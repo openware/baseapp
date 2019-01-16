@@ -9,7 +9,8 @@
     "noImplicitAny": false,
     "lib": [
       "es2015",
-      "dom"
+      "dom",
+      "es2017"
     ],
     "types": [
       "node",

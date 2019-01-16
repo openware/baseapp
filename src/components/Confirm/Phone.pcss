@@ -2,26 +2,27 @@
   color: var(--base-10);
   font-size: calc(var(--gap) * 2.33);
   margin: 0 auto;
-  margin-top: calc(var(--big-gap) * 1.5);
-  width: 65%;
+  margin-top: calc(var(--gap) * 3);
+  max-width: 480px;
+  width: 100%;
 
-  &-row {
-    display: inline-block;
-    margin-top: calc(var(--gap) * 5);
+  &-head {
+    color: var(--color-white);
+  }
+
+  &-col {
     margin-bottom: calc(var(--gap) * 5);
 
     &-text {
-      display: inline-block;
       font-size: calc(var(--gap) * 2.33);
-      padding-right: calc(var(--gap) * 4);
-      text-align: right;
-      width: calc(var(--big-gap) * 3.33);
+      color: var(--kyc-grey);
     }
 
     &-content {
       border-bottom: 1px solid var(--confirm-border-color);
-      display: inline-block;
-      width: calc(var(--big-gap) * 5);
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
 
       &-send {
         cursor: pointer;
@@ -34,8 +35,15 @@
       }
 
       input {
-        color: var(--dark-color);
-        padding-bottom: calc(var(--gap) * 0.33);
+        width: 335px;
+        padding: 5px 15px;
+        display: inline;
+        color: var(--kyc-grey);
+        background: var(--transparent);
+        height: 50px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border: 1px solid var(--kyc-grey);
 
         &::placeholder {
           color: var(--text-muted);
@@ -43,7 +51,11 @@
       }
 
       button {
-        color: var(--active-color);
+        color: var(--white-color);
+        width: 130px;
+        background: #2E4C80;
+        opacity: 0.5;
+        border-radius: 3px;
       }
     }
 

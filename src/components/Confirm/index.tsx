@@ -13,7 +13,6 @@ interface ReduxProps {
 interface ConfirmState {
     title: string;
     level: number;
-    completedIdentity: boolean;
 }
 
 type Props = ReduxProps;
@@ -25,7 +24,6 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
         this.state = {
             title: '',
             level: 1,
-            completedIdentity: false,
         };
     }
 
@@ -38,52 +36,42 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
 
     public render() {
         const { userData } = this.props;
-        const { completedIdentity } = this.state;
         const currentProfileLevel = userData.level;
-        const title = this.getCurrentTitleByLevel(currentProfileLevel);
         const cx = classnames('pg-confirm__progress-items', {
             'pg-confirm__progress-first': currentProfileLevel === 1,
-            'pg-confirm__progress-second': currentProfileLevel === 2 && !completedIdentity,
-            'pg-confirm__progress-third': currentProfileLevel === 2 && completedIdentity || currentProfileLevel === 3,
+            'pg-confirm__progress-second': currentProfileLevel === 2,
+            'pg-confirm__progress-third': currentProfileLevel === 3,
         });
         return (
-            <div className="pg-confirm">
-                <div className="pg-confirm__title">
-                    <span className="pg-confirm__title-text">{title}</span> Verification
-                </div>
+          <div className="pg-confirm">
+            <div className="pg-confirm-box">
                 <div className="pg-confirm__progress">
                     <div className={cx}>
-                        <div className="pg-confirm__progress-circle-1" />
+                        <div className="pg-confirm__progress-circle-1">
+                          <span className="pg-confirm__title-text pg-confirm__active-1">Phone Verification</span>
+                        </div>
                         <div className="pg-confirm__progress-line-1" />
-                        <div className="pg-confirm__progress-circle-2" />
+                        <div className="pg-confirm__progress-circle-2">
+                          <span className="pg-confirm__title-text pg-confirm__active-2">Identity Verification</span>
+                        </div>
                         <div className="pg-confirm__progress-line-2" />
-                        <div className="pg-confirm__progress-circle-3" />
+                        <div className="pg-confirm__progress-circle-3">
+                          <span className="pg-confirm__title-text pg-confirm__active-3">Document Verification</span>
+                        </div>
                     </div>
                 </div>
                 <div className="pg-confirm__content">
                     {this.renderContent(currentProfileLevel)}
                 </div>
             </div>
+          </div>
         );
     }
 
-    private getCurrentTitleByLevel = (level: number) => {
-        const { completedIdentity } = this.state;
-
-        switch (level) {
-            case 1: return 'Phone';
-            case 2: return (completedIdentity ? 'Documents' : 'Identity');
-            case 3: return 'Documents';
-            default: return 'Something went wrong';
-        }
-    };
-
     private renderContent = (level: number) => {
-        const { completedIdentity } = this.state;
-
         switch (level) {
             case 1: return <Phone />;
-            case 2: return (!completedIdentity ? <Documents /> : <Identity />);
+            case 2: return <Identity />;
             case 3: return <Documents />;
             default: return 'Something went wrong';
         }

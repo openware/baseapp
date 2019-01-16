@@ -3,7 +3,6 @@ import {
   Dropdown,
 } from '@openware/components';
 import * as React from 'react';
-import DatePicker from 'react-date-picker';
 import {
   connect,
   MapDispatchToPropsFunction,
@@ -34,7 +33,6 @@ interface OnChangeEvent {
 interface DocumentsState {
     documentsType: string;
     idNumber: string;
-    expiration: Date;
     scan?: File;
 }
 
@@ -44,14 +42,12 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     public state = {
         documentsType: 'Passport',
         idNumber: '',
-        expiration: new Date(),
     };
 
     public render() {
         const {
             documentsType,
             idNumber,
-            expiration,
             scan,
         }: DocumentsState = this.state;
         const { error, success } = this.props;
@@ -87,17 +83,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                     placeholder={numberType}
                                     value={idNumber}
                                     onChange={this.handleChangeIdNumber}
-                                />
-                            </div>
-                        </div>
-                        <div className="pg-confirm__content-documents-col-row">
-                            <div className="pg-confirm__content-documents-col-row-text">
-                                {documentsType} Expiration Date
-                            </div>
-                            <div className="pg-confirm__content-documents-col-row-content">
-                                <DatePicker
-                                    onChange={this.handleChangeExpiration}
-                                    value={expiration}
                                 />
                             </div>
                         </div>
@@ -167,12 +152,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         });
     };
 
-    private handleChangeExpiration = (expiration: Date | Date[]) => {
-        this.setState({
-            expiration: expiration as Date,
-        });
-    }
-
     private handleChangeScan = (scan: File) => {
         this.setState({ scan });
     }
@@ -204,7 +183,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         const {
             scan,
             idNumber,
-            expiration,
             documentsType,
 
         }: DocumentsState = this.state;
@@ -216,7 +194,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         const request = new FormData();
 
         request.append('upload', scan);
-        request.append('doc_expire', expiration.toISOString());
         request.append('doc_type', documentsType);
         request.append('doc_number', idNumber);
 

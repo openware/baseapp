@@ -30,6 +30,7 @@ interface OnChangeEvent {
 interface PhoneState {
     phoneNumber: string;
     confirmationCode: string;
+    currentAction: string;
 }
 
 interface DispatchProps {
@@ -47,11 +48,12 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         this.state = {
           phoneNumber: '',
           confirmationCode: '',
+          currentAction: 'SEND CODE',
         };
     }
 
     public render() {
-        const { phoneNumber, confirmationCode } = this.state;
+        const { phoneNumber, confirmationCode, currentAction } = this.state;
         const {
             verifyPhoneError,
             verifyPhoneSuccess,
@@ -59,46 +61,40 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         const showError = verifyPhoneError && !verifyPhoneSuccess;
         return (
             <div className="pg-confirm__content-phone">
-                <div className="pg-confirm__content-phone-row">
-                    <div className="pg-confirm__content-phone-row-text">
-                        Phone Number
-                    </div>
-                    <div className="pg-confirm__content-phone-row-content">
+                <h2 className="pg-confirm__content-phone-head">Lets Verify your phone</h2>
+                <div className="pg-confirm__content-phone-col">
+                    <p className="pg-confirm__content-phone-col-text">
+                        1. Enter your Phone number
+                    </p>
+                    <div className="pg-confirm__content-phone-col-content">
                         <input
-                            className="pg-confirm__content-phone-row-content-number"
+                            className="pg-confirm__content-phone-col-content-number"
                             type="string"
-                            placeholder="+"
+                            placeholder="Phone Number"
                             value={phoneNumber}
                             onChange={this.handleChangeNumber}
                         />
                         <button
-                            className="pg-confirm__content-phone-row-content-send"
+                            className="pg-confirm__content-phone-col-content-send"
                             type="button"
                             onClick={this.handleSendCode}
                         >
-                            Send code
+                            {currentAction}
                         </button>
                     </div>
                 </div>
-                <div className="pg-confirm__content-phone-row">
-                    <div className="pg-confirm__content-phone-row-text">
-                        SMS Confirmation Code
-                    </div>
-                    <div className="pg-confirm__content-phone-row-content">
+                <div className="pg-confirm__content-phone-col">
+                    <p className="pg-confirm__content-phone-col-text">
+                        2. Enter Code that you received
+                    </p>
+                    <div className="pg-confirm__content-phone-col-content">
                         <input
-                            className="pg-confirm__content-phone-row-content-number"
+                            className="pg-confirm__content-phone-col-content-number"
                             type="string"
-                            placeholder="Code"
+                            placeholder="SMS Code"
                             value={confirmationCode}
                             onChange={this.handleConfirmNumber}
                         />
-                        <button
-                            className="pg-confirm__content-phone-row-content-send"
-                            type="button"
-                            onClick={this.handleResendCode}
-                        >
-                            Resend code
-                        </button>
                     </div>
                 </div>
                 {showError && <p className="pg-confirm__error">{(verifyPhoneError || { message: '' }).message}</p>}
@@ -138,14 +134,14 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         const requestProps = {
             phone_number: String(this.state.phoneNumber),
         };
-        this.props.sendCode(requestProps);
-    };
-
-    private handleResendCode = () => {
-        const requestProps = {
-            phone_number: String(this.state.phoneNumber),
-        };
-        this.props.resendCode(requestProps);
+        if (this.state.currentAction === 'SEND CODE') {
+          this.props.sendCode(requestProps);
+          this.setState({
+              currentAction: 'RESEND CODE',
+          });
+        } else {
+          this.props.resendCode(requestProps);
+        }
     };
 }
 

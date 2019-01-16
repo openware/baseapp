@@ -83,52 +83,23 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
         return (
           <div className="pg-confirm__content-identity">
-              <div className="pg-confirm__content-identity-col">
-                  <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-text">
-                          First Name
-                      </div>
-                      <div className="pg-confirm__content-identity-col-row-content">
-                          <input
-                              className="pg-confirm__content-identity-col-row-content-number"
-                              type="string"
-                              placeholder="First Name"
-                              value={firstName}
-                              onChange={this.handleChange('firstName')}
-                          />
-                      </div>
-                  </div>
-                  <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-text">
-                          Last Name
-                      </div>
-                      <div className="pg-confirm__content-identity-col-row-content">
-                          <input
-                              className="pg-confirm__content-identity-col-row-content-number"
-                              type="string"
-                              placeholder="Last Name"
-                              value={lastName}
-                              onChange={this.handleChange('lastName')}
-                          />
-                      </div>
-                  </div>
-                  <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-text">
-                          Nationality
-                      </div>
-                      <div className="pg-confirm__content-identity-col-row-content">
-                          <Dropdown
-                              className="pg-confirm__content-documents-col-row-content-number"
-                              list={dataNationalities}
-                              onSelect={onSelectNationality}
-                          />
-                      </div>
-                  </div>
-                  <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-text">
-                          Date of Birth
-                      </div>
-                      <div className="pg-confirm__content-identity-col-row-content">
+            <div className="pg-confirm__content-identity-forms">
+                <div className="pg-confirm__content-identity-col">
+                    <div className="pg-confirm__content-identity-col-row">
+                      <fieldset className={`pg-confirm__content-identity-col-row-content ${firstName && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                          {firstName && <legend>First Name</legend>}
+                              <input
+                                  className="pg-confirm__content-identity-col-row-content-number"
+                                  type="string"
+                                  placeholder="First Name"
+                                  value={firstName}
+                                  onChange={this.handleChange('firstName')}
+                              />
+                      </fieldset>
+                    </div>
+                    <div className="pg-confirm__content-identity-col-row">
+                      <fieldset className={`pg-confirm__content-identity-col-row-content ${dateOfBirth && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                          {dateOfBirth && <legend>Date of Birth</legend>}
                           <input
                               className="pg-confirm__content-identity-col-row-content-number"
                               type="string"
@@ -136,41 +107,23 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                               value={dateOfBirth}
                               onChange={this.handleChange('dateOfBirth')}
                           />
-                      </div>
-                  </div>
-              </div>
-              <div className="pg-confirm__content-identity-col">
-                  <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-text">
-                          Country of Birth
-                      </div>
-                      <div className="pg-confirm__content-identity-col-row-content">
-                          <Dropdown
-                              className="pg-confirm__content-documents-col-row-content-number"
-                              list={dataCountries}
-                              onSelect={onSelectCountry}
-                          />
-                      </div>
-                  </div>
-                  <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-text">
-                          Residential Address
-                      </div>
-                      <div className="pg-confirm__content-identity-col-row-content">
+                      </fieldset>
+                    </div>
+                    <div className="pg-confirm__content-identity-col-row">
+                      <fieldset className={`pg-confirm__content-identity-col-row-content ${residentialAddress && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                          {residentialAddress && <legend>Residential Address</legend>}
                           <input
-                              className="pg-confirm__content-identity-col-row-content-number"
-                              type="string"
-                              placeholder="Residential Address"
-                              value={residentialAddress}
-                              onChange={this.handleChange('residentialAddress')}
+                            className="pg-confirm__content-identity-col-row-content-number"
+                            type="string"
+                            placeholder="Residential Address"
+                            value={residentialAddress}
+                            onChange={this.handleChange('residentialAddress')}
                           />
-                      </div>
-                  </div>
-                  <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-text">
-                          City
-                      </div>
-                      <div className="pg-confirm__content-identity-col-row-content">
+                      </fieldset>
+                    </div>
+                    <div className="pg-confirm__content-identity-col-row">
+                      <fieldset className={`pg-confirm__content-identity-col-row-content ${city && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                          {city && <legend>City</legend>}
                           <input
                               className="pg-confirm__content-identity-col-row-content-number"
                               type="string"
@@ -178,13 +131,43 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                               value={city}
                               onChange={this.handleChange('city')}
                           />
-                      </div>
-                  </div>
+                      </fieldset>
+                    </div>
+                </div>
+                <div className="pg-confirm__content-identity-col pg-confirm__content-identity-col-right">
                   <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-text">
-                          Postcode
-                      </div>
+                    <fieldset className={`pg-confirm__content-identity-col-row-content ${lastName && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                        {lastName && <legend>Last Name</legend>}
+                            <input
+                                className="pg-confirm__content-identity-col-row-content-number"
+                                type="string"
+                                placeholder="Last Name"
+                                value={lastName}
+                                onChange={this.handleChange('lastName')}
+                            />
+                    </fieldset>
+                  </div>
+                    <div className="pg-confirm__content-identity-col-row">
                       <div className="pg-confirm__content-identity-col-row-content">
+                        <Dropdown
+                          className="pg-confirm__content-documents-col-row-content-number"
+                          list={dataNationalities}
+                          onSelect={onSelectNationality}
+                        />
+                      </div>
+                    </div>
+                    <div className="pg-confirm__content-identity-col-row">
+                        <div className="pg-confirm__content-identity-col-row-content">
+                            <Dropdown
+                                className="pg-confirm__content-documents-col-row-content-number"
+                                list={dataCountries}
+                                onSelect={onSelectCountry}
+                            />
+                        </div>
+                    </div>
+                    <div className="pg-confirm__content-identity-col-row">
+                      <fieldset className={`pg-confirm__content-identity-col-row-content ${postcode && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                          {postcode && <legend>Postcode</legend>}
                           <input
                               className="pg-confirm__content-identity-col-row-content-number"
                               type="string"
@@ -192,8 +175,9 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                               value={postcode}
                               onChange={this.handleChange('postcode')}
                           />
-                      </div>
-                  </div>
+                      </fieldset>
+                    </div>
+                </div>
               </div>
               {success && <p className="pg-confirm__success">{success}</p>}
               {error && <p className="pg-confirm__error">{error.message}</p>}

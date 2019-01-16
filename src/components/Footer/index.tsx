@@ -1,13 +1,14 @@
 import { Button } from '@openware/components';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { LegalDocuments } from '../LegalDocuments';
 
 export interface FooterState {
     showModal: boolean;
 }
 
-class Footer extends React.Component<{}, FooterState> {
+// tslint:disable
+class Foot extends React.Component<{}, FooterState> {
     public state = {
         showModal: false,
     };
@@ -15,6 +16,8 @@ class Footer extends React.Component<{}, FooterState> {
     public render() {
         const { showModal } = this.state;
         return(
+          <React.Fragment>
+          {!['/confirm'].some(r=> location.pathname.includes(r)) &&
             <footer className="pg-footer">
                 <span className="pg-footer__link" onClick={this.toggleModal}>Legal documents</span>
                 <LegalDocuments
@@ -25,6 +28,8 @@ class Footer extends React.Component<{}, FooterState> {
                     FAQ
                 </Link>
             </footer>
+          }
+          </React.Fragment>
         );
     }
 
@@ -34,6 +39,9 @@ class Footer extends React.Component<{}, FooterState> {
         });
     };
 }
+
+// tslint:disable-next-line
+const Footer = withRouter(Foot as any);
 
 export {
     Footer,

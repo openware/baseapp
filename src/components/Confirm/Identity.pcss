@@ -3,14 +3,51 @@
   font-size: calc(var(--gap) * 2.33);
   margin: 0 auto;
 
+  &-forms {
+    overflow-y: scroll;
+    height: 320px;
+    display: flex;
+  }
+
   &-col {
-    display: inline-block;
-    max-width: 50%;
+    flex-direction: column;
+    width: 100%;
+    display: flex;
+
+    &-right {
+      align-items: flex-end;
+    }
 
     &-row {
       display: inline-block;
-      margin-top: calc(var(--gap) * 6.66);
-      margin-bottom: calc(var(--gap) * 3.33);
+      margin-top: calc(var(--gap) * 4);
+
+      &-is-active {
+        margin-top: 0 !important;
+        height: 63px !important;
+        margin-bottom: 5px;
+        input {
+          padding: 20px 15px 0 !important;
+          color: var(--color-white) !important;
+        }
+        border: 1px solid var(--kyc-active-color) !important;;
+      }
+
+      fieldset {
+        display: inline;
+        color: var(--kyc-grey);
+        height: 55px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border: 1px solid var(--kyc-grey);
+        width: 230px;
+        position: relative;
+        margin-top: 8px;
+
+        &::placeholder {
+          color: var(--text-muted);
+        }
+      }
 
       &-text {
         display: inline-block;
@@ -23,15 +60,22 @@
 
       &-content {
         display: inline-block;
-        width: calc(var(--big-gap) * 4.33);
 
         input {
-          border: none;
-          border-bottom: 1px solid var(--confirm-border-color);
-          font-size: calc(var(--gap) * 2.66);
-          outline: none;
-          color: var(--dark-color);
-          padding-bottom: calc(var(--gap) * 0.33);
+          padding: 5px 15px 0;
+          display: inline;
+          color: var(--kyc-grey);
+          background: var(--transparent);
+          box-sizing: border-box;
+          border-radius: 4px;
+          width: 230px;
+          height: 53px;
+          border: unset;
+          position: absolute;
+          right: 0;
+          left: 0;
+          top: 0;
+          bottom: 0;
 
           &::placeholder {
             color: var(--text-muted);
@@ -40,17 +84,28 @@
 
         .cr-dropdown {
           &__input, &__input--open {
-            border-color: #efeff0;
+            border-color: var(--kyc-grey);
             background-color: var(--base-bright);
-            color: var(--base-9);
+            color: var(--kyc-grey);
+            height: 53px;
+            width: 230px;
+            border-radius: 4px;
+            margin-top: 8px;
+            margin-bottom: 5px;
+          }
+
+          &__input--open {
+            border-radius: 4px 4px 0 0;
           }
           &__list {
-            border-color: #efeff0;
+            border-color: var(--kyc-grey);
             background-color: var(--base-bright);
-            color: var(--base-9);
+            color: var(--kyc-grey);
             max-height: calc(var(--big-gap) * 3.5);
             overflow-y: auto;
+            margin-top: -5px;
             &-item {
+              color: var(--kyc-grey);
               &:hover {
                 background-color: var(--active-color);
                 color: var(--base-bright);

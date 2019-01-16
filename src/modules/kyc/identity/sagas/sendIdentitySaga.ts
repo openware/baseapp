@@ -10,7 +10,7 @@ const sessionsConfig: RequestOptions = {
 
 export function* sendIdentitySaga(action: SendIdentityFetch) {
     try {
-        const response = yield call(API.post(sessionsConfig), '/profiles', action.payload);
+        const response = yield call(API.post(sessionsConfig), '/resource/profiles', action.payload);
         const defaultMessage = 'Your documents are successfully accepted';
         const { message = defaultMessage } = response;
         yield put(sendIdentityData({ message }));

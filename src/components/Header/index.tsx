@@ -23,7 +23,7 @@ class Head extends React.Component<any, HeaderState> {
         const link = `/wallets/btc/deposit`;
         return (
           <React.Fragment>
-          {!location.pathname.includes('/profile') &&
+          {!['/profile', '/confirm'].some(r=> location.pathname.includes(r)) &&
             <header className={`pg-header ${isActive ? 'pg-header--active' : ''}`}>
                 <div className="pg-container pg-header__content">
                     <a className="pg-header__logo" href={link}>
