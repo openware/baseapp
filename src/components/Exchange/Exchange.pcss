@@ -5,16 +5,21 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 0 !important;
-  margin-top: calc(var(--gap) * 2) !important;
+  margin-top: calc(var(--gap) * 4) !important;
+  max-width: 80%;
 
   .pg-exchange__tabs-content {
     align-items: flex-start;
     width: 100%;
     .cr-tab-panel__navigation-container {
       background: var(--table-dark-header-color);
+      border-bottom: 1px solid var(--header-border);
+      border-radius: calc(var(--gap) * 0.66);
+      margin-bottom: 0;
 
       &-navigation {
         padding-bottom: 0;
+        box-shadow: none;
 
         .cr-tab {
           padding-left: calc(var(--gap) * 7);
@@ -31,7 +36,7 @@
 
       &__active {
         color: var(--bright-1);
-        border-bottom-color: var(--color-blue);
+        border-bottom: 1px solid var(--active-tab-color)
       }
 
       &__pointer {
@@ -67,6 +72,7 @@
     &__container {
       display: flex;
       justify-content: space-between;
+      padding: 0 calc(var(--gap) * 3);
     }
 
     &__loading {
@@ -100,7 +106,8 @@
           padding-bottom: 0 !important;
           &__input {
             border-radius: 3px;
-            border: 1px solid #737F92;
+            border: 1px solid var(--table-text-color);
+            padding-right: calc(var(--gap) * 0.8);
             input {
               height: 40px;
             }
@@ -137,6 +144,7 @@
       width: 45%;
       color: var(--base-new);
       padding: 10px;
+      margin-top: calc(var(--gap) * 2.2);
     }
     &__summary-block {
       margin-bottom: calc(var(--gap) * 3.33);
@@ -160,13 +168,12 @@
       justify-content: center;
       .cr-button {
         font-size: calc(var(--gap) * 2.66);
-        font-style: normal;
         font-weight: normal;
-        line-height: normal;
-        padding: calc(var(--gap) * 2.5) calc(var(--gap) * 8);
+        padding: calc(var(--gap) * 2) calc(var(--gap) * 8);
         text-align: center;
-        width: auto;
+        width: 50%;
         color: var(--color-white);
+        background: var(--profile-btn);
 
         input {
           width: auto;

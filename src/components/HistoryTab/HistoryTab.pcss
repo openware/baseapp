@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 80%;
   background: var(--transparent);
-  margin: calc(var(--gap) * 2) auto 0;
+  margin: calc(var(--gap) * 4) auto 0;
 
   .cr-pagination {
     text-align: center;
@@ -11,10 +11,15 @@
   .pg-history-tab__tabs-content {
     align-items: center;
     width: 100%;
+    display: border-box;
+    border-radius: calc(var(--gap) * 0.66);
 
     .cr-tab-panel__navigation-container {
       margin-bottom: 0 !important;
       background: var(--table-dark-header-color);
+      border: 1px solid var(--table-dark-header-color);
+      border-top-left-radius: calc(var(--gap) * .66);
+      border-top-right-radius: calc(var(--gap) * .66);
       &-navigation {
         padding-bottom: 0;
 
@@ -22,6 +27,8 @@
           background: var(--table-dark-header-color);
           padding-left: calc(var(--gap) * 7);
           padding-right: calc(var(--gap) * 7);
+          border-top-left-radius: calc(var(--gap) * .66);
+          border-top-right-radius: calc(var(--gap) * .66);
         }
       }
     }
@@ -34,8 +41,8 @@
       font-size: calc(var(--gap) * 2.6);
 
       &__active {
-        border-bottom: 1px solid var(--active-color);
-        color: var(--active-color);
+        border-bottom: 1px solid var(--active-tab-color);
+        color: var(--bight-1);
       }
 
       &__pointer {
@@ -96,6 +103,10 @@
 
               &:first-child {
                 text-align: left;
+                border-bottom-left-radius: calc(var(--gap) * .5);
+              }
+              &:last-child {
+                border-bottom-right-radius: calc(var(--gap) * .5);
               }
               a {
                 color: var(--table-text-color);

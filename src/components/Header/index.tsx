@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
+import logo = require('../../assets/images/baseapp.svg');
 import { NavBar } from '../NavBar';
 
 interface HeaderState {
@@ -27,7 +28,7 @@ class Head extends React.Component<any, HeaderState> {
                 <div className="pg-container pg-header__content">
                     <a className="pg-header__logo" href={link}>
                       <div className="pg-logo">
-                          Logo
+                        <img src={logo} className="pg-logo__img" alt="Logo" />
                       </div>
                     </a>
                     <div className="pg-header__navbar">

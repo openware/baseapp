@@ -42,13 +42,12 @@ class OrderBookContainer extends React.Component<Props> {
     }
 
     public render() {
-        const { asksError, asks, asksLoading } = this.props;
+        const { asks, asksLoading } = this.props;
         const cn = classNames('pg-asks', {
             'pg-asks--loading': asksLoading,
         });
         return (
             <div className={cn}>
-                {asksError && <span>{asksError.message}</span>}
                 {asksLoading ? <Loader /> : this.orderBook(asks)}
             </div>
         );

@@ -53,12 +53,16 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
                     <div className="pg-forgot-password-screen__container-header">
                         Forgot Password
                     </div>
-                    <div className="pg-forgot-password-screen__container-body">
-                        <div className="pg-forgot-password-screen__container-body-item">
-                            Email
-                            <Input value={email} onChangeValue={this.handleChangeEmail} />
-                        </div>
-                    </div>
+                    <form className="pg-forgot-password-screen__container-body">
+                        <fieldset className="pg-forgot-password-screen__container-body-item">
+                            <legend>
+                                Email
+                            </legend>
+                            <div className="pg-forgot-password-screen__container-body-item__input">
+                                <Input value={email} onChangeValue={this.handleChangeEmail} />
+                            </div>
+                        </fieldset>
+                    </form>
                     <div className="pg-forgot-password-screen__container-alert">
                         {error ? 'Wrong format of email' : null}
                     </div>

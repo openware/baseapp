@@ -1,7 +1,7 @@
 import { Table } from '@openware/components';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeDate } from '../../helpers';
+import { localeDateSec } from '../../helpers';
 import { Market, RootState, selectCurrentMarket } from '../../modules';
 import { recentTrades, selectRecentTrades } from '../../modules/recentTrades';
 
@@ -30,13 +30,13 @@ class RecentTradesComponent extends React.Component<Props> {
 
     public render() {
         return (
-            <div>
+            <div className="pg-recent-trades">
                 <div className="cr-table-header__content">
                     <div className={'pg-market-depth__title'}>
                         Recent Trades
                     </div>
                 </div>
-                <Table data={this.getTrades(this.props.recentTrades)} header={['Time', 'Type', 'Price', 'Volume']}/>
+                <Table data={this.getTrades(this.props.recentTrades)} header={['Time', 'Price', 'Volume']}/>
             </div>
         );
     }
@@ -44,7 +44,7 @@ class RecentTradesComponent extends React.Component<Props> {
     private getTrades(trades: any) {
         const renderRow = item => {
             const { time } = item;
-            return [localeDate(time), ...item.slice(1)];
+            return [localeDateSec(time), ...item.slice(2)];
         };
 
         return trades.length ?

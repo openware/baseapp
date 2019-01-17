@@ -88,7 +88,7 @@ steps:
         - push
 
   - name: "Redeploy on devkube"
-    image: rubykube/microkube:0.1.0
+    image: rubykube/microkube:0.2.0
     environment:
         WEBHOOK_JWT_SECRET:
             from_secret: devkube_webhook_secret

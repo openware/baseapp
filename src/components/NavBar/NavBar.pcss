@@ -5,11 +5,6 @@
   position: relative;
   padding: 0;
 
-  &__trading {
-    background-color: var(--active-color);
-    color: #fff !important;
-  }
-
   &__admin {
     display: flex;
     align-items: center;
@@ -47,22 +42,20 @@
     background-color: var(--background-dark);
 
     &-item, &-item:hover {
-      color: var(--navbar-text-color);
       cursor: pointer;
       text-decoration: none;
       font-size: calc(var(--gap) * 2.333);
       padding: 0 calc(var(--gap) * 1.6);
       padding-top: calc(var(--gap) * 1.5);
-      padding-bottom: var(--gap);
+      padding-bottom: calc(var(--gap) * 2.9);
     }
 
     &-item {
       margin-right: calc(var(--gap) * 1.66);
-      padding-bottom: var(--gap);
+      color: var(--navbar-text-color);
       &--active {
-        color: var(--active-color);
+        color: var(--bright-1);
         border-bottom: 1px solid var(--active-color);
-        padding-bottom: var(--gap);
       }
     }
   }

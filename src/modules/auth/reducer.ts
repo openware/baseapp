@@ -1,5 +1,6 @@
 import { AuthAction, AuthError } from './actions';
 import {
+    AUTH_ERROR,
     LOGOUT_FAILURE,
     LOGOUT_FETCH,
     SIGN_IN_ERROR,
@@ -40,6 +41,8 @@ export const authReducer = (state = initialStateAuth, action: AuthAction) => {
             return { ...state, emailVerified: false };
         case VERIFICATION_SUCCESS:
             return { ...state, emailVerified: true };
+        case AUTH_ERROR:
+            return { ...state, authError: action.payload };
         case SIGN_IN_ERROR:
             return { ...state, authError: action.payload };
         case LOGOUT_FETCH:

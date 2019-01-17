@@ -2,7 +2,6 @@ import { History } from 'history';
 import * as React from 'react';
 import { Router } from 'react-router';
 import { ErrorWrapper } from './components/Errors';
-import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Layout } from './routes';
 
@@ -18,7 +17,6 @@ class App extends React.Component<AppProps, {}, {}> {
                 <ErrorWrapper>
                     <Header />
                     <Layout />
-                    <Footer />
                 </ErrorWrapper>
             </Router>
         );

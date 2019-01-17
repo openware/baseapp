@@ -42,13 +42,12 @@ class OrderBookContainer extends React.Component<Props> {
     }
 
     public render() {
-        const { bidsError, bids, bidsLoading } = this.props;
+        const { bids, bidsLoading } = this.props;
         const cn = classNames('', {
             'pg-bids--loading': bidsLoading,
         });
         return (
             <div className={cn}>
-                {bidsError && (<span>{bidsError.message}</span>)}
                 {bidsLoading ? <Loader /> : this.orderBook(bids)}
             </div>
         );

@@ -1,9 +1,8 @@
 .pg-wallet {
-  display: flex;
-  justify-content: space-between;
   flex-direction: column;
   background: var(--background);
   margin: 0 !important;
+  max-width: 80%;
 
   .pg-wallet__loading {
     height: 100vh;
@@ -33,11 +32,12 @@
     flex: 0.35 1;
     background: var(--background);
     margin-right: calc(var(--gap) * 4);
+    margin-top: 0;
   }
   .pg-wallet__tabs {
     flex: 1;
     background: var(--background);
-    margin-top: calc(var(--gap) * 3);
+    margin-top: calc(var(--gap) * 1);
   }
 
   .cr-withdraw {
@@ -112,8 +112,8 @@
 
     &__deep {
       .cr-button {
-        color: var(--base-bright);
-        background: var(--base);
+        color: var(--color-white);
+        background: var(--profile-btn);
         font-size: calc(var(--gap) * 2.66);
         border-radius: calc(var(--gap) * 0.5);
         font-weight: normal;
@@ -168,7 +168,7 @@
 
     .cr-copyable-text-field {
       border-radius: calc(var(--gap) * 0.66);
-      padding: 0.1rem 1rem;
+      padding: 0rem 1rem;
     }
 
     &__copyable {
@@ -192,12 +192,15 @@
         }
 
         .cr-copyable-text-field__button {
-          background-color: var(--base);
-          color: var(--base-bright);
+          background: var(--profile-btn);
+          color: var(--color-white);
           border-radius: calc(var(--gap) * 0.5);
-          width: 20%;
-          padding: calc(var(--gap) * 1);
+          width: 30%;
+          padding: calc(var(--gap) * 1.8);
           text-align: center;
+          margin-bottom: 0px;
+          font-size: calc(var(--gap) * 2);
+          text-transform: uppercase;
         }
       }
     }
@@ -210,7 +213,8 @@
   .cr-tab-panel__navigation-container {
     background: var(--table-dark-header-color);
     border-bottom: 1px solid var(--header-border);
-    border-radius: calc(var(--gap) * 0.66);
+    border-top-left-radius: calc(var(--gap) * .66);
+    border-top-right-radius: calc(var(--gap) * .66);
     margin-bottom: 0;
     &-navigation {
       padding-bottom: 0;
@@ -221,7 +225,8 @@
   .cr-tab-content {
     background: var(--base-bright);
     display: none;
-    border-radius: calc(var(--gap) * 0.5);
+    border-bottom-right-radius: calc(var(--gap) * .5);
+    border-bottom-left-radius: calc(var(--gap) * .5);
     padding: calc(var(--gap) * 5) calc(var(--gap) * 2);
     &__active {
       display: flex;
