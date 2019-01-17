@@ -1,6 +1,6 @@
 module.exports = {
     'roots': [
-        '<rootDir>/packages'
+        '<rootDir>'
     ],
     'snapshotSerializers': ['enzyme-to-json/serializer'],
     'setupTestFrameworkScriptFile': '<rootDir>/enzymeSetup.ts',

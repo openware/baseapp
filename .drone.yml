@@ -1,0 +1,126 @@
+kind: pipeline
+name: default
+
+steps:
+  - name: "Test"
+    image: node:10.11
+    commands:
+      - npm -g install yarn
+      - yarn
+      - yarn build
+      - yarn lint
+      - yarn test:ci --collectCoverage=true
+    when:
+      event:
+        - push
+
+  - name: "Bump & Tag"
+    image: node:10.11
+    environment:
+      GITHUB_API_KEY:
+        from_secret: kite_bot_key
+    commands:
+      - npm -g install yarn
+      - yarn
+      - git config --global user.name "Kite Bot"
+      - git config --global user.email "kite-bot@heliostech.fr"
+      - git remote add authenticated-origin https://kite-bot:$GITHUB_API_KEY@github.com/${DRONE_REPO}
+      - git fetch authenticated-origin
+      - yarn version -m '[skip ci] Bump %s' --tag-version-prefix ""
+          patch -y --no-commit-hooks --git-remote authenticated-origin
+      - git describe --tags $(git rev-list --tags --max-count=1) > .tags
+    when:
+      branch:
+        - master
+      event:
+        - push
+
+  - name: "Build"
+    image: plugins/gcr
+    settings:
+      repo: gcr.io/openware-production/baseapp
+      json_key:
+        from_secret: openware_gcp_creds_base64
+    when:
+      branch:
+        - master
+      event:
+        - push
+
+  - name: "Stage"
+    image: alpine/git
+    environment:
+      PRIVATE_KEY:
+        from_secret: deploy_key
+    commands:
+      - echo "$PRIVATE_KEY" | base64 -d > id_rsa
+      - chmod 0600 id_rsa
+      - cd build/config/
+      - echo "window.env={api:{gatewayUrl:'http://api-v2.mock.openware.work/api/v2',rangerUrl:'ws://ranger.mock.openware.work'}};" > env.js
+      - cat env.js
+      - cd /drone/src/
+      - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build dfedorchenko@35.232.147.44:/home/dfedorchenko/builds/${DRONE_COMMIT_SHA:0:7}
+      - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null coverage/lcov-report dfedorchenko@35.232.147.44:/home/dfedorchenko/builds/${DRONE_COMMIT_SHA:0:7}-coverage
+    when:
+      event:
+        - push
+
+  - name: "Notify about staging"
+    image: plugins/slack
+    settings:
+      webhook:
+        from_secret: baseapp_slack_webhook
+      channel:
+        from_secret: baseapp_slack_channel
+      template: >
+        {{#success build.status}}
+          [SUCCESS] (Base Application) Branch {{ build.branch }} by {{ build.author }} staging has succeeded!
+
+          Visit http://{{ truncate build.commit 7 }}.mock.openware.work to check it out!
+          Coverage report: http://{{ truncate build.commit 7 }}-coverage.mock.openware.work
+        {{else}}
+          [FAILURE] Branch {{ build.branch }} by {{ build.author }} staging has failed!
+        {{/success}}
+        Check the build info here: {{ build.link }}
+    when:
+      status: [success, failure]
+      event:
+        - push
+
+  - name: "Redeploy on devkube"
+    image: rubykube/microkube:0.1.0
+    environment:
+        WEBHOOK_JWT_SECRET:
+            from_secret: devkube_webhook_secret
+    commands:
+      - export latest_image=gcr.io/openware-production/baseapp:$(cat .tags)
+      - cd /home/app
+      - bundle exec rake payload:send[frontend,$latest_image,http://www.devkube.com:1337]
+    when:
+      branch:
+        - master
+      event:
+        - push
+
+  - name: "Notify about redeployment on devkube"
+    image: plugins/slack
+    settings:
+      webhook:
+        from_secret: cryptobase_slack_webhook
+      channel:
+        from_secret: cryptobase_slack_channel
+      template: >
+        {{#success build.status}}
+          [SUCCESS] (Base Application) Master branch build by {{ build.author }} has succeeded!
+
+          Visit http://www.devkube.com to check it out!
+        {{else}}
+          [FAILURE] Master branch build by {{ build.author }} has failed!
+        {{/success}}
+        Check the build info here: {{ build.link }}
+    when:
+      status: [success, failure]
+      branch:
+        - master
+      event:
+        - push
