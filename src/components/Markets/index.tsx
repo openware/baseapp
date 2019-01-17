@@ -5,7 +5,6 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RootState, selectUserInfo, User } from '../../modules';
 import {
     Market,
-    marketsFetch,
     selectCurrentMarket,
     selectMarkets,
     selectMarketsLoading,
@@ -26,7 +25,6 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    marketsFetch: typeof marketsFetch;
     setCurrentMarket: typeof setCurrentMarket;
     depthFetch: typeof depthFetch;
 }
@@ -35,19 +33,6 @@ type Props = ReduxProps & DispatchProps;
 
 // tslint:disable
 class MarketsContainer extends React.Component<Props> {
-    public componentDidMount() {
-        if (this.props.markets.length < 2) {
-            this.props.marketsFetch();
-        }
-    }
-
-    public componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.userData.uid &&
-            (nextProps.markets.length < 2) &&
-            !nextProps.marketsLoading) {
-            this.props.marketsFetch();
-        }
-    }
 
     public render() {
         const { marketsLoading } = this.props;
@@ -99,7 +84,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        marketsFetch: () => dispatch(marketsFetch()),
         setCurrentMarket: (market: Market) => dispatch(setCurrentMarket(market)),
         depthFetch: (market: Market) => dispatch(depthFetch(market)),
     });

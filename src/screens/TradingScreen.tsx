@@ -17,8 +17,7 @@ import {
   selectUserInfo,
   User,
 } from '../modules';
-import { Market, selectCurrentMarket } from '../modules/markets';
-import { depthFetch } from '../modules/orderBook';
+import { Market, marketsFetch, selectMarkets } from '../modules/markets';
 import { selectWallets, Wallet, walletsFetch } from '../modules/wallets';
 
 const breakpoints = {
@@ -207,27 +206,27 @@ const handleLayoutChange = () => {
 };
 // tslint:disable
 interface ReduxProps {
-    currentMarket: Market,
+    markets: Market[]
     wallets: Wallet [];
     user: User;
 }
 
 interface DispatchProps {
+    marketsFetch: typeof marketsFetch
     accountWallets: typeof walletsFetch;
-    depthFetch: typeof depthFetch;
 }
 
 type Props = DispatchProps & ReduxProps;
 
 class Trading extends React.Component<Props> {
     public async componentDidMount() {
-        const { wallets } = this.props;
+        const { wallets, markets } = this.props;
 
+        if (markets.length < 1) {
+            this.props.marketsFetch();
+        }
         if (!wallets || wallets.length === 0) {
             this.props.accountWallets();
-        }
-        if (this.props.currentMarket) {
-            this.props.depthFetch(this.props.currentMarket);
         }
     }
 
@@ -254,14 +253,14 @@ class Trading extends React.Component<Props> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    markets: selectMarkets(state),
     wallets: selectWallets(state),
     user: selectUserInfo(state),
-    currentMarket: selectCurrentMarket(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    marketsFetch: () => dispatch(marketsFetch()),
     accountWallets: () => dispatch(walletsFetch()),
-    depthFetch: (market) => dispatch(depthFetch(market)),
 });
 
 const TradingScreen = connect(mapStateToProps, mapDispatchToProps)(Trading);

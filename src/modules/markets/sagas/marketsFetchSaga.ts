@@ -1,6 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../api';
+import { DEPTH_FETCH } from '../../orderBook/constants';
 import {
     marketsData,
     marketsError,
@@ -8,6 +9,7 @@ import {
     marketsTickersError,
     MarketsTickersFetch,
 } from '../actions';
+import { SET_CURRENT_MARKET } from '../constants';
 
 const marketsRequestOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -21,6 +23,8 @@ export function* marketsFetchSaga() {
     try {
         const markets = yield call(API.get(marketsRequestOptions), '/public/markets');
         yield put(marketsData(markets));
+        yield put({ type: SET_CURRENT_MARKET, payload: markets[0] });
+        yield put({ type: DEPTH_FETCH, payload: markets[0] });
     } catch (error) {
         yield put(marketsError(error));
     }

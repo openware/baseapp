@@ -18,12 +18,12 @@ export interface MarketsState extends CommonState {
 }
 
 const defaultMarket: Market = {
-    id: 'xrpbtc',
-    name: 'XRP/BTC',
+    id: '',
+    name: '',
 };
 
 const initialState: MarketsState = {
-    list: [defaultMarket],
+    list: [],
     currentMarket: defaultMarket,
     tickers: {},
 };
