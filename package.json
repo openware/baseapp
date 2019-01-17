@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@openware/components": "^0.1.3",
+    "@openware/cryptofont": "^0.1.6",
     "axios": "^0.18.0",
     "bitcoincashjs": "0.1.10",
     "country-list": "^1.1.0",

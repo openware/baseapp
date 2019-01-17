@@ -7,7 +7,7 @@
 
 :root {
   /* typography */
-  --font-family: Averta, 'Roboto', 'Helvetica', sans-serif;
+  --font-family: Roboto, Helvetica, sans-serif;
   --font-weight: normal;
 
 
@@ -55,6 +55,7 @@
   --gap: 0.5em;
   --big-gap: 60px;
   --active-tab-color: #3C78E0;
+  --border-radius: 5px;
 
   /* --font-size: 12px !important;
   --font-size-smaller: calc(var(--font-size) * 0.9);
@@ -378,4 +379,42 @@ input:-webkit-autofill {
 ::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar);
   border-radius: var(--gap);
+}
+
+.cr-tab-panel {
+  &__navigation-container {
+    background: var(--profile-activity-header);
+    border-bottom: 1px solid var(--base-new);
+    border-top-left-radius: var(--gap);
+    border-top-right-radius: var(--gap);
+
+    &-navigation {
+      box-shadow: none;
+    }
+  }
+
+  .cr-tab {
+    color: var(--base-new);
+    font-size: 1rem;
+    text-transform: none;
+    border: 0;
+    box-shadow: none;
+    cursor: pointer;
+    padding-top: 14px;
+    padding-bottom: calc(var(--border-radius) * 2);
+    transition: 0.2s;
+
+    &__pointer {
+      background: none;
+      height: 1px;
+    }
+
+    &__active {
+      color: var(--bright-1);
+
+      .cr-tab__pointer {
+        background: var(--color-blue);
+      }
+    }
+  }
 }

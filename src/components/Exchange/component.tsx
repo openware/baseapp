@@ -1,15 +1,14 @@
 import {
     Button,
-    FilterInput,
+    CryptoIcon,
+    Dropdown,
     InputBlock,
     Modal,
     SummaryField,
     WalletItemProps,
-    WalletTradeItem,
 } from '@openware/components';
 import * as React from 'react';
 import {connect, MapDispatchToProps} from 'react-redux';
-import {handleFilter} from '../../helpers';
 import {
     marketsFetch,
     marketsTickersFetch,
@@ -28,8 +27,6 @@ import {
     selectOrderExecuteError,
  } from '../../modules/orders';
 import { CommonError, RangerEvent } from '../../modules/types';
-
-import close = require('./close.svg');
 
 interface ReduxProps {
     fees: MarketFees[];
@@ -136,11 +133,11 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
             amountFrom,
             amountTo,
             currentTickerValue,
-            showFrom,
             showSubmit,
-            showTo,
             selectedWalletFrom,
             selectedWalletTo,
+            walletsFrom,
+            walletsTo,
         } = this.state;
 
         const {type} = this.props;
@@ -149,18 +146,20 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
         const toBalance = this.formatBalance(selectedWalletTo);
         const fromBalance = this.formatBalance(selectedWalletFrom);
 
-        const rateMessage = (selectedWalletFrom && selectedWalletTo) ?
+        const canShowMessages = selectedWalletFrom && selectedWalletTo;
+
+        const rateMessage = canShowMessages ?
             `1 ${fromCurrency} = ${currentTickerValue} ${toCurrency}` :
             'Loading...';
-        const feeMessage = (selectedWalletFrom && selectedWalletTo) ? this.getFeeMessage() : 'Loading...';
-        const remainingMessage = (selectedWalletFrom && selectedWalletTo) ?
-            `
+        const feeMessage = canShowMessages ? this.getFeeMessage() : 'Loading...';
+        const remainingMessage = canShowMessages
+            // tslint:disable
+            ? `
+                ${fromBalance} ${fromCurrency}
                 ${toBalance} ${toCurrency}
-                 and ${fromBalance} ${fromCurrency}
-            ` :
-            'Loading...';
-        const showModalSelectFrom = e => this.showModal(e, 'showFrom');
-        const showModalSelectTo = e => this.showModal(e, 'showTo');
+            `
+            : 'Loading...';
+
         const submitRequestFunc = e => this.showModal(e, 'showSubmit');
         const emptyFunc = () => {
             return;
@@ -179,18 +178,12 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
                                 placeholder="0"
                             />
                         </div>
-                        <div className="cr-wallet-trades__item-trade" onClick={showModalSelectFrom}>
-                            <WalletTradeItem
-                                currency={selectedWalletFrom ? selectedWalletFrom.currency : 'Loading'}
-                                balance={selectedWalletFrom ? selectedWalletFrom.balance : 0}
+                        <div className="cr-wallet-trades__item-trade">
+                            <Dropdown
+                                list={this.renderDropdownWalletList(walletsFrom)}
+                                onSelect={this.selectWalletFrom}
                             />
                         </div>
-                        <Modal
-                            show={showFrom}
-                            header={this.renderHeaderModal('from')}
-                            content={this.renderBodyModal('from')}
-                            footer={this.renderFooterModal('from')}
-                        />
                     </div>
                     <div className="cr-wallet-trades__item-exchange">
                         <div className="cr-wallet-trades__item-input">
@@ -202,18 +195,12 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
                                 placeholder=""
                             />
                         </div>
-                        <div className="cr-wallet-trades__item-trade" onClick={showModalSelectTo}>
-                            <WalletTradeItem
-                                currency={selectedWalletTo ? selectedWalletTo.currency : 'Loading'}
-                                balance={selectedWalletTo ? selectedWalletTo.balance : 0}
+                        <div className="cr-wallet-trades__item-trade">
+                            <Dropdown
+                                list={this.renderDropdownWalletList(walletsTo)}
+                                onSelect={this.selectWalletTo}
                             />
                         </div>
-                        <Modal
-                            show={showTo}
-                            header={this.renderHeaderModal('to')}
-                            content={this.renderBodyModal('to')}
-                            footer={this.renderFooterModal('to')}
-                        />
                     </div>
                 </div>
                 <div className="cr-wallet-trades__summary">
@@ -230,9 +217,6 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
                             content={feeMessage}
                             borderItem="empty-circle"
                         />
-                    </div>
-                    <div className="cr-wallet-trades__divider-2"/>
-                    <div className="cr-wallet-trades__summary-block">
                         <SummaryField
                             className="cr-wallet-trades__summary-block-field"
                             message="Remaining Balance"
@@ -300,91 +284,17 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
                 walletsTo: walletsItems as WalletItemProps[],
             });
 
+            const defaultTicker = { last: 0 };
+
             if (walletsItems.length) {
                 const currentMarket = `${selectedWalletFrom!.currency}${walletsItems[0].currency}`.toLowerCase();
                 this.setState({
-                    currentTickerValue: marketTickers[currentMarket].last,
+                    currentTickerValue: (marketTickers[currentMarket] || defaultTicker).last,
                     amountTo: 0,
                 });
             }
         }
     }
-
-    private renderWalletsModalFrom = (props: WalletItemProps, i: number) => (
-        <div
-            key={i}
-            className="cr-wallet-modal-item"
-            onClick={this.selectWalletFrom.bind(this, i)}
-        >
-            <WalletTradeItem currency={props.currency} balance={props.balance}/>
-        </div>
-    );
-
-    private renderWalletsModalTo = (props: WalletItemProps, i: number) => (
-        <div
-            key={i}
-            className="cr-wallet-modal-item"
-            onClick={this.selectWalletTo.bind(this, i)}
-        >
-            <WalletTradeItem currency={props.currency} balance={props.balance}/>
-        </div>
-    );
-
-    private renderHeaderModal = (value: string) => {
-        const message = value === 'from' ? 'Choose currency to buy' : 'Choose currency to spend';
-        return (
-            <div className="pg-header-modal">
-                <div className="pg-header-modal__title">{message}</div>
-                <div className="pg-header-modal__close"><img onClick={this.hideModal} src={close}/></div>
-            </div>
-        );
-    };
-
-    private renderBodyModal = (value: string) => {
-        const {
-            filteredWallets,
-            walletsFrom,
-            walletsTo,
-        } = this.state;
-
-        const wallets = value === 'from' ? walletsFrom : walletsTo;
-
-        if (filteredWallets && filteredWallets.length === 0) {
-            return (
-                <div className="pg-exchange-modal">
-                    <span className="alert">No wallets were found</span>
-                </div>
-            );
-        }
-
-        if (value === 'from') {
-            return (
-                <div className="pg-exchange-modal">
-                    {filteredWallets ? filteredWallets.map(this.renderWalletsModalFrom) : wallets.map(this.renderWalletsModalFrom)}
-                </div>
-            );
-        }
-
-        return (
-            <div className="pg-exchange-modal">
-                {filteredWallets ? filteredWallets.map(this.renderWalletsModalTo) : wallets.map(this.renderWalletsModalTo)}
-            </div>
-        );
-    };
-
-    private renderFooterModal = (value: string) => {
-        const {walletsFrom, walletsTo} = this.state;
-        const data = value === 'from' ? walletsFrom : walletsTo;
-        return (
-            <div className="pg-footer-modal">
-                <FilterInput
-                    filter={handleFilter}
-                    onFilter={this.searchCallback}
-                    data={data}
-                />
-            </div>
-        );
-    };
 
     private renderHeaderModalSubmit = () => {
         return (
@@ -418,6 +328,28 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
             </div>
         );
     };
+
+    private renderDropdownWalletList = (wallets: WalletItemProps[]) => {
+        return wallets.map(this.renderDropdownWalletItem);
+    }
+
+    private renderDropdownWalletItem = (wallet: WalletItemProps, index: number) => {
+        const icon = `${wallet.currency.toUpperCase()}-alt`;
+        return (
+            <span
+                className="pg-exchange-dropdown-list-item"
+                key={`${wallet.currency}${index}`}
+            >
+                <span>
+                    <CryptoIcon code={icon} />
+                    <span className="pg-exchange-dropdown-list-item__currency">
+                        {wallet.currency}
+                    </span>
+                </span>
+                <span className="pg-exchange-dropdown-list-item__balance">{wallet.balance}</span>
+            </span>
+        );
+    }
 
     private confirmRequest = () => {
         const {
@@ -470,7 +402,7 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
             `${selectedWalletFrom.currency}${selectedWalletTo.currency}`.toLowerCase()
             : null;
         if (currentMarket) {
-            const foundFee = fees.find((fee: MarketFees) => !!fee[currentMarket]) || {};
+            const foundFee = fees.find((fee: MarketFees) => !!fee[currentMarket]);
             return foundFee && fees.length > 0 ? foundFee[currentMarket] : emptyFees;
         }
         return emptyFees;
@@ -489,7 +421,7 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
             : balance.toFixed(8);
     }
 
-    private selectWalletFrom = (i: number): void => {
+    private selectWalletFrom = (i: number) => {
         const {walletsFrom} = this.state;
         this.setState({
             selectedWalletFrom: walletsFrom[i],
@@ -527,13 +459,6 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
         this.setState({
             amountFrom: parseFloat(text) || 0,
             amountTo: parseFloat(text) ? parseFloat(text) * this.state.currentTickerValue : 0,
-        });
-    };
-
-    // tslint:disable-next-line: no-any
-    private searchCallback = (value: any) => {
-        this.setState({
-            filteredWallets: value,
         });
     };
 }
