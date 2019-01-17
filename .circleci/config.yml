@@ -36,7 +36,7 @@ jobs:
       - run: git remote add origin https://gfedorenko:$GITHUB_TOKEN@github.com/openware/cryptobase.git
       - run: git config --global user.email "gfedorenko@heliostech.fr"
       - run: git config --global user.name "Galya Fedorenko"
-      - run: lerna version patch --yes -m "NOJIRA Release new version and publish"
+      - run: yarn version patch --yes -m "NOJIRA Release new version and publish"
       - run: git push origin HEAD:develop
 
 workflows:
