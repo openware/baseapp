@@ -1,0 +1,224 @@
+.pg-order {
+  text-align: left;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+  }
+
+  @media (min-width: 640px) and (max-width: 992px) {
+    flex: 1;
+    margin-left: var(--gap);
+  }
+
+  &__error {
+    display: block;
+    margin: calc(var(--gap) * 2);
+    text-align: center;
+    color: var(--order-error-color);
+  }
+
+  .cr-loader {
+    filter: brightness(0.1);
+  }
+
+  .cr-input, .cr-input__number, .cr-order-input__input {
+    width: 60% !important;
+  }
+
+  .cr-order {
+    padding: calc(var(--gap) * 2);
+    &-item {
+      &__content {
+        width: 64%;
+      }
+    }
+
+    .cr-dropdown {
+      &__input {
+        background-color: inherit;
+        border-radius: 3px;
+        &--open {
+          border-radius: 3px 3px 0 0;
+        }
+        &-label {
+          background-color: inherit;
+          font-size: 1em;
+          font-weight: 200;
+          color: var(--table-header-color);
+          line-height: 28px;
+        }
+      }
+
+      &__list {
+        border-radius: 0 0 3px 3px;
+        &-item {
+          &:hover {
+            background: var(--markets-selected-color);
+          }
+          &-label {
+            background: transparent;
+            color: var(--table-header-color);
+            font-size: 1em;
+          }
+        }
+      }
+    }
+    .cr-tab-panel {
+      background-color: inherit;
+
+      .cr-tab {
+        background-color: inherit;
+        cursor: pointer;
+        line-height: calc(var(--gap) * 4);
+        width: 100%;
+
+        &__active {
+          color: var(--markets-filter-active-color);
+        }
+
+        &__pointer {
+          position: absolute;
+          height: 1px;
+          margin-bottom: 1px;
+        }
+      }
+
+      .cr-tab-content {
+        padding: 2px;
+
+        &:last-child {
+          .cr-button {
+            font-weight: bolder;
+            color: var(--base-bright) !important;
+            background: var(--order-button-sell);
+          }
+        }
+      }
+
+      &__navigation-container {
+        background-color: inherit;
+        display: inline-block;
+        margin-bottom: calc(var(--gap) * 2);
+        width: 100%;
+
+        &-navigation {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .cr-order-item__label {
+      font-size: 1em;
+      font-weight: 200;
+      line-height: 2.3em;
+      background-color: inherit;
+    }
+
+    .cr-order-item__content {
+      background-color: inherit;
+
+      .cr-order-input {
+        display: flex;
+        align-items: flex-end;
+        border: 1px solid var(--base-3);
+        border-radius: 3px;
+
+        &__crypto-icon {
+          border: none;
+          border-right: 1px solid var(--base-3);
+          /* border-color: #efeff0; */
+          width: auto;
+
+          [class^=cr-crypto-font] {
+            color: var(--table-header-color);
+            font-size: 1em;
+            font-weight: normal;
+
+            &::before {
+              display: none;
+            }
+          }
+        }
+
+        &__input {
+          border: none;
+          background-color: inherit;
+          padding-top: 0;
+          .cr-input {
+            input {
+              font-size: 1em;
+            }
+          }
+        }
+      }
+    }
+
+    .cr-order-item__total {
+      text-align: right;
+      padding-right: 15px;
+      background-color: inherit;
+      margin: calc(var(--gap) * 2) 0;
+
+      .cr-order-item__content {
+        font-size: 14px;
+        font-weight: 200;
+        line-height: 28px;
+        background-color: inherit;
+        border: none;
+      }
+      .cr-crypto-icon {
+        border-top: none;
+        border-right: none;
+        border-left: none;
+      }
+    }
+  }
+
+  .cr-button {
+    background: var(--color-green);
+    color: #fff !important;
+    padding: calc(var(--gap) * 1.3);
+    font-size: 1.3em;
+    font-weight: normal;
+    &:hover &:active  {
+      background: var(--color-green);
+    }
+  }
+
+  @media (min-width: 601px) {
+    .cr-input {
+      input {
+        max-width: 100%;
+      }
+    }
+  }
+  @media (max-width: 600px) {
+    .cr-input {
+      input {
+        max-width: 100px;
+      }
+    }
+  }
+  @media (max-width: 500px) {
+    .cr-input {
+      input {
+        max-width: 70px;
+      }
+    }
+  }
+  @media (max-width: 400px) {
+    .cr-input {
+      input {
+        max-width: 50px;
+      }
+    }
+  }
+  @media (max-width: 300px) {
+    .cr-input {
+      input {
+        max-width: 30px;
+      }
+    }
+  }
+}

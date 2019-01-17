@@ -1,0 +1,70 @@
+.pg-profile-two-factor-auth {
+  margin-top: calc(var(--gap) * 4);
+
+  &__header {
+    text-align: center;
+  }
+
+  &__title {
+    color: var(--active-color);
+    margin-bottom: var(--gap);
+    margin-top: 0;
+  }
+
+  &__form {
+    background: var(--base-bright);
+    margin: 0 auto;
+    max-width: calc(var(--gap) * 60);
+    padding: calc(var(--gap) * 8) calc(var(--gap) * 8);
+  }
+
+  &__form-group {
+    margin: calc(var(--gap) * 2) 0;
+
+    .cr-input {
+      border-bottom: 1px solid var(--sign-in-input-border-color);
+      width: 100%;
+
+      input {
+        color: var(--dark-color);
+        font-size: 2rem;
+        height: calc(var(--gap) * 4);
+        text-align: left;
+        width: 100%;
+      }
+    }
+  }
+
+  &-form-group {
+    &__label {
+      color: var(--text-muted);
+    }
+  }
+
+  &__error {
+    color: var(--order-error-color);
+    font-size: 1.16rem;
+  }
+
+  &__info {
+    color: var(--dark-color);
+    font-size: 1.16rem;
+  }
+
+  .cr-button {
+    margin: calc(var(--gap) * 2) 0;
+    height: 50px;
+    background: var(--active-color);
+    color: var(--base-bright);
+    font-size: calc(var(--gap) * 2.66);
+  }
+
+  .cr-copyable-text-field {
+    border-color: var(--sign-in-input-border-color);
+
+    input {
+      font-size: 1.2rem;
+      color: var(--dark-color);
+    }
+  }
+}

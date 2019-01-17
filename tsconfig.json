@@ -1,0 +1,25 @@
+{
+  "extends": "./node_modules/@openware/coding-standards/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "/",
+    "jsx": "react",
+    "rootDir": "src",
+    "target": "es5",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "types": [
+      "node",
+      "jest"
+    ]
+  },
+  "include": [
+    "./src/assets",
+    "./src",
+    "./images.d.ts",
+    "./charting_library.min.d.ts"
+  ]
+}

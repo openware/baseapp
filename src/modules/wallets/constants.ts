@@ -1,0 +1,11 @@
+export const WALLETS_FETCH = 'wallets/WALLETS_FETCH';
+export const WALLETS_DATA = 'wallets/WALLETS_DATA';
+export const WALLETS_ERROR = 'wallets/WALLETS_ERROR';
+
+export const WALLETS_ADDRESS_FETCH = 'wallets/WALLETS_ADDRESS_FETCH';
+export const WALLETS_ADDRESS_DATA = 'wallets/WALLETS_ADDRESS_DATA';
+export const WALLETS_ADDRESS_ERROR = 'wallets/WALLETS_ADDRESS_ERROR';
+
+export const WALLETS_WITHDRAW_FETCH = 'wallets/WALLETS_WITHDRAW_FETCH';
+export const WALLETS_WITHDRAW_DATA = 'wallets/WALLETS_WITHDRAW_DATA';
+export const WALLETS_WITHDRAW_ERROR = 'wallets/WALLETS_WITHDRAW_ERROR';

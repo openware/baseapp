@@ -1,0 +1,28 @@
+.pg-footer {
+  background: var(--transparent);
+  text-align: center;
+  padding: var(--gap) 0 calc(var(--gap) * 3.16) 0;
+  height: calc(var(--gap) * 3);
+  margin-top: calc(var(--gap) * 5);
+
+  &__link {
+    background: var(--transparent);
+    color: var(--table-header-color);
+    text-decoration: none;
+    padding: 0 calc(var(--gap) * 2);
+    font-size: calc(var(--gap) * 2);
+    cursor: default;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &--highlighted {
+      color: var(--history-action-sell);
+
+      &:visited {
+        color: var(--history-action-sell);
+      }
+    }
+  }
+}

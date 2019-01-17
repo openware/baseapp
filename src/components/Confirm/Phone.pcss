@@ -1,0 +1,71 @@
+.pg-confirm__content-phone {
+  color: var(--base-10);
+  font-size: calc(var(--gap) * 2.33);
+  margin: 0 auto;
+  margin-top: calc(var(--big-gap) * 1.5);
+  width: 65%;
+
+  &-row {
+    display: inline-block;
+    margin-top: calc(var(--gap) * 5);
+    margin-bottom: calc(var(--gap) * 5);
+
+    &-text {
+      display: inline-block;
+      font-size: calc(var(--gap) * 2.33);
+      padding-right: calc(var(--gap) * 4);
+      text-align: right;
+      width: calc(var(--big-gap) * 3.33);
+    }
+
+    &-content {
+      border-bottom: 1px solid var(--confirm-border-color);
+      display: inline-block;
+      width: calc(var(--big-gap) * 5);
+
+      &-send {
+        cursor: pointer;
+      }
+
+      input, button {
+        border: none;
+        font-size: calc(var(--gap) * 2.33);
+        outline: none;
+      }
+
+      input {
+        color: var(--dark-color);
+        padding-bottom: calc(var(--gap) * 0.33);
+
+        &::placeholder {
+          color: var(--text-muted);
+        }
+      }
+
+      button {
+        color: var(--active-color);
+      }
+    }
+
+    &-content-2 {
+      border-bottom: 1px solid var(--confirm-border-color);
+      display: inline-block;
+      width: calc(var(--big-gap) * 5);
+
+      input {
+        border: none;
+        font-size: calc(var(--gap) * 2.33);
+        outline: none;
+      }
+
+      input {
+        color: var(--dark-color);
+        padding-bottom: calc(var(--gap) * 0.33);
+
+        &::placeholder {
+          color: var(--text-muted);
+        }
+      }
+    }
+  }
+}

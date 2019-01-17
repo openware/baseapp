@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Playground test",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "/usr/bin/node",
+            "runtimeArgs": [
+                "--inspect-brk",
+                "/usr/bin/yarn",
+                "test"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "port": 9229
+        }
+    ]
+}

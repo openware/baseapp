@@ -1,0 +1,103 @@
+header {
+  padding: 12px 0;
+}
+
+.pg-header {
+  background-color: var(--background-dark);
+  margin: 0 auto;
+
+  .pg-logo__img {
+    height: calc(var(--gap) * 4.666);
+  }
+
+  &__logo {
+    img {
+      vertical-align: middle;
+      border-style: none;
+    }
+  }
+
+  &__navbar {
+    background: var(--background-dark);
+    padding-top: 3px;
+    margin-left: 30px;
+    display: block;
+    width: 100%;
+  }
+
+  &__content {
+    align-items: center;
+    display: flex;
+  }
+
+  &__toggler {
+    display: none;
+    position: absolute;
+    top: 25px;
+    z-index: 11;
+    right: 25px;
+  }
+
+  .pg-container {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pg-header {
+    position: relative;
+    &--active {
+      position: static;
+      .pg-header__navbar {
+        display: block;
+        position: absolute;
+        right: 0;
+        background: var(--background-dark);
+      }
+    }
+    &__navbar {
+      height: 100vh;
+      bottom: 0;
+      z-index: 666;
+      max-width: calc(var(--gap) * 33);
+      padding: 0 var(--gap);
+      position: absolute;
+      width: 100%;
+      display: none;
+      /* right: calc(var(--gap) * -33); */
+      transition: all 0.2s linear;
+    }
+    &__toggler {
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: block;
+      &-item {
+        background: var(--text-light-grey);
+        display: block;
+        width: 30px;
+        height: 3px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        transition: all 0.2s linear;
+      }
+      &--active {
+        z-index: 667;
+        .pg-header__toggler-item {
+          &:nth-child(1),
+          &:nth-child(3){
+            transform: translate(0px, 13px) rotate(-45deg) scalex(1.1);
+            margin: 0;
+          }
+          &:nth-child(2){
+            height: 0;
+            margin: 0;
+          }
+          &:nth-child(3){
+            transform: translate(0px, 9px) rotate(45deg) scalex(1.1);
+          }
+        }
+      }
+    }
+  }
+}
