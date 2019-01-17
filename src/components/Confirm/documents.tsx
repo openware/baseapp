@@ -62,7 +62,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                     <div className="pg-confirm__content-documents-col">
                         <div className="pg-confirm__content-documents-col-row">
                             <div className="pg-confirm__content-documents-col-row-text">
-                                Documents
+                                Select ID Type
                             </div>
                             <div className="pg-confirm__content-documents-col-row-content-3">
                                 <Dropdown
@@ -90,6 +90,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                     <div className="pg-confirm__content-documents-col">
                         <div className="pg-confirm__content-documents-col-row">
                             <div className="pg-confirm__content-documents-col-row-content-2">
+                                Upload your ID Photo
                                 <div className="pg-confirm__content-documents-col-row-content-2-documents">
                                     <form
                                         className="box"

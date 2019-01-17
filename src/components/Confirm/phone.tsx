@@ -69,10 +69,10 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         const showError = verifyPhoneError && !verifyPhoneSuccess;
         return (
             <div className="pg-confirm__content-phone">
-                <h2 className="pg-confirm__content-phone-head">Lets Verify your phone</h2>
+                <h2 className="pg-confirm__content-phone-head">Let`s verify your phone</h2>
                 <div className="pg-confirm__content-phone-col">
                     <p className="pg-confirm__content-phone-col-text">
-                        1. Enter your Phone number
+                        1. Enter your phone number
                     </p>
                     <div className="pg-confirm__content-phone-col-content">
                         <input
@@ -93,7 +93,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                 </div>
                 <div className="pg-confirm__content-phone-col">
                     <p className="pg-confirm__content-phone-col-text">
-                        2. Enter Code that you received
+                        2. Enter code that you received
                     </p>
                     <div className="pg-confirm__content-phone-col-content">
                         <input

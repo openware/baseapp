@@ -5,7 +5,7 @@
 
   &-forms {
     overflow-y: scroll;
-    height: 320px;
+    height: calc(var(--big-gap) * 5.33);
     display: flex;
   }
 
@@ -20,7 +20,9 @@
 
     &-row {
       display: inline-block;
-      margin-top: calc(var(--gap) * 4);
+      margin-top: calc(var(--gap) * 3.2);
+      margin-bottom: calc(var(--gap) * 1);
+
 
       &-is-active {
         margin-top: 0 !important;
@@ -94,6 +96,12 @@
             margin-bottom: 5px;
           }
 
+          &__input {
+            &-label, &-icon {
+              line-height: calc(var(--gap) * 6.4);
+            }
+          }
+
           &__input--open {
             border-radius: 4px 4px 0 0;
           }
@@ -104,6 +112,7 @@
             max-height: calc(var(--big-gap) * 3.5);
             overflow-y: auto;
             margin-top: -5px;
+            width: 99%;
             &-item {
               color: var(--kyc-grey);
               &:hover {

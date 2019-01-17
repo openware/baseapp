@@ -14,10 +14,10 @@
     background-color: var(--base-bright);
     display: block;
     margin: 0 auto;
-    max-width: 560px;
+    max-width: calc(var(--big-gap) * 9.33);
     width: 100%;
-    max-height: 480px;
-    height: 100%;
+    max-height: calc(var(--big-gap) * 10);
+    min-height: cacl(var(--big-gap) * 8);
   }
 
   &__success,
@@ -161,8 +161,8 @@
         font-weight: normal;
         background: var(--kyc-button);
         color: var(--color-white);
-        font-size: 18px;
-        height: 40px;
+        font-size: calc(var(--gap) * 2.66);
+        height: calc(var(--gap) * 5);
         width: 100%;
         margin: 0;
       }
