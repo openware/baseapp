@@ -3,7 +3,7 @@ export const PG_TITLE_PREFIX = 'Cryptobase';
 
 export const pgRoutes = (isLoggedIn: boolean): string[][] => {
     const routes = [
-        ['Advanced Trading', '/advance'],
+        ['Trade', '/advance'],
         ['Wallets', '/wallets'],
         ['Buy/Sell', '/exchange'],
         ['Open orders', '/orders'],
@@ -12,7 +12,7 @@ export const pgRoutes = (isLoggedIn: boolean): string[][] => {
     ];
     const routesUnloggedIn = [
         ['Sign In', '/signin'],
-        ['Advanced Trading', '/advance'],
+        ['Trade', '/advance'],
     ];
     return isLoggedIn ? routes : routesUnloggedIn;
 };

@@ -42,7 +42,7 @@ type NavbarProps = OwnProps & ReduxProps & RouteProps & DispatchProps;
 
 const shouldUnderline = (
     address: string, url: string, index: number): boolean =>
-    (url === '/advance' && address === '/trading') || address === url || (address === '/' && index === 0);
+    (url === '/trade' && address === '/trading') || address === url || (address === '/' && index === 0);
 
 const navItem = (
     address: string, onLinkChange?: () => void,
