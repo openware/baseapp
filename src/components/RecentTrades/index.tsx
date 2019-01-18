@@ -48,7 +48,7 @@ class RecentTradesComponent extends React.Component<Props> {
         };
 
         return trades.length ?
-            trades.map(renderRow) :
+            trades.map(renderRow).slice(0,100) :
             [['There is no data to show...']];
     }
 }
