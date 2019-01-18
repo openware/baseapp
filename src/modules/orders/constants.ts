@@ -2,6 +2,8 @@ export const ORDERS_FETCH = 'orders/ORDERS_FETCH';
 export const ORDERS_DATA = 'orders/ORDERS_DATA';
 export const ORDERS_ERROR = 'orders/ORDERS_ERROR';
 
+export const ORDERS_CANCEL_ALL_FETCH = 'open_orders/ORDERS_CANCEL_ALL_FETCH';
+
 export const ORDER_CANCEL_FETCH = 'orders/CANCEL_FETCH';
 export const ORDER_CANCEL_DATA = 'orders/CANCEL_DATA';
 export const ORDER_CANCEL_ERROR = 'orders/CANCEL_ERROR';
