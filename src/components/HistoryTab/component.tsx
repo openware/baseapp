@@ -2,7 +2,13 @@ import { History } from '@openware/components';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeDate, setStatusColor, sliceString, uppercase } from '../../helpers';
+import {
+    localeDate,
+    setDepositStatusColor,
+    setwithdrawStatusColor,
+    sliceString,
+    uppercase,
+} from '../../helpers';
 import {
     Deposit,
     RootState,
@@ -107,7 +113,7 @@ class HistoryComponent extends React.Component<Props> {
                     localeDate(created_at),
                     currency.toUpperCase(),
                     amount,
-                    <span style={{ color: setStatusColor(state) }} key={txid}>{state}</span>,
+                    <span style={{ color: setDepositStatusColor(state) }} key={txid}>{state}</span>,
                 ];
             }
             case 'withdraw': {
@@ -117,10 +123,10 @@ class HistoryComponent extends React.Component<Props> {
                     id,
                     localeDate(created_at),
                     uppercase(currency),
-                    <a href={blockchainLink} target="_blank" rel="noopener noreferrer" key={txid || rid}>{sliceString(txid || rid, 7)}</a>,
+                    <a href={blockchainLink} target="_blank" rel="noopener noreferrer" key={txid || rid}>{txid || rid}</a>,
                     amount,
                     fee,
-                    state,
+                    <span style={{ color: setwithdrawStatusColor(state) }} key={txid || rid}>{state}</span>,
                 ];
             }
             case 'trade': {
