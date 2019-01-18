@@ -5,7 +5,8 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import {
     localeDate,
     setDepositStatusColor,
-    setwithdrawStatusColor,
+    setTradesType,
+    setWithdrawStatusColor,
     sliceString,
     uppercase,
 } from '../../helpers';
@@ -102,8 +103,6 @@ class HistoryComponent extends React.Component<Props> {
     }
 
     private renderTableRow = (type, item) => {
-        //tslint:disable-next-line
-        console.log(item);
         switch (type) {
             case 'deposit': {
                 const { txid, created_at, currency, amount, state } = item;
@@ -126,7 +125,7 @@ class HistoryComponent extends React.Component<Props> {
                     <a href={blockchainLink} target="_blank" rel="noopener noreferrer" key={txid || rid}>{txid || rid}</a>,
                     amount,
                     fee,
-                    <span style={{ color: setwithdrawStatusColor(state) }} key={txid || rid}>{state}</span>,
+                    <span style={{ color: setWithdrawStatusColor(state) }} key={txid || rid}>{state}</span>,
                 ];
             }
             case 'trade': {
@@ -137,7 +136,7 @@ class HistoryComponent extends React.Component<Props> {
                 return [
                     id,
                     localeDate(created_at),
-                    side,
+                    <span style={{ color: setTradesType(side).color }} key={id}>{setTradesType(side).text}</span>,
                     marketName,
                     price,
                     funds,

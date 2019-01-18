@@ -10,7 +10,7 @@ export const setDepositStatusColor = (status: string): string => {
     return colorMapping[status];
 };
 
-export const setwithdrawStatusColor = (status: string): string => {
+export const setWithdrawStatusColor = (status: string): string => {
     const colorMapping = {
         prepared: '',
         submitted: '',
@@ -25,4 +25,19 @@ export const setwithdrawStatusColor = (status: string): string => {
     };
 
     return colorMapping[status];
+};
+
+export const setTradesType = (type: string) => {
+    const colorMapping = {
+        ask: {
+            color: 'var(--color-red)',
+            text: 'Sell',
+        },
+        bid: {
+            color: 'var(--color-green)',
+            text: 'Buy',
+        },
+    };
+
+    return colorMapping[type] || { color: '', text: '' };
 };
