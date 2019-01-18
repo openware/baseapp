@@ -36,13 +36,22 @@ interface DispatchProps {
 }
 
 interface OpenOrdersState {
-    marketsLength: number;
+    orderType: boolean;
 }
 
 type Props = ReduxProps & DispatchProps;
 
 // tslint:disable
 class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState> {
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            orderType: false,
+        };
+        this.toggleByOrderType = this.toggleByOrderType.bind(this);
+    }
+
     public componentDidMount() {
         this.props.markets();
     }
@@ -78,6 +87,7 @@ class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState>
             <div>
                 {error && <p className="pg-open-orders-tab__error">{error.message}</p>}
                 <OpenOrders
+                    function={this.toggleByOrderType}
                     headers={this.renderHeaders()}
                     data={this.renderData(this.props.openOrdersData)}
                     onCancel={this.handleCancel}
@@ -103,11 +113,27 @@ class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState>
             : [['There is no data to show...', '', '', '', '', '', '', '', '']];
     };
 
+    private toggleByOrderType() {
+        const currentOrderType = this.state.orderType;
+        this.setState({
+            orderType: !currentOrderType
+        });
+        this.openOrders();
+    }
+
     private sortDataByDateTime(data: Order[]) {
         const sortByDateTime = (a: Order, b: Order) => a.created_at < b.created_at ? 1 : -1;
+        const sortByOrderType = (a: Order, b: Order) => (this.state.orderType) ? ((a.side < b.side) ? 1 : -1) : (a.side > b.side ? 1 : -1);
+        (this.state.orderType) ? 
+            (document.getElementsByClassName('cr-table__head-row')[0].children[0].className = "cr-open-orders__order--active") : 
+            ((document.getElementsByClassName('cr-open-orders__order--active')[0]) ?
+                (document.getElementsByClassName('cr-open-orders__order--active')[0].classList.remove("cr-open-orders__order--active")) :
+                null
+        );
         const dataToSort = [...data];
 
         dataToSort.sort(sortByDateTime);
+        dataToSort.sort(sortByOrderType);
         return dataToSort;
     }
 

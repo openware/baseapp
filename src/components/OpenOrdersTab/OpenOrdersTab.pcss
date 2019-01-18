@@ -31,6 +31,7 @@
           font-size: calc(var(--gap) * 2.33) !important;
           font-weight: bolder;
           padding: calc(var(--gap) * 3.33) calc(var(--gap) * 5) calc(var(--gap) * 1.16) calc(var(--gap) * 5) !important;
+
           &:first-child {
             color: #E5EFE6;
             padding-left: calc(var(--gap) * 2) !important;
@@ -77,6 +78,15 @@
             }
           
             &::after {
+              transform: rotate(-45deg);
+            }
+          }
+        }
+
+        .cr-open-orders__order--active {
+          &:first-child {
+            &:after {
+              top: calc(var(--gap) / 1.5);
               transform: rotate(-45deg);
             }
           }
