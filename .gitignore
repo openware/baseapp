@@ -25,3 +25,4 @@ yarn-error.log*
 index.css
 
 # environment config
+public/config/
