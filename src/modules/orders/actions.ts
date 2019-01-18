@@ -4,6 +4,7 @@ import {
     FEES_DATA,
     FEES_ERROR,
     FEES_FETCH,
+    ORDERS_CANCEL_ALL_FETCH,
     ORDER_CANCEL_DATA,
     ORDER_CANCEL_ERROR,
     ORDER_CANCEL_FETCH,
@@ -39,6 +40,10 @@ export interface OrdersData {
 export interface OrdersError {
     type: typeof ORDERS_ERROR;
     payload: CommonError;
+}
+
+export interface OrdersCancelAllFetch {
+    type: typeof ORDERS_CANCEL_ALL_FETCH;
 }
 
 export interface OrderCancelFetch {
@@ -115,6 +120,7 @@ export interface UserOrdersError {
 export type OrdersAction = OrdersFetch
     | OrdersData
     | OrdersError
+    | OrdersCancelAllFetch
     | OrderCancelFetch
     | OrderCancelData
     | OrderCancelError
@@ -141,6 +147,10 @@ export const ordersData = (payload: OrdersData['payload']): OrdersData => ({
 export const ordersError = (payload: OrdersError['payload']): OrdersError => ({
     type: ORDERS_ERROR,
     payload,
+});
+
+export const ordersCancelAllFetch = (): OrdersCancelAllFetch => ({
+    type: ORDERS_CANCEL_ALL_FETCH,
 });
 
 export const orderCancelFetch =

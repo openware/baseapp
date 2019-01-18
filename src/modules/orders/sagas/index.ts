@@ -2,12 +2,14 @@
 import { takeLatest } from 'redux-saga/effects';
 import {
     FEES_FETCH,
+    ORDERS_CANCEL_ALL_FETCH,
     ORDER_CANCEL_FETCH,
     ORDER_EXECUTE_FETCH,
     ORDERS_FETCH,
     USER_ORDERS_FETCH,
 } from '../constants';
 import { feesFetchSaga } from './feesFetchSaga';
+import { ordersCancelAllSaga } from './ordersCancelAllSaga';
 import { ordersCancelSaga } from './ordersCancelSaga';
 import { ordersExecuteSaga } from './ordersExecuteSaga';
 import { ordersFetchSaga } from './ordersFetchSaga';
@@ -15,6 +17,7 @@ import { userOrdersFetchSaga } from './userOrdersFetchSaga';
 
 export function* rootOrdersSaga() {
     yield takeLatest(ORDERS_FETCH, ordersFetchSaga);
+    yield takeLatest(ORDERS_CANCEL_ALL_FETCH, ordersCancelAllSaga);
     yield takeLatest(ORDER_CANCEL_FETCH, ordersCancelSaga);
     yield takeLatest(ORDER_EXECUTE_FETCH, ordersExecuteSaga);
     yield takeLatest(FEES_FETCH, feesFetchSaga);

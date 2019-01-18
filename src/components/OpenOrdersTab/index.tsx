@@ -12,6 +12,7 @@ import {
 } from '../../modules/markets';
 import {
     Order,
+    ordersCancelAllFetch,
     orderCancelFetch,
     selectOrders,
     selectOrdersError,
@@ -32,6 +33,7 @@ interface ReduxProps {
 interface DispatchProps {
     markets: typeof marketsFetch;
     orderHistory: typeof userOrdersFetch;
+    orderCancelAll: typeof ordersCancelAllFetch;
     orderCancel: typeof orderCancelFetch;
 }
 
@@ -86,12 +88,14 @@ class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState>
         return (
             <div>
                 {error && <p className="pg-open-orders-tab__error">{error.message}</p>}
+                <div className="pg-open-orders-tab__cancel-all" ><span onClick={this.handleCancelAll.bind(this)}>Cancel all<span className="pg-open-orders-tab__close"/></span></div>
                 <OpenOrders
                     function={this.toggleByOrderType}
                     headers={this.renderHeaders()}
                     data={this.renderData(this.props.openOrdersData)}
                     onCancel={this.handleCancel}
                 />
+                <div className="pg-open-orders-tab__footer" />
             </div>
         );
     };
@@ -142,6 +146,10 @@ class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState>
         const orderToDelete = this.sortDataByDateTime(openOrdersData)[index];
         this.props.orderCancel({ id: orderToDelete.id.toString() });
     };
+
+    private handleCancelAll() {
+        this.props.orderCancelAll();
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -158,6 +166,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         markets: () => dispatch(marketsFetch()),
         orderHistory: payload => dispatch(userOrdersFetch(payload)),
         orderCancel: payload => dispatch(orderCancelFetch(payload)),
+        orderCancelAll: () => dispatch(ordersCancelAllFetch()),
     });
 
 export const OpenOrdersTabComponent =
