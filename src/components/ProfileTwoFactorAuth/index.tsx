@@ -16,9 +16,10 @@ class ProfileTwoFactorAuth extends React.Component<ProfileTwoFactorAuthProps, Pr
         super(props);
 
         this.state = {
-          is2faEnabled: this.props.is2faEnabled,
+          is2faEnabled: props.is2faEnabled,
         };
     }
+
     public render() {
         const { is2faEnabled } = this.state;
         return (
@@ -38,11 +39,11 @@ class ProfileTwoFactorAuth extends React.Component<ProfileTwoFactorAuthProps, Pr
         );
     }
 
-    private handleToggle2fa(): void {
+    private handleToggle2fa() {
+        this.props.navigateTo2fa(!this.state.is2faEnabled);
         this.setState(prev => ({
             is2faEnabled: !prev.is2faEnabled,
         }));
-        this.props.navigateTo2fa(this.state.is2faEnabled);
     }
 }
 
