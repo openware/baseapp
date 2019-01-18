@@ -2,9 +2,9 @@
 import { takeLatest } from 'redux-saga/effects';
 import {
     FEES_FETCH,
-    ORDERS_CANCEL_ALL_FETCH,
     ORDER_CANCEL_FETCH,
     ORDER_EXECUTE_FETCH,
+    ORDERS_CANCEL_ALL_FETCH,
     ORDERS_FETCH,
     USER_ORDERS_FETCH,
 } from '../constants';

@@ -43,10 +43,10 @@
   resolved "https://registry.yarnpkg.com/@openware/coding-standards/-/coding-standards-0.1.6.tgz#05011cb86880f34b24d7fe15427bcfb55fcfef6a"
   integrity sha512-UnVfrYcTVNGImb2l9BI3gHmBR0UAm2c42HsnC9tpRCEfV7dGm1lMPINjMD17jPo2e6L9riyYQOb8Jz3IF+U/Cg==
 
-"@openware/components@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@openware/components/-/components-0.1.6.tgz#ce3878b585d1ccf17107fb60328771905a37781e"
-  integrity sha512-IoNkfoVbUTbFXCVoX+kqfJXfBHjCyNGFNSpVO1FiNYYLsuFd/A+JR/Slu77BtsUirx1d9vDtbO0raisxYW/toA==
+"@openware/components@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@openware/components/-/components-0.1.8.tgz#27d0262994f18834bd0a58af6205258814f9168f"
+  integrity sha512-EteDdKvvxMD6UI7d/zgIoA000wNqOO5YO/hm4kTU/+3LE0a3RFsOYQ8VxXFQIENjEqVrZN6vXCR7HRmPPFLHXQ==
   dependencies:
     "@openware/cryptofont" "^0.1.4"
     react "^16.4.2"

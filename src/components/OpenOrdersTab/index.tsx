@@ -12,8 +12,8 @@ import {
 } from '../../modules/markets';
 import {
     Order,
-    ordersCancelAllFetch,
     orderCancelFetch,
+    ordersCancelAllFetch,
     selectOrders,
     selectOrdersError,
     selectOrdersLoading,
