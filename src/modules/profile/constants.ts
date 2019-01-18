@@ -21,3 +21,5 @@ export const GET_USER_ERROR = 'profile/GET_USER_ERROR';
 export const RESET_USER = 'profile/RESET_USER';
 
 export const TEST_PROFILE_STATE = 'profile/TEST_PROFILE_STATE';
+
+export const CHANGE_USER_LEVEL = 'profile/CHANGE_USER_LEVEL';

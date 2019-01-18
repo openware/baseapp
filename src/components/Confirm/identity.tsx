@@ -14,6 +14,7 @@ import {
     selectSendIdentitySuccess,
     sendIdentity,
 } from '../../modules/kyc/identity';
+import { changeUserLevel } from '../../modules/profile';
 import { CommonError } from '../../modules/types';
 import { nationalities } from './nationalities';
 
@@ -24,6 +25,7 @@ interface ReduxProps {
 
 interface DispatchProps {
     sendIdentity: typeof sendIdentity;
+    changeUserLevel: typeof changeUserLevel;
 }
 
 interface OnChangeEvent {
@@ -62,6 +64,12 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
           countryOfBirth: countries().getCodes()[0],
           nationality: nationalities[0],
         });
+    }
+
+    public componentDidUpdate(prev: Props) {
+        if (!prev.success && this.props.success) {
+            this.props.changeUserLevel({ level: 3 });
+        }
     }
 
     public render() {
@@ -235,6 +243,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         sendIdentity: payload => dispatch(sendIdentity(payload)),
+        changeUserLevel: payload => dispatch(changeUserLevel(payload)),
     });
 
 // tslint:disable-next-line

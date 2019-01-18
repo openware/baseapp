@@ -64,6 +64,24 @@ describe('Profile reducer', () => {
         expect(profileReducer(actualState, actions.userReset())).toEqual(expectedState);
     });
 
+    it('should handle CHANGE_USER_LEVEL', () => {
+        const actualState = {
+            ...initialStateProfile,
+            userData: { ...initialStateProfile.userData, user },
+        };
+        const expectedState = {
+            ...initialStateProfile,
+            userData: {
+                ...initialStateProfile.userData,
+                user: {
+                    ...user,
+                    level: 2,
+                },
+            },
+        };
+        expect(profileReducer(actualState, actions.changeUserLevel({ level: 2 }))).toEqual(expectedState);
+    });
+
     it('should handle CHANGE_PASSWORD_FETCH', () => {
         const payload = {
             old_password: '123123',

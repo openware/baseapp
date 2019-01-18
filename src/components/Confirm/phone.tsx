@@ -14,6 +14,7 @@ import {
     sendCode,
     verifyPhone,
 } from '../../modules/kyc/phone';
+import { changeUserLevel } from '../../modules/profile';
 import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
@@ -37,6 +38,7 @@ interface DispatchProps {
     resendCode: typeof resendCode;
     sendCode: typeof sendCode;
     verifyPhone: typeof verifyPhone;
+    changeUserLevel: typeof changeUserLevel;
 }
 
 type Props = ReduxProps & DispatchProps;
@@ -50,6 +52,12 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
           confirmationCode: '',
           currentAction: 'SEND CODE',
         };
+    }
+
+    public componentDidUpdate(prev: Props) {
+        if (!prev.verifyPhoneSuccess && this.props.verifyPhoneSuccess) {
+            this.props.changeUserLevel({ level: 2 });
+        }
     }
 
     public render() {
@@ -155,6 +163,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         resendCode: phone => dispatch(resendCode(phone)),
         sendCode: phone => dispatch(sendCode(phone)),
         verifyPhone: payload => dispatch(verifyPhone(payload)),
+        changeUserLevel: payload => dispatch(changeUserLevel(payload)),
     });
 
 // tslint:disable-next-line

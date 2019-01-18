@@ -35,6 +35,16 @@ describe('Profile actions', () => {
             const expectedAction = { type: 'profile/RESET_USER' };
             expect(actions.userReset()).toEqual(expectedAction);
         });
+
+        it('should change user level', () => {
+            const expectedAction = {
+                type: 'profile/CHANGE_USER_LEVEL',
+                payload: {
+                    level: 1,
+                },
+            };
+            expect(actions.changeUserLevel({ level: 1 })).toEqual(expectedAction);
+        });
     });
 
     describe('Change password actions', () => {

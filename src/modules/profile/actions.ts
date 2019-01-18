@@ -3,6 +3,7 @@ import {
     CHANGE_PASSWORD_DATA,
     CHANGE_PASSWORD_ERROR,
     CHANGE_PASSWORD_FETCH,
+    CHANGE_USER_LEVEL,
     GENERATE_2FA_QRCODE_DATA,
     GENERATE_2FA_QRCODE_ERROR,
     GENERATE_2FA_QRCODE_FETCH,
@@ -131,6 +132,13 @@ export interface TestProfileState {
     type: typeof TEST_PROFILE_STATE;
 }
 
+export interface ChangeUserLevel {
+    type: typeof CHANGE_USER_LEVEL;
+    payload: {
+        level: number;
+    };
+}
+
 export type ProfileAction =
     | ChangePasswordFetch
     | ChangePasswordData
@@ -149,7 +157,8 @@ export type ProfileAction =
     | UserInfo
     | UserError
     | UserReset
-    | TestProfileState;
+    | TestProfileState
+    | ChangeUserLevel;
 
 export const changePasswordFetch = (payload: ChangePasswordFetch['payload']): ChangePasswordFetch => ({
     type: CHANGE_PASSWORD_FETCH,
@@ -229,3 +238,9 @@ export const userError = (payload: UserError['payload']): UserError => ({
 export const userReset = (): UserReset => ({
     type: RESET_USER,
 });
+
+export const changeUserLevel =
+    (payload: ChangeUserLevel['payload']): ChangeUserLevel => ({
+        type: CHANGE_USER_LEVEL,
+        payload,
+    });
