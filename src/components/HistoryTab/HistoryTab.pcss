@@ -1,52 +1,33 @@
 .pg-history-tab {
-  width: 100%;
-  max-width: 80%;
-  background: var(--transparent);
-  margin: calc(var(--gap) * 4) auto 0;
+  align-items: flex-start !important;
+  background: var(--base-bright);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 !important;
+  margin-top: calc(var(--gap) * 2) !important;
+  border-radius: var(--gap);
+  max-width: 920px !important;
 
   .cr-pagination {
     text-align: center;
   }
 
   .pg-history-tab__tabs-content {
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
-    display: border-box;
-    border-radius: calc(var(--gap) * 0.66);
 
     .cr-tab-panel__navigation-container {
-      margin-bottom: 0 !important;
       background: var(--table-dark-header-color);
-      border: 1px solid var(--table-dark-header-color);
-      border-top-left-radius: calc(var(--gap) * .66);
-      border-top-right-radius: calc(var(--gap) * .66);
-      &-navigation {
-        padding-bottom: 0;
+      border-bottom: 1px solid var(--header-border);
+      border-radius: calc(var(--gap) * 0.66);
+      margin-bottom: 0;
 
+      &-navigation {
         .cr-tab {
-          background: var(--table-dark-header-color);
           padding-left: calc(var(--gap) * 7);
           padding-right: calc(var(--gap) * 7);
-          border-top-left-radius: calc(var(--gap) * .66);
-          border-top-right-radius: calc(var(--gap) * .66);
         }
-      }
-    }
-
-    .cr-tab {
-      background: var(--table-dark-header-color);
-      border: 0;
-      box-shadow: none;
-      cursor: pointer;
-      font-size: calc(var(--gap) * 2.6);
-
-      &__active {
-        border-bottom: 1px solid var(--active-tab-color);
-        color: var(--bight-1);
-      }
-
-      &__pointer {
-        display: none !important;
       }
     }
   }
@@ -69,7 +50,7 @@
               font-size: 12px !important;
               font-weight: 500;
               font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-              padding: 20px 17px 17px 17px !important;
+              padding: calc(var(--gap) * 3.5) var(--gap) calc(var(--gap) * 3.5) var(--gap) !important;
               text-align: right;
               padding-left: 10px;
               position: static;
@@ -78,6 +59,11 @@
               &:first-child {
                 text-align: left;
                 margin-left: 10px;
+                padding-left: calc(var(--gap) * 3) !important;
+              }
+
+              &:last-child {
+                padding-right: calc(var(--gap) * 3) !important;
               }
 
               &:nth-child(7) {
@@ -96,7 +82,7 @@
               color: var(--table-text-color);
               font-size: 13px !important;
               font-weight: 400;
-              padding: calc(var(--gap) * 3.5) calc(var(--gap) * 3) calc(var(--gap) * 3.5) calc(var(--gap) * 3) !important;
+              padding: calc(var(--gap) * 3.5) var(--gap) calc(var(--gap) * 3.5) var(--gap) !important;
               margin-top: calc(var(--gap) * 1.66) !important;
               margin-bottom: calc(var(--gap) * 1.66) !important;
               text-align: right;
@@ -104,9 +90,15 @@
               &:first-child {
                 text-align: left;
                 border-bottom-left-radius: calc(var(--gap) * .5);
+                padding-left: calc(var(--gap) * 3) !important;
               }
               &:last-child {
                 border-bottom-right-radius: calc(var(--gap) * .5);
+                padding-right: calc(var(--gap) * 3) !important;
+
+                &:first-letter {
+                  text-transform: uppercase;
+                }
               }
               a {
                 color: var(--table-text-color);

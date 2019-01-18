@@ -28,7 +28,7 @@ class History extends React.Component<Props> {
 
     public render() {
         return (
-            <div className="pg-history-tab">
+            <div className="pg-history-tab pg-container">
                 <div className="pg-history-tab__tabs-content">
                     <TabPanel
                         panels={this.renderTabs()}
