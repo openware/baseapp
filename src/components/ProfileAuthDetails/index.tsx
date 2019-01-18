@@ -73,10 +73,11 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
         );
     }
 
-    private handleChangePassword = (oldPassword: string, newPassword: string) => {
+    private handleChangePassword = (oldPassword: string, newPassword: string, confirmPassword: string) => {
         this.props.changePassword({
             old_password: oldPassword,
             new_password: newPassword,
+            confirm_password: confirmPassword,
         });
     }
 
@@ -92,8 +93,8 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    changePassword: ({ old_password, new_password }) =>
-        dispatch(changePasswordFetch({ old_password, new_password })),
+    changePassword: ({ old_password, new_password, confirm_password }) =>
+        dispatch(changePasswordFetch({ old_password, new_password, confirm_password })),
     clearPasswordChangeError: () => dispatch(changePasswordError(undefined)),
 });
 

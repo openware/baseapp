@@ -52,6 +52,7 @@ describe('Profile actions', () => {
             const payload = {
                 old_password: '123123',
                 new_password: '123',
+                confirm_password: '123',
             };
             const expectedAction = { type: 'profile/CHANGE_PASSWORD_FETCH', payload };
             expect(actions.changePasswordFetch(payload)).toEqual(expectedAction);

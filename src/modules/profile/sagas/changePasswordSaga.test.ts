@@ -30,6 +30,7 @@ describe('Module: Change password', () => {
     const fakePassword =  {
         old_password: '123123',
         new_password: '123',
+        confirm_password: '123',
     };
 
     const mockChangePassword = () => {

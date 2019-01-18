@@ -3,7 +3,7 @@ import * as React from 'react';
 import { CommonError } from '../../modules/types';
 
 type OnClearError = () => void;
-type OnSubmitChangePassword = (oldPassword: string, newPassword: string) => void;
+type OnSubmitChangePassword = (oldPassword: string, newPassword: string, confirmPassword: string) => void;
 
 interface ChangePasswordProps {
     onClearError: OnClearError;
@@ -103,7 +103,7 @@ class ChangePassword extends React.Component<ChangePasswordProps, ChangePassword
     }
 
     private handleSubmit = () => {
-        this.props.onSubmit(this.state.oldPassword, this.state.newPassword);
+        this.props.onSubmit(this.state.oldPassword, this.state.newPassword, this.state.newPassword);
     }
 
     private handleCancel = () => {
