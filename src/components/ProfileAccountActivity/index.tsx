@@ -16,7 +16,7 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
         const { userData } = this.props;
         return (
             <div className="pg-profile-page__activity">
-                <div className="pg-profile-page__activity-header">
+                <div className="pg-profile-page-header">
                     <h3><span className="pg-profile-page__text-purple">Account</span> activity</h3>
                 </div>
                 <Table

@@ -47,8 +47,8 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
             <div className="pg-profile-page__box pg-profile-page__left-col__basic">
                 <div className="pg-profile-page__box-header pg-profile-page__left-col__basic__info-row">
                     <div className="pg-profile-page__left-col__basic__info-row__block">
-                        <div className="pg-profile-page__row">
-                            <h1>{user.email}</h1>
+                        <div className="pg-profile-page__row pg-profile-page__details-user">
+                            <p>{user.email}</p>
                         </div>
                         <div className="pg-profile-page__row">
                             <h2 className="pg-profile-page__text-muted">UID: {user.uid}</h2>

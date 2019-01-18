@@ -13,25 +13,22 @@ class Prof extends React.Component<any, {}, {}> {
     }
     public render() {
         return(
-          <div>
-            <div className="pg-profile-page__head">
-              <div onClick={this.goBack} className="pg-profile-page__head-back">
-                <span/>
-                <h1>Profile</h1>
-              </div>
-            </div>
-            <div className="pg-container pg-profile-page">
-              <div className="pg-profile-page__details">
-                  <div className="pg-profile-page__left-col">
-                      <ProfileAuthDetails />
+              <div className="pg-container pg-profile-page">
+                <div className="pg-profile-page__details">
+                  <div className="pg-profile-page-header">
+                    <h3 className="pg-profile-page__text-purple">Account</h3>
                   </div>
-                  <div className="pg-profile-page__right-col">
-                      <ProfileVerification />
+                  <div className="pg-profile-page__details-box">
+                      <div className="pg-profile-page__left-col">
+                          <ProfileAuthDetails />
+                      </div>
+                      <div className="pg-profile-page__right-col">
+                          <ProfileVerification />
+                      </div>
                   </div>
+                </div>
+                  <ProfileAccountActivity />
               </div>
-                <ProfileAccountActivity />
-            </div>
-            </div>
         );
     }
 }

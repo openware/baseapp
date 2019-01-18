@@ -4,6 +4,7 @@
   color: var(--base-8);
   align-items: flex-start !important;
   color: var(--profile-grey);
+  max-width: 85%;
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
@@ -28,10 +29,26 @@
   &__details {
     box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
     background-color: var(--profile-box);
-    width: 100%;
+    width: 80%;
+    max-width: 100%;
+    margin-top: calc(var(--gap) * 5);
+    &-user {
+      p {
+        font-size: 45px;
+        margin: 0 0 25px 0;
+      }
+    }
+    &-box {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &-header {
     display: flex;
-    margin-top: calc(var(--gap) * -15);
-    justify-content: space-around;
+    padding: 0 calc(var(--gap) * 3);
+    background: var(--profile-activity-header);
+    border-bottom: 1px solid var(--profile-activity-border);
   }
 
   &__switch {
@@ -73,41 +90,17 @@
     }
   }
 
-  &__head {
-    background: var(--profile-box-head);
-    height: calc(var(--gap) * 35);
-    width: 100%;
-
-    h1 {
-      margin: 0 0 0 60px;
-      padding-top: 20px;
-      color: white;
-    }
-    &-back {
-      cursor: pointer;
-      span {
-        &::before {
-          display: inline;
-          color: #fff;
-          content: ' ←';
-          font-size: 40px;
-          position: absolute;
-          top: 14px;
-          left: 20px;
-        }
-      }
-    }
-  }
-
   &__box {
     background-color: var(--profile-box-bg);
     box-shadow: var(--profile-box-shadow);
-    margin-top: calc(var(--gap) * 6);
-    padding: calc(var(--gap) * 3);
+    padding: calc(var(--gap) * 4);
 
     &-header {
       display: flex;
       border-bottom: 1px solid var(--profile-box-header-line);
+      h1 {
+        margin: 0;
+      }
     }
   }
 
@@ -130,7 +123,7 @@
   }
 
   &__left-col {
-    width: 40%;
+    width: 48%;
 
     &__basic {
       height: 25%;
@@ -138,6 +131,7 @@
       &__info-row {
         color: var(--color-white);
         display: flex;
+        margin-bottom: 15px;
 
         .cr-avatar {
           margin-right: calc(var(--gap) * 3);
@@ -183,8 +177,6 @@
     }
 
     &__verification {
-      height: 35%;
-
       .pg-profile-page__box-header {
         color: var(--color-white);
         .pg-profile-page__row > .pg-profile-page__col:last-child {
@@ -201,7 +193,7 @@
   }
 
   &__right-col {
-    width: 30%;
+    width: 48%;
 
     &__token {
       min-height: 40%;
@@ -247,17 +239,11 @@
   }
 
   &__activity {
-    width: 100%;
+    width: 80%;
+    max-width: 100%;
     box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
     margin-top: calc(var(--gap) * 6);
     background: var(--profile-box);
-
-    &-header {
-      display: flex;
-      padding: 0 calc(var(--gap) * 3);
-      background: var(--profile-activity-header);
-      border-bottom: 1px solid var(--profile-activity-border);
-    }
 
     .cr-table {
 
@@ -333,7 +319,7 @@
   &__btn-secondary {
     background: var(--profile-btn);
     color: var(--color-white);
-    width: calc(var(--gap) * 15);
+    width: calc(var(--gap) * 25);
 
     &:visited {
       color: var(--text-muted);

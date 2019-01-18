@@ -1,8 +1,6 @@
-import { Button } from '@openware/components';
 import cn from 'classnames';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { selectUserInfo, User } from '../../modules';
 
 
@@ -24,20 +22,8 @@ class ProfileVerificationComponent extends React.Component<ProfileVerificationPr
                 {this.renderFirstLevel(userLevel)}
                 {this.renderSecondLevel(userLevel)}
                 {this.renderThirdLevel(userLevel)}
-                <Link to="/confirm">
-                    <Button
-                      className="pg-profile-page__btn-secondary pg-profile-page__verification"
-                      label="Complete KYC"
-                      onClick={this.completeKYC}
-                    />
-                </Link>
             </div>
         );
-    }
-
-    private completeKYC = () => {
-      // tslint:disable-next-line
-        console.log(1)
     }
 
     private renderFirstLevel(userLevel: number) {
