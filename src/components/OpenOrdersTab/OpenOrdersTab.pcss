@@ -1,5 +1,5 @@
 .pg-open-orders-tab {
-  max-width: 80%;
+  width: 100%;
   background: var(--transparent);
 
   td {
@@ -16,7 +16,8 @@
   .cr-table {
     background: var(--background);
     border-collapse: separate;
-    border-spacing: 0 calc(var(--gap) * 2.33);
+    border-spacing: 0 calc(var(--gap) * 1.33);
+    font-weight: 300;
     &-header__content {
       display: none;
     }
@@ -24,16 +25,60 @@
       &-row {
         background: var(--background);
         th {
+          position: static;
           background: var(--background);
           color: var(--active-color);
           font-size: calc(var(--gap) * 2.33) !important;
           font-weight: bolder;
           padding: calc(var(--gap) * 3.33) calc(var(--gap) * 5) calc(var(--gap) * 1.16) calc(var(--gap) * 5) !important;
           &:first-child {
+            color: #E5EFE6;
             padding-left: calc(var(--gap) * 2) !important;
+
+            &:after {
+              border-style: solid;
+              border-width: 1px 1px 0 0;
+              content: '';
+              display: inline-block;
+              height: calc(var(--gap) * 1.33);     
+              width: calc(var(--gap) * 1.33);
+              left: calc(var(--gap) * 1.1);
+              top: calc(var(--gap) / 6);
+              position: relative;
+              transform: rotate(135deg);
+              vertical-align: top;
+            }
           }
+
           &:nth-child(7) {
             white-space: nowrap;
+          }
+
+          &:last-child {
+            position: absolute;    
+            cursor: pointer;
+            top: calc(var(--gap) * 3.25);
+            margin-left: calc(var(--gap) * 4);
+            width: 10px;
+            &::before,
+            &::after {
+              background: var(--active-color);
+              content: '';
+              display: block;
+              height: calc(var(--gap) * 2.5);
+              left: var(--gap);
+              position: absolute;
+              top: var(--gap);
+              width: 1px;
+            }
+          
+            &::before {
+              transform: rotate(45deg);
+            }
+          
+            &::after {
+              transform: rotate(-45deg);
+            }
           }
         }
       }
@@ -45,9 +90,9 @@
         box-shadow: 0px 0px var(--gap) rgba(0, 0, 0, 0.05);
         td {
           color: var(--base-9);
-          font-size: calc(var(--gap) * 2.33) !important;
-          font-weight: bolder;
-          padding: calc(var(--gap) * 3.33) calc(var(--gap) * 5) !important;
+          font-size: calc(var(--gap) * 2.5) !important;
+          font-weight: normal;
+          padding: calc(var(--gap) * 2.33) calc(var(--gap) * 5) !important;
           margin-top: calc(var(--gap) * 1.66) !important;
           margin-bottom: calc(var(--gap) * 1.66) !important;
           width: auto;
@@ -55,26 +100,35 @@
             padding-left: calc(var(--gap) * 2) !important;
           }
           &:nth-child(8) {
+            color: #FFA216;
             text-align: center;
           }
           &:last-child {
-            padding-left: var(--gap);
             text-align: center;
+            padding: 0;
             .cr-close-button {
-              margin-left: var(--gap);
+              border-radius: 4px;
+              left: calc(var(--gap) * 1.9);
+              background: #2E4C80;
+              opacity: 1;
+              height: calc(var(--gap) * 7.2);
+              width: calc(var(--gap) * 7.2);
               &:after, &:before {
-                left: calc(var(--gap) * 1.66);
+                background: #F4F5FA;
+                left: calc(var(--gap) * 3.5);
+                top: calc(var(--gap) * 2.25);
               }
             }
             &:hover {
-              background: var(--active-color);
               .cr-close-button {
-                &:after, &:before {
-                  background: var(--base-bright);
-                }
+                background: #456FB8;
               }
             }
           }
+          &:first-child { border-top-left-radius: 4px; }
+          &:first-child { border-bottom-left-radius: 4px; }
+          &:last-child { border-top-right-radius: 4px; }
+          &:last-child { border-bottom-right-radius: 4px; }
         }
       }
     }
@@ -94,7 +148,7 @@
         td {
           &:first-child {
             display: block;
-            font-size: calc(var(--gap) * 2.33) !important;
+            font-size: calc(var(--gap) * 2.5) !important;
             font-weight: bold;
             margin-left: calc(var(--gap) * 1.66);
             padding: calc(var(--gap) * 3.33) 0 calc(var(--gap) * 3.33) 0 !important;
