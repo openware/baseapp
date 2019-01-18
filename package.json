@@ -35,7 +35,7 @@
     "build": "REACT_APP_SOCKET_SERVICE=ranger npm-run-all build:css build-js",
     "test": "jest",
     "test:coverage": "jest --collectCoverage=true",
-    "test:ci": "jest --ci --runInBand",
+    "test:ci": "jest --ci",
     "eject": "react-scripts-ts eject",
     "clean": "rimraf build"
   },
