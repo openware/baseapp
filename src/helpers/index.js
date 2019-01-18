@@ -6,3 +6,4 @@ export * from './filterData';
 export * from './emailValidation';
 export * from './timezone';
 export * from './localeDateSec';
+export * from './historyTableUtils';

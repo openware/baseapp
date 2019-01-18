@@ -2,7 +2,14 @@ import { History } from '@openware/components';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeDate, sliceString, uppercase } from '../../helpers';
+import {
+    localeDate,
+    setDepositStatusColor,
+    setTradesType,
+    setWithdrawStatusColor,
+    sliceString,
+    uppercase,
+} from '../../helpers';
 import {
     Deposit,
     RootState,
@@ -77,42 +84,35 @@ class HistoryComponent extends React.Component<Props> {
       }
     };
 
-    private retrieveData(type) {
+    private retrieveData = (type: string) => {
         const data = this.sortDataByDateTime(this.props[`${type}s`]);
-        const renderRow = item => {
-            return this.renderTableRow(type, item);
-        };
+        const renderRow = item => this.renderTableRow(type, item);
 
         if (type === 'deposit') {
-            return (data.length > 0)
-                ? data.map(renderRow)
-                : [['There is no data to show...', '', '', '', '']];
+            return (data.length > 0) ? data.map(renderRow) : [['There is no data to show...', '', '', '', '']];
         }
-        return (data.length > 0)
-            ? data.map(renderRow)
-            : [['There is no data to show...', '', '', '', '', '', '']];
+        return (data.length > 0) ? data.map(renderRow) : [['There is no data to show...', '', '', '', '', '', '']];
     }
 
     private sortDataByDateTime(data: Order[]) {
         const sortByDateTime = (a: Order, b: Order) => {
             return moment(localeDate(a.created_at), 'DD/MM HH:mm') > moment(localeDate(b.created_at), 'DD/MM HH:mm') ? -1 : 1;
         };
-        const dataToSort = [...data];
 
-        return dataToSort.sort(sortByDateTime);
+        return [...data].sort(sortByDateTime);
     }
 
-    private renderTableRow(type, item) {
+    private renderTableRow = (type, item) => {
         switch (type) {
             case 'deposit': {
                 const { txid, created_at, currency, amount, state } = item;
                 const blockchainLink = this.getBlockchainLink(currency, txid);
                 return [
-                    <a href={blockchainLink} target="_blank" key={txid}>{sliceString(txid, 7)}</a>,
+                    <a href={blockchainLink} target="_blank" rel="noopener noreferrer" key={txid}>{txid}</a>,
                     localeDate(created_at),
                     currency.toUpperCase(),
                     amount,
-                    state,
+                    <span style={{ color: setDepositStatusColor(state) }} key={txid}>{state}</span>,
                 ];
             }
             case 'withdraw': {
@@ -122,10 +122,10 @@ class HistoryComponent extends React.Component<Props> {
                     id,
                     localeDate(created_at),
                     uppercase(currency),
-                    <a href={blockchainLink} target="_blank" key={txid || rid}>{sliceString(txid || rid, 7)}</a>,
+                    <a href={blockchainLink} target="_blank" rel="noopener noreferrer" key={txid || rid}>{txid || rid}</a>,
                     amount,
                     fee,
-                    state,
+                    <span style={{ color: setWithdrawStatusColor(state) }} key={txid || rid}>{state}</span>,
                 ];
             }
             case 'trade': {
@@ -136,7 +136,7 @@ class HistoryComponent extends React.Component<Props> {
                 return [
                     id,
                     localeDate(created_at),
-                    side,
+                    <span style={{ color: setTradesType(side).color }} key={id}>{setTradesType(side).text}</span>,
                     marketName,
                     price,
                     funds,
@@ -146,7 +146,13 @@ class HistoryComponent extends React.Component<Props> {
             default: {
                 const { txid, created_at, currency, amount, state } = item;
                 const blockchainLink = this.getBlockchainLink(currency, txid);
-                return [<a href={blockchainLink} target="_blank" key={txid}>{sliceString(txid, 7)}</a>, localeDate(created_at), uppercase(currency), amount, state];
+                return [
+                    <a href={blockchainLink} target="_blank" rel="noopener noreferrer" key={txid}>{sliceString(txid, 7)}</a>,
+                    localeDate(created_at),
+                    uppercase(currency),
+                    amount,
+                    state,
+                ];
             }
         }
     }

@@ -10,7 +10,7 @@ export function* tradesFetchSaga(action: TradesFetch) {
         const config: RequestOptions = {
             apiVersion: 'peatio',
         };
-        const getCurrentMarket = state => state.coreData.markets;
+        const getCurrentMarket = state => state.app.markets;
         const markets = yield select(getCurrentMarket);
 
         let trades = [];
