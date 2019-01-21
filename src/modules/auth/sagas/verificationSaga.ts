@@ -9,7 +9,7 @@ const verificationConfig: RequestOptions = {
 
 export function* verificationSaga(action: VerificationFetch) {
     try {
-        yield call(API.post(verificationConfig), '/accounts/confirm', action.payload);
+        yield call(API.post(verificationConfig), '/identity/users/email/confirm_code', action.payload);
         yield put(verificationSuccess());
     } catch (error) {
         yield put(signUpError(error));
