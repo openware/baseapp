@@ -1,7 +1,6 @@
 import { Table } from '@openware/components';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeDateSec } from '../../helpers';
 import { Market, RootState, selectCurrentMarket } from '../../modules';
 import { recentTrades, selectRecentTrades } from '../../modules/recentTrades';
 
@@ -43,10 +42,8 @@ class RecentTradesComponent extends React.Component<Props> {
 
     private getTrades(trades: any) {
         const renderRow = item => {
-            const { time } = item;
-            return [localeDateSec(time), ...item.slice(2)];
+            return [item[0], ...item.slice(2)];
         };
-
         return trades.length ?
             trades.map(renderRow).slice(0,100) :
             [['There is no data to show...']];
