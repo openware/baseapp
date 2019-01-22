@@ -29,7 +29,7 @@
   }
 
   .cr-wallet-list {
-    flex: 0.35 1;
+    flex: 0.45 1;
     background: var(--background);
     margin-right: calc(var(--gap) * 4);
     margin-top: 0;
@@ -120,15 +120,6 @@
         width: 90%;
         margin-bottom: 0px;
       }
-    }
-  }
-
-  &__selected-wallet {
-    .cr-wallet-item__icon {
-      display: none;
-    }
-    .cr-wallet-item__balance-locked {
-      display: block;
     }
   }
 
@@ -236,9 +227,13 @@
   .cr-wallet-item {
     cursor: pointer;
     background: var(--wallet-item-active-color);
-    color: var(--base-9);
-    height: calc(var(--gap) * 7);
-    font-weight: 500;
+    color: var(--bright-1);
+    height: calc(var(--gap) * 9);
+    box-sizing: border-box;
+    border: 0.5px solid var(--base-3);
+    border-radius: calc(var(--gap) * 0.5);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12);
+    font-size: calc(var(--gap) * 2.66);
 
     & > * {
       background: var(--transparent);
@@ -255,26 +250,56 @@
     }
 
     &__amount-locked {
-      color: var(--input-default-color);
+      color: var(--bright-1);
+      &-icon {
+        display: inline-block;
+        margin-right: calc(var(--gap) * 1);
+      }
     }
 
 
     &--active {
       border-radius: calc(var(--gap) * 0.66);
-
-      .cr-wallet-item__balance {
-        color: var(--wallet-item-active-color);
-
-        .cr-wallet-item__amount-locked {
-          color: var(--wallet-item-active-color);
-          padding-top: var(--gap);
-        }
-      }
+      background: var(--active-color);
 
       .cr-wallet-item__icon,
       .cr-wallet-item__icon-code {
         background: transparent;
         color: var(--wallet-item-active-color);
+      }
+    }
+    &__single {
+      background: var(--transparent);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 calc(var(--gap) * 2) calc(var(--gap) * 2) 0;
+      &-balance {
+        display: flex;
+        justify-content: space-between;
+      }
+      .cr-wallet-item {
+        &__icon-code {
+          font-size: calc(var(--gap) * 8);
+          color: var(--bright-1);
+          background: var(--transparent);
+        }
+        &__amount-locked {
+          margin-right: calc(var(--gap) * 7);
+        }
+        &__balance,  &__amount-locked {
+          display: flex;
+          background: var(--transparent);
+          color: var(--table-text-color);
+          font-size: calc(var(--gap) * 3);
+          padding-top: 0;
+          &-amount, &-locked {
+            background: var(--transparent);
+            color: var(--bright-1);
+            font-size: calc(var(--gap) * 5);
+            font-weight: 300;
+          }
+        }
       }
     }
   }

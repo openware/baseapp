@@ -137,10 +137,16 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             ? 'No results...'
             : null;
 
-        const maybeSelectedTab = selectedWalletIndex !== -1 &&
-            <TabPanel panels={this.renderTabs(selectedWalletIndex)} />;
-
         const selectedCurrency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
+        const selectedBalance = (wallets[selectedWalletIndex] || { balance: 0 }).balance;
+        const selectedLocked = (wallets[selectedWalletIndex] || { locked: 0 }).locked;
+
+        const maybeSelectedTab = selectedWalletIndex !== -1 && (
+            <div>
+                {this.renderSingle(selectedCurrency, selectedBalance, selectedLocked)}
+                <TabPanel panels={this.renderTabs(selectedWalletIndex)} />
+            </div>
+        );
 
         return (
             <div className="pg-wallet pg-container">
@@ -174,6 +180,38 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                     onSubmit={this.handleWithdraw}
                     onDismiss={this.toggleConfirmModal}
                 />
+            </div>
+        );
+    }
+
+    private renderSingle = (currency: string, balance: number, lockedAmount?: number) => {
+        const locked = (
+            <div>
+                <div className="cr-wallet-item__amount-locked">
+                    Locked
+                </div>
+                <span className="cr-wallet-item__balance-locked">
+                    {lockedAmount ? lockedAmount : 0}
+                </span>
+            </div>);
+        const displayBalance = (
+            <div>
+                <span className="cr-wallet-item__balance">
+                    {currency.toUpperCase()} Balance
+                </span>&nbsp;
+                <span className="cr-wallet-item__balance-amount">
+                    {balance}
+                </span>
+            </div>);
+        return (
+            <div className="cr-wallet-item__single">
+                <div>
+                    <span className="cr-wallet-item__icon-code"> {currency.toLocaleUpperCase()}</span>
+                </div>
+                <div className="cr-wallet-item__single-balance">
+                    {locked}
+                    {displayBalance}
+                </div>
             </div>
         );
     }
