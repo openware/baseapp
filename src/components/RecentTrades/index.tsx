@@ -24,7 +24,9 @@ class RecentTradesComponent extends React.Component<Props> {
     }
 
     public componentDidMount() {
-        this.props.tradesFetch(this.props.currentMarket);
+        if (this.props.currentMarket.id){
+          this.props.tradesFetch(this.props.currentMarket);
+        }
     }
 
     public render() {

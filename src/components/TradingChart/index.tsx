@@ -55,7 +55,9 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     }
 
     public componentDidMount() {
-        this.setChart(this.props.markets, this.props.currentMarket);
+        if (this.props.currentMarket.id){
+          this.setChart(this.props.markets, this.props.currentMarket);
+        }
     }
 
     public componentWillUnmount() {

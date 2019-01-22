@@ -32,7 +32,9 @@ type Props = ReduxProps & DispatchProps;
 
 class OrderBookContainer extends React.Component<Props> {
     public componentDidMount() {
-        this.props.orderBookFetch(this.props.currentMarket);
+        if (this.props.currentMarket.id){
+          this.props.orderBookFetch(this.props.currentMarket);
+        }
     }
 
     public componentWillReceiveProps(next: Props) {

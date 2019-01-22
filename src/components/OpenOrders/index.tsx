@@ -29,7 +29,9 @@ type Props = ReduxProps & DispatchProps;
 
 class OpenOrdersContainer extends React.Component<Props> {
     public componentDidMount() {
-        this.props.orderHistory([this.props.currentMarket]);
+        if (this.props.currentMarket.id){
+          this.props.orderHistory([this.props.currentMarket]);
+        }
     }
 
     public componentWillReceiveProps(next: Props) {
