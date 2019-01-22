@@ -31,5 +31,6 @@ module.exports = {
     'collectCoverage': false,
     'collectCoverageFrom': [
         "<rootDir>/src/**/*.{ts,tsx,js,jsx}",
+        "!<rootDir>/src/charting_library/**",
     ],
 };
