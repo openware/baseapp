@@ -21,6 +21,10 @@ const convertToTrades = trades => trades.map(trade => [
 export function* recentTradesFetchSaga(action: RecentTradesFetch) {
     try {
         const market = action.payload;
+        if (!market.id) {
+            throw new Error(`ERROR: Empty market provided to recentTradesFetchSaga`);
+        }
+
         const trades = yield call(API.get(tradesOptions), `/public/markets/${market.id}/trades`);
         const convertedTrades = convertToTrades(trades);
 

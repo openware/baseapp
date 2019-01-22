@@ -31,8 +31,5 @@ export const setupMockAxios = () => {
 };
 
 export const mockNetworkError = (mockAxios: any) => {
-    mockAxios.onGet().networkError();
-    mockAxios.onPost().networkError();
-    mockAxios.onPut().networkError();
-    mockAxios.onDelete().networkError();
+    mockAxios.onAny().networkError();
 };

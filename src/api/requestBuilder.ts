@@ -14,7 +14,7 @@ export type HTTPMethod =
     | 'patch';
 
 export interface JsonBody {
-    // tslint:disable-next-line
+    // tslint:disable-next-line no-any
     [key: string]: any;
 }
 
@@ -35,9 +35,9 @@ export interface ApiVariety {
 }
 
 const getAPI = () => ({
-    barong: `${gatewayUrl}/barong`,
-    applogic: `${gatewayUrl}/applogic`,
-    peatio: `${gatewayUrl}/peatio`,
+    barong: `${gatewayUrl()}/barong`,
+    applogic: `${gatewayUrl()}/applogic`,
+    peatio: `${gatewayUrl()}/peatio`,
 });
 
 const buildRequest = (request: Request, configData: RequestOptions) => {
@@ -61,7 +61,7 @@ const buildRequest = (request: Request, configData: RequestOptions) => {
         headers,
         method,
         url,
-        withCredentials,
+        withCredentials: withCredentials(),
     };
 
     return requestConfig;
@@ -76,7 +76,7 @@ const defaultResponse: Partial<AxiosError['response']> = {
 
 const formatError = (responseError: AxiosError) => {
     const response = responseError.response || defaultResponse;
-    const error = response.data.error;
+    const error = response.data ? response.data.error : null;
     return {
         code: response.status,
         message: error && error.message ? error.message : error,

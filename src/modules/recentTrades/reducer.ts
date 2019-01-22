@@ -1,4 +1,5 @@
 
+import { Trade } from '../history/trades';
 import { CommonState } from '../types';
 import { RecentTradesActions } from './actions';
 import {
@@ -6,10 +7,9 @@ import {
     RECENT_TRADES_ERROR,
     RECENT_TRADES_FETCH,
 } from './constants';
-import { RecentTrade } from './types';
 
 export interface RecentTradesState extends CommonState {
-    list: RecentTrade[];
+    list: Trade[];
 }
 
 const initialState: RecentTradesState = {

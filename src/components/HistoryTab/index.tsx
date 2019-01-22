@@ -8,18 +8,25 @@ import {
 } from 'react-redux';
 import {
     deposits,
-    trades,
+    Market,
+    RootState,
+    selectMarkets,
+    tradesFetch,
     withdraws,
 } from '../../modules';
 import { HistoryElement } from './component';
 
+interface ReduxProps {
+    markets: Market[];
+}
+
 interface DispatchProps {
     getDeposit: typeof deposits;
-    getTrade: typeof trades;
+    getTrade: typeof tradesFetch;
     getWithdraw: typeof withdraws;
 }
 
-type Props = DispatchProps;
+type Props = ReduxProps & DispatchProps;
 
 class History extends React.Component<Props> {
     public componentDidMount() {
@@ -41,7 +48,7 @@ class History extends React.Component<Props> {
 
     private handleMakeRequest = (index: number) => {
         const tabs = this.renderTabs();
-        tabs[index].loadData();
+        tabs[index].loadData(this.props.markets);
     };
 
     private renderTabs = () => {
@@ -66,13 +73,17 @@ class History extends React.Component<Props> {
 
 }
 
+const mapStateToProps = (state: RootState): ReduxProps => ({
+    markets: selectMarkets(state),
+});
+
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     getDeposit: () => dispatch(deposits()),
-    getTrade: () => dispatch(trades()),
+    getTrade: (markets: Market[]) => dispatch(tradesFetch(markets)),
     getWithdraw: () => dispatch(withdraws()),
 });
 
-const HistoryTab = connect(null, mapDispatchToProps)(History);
+const HistoryTab = connect(mapStateToProps, mapDispatchToProps)(History);
 
 export {
     HistoryTab,

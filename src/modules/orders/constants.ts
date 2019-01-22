@@ -1,7 +1,3 @@
-export const ORDERS_FETCH = 'orders/ORDERS_FETCH';
-export const ORDERS_DATA = 'orders/ORDERS_DATA';
-export const ORDERS_ERROR = 'orders/ORDERS_ERROR';
-
 export const ORDERS_CANCEL_ALL_FETCH = 'open_orders/ORDERS_CANCEL_ALL_FETCH';
 
 export const ORDER_CANCEL_FETCH = 'orders/CANCEL_FETCH';
@@ -19,3 +15,4 @@ export const FEES_ERROR = 'orders/FEES_ERROR';
 export const USER_ORDERS_FETCH = 'orders/USER_ORDERS_FETCH';
 export const USER_ORDERS_DATA = 'orders/USER_ORDERS_DATA';
 export const USER_ORDERS_ERROR = 'orders/USER_ORDERS_ERROR';
+export const USER_ORDERS_DEFAULT = 'orders/USER_ORDERS_DEFAULT';

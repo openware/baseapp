@@ -9,9 +9,9 @@ import { Market, selectCurrentMarket } from '../../modules/markets';
 import {
     Order,
     orderCancelFetch,
-    ordersFetch,
     selectOpenOrders,
     selectOrdersLoading,
+    userOrdersFetch,
  } from '../../modules/orders';
 
 interface ReduxProps {
@@ -21,7 +21,7 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    orderHistory: typeof ordersFetch;
+    orderHistory: typeof userOrdersFetch;
     orderCancel: typeof orderCancelFetch;
 }
 
@@ -29,12 +29,12 @@ type Props = ReduxProps & DispatchProps;
 
 class OpenOrdersContainer extends React.Component<Props> {
     public componentDidMount() {
-        this.props.orderHistory({ market: this.props.currentMarket.id });
+        this.props.orderHistory([this.props.currentMarket]);
     }
 
     public componentWillReceiveProps(next: Props) {
         if (this.props.currentMarket !== next.currentMarket) {
-            this.props.orderHistory({ market: next.currentMarket.id });
+            this.props.orderHistory([next.currentMarket]);
         }
     }
 
@@ -111,7 +111,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        orderHistory: payload => dispatch(ordersFetch(payload)),
+        orderHistory: payload => dispatch(userOrdersFetch(payload)),
         orderCancel: payload => dispatch(orderCancelFetch(payload)),
     });
 

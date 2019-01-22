@@ -11,12 +11,12 @@ import {
     feesFetch,
     orderCancelFetch,
     orderExecuteFetch,
-    ordersFetch,
     userOrdersFetch,
 } from './';
 import { OrderExecution } from './actions';
+import { FEES_DATA, FEES_ERROR, FEES_FETCH, ORDER_CANCEL_DATA, ORDER_CANCEL_ERROR, ORDER_CANCEL_FETCH, ORDER_EXECUTE_DATA, ORDER_EXECUTE_ERROR, ORDER_EXECUTE_FETCH, USER_ORDERS_DATA, USER_ORDERS_ERROR, USER_ORDERS_FETCH } from './constants';
 
-// tslint:disable no-any no-magic-numbers
+// tslint:disable no-any no-magic-numbers no-console
 const debug = false;
 
 describe('Orders', () => {
@@ -24,56 +24,59 @@ describe('Orders', () => {
     let sagaMiddleware: SagaMiddleware<{}>;
     let mockAxios: MockAdapter;
 
-    const market = 'bchbtc';
+    const market = {
+        id: 'bchbtc',
+        name: 'BCH/BTC',
+    };
 
     const cancelOrders = [
-      {
-        id: 204099,
-        side: 'buy',
-        ord_type: 'limit',
-        price: '0.001',
-        avg_price: '0.0',
-        state: 'cancel',
-        market: 'bchbtc',
-        created_at: '2018-12-20T15:38:38+01:00',
-        volume: '0.1',
-        remaining_volume: '0.1',
-        executed_volume: '0.0',
-        trades_count: 0,
-      },
+        {
+            id: 204099,
+            side: 'buy',
+            ord_type: 'limit',
+            price: '0.001',
+            avg_price: '0.0',
+            state: 'cancel',
+            market: 'bchbtc',
+            created_at: '2018-12-20T15:38:38+01:00',
+            volume: '0.1',
+            remaining_volume: '0.1',
+            executed_volume: '0.0',
+            trades_count: 0,
+        },
     ];
 
     const waitOrders = [
         {
-          id: 204099,
-          side: 'buy',
-          ord_type: 'limit',
-          price: '0.001',
-          avg_price: '0.0',
-          state: 'wait',
-          market: 'bchbtc',
-          created_at: '2018-12-21T15:38:38+01:00',
-          volume: '0.1',
-          remaining_volume: '0.1',
-          executed_volume: '0.0',
-          trades_count: 0,
+            id: 204099,
+            side: 'buy',
+            ord_type: 'limit',
+            price: '0.001',
+            avg_price: '0.0',
+            state: 'wait',
+            market: 'bchbtc',
+            created_at: '2018-12-21T15:38:38+01:00',
+            volume: '0.1',
+            remaining_volume: '0.1',
+            executed_volume: '0.0',
+            trades_count: 0,
         },
     ];
 
     const doneOrders = [
         {
-          id: 204099,
-          side: 'buy',
-          ord_type: 'limit',
-          price: '0.001',
-          avg_price: '0.0',
-          state: 'done',
-          market: 'bchbtc',
-          created_at: '2018-12-22T15:38:38+01:00',
-          volume: '0.1',
-          remaining_volume: '0.1',
-          executed_volume: '0.0',
-          trades_count: 0,
+            id: 204099,
+            side: 'buy',
+            ord_type: 'limit',
+            price: '0.001',
+            avg_price: '0.0',
+            state: 'done',
+            market: 'bchbtc',
+            created_at: '2018-12-22T15:38:38+01:00',
+            volume: '0.1',
+            remaining_volume: '0.1',
+            executed_volume: '0.0',
+            trades_count: 0,
         },
     ];
 
@@ -145,40 +148,36 @@ describe('Orders', () => {
     };
 
     const mockOrders = () => {
-        mockAxios.onGet('/market/orders?market=bchbtc&state=cancel').reply(200, cancelOrders);
-        mockAxios.onGet('/market/orders?market=bchbtc&state=done').reply(200, doneOrders);
-        mockAxios.onGet('/market/orders?market=bchbtc&state=wait').reply(200, waitOrders);
+        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc').reply(200, cancelOrders.concat(doneOrders).concat(waitOrders));
     };
 
     const mockUserOrders = () => {
-        mockAxios.onGet('/market/orders?market=bchbtc')
+        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc')
             .reply(200, cancelOrders.concat(waitOrders).concat(doneOrders));
     };
 
     const mockUserOrdersError = () => {
-        mockAxios.onGet('/market/orders?market=bchbtc').reply(500, userOrdersError);
+        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc').reply(500, userOrdersError);
     };
 
     const mockOrdersLowLevel = () => {
-        mockAxios.onGet('/market/orders?market=bchbtc&state=cancel').reply(401, unverifiedAccountResponse);
-        mockAxios.onGet('/market/orders?market=bchbtc&state=wait').reply(401, unverifiedAccountResponse);
-        mockAxios.onGet('/market/orders?market=bchbtc&state=done').reply(401, unverifiedAccountResponse);
+        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc').reply(401, unverifiedAccountResponse);
     };
 
     const mockOrderCancel = () => {
-        mockAxios.onPost('/market/orders/bchbtc/cancel').reply(200, orderCancel);
+        mockAxios.onPost('/api/v2/peatio/market/orders/bchbtc/cancel').reply(200, orderCancel);
     };
 
     const mockOrderCancelError = () => {
-        mockAxios.onPost('/market/orders/bchbtc/cancel').reply(500, orderCancelError);
+        mockAxios.onPost('/api/v2/peatio/market/orders/bchbtc/cancel').reply(500, orderCancelError);
     };
 
     const mockOrderExecute = () => {
-        mockAxios.onPost('/market/orders').reply(200, executedOrder);
+        mockAxios.onPost('/api/v2/peatio/market/orders').reply(200, executedOrder);
     };
 
     const mockOrderExecuteError = () => {
-        mockAxios.onPost('/market/orders').reply(500, orderExecuteError);
+        mockAxios.onPost('/api/v2/peatio/market/orders').reply(500, orderExecuteError);
     };
 
     const mockFees = () => {
@@ -202,12 +201,12 @@ describe('Orders', () => {
 
     describe('user with correct level', () => {
         const expectedOrderFetch = {
-            type: 'orders/ORDERS_FETCH',
-            payload: { market },
+            type: USER_ORDERS_FETCH,
+            payload: [market],
         };
 
         const expectedOrderData = {
-            type: 'orders/ORDERS_DATA',
+            type: USER_ORDERS_DATA,
             payload: {
                 wait: waitOrders,
                 cancel: cancelOrders,
@@ -220,6 +219,7 @@ describe('Orders', () => {
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
+
                     if (actions.length === 2) {
                         expect(actions[0]).toEqual(expectedOrderFetch);
                         expect(actions[1]).toEqual(expectedOrderData);
@@ -227,19 +227,19 @@ describe('Orders', () => {
                     }
                 });
             });
-            store.dispatch(ordersFetch({ market }));
+            store.dispatch(userOrdersFetch([market]));
             return promise;
         });
     });
 
     describe('user with low verification level', () => {
         const expectedOrderFetch = {
-            type: 'orders/ORDERS_FETCH',
-            payload: { market },
+            type: USER_ORDERS_FETCH,
+            payload: [market],
         };
 
         const expectedOrderError = {
-            type: 'orders/ORDERS_ERROR',
+            type: USER_ORDERS_ERROR,
             payload: {
                 code: 401,
                 message: 'Please, pass the corresponding verification steps to enable trading.',
@@ -258,19 +258,19 @@ describe('Orders', () => {
                     }
                 });
             });
-            store.dispatch(ordersFetch({ market }));
+            store.dispatch(userOrdersFetch([market]));
             return promise;
         });
     });
 
     describe('network error', () => {
         const expectedOrderFetch = {
-            type: 'orders/ORDERS_FETCH',
-            payload: { market },
+            type: USER_ORDERS_FETCH,
+            payload: [market],
         };
 
         const expectedOrderError = {
-            type: 'orders/ORDERS_ERROR',
+            type: USER_ORDERS_ERROR,
             payload: {
                 code: 500,
                 message: 'Server error',
@@ -289,28 +289,28 @@ describe('Orders', () => {
                     }
                 });
             });
-            store.dispatch(ordersFetch({ market }));
+            store.dispatch(userOrdersFetch([market]));
             return promise;
         });
     });
 
     describe('cancel order', async () => {
         const expectedOrderCancelFetch = {
-            type: 'orders/CANCEL_FETCH',
+            type: ORDER_CANCEL_FETCH,
             payload: {
                 id: 'bchbtc',
             },
-         };
+        };
 
         const expectedOrderCancelData = {
-            type: 'orders/CANCEL_DATA',
+            type: ORDER_CANCEL_DATA,
             payload: {
                 id: 'bchbtc',
             },
         };
 
         const expectedOrderCancelError = {
-            type: 'orders/CANCEL_ERROR',
+            type: ORDER_CANCEL_ERROR,
             payload: {
                 code: 500,
                 message: 'Cannot cancel order',
@@ -360,17 +360,17 @@ describe('Orders', () => {
         };
 
         const expectedOrderExecuteFetch = {
-            type: 'orders/EXECUTE_FETCH',
+            type: ORDER_EXECUTE_FETCH,
             payload: order,
-         };
+        };
 
         const expectedOrderExecuteData = {
-            type: 'orders/EXECUTE_DATA',
+            type: ORDER_EXECUTE_DATA,
             payload: executedOrder,
         };
 
         const expectedOrderExecuteError = {
-            type: 'orders/EXECUTE_ERROR',
+            type: ORDER_EXECUTE_ERROR,
             payload: {
                 code: 500,
                 message: 'Cannot execute order',
@@ -412,16 +412,16 @@ describe('Orders', () => {
 
     describe('fees fetch', async () => {
         const expectedFeesFetch = {
-            type: 'orders/FEES_FETCH',
+            type: FEES_FETCH,
         };
 
         const expectedFeesData = {
-            type: 'orders/FEES_DATA',
+            type: FEES_DATA,
             payload: fees,
         };
 
         const expectedFeesError = {
-            type: 'orders/FEES_ERROR',
+            type: FEES_ERROR,
             payload: {
                 code: 500,
                 message: 'Cannot fetch fees',
@@ -470,12 +470,12 @@ describe('Orders', () => {
         ];
 
         const expectedOrdersFetch = {
-            type: 'orders/USER_ORDERS_FETCH',
+            type: USER_ORDERS_FETCH,
             payload: markets,
         };
 
         const expectedOrdersData = {
-            type: 'orders/USER_ORDERS_DATA',
+            type: USER_ORDERS_DATA,
             payload: {
                 wait: waitOrders,
                 cancel: cancelOrders,
@@ -484,7 +484,7 @@ describe('Orders', () => {
         };
 
         const expectedOrdersError = {
-            type: 'orders/USER_ORDERS_ERROR',
+            type: USER_ORDERS_ERROR,
             payload: {
                 code: 500,
                 message: 'Cannot fetch orders',

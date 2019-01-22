@@ -54,7 +54,6 @@ const renderLoader = () => (
     </div>
 );
 
-const MINUTES_UNTIL_AUTO_LOGOUT = minutesUntilAutoLogout;
 const CHECK_INTERVAL = 15000;
 const STORE_KEY =  'lastAction';
 
@@ -154,7 +153,7 @@ class LayoutComponent extends React.Component<Props> {
     private check = () => {
         const { user } = this.props;
         const now = Date.now();
-        const timeleft = this.getLastAction() + parseFloat(MINUTES_UNTIL_AUTO_LOGOUT) * 60 * 1000;
+        const timeleft = this.getLastAction() + parseFloat(minutesUntilAutoLogout()) * 60 * 1000;
         const diff = timeleft - now;
         const isTimeout = diff < 0;
         if (isTimeout && user.email) {

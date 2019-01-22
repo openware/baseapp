@@ -18,17 +18,10 @@ declare global {
 }
 
 window.env = window.env || defaultConfig;
+Cryptobase.config = {...window.env};
 
-export const gatewayUrl = window.env.api.gatewayUrl;
-export const rangerUrl = window.env.api.rangerUrl;
-export const minutesUntilAutoLogout = window.env.minutesUntilAutoLogout;
-export const withCredentials = window.env.withCredentials;
+export const gatewayUrl = () => Cryptobase.config.api.gatewayUrl;
+export const rangerUrl = () => Cryptobase.config.api.rangerUrl;
+export const minutesUntilAutoLogout = () => Cryptobase.config.minutesUntilAutoLogout;
+export const withCredentials = () => Cryptobase.config.withCredentials;
 
-Cryptobase.config = {
-    api: {
-        gatewayUrl,
-        rangerUrl,
-    },
-    minutesUntilAutoLogout,
-    withCredentials,
-};

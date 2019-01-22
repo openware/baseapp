@@ -1,9 +1,11 @@
+import { Market } from '../../markets';
 import { CommonError } from '../../types';
 import {TRADES_DATA, TRADES_ERROR, TRADES_FETCH} from './constants';
-import { Trade } from './reducer';
+import { Trade } from './types';
 
 export interface TradesFetch {
     type: typeof TRADES_FETCH;
+    payload: Market[];
 }
 
 export interface TradesError {
@@ -18,6 +20,7 @@ export interface TradesData {
 
 export type TradesActions = TradesFetch | TradesData | TradesError;
 
-export const trades = (): TradesFetch => ({
+export const tradesFetch = (markets: Market[]): TradesFetch => ({
     type: TRADES_FETCH,
+    payload: markets,
 });

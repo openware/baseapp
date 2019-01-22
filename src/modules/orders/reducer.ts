@@ -10,10 +10,8 @@ import {
     ORDER_EXECUTE_DATA,
     ORDER_EXECUTE_ERROR,
     ORDER_EXECUTE_FETCH,
-    ORDERS_DATA,
-    ORDERS_ERROR,
-    ORDERS_FETCH,
     USER_ORDERS_DATA,
+    USER_ORDERS_DEFAULT,
     USER_ORDERS_ERROR,
     USER_ORDERS_FETCH,
 } from './constants';
@@ -95,17 +93,14 @@ const getConvertedFees = (fees: DefaultFee[]): MarketFees[] =>
 export const ordersReducer = (state = initialState, action: OrdersAction) => {
     switch (action.type) {
         case USER_ORDERS_FETCH:
-        case ORDERS_FETCH:
             return { ...state, loading: true };
         case USER_ORDERS_DATA:
-        case ORDERS_DATA:
             return {
                 ...state,
                 loading: false,
                 orders: action.payload,
             };
         case USER_ORDERS_ERROR:
-        case ORDERS_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -168,6 +163,8 @@ export const ordersReducer = (state = initialState, action: OrdersAction) => {
                 feesLoading: false,
                 feesError: action.payload,
             };
+
+        case USER_ORDERS_DEFAULT:
         default:
             return state;
     }

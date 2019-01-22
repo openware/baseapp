@@ -11,10 +11,8 @@ import {
     ORDER_EXECUTE_ERROR,
     ORDER_EXECUTE_FETCH,
     ORDERS_CANCEL_ALL_FETCH,
-    ORDERS_DATA,
-    ORDERS_ERROR,
-    ORDERS_FETCH,
     USER_ORDERS_DATA,
+    USER_ORDERS_DEFAULT,
     USER_ORDERS_ERROR,
     USER_ORDERS_FETCH,
 } from './constants';
@@ -24,23 +22,6 @@ import {
     Order,
     OrderSide,
 } from './types';
-
-export interface OrdersFetch {
-    type: typeof ORDERS_FETCH;
-    payload: {
-        market: string;
-    };
-}
-
-export interface OrdersData {
-    type: typeof ORDERS_DATA;
-    payload: GroupedOrders;
-}
-
-export interface OrdersError {
-    type: typeof ORDERS_ERROR;
-    payload: CommonError;
-}
 
 export interface OrdersCancelAllFetch {
     type: typeof ORDERS_CANCEL_ALL_FETCH;
@@ -117,10 +98,11 @@ export interface UserOrdersError {
     payload: CommonError;
 }
 
-export type OrdersAction = OrdersFetch
-    | OrdersData
-    | OrdersError
-    | OrdersCancelAllFetch
+export interface UserOrdersDefault {
+    type: typeof USER_ORDERS_DEFAULT;
+}
+
+export type OrdersAction = OrdersCancelAllFetch
     | OrderCancelFetch
     | OrderCancelData
     | OrderCancelError
@@ -132,22 +114,8 @@ export type OrdersAction = OrdersFetch
     | FeesError
     | UserOrdersFetch
     | UserOrdersData
-    | UserOrdersError;
-
-export const ordersFetch = (payload: OrdersFetch['payload']): OrdersFetch => ({
-    type: ORDERS_FETCH,
-    payload,
-});
-
-export const ordersData = (payload: OrdersData['payload']): OrdersData => ({
-    type: ORDERS_DATA,
-    payload,
-});
-
-export const ordersError = (payload: OrdersError['payload']): OrdersError => ({
-    type: ORDERS_ERROR,
-    payload,
-});
+    | UserOrdersError
+    | UserOrdersDefault;
 
 export const ordersCancelAllFetch = (): OrdersCancelAllFetch => ({
     type: ORDERS_CANCEL_ALL_FETCH,
@@ -211,6 +179,11 @@ export const userOrdersFetch =
 export const userOrdersData = (payload: UserOrdersData['payload']): UserOrdersData => ({
     type: USER_ORDERS_DATA,
     payload,
+});
+
+
+export const userOrdersDefault = (): UserOrdersDefault => ({
+    type: USER_ORDERS_DEFAULT,
 });
 
 export const userOrdersError =

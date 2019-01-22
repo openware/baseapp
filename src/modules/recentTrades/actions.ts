@@ -1,3 +1,4 @@
+import { Trade } from '../history/trades';
 import { Market } from '../markets';
 import { CommonError } from '../types';
 import {
@@ -5,7 +6,6 @@ import {
     RECENT_TRADES_ERROR,
     RECENT_TRADES_FETCH,
 } from './constants';
-import { RecentTrade } from './types';
 
 // tslint:disable no-any
 
@@ -16,7 +16,7 @@ export interface RecentTradesFetch {
 
 export interface RecentTradesData {
     type: typeof RECENT_TRADES_DATA;
-    payload: RecentTrade[];
+    payload: Trade[];
 }
 
 export interface RecentTradesError {

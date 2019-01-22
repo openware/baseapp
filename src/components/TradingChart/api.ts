@@ -9,7 +9,7 @@ export const print = (...x) => console.log.apply(null, ['>>>> TC', ...x]);
 
 const makeHistoryUrl = (
     market: string, resolution: number, from: number, to: number,
-) => `${gatewayUrl}/peatio/public/markets/${market}/k-line?period=${resolution}&time_from=${from}&time_to=${to}`;
+) => `${gatewayUrl()}/peatio/public/markets/${market}/k-line?period=${resolution}&time_from=${from}&time_to=${to}`;
 
 const resolutionToSeconds = (r: string): number => {
     const minutes = parseInt(r, 10);

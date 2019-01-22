@@ -1,14 +1,6 @@
-import { CommonState } from '../../types';
 import { TradesActions } from './actions';
-import {TRADES_DATA, TRADES_ERROR, TRADES_FETCH} from './constants';
-
-export interface Trade {
-    market: string;
-}
-
-export interface TradesState extends CommonState {
-    list: Trade[];
-}
+import { TRADES_DATA, TRADES_ERROR, TRADES_FETCH } from './constants';
+import { TradesState } from './types';
 
 const initialState: TradesState = {
     list: [],
