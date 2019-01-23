@@ -17,12 +17,13 @@
 
   .cr-search {
     display: flex;
-    position: sticky;
+    position: fixed;
     padding-bottom: calc(var(--gap) * 2);
     padding-right: var(--gap);
     bottom: 0;
     background: var(--base-bright);
     z-index: 9999;
+    padding: 5px 0 !important;
 
     &__icon {
       background: var(--transparent);
@@ -50,7 +51,7 @@
 }
 
 .cr-markets {
-  padding-bottom: 0;
+  padding-bottom: 0 !important;
 
   .cr-table {
     td {

@@ -32,11 +32,6 @@ class RecentTradesComponent extends React.Component<Props> {
     public render() {
         return (
             <div className="pg-recent-trades">
-                <div className="cr-table-header__content">
-                    <div className={'pg-market-depth__title'}>
-                        Recent Trades
-                    </div>
-                </div>
                 <Table data={this.getTrades(this.props.recentTrades)} header={['Time', 'Price', 'Volume']}/>
             </div>
         );

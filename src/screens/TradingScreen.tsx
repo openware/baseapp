@@ -1,10 +1,9 @@
-import { Grid } from '@openware/components';
+import { Grid, TabPanel } from '@openware/components';
 import * as React from 'react';
 import {connect, MapDispatchToPropsFunction, MapStateToProps} from 'react-redux';
 import {
     Asks,
     Bids,
-    HistoryComponent,
     MarketDepthsComponent,
     MarketsComponent,
     OpenOrdersComponent,
@@ -43,10 +42,8 @@ const layouts = {
         { x: 8, y: 0, w: 16, h: 39, i: '2', minH: 12, minW: 5 },
         { x: 0, y: 39, w: 4, h: 24, i: '3', minH: 10, minW: 3 },
         { x: 4, y: 39, w: 4, h: 24, i: '4', minH: 10, minW: 3 },
-        { x: 15, y: 12, w: 9, h: 12, i: '5', minH: 10, minW: 4 },
-        { x: 15, y: 25, w: 9, h: 12, i: '6', minH: 10, minW: 5 },
-        { x: 0, y: 6, w: 8, h: 15, i: '7', minH: 10, minW: 5 },
-        { x: 8, y: 72, w: 7, h: 24, i: '8', minH: 23, minW: 5 },
+        { x: 0, y: 6, w: 8, h: 15, i: '5', minH: 10, minW: 5 },
+        { x: 8, y: 72, w: 16, h: 24, i: '6', minH: 23, minW: 5 },
     ],
     md: [
         { x: 0, y: 0, w: 5, h: 12, i: '0', minH: 12, minW: 4 },
@@ -54,10 +51,8 @@ const layouts = {
         { x: 5, y: 0, w: 19, h: 30, i: '2', minH: 12, minW: 5 },
         { x: 0, y: 24, w: 5, h: 12, i: '3', minH: 10, minW: 3 },
         { x: 5, y: 12, w: 5, h: 12, i: '4', minH: 10, minW: 3 },
-        { x: 10, y: 12, w: 8, h: 12, i: '5', minH: 10, minW: 4 },
-        { x: 18, y: 12, w: 6, h: 12, i: '6', minH: 10, minW: 5 },
-        { x: 0, y: 24, w: 10, h: 24, i: '7', minH: 10, minW: 5 },
-        { x: 0, y: 72, w: 6, h: 8, i: '8', minH: 8, minW: 5 },
+        { x: 0, y: 24, w: 10, h: 24, i: '5', minH: 10, minW: 5 },
+        { x: 10, y: 0, w: 14, h: 36, i: '6', minH: 8, minW: 5 },
     ],
     sm: [
         {
@@ -117,32 +112,10 @@ const layouts = {
         },
         {
             x: 0,
-            y: 84,
-            w: 12,
-            h: 12,
-            i: '5',
-            minH: 12,
-            minW: 5,
-            draggable: false,
-            resizable: false,
-        },
-        {
-            x: 0,
-            y: 96,
-            w: 12,
-            h: 12,
-            i: '6',
-            minH: 12,
-            minW: 5,
-            draggable: false,
-            resizable: false,
-        },
-        {
-            x: 0,
             y: 106,
             w: 12,
             h: 12,
-            i: '7',
+            i: '5',
             minH: 12,
             minW: 7,
             draggable: false,
@@ -153,13 +126,26 @@ const layouts = {
             y: 72,
             w: 12,
             h: 12,
-            i: '8',
+            i: '6',
             minH: 12,
             minW: 7,
             draggable: false,
             resizable: false,
         },
     ],
+};
+
+const renderTabs = () => {
+    return [
+        {
+          content: <RecentTrades/>,
+          label: 'Recent Trades',
+        },
+        {
+            content: <OpenOrdersComponent/>,
+            label: 'Open Orders',
+        },
+    ];
 };
 
 const gridItems = [
@@ -185,19 +171,7 @@ const gridItems = [
     },
     {
         i: 5,
-        render: () => <HistoryComponent />,
-    },
-    {
-        i: 6,
-        render: () => <OpenOrdersComponent />,
-    },
-    {
-        i: 7,
         render: () => <MarketDepthsComponent />,
-    },
-    {
-        i: 8,
-        render: () => <RecentTrades/>,
     },
 ];
 
@@ -230,8 +204,27 @@ class Trading extends React.Component<Props> {
         }
     }
 
+    public renderTrades() {
+      if (this.props.user.uid) {
+        return (
+          <div className="pg-trading-screen__tab-panel"><TabPanel  panels={renderTabs()} /></div>
+        );
+      } else {
+        return (
+          <React.Fragment>
+            <div className="cr-table-header__content">
+                <div className={'pg-market-depth__title'}>
+                      Recent Trades
+                </div>
+              </div>
+            <RecentTrades/>
+          </React.Fragment>
+        );
+      }
+    }
     public render() {
         const rowHeight = 12;
+        const allGridItems = [...gridItems, {i: 6, render: () => this.renderTrades()}];
 
         return (
             <div className={'pg-trading-screen'}>
@@ -239,7 +232,7 @@ class Trading extends React.Component<Props> {
                     <Grid
                         breakpoints={breakpoints}
                         className="layout"
-                        children={gridItems}
+                        children={allGridItems}
                         cols={cols}
                         draggableHandle=".cr-table-header__content"
                         layouts={layouts}

@@ -1,6 +1,32 @@
 .pg-trading-screen {
   padding: calc(var(--gap) * 0.5) calc(var(--gap) * 1.66);
   background: var(--transparent);
+
+  &__tab-panel {
+    .cr-tab {
+      color: var(--title-component-color) !important;
+      padding: 12px 12px 6px !important;
+      &__active {
+        color: var(--bright-1) !important;
+      }
+      &__pointer {
+        bottom: 0 !important;
+      }
+      &-panel__navigation-container {
+        &-navigation {
+          padding-bottom: unset;
+        }
+        cursor: move;
+        background: var(--table-dark-header-color);
+        box-shadow: inset 0 -1px 0 var(--header-border);
+        border-bottom: unset;
+        margin-bottom: unset;
+        position: sticky;
+        top: 0;
+        z-index: 9999;
+      }
+    }
+  }
 }
 
 .pg-trading-wrap {
