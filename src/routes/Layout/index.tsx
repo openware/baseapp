@@ -99,7 +99,7 @@ class LayoutComponent extends React.Component<Props> {
             <div className="pg-layout">
                 <Switch>
                     <Route path="/signin" component={SignInScreen} />
-                    <Route path="/accounts/confirmation/:token" component={VerificationScreen} />
+                    <Route path="/accounts/confirmation" component={VerificationScreen} />
                     <Route path="/signup" component={SignUpScreen} />
                     <Route path="/forgot_password" component={ForgotPasswordScreen} />
                     <Route path="/reset_password" component={ChangeForgottenPasswordScreen} />

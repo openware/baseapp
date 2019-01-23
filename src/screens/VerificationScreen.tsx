@@ -19,19 +19,21 @@ interface ReduxProps {
 }
 
 interface RouterProps {
-    match: {
-        params: {
-            token: string,
-        };
+    location: {
+        search: string;
     };
 }
 
 type Props = DispatchProps & RouterProps & ReduxProps;
 
+
 class Verification extends React.Component<Props> {
     public componentDidMount() {
-        const token = this.props.match.params.token;
-        this.props.verification({ confirmation_token: token });
+        const queryParams = new URLSearchParams(this.props.location.search);
+        const token = queryParams.get('confirmation_token');
+        if (token) {
+            this.props.verification({ confirmation_token: token });
+        }
     }
 
     public render() {
