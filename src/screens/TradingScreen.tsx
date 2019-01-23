@@ -234,7 +234,7 @@ class Trading extends React.Component<Props> {
                         className="layout"
                         children={allGridItems}
                         cols={cols}
-                        draggableHandle=".cr-table-header__content"
+                        draggableHandle=".cr-table-header__content, .pg-trading-screen__tab-panel"
                         layouts={layouts}
                         rowHeight={rowHeight}
                         onLayoutChange={handleLayoutChange}
