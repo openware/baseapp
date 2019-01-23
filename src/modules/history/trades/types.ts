@@ -6,7 +6,7 @@ export interface Trade {
     funds: string;
     id: number;
     price: string;
-    side: string | null;
+    side: string;
     volume: string;
 }
 

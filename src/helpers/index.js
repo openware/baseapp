@@ -7,3 +7,4 @@ export * from './emailValidation';
 export * from './timezone';
 export * from './localeDateSec';
 export * from './historyTableUtils';
+export * from './setTradeColor';

@@ -29,7 +29,7 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
             return {
                 list: [],
                 loading: false,
-                error: action.payload,
+                error: action.error,
             };
         }
         case RECENT_TRADES_FETCH: {

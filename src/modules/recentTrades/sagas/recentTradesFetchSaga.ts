@@ -1,22 +1,15 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
-import { handleError } from '../../';
 import { API, RequestOptions } from '../../../api';
-import { localeDate } from '../../../helpers';
-import { RecentTradesFetch } from '../actions';
-import { RECENT_TRADES_DATA, RECENT_TRADES_ERROR } from '../constants';
+import {
+    recentTradesData,
+    recentTradesError,
+    RecentTradesFetch,
+} from '../actions';
 
 const tradesOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
-
-const convertToTrades = trades => trades.map(trade => [
-    localeDate(trade.created_at),
-    trade.side,
-    trade.price,
-    trade.volume,
-],
-);
 
 export function* recentTradesFetchSaga(action: RecentTradesFetch) {
     try {
@@ -26,11 +19,8 @@ export function* recentTradesFetchSaga(action: RecentTradesFetch) {
         }
 
         const trades = yield call(API.get(tradesOptions), `/public/markets/${market.id}/trades`);
-        const convertedTrades = convertToTrades(trades);
-
-        yield put({ type: RECENT_TRADES_DATA, payload: convertedTrades });
+        yield put(recentTradesData(trades));
     } catch (error) {
-        yield put({ type: RECENT_TRADES_ERROR, payload: error.message });
-        yield put(handleError(error.message));
+        yield put(recentTradesError(error));
     }
 }

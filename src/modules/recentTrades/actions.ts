@@ -21,7 +21,7 @@ export interface RecentTradesData {
 
 export interface RecentTradesError {
     type: typeof RECENT_TRADES_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export type RecentTradesActions =
@@ -29,7 +29,17 @@ export type RecentTradesActions =
     | RecentTradesError
     | RecentTradesData;
 
-export const recentTrades = (payload: RecentTradesFetch['payload']): RecentTradesFetch => ({
+export const recentTradesFetch = (payload: RecentTradesFetch['payload']): RecentTradesFetch => ({
     type: RECENT_TRADES_FETCH,
     payload,
+});
+
+export const recentTradesData = (payload: RecentTradesData['payload']): RecentTradesData => ({
+    type: RECENT_TRADES_DATA,
+    payload,
+});
+
+export const recentTradesError = (error: RecentTradesError['error']): RecentTradesError => ({
+    type: RECENT_TRADES_ERROR,
+    error,
 });

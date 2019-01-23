@@ -1,17 +1,18 @@
 import { Table } from '@openware/components';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { Market, RootState, selectCurrentMarket } from '../../modules';
-import { recentTrades, selectRecentTrades } from '../../modules/recentTrades';
+import { localeDateSec, setTradeColor } from '../../helpers';
+import { Market, RootState, selectCurrentMarket, Trade } from '../../modules';
+import { recentTradesFetch, selectRecentTrades } from '../../modules/recentTrades';
 
 // tslint:disable no-any
 interface ReduxProps {
-    recentTrades: any;
+    recentTrades: Trade[];
     currentMarket: Market;
 }
 
 interface DispatchProps {
-    tradesFetch: typeof recentTrades;
+    tradesFetch: typeof recentTradesFetch;
 }
 
 type Props = DispatchProps & ReduxProps;
@@ -37,13 +38,18 @@ class RecentTradesComponent extends React.Component<Props> {
         );
     }
 
-    private getTrades(trades: any) {
+    private getTrades(trades: Trade[]) {
         const renderRow = item => {
-            return [item[0], ...item.slice(2)];
+            const { id, created_at, side, price, volume } = item;
+            return [
+                <span style={{ color: setTradeColor(side).color }} key={id}>{localeDateSec(created_at)}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>{price}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>{volume}</span>,
+            ];
         };
-        return trades.length ?
-            trades.map(renderRow).slice(0,100) :
-            [['There is no data to show...']];
+        return (trades.length > 0)
+            ? trades.map(renderRow)
+            : [['There is no data to show...', '', '']];
     }
 }
 
@@ -53,7 +59,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    tradesFetch: market => dispatch(recentTrades(market)),
+    tradesFetch: market => dispatch(recentTradesFetch(market)),
 });
 
 
