@@ -226,7 +226,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
         const request = new FormData();
 
-        request.append('upload', scan);
+        request.append('upload[]', scan);
         request.append('doc_expire', expiration);
         request.append('doc_type', documentsType);
         request.append('doc_number', idNumber);
