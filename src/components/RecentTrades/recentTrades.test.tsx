@@ -21,6 +21,7 @@ const defaultProps: RouterProps = {
             market: 'bchbtc',
             created_at: '2018-12-18T14:21:23+01:00',
             side: 'ask',
+            maker_type: 'sell',
         },
         {
             id: 162412,
@@ -30,6 +31,7 @@ const defaultProps: RouterProps = {
             market: 'bchbtc',
             created_at: '2018-12-18T14:21:23+01:00',
             side: 'bid',
+            maker_type: 'buy',
         },
         {
             id: 162411,
@@ -39,6 +41,7 @@ const defaultProps: RouterProps = {
             market: 'bchbtc',
             created_at: '2018-12-18T14:21:23+01:00',
             side: 'bid',
+            maker_type: 'buy',
         },
     ],
     currentMarket: {

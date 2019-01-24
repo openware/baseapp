@@ -7,6 +7,7 @@ export interface Trade {
     id: number;
     price: string;
     side: string;
+    maker_type: string;
     volume: string;
 }
 

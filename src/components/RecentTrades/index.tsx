@@ -40,11 +40,11 @@ class RecentTradesComponent extends React.Component<Props> {
 
     private getTrades(trades: Trade[]) {
         const renderRow = item => {
-            const { id, created_at, side, price, volume } = item;
+            const { id, created_at, maker_type, price, volume } = item;
             return [
-                <span style={{ color: setTradeColor(side).color }} key={id}>{localeDateSec(created_at)}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{price}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{volume}</span>,
+                <span style={{ color: setTradeColor(maker_type).color }} key={id}>{localeDateSec(created_at)}</span>,
+                <span style={{ color: setTradeColor(maker_type).color }} key={id}>{price}</span>,
+                <span style={{ color: setTradeColor(maker_type).color }} key={id}>{volume}</span>,
             ];
         };
         return (trades.length > 0)
