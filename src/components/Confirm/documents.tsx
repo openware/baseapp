@@ -55,6 +55,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
         const onSelect = value => this.handleChangeDocumentsType(data[value]);
         const numberType = `${documentsType} Number`;
+        const scanName = scan && (scan.name.length > 30 ? `${scan.name.slice(0, 20)}...${scan.name.slice(-8)}` : scan.name);
 
         return (
             <div>
@@ -123,7 +124,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                         </div>
                                     </form>
                                 </div>
-                                {scan && <p>{scan.name}</p>}
+                                {scanName && <p>{scanName}</p>}
                             </div>
                         </div>
                     </div>
