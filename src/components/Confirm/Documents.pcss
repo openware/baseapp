@@ -5,16 +5,19 @@
   display: flex;
   flex-direction: column;
 
+  &-drag {
+    float: right;
+    text-align: left;
+  }
+
   &-col {
     display: inline-flex;
     max-width: 50%;
     flex: 0 0 50%;
-    width: 100%;
 
     &-row {
       display: inline-block;
-      margin-top: calc(var(--gap) * 4.66);
-      margin-bottom: calc(var(--gap) * 3.33);
+      margin-top: calc(var(--gap) * 2);
       color: var(--kyc-grey);
 
       &-text {
@@ -24,18 +27,14 @@
         width: 100%;
         font-weight: normal;
       }
-      &:first-child {
-        margin-right: calc(var(--gap) * 3);
-      }
 
       &-content {
         border-bottom: 1px solid var(--confirm-border-color);
         display: inline-block;
-        width: calc(var(--big-gap) * 3.83);
         font-weight: normal;
 
         input {
-          background: var(--transparent); 
+          background: var(--transparent);
           box-sizing: border-box;
           color: var(--dark-color);
           font-size: calc(var(--gap) * 2.33);
@@ -44,7 +43,8 @@
           border-radius: 4px;
           width: 230px;
           height: 53px;
-          padding-left: calc(var(--gap) * 3);
+          padding-left: calc(var(--gap) * 2);
+          margin-bottom: calc(var(--gap) * 3);
 
           &::placeholder {
             color: var(--text-muted);
@@ -54,8 +54,10 @@
 
       &-content-2 {
         display: inline-block;
-        width: calc(var(--big-gap) * 4.33);
         font-size: calc(var(--gap) * 2.33);
+        margin: 0 auto;
+        height: 100%;
+        width: 242px;
 
         input {
           border: none;
@@ -70,11 +72,11 @@
         }
 
         &-documents {
-          width: 480px;
           border: 1px dashed var(--kyc-grey);
           box-sizing: border-box;
           margin-top: calc(var(--gap) * 1.2);
           margin-bottom: calc(var(--gap) * 3);
+          height: 165px;
           &-input {
             height: 0.1px;
             opacity: 0;
@@ -96,7 +98,6 @@
             cursor: pointer;
             display: flex;
             justify-content: space-around;
-            height: calc(var(--big-gap) * 1.66);
             margin: 0 auto;
 
             &:hover, label {
@@ -134,9 +135,9 @@
             border-color: var(--confirm-border-color) !important;
             color: var(--base-9) !important;
             height: 53px;
-            width: 230px;
             border-radius: 4px;
             font-size: calc(var(--gap) * 2.33);
+            margin-bottom: calc(var(--gap) * 3);
           }
           &__input--open {
             border-radius: 4px 4px 0 0;
@@ -156,15 +157,15 @@
             background-color: var(--base-bright);
             color: var(--kyc-grey);
             overflow-y: auto;
-            margin-top: -5px;
+            margin-top: -30px;
             max-height: calc(var(--big-gap) * 3.5);
-            border-radius: 4px;
+            border-radius: 0 0 4px 4px;
             &-item {
               color: var(--kyc-grey);
               font-size: calc(var(--gap) * 2.33);
               font-weight: normal;
               &-label {
-                margin-left: calc(var(--gap) * 3);
+                margin-left: calc(var(--gap) * 2);
                 font-size: calc(var(--gap) * 2.33);
               }
               &:hover {

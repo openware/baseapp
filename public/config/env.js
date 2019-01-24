@@ -6,4 +6,3 @@ window.env = {
     minutesUntilAutoLogout: '5',
     withCredentials: false,
 };
-  

@@ -1,6 +1,8 @@
 import classnames from 'classnames';
+import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { RootState, selectUserInfo, User } from '../../modules';
 import { Documents } from './documents';
 import { Identity } from './identity';
@@ -10,12 +12,16 @@ interface ReduxProps {
     userData: User;
 }
 
+interface HistoryProps {
+    history: History;
+}
+
 interface ConfirmState {
     title: string;
     level: number;
 }
 
-type Props = ReduxProps;
+type Props = ReduxProps & HistoryProps;
 
 class ConfirmComponent extends React.Component<Props, ConfirmState> {
     constructor(props: Props) {
@@ -34,6 +40,11 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
         });
     }
 
+    public goBack = event => {
+      event.preventDefault();
+      this.props.history.goBack();
+    }
+
     public render() {
         const { userData } = this.props;
         const currentProfileLevel = userData.level;
@@ -45,6 +56,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
         return (
           <div className="pg-confirm">
             <div className="pg-confirm-box">
+                <a href="#" onClick={this.goBack} className="pg-confirm-box-close" />
                 <div className="pg-confirm__progress">
                     <div className={cx}>
                         <div className="pg-confirm__progress-circle-1">
@@ -83,4 +95,4 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 });
 
 // tslint:disable-next-line
-export const Confirm = connect(mapStateToProps)(ConfirmComponent) as any;
+export const Confirm = withRouter(connect(mapStateToProps)(ConfirmComponent) as any);

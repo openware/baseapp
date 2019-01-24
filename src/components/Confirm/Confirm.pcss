@@ -18,6 +18,19 @@
     width: 100%;
     max-height: calc(var(--big-gap) * 10);
     min-height: cacl(var(--big-gap) * 8);
+    position: relative;
+    border-radius: 4px;
+
+    &-close {
+      background: url(assets/images/close.svg);
+      background-size: cover;
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      right: 10px;
+      top: 10px;
+      cursor: pointer;
+    }
   }
 
   &__success,
@@ -53,6 +66,7 @@
     height: 100px;
     background: var(--kyc-header-color);
     border-bottom: 1px solid var(--kyc-header-border);
+    border-radius: 4px 4px 0 0;
 
     &-circle {
       &-1,
@@ -144,7 +158,7 @@
 
   &__content {
     width: 100%;
-    max-width: 480px;
+    max-width: 500px;
     margin: 0 auto;
 
     input, button {

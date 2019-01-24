@@ -3,6 +3,7 @@ import {
   Dropdown,
 } from '@openware/components';
 import * as React from 'react';
+import MaskInput from 'react-maskinput';
 import {
   connect,
   MapDispatchToPropsFunction,
@@ -33,6 +34,7 @@ interface OnChangeEvent {
 interface DocumentsState {
     documentsType: string;
     idNumber: string;
+    expiration: string;
     scan?: File;
 }
 
@@ -42,12 +44,14 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     public state = {
         documentsType: 'Passport',
         idNumber: '',
+        expiration: '',
     };
 
     public render() {
         const {
             documentsType,
             idNumber,
+            expiration,
             scan,
         }: DocumentsState = this.state;
         const { error, success } = this.props;
@@ -60,71 +64,75 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         return (
             <div>
                 <div className="pg-confirm__content-documents">
-                    <div className="pg-confirm__content-documents-col">
                         <div className="pg-confirm__content-documents-col-row">
-                            <div className="pg-confirm__content-documents-col-row-text">
-                                Select ID Type
-                            </div>
-                            <div className="pg-confirm__content-documents-col-row-content-3">
-                                <Dropdown
-                                    className="pg-confirm__content-documents-col-row-content-number"
-                                    list={data}
-                                    onSelect={onSelect}
-                                />
-                            </div>
-                        </div>
-                        <div className="pg-confirm__content-documents-col-row">
-                            <div className="pg-confirm__content-documents-col-row-text">
-                                {documentsType} Number
-                            </div>
-                            <div className="pg-confirm__content-documents-col-row-content">
+                          <div className="pg-confirm__content-documents-col">
+                            <div className="pg-confirm__content-documents-col-row">
+                              <div className="pg-confirm__content-documents-col-row-content-3">
+                                  <Dropdown
+                                      className="pg-confirm__content-documents-col-row-content-number"
+                                      list={data}
+                                      onSelect={onSelect}
+                                  />
+                              </div>
+                              <div className="pg-confirm__content-documents-col-row-content">
                                 <input
-                                    className="pg-confirm__content-documents-col-row-content-number"
-                                    type="string"
-                                    placeholder={numberType}
-                                    value={idNumber}
-                                    onChange={this.handleChangeIdNumber}
+                                  className="pg-confirm__content-documents-col-row-content-number"
+                                  type="string"
+                                  placeholder={numberType}
+                                  value={idNumber}
+                                  onChange={this.handleChangeIdNumber}
+                                />
+                              </div>
+                              <div className="pg-confirm__content-documents-col-row-content">
+                                <MaskInput
+                                  maskString="00/00/0000"
+                                  mask="00/00/0000"
+                                  onChange={this.handleChangeExpiration}
+                                  value={expiration}
+                                  className="group-input"
+                                  placeholder="Expiry Date DD/MM/YYYY"
                                 />
                             </div>
+                          </div>
                         </div>
-                    </div>
-                    <div className="pg-confirm__content-documents-col">
-                        <div className="pg-confirm__content-documents-col-row">
-                            <div className="pg-confirm__content-documents-col-row-content-2">
-                                Upload your ID Photo
-                                <div className="pg-confirm__content-documents-col-row-content-2-documents">
-                                    <form
-                                        className="box"
-                                        draggable={true}
-                                        onDrop={this.handleFileDrop}
-                                        onDragOver={this.handleDragOver}
-                                        method="post"
-                                        action=""
-                                        data-enctype="multipart/form-data"
-                                    >
-                                        <input
-                                            className="pg-confirm__content-documents-col-row-content-2-documents-input"
-                                            data-multiple-caption="files selected"
+                        <div className="pg-confirm__content-documents-col pg-confirm__content-documents-drag">
+                            <div className="pg-confirm__content-documents-col-row">
+                                <div className="pg-confirm__content-documents-col-row-content-2">
+                                    Upload your ID Photo
+                                    <div className="pg-confirm__content-documents-col-row-content-2-documents">
+                                        <form
+                                            className="box"
                                             draggable={true}
-                                            multiple={true}
-                                            name="files[]"
-                                            type="file"
-                                            id="file"
-                                            onChange={this.handleUploadScan}
-                                        />
-                                        <div className="pg-confirm__content-documents-col-row-content-2-documents-label">
-                                            <label
-                                                className="pg-confirm__content-documents-col-row-content-2-documents-label-item"
-                                                htmlFor="file"
-                                            >
-                                                Drag and drop or <span className="active">browse files</span>
-                                                <div className="muted">Maximum file size is 20MB</div>
-                                                <div className="muted">Maximum number of files is 5</div>
-                                            </label>
-                                        </div>
-                                    </form>
+                                            onDrop={this.handleFileDrop}
+                                            onDragOver={this.handleDragOver}
+                                            method="post"
+                                            action=""
+                                            data-enctype="multipart/form-data"
+                                        >
+                                            <input
+                                                className="pg-confirm__content-documents-col-row-content-2-documents-input"
+                                                data-multiple-caption="files selected"
+                                                draggable={true}
+                                                multiple={true}
+                                                name="files[]"
+                                                type="file"
+                                                id="file"
+                                                onChange={this.handleUploadScan}
+                                            />
+                                            <div className="pg-confirm__content-documents-col-row-content-2-documents-label">
+                                                <label
+                                                    className="pg-confirm__content-documents-col-row-content-2-documents-label-item"
+                                                    htmlFor="file"
+                                                >
+                                                    <p className="active">Drag and drop orbrowse files</p>
+                                                    <div className="muted">Maximum file size is 20MB</div>
+                                                    <div className="muted">Maximum number of files is 5</div>
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {scanName && <p>{scanName}</p>}
                                 </div>
-                                {scanName && <p>{scanName}</p>}
                             </div>
                         </div>
                     </div>
@@ -158,6 +166,28 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         this.setState({ scan });
     }
 
+    private formatDate = (date: string) => {
+      const [day, month, year] = date.split('/');
+      let formatDay = day ? parseFloat(day) : '';
+      formatDay = formatDay === '' || formatDay <= 31 ? formatDay : 31;
+      let formatMonth = month ? parseFloat(month) : '';
+      formatMonth = formatMonth === '' || formatMonth <= 12 ? formatMonth : 12;
+      const formatYear = year ? parseFloat(year) : '';
+      if (formatDay && formatMonth && formatYear) {
+        return `${formatDay}/${formatMonth}/${formatYear}`;
+      } else if (formatDay && formatMonth) {
+        return `${formatDay}/${formatMonth}`;
+      } else {
+        return `${formatDay}`;
+      }
+    }
+
+    private handleChangeExpiration = (e: OnChangeEvent) => {
+        this.setState({
+          expiration: this.formatDate(e.target.value),
+        });
+    }
+
     private handleUploadScan = uploadEvent => {
         const allFiles: File[] = uploadEvent.target.files;
         const file: File = allFiles[0];
@@ -185,6 +215,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         const {
             scan,
             idNumber,
+            expiration,
             documentsType,
 
         }: DocumentsState = this.state;
@@ -196,6 +227,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         const request = new FormData();
 
         request.append('upload', scan);
+        request.append('doc_expire', expiration);
         request.append('doc_type', documentsType);
         request.append('doc_number', idNumber);
 
