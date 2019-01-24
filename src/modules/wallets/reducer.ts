@@ -7,9 +7,12 @@ import {
     WALLETS_DATA,
     WALLETS_ERROR,
     WALLETS_FETCH,
-    WALLETS_WITHDRAW_DATA,
-    WALLETS_WITHDRAW_ERROR,
-    WALLETS_WITHDRAW_FETCH,
+    WALLETS_WITHDRAW_CCY_DATA,
+    WALLETS_WITHDRAW_CCY_ERROR,
+    WALLETS_WITHDRAW_CCY_FETCH,
+    WALLETS_WITHDRAW_FIAT_DATA,
+    WALLETS_WITHDRAW_FIAT_ERROR,
+    WALLETS_WITHDRAW_FIAT_FETCH,
 } from './constants';
 import { Wallet } from './types';
 
@@ -38,7 +41,13 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 ...state,
                 loading: true,
             };
-        case WALLETS_WITHDRAW_FETCH:
+        case WALLETS_WITHDRAW_FIAT_FETCH:
+            return {
+                ...state,
+                loading: true,
+                withdrawSuccess: false,
+            };
+        case WALLETS_WITHDRAW_CCY_FETCH:
             return {
                 ...state,
                 loading: true,
@@ -84,13 +93,26 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 loading: false,
             };
         }
-        case WALLETS_WITHDRAW_DATA:
+        case WALLETS_WITHDRAW_FIAT_DATA:
             return {
                 ...state,
                 loading: false,
                 withdrawSuccess: true,
             };
-        case WALLETS_WITHDRAW_ERROR:
+        case WALLETS_WITHDRAW_FIAT_ERROR:
+            return {
+                ...state,
+                loading: false,
+                withdrawSuccess: false,
+                error: action.payload,
+            };
+        case WALLETS_WITHDRAW_CCY_DATA:
+            return {
+                ...state,
+                loading: false,
+                withdrawSuccess: true,
+            };
+        case WALLETS_WITHDRAW_CCY_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -117,13 +139,21 @@ export const walletsReducer = (state = initialState, action: WalletsAction): Wal
         case WALLETS_ADDRESS_FETCH:
         case WALLETS_ADDRESS_DATA:
         case WALLETS_ADDRESS_ERROR:
-        case WALLETS_WITHDRAW_FETCH:
-        case WALLETS_WITHDRAW_DATA:
-        case WALLETS_WITHDRAW_ERROR:
-            const walletsListState = { ...state.wallets };
+        case WALLETS_WITHDRAW_FIAT_FETCH:
+        case WALLETS_WITHDRAW_FIAT_DATA:
+        case WALLETS_WITHDRAW_FIAT_ERROR:
+            const walletsListStateFiat = { ...state.wallets };
             return {
                 ...state,
-                wallets: walletsListReducer(walletsListState, action),
+                wallets: walletsListReducer(walletsListStateFiat, action),
+            };
+        case WALLETS_WITHDRAW_CCY_FETCH:
+        case WALLETS_WITHDRAW_CCY_DATA:
+        case WALLETS_WITHDRAW_CCY_ERROR:
+            const walletsListStateCcy = { ...state.wallets };
+            return {
+                ...state,
+                wallets: walletsListReducer(walletsListStateCcy, action),
             };
         default:
             return state;

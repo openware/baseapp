@@ -4286,6 +4286,11 @@ input-core@^1.0.0:
   resolved "https://registry.yarnpkg.com/input-core/-/input-core-1.0.0.tgz#e8c02f92fbac4033058fcaa1b779bef3a8fbae70"
   integrity sha1-6MAvkvusQDMFj8qht3m+86j7rnA=
 
+input-core@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/input-core/-/input-core-1.0.0.tgz#e8c02f92fbac4033058fcaa1b779bef3a8fbae70"
+  integrity sha1-6MAvkvusQDMFj8qht3m+86j7rnA=
+
 inquirer@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-3.3.0.tgz#9dd2f2ad765dcab1ff0443b491442a20ba227dc9"
@@ -7656,6 +7661,13 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
 react-maskinput@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-maskinput/-/react-maskinput-1.0.1.tgz#9d3df4a5a019a03676401c48e3d04ace08df9d05"
+  dependencies:
+    input-core "^1.0.0"
+
+react-maskinput@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-maskinput/-/react-maskinput-1.0.1.tgz#9d3df4a5a019a03676401c48e3d04ace08df9d05"
+  integrity sha512-hYAEgL2rxPAsia/MGUmFdb46eKsFSACm5lJ/Ql92Z+v3GmKuB/AC/9mG0FNiriqeg+xCqnJqlhUsTWvp+LKhAw==
   dependencies:
     input-core "^1.0.0"
 

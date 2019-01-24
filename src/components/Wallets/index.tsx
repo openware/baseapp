@@ -20,7 +20,8 @@ import {
     walletsAddressFetch,
     walletsData,
     walletsFetch,
-    walletsWithdrawFetch,
+    walletsWithdrawCcyFetch,
+    walletsWithdrawFiatFetch,
 } from '../../modules/wallets';
 import { ModalWithdrawConfirmation } from '../ModalWithdrawConfirmation';
 import { ModalWithdrawSubmit } from '../ModalWithdrawSubmit';
@@ -39,7 +40,8 @@ interface DispatchProps {
     fetchWallets: typeof walletsFetch;
     fetchAddress: typeof walletsAddressFetch;
     clearWallets: () => void;
-    walletsWithdraw: typeof walletsWithdrawFetch;
+    walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
+    walletsWithdrawFiat: typeof walletsWithdrawFiatFetch;
 }
 
 interface WalletsState {
@@ -290,15 +292,25 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }
 
         const { currency, type } = this.props.wallets[selectedWalletIndex];
-        const withdrawRequest = {
-            amount,
-            currency: currency.toLowerCase(),
-            currency_type: type,
-            otp: otpCode,
-            rid,
-        };
 
-        this.props.walletsWithdraw(withdrawRequest);
+        if (type === 'fiat') {
+            const withdrawRequest = {
+                amount,
+                currency: currency.toLowerCase(),
+                currency_type: type,
+                otp: otpCode,
+                rid,
+            };
+            this.props.walletsWithdrawFiat(withdrawRequest);
+        } else {
+            const withdrawRequest = {
+                amount,
+                currency: currency.toLowerCase(),
+                otp: otpCode,
+                rid,
+            };
+            this.props.walletsWithdrawCcy(withdrawRequest);
+        }
         this.toggleConfirmModal();
     };
 
@@ -380,7 +392,8 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchWallets: () => dispatch(walletsFetch()),
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
-    walletsWithdraw: params => dispatch(walletsWithdrawFetch(params)),
+    walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
+    walletsWithdrawFiat: params => dispatch(walletsWithdrawFiatFetch(params)),
     clearWallets: () => dispatch(walletsData([])),
 });
 
