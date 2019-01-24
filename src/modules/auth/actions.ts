@@ -62,7 +62,7 @@ export interface SignUpRequireVerification {
 export interface VerificationFetch {
     type: typeof VERIFICATION_FETCH;
     payload: {
-        confirmation_token: string;
+        token: string;
     };
 }
 

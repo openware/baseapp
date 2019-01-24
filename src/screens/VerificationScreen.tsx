@@ -18,7 +18,7 @@ interface ReduxProps {
     error?: AuthError;
 }
 
-interface RouterProps {
+export interface RouterProps {
     location: {
         search: string;
     };
@@ -26,13 +26,13 @@ interface RouterProps {
 
 type Props = DispatchProps & RouterProps & ReduxProps;
 
+export const extractToken = (props: RouterProps) => new URLSearchParams(props.location.search).get('confirmation_token');
 
 class Verification extends React.Component<Props> {
     public componentDidMount() {
-        const queryParams = new URLSearchParams(this.props.location.search);
-        const token = queryParams.get('confirmation_token');
+        const token = extractToken(this.props);
         if (token) {
-            this.props.verification({ confirmation_token: token });
+            this.props.verification({ token });
         }
     }
 

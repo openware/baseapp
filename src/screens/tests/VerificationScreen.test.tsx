@@ -4,12 +4,7 @@ import {connect, Provider} from 'react-redux';
 import { createStore } from 'redux';
 import { VerificationScreen } from '..';
 import { rootReducer } from '../../modules';
-
-interface RouterProps {
-    location: {
-        search: string;
-    };
-}
+import { extractToken, RouterProps } from '../VerificationScreen';
 
 const defaultProps: RouterProps = {
     location: {
@@ -29,13 +24,17 @@ describe('VerificationScreen test', () => {
         expect(wrapper).toMatchSnapshot();
     });
 
+    const tokenProps = {
+        location: {
+            search: 'confirmation_token=123123',
+        },
+    };
     it('should fetch token correctly', () => {
-        const tokenProps = {
-            location: {
-                search: 'confirmation_token=123123',
-            },
-        };
         const wrapper = setup(tokenProps);
         expect(wrapper.props().location.search).toEqual(tokenProps.location.search);
+    });
+
+    it('extract the token from search url', () => {
+        expect(extractToken(tokenProps)).toEqual('123123');
     });
 });
