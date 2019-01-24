@@ -85,6 +85,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                 <div className="cr-table-header__content">
                     <div className="cr-title-component">Insert New Order</div>
                 </div>
+                {executeError && <span className="pg-order__error">{executeError.message}</span>}
                 <Order
                     disabled={executeLoading}
                     feeBuy={Number(orderFees.bid.value)}
@@ -98,7 +99,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     handleSendType={this.getOrderType}
                 />
                 {executeLoading && <Loader />}
-                {executeError && <span className="pg-order__error">{executeError.message}</span>}
             </div>
         );
     }
