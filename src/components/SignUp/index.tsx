@@ -39,7 +39,7 @@ class SignUpComponent extends React.Component<Props> {
 
     public componentWillReceiveProps(props: Props) {
         if (props.requireVerification) {
-            this.props.history.push('/signin');
+            this.openModal();
         }
     }
 
@@ -77,7 +77,6 @@ class SignUpComponent extends React.Component<Props> {
             password,
             recaptcha_response,
         });
-        this.changeState();
     };
 
     private renderModalHeader = () => {
@@ -107,16 +106,19 @@ class SignUpComponent extends React.Component<Props> {
                 <Button
                     className="pg-exchange-modal-submit-footer__button-inverse"
                     label="OK"
-                    onClick={this.changeState}
+                    onClick={this.closeModal}
                 />
             </div>
         );
     };
 
-    private changeState = () => {
-        if (!this.props.error) {
-            this.setState({showModal: !this.state.showModal});
-        }
+    private openModal = () => {
+        this.setState({showModal: true});
+    };
+
+    private closeModal = () => {
+        this.setState({showModal: false});
+        this.props.history.push('/signin');
     }
 }
 
