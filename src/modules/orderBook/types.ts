@@ -8,6 +8,11 @@ export interface OrderBookState extends CommonState {
 }
 /* tslint:enable */
 
+export interface OrderBookEntry extends CommonState {
+  remaining_volume: string;
+  volume: string;
+}
+
 export interface DepthState extends CommonState {
   asks: string[][];
   bids: string[][];

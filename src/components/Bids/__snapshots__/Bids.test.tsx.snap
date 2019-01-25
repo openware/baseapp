@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bids table test should render 1`] = `
+<Connect(Connect(OrderBookContainer))
+  asks={
+    Array [
+      Array [
+        "0.6",
+        "0.1",
+      ],
+      Array [
+        "0.7",
+        "1",
+      ],
+      Array [
+        "0.75",
+        "1",
+      ],
+      Array [
+        "0.8",
+        "1",
+      ],
+      Array [
+        "0.96",
+        "1",
+      ],
+      Array [
+        "0.98",
+        "20",
+      ],
+      Array [
+        "0.99",
+        "1",
+      ],
+    ]
+  }
+  bids={
+    Array [
+      Array [
+        "0.5",
+        "0.04",
+      ],
+      Array [
+        "0.49",
+        "0.5",
+      ],
+      Array [
+        "0.48",
+        "0.2",
+      ],
+      Array [
+        "0.47",
+        "0.1",
+      ],
+      Array [
+        "0.3",
+        "10",
+      ],
+      Array [
+        "0.28",
+        "2",
+      ],
+      Array [
+        "0.27",
+        "5",
+      ],
+      Array [
+        "0.26",
+        "25",
+      ],
+    ]
+  }
+  bidsLoading={false}
+  currentMarket={
+    Object {
+      "id": "btczar",
+      "name": "BTC/ZAR",
+    }
+  }
+/>
+`;

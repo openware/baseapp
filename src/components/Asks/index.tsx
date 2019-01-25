@@ -12,6 +12,7 @@ import {
     RootState,
     selectCurrentMarket,
     selectDepthAsks,
+    selectDepthBids,
     selectDepthError,
     selectDepthLoading,
 } from '../../modules';
@@ -21,6 +22,7 @@ interface ReduxProps {
     asks: string[][];
     asksLoading: boolean;
     asksError?: CommonError;
+    bids: string[][];
     currentMarket: Market;
 }
 
@@ -30,10 +32,10 @@ interface DispatchProps {
 
 type Props = ReduxProps & DispatchProps;
 
-class OrderBookContainer extends React.Component<Props> {
+export class OrderBookContainer extends React.Component<Props> {
     public componentDidMount() {
-        if (this.props.currentMarket.id){
-          this.props.orderBookFetch(this.props.currentMarket);
+        if (this.props.currentMarket.id) {
+            this.props.orderBookFetch(this.props.currentMarket);
         }
     }
 
@@ -44,35 +46,58 @@ class OrderBookContainer extends React.Component<Props> {
     }
 
     public render() {
-        const { asks, asksLoading } = this.props;
+        const { asks, asksLoading, bids } = this.props;
         const cn = classNames('pg-asks', {
             'pg-asks--loading': asksLoading,
         });
         return (
             <div className={cn}>
-                {asksLoading ? <Loader /> : this.orderBook(asks)}
+                {asksLoading ? <Loader /> : this.orderBook(bids, asks)}
             </div>
         );
     }
 
+    public static renderTotal = array => {
+        const total: number[] = [];
+        array.map(item => {
+            const [price, volume] = item;
+            return [(Number(volume) * Number(price)).toFixed(2)];
+        }).reduce((accumulator, currentValue, currentIndex) => {
+            total[currentIndex] = Number(accumulator) + Number(currentValue);
+            return (Number(accumulator) + Number(currentValue));
+        }, 0);
+        return total;
+    }
+
     private static renderData(asks: string[][]) {
-        return (asks.length > 0) ? asks.map(item => {
-            const [ price, volume ] = item;
-            return [ price, volume ];
+        const total = this.renderTotal(asks);
+        return (asks.length > 0) ? asks.map((item, i) => {
+            const [price, volume] = item;
+            return [price, volume, total[i]];
         }) : [['There is no data to show...']];
     }
 
-    private orderBook = items => (
+    public static calcMaxVolume(bids: string[][], asks: string[][]) {
+        return Math.max(...this.renderTotal(bids), ...this.renderTotal(asks));
+    }
+
+    private orderBook = (bids, asks) => (
         <OrderBook
+            side={'left'}
             title={'Asks'}
-            headers={['Price', 'Amount']}
-            data={OrderBookContainer.renderData(items)}
+            headers={['Price', 'Amount', 'Volume']}
+            data={OrderBookContainer.renderData(asks.sort())}
+            rowBackgroundColor={'rgba(232, 94, 89, 0.5)'}
+            maxVolume={OrderBookContainer.calcMaxVolume(bids, asks)}
+            orderBookEntry={OrderBookContainer.renderTotal(asks)}
         />
     );
+
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     asks: selectDepthAsks(state),
+    bids: selectDepthBids(state),
     asksLoading: selectDepthLoading(state),
     asksError: selectDepthError(state),
     currentMarket: selectCurrentMarket(state),
@@ -84,7 +109,13 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 const Asks = connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer);
+const renderTotal = OrderBookContainer.renderTotal;
+const calcMaxVolume = OrderBookContainer.calcMaxVolume;
+type AsksProps = ReduxProps;
 
 export {
     Asks,
+    AsksProps,
+    renderTotal,
+    calcMaxVolume,
 };
