@@ -25,7 +25,7 @@ export interface WalletsState {
     };
 }
 
-const initialState: WalletsState = {
+export const initialWalletsState: WalletsState = {
     wallets: {
         list: [],
         loading: false,
@@ -131,7 +131,7 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
     }
 };
 
-export const walletsReducer = (state = initialState, action: WalletsAction): WalletsState => {
+export const walletsReducer = (state = initialWalletsState, action: WalletsAction): WalletsState => {
     switch (action.type) {
         case WALLETS_FETCH:
         case WALLETS_DATA:
