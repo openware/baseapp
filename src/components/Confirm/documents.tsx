@@ -55,7 +55,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             scan,
         }: DocumentsState = this.state;
         const { error, success } = this.props;
-        const data = ['Passport', 'Identity Card', 'Driver license', 'Utility Bill'];
+        const data = ['Passport', 'Identity card', 'Driver license', 'Utility Bill'];
 
         const onSelect = value => this.handleChangeDocumentsType(data[value]);
         const numberType = `${documentsType} Number`;
