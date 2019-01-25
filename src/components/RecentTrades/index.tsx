@@ -2,12 +2,12 @@ import { Table } from '@openware/components';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDateSec, setTradeColor } from '../../helpers';
-import { Market, RootState, selectCurrentMarket, Trade } from '../../modules';
-import { recentTradesFetch, selectRecentTrades } from '../../modules/recentTrades';
+import { Market, PublicTrade, RootState, selectCurrentMarket } from '../../modules';
+import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modules/recentTrades';
 
 // tslint:disable no-any
 interface ReduxProps {
-    recentTrades: Trade[];
+    recentTrades: PublicTrade[];
     currentMarket: Market;
 }
 
@@ -38,7 +38,7 @@ class RecentTradesComponent extends React.Component<Props> {
         );
     }
 
-    private getTrades(trades: Trade[]) {
+    private getTrades(trades: PublicTrade[]) {
         const renderRow = item => {
             const { id, created_at, maker_type, price, volume } = item;
             return [
@@ -54,7 +54,7 @@ class RecentTradesComponent extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    recentTrades: selectRecentTrades(state),
+    recentTrades: selectRecentTradesOfCurrentMarket(state),
     currentMarket: selectCurrentMarket(state),
 });
 

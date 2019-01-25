@@ -5,4 +5,7 @@ export interface Config {
     };
     minutesUntilAutoLogout: string;
     withCredentials: boolean;
+    storage: {
+        defaultStorageLimit?: number;
+    };
 }

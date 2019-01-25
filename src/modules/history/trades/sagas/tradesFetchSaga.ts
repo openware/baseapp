@@ -5,15 +5,14 @@ import { handleError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { localeDate } from '../../../../helpers/localeDate';
 import { Market } from '../../../markets';
-import { TradesFetch } from '../actions';
-import { TRADES_DATA, TRADES_ERROR } from '../constants';
-import { Trade } from '../types';
+import { tradesData, tradesError, TradesFetch } from '../actions';
+import { PrivateTrade } from '../types';
 
 const config: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export const sortByDateTime = (a: Trade, b: Trade) => {
+export const sortByDateTime = (a: PrivateTrade, b: PrivateTrade) => {
     return moment(localeDate(a.created_at), 'DD/MM HH:mm') > moment(localeDate(b.created_at), 'DD/MM HH:mm') ? -1 : 1;
 };
 
@@ -32,9 +31,9 @@ export function* tradesFetchSaga(action: TradesFetch) {
             .reduce((previous, current, index, []) => previous.concat(current))
             .sort(sortByDateTime);
 
-        yield put({ type: TRADES_DATA, payload: trades });
+        yield put(tradesData(trades));
     } catch (error) {
-        yield put({ type: TRADES_ERROR, payload: error.message });
+        yield put(tradesError(error));
         yield put(handleError(error.code));
     }
 }

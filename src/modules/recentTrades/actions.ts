@@ -1,13 +1,14 @@
-import { Trade } from '../history/trades';
+import { PublicTrade } from '../history/trades';
 import { Market } from '../markets';
 import { CommonError } from '../types';
 import {
     RECENT_TRADES_DATA,
     RECENT_TRADES_ERROR,
     RECENT_TRADES_FETCH,
+    RECENT_TRADES_PUSH,
 } from './constants';
 
-// tslint:disable no-any
+import { PublicTradeEvent } from './types';
 
 export interface RecentTradesFetch {
     type: typeof RECENT_TRADES_FETCH;
@@ -16,7 +17,7 @@ export interface RecentTradesFetch {
 
 export interface RecentTradesData {
     type: typeof RECENT_TRADES_DATA;
-    payload: Trade[];
+    payload: PublicTrade[];
 }
 
 export interface RecentTradesError {
@@ -24,10 +25,19 @@ export interface RecentTradesError {
     error: CommonError;
 }
 
+export interface RecentTradesPush {
+    type: typeof RECENT_TRADES_PUSH;
+    payload: {
+        trades: PublicTradeEvent[],
+        market: string,
+    };
+}
+
 export type RecentTradesActions =
     RecentTradesFetch
     | RecentTradesError
-    | RecentTradesData;
+    | RecentTradesData
+    | RecentTradesPush;
 
 export const recentTradesFetch = (payload: RecentTradesFetch['payload']): RecentTradesFetch => ({
     type: RECENT_TRADES_FETCH,
@@ -36,6 +46,11 @@ export const recentTradesFetch = (payload: RecentTradesFetch['payload']): Recent
 
 export const recentTradesData = (payload: RecentTradesData['payload']): RecentTradesData => ({
     type: RECENT_TRADES_DATA,
+    payload,
+});
+
+export const recentTradesPush = (payload: RecentTradesPush['payload']): RecentTradesPush => ({
+    type: RECENT_TRADES_PUSH,
     payload,
 });
 

@@ -12,6 +12,7 @@ import {
 } from '../../helpers';
 import {
     Deposit,
+    PrivateTrade,
     RootState,
     selectDeposits,
     selectMarkets,
@@ -20,7 +21,6 @@ import {
     selectTrades,
     selectWallets,
     selectWithdraws,
-    Trade,
     Wallet,
     walletsFetch,
     Withdraw,
@@ -34,7 +34,7 @@ interface ReduxProps {
     marketsData: Market[];
     marketsLoading?: boolean;
     marketsError?: CommonError;
-    trades: Trade[];
+    trades: PrivateTrade[];
     wallets: Wallet[];
     withdraws: Withdraw[];
 }

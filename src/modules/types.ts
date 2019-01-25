@@ -2,9 +2,9 @@ import { MarketsState } from './markets/reducer';
 import { OrderBookState } from './orderBook';
 
 import {
+    OrderKind,
     OrdersState,
     OrderStatus,
-    OrderType,
 } from './orders';
 
 export interface CommonState {
@@ -13,14 +13,14 @@ export interface CommonState {
 }
 
 interface OrderEvent {
-    id: string;
-    at: string;
+    id: number;
+    at: number;
     market: string;
-    kind: OrderType;
-    price: number;
+    kind: OrderKind;
+    price: string;
     state: OrderStatus;
-    volume: number;
-    origin_volume: number;
+    volume: string;
+    origin_volume: string;
 }
 
 interface TickerEvent {

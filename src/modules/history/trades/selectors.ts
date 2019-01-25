@@ -1,9 +1,9 @@
 import { RootState } from '../../index';
 import { selectCurrentMarket } from '../../markets';
 import { CommonError } from '../../types';
-import { Trade } from './types';
+import { PrivateTrade } from './types';
 
-export const selectTrades = (state: RootState): Trade[] =>
+export const selectTrades = (state: RootState): PrivateTrade[] =>
     state.app.trades.list;
 
 export const selectTradesLoading = (state: RootState): boolean | undefined =>
@@ -12,7 +12,7 @@ export const selectTradesLoading = (state: RootState): boolean | undefined =>
 export const selectTradesError = (state: RootState): CommonError | undefined =>
     state.app.trades.error;
 
-export const selectTradesOfCurrentMarket = (state: RootState): Trade[] => {
+export const selectTradesOfCurrentMarket = (state: RootState): PrivateTrade[] => {
     const market = selectCurrentMarket(state);
     return selectTrades(state).filter(value => value.market === market.id);
 };

@@ -3,8 +3,11 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
+import { getTimezone, setTimezone } from '../../../helpers/timezone';
+import { Market } from '../../markets';
 import { tradesFetch } from './actions';
 import { TRADES_DATA, TRADES_ERROR, TRADES_FETCH } from './constants';
+import { PrivateTrade } from './types';
 
 const debug = false;
 
@@ -13,12 +16,16 @@ describe('History/Trades', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware<{}>;
     let mockAxios: MockAdapter;
+    let tz;
 
     afterEach(() => {
         mockAxios.reset();
+        setTimezone(tz);
     });
 
     beforeEach(() => {
+        tz = getTimezone();
+        setTimezone('America/Los_Angeles');
         mockAxios = setupMockAxios();
         sagaMiddleware = createSagaMiddleware();
         store = setupMockStore(sagaMiddleware, debug)();
@@ -26,7 +33,7 @@ describe('History/Trades', () => {
     });
 
     describe('Fetch trades history', () => {
-        const marketsList = [
+        const marketsList: Market[] = [
             {
                 id: 'btceur',
                 name: 'BTC/EUR',
@@ -36,7 +43,7 @@ describe('History/Trades', () => {
                 name: 'XRP/BTC',
             },
         ];
-        const tradesXrpBtc = [
+        const tradesXrpBtc: PrivateTrade[] = [
             {
                 id: 162389,
                 price: '0.3',
@@ -45,6 +52,7 @@ describe('History/Trades', () => {
                 market: 'xrpbtc',
                 created_at: '2018-12-14T12:00:47+01:00',
                 side: 'bid',
+                maker_type: 'buy',
             },
             {
                 id: 162387,
@@ -54,10 +62,11 @@ describe('History/Trades', () => {
                 market: 'xrpbtc',
                 created_at: '2018-12-14T11:32:42+01:00',
                 side: 'ask',
+                maker_type: 'buy',
             },
         ];
 
-        const tradesBtcEur = [
+        const tradesBtcEur: PrivateTrade[] = [
             {
                 id: 121,
                 price: '0.3',
@@ -66,6 +75,7 @@ describe('History/Trades', () => {
                 market: 'btceur',
                 created_at: '2018-11-14T12:00:47+01:00',
                 side: 'bid',
+                maker_type: 'sell',
             },
             {
                 id: 162388,
@@ -75,10 +85,11 @@ describe('History/Trades', () => {
                 market: 'btceur',
                 created_at: '2018-12-14T11:45:42+01:00',
                 side: 'bid',
+                maker_type: 'sell',
             },
         ];
 
-        const trades = [
+        const trades: PrivateTrade[] = [
             {
                 id: 162389,
                 price: '0.3',
@@ -87,6 +98,7 @@ describe('History/Trades', () => {
                 market: 'xrpbtc',
                 created_at: '2018-12-14T12:00:47+01:00',
                 side: 'bid',
+                maker_type: 'buy',
             },
             {
                 id: 162388,
@@ -96,6 +108,7 @@ describe('History/Trades', () => {
                 market: 'btceur',
                 created_at: '2018-12-14T11:45:42+01:00',
                 side: 'bid',
+                maker_type: 'sell',
             },
             {
                 id: 162387,
@@ -105,6 +118,7 @@ describe('History/Trades', () => {
                 market: 'xrpbtc',
                 created_at: '2018-12-14T11:32:42+01:00',
                 side: 'ask',
+                maker_type: 'buy',
             },
             {
                 id: 121,
@@ -114,6 +128,7 @@ describe('History/Trades', () => {
                 market: 'btceur',
                 created_at: '2018-11-14T12:00:47+01:00',
                 side: 'bid',
+                maker_type: 'sell',
             },
         ];
 
@@ -151,7 +166,10 @@ describe('History/Trades', () => {
         it('should trigger an error action', async () => {
             const expectedTradesError = {
                 type: TRADES_ERROR,
-                payload: 'Server error',
+                payload: {
+                    code: 500,
+                    message: 'Server error',
+                },
             };
 
             mockNetworkError(mockAxios);

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { authReducer, AuthState } from './auth';
 import { contactReducer, ContactState } from './contact';
 import { depositsReducer, DepositsState } from './history/deposits';
-import { tradesReducer, TradesState } from './history/trades';
+import { PrivateTradesState, tradesReducer } from './history/trades';
 import { withdrawsReducer, WithdrawsState } from './history/withdraws';
 import {
     documentsReducer,
@@ -29,7 +29,7 @@ export interface AppState {
     auth: AuthState;
     contact: ContactState;
     deposits: DepositsState;
-    trades: TradesState;
+    trades: PrivateTradesState;
     recentTrades: RecentTradesState;
     withdraws: WithdrawsState;
     orders: OrdersState;

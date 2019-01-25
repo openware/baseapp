@@ -1,3 +1,4 @@
+import { defaultStorageLimit } from '../../api';
 import { CommonError, CommonState } from '../types';
 import { OrdersAction } from './actions';
 import {
@@ -11,15 +12,16 @@ import {
     ORDER_EXECUTE_ERROR,
     ORDER_EXECUTE_FETCH,
     USER_ORDERS_DATA,
-    USER_ORDERS_DEFAULT,
     USER_ORDERS_ERROR,
     USER_ORDERS_FETCH,
+    USER_ORDERS_UPDATE,
 } from './constants';
 import {
     DefaultFee,
     GroupedOrders,
     MarketFees,
     Order,
+    OrderStatus,
 } from './types';
 
 export interface OrdersState extends CommonState {
@@ -90,6 +92,20 @@ const getConvertedFees = (fees: DefaultFee[]): MarketFees[] =>
         },
     }));
 
+const userOrdersUpdate = (source: GroupedOrders, order: Order, state: OrderStatus): Order[] => {
+    const orderToUpdate = source[state].find(findOrderById(order.id));
+    if ((orderToUpdate) && (orderToUpdate.state === order.state)) {
+        return [order, ...source[state].filter(filterOrderById(order.id))];
+    }
+    if (order.state === state) {
+        return [order, ...source[state]];
+    }
+    if ((orderToUpdate) && (orderToUpdate.state === state)) {
+        return source[state].filter(filterOrderById(orderToUpdate.id));
+    }
+    return [...source[state]];
+};
+
 export const ordersReducer = (state = initialState, action: OrdersAction) => {
     switch (action.type) {
         case USER_ORDERS_FETCH:
@@ -99,6 +115,16 @@ export const ordersReducer = (state = initialState, action: OrdersAction) => {
                 ...state,
                 loading: false,
                 orders: action.payload,
+            };
+        case USER_ORDERS_UPDATE:
+            return {
+                ...state,
+                orders: {
+                    cancel: userOrdersUpdate(state.orders, action.payload, 'cancel').slice(0, defaultStorageLimit()),
+                    done: userOrdersUpdate(state.orders, action.payload, 'done').slice(0, defaultStorageLimit()),
+                    wait: userOrdersUpdate(state.orders, action.payload, 'wait').slice(0, defaultStorageLimit()),
+                },
+                loading: false,
             };
         case USER_ORDERS_ERROR:
             return {
@@ -164,7 +190,6 @@ export const ordersReducer = (state = initialState, action: OrdersAction) => {
                 feesError: action.payload,
             };
 
-        case USER_ORDERS_DEFAULT:
         default:
             return state;
     }

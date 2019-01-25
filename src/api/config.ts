@@ -1,3 +1,4 @@
+import { STORAGE_DEFAULT_LIMIT } from '../constants';
 import { Config } from './types';
 
 export const defaultConfig: Config = {
@@ -7,6 +8,7 @@ export const defaultConfig: Config = {
     },
     minutesUntilAutoLogout: '5',
     withCredentials: true,
+    storage: {},
 };
 
 export const Cryptobase = {
@@ -19,9 +21,10 @@ declare global {
 
 window.env = window.env || defaultConfig;
 Cryptobase.config = {...window.env};
+Cryptobase.config.storage = Cryptobase.config.storage || {};
 
 export const gatewayUrl = () => Cryptobase.config.api.gatewayUrl;
 export const rangerUrl = () => Cryptobase.config.api.rangerUrl;
 export const minutesUntilAutoLogout = () => Cryptobase.config.minutesUntilAutoLogout;
 export const withCredentials = () => Cryptobase.config.withCredentials;
-
+export const defaultStorageLimit = () => Cryptobase.config.storage.defaultStorageLimit || STORAGE_DEFAULT_LIMIT;

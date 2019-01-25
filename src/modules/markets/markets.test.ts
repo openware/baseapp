@@ -123,7 +123,10 @@ describe('Markets', () => {
             };
 
             const expectedMarketsTickersFetch = { type: 'markets/MARKET_TICKERS_FETCH' };
-            const expectedMarketsTickersData = { type: 'markets/MARKET_TICKERS_DATA', payload: marketsTickersList };
+            const expectedMarketsTickersData = {
+                type: 'markets/MARKET_TICKERS_DATA',
+                payload: marketsTickersList,
+            };
 
             mockMarketsTickers();
             const promise = new Promise(resolve => {
@@ -142,7 +145,7 @@ describe('Markets', () => {
 
         it('should report error', async () => {
             const expectedMarketsTickersFetch = { type: 'markets/MARKET_TICKERS_FETCH' };
-            const expectedMarketsTickersError = { type: 'markets/MARKET_TICKERS_ERROR', payload: {code: 500, message: 'Server error'} };
+            const expectedMarketsTickersError = { type: 'markets/MARKET_TICKERS_ERROR', payload: { code: 500, message: 'Server error' } };
 
             mockNetworkError(mockAxios);
             const promise = new Promise(resolve => {

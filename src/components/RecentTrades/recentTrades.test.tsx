@@ -3,11 +3,11 @@ import * as ReactDOM from 'react-dom';
 import {connect, Provider} from 'react-redux';
 import { createStore } from 'redux';
 import { RecentTrades } from '..';
-import { Market, rootReducer, Trade } from '../../modules';
+import { Market, PublicTrade, rootReducer } from '../../modules';
 
 
 interface RouterProps {
-    recentTrades: Trade[];
+    recentTrades: PublicTrade[];
     currentMarket: Market;
 }
 
@@ -20,7 +20,6 @@ const defaultProps: RouterProps = {
             funds: '0.00059',
             market: 'bchbtc',
             created_at: '2018-12-18T14:21:23+01:00',
-            side: 'ask',
             maker_type: 'sell',
         },
         {
@@ -30,7 +29,6 @@ const defaultProps: RouterProps = {
             funds: '0.0001',
             market: 'bchbtc',
             created_at: '2018-12-18T14:21:23+01:00',
-            side: 'bid',
             maker_type: 'buy',
         },
         {
@@ -40,7 +38,6 @@ const defaultProps: RouterProps = {
             funds: '0.0005',
             market: 'bchbtc',
             created_at: '2018-12-18T14:21:23+01:00',
-            side: 'bid',
             maker_type: 'buy',
         },
     ],

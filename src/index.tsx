@@ -8,6 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import { App } from './App';
 import './index.css';
 import { rootReducer, rootSaga } from './modules';
+import { rangerSagas } from './modules/ranger';
 
 const history = createBrowserHistory();
 
@@ -16,15 +17,20 @@ const composeEnhancer: typeof compose = (window as any)
     .__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const sagaMiddleware = createSagaMiddleware();
+const rangerMiddleware = createSagaMiddleware();
 
 const store = createStore(
     rootReducer,
     composeEnhancer(
-        applyMiddleware(sagaMiddleware),
+        applyMiddleware(
+            sagaMiddleware,
+            rangerMiddleware,
+        ),
     ),
 );
 
 sagaMiddleware.run(rootSaga);
+rangerMiddleware.run(rangerSagas);
 
 const render = () => ReactDOM.render(
     <Provider store={store}>

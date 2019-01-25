@@ -14,5 +14,5 @@ export const FEES_ERROR = 'orders/FEES_ERROR';
 
 export const USER_ORDERS_FETCH = 'orders/USER_ORDERS_FETCH';
 export const USER_ORDERS_DATA = 'orders/USER_ORDERS_DATA';
+export const USER_ORDERS_UPDATE = 'orders/USER_ORDERS_UPDATE';
 export const USER_ORDERS_ERROR = 'orders/USER_ORDERS_ERROR';
-export const USER_ORDERS_DEFAULT = 'orders/USER_ORDERS_DEFAULT';

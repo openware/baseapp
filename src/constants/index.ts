@@ -16,3 +16,5 @@ export const pgRoutes = (isLoggedIn: boolean): string[][] => {
     ];
     return isLoggedIn ? routes : routesUnloggedIn;
 };
+
+export const STORAGE_DEFAULT_LIMIT = 50;

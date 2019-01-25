@@ -12,9 +12,9 @@ import {
     ORDER_EXECUTE_FETCH,
     ORDERS_CANCEL_ALL_FETCH,
     USER_ORDERS_DATA,
-    USER_ORDERS_DEFAULT,
     USER_ORDERS_ERROR,
     USER_ORDERS_FETCH,
+    USER_ORDERS_UPDATE,
 } from './constants';
 import {
     DefaultFee,
@@ -22,6 +22,11 @@ import {
     Order,
     OrderSide,
 } from './types';
+
+export interface UserOrdersUpdate {
+    type: typeof USER_ORDERS_UPDATE;
+    payload: Order;
+}
 
 export interface OrdersCancelAllFetch {
     type: typeof ORDERS_CANCEL_ALL_FETCH;
@@ -98,10 +103,6 @@ export interface UserOrdersError {
     payload: CommonError;
 }
 
-export interface UserOrdersDefault {
-    type: typeof USER_ORDERS_DEFAULT;
-}
-
 export type OrdersAction = OrdersCancelAllFetch
     | OrderCancelFetch
     | OrderCancelData
@@ -115,7 +116,8 @@ export type OrdersAction = OrdersCancelAllFetch
     | UserOrdersFetch
     | UserOrdersData
     | UserOrdersError
-    | UserOrdersDefault;
+    | UserOrdersUpdate
+    | UserOrdersError;
 
 export const ordersCancelAllFetch = (): OrdersCancelAllFetch => ({
     type: ORDERS_CANCEL_ALL_FETCH,
@@ -181,9 +183,9 @@ export const userOrdersData = (payload: UserOrdersData['payload']): UserOrdersDa
     payload,
 });
 
-
-export const userOrdersDefault = (): UserOrdersDefault => ({
-    type: USER_ORDERS_DEFAULT,
+export const userOrdersUpdate = (payload: UserOrdersUpdate['payload']): UserOrdersUpdate => ({
+    type: USER_ORDERS_UPDATE,
+    payload,
 });
 
 export const userOrdersError =

@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDate } from '../../helpers';
-import { RootState, selectTradesLoading, selectTradesOfCurrentMarket, Trade } from '../../modules';
+import { PrivateTrade, RootState, selectTradesLoading, selectTradesOfCurrentMarket } from '../../modules';
 import { tradesFetch } from '../../modules/history/trades/actions';
 import {
     Market,
@@ -11,7 +11,7 @@ import {
 } from '../../modules/markets';
 
 interface ReduxProps {
-    trades: Trade[];
+    trades: PrivateTrade[];
     currentMarket: Market;
     ordersLoading?: boolean;
 }
@@ -21,7 +21,7 @@ interface DispatchProps {
 }
 
 interface HistoryState {
-    historyData: Trade[];
+    historyData: PrivateTrade[];
 }
 
 type Props = ReduxProps & DispatchProps;
