@@ -41,7 +41,6 @@ export class TwoFactorAuth extends React.Component<TwoFactorAuthProps, TwoFactor
                             <div className="cr-sign-in-form__loader">{isLoading ? <Loader /> : null}</div>
                             <Button
                                 label="Sign In"
-                                type="submit"
                                 className="cr-sign-in-form__button"
                                 onClick={this.handleSubmit}
                             />
@@ -61,10 +60,7 @@ export class TwoFactorAuth extends React.Component<TwoFactorAuthProps, TwoFactor
         );
     }
 
-    private handleSubmit = event => {
-        if (event.preventDefault) {
-            event.preventDefault();
-        }
+    private handleSubmit = () => {
         this.props.onSubmit(this.state.otpCode);
     };
 

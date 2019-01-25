@@ -13,6 +13,7 @@ import {
 import { withRouter } from 'react-router-dom';
 import { RootState } from '../../modules';
 import {
+    enableUser2fa,
     generate2faQRFetch,
     selectTwoFactorAuthBarcode,
     selectTwoFactorAuthError,
@@ -37,6 +38,7 @@ interface ReduxProps {
 interface DispatchProps {
     toggle2fa: typeof toggle2faFetch;
     generateQR: typeof generate2faQRFetch;
+    enableUser2fa: typeof enableUser2fa;
 }
 
 type Props = RouterProps & ReduxProps & DispatchProps;
@@ -70,6 +72,12 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                 {this.renderToggle2fa(enable2fa)}
             </div>
         );
+    }
+
+    public componentDidUpdate(prev: Props) {
+        if (!prev.success && this.props.success) {
+            this.props.enableUser2fa();
+        }
     }
 
     private renderToggle2fa = (enable2fa: boolean) => {
@@ -118,7 +126,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                     2fa code from different devices and to restore access if your device was lost.
                     Be sure to save the code
                 </p>
-                {secret && <CopyableTextField value={secret} fieldId="2fa-secret" />}
+                {secret && <CopyableTextField value={secret} fieldId="secret-2fa" />}
             </React.Fragment>
         )
     }
@@ -163,6 +171,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, Props, RootState> = state => 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     generateQR: () => dispatch(generate2faQRFetch()),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
+    enableUser2fa: () => dispatch(enableUser2fa()),
 });
 
 const connected = connect(mapStateToProps, mapDispatchToProps)(ToggleTwoFactorAuthComponent);

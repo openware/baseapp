@@ -41,9 +41,6 @@ class ProfileTwoFactorAuth extends React.Component<ProfileTwoFactorAuthProps, Pr
 
     private handleToggle2fa() {
         this.props.navigateTo2fa(!this.state.is2faEnabled);
-        this.setState(prev => ({
-            is2faEnabled: !prev.is2faEnabled,
-        }));
     }
 }
 

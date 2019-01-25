@@ -1,3 +1,7 @@
+import {
+    Button,
+    Modal,
+} from '@openware/components';
 import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -34,9 +38,17 @@ interface DispatchProps {
     clearPasswordChangeError: () => void;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps;
+interface ProfileProps {
+    showModal: boolean;
+}
+
+
+type Props = ReduxProps & DispatchProps & RouterProps & ProfileProps;
 
 class ProfileAuthDetailsComponent extends React.Component<Props> {
+    public state = {
+        showModal: false,
+    };
     public render() {
         const {
             passwordChangeError,
@@ -69,9 +81,45 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
                         navigateTo2fa={this.handleNavigateTo2fa}
                     />
                 </div>
+                <Modal
+                    show={this.state.showModal}
+                    header={this.renderModalHeader()}
+                    content={this.renderModalBody()}
+                    footer={this.renderModalFooter()}
+                />
             </div>
         );
     }
+
+    private renderModalHeader = () => {
+        return (
+            <div className="pg-exchange-modal-submit-header">
+                Two-factor authentication is enabled
+            </div>
+        );
+    };
+
+    private renderModalBody = () => {
+        return (
+            <div className="pg-exchange-modal-submit-body">
+                <h2>
+                    Please сontact administrator to disable it.
+                </h2>
+            </div>
+        );
+    };
+
+    private renderModalFooter = () => {
+        return (
+            <div className="pg-exchange-modal-submit-footer">
+                <Button
+                    className="pg-exchange-modal-submit-footer__button-inverse"
+                    label="OK"
+                    onClick={this.closeModal}
+                />
+            </div>
+        );
+    };
 
     private handleChangePassword = (oldPassword: string, newPassword: string, confirmPassword: string) => {
         this.props.changePassword({
@@ -81,8 +129,20 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
         });
     }
 
+    private closeModal = () => {
+        this.setState({
+            showModal: false,
+        });
+      }
+
     private handleNavigateTo2fa = (enable2fa: boolean) => {
-        this.props.history.push('/security/2fa', { enable2fa });
+        if (enable2fa) {
+          this.props.history.push('/security/2fa', { enable2fa });
+        } else {
+          this.setState({
+              showModal: !this.state.showModal,
+          });
+        }
     }
 }
 
