@@ -91,9 +91,9 @@ class SignUpComponent extends React.Component<Props> {
         return (
             <div className="pg-exchange-modal-submit-body">
                 <h2>
-                    To complete the registration look for an<br/>
-                    email in your inbox that provides further<br/>
-                    instruction. If you cannot find the email,<br/>
+                    To complete the registration look for an
+                    email in your inbox that provides further
+                    instruction. If you cannot find the email,
                     please check your spam email
                 </h2>
             </div>
