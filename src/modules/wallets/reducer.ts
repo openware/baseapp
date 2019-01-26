@@ -7,6 +7,7 @@ import {
     WALLETS_DATA,
     WALLETS_ERROR,
     WALLETS_FETCH,
+    WALLETS_RESET,
     WALLETS_WITHDRAW_CCY_DATA,
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
@@ -124,6 +125,15 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
             return {
                 ...state,
                 wallets: walletsListReducer(walletsListState, action),
+            };
+        case WALLETS_RESET:
+            return {
+                ...state,
+                wallets: {
+                    list: [],
+                    loading: false,
+                    withdrawSuccess: false,
+                },
             };
         default:
             return state;

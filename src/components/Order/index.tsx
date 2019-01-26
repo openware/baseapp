@@ -62,6 +62,11 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     public componentWillReceiveProps(next: Props) {
+        if (next.wallets && (next.wallets.length === 0)) {
+            this.setState({
+                wallet: undefined,
+            });
+        }
         if ((next.currentMarket.id !== this.props.currentMarket.id) || !this.state.wallet) {
             this.setState({
                 wallet: this.getWallet(this.state.orderSide, next.currentMarket),

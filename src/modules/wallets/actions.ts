@@ -6,6 +6,7 @@ import {
     WALLETS_DATA,
     WALLETS_ERROR,
     WALLETS_FETCH,
+    WALLETS_RESET,
     WALLETS_WITHDRAW_CCY_DATA,
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
@@ -28,6 +29,10 @@ export interface WalletsData {
 export interface WalletsError {
     type: typeof WALLETS_ERROR;
     payload: CommonError;
+}
+
+export interface WalletsReset {
+    type: typeof WALLETS_RESET;
 }
 
 export interface WalletsAddressFetch {
@@ -69,7 +74,8 @@ export type WalletsAction = WalletsFetch
     | WalletsAddressError
     | WalletsWithdrawCcyFetch
     | WalletsWithdrawCcyData
-    | WalletsWithdrawCcyError;
+    | WalletsWithdrawCcyError
+    | WalletsReset;
 
 export const walletsFetch = (): WalletsFetch => ({
     type: WALLETS_FETCH,
@@ -112,4 +118,8 @@ export const walletsWithdrawCcyData = (): WalletsWithdrawCcyData => ({
 export const walletsWithdrawCcyError = (payload: WalletsWithdrawCcyError['payload']): WalletsWithdrawCcyError => ({
     type: WALLETS_WITHDRAW_CCY_ERROR,
     payload,
+});
+
+export const walletsReset = (): WalletsReset => ({
+    type: WALLETS_RESET,
 });
