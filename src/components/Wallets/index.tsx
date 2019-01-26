@@ -1,4 +1,5 @@
 import {
+    Button,
     DepositCrypto,
     DepositFiat,
     FilterInput,
@@ -10,6 +11,8 @@ import {
 } from '@openware/components';
 import * as React from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { RouterProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { RootState, selectUserInfo, User } from '../../modules';
 import { CommonError } from '../../modules/types';
 import {
@@ -21,7 +24,6 @@ import {
     walletsData,
     walletsFetch,
     walletsWithdrawCcyFetch,
-    walletsWithdrawFiatFetch,
 } from '../../modules/wallets';
 import { ModalWithdrawConfirmation } from '../ModalWithdrawConfirmation';
 import { ModalWithdrawSubmit } from '../ModalWithdrawSubmit';
@@ -41,7 +43,6 @@ interface DispatchProps {
     fetchAddress: typeof walletsAddressFetch;
     clearWallets: () => void;
     walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
-    walletsWithdrawFiat: typeof walletsWithdrawFiatFetch;
 }
 
 interface WalletsState {
@@ -55,7 +56,7 @@ interface WalletsState {
     filteredWallets?: WalletItemProps[] | null;
 }
 
-type Props = ReduxProps & DispatchProps;
+type Props = ReduxProps & DispatchProps & RouterProps;
 
 const title = 'You can deposit in bank on this credential';
 const description = 'Please use information below ' +
@@ -246,7 +247,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         this.setState({
             filteredWallets: value,
         });
-    }
+    };
 
     private renderTabs(walletIndex: WalletsState['selectedWalletIndex']) {
         if (walletIndex === -1) {
@@ -259,7 +260,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }
         const wallet = this.props.wallets[walletIndex];
         const { user: { level, otp } } = this.props;
-        const { currency, fee } = wallet;
+        const { currency, fee, type } = wallet;
         const withdrawProps = {
             currency,
             fee,
@@ -273,7 +274,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 label: 'Deposit',
             },
             {
-                content: this.renderWithdraw(withdrawProps),
+                content: this.renderWithdraw(withdrawProps, type),
                 label: 'Withdraw',
             },
         ];
@@ -291,26 +292,14 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             return;
         }
 
-        const { currency, type } = this.props.wallets[selectedWalletIndex];
-
-        if (type === 'fiat') {
-            const withdrawRequest = {
-                amount,
-                currency: currency.toLowerCase(),
-                currency_type: type,
-                otp: otpCode,
-                rid,
-            };
-            this.props.walletsWithdrawFiat(withdrawRequest);
-        } else {
-            const withdrawRequest = {
-                amount,
-                currency: currency.toLowerCase(),
-                otp: otpCode,
-                rid,
-            };
-            this.props.walletsWithdrawCcy(withdrawRequest);
-        }
+        const { currency } = this.props.wallets[selectedWalletIndex];
+        const withdrawRequest = {
+            amount,
+            currency: currency.toLowerCase(),
+            otp: otpCode,
+            rid,
+        };
+        this.props.walletsWithdrawCcy(withdrawRequest);
         this.toggleConfirmModal();
     };
 
@@ -352,24 +341,56 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         return null;
     }
 
-    private renderWithdraw(withdrawProps: WithdrawProps) {
+    private renderWithdraw(withdrawProps: WithdrawProps, type: string) {
         const {
             walletsError,
+            user,
         } = this.props;
+
+        if (type === 'fiat') {
+            return (
+                <React.Fragment>
+                    <p className="pg-wallet__enable-2fa-message">
+                        If you want to make fiat withdraw, please contact administrator!
+                    </p>
+                </React.Fragment>
+            );
+        }
+
         return (
             <React.Fragment>
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
-                <Withdraw {...withdrawProps} />
+                {user.otp ? <Withdraw {...withdrawProps} /> : this.isOtpDisabled()}
             </React.Fragment>
         );
     }
+
+    private isOtpDisabled = () => {
+        return (
+            <React.Fragment>
+                <p className="pg-wallet__enable-2fa-message">
+                    You should enable 2fa for having abitity to withdraw!
+                </p>
+                <Button
+                    className="pg-wallet__button-2fa"
+                    label="Enable 2fa"
+                    onClick={this.redirectToEnable2fa}
+                />
+            </React.Fragment>
+        );
+    };
+
+    // tslint:disable-next-line:no-any
+    private redirectToEnable2fa = (e: any) => {
+        this.props.history.push('/security/2fa');
+    };
 
     private isTwoFactorAuthRequired(level: number, is2faEnabled: boolean) {
         return level > 1 || level === 1 && is2faEnabled;
     }
 
     private onWalletSelectionChange = (value: WalletItemProps) => {
-        if (!value.address && !this.props.walletsLoading) {
+        if (!value.address && !this.props.walletsLoading && value.type !== 'fiat') {
             this.props.fetchAddress({ currency: value.currency });
         }
         const nextWalletIndex = this.props.wallets.findIndex(
@@ -378,7 +399,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         this.setState({
             selectedWalletIndex: nextWalletIndex,
         });
-    }
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -393,8 +414,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchWallets: () => dispatch(walletsFetch()),
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
-    walletsWithdrawFiat: params => dispatch(walletsWithdrawFiatFetch(params)),
     clearWallets: () => dispatch(walletsData([])),
 });
 
-export const Wallets = connect(mapStateToProps, mapDispatchToProps)(WalletsComponent);
+// tslint:disable-next-line:no-any
+export const Wallets = withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletsComponent) as any);

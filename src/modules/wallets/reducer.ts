@@ -10,9 +10,6 @@ import {
     WALLETS_WITHDRAW_CCY_DATA,
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
-    WALLETS_WITHDRAW_FIAT_DATA,
-    WALLETS_WITHDRAW_FIAT_ERROR,
-    WALLETS_WITHDRAW_FIAT_FETCH,
 } from './constants';
 import { Wallet } from './types';
 
@@ -40,12 +37,6 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
             return {
                 ...state,
                 loading: true,
-            };
-        case WALLETS_WITHDRAW_FIAT_FETCH:
-            return {
-                ...state,
-                loading: true,
-                withdrawSuccess: false,
             };
         case WALLETS_WITHDRAW_CCY_FETCH:
             return {
@@ -93,19 +84,6 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 loading: false,
             };
         }
-        case WALLETS_WITHDRAW_FIAT_DATA:
-            return {
-                ...state,
-                loading: false,
-                withdrawSuccess: true,
-            };
-        case WALLETS_WITHDRAW_FIAT_ERROR:
-            return {
-                ...state,
-                loading: false,
-                withdrawSuccess: false,
-                error: action.payload,
-            };
         case WALLETS_WITHDRAW_CCY_DATA:
             return {
                 ...state,
@@ -139,21 +117,13 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
         case WALLETS_ADDRESS_FETCH:
         case WALLETS_ADDRESS_DATA:
         case WALLETS_ADDRESS_ERROR:
-        case WALLETS_WITHDRAW_FIAT_FETCH:
-        case WALLETS_WITHDRAW_FIAT_DATA:
-        case WALLETS_WITHDRAW_FIAT_ERROR:
-            const walletsListStateFiat = { ...state.wallets };
-            return {
-                ...state,
-                wallets: walletsListReducer(walletsListStateFiat, action),
-            };
         case WALLETS_WITHDRAW_CCY_FETCH:
         case WALLETS_WITHDRAW_CCY_DATA:
         case WALLETS_WITHDRAW_CCY_ERROR:
-            const walletsListStateCcy = { ...state.wallets };
+            const walletsListState = { ...state.wallets };
             return {
                 ...state,
-                wallets: walletsListReducer(walletsListStateCcy, action),
+                wallets: walletsListReducer(walletsListState, action),
             };
         default:
             return state;

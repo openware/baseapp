@@ -9,15 +9,11 @@ import {
     WALLETS_WITHDRAW_CCY_DATA,
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
-    WALLETS_WITHDRAW_FIAT_DATA,
-    WALLETS_WITHDRAW_FIAT_ERROR,
-    WALLETS_WITHDRAW_FIAT_FETCH,
 } from './constants';
 import {
     Wallet,
     WalletAddress,
     WalletWithdrawCCY,
-    WalletWithdrawFiat,
 } from './types';
 
 export interface WalletsFetch {
@@ -51,20 +47,6 @@ export interface WalletsAddressError {
     payload: CommonError;
 }
 
-export interface WalletsWithdrawFiatFetch {
-    type: typeof WALLETS_WITHDRAW_FIAT_FETCH;
-    payload: WalletWithdrawFiat;
-}
-
-export interface WalletsWithdrawFiatData {
-    type: typeof WALLETS_WITHDRAW_FIAT_DATA;
-}
-
-export interface WalletsWithdrawFiatError {
-    type: typeof WALLETS_WITHDRAW_FIAT_ERROR;
-    payload: CommonError;
-}
-
 export interface WalletsWithdrawCcyFetch {
     type: typeof WALLETS_WITHDRAW_CCY_FETCH;
     payload: WalletWithdrawCCY;
@@ -85,9 +67,6 @@ export type WalletsAction = WalletsFetch
     | WalletsAddressFetch
     | WalletsAddressData
     | WalletsAddressError
-    | WalletsWithdrawFiatFetch
-    | WalletsWithdrawFiatData
-    | WalletsWithdrawFiatError
     | WalletsWithdrawCcyFetch
     | WalletsWithdrawCcyData
     | WalletsWithdrawCcyError;
@@ -118,20 +97,6 @@ export const walletsAddressData = (payload: WalletsAddressData['payload']): Wall
 
 export const walletsAddressError = (payload: WalletsAddressError['payload']): WalletsAddressError => ({
     type: WALLETS_ADDRESS_ERROR,
-    payload,
-});
-
-export const walletsWithdrawFiatFetch = (payload: WalletsWithdrawFiatFetch['payload']): WalletsWithdrawFiatFetch => ({
-    type: WALLETS_WITHDRAW_FIAT_FETCH,
-    payload,
-});
-
-export const walletsWithdrawFiatData = (): WalletsWithdrawFiatData => ({
-    type: WALLETS_WITHDRAW_FIAT_DATA,
-});
-
-export const walletsWithdrawFiatError = (payload: WalletsWithdrawFiatError['payload']): WalletsWithdrawFiatError => ({
-    type: WALLETS_WITHDRAW_FIAT_ERROR,
     payload,
 });
 
