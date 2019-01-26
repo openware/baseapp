@@ -8,7 +8,7 @@ import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modu
 // tslint:disable no-any
 interface ReduxProps {
     recentTrades: PublicTrade[];
-    currentMarket: Market;
+    currentMarket: Market | undefined;
 }
 
 interface DispatchProps {
@@ -19,13 +19,13 @@ type Props = DispatchProps & ReduxProps;
 
 class RecentTradesComponent extends React.Component<Props> {
     public componentWillReceiveProps(next: Props) {
-        if (this.props.currentMarket !== next.currentMarket) {
+        if (next.currentMarket && this.props.currentMarket !== next.currentMarket) {
           this.props.tradesFetch(next.currentMarket);
         }
     }
 
     public componentDidMount() {
-        if (this.props.currentMarket.id){
+        if (this.props.currentMarket){
           this.props.tradesFetch(this.props.currentMarket);
         }
     }

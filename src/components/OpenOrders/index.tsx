@@ -15,7 +15,7 @@ import {
  } from '../../modules/orders';
 
 interface ReduxProps {
-    currentMarket: Market;
+    currentMarket: Market | undefined;
     openOrdersData: Order[];
     openOrdersLoading?: boolean;
 }
@@ -29,13 +29,13 @@ type Props = ReduxProps & DispatchProps;
 
 class OpenOrdersContainer extends React.Component<Props> {
     public componentDidMount() {
-        if (this.props.currentMarket.id){
+        if (this.props.currentMarket){
           this.props.orderHistory([this.props.currentMarket]);
         }
     }
 
     public componentWillReceiveProps(next: Props) {
-        if (this.props.currentMarket !== next.currentMarket) {
+        if (next.currentMarket && this.props.currentMarket !== next.currentMarket) {
             this.props.orderHistory([next.currentMarket]);
         }
     }

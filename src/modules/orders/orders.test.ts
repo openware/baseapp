@@ -8,7 +8,6 @@ import {
     setupMockStore,
 } from '../../helpers/jest';
 import {
-    feesFetch,
     orderCancelFetch,
     orderExecuteFetch,
     ordersCancelAllFetch,
@@ -16,9 +15,6 @@ import {
 } from './';
 import { OrderExecution } from './actions';
 import {
-    FEES_DATA,
-    FEES_ERROR,
-    FEES_FETCH,
     ORDER_CANCEL_DATA,
     ORDER_CANCEL_ERROR,
     ORDER_CANCEL_FETCH,
@@ -44,6 +40,16 @@ describe('Orders', () => {
     const market = {
         id: 'bchbtc',
         name: 'BCH/BTC',
+        ask_unit: 'bch',
+        bid_unit: 'btc',
+        ask_fee: '0.0015',
+        bid_fee: '0.0015',
+        min_ask_price: '0.0',
+        max_bid_price: '0.0',
+        min_ask_amount: '0.0',
+        min_bid_amount: '0.0',
+        ask_precision: 4,
+        bid_precision: 4,
     };
 
     const cancelOrders = [
@@ -101,19 +107,6 @@ describe('Orders', () => {
         id: 'bchbtc',
     };
 
-    const fees = [
-        {
-            ask_fee: '0.1',
-            bid_fee: '0.2',
-            market: 'bchbtc',
-        },
-        {
-            ask_fee: '0.14',
-            bid_fee: '0.12',
-            market: 'xrpbch',
-        },
-    ];
-
     const executedOrder = {
         id: 204099,
         side: 'buy',
@@ -147,13 +140,6 @@ describe('Orders', () => {
         error: {
             code: 500,
             message: 'Cannot execute order',
-        },
-    };
-
-    const feesError = {
-        error: {
-            code: 500,
-            message: 'Cannot fetch fees',
         },
     };
 
@@ -203,14 +189,6 @@ describe('Orders', () => {
 
     const mockOrderExecuteError = () => {
         mockAxios.onPost('/api/v2/peatio/market/orders').reply(500, orderExecuteError);
-    };
-
-    const mockFees = () => {
-        mockAxios.onGet('/public/fees/trading').reply(200, fees);
-    };
-
-    const mockFeesError = () => {
-        mockAxios.onGet('/public/fees/trading').reply(500, feesError);
     };
 
     afterEach(() => {
@@ -485,62 +463,21 @@ describe('Orders', () => {
         });
     });
 
-    describe('fees fetch', async () => {
-        const expectedFeesFetch = {
-            type: FEES_FETCH,
-        };
-
-        const expectedFeesData = {
-            type: FEES_DATA,
-            payload: fees,
-        };
-
-        const expectedFeesError = {
-            type: FEES_ERROR,
-            payload: {
-                code: 500,
-                message: 'Cannot fetch fees',
-            },
-        };
-
-        it('should fetch fees', async () => {
-            mockFees();
-            const promise = new Promise(resolve => {
-                store.subscribe(() => {
-                    const actions = store.getActions();
-                    if (actions.length === 2) {
-                        expect(actions[0]).toEqual(expectedFeesFetch);
-                        expect(actions[1]).toEqual(expectedFeesData);
-                        resolve();
-                    }
-                });
-            });
-            store.dispatch(feesFetch());
-            return promise;
-        });
-
-        it('should handle fees fetch error', async () => {
-            mockFeesError();
-            const promise = new Promise(resolve => {
-                store.subscribe(() => {
-                    const actions = store.getActions();
-                    if (actions.length === 2) {
-                        expect(actions[0]).toEqual(expectedFeesFetch);
-                        expect(actions[1]).toEqual(expectedFeesError);
-                        resolve();
-                    }
-                });
-            });
-            store.dispatch(feesFetch());
-            return promise;
-        });
-    });
-
     describe('user orders', async () => {
         const markets = [
             {
                 id: 'bchbtc',
                 name: 'BCH/BTC',
+                ask_unit: 'bch',
+                bid_unit: 'btc',
+                ask_fee: '0.0015',
+                bid_fee: '0.0015',
+                min_ask_price: '0.0',
+                max_bid_price: '0.0',
+                min_ask_amount: '0.0',
+                min_bid_amount: '0.0',
+                ask_precision: 4,
+                bid_precision: 4,
             },
         ];
 

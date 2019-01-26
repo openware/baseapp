@@ -19,7 +19,7 @@ import { dataFeedObject, print, TickSubscriptions } from './api';
 
 interface ReduxProps {
     markets: Market[];
-    currentMarket: Market;
+    currentMarket: Market | undefined;
     tickers: MarketsState['tickers'];
 }
 
@@ -28,7 +28,6 @@ type Props = ReduxProps;
 export class TradingChartComponent extends React.PureComponent<Props> {
 
     private params = {
-        symbol: this.props.currentMarket.id,
         interval: '15',
         containerId: 'tv_chart_container',
         libraryPath: '/charting_library/',
@@ -46,7 +45,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     private subscriptions: TickSubscriptions = {};
 
     public componentWillReceiveProps(next: Props) {
-        if (next.currentMarket.id !== this.props.currentMarket.id) {
+        if (next.currentMarket && (!this.props.currentMarket || next.currentMarket.id !== this.props.currentMarket.id)) {
             if (this.tvWidget) {
                 this.tvWidget = null;
             }
@@ -55,7 +54,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     }
 
     public componentDidMount() {
-        if (this.props.currentMarket.id){
+        if (this.props.currentMarket) {
           this.setChart(this.props.markets, this.props.currentMarket);
         }
     }
@@ -72,7 +71,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             <React.Fragment>
                 <div className="cr-table-header__content">
                     <div className="pg-title-component">
-                        {this.props.currentMarket.name}
+                        {this.props.currentMarket ? this.props.currentMarket.name : ''}
                     </div>
                 </div>
                 <div

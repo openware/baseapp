@@ -23,7 +23,7 @@ interface ReduxProps {
     bidsLoading: boolean;
     bidsError?: CommonError;
     asks: string[][];
-    currentMarket: Market;
+    currentMarket: Market | undefined;
 }
 
 interface DispatchProps {
@@ -34,13 +34,13 @@ type Props = ReduxProps & DispatchProps;
 
 class OrderBookContainer extends React.Component<Props> {
     public componentDidMount() {
-        if (this.props.currentMarket.id) {
+        if (this.props.currentMarket) {
             this.props.orderBookFetch(this.props.currentMarket);
         }
     }
 
     public componentWillReceiveProps(next: Props) {
-        if (this.props.currentMarket !== next.currentMarket) {
+        if (this.props.currentMarket !== next.currentMarket && next.currentMarket) {
             this.props.orderBookFetch(next.currentMarket);
         }
     }

@@ -14,5 +14,5 @@ export const selectTradesError = (state: RootState): CommonError | undefined =>
 
 export const selectTradesOfCurrentMarket = (state: RootState): PrivateTrade[] => {
     const market = selectCurrentMarket(state);
-    return selectTrades(state).filter(value => value.market === market.id);
+    return market ? selectTrades(state).filter(value => value.market === market.id) : [];
 };

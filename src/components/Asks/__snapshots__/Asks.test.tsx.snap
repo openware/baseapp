@@ -73,7 +73,17 @@ exports[`Asks table test should render 1`] = `
   }
   currentMarket={
     Object {
+      "ask_fee": "0.0015",
+      "ask_precision": 4,
+      "ask_unit": "btc",
+      "bid_fee": "0.0015",
+      "bid_precision": 4,
+      "bid_unit": "zar",
       "id": "btczar",
+      "max_bid_price": "0.0",
+      "min_ask_amount": "0.0",
+      "min_ask_price": "0.0",
+      "min_bid_amount": "0.0",
       "name": "BTC/ZAR",
     }
   }

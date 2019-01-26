@@ -21,15 +21,12 @@ import {
 } from '../../modules';
 import { Market, selectMarkets } from '../../modules/markets';
 import {
-    MarketFees,
     orderExecuteFetch,
-    selectFees,
     selectOrderExecuteError,
  } from '../../modules/orders';
 import { CommonError, RangerEvent } from '../../modules/types';
 
 interface ReduxProps {
-    fees: MarketFees[];
     wallets: WalletItemProps[];
     executeError?: CommonError;
     marketsData: Market[];
@@ -50,6 +47,7 @@ interface DispatchProps {
 interface ExchangeProps {
     type: 'sell' | 'buy';
 }
+        //tslint:disable
 
 type Props = ReduxProps & DispatchProps & ExchangeProps;
 
@@ -94,10 +92,10 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
     }
 
     public componentDidMount() {
-        const { fees } = this.props;
+        const { marketsData } = this.props;
         this.props.fetchWallets();
         this.props.markets();
-        this.getTradingFees(fees);
+        this.getTradingFees(marketsData);
     }
 
     public componentWillReceiveProps(props: Props) {
@@ -377,33 +375,30 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
 
     private getFeeMessage = () => {
         const {selectedWalletTo} = this.state;
-        const { fees, type } = this.props;
-        const orderFees = this.getTradingFees(fees);
+        const { marketsData, type } = this.props;
+        //tslint:disable
+        const orderFees = this.getTradingFees(marketsData);
         const toCurrency = this.formatCurrency(selectedWalletTo);
-        if (fees && selectedWalletTo) {
+        if (marketsData && selectedWalletTo) {
             return type === 'buy'
-                ? `${orderFees.ask.value} ${toCurrency}`
-                : `${orderFees.bid.value} ${toCurrency}`;
+                ? `${orderFees.ask_fee} ${toCurrency}`
+                : `${orderFees.bid_fee} ${toCurrency}`;
         }
         return 'Loading';
     };
 
-    private getTradingFees = (fees: MarketFees[]) => {
+    private getTradingFees = (markets: Market[]) => {
         const {selectedWalletTo, selectedWalletFrom} = this.state;
         const emptyFees = {
-            ask: {
-                value: 0,
-            },
-            bid: {
-                value: 0,
-            },
+            ask_fee: "0",
+            bid_fee: "0",
         };
         const currentMarket = (selectedWalletTo && selectedWalletFrom) ?
             `${selectedWalletFrom.currency}${selectedWalletTo.currency}`.toLowerCase()
             : null;
-        if (currentMarket) {
-            const foundFee = fees.find((fee: MarketFees) => !!fee[currentMarket]);
-            return foundFee && fees.length > 0 ? foundFee[currentMarket] : emptyFees;
+        if (markets && currentMarket) {
+            const foundFee = markets.find((market: Market) => { return market.id === currentMarket });
+            return foundFee && markets.length > 0 ? foundFee : emptyFees;
         }
         return emptyFees;
     };
@@ -467,7 +462,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     executeError: selectOrderExecuteError(state),
     marketsData: selectMarkets(state),
     marketTickers: selectMarketTickers(state),
-    fees: selectFees(state),
     wallets: selectWallets(state),
     walletsError: selectWalletsError(state),
     walletsLoading: selectWalletsLoading(state),

@@ -2,9 +2,6 @@ import { defaultStorageLimit } from '../../api';
 import { CommonError, CommonState } from '../types';
 import { OrdersAction } from './actions';
 import {
-    FEES_DATA,
-    FEES_ERROR,
-    FEES_FETCH,
     ORDER_CANCEL_DATA,
     ORDER_CANCEL_ERROR,
     ORDER_CANCEL_FETCH,
@@ -20,20 +17,15 @@ import {
     USER_ORDERS_UPDATE,
 } from './constants';
 import {
-    DefaultFee,
     GroupedOrders,
-    MarketFees,
     Order,
     OrderStatus,
 } from './types';
 
 export interface OrdersState extends CommonState {
     orders: GroupedOrders;
-    fees: MarketFees[];
-    feesLoading: boolean;
     cancelLoading: boolean;
     executeLoading: boolean;
-    feesError?: CommonError;
     cancelError?: CommonError;
     executeError?: CommonError;
 }
@@ -47,8 +39,6 @@ const defaultOrders: GroupedOrders = {
 const initialState: OrdersState = {
     loading: false,
     orders: defaultOrders,
-    fees: [],
-    feesLoading: false,
     cancelLoading: false,
     executeLoading: false,
 };
@@ -107,14 +97,6 @@ const appendExecutedOrder = (source: GroupedOrders, order: Order): GroupedOrders
         wait: [order, ...source.wait],
     };
 };
-
-const getConvertedFees = (fees: DefaultFee[]): MarketFees[] =>
-    fees.map(fee => ({
-        [fee.market]: {
-            ask: fee.ask_fee,
-            bid: fee.bid_fee,
-        },
-    }));
 
 const userOrdersUpdate = (source: GroupedOrders, order: Order, state: OrderStatus): Order[] => {
     const orderToUpdate = source[state].find(findOrderById(order.id));
@@ -212,25 +194,6 @@ export const ordersReducer = (state = initialState, action: OrdersAction) => {
                 ...state,
                 executeLoading: false,
                 executeError: action.payload,
-            };
-        case FEES_FETCH:
-            return {
-                ...state,
-                feesLoading: true,
-                feesError: undefined,
-            };
-        case FEES_DATA:
-            return {
-                ...state,
-                feesLoading: false,
-                feesError: undefined,
-                fees: getConvertedFees(action.payload),
-            };
-        case FEES_ERROR:
-            return {
-                ...state,
-                feesLoading: false,
-                feesError: action.payload,
             };
 
         default:

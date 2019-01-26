@@ -23,21 +23,3 @@ export interface GroupedOrders {
     done: Order[];
     cancel: Order[];
 }
-
-export interface FeeItem {
-    type: string;
-    value: string;
-}
-
-export interface DefaultFee {
-    ask_fee: FeeItem;
-    bid_fee: FeeItem;
-    market: string;
-}
-
-export interface MarketFees {
-    [market: string]: {
-        ask: FeeItem;
-        bid: FeeItem;
-    };
-}

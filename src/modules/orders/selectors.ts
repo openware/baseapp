@@ -1,6 +1,6 @@
 import { RootState } from '../index';
 import { CommonError } from '../types';
-import { MarketFees, Order } from './types';
+import { Order } from './types';
 
 const selectOrdersState = (state: RootState): RootState['app']['orders'] =>
     state.app.orders;
@@ -35,12 +35,3 @@ export const selectOrderExecuteLoading = (state: RootState): boolean =>
 
 export const selectOrderExecuteError = (state: RootState): CommonError | undefined =>
     selectOrdersState(state).executeError;
-
-export const selectFees = (state: RootState): MarketFees[] =>
-    selectOrdersState(state).fees;
-
-export const selectFeesLoading = (state: RootState): boolean =>
-    selectOrdersState(state).feesLoading;
-
-export const selectFeesError = (state: RootState): CommonError | undefined =>
-    selectOrdersState(state).feesError;

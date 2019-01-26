@@ -7,23 +7,16 @@ import {
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RootState, selectWallets } from '../../modules';
-import { selectCurrentMarket, selectMarketTickers } from '../../modules/markets';
+import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/markets';
 import {
-    feesFetch,
-    MarketFees,
     orderExecuteFetch,
-    selectFees,
     selectOrderExecuteError,
     selectOrderExecuteLoading,
 } from '../../modules/orders';
 import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
-    currentMarket: {
-        id: string;
-        name: string;
-    };
-    fees: MarketFees[];
+    currentMarket: Market | undefined;
     executeLoading: boolean;
     marketTickers: {
         [key: string]: {
@@ -34,14 +27,13 @@ interface ReduxProps {
     wallets: WalletItemProps[];
 }
 
-// tslint:disable
 interface StoreProps {
     orderSide: string;
+    // tslint:disable-next-line no-any
     wallet?: any;
 }
 
 interface DispatchProps {
-    feesFetch: typeof feesFetch;
     orderExecute: typeof orderExecuteFetch;
 }
 
@@ -57,17 +49,13 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         };
     }
 
-    public componentDidMount() {
-        this.props.feesFetch();
-    }
-
     public componentWillReceiveProps(next: Props) {
         if (next.wallets && (next.wallets.length === 0)) {
             this.setState({
                 wallet: undefined,
             });
         }
-        if ((next.currentMarket.id !== this.props.currentMarket.id) || !this.state.wallet) {
+        if ((next.currentMarket && (!this.props.currentMarket || next.currentMarket.id !== this.props.currentMarket.id)) || !this.state.wallet) {
             this.setState({
                 wallet: this.getWallet(this.state.orderSide, next.currentMarket),
             });
@@ -75,7 +63,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     public render() {
-        const { executeError, executeLoading, marketTickers, fees } = this.props;
+        if (!this.props.currentMarket) {
+            return null;
+        }
+        const { executeError, executeLoading, marketTickers, currentMarket } = this.props;
         const { wallet, orderSide } = this.state;
         const currentMarketId = this.props.currentMarket.id;
         const to = (orderSide === 'sell') ? currentMarketId.slice(-3) : currentMarketId.slice(0, 3);
@@ -83,7 +74,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         const currentTicker = marketTickers[currentMarketId];
         const defaultCurrentTicker = { last: '0' };
-        const orderFees = this.getTradingFees(fees);
 
         return (
             <div className={'pg-order'}>
@@ -93,8 +83,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                 {executeError && <span className="pg-order__error">{executeError.message}</span>}
                 <Order
                     disabled={executeLoading}
-                    feeBuy={Number(orderFees.bid.value)}
-                    feeSell={Number(orderFees.ask.value)}
+                    feeBuy={Number(currentMarket.ask_fee || 0)}
+                    feeSell={Number(currentMarket.ask_fee || 0)}
                     from={from}
                     available={this.getAvailableValue(wallet)}
                     onSubmit={this.handleSubmit}
@@ -109,6 +99,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     private handleSubmit = (value: OrderProps) => {
+        if (!this.props.currentMarket) {
+            return;
+        }
         const { type, price, orderType, amount } = value;
         const resultData = {
             market: this.props.currentMarket.id,
@@ -120,21 +113,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.props.orderExecute(order);
     };
 
-    private getTradingFees(fees: MarketFees[]) {
-        const emptyFees = {
-            ask: {
-                value: 0,
-            },
-            bid: {
-                value: 0,
-            },
-        };
-        const { currentMarket } = this.props;
-        const foundFee = fees.find((fee: MarketFees) => !!fee[currentMarket.id]) || {};
-        return foundFee[currentMarket.id] ? foundFee[currentMarket.id] : emptyFees;
-    }
-
-    private getWallet(orderSide: string, market?: { id: string; name: string; }) {
+    private getWallet(orderSide: string, market?: Market) {
         const { wallets } = this.props;
         const currentMarket = market ? market : this.props.currentMarket;
         const currentMarketName = orderSide === 'sell' ?
@@ -164,11 +143,9 @@ const mapStateToProps = (state: RootState) => ({
     executeLoading: selectOrderExecuteLoading(state),
     marketTickers: selectMarketTickers(state),
     wallets: selectWallets(state),
-    fees: selectFees(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-    feesFetch: () => dispatch(feesFetch()),
     orderExecute: payload => dispatch(orderExecuteFetch(payload)),
 });
 

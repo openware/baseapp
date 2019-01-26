@@ -14,7 +14,7 @@ import { preciseData } from '../../helpers';
 interface ReduxProps {
     asksItems: string[][];
     bidsItems: string[][];
-    currentMarket: Market;
+    currentMarket: Market | undefined;
 }
 
 type Props = ReduxProps;
@@ -69,6 +69,9 @@ class MarketDepthContainer extends React.Component<Props> {
     }
 
     private convertToCumulative = (data, type) => {
+        if (!this.props.currentMarket) {
+            return;
+        }
         const { name } = this.props.currentMarket;
         const [first, second] = name.split('/');
         const tipLayout = ({volume, price, cumulativeVolume, cumulativePrice}) =>

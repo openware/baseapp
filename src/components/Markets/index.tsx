@@ -21,7 +21,7 @@ interface ReduxProps {
     marketTickers: {
         [key: string]: RangerEvent,
     };
-    currentMarket: Market;
+    currentMarket: Market | undefined;
 }
 
 interface DispatchProps {
@@ -67,7 +67,7 @@ class MarketsContainer extends React.Component<Props> {
         const { markets, currentMarket } = this.props;
         const marketToSet = markets[index];
 
-        if (currentMarket.id !== marketToSet.id) {
+        if (!currentMarket || currentMarket.id !== marketToSet.id) {
             this.props.setCurrentMarket(marketToSet);
             this.props.depthFetch(marketToSet);
         }

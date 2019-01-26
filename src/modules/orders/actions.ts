@@ -1,9 +1,6 @@
 import { Market } from '../markets';
 import { CommonError } from '../types';
 import {
-    FEES_DATA,
-    FEES_ERROR,
-    FEES_FETCH,
     ORDER_CANCEL_DATA,
     ORDER_CANCEL_ERROR,
     ORDER_CANCEL_FETCH,
@@ -19,7 +16,6 @@ import {
     USER_ORDERS_UPDATE,
 } from './constants';
 import {
-    DefaultFee,
     GroupedOrders,
     Order,
     OrderSide,
@@ -86,20 +82,6 @@ export interface OrderExecuteError {
     payload: CommonError;
 }
 
-export interface FeesFetch {
-    type: typeof FEES_FETCH;
-}
-
-export interface FeesData {
-    type: typeof FEES_DATA;
-    payload: DefaultFee[];
-}
-
-export interface FeesError {
-    type: typeof FEES_ERROR;
-    payload: CommonError;
-}
-
 export interface UserOrdersFetch {
     type: typeof USER_ORDERS_FETCH;
     payload: Market[];
@@ -124,9 +106,6 @@ export type OrdersAction = OrdersCancelAllFetch
     | OrderExecuteFetch
     | OrderExecuteData
     | OrderExecuteError
-    | FeesFetch
-    | FeesData
-    | FeesError
     | UserOrdersFetch
     | UserOrdersData
     | UserOrdersError
@@ -181,20 +160,6 @@ export const orderExecuteError =
         type: ORDER_EXECUTE_ERROR,
         payload,
     });
-
-export const feesFetch = (): FeesFetch => ({
-    type: FEES_FETCH,
-});
-
-export const feesData = (payload: FeesData['payload']): FeesData => ({
-    type: FEES_DATA,
-    payload,
-});
-
-export const feesError = (payload: FeesError['payload']): FeesError => ({
-    type: FEES_ERROR,
-    payload,
-});
 
 export const userOrdersFetch =
     (payload: UserOrdersFetch['payload']): UserOrdersFetch => ({

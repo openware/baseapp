@@ -1,9 +1,6 @@
 import { Cryptobase, defaultStorageLimit } from '../../api';
 import { Market } from '../markets';
 import {
-    feesData,
-    feesError,
-    feesFetch,
     orderCancelData,
     orderCancelError,
     orderCancelFetch,
@@ -24,12 +21,32 @@ import { OrderSide, OrderStatus } from './types';
 describe('Orders reducer', () => {
     const markets: Market[] = [
         {
-            id: 'btceur',
-            name: 'BTC/EUR',
+            id: 'ethusd',
+            name: 'ETH/USD',
+            ask_unit: 'eth',
+            bid_unit: 'usd',
+            ask_fee: '0.0015',
+            bid_fee: '0.0015',
+            min_ask_price: '0.0',
+            max_bid_price: '0.0',
+            min_ask_amount: '0.0',
+            min_bid_amount: '0.0',
+            ask_precision: 4,
+            bid_precision: 4,
         },
         {
-            id: 'ethzar',
-            name: 'ETH/ZAR',
+            id: 'trsteth',
+            name: 'TRST/ETH',
+            ask_unit: 'trst',
+            bid_unit: 'eth',
+            ask_fee: '0.0015',
+            bid_fee: '0.0015',
+            min_ask_price: '0.0',
+            max_bid_price: '0.0',
+            min_ask_amount: '0.0',
+            min_bid_amount: '0.0',
+            ask_precision: 4,
+            bid_precision: 4,
         },
     ];
 
@@ -103,8 +120,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -123,8 +138,7 @@ describe('Orders reducer', () => {
                     done: doneOrders,
                     cancel: cancelOrders,
                 },
-                fees: [],
-                feesLoading: false,
+
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -138,8 +152,6 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: cancelOrders,
             },
-            fees: [],
-            feesLoading: false,
             cancelLoading: false,
             executeLoading: false,
         };
@@ -157,8 +169,6 @@ describe('Orders reducer', () => {
                     done: [updatedOrder],
                     cancel: cancelOrders,
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -172,8 +182,6 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: [],
             },
-            fees: [],
-            feesLoading: false,
             cancelLoading: false,
             executeLoading: false,
         };
@@ -191,8 +199,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -216,8 +222,6 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: [],
             },
-            fees: [],
-            feesLoading: false,
             cancelLoading: false,
             executeLoading: false,
         };
@@ -245,8 +249,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -262,8 +264,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 executeLoading: false,
                 error: someError,
@@ -279,8 +279,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: true,
                 cancelError: undefined,
                 executeLoading: false,
@@ -295,8 +293,6 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: [],
             },
-            fees: [],
-            feesLoading: false,
             cancelLoading: false,
             executeLoading: false,
         };
@@ -308,8 +304,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 cancelError: undefined,
                 executeLoading: false,
@@ -325,8 +319,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 cancelError: someError,
                 executeLoading: false,
@@ -342,8 +334,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: true,
                 cancelError: undefined,
                 executeLoading: false,
@@ -358,8 +348,6 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: [],
             },
-            fees: [],
-            feesLoading: false,
             cancelLoading: false,
             executeLoading: false,
         };
@@ -375,8 +363,6 @@ describe('Orders reducer', () => {
                         executed_volume: undefined,
                     }],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 cancelError: undefined,
                 executeLoading: false,
@@ -392,8 +378,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 cancelError: someError,
                 executeLoading: false,
@@ -415,8 +399,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 executeLoading: true,
                 executeError: undefined,
@@ -432,8 +414,6 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 executeLoading: false,
                 executeError: undefined,
@@ -449,111 +429,9 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
-                fees: [],
-                feesLoading: false,
                 cancelLoading: false,
                 executeLoading: false,
                 executeError: someError,
-            });
-    });
-
-    it('supports feesFetch', () => {
-        expect(ordersReducer(undefined, feesFetch()))
-            .toEqual({
-                loading: false,
-                orders: {
-                    wait: [],
-                    done: [],
-                    cancel: [],
-                },
-                fees: [],
-                feesLoading: true,
-                feesError: undefined,
-                cancelLoading: false,
-                executeLoading: false,
-            });
-    });
-
-    it('supports feesData', () => {
-        const fees = [
-            {
-                market: 'bchbtc',
-                ask_fee: {
-                    type: 'relative',
-                    value: '0.0001',
-                },
-                bid_fee: {
-                    type: 'relative',
-                    value: '0.0001',
-                },
-            },
-            {
-                market: 'ethbtc',
-                ask_fee: {
-                    type: 'relative',
-                    value: '0.0002',
-                },
-                bid_fee: {
-                    type: 'relative',
-                    value: '0.0003',
-                },
-            },
-        ];
-        expect(ordersReducer(undefined, feesData(fees)))
-            .toEqual({
-                loading: false,
-                orders: {
-                    wait: [],
-                    done: [],
-                    cancel: [],
-                },
-                fees: [
-                    {
-                        bchbtc: {
-                            ask: {
-                                type: 'relative',
-                                value: '0.0001',
-                            },
-                            bid: {
-                                type: 'relative',
-                                value: '0.0001',
-                            },
-                        },
-                    },
-                    {
-                        ethbtc: {
-                            ask: {
-                                type: 'relative',
-                                value: '0.0002',
-                            },
-                            bid: {
-                                type: 'relative',
-                                value: '0.0003',
-                            },
-                        },
-                    },
-                ],
-                feesLoading: false,
-                feesError: undefined,
-                cancelLoading: false,
-                executeLoading: false,
-            });
-    });
-
-    it('supports feesError', () => {
-        expect(ordersReducer(undefined, feesError(someError)))
-            .toEqual({
-                loading: false,
-                orders: {
-                    wait: [],
-                    done: [],
-                    cancel: [],
-                },
-                fees: [],
-                feesLoading: false,
-                feesError: someError,
-                cancelLoading: false,
-                executeLoading: false,
             });
     });
 

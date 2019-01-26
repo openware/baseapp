@@ -23,15 +23,50 @@ describe('Markets', () => {
         sagaMiddleware.run(rootSaga);
     });
 
+
     describe('Fetch public markets informations', () => {
         const marketsList = [
             {
-                id: 'btceur',
-                name: 'BTC/EUR',
+                id: 'ethusd',
+                name: 'ETH/USD',
+                ask_unit: 'eth',
+                bid_unit: 'usd',
+                ask_fee: '0.0015',
+                bid_fee: '0.0015',
+                min_ask_price: '0.0',
+                max_bid_price: '0.0',
+                min_ask_amount: '0.0',
+                min_bid_amount: '0.0',
+                ask_precision: 4,
+                bid_precision: 4,
             },
             {
-                id: 'xrpbtc',
-                name: 'XRP/BTC',
+                id: 'trsteth',
+                name: 'TRST/ETH',
+                ask_unit: 'trst',
+                bid_unit: 'eth',
+                ask_fee: '0.0015',
+                bid_fee: '0.0015',
+                min_ask_price: '0.0',
+                max_bid_price: '0.0',
+                min_ask_amount: '0.0',
+                min_bid_amount: '0.0',
+                ask_precision: 4,
+                bid_precision: 4,
+            },
+            {
+                id: 'kyneth',
+                name: 'KYN/ETH',
+                ask_unit: 'kyn',
+                bid_unit: 'eth',
+                ask_fee: '0.0015',
+                bid_fee: '0.0015',
+                min_ask_price: '0.0',
+                max_bid_price: '0.0',
+                min_ask_amount: '0.0',
+                min_bid_amount: '0.0',
+                ask_precision: 4,
+                bid_precision: 4,
             },
         ];
 

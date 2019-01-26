@@ -14,7 +14,7 @@ export const selectMarketsLoading = (state: RootState): boolean | undefined =>
 export const selectMarketsError = (state: RootState): CommonError | undefined =>
     selectMarketsState(state).error;
 
-export const selectCurrentMarket = (state: RootState): Market =>
+export const selectCurrentMarket = (state: RootState): Market | undefined =>
     selectMarketsState(state).currentMarket;
 
 export const selectMarketTickers = (state: RootState): MarketsState['tickers'] =>

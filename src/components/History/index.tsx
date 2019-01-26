@@ -12,7 +12,7 @@ import {
 
 interface ReduxProps {
     trades: PrivateTrade[];
-    currentMarket: Market;
+    currentMarket: Market | undefined;
     ordersLoading?: boolean;
 }
 
@@ -29,11 +29,13 @@ const sides = ['buy', 'sell'];
 
 class HistoryContainer extends React.Component<Props, HistoryState> {
     public componentDidMount() {
-        this.props.getTradesHistory([this.props.currentMarket]);
+        if (this.props.currentMarket) {
+            this.props.getTradesHistory([this.props.currentMarket]);
+        }
     }
 
     public componentWillReceiveProps(next: Props) {
-        if (this.props.currentMarket !== next.currentMarket) {
+        if (this.props.currentMarket !== next.currentMarket && next.currentMarket) {
             this.props.getTradesHistory([next.currentMarket]);
         }
     }
@@ -62,7 +64,7 @@ class HistoryContainer extends React.Component<Props, HistoryState> {
     }
 
     private renderHeaders() {
-      return ['Date', 'Action', 'Price', 'Amount', 'Total'];
+        return ['Date', 'Action', 'Price', 'Amount', 'Total'];
     }
 
     private renderSide(side) {

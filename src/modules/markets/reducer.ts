@@ -11,20 +11,15 @@ import { Market } from './types';
 
 export interface MarketsState extends CommonState {
     list: Market[];
-    currentMarket: Market;
+    currentMarket: Market | undefined;
     tickers: {
         [pair: string]: RangerEvent;
     };
 }
 
-const defaultMarket: Market = {
-    id: '',
-    name: '',
-};
-
 const initialState: MarketsState = {
     list: [],
-    currentMarket: defaultMarket,
+    currentMarket: undefined,
     tickers: {},
 };
 
