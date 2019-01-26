@@ -64,17 +64,17 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     public componentWillReceiveProps(next: Props) {
         if ((next.currentMarket.id !== this.props.currentMarket.id) || !this.state.wallet) {
             this.setState({
-                wallet: this.getWallet(this.state.orderSide),
+                wallet: this.getWallet(this.state.orderSide, next.currentMarket),
             });
         }
     }
 
     public render() {
         const { executeError, executeLoading, marketTickers, fees } = this.props;
-        const { wallet } = this.state;
+        const { wallet, orderSide } = this.state;
         const currentMarketId = this.props.currentMarket.id;
-        const to = currentMarketId.slice(0, 3);
-        const from = currentMarketId.slice(-3);
+        const to = (orderSide === 'sell') ? currentMarketId.slice(-3) : currentMarketId.slice(0, 3);
+        const from = (orderSide === 'buy') ? currentMarketId.slice(-3) : currentMarketId.slice(0, 3);
 
         const currentTicker = marketTickers[currentMarketId];
         const defaultCurrentTicker = { last: '0' };
@@ -129,8 +129,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         return foundFee[currentMarket.id] ? foundFee[currentMarket.id] : emptyFees;
     }
 
-    private getWallet(orderSide: string) {
-        const { wallets, currentMarket } = this.props;
+    private getWallet(orderSide: string, market?: { id: string; name: string; }) {
+        const { wallets } = this.props;
+        const currentMarket = market ? market : this.props.currentMarket;
         const currentMarketName = orderSide === 'sell' ?
             (currentMarket ? currentMarket.name.split('/')[0] : '') :
             (currentMarket ? currentMarket.name.split('/')[1] : '');
@@ -140,9 +141,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     private getOrderType = (index: number, label: string) => {
+        const wallet = this.getWallet(label.toLowerCase());
         this.setState({
             orderSide: label.toLowerCase(),
-            wallet: this.getWallet(label.toLowerCase()),
+            wallet,
         });
     }
 
