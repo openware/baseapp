@@ -10,6 +10,8 @@ import {
     ORDER_EXECUTE_DATA,
     ORDER_EXECUTE_ERROR,
     ORDER_EXECUTE_FETCH,
+    ORDERS_CANCEL_ALL_DATA,
+    ORDERS_CANCEL_ALL_ERROR,
     ORDERS_CANCEL_ALL_FETCH,
     USER_ORDERS_DATA,
     USER_ORDERS_ERROR,
@@ -31,6 +33,16 @@ export interface UserOrdersUpdate {
 export interface OrdersCancelAllFetch {
     type: typeof ORDERS_CANCEL_ALL_FETCH;
 }
+
+export interface OrdersCancelAllData {
+    type: typeof ORDERS_CANCEL_ALL_DATA;
+}
+
+export interface OrdersCancelAllError {
+    type: typeof ORDERS_CANCEL_ALL_ERROR;
+    payload: CommonError;
+}
+
 
 export interface OrderCancelFetch {
     type: typeof ORDER_CANCEL_FETCH;
@@ -104,6 +116,8 @@ export interface UserOrdersError {
 }
 
 export type OrdersAction = OrdersCancelAllFetch
+    | OrdersCancelAllData
+    | OrdersCancelAllError
     | OrderCancelFetch
     | OrderCancelData
     | OrderCancelError
@@ -122,6 +136,16 @@ export type OrdersAction = OrdersCancelAllFetch
 export const ordersCancelAllFetch = (): OrdersCancelAllFetch => ({
     type: ORDERS_CANCEL_ALL_FETCH,
 });
+
+export const ordersCancelAllData = (): OrdersCancelAllData => ({
+    type: ORDERS_CANCEL_ALL_DATA,
+});
+
+export const ordersCancelAllError =
+    (payload: OrdersCancelAllError['payload']): OrdersCancelAllError => ({
+        type: ORDERS_CANCEL_ALL_ERROR,
+        payload,
+    });
 
 export const orderCancelFetch =
     (payload: OrderCancelFetch['payload']): OrderCancelFetch => ({

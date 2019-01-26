@@ -1,6 +1,23 @@
 import { Cryptobase, defaultStorageLimit } from '../../api';
 import { Market } from '../markets';
-import { feesData, feesError, feesFetch, orderCancelData, orderCancelError, orderCancelFetch, orderExecuteData, orderExecuteError, orderExecuteFetch, userOrdersData, userOrdersError, userOrdersFetch, userOrdersUpdate } from './actions';
+import {
+    feesData,
+    feesError,
+    feesFetch,
+    orderCancelData,
+    orderCancelError,
+    orderCancelFetch,
+    orderExecuteData,
+    orderExecuteError,
+    orderExecuteFetch,
+    ordersCancelAllData,
+    ordersCancelAllError,
+    ordersCancelAllFetch,
+    userOrdersData,
+    userOrdersError,
+    userOrdersFetch,
+    userOrdersUpdate,
+} from './actions';
 import { ordersReducer } from './reducer';
 import { OrderSide, OrderStatus } from './types';
 
@@ -250,6 +267,69 @@ describe('Orders reducer', () => {
                 cancelLoading: false,
                 executeLoading: false,
                 error: someError,
+            });
+    });
+
+    it('supports orderCancelAllFetch', () => {
+        expect(ordersReducer(undefined, ordersCancelAllFetch()))
+            .toEqual({
+                loading: false,
+                orders: {
+                    wait: [],
+                    done: [],
+                    cancel: [],
+                },
+                fees: [],
+                feesLoading: false,
+                cancelLoading: true,
+                cancelError: undefined,
+                executeLoading: false,
+            });
+    });
+
+    it('supports orderCancelAllData', () => {
+        const initialState = {
+            loading: false,
+            orders: {
+                wait: [],
+                done: [],
+                cancel: [],
+            },
+            fees: [],
+            feesLoading: false,
+            cancelLoading: false,
+            executeLoading: false,
+        };
+        expect(ordersReducer(initialState, ordersCancelAllData()))
+            .toEqual({
+                loading: false,
+                orders: {
+                    wait: [],
+                    done: [],
+                    cancel: [],
+                },
+                fees: [],
+                feesLoading: false,
+                cancelLoading: false,
+                cancelError: undefined,
+                executeLoading: false,
+            });
+    });
+
+    it('supports orderCancelAllError', () => {
+        expect(ordersReducer(undefined, ordersCancelAllError(someError)))
+            .toEqual({
+                loading: false,
+                orders: {
+                    wait: [],
+                    done: [],
+                    cancel: [],
+                },
+                fees: [],
+                feesLoading: false,
+                cancelLoading: false,
+                cancelError: someError,
+                executeLoading: false,
             });
     });
 

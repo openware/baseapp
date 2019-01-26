@@ -11,6 +11,9 @@ import {
     ORDER_EXECUTE_DATA,
     ORDER_EXECUTE_ERROR,
     ORDER_EXECUTE_FETCH,
+    ORDERS_CANCEL_ALL_DATA,
+    ORDERS_CANCEL_ALL_ERROR,
+    ORDERS_CANCEL_ALL_FETCH,
     USER_ORDERS_DATA,
     USER_ORDERS_ERROR,
     USER_ORDERS_FETCH,
@@ -55,6 +58,27 @@ const filterOrderById = (id: number | string) =>
 
 const findOrderById = (id: number | string) =>
     (order: Order): boolean => Number(id) === Number(order.id);
+
+const removeCancelledOrders = (source: GroupedOrders): GroupedOrders => {
+    const cancelledOrders = source.wait;
+
+    if (!cancelledOrders) {
+        return source;
+    }
+
+    const updatedOrders: Order[] = cancelledOrders.map(order => {
+        order.state = 'cancel';
+        order.executed_volume = order.origin_volume;
+        order.side = order.side || (order.kind === 'bid' ? 'buy' : 'sell');
+        return order;
+    });
+
+    return {
+        ...source,
+        cancel: updatedOrders,
+        wait: source.wait,
+    };
+};
 
 const removeCancelledOrder = (source: GroupedOrders, id: string | number): GroupedOrders => {
     const cancelledOrder = source.wait.find(findOrderById(id));
@@ -131,6 +155,25 @@ export const ordersReducer = (state = initialState, action: OrdersAction) => {
                 ...state,
                 loading: false,
                 error: action.payload,
+            };
+        case ORDERS_CANCEL_ALL_FETCH:
+            return {
+                ...state,
+                cancelLoading: true,
+                cancelError: undefined,
+            };
+        case ORDERS_CANCEL_ALL_DATA:
+            return {
+                ...state,
+                orders: removeCancelledOrders(state.orders),
+                cancelLoading: false,
+                cancelError: undefined,
+            };
+        case ORDERS_CANCEL_ALL_ERROR:
+            return {
+                ...state,
+                cancelLoading: false,
+                cancelError: action.payload,
             };
         case ORDER_CANCEL_FETCH:
             return {

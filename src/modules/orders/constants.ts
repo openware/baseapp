@@ -1,4 +1,6 @@
-export const ORDERS_CANCEL_ALL_FETCH = 'open_orders/ORDERS_CANCEL_ALL_FETCH';
+export const ORDERS_CANCEL_ALL_FETCH = 'orders/ORDERS_CANCEL_ALL_FETCH';
+export const ORDERS_CANCEL_ALL_DATA = 'orders/ORDERS_CANCEL_ALL_DATA';
+export const ORDERS_CANCEL_ALL_ERROR = 'orders/ORDERS_CANCEL_ALL_ERROR';
 
 export const ORDER_CANCEL_FETCH = 'orders/CANCEL_FETCH';
 export const ORDER_CANCEL_DATA = 'orders/CANCEL_DATA';

@@ -1,8 +1,9 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
-import { handleError } from '../../';
 import { API, RequestOptions } from '../../../api';
 import {
+    ordersCancelAllData,
+    ordersCancelAllError,
     OrdersCancelAllFetch,
 } from '../actions';
 
@@ -13,7 +14,8 @@ const ordersCancelAllOptions: RequestOptions = {
 export function* ordersCancelAllSaga(action: OrdersCancelAllFetch) {
     try {
         yield call(API.post(ordersCancelAllOptions), `/market/orders/cancel`);
+        yield put(ordersCancelAllData());
     } catch (error) {
-        yield put(handleError(error.code));
+        yield put(ordersCancelAllError(error));
     }
 }

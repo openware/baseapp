@@ -11,10 +11,27 @@ import {
     feesFetch,
     orderCancelFetch,
     orderExecuteFetch,
+    ordersCancelAllFetch,
     userOrdersFetch,
 } from './';
 import { OrderExecution } from './actions';
-import { FEES_DATA, FEES_ERROR, FEES_FETCH, ORDER_CANCEL_DATA, ORDER_CANCEL_ERROR, ORDER_CANCEL_FETCH, ORDER_EXECUTE_DATA, ORDER_EXECUTE_ERROR, ORDER_EXECUTE_FETCH, USER_ORDERS_DATA, USER_ORDERS_ERROR, USER_ORDERS_FETCH } from './constants';
+import {
+    FEES_DATA,
+    FEES_ERROR,
+    FEES_FETCH,
+    ORDER_CANCEL_DATA,
+    ORDER_CANCEL_ERROR,
+    ORDER_CANCEL_FETCH,
+    ORDER_EXECUTE_DATA,
+    ORDER_EXECUTE_ERROR,
+    ORDER_EXECUTE_FETCH,
+    ORDERS_CANCEL_ALL_DATA,
+    ORDERS_CANCEL_ALL_ERROR,
+    ORDERS_CANCEL_ALL_FETCH,
+    USER_ORDERS_DATA,
+    USER_ORDERS_ERROR,
+    USER_ORDERS_FETCH,
+} from './constants';
 
 // tslint:disable no-any no-magic-numbers no-console
 const debug = false;
@@ -168,8 +185,16 @@ describe('Orders', () => {
         mockAxios.onPost('/api/v2/peatio/market/orders/bchbtc/cancel').reply(200, orderCancel);
     };
 
+    const mockOrderCancelAll = () => {
+        mockAxios.onPost('/api/v2/peatio/market/orders/cancel').reply(200, orderCancel);
+    };
+
     const mockOrderCancelError = () => {
         mockAxios.onPost('/api/v2/peatio/market/orders/bchbtc/cancel').reply(500, orderCancelError);
+    };
+
+    const mockOrderCancelAllError = () => {
+        mockAxios.onPost('/api/v2/peatio/market/orders/cancel').reply(500, orderCancelError);
     };
 
     const mockOrderExecute = () => {
@@ -346,6 +371,56 @@ describe('Orders', () => {
                 });
             });
             store.dispatch(orderCancelFetch({ id: 'bchbtc' }));
+            return promise;
+        });
+    });
+
+    describe('cancel all orders', async () => {
+        const expectedOrderCancelAllFetch = {
+            type: ORDERS_CANCEL_ALL_FETCH,
+        };
+
+        const expectedOrderCancelAllData = {
+            type: ORDERS_CANCEL_ALL_DATA,
+        };
+
+        const expectedOrderCancelAllError = {
+            type: ORDERS_CANCEL_ALL_ERROR,
+            payload: {
+                code: 500,
+                message: 'Cannot cancel order',
+            },
+        };
+
+        it('should cancel all orders', async () => {
+            mockOrderCancelAll();
+            const promise = new Promise(resolve => {
+                store.subscribe(() => {
+                    const actions = store.getActions();
+                    if (actions.length === 2) {
+                        expect(actions[0]).toEqual(expectedOrderCancelAllFetch);
+                        expect(actions[1]).toEqual(expectedOrderCancelAllData);
+                        resolve();
+                    }
+                });
+            });
+            store.dispatch(ordersCancelAllFetch());
+            return promise;
+        });
+
+        it('should handle cancel order error', async () => {
+            mockOrderCancelAllError();
+            const promise = new Promise(resolve => {
+                store.subscribe(() => {
+                    const actions = store.getActions();
+                    if (actions.length === 2) {
+                        expect(actions[0]).toEqual(expectedOrderCancelAllFetch);
+                        expect(actions[1]).toEqual(expectedOrderCancelAllError);
+                        resolve();
+                    }
+                });
+            });
+            store.dispatch(ordersCancelAllFetch());
             return promise;
         });
     });
