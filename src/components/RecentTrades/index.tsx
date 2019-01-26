@@ -33,7 +33,7 @@ class RecentTradesComponent extends React.Component<Props> {
     public render() {
         return (
             <div className="pg-recent-trades">
-                <Table data={this.getTrades(this.props.recentTrades)} header={['Time', 'Price', 'Volume']}/>
+                <Table data={this.getTrades(this.props.recentTrades)} header={['Price', 'Amount', 'Time']}/>
             </div>
         );
     }
@@ -42,9 +42,9 @@ class RecentTradesComponent extends React.Component<Props> {
         const renderRow = item => {
             const { id, created_at, maker_type, price, volume } = item;
             return [
-                <span style={{ color: setTradeColor(maker_type).color }} key={id}>{localeDateSec(created_at)}</span>,
                 <span style={{ color: setTradeColor(maker_type).color }} key={id}>{price}</span>,
                 <span style={{ color: setTradeColor(maker_type).color }} key={id}>{volume}</span>,
+                <span style={{ color: setTradeColor(maker_type).color }} key={id}>{localeDateSec(created_at).slice(5)}</span>,
             ];
         };
         return (trades.length > 0)
