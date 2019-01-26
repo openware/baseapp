@@ -4,6 +4,7 @@ import {
 } from '@openware/components';
 import countries = require('country-list');
 import * as React from 'react';
+import MaskInput from 'react-maskinput';
 import {
   connect,
   MapDispatchToPropsFunction,
@@ -108,12 +109,13 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     <div className="pg-confirm__content-identity-col-row">
                       <fieldset className={`pg-confirm__content-identity-col-row-content ${dateOfBirth && 'pg-confirm__content-identity-col-row-is-active'}`}>
                           {dateOfBirth && <legend>Date of Birth</legend>}
-                          <input
-                              className="pg-confirm__content-identity-col-row-content-number"
-                              type="string"
-                              placeholder="Date of Birth"
-                              value={dateOfBirth}
-                              onChange={this.handleChange('dateOfBirth')}
+                          <MaskInput
+                            className="pg-confirm__content-identity-col-row-content-number"
+                            maskString="00/00/0000"
+                            mask="00/00/0000"
+                            onChange={this.handleChangeDate}
+                            value={dateOfBirth}
+                            placeholder="Date of Birth DD/MM/YYYY"
                           />
                       </fieldset>
                     </div>
@@ -208,6 +210,28 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             });
         };
     };
+
+    private formatDate = (date: string) => {
+      const [day, month, year] = date.split('/');
+      let formatDay = day ? parseFloat(day) : '';
+      formatDay = formatDay === '' || formatDay <= 31 ? formatDay : 31;
+      let formatMonth = month ? parseFloat(month) : '';
+      formatMonth = formatMonth === '' || formatMonth <= 12 ? formatMonth : 12;
+      const formatYear = year ? parseFloat(year) : '';
+      if (formatDay && formatMonth && formatYear) {
+        return `${formatDay}/${formatMonth}/${formatYear}`;
+      } else if (formatDay && formatMonth) {
+        return `${formatDay}/${formatMonth}`;
+      } else {
+        return `${formatDay}`;
+      }
+    }
+
+    private handleChangeDate = (e: OnChangeEvent) => {
+        this.setState({
+          dateOfBirth: this.formatDate(e.target.value),
+        });
+    }
 
     private selectNationality = (value: string) => {
         this.setState({

@@ -8,6 +8,8 @@ import {
   connect,
   MapDispatchToPropsFunction,
 } from 'react-redux';
+import { RouterProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { RootState } from '../../modules';
 import {
     selectSendDocumentsError,
@@ -38,7 +40,7 @@ interface DocumentsState {
     scan?: File;
 }
 
-type Props = ReduxProps & DispatchProps;
+type Props = ReduxProps & DispatchProps & RouterProps;
 
 class DocumentsComponent extends React.Component<Props, DocumentsState> {
     public state = {
@@ -47,6 +49,13 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         expiration: '',
     };
 
+    //tslint:disable
+    public componentWillReceiveProps(next: Props) {
+      if (next.success){
+        this.props.history.push('/profile');
+      }
+    }
+
     public render() {
         const {
             documentsType,
@@ -54,7 +63,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             expiration,
             scan,
         }: DocumentsState = this.state;
-        const { error, success } = this.props;
+        const { error } = this.props;
         const data = ['Passport', 'Identity card', 'Driver license', 'Utility Bill'];
 
         const onSelect = value => this.handleChangeDocumentsType(data[value]);
@@ -138,7 +147,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                     </div>
                 </div>
                 {error && <p className="pg-confirm__error">{error.message}</p>}
-                {success && <p className="pg-confirm__success">{success}</p>}
                 <div className="pg-confirm__content-deep">
                     <Button
                         className="pg-confirm__content-phone-deep-button"
@@ -246,4 +254,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line
-export const Documents = connect(mapStateToProps, mapDispatchProps)(DocumentsComponent) as any;
+export const Documents = withRouter(connect(mapStateToProps, mapDispatchProps)(DocumentsComponent) as any);

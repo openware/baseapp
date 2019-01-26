@@ -4,15 +4,16 @@
   margin: 0 auto;
 
   &-forms {
-    overflow-y: scroll;
-    height: calc(var(--big-gap) * 5.33);
     display: flex;
+    margin-bottom: calc(2 * var(--gap));
   }
 
   &-col {
     flex-direction: column;
     width: 100%;
     display: flex;
+    justify-content: space-between;
+    height: 380px;
 
     &-right {
       align-items: flex-end;
@@ -22,14 +23,14 @@
       display: inline-block;
       margin-top: calc(var(--gap) * 3.2);
       margin-bottom: calc(var(--gap) * 1);
+      height: 66px;
 
 
       &-is-active {
         margin-top: 0 !important;
         height: 63px !important;
-        margin-bottom: 5px;
+        margin-bottom: 3px;
         input {
-          padding: 20px 15px 0 !important;
           color: var(--color-white) !important;
         }
         border: 1px solid var(--kyc-active-color) !important;;
@@ -64,7 +65,6 @@
         display: inline-block;
 
         input {
-          padding: 5px 15px 0;
           display: inline;
           color: var(--kyc-grey);
           background: var(--transparent);
@@ -74,9 +74,6 @@
           height: 53px;
           border: unset;
           position: absolute;
-          right: 0;
-          left: 0;
-          top: 0;
           bottom: 0;
 
           &::placeholder {
