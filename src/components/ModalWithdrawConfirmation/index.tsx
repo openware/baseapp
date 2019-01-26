@@ -58,7 +58,7 @@ class ModalWithdrawConfirmation extends React.Component<ModalWithdrawConfirmatio
                     onClick={this.props.onDismiss}
                 />
                 <Button
-                    className="pg-exchange-modal-submit-footer__button"
+                    className="pg-exchange-modal-submit-footer__button-inverse"
                     label="Withdraw"
                     onClick={this.props.onSubmit}
                 />
