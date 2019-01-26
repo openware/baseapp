@@ -6,7 +6,7 @@ export const pgRoutes = (isLoggedIn: boolean): string[][] => {
         ['Trade', '/trade'],
         ['Wallets', '/wallets'],
         ['Buy/Sell', '/exchange'],
-        ['Open orders', '/orders'],
+        ['Orders', '/orders'],
         ['History', '/history'],
 
     ];
