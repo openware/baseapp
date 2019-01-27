@@ -382,7 +382,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     // tslint:disable-next-line:no-any
     private redirectToEnable2fa = (e: any) => {
-        this.props.history.push('/security/2fa');
+        this.props.history.push('/security/2fa', { enable2fa: true });
     };
 
     private isTwoFactorAuthRequired(level: number, is2faEnabled: boolean) {
