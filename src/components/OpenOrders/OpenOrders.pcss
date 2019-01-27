@@ -2,11 +2,6 @@
   width: 100%;
   background: var(--transparent);
 
-  td {
-    &:first-child {
-      min-width: 100px;
-    }
-  }
 
   @media (max-width: 640px) {
     width: 100%;
@@ -21,6 +16,11 @@
     width: 3.5%;
     padding: 0 !important;
   }
+}
+
+.cr-open-orders .cr-table th,
+.cr-open-orders .cr-table td {
+  width: auto !important;
 }
 
 .pg-open-orders--loading {

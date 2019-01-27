@@ -55,7 +55,7 @@ class OpenOrdersContainer extends React.Component<Props> {
 
     private openOrders = () => (
         <OpenOrders
-            headers={['Date', 'Action', 'State', 'Price', 'Amount', '']}
+            headers={['Date', 'Action', 'Price', 'Amount', 'Total', 'Filled', '']}
             data={this.renderData(this.props.openOrdersData)}
             onCancel={this.handleCancel}
         />
@@ -65,23 +65,16 @@ class OpenOrdersContainer extends React.Component<Props> {
         return localeDate(time);
     };
 
-    private renderState({ remaining_volume = '0', volume = '0' }) {
-        const isVolumeEqual = Number(remaining_volume) === Number(volume);
-
-        if (isVolumeEqual) {
-            return 'wait';
-        }
-        return 'partially filled';
-    }
-
     private renderData = (data: Order[]) => {
         const renderRow = item => {
-          const { price, created_at, remaining_volume, origin_volume, kind, volume, side } = item;
+          const { price, created_at, remaining_volume, origin_volume, kind, side, executed_volume, volume } = item;
           const resultSide = kind ? kind : side === 'sell' ? 'ask' : 'bid';
           const remaining = remaining_volume || origin_volume;
-          const resultState = this.renderState({ remaining_volume, volume});
+          const total = remaining * price;
+          const executed = executed_volume || (volume - remaining_volume);
+          const filled = (executed / volume * 100).toFixed(2);
 
-          return [OpenOrdersContainer.getDate(created_at), resultSide, resultState, price, remaining, ''];
+          return [OpenOrdersContainer.getDate(created_at), resultSide, price, remaining, total, `${filled}%`, ''];
         };
 
         return (data.length > 0)
