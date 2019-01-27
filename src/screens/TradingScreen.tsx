@@ -139,7 +139,7 @@ const renderTabs = () => {
     return [
         {
           content: <RecentTrades/>,
-          label: 'Trade History',
+          label: 'Recent Trades',
         },
         {
             content: <OpenOrdersComponent/>,
