@@ -103,8 +103,6 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
 
         if (selectedWalletTo && selectedWalletFrom) {
             this.setState({loading: false});
-            this.getWalletsFromList(props);
-            this.getWalletsToList(props, selectedWalletFrom);
             return;
         }
 
@@ -420,6 +418,8 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
         const {walletsFrom} = this.state;
         this.setState({
             selectedWalletFrom: walletsFrom[i],
+            amountFrom: 0,
+            amountTo: 0,
         });
         this.getWalletsToList(this.props, walletsFrom[i]);
         this.hideModal();
@@ -429,6 +429,8 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
         const {walletsTo} = this.state;
         this.setState({
             selectedWalletTo: walletsTo[i],
+            amountFrom: 0,
+            amountTo: 0,
         });
         this.hideModal();
     };
