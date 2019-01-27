@@ -78,7 +78,7 @@ class HistoryComponent extends React.Component<Props> {
         case 'withdraw':
           return ['ID', 'Date', 'Currency', 'Address', 'Amount', 'Fee', 'Status'];
         case 'trade':
-          return ['ID', 'Date', 'Side', 'Market', 'Price', 'Funds', 'Amount'];
+          return ['ID', 'Date', 'Side', 'Market', 'Price', 'Amount', 'Funds'];
         default:
           return ['txID', 'Date', 'Currency', 'Amount', 'Status', 'Balance'];
       }
@@ -139,8 +139,8 @@ class HistoryComponent extends React.Component<Props> {
                     <span style={{ color: setTradesType(side).color }} key={id}>{setTradesType(side).text}</span>,
                     marketName,
                     price,
-                    funds,
                     volume,
+                    funds,
                 ];
             }
             default: {
