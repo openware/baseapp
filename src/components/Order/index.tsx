@@ -67,9 +67,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             return null;
         }
         const { executeError, executeLoading, marketTickers, currentMarket } = this.props;
-        const { wallet, orderSide } = this.state;
-        const to = (orderSide === 'sell') ? currentMarket.bid_unit : currentMarket.ask_unit;
-        const from = (orderSide === 'buy') ? currentMarket.bid_unit : currentMarket.ask_unit;
+        const { wallet } = this.state;
+        const to = currentMarket.ask_unit;
+        const from = currentMarket.bid_unit;
 
         const currentTicker = marketTickers[currentMarket.id];
         const defaultCurrentTicker = { last: '0' };
