@@ -146,9 +146,9 @@
 
     &__container {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       max-width: calc(var(--gap) * 150);
-      margin-bottom: calc(var(--gap) * 20);
+      padding: calc(var(--gap) * 3) 0 calc(var(--gap) * 5) 0;
     }
 
     &__loading {
@@ -184,6 +184,9 @@
           display: flex;
           flex-direction: column;
           padding-bottom: 0 !important;
+            input {
+              margin-top: var(--gap);
+            }
         }
       }
 
