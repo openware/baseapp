@@ -16,6 +16,7 @@ import {
     sendEmail,
 } from '../../modules/contact';
 import { selectUserInfo, selectUserLoggedIn } from '../../modules/profile';
+import { walletsReset } from '../../modules/wallets';
 import arrow = require('./down-arrow.svg');
 
 // tslint:disable
@@ -30,6 +31,7 @@ export interface ReduxProps {
 interface DispatchProps {
     logout: typeof logoutFetch;
     sendEmail: typeof sendEmail;
+    walletsReset: typeof walletsReset;
 }
 
 export interface OwnProps {
@@ -165,6 +167,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
             if (profile) { localStorage.removeItem('profile'); }
 
             this.props.logout();
+            this.props.walletsReset();
         });
     };
 
@@ -188,6 +191,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         logout: () => dispatch(logoutFetch()),
         sendEmail: payload => dispatch(sendEmail(payload)),
+        walletsReset: () => dispatch(walletsReset()),
     });
 
 // tslint:disable-next-line:no-any

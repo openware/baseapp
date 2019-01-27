@@ -4,7 +4,6 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
 import { userReset } from '../../profile';
-import { walletsReset } from '../../wallets';
 import { logoutError, logoutFetch } from '../actions';
 
 
@@ -33,7 +32,7 @@ describe('Logout saga', () => {
         mockAxios.onDelete('/identity/sessions').reply(200);
     };
 
-    const expectedActionsFetch = [logoutFetch(), walletsReset(), userReset()];
+    const expectedActionsFetch = [logoutFetch(), userReset()];
     const expectedActionsError = [logoutFetch(), logoutError(fakeError)];
 
     it('should logout user in success flow', async () => {
