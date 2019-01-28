@@ -106,11 +106,12 @@ class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState>
 
     private renderData = (data: Order[]) => {
         const renderRow = item => {
-          const { price, volume, side, ord_type, market, remaining_volume, state } = item;
+          const { price, volume, side, ord_type, market, executed_volume, remaining_volume, state } = item;
           const type = side === 'buy' ? `Buy / ${ord_type}` : `Sell / ${ord_type}`;
           const currentMarket = this.props.marketsData.find(marketElem => marketElem.id === market) || market;
+          const costRemaining = remaining_volume * price;
 
-          return [type, currentMarket.name, price, volume, volume, remaining_volume, remaining_volume, state, ''];
+          return [type, currentMarket.name, price, volume, executed_volume, remaining_volume, costRemaining, state, ''];
         };
         return (data.length > 0)
             ? this.sortDataByDateTime(data).map(renderRow)
