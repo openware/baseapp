@@ -10,6 +10,7 @@ describe('walletsList reducer', () => {
         {
             balance: 0,
             currency: 'btc',
+            name: 'Bitcoin',
             explorerAddress: 'https://testnet.blockchain.info/address/#{address}',
             explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
             fee: 0,
@@ -18,6 +19,7 @@ describe('walletsList reducer', () => {
         {
             balance: 0,
             currency: 'bch',
+            name: 'Bitcoin Cash',
             explorerAddress: 'https://www.blocktrail.com/tBCC/address/#{address}',
             explorerTransaction: 'https://www.blocktrail.com/tBCC/tx/#{txid}',
             fee: 0,
@@ -26,6 +28,7 @@ describe('walletsList reducer', () => {
         {
             balance: 0,
             currency: 'eth',
+            name: 'Ethereum',
             explorerAddress: 'https://rinkeby.etherscan.io/address/#{address}',
             explorerTransaction: 'https://rinkeby.etherscan.io/tx/#{txid}',
             fee: 0,

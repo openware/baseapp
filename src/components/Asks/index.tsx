@@ -81,6 +81,10 @@ export class OrderBookContainer extends React.Component<Props> {
         return Math.max(...this.renderTotal(bids), ...this.renderTotal(asks));
     }
 
+    private selectEntry(index) {
+        // TODO: prefill the Order component with the selected price
+    }
+
     private orderBook = (bids, asks) => (
         <OrderBook
             side={'left'}
@@ -90,6 +94,7 @@ export class OrderBookContainer extends React.Component<Props> {
             rowBackgroundColor={'rgba(232, 94, 89, 0.5)'}
             maxVolume={OrderBookContainer.calcMaxVolume(bids, asks)}
             orderBookEntry={OrderBookContainer.renderTotal(asks)}
+            onSelect={this.selectEntry}
         />
     );
 

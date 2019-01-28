@@ -63,10 +63,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     public render() {
-        if (!this.props.currentMarket) {
+        const { executeError, executeLoading, marketTickers, currentMarket } = this.props;
+        if (!currentMarket) {
             return null;
         }
-        const { executeError, executeLoading, marketTickers, currentMarket } = this.props;
         const { wallet } = this.state;
         const to = currentMarket.ask_unit;
         const from = currentMarket.bid_unit;
@@ -82,8 +82,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                 {executeError && <span className="pg-order__error">{executeError.message}</span>}
                 <Order
                     disabled={executeLoading}
-                    feeBuy={Number(currentMarket.ask_fee || 0)}
-                    feeSell={Number(currentMarket.ask_fee || 0)}
+                    feeBuy={Number(currentMarket.ask_fee)}
+                    feeSell={Number(currentMarket.ask_fee)}
                     from={from}
                     available={this.getAvailableValue(wallet)}
                     onSubmit={this.handleSubmit}
