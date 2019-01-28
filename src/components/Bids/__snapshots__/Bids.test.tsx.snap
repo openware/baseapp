@@ -87,5 +87,6 @@ exports[`Bids table test should render 1`] = `
       "name": "BTC/ZAR",
     }
   }
+  currentPrice=""
 />
 `;

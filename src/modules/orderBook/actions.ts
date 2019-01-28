@@ -7,6 +7,7 @@ import {
   ORDER_BOOK_DATA,
   ORDER_BOOK_ERROR,
   ORDER_BOOK_FETCH,
+  SET_CURRENT_PRICE,
 } from './constants';
 import { DepthState, OrderBookState } from './types';
 
@@ -45,10 +46,16 @@ export interface DepthError {
   error: CommonError;
 }
 
+export interface SetCurrentPrice {
+  type: typeof SET_CURRENT_PRICE;
+  payload: string;
+}
+
 export type DepthActions =
   DepthFetch
   | DepthData
-  | DepthError;
+  | DepthError
+  | SetCurrentPrice;
 
 export const orderBookFetch = (payload: OrderBookFetch['payload']): OrderBookFetch => ({
   type: ORDER_BOOK_FETCH,
@@ -79,3 +86,9 @@ export const depthError = (error: DepthError['error']): DepthError => ({
   type: DEPTH_ERROR,
   error,
 });
+
+export const setCurrentPrice =
+  (payload: SetCurrentPrice['payload']): SetCurrentPrice => ({
+    type: SET_CURRENT_PRICE,
+    payload,
+  });

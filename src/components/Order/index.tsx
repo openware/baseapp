@@ -6,7 +6,11 @@ import {
 } from '@openware/components';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RootState, selectWallets } from '../../modules';
+import {
+    RootState,
+    selectCurrentPrice,
+    selectWallets,
+} from '../../modules';
 import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/markets';
 import {
     orderExecuteFetch,
@@ -25,12 +29,14 @@ interface ReduxProps {
     };
     executeError?: CommonError;
     wallets: WalletItemProps[];
+    currentPrice: string;
 }
 
 interface StoreProps {
     orderSide: string;
     // tslint:disable-next-line no-any
     wallet?: any;
+    price: string;
 }
 
 interface DispatchProps {
@@ -46,6 +52,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.state = {
             orderSide: 'buy',
             wallet: undefined,
+            price: '',
         };
     }
 
@@ -60,6 +67,11 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                 wallet: this.getWallet(this.state.orderSide, next.currentMarket),
             });
         }
+        if (next.currentPrice !== this.props.currentPrice) {
+            this.setState({
+                price: next.currentPrice,
+            });
+        }
     }
 
     public render() {
@@ -67,9 +79,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         if (!currentMarket) {
             return null;
         }
-        const { wallet } = this.state;
-        const to = currentMarket.ask_unit;
-        const from = currentMarket.bid_unit;
+        const { wallet, orderSide, price } = this.state;
+        const to = (orderSide === 'sell') ? currentMarket.bid_unit : currentMarket.ask_unit;
+        const from = (orderSide === 'buy') ? currentMarket.bid_unit : currentMarket.ask_unit;
 
         const currentTicker = marketTickers[currentMarket.id];
         const defaultCurrentTicker = { last: '0' };
@@ -91,10 +103,36 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     priceMarketSell={Number((currentTicker || defaultCurrentTicker).last)}
                     to={to}
                     handleSendType={this.getOrderType}
+                    price={price}
+                    handleChangeInputPrice={this.handleChangePrice}
                 />
                 {executeLoading && <Loader />}
             </div>
         );
+    }
+
+    private changeState = (value: string) => {
+        this.setState({
+            price: value ? value : '',
+        });
+    };
+
+    private handleChangePrice = (value: string) => {
+        const convertedText = value
+            .replace(',', '.')
+            .replace('-', '');
+        const isDotFirst = convertedText[0] === '.';
+
+        if (isDotFirst) {
+            this.changeState('0.');
+            return;
+        }
+
+        const condition = new RegExp('^(?:[\\d-]*\\.?[\\d-]*|[\\d-]*\\.[\\d-])$');
+
+        if (convertedText.match(condition)) {
+            this.changeState(convertedText);
+        }
     }
 
     private handleSubmit = (value: OrderProps) => {
@@ -142,6 +180,7 @@ const mapStateToProps = (state: RootState) => ({
     executeLoading: selectOrderExecuteLoading(state),
     marketTickers: selectMarketTickers(state),
     wallets: selectWallets(state),
+    currentPrice: selectCurrentPrice(state),
 });
 
 const mapDispatchToProps = dispatch => ({

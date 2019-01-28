@@ -68,6 +68,7 @@ describe('orderBook reducer', () => {
       [ '0.49', '0.5' ],
       [ '0.26', '25' ],
     ],
+    currentPrice: '',
     loading: true,
   };
 

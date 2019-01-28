@@ -11,10 +11,12 @@ import {
     orderBookFetch,
     RootState,
     selectCurrentMarket,
+    selectCurrentPrice,
     selectDepthAsks,
     selectDepthBids,
     selectDepthError,
     selectDepthLoading,
+    setCurrentPrice,
 } from '../../modules';
 import { CommonError } from '../../modules/types';
 
@@ -24,10 +26,12 @@ interface ReduxProps {
     bidsError?: CommonError;
     asks: string[][];
     currentMarket: Market | undefined;
+    currentPrice: string;
 }
 
 interface DispatchProps {
     orderBookFetch: typeof orderBookFetch;
+    setCurrentPrice: typeof setCurrentPrice;
 }
 
 type Props = ReduxProps & DispatchProps;
@@ -81,10 +85,6 @@ class OrderBookContainer extends React.Component<Props> {
         return Math.max(...this.renderTotal(bids), ...this.renderTotal(asks));
     }
 
-    private selectEntry(index) {
-        // TODO: prefill the Order component with the selected price
-    }
-
     private orderBook = (bids, asks) => (
         <OrderBook
             side={'right'}
@@ -94,9 +94,18 @@ class OrderBookContainer extends React.Component<Props> {
             rowBackgroundColor={'rgba(84, 180, 137, 0.5)'}
             maxVolume={OrderBookContainer.calcMaxVolume(bids, asks)}
             orderBookEntry={OrderBookContainer.renderTotal(bids)}
-            onSelect={this.selectEntry}
+            onSelect={this.handleOnSelect}
         />
     );
+
+    private handleOnSelect = (index: number) => {
+        const { bids, currentPrice } = this.props;
+        const priceToSet = bids[index][0];
+
+        if (currentPrice !== priceToSet) {
+            this.props.setCurrentPrice(priceToSet);
+        }
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
@@ -105,11 +114,13 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     bidsLoading: selectDepthLoading(state),
     bidsError: selectDepthError(state),
     currentMarket: selectCurrentMarket(state),
+    currentPrice: selectCurrentPrice(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         orderBookFetch: payload => dispatch(orderBookFetch(payload)),
+        setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     });
 
 const Bids = connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer);

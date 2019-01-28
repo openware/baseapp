@@ -16,5 +16,6 @@ export interface OrderBookEntry extends CommonState {
 export interface DepthState extends CommonState {
   asks: string[][];
   bids: string[][];
+  currentPrice: string;
   loading: boolean;
 }

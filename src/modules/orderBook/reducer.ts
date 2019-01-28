@@ -6,6 +6,7 @@ import {
   ORDER_BOOK_DATA,
   ORDER_BOOK_ERROR,
   ORDER_BOOK_FETCH,
+  SET_CURRENT_PRICE,
 } from './constants';
 import { DepthState, OrderBookState } from './types';
 
@@ -18,6 +19,7 @@ export const initialOrderBook: OrderBookState = {
 export const initialDepth: DepthState = {
   asks: [],
   bids: [],
+  currentPrice: '',
   loading: false,
 };
 
@@ -71,6 +73,11 @@ export const depthReducer = (state = initialDepth, action: DepthActions): DepthS
         ...state,
         loading: false,
         error: action.error,
+      };
+    case SET_CURRENT_PRICE:
+      return {
+        ...state,
+        currentPrice: action.payload,
       };
     default:
       return state;

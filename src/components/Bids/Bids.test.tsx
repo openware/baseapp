@@ -42,11 +42,14 @@ const currentMarket = {
     bid_precision: 4,
 };
 
+const currentPrice = '';
+
 const defaultProps: BidsProps = {
     asks,
     bidsLoading,
     bids,
     currentMarket,
+    currentPrice,
 };
 
 const store = createStore(rootReducer);
