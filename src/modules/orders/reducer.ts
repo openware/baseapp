@@ -11,6 +11,9 @@ import {
     ORDERS_CANCEL_ALL_DATA,
     ORDERS_CANCEL_ALL_ERROR,
     ORDERS_CANCEL_ALL_FETCH,
+    USER_ORDERS_ALL_DATA,
+    USER_ORDERS_ALL_ERROR,
+    USER_ORDERS_ALL_FETCH,
     USER_ORDERS_DATA,
     USER_ORDERS_ERROR,
     USER_ORDERS_FETCH,
@@ -156,6 +159,20 @@ export const ordersReducer = (state = initialState, action: OrdersAction) => {
                 ...state,
                 cancelLoading: false,
                 cancelError: action.payload,
+            };
+        case USER_ORDERS_ALL_FETCH:
+            return { ...state, loading: true };
+        case USER_ORDERS_ALL_DATA:
+            return {
+                ...state,
+                loading: false,
+                orders: action.payload,
+            };
+        case USER_ORDERS_ALL_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
             };
         case ORDER_CANCEL_FETCH:
             return {

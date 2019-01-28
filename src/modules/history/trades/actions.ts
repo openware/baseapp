@@ -1,11 +1,14 @@
-import { Market } from '../../markets';
 import { CommonError } from '../../types';
-import { TRADES_DATA, TRADES_ERROR, TRADES_FETCH, TRADES_PUSH } from './constants';
+import {
+    TRADES_DATA,
+    TRADES_ERROR,
+    TRADES_FETCH,
+    TRADES_PUSH,
+} from './constants';
 import { PrivateTrade, PrivateTradeEvent } from './types';
 
 export interface TradesFetch {
     type: typeof TRADES_FETCH;
-    payload: Market[];
 }
 
 export interface TradePush {
@@ -23,11 +26,13 @@ export interface TradesData {
     payload: PrivateTrade[];
 }
 
-export type TradesActions = TradesFetch | TradesData | TradePush | TradesError;
+export type TradesActions = TradesFetch
+    | TradesData
+    | TradePush
+    | TradesError;
 
-export const tradesFetch = (markets: Market[]): TradesFetch => ({
+export const tradesFetch = (): TradesFetch => ({
     type: TRADES_FETCH,
-    payload: markets,
 });
 
 export const tradePush = (tradeEvent: PrivateTradeEvent): TradePush => ({

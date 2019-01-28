@@ -29,14 +29,12 @@ const sides = ['buy', 'sell'];
 
 class HistoryContainer extends React.Component<Props, HistoryState> {
     public componentDidMount() {
-        if (this.props.currentMarket) {
-            this.props.getTradesHistory([this.props.currentMarket]);
-        }
+        this.props.getTradesHistory();
     }
 
     public componentWillReceiveProps(next: Props) {
-        if (this.props.currentMarket !== next.currentMarket && next.currentMarket) {
-            this.props.getTradesHistory([next.currentMarket]);
+        if (this.props.currentMarket !== next.currentMarket) {
+            this.props.getTradesHistory();
         }
     }
 
@@ -105,7 +103,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        getTradesHistory: (markets: Market[]) => dispatch(tradesFetch(markets)),
+        getTradesHistory: () => dispatch(tradesFetch()),
     });
 
 export const HistoryComponent = connect(mapStateToProps, mapDispatchToProps)(HistoryContainer);

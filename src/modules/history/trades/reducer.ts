@@ -2,7 +2,12 @@ import { defaultStorageLimit } from '../../../api';
 import { localeDate } from '../../../helpers/localeDate';
 import { getTimezone } from '../../../helpers/timezone';
 import { TradesActions } from './actions';
-import { TRADES_DATA, TRADES_ERROR, TRADES_FETCH, TRADES_PUSH } from './constants';
+import {
+    TRADES_DATA,
+    TRADES_ERROR,
+    TRADES_FETCH,
+    TRADES_PUSH,
+} from './constants';
 import { MakerType, PrivateTrade, PrivateTradeEvent, PrivateTradesState } from './types';
 
 const initialState: PrivateTradesState = {

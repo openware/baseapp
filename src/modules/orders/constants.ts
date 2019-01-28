@@ -14,3 +14,7 @@ export const USER_ORDERS_FETCH = 'orders/USER_ORDERS_FETCH';
 export const USER_ORDERS_DATA = 'orders/USER_ORDERS_DATA';
 export const USER_ORDERS_UPDATE = 'orders/USER_ORDERS_UPDATE';
 export const USER_ORDERS_ERROR = 'orders/USER_ORDERS_ERROR';
+
+export const USER_ORDERS_ALL_FETCH = 'orders/USER_ORDERS_ALL_FETCH';
+export const USER_ORDERS_ALL_DATA = 'orders/USER_ORDERS_ALL_DATA';
+export const USER_ORDERS_ALL_ERROR = 'orders/USER_ORDERS_ALL_ERROR';

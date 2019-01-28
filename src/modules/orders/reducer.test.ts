@@ -10,6 +10,9 @@ import {
     ordersCancelAllData,
     ordersCancelAllError,
     ordersCancelAllFetch,
+    userOrdersAllData,
+    userOrdersAllError,
+    userOrdersAllFetch,
     userOrdersData,
     userOrdersError,
     userOrdersFetch,
@@ -112,7 +115,21 @@ describe('Orders reducer', () => {
     };
 
     it('supports initial userOrdersFetch', () => {
-        expect(ordersReducer(undefined, userOrdersFetch(markets)))
+        expect(ordersReducer(undefined, userOrdersFetch({market: markets, state: wait})))
+            .toEqual({
+                loading: true,
+                orders: {
+                    wait: [],
+                    done: [],
+                    cancel: [],
+                },
+                cancelLoading: false,
+                executeLoading: false,
+            });
+    });
+
+    it('supports initial userOrdersAllFetch', () => {
+        expect(ordersReducer(undefined, userOrdersAllFetch()))
             .toEqual({
                 loading: true,
                 orders: {
@@ -139,6 +156,24 @@ describe('Orders reducer', () => {
                     cancel: cancelOrders,
                 },
 
+                cancelLoading: false,
+                executeLoading: false,
+            });
+    });
+
+    it('supports userOrdersAllData', () => {
+        expect(ordersReducer(undefined, userOrdersAllData({
+            wait: waitOrders,
+            done: doneOrders,
+            cancel: cancelOrders,
+        })))
+            .toEqual({
+                loading: false,
+                orders: {
+                    wait: waitOrders,
+                    done: doneOrders,
+                    cancel: cancelOrders,
+                },
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -257,6 +292,21 @@ describe('Orders reducer', () => {
 
     it('supports userOrdersError', () => {
         expect(ordersReducer(undefined, userOrdersError(someError)))
+            .toEqual({
+                loading: false,
+                orders: {
+                    wait: [],
+                    done: [],
+                    cancel: [],
+                },
+                cancelLoading: false,
+                executeLoading: false,
+                error: someError,
+            });
+    });
+
+    it('supports userOrdersAllError', () => {
+        expect(ordersReducer(undefined, userOrdersAllError(someError)))
             .toEqual({
                 loading: false,
                 orders: {

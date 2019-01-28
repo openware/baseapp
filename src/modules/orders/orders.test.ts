@@ -11,6 +11,7 @@ import {
     orderCancelFetch,
     orderExecuteFetch,
     ordersCancelAllFetch,
+    userOrdersAllFetch,
     userOrdersFetch,
 } from './';
 import { OrderExecution } from './actions';
@@ -24,10 +25,14 @@ import {
     ORDERS_CANCEL_ALL_DATA,
     ORDERS_CANCEL_ALL_ERROR,
     ORDERS_CANCEL_ALL_FETCH,
+    USER_ORDERS_ALL_DATA,
+    USER_ORDERS_ALL_ERROR,
+    USER_ORDERS_ALL_FETCH,
     USER_ORDERS_DATA,
     USER_ORDERS_ERROR,
     USER_ORDERS_FETCH,
 } from './constants';
+import { OrderStatus } from './types';
 
 // tslint:disable no-any no-magic-numbers no-console
 const debug = false;
@@ -51,6 +56,8 @@ describe('Orders', () => {
         ask_precision: 4,
         bid_precision: 4,
     };
+
+    const wait: OrderStatus = 'wait';
 
     const cancelOrders = [
         {
@@ -76,7 +83,7 @@ describe('Orders', () => {
             ord_type: 'limit',
             price: '0.001',
             avg_price: '0.0',
-            state: 'wait',
+            state: wait,
             market: 'bchbtc',
             created_at: '2018-12-21T15:38:38+01:00',
             volume: '0.1',
@@ -150,21 +157,29 @@ describe('Orders', () => {
         },
     };
 
+    const mockAllOrders = () => {
+        mockAxios.onGet('/api/v2/peatio/market/orders').reply(200, cancelOrders.concat(doneOrders).concat(waitOrders));
+    };
+
     const mockOrders = () => {
-        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc').reply(200, cancelOrders.concat(doneOrders).concat(waitOrders));
+        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc&state=wait').reply(200, cancelOrders.concat(doneOrders).concat(waitOrders));
     };
 
     const mockUserOrders = () => {
-        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc')
+        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc&state=wait')
             .reply(200, cancelOrders.concat(waitOrders).concat(doneOrders));
     };
 
     const mockUserOrdersError = () => {
-        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc').reply(500, userOrdersError);
+        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc&state=wait').reply(500, userOrdersError);
+    };
+
+    const mockAllOrdersLowLevel = () => {
+        mockAxios.onGet('/api/v2/peatio/market/orders').reply(401, unverifiedAccountResponse);
     };
 
     const mockOrdersLowLevel = () => {
-        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc').reply(401, unverifiedAccountResponse);
+        mockAxios.onGet('/api/v2/peatio/market/orders?market=bchbtc&state=wait').reply(401, unverifiedAccountResponse);
     };
 
     const mockOrderCancel = () => {
@@ -205,11 +220,27 @@ describe('Orders', () => {
     describe('user with correct level', () => {
         const expectedOrderFetch = {
             type: USER_ORDERS_FETCH,
-            payload: [market],
+            payload: {
+                market: [market],
+                state: wait,
+            },
+        };
+
+        const expectedOrderAllFetch = {
+            type: USER_ORDERS_ALL_FETCH,
         };
 
         const expectedOrderData = {
             type: USER_ORDERS_DATA,
+            payload: {
+                wait: waitOrders,
+                cancel: cancelOrders,
+                done: doneOrders,
+            },
+        };
+
+        const expectedOrderAllData = {
+            type: USER_ORDERS_ALL_DATA,
             payload: {
                 wait: waitOrders,
                 cancel: cancelOrders,
@@ -230,7 +261,24 @@ describe('Orders', () => {
                     }
                 });
             });
-            store.dispatch(userOrdersFetch([market]));
+            store.dispatch(userOrdersFetch({market: [market], state: wait}));
+            return promise;
+        });
+
+        it('should fetch all orders', async () => {
+            mockAllOrders();
+            const promise = new Promise(resolve => {
+                store.subscribe(() => {
+                    const actions = store.getActions();
+
+                    if (actions.length === 2) {
+                        expect(actions[0]).toEqual(expectedOrderAllFetch);
+                        expect(actions[1]).toEqual(expectedOrderAllData);
+                        resolve();
+                    }
+                });
+            });
+            store.dispatch(userOrdersAllFetch());
             return promise;
         });
     });
@@ -238,11 +286,26 @@ describe('Orders', () => {
     describe('user with low verification level', () => {
         const expectedOrderFetch = {
             type: USER_ORDERS_FETCH,
-            payload: [market],
+            payload: {
+                market: [market],
+                state: wait,
+            },
+        };
+
+        const expectedOrderAllFetch = {
+            type: USER_ORDERS_ALL_FETCH,
         };
 
         const expectedOrderError = {
             type: USER_ORDERS_ERROR,
+            payload: {
+                code: 401,
+                message: 'Please, pass the corresponding verification steps to enable trading.',
+            },
+        };
+
+        const expectedOrderAllError = {
+            type: USER_ORDERS_ALL_ERROR,
             payload: {
                 code: 401,
                 message: 'Please, pass the corresponding verification steps to enable trading.',
@@ -261,7 +324,23 @@ describe('Orders', () => {
                     }
                 });
             });
-            store.dispatch(userOrdersFetch([market]));
+            store.dispatch(userOrdersFetch({market: [market], state: wait}));
+            return promise;
+        });
+
+        it('should trigger an error', async () => {
+            mockAllOrdersLowLevel();
+            const promise = new Promise(resolve => {
+                store.subscribe(() => {
+                    const actions = store.getActions();
+                    if (actions.length === 2) {
+                        expect(actions[0]).toEqual(expectedOrderAllFetch);
+                        expect(actions[1]).toEqual(expectedOrderAllError);
+                        resolve();
+                    }
+                });
+            });
+            store.dispatch(userOrdersAllFetch());
             return promise;
         });
     });
@@ -269,7 +348,10 @@ describe('Orders', () => {
     describe('network error', () => {
         const expectedOrderFetch = {
             type: USER_ORDERS_FETCH,
-            payload: [market],
+            payload: {
+                market: [market],
+                state: wait,
+            },
         };
 
         const expectedOrderError = {
@@ -292,7 +374,7 @@ describe('Orders', () => {
                     }
                 });
             });
-            store.dispatch(userOrdersFetch([market]));
+            store.dispatch(userOrdersFetch({market: [market], state: wait}));
             return promise;
         });
     });
@@ -483,7 +565,10 @@ describe('Orders', () => {
 
         const expectedOrdersFetch = {
             type: USER_ORDERS_FETCH,
-            payload: markets,
+            payload: {
+                market: [market],
+                state: wait,
+            },
         };
 
         const expectedOrdersData = {
@@ -515,7 +600,7 @@ describe('Orders', () => {
                     }
                 });
             });
-            store.dispatch(userOrdersFetch(markets));
+            store.dispatch(userOrdersFetch({market: markets, state: wait}));
             return promise;
         });
 
@@ -531,7 +616,7 @@ describe('Orders', () => {
                     }
                 });
             });
-            store.dispatch(userOrdersFetch(markets));
+            store.dispatch(userOrdersFetch({market: markets, state: wait}));
             return promise;
         });
     });

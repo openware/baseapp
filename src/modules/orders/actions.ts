@@ -10,6 +10,9 @@ import {
     ORDERS_CANCEL_ALL_DATA,
     ORDERS_CANCEL_ALL_ERROR,
     ORDERS_CANCEL_ALL_FETCH,
+    USER_ORDERS_ALL_DATA,
+    USER_ORDERS_ALL_ERROR,
+    USER_ORDERS_ALL_FETCH,
     USER_ORDERS_DATA,
     USER_ORDERS_ERROR,
     USER_ORDERS_FETCH,
@@ -19,12 +22,8 @@ import {
     GroupedOrders,
     Order,
     OrderSide,
+    OrderStatus,
 } from './types';
-
-export interface UserOrdersUpdate {
-    type: typeof USER_ORDERS_UPDATE;
-    payload: Order;
-}
 
 export interface OrdersCancelAllFetch {
     type: typeof ORDERS_CANCEL_ALL_FETCH;
@@ -84,7 +83,10 @@ export interface OrderExecuteError {
 
 export interface UserOrdersFetch {
     type: typeof USER_ORDERS_FETCH;
-    payload: Market[];
+    payload: {
+        market: Market[],
+        state: OrderStatus,
+    };
 }
 
 export interface UserOrdersData {
@@ -94,6 +96,25 @@ export interface UserOrdersData {
 
 export interface UserOrdersError {
     type: typeof USER_ORDERS_ERROR;
+    payload: CommonError;
+}
+
+export interface UserOrdersUpdate {
+    type: typeof USER_ORDERS_UPDATE;
+    payload: Order;
+}
+
+export interface UserOrdersAllFetch {
+    type: typeof USER_ORDERS_ALL_FETCH;
+}
+
+export interface UserOrdersAllData {
+    type: typeof USER_ORDERS_ALL_DATA;
+    payload: GroupedOrders;
+}
+
+export interface UserOrdersAllError {
+    type: typeof USER_ORDERS_ALL_ERROR;
     payload: CommonError;
 }
 
@@ -110,7 +131,9 @@ export type OrdersAction = OrdersCancelAllFetch
     | UserOrdersData
     | UserOrdersError
     | UserOrdersUpdate
-    | UserOrdersError;
+    | UserOrdersAllFetch
+    | UserOrdersAllData
+    | UserOrdersAllError;
 
 export const ordersCancelAllFetch = (): OrdersCancelAllFetch => ({
     type: ORDERS_CANCEL_ALL_FETCH,
@@ -177,8 +200,21 @@ export const userOrdersUpdate = (payload: UserOrdersUpdate['payload']): UserOrde
     payload,
 });
 
-export const userOrdersError =
-    (payload: UserOrdersError['payload']): UserOrdersError => ({
-        type: USER_ORDERS_ERROR,
-        payload,
-    });
+export const userOrdersError = (payload: UserOrdersError['payload']): UserOrdersError => ({
+    type: USER_ORDERS_ERROR,
+    payload,
+});
+
+export const userOrdersAllFetch = (): UserOrdersAllFetch => ({
+    type: USER_ORDERS_ALL_FETCH,
+});
+
+export const userOrdersAllData = (payload: UserOrdersAllData['payload']): UserOrdersAllData => ({
+    type: USER_ORDERS_ALL_DATA,
+    payload,
+});
+
+export const userOrdersAllError = (payload: UserOrdersAllError['payload']): UserOrdersAllError => ({
+    type: USER_ORDERS_ALL_ERROR,
+    payload,
+});

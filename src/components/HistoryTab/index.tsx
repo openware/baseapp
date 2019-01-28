@@ -48,7 +48,7 @@ class History extends React.Component<Props> {
 
     private handleMakeRequest = (index: number) => {
         const tabs = this.renderTabs();
-        tabs[index].loadData(this.props.markets);
+        tabs[index].loadData();
     };
 
     private renderTabs = () => {
@@ -79,7 +79,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     getDeposit: () => dispatch(deposits()),
-    getTrade: (markets: Market[]) => dispatch(tradesFetch(markets)),
+    getTrade: () => dispatch(tradesFetch()),
     getWithdraw: () => dispatch(withdraws()),
 });
 
