@@ -129,6 +129,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     private handleChangeNumber = (e: OnChangeEvent) => {
         this.setState({
             phoneNumber: e.target.value,
+            currentAction: 'SEND CODE',
         });
     };
 
