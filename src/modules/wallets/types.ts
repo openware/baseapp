@@ -1,7 +1,7 @@
 export interface Wallet {
-    name: string;
     balance: number;
     currency: string;
+    name: string;
     type: 'fiat' | 'coin';
     fee: number;
     address?: string;

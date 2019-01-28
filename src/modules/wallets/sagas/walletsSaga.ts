@@ -29,12 +29,12 @@ export function* walletsSaga() {
         const fees = accounts.map(wallet => {
             const currencyInfo = currencies.find(item => item.id === wallet.currency);
             return ({
-              ...wallet,
-              explorerTransaction: currencyInfo!.explorer_transaction,
-              explorerAddress: currencyInfo!.explorer_address,
-              fee: depositFees[wallet.currency]!.fee.value,
-              type: depositFees[wallet.currency]!.type,
-              name: currencyInfo.name,
+                ...wallet,
+                name: currencyInfo.name,
+                explorerTransaction: currencyInfo!.explorer_transaction,
+                explorerAddress: currencyInfo!.explorer_address,
+                fee: depositFees[wallet.currency]!.fee.value,
+                type: depositFees[wallet.currency]!.type,
             });
         });
 
