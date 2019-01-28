@@ -9,6 +9,7 @@ import { Market, PublicTrade, rootReducer } from '../../modules';
 interface RouterProps {
     recentTrades: PublicTrade[];
     currentMarket: Market;
+    currentPrice: string;
 }
 
 const defaultProps: RouterProps = {
@@ -55,6 +56,7 @@ const defaultProps: RouterProps = {
         ask_precision: 4,
         bid_precision: 4,
     },
+    currentPrice: '',
 };
 
 const store = createStore(rootReducer);

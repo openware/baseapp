@@ -2,17 +2,26 @@ import { Table } from '@openware/components';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDateSec, setTradeColor } from '../../helpers';
-import { Market, PublicTrade, RootState, selectCurrentMarket } from '../../modules';
+import {
+    Market,
+    PublicTrade,
+    RootState,
+    selectCurrentMarket,
+    selectCurrentPrice,
+    setCurrentPrice,
+} from '../../modules';
 import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modules/recentTrades';
 
 // tslint:disable no-any
 interface ReduxProps {
     recentTrades: PublicTrade[];
     currentMarket: Market | undefined;
+    currentPrice: string;
 }
 
 interface DispatchProps {
     tradesFetch: typeof recentTradesFetch;
+    setCurrentPrice: typeof setCurrentPrice;
 }
 
 type Props = DispatchProps & ReduxProps;
@@ -33,7 +42,11 @@ class RecentTradesComponent extends React.Component<Props> {
     public render() {
         return (
             <div className="pg-recent-trades">
-                <Table data={this.getTrades(this.props.recentTrades)} header={['Price', 'Amount', 'Time']}/>
+                <Table
+                    data={this.getTrades(this.props.recentTrades)}
+                    header={['Price', 'Amount', 'Time']}
+                    onSelect={this.handleOnSelect}
+                />
             </div>
         );
     }
@@ -51,15 +64,26 @@ class RecentTradesComponent extends React.Component<Props> {
             ? trades.map(renderRow)
             : [['There is no data to show...', '', '']];
     }
+
+    private handleOnSelect = (index: number) => {
+        const { recentTrades, currentPrice } = this.props;
+        const priceToSet = recentTrades[index].price;
+
+        if (currentPrice !== priceToSet) {
+            this.props.setCurrentPrice(priceToSet);
+        }
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     recentTrades: selectRecentTradesOfCurrentMarket(state),
     currentMarket: selectCurrentMarket(state),
+    currentPrice: selectCurrentPrice(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     tradesFetch: market => dispatch(recentTradesFetch(market)),
+    setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
 });
 
 
