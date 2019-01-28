@@ -48,11 +48,12 @@ interface ExchangeProps {
     type: 'sell' | 'buy';
 }
 
-type Props = ReduxProps & DispatchProps & ExchangeProps;
+export type Props = ReduxProps & DispatchProps & ExchangeProps;
 
-interface ExchangeState {
+export interface ExchangeState {
     amountFrom: number;
     amountTo: number;
+    fee: string;
     currentTickerValue: number;
     filteredWallets: WalletItemProps[] | null;
     loading: boolean;
@@ -70,13 +71,14 @@ const defaultWallet = {
     balance: 0,
 };
 
-class ExchangeComponent extends React.Component<Props, ExchangeState> {
+export class ExchangeComponent extends React.Component<Props, ExchangeState> {
     constructor(props: Props) {
         super(props);
 
         this.state = {
             amountFrom: 0,
             amountTo: 0,
+            fee: '0',
             currentTickerValue: 0,
             filteredWallets: null,
             loading: true,
@@ -127,6 +129,7 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
         const {
             amountFrom,
             amountTo,
+            fee,
             currentTickerValue,
             showSubmit,
             selectedWalletFrom,
@@ -138,22 +141,12 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
         const {type} = this.props;
         const fromCurrency = this.formatCurrency(selectedWalletFrom);
         const toCurrency = this.formatCurrency(selectedWalletTo);
-        const toBalance = this.formatBalance(selectedWalletTo);
-        const fromBalance = this.formatBalance(selectedWalletFrom);
 
         const canShowMessages = selectedWalletFrom && selectedWalletTo;
 
         const rateMessage = canShowMessages ?
             `1 ${fromCurrency} = ${currentTickerValue} ${toCurrency}` :
             'Loading...';
-        const feeMessage = canShowMessages ? this.getFeeMessage() : 'Loading...';
-        const remainingMessage = canShowMessages
-            // tslint:disable
-            ? `
-                ${fromBalance} ${fromCurrency}
-                ${toBalance} ${toCurrency}
-            `
-            : 'Loading...';
 
         const submitRequestFunc = e => this.showModal(e, 'showSubmit');
         const emptyFunc = () => {
@@ -167,7 +160,7 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
                         <div className="cr-wallet-trades__item-input">
                             <InputBlock
                                 handleChangeValue={this.handleChangeAmount}
-                                value={amountFrom}
+                                value={amountFrom || ''}
                                 type="number"
                                 message={type === 'buy' ? 'Buy' : 'Sell'}
                                 placeholder="0"
@@ -209,13 +202,7 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
                         <SummaryField
                             className="cr-wallet-trades__summary-block-field"
                             message="Fee"
-                            content={feeMessage}
-                            borderItem="empty-circle"
-                        />
-                        <SummaryField
-                            className="cr-wallet-trades__summary-block-field"
-                            message="Remaining Balance"
-                            content={remainingMessage}
+                            content={canShowMessages ? fee : 'Loading...'}
                             borderItem="empty-circle"
                         />
                     </div>
@@ -224,6 +211,7 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
                             className="pg-wallet-trades-button"
                             label="CONFIRM"
                             onClick={submitRequestFunc}
+                            disabled={this.state.amountFrom === 0}
                         />
                         <Modal
                             show={showSubmit}
@@ -326,7 +314,7 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
 
     private renderDropdownWalletList = (wallets: WalletItemProps[]) => {
         return wallets.map(this.renderDropdownWalletItem);
-    }
+    };
 
     private renderDropdownWalletItem = (wallet: WalletItemProps, index: number) => {
         const icon = `${wallet.currency.toUpperCase()}-alt`;
@@ -344,7 +332,7 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
                 <span className="pg-exchange-dropdown-list-item__balance">{wallet.balance}</span>
             </span>
         );
-    }
+    };
 
     private confirmRequest = () => {
         const {
@@ -370,16 +358,16 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
         this.hideModal();
     };
 
-    private getFeeMessage = () => {
-        const {selectedWalletTo} = this.state;
+    private getFeeMessage = (amountTo: number, amountFrom: number) => {
+        const { selectedWalletTo, selectedWalletFrom } = this.state;
         const { marketsData, type } = this.props;
-        //tslint:disable
         const orderFees = this.getTradingFees(marketsData);
         const toCurrency = this.formatCurrency(selectedWalletTo);
+        const fromCurrency = this.formatCurrency(selectedWalletFrom);
         if (marketsData && selectedWalletTo) {
             return type === 'buy'
-                ? `${orderFees.ask_fee} ${toCurrency}`
-                : `${orderFees.bid_fee} ${toCurrency}`;
+                ? `${+orderFees.ask_fee * amountFrom} ${fromCurrency}`
+                : `${+orderFees.bid_fee * amountTo} ${toCurrency}`;
         }
         return 'Loading';
     };
@@ -402,15 +390,6 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
 
     private formatCurrency(wallet: WalletItemProps | null) {
         return (wallet || defaultWallet).currency.toUpperCase();
-    }
-
-    private formatBalance(wallet: WalletItemProps | null) {
-        const userWallet = (wallet || defaultWallet);
-        const currency = userWallet.currency;
-        const balance = Number(userWallet.balance);
-        return currency.toLowerCase() === 'bch'
-            ? balance.toFixed(4)
-            : balance.toFixed(8);
     }
 
     private selectWalletFrom = (i: number) => {
@@ -451,12 +430,35 @@ class ExchangeComponent extends React.Component<Props, ExchangeState> {
         });
     };
 
-    private handleChangeAmount = (text: string) => {
+    private formatBalance(wallet: WalletItemProps | null) {
+        const userWallet = (wallet || defaultWallet);
+        return Number(userWallet.balance);
+    }
+
+    public static handleAmountFromValue = (value: string, toBalance: number, fromBalance: number, type: string, currentTickerValue: number) => {
+        if (type === 'sell' && (+value > fromBalance)) {
+            return fromBalance;
+        }
+        if (type === 'buy' && ((+value * currentTickerValue) > toBalance)) {
+            return toBalance / currentTickerValue;
+        }
+        return +value;
+    };
+
+    private calcAmounts = (value: string, toBalance: number, fromBalance: number, type: string) => {
+        const amountFrom = handleAmountFromValue(value, toBalance, fromBalance, type, this.state.currentTickerValue) || 0;
+        const amountTo = amountFrom * this.state.currentTickerValue;
+
         this.setState({
-            amountFrom: parseFloat(text) || 0,
-            amountTo: parseFloat(text) ? parseFloat(text) * this.state.currentTickerValue : 0,
+            amountFrom: amountFrom,
+            amountTo: amountTo,
+            fee: this.getFeeMessage(amountTo, amountFrom),
         });
     };
+
+    private handleChangeAmount = (value: string) => {
+        return this.calcAmounts(value, this.formatBalance(this.state.selectedWalletTo), this.formatBalance(this.state.selectedWalletFrom), this.props.type)
+    }
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -475,4 +477,5 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     tickers: () => dispatch(marketsTickersFetch()),
 });
 
+export const handleAmountFromValue = ExchangeComponent.handleAmountFromValue;
 export const ExchangeElement = connect(mapStateToProps, mapDispatchToProps)(ExchangeComponent);
