@@ -2,6 +2,7 @@ import { Loader, OpenOrders } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { preciseData } from '../../helpers';
 import { RootState } from '../../modules';
 import {
     Market,
@@ -110,8 +111,7 @@ class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState>
           const type = side === 'buy' ? `Buy / ${ord_type}` : `Sell / ${ord_type}`;
           const currentMarket = this.props.marketsData.find(marketElem => marketElem.id === market) || market;
           const costRemaining = remaining_volume * price;
-
-          return [type, currentMarket.name, price, volume, executed_volume, remaining_volume, costRemaining, state, ''];
+          return [type, currentMarket.name, preciseData(price, currentMarket.bid_precision), preciseData(volume, currentMarket.ask_precision) , executed_volume, remaining_volume, costRemaining, state, ''];
         };
         return (data.length > 0)
             ? this.sortDataByDateTime(data).map(renderRow)
@@ -129,8 +129,8 @@ class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState>
     private sortDataByDateTime(data: Order[]) {
         const sortByDateTime = (a: Order, b: Order) => a.created_at < b.created_at ? 1 : -1;
         const sortByOrderType = (a: Order, b: Order) => (this.state.orderType) ? ((a.side < b.side) ? 1 : -1) : (a.side > b.side ? 1 : -1);
-        (this.state.orderType) ? 
-            (document.getElementsByClassName('cr-table__head-row')[0].children[0].className = "cr-open-orders__order--active") : 
+        (this.state.orderType) ?
+            (document.getElementsByClassName('cr-table__head-row')[0].children[0].className = "cr-open-orders__order--active") :
             ((document.getElementsByClassName('cr-open-orders__order--active')[0]) ?
                 (document.getElementsByClassName('cr-open-orders__order--active')[0].classList.remove("cr-open-orders__order--active")) :
                 null
