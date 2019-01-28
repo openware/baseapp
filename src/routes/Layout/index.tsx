@@ -102,7 +102,7 @@ class LayoutComponent extends React.Component<Props> {
                     <Route path="/accounts/confirmation" component={VerificationScreen} />
                     <Route path="/signup" component={SignUpScreen} />
                     <Route path="/forgot_password" component={ForgotPasswordScreen} />
-                    <Route path="/reset_password" component={ChangeForgottenPasswordScreen} />
+                    <Route path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
                     <Route exact path="/trading" component={TradingScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OpenOrdersScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={HistoryScreen} />

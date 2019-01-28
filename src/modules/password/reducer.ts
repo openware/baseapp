@@ -1,39 +1,49 @@
+import { CommonError, CommonState } from '../types';
 import { PasswordAction } from './actions';
 import {
-    CHANGE_PASSWORD_FETCH,
-    CHANGE_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_REQUIRE_VERIFICATION,
-    FORGOT_PASSWORD_VERIFICATION_FETCH,
-    FORGOT_PASSWORD_VERIFICATION_SUCCESS,
+    CHANGE_FORGOT_PASSWORD_FETCH,
+    CHANGE_FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_ERROR,
+    FORGOT_PASSWORD_FETCH,
+    FORGOT_PASSWORD_SUCCESS,
 } from './constants';
 
-export interface PasswordState {
-    changeForgottenPassword?: boolean;
-    forgotPasswordRequireVerification?: boolean;
-    emailPasswordVerified?: boolean;
+export interface PasswordState extends CommonState {
+    forgotPasswordRequested: boolean;
+    forgotPasswordChanged: boolean;
+    forgotPasswordError?: CommonError;
 }
 
 const initialState: PasswordState = {
-    changeForgottenPassword: false,
-    forgotPasswordRequireVerification: false,
-    emailPasswordVerified: false,
+    loading: false,
+    forgotPasswordRequested: false,
+    forgotPasswordChanged: false,
 };
 
 export const passwordReducer = (state = initialState, action: PasswordAction) => {
     switch (action.type) {
-        case FORGOT_PASSWORD_REQUIRE_VERIFICATION:
+        case FORGOT_PASSWORD_FETCH:
+            return { ...state, loading: true };
+        case FORGOT_PASSWORD_SUCCESS:
             return {
                 ...state,
-                forgotPasswordRequireVerification: action.payload.forgotPasswordRequireVerification,
+                forgotPasswordRequested: true,
+                loading: false,
             };
-        case FORGOT_PASSWORD_VERIFICATION_FETCH:
-            return { ...state, emailPasswordVerified: false };
-        case FORGOT_PASSWORD_VERIFICATION_SUCCESS:
-            return { ...state, emailPasswordVerified: true };
-        case CHANGE_PASSWORD_FETCH:
-            return { ...state, changeForgottenPassword: false };
-        case CHANGE_PASSWORD_SUCCESS:
-            return { ...state, changeForgottenPassword: true };
+        case FORGOT_PASSWORD_ERROR:
+            return {
+                ...state,
+                forgotPasswordError: action.payload,
+                loading: false,
+            };
+        case CHANGE_FORGOT_PASSWORD_FETCH:
+            return { ...state, loading: true };
+        case CHANGE_FORGOT_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                forgotPasswordChanged: true,
+                loading: false,
+            };
         default:
             return state;
     }

@@ -1,11 +1,11 @@
 import { RootState } from '../index';
 import { PasswordState } from './reducer';
 
-export const selectForgotPasswordRequireVerification = (state: RootState): PasswordState['forgotPasswordRequireVerification'] =>
-    state.app.password.forgotPasswordRequireVerification;
+export const selectForgotPasswordError = (state: RootState): PasswordState['error'] | undefined =>
+    state.app.password.forgotPasswordError;
 
-export const selectForgotPasswordEmailVerified = (state: RootState): PasswordState['emailPasswordVerified'] =>
-    state.app.password.emailPasswordVerified;
+export const selectForgotPasswordSuccess = (state: RootState): PasswordState['forgotPasswordRequested'] =>
+    state.app.password.forgotPasswordRequested;
 
-export const selectChangeForgottenPassport = (state: RootState): PasswordState['changeForgottenPassword'] =>
-    state.app.password.changeForgottenPassword;
+export const selectChangeForgotPasswordSuccess = (state: RootState): PasswordState['forgotPasswordChanged'] =>
+    state.app.password.forgotPasswordChanged;

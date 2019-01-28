@@ -49,4 +49,4 @@ const conf: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export const changePassword = async body => API.put(conf)('/security/reset_password', body);
+export const changePassword = async body => API.post(conf)('/identity/users/password/confirm_code', body);

@@ -11,13 +11,11 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { changePassword } from '../../api';
-import { RootState } from '../../modules';
 import {
-    changePasswordError,
-    PasswordError,
-    selectChangeForgottenPassport,
-} from '../../modules/password';
+    changeForgotPasswordFetch,
+    RootState,
+    selectChangeForgotPasswordSuccess,
+} from '../../modules';
 
 interface ChangeForgottenPasswordState {
     error: boolean;
@@ -29,11 +27,11 @@ interface ChangeForgottenPasswordState {
 }
 
 interface ReduxProps {
-    changeForgottenPassword?: boolean;
+    changeForgotPassword?: boolean;
 }
 
 interface DispatchProps {
-    changePasswordError: typeof changePasswordError;
+    changeForgotPasswordFetch: typeof changeForgotPasswordFetch;
 }
 
 interface HistoryProps {
@@ -62,10 +60,18 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 
     public componentDidMount() {
         const { history } = this.props;
+        const token = new URLSearchParams(history.location.search).get('reset_token');
+        if (token) {
+            this.setState({
+                confirmToken: token,
+            });
+        }
+    }
 
-        this.setState({
-            confirmToken: history.location.search.split('?reset_password_token=')[1],
-        });
+    public componentWillReceiveProps(next: Props) {
+        if (next.changeForgotPassword && (!this.props.changeForgotPassword)) {
+            this.props.history.push('/signin');
+        }
     }
 
     public render() {
@@ -120,24 +126,11 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
               errorMessage: '',
               isLoading: true,
           });
-          const requestOptions = {
-              reset_password_token: confirmToken,
-              password: password,
-          };
-
-          changePassword(requestOptions)
-              .then(() => {
-                  this.setState({
-                      isLoading: false,
-                  });
-                  this.props.history.push('/signin');
-              })
-              .catch(() => {
-                  this.setState({
-                      errorMessage: 'Something went wrong. Try again.',
-                      isLoading: false,
-                  });
-              });
+          this.props.changeForgotPasswordFetch({
+            reset_password_token: confirmToken,
+            password: password,
+            confirm_password: confirmPassword,
+          });
         } else {
           this.setState({
               error: true,
@@ -155,12 +148,12 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
-    changeForgottenPassword: selectChangeForgottenPassport(state),
+    changeForgotPassword: selectChangeForgotPasswordSuccess(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        changePasswordError: (error: PasswordError) => dispatch(changePasswordError(error)),
+        changeForgotPasswordFetch: credentials => dispatch(changeForgotPasswordFetch(credentials)),
     });
 
 // tslint:disable-next-line:no-any

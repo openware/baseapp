@@ -27,6 +27,7 @@ export * from './profile';
 export * from './markets';
 export * from './orderBook';
 export * from './orders';
+export * from './password';
 
 export * from './history/deposits';
 export * from './history/trades';

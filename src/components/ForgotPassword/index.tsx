@@ -1,6 +1,7 @@
 import {
   Button,
   Input,
+  Modal,
 } from '@openware/components';
 import * as React from 'react';
 import {
@@ -11,42 +12,49 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { EMAIL_REGEX } from '../../helpers';
-import { RootState } from '../../modules';
 import {
     forgotPassword,
-    forgotPasswordError,
-    PasswordError,
-    selectForgotPasswordRequireVerification,
-} from '../../modules/password';
+    RootState,
+    selectForgotPasswordError,
+    selectForgotPasswordSuccess,
+} from '../../modules';
 
 interface ForgotPasswordState {
     error: boolean;
     email: string;
+    showModal: boolean;
 }
 
 interface ReduxProps {
-    forgotPasswordRequireVerification?: boolean;
+    success: boolean;
+    backendError?: {
+        code: number;
+        message: string;
+    };
 }
 
 interface DispatchProps {
     forgotPassword: typeof forgotPassword;
-    forgotPasswordError: typeof forgotPasswordError;
 }
 
 type Props = RouterProps & ReduxProps & DispatchProps;
 
 class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState> {
-    constructor(props: Props) {
-        super(props);
+    public state = {
+        error: false,
+        email: '',
+        showModal: false,
+    };
 
-        this.state = {
-            error: false,
-            email: '',
-        };
+    public componentWillReceiveProps(next: Props) {
+        if (next.success) {
+            this.setState({ showModal: true });
+        }
     }
 
     public render() {
         const { email, error } = this.state;
+        const { backendError } = this.props;
         return (
             <div className="pg-forgot-password-screen">
                 <div className="pg-forgot-password-screen__container">
@@ -65,12 +73,19 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
                     </form>
                     <div className="pg-forgot-password-screen__container-alert">
                         {error ? 'Wrong format of email' : null}
+                        {(backendError && backendError.message) ? backendError.message : null}
                     </div>
                     <div className="pg-forgot-password-screen__container-footer">
                         <Button
                             className="pg-forgot-password-screen__container-footer-button"
                             label="Send instructions"
                             onClick={this.handleSendPassword}
+                        />
+                        <Modal
+                            show={this.state.showModal}
+                            header={this.renderModalHeader()}
+                            content={this.renderModalBody()}
+                            footer={this.renderModalFooter()}
                         />
                     </div>
                 </div>
@@ -92,23 +107,60 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
               error: false,
             });
             this.props.forgotPassword({email});
-            this.props.history.push('/signin');
         } else {
           this.setState({
               error: true,
           });
         }
     }
+
+    private renderModalHeader = () => {
+        return (
+            <div className="pg-exchange-modal-submit-header">
+                CHANGE FORGOTTEN PASSWORD
+            </div>
+        );
+    };
+
+    private renderModalBody = () => {
+        return (
+            <div className="pg-exchange-modal-submit-body">
+                <h2>
+                    To change forgotten  password look for an
+                    email in your inbox that provides further
+                    instruction. If you cannot find the email,
+                    please check your spam email
+                </h2>
+            </div>
+        );
+    };
+
+    private renderModalFooter = () => {
+        return (
+            <div className="pg-exchange-modal-submit-footer">
+                <Button
+                    className="pg-exchange-modal-submit-footer__button-inverse"
+                    label="OK"
+                    onClick={this.closeModal}
+                />
+            </div>
+        );
+    };
+
+    private closeModal = () => {
+        this.setState({showModal: false});
+        this.props.history.push('/signin');
+    }
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
-    forgotPasswordRequireVerification: selectForgotPasswordRequireVerification(state),
+    success: selectForgotPasswordSuccess(state),
+    backendError: selectForgotPasswordError(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         forgotPassword: credentials => dispatch(forgotPassword(credentials)),
-        forgotPasswordError: (error: PasswordError) => dispatch(forgotPasswordError(error)),
     });
 
 // tslint:disable-next-line:no-any
