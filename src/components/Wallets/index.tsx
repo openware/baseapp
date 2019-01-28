@@ -250,7 +250,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     };
 
     private renderTabs(walletIndex: WalletsState['selectedWalletIndex']) {
-        if (walletIndex === -1) {
+        if ((walletIndex === -1) || (this.props.wallets.length === 0)) {
             return [
                 {
                     content: null,

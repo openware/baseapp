@@ -168,6 +168,8 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
             this.props.logout();
             this.props.walletsReset();
+            localStorage.clear();
+            this.props.history.push('/trading');
         });
     };
 

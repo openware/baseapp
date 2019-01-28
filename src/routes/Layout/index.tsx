@@ -13,6 +13,7 @@ import {
     selectUserFetching,
     User,
     userFetch,
+    walletsReset,
 } from '../../modules';
 import {
     OpenOrdersScreen,
@@ -40,6 +41,7 @@ interface ReduxProps {
 interface DispatchProps {
     logout: typeof logoutFetch;
     userFetch: typeof userFetch;
+    walletsReset: typeof walletsReset;
 }
 
 interface OwnProps {
@@ -158,7 +160,9 @@ class LayoutComponent extends React.Component<Props> {
         const isTimeout = diff < 0;
         if (isTimeout && user.email) {
           this.props.logout();
+          this.props.walletsReset();
           localStorage.clear();
+          this.props.history.push('/trading');
         }
     }
 }
@@ -172,6 +176,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     logout: () => dispatch(logoutFetch()),
     userFetch: () => dispatch(userFetch()),
+    walletsReset: () => dispatch(walletsReset()),
 });
 
 const Layout = withRouter(connect(mapStateToProps, mapDispatchToProps)(LayoutComponent) as any) as any;
