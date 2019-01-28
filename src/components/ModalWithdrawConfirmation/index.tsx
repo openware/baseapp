@@ -38,13 +38,13 @@ class ModalWithdrawConfirmation extends React.Component<ModalWithdrawConfirmatio
             rid,
         } = this.props;
         const formattedCurrency = currency.toUpperCase();
-        const text = `
-            You are withdrawing ${amount} ${formattedCurrency} on ${rid} address.
-            Are you sure?
-        `;
+        const text = [
+          `You will receive ${amount} ${formattedCurrency} on address`,
+          `${rid}`,
+        ];
         return (
             <div className="pg-exchange-modal-submit-body">
-                {text}
+              {text.map((item,i) => <p key={i}>{item}</p>)}
             </div>
         );
     };
