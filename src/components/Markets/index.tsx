@@ -5,21 +5,22 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RootState, selectUserInfo, User } from '../../modules';
 import {
     Market,
+    marketsTickersFetch,
     selectCurrentMarket,
     selectMarkets,
     selectMarketsLoading,
     selectMarketTickers,
     setCurrentMarket,
+    Ticker,
 } from '../../modules/markets';
 import { depthFetch } from '../../modules/orderBook';
-import { RangerEvent } from '../../modules/types';
 
 interface ReduxProps {
     userData: User;
     markets: Market[];
     marketsLoading?: boolean;
     marketTickers: {
-        [key: string]: RangerEvent,
+        [key: string]: Ticker,
     };
     currentMarket: Market | undefined;
 }
@@ -27,12 +28,16 @@ interface ReduxProps {
 interface DispatchProps {
     setCurrentMarket: typeof setCurrentMarket;
     depthFetch: typeof depthFetch;
+    tickers: typeof marketsTickersFetch;
 }
 
 type Props = ReduxProps & DispatchProps;
 
-// tslint:disable
 class MarketsContainer extends React.Component<Props> {
+
+    public componentDidMount() {
+        this.props.tickers();
+    }
 
     public render() {
         const { marketsLoading } = this.props;
@@ -55,11 +60,18 @@ class MarketsContainer extends React.Component<Props> {
     )
 
     private mapMarkets() {
-        const { markets } = this.props;
-        const defaultTicker = { last: 0 };
+        const { markets, marketTickers } = this.props;
+        const defaultTicker = {
+            last: 0,
+            price_change_percent: '+0.00%',
+        };
 
         return markets.map((market: Market) =>
-            ([market.name, (defaultTicker).last]),
+            ([
+                market.name,
+                (marketTickers[market.id] || defaultTicker).last,
+                (marketTickers[market.id] || defaultTicker).price_change_percent,
+            ]),
         );
     }
 
@@ -86,6 +98,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         setCurrentMarket: (market: Market) => dispatch(setCurrentMarket(market)),
         depthFetch: (market: Market) => dispatch(depthFetch(market)),
+        tickers: () => dispatch(marketsTickersFetch()),
     });
 
 export const MarketsComponent = connect(mapStateToProps, mapDispatchToProps)(MarketsContainer);

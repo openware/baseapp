@@ -9,7 +9,7 @@ import {
     MARKETS_TICKERS_PUSH,
     SET_CURRENT_MARKET,
 } from './constants';
-import { Market, TickerEvent } from './types';
+import { Market, Ticker, TickerEvent } from './types';
 
 export interface MarketsFetch {
     type: typeof MARKETS_FETCH;
@@ -44,7 +44,7 @@ export interface MarketsTickersPush {
 export interface MarketsTickersData {
     type: typeof MARKETS_TICKERS_DATA;
     payload: {
-        [pair: string]: TickerEvent;
+        [pair: string]: Ticker;
     };
 }
 

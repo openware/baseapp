@@ -4,6 +4,7 @@ import { Cryptobase } from '../../api/config';
 import { createPingServer, setupMockStore } from '../../helpers/jest';
 import { PrivateTradeEvent } from '../history/trades';
 import { TRADES_PUSH } from '../history/trades/constants';
+import { Ticker, TickerEvent } from '../markets';
 import { MARKETS_TICKERS_DATA } from '../markets/constants';
 import { DEPTH_DATA } from '../orderBook/constants';
 import { PublicTradeEvent } from '../recentTrades';
@@ -67,25 +68,25 @@ describe('Ranger module', () => {
 
     describe('public events', () => {
         describe('markets tickers update', () => {
-            const data = {
-                ethzar: { name: 'ETH/ZAR', base_unit: 'eth', quote_unit: 'zar', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '8.0', sell: '70.0', buy: '69.0', at: 1547625102601 },
-                xrpbtc: { name: 'XRP/BTC', base_unit: 'xrp', quote_unit: 'btc', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '9.0', sell: '80.0', buy: '79.0', at: 1547625102601 },
-                ltcbtc: { name: 'LTC/BTC', base_unit: 'ltc', quote_unit: 'btc', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '10.0', sell: '90.0', buy: '89.0', at: 1547625102601 },
+            const tickerEvents: { [pair: string]: TickerEvent } = {
+                ethzar: { name: 'ETH/ZAR', base_unit: 'eth', quote_unit: 'zar', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '8.0', sell: '70.0', buy: '69.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },
+                xrpbtc: { name: 'XRP/BTC', base_unit: 'xrp', quote_unit: 'btc', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '9.0', sell: '80.0', buy: '79.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },
+                ltcbtc: { name: 'LTC/BTC', base_unit: 'ltc', quote_unit: 'btc', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '10.0', sell: '90.0', buy: '89.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },
             };
-            const actionData = {
-                ethzar: { low: '0.001', high: '0.145', last: '0.134', vol: '8.0', sell: '70.0', buy: '69.0' },
-                xrpbtc: { low: '0.001', high: '0.145', last: '0.134', vol: '9.0', sell: '80.0', buy: '79.0' },
-                ltcbtc: { low: '0.001', high: '0.145', last: '0.134', vol: '10.0', sell: '90.0', buy: '89.0' },
+            const tickers: { [pair: string]: Ticker }  = {
+                ethzar: { low: '0.001', high: '0.145', last: '0.134', open: 0.134, vol: '8.0', sell: '70.0', buy: '69.0', avg_price: '69.5', price_change_percent: '+10.05%' },
+                xrpbtc: { low: '0.001', high: '0.145', last: '0.134', open: 0.134, vol: '9.0', sell: '80.0', buy: '79.0', avg_price: '69.5', price_change_percent: '+10.05%' },
+                ltcbtc: { low: '0.001', high: '0.145', last: '0.134', open: 0.134, vol: '10.0', sell: '90.0', buy: '89.0', avg_price: '69.5', price_change_percent: '+10.05%' },
             };
-            const mockGlobalTickers = ['global.tickers', data];
+            const mockGlobalTickers = ['global.tickers', tickerEvents];
 
             const expectedAction = {
                 type: MARKETS_TICKERS_DATA,
-                payload: actionData,
+                payload: tickers,
             };
 
             it('formats tickers info from events', () => {
-                expect(formatTicker(data)).toEqual(actionData);
+                expect(formatTicker(tickerEvents)).toEqual(tickers);
             });
 
             it('should push market tickers', async () => {

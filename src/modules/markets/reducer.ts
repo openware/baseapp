@@ -1,4 +1,4 @@
-import { CommonState, RangerEvent } from '../types';
+import { CommonState } from '../types';
 import { MarketsAction } from './actions';
 import {
     MARKETS_DATA,
@@ -7,13 +7,13 @@ import {
     MARKETS_TICKERS_DATA,
     SET_CURRENT_MARKET,
 } from './constants';
-import { Market } from './types';
+import { Market, Ticker } from './types';
 
 export interface MarketsState extends CommonState {
     list: Market[];
     currentMarket: Market | undefined;
     tickers: {
-        [pair: string]: RangerEvent;
+        [pair: string]: Ticker;
     };
 }
 

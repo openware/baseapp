@@ -19,19 +19,19 @@ import {
     selectWalletsLoading,
     walletsFetch,
 } from '../../modules';
-import { Market, selectMarkets } from '../../modules/markets';
+import { Market, selectMarkets, Ticker } from '../../modules/markets';
 import {
     orderExecuteFetch,
     selectOrderExecuteError,
  } from '../../modules/orders';
-import { CommonError, RangerEvent } from '../../modules/types';
+import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
     wallets: WalletItemProps[];
     executeError?: CommonError;
     marketsData: Market[];
     marketTickers: {
-        [key: string]: RangerEvent,
+        [key: string]: Ticker,
     };
     walletsLoading?: boolean;
     walletsError?: CommonError;
@@ -47,7 +47,6 @@ interface DispatchProps {
 interface ExchangeProps {
     type: 'sell' | 'buy';
 }
-        //tslint:disable
 
 type Props = ReduxProps & DispatchProps & ExchangeProps;
 

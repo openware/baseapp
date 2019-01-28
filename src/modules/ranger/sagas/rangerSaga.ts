@@ -3,7 +3,7 @@ import { eventChannel } from 'redux-saga';
 import { call, put, race, take, takeEvery } from 'redux-saga/effects';
 import { rangerUrl } from '../../../api/config';
 import { tradePush } from '../../history/trades/actions';
-import { marketsTickersData, SetCurrentMarket } from '../../markets';
+import { marketsTickersData, SetCurrentMarket, Ticker, TickerEvent } from '../../markets';
 import { SET_CURRENT_MARKET } from '../../markets/constants';
 import { depthData } from '../../orderBook';
 import { userOrdersUpdate } from '../../orders';
@@ -19,12 +19,13 @@ const streams: string[] = [
 
 const generateSocketURI = (s: string[]) => `${rangerUrl()}/?stream=${s.sort().join('&stream=')}`;
 
-export const formatTicker = event => {
+export const formatTicker = (events: {[pair: string]: TickerEvent}): {[pair: string]: Ticker} => {
     const tickers = {};
-    for (const market in event) {
-        if (event.hasOwnProperty(market)) {
-            const { low, high, last, volume, sell, buy } = event[market];
-            tickers[market] = { low, high, last, sell, buy, vol: volume };
+    for (const market in events) {
+        if (events.hasOwnProperty(market)) {
+            const event: TickerEvent = events[market];
+            const { open, low, high, last, volume, sell, buy, avg_price, price_change_percent } = event;
+            tickers[market] = { open, low, high, last, sell, buy, vol: volume, avg_price, price_change_percent };
         }
     }
     return tickers;

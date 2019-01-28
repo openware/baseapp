@@ -1,6 +1,7 @@
 import { MarketsState } from './markets/reducer';
 import { OrderBookState } from './orderBook';
 
+import { TickerEvent } from './markets';
 import {
     OrderKind,
     OrdersState,
@@ -23,19 +24,6 @@ interface OrderEvent {
     origin_volume: string;
 }
 
-interface TickerEvent {
-    name: string;
-    base_unit: number;
-    quote_unit: number;
-    open: number;
-    volume: number;
-    sell: number;
-    buy: number;
-    at: number;
-    low: number;
-    high: number;
-    last: number;
-}
 
 interface MarketUpdateEvent {
     asks: Array<[number, number]>;
@@ -44,7 +32,6 @@ interface MarketUpdateEvent {
 
 export {
     OrderEvent,
-    TickerEvent,
     MarketUpdateEvent,
 };
 
