@@ -90,16 +90,24 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                     <div className="pg-forgot-password-screen__container-header">
                         Forgot Password
                     </div>
-                    <div className="pg-forgot-password-screen__container-body">
-                        <div className="pg-forgot-password-screen__container-body-item">
-                            <p className="pg-forgot-password__text">New password</p>
-                            <Input type="password" value={password} onChangeValue={updatePassword} />
-                        </div>
-                        <div className="pg-forgot-password-screen__container-body-item-2">
-                            <p className="pg-forgot-password__text">Repeat password</p>
-                            <Input type="password" value={confirmPassword} onChangeValue={updateConfirmPassword} />
-                        </div>
-                    </div>
+                    <form className="pg-forgot-password-screen__container-body">
+                        <fieldset className="pg-forgot-password-screen__container-body-item">
+                            <legend>
+                                New password
+                            </legend>
+                            <div className="pg-forgot-password-screen__container-body-item__input">
+                                <Input type="password" value={password} onChangeValue={updatePassword} />
+                            </div>
+                        </fieldset>
+                        <fieldset className="pg-forgot-password-screen__container-body-item">
+                            <legend>
+                                Repeat password
+                            </legend>
+                            <div className="pg-forgot-password-screen__container-body-item__input">
+                                <Input type="password" value={confirmPassword} onChangeValue={updateConfirmPassword} />
+                            </div>
+                        </fieldset>
+                    </form>
                     <div className="pg-forgot-password-screen__container-alert">
                         {error ? 'Passwords do not match' : null}
                         {errorMessage}
