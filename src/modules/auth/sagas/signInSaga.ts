@@ -18,7 +18,7 @@ export function* signInSaga(action: SignInFetch) {
         const activity = yield call(API.get(sessionsConfig), '/resource/users/activity/all');
         yield put(userData({ user, activity }));
 
-        yield put(signInRequire2FA({ require2fa: false }));
+        yield put(signInRequire2FA({ require2fa: user.otp }));
     } catch (error) {
         const responseStatus = error.code;
         const is2FAEnabled = responseStatus === 403;
