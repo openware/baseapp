@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import logo = require('../../assets/images/baseapp.svg');
 import { NavBar } from '../NavBar';
 
@@ -20,17 +20,16 @@ class Head extends React.Component<any, HeaderState> {
     public render() {
         const { location } = this.props;
         const { isActive } = this.state;
-        const link = `/wallets/btc/deposit`;
         return (
           <React.Fragment>
           {!['/confirm'].some(r=> location.pathname.includes(r)) &&
             <header className={`pg-header ${isActive ? 'pg-header--active' : ''}`}>
                 <div className="pg-container pg-header__content">
-                    <a className="pg-header__logo" href={link}>
-                      <div className="pg-logo">
-                        <img src={logo} className="pg-logo__img" alt="Logo" />
-                      </div>
-                    </a>
+                    <Link to={'/wallets'} className='pg-header__logo'>
+                        <div className="pg-logo">
+                            <img src={logo} className="pg-logo__img" alt="Logo" />
+                        </div>
+                    </Link>
                     <div className="pg-header__navbar">
                         <NavBar onLinkChange={this.toggleModal}/>
                     </div>
