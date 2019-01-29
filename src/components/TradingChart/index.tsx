@@ -46,10 +46,11 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
     public componentWillReceiveProps(next: Props) {
         if (next.currentMarket && (!this.props.currentMarket || next.currentMarket.id !== this.props.currentMarket.id)) {
-            if (this.tvWidget) {
-                this.tvWidget = null;
+            if (this.props.currentMarket && (this.props.currentMarket.id && this.tvWidget)) {
+                this.updateChart(next.currentMarket);
+            } else {
+                this.setChart(next.markets, next.currentMarket);
             }
-            this.setChart(next.markets, next.currentMarket);
         }
     }
 
@@ -61,8 +62,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
     public componentWillUnmount() {
         if (this.tvWidget) {
-            // this.tvWidget.remove();
-            this.tvWidget = null;
+            this.tvWidget.remove();
         }
     }
 
@@ -78,7 +78,6 @@ export class TradingChartComponent extends React.PureComponent<Props> {
                     id={this.params.containerId}
                     className="pg-trading-chart"
                 />
-                <div id="cryptobase_chart" />
             </React.Fragment>
         );
     }
@@ -144,9 +143,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             height: 610,
         };
 
-        if (this.tvWidget === null) {
-            this.tvWidget = new widget(widgetOptions);
-        }
+        this.tvWidget = new widget(widgetOptions);
 
         this.tvWidget.onChartReady(() => {
             this.tvWidget!.activeChart().setSymbol(currentMarket.id, () => {
@@ -154,6 +151,16 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             });
         });
     };
+
+    private updateChart = (currentMarket: Market) => {
+        if (this.tvWidget) {
+            this.tvWidget.onChartReady(() => {
+                this.tvWidget!.activeChart().setSymbol(currentMarket.id, () => {
+                    print('Symbol set', currentMarket.id);
+                });
+            });
+        }
+    }
 }
 
 const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
