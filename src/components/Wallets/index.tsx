@@ -346,10 +346,8 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     }
 
     private renderWithdraw(withdrawProps: WithdrawProps, type: string) {
-        const {
-            walletsError,
-            user,
-        } = this.props;
+        const { walletsError, user } = this.props;
+        const key = withdrawProps.currency;
 
         if (type === 'fiat') {
             return (
@@ -364,7 +362,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         return (
             <React.Fragment>
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
-                {user.otp ? <Withdraw {...withdrawProps} /> : this.isOtpDisabled()}
+                {user.otp ? <Withdraw {...withdrawProps} key={key} /> : this.isOtpDisabled()}
             </React.Fragment>
         );
     }
