@@ -18,6 +18,7 @@ export const TIERS_DISABLE = 'profile/TIERS_DISABLE';
 export const GET_USER_FETCH = 'profile/GET_USER_FETCH';
 export const GET_USER_DATA = 'profile/GET_USER_DATA';
 export const GET_USER_ERROR = 'profile/GET_USER_ERROR';
+export const GET_USER_ACTIVITY = 'profile/GET_USER_ACTIVITY';
 export const RESET_USER = 'profile/RESET_USER';
 
 export const TEST_PROFILE_STATE = 'profile/TEST_PROFILE_STATE';

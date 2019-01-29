@@ -15,12 +15,24 @@ describe('Profile actions', () => {
 
         it('should check userData action creator', () => {
             const payload = {
-                email: 'admin@barong.io',
-                uid: 'ID26C901376F',
-                role: 'admin',
-                level: 3,
-                otp: false,
-                state: 'active',
+                user: {
+                    email: 'admin@barong.io',
+                    uid: 'ID26C901376F',
+                    role: 'admin',
+                    level: 3,
+                    otp: false,
+                    state: 'active',
+                },
+                activity: [{
+                    id: 966,
+                    user_id: 59,
+                    user_ip: '195.214.197.210',
+                    user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+                    topic: 'session',
+                    action: 'login',
+                    result: 'succeed',
+                    created_at: '2019-01-28T09:28:03.000Z',
+                }],
             };
             const expectedAction = { type: 'profile/GET_USER_DATA', payload };
             expect(actions.userData(payload)).toEqual(expectedAction);

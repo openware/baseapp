@@ -38,6 +38,18 @@ export interface User {
     uid: string;
 }
 
+export interface Activity {
+    id: number;
+    user_id: number;
+    user_ip: string;
+    user_agent: string;
+    topic: string;
+    action: string;
+    result: string;
+    data?: string;
+    created_at: string;
+}
+
 export interface ChangePasswordFetch {
     type: typeof CHANGE_PASSWORD_FETCH;
     payload: {
@@ -118,7 +130,10 @@ export interface UserFetch {
 
 export interface UserInfo {
     type: typeof GET_USER_DATA;
-    payload: User;
+    payload: {
+        user: User;
+        activity: Activity[];
+    };
 }
 
 export interface UserError {

@@ -1,17 +1,28 @@
 import { Table } from '@openware/components';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { selectUserData, UserData } from '../../modules/profile';
+import { localeFullDate } from '../../helpers';
+import { Activity, selectUserActivity } from '../../modules/profile';
 
 interface ReduxProps {
-    userData: UserData;
+    userData?: Activity[];
 }
 
 type Props = ReduxProps;
 
-const tableHeader = ['Date', 'Address IP', 'Location'];
+const tableHeader = ['Date', 'Action', 'Result', 'Address IP', 'User Agent'];
 
 class ProfileAccountActivityComponent extends React.Component<Props> {
+
+    public componentWillReceiveProps(next: Props) {
+        if (next.userData && (this.props.userData !== next.userData)) {
+            const activity = this.getActivityData(next.userData);
+            this.setState({
+                activity,
+            });
+        }
+    }
+
     public render() {
         const { userData } = this.props;
         return (
@@ -21,15 +32,30 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
                 </div>
                 <Table
                     header={tableHeader}
-                    data={userData.accountActivity}
+                    data={this.getActivityData(userData)}
                 />
             </div>
         );
     }
+
+    private getActivityData(userData?: Activity[]) {
+        if (!userData) {
+            return [[]];
+        }
+        return userData.reverse().map(row => {
+            return [
+                localeFullDate(row.created_at),
+                row.action,
+                row.result,
+                row.user_ip,
+                row.user_agent,
+            ];
+        });
+    }
 }
 
 const mapStateToProps = state => ({
-    userData: selectUserData(state),
+    userData: selectUserActivity(state),
 });
 
 const ProfileAccountActivity = connect(mapStateToProps)(ProfileAccountActivityComponent);

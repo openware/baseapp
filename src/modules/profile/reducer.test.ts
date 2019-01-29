@@ -3,13 +3,25 @@ import { TEST_PROFILE_STATE } from './constants';
 import { initialStateProfile, profileReducer } from './reducer';
 
 describe('Profile reducer', () => {
-    const user = {
-        email: 'admin@barong.io',
-        uid: 'ID26C901376F',
-        role: 'admin',
-        level: 3,
-        otp: false,
-        state: 'active',
+    const userData = {
+        user: {
+            email: 'admin@barong.io',
+            uid: 'ID26C901376F',
+            role: 'admin',
+            level: 3,
+            otp: false,
+            state: 'active',
+        },
+        activity: [{
+            id: 966,
+            user_id: 59,
+            user_ip: '195.214.197.210',
+            user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+            topic: 'session',
+            action: 'login',
+            result: 'succeed',
+            created_at: '2019-01-28T09:28:03.000Z',
+        }],
     };
     const error = {
         code: 401,
@@ -35,9 +47,9 @@ describe('Profile reducer', () => {
         };
         const expectedState = {
             ...initialStateProfile,
-            userData: { ...initialStateProfile.userData, isFetching: false, user },
+            userData: { ...initialStateProfile.userData, isFetching: false, user: userData.user, userActivity: userData.activity },
         };
-        expect(profileReducer(actualState, actions.userData(user))).toEqual(expectedState);
+        expect(profileReducer(actualState, actions.userData(userData))).toEqual(expectedState);
     });
 
     it('should handle GET_USER_ERROR', () => {
@@ -55,7 +67,7 @@ describe('Profile reducer', () => {
     it('should handle RESET_USER', () => {
         const actualState = {
             ...initialStateProfile,
-            userData: { ...initialStateProfile.userData, isFetching: false, user },
+            userData: { ...initialStateProfile.userData, isFetching: false, user: userData.user, userActivity: userData.activity },
         };
         const expectedState = {
             ...initialStateProfile,
@@ -67,14 +79,14 @@ describe('Profile reducer', () => {
     it('should handle CHANGE_USER_LEVEL', () => {
         const actualState = {
             ...initialStateProfile,
-            userData: { ...initialStateProfile.userData, user },
+            userData: { ...initialStateProfile.userData, user: userData.user },
         };
         const expectedState = {
             ...initialStateProfile,
             userData: {
                 ...initialStateProfile.userData,
                 user: {
-                    ...user,
+                    ...userData.user,
                     level: 2,
                 },
             },

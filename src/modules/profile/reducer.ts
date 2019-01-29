@@ -1,5 +1,5 @@
 import { CommonError } from '../types';
-import { ProfileAction, Tier, User } from './actions';
+import { Activity, ProfileAction, Tier, User } from './actions';
 import {
     CHANGE_PASSWORD_DATA,
     CHANGE_PASSWORD_ERROR,
@@ -40,6 +40,7 @@ export interface ProfileState {
     };
     userData: {
         user: User;
+        userActivity?: Activity[];
         error?: CommonError;
         isFetching: boolean;
     };
@@ -194,7 +195,8 @@ export const userReducer = (state: ProfileState['userData'], action: ProfileActi
             return {
                 ...state,
                 isFetching: false,
-                user: action.payload,
+                user: action.payload.user,
+                userActivity: action.payload.activity,
             };
         case GET_USER_ERROR:
             return {
@@ -203,7 +205,11 @@ export const userReducer = (state: ProfileState['userData'], action: ProfileActi
                 error: action.payload,
             };
         case RESET_USER:
-            return { ...state, user: initialStateProfile.userData.user };
+            return {
+                ...state,
+                user: initialStateProfile.userData.user,
+                userActivity: initialStateProfile.userData.userActivity,
+            };
         case CHANGE_USER_LEVEL:
             return {
                 ...state,

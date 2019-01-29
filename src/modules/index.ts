@@ -18,7 +18,6 @@ import { rootPasswordSaga } from './password';
 import { rootProfileSaga } from './profile';
 import { rootRecentTradesSaga } from './recentTrades';
 import { rootWalletsSaga } from './wallets';
-export { selectUserData } from './profile';
 
 export * from './auth';
 export * from './contact';

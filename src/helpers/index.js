@@ -1,5 +1,6 @@
 export * from './preciseNumber';
 export * from './localeDate';
+export * from './localeFullDate';
 export * from './sliceString';
 export * from './uppercase';
 export * from './filterData';

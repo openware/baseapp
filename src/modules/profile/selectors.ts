@@ -1,27 +1,9 @@
 import { RootState, User } from '../index';
 import { CommonError } from '../types';
-import { Tier } from './actions';
+import { Activity, Tier } from './actions';
 
-export interface UserData {
-    accountActivity: string[][];
-}
-
-const tableData = [
-    ['11-09-2011 12:00', '93.31.160.8', 'Paris'],
-    ['11-09-2011 12:00', '93.31.160.8', 'Paris'],
-    ['11-09-2011 12:00', '93.31.160.8', 'Paris'],
-    ['11-09-2011 12:00', '93.31.160.8', 'Paris'],
-    ['11-09-2011 12:00', '93.31.160.8', 'Paris'],
-    ['11-09-2011 12:00', '93.31.160.8', 'Paris'],
-    ['11-09-2011 12:00', '93.31.160.8', 'Paris'],
-];
-
-const userData: UserData = {
-    accountActivity: tableData,
-};
-
-export const selectUserData = (state: RootState): UserData =>
-    userData;
+export const selectUserActivity = (state: RootState): Activity[] | undefined =>
+    state.app.profile.userData.userActivity;
 
 export const selectChangePasswordError = (state: RootState): CommonError | undefined =>
     state.app.profile.passwordChange.error;

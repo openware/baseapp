@@ -15,7 +15,8 @@ export function* signInSaga(action: SignInFetch) {
         yield put(signInError({ code: undefined, message: undefined }));
 
         const user = yield call(API.post(sessionsConfig), '/identity/sessions', action.payload);
-        yield put(userData(user));
+        const activity = yield call(API.get(sessionsConfig), '/resource/users/activity/all');
+        yield put(userData({ user, activity }));
 
         yield put(signInRequire2FA({ require2fa: false }));
     } catch (error) {
