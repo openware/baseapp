@@ -11,17 +11,21 @@ interface TwoFactorAuthProps {
 
 interface TwoFactorAuthState {
     otpCode: string;
+    error: string;
 }
 
 export class TwoFactorAuth extends React.Component<TwoFactorAuthProps, TwoFactorAuthState> {
     public state = {
         otpCode: '',
+        error: '',
     };
 
     public render() {
         const { errorMessage, isLoading, onSignUp } = this.props;
+        const { error } = this.state;
+        const errors = errorMessage && error;
         const buttonWrapperClass = cn('cr-sign-in-form__button-wrapper', {
-            'cr-sign-in-form__button-wrapper--empty': !errorMessage,
+            'cr-sign-in-form__button-wrapper--empty': !errors,
         });
         return (
             <form onSubmit={this.handleSubmit}>
@@ -37,7 +41,7 @@ export class TwoFactorAuth extends React.Component<TwoFactorAuthProps, TwoFactor
                             onChangeValue={this.handleOptCodeChange}
                         />
                         <div className={buttonWrapperClass}>
-                            <div className="cr-sign-in-form__error-message">{errorMessage || null}</div>
+                            <div className="cr-sign-in-form__error-message">{errors || null}</div>
                             <div className="cr-sign-in-form__loader">{isLoading ? <Loader /> : null}</div>
                             <Button
                                 label="Sign In"
@@ -61,7 +65,13 @@ export class TwoFactorAuth extends React.Component<TwoFactorAuthProps, TwoFactor
     }
 
     private handleSubmit = () => {
-        this.props.onSubmit(this.state.otpCode);
+        const { otpCode } = this.state;
+        if (!otpCode) {
+            this.setState({
+                error: 'Please enter 2fa code',
+            });
+        }
+        this.props.onSubmit(otpCode);
     };
 
     private handleOptCodeChange = (value: string) => {
