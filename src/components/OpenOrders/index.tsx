@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeDate } from '../../helpers';
+import { localeDate, preciseData } from '../../helpers';
 import { RootState } from '../../modules';
 import { Market, selectCurrentMarket } from '../../modules/markets';
 import {
@@ -73,8 +73,10 @@ class OpenOrdersContainer extends React.Component<Props> {
           const total = remaining * price;
           const executed = executed_volume || (volume - remaining_volume);
           const filled = (executed / volume * 100).toFixed(2);
+          const priceFixed = this.props.currentMarket ? this.props.currentMarket.bid_precision : 0;
+          const amountFixed = this.props.currentMarket ? this.props.currentMarket.ask_precision : 0;
 
-          return [OpenOrdersContainer.getDate(created_at), resultSide, price, remaining, total, `${filled}%`, ''];
+          return [OpenOrdersContainer.getDate(created_at), resultSide, preciseData(price, priceFixed), preciseData(remaining, amountFixed), preciseData(total, amountFixed), `${filled}%`, ''];
         };
 
         return (data.length > 0)

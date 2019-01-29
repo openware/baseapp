@@ -1,3 +1,5 @@
+![Build Status](https://ci.microkube.com/api/badges/openware/baseapp/status.svg)](https://ci.microkube.com/openware/baseapp)
+
 CryptoBase Base Application
 ---
 

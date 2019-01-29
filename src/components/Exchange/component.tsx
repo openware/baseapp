@@ -1,6 +1,7 @@
 import {
     Button,
     CryptoIcon,
+    Decimal,
     Dropdown,
     InputBlock,
     Modal,
@@ -69,6 +70,7 @@ export interface ExchangeState {
 const defaultWallet = {
     currency: '',
     balance: 0,
+    fixed: 8,
 };
 
 export class ExchangeComponent extends React.Component<Props, ExchangeState> {
@@ -329,7 +331,7 @@ export class ExchangeComponent extends React.Component<Props, ExchangeState> {
                         {wallet.currency}
                     </span>
                 </span>
-                <span className="pg-exchange-dropdown-list-item__balance">{wallet.balance}</span>
+                <span className="pg-exchange-dropdown-list-item__balance"><Decimal fixed={wallet.fixed}>{wallet.balance.toString()}</Decimal></span>
             </span>
         );
     };
@@ -432,7 +434,7 @@ export class ExchangeComponent extends React.Component<Props, ExchangeState> {
 
     private formatBalance(wallet: WalletItemProps | null) {
         const userWallet = (wallet || defaultWallet);
-        return Number(userWallet.balance);
+        return Number(Decimal.format(Number(userWallet.balance), userWallet.fixed));
     }
 
     public static handleAmountFromValue = (value: string, toBalance: number, fromBalance: number, type: string, currentTickerValue: number) => {

@@ -1,4 +1,4 @@
-import { Table } from '@openware/components';
+import { Decimal, Table } from '@openware/components';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDateSec, setTradeColor } from '../../helpers';
@@ -52,11 +52,14 @@ class RecentTradesComponent extends React.Component<Props> {
     }
 
     private getTrades(trades: PublicTrade[]) {
+        const priceFixed = this.props.currentMarket ? this.props.currentMarket.bid_precision : 0;
+        const amountFixed = this.props.currentMarket ? this.props.currentMarket.ask_precision : 0;
+
         const renderRow = item => {
             const { id, created_at, maker_type, price, volume } = item;
             return [
-                <span style={{ color: setTradeColor(maker_type).color }} key={id}>{price}</span>,
-                <span style={{ color: setTradeColor(maker_type).color }} key={id}>{volume}</span>,
+                <span style={{ color: setTradeColor(maker_type).color }} key={id}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
+                <span style={{ color: setTradeColor(maker_type).color }} key={id}><Decimal fixed={amountFixed}>{volume}</Decimal></span>,
                 <span style={{ color: setTradeColor(maker_type).color }} key={id}>{localeDateSec(created_at).slice(5)}</span>,
             ];
         };

@@ -126,6 +126,7 @@ describe('Wallets', () => {
                 fee: '0.0',
                 locked: '0.0',
                 type: 'coin',
+                fixed: 8,
             },
             {
                 balance: '0.0',
@@ -135,6 +136,7 @@ describe('Wallets', () => {
                 fee: '0.0',
                 locked: '0.0',
                 type: 'coin',
+                fixed: 8,
             },
             {
                 balance: '0.0',
@@ -144,6 +146,7 @@ describe('Wallets', () => {
                 fee: '0.0',
                 locked: '0.0',
                 type: 'coin',
+                fixed: 8,
             },
         ];
 

@@ -1,4 +1,4 @@
-import { Loader, OrderBook } from '@openware/components';
+import { Decimal, Loader, OrderBook } from '@openware/components';
 import classNames from 'classnames';
 import * as React from 'react';
 import {
@@ -73,11 +73,13 @@ class OrderBookContainer extends React.Component<Props> {
         return total;
     }
 
-    private static renderData(bids: string[][]) {
+    private static renderData(bids: string[][], currentMarket?: Market) {
         const total = this.renderTotal(bids);
+        const priceFixed = currentMarket ? currentMarket.bid_precision : 0;
+        const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
         return (bids.length > 0) ? bids.map((item, i) => {
             const [price, volume] = item;
-            return [total[i], volume, price];
+            return [Decimal.format(Number(total[i]), amountFixed), Decimal.format(Number(volume), amountFixed), Decimal.format(Number(price), priceFixed)];
         }) : [['There is no data to show...']];
     }
 
@@ -90,7 +92,7 @@ class OrderBookContainer extends React.Component<Props> {
             side={'right'}
             title={'Bids'}
             headers={['Volume', 'Amount', 'Price']}
-            data={OrderBookContainer.renderData(bids)}
+            data={OrderBookContainer.renderData(bids, this.props.currentMarket)}
             rowBackgroundColor={'rgba(84, 180, 137, 0.5)'}
             maxVolume={OrderBookContainer.calcMaxVolume(bids, asks)}
             orderBookEntry={OrderBookContainer.renderTotal(bids)}

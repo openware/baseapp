@@ -8,6 +8,7 @@ export interface Wallet {
     locked?: number;
     explorerTransaction: string;
     explorerAddress: string;
+    fixed: number;
 }
 
 export interface WalletAddress {

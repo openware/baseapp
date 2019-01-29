@@ -35,6 +35,7 @@ export function* walletsSaga() {
                 explorerAddress: currencyInfo!.explorer_address,
                 fee: depositFees[wallet.currency]!.fee.value,
                 type: depositFees[wallet.currency]!.type,
+                fixed: currencyInfo!.precision,
             });
         });
 

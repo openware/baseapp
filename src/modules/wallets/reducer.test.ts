@@ -15,6 +15,7 @@ describe('walletsList reducer', () => {
             explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
             fee: 0,
             type: 'coin',
+            fixed: 8,
         },
         {
             balance: 0,
@@ -24,6 +25,7 @@ describe('walletsList reducer', () => {
             explorerTransaction: 'https://www.blocktrail.com/tBCC/tx/#{txid}',
             fee: 0,
             type: 'coin',
+            fixed: 8,
         },
         {
             balance: 0,
@@ -33,6 +35,7 @@ describe('walletsList reducer', () => {
             explorerTransaction: 'https://rinkeby.etherscan.io/tx/#{txid}',
             fee: 0,
             type: 'coin',
+            fixed: 8,
         },
     ];
 

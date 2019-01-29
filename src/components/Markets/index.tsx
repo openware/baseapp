@@ -1,7 +1,8 @@
-import { Loader, Markets } from '@openware/components';
+import { Decimal, Loader, Markets } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+// import { preciseData } from '../../helpers';
 import { RootState, selectUserInfo, User } from '../../modules';
 import {
     Market,
@@ -69,7 +70,7 @@ class MarketsContainer extends React.Component<Props> {
         return markets.map((market: Market) =>
             ([
                 market.name,
-                (marketTickers[market.id] || defaultTicker).last,
+                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.ask_precision),
                 (marketTickers[market.id] || defaultTicker).price_change_percent,
             ]),
         );

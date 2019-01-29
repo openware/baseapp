@@ -4,6 +4,7 @@ import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import {
     localeDate,
+    preciseData,
     setDepositStatusColor,
     setTradesType,
     setWithdrawStatusColor,
@@ -107,23 +108,29 @@ class HistoryComponent extends React.Component<Props> {
             case 'deposit': {
                 const { txid, created_at, currency, amount, state } = item;
                 const blockchainLink = this.getBlockchainLink(currency, txid);
+                const wallet = this.props.wallets.find(obj => {
+                    return obj.currency === currency;
+                });
                 return [
                     <a href={blockchainLink} target="_blank" rel="noopener noreferrer" key={txid}>{txid}</a>,
                     localeDate(created_at),
                     currency.toUpperCase(),
-                    amount,
+                    wallet && preciseData(amount, wallet.fixed),
                     <span style={{ color: setDepositStatusColor(state) }} key={txid}>{state}</span>,
                 ];
             }
             case 'withdraw': {
                 const { id, txid, created_at, currency, amount, state, fee, rid } = item;
                 const blockchainLink = this.getBlockchainLink(currency, txid, rid);
+                const wallet = this.props.wallets.find(obj => {
+                    return obj.currency === currency;
+                });
                 return [
                     id,
                     localeDate(created_at),
                     uppercase(currency),
                     <a href={blockchainLink} target="_blank" rel="noopener noreferrer" key={txid || rid}>{txid || rid}</a>,
-                    amount,
+                    wallet && preciseData(amount, wallet.fixed),
                     fee,
                     <span style={{ color: setWithdrawStatusColor(state) }} key={txid || rid}>{state}</span>,
                 ];
@@ -138,9 +145,9 @@ class HistoryComponent extends React.Component<Props> {
                     localeDate(created_at),
                     <span style={{ color: setTradesType(side).color }} key={id}>{setTradesType(side).text}</span>,
                     marketName,
-                    price,
-                    volume,
-                    funds,
+                    marketToDisplay && preciseData(price, marketToDisplay.bid_precision),
+                    marketToDisplay && preciseData(volume, marketToDisplay.ask_precision),
+                    marketToDisplay && preciseData(funds, marketToDisplay.bid_precision),
                 ];
             }
             default: {
