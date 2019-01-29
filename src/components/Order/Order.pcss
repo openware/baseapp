@@ -91,9 +91,14 @@
 
         &:last-child {
           .cr-button {
-            font-weight: bolder;
-            color: var(--base-bright) !important;
-            background: var(--order-button-sell);
+            background: var(--color-red);
+            color: var(--color-white) !important;
+            padding: calc(var(--gap) * 1.3);
+            font-size: 1.3em;
+            font-weight: normal;
+            &:hover &:active  {
+              background: var(--color-red);
+            }
           }
         }
       }
@@ -175,11 +180,25 @@
         border-left: none;
       }
     }
+    .cr-order-item:nth-of-type(5),
+    .cr-order-item:nth-of-type(6) {
+      justify-content: flex-end;
+      color: var(--muted-text);
+      .cr-order-item__content {
+        margin-left: 5px;
+        font-size: 12px;
+        font-weight: normal;
+        line-height: 14px;
+        background-color: inherit;
+        border: none;
+        width: auto;
+      }
+    }
   }
 
   .cr-button {
     background: var(--color-green);
-    color: #fff !important;
+    color: var(--color-white) !important;
     padding: calc(var(--gap) * 1.3);
     font-size: 1.3em;
     font-weight: normal;
