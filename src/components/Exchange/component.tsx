@@ -163,7 +163,7 @@ export class ExchangeComponent extends React.Component<Props, ExchangeState> {
                             <InputBlock
                                 handleChangeValue={this.handleChangeAmount}
                                 value={amountFrom || ''}
-                                type="number"
+                                type="text"
                                 message={type === 'buy' ? 'Buy' : 'Sell'}
                                 placeholder="0"
                             />
