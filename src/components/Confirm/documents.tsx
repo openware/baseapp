@@ -133,7 +133,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                                     className="pg-confirm__content-documents-col-row-content-2-documents-label-item"
                                                     htmlFor="file"
                                                 >
-                                                    <p className="active">Drag and drop orbrowse files</p>
+                                                    <p className="active">Drag and drop or browse files</p>
                                                     <div className="muted">Maximum file size is 20MB</div>
                                                     <div className="muted">Maximum number of files is 5</div>
                                                 </label>
@@ -175,19 +175,16 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     }
 
     private formatDate = (date: string) => {
-      const [day, month, year] = date.split('/');
-      let formatDay = day ? parseFloat(day) : '';
-      formatDay = formatDay === '' || formatDay <= 31 ? formatDay : 31;
-      let formatMonth = month ? parseFloat(month) : '';
-      formatMonth = formatMonth === '' || formatMonth <= 12 ? formatMonth : 12;
-      const formatYear = year ? parseFloat(year) : '';
-      if (formatDay && formatMonth && formatYear) {
-        return `${formatDay}/${formatMonth}/${formatYear}`;
-      } else if (formatDay && formatMonth) {
-        return `${formatDay}/${formatMonth}`;
-      } else {
-        return `${formatDay}`;
-      }
+        const [day, month, year] = date.split('/');
+
+        let formatDay = day ? day : '';
+        formatDay = formatDay === '' || parseFloat(formatDay) <= 31 ? formatDay : '31';
+        let formatMonth = month ? month : '';
+        formatMonth = formatMonth === '' || parseFloat(formatMonth) <= 12 ? formatMonth : '12';
+        const formatYear = year ? parseFloat(year) : '';
+
+        return (formatDay && formatMonth && formatYear) ?
+               `${formatDay}/${formatMonth}/${formatYear}` : ``;
     }
 
     private handleChangeExpiration = (e: OnChangeEvent) => {
