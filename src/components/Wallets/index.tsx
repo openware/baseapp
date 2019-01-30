@@ -145,6 +145,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const selectedBalance = (wallets[selectedWalletIndex] || { balance: 0 }).balance;
         const selectedLocked = (wallets[selectedWalletIndex] || { locked: 0 }).locked;
         const selectedFixed = (wallets[selectedWalletIndex] || { precision: 0 }).fixed;
+        const fee = (this.props.wallets[selectedWalletIndex] || { fee: 0 }).fee;
 
         const maybeSelectedTab = selectedWalletIndex !== -1 && (
             <div>
@@ -179,7 +180,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 />
                 <ModalWithdrawConfirmation
                     show={withdrawConfirmModal}
-                    amount={amount}
+                    amount={amount - fee}
                     currency={selectedCurrency}
                     rid={rid}
                     onSubmit={this.handleWithdraw}
@@ -221,13 +222,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 </div>
             </div>
         );
-    }
+    };
 
     private toggleSubmitModal = () => {
         this.setState((state: WalletsState) => ({
             withdrawSubmitModal: !state.withdrawSubmitModal,
         }));
-    }
+    };
 
     private toggleConfirmModal = (amount?: number, rid?: string, otpCode?: string) => {
         this.setState((state: WalletsState) => ({
@@ -236,7 +237,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             otpCode: otpCode ? otpCode : '',
             withdrawConfirmModal: !state.withdrawConfirmModal,
         }));
-    }
+    };
 
     private consist(a: string, b: string): boolean {
         return a.toLowerCase().indexOf(b.toLowerCase()) !== -1;
