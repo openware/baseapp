@@ -1,15 +1,15 @@
-import { eventChannel } from 'redux-saga';
+import { Channel, eventChannel } from 'redux-saga';
 // tslint:disable-next-line no-submodule-imports
-import { call, put, race, take, takeEvery } from 'redux-saga/effects';
-import { rangerUrl } from '../../../api/config';
+import { all, call, cancel, fork, put, race, take, takeEvery } from 'redux-saga/effects';
+import { rangerUrl } from '../../../api';
 import { tradePush } from '../../history/trades/actions';
 import { marketsTickersData, SetCurrentMarket, Ticker, TickerEvent } from '../../markets';
 import { SET_CURRENT_MARKET } from '../../markets/constants';
 import { depthData } from '../../orderBook';
 import { userOrdersUpdate } from '../../orders';
 import { recentTradesPush } from '../../recentTrades';
-import { rangerSubscribeMarket, rangerUnsubscribeMarket } from '../actions';
-import { RANGER_CONNECT_DATA, RANGER_DIRECT_WRITE, RANGER_DISCONNECT } from '../constants';
+import { RangerConnectFetch, rangerDisconnectData, rangerDisconnectFetch, rangerSubscribeMarket, rangerUnsubscribeMarket } from '../actions';
+import { RANGER_CONNECT_DATA, RANGER_CONNECT_FETCH, RANGER_DIRECT_WRITE, RANGER_DISCONNECT_DATA, RANGER_DISCONNECT_FETCH } from '../constants';
 
 const streams: string[] = [
     'global.tickers',
@@ -17,7 +17,7 @@ const streams: string[] = [
     'trade',
 ];
 
-const generateSocketURI = (s: string[]) => `${rangerUrl()}/?stream=${s.sort().join('&stream=')}`;
+const generateSocketURI = (baseUrl: string, s: string[]) => `${baseUrl}/?stream=${s.sort().join('&stream=')}`;
 
 export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: string]: Ticker } => {
     const tickers = {};
@@ -32,8 +32,9 @@ export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: 
 };
 
 // tslint:disable no-console
-const initRanger = () => {
-    const ws = new WebSocket(generateSocketURI(streams));
+const initRanger = ({ withAuth }: RangerConnectFetch['payload']): [Channel<{}>, WebSocket] => {
+    const baseUrl = `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
+    const ws = new WebSocket(generateSocketURI(baseUrl, streams));
     const channel = eventChannel(emitter => {
         ws.onopen = () => {
             emitter({ type: RANGER_CONNECT_DATA });
@@ -41,6 +42,9 @@ const initRanger = () => {
         ws.onerror = error => {
             console.log(`WebSocket error ${error}`);
             console.dir(error);
+        };
+        ws.onclose = event => {
+            channel.close();
         };
         ws.onmessage = ({ data }) => {
             // tslint:disable-next-line no-any
@@ -100,7 +104,7 @@ const initRanger = () => {
         };
         // unsubscribe function
         return () => {
-            console.log('Socket off');
+            emitter(rangerDisconnectData());
         };
     });
     return [channel, ws];
@@ -137,29 +141,57 @@ function* reader(channel) {
     }
 }
 
-let previousMarketId: string;
+const switchMarket = () => {
+    let previousMarketId: string;
+    return function*(action: SetCurrentMarket) {
+        if (previousMarketId && previousMarketId !== action.payload.id) {
+            yield put(rangerUnsubscribeMarket(previousMarketId));
+        }
+        previousMarketId = action.payload.id;
+        yield put(rangerSubscribeMarket(action.payload.id));
+    };
+};
 
-function* switchMarket(action: SetCurrentMarket) {
-    if (previousMarketId && previousMarketId !== action.payload.id) {
-        yield put(rangerUnsubscribeMarket(previousMarketId));
-    }
-    previousMarketId = action.payload.id;
-    yield put(rangerSubscribeMarket(action.payload.id));
+function* watchDisconnect(socket: WebSocket, channel: Channel<{}>) {
+    yield take(RANGER_DISCONNECT_FETCH);
+    socket.close();
+}
+
+function* bindSocket(channel: Channel<{}>, socket: WebSocket) {
+    yield all([
+        call(reader, channel),
+        call(writter, socket),
+        call(watchDisconnect, socket, channel),
+    ]);
 }
 
 export function* rangerSagas() {
-    yield takeEvery(SET_CURRENT_MARKET, switchMarket);
+    let channel: Channel<{}>;
+    let socket: WebSocket;
+    let initialized = false;
 
-    const [channel, ws] = yield call(initRanger);
-    const { cancel } = yield race({
-        task: [
-            call(reader, channel),
-            call(writter, ws),
-        ],
-        cancel: take(RANGER_DISCONNECT),
-    });
+    while (true) {
+        const setMarketTask = yield takeEvery(SET_CURRENT_MARKET, switchMarket());
 
-    if (cancel) {
-        ws.close();
+        while (true) {
+            const { connectFetch, disconnectData } = yield race({
+                connectFetch: take(RANGER_CONNECT_FETCH),
+                disconnectData: take(RANGER_DISCONNECT_DATA),
+            });
+
+            if (connectFetch) {
+                if (initialized) {
+                    yield put(rangerDisconnectFetch());
+                    yield take(RANGER_DISCONNECT_DATA);
+                }
+                [channel, socket] = yield call(initRanger, connectFetch.payload);
+                initialized = true;
+                yield fork(bindSocket, channel, socket);
+            }
+            if (disconnectData) {
+                break;
+            }
+        }
+        cancel(setMarketTask);
     }
 }

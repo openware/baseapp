@@ -22,6 +22,7 @@ import {
 import { ordersReducer, OrdersState } from './orders';
 import { passwordReducer, PasswordState } from './password';
 import { profileReducer, ProfileState } from './profile';
+import { rangerReducer, RangerState } from './ranger/reducer';
 import { recentTradesReducer, RecentTradesState } from './recentTrades';
 import { userActivityReducer, UserActivityState } from './userActivity';
 import { walletsReducer, WalletsState } from './wallets';
@@ -44,6 +45,7 @@ export interface AppState {
     orderBook: OrderBookState;
     depth: DepthState;
     userActivity: UserActivityState;
+    ranger: RangerState;
 }
 
 export const appReducer = combineReducers({
@@ -64,4 +66,5 @@ export const appReducer = combineReducers({
     orderBook: orderBookReducer,
     depth: depthReducer,
     userActivity: userActivityReducer,
+    ranger: rangerReducer,
 });

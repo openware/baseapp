@@ -14,9 +14,13 @@ import {
 import {
   RootState,
   selectUserInfo,
+  selectUserLoggedIn,
   User,
 } from '../modules';
 import { Market, marketsFetch, selectMarkets } from '../modules/markets';
+import { rangerConnectFetch, RangerConnectFetch } from '../modules/ranger';
+import { RangerState } from '../modules/ranger/reducer';
+import { selectRanger } from '../modules/ranger/selectors';
 import { selectWallets, Wallet, walletsFetch } from '../modules/wallets';
 
 const breakpoints = {
@@ -178,16 +182,19 @@ const gridItems = [
 const handleLayoutChange = () => {
     return;
 };
-// tslint:disable
+
 interface ReduxProps {
-    markets: Market[]
+    markets: Market[];
     wallets: Wallet [];
     user: User;
+    rangerState: RangerState;
+    userLoggedIn: boolean;
 }
 
 interface DispatchProps {
-    marketsFetch: typeof marketsFetch
+    marketsFetch: typeof marketsFetch;
     accountWallets: typeof walletsFetch;
+    rangerConnect: typeof rangerConnectFetch;
 }
 
 type Props = DispatchProps & ReduxProps;
@@ -195,12 +202,16 @@ type Props = DispatchProps & ReduxProps;
 class Trading extends React.Component<Props> {
     public async componentDidMount() {
         const { wallets, markets } = this.props;
+        const { connected, withAuth } = this.props.rangerState;
 
         if (markets.length < 1) {
             this.props.marketsFetch();
         }
         if (!wallets || wallets.length === 0) {
             this.props.accountWallets();
+        }
+        if (!connected || withAuth !== this.props.userLoggedIn) {
+            this.props.rangerConnect({withAuth: this.props.userLoggedIn});
         }
     }
 
@@ -249,11 +260,14 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     markets: selectMarkets(state),
     wallets: selectWallets(state),
     user: selectUserInfo(state),
+    rangerState: selectRanger(state),
+    userLoggedIn: selectUserLoggedIn(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     marketsFetch: () => dispatch(marketsFetch()),
     accountWallets: () => dispatch(walletsFetch()),
+    rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
 });
 
 const TradingScreen = connect(mapStateToProps, mapDispatchToProps)(Trading);

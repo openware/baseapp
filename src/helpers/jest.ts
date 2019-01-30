@@ -36,7 +36,7 @@ export const mockNetworkError = (mockAxios: any) => {
     mockAxios.onAny().networkError();
 };
 
-export const createPingServer = (port: number, debug: boolean) => {
+export const createEchoServer = (port: number, debug: boolean) => {
     const server = new WebSocket.Server({ port: port });
     server.on('connection', (ws, request) => {
         if (debug) {

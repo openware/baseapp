@@ -1,32 +1,26 @@
 import { CommonError } from '../types';
 import {
-
     RANGER_CONNECT_DATA,
     RANGER_CONNECT_ERROR,
     RANGER_CONNECT_FETCH,
     RANGER_DIRECT_WRITE,
-    RANGER_DISCONNECT,
     RANGER_DISCONNECT_DATA,
+    RANGER_DISCONNECT_FETCH,
 } from './constants';
-
-interface RangerConnectedEvent {
-    isTrusted: boolean;
-}
 
 export interface RangerConnectFetch {
     type: typeof RANGER_CONNECT_FETCH;
-    payload: {};
+    payload: {
+        withAuth: boolean;
+    };
 }
 
 export interface RangerConnectData {
     type: typeof RANGER_CONNECT_DATA;
-    payload: {
-        isTrusted: boolean;
-    };
 }
 
-export interface RangerDisconnect {
-    type: typeof RANGER_DISCONNECT;
+export interface RangerDisconnectFetch {
+    type: typeof RANGER_DISCONNECT_FETCH;
 }
 
 export interface RangerDisconnectData {
@@ -43,7 +37,7 @@ export interface RangerSubscribe {
 export interface RangerDirectMessage {
     type: typeof RANGER_DIRECT_WRITE;
     // tslint:disable-next-line no-any
-    payload: any;
+    payload: {[pair: string]: any};
 }
 
 export interface RangerConnectError {
@@ -54,22 +48,29 @@ export interface RangerConnectError {
     };
 }
 
+export type RangerAction = RangerConnectFetch |
+    RangerConnectData |
+    RangerConnectError |
+    RangerDisconnectData;
 
 export type RangerErrorType = typeof RANGER_CONNECT_ERROR;
 
-export const rangerConnect = (): RangerConnectFetch => ({
+export const rangerConnectFetch = (payload: RangerConnectFetch['payload']): RangerConnectFetch => ({
     type: RANGER_CONNECT_FETCH,
-    payload: {},
+    payload,
 });
 
-export const rangerConnectData = (payload: RangerConnectedEvent): RangerConnectData => ({
+export const rangerConnectData = (): RangerConnectData => ({
     type: RANGER_CONNECT_DATA,
-    payload,
 });
 
 export const rangerConnectError = (payload: CommonError): RangerConnectError => ({
     type: RANGER_CONNECT_ERROR,
     payload,
+});
+
+export const rangerDisconnectData = (): RangerDisconnectData => ({
+    type: RANGER_DISCONNECT_DATA,
 });
 
 export const rangerDirectMessage = (payload: RangerDirectMessage['payload']): RangerDirectMessage => ({
@@ -90,10 +91,7 @@ export const rangerUnsubscribe = (payload: RangerSubscribe['payload']): RangerDi
 export const rangerSubscribeMarket = (marketId: string): RangerDirectMessage => rangerSubscribe({ channels: [`${marketId}.trades`] });
 export const rangerUnsubscribeMarket = (marketId: string): RangerDirectMessage => rangerUnsubscribe({ channels: [`${marketId}.trades`] });
 
-export const rangerDisconnect = (): RangerDisconnect => ({
-    type: RANGER_DISCONNECT,
+export const rangerDisconnectFetch = (): RangerDisconnectFetch => ({
+    type: RANGER_DISCONNECT_FETCH,
 });
 
-export const rangerDisconnectData = (): RangerDisconnectData => ({
-    type: RANGER_DISCONNECT_DATA,
-});

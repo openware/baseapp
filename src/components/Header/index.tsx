@@ -7,7 +7,7 @@ interface HeaderState {
     isActive: boolean;
 }
 
-// tslint:disable
+// tslint:disable no-any jsx-no-multiline-js
 class Head extends React.Component<any, HeaderState> {
     constructor(props: any) {
         super(props);
@@ -22,10 +22,10 @@ class Head extends React.Component<any, HeaderState> {
         const { isActive } = this.state;
         return (
           <React.Fragment>
-          {!['/confirm'].some(r=> location.pathname.includes(r)) &&
+          {!['/confirm'].some(r => location.pathname.includes(r)) &&
             <header className={`pg-header ${isActive ? 'pg-header--active' : ''}`}>
                 <div className="pg-container pg-header__content">
-                    <Link to={'/wallets'} className='pg-header__logo'>
+                    <Link to={'/wallets'} className="pg-header__logo">
                         <div className="pg-logo">
                             <img src={logo} className="pg-logo__img" alt="Logo" />
                         </div>
@@ -54,7 +54,6 @@ class Head extends React.Component<any, HeaderState> {
     }
 }
 
-// tslint:disable-next-line
 const Header = withRouter(Head as any);
 
 export {

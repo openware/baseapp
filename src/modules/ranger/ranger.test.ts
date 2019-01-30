@@ -1,7 +1,7 @@
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { Cryptobase } from '../../api/config';
-import { createPingServer, setupMockStore } from '../../helpers/jest';
+import { createEchoServer as createEchoServer, setupMockStore } from '../../helpers/jest';
 import { PrivateTradeEvent } from '../history/trades';
 import { TRADES_PUSH } from '../history/trades/constants';
 import { Ticker, TickerEvent } from '../markets';
@@ -10,13 +10,13 @@ import { DEPTH_DATA } from '../orderBook/constants';
 import { PublicTradeEvent } from '../recentTrades';
 import { RECENT_TRADES_PUSH } from '../recentTrades/constants';
 import { OrderEvent } from '../types';
-import { rangerDirectMessage, rangerSubscribeMarket, rangerUnsubscribeMarket } from './actions';
-import { RANGER_DIRECT_WRITE } from './constants';
+import { rangerConnectFetch, rangerDirectMessage, rangerDisconnectFetch, rangerSubscribeMarket, rangerUnsubscribeMarket } from './actions';
+import { RANGER_CONNECT_DATA, RANGER_CONNECT_FETCH, RANGER_DIRECT_WRITE, RANGER_DISCONNECT_DATA, RANGER_DISCONNECT_FETCH } from './constants';
 import { formatTicker, rangerSagas } from './sagas';
 
 // tslint:disable no-any no-magic-numbers no-console
 const debug = false;
-const pingPongPort = 9099;
+const echoServerPort = 9099;
 
 describe('Ranger module', () => {
     let store: MockStoreEnhanced;
@@ -24,11 +24,11 @@ describe('Ranger module', () => {
     let pingServer: any;
 
     beforeAll(() => {
-        pingServer = createPingServer(pingPongPort, debug);
+        pingServer = createEchoServer(echoServerPort, debug);
         Cryptobase.config = {
             api: {
                 gatewayUrl: '/api/v2',
-                rangerUrl: `ws://localhost:${pingPongPort}`,
+                rangerUrl: `ws://localhost:${echoServerPort}`,
             },
             minutesUntilAutoLogout: '5',
             withCredentials: true,
@@ -66,6 +66,41 @@ describe('Ranger module', () => {
         });
     });
 
+    describe('support disconnect action', () => {
+        it('disconnects and trigger disconnect action', async () => {
+            return new Promise(resolve => {
+                store.subscribe(() => {
+                    const actions = store.getActions();
+                    switch (actions.length) {
+                        case 1:
+                            expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                            return;
+
+                        case 2:
+                            expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                            store.dispatch(rangerDisconnectFetch());
+                            return;
+
+                        case 3:
+                            expect(actions[2]).toEqual({ type: RANGER_DISCONNECT_FETCH });
+                            return;
+
+                        case 4:
+                            expect(actions[3]).toEqual({ type: RANGER_DISCONNECT_DATA });
+                            setTimeout(resolve, 30);
+                            return;
+
+                        default:
+                            fail(`Unexpected action ${actions.length}`);
+                            break;
+                    }
+                });
+                store.dispatch(rangerConnectFetch({ withAuth: false }));
+            });
+        });
+
+    });
+
     describe('public events', () => {
         describe('markets tickers update', () => {
             const tickerEvents: { [pair: string]: TickerEvent } = {
@@ -91,14 +126,31 @@ describe('Ranger module', () => {
 
             it('should push market tickers', async () => {
                 return new Promise(resolve => {
+                    store.dispatch(rangerConnectFetch({ withAuth: false }));
                     store.subscribe(() => {
                         const actions = store.getActions();
-                        if (actions.length === 1) {
-                            store.dispatch({ type: RANGER_DIRECT_WRITE, payload: mockGlobalTickers });
-                        }
-                        if (actions.length === 3) {
-                            expect(actions[2]).toEqual(expectedAction);
-                            resolve();
+                        switch (actions.length) {
+                            case 1:
+                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                                return;
+
+                            case 2:
+                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                store.dispatch(rangerDirectMessage(mockGlobalTickers));
+                                return;
+
+                            case 3:
+                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockGlobalTickers });
+                                return;
+
+                            case 4:
+                                expect(actions[3]).toEqual(expectedAction);
+                                setTimeout(resolve, 30);
+                                return;
+
+                            default:
+                                fail(`Unexpected action ${actions.length}`);
+                                break;
                         }
                     });
                 });
@@ -125,14 +177,31 @@ describe('Ranger module', () => {
             };
             it('should push order book', async () => {
                 return new Promise(resolve => {
+                    store.dispatch(rangerConnectFetch({ withAuth: false }));
                     store.subscribe(() => {
                         const actions = store.getActions();
-                        if (actions.length === 1) {
-                            store.dispatch({ type: RANGER_DIRECT_WRITE, payload: mockOrderBookUpdate });
-                        }
-                        if (actions.length === 3) {
-                            expect(actions[2]).toEqual(expectedAction);
-                            resolve();
+                        switch (actions.length) {
+                            case 1:
+                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                                return;
+
+                            case 2:
+                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                store.dispatch(rangerDirectMessage(mockOrderBookUpdate));
+                                return;
+
+                            case 3:
+                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrderBookUpdate });
+                                return;
+
+                            case 4:
+                                expect(actions[3]).toEqual(expectedAction);
+                                setTimeout(resolve, 30);
+                                return;
+
+                            default:
+                                fail(`Unexpected action ${actions.length}`);
+                                break;
                         }
                     });
                 });
@@ -161,15 +230,31 @@ describe('Ranger module', () => {
                 return new Promise(resolve => {
                     store.subscribe(() => {
                         const actions = store.getActions();
-                        if (actions.length === 1) {
-                            const message = { 'eurbtc.trades': mockTrades };
-                            store.dispatch(rangerDirectMessage(message));
-                        }
-                        if (actions.length === 3) {
-                            expect(actions[2]).toEqual(expectedAction);
-                            resolve();
+                        switch (actions.length) {
+                            case 1:
+                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                                return;
+
+                            case 2:
+                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                store.dispatch(rangerDirectMessage({ 'eurbtc.trades': mockTrades }));
+                                return;
+
+                            case 3:
+                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: { 'eurbtc.trades': mockTrades } });
+                                return;
+
+                            case 4:
+                                expect(actions[3]).toEqual(expectedAction);
+                                setTimeout(resolve, 30);
+                                return;
+
+                            default:
+                                fail(`Unexpected action ${actions.length}`);
+                                break;
                         }
                     });
+                    store.dispatch(rangerConnectFetch({ withAuth: false }));
                 });
             });
         });
@@ -189,14 +274,31 @@ describe('Ranger module', () => {
                 return new Promise(resolve => {
                     store.subscribe(() => {
                         const actions = store.getActions();
-                        if (actions.length === 1) {
-                            store.dispatch({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
-                        }
-                        if (actions.length === 3) {
-                            expect(actions[2]).toEqual(expectedAction);
-                            resolve();
+                        switch (actions.length) {
+                            case 1:
+                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
+                                return;
+
+                            case 2:
+                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                store.dispatch(rangerDirectMessage(mockOrder));
+                                return;
+
+                            case 3:
+                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
+                                return;
+
+                            case 4:
+                                expect(actions[3]).toEqual(expectedAction);
+                                setTimeout(resolve, 30);
+                                return;
+
+                            default:
+                                fail(`Unexpected action ${actions.length}`);
+                                break;
                         }
                     });
+                    store.dispatch(rangerConnectFetch({ withAuth: true }));
                 });
             });
         });
@@ -212,14 +314,31 @@ describe('Ranger module', () => {
                 return new Promise(resolve => {
                     store.subscribe(() => {
                         const actions = store.getActions();
-                        if (actions.length === 1) {
-                            store.dispatch({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
-                        }
-                        if (actions.length === 3) {
-                            expect(actions[2]).toEqual(expectedAction);
-                            resolve();
+                        switch (actions.length) {
+                            case 1:
+                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
+                                return;
+
+                            case 2:
+                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                store.dispatch(rangerDirectMessage(mockOrder));
+                                return;
+
+                            case 3:
+                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
+                                return;
+
+                            case 4:
+                                expect(actions[3]).toEqual(expectedAction);
+                                setTimeout(resolve, 30);
+                                return;
+
+                            default:
+                                fail(`Unexpected action ${actions.length}`);
+                                break;
                         }
                     });
+                    store.dispatch(rangerConnectFetch({ withAuth: true }));
                 });
             });
         });
@@ -244,14 +363,31 @@ describe('Ranger module', () => {
                 return new Promise(resolve => {
                     store.subscribe(() => {
                         const actions = store.getActions();
-                        if (actions.length === 1) {
-                            store.dispatch({ type: RANGER_DIRECT_WRITE, payload: mockTrade });
-                        }
-                        if (actions.length === 3) {
-                            expect(actions[2]).toEqual(expectedTradeAction);
-                            resolve();
+                        switch (actions.length) {
+                            case 1:
+                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
+                                return;
+
+                            case 2:
+                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                store.dispatch(rangerDirectMessage(mockTrade));
+                                return;
+
+                            case 3:
+                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockTrade });
+                                return;
+
+                            case 4:
+                                expect(actions[3]).toEqual(expectedTradeAction);
+                                setTimeout(resolve, 30);
+                                return;
+
+                            default:
+                                fail(`Unexpected action ${actions.length}`);
+                                break;
                         }
                     });
+                    store.dispatch(rangerConnectFetch({ withAuth: true }));
                 });
             });
         });
