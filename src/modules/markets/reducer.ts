@@ -17,6 +17,7 @@ export interface MarketsState extends CommonState {
     tickers: {
         [pair: string]: Ticker;
     };
+    tickerLoading: boolean;
     loading: boolean;
     error?: CommonError;
 }
@@ -25,6 +26,7 @@ export const initialMarketsState: MarketsState = {
     list: [],
     currentMarket: undefined,
     tickers: {},
+    tickerLoading: false,
     loading: false,
 };
 
@@ -49,28 +51,32 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
                 loading: false,
                 error: action.payload,
             };
+
         case SET_CURRENT_MARKET:
             return {
                 ...state,
                 currentMarket: action.payload,
             };
-        case MARKETS_TICKERS_ERROR:
+
+        case MARKETS_TICKERS_FETCH:
             return {
                 ...state,
-                loading: false,
-                error: action.payload,
+                tickerLoading: true,
+                error: undefined,
             };
         case MARKETS_TICKERS_DATA:
             return {
                 ...state,
+                tickerLoading: false,
                 tickers: action.payload,
             };
-        case MARKETS_TICKERS_FETCH:
+        case MARKETS_TICKERS_ERROR:
             return {
                 ...state,
-                loading: true,
-                error: undefined,
+                tickerLoading: false,
+                error: action.payload,
             };
+
         default:
             return state;
     }

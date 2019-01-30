@@ -37,7 +37,9 @@ type Props = ReduxProps & DispatchProps;
 class MarketsContainer extends React.Component<Props> {
 
     public componentDidMount() {
-        this.props.tickers();
+        if (this.props.markets.length === 0) {
+            this.props.tickers();
+        }
     }
 
     public render() {

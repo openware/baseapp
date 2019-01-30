@@ -2,10 +2,12 @@ import * as actions from './actions';
 import {
     initialMarketsState,
     marketsReducer,
+    MarketsState,
 } from './reducer';
+import { Market, Ticker } from './types';
 
 describe('Markets reducer', () => {
-    const fakeMarkets = [
+    const fakeMarkets: Market[] = [
         {
             id: 'usdbtc',
             name: 'USD/BTC',
@@ -36,7 +38,7 @@ describe('Markets reducer', () => {
         },
     ];
 
-    const btcethTicker = {
+    const btcethTicker: Ticker = {
         buy: '0.0',
         sell: '0.0',
         low: '0.0',
@@ -48,7 +50,7 @@ describe('Markets reducer', () => {
         price_change_percent: '-100.00%',
     };
 
-    const btcusdTicker = {
+    const btcusdTicker: Ticker = {
         buy: '0.0',
         sell: '1.0',
         low: '0.0',
@@ -60,7 +62,7 @@ describe('Markets reducer', () => {
         vol: '15.5',
     };
 
-    const marketsTickersList = {
+    const marketsTickersList: { [pairs: string]: Ticker } = {
         btceth: btcethTicker,
         btcusd: btcusdTicker,
     };
@@ -71,7 +73,7 @@ describe('Markets reducer', () => {
     };
 
     it('should handle MARKETS_FETCH', () => {
-        const expectedState = {
+        const expectedState: MarketsState = {
             ...initialMarketsState,
             loading: true,
             error: undefined,
@@ -80,8 +82,9 @@ describe('Markets reducer', () => {
     });
 
     it('should handle MARKETS_DATA', () => {
-        const expectedState = {
+        const expectedState: MarketsState = {
             ...initialMarketsState,
+            tickerLoading: false,
             loading: false,
             error: undefined,
             list: fakeMarkets,
@@ -90,8 +93,9 @@ describe('Markets reducer', () => {
     });
 
     it('should handle MARKETS_ERROR', () => {
-        const expectedState = {
+        const expectedState: MarketsState = {
             ...initialMarketsState,
+            tickerLoading: false,
             loading: false,
             error: error,
         };
@@ -99,7 +103,7 @@ describe('Markets reducer', () => {
     });
 
     it('should handle SET_CURRENT_MARKET', () => {
-        const expectedState = {
+        const expectedState: MarketsState = {
             ...initialMarketsState,
             currentMarket: fakeMarkets[0],
         };
@@ -107,16 +111,17 @@ describe('Markets reducer', () => {
     });
 
     it('should handle MARKETS_TICKERS_FETCH', () => {
-        const expectedState = {
+        const expectedState: MarketsState = {
             ...initialMarketsState,
-            loading: true,
+            tickerLoading: true,
+            loading: false,
             error: undefined,
         };
         expect(marketsReducer(initialMarketsState, actions.marketsTickersFetch())).toEqual(expectedState);
     });
 
     it('should handle MARKETS_TICKERS_DATA', () => {
-        const expectedState = {
+        const expectedState: MarketsState = {
             ...initialMarketsState,
             tickers: marketsTickersList,
         };
@@ -124,8 +129,9 @@ describe('Markets reducer', () => {
     });
 
     it('should handle MARKETS_TICKERS_ERROR', () => {
-        const expectedState = {
+        const expectedState: MarketsState = {
             ...initialMarketsState,
+            tickerLoading: false,
             loading: false,
             error: error,
         };
