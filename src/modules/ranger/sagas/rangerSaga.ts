@@ -19,7 +19,7 @@ const streams: string[] = [
 
 const generateSocketURI = (s: string[]) => `${rangerUrl()}/?stream=${s.sort().join('&stream=')}`;
 
-export const formatTicker = (events: {[pair: string]: TickerEvent}): {[pair: string]: Ticker} => {
+export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: string]: Ticker } => {
     const tickers = {};
     for (const market in events) {
         if (events.hasOwnProperty(market)) {
@@ -97,10 +97,27 @@ const initRanger = () => {
     return [channel, ws];
 };
 
-function* writter(socket) {
+const wsStateToString = (socket: WebSocket) => {
+    switch (socket.readyState) {
+        case socket.OPEN: return 'OPEN';
+        case socket.CLOSED: return 'CLOSED';
+        case socket.CLOSING: return 'CLOSING';
+        case socket.CONNECTING: return 'CONNECTING';
+        default: return `UNKNOWN ${socket.readyState}`;
+    }
+};
+
+function* writter(socket: WebSocket) {
     while (true) {
         const data = yield take(RANGER_DIRECT_WRITE);
-        socket.send(JSON.stringify(data.payload));
+        switch (socket.readyState) {
+            case socket.OPEN:
+                socket.send(JSON.stringify(data.payload));
+                break;
+            default:
+                console.log(`Ranger state is ${wsStateToString(socket)}`);
+                break;
+        }
     }
 }
 
