@@ -102,7 +102,7 @@ class OrderBookContainer extends React.Component<Props> {
 
     private handleOnSelect = (index: number) => {
         const { bids, currentPrice } = this.props;
-        const priceToSet = bids[index][0];
+        const priceToSet = bids[index] ? bids[index][0] : '';
 
         if (currentPrice !== priceToSet) {
             this.props.setCurrentPrice(priceToSet);
