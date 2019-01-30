@@ -1,5 +1,6 @@
 import { CommonError } from '../../types';
 import {
+    RESEND_CODE_DATA,
     RESEND_CODE_ERROR,
     RESEND_CODE_FETCH,
     SEND_CODE_DATA,
@@ -31,6 +32,10 @@ export interface ResendCodeFetch {
     payload: {
         phone_number: string;
     };
+}
+
+export interface ResendCodeData {
+    type: typeof RESEND_CODE_DATA;
 }
 
 export interface ResendCodeError {
@@ -65,7 +70,8 @@ export type PhoneAction = SendCodeFetch
     | VerifyPhoneData
     | VerifyPhoneError
     | ResendCodeFetch
-    | ResendCodeError;
+    | ResendCodeError
+    | ResendCodeData;
 
 export const sendCode = (payload: SendCodeFetch['payload']): SendCodeFetch => ({
     type: SEND_CODE_FETCH,
@@ -84,6 +90,10 @@ export const sendCodeError = (payload: SendCodeError['payload']): SendCodeError 
 export const resendCode = (payload: ResendCodeFetch['payload']): ResendCodeFetch => ({
     type: RESEND_CODE_FETCH,
     payload,
+});
+
+export const resendCodeData = (): ResendCodeData => ({
+    type: RESEND_CODE_DATA,
 });
 
 export const resendCodeError = (payload: ResendCodeError['payload']): ResendCodeError => ({

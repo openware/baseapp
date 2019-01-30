@@ -11,9 +11,9 @@ export interface DocumentsState {
     error?: CommonError;
 }
 
-const initialState: DocumentsState = {};
+export const initialDocumentsState: DocumentsState = {};
 
-export const documentsReducer = (state = initialState, action: DocumentsAction) => {
+export const documentsReducer = (state = initialDocumentsState, action: DocumentsAction) => {
     switch (action.type) {
         case SEND_DOCUMENTS_FETCH:
             return {

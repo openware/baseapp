@@ -83,6 +83,11 @@ describe('History/Trades', () => {
             type: TRADES_FETCH,
         };
 
+        const expectedCallErrorHandler = {
+            type: 'error/ERROR_DATA',
+            payload: 500,
+        };
+
         it('should fetch wallets', async () => {
             const expectedTradesData = {
                 type: TRADES_DATA,
@@ -117,9 +122,10 @@ describe('History/Trades', () => {
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
-                    if (actions.length === 2) {
+                    if (actions.length === 3) {
                         expect(actions[0]).toEqual(expectedTradesFetch);
                         expect(actions[1]).toEqual(expectedTradesError);
+                        expect(actions[2]).toEqual(expectedCallErrorHandler);
                         resolve();
                     }
                 });

@@ -8,3 +8,4 @@ export const VERIFY_PHONE_FETCH = 'phone/VERIFY_PHONE_FETCH';
 
 export const RESEND_CODE_ERROR = 'phone/RESEND_CODE_ERROR';
 export const RESEND_CODE_FETCH = 'phone/RESEND_CODE_FETCH';
+export const RESEND_CODE_DATA = 'phone/RESEND_CODE_DATA';

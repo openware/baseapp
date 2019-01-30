@@ -11,9 +11,9 @@ export interface IdentityState {
     error?: CommonError;
 }
 
-const initialState: IdentityState = {};
+export const initialIdentityState: IdentityState = {};
 
-export const identityReducer = (state = initialState, action: IdentityAction) => {
+export const identityReducer = (state = initialIdentityState, action: IdentityAction) => {
     switch (action.type) {
         case SEND_IDENTITY_FETCH:
             return {

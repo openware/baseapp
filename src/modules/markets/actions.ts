@@ -76,11 +76,6 @@ export const marketsError = (payload: MarketsError['payload']): MarketsError => 
     payload,
 });
 
-export const marketsTickersError = (payload: MarketsError['payload']): MarketsTickersError => ({
-    type: MARKETS_TICKERS_ERROR,
-    payload,
-});
-
 export const setCurrentMarket =
     (payload: SetCurrentMarket['payload']): SetCurrentMarket => ({
         type: SET_CURRENT_MARKET,
@@ -93,6 +88,11 @@ export const marketsTickersFetch = (): MarketsTickersFetch => ({
 
 export const marketsTickersData = (payload: MarketsTickersData['payload']): MarketsTickersData => ({
     type: MARKETS_TICKERS_DATA,
+    payload,
+});
+
+export const marketsTickersError = (payload: MarketsError['payload']): MarketsTickersError => ({
+    type: MARKETS_TICKERS_ERROR,
     payload,
 });
 

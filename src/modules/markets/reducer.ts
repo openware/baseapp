@@ -1,10 +1,12 @@
-import { CommonState } from '../types';
+import { CommonError, CommonState } from '../types';
 import { MarketsAction } from './actions';
 import {
     MARKETS_DATA,
     MARKETS_ERROR,
     MARKETS_FETCH,
     MARKETS_TICKERS_DATA,
+    MARKETS_TICKERS_ERROR,
+    MARKETS_TICKERS_FETCH,
     SET_CURRENT_MARKET,
 } from './constants';
 import { Market, Ticker } from './types';
@@ -15,15 +17,18 @@ export interface MarketsState extends CommonState {
     tickers: {
         [pair: string]: Ticker;
     };
+    loading: boolean;
+    error?: CommonError;
 }
 
-const initialState: MarketsState = {
+export const initialMarketsState: MarketsState = {
     list: [],
     currentMarket: undefined,
     tickers: {},
+    loading: false,
 };
 
-export const marketsReducer = (state = initialState, action: MarketsAction) => {
+export const marketsReducer = (state = initialMarketsState, action: MarketsAction) => {
     switch (action.type) {
         case MARKETS_FETCH:
             return {
@@ -49,10 +54,22 @@ export const marketsReducer = (state = initialState, action: MarketsAction) => {
                 ...state,
                 currentMarket: action.payload,
             };
+        case MARKETS_TICKERS_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
         case MARKETS_TICKERS_DATA:
             return {
                 ...state,
                 tickers: action.payload,
+            };
+        case MARKETS_TICKERS_FETCH:
+            return {
+                ...state,
+                loading: true,
+                error: undefined,
             };
         default:
             return state;

@@ -167,6 +167,11 @@ describe('Wallets', () => {
             },
         };
 
+        const expectedCallErrorHandler = {
+            type: 'error/ERROR_DATA',
+            payload: 500,
+        };
+
         const mockWalletsBalancesFetch = () => {
             mockAxios.onGet(`/account/balances`).reply(200, balancesResponse);
         };
@@ -179,7 +184,7 @@ describe('Wallets', () => {
             mockAxios.onGet('/public/fees/withdraw').reply(200, feesResponse);
         };
 
-        it('should handle wallet address error', async () => {
+        it('should handle wallet address data', async () => {
             mockWalletsBalancesFetch();
             mockWalletsCurrenciesFetch();
             mockWalletsWithdrawFeesFetch();
@@ -202,9 +207,10 @@ describe('Wallets', () => {
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
-                    if (actions.length === 2) {
+                    if (actions.length === 3) {
                         expect(actions[0]).toEqual(expectedWalletsFetch);
                         expect(actions[1]).toEqual(expectedWalletsError);
+                        expect(actions[2]).toEqual(expectedCallErrorHandler);
                         resolve();
                     }
                 });
@@ -240,6 +246,11 @@ describe('Wallets', () => {
             },
         };
 
+        const expectedCallErrorHandler = {
+            type: 'error/ERROR_DATA',
+            payload: 500,
+        };
+
         const responseAddress = {
             address: 'address',
         };
@@ -269,9 +280,10 @@ describe('Wallets', () => {
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
-                    if (actions.length === 2) {
+                    if (actions.length === 3) {
                         expect(actions[0]).toEqual(expectedWalletsAddressFetch);
                         expect(actions[1]).toEqual(expectedWalletsAddressError);
+                        expect(actions[2]).toEqual(expectedCallErrorHandler);
                         resolve();
                     }
                 });
@@ -306,6 +318,11 @@ describe('Wallets', () => {
             },
         };
 
+        const expectedCallErrorHandler = {
+            type: 'error/ERROR_DATA',
+            payload: 500,
+        };
+
         const mockWalletsWithdrawCcyFetch = () => {
             mockAxios.onPost('/account/withdraws').reply(201);
         };
@@ -331,9 +348,10 @@ describe('Wallets', () => {
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
-                    if (actions.length === 2) {
+                    if (actions.length === 3) {
                         expect(actions[0]).toEqual(expectedWalletsWithdrawCcyFetch);
                         expect(actions[1]).toEqual(expectedWalletsWithdrawCcyError);
+                        expect(actions[2]).toEqual(expectedCallErrorHandler);
                         resolve();
                     }
                 });
