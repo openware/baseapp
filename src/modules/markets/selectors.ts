@@ -8,14 +8,6 @@ const selectMarketsState = (state: RootState): MarketsState => state.app.markets
 export const selectMarkets = (state: RootState): Market[] =>
     selectMarketsState(state).list;
 
-export const selectHashMarkets = (state: RootState): { [pair: string]: Market } => {
-    const data = {};
-    for (const market of selectMarkets(state)) {
-        data[market.id] = market;
-    }
-    return data;
-};
-
 export const selectMarketsLoading = (state: RootState): boolean | undefined =>
     selectMarketsState(state).loading;
 
