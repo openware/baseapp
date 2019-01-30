@@ -1,30 +1,33 @@
 import { Table } from '@openware/components';
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeFullDate } from '../../helpers';
-import { Activity, selectUserActivity } from '../../modules/profile';
+import {
+    getUserActivity,
+    RootState,
+    selectUserActivity,
+    UserActivityDataInterface,
+} from '../../modules';
 
 interface ReduxProps {
-    userData?: Activity[];
+    userActivity?: UserActivityDataInterface[];
 }
 
-type Props = ReduxProps;
+interface DispatchProps {
+    getUserActivity: typeof getUserActivity;
+}
+
+type Props = ReduxProps & DispatchProps;
 
 const tableHeader = ['Date', 'Action', 'Result', 'Address IP', 'User Agent'];
 
 class ProfileAccountActivityComponent extends React.Component<Props> {
-
-    public componentWillReceiveProps(next: Props) {
-        if (next.userData && (this.props.userData !== next.userData)) {
-            const activity = this.getActivityData(next.userData);
-            this.setState({
-                activity,
-            });
-        }
+    public componentDidMount() {
+        this.props.getUserActivity();
     }
 
     public render() {
-        const { userData } = this.props;
+        const { userActivity } = this.props;
         return (
             <div className="pg-profile-page__activity">
                 <div className="pg-profile-page-header">
@@ -32,33 +35,35 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
                 </div>
                 <Table
                     header={tableHeader}
-                    data={this.getActivityData(userData)}
+                    data={userActivity ? this.getActivityData(userActivity) : [['', '', 'There is no date to show']]}
                 />
             </div>
         );
     }
 
-    private getActivityData(userData?: Activity[]) {
-        if (!userData) {
-            return [[]];
-        }
-        return userData.reverse().map(row => {
+    private getActivityData(userData: UserActivityDataInterface[]) {
+        return userData.map(item => {
             return [
-                localeFullDate(row.created_at),
-                row.action,
-                row.result,
-                row.user_ip,
-                row.user_agent,
+                localeFullDate(item.created_at),
+                item.action,
+                item.result,
+                item.user_ip,
+                item.user_agent,
             ];
         });
     }
 }
 
-const mapStateToProps = state => ({
-    userData: selectUserActivity(state),
+const mapStateToProps = (state: RootState): ReduxProps => ({
+    userActivity: selectUserActivity(state),
 });
 
-const ProfileAccountActivity = connect(mapStateToProps)(ProfileAccountActivityComponent);
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+    dispatch => ({
+        getUserActivity: () => dispatch(getUserActivity()),
+    });
+
+const ProfileAccountActivity = connect(mapStateToProps, mapDispatchToProps)(ProfileAccountActivityComponent);
 
 export {
     ProfileAccountActivity,

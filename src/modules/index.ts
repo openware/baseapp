@@ -17,6 +17,7 @@ import { rootOrdersSaga } from './orders';
 import { rootPasswordSaga } from './password';
 import { rootProfileSaga } from './profile';
 import { rootRecentTradesSaga } from './recentTrades';
+import { rootUserActivitySaga } from './userActivity';
 import { rootWalletsSaga } from './wallets';
 
 export * from './auth';
@@ -27,6 +28,7 @@ export * from './markets';
 export * from './orderBook';
 export * from './orders';
 export * from './password';
+export * from './userActivity';
 
 export * from './history/deposits';
 export * from './history/trades';
@@ -61,5 +63,6 @@ export function* rootSaga() {
         call(rootRecentTradesSaga),
         call(rootOrderBookSaga),
         call(rootHandleErrorSaga),
+        call(rootUserActivitySaga),
     ]);
 }

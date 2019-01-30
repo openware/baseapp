@@ -38,17 +38,6 @@ describe('SignIn saga', () => {
         state: 'active',
     };
 
-    const fakeUserActivity = {
-        id: 966,
-        user_id: 59,
-        user_ip: '195.214.197.210',
-        user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
-        topic: 'session',
-        action: 'login',
-        result: 'succeed',
-        created_at: '2019-01-28T09:28:03.000Z',
-    };
-
     const mockSignIn = () => {
         mockAxios.onPost('/identity/sessions').reply(200, fakeUser);
     };
@@ -57,14 +46,10 @@ describe('SignIn saga', () => {
         mockAxios.onPost('/identity/sessions').reply(403, fake2FAError);
     };
 
-    const mockUserActivity = () => {
-        mockAxios.onGet('/resource/users/activity/all').reply(200, [fakeUserActivity]);
-    };
-
     const expectedActionsFetch = [
         signIn(fakeCredentials),
         signInError(clearError),
-        userData({user: fakeUser, activity: [fakeUserActivity]}),
+        userData({user: fakeUser}),
         signInRequire2FA({ require2fa: false }),
     ];
     const expectedActions2FAError = [
@@ -80,7 +65,6 @@ describe('SignIn saga', () => {
 
     it('should signin user in success flow', async () => {
         mockSignIn();
-        mockUserActivity();
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();

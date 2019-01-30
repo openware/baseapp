@@ -1,9 +1,6 @@
 import { RootState, User } from '../index';
 import { CommonError } from '../types';
-import { Activity, Tier } from './actions';
-
-export const selectUserActivity = (state: RootState): Activity[] | undefined =>
-    state.app.profile.userData.userActivity;
+import { Tier } from './actions';
 
 export const selectChangePasswordError = (state: RootState): CommonError | undefined =>
     state.app.profile.passwordChange.error;
