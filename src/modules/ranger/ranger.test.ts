@@ -73,12 +73,12 @@ describe('Ranger module', () => {
                 xrpbtc: { name: 'XRP/BTC', base_unit: 'xrp', quote_unit: 'btc', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '9.0', sell: '80.0', buy: '79.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },
                 ltcbtc: { name: 'LTC/BTC', base_unit: 'ltc', quote_unit: 'btc', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '10.0', sell: '90.0', buy: '89.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },
             };
-            const tickers: { [pair: string]: Ticker }  = {
+            const tickers: { [pair: string]: Ticker } = {
                 ethzar: { low: '0.001', high: '0.145', last: '0.134', open: 0.134, vol: '8.0', sell: '70.0', buy: '69.0', avg_price: '69.5', price_change_percent: '+10.05%' },
                 xrpbtc: { low: '0.001', high: '0.145', last: '0.134', open: 0.134, vol: '9.0', sell: '80.0', buy: '79.0', avg_price: '69.5', price_change_percent: '+10.05%' },
                 ltcbtc: { low: '0.001', high: '0.145', last: '0.134', open: 0.134, vol: '10.0', sell: '90.0', buy: '89.0', avg_price: '69.5', price_change_percent: '+10.05%' },
             };
-            const mockGlobalTickers = ['global.tickers', tickerEvents];
+            const mockGlobalTickers = { 'global.tickers': tickerEvents };
 
             const expectedAction = {
                 type: MARKETS_TICKERS_DATA,
@@ -118,7 +118,7 @@ describe('Ranger module', () => {
                     ['0.0000008', '8.9'],
                 ],
             };
-            const mockOrderBookUpdate = ['eurbtc.update', data];
+            const mockOrderBookUpdate = { 'eurbtc.update': data };
             const expectedAction = {
                 type: DEPTH_DATA,
                 payload: data,
@@ -142,10 +142,10 @@ describe('Ranger module', () => {
         describe('trades', () => {
             const tradeEvent: PublicTradeEvent = {
                 tid: 100022,
-                type: 'ask',
+                type: 'buy',
                 date: 1547464388,
-                price: 0.0002,
-                amount: 0.00015,
+                price: '0.0002',
+                amount: '0.00015',
             };
             const mockTrades = {
                 trades: [tradeEvent],
@@ -162,7 +162,7 @@ describe('Ranger module', () => {
                     store.subscribe(() => {
                         const actions = store.getActions();
                         if (actions.length === 1) {
-                            const message = ['eurbtc.trades', mockTrades];
+                            const message = { 'eurbtc.trades': mockTrades };
                             store.dispatch(rangerDirectMessage(message));
                         }
                         if (actions.length === 3) {
@@ -180,7 +180,7 @@ describe('Ranger module', () => {
     describe('private events', () => {
         describe('should push new order', () => {
             const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'wait', volume: '0.1', origin_volume: '0.1' };
-            const mockOrder = ['order', data];
+            const mockOrder = { order: data };
             const expectedAction = {
                 type: 'orders/USER_ORDERS_UPDATE',
                 payload: data,
@@ -203,7 +203,7 @@ describe('Ranger module', () => {
 
         describe('should push close order', () => {
             const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'done', volume: '0.0', origin_volume: '0.1' };
-            const mockOrder = ['order', data];
+            const mockOrder = { order: data };
             const expectedAction = {
                 type: 'orders/USER_ORDERS_UPDATE',
                 payload: data,
@@ -235,7 +235,7 @@ describe('Ranger module', () => {
                 bid_id: 758,
                 market: 'eurbtc',
             };
-            const mockTrade = ['trade', privateTradeEvent];
+            const mockTrade = { trade: privateTradeEvent };
             const expectedTradeAction = {
                 type: TRADES_PUSH,
                 payload: privateTradeEvent,

@@ -1,8 +1,10 @@
 import { Cryptobase, defaultStorageLimit } from '../../api';
 import { getTimezone, setTimezone } from '../../helpers/timezone';
+import { PublicTrade } from '../history/trades';
 import { Market } from '../markets';
 import { recentTradesData, recentTradesError, recentTradesFetch, recentTradesPush } from './actions';
 import { recentTradesReducer } from './reducer';
+import { PublicTradeEvent } from './types';
 
 
 describe('recentTrade reducer', () => {
@@ -19,8 +21,8 @@ describe('recentTrade reducer', () => {
         min_bid_amount: '0.0',
         ask_precision: 4,
         bid_precision: 4,
-};
-    const fakeTrades = [
+    };
+    const fakeTrades: PublicTrade[] = [
         {
             id: 162413,
             price: '0.01',
@@ -40,24 +42,24 @@ describe('recentTrade reducer', () => {
             maker_type: 'buy',
         },
     ];
-    const fakeTradeEvents = [
+    const fakeTradeEvents: PublicTradeEvent[] = [
         {
             tid: 162413,
             type: 'ask',
             date: 1547464388,
-            price: 0.01,
-            amount: 0.059,
+            price: '0.01',
+            amount: '0.059',
         },
         {
             tid: 162414,
             type: 'bid',
             date: 1547464388,
-            price: 0.01,
-            amount: 0.01,
+            price: '0.01',
+            amount: '0.01',
         },
     ];
 
-    const trade = {
+    const trade: PublicTrade = {
         id: 162413,
         price: '0.01',
         volume: '0.059',

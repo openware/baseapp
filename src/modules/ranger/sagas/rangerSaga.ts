@@ -43,51 +43,60 @@ const initRanger = () => {
             console.dir(error);
         };
         ws.onmessage = ({ data }) => {
-            let routingKey;
-            let payload;
+            // tslint:disable-next-line no-any
+            let payload: { [pair: string]: any } = {};
+
             try {
-                [routingKey, payload] = JSON.parse(data as string);
+                payload = JSON.parse(data as string);
             } catch (e) {
                 console.error(`Error parsing : ${e.data}`);
             }
 
-            if (routingKey && payload) {
-                // public
-                if (/([^.]*)\.update/.test(routingKey)) {
-                    emitter(depthData(payload));
-                    return;
-                }
-
-                // public
-                const m = String(routingKey).match(/([^.]*)\.trades/);
-                if (m) {
-                    emitter(recentTradesPush({
-                        trades: payload.trades,
-                        market: m[1],
-                    }));
-                    return;
-                }
-
-                switch (routingKey) {
+            for (const routingKey in payload) {
+                if (payload.hasOwnProperty(routingKey)) {
+                    const event = payload[routingKey];
                     // public
-                    case 'global.tickers':
-                        emitter(marketsTickersData(formatTicker(payload)));
+                    if (/([^.]*)\.update/.test(routingKey)) {
+                        emitter(depthData(event));
                         return;
+                    }
 
-                    // private
-                    case 'order':
-                        emitter(userOrdersUpdate(payload));
+                    // public
+                    const m = String(routingKey).match(/([^.]*)\.trades/);
+                    if (m) {
+                        emitter(recentTradesPush({
+                            trades: event.trades,
+                            market: m[1],
+                        }));
                         return;
+                    }
 
-                    // private
-                    case 'trade':
-                        emitter(tradePush(payload));
-                        return;
+                    switch (routingKey) {
+                        // public
+                        case 'global.tickers':
+                            emitter(marketsTickersData(formatTicker(event)));
+                            return;
 
-                    default:
+                        // public
+                        case 'success':
+                            return;
+
+                        // private
+                        case 'order':
+                            emitter(userOrdersUpdate(event));
+                            return;
+
+                        // private
+                        case 'trade':
+                            emitter(tradePush(event));
+                            return;
+
+                        default:
+                    }
+                    console.log(`Unhandeled websocket channel: ${routingKey}`);
+
                 }
             }
-            console.log(`Unhandeled websocket channel: ${routingKey}`);
         };
         // unsubscribe function
         return () => {
