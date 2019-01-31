@@ -1,6 +1,5 @@
 import {
     Button,
-    Decimal,
     DepositCrypto,
     DepositFiat,
     FilterInput,
@@ -220,6 +219,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     private renderTabs(walletIndex: WalletsState['selectedWalletIndex']) {
         const { tab } = this.state;
+
         if (walletIndex === -1) {
             return [{ content: null, label: '' }];
         }
@@ -272,27 +272,21 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     private renderSingle = () => {
         const { selectedWalletIndex } = this.state;
         const { wallets } = this.props;
-
-        const balance = (wallets[selectedWalletIndex] || { balance: 0 }).balance.toString();
+        const balance = (wallets[selectedWalletIndex] || { balance: 0 }).balance;
         const lockedAmount = (wallets[selectedWalletIndex] || { locked: 0 }).locked;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-        const fixed = (wallets[selectedWalletIndex] || { fixed: 0 }).fixed;
 
         const formattedCurrency = currency.toUpperCase();
         const locked = (
             <div>
                 <div className="cr-wallet-item__amount-locked">Locked</div>
-                <span className="cr-wallet-item__balance-locked">
-                    <Decimal fixed={fixed}>{lockedAmount ? lockedAmount.toString() : undefined}</Decimal>
-                </span>
+                <span className="cr-wallet-item__balance-locked">{lockedAmount}</span>
             </div>
         );
         const displayBalance = (
             <div>
                 <span className="cr-wallet-item__balance">{formattedCurrency} Balance</span>&nbsp;
-                <span className="cr-wallet-item__balance-amount">
-                    <Decimal fixed={fixed}>{balance}</Decimal>
-                </span>
+                <span className="cr-wallet-item__balance-amount">{balance}</span>
             </div>
         );
         return (
@@ -311,13 +305,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             'deposit payment using one of the ' +
             'following options. You deposit will be' +
             ' reflected in your account ofter 6 confirmation';
-
         const error = walletsError ? walletsError.message : '';
-
         const walletAddress = wallet.currency === 'BCH' && wallet.address
             ? bch.Address(wallet.address).toString(bch.Address.CashAddrFormat)
             : wallet.address || '';
-
         if (wallet.type === 'coin') {
             return (
               <React.Fragment>
@@ -336,7 +327,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             );
         }
     }
-
     private renderWithdraw(withdrawProps: WithdrawProps, type: string) {
         const { walletsError, user, wallets } = this.props;
         const { selectedWalletIndex } = this.state;
@@ -357,7 +347,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             </React.Fragment>
         );
     }
-
     private isOtpDisabled = () => {
         return (
             <React.Fragment>
@@ -372,16 +361,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             </React.Fragment>
         );
     };
-
     // tslint:disable-next-line:no-any
     private redirectToEnable2fa = (e: any) => {
         this.props.history.push('/security/2fa', { enable2fa: true });
     };
-
     private isTwoFactorAuthRequired(level: number, is2faEnabled: boolean) {
         return level > 1 || level === 1 && is2faEnabled;
     }
-
     private onWalletSelectionChange = (value: WalletItemProps) => {
         if (!value.address && !this.props.walletsLoading && value.type !== 'fiat') {
             this.props.fetchAddress({ currency: value.currency });
@@ -394,7 +380,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         });
     };
 }
-
 const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
     wallets: selectWallets(state),
@@ -403,13 +388,11 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     withdrawSuccess: selectWithdrawSuccess(state),
     historyList: selectCurrencyHistory(state),
 });
-
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchWallets: () => dispatch(walletsFetch()),
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
     clearWallets: () => dispatch(walletsData([])),
 });
-
 // tslint:disable-next-line:no-any
 export const Wallets = withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletsComponent) as any);
