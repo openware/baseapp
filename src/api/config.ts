@@ -8,6 +8,7 @@ export const defaultConfig: Config = {
     },
     minutesUntilAutoLogout: '5',
     withCredentials: true,
+    siteKey: '',
     storage: {},
 };
 
@@ -28,3 +29,4 @@ export const rangerUrl = () => Cryptobase.config.api.rangerUrl;
 export const minutesUntilAutoLogout = () => Cryptobase.config.minutesUntilAutoLogout;
 export const withCredentials = () => Cryptobase.config.withCredentials;
 export const defaultStorageLimit = () => Cryptobase.config.storage.defaultStorageLimit || STORAGE_DEFAULT_LIMIT;
+export const siteKey = () => Cryptobase.config.siteKey;

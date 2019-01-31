@@ -93,7 +93,7 @@ class SignInComponent extends React.Component<Props, SignInState> {
             />
         );
     }
-    // tslint:disable
+
     private handleSignIn = ({ email, password }: SignInFormValues) => {
         this.props.signIn({
             email,

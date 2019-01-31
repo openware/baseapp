@@ -8,6 +8,7 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { siteKey } from '../../api';
 import {
     AuthError,
     RootState,
@@ -55,7 +56,7 @@ class SignUpComponent extends React.Component<Props> {
                         isLoading={loading}
                         onSignIn={this.handleSignIn}
                         onSignUp={this.handleSignUp}
-                        siteKey="6LeBHl0UAAAAALq0JBMgY9_CnF35W797k7-q0edn"
+                        siteKey={siteKey()}
                     />
                     <Modal
                         show={this.state.showModal}

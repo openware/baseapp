@@ -5,4 +5,5 @@ window.env = {
     },
     minutesUntilAutoLogout: '5',
     withCredentials: false,
+    siteKey: '6LeBHl0UAAAAALq0JBMgY9_CnF35W797k7-q0edn',
 };

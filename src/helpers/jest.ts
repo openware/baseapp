@@ -13,6 +13,7 @@ const mockConfig: Config = {
     minutesUntilAutoLogout: '5',
     withCredentials: true,
     storage: {},
+    siteKey: '',
 };
 
 // tslint:disable no-any no-console

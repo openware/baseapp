@@ -8,4 +8,5 @@ export interface Config {
     storage: {
         defaultStorageLimit?: number;
     };
+    siteKey: string;
 }
