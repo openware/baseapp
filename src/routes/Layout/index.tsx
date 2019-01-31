@@ -23,7 +23,6 @@ import {
     VerificationScreen,
     TradingScreen,
     WalletsScreen,
-    ExchangeScreen,
     HistoryScreen,
     ConfirmScreen,
     FaqScreen,
@@ -111,7 +110,6 @@ class LayoutComponent extends React.Component<Props> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/confirm" component={ConfirmScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/exchange" component={ExchangeScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/help" component={FaqScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
                     <Route path="**"

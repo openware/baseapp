@@ -12,7 +12,6 @@ export * from './Order';
 export * from './Markets';
 export * from './Profile';
 export * from './MarketDepth';
-export * from './Exchange';
 export * from './HistoryTab';
 export * from './Confirm';
 export * from './TwoFactorAuth';

@@ -8,7 +8,6 @@ describe('Constants', () => {
     const expectedRoutesForLoggedInUser = [
         ['Trade', '/trade'],
         ['Wallets', '/wallets'],
-        ['Buy/Sell', '/exchange'],
         ['Orders', '/orders'],
         ['History', '/history'],
     ];
