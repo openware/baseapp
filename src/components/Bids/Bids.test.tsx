@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { Bids, BidsProps, renderVolume } from '..';
+import { Bids, BidsProps, renderVolume, sortBidByPrice } from '..';
 import { rootReducer } from '../../modules';
 
 const asks: string[][] = [
@@ -65,8 +65,24 @@ describe('Bids table test', () => {
     });
 
     it('should accumulate volume of bids properly', () => {
-        const expectedResult = [0.02, 0.26, 0.36, 0.41, 3.41, 3.97, 5.32, 11.82];
+        const expectedResult = [0.04, 0.54, 0.74, 0.84, 10.84, 12.84, 17.84, 42.84];
         const result = renderVolume(bids);
         expect(result).toEqual(expectedResult);
+    });
+
+    it('should sort bids descendingly by price', () => {
+        const sortedArray = [
+            ['0.5', '0.04'],
+            ['0.49', '0.5'],
+            ['0.48', '0.2'],
+            ['0.47', '0.1'],
+            ['0.3', '10'],
+            ['0.28', '2'],
+            ['0.27', '5'],
+            ['0.26', '25'],
+        ];
+
+        const result = sortBidByPrice(bids);
+        expect(result).toEqual(sortedArray);
     });
 });

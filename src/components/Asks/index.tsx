@@ -54,9 +54,10 @@ export class OrderBookContainer extends React.Component<Props> {
         const cn = classNames('pg-asks', {
             'pg-asks--loading': asksLoading,
         });
+
         return (
             <div className={cn}>
-                {asksLoading ? <Loader /> : this.orderBook(bids, asks)}
+                {asksLoading ? <Loader /> : this.orderBook(bids, OrderBookContainer.sortByPrice(asks))}
             </div>
         );
     }
@@ -64,8 +65,7 @@ export class OrderBookContainer extends React.Component<Props> {
     public static renderTotal = array => {
         const total: number[] = [];
         array.map(item => {
-            const [price, volume] = item;
-            return [(Number(volume) * Number(price)).toFixed(2)];
+            return item[1];
         }).reduce((accumulator, currentValue, currentIndex) => {
             total[currentIndex] = Number(accumulator) + Number(currentValue);
             return (Number(accumulator) + Number(currentValue));
@@ -87,12 +87,16 @@ export class OrderBookContainer extends React.Component<Props> {
         return Math.max(...this.renderTotal(bids), ...this.renderTotal(asks));
     }
 
+    public static sortByPrice(asks: string[][]) {
+        return asks.sort((a, b) => Number(a[0]) - Number(b[0]));
+    }
+
     private orderBook = (bids, asks) => (
         <OrderBook
             side={'left'}
             title={'Asks'}
             headers={['Price', 'Amount', 'Volume']}
-            data={OrderBookContainer.renderData(asks.sort(), this.props.currentMarket)}
+            data={OrderBookContainer.renderData(asks, this.props.currentMarket)}
             rowBackgroundColor={'rgba(232, 94, 89, 0.5)'}
             maxVolume={OrderBookContainer.calcMaxVolume(bids, asks)}
             orderBookEntry={OrderBookContainer.renderTotal(asks)}
@@ -128,6 +132,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
 const Asks = connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer);
 const renderTotal = OrderBookContainer.renderTotal;
 const calcMaxVolume = OrderBookContainer.calcMaxVolume;
+const sortAskByPrice = OrderBookContainer.sortByPrice;
 type AsksProps = ReduxProps;
 
 export {
@@ -135,4 +140,5 @@ export {
     AsksProps,
     renderTotal,
     calcMaxVolume,
+    sortAskByPrice,
 };

@@ -9,15 +9,11 @@ exports[`Asks table test should render 1`] = `
         "0.1",
       ],
       Array [
-        "0.7",
-        "1",
-      ],
-      Array [
-        "0.75",
-        "1",
-      ],
-      Array [
         "0.8",
+        "1",
+      ],
+      Array [
+        "0.99",
         "1",
       ],
       Array [
@@ -25,11 +21,15 @@ exports[`Asks table test should render 1`] = `
         "1",
       ],
       Array [
+        "0.75",
+        "1",
+      ],
+      Array [
         "0.98",
         "20",
       ],
       Array [
-        "0.99",
+        "0.7",
         "1",
       ],
     ]
@@ -42,12 +42,16 @@ exports[`Asks table test should render 1`] = `
         "0.04",
       ],
       Array [
-        "0.49",
-        "0.5",
-      ],
-      Array [
         "0.48",
         "0.2",
+      ],
+      Array [
+        "0.27",
+        "5",
+      ],
+      Array [
+        "0.28",
+        "2",
       ],
       Array [
         "0.47",
@@ -58,16 +62,12 @@ exports[`Asks table test should render 1`] = `
         "10",
       ],
       Array [
-        "0.28",
-        "2",
-      ],
-      Array [
-        "0.27",
-        "5",
-      ],
-      Array [
         "0.26",
         "25",
+      ],
+      Array [
+        "0.49",
+        "0.5",
       ],
     ]
   }

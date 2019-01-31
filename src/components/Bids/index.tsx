@@ -54,9 +54,10 @@ class OrderBookContainer extends React.Component<Props> {
         const cn = classNames('', {
             'pg-bids--loading': bidsLoading,
         });
+
         return (
             <div className={cn}>
-                {bidsLoading ? <Loader /> : this.orderBook(bids, asks)}
+                {bidsLoading ? <Loader /> : this.orderBook(OrderBookContainer.sortByPrice(bids), asks)}
             </div>
         );
     }
@@ -64,8 +65,7 @@ class OrderBookContainer extends React.Component<Props> {
     public static renderTotal = array => {
         const total: number[] = [];
         array.map(item => {
-            const [price, volume] = item;
-            return [(Number(volume) * Number(price)).toFixed(2)];
+            return item[1];
         }).reduce((accumulator, currentValue, currentIndex) => {
             total[currentIndex] = Number(accumulator) + Number(currentValue);
             return Number(accumulator) + Number(currentValue);
@@ -81,6 +81,10 @@ class OrderBookContainer extends React.Component<Props> {
             const [price, volume] = item;
             return [Decimal.format(Number(total[i]), amountFixed), Decimal.format(Number(volume), amountFixed), Decimal.format(Number(price), priceFixed)];
         }) : [['There is no data to show...']];
+    }
+
+    public static sortByPrice(bids: string[][]) {
+        return bids.sort((a, b) => Number(b[0]) - Number(a[0]));
     }
 
     public static calcMaxVolume(bids: string[][], asks: string[][]) {
@@ -127,10 +131,12 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
 
 const Bids = connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer);
 const renderVolume = OrderBookContainer.renderTotal;
+const sortBidByPrice = OrderBookContainer.sortByPrice;
 type BidsProps = ReduxProps;
 
 export {
     Bids,
     BidsProps,
     renderVolume,
+    sortBidByPrice,
 };
