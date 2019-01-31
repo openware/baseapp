@@ -33,13 +33,15 @@ export class TwoFactorAuth extends React.Component<TwoFactorAuthProps, TwoFactor
                     <h1 className="cr-sign-in-form__title" style={{ marginTop: 119 }}>
                         Sign-in
                     </h1>
-                    <div className="cr-sign-in-form__group">
-                        <label className="cr-sign-in-form__label">6-digit Google Authenticator code</label>
-                        <Input
-                            value={this.state.otpCode}
-                            className={'cr-sign-in-form__input'}
-                            onChangeValue={this.handleOptCodeChange}
-                        />
+                    <div className="cr-sign-in-form__form-content">
+                      <div className="cr-sign-in-form__group">
+                          <label className="cr-sign-in-form__label">6-digit Google Authenticator code</label>
+                          <Input
+                              value={this.state.otpCode}
+                              className={'cr-sign-in-form__input'}
+                              onChangeValue={this.handleOptCodeChange}
+                          />
+                        </div>
                         <div className={buttonWrapperClass}>
                             <div className="cr-sign-in-form__error-message">{errors || null}</div>
                             <div className="cr-sign-in-form__loader">{isLoading ? <Loader /> : null}</div>
