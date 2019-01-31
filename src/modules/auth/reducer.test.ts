@@ -36,4 +36,48 @@ describe('Auth reducer', () => {
         const expectedState = { ...initialStateAuth, require2FA: payload.require2fa };
         expect(authReducer(initialStateAuth, actions.signInRequire2FA(payload))).toEqual(expectedState);
     });
+
+    it('should handle AUTH_ERROR', () => {
+        const payload = {
+            code: 500,
+            message: 'Server error',
+        };
+        const expectedState = { ...initialStateAuth, authError: payload };
+        expect(authReducer(initialStateAuth, actions.signUpError(payload))).toEqual(expectedState);
+    });
+
+    it('should handle SIGN_UP_REQUIRE_VERIFICATION', () => {
+        const payload = {
+            requireVerification: true,
+        };
+
+        const expectedState = {
+            ...initialStateAuth,
+            requireVerification: true,
+        };
+
+        expect(authReducer(initialStateAuth, actions.signUpRequireVerification(payload))).toEqual(expectedState);
+    });
+
+    it('should handle VERIFICATION_FETCH', () => {
+        const payload = {
+            token: 'token',
+        };
+
+        const expectedState = {
+            ...initialStateAuth,
+            emailVerified: false,
+        };
+
+        expect(authReducer(initialStateAuth, actions.verificationFetch(payload))).toEqual(expectedState);
+    });
+
+    it('should handle VERIFICATION_SUCCESS', () => {
+        const expectedState = {
+            ...initialStateAuth,
+            emailVerified: true,
+        };
+
+        expect(authReducer(initialStateAuth, actions.verificationSuccess())).toEqual(expectedState);
+    });
 });

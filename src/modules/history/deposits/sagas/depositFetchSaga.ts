@@ -2,8 +2,7 @@
 import { call, put } from 'redux-saga/effects';
 import { handleError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { DepositsFetch } from '../actions';
-import { DEPOSITS_DATA, DEPOSITS_ERROR } from '../constants';
+import { depositsData, depositsError, DepositsFetch } from '../actions';
 
 export function* depositFetchSaga(action: DepositsFetch) {
     try {
@@ -12,9 +11,9 @@ export function* depositFetchSaga(action: DepositsFetch) {
         };
         const deposits = yield call(API.get(config), '/account/deposits');
 
-        yield put({ type: DEPOSITS_DATA, payload: deposits });
+        yield put(depositsData(deposits));
     } catch (error) {
-        yield put({ type: DEPOSITS_ERROR, payload: error.message });
+        yield put(depositsError(error));
         yield put(handleError(error.code));
     }
 }

@@ -1,6 +1,10 @@
 import { CommonError, CommonState } from '../../types';
 import { DepositsActions } from './actions';
-import {DEPOSITS_DATA, DEPOSITS_ERROR, DEPOSITS_FETCH} from './constants';
+import {
+    DEPOSITS_DATA,
+    DEPOSITS_ERROR,
+    DEPOSITS_FETCH,
+} from './constants';
 
 export interface Deposit {
     currency: string;
@@ -8,15 +12,16 @@ export interface Deposit {
 
 export interface DepositsState extends CommonState {
     list: Deposit[];
+    loading: boolean;
     error?: CommonError;
 }
 
-const initialState: DepositsState = {
+export const initialDepositsState: DepositsState = {
     list: [],
     loading: false,
 };
 
-export const depositsReducer = (state = initialState, action: DepositsActions) => {
+export const depositsReducer = (state = initialDepositsState, action: DepositsActions) => {
     switch (action.type) {
         case DEPOSITS_FETCH:
             return {

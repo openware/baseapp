@@ -22,6 +22,16 @@ export interface DepositsError {
 
 export type DepositsActions = DepositsFetch | DepositsData | DepositsError;
 
-export const deposits = (): DepositsFetch => ({
+export const depositsFetch = (): DepositsFetch => ({
     type: DEPOSITS_FETCH,
+});
+
+export const depositsData = (payload: DepositsData['payload']): DepositsData => ({
+    type: DEPOSITS_DATA,
+    payload,
+});
+
+export const depositsError = (payload: DepositsError['payload']): DepositsError => ({
+    type: DEPOSITS_ERROR,
+    payload,
 });

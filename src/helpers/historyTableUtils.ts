@@ -1,4 +1,4 @@
-const depositColorMapping = {
+export const depositColorMapping = {
     accepted: 'var(--color-green)',
     collected: 'var(--color-green)',
     submitted: '',
@@ -6,7 +6,7 @@ const depositColorMapping = {
     rejected: 'var(--color-red)',
 };
 
-const withdrawColorMapping = {
+export const withdrawColorMapping = {
     prepared: '',
     submitted: '',
     canceled: 'var(--color-red)',
@@ -19,7 +19,7 @@ const withdrawColorMapping = {
     confirming: '',
 };
 
-const tradesColorMapping = {
+export const tradesColorMapping = {
     ask: {
         color: 'var(--color-red)',
         text: 'Sell',

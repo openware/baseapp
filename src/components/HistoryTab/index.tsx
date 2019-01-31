@@ -7,12 +7,12 @@ import {
     MapDispatchToPropsFunction,
 } from 'react-redux';
 import {
-    deposits,
+    depositsFetch,
     Market,
     RootState,
     selectMarkets,
     tradesFetch,
-    withdraws,
+    withdrawsFetch,
 } from '../../modules';
 import { HistoryElement } from './component';
 
@@ -21,9 +21,9 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    getDeposit: typeof deposits;
+    getDeposit: typeof depositsFetch;
     getTrade: typeof tradesFetch;
-    getWithdraw: typeof withdraws;
+    getWithdraw: typeof withdrawsFetch;
 }
 
 type Props = ReduxProps & DispatchProps;
@@ -78,9 +78,9 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    getDeposit: () => dispatch(deposits()),
+    getDeposit: () => dispatch(depositsFetch()),
     getTrade: () => dispatch(tradesFetch()),
-    getWithdraw: () => dispatch(withdraws()),
+    getWithdraw: () => dispatch(withdrawsFetch()),
 });
 
 const HistoryTab = connect(mapStateToProps, mapDispatchToProps)(History);

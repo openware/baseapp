@@ -1,4 +1,4 @@
 export { withdrawsReducer, Withdraw, WithdrawsState } from './reducer';
-export { withdraws } from './actions';
+export { withdrawsFetch } from './actions';
 export * from './selectors';
 export * from './sagas';

@@ -10,12 +10,12 @@ export interface WithdrawsState extends CommonState {
     list: Withdraw[];
 }
 
-const initialState: WithdrawsState = {
+export const initialWithdrawsState: WithdrawsState = {
     list: [],
     loading: false,
 };
 
-export const withdrawsReducer = (state = initialState, action: WithdrawsActions) => {
+export const withdrawsReducer = (state = initialWithdrawsState, action: WithdrawsActions) => {
     switch (action.type) {
         case WITHDRAWS_FETCH:
             return {

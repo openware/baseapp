@@ -6,7 +6,7 @@ export interface WithdrawsFetch {
     type: typeof WITHDRAWS_FETCH;
 }
 
-export interface WithdrawData {
+export interface WithdrawsData {
     type: typeof WITHDRAWS_DATA;
     payload: Withdraw[];
 }
@@ -16,8 +16,18 @@ export interface WithdrawsError {
     payload: CommonError;
 }
 
-export type WithdrawsActions = WithdrawsFetch | WithdrawData | WithdrawsError;
+export type WithdrawsActions = WithdrawsFetch | WithdrawsData | WithdrawsError;
 
-export const withdraws = (): WithdrawsFetch => ({
+export const withdrawsFetch = (): WithdrawsFetch => ({
     type: WITHDRAWS_FETCH,
+});
+
+export const withdrawsData = (payload: WithdrawsData['payload']): WithdrawsData => ({
+    type: WITHDRAWS_DATA,
+    payload,
+});
+
+export const withdrawsError = (payload: WithdrawsError['payload']): WithdrawsError => ({
+    type: WITHDRAWS_ERROR,
+    payload,
 });

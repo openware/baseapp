@@ -2,8 +2,7 @@
 import { call, put } from 'redux-saga/effects';
 import { handleError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { WithdrawsFetch } from '../actions';
-import { WITHDRAWS_DATA, WITHDRAWS_ERROR } from '../constants';
+import { withdrawsData, withdrawsError, WithdrawsFetch } from '../actions';
 
 export function* withdrawsFetchSaga(action: WithdrawsFetch) {
     try {
@@ -12,9 +11,9 @@ export function* withdrawsFetchSaga(action: WithdrawsFetch) {
         };
         const withdraws = yield call(API.get(config), '/account/withdraws');
 
-        yield put({ type: WITHDRAWS_DATA, payload: withdraws });
+        yield put(withdrawsData(withdraws));
     } catch (error) {
-        yield put({ type: WITHDRAWS_ERROR, payload: error.message });
+        yield put(withdrawsError(error));
         yield put(handleError(error.code));
     }
 }
