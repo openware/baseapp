@@ -1,7 +1,6 @@
 import {
   Button,
   Input,
-  Loader,
 } from '@openware/components';
 import * as React from 'react';
 import {
@@ -15,19 +14,22 @@ import {
     changeForgotPasswordFetch,
     RootState,
     selectChangeForgotPasswordSuccess,
+    selectForgotPasswordError,
 } from '../../modules';
 
 interface ChangeForgottenPasswordState {
     error: boolean;
-    errorMessage: string;
     password: string;
     confirmToken: string;
     confirmPassword: string;
-    isLoading: boolean;
 }
 
 interface ReduxProps {
     changeForgotPassword?: boolean;
+    backendError?: {
+        code: number;
+        message: string;
+    };
 }
 
 interface DispatchProps {
@@ -50,10 +52,8 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 
         this.state = {
             error: false,
-            errorMessage: '',
             confirmToken: '',
             password: '',
-            isLoading: false,
             confirmPassword: '',
         };
     }
@@ -79,11 +79,10 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
             error,
             password,
             confirmPassword,
-            errorMessage,
-            isLoading,
         } = this.state;
         const updatePassword = e => this.handleChange('password', e);
         const updateConfirmPassword = e => this.handleChange('confirmPassword', e);
+        const { backendError } = this.props;
         return (
             <div className="pg-forgot-password-screen">
                 <div className="pg-forgot-password-screen__container">
@@ -110,12 +109,10 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                     </form>
                     <div className="pg-forgot-password-screen__container-alert">
                         {error ? 'Passwords do not match' : null}
-                        {errorMessage}
+                        {backendError ? backendError.message : null}
                     </div>
-                    {isLoading ? <Loader/> : null}
                     <div className="pg-forgot-password-screen__container-footer">
                         <Button
-                            disabled={isLoading}
                             className="pg-forgot-password-screen__container-footer-button"
                             label="Change"
                             onClick={this.handleSendNewPassword}
@@ -131,8 +128,6 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
         if (password === confirmPassword) {
           this.setState({
               error: false,
-              errorMessage: '',
-              isLoading: true,
           });
           this.props.changeForgotPasswordFetch({
             reset_password_token: confirmToken,
@@ -142,7 +137,6 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
         } else {
           this.setState({
               error: true,
-              errorMessage: '',
           });
         }
     };
@@ -157,6 +151,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     changeForgotPassword: selectChangeForgotPasswordSuccess(state),
+    backendError: selectForgotPasswordError(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
