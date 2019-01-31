@@ -133,7 +133,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         signInError: error => dispatch(signInError(error)),
     });
 
-// tslint:disable-next-line
+// tslint:disable-next-line no-any
 const SignIn = withRouter(connect(mapStateToProps, mapDispatchProps)(SignInComponent) as any);
 
 export {

@@ -1,4 +1,4 @@
-// tslint:disable-next-line
+// tslint:disable-next-line no-submodule-imports
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../api';
 import { userData } from '../../profile';

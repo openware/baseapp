@@ -62,7 +62,12 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
     public componentWillUnmount() {
         if (this.tvWidget) {
-            this.tvWidget.remove();
+            try {
+                this.tvWidget.remove();
+            } catch (error) {
+                // tslint:disable-next-line no-console
+                console.log(`TradingChart unmount failed: ${error}`);
+            }
         }
     }
 
