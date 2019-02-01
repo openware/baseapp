@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { authReducer, AuthState } from './auth';
 import { contactReducer, ContactState } from './contact';
+import { currencyHistoryReducer, CurrencyHistoryState } from './history/currencyHistory';
 import { depositsReducer, DepositsState } from './history/deposits';
 import { PrivateTradesState, tradesReducer } from './history/trades';
 import { withdrawsReducer, WithdrawsState } from './history/withdraws';
@@ -44,6 +45,7 @@ export interface AppState {
     markets: MarketsState;
     orderBook: OrderBookState;
     depth: DepthState;
+    currencyHistory: CurrencyHistoryState;
     userActivity: UserActivityState;
     ranger: RangerState;
 }
@@ -65,6 +67,7 @@ export const appReducer = combineReducers({
     markets: marketsReducer,
     orderBook: orderBookReducer,
     depth: depthReducer,
+    currencyHistory: currencyHistoryReducer,
     userActivity: userActivityReducer,
     ranger: rangerReducer,
 });

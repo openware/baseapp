@@ -5,6 +5,7 @@ import { appReducer, AppState } from './app';
 import { rootAuthSaga } from './auth';
 import { rootSendEmailSaga } from './contact';
 import { rootHandleErrorSaga } from './error';
+import { rootCurrencyHistorySaga } from './history/currencyHistory';
 import { rootDepositSaga } from './history/deposits';
 import { rootTradeSaga } from './history/trades';
 import { rootWithdrawSaga } from './history/withdraws';
@@ -30,6 +31,7 @@ export * from './orders';
 export * from './password';
 export * from './userActivity';
 
+export * from './history/currencyHistory';
 export * from './history/deposits';
 export * from './history/trades';
 export * from './history/withdraws';
@@ -63,6 +65,7 @@ export function* rootSaga() {
         call(rootRecentTradesSaga),
         call(rootOrderBookSaga),
         call(rootHandleErrorSaga),
+        call(rootCurrencyHistorySaga),
         call(rootUserActivitySaga),
     ]);
 }

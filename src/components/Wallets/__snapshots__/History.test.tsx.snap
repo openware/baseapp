@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WalletHistory should matches snapshot 1`] = `
+<div
+  className="pg-history-elem"
+>
+  <div
+    className="pg-history-elem__label"
+  >
+    Deposits history
+  </div>
+  <e
+    data={
+      Array [
+        Array [
+          "03 Dec 2018",
+          <Unknown />,
+          "0.99",
+        ],
+        Array [
+          "16 Nov 2018",
+          <Unknown />,
+          "0.001",
+        ],
+      ]
+    }
+    headers={
+      Array [
+        "Date",
+        "Status",
+        "Amount",
+      ]
+    }
+  />
+  <div
+    className="pg-history-elem__pagination"
+  >
+    <p>
+      1
+       - 
+      6
+       of 
+      10
+    </p>
+    <span
+      className="pg-history__pagination-prev"
+      onClick={[Function]}
+    >
+      <Component />
+    </span>
+    <span
+      className="pg-history__pagination-next"
+      onClick={[Function]}
+    >
+      <Component />
+    </span>
+  </div>
+</div>
+`;
