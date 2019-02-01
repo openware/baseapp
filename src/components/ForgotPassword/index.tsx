@@ -17,6 +17,7 @@ import {
     RootState,
     selectForgotPasswordError,
     selectForgotPasswordSuccess,
+    selectUserLoggedIn,
 } from '../../modules';
 
 interface ForgotPasswordState {
@@ -26,6 +27,7 @@ interface ForgotPasswordState {
 }
 
 interface ReduxProps {
+    isLoggedIn: boolean;
     success: boolean;
     backendError?: {
         code: number;
@@ -47,6 +49,9 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
     };
 
     public componentWillReceiveProps(next: Props) {
+        if (next.isLoggedIn) {
+            this.props.history.push('/wallets');
+        }
         if (next.success) {
             this.setState({ showModal: true });
         }
@@ -154,6 +159,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    isLoggedIn: selectUserLoggedIn(state),
     success: selectForgotPasswordSuccess(state),
     backendError: selectForgotPasswordError(state),
 });
