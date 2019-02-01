@@ -103,6 +103,16 @@ steps:
       event:
           - push
 
+  - name: "Run integration testing"
+    image: cypress/base:10
+    commands:
+      - CYPRESS_baseUrl=http://www.devkube.com cypress run
+    when:
+      branch:
+          - master
+      event:
+          - push
+
   - name: "Notify about redeployment on devkube"
     image: plugins/slack
     settings:
