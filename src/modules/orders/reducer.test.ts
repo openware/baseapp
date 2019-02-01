@@ -290,6 +290,50 @@ describe('Orders reducer', () => {
         Cryptobase.config.storage.defaultStorageLimit = initialLimit;
     });
 
+    it('supports userOrdersUpdate when ids is equal', () => {
+        const initialState = {
+            loading: false,
+            orders: {
+                wait: waitOrders,
+                done: [],
+                cancel: [],
+            },
+            cancelLoading: false,
+            executeLoading: false,
+        };
+
+        const duplicatingIdOrder = [
+            {
+                id: 2,
+                side: buy,
+                ord_type: 'limit',
+                price: 0.001,
+                avg_price: '0.0',
+                state: wait,
+                market: 'bchbtc',
+                created_at: '2018-12-21T15:38:38+01:00',
+                volume: '0.1',
+                remaining_volume: '0.1',
+                executed_volume: '0.0',
+                trades_count: 0,
+            },
+        ];
+
+
+        expect(ordersReducer(initialState, userOrdersUpdate(duplicatingIdOrder[0])))
+            .toEqual({
+                loading: false,
+                orders: {
+                    wait: waitOrders,
+                    done: [],
+                    cancel: [],
+                },
+                cancelLoading: false,
+                executeLoading: false,
+            });
+    });
+
+
     it('supports userOrdersError', () => {
         expect(ordersReducer(undefined, userOrdersError(someError)))
             .toEqual({
@@ -456,13 +500,42 @@ describe('Orders reducer', () => {
     });
 
     it('supports orderExecuteData', () => {
-        expect(ordersReducer(undefined, orderExecuteData(waitOrders[0])))
+        const initialState = {
+            loading: false,
+            orders: {
+                wait: waitOrders,
+                done: doneOrders,
+                cancel: cancelOrders,
+            },
+            cancelLoading: false,
+            executeLoading: false,
+        };
+
+        const orderExecuted = {
+            id: 4,
+            side: buy,
+            ord_type: 'limit',
+            price: 0.01,
+            avg_price: '0.0',
+            state: wait,
+            market: 'ethbtc',
+            created_at: '2018-12-21T15:38:38+01:00',
+            volume: '10',
+            remaining_volume: '0.0',
+            executed_volume: '0.0',
+            trades_count: 0,
+        };
+
+        expect(ordersReducer(initialState, orderExecuteData(orderExecuted)))
             .toEqual({
                 loading: false,
                 orders: {
-                    wait: waitOrders,
-                    done: [],
-                    cancel: [],
+                    wait: [
+                        orderExecuted,
+                        ...waitOrders,
+                    ],
+                    done: doneOrders,
+                    cancel: cancelOrders,
                 },
                 cancelLoading: false,
                 executeLoading: false,
