@@ -15,7 +15,6 @@ import {
     RootState,
     selectChangeForgotPasswordSuccess,
     selectForgotPasswordError,
-    selectUserLoggedIn,
 } from '../../modules';
 
 interface ChangeForgottenPasswordState {
@@ -26,7 +25,6 @@ interface ChangeForgottenPasswordState {
 }
 
 interface ReduxProps {
-    isLoggedIn: boolean;
     changeForgotPassword?: boolean;
     backendError?: {
         code: number;
@@ -71,9 +69,6 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
     }
 
     public componentWillReceiveProps(next: Props) {
-        if (next.isLoggedIn) {
-            this.props.history.push('/wallets');
-        }
         if (next.changeForgotPassword && (!this.props.changeForgotPassword)) {
             this.props.history.push('/signin');
         }
@@ -112,10 +107,8 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                             </div>
                         </fieldset>
                     </form>
-                    <div className="pg-forgot-password-screen__container-alert">
-                        {error ? 'Passwords do not match' : null}
-                        {backendError ? backendError.message : null}
-                    </div>
+                    {error && <div className="pg-forgot-password-screen__container-alert">Passwords do not match</div>}
+                    {backendError && <div className="pg-forgot-password-screen__container-alert">{backendError.message}</div>}
                     <div className="pg-forgot-password-screen__container-footer">
                         <Button
                             className="pg-forgot-password-screen__container-footer-button"
@@ -155,7 +148,6 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
-    isLoggedIn: selectUserLoggedIn(state),
     changeForgotPassword: selectChangeForgotPasswordSuccess(state),
     backendError: selectForgotPasswordError(state),
 });

@@ -68,6 +68,16 @@ const PrivateRoute: React.SFC<any> = ({ component: CustomComponent, loading, isL
     )} />;
 };
 
+const PublicRoute: React.SFC<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
+    if (loading) {
+        return renderLoader();
+    }
+    return <Route {...rest} render={props => (
+        !isLogged ? <CustomComponent {...props} /> :
+            <Redirect to={'/wallets'} />
+    )} />;
+};
+
 class LayoutComponent extends React.Component<Props> {
     timer: any;
 
@@ -99,11 +109,11 @@ class LayoutComponent extends React.Component<Props> {
         return (
             <div className="pg-layout">
                 <Switch>
-                    <Route path="/signin" component={SignInScreen} />
-                    <Route path="/accounts/confirmation" component={VerificationScreen} />
-                    <Route path="/signup" component={SignUpScreen} />
-                    <Route path="/forgot_password" component={ForgotPasswordScreen} />
-                    <Route path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInScreen} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpScreen} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordScreen} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
                     <Route exact path="/trading" component={TradingScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OpenOrdersScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={HistoryScreen} />
