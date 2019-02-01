@@ -1,5 +1,6 @@
 import {
     Button,
+    Decimal,
     DepositCrypto,
     DepositFiat,
     FilterInput,
@@ -275,18 +276,21 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const balance = (wallets[selectedWalletIndex] || { balance: 0 }).balance;
         const lockedAmount = (wallets[selectedWalletIndex] || { locked: 0 }).locked;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
+        const selectedFixed = (wallets[selectedWalletIndex] || { fixed: 0 }).fixed;
+        const stringBalance = balance.toString();
+        const stringLocked = lockedAmount ? lockedAmount.toString() : undefined;
 
         const formattedCurrency = currency.toUpperCase();
         const locked = (
             <div>
                 <div className="cr-wallet-item__amount-locked">Locked</div>
-                <span className="cr-wallet-item__balance-locked">{lockedAmount}</span>
+                <span className="cr-wallet-item__balance-locked"><Decimal fixed={selectedFixed}>{stringBalance}</Decimal></span>
             </div>
         );
         const displayBalance = (
             <div>
                 <span className="cr-wallet-item__balance">{formattedCurrency} Balance</span>&nbsp;
-                <span className="cr-wallet-item__balance-amount">{balance}</span>
+                <span className="cr-wallet-item__balance-amount"><Decimal fixed={selectedFixed}>{stringLocked}</Decimal></span>
             </div>
         );
         return (
