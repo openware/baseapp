@@ -11,6 +11,7 @@ import { rootTradeSaga } from './history/trades';
 import { rootWithdrawSaga } from './history/withdraws';
 import { rootSendDocumentsSaga } from './kyc/documents';
 import { rootSendIdentitySaga } from './kyc/identity';
+import { rootLabelSaga } from './kyc/label';
 import { rootSendCodeSaga } from './kyc/phone';
 import { rootMarketsSaga } from './markets';
 import { rootOrderBookSaga } from './orderBook';
@@ -67,5 +68,6 @@ export function* rootSaga() {
         call(rootHandleErrorSaga),
         call(rootCurrencyHistorySaga),
         call(rootUserActivitySaga),
+        call(rootLabelSaga),
     ]);
 }

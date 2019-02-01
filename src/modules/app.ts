@@ -10,6 +10,8 @@ import {
     DocumentsState,
     identityReducer,
     IdentityState,
+    labelReducer,
+    LabelState,
     phoneReducer,
     PhoneState,
 } from './kyc';
@@ -38,6 +40,7 @@ export interface AppState {
     orders: OrdersState;
     password: PasswordState;
     profile: ProfileState;
+    label: LabelState;
     wallets: WalletsState;
     documents: DocumentsState;
     identity: IdentityState;
@@ -55,6 +58,7 @@ export const appReducer = combineReducers({
     contact: contactReducer,
     deposits: depositsReducer,
     trades: tradesReducer,
+    label: labelReducer,
     recentTrades: recentTradesReducer,
     withdraws: withdrawsReducer,
     orders: ordersReducer,
