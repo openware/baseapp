@@ -49,15 +49,19 @@
         font-weight: bold;
       }
     }
-    .cr-checkbox__checkitem {
-      border-color: var(--active-color);
-      &::after {
+
+    .cr-checkbox {
+      padding-left: calc(2.6 * var(--checkbox-general-intent));
+      &__checkitem {
         border-color: var(--active-color);
+        &::after {
+          border-color: var(--active-color);
+        }
       }
-    }
-    .cr-checkbox__label {
-      color: #666;
-      font-size: 14px;
+      &__label {
+        color: var(--c--base-9);
+        font-size: calc(var(--gap) * 2.33);
+      }
     }
     &__error {
       color: var(--order-error-color);
