@@ -187,6 +187,14 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                `${formatDay}/${formatMonth}/${formatYear}` : ``;
     }
 
+    private checkDate = (date: string) => {
+        const [day, month, year] = date.split('/');
+        const inputDate = new Date(`${month}/${day}/${year}`);
+        const curDate = new Date();
+
+        return (inputDate > curDate) ? true : false;
+    }
+
     private handleChangeExpiration = (e: OnChangeEvent) => {
         this.setState({
           expiration: this.formatDate(e.target.value),
@@ -224,6 +232,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             documentsType,
 
         }: DocumentsState = this.state;
+        const doc_expire = this.checkDate(expiration) ? expiration : '';
 
         if (!scan) {
             return;
@@ -232,7 +241,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         const request = new FormData();
 
         request.append('upload[]', scan);
-        request.append('doc_expire', expiration);
+        request.append('doc_expire', doc_expire);
         request.append('doc_type', documentsType);
         request.append('doc_number', idNumber);
 

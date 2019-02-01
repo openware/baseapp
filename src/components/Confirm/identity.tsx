@@ -212,24 +212,29 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     };
 
     private formatDate = (date: string) => {
-      const [day, month, year] = date.split('/');
-      let formatDay = day ? parseFloat(day) : '';
-      formatDay = formatDay === '' || formatDay <= 31 ? formatDay : 31;
-      let formatMonth = month ? parseFloat(month) : '';
-      formatMonth = formatMonth === '' || formatMonth <= 12 ? formatMonth : 12;
-      const formatYear = year ? parseFloat(year) : '';
-      if (formatDay && formatMonth && formatYear) {
-        return `${formatDay}/${formatMonth}/${formatYear}`;
-      } else if (formatDay && formatMonth) {
-        return `${formatDay}/${formatMonth}`;
-      } else {
-        return `${formatDay}`;
-      }
+        const [day, month, year] = date.split('/');
+
+        let formatDay = day ? day : '';
+        formatDay = formatDay === '' || parseFloat(formatDay) <= 31 ? formatDay : '31';
+        let formatMonth = month ? month : '';
+        formatMonth = formatMonth === '' || parseFloat(formatMonth) <= 12 ? formatMonth : '12';
+        const formatYear = year ? parseFloat(year) : '';
+
+        return (formatDay && formatMonth && formatYear) ?
+            `${formatDay}/${formatMonth}/${formatYear}` : ``;
+    }
+
+    private checkDate = (date: string) => {
+        const [day, month, year] = date.split('/');
+        const inputDate = new Date(`${month}/${day}/${year}`);
+        const curDate = new Date();
+
+        return (inputDate <= curDate) ? true : false;
     }
 
     private handleChangeDate = (e: OnChangeEvent) => {
         this.setState({
-          dateOfBirth: this.formatDate(e.target.value),
+            dateOfBirth: this.formatDate(e.target.value),
         });
     }
 
@@ -246,10 +251,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     };
 
     private sendData = () => {
+        const dob = this.checkDate(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
         const profileInfo = {
           first_name: this.state.firstName,
           last_name: this.state.lastName,
-          dob: this.state.dateOfBirth,
+          dob,
           address: this.state.residentialAddress,
           postcode: this.state.postcode,
           city: this.state.city,
