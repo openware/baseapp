@@ -201,8 +201,7 @@ type Props = DispatchProps & ReduxProps;
 
 class Trading extends React.Component<Props> {
     public async componentDidMount() {
-        const { wallets, markets } = this.props;
-        const { connected, withAuth } = this.props.rangerState;
+        const { wallets, markets, userLoggedIn, rangerState: { connected } } = this.props;
 
         if (markets.length < 1) {
             this.props.marketsFetch();
@@ -210,8 +209,15 @@ class Trading extends React.Component<Props> {
         if (!wallets || wallets.length === 0) {
             this.props.accountWallets();
         }
-        if (!connected || withAuth !== this.props.userLoggedIn) {
-            this.props.rangerConnect({withAuth: this.props.userLoggedIn});
+        if (!connected) {
+            this.props.rangerConnect({ withAuth: userLoggedIn });
+        }
+    }
+
+    public componentWillReceiveProps(nextProps) {
+        const { userLoggedIn } = this.props;
+        if (userLoggedIn !== nextProps.userLoggedIn) {
+            this.props.rangerConnect({ withAuth: nextProps.userLoggedIn });
         }
     }
 

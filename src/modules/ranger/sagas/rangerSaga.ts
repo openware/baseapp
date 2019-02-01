@@ -3,19 +3,25 @@ import { Channel, eventChannel } from 'redux-saga';
 import { all, call, cancel, fork, put, race, take, takeEvery } from 'redux-saga/effects';
 import { rangerUrl } from '../../../api';
 import { tradePush } from '../../history/trades/actions';
-import { marketsTickersData, SetCurrentMarket, Ticker, TickerEvent } from '../../markets';
+import { Market, marketsTickersData, SetCurrentMarket, Ticker, TickerEvent } from '../../markets';
 import { SET_CURRENT_MARKET } from '../../markets/constants';
 import { depthData } from '../../orderBook';
 import { userOrdersUpdate } from '../../orders';
 import { recentTradesPush } from '../../recentTrades';
-import { RangerConnectFetch, rangerDisconnectData, rangerDisconnectFetch, rangerSubscribeMarket, rangerUnsubscribeMarket } from '../actions';
-import { RANGER_CONNECT_DATA, RANGER_CONNECT_FETCH, RANGER_DIRECT_WRITE, RANGER_DISCONNECT_DATA, RANGER_DISCONNECT_FETCH } from '../constants';
-
-const streams: string[] = [
-    'global.tickers',
-    'order',
-    'trade',
-];
+import {
+    RangerConnectFetch,
+    rangerDisconnectData,
+    rangerDisconnectFetch,
+    rangerSubscribeMarket,
+    rangerUnsubscribeMarket,
+} from '../actions';
+import {
+    RANGER_CONNECT_DATA,
+    RANGER_CONNECT_FETCH,
+    RANGER_DIRECT_WRITE,
+    RANGER_DISCONNECT_DATA,
+    RANGER_DISCONNECT_FETCH,
+} from '../constants';
 
 const generateSocketURI = (baseUrl: string, s: string[]) => `${baseUrl}/?stream=${s.sort().join('&stream=')}`;
 
@@ -31,10 +37,22 @@ export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: 
     return tickers;
 };
 
+const streamsBuilder = (withAuth: boolean, period: string) => {
+    const globalStreams: string[] = [
+        'global.tickers',
+    ];
+
+    const privateStreams = [
+        'order',
+        'trade',
+    ];
+    return globalStreams.concat(privateStreams);
+};
+
 // tslint:disable no-console
 const initRanger = ({ withAuth }: RangerConnectFetch['payload']): [Channel<{}>, WebSocket] => {
     const baseUrl = `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
-    const ws = new WebSocket(generateSocketURI(baseUrl, streams));
+    const ws = new WebSocket(generateSocketURI(baseUrl, streamsBuilder(withAuth, '1m')));
     const channel = eventChannel(emitter => {
         ws.onopen = () => {
             emitter({ type: RANGER_CONNECT_DATA });
@@ -142,13 +160,13 @@ function* reader(channel) {
 }
 
 const switchMarket = () => {
-    let previousMarketId: string;
+    let previousMarket: Market;
     return function*(action: SetCurrentMarket) {
-        if (previousMarketId && previousMarketId !== action.payload.id) {
-            yield put(rangerUnsubscribeMarket(previousMarketId));
+        if (previousMarket && previousMarket.id !== action.payload.id) {
+            yield put(rangerUnsubscribeMarket(previousMarket));
         }
-        previousMarketId = action.payload.id;
-        yield put(rangerSubscribeMarket(action.payload.id));
+        previousMarket = action.payload;
+        yield put(rangerSubscribeMarket(action.payload));
     };
 };
 

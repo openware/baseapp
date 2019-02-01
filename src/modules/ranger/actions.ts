@@ -1,3 +1,4 @@
+import { Market } from '../markets';
 import { CommonError } from '../types';
 import {
     RANGER_CONNECT_DATA,
@@ -37,7 +38,7 @@ export interface RangerSubscribe {
 export interface RangerDirectMessage {
     type: typeof RANGER_DIRECT_WRITE;
     // tslint:disable-next-line no-any
-    payload: {[pair: string]: any};
+    payload: { [pair: string]: any };
 }
 
 export interface RangerConnectError {
@@ -88,8 +89,23 @@ export const rangerUnsubscribe = (payload: RangerSubscribe['payload']): RangerDi
     payload: { event: 'unsubscribe', streams: payload.channels },
 });
 
-export const rangerSubscribeMarket = (marketId: string): RangerDirectMessage => rangerSubscribe({ channels: [`${marketId}.trades`] });
-export const rangerUnsubscribeMarket = (marketId: string): RangerDirectMessage => rangerUnsubscribe({ channels: [`${marketId}.trades`] });
+const marketStreams = (market: Market) => ({
+    channels: [
+        `${market.id}.trades`,
+        `${market.id}.update`,
+    ],
+});
+
+const marketKlineStreams = (market: Market, period: string) => ({
+    channels: [
+        `${market.id}.kline-${period}`,
+    ],
+});
+
+export const rangerSubscribeMarket = (market: Market): RangerDirectMessage => rangerSubscribe(marketStreams(market));
+export const rangerUnsubscribeMarket = (market: Market): RangerDirectMessage => rangerUnsubscribe(marketStreams(market));
+export const rangerSubscribeKlineMarket = (market: Market, period: string): RangerDirectMessage => rangerSubscribe(marketKlineStreams(market, period));
+export const rangerUnsubscribeKlineMarket = (market: Market, period: string): RangerDirectMessage => rangerUnsubscribe(marketKlineStreams(market, period));
 
 export const rangerDisconnectFetch = (): RangerDisconnectFetch => ({
     type: RANGER_DISCONNECT_FETCH,

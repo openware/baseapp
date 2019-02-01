@@ -1,17 +1,31 @@
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { Cryptobase } from '../../api/config';
+import { Cryptobase } from '../../api';
 import { createEchoServer as createEchoServer, setupMockStore } from '../../helpers/jest';
 import { PrivateTradeEvent } from '../history/trades';
 import { TRADES_PUSH } from '../history/trades/constants';
-import { Ticker, TickerEvent } from '../markets';
+import { Market, Ticker, TickerEvent } from '../markets';
 import { MARKETS_TICKERS_DATA } from '../markets/constants';
 import { DEPTH_DATA } from '../orderBook/constants';
 import { PublicTradeEvent } from '../recentTrades';
 import { RECENT_TRADES_PUSH } from '../recentTrades/constants';
 import { OrderEvent } from '../types';
-import { rangerConnectFetch, rangerDirectMessage, rangerDisconnectFetch, rangerSubscribeMarket, rangerUnsubscribeMarket } from './actions';
-import { RANGER_CONNECT_DATA, RANGER_CONNECT_FETCH, RANGER_DIRECT_WRITE, RANGER_DISCONNECT_DATA, RANGER_DISCONNECT_FETCH } from './constants';
+import {
+    rangerConnectFetch,
+    rangerDirectMessage,
+    rangerDisconnectFetch,
+    rangerSubscribeKlineMarket,
+    rangerSubscribeMarket,
+    rangerUnsubscribeKlineMarket,
+    rangerUnsubscribeMarket,
+} from './actions';
+import {
+    RANGER_CONNECT_DATA,
+    RANGER_CONNECT_FETCH,
+    RANGER_DIRECT_WRITE,
+    RANGER_DISCONNECT_DATA,
+    RANGER_DISCONNECT_FETCH,
+} from './constants';
 import { formatTicker, rangerSagas } from './sagas';
 
 // tslint:disable no-any no-magic-numbers no-console
@@ -54,18 +68,47 @@ describe('Ranger module', () => {
         sagaMiddleware.run(rangerSagas);
     });
 
+    const marketExample: Market = {
+        id: 'abcdefg',
+        name: 'ABCD/EFG',
+        ask_unit: 'abcd',
+        bid_unit: 'efg',
+        ask_fee: '0.001',
+        bid_fee: '0.002',
+        min_ask_price: '0.015',
+        max_bid_price: '0.016',
+        min_ask_amount: '0.00001',
+        min_bid_amount: '0.00002',
+        ask_precision: 6,
+        bid_precision: 6,
+    };
+
     describe('channels subscription flow', () => {
         it('subscribes to market channels', () => {
-            expect(rangerSubscribeMarket('abcd')).toEqual({
+            expect(rangerSubscribeMarket(marketExample)).toEqual({
                 type: RANGER_DIRECT_WRITE,
-                payload: { event: 'subscribe', streams: ['abcd.trades'] },
+                payload: { event: 'subscribe', streams: ['abcdefg.trades', 'abcdefg.update'] },
             });
         });
 
         it('unsubscribes from market channels', () => {
-            expect(rangerUnsubscribeMarket('abcd')).toEqual({
+            expect(rangerUnsubscribeMarket(marketExample)).toEqual({
                 type: RANGER_DIRECT_WRITE,
-                payload: { event: 'unsubscribe', streams: ['abcd.trades'] },
+                payload: { event: 'unsubscribe', streams: ['abcdefg.trades', 'abcdefg.update'] },
+            });
+        });
+
+        it('subscribes to market kline channel', () => {
+            expect(rangerSubscribeKlineMarket(marketExample, '1w')).toEqual({
+                type: RANGER_DIRECT_WRITE,
+                payload: { event: 'subscribe', streams: ['abcdefg.kline-1w'] },
+            });
+        });
+
+        it('unsubscribes from market kline channel', () => {
+            expect(rangerUnsubscribeKlineMarket(marketExample, '1w')).toEqual({
+                type: RANGER_DIRECT_WRITE,
+                payload: { event: 'unsubscribe', streams: ['abcdefg.kline-1w'] },
             });
         });
     });
