@@ -89,7 +89,7 @@ export const rangerUnsubscribe = (payload: RangerSubscribe['payload']): RangerDi
     payload: { event: 'unsubscribe', streams: payload.channels },
 });
 
-const marketStreams = (market: Market) => ({
+export const marketStreams = (market: Market) => ({
     channels: [
         `${market.id}.trades`,
         `${market.id}.update`,
