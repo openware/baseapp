@@ -1,7 +1,7 @@
 import { History } from '@openware/components';
 import * as moment from 'moment';
 import * as React from 'react';
-import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { connect } from 'react-redux';
 import {
     localeDate,
     preciseData,
@@ -23,10 +23,9 @@ import {
     selectWallets,
     selectWithdraws,
     Wallet,
-    walletsFetch,
     Withdraw,
 } from '../../modules';
-import { Market, marketsFetch } from '../../modules/markets';
+import { Market } from '../../modules/markets';
 import { Order } from '../../modules/orders';
 import { CommonError } from '../../modules/types';
 
@@ -40,25 +39,13 @@ interface ReduxProps {
     withdraws: Withdraw[];
 }
 
-interface DispatchProps {
-    markets: typeof marketsFetch;
-    fetchWallets: typeof walletsFetch;
-}
-
 interface HistoryProps {
     type: string;
 }
 
-type Props = HistoryProps & ReduxProps & DispatchProps;
+type Props = HistoryProps & ReduxProps;
 
 class HistoryComponent extends React.Component<Props> {
-    public componentDidMount() {
-        if (this.props.marketsData.length < 2) {
-            this.props.markets();
-        }
-        this.props.fetchWallets();
-    }
-
     public render() {
         const { type } = this.props;
         const headers = this.renderHeaders(type);
@@ -189,10 +176,4 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     withdraws: selectWithdraws(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        fetchWallets: () => dispatch(walletsFetch()),
-        markets: () => dispatch(marketsFetch()),
-    });
-
-export const HistoryElement = connect(mapStateToProps, mapDispatchToProps)(HistoryComponent);
+export const HistoryElement = connect(mapStateToProps)(HistoryComponent);
