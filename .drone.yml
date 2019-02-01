@@ -57,7 +57,7 @@ steps:
       - echo "$PRIVATE_KEY" | base64 -d > id_rsa
       - chmod 0600 id_rsa
       - cd build/config/
-      - echo "window.env={api:{gatewayUrl:'http://api-v2.mock.openware.work/api/v2',rangerUrl:'ws://ranger.mock.openware.work'},siteKey:'6LeBHl0UAAAAALq0JBMgY9_CnF35W797k7-q0edn'};" > env.js
+      - echo "window.env={api:{gatewayUrl:'http://api-v2.mock.openware.work/api/v2',rangerUrl:'ws://ranger.mock.openware.work'},captcha:{captchaType:'none',siteKey:''}};" > env.js
       - cat env.js
       - cd /drone/src/
       - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build dfedorchenko@35.232.147.44:/home/dfedorchenko/builds/${DRONE_COMMIT_SHA:0:7}

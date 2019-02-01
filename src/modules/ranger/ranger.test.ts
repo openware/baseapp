@@ -35,7 +35,10 @@ describe('Ranger module', () => {
             storage: {
                 defaultStorageLimit: 10,
             },
-            siteKey: '',
+            captcha: {
+                captchaType: 'none',
+                siteKey: '',
+            },
         };
     });
 

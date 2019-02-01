@@ -13,11 +13,13 @@ const mockConfig: Config = {
     minutesUntilAutoLogout: '5',
     withCredentials: true,
     storage: {},
-    siteKey: '',
+    captcha: {
+        captchaType: 'none',
+        siteKey: '',
+    },
 };
 
 // tslint:disable no-any no-console
-
 export const loggerMiddleware: Middleware = (store: {}) => (next: any) => (action: Action) => {
     console.log(`dispatching: ${JSON.stringify(action)}`);
     return next(action);

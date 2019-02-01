@@ -8,5 +8,8 @@ export interface Config {
     storage: {
         defaultStorageLimit?: number;
     };
-    siteKey: string;
+    captcha: {
+        captchaType: 'recaptcha' | 'geetest' | 'none';
+        siteKey: string;
+    };
 }

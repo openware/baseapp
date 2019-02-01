@@ -43,7 +43,7 @@ export interface SignUpFetch {
     payload: {
         email: string;
         password: string;
-        recaptcha_response: string;
+        recaptcha_response?: string;
     };
 }
 

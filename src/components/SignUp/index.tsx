@@ -8,7 +8,7 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { siteKey } from '../../api';
+import { captchaType, siteKey } from '../../api';
 import {
     AuthError,
     RootState,
@@ -57,6 +57,7 @@ class SignUpComponent extends React.Component<Props> {
                         onSignIn={this.handleSignIn}
                         onSignUp={this.handleSignUp}
                         siteKey={siteKey()}
+                        captchaType={captchaType()}
                     />
                     <Modal
                         show={this.state.showModal}
@@ -73,11 +74,23 @@ class SignUpComponent extends React.Component<Props> {
         this.props.history.push('/signin');
     };
     private handleSignUp = ({ email, password, recaptcha_response }: SignUpFormValues) => {
-        this.props.signUp({
-            email,
-            password,
-            recaptcha_response,
-        });
+        switch (captchaType()) {
+            case 'none':
+                this.props.signUp({
+                    email,
+                    password,
+                });
+                break;
+            case 'recaptcha':
+            case 'geetest':
+            default:
+                this.props.signUp({
+                    email,
+                    password,
+                    recaptcha_response,
+                });
+                break;
+        }
     };
 
     private renderModalHeader = () => {
