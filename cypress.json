@@ -1,0 +1,9 @@
+{
+  "baseUrl":            "http://www.app.local",
+  "fixturesFolder":     "spec/fixtures",
+  "integrationFolder":  "spec/integration",
+  "pluginsFile":        "spec/plugins/index.js",
+  "supportFile":        "spec/support/index.js",
+  "screenshotsFolder":  "cypress/screenshots",
+  "videosFolder":       "cypress/videos"
+}
