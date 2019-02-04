@@ -10,6 +10,7 @@ import {
     RootState,
     selectCurrentPrice,
     selectWallets,
+    setCurrentPrice,
 } from '../../modules';
 import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/markets';
 import {
@@ -40,6 +41,7 @@ interface StoreProps {
 }
 
 interface DispatchProps {
+    setCurrentPrice: typeof setCurrentPrice;
     orderExecute: typeof orderExecuteFetch;
 }
 
@@ -140,6 +142,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             return;
         }
         const { type, price, orderType, amount } = value;
+        this.props.setCurrentPrice('');
         const resultData = {
             market: this.props.currentMarket.id,
             side: type,
@@ -185,6 +188,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = dispatch => ({
     orderExecute: payload => dispatch(orderExecuteFetch(payload)),
+    setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
 });
 
 // tslint:disable-next-line

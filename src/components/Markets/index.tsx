@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 // import { preciseData } from '../../helpers';
-import { RootState, selectUserInfo, User } from '../../modules';
+import { RootState, selectUserInfo, setCurrentPrice, User } from '../../modules';
 import {
     Market,
     marketsTickersFetch,
@@ -30,6 +30,7 @@ interface DispatchProps {
     setCurrentMarket: typeof setCurrentMarket;
     depthFetch: typeof depthFetch;
     tickers: typeof marketsTickersFetch;
+    setCurrentPrice: typeof setCurrentPrice;
 }
 
 type Props = ReduxProps & DispatchProps;
@@ -81,6 +82,7 @@ class MarketsContainer extends React.Component<Props> {
     private handleOnSelect = (index: number) => {
         const { markets, currentMarket } = this.props;
         const marketToSet = markets[index];
+        this.props.setCurrentPrice('');
 
         if (!currentMarket || currentMarket.id !== marketToSet.id) {
             this.props.setCurrentMarket(marketToSet);
@@ -102,6 +104,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         setCurrentMarket: (market: Market) => dispatch(setCurrentMarket(market)),
         depthFetch: (market: Market) => dispatch(depthFetch(market)),
         tickers: () => dispatch(marketsTickersFetch()),
+        setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     });
 
 export const MarketsComponent = connect(mapStateToProps, mapDispatchToProps)(MarketsContainer);

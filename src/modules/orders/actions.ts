@@ -10,6 +10,7 @@ import {
     ORDERS_CANCEL_ALL_DATA,
     ORDERS_CANCEL_ALL_ERROR,
     ORDERS_CANCEL_ALL_FETCH,
+    SET_CURRENT_PRICE,
     USER_ORDERS_ALL_DATA,
     USER_ORDERS_ALL_ERROR,
     USER_ORDERS_ALL_FETCH,
@@ -118,6 +119,11 @@ export interface UserOrdersAllError {
     payload: CommonError;
 }
 
+export interface SetCurrentPrice {
+  type: typeof SET_CURRENT_PRICE;
+  payload: string;
+}
+
 export type OrdersAction = OrdersCancelAllFetch
     | OrdersCancelAllData
     | OrdersCancelAllError
@@ -133,7 +139,8 @@ export type OrdersAction = OrdersCancelAllFetch
     | UserOrdersUpdate
     | UserOrdersAllFetch
     | UserOrdersAllData
-    | UserOrdersAllError;
+    | UserOrdersAllError
+    | SetCurrentPrice;
 
 export const ordersCancelAllFetch = (): OrdersCancelAllFetch => ({
     type: ORDERS_CANCEL_ALL_FETCH,
@@ -218,3 +225,9 @@ export const userOrdersAllError = (payload: UserOrdersAllError['payload']): User
     type: USER_ORDERS_ALL_ERROR,
     payload,
 });
+
+export const setCurrentPrice =
+  (payload: SetCurrentPrice['payload']): SetCurrentPrice => ({
+    type: SET_CURRENT_PRICE,
+    payload,
+  });

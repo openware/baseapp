@@ -91,7 +91,6 @@ describe('Orderbook/MarketDepth actions', () => {
         [ '0.49', '0.5' ],
         [ '0.26', '25' ],
       ],
-      currentPrice: '',
       loading: false,
     };
     const expectedAction = { type: 'depth/DEPTH_DATA', payload: fakeDepth };

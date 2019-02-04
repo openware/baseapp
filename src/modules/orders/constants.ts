@@ -18,3 +18,5 @@ export const USER_ORDERS_ERROR = 'orders/USER_ORDERS_ERROR';
 export const USER_ORDERS_ALL_FETCH = 'orders/USER_ORDERS_ALL_FETCH';
 export const USER_ORDERS_ALL_DATA = 'orders/USER_ORDERS_ALL_DATA';
 export const USER_ORDERS_ALL_ERROR = 'orders/USER_ORDERS_ALL_ERROR';
+
+export const SET_CURRENT_PRICE = 'depth/SET_CURRENT_PRICE';

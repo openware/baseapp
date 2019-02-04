@@ -11,6 +11,7 @@ import {
     ORDERS_CANCEL_ALL_DATA,
     ORDERS_CANCEL_ALL_ERROR,
     ORDERS_CANCEL_ALL_FETCH,
+    SET_CURRENT_PRICE,
     USER_ORDERS_ALL_DATA,
     USER_ORDERS_ALL_ERROR,
     USER_ORDERS_ALL_FETCH,
@@ -31,6 +32,7 @@ export interface OrdersState extends CommonState {
     executeLoading: boolean;
     cancelError?: CommonError;
     executeError?: CommonError;
+    currentPrice: string;
 }
 
 const defaultOrders: GroupedOrders = {
@@ -44,6 +46,7 @@ const initialState: OrdersState = {
     orders: defaultOrders,
     cancelLoading: false,
     executeLoading: false,
+    currentPrice: '',
 };
 
 const filterOrderById = (id: number | string) =>
@@ -212,6 +215,11 @@ export const ordersReducer = (state = initialState, action: OrdersAction) => {
                 executeLoading: false,
                 executeError: action.payload,
             };
+        case SET_CURRENT_PRICE:
+          return {
+            ...state,
+            currentPrice: action.payload,
+          };
 
         default:
             return state;

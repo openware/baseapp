@@ -123,6 +123,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -137,6 +138,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -155,7 +157,7 @@ describe('Orders reducer', () => {
                     done: doneOrders,
                     cancel: cancelOrders,
                 },
-
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -174,6 +176,7 @@ describe('Orders reducer', () => {
                     done: doneOrders,
                     cancel: cancelOrders,
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -187,6 +190,7 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: cancelOrders,
             },
+            currentPrice: '',
             cancelLoading: false,
             executeLoading: false,
         };
@@ -204,6 +208,7 @@ describe('Orders reducer', () => {
                     done: [updatedOrder],
                     cancel: cancelOrders,
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -217,6 +222,7 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: [],
             },
+            currentPrice: '',
             cancelLoading: false,
             executeLoading: false,
         };
@@ -234,6 +240,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -257,6 +264,7 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: [],
             },
+            currentPrice: '',
             cancelLoading: false,
             executeLoading: false,
         };
@@ -284,6 +292,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -298,6 +307,7 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: [],
             },
+            currentPrice: '',
             cancelLoading: false,
             executeLoading: false,
         };
@@ -328,6 +338,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
             });
@@ -343,6 +354,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
                 error: someError,
@@ -358,6 +370,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
                 error: someError,
@@ -373,6 +386,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: true,
                 cancelError: undefined,
                 executeLoading: false,
@@ -387,6 +401,7 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: [],
             },
+            currentPrice: '',
             cancelLoading: false,
             executeLoading: false,
         };
@@ -398,6 +413,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 cancelError: undefined,
                 executeLoading: false,
@@ -413,6 +429,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 cancelError: someError,
                 executeLoading: false,
@@ -428,6 +445,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: true,
                 cancelError: undefined,
                 executeLoading: false,
@@ -442,6 +460,7 @@ describe('Orders reducer', () => {
                 done: [],
                 cancel: [],
             },
+            currentPrice: '',
             cancelLoading: false,
             executeLoading: false,
         };
@@ -457,6 +476,7 @@ describe('Orders reducer', () => {
                         executed_volume: undefined,
                     }],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 cancelError: undefined,
                 executeLoading: false,
@@ -472,6 +492,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 cancelError: someError,
                 executeLoading: false,
@@ -493,6 +514,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: true,
                 executeError: undefined,
@@ -507,6 +529,7 @@ describe('Orders reducer', () => {
                 done: doneOrders,
                 cancel: cancelOrders,
             },
+            currentPrice: '',
             cancelLoading: false,
             executeLoading: false,
         };
@@ -537,6 +560,7 @@ describe('Orders reducer', () => {
                     done: doneOrders,
                     cancel: cancelOrders,
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
                 executeError: undefined,
@@ -552,6 +576,7 @@ describe('Orders reducer', () => {
                     done: [],
                     cancel: [],
                 },
+                currentPrice: '',
                 cancelLoading: false,
                 executeLoading: false,
                 executeError: someError,

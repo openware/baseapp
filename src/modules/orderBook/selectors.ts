@@ -29,7 +29,3 @@ export const selectDepthError =
 
 export const selectDepthLoading = (state: RootState): boolean =>
   state.app.depth.loading;
-
-export const selectCurrentPrice =
-  (state: RootState): DepthState['currentPrice'] =>
-    state.app.depth.currentPrice;

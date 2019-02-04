@@ -62,7 +62,6 @@ describe('Saga: depth', () => {
       [ '0.27', '5' ],
       [ '0.26', '25' ],
     ],
-    currentPrice: '',
     loading: false,
   };
 

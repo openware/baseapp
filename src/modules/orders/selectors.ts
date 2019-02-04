@@ -35,3 +35,7 @@ export const selectOrderExecuteLoading = (state: RootState): boolean =>
 
 export const selectOrderExecuteError = (state: RootState): CommonError | undefined =>
     selectOrdersState(state).executeError;
+
+export const selectCurrentPrice =
+  (state: RootState): string =>
+      selectOrdersState(state).currentPrice;

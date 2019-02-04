@@ -15,6 +15,7 @@ import {
   RootState,
   selectUserInfo,
   selectUserLoggedIn,
+  setCurrentPrice,
   User,
 } from '../modules';
 import { Market, marketsFetch, selectMarkets } from '../modules/markets';
@@ -195,6 +196,7 @@ interface DispatchProps {
     marketsFetch: typeof marketsFetch;
     accountWallets: typeof walletsFetch;
     rangerConnect: typeof rangerConnectFetch;
+    setCurrentPrice: typeof setCurrentPrice;
 }
 
 type Props = DispatchProps & ReduxProps;
@@ -212,6 +214,10 @@ class Trading extends React.Component<Props> {
         if (!connected) {
             this.props.rangerConnect({ withAuth: userLoggedIn });
         }
+    }
+
+    public componentWillUnmount() {
+        this.props.setCurrentPrice('');
     }
 
     public componentWillReceiveProps(nextProps) {
@@ -274,6 +280,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     marketsFetch: () => dispatch(marketsFetch()),
     accountWallets: () => dispatch(walletsFetch()),
     rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
+    setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
 });
 
 const TradingScreen = connect(mapStateToProps, mapDispatchToProps)(Trading);
