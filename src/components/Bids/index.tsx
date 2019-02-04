@@ -8,7 +8,6 @@ import {
 } from 'react-redux';
 import {
     Market,
-    orderBookFetch,
     RootState,
     selectCurrentMarket,
     selectCurrentPrice,
@@ -30,25 +29,12 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    orderBookFetch: typeof orderBookFetch;
     setCurrentPrice: typeof setCurrentPrice;
 }
 
 type Props = ReduxProps & DispatchProps;
 
 class OrderBookContainer extends React.Component<Props> {
-    public componentDidMount() {
-        if (this.props.currentMarket) {
-            this.props.orderBookFetch(this.props.currentMarket);
-        }
-    }
-
-    public componentWillReceiveProps(next: Props) {
-        if (this.props.currentMarket !== next.currentMarket && next.currentMarket) {
-            this.props.orderBookFetch(next.currentMarket);
-        }
-    }
-
     public render() {
         const { bids, bidsLoading, asks } = this.props;
         const cn = classNames('', {
@@ -125,7 +111,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        orderBookFetch: payload => dispatch(orderBookFetch(payload)),
         setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     });
 

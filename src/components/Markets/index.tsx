@@ -14,7 +14,7 @@ import {
     setCurrentMarket,
     Ticker,
 } from '../../modules/markets';
-import { depthFetch } from '../../modules/orderBook';
+import { depthFetch, orderBookFetch } from '../../modules/orderBook';
 
 interface ReduxProps {
     userData: User;
@@ -29,6 +29,7 @@ interface ReduxProps {
 interface DispatchProps {
     setCurrentMarket: typeof setCurrentMarket;
     depthFetch: typeof depthFetch;
+    orderBookFetch: typeof orderBookFetch;
     tickers: typeof marketsTickersFetch;
     setCurrentPrice: typeof setCurrentPrice;
 }
@@ -87,6 +88,7 @@ class MarketsContainer extends React.Component<Props> {
         if (!currentMarket || currentMarket.id !== marketToSet.id) {
             this.props.setCurrentMarket(marketToSet);
             this.props.depthFetch(marketToSet);
+            this.props.orderBookFetch(marketToSet);
         }
     };
 }
@@ -103,6 +105,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         setCurrentMarket: (market: Market) => dispatch(setCurrentMarket(market)),
         depthFetch: (market: Market) => dispatch(depthFetch(market)),
+        orderBookFetch: (market: Market) => dispatch(orderBookFetch(market)),
         tickers: () => dispatch(marketsTickersFetch()),
         setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     });
