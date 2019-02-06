@@ -2,7 +2,6 @@ import { defaultStorageLimit } from '../../api';
 import { localeDate } from '../../helpers/localeDate';
 import { getTimezone } from '../../helpers/timezone';
 import { PublicTrade } from '../history/trades';
-import { kindToMakerType } from '../history/trades/reducer';
 import { CommonState } from '../types';
 import { RecentTradesActions } from './actions';
 import {
@@ -26,7 +25,7 @@ export const convertTradeEventToTrade = (market: string, trade: PublicTradeEvent
     market,
     id: trade.tid,
     created_at: localeDate(trade.date, getTimezone(), ''),
-    maker_type: kindToMakerType(trade.type),
+    maker_type: trade.type,
     price: String(trade.price),
     volume: String(trade.amount),
     funds: String(Number(trade.price) * Number(trade.amount)),
