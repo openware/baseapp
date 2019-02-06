@@ -1,4 +1,4 @@
-import { Decimal, Loader, OrderBook } from '@openware/components';
+import { Loader, OrderBook } from '@openware/components';
 import classNames from 'classnames';
 import * as React from 'react';
 import {
@@ -6,6 +6,7 @@ import {
     MapDispatchToPropsFunction,
     MapStateToProps,
 } from 'react-redux';
+import { accumulateVolume, calcMaxVolume, renderOrderBook, sortAsks } from '../../helpers';
 import {
     Market,
     RootState,
@@ -43,38 +44,9 @@ export class OrderBookContainer extends React.Component<Props> {
 
         return (
             <div className={cn}>
-                {asksLoading ? <Loader /> : this.orderBook(bids, OrderBookContainer.sortByPrice(asks))}
+                {asksLoading ? <Loader /> : this.orderBook(bids, sortAsks(asks))}
             </div>
         );
-    }
-
-    public static renderTotal = array => {
-        const total: number[] = [];
-        array.map(item => {
-            return item[1];
-        }).reduce((accumulator, currentValue, currentIndex) => {
-            total[currentIndex] = Number(accumulator) + Number(currentValue);
-            return (Number(accumulator) + Number(currentValue));
-        }, 0);
-        return total;
-    }
-
-    private static renderData(asks: string[][], currentMarket?: Market) {
-        const total = this.renderTotal(asks);
-        const priceFixed = currentMarket ? currentMarket.bid_precision : 0;
-        const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
-        return (asks.length > 0) ? asks.map((item, i) => {
-            const [price, volume] = item;
-            return [Decimal.format(Number(price), priceFixed), Decimal.format(Number(volume), amountFixed), Decimal.format(Number(total[i]), amountFixed)];
-        }) : [['There is no data to show...']];
-    }
-
-    public static calcMaxVolume(bids: string[][], asks: string[][]) {
-        return Math.max(...this.renderTotal(bids), ...this.renderTotal(asks));
-    }
-
-    public static sortByPrice(asks: string[][]) {
-        return asks.sort((a, b) => Number(a[0]) - Number(b[0]));
     }
 
     private orderBook = (bids, asks) => (
@@ -82,10 +54,10 @@ export class OrderBookContainer extends React.Component<Props> {
             side={'left'}
             title={'Asks'}
             headers={['Price', 'Amount', 'Volume']}
-            data={OrderBookContainer.renderData(asks, this.props.currentMarket)}
+            data={renderOrderBook(asks, 'asks', this.props.currentMarket)}
             rowBackgroundColor={'rgba(232, 94, 89, 0.5)'}
-            maxVolume={OrderBookContainer.calcMaxVolume(bids, asks)}
-            orderBookEntry={OrderBookContainer.renderTotal(asks)}
+            maxVolume={calcMaxVolume(bids, asks)}
+            orderBookEntry={accumulateVolume(asks)}
             onSelect={this.handleOnSelect}
         />
     );
@@ -115,15 +87,9 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 const Asks = connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer);
-const renderTotal = OrderBookContainer.renderTotal;
-const calcMaxVolume = OrderBookContainer.calcMaxVolume;
-const sortAskByPrice = OrderBookContainer.sortByPrice;
 type AsksProps = ReduxProps;
 
 export {
     Asks,
     AsksProps,
-    renderTotal,
-    calcMaxVolume,
-    sortAskByPrice,
 };

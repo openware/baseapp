@@ -56,6 +56,27 @@ describe('Helpers', () => {
         },
     };
 
+    const asks: string[][] = [
+        ['0.6', '0.1'],
+        ['0.8', '1'],
+        ['0.99', '1'],
+        ['0.96', '1'],
+        ['0.75', '1'],
+        ['0.98', '20'],
+        ['0.7', '1'],
+    ];
+
+    const bids: string[][] = [
+        ['0.5', '0.04'],
+        ['0.48', '0.2'],
+        ['0.27', '5'],
+        ['0.28', '2'],
+        ['0.47', '0.1'],
+        ['0.3', '10'],
+        ['0.26', '25'],
+        ['0.49', '0.5'],
+    ];
+
     // emailValidation.js
     it('Rendering correct regular expression for email validation', () => {
         expect(helpers.EMAIL_REGEX).toEqual(/^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/);
@@ -155,5 +176,51 @@ describe('Helpers', () => {
         expect(helpers.uppercase('Helios')).toEqual('HELIOS');
         expect(helpers.uppercase('')).toEqual('');
         expect(helpers.uppercase(' ')).toEqual(' ');
+    });
+
+    // accumulateVolume.ts
+    it('should accumulate volume of asks properly', () => {
+        const expectedResult = [0.1, 1.1, 2.1, 3.1, 4.1, 24.1, 25.1];
+        const result = helpers.accumulateVolume(asks);
+        expect(result).toEqual(expectedResult);
+    });
+
+    // calcMaxVolume.ts
+    it('sholud calculate max volume between asks and bids correctly', () => {
+        const expectedMax = 42.84;
+        const result = helpers.calcMaxVolume(asks, bids);
+        expect(result).toEqual(expectedMax);
+    });
+
+    // sortByPrice.ts
+    it('should sort ask ascendingly by price', () => {
+        const sortedArray = [
+            ['0.6', '0.1'],
+            ['0.7', '1'],
+            ['0.75', '1'],
+            ['0.8', '1'],
+            ['0.96', '1'],
+            ['0.98', '20'],
+            ['0.99', '1'],
+        ];
+
+        const result = helpers.sortAsks(asks);
+        expect(result).toEqual(sortedArray);
+    });
+
+    it('should sort bids descendingly by price', () => {
+        const sortedArray = [
+            ['0.5', '0.04'],
+            ['0.49', '0.5'],
+            ['0.48', '0.2'],
+            ['0.47', '0.1'],
+            ['0.3', '10'],
+            ['0.28', '2'],
+            ['0.27', '5'],
+            ['0.26', '25'],
+        ];
+
+        const result = helpers.sortBids(bids);
+        expect(result).toEqual(sortedArray);
     });
 });
