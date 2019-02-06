@@ -28,7 +28,7 @@ steps:
       - yarn config set version-git-message "[ci Skip] Bump %s"
       - yarn config set version-tag-prefix ""
       - yarn version --patch -y
-      - git push authenticated-origin HEAD:master
+      - git push authenticated-origin HEAD:master --tags
       - git describe --tags $(git rev-list --tags --max-count=1) > .tags
     when:
       branch:
