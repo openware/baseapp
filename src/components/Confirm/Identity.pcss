@@ -88,9 +88,10 @@
             color: var(--kyc-grey);
             height: 53px;
             width: 230px;
-            border-radius: 4px;
-            margin-top: 6px;
-            margin-bottom: 5px;
+            border-radius: calc(var(--gap) * 0.66);
+            margin-top: var(--gap);
+            margin-bottom: calc(var(--gap) * 0.83);
+            position: relative;
           }
 
           &__input {
@@ -99,17 +100,25 @@
             }
           }
 
+          &__input-icon {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+          }
+
           &__input--open {
             border-radius: 4px 4px 0 0;
           }
           &__list {
             border-color: var(--kyc-grey);
+            border-bottom: 1px solid var(--kyc-grey);
             background-color: var(--base-bright);
             color: var(--kyc-grey);
-            max-height: calc(var(--big-gap) * 3.5);
+            max-height: calc(var(--big-gap) * 1.5);
             overflow-y: auto;
-            margin-top: -5px;
+            margin-top: calc(var(--gap) * -0.83);
             width: 99%;
+            border-radius: 0 0 calc(var(--gap) * 0.66) calc(var(--gap) * 0.66);
             &-item {
               color: var(--kyc-grey);
               &:hover {

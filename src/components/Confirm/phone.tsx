@@ -127,16 +127,26 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     }
 
     private handleChangeNumber = (e: OnChangeEvent) => {
-        this.setState({
-            phoneNumber: e.target.value,
-            currentAction: 'SEND CODE',
-        });
-    };
+        if (this.inputNumber(e)) {
+            this.setState({
+                phoneNumber: e.target.value,
+                currentAction: 'SEND CODE',
+            });
+        }
+    }
+
+    private inputNumber = (e: OnChangeEvent) => {
+        const convertedText = e.target.value.trim();
+        const condition = new RegExp('^\\+\\d*?$');
+        return condition.test(convertedText);
+    }
 
     private handleConfirmNumber = (e: OnChangeEvent) => {
-        this.setState({
-            confirmationCode: e.target.value,
-        });
+        if (this.inputNumber(e)) {
+            this.setState({
+                confirmationCode: e.target.value,
+            });
+        }
     };
 
     private handleSendCode = () => {
