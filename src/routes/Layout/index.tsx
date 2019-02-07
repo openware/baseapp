@@ -93,6 +93,14 @@ class LayoutComponent extends React.Component<Props> {
         this.check();
     }
 
+    public componentDidUpdate(next: Props) {
+        if (!this.props.isLoggedIn && next.isLoggedIn) {
+            this.props.walletsReset();
+            localStorage.clear();
+            this.props.history.push('/trading');
+        }
+    }
+
     public componentWillUnmount() {
         document.body.removeEventListener('click', () => {});
         document.body.removeEventListener('mouseover', () => {});
@@ -168,9 +176,6 @@ class LayoutComponent extends React.Component<Props> {
         const isTimeout = diff < 0;
         if (isTimeout && user.email) {
           this.props.logout();
-          this.props.walletsReset();
-          localStorage.clear();
-          this.props.history.push('/trading');
         }
     }
 }

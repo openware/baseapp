@@ -90,6 +90,14 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
       };
     }
 
+    public componentDidUpdate(next: NavbarProps) {
+        if (!this.props.isLoggedIn && next.isLoggedIn) {
+            this.props.walletsReset();
+            localStorage.clear();
+            this.props.history.push('/trading');
+        }
+    }
+
     public render() {
         const { location, user } = this.props;
         const { isOpen } = this.state;
@@ -167,9 +175,6 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
             if (profile) { localStorage.removeItem('profile'); }
 
             this.props.logout();
-            this.props.walletsReset();
-            localStorage.clear();
-            this.props.history.push('/trading');
         });
     };
 
