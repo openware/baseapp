@@ -227,6 +227,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { user: { level, otp }, wallets } = this.props;
         const wallet = wallets[walletIndex];
         const { currency, fee, type } = wallet;
+        const fixed = (wallet || { fixed: 0 }).fixed;
 
         const withdrawProps = {
             currency,
@@ -234,6 +235,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             onClick: this.toggleConfirmModal,
             borderItem: 'empty-circle',
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
+            fixed,
         };
         return [
             {
