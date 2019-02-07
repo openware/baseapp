@@ -21,13 +21,16 @@ steps:
       GITHUB_API_KEY:
         from_secret: kite_bot_key
     commands:
+      - set -x
       - git config --global user.name "Kite Bot"
       - git config --global user.email "kite-bot@heliostech.fr"
       - git remote add authenticated-origin https://kite-bot:$GITHUB_API_KEY@github.com/${DRONE_REPO}
       - git fetch authenticated-origin
       - yarn config set version-git-message "[ci Skip] Bump %s"
       - yarn config set version-tag-prefix ""
-      - yarn version --patch -y
+      - git_msg=$(git log -n1 --pretty=oneline)
+      - patch_level=$( (echo $git_msg | grep -q MAJOR-BUMP && echo major) || (echo $git_msg | grep -q MINOR-BUMP && echo minor) || echo patch)
+      - yarn version --"$patch_level" -y
       - git push authenticated-origin HEAD:master --tags
       - git describe --tags $(git rev-list --tags --max-count=1) > .tags
     when:
