@@ -13,20 +13,20 @@ const makeHistoryUrl = (
 
 const resolutionToSeconds = (r: string): number => {
     const minutes = parseInt(r, 10);
-
-    if (r.match(/D/)) {
+    if (r === '1D') {
         return 1440;
+    } else if (r === 'D') {
+        return 4320;
+    } else if (!isNaN(minutes)) {
+        return minutes;
     } else {
-        if (!isNaN(minutes)) {
-            return minutes;
-        } else {
-            return 1;
-        }
+        return 1;
     }
 };
 
 const config = {
     supports_time: false,
+    supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
 };
 
 export interface TickSubscriptions {
@@ -78,8 +78,8 @@ export const dataFeedObject = (
             minmov: 1,
             pricescale: 10000,
             has_intraday: true,
-            intraday_multipliers: ['1'],
-            supported_resolution: ['1', '5', '15', '60', '120', 'D'],
+            intraday_multipliers: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
+            supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
             volume_precision: 8,
             data_status: 'streaming',
         };
