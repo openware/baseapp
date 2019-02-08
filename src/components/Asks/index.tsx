@@ -70,9 +70,9 @@ export class OrderBookContainer extends React.Component<Props> {
 
     private renderHeaders = () => {
         return [
-            this.props.intl.formatMessage({ id: 'page.body.trade.orderbook.header.volume' }),
-            this.props.intl.formatMessage({ id: 'page.body.trade.orderbook.header.amount' }),
             this.props.intl.formatMessage({ id: 'page.body.trade.orderbook.header.price' }),
+            this.props.intl.formatMessage({ id: 'page.body.trade.orderbook.header.amount' }),
+            this.props.intl.formatMessage({ id: 'page.body.trade.orderbook.header.volume' }),
         ];
     }
 
