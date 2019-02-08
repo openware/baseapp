@@ -1,6 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
-import { handleError } from '../../';
+import { fetchError } from '../../';
 import { API, defaultStorageLimit, RequestOptions } from '../../../api';
 import { failHistory, HistoryFetch, successHistory } from '../actions';
 
@@ -27,6 +27,6 @@ export function* historySaga(action: HistoryFetch) {
         yield put(successHistory({ list: updatedData, page, fullHistory: headers.total }));
     } catch (error) {
         yield put(failHistory([]));
-        yield put(handleError(error.code));
+        yield put(fetchError(error));
     }
 }

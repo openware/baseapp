@@ -1,5 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { fetchError } from '../../';
 import { API, RequestOptions } from '../../../api';
 import { signUpError, SignUpFetch, signUpRequireVerification } from '../actions';
 
@@ -13,5 +14,6 @@ export function* signUpSaga(action: SignUpFetch) {
         yield put(signUpRequireVerification({ requireVerification: true }));
     } catch (error) {
         yield put(signUpError(error));
+        yield put(fetchError(error));
     }
 }

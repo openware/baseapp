@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
-import { handleError, rootSaga } from '../../index';
+import { rootSaga } from '../../index';
 import {
     failHistory,
     fetchHistory,
@@ -67,7 +67,6 @@ describe('CurrencyHistory', () => {
     const expectedActionsError = [
         fetchHistory(fakeFetchPayloadFirstPage),
         failHistory([]),
-        handleError(500),
     ];
 
     it('should fetch currency deposit history for 1 page in success flow', async () => {

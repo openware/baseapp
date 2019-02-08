@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 // tslint:disable-next-line no-submodule-imports
 import { all, call } from 'redux-saga/effects';
+import { rootHandleErrorSaga } from './alert';
 import { appReducer, AppState } from './app';
 import { rootAuthSaga } from './auth';
 import { rootSendEmailSaga } from './contact';
-import { rootHandleErrorSaga } from './error';
 import { rootHistorySaga } from './history';
 import { rootSendDocumentsSaga } from './kyc/documents';
 import { rootSendIdentitySaga } from './kyc/identity';
@@ -33,7 +33,7 @@ export * from './i18n';
 export * from './history';
 export * from './kyc';
 
-export * from './error';
+export * from './alert';
 
 export interface RootState {
     app: AppState;

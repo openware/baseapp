@@ -168,8 +168,11 @@ describe('Wallets', () => {
         };
 
         const expectedCallErrorHandler = {
-            type: 'error/ERROR_DATA',
-            payload: 500,
+            error: {
+              code: 500,
+              message: 'Server error',
+            },
+            type: 'error/ERROR_FETCH',
         };
 
         const mockWalletsBalancesFetch = () => {
@@ -247,8 +250,11 @@ describe('Wallets', () => {
         };
 
         const expectedCallErrorHandler = {
-            type: 'error/ERROR_DATA',
-            payload: 500,
+            error: {
+              code: 500,
+              message: 'Server error',
+            },
+            type: 'error/ERROR_FETCH',
         };
 
         const responseAddress = {
@@ -319,8 +325,11 @@ describe('Wallets', () => {
         };
 
         const expectedCallErrorHandler = {
-            type: 'error/ERROR_DATA',
-            payload: 500,
+            error: {
+              code: 500,
+              message: 'Server error',
+            },
+            type: 'error/ERROR_FETCH',
         };
 
         const mockWalletsWithdrawCcyFetch = () => {

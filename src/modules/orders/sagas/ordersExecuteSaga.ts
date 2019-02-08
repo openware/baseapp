@@ -1,5 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { fetchError } from '../../';
 import { API, RequestOptions } from '../../../api';
 import {
     orderExecuteData,
@@ -17,5 +18,6 @@ export function* ordersExecuteSaga(action: OrderExecuteFetch) {
         yield put(orderExecuteData(order));
     } catch (error) {
         yield put(orderExecuteError(error));
+        yield put(fetchError(error));
     }
 }

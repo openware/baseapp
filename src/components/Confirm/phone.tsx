@@ -10,16 +10,13 @@ import {
 import { RootState } from '../../modules';
 import {
     resendCode,
-    selectVerifyPhoneError,
     selectVerifyPhoneSuccess,
     sendCode,
     verifyPhone,
 } from '../../modules/kyc/phone';
 import { changeUserLevel } from '../../modules/profile';
-import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
-    verifyPhoneError?: CommonError;
     verifyPhoneSuccess?: string;
 }
 
@@ -72,10 +69,8 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     public render() {
         const { phoneNumber, confirmationCode } = this.state;
         const {
-            verifyPhoneError,
             verifyPhoneSuccess,
         } = this.props;
-        const showError = verifyPhoneError && !verifyPhoneSuccess;
         return (
             <div className="pg-confirm__content-phone">
                 <h2 className="pg-confirm__content-phone-head">{this.translate('page.body.kyc.phone.head')}</h2>
@@ -114,7 +109,6 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                         />
                     </div>
                 </div>
-                {showError && <p className="pg-confirm__error">{(verifyPhoneError || { message: '' }).message}</p>}
                 {verifyPhoneSuccess && <p className="pg-confirm__success">{verifyPhoneSuccess}</p>}
                 <div className="pg-confirm__content-deep">
                     <Button
@@ -173,7 +167,6 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    verifyPhoneError: selectVerifyPhoneError(state),
     verifyPhoneSuccess: selectVerifyPhoneSuccess(state),
 });
 

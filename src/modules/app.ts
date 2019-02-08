@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { AlertState, errorReducer } from './alert';
 import { authReducer, AuthState } from './auth';
 import { contactReducer, ContactState } from './contact';
 import { historyReducer, HistoryState } from './history';
@@ -47,6 +48,7 @@ export interface AppState {
     userActivity: UserActivityState;
     ranger: RangerState;
     i18n: LanguageState;
+    alert: AlertState;
 }
 
 export const appReducer = combineReducers({
@@ -68,4 +70,5 @@ export const appReducer = combineReducers({
     userActivity: userActivityReducer,
     ranger: rangerReducer,
     i18n: changeLanguageReducer,
+    alert: errorReducer,
 });

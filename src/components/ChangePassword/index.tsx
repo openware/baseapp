@@ -77,7 +77,6 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
 
     private renderForm = () => {
         const { oldPassword, newPassword } = this.state;
-        const { error } = this.props;
         return (
             <div>
                 <div className="pg-change-password-form">
@@ -108,7 +107,6 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
                         onClick={this.handleCancel}
                     />
                 </div>
-                {error && <p className="pg-change-password-form__error">{error.message}</p>}
             </div>
         );
     }

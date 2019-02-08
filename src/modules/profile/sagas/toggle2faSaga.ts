@@ -1,5 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { fetchError } from '../../';
 import { API, RequestOptions } from '../../../api';
 import {
     toggle2faData,
@@ -18,5 +19,6 @@ export function* toggle2faSaga(action: Toggle2FAFetch) {
         yield put(toggle2faData());
     } catch (error) {
         yield put(toggle2faError(error));
+        yield put(fetchError(error));
     }
 }

@@ -68,6 +68,8 @@ describe('Module: User', () => {
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
+                //tslint:disable
+                console.log(actions)
                 if (actions.length === expectedActionsError.length) {
                     expect(actions).toEqual(expectedActionsError);
                     resolve();

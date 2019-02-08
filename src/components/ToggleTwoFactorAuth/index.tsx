@@ -17,12 +17,10 @@ import {
     enableUser2fa,
     generate2faQRFetch,
     selectTwoFactorAuthBarcode,
-    selectTwoFactorAuthError,
     selectTwoFactorAuthQR,
     selectTwoFactorAuthSuccess,
     toggle2faFetch,
 } from '../../modules/profile';
-import { CommonError } from '../../modules/types';
 
 interface RouterProps {
     history: History;
@@ -33,7 +31,6 @@ interface ReduxProps {
     barcode: string;
     qrUrl: string;
     success?: boolean;
-    error?: CommonError;
 }
 
 interface DispatchProps {
@@ -89,7 +86,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
     }
 
     private renderToggle2fa = (enable2fa: boolean) => {
-        const { barcode, qrUrl, error } = this.props;
+        const { barcode, qrUrl } = this.props;
         const { otpCode } = this.state;
 
         const secretRegex = /secret=(\w+)/;
@@ -116,7 +113,6 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                     />
                 </div>
                 <Button label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.enable')} onClick={submitHandler} />
-                <p className="pg-profile-two-factor-auth__error">{error && error.message}</p>
                 {enable2fa && secret && this.renderSecret(secret)}
             </div>
         );
@@ -172,7 +168,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, Props, RootState> = state => 
     qrUrl: selectTwoFactorAuthQR(state),
     barcode: selectTwoFactorAuthBarcode(state),
     success: selectTwoFactorAuthSuccess(state),
-    error: selectTwoFactorAuthError(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({

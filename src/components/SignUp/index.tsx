@@ -17,7 +17,6 @@ import { captchaType, siteKey } from '../../api';
 import {
     AuthError,
     RootState,
-    selectAuthError,
     selectSignUpRequireVerification,
     signUp,
     signUpError,
@@ -26,7 +25,6 @@ import { SignUpForm, SignUpFormValues } from './SignUpForm';
 
 interface ReduxProps {
     requireVerification?: boolean;
-    error?: AuthError;
     loading?: boolean;
 }
 
@@ -56,7 +54,7 @@ class SignUpComponent extends React.Component<Props> {
     }
 
     public render() {
-        const { loading, error } = this.props;
+        const { loading } = this.props;
 
         const className = cx('pg-sign-up-screen__container', { loading });
         return (
@@ -70,7 +68,6 @@ class SignUpComponent extends React.Component<Props> {
                         confirmPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.confirmPassword'})}
                         referalCodeLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.referalCode'})}
                         termsMessage={this.props.intl.formatMessage({ id: 'page.header.signUp.terms'})}
-                        errorMessage={error && error.message}
                         isLoading={loading}
                         onSignIn={this.handleSignIn}
                         onSignUp={this.handleSignUp}
@@ -154,7 +151,6 @@ class SignUpComponent extends React.Component<Props> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     requireVerification: selectSignUpRequireVerification(state),
-    error: selectAuthError(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

@@ -14,7 +14,6 @@ import {
     changeForgotPasswordFetch,
     RootState,
     selectChangeForgotPasswordSuccess,
-    selectForgotPasswordError,
 } from '../../modules';
 
 interface ChangeForgottenPasswordState {
@@ -26,10 +25,6 @@ interface ChangeForgottenPasswordState {
 
 interface ReduxProps {
     changeForgotPassword?: boolean;
-    backendError?: {
-        code: number;
-        message: string;
-    };
 }
 
 interface DispatchProps {
@@ -82,7 +77,6 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
         } = this.state;
         const updatePassword = e => this.handleChange('password', e);
         const updateConfirmPassword = e => this.handleChange('confirmPassword', e);
-        const { backendError } = this.props;
         return (
             <div className="pg-forgot-password-screen">
                 <div className="pg-forgot-password-screen__container">
@@ -108,7 +102,6 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                         </fieldset>
                     </form>
                     {error && <div className="pg-forgot-password-screen__container-alert">Passwords do not match</div>}
-                    {backendError && <div className="pg-forgot-password-screen__container-alert">{backendError.message}</div>}
                     <div className="pg-forgot-password-screen__container-footer">
                         <Button
                             className="pg-forgot-password-screen__container-footer-button"
@@ -149,7 +142,6 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     changeForgotPassword: selectChangeForgotPasswordSuccess(state),
-    backendError: selectForgotPasswordError(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

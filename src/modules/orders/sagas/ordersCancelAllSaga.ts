@@ -1,5 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { fetchError } from '../../';
 import { API, RequestOptions } from '../../../api';
 import {
     ordersCancelAllData,
@@ -17,5 +18,6 @@ export function* ordersCancelAllSaga(action: OrdersCancelAllFetch) {
         yield put(ordersCancelAllData());
     } catch (error) {
         yield put(ordersCancelAllError(error));
+        yield put(fetchError(error));
     }
 }

@@ -13,9 +13,7 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import {
-    AuthError,
     RootState,
-    selectAuthError,
     selectSignInRequire2FA,
     selectUserFetching,
     selectUserLoggedIn,
@@ -27,7 +25,6 @@ import { SignInForm, SignInFormValues } from './SignInForm';
 
 interface ReduxProps {
     isLoggedIn: boolean;
-    error?: AuthError;
     loading?: boolean;
     require2FA?: boolean;
 }
@@ -80,7 +77,7 @@ class SignInComponent extends React.Component<Props, SignInState> {
     }
 
     private renderSignInForm = () => {
-        const { loading, error } = this.props;
+        const { loading } = this.props;
         return (
             <SignInForm
                 labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
@@ -89,7 +86,6 @@ class SignInComponent extends React.Component<Props, SignInState> {
                 passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.password'})}
                 receiveConfirmationLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.receiveConfirmation'})}
                 forgotPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.forgotPassword'})}
-                errorMessage={error && error.message}
                 isLoading={loading}
                 onForgotPassword={this.forgotPassword}
                 onSignUp={this.handleSignUp}
@@ -99,10 +95,9 @@ class SignInComponent extends React.Component<Props, SignInState> {
     }
 
     private render2FA = () => {
-        const { loading, error } = this.props;
+        const { loading } = this.props;
         return (
             <TwoFactorAuth
-                errorMessage={error && error.message}
                 isLoading={loading}
                 onSignUp={this.handleSignUp}
                 onSubmit={this.handle2FASignIn}
@@ -139,7 +134,6 @@ class SignInComponent extends React.Component<Props, SignInState> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     isLoggedIn: selectUserLoggedIn(state),
     loading: selectUserFetching(state),
-    error: selectAuthError(state),
     require2FA: selectSignInRequire2FA(state),
 });
 

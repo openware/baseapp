@@ -1,5 +1,6 @@
 // tslint:disable-next-line no-submodule-imports
 import { call, put } from 'redux-saga/effects';
+import { fetchError } from '../../';
 import { API, RequestOptions } from '../../../api';
 import { userData } from '../../profile';
 import { signInError, SignInFetch, signInRequire2FA } from '../actions';
@@ -27,5 +28,6 @@ export function* signInSaga(action: SignInFetch) {
         } else {
             yield put(signInError(error));
         }
+        yield put(fetchError(error));
     }
 }

@@ -21,10 +21,8 @@ import {
 import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/markets';
 import {
     orderExecuteFetch,
-    selectOrderExecuteError,
     selectOrderExecuteLoading,
 } from '../../modules/orders';
-import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
@@ -34,7 +32,6 @@ interface ReduxProps {
             last: string;
         },
     };
-    executeError?: CommonError;
     wallets: WalletItemProps[];
     currentPrice: string;
 }
@@ -93,7 +90,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     public render() {
-        const { executeError, executeLoading, marketTickers, currentMarket } = this.props;
+        const { executeLoading, marketTickers, currentMarket } = this.props;
         if (!currentMarket) {
             return null;
         }
@@ -109,7 +106,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                 <div className="cr-table-header__content">
                     <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.newOrder" /></div>
                 </div>
-                {executeError && <span className="pg-order__error">{executeError.message}</span>}
                 <Order
                     disabled={executeLoading}
                     feeBuy={Number(currentMarket.ask_fee)}
@@ -204,7 +200,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
 const mapStateToProps = (state: RootState) => ({
     currentMarket: selectCurrentMarket(state),
-    executeError: selectOrderExecuteError(state),
     executeLoading: selectOrderExecuteLoading(state),
     marketTickers: selectMarketTickers(state),
     wallets: selectWallets(state),

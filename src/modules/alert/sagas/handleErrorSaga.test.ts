@@ -1,9 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '..';
-import { setupMockAxios, setupMockStore } from '../../helpers/jest';
-import { handleError } from './actions';
+import { rootSaga } from '../../';
+import { setupMockAxios, setupMockStore } from '../../../helpers/jest';
+import { fetchError } from '../actions';
 
 const debug = false;
 
@@ -24,11 +24,11 @@ describe('Error handler', () => {
     });
 
     describe('Fetch handle error', () => {
-        const errorCodeUnauthorized = 401;
+        const errorCodeUnauthorized = {code: 401, message: 'Invalid Session'};
 
         const expectedErrorActionUnauthorized = {
-            type: 'error/ERROR_DATA',
-            payload: errorCodeUnauthorized,
+            type: 'error/ERROR_FETCH',
+            error: errorCodeUnauthorized,
         };
 
         const expectedUserReset = {
@@ -46,7 +46,7 @@ describe('Error handler', () => {
                     }
                 });
             });
-            store.dispatch(handleError(errorCodeUnauthorized));
+            store.dispatch(fetchError(errorCodeUnauthorized));
             return promise;
         });
     });

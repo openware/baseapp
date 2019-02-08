@@ -29,3 +29,4 @@ export * from './LegalDocuments';
 export * from './ForgotPassword';
 export * from './ChangeForgottenPassword';
 export * from './RecentTrades';
+export * from './Alerts';

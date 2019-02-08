@@ -1,6 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
-import { handleError } from '../../../';
+import { fetchError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { sendCodeData, sendCodeError, SendCodeFetch } from '../actions';
 
@@ -14,6 +14,6 @@ export function* sendCodeSaga(action: SendCodeFetch) {
         yield put(sendCodeData());
     } catch (error) {
         yield put(sendCodeError(error));
-        yield put(handleError(error.code));
+        yield put(fetchError(error));
     }
 }

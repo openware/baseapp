@@ -15,16 +15,11 @@ import { withRouter } from 'react-router-dom';
 import {
     forgotPassword,
     RootState,
-    selectForgotPasswordError,
     selectForgotPasswordSuccess,
 } from '../../modules';
 
 interface ReduxProps {
     success: boolean;
-    backendError?: {
-        code: number;
-        message: string;
-    };
 }
 
 interface DispatchProps {
@@ -40,7 +35,6 @@ class ForgotPasswordComponent extends React.Component<Props> {
     };
 
     public render() {
-        const { backendError } = this.props;
         return (
             <div className="pg-forgot-password-screen">
                 <div className="pg-forgot-password-screen__container">
@@ -48,7 +42,6 @@ class ForgotPasswordComponent extends React.Component<Props> {
                         <EmailForm
                             OnSubmit={this.handleChangeEmail}
                             title={this.props.intl.formatMessage({id: 'page.resendConfirmation'})}
-                            errorMessage={(backendError && backendError.message) ? backendError.message : ''}
                         />
                     </div>
                 </div>
@@ -63,7 +56,6 @@ class ForgotPasswordComponent extends React.Component<Props> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     success: selectForgotPasswordSuccess(state),
-    backendError: selectForgotPasswordError(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

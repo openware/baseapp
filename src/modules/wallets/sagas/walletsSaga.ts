@@ -1,6 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
-import { handleError } from '../../';
+import { fetchError } from '../../';
 import { API, RequestOptions } from '../../../api';
 import { walletsAddressFetch, walletsData, walletsError } from '../actions';
 
@@ -52,6 +52,6 @@ export function* walletsSaga() {
         }
     } catch (error) {
         yield put(walletsError(error));
-        yield put(handleError(error.code));
+        yield put(fetchError(error));
     }
 }

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { Router } from 'react-router';
-import { ErrorWrapper, Header } from './components';
+import { Alerts, ErrorWrapper, Header } from './components';
 import { RootState } from './modules';
 import { Layout } from './routes';
 
@@ -31,6 +31,7 @@ class AppLayout extends React.Component<Props, {}, {}> {
                 <Router history={history}>
                     <ErrorWrapper>
                         <Header />
+                        <Alerts />
                         <Layout />
                     </ErrorWrapper>
                 </Router>

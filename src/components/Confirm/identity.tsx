@@ -12,16 +12,13 @@ import {
 } from 'react-redux';
 import { RootState } from '../../modules';
 import {
-    selectSendIdentityError,
     selectSendIdentitySuccess,
     sendIdentity,
 } from '../../modules/kyc/identity';
 import { changeUserLevel } from '../../modules/profile';
-import { CommonError } from '../../modules/types';
 import { nationalities } from './nationalities';
 
 interface ReduxProps {
-    error?: CommonError;
     success?: string;
 }
 
@@ -91,7 +88,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             postcode,
             residentialAddress,
         } = this.state;
-        const { error, success } = this.props;
+        const { success } = this.props;
 
         const dataNationalities = nationalities;
         const onSelectNationality = value => this.selectNationality(dataNationalities[value]);
@@ -199,7 +196,6 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 </div>
               </div>
               {success && <p className="pg-confirm__success">{success}</p>}
-              {error && <p className="pg-confirm__error">{error.message}</p>}
               <div className="pg-confirm__content-deep">
                   <Button
                       className="pg-confirm__content-phone-deep-button"
@@ -275,7 +271,6 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    error: selectSendIdentityError(state),
     success: selectSendIdentitySuccess(state),
 });
 

@@ -17,14 +17,11 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { RootState } from '../../modules';
 import {
-    selectSendDocumentsError,
     selectSendDocumentsSuccess,
     sendDocuments,
 } from '../../modules/kyc/documents';
-import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
-    error?: CommonError;
     success?: string;
 }
 
@@ -84,7 +81,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             expiration,
             scan,
         }: DocumentsState = this.state;
-        const { error } = this.props;
 
         const onSelect = value => this.handleChangeDocumentsType(this.data[value]);
         const numberType = `${documentsType}${this.translate('page.body.kyc.documents.number')}`;
@@ -166,7 +162,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         </div>
                     </div>
                 </div>
-                {error && <p className="pg-confirm__error">{error.message}</p>}
                 <div className="pg-confirm__content-deep">
                     <Button
                         className="pg-confirm__content-phone-deep-button"
@@ -282,7 +277,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     success: selectSendDocumentsSuccess(state),
-    error: selectSendDocumentsError(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

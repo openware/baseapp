@@ -13,20 +13,14 @@ import {
   User,
 } from '../../modules';
 import {
-    changePasswordError,
     changePasswordFetch,
-    selectChangePasswordError,
     selectChangePasswordSuccess,
 } from '../../modules/profile';
-import {
-    CommonError,
-} from '../../modules/types';
 import { ChangePassword } from '../ChangePassword';
 import { ProfileTwoFactorAuth } from '../ProfileTwoFactorAuth';
 
 interface ReduxProps {
     user: User;
-    passwordChangeError: CommonError | undefined;
     passwordChangeSuccess?: boolean;
 }
 
@@ -52,7 +46,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
     };
     public render() {
         const {
-            passwordChangeError,
             passwordChangeSuccess,
             user,
         } = this.props;
@@ -70,8 +63,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
                 </div>
                 <div className="pg-profile-page__row">
                     <ChangePassword
-                        error={passwordChangeError}
-                        onClearError={this.props.clearPasswordChangeError}
+                        onClearError={this.clearPasswordChangeError}
                         onSubmit={this.handleChangePassword}
                         success={passwordChangeSuccess}
                     />
@@ -98,6 +90,11 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
                 <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalHeader"/>
             </div>
         );
+    };
+
+    private clearPasswordChangeError = () => {
+        //tslint:disable
+        console.log(1)
     };
 
     private renderModalBody = () => {
@@ -149,14 +146,12 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
-    passwordChangeError: selectChangePasswordError(state),
     passwordChangeSuccess: selectChangePasswordSuccess(state),
 });
 
 const mapDispatchToProps = dispatch => ({
     changePassword: ({ old_password, new_password, confirm_password }) =>
         dispatch(changePasswordFetch({ old_password, new_password, confirm_password })),
-    clearPasswordChangeError: () => dispatch(changePasswordError(undefined)),
 });
 
 const ProfileAuthDetailsConnected = connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent);

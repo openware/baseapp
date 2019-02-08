@@ -1,5 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { fetchError } from '../../';
 import { API, RequestOptions } from '../../../api';
 import {
     changePasswordData,
@@ -17,5 +18,6 @@ export function* changePasswordSaga(action: ChangePasswordFetch) {
         yield put(changePasswordData());
     } catch (error) {
         yield put(changePasswordError(error));
+        yield put(fetchError(error));
     }
 }

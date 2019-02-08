@@ -14,7 +14,6 @@ import {
     Market,
     marketsFetch,
     selectMarkets,
-    selectMarketsError,
     selectMarketsLoading,
 } from '../../modules/markets';
 import {
@@ -22,19 +21,15 @@ import {
     orderCancelFetch,
     ordersCancelAllFetch,
     selectOrders,
-    selectOrdersError,
     selectOrdersLoading,
     userOrdersAllFetch,
 } from '../../modules/orders';
-import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
     marketsData: Market[];
-    marketsError?: CommonError;
     marketsLoading?: boolean;
     openOrdersData: Order[];
     openOrdersLoading?: boolean;
-    openOrdersError?: CommonError;
 }
 
 interface DispatchProps {
@@ -88,12 +83,10 @@ class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState>
     }
 
     private openOrders = () => {
-        const { marketsError, openOrdersData, openOrdersError } = this.props;
-        const error = openOrdersError || marketsError;
+        const { openOrdersData } = this.props;
 
         return (
             <div>
-                {error && <p className="pg-open-orders-tab__error">{error.message}</p>}
                 <div className="pg-open-orders-tab__cancel-all" >
                     <span onClick={this.handleCancelAll}>
                         <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
@@ -205,11 +198,9 @@ class OpenOrdersTabContainer extends React.PureComponent<Props, OpenOrdersState>
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     marketsData: selectMarkets(state),
-    marketsError: selectMarketsError(state),
     marketsLoading: selectMarketsLoading(state),
     openOrdersData: selectOrders(state),
     openOrdersLoading: selectOrdersLoading(state),
-    openOrdersError: selectOrdersError(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
