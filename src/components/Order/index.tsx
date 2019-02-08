@@ -5,6 +5,12 @@ import {
     WalletItemProps,
 } from '@openware/components';
 import * as React from 'react';
+import {
+    FormattedMessage,
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
 import { connect } from 'react-redux';
 import {
     RootState,
@@ -45,9 +51,14 @@ interface DispatchProps {
     orderExecute: typeof orderExecuteFetch;
 }
 
-type Props = ReduxProps & DispatchProps;
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class OrderInsert extends React.PureComponent<Props, StoreProps> {
+    //tslint:disable-next-line:no-any
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
     constructor(props: Props) {
         super(props);
 
@@ -57,6 +68,11 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             price: '',
         };
     }
+
+    private getOrderTypes = [
+        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.limit'}),
+        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.market'}),
+    ];
 
     public componentWillReceiveProps(next: Props) {
         if (next.wallets && (next.wallets.length === 0)) {
@@ -91,7 +107,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         return (
             <div className={'pg-order'}>
                 <div className="cr-table-header__content">
-                    <div className="cr-title-component">Insert New Order</div>
+                    <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.newOrder" /></div>
                 </div>
                 {executeError && <span className="pg-order__error">{executeError.message}</span>}
                 <Order
@@ -106,7 +122,16 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     to={to}
                     handleSendType={this.getOrderType}
                     price={price}
+                    orderTypes={this.getOrderTypes}
                     handleChangeInputPrice={this.handleChangePrice}
+                    amountText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.amount'})}
+                    availableText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.available'})}
+                    orderTypeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType'})}
+                    priceText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.price'})}
+                    totalText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.total'})}
+                    labelFirst={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy'})}
+                    labelSecond={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell'})}
+                    estimatedFeeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.estimatedFee'})}
                 />
                 {executeLoading && <Loader />}
             </div>
@@ -192,7 +217,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // tslint:disable-next-line
-const OrderComponent = connect(mapStateToProps, mapDispatchToProps)(OrderInsert as any);
+const OrderComponent = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderInsert as any));
 
 export {
     OrderComponent,

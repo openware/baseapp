@@ -1,0 +1,226 @@
+.cr-sign-up-form {
+  background: #1e2841;
+  max-width: 424px;
+  min-height: 620px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  position: relative;
+
+  &__options-group {
+    width: 100%;
+    height: 58px;
+    border-bottom: 2px solid #657395;
+  }
+
+  &__option {
+    background: #28334e;
+    display: inline-block;
+    width: 50%;
+    height: 58px;
+
+    .__selected {
+      border-bottom: 2px solid #3c78e0;
+      color: #fff;
+    }
+  }
+
+  &__option-inner {
+    background: var(--transparent);
+    width: 75%;
+    height: 58px;
+    margin: 0 auto;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 58px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.0357143em;
+    cursor: pointer;
+  }
+
+  &__form-content {
+    position: absolute;
+    top: 90px;
+    right: 23px;
+    bottom: 23px;
+    left: 23px;
+    box-sizing: border-box;
+  }
+
+  & > * {
+    background: var(--transparent);
+  }
+
+  &__group {
+    background: var(--transparent);
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  &__error {
+    background: var(--transparent);
+    margin-top: 5px;
+    color: var(--color-red);
+  }
+
+  &__label {
+    position: relative;
+    top: 7px;
+    left: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    background: #1e2841;
+    color: var(--sign-in-label-color);
+  }
+
+  &__group--focused {
+    .cr-sign-up-form__label {
+      color: #3c78e0;
+    }
+
+    input {
+      border: 1px solid #3c78e0 !important;
+    }
+  }
+
+  &__image {
+    display: block;
+    width: 50%;
+    height: 100px;
+    margin: 0 auto 20px auto;
+  }
+
+  &__title {
+    color: var(--sign-in-label-color);
+    margin: 119px 0 60px 0;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  &__error-message {
+    color: var(--color-red);
+    font-size: calc(var(--gap) * 2.5);
+    flex: 1;
+    display: flex;
+    background: var(--transparent);
+    justify-content: center;
+    align-items: center;
+    min-height: calc(var(--gap) * 6);
+  }
+
+  &__button-wrapper {
+    background: var(--transparent);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &__button-wrapper--empty {
+    background: var(--transparent);
+    position: absolute;
+    right: 0;
+    bottom: 0 !important;
+    left: 0;
+  }
+
+  &__button {
+    margin-left: 0;
+    height: 40px;
+    background: #2e4c80 !important;
+    border-radius: 3px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  &__loader {
+    background: var(--transparent);
+    min-height: calc(var(--gap) * 6);
+  }
+
+  &__input {
+    width: 100%;
+
+    input {
+      color: var(--sign-in-input-color);
+      width: 100%;
+      height: 50px;
+      padding: 0 10px;
+      font-size: 12px;
+      text-align: left;
+      border: 1px solid #737f92;
+      box-sizing: border-box;
+      border-radius: 4px;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > * {
+      background: var(--transparent);
+    }
+
+    &-create {
+      color: var(--sign-in-label-color);
+    }
+
+    &-signin {
+      cursor: pointer;
+      padding-left: 10px;
+    }
+  }
+
+  &__checkbox {
+    word-wrap: break-word;
+    background: var(--transparent);
+    margin-left: 10px;
+    z-index: 9999;
+
+    .cr-checkbox__checkitem {
+      border: 1px solid #737f92;
+      border-radius: 4px;
+      background: var(--transparent);
+
+      &::after {
+        border-color: var(--sign-up-checkbox-mark-color);
+      }
+    }
+
+    input:checked ~ .cr-checkbox__checkitem {
+      background-color: var(--transparent);
+      vertical-align: middle;
+    }
+
+    .cr-checkbox__label {
+      background: var(--transparent);
+      white-space: normal;
+      padding-top: 0;
+      position: relative;
+      left: 25px;
+      top: 5px;
+      font-style: normal;
+      font-weight: normal;
+      line-height: normal;
+      font-size: 12px;
+      color: #737f92;
+    }
+  }
+
+  &__recaptcha {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    left: 0;
+  }
+}

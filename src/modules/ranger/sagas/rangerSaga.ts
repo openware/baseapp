@@ -2,7 +2,7 @@ import { Channel, eventChannel } from 'redux-saga';
 // tslint:disable-next-line no-submodule-imports
 import { all, call, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 import { rangerUrl } from '../../../api';
-import { tradePush } from '../../history/trades/actions';
+//import { pushHistoryEmit } from '../../history';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket, Ticker, TickerEvent } from '../../markets';
 import { SET_CURRENT_MARKET } from '../../markets/constants';
 import { depthData } from '../../orderBook';
@@ -112,9 +112,9 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
                             return;
 
                         // private
-                        case 'trade':
-                            emitter(tradePush(event));
-                            return;
+                        // case 'trade':
+                        //     emitter(pushHistoryEmit(event));
+                        //     return;
 
                         default:
                     }

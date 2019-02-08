@@ -2,6 +2,7 @@
 import {MarketDepths} from '@openware/components';
 import * as React from 'react';
 import { connect, MapStateToProps } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import {
     Market,
     RootState,
@@ -50,7 +51,7 @@ class MarketDepthContainer extends React.Component<Props> {
             <div>
                 <div className="cr-table-header__content">
                     <div className={'pg-market-depth__title'}>
-                        Market Depth
+                        <FormattedMessage id='page.body.trade.header.marketDepths' />
                     </div>
                 </div>
                 {(asksItems.length || bidsItems.length) ? this.renderMarketDepth(colors) : null}
@@ -76,10 +77,10 @@ class MarketDepthContainer extends React.Component<Props> {
         const [first, second] = name.split('/');
         const tipLayout = ({volume, price, cumulativeVolume, cumulativePrice}) =>
             <span className={'pg-market-depth__tooltip'}>
-                    <span>Price : {price} {second}</span>
-                    <span>Volume : {volume} {first}</span>
-                    <span>Cumulative Volume : {preciseData(cumulativeVolume, 2)} {second}</span>
-                    <span>Cumulative Value : {preciseData(cumulativePrice, 2)} {first}</span>
+                    <span><FormattedMessage id='page.body.trade.header.marketDepths.content.price' /> : {price} {second}</span>
+                    <span><FormattedMessage id='page.body.trade.header.marketDepths.content.volume' /> : {volume} {first}</span>
+                    <span><FormattedMessage id='page.body.trade.header.marketDepths.content.cumulativeVolume' /> : {preciseData(cumulativeVolume, 2)} {second}</span>
+                    <span><FormattedMessage id='page.body.trade.header.marketDepths.content.cumulativeValue' /> : {preciseData(cumulativePrice, 2)} {first}</span>
                 </span>;
 
         let cumulativeVolumeData = 0;

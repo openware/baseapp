@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sign in form should render 1`] = `
+<form>
+  <div
+    className="cr-sign-in-form"
+  >
+    <div
+      className="cr-sign-in-form__options-group"
+    >
+      <div
+        className="cr-sign-in-form__option"
+      >
+        <div
+          className="cr-sign-in-form__option-inner __selected"
+        >
+          Sign In
+        </div>
+      </div>
+      <div
+        className="cr-sign-in-form__option"
+      >
+        <div
+          className="cr-sign-in-form__option-inner cr-sign-in-form__tab-signup"
+          onClick={[MockFunction]}
+        >
+          Sign Up
+        </div>
+      </div>
+    </div>
+    <div
+      className="cr-sign-in-form__form-content"
+    >
+      <div
+        className="cr-sign-in-form__group"
+      >
+        <label
+          className="cr-sign-in-form__label"
+        >
+          Email
+        </label>
+        <e
+          className="cr-sign-in-form__input"
+          onBlur={[Function]}
+          onChangeValue={[Function]}
+          onFocus={[Function]}
+          type="email"
+          value=""
+        />
+      </div>
+      <div
+        className="cr-sign-in-form__group"
+      >
+        <label
+          className="cr-sign-in-form__label"
+        >
+          Password
+        </label>
+        <e
+          className="cr-sign-in-form__input"
+          onBlur={[Function]}
+          onChangeValue={[Function]}
+          onFocus={[Function]}
+          type="password"
+          value=""
+        />
+      </div>
+      <div
+        className="cr-sign-in-form__button-wrapper cr-sign-in-form__button-wrapper--empty"
+      >
+        <div
+          className="cr-sign-in-form__error-message"
+        />
+        <div
+          className="cr-sign-in-form__loader"
+        />
+        <Component
+          className="cr-sign-in-form__button"
+          label="Sign in"
+          onClick={[Function]}
+          type="submit"
+        />
+      </div>
+      <div
+        className="cr-sign-in-form__bottom-section"
+      >
+        <div
+          className="cr-sign-in-form__bottom-section-resend-confirmation"
+          onClick={[Function]}
+        >
+          Didn't received your confirmation email?
+        </div>
+        <div
+          className="cr-sign-in-form__bottom-section-password"
+          onClick={[Function]}
+        >
+          Forgot your password?
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;

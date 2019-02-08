@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { selectUserInfo, User } from '../../modules';
-
 
 interface ProfileVerificationProps {
     user: User;
@@ -16,7 +16,9 @@ class ProfileVerificationComponent extends React.Component<ProfileVerificationPr
             <div className="pg-profile-page__box pg-profile-page__left-col__verification">
                 <div className="pg-profile-page__box-header">
                     <div className="pg-profile-page__row">
-                      <h1>Profile Verification</h1>
+                        <h1>
+                            <FormattedMessage id="page.body.profile.header.account.profile" />
+                        </h1>
                     </div>
                 </div>
                 {this.renderFirstLevel(userLevel)}
@@ -33,10 +35,10 @@ class ProfileVerificationComponent extends React.Component<ProfileVerificationPr
         } = this.getLevelsClassNames(userLevel, targetLevel);
         return (
             <div className="pg-profile-page__row pg-profile-page__level-verification">
-                    <div className={titleClassName}>
-                      <p>Email verified</p>
-                      <p>Deposit and Withdrawal not allowed</p>
-                    </div>
+                <div className={titleClassName}>
+                    <p><FormattedMessage id="page.body.profile.header.account.profile.email.title" /></p>
+                    <p><FormattedMessage id="page.body.profile.header.account.profile.email.message" /></p>
+                </div>
             </div>
         );
     }
@@ -48,10 +50,10 @@ class ProfileVerificationComponent extends React.Component<ProfileVerificationPr
         } = this.getLevelsClassNames(userLevel, targetLevel);
         return (
             <div className="pg-profile-page__row pg-profile-page__level-verification">
-                    <div className={titleClassName}>
-                      <p>Phone verification</p>
-                      <p>Deposit and trade allowed</p>
-                    </div>
+                <div className={titleClassName}>
+                    <p><FormattedMessage id="page.body.profile.header.account.profile.phone.title" /></p>
+                    <p><FormattedMessage id="page.body.profile.header.account.profile.phone.message" /></p>
+                </div>
             </div>
         );
     }
@@ -63,10 +65,10 @@ class ProfileVerificationComponent extends React.Component<ProfileVerificationPr
         } = this.getLevelsClassNames(userLevel, targetLevel);
         return (
             <div className="pg-profile-page__row pg-profile-page__level-verification">
-                    <div className={titleClassName}>
-                      <p>Identity verified</p>
-                      <p>Withdrawal allowed</p>
-                    </div>
+                <div className={titleClassName}>
+                    <p><FormattedMessage id="page.body.profile.header.account.profile.identity.title" /></p>
+                    <p><FormattedMessage id="page.body.profile.header.account.profile.identity.message" /></p>
+                </div>
             </div>
         );
     }

@@ -5,10 +5,7 @@ import { appReducer, AppState } from './app';
 import { rootAuthSaga } from './auth';
 import { rootSendEmailSaga } from './contact';
 import { rootHandleErrorSaga } from './error';
-import { rootCurrencyHistorySaga } from './history/currencyHistory';
-import { rootDepositSaga } from './history/deposits';
-import { rootTradeSaga } from './history/trades';
-import { rootWithdrawSaga } from './history/withdraws';
+import { rootHistorySaga } from './history';
 import { rootSendDocumentsSaga } from './kyc/documents';
 import { rootSendIdentitySaga } from './kyc/identity';
 import { rootLabelSaga } from './kyc/label';
@@ -32,10 +29,8 @@ export * from './orders';
 export * from './password';
 export * from './userActivity';
 
-export * from './history/currencyHistory';
-export * from './history/deposits';
-export * from './history/trades';
-export * from './history/withdraws';
+export * from './i18n';
+export * from './history';
 export * from './kyc';
 
 export * from './error';
@@ -51,9 +46,6 @@ export const rootReducer = combineReducers({
 export function* rootSaga() {
     yield all([
         call(rootAuthSaga),
-        call(rootDepositSaga),
-        call(rootTradeSaga),
-        call(rootWithdrawSaga),
         call(rootMarketsSaga),
         call(rootOrdersSaga),
         call(rootProfileSaga),
@@ -66,7 +58,7 @@ export function* rootSaga() {
         call(rootRecentTradesSaga),
         call(rootOrderBookSaga),
         call(rootHandleErrorSaga),
-        call(rootCurrencyHistorySaga),
+        call(rootHistorySaga),
         call(rootUserActivitySaga),
         call(rootLabelSaga),
     ]);

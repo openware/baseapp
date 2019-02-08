@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sign in form should render 1`] = `
+<form>
+  <div
+    className="cr-sign-up-form"
+  >
+    <div
+      className="cr-sign-up-form__options-group"
+    >
+      <div
+        className="cr-sign-up-form__option"
+      >
+        <div
+          className="cr-sign-up-form__option-inner cr-sign-in-form__tab-signin"
+        >
+          Sign In
+        </div>
+      </div>
+      <div
+        className="cr-sign-up-form__option"
+      >
+        <div
+          className="cr-sign-up-form__option-inner __selected"
+        >
+          Sign Up
+        </div>
+      </div>
+    </div>
+    <div
+      className="cr-sign-up-form__form-content"
+    >
+      <div
+        className="cr-sign-up-form__group"
+      >
+        <label
+          className="cr-sign-up-form__label"
+        >
+          Email
+        </label>
+        <e
+          className="cr-sign-up-form__input"
+          onBlur={[Function]}
+          onChangeValue={[Function]}
+          onFocus={[Function]}
+          type="email"
+          value=""
+        />
+      </div>
+      <div
+        className="cr-sign-up-form__group"
+      >
+        <label
+          className="cr-sign-up-form__label"
+        >
+          Password
+        </label>
+        <e
+          className="cr-sign-up-form__input"
+          onBlur={[Function]}
+          onChangeValue={[Function]}
+          onFocus={[Function]}
+          type="password"
+          value=""
+        />
+      </div>
+      <div
+        className="cr-sign-up-form__group"
+      >
+        <label
+          className="cr-sign-up-form__label"
+        >
+          Confirm Password
+        </label>
+        <e
+          className="cr-sign-up-form__input"
+          onBlur={[Function]}
+          onChangeValue={[Function]}
+          onFocus={[Function]}
+          type="password"
+          value=""
+        />
+      </div>
+      <div
+        className="cr-sign-up-form__group"
+      >
+        <label
+          className="cr-sign-up-form__label"
+        >
+          Referral code
+        </label>
+        <e
+          className="cr-sign-up-form__input"
+          onBlur={[Function]}
+          onChangeValue={[Function]}
+          onFocus={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <Component
+        checked={false}
+        className="cr-sign-up-form__checkbox"
+        label="I  agree all statements in terms of service"
+        onChange={[Function]}
+      />
+      <div
+        className="cr-sign-up-form__button-wrapper cr-sign-up-form__button-wrapper--empty"
+      >
+        <div
+          className="cr-sign-up-form__error-message"
+        />
+        <div
+          className="cr-sign-up-form__loader"
+        />
+        <Component
+          className="cr-sign-up-form__button"
+          disabled={true}
+          label="Sign up"
+          onClick={[Function]}
+          type="submit"
+        />
+      </div>
+    </div>
+  </div>
+</form>
+`;

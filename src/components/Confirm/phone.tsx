@@ -2,6 +2,7 @@ import {
     Button,
 } from '@openware/components';
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
 import {
   connect,
   MapDispatchToPropsFunction,
@@ -31,7 +32,7 @@ interface OnChangeEvent {
 interface PhoneState {
     phoneNumber: string;
     confirmationCode: string;
-    currentAction: string;
+    resendCode: boolean;
 }
 
 interface DispatchProps {
@@ -41,18 +42,26 @@ interface DispatchProps {
     changeUserLevel: typeof changeUserLevel;
 }
 
-type Props = ReduxProps & DispatchProps;
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class PhoneComponent extends React.Component<Props, PhoneState> {
+    //tslint:disable-next-line:no-any
+    public static propsTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
     constructor(props: Props) {
         super(props);
 
         this.state = {
-          phoneNumber: '',
-          confirmationCode: '',
-          currentAction: 'SEND CODE',
+            phoneNumber: '',
+            confirmationCode: '',
+            resendCode: false,
         };
     }
+
+    public translate = (e: string) => {
+        return this.props.intl.formatMessage({id: e});
+    };
 
     public componentDidUpdate(prev: Props) {
         if (!prev.verifyPhoneSuccess && this.props.verifyPhoneSuccess) {
@@ -61,7 +70,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     }
 
     public render() {
-        const { phoneNumber, confirmationCode, currentAction } = this.state;
+        const { phoneNumber, confirmationCode } = this.state;
         const {
             verifyPhoneError,
             verifyPhoneSuccess,
@@ -69,16 +78,16 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         const showError = verifyPhoneError && !verifyPhoneSuccess;
         return (
             <div className="pg-confirm__content-phone">
-                <h2 className="pg-confirm__content-phone-head">Let`s verify your phone</h2>
+                <h2 className="pg-confirm__content-phone-head">{this.translate('page.body.kyc.phone.head')}</h2>
                 <div className="pg-confirm__content-phone-col">
                     <p className="pg-confirm__content-phone-col-text">
-                        1. Enter your phone number
+                        1. {this.translate('page.body.kyc.phone.enterPhone')}
                     </p>
                     <div className="pg-confirm__content-phone-col-content">
                         <input
                             className="pg-confirm__content-phone-col-content-number"
                             type="string"
-                            placeholder="Phone Number"
+                            placeholder={this.translate('page.body.kyc.phone.phoneNumber')}
                             value={phoneNumber}
                             onChange={this.handleChangeNumber}
                         />
@@ -87,19 +96,19 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             type="button"
                             onClick={this.handleSendCode}
                         >
-                            {currentAction}
+                            {this.state.resendCode ? this.translate('page.body.kyc.phone.resend') : this.translate('page.body.kyc.phone.send')}
                         </button>
                     </div>
                 </div>
                 <div className="pg-confirm__content-phone-col">
                     <p className="pg-confirm__content-phone-col-text">
-                        2. Enter code that you received
+                        2. {this.translate('page.body.kyc.phone.enterCode')}
                     </p>
                     <div className="pg-confirm__content-phone-col-content">
                         <input
                             className="pg-confirm__content-phone-col-content-number"
                             type="string"
-                            placeholder="SMS Code"
+                            placeholder={this.translate('page.body.kyc.phone.code')}
                             value={confirmationCode}
                             onChange={this.handleConfirmNumber}
                         />
@@ -110,7 +119,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                 <div className="pg-confirm__content-deep">
                     <Button
                         className="pg-confirm__content-phone-deep-button"
-                        label="Next"
+                        label={this.translate('page.body.kyc.next')}
                         onClick={this.confirmPhone}
                     />
                 </div>
@@ -130,7 +139,6 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         if (this.inputNumber(e)) {
             this.setState({
                 phoneNumber: e.target.value,
-                currentAction: 'SEND CODE',
             });
         }
     }
@@ -153,10 +161,10 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         const requestProps = {
             phone_number: String(this.state.phoneNumber),
         };
-        if (this.state.currentAction === 'SEND CODE') {
+        if (!this.state.resendCode) {
           this.props.sendCode(requestProps);
           this.setState({
-              currentAction: 'RESEND CODE',
+              resendCode: true,
           });
         } else {
           this.props.resendCode(requestProps);
@@ -178,4 +186,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line
-export const Phone = connect(mapStateToProps, mapDispatchProps)(PhoneComponent) as any;
+export const Phone = injectIntl(connect(mapStateToProps, mapDispatchProps)(PhoneComponent) as any);

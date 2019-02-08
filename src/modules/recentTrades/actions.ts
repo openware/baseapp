@@ -1,4 +1,4 @@
-import { PublicTrade } from '../history/trades';
+import { PublicTrade } from '../history';
 import { Market } from '../markets';
 import { CommonError } from '../types';
 import {

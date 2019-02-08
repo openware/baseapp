@@ -4,6 +4,7 @@ import {
 } from '@openware/components';
 import countries = require('country-list');
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import {
   connect,
@@ -46,9 +47,13 @@ interface IdentityState {
     residentialAddress: string;
 }
 
-type Props = ReduxProps & DispatchProps;
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class IdentityComponent extends React.Component<Props, IdentityState> {
+    //tslint:disable-next-line:no-any
+    public static propsTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
     public state = {
         city: '',
         countryOfBirth: '',
@@ -66,6 +71,10 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
           nationality: nationalities[0],
         });
     }
+
+    public translate = (e: string) => {
+        return this.props.intl.formatMessage({id: e});
+    };
 
     public componentDidUpdate(prev: Props) {
         if (!prev.success && this.props.success) {
@@ -96,11 +105,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 <div className="pg-confirm__content-identity-col">
                     <div className="pg-confirm__content-identity-col-row">
                       <fieldset className={`pg-confirm__content-identity-col-row-content ${firstName && 'pg-confirm__content-identity-col-row-is-active'}`}>
-                          {firstName && <legend>First Name</legend>}
+                          {firstName && <legend>{this.translate('page.body.kyc.identity.firstName')}</legend>}
                               <input
                                   className="pg-confirm__content-identity-col-row-content-number"
                                   type="string"
-                                  placeholder="First Name"
+                                  placeholder={this.translate('page.body.kyc.identity.firstName')}
                                   value={firstName}
                                   onChange={this.handleChange('firstName')}
                               />
@@ -108,24 +117,24 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
                       <fieldset className={`pg-confirm__content-identity-col-row-content ${dateOfBirth && 'pg-confirm__content-identity-col-row-is-active'}`}>
-                          {dateOfBirth && <legend>Date of Birth</legend>}
+                          {dateOfBirth && <legend>{this.translate('page.body.kyc.identity.dateOfBirth')}</legend>}
                           <MaskInput
                             className="pg-confirm__content-identity-col-row-content-number"
                             maskString="00/00/0000"
                             mask="00/00/0000"
                             onChange={this.handleChangeDate}
                             value={dateOfBirth}
-                            placeholder="Date of Birth DD/MM/YYYY"
+                            placeholder={this.translate('page.body.kyc.identity.dateOfBirth')}
                           />
                       </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
                       <fieldset className={`pg-confirm__content-identity-col-row-content ${residentialAddress && 'pg-confirm__content-identity-col-row-is-active'}`}>
-                          {residentialAddress && <legend>Residential Address</legend>}
+                          {residentialAddress && <legend>{this.translate('page.body.kyc.identity.residentialAddress')}</legend>}
                           <input
                             className="pg-confirm__content-identity-col-row-content-number"
                             type="string"
-                            placeholder="Residential Address"
+                            placeholder={this.translate('page.body.kyc.identity.residentialAddress')}
                             value={residentialAddress}
                             onChange={this.handleChange('residentialAddress')}
                           />
@@ -133,11 +142,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
                       <fieldset className={`pg-confirm__content-identity-col-row-content ${city && 'pg-confirm__content-identity-col-row-is-active'}`}>
-                          {city && <legend>City</legend>}
+                          {city && <legend>{this.translate('page.body.kyc.identity.city')}</legend>}
                           <input
                               className="pg-confirm__content-identity-col-row-content-number"
                               type="string"
-                              placeholder="City"
+                              placeholder={this.translate('page.body.kyc.identity.city')}
                               value={city}
                               onChange={this.handleChange('city')}
                           />
@@ -147,11 +156,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 <div className="pg-confirm__content-identity-col pg-confirm__content-identity-col-right">
                   <div className="pg-confirm__content-identity-col-row">
                     <fieldset className={`pg-confirm__content-identity-col-row-content ${lastName && 'pg-confirm__content-identity-col-row-is-active'}`}>
-                        {lastName && <legend>Last Name</legend>}
+                        {lastName && <legend>{this.translate('page.body.kyc.identity.lastName')}</legend>}
                             <input
                                 className="pg-confirm__content-identity-col-row-content-number"
                                 type="string"
-                                placeholder="Last Name"
+                                placeholder={this.translate('page.body.kyc.identity.lastName')}
                                 value={lastName}
                                 onChange={this.handleChange('lastName')}
                             />
@@ -177,11 +186,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
                       <fieldset className={`pg-confirm__content-identity-col-row-content ${postcode && 'pg-confirm__content-identity-col-row-is-active'}`}>
-                          {postcode && <legend>Postcode</legend>}
+                          {postcode && <legend>{this.translate('page.body.kyc.identity.postcode')}</legend>}
                           <input
                               className="pg-confirm__content-identity-col-row-content-number"
                               type="string"
-                              placeholder="Postcode"
+                              placeholder={this.translate('page.body.kyc.identity.postcode')}
                               value={postcode}
                               onChange={this.handleChange('postcode')}
                           />
@@ -194,7 +203,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
               <div className="pg-confirm__content-deep">
                   <Button
                       className="pg-confirm__content-phone-deep-button"
-                      label="Next"
+                      label={this.translate('page.body.kyc.next')}
                       onClick={this.sendData}
                   />
               </div>
@@ -277,4 +286,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line
-export const Identity = connect(mapStateToProps, mapDispatchProps)(IdentityComponent) as any;
+export const Identity = injectIntl(connect(mapStateToProps, mapDispatchProps)(IdentityComponent) as any);

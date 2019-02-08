@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { OpenOrdersComponent, OpenOrdersProps, renderData } from '..';
+import { OpenOrdersComponent, OpenOrdersProps } from '..';
 import { Market, Order, rootReducer } from '../../modules';
 
 const currentMarket: Market | undefined = {
@@ -50,10 +50,5 @@ describe('OpenOrders', () => {
 
     it('should render', () => {
         expect(wrapper).toMatchSnapshot();
-    });
-
-    it('should handle NaN in Filled column', () => {
-        const result = renderData(openOrdersData, 0, 0);
-        expect(result[0][5]).not.toEqual(NaN);
     });
 });

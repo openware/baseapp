@@ -62,8 +62,10 @@
 
   &__header-settings {
     float: right;
+    display: inherit;
 
     &__account-dropdown {
+      margin-right: calc(var(--gap) * 1);
       a {
         color: #666666;
         font-size: calc(var(--gap) * 2.333);
@@ -73,9 +75,8 @@
 
       .dropdown-menu {
         position: absolute;
-        width: 130px;
         background-color: var(--base-bright);
-        margin-right: 50px;
+        margin-right: 100px;
         cursor: pointer !important;
         border: 1px solid rgba(7, 7, 7, 0.15);
         border-radius: var(--gap);
@@ -88,6 +89,7 @@
         .dropdown-menu-item {
           float: left;
           padding: 0.25rem 1.6rem;
+          font-size: calc(var(--gap) * 2);
           a, span {
             text-decoration: none;
             color: var(--base);
@@ -95,20 +97,11 @@
             background-color: var(--base-bright);
           }
         }
-      }
 
-      .dropdown-toggle {
-        cursor: pointer !important;
-        display: flex;
-        .email {
-          color: var(--email-header-color);
-          line-height: normal;
-          font-size: calc(var(--gap) * 4.33);
-          text-align: center;
-          .icon {
-            margin-left: calc(var(--gap) * 1.66);
-            margin-top: calc(var(--gap) * 0.5);
-          }
+        .dropdown-menu-item-lang {
+          float: left;
+          padding: 0.25rem 1rem;
+          font-size: calc(var(--gap) * 1.5);
         }
       }
     }
@@ -129,12 +122,12 @@
   .dropdown-toggle {
     color: var(--dropdown-toggle-color);
     line-height: normal;
-    font-size: calc(var(--gap) * 4.33);
+    font-size: calc(var(--gap) * 3.33);
     text-align: center;
 
     .icon {
       color: var(--navbar-text-color);
-      margin-left: calc(var(--gap) * 1.66);
+      margin-left: calc(var(--gap) * 0.5);
       margin-top: calc(var(--gap) * 0.5);
     }
 
@@ -177,7 +170,7 @@
     background-color: var(--base-bright);
     height: 80%;
     overflow-y: auto;
-    
+
     &-content {
       padding-top: calc(var(--gap) * 1.5);
       padding-bottom: calc(var(--gap) * 1.5);

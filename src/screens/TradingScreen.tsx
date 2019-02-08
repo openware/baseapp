@@ -1,5 +1,10 @@
 import { Grid, TabPanel } from '@openware/components';
 import * as React from 'react';
+import {
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
 import {connect, MapDispatchToPropsFunction, MapStateToProps} from 'react-redux';
 import {
     Asks,
@@ -140,19 +145,6 @@ const layouts = {
     ],
 };
 
-const renderTabs = () => {
-    return [
-        {
-          content: <RecentTrades/>,
-          label: 'Recent Trades',
-        },
-        {
-            content: <OpenOrdersComponent/>,
-            label: 'Open Orders',
-        },
-    ];
-};
-
 const gridItems = [
     {
         i: 0,
@@ -199,9 +191,13 @@ interface DispatchProps {
     setCurrentPrice: typeof setCurrentPrice;
 }
 
-type Props = DispatchProps & ReduxProps;
+type Props = DispatchProps & ReduxProps & InjectedIntlProps;
 
 class Trading extends React.Component<Props> {
+    //tslint:disable-next-line:no-any
+    public static propsTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
     public async componentDidMount() {
         const { wallets, markets, userLoggedIn, rangerState: { connected } } = this.props;
 
@@ -227,17 +223,34 @@ class Trading extends React.Component<Props> {
         }
     }
 
+    public translate = (e: string) => {
+        return this.props.intl.formatMessage({id: e});
+    };
+
+    public renderTabs = () => {
+        return [
+            {
+              content: <RecentTrades/>,
+              label: this.translate('page.body.trade.header.recentTrades'),
+            },
+            {
+                content: <OpenOrdersComponent/>,
+                label: this.translate('page.body.trade.header.openOrders'),
+            },
+        ];
+    };
+
     public renderTrades() {
       if (this.props.user.uid) {
         return (
-          <div className="pg-trading-screen__tab-panel"><TabPanel  panels={renderTabs()} /></div>
+          <div className="pg-trading-screen__tab-panel"><TabPanel  panels={this.renderTabs()} /></div>
         );
       } else {
         return (
           <React.Fragment>
             <div className="cr-table-header__content">
                 <div className={'pg-market-depth__title'}>
-                      Recent Trades
+                      {this.translate('page.body.trade.header.recentTrades')}
                 </div>
               </div>
             <RecentTrades/>
@@ -283,7 +296,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
 });
 
-const TradingScreen = connect(mapStateToProps, mapDispatchToProps)(Trading);
+const TradingScreen = injectIntl(connect(mapStateToProps, mapDispatchToProps)(Trading));
 
 export {
     TradingScreen,

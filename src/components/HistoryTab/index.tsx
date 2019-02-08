@@ -1,35 +1,53 @@
-import {
-  TabPanel,
-} from '@openware/components';
+import { TabPanel } from '@openware/components';
 import * as React from 'react';
+import {
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
 import {
     connect,
     MapDispatchToPropsFunction,
 } from 'react-redux';
 import {
-    depositsFetch,
+    fetchHistory,
     marketsFetch,
-    tradesFetch,
+    resetHistory,
     walletsFetch,
-    withdrawsFetch,
 } from '../../modules';
-import { HistoryElement } from './component';
+import { HistoryElement } from './HistoryElement';
+
 
 interface DispatchProps {
+    resetHistory: typeof resetHistory;
     fetchMarkets: typeof marketsFetch;
     fetchWallets: typeof walletsFetch;
-    getDeposit: typeof depositsFetch;
-    getTrade: typeof tradesFetch;
-    getWithdraw: typeof withdrawsFetch;
+    fetchHistory: typeof fetchHistory;
 }
 
-type Props = DispatchProps;
+type Props = DispatchProps & InjectedIntlProps;
 
-class History extends React.Component<Props> {
+interface State {
+    tab: string;
+}
+
+class History extends React.Component<Props, State> {
+    //tslint:disable-next-line:no-any
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
+    public state = { tab: 'deposits' };
+
+    public tabMapping = ['deposits', 'withdraws', 'trades'];
+
     public componentDidMount() {
         this.props.fetchMarkets();
         this.props.fetchWallets();
-        this.props.getDeposit();
+    }
+
+    public componentWillUnmount() {
+        this.props.resetHistory();
     }
 
     public render() {
@@ -46,41 +64,40 @@ class History extends React.Component<Props> {
     }
 
     private handleMakeRequest = (index: number) => {
-        const tabs = this.renderTabs();
-        tabs[index].loadData();
+        if (this.state.tab === this.tabMapping[index]) {
+            return;
+        }
+        this.props.resetHistory();
+        this.setState({ tab: this.tabMapping[index] });
     };
 
     private renderTabs = () => {
+        const { tab } = this.state;
         return [
             {
-                content: <HistoryElement type="deposit" />,
-                label: 'Deposit History',
-                loadData: this.props.getDeposit,
+                content: tab === 'deposits' ? <HistoryElement type="deposits" /> : null,
+                label: this.props.intl.formatMessage({id: 'page.body.history.deposit'}),
             },
             {
-                content: <HistoryElement type="withdraw"/>,
-                label: 'Withdraw History',
-                loadData: this.props.getWithdraw,
+                content: tab === 'withdraws' ? <HistoryElement type="withdraws" /> : null,
+                label: this.props.intl.formatMessage({id: 'page.body.history.withdraw'}),
             },
             {
-                content: <HistoryElement type="trade" />,
-                label: 'Trade History',
-                loadData: this.props.getTrade,
+                content: tab === 'trades' ? <HistoryElement type="trades" /> : null,
+                label: this.props.intl.formatMessage({id: 'page.body.history.trade'}),
             },
         ];
     };
-
 }
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     fetchMarkets: () => dispatch(marketsFetch()),
     fetchWallets: () => dispatch(walletsFetch()),
-    getDeposit: () => dispatch(depositsFetch()),
-    getTrade: () => dispatch(tradesFetch()),
-    getWithdraw: () => dispatch(withdrawsFetch()),
+    fetchHistory: payload => dispatch(fetchHistory(payload)),
+    resetHistory: () => dispatch(resetHistory()),
 });
 
-const HistoryTab = connect(null, mapDispatchToProps)(History);
+const HistoryTab = injectIntl(connect(null, mapDispatchToProps)(History));
 
 export {
     HistoryTab,

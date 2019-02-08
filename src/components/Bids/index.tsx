@@ -1,6 +1,7 @@
 import { Loader, OrderBook } from '@openware/components';
 import classNames from 'classnames';
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
 import {
     connect,
     MapDispatchToPropsFunction,
@@ -33,9 +34,14 @@ interface DispatchProps {
     setCurrentPrice: typeof setCurrentPrice;
 }
 
-type Props = ReduxProps & DispatchProps;
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class OrderBookContainer extends React.Component<Props> {
+    //tslint:disable-next-line:no-any
+    public static propsTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
     public render() {
         const { bids, bidsLoading, asks } = this.props;
         const cn = classNames('', {
@@ -52,8 +58,8 @@ class OrderBookContainer extends React.Component<Props> {
     private orderBook = (bids, asks) => (
         <OrderBook
             side={'right'}
-            title={'Bids'}
-            headers={['Volume', 'Amount', 'Price']}
+            title={this.props.intl.formatMessage({id: 'page.body.trade.header.bids'})}
+            headers={this.renderHeaders()}
             data={renderOrderBook(bids, 'bids', this.props.currentMarket)}
             rowBackgroundColor={'rgba(84, 180, 137, 0.5)'}
             maxVolume={calcMaxVolume(bids, asks)}
@@ -61,6 +67,14 @@ class OrderBookContainer extends React.Component<Props> {
             onSelect={this.handleOnSelect}
         />
     );
+
+    private renderHeaders = () => {
+        return [
+            this.props.intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'}),
+            this.props.intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'}),
+            this.props.intl.formatMessage({id: 'page.body.trade.orderbook.header.price'}),
+        ];
+     }
 
     private handleOnSelect = (index: number) => {
         const { bids, currentPrice } = this.props;
@@ -86,7 +100,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     });
 
-const Bids = connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer);
+const Bids = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer));
 type BidsProps = ReduxProps;
 
 export {

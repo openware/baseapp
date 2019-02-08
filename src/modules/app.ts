@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
 import { authReducer, AuthState } from './auth';
 import { contactReducer, ContactState } from './contact';
-import { currencyHistoryReducer, CurrencyHistoryState } from './history/currencyHistory';
-import { depositsReducer, DepositsState } from './history/deposits';
-import { PrivateTradesState, tradesReducer } from './history/trades';
-import { withdrawsReducer, WithdrawsState } from './history/withdraws';
+import { historyReducer, HistoryState } from './history';
+import { changeLanguageReducer, LanguageState } from './i18n';
 import {
     documentsReducer,
     DocumentsState,
@@ -33,10 +31,7 @@ import { walletsReducer, WalletsState } from './wallets';
 export interface AppState {
     auth: AuthState;
     contact: ContactState;
-    deposits: DepositsState;
-    trades: PrivateTradesState;
     recentTrades: RecentTradesState;
-    withdraws: WithdrawsState;
     orders: OrdersState;
     password: PasswordState;
     profile: ProfileState;
@@ -48,19 +43,17 @@ export interface AppState {
     markets: MarketsState;
     orderBook: OrderBookState;
     depth: DepthState;
-    currencyHistory: CurrencyHistoryState;
+    history: HistoryState;
     userActivity: UserActivityState;
     ranger: RangerState;
+    i18n: LanguageState;
 }
 
 export const appReducer = combineReducers({
     auth: authReducer,
     contact: contactReducer,
-    deposits: depositsReducer,
-    trades: tradesReducer,
     label: labelReducer,
     recentTrades: recentTradesReducer,
-    withdraws: withdrawsReducer,
     orders: ordersReducer,
     password: passwordReducer,
     profile: profileReducer,
@@ -71,7 +64,8 @@ export const appReducer = combineReducers({
     markets: marketsReducer,
     orderBook: orderBookReducer,
     depth: depthReducer,
-    currencyHistory: currencyHistoryReducer,
+    history: historyReducer,
     userActivity: userActivityReducer,
     ranger: rangerReducer,
+    i18n: changeLanguageReducer,
 });

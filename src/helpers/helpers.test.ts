@@ -223,4 +223,11 @@ describe('Helpers', () => {
         const result = helpers.sortBids(bids);
         expect(result).toEqual(sortedArray);
     });
+
+    // getLanguageByCode.ts
+    it('should return correct language name', () => {
+        expect(helpers.getLanguageName('en')).toEqual('English');
+        expect(helpers.getLanguageName('ru')).toEqual('Русский');
+        expect(helpers.getLanguageName('asd')).toEqual('English');
+    });
 });

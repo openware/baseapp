@@ -1,6 +1,9 @@
 /* tslint:disable jsx-no-lambda  jsx-no-multiline-js */
 import { Checkbox } from '@openware/components';
 import * as React from 'react';
+import {
+    FormattedMessage,
+} from 'react-intl';
 
 interface ProfileTwoFactorAuthProps {
     is2faEnabled: boolean;
@@ -11,7 +14,9 @@ interface ProfileTwoFactorAuthState {
     is2faEnabled: boolean;
 }
 
-class ProfileTwoFactorAuth extends React.Component<ProfileTwoFactorAuthProps, ProfileTwoFactorAuthState> {
+type Props = ProfileTwoFactorAuthProps;
+
+class ProfileTwoFactorAuthComponent extends React.Component<Props, ProfileTwoFactorAuthState> {
     constructor(props: ProfileTwoFactorAuthProps) {
         super(props);
 
@@ -25,8 +30,11 @@ class ProfileTwoFactorAuth extends React.Component<ProfileTwoFactorAuthProps, Pr
         return (
             <React.Fragment>
                 <label>
-                  <p>Two-factor authentication</p>
-                  <span>2FA - {is2faEnabled ? 'Enable' : 'Disable'}</span>
+                    <p><FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication" /></p>
+                    <span>
+                        {is2faEnabled ? <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.message.enable" />
+                                      : <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.message.disable" />}
+                    </span>
                 </label>
                 <Checkbox
                     checked={is2faEnabled}
@@ -44,6 +52,4 @@ class ProfileTwoFactorAuth extends React.Component<ProfileTwoFactorAuthProps, Pr
     }
 }
 
-export {
-    ProfileTwoFactorAuth,
-};
+export const ProfileTwoFactorAuth = ProfileTwoFactorAuthComponent;

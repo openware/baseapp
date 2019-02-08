@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OpenOrders should render 1`] = `
-<Connect(Connect(OpenOrdersContainer))
+<Connect(InjectIntl(Connect(OpenOrdersContainer)))
   currentMarket={
     Object {
       "ask_fee": "0.0015",

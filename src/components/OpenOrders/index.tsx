@@ -2,6 +2,7 @@ import { Loader, OpenOrders } from '@openware/components';
 import classnames from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDate, preciseData } from '../../helpers';
 import { RootState } from '../../modules';
@@ -25,10 +26,13 @@ interface DispatchProps {
     orderCancel: typeof orderCancelFetch;
 }
 
-type Props = ReduxProps & DispatchProps;
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 export class OpenOrdersContainer extends React.Component<Props> {
-
+    //tslint:disable-next-line:no-any
+    public static propsTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
     public componentDidMount() {
         if (this.props.currentMarket){
             this.props.orderHistory({market: [this.props.currentMarket], state: 'wait'});
@@ -54,10 +58,26 @@ export class OpenOrdersContainer extends React.Component<Props> {
         );
     }
 
+    public translate = (e: string) => {
+        return this.props.intl.formatMessage({id: e});
+    };
+
+    private renderHeaders = () => {
+       return [
+           this.translate('page.body.trade.header.openOrders.content.date'),
+           this.translate('page.body.trade.header.openOrders.content.action'),
+           this.translate('page.body.trade.header.openOrders.content.price'),
+           this.translate('page.body.trade.header.openOrders.content.amount'),
+           this.translate('page.body.trade.header.openOrders.content.total'),
+           this.translate('page.body.trade.header.openOrders.content.filled'),
+           '',
+         ];
+     }
+
     private openOrders = () => (
         <OpenOrders
-            headers={['Date', 'Action', 'Price', 'Amount', 'Total', 'Filled', '']}
-            data={OpenOrdersContainer.renderData(this.props.openOrdersData, (this.props.currentMarket ? this.props.currentMarket.bid_precision : 0), (this.props.currentMarket ? this.props.currentMarket.ask_precision : 0))}
+            headers={this.renderHeaders()}
+            data={this.renderData(this.props.openOrdersData)}
             onCancel={this.handleCancel}
         />
     );
@@ -67,26 +87,36 @@ export class OpenOrdersContainer extends React.Component<Props> {
         return localeDate(time);
     };
 
-    public static renderData = (data: Order[], priceFixed, amountFixed) => {
+    // tslint:disable
+    private renderData = (data: Order[]) => {
         const renderRow = item => {
-            const { price, created_at, remaining_volume, origin_volume, kind, side, executed_volume, volume } = item;
-            const resultSide = kind ? kind : side === 'sell' ? 'ask' : 'bid';
-            const remaining = remaining_volume || origin_volume;
-            const total = remaining * price;
-            const executed = executed_volume || (volume - remaining_volume);
-            const filled = isNaN((executed / volume * 100)) ? '0.00' : (executed / volume * 100).toFixed(2);
+          const { price, created_at, remaining_volume, origin_volume, kind, side, executed_volume, volume } = item;
+          const resultSide = this.getType(side, kind);
+          const remaining = remaining_volume || origin_volume;
+          const total = remaining * price;
+          const executed = executed_volume || (volume - remaining_volume);
+          const filled = (executed / volume * 100).toFixed(2);
+          const priceFixed = this.props.currentMarket ? this.props.currentMarket.bid_precision : 0;
+          const amountFixed = this.props.currentMarket ? this.props.currentMarket.ask_precision : 0;
 
-            return [OpenOrdersContainer.getDate(created_at), resultSide, preciseData(price, priceFixed),
-                preciseData(remaining, amountFixed), preciseData(total, amountFixed), `${filled}%`, ''];
+          return [OpenOrdersContainer.getDate(created_at), resultSide, preciseData(price, priceFixed), preciseData(remaining, amountFixed), preciseData(total, amountFixed), `${filled}%`, ''];
         };
 
         return (data.length > 0)
-            ? OpenOrdersContainer.sortDataByDateTime(data).map(renderRow)
+            ? this.sortDataByDateTime(data).map(renderRow)
             : [['There is no data to show...']];
     };
 
+    private getType = (side: string, kind: string) => {
+        if (kind) {
+            return kind;
+        }
 
-    private static sortDataByDateTime = (data: Order[]) => {
+        return side === 'sell' ? this.props.intl.formatMessage({id: `page.body.trade.header.openOrders.content.ask`})
+                                : this.props.intl.formatMessage({id: `page.body.trade.header.openOrders.content.bid`});
+    }
+
+    private sortDataByDateTime(data: Order[]) {
         const sortByDateTime = (a: Order, b: Order) =>
             moment(a.created_at) < moment(b.created_at) ? 1 : -1;
         const dataToSort = [...data];
@@ -97,7 +127,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
 
     private handleCancel = (index: number) => {
         const { openOrdersData } = this.props;
-        const orderToDelete = OpenOrdersContainer.sortDataByDateTime(openOrdersData)[index];
+        const orderToDelete = this.sortDataByDateTime(openOrdersData)[index];
         this.props.orderCancel({ id: orderToDelete.id });
     };
 }
@@ -115,7 +145,6 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 export type OpenOrdersProps = ReduxProps;
-export const renderData = OpenOrdersContainer.renderData;
 
 export const OpenOrdersComponent =
-    connect(mapStateToProps, mapDispatchToProps)(OpenOrdersContainer);
+    injectIntl(connect(mapStateToProps, mapDispatchToProps)(OpenOrdersContainer));

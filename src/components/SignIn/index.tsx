@@ -1,6 +1,10 @@
-import { SignInForm, SignInFormValues } from '@openware/components';
 import cx from 'classnames';
 import * as React from 'react';
+import {
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
 import {
     connect,
     MapDispatchToPropsFunction,
@@ -19,6 +23,7 @@ import {
     signInError,
 } from '../../modules';
 import { TwoFactorAuth } from '../TwoFactorAuth';
+import { SignInForm, SignInFormValues } from './SignInForm';
 
 interface ReduxProps {
     isLoggedIn: boolean;
@@ -37,9 +42,14 @@ interface SignInState {
     password: string;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps;
+type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 
 class SignInComponent extends React.Component<Props, SignInState> {
+    //tslint:disable-next-line:no-any
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
     public state = {
         email: '',
         password: '',
@@ -73,6 +83,12 @@ class SignInComponent extends React.Component<Props, SignInState> {
         const { loading, error } = this.props;
         return (
             <SignInForm
+                labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
+                labelSignUp={this.props.intl.formatMessage({ id: 'page.header.signUp'})}
+                emailLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.email'})}
+                passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.password'})}
+                receiveConfirmationLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.receiveConfirmation'})}
+                forgotPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.forgotPassword'})}
                 errorMessage={error && error.message}
                 isLoading={loading}
                 onForgotPassword={this.forgotPassword}
@@ -134,7 +150,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line no-any
-const SignIn = withRouter(connect(mapStateToProps, mapDispatchProps)(SignInComponent) as any);
+const SignIn = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(SignInComponent) as any));
 
 export {
     SignIn,

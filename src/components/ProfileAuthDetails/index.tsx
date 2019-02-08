@@ -4,6 +4,7 @@ import {
 } from '@openware/components';
 import { History } from 'history';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
@@ -68,12 +69,12 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
                     </div>
                 </div>
                 <div className="pg-profile-page__row">
-                        <ChangePassword
-                            error={passwordChangeError}
-                            onClearError={this.props.clearPasswordChangeError}
-                            onSubmit={this.handleChangePassword}
-                            success={passwordChangeSuccess}
-                        />
+                    <ChangePassword
+                        error={passwordChangeError}
+                        onClearError={this.props.clearPasswordChangeError}
+                        onSubmit={this.handleChangePassword}
+                        success={passwordChangeSuccess}
+                    />
                 </div>
                 <div className="pg-profile-page__row">
                     <ProfileTwoFactorAuth
@@ -94,7 +95,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
     private renderModalHeader = () => {
         return (
             <div className="pg-exchange-modal-submit-header">
-                Two-factor authentication is enabled
+                <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalHeader"/>
             </div>
         );
     };
@@ -103,7 +104,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
         return (
             <div className="pg-exchange-modal-submit-body">
                 <h2>
-                    Please сontact administrator to disable it.
+                    <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalBody"/>
                 </h2>
             </div>
         );

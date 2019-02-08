@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Label, labelFetch, RootState, selectLabelData, selectUserInfo, User } from '../../modules';
@@ -67,15 +68,15 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                 <div className="pg-confirm__progress">
                     <div className={cx}>
                         <div className="pg-confirm__progress-circle-1">
-                          <span className="pg-confirm__title-text pg-confirm__active-1">Phone Verification</span>
+                          <span className="pg-confirm__title-text pg-confirm__active-1"><FormattedMessage id="page.body.kyc.head.phone"/></span>
                         </div>
                         <div className="pg-confirm__progress-line-1" />
                         <div className="pg-confirm__progress-circle-2">
-                          <span className="pg-confirm__title-text pg-confirm__active-2">Identity Verification</span>
+                          <span className="pg-confirm__title-text pg-confirm__active-2"><FormattedMessage id="page.body.kyc.head.identity"/></span>
                         </div>
                         <div className="pg-confirm__progress-line-2" />
                         <div className="pg-confirm__progress-circle-3">
-                          <span className="pg-confirm__title-text pg-confirm__active-3">Document Verification</span>
+                          <span className="pg-confirm__title-text pg-confirm__active-3"><FormattedMessage id="page.body.kyc.head.document"/></span>
                         </div>
                     </div>
                 </div>

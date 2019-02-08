@@ -1,5 +1,10 @@
 import { Decimal, Table } from '@openware/components';
 import * as React from 'react';
+import {
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDateSec, setTradeColor } from '../../helpers';
 import {
@@ -24,9 +29,14 @@ interface DispatchProps {
     setCurrentPrice: typeof setCurrentPrice;
 }
 
-type Props = DispatchProps & ReduxProps;
+type Props = DispatchProps & ReduxProps & InjectedIntlProps;
 
 class RecentTradesComponent extends React.Component<Props> {
+    //tslint:disable-next-line:no-any
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
     public componentWillReceiveProps(next: Props) {
         if (next.currentMarket && this.props.currentMarket !== next.currentMarket) {
           this.props.tradesFetch(next.currentMarket);
@@ -44,12 +54,20 @@ class RecentTradesComponent extends React.Component<Props> {
             <div className="pg-recent-trades">
                 <Table
                     data={this.getTrades(this.props.recentTrades)}
-                    header={['Price', 'Amount', 'Time']}
+                    header={this.getHeaders()}
                     onSelect={this.handleOnSelect}
                 />
             </div>
         );
     }
+
+    private getHeaders = () => {
+        return [
+            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.price'}),
+            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.amount'}),
+            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.time'}),
+        ];
+    };
 
     private getTrades(trades: PublicTrade[]) {
         const priceFixed = this.props.currentMarket ? this.props.currentMarket.bid_precision : 0;
@@ -90,4 +108,4 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
 });
 
 
-export const RecentTrades = connect(mapStateToProps, mapDispatchToProps)(RecentTradesComponent);
+export const RecentTrades = injectIntl(connect(mapStateToProps, mapDispatchToProps)(RecentTradesComponent));

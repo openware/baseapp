@@ -3,6 +3,11 @@ import {
   Dropdown,
 } from '@openware/components';
 import * as React from 'react';
+import {
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
 import MaskInput from 'react-maskinput';
 import {
   connect,
@@ -40,20 +45,36 @@ interface DocumentsState {
     scan?: File;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps;
+type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 
+// tslint:disable:member-ordering
 class DocumentsComponent extends React.Component<Props, DocumentsState> {
+    //tslint:disable-next-line:no-any
+    public static propsTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
+    public translate = (e: string) => {
+        return this.props.intl.formatMessage({id: e});
+    };
+
+    public data = [
+        this.translate('page.body.kyc.documents.select.passport'),
+        this.translate('page.body.kyc.documents.select.identityCard'),
+        this.translate('page.body.kyc.documents.select.driverLicense'),
+        this.translate('page.body.kyc.documents.select.utilityBill'),
+    ];
+
     public state = {
-        documentsType: 'Passport',
+        documentsType: this.data[0],
         idNumber: '',
         expiration: '',
     };
 
-    //tslint:disable
     public componentWillReceiveProps(next: Props) {
-      if (next.success){
-        this.props.history.push('/profile');
-      }
+        if (next.success){
+            this.props.history.push('/profile');
+        }
     }
 
     public render() {
@@ -64,50 +85,49 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             scan,
         }: DocumentsState = this.state;
         const { error } = this.props;
-        const data = ['Passport', 'Identity card', 'Driver license', 'Utility Bill'];
 
-        const onSelect = value => this.handleChangeDocumentsType(data[value]);
-        const numberType = `${documentsType} Number`;
+        const onSelect = value => this.handleChangeDocumentsType(this.data[value]);
+        const numberType = `${documentsType}${this.translate('page.body.kyc.documents.number')}`;
         const scanName = scan && (scan.name.length > 30 ? `${scan.name.slice(0, 20)}...${scan.name.slice(-8)}` : scan.name);
 
         return (
-            <div>
+            <React.Fragment>
                 <div className="pg-confirm__content-documents">
-                        <div className="pg-confirm__content-documents-col-row">
-                          <div className="pg-confirm__content-documents-col">
+                    <div className="pg-confirm__content-documents-col-row">
+                        <div className="pg-confirm__content-documents-col">
                             <div className="pg-confirm__content-documents-col-row">
-                              <div className="pg-confirm__content-documents-col-row-content-3">
-                                  <Dropdown
+                                <div className="pg-confirm__content-documents-col-row-content-3">
+                                    <Dropdown
+                                        className="pg-confirm__content-documents-col-row-content-number"
+                                        list={this.data}
+                                        onSelect={onSelect}
+                                    />
+                                </div>
+                                <div className="pg-confirm__content-documents-col-row-content">
+                                    <input
                                       className="pg-confirm__content-documents-col-row-content-number"
-                                      list={data}
-                                      onSelect={onSelect}
-                                  />
-                              </div>
-                              <div className="pg-confirm__content-documents-col-row-content">
-                                <input
-                                  className="pg-confirm__content-documents-col-row-content-number"
-                                  type="string"
-                                  placeholder={numberType}
-                                  value={idNumber}
-                                  onChange={this.handleChangeIdNumber}
-                                />
-                              </div>
-                              <div className="pg-confirm__content-documents-col-row-content">
-                                <MaskInput
-                                  maskString="00/00/0000"
-                                  mask="00/00/0000"
-                                  onChange={this.handleChangeExpiration}
-                                  value={expiration}
-                                  className="group-input"
-                                  placeholder="Expiry Date DD/MM/YYYY"
-                                />
+                                      type="string"
+                                      placeholder={numberType}
+                                      value={idNumber}
+                                      onChange={this.handleChangeIdNumber}
+                                    />
+                                </div>
+                                <div className="pg-confirm__content-documents-col-row-content">
+                                    <MaskInput
+                                      maskString="00/00/0000"
+                                      mask="00/00/0000"
+                                      onChange={this.handleChangeExpiration}
+                                      value={expiration}
+                                      className="group-input"
+                                      placeholder={this.translate('page.body.kyc.documents.expiryDate')}
+                                    />
+                                </div>
                             </div>
-                          </div>
                         </div>
                         <div className="pg-confirm__content-documents-col pg-confirm__content-documents-drag">
                             <div className="pg-confirm__content-documents-col-row">
                                 <div className="pg-confirm__content-documents-col-row-content-2">
-                                    Upload your ID Photo
+                                    {this.translate('page.body.kyc.documents.upload')}
                                     <div className="pg-confirm__content-documents-col-row-content-2-documents">
                                         <form
                                             className="box"
@@ -133,9 +153,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                                     className="pg-confirm__content-documents-col-row-content-2-documents-label-item"
                                                     htmlFor="file"
                                                 >
-                                                    <p className="active">Drag and drop or browse files</p>
-                                                    <div className="muted">Maximum file size is 20MB</div>
-                                                    <div className="muted">Maximum number of files is 5</div>
+                                                    <p className="active">{this.translate('page.body.kyc.documents.drag')}</p>
+                                                    <div className="muted">{this.translate('page.body.kyc.documents.maxFile')}</div>
+                                                    <div className="muted">{this.translate('page.body.kyc.documents.maxNum')}</div>
                                                 </label>
                                             </div>
                                         </form>
@@ -150,11 +170,11 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                 <div className="pg-confirm__content-deep">
                     <Button
                         className="pg-confirm__content-phone-deep-button"
-                        label="Next"
+                        label={this.translate('page.body.kyc.next')}
                         onClick={this.sendDocuments}
                     />
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 
@@ -223,16 +243,17 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
       event.stopPropagation();
     }
 
-    // tslint:disable
     private sendDocuments = () => {
         const {
             scan,
             idNumber,
             expiration,
             documentsType,
-
         }: DocumentsState = this.state;
-        const doc_expire = this.checkDate(expiration) ? expiration : '';
+
+        const docExpire = this.checkDate(expiration) ? expiration : '';
+
+        const typeOfDocuments = this.getDocumentsType(documentsType);
 
         if (!scan) {
             return;
@@ -241,11 +262,21 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         const request = new FormData();
 
         request.append('upload[]', scan);
-        request.append('doc_expire', doc_expire);
-        request.append('doc_type', documentsType);
+        request.append('doc_expire', docExpire);
+        request.append('doc_type', typeOfDocuments);
         request.append('doc_number', idNumber);
 
         this.props.sendDocuments(request);
+    };
+
+    private getDocumentsType = (value: string) => {
+        switch (value) {
+           case this.data[0]: return 'Passport';
+           case this.data[1]: return 'Identity Card';
+           case this.data[2]: return 'Driver License';
+           case this.data[3]: return 'Utility Bill';
+           default: return value;
+        }
     };
 }
 
@@ -259,5 +290,5 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         sendDocuments: payload => dispatch(sendDocuments(payload)),
     });
 
-// tslint:disable-next-line
-export const Documents = withRouter(connect(mapStateToProps, mapDispatchProps)(DocumentsComponent) as any);
+// tslint:disable-next-line:no-any
+export const Documents = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(DocumentsComponent) as any));

@@ -5,6 +5,7 @@ import {
 } from '@openware/components';
 import { History } from 'history';
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
 import {
     connect,
     MapDispatchToProps,
@@ -41,13 +42,17 @@ interface DispatchProps {
     enableUser2fa: typeof enableUser2fa;
 }
 
-type Props = RouterProps & ReduxProps & DispatchProps;
+type Props = RouterProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
 interface State {
     otpCode: string;
 }
 
 class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
+    //tslint:disable-next-line:no-any
+    public static propsTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
     public state = {
         otpCode: '',
     };
@@ -58,6 +63,9 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
             this.props.generateQR();
         }
     }
+    public translate = (e: string) => {
+        return this.props.intl.formatMessage({id: e});
+    };
 
     public componentWillReceiveProps(next: Props) {
         if (!this.props.success && next.success) {
@@ -87,26 +95,27 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
         const secretRegex = /secret=(\w+)/;
         const secretMatch = qrUrl.match(secretRegex);
         const secret = secretMatch ? secretMatch[1] : null;
-        const actionLabel = enable2fa ? 'Enable' : 'Disable';
         const submitHandler = enable2fa ? this.handleEnable2fa : this.handleDisable2fa;
 
         return (
             <div className="pg-profile-two-factor-auth__form">
                 <div className="pg-profile-two-factor-auth__header">
                     <h1 className="pg-profile-two-factor-auth__title">
-                        {`${actionLabel} two factor authentication`}
+                        {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.header')}
                     </h1>
                     {enable2fa && this.renderTwoFactorAuthQR(barcode)}
                 </div>
                 <div className="pg-profile-two-factor-auth__form-group">
-                    <label className="pg-profile-two-factor-auth-form-group__label">6-digit Google Authenticator code</label>
+                    <label className="pg-profile-two-factor-auth-form-group__label">
+                      {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
+                    </label>
                     <Input
                         onChangeValue={this.handleOtpCodeChange}
                         type="tel"
                         value={otpCode}
                     />
                 </div>
-                <Button label={`${actionLabel} 2FA`} onClick={submitHandler} />
+                <Button label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.enable')} onClick={submitHandler} />
                 <p className="pg-profile-two-factor-auth__error">{error && error.message}</p>
                 {enable2fa && secret && this.renderSecret(secret)}
             </div>
@@ -122,9 +131,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
         return (
             <React.Fragment>
                 <p className="pg-profile-two-factor-auth__info">
-                    This is your secret code that can be used to get access to your
-                    2fa code from different devices and to restore access if your device was lost.
-                    Be sure to save the code
+                    {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.info')}
                 </p>
                 {secret && <CopyableTextField value={secret} fieldId="secret-2fa" />}
             </React.Fragment>
@@ -174,7 +181,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     enableUser2fa: () => dispatch(enableUser2fa()),
 });
 
-const connected = connect(mapStateToProps, mapDispatchToProps)(ToggleTwoFactorAuthComponent);
+const connected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ToggleTwoFactorAuthComponent));
 // tslint:disable-next-line
 const ToggleTwoFactorAuth = withRouter(connected as any);
 

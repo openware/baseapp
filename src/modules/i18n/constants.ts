@@ -1,0 +1,1 @@
+export const CHANGE_LANGUAGE = 'i18n/CHANGE_LANGUAGE';

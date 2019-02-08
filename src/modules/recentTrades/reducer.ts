@@ -1,7 +1,7 @@
 import { defaultStorageLimit } from '../../api';
 import { localeDate } from '../../helpers/localeDate';
 import { getTimezone } from '../../helpers/timezone';
-import { PublicTrade } from '../history/trades';
+import { PublicTrade } from '../history';
 import { CommonState } from '../types';
 import { RecentTradesActions } from './actions';
 import {

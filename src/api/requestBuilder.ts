@@ -20,6 +20,7 @@ export interface JsonBody {
 
 export interface RequestOptions {
     apiVersion: 'applogic' | 'peatio' | 'barong';
+    withHeaders?: boolean;
 }
 
 export interface Request {
@@ -89,7 +90,13 @@ export const makeRequest = async (request: Request, configData: RequestOptions) 
     return new Promise((resolve, reject) => {
         const axiosRequest: AxiosPromise = axios(requestConfig);
         axiosRequest
-            .then((response: AxiosResponse) => resolve(response.data))
+            .then((response: AxiosResponse) => {
+                if (configData.withHeaders) {
+                    resolve(response);
+                } else {
+                    resolve(response.data);
+                }
+            })
             .catch((error: AxiosError) => {
                 reject(formatError(error));
             });

@@ -1,5 +1,6 @@
 import { Button } from '@openware/components';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link, withRouter } from 'react-router-dom';
 import { LegalDocuments } from '../LegalDocuments';
 
@@ -19,13 +20,15 @@ class Foot extends React.Component<{}, FooterState> {
           <React.Fragment>
           {!['/confirm'].some(r=> location.pathname.includes(r)) &&
             <footer className="pg-footer">
-                <span className="pg-footer__link" onClick={this.toggleModal}>Legal documents</span>
+                <span className="pg-footer__link" onClick={this.toggleModal}>
+                    <FormattedMessage id="page.footer.legalDocuments"/>
+                </span>
                 <LegalDocuments
                     isOpen={showModal}
                     footer={<Button label={'Ok'} onClick={this.toggleModal}/>}
                 />
                 <Link className="pg-footer__link" to="/help">
-                    FAQ
+                    <FormattedMessage id="page.footer.faq"/>
                 </Link>
             </footer>
           }

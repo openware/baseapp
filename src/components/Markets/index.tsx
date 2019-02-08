@@ -1,8 +1,12 @@
 import { Decimal, Loader, Markets } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import {
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-// import { preciseData } from '../../helpers';
 import { RootState, selectUserInfo, setCurrentPrice, User } from '../../modules';
 import {
     Market,
@@ -34,9 +38,19 @@ interface DispatchProps {
     setCurrentPrice: typeof setCurrentPrice;
 }
 
-type Props = ReduxProps & DispatchProps;
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class MarketsContainer extends React.Component<Props> {
+    //tslint:disable-next-line:no-any
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
+    private headers = [
+        this.props.intl.formatMessage({id: 'page.body.trade.header.markets.content.pair'}),
+        this.props.intl.formatMessage({id: 'page.body.trade.header.markets.content.price'}),
+        this.props.intl.formatMessage({id: 'page.body.trade.header.markets.content.change'}),
+    ];
 
     public componentDidMount() {
         if (this.props.markets.length === 0) {
@@ -61,8 +75,11 @@ class MarketsContainer extends React.Component<Props> {
             filters={false}
             data={this.mapMarkets()}
             onSelect={this.handleOnSelect}
+            headers={this.headers}
+            title={this.props.intl.formatMessage({id: 'page.body.trade.header.markets'})}
+            filterPlaceholder={this.props.intl.formatMessage({ id: 'page.body.trade.header.markets.content.search'})}
         />
-    )
+    );
 
     private mapMarkets() {
         const { markets, marketTickers } = this.props;
@@ -110,4 +127,4 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     });
 
-export const MarketsComponent = connect(mapStateToProps, mapDispatchToProps)(MarketsContainer);
+export const MarketsComponent = injectIntl(connect(mapStateToProps, mapDispatchToProps)(MarketsContainer));

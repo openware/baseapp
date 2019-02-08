@@ -1,10 +1,15 @@
-import { Button, Modal, SignUpForm, SignUpFormValues } from '@openware/components';
+import { Button, Modal } from '@openware/components';
 import cx from 'classnames';
 import * as React from 'react';
 import {
-  connect,
-  MapDispatchToPropsFunction,
-  MapStateToProps,
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
+import {
+    connect,
+    MapDispatchToPropsFunction,
+    MapStateToProps,
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
@@ -17,6 +22,7 @@ import {
     signUp,
     signUpError,
 } from '../../modules';
+import { SignUpForm, SignUpFormValues } from './SignUpForm';
 
 interface ReduxProps {
     requireVerification?: boolean;
@@ -29,9 +35,14 @@ interface DispatchProps {
     signUpError: typeof signUpError;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps;
+type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 
 class SignUpComponent extends React.Component<Props> {
+    //tslint:disable-next-line:no-any
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
     public readonly state = { showModal: false };
 
     public componentDidMount() {
@@ -52,6 +63,13 @@ class SignUpComponent extends React.Component<Props> {
             <div className="pg-sign-up-screen">
                 <div className={className}>
                     <SignUpForm
+                        labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
+                        labelSignUp={this.props.intl.formatMessage({ id: 'page.header.signUp'})}
+                        emailLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.email'})}
+                        passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.password'})}
+                        confirmPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.confirmPassword'})}
+                        referalCodeLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.referalCode'})}
+                        termsMessage={this.props.intl.formatMessage({ id: 'page.header.signUp.terms'})}
                         errorMessage={error && error.message}
                         isLoading={loading}
                         onSignIn={this.handleSignIn}
@@ -73,6 +91,7 @@ class SignUpComponent extends React.Component<Props> {
     private handleSignIn = () => {
         this.props.history.push('/signin');
     };
+
     private handleSignUp = ({ email, password, recaptcha_response }: SignUpFormValues) => {
         switch (captchaType()) {
             case 'none':
@@ -96,7 +115,7 @@ class SignUpComponent extends React.Component<Props> {
     private renderModalHeader = () => {
         return (
             <div className="pg-exchange-modal-submit-header">
-                VERIFY YOUR EMAIL ADDRESS
+                {this.props.intl.formatMessage({id: 'page.header.signUp.modal.header'})}
             </div>
         );
     };
@@ -105,10 +124,7 @@ class SignUpComponent extends React.Component<Props> {
         return (
             <div className="pg-exchange-modal-submit-body">
                 <h2>
-                    To complete the registration look for an
-                    email in your inbox that provides further
-                    instruction. If you cannot find the email,
-                    please check your spam email
+                    {this.props.intl.formatMessage({id: 'page.header.signUp.modal.body'})}
                 </h2>
             </div>
         );
@@ -147,8 +163,8 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         signUpError: (error: AuthError) => dispatch(signUpError(error)),
     });
 
-// tslint:disable-next-line
-const SignUp = withRouter(connect(mapStateToProps, mapDispatchProps)(SignUpComponent) as any);
+// tslint:disable-next-line:no-any
+const SignUp = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(SignUpComponent) as any));
 
 export {
     SignUp,

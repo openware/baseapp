@@ -1,6 +1,11 @@
 import { EmailForm } from '@openware/components';
 import * as React from 'react';
 import {
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
+import {
   connect,
   MapDispatchToPropsFunction,
   MapStateToProps,
@@ -26,9 +31,14 @@ interface DispatchProps {
     forgotPassword: typeof forgotPassword;
 }
 
-type Props = RouterProps & ReduxProps & DispatchProps;
+type Props = RouterProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
 class ForgotPasswordComponent extends React.Component<Props> {
+    //tslint:disable-next-line:no-any
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
     public render() {
         const { backendError } = this.props;
         return (
@@ -37,7 +47,7 @@ class ForgotPasswordComponent extends React.Component<Props> {
                     <div className="pg-forgot-password___form">
                         <EmailForm
                             OnSubmit={this.handleChangeEmail}
-                            title="Resend Confirmation"
+                            title={this.props.intl.formatMessage({id: 'page.resendConfirmation'})}
                             errorMessage={(backendError && backendError.message) ? backendError.message : ''}
                         />
                     </div>
@@ -62,7 +72,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line:no-any
-const ForgotPassword = withRouter(connect(mapStateToProps, mapDispatchProps)(ForgotPasswordComponent) as any);
+const ForgotPassword = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(ForgotPasswordComponent) as any));
 
 export {
     ForgotPassword,
