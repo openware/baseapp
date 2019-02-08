@@ -30,7 +30,7 @@ import { formatTicker, rangerSagas } from './sagas';
 
 // tslint:disable no-any no-magic-numbers no-console
 const debug = false;
-const echoServerPort = 9099;
+const echoServerPort = 9100;
 
 describe('Ranger module', () => {
     let store: MockStoreEnhanced;
@@ -83,7 +83,7 @@ describe('Ranger module', () => {
         bid_precision: 6,
     };
 
-    describe.skip('channels subscription flow', () => {
+    describe('channels subscription flow', () => {
         it('subscribes to market channels', () => {
             expect(rangerSubscribeMarket(marketExample)).toEqual({
                 type: RANGER_DIRECT_WRITE,
@@ -113,7 +113,7 @@ describe('Ranger module', () => {
         });
     });
 
-    describe.skip('support disconnect action', () => {
+    describe('support disconnect action', () => {
         it('disconnects and trigger disconnect action', async () => {
             return new Promise(resolve => {
                 store.subscribe(() => {
@@ -148,7 +148,7 @@ describe('Ranger module', () => {
 
     });
 
-    describe.skip('public events', () => {
+    describe('public events', () => {
         describe('markets tickers update', () => {
             const tickerEvents: { [pair: string]: TickerEvent } = {
                 ethzar: { name: 'ETH/ZAR', base_unit: 'eth', quote_unit: 'zar', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '8.0', sell: '70.0', buy: '69.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },
@@ -204,7 +204,7 @@ describe('Ranger module', () => {
             });
         });
 
-        describe.skip('market depth update', () => {
+        describe('market depth update', () => {
             const data = {
                 asks: [
                     ['0.0005', '97.4'],
@@ -255,7 +255,7 @@ describe('Ranger module', () => {
             });
         });
 
-        describe.skip('trades', () => {
+        describe('trades', () => {
             const tradeEvent: PublicTradeEvent = {
                 tid: 100022,
                 type: 'buy',
@@ -309,7 +309,7 @@ describe('Ranger module', () => {
 
     });
 
-    describe.skip('private events', () => {
+    describe('private events', () => {
         describe('should push new order', () => {
             const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'wait', volume: '0.1', origin_volume: '0.1' };
             const mockOrder = { order: data };
@@ -350,7 +350,7 @@ describe('Ranger module', () => {
             });
         });
 
-        describe.skip('should push close order', () => {
+        describe('should push close order', () => {
             const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'done', volume: '0.0', origin_volume: '0.1' };
             const mockOrder = { order: data };
             const expectedAction = {
@@ -390,7 +390,7 @@ describe('Ranger module', () => {
             });
         });
 
-        describe.skip('trade', () => {
+        describe('trade', () => {
             const privateTradeEvent: PrivateTradeEvent = {
                 id: 312,
                 kind: 'bid',

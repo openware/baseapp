@@ -112,9 +112,9 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
                             return;
 
                         // private
-                        // case 'trade':
-                        //     emitter(pushHistoryEmit(event));
-                        //     return;
+                        case 'trade':
+                            // emitter(pushHistoryEmit(event));
+                            return;
 
                         default:
                     }
@@ -186,40 +186,47 @@ function* bindSocket(channel: Channel<{}>, socket: WebSocket) {
     ]);
 }
 
+const delay = async (ms: number) => {
+    return new Promise(resolve => setTimeout(() => resolve(true), ms));
+};
+
 export function* rangerSagas() {
     let channel: Channel<{}>;
     let socket: WebSocket;
     let initialized = false;
+    let connectFetchPayload: RangerConnectFetch['payload'] | undefined;
 
     yield takeEvery(SET_CURRENT_MARKET, switchMarket());
 
     while (true) {
-        while (true) {
-            const { connectFetch, disconnectData } = yield race({
-                connectFetch: take(RANGER_CONNECT_FETCH),
-                disconnectData: take(RANGER_DISCONNECT_DATA),
-            });
+        const { connectFetch, disconnectData } = yield race({
+            connectFetch: take(RANGER_CONNECT_FETCH),
+            disconnectData: take(RANGER_DISCONNECT_DATA),
+        });
+        let market: Market | undefined;
 
-            if (connectFetch) {
-                if (initialized) {
-                    yield put(rangerDisconnectFetch());
-                    yield take(RANGER_DISCONNECT_DATA);
-                }
-
-                let market: Market | undefined;
-                try {
-                    market = yield select(selectCurrentMarket);
-                } catch (error) {
-                    market = undefined;
-                }
-
-                [channel, socket] = yield call(initRanger, connectFetch.payload, market);
-                initialized = true;
-                yield fork(bindSocket, channel, socket);
+        if (connectFetch) {
+            if (initialized) {
+                yield put(rangerDisconnectFetch());
+                yield take(RANGER_DISCONNECT_DATA);
             }
-            if (disconnectData) {
-                break;
-            }
+            connectFetchPayload = connectFetch.payload;
+        }
+
+        if (disconnectData) {
+            yield call(delay, 1000);
+        }
+
+        try {
+            market = yield select(selectCurrentMarket);
+        } catch (error) {
+            market = undefined;
+        }
+        if (connectFetchPayload) {
+            [channel, socket] = yield call(initRanger, connectFetchPayload, market);
+            initialized = true;
+            yield fork(bindSocket, channel, socket);
+
         }
     }
 }
