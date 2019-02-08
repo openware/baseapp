@@ -3,7 +3,7 @@
   "version": "2.1.4",
   "private": true,
   "dependencies": {
-    "@openware/components": "^2.0.5",
+    "@openware/components": "^2.0.7",
     "@openware/cryptofont": "^0.1.6",
     "axios": "^0.18.0",
     "bitcoincashjs": "0.1.10",
