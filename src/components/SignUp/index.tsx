@@ -1,5 +1,6 @@
 import { Button, Modal } from '@openware/components';
 import cx from 'classnames';
+import { History } from 'history';
 import * as React from 'react';
 import {
     InjectedIntlProps,
@@ -11,7 +12,6 @@ import {
     MapDispatchToPropsFunction,
     MapStateToProps,
 } from 'react-redux';
-import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { captchaType, siteKey } from '../../api';
 import {
@@ -33,7 +33,16 @@ interface DispatchProps {
     signUpError: typeof signUpError;
 }
 
+interface RouterProps {
+    location: {
+        search: string;
+    };
+    history: History;
+}
+
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+
+export const extractRefID = (props: RouterProps) => new URLSearchParams(props.location.search).get('ref_id');
 
 class SignUpComponent extends React.Component<Props> {
     //tslint:disable-next-line:no-any
@@ -55,6 +64,7 @@ class SignUpComponent extends React.Component<Props> {
 
     public render() {
         const { loading } = this.props;
+        const refId = this.extractRefID(this.props.location.search) || '';
 
         const className = cx('pg-sign-up-screen__container', { loading });
         return (
@@ -68,6 +78,7 @@ class SignUpComponent extends React.Component<Props> {
                         confirmPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.confirmPassword'})}
                         referalCodeLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.referalCode'})}
                         termsMessage={this.props.intl.formatMessage({ id: 'page.header.signUp.terms'})}
+                        refId={refId}
                         isLoading={loading}
                         onSignIn={this.handleSignIn}
                         onSignUp={this.handleSignUp}
@@ -88,13 +99,13 @@ class SignUpComponent extends React.Component<Props> {
     private handleSignIn = () => {
         this.props.history.push('/signin');
     };
-
-    private handleSignUp = ({ email, password, recaptcha_response }: SignUpFormValues) => {
+    private handleSignUp = ({ email, password, recaptcha_response, refId }: SignUpFormValues) => {
         switch (captchaType()) {
             case 'none':
                 this.props.signUp({
                     email,
                     password,
+                    refid: refId,
                 });
                 break;
             case 'recaptcha':
@@ -104,6 +115,7 @@ class SignUpComponent extends React.Component<Props> {
                     email,
                     password,
                     recaptcha_response,
+                    refid: refId,
                 });
                 break;
         }
@@ -147,6 +159,8 @@ class SignUpComponent extends React.Component<Props> {
         this.setState({showModal: false});
         this.props.history.push('/signin');
     }
+
+    private extractRefID = (url: string) => new URLSearchParams(url).get('ref_id');
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

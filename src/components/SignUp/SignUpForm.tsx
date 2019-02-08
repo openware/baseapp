@@ -301,7 +301,6 @@ class SignUpForm extends React.Component<SignUpFormProps, SignUpFormState> {
             confirmationError: '',
             emailError: '',
             passwordError: '',
-            refId: '',
         }, () => {
             this.props.onSignUp({email, password, recaptcha_response, refId});
         });

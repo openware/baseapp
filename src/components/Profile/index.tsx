@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { ProfileAccountActivity } from '../ProfileAccountActivity';
 import { ProfileAuthDetails } from '../ProfileAuthDetails';
 import { ProfileVerification } from '../ProfileVerification';
+import { ReferralProgram } from '../ReferralProgram';
+// import { ProfileTiers } from '../ProfileTiers';
 
 class ProfileComponent extends React.Component<RouterProps> {
     public goBack = () => {
@@ -12,26 +14,27 @@ class ProfileComponent extends React.Component<RouterProps> {
     }
 
     public render() {
-        return(
-              <div className="pg-container pg-profile-page">
-                <div className="pg-profile-page__details">
-                  <div className="pg-profile-page-header">
-                    <h3 className="pg-profile-page__text-purple">
-                        <FormattedMessage id="page.body.profile.header.account" />
-                    </h3>
-                  </div>
-                  <div className="pg-profile-page__details-box">
-                      <div className="pg-profile-page__left-col">
-                          <ProfileAuthDetails />
-                      </div>
-                      <div className="pg-profile-page__right-col">
-                          <ProfileVerification />
-                      </div>
-                  </div>
+      return(
+        <div className="pg-container pg-profile-page">
+          <div className="pg-profile-page__details">
+            <div className="pg-profile-page-header">
+              <h3 className="pg-profile-page__text-purple">
+                  <FormattedMessage id="page.body.profile.header.account" />
+              </h3>
+            </div>
+            <div className="pg-profile-page__details-box">
+                <div className="pg-profile-page__left-col">
+                    <ProfileAuthDetails />
                 </div>
-                  <ProfileAccountActivity />
-              </div>
-        );
+                <div className="pg-profile-page__right-col">
+                    <ProfileVerification />
+                </div>
+            </div>
+          </div>
+          <ReferralProgram />
+          <ProfileAccountActivity />
+        </div>
+      );
     }
 }
 

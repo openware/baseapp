@@ -21,7 +21,7 @@ export * from './ToggleTwoFactorAuth';
 export * from './ProfileAuthDetails';
 export * from './ProfileVerification';
 export * from './ProfileTiers';
-export * from './ProfileReferralProgram';
+export * from './ReferralProgram';
 export * from './ProfileAccountActivity';
 export * from './ModalWithdrawSubmit';
 export * from './ModalWithdrawConfirmation';
