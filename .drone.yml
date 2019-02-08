@@ -109,7 +109,9 @@ steps:
   - name: "Run integration testing"
     image: cypress/base:10
     commands:
-      - CYPRESS_baseUrl=http://www.devkube.com cypress run
+      - npm install --save-dev cypress
+      - export CYPRESS_baseUrl=http://www.devkube.com
+      - $(npm bin)/cypress run
     when:
       branch:
           - master
