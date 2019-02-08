@@ -72,7 +72,7 @@ class HistoryComponent extends React.Component<Props> {
         return (
           <div className={`pg-history-elem ${list.length ? '' : 'pg-history-elem-empty'}`}>
               {list.length ? this.renderContent() : null}
-              {!list.length && !fetching ? <p className="pg-history-elem__empty">No data to show</p> : null}
+              {!list.length && !fetching ? <p className="pg-history-elem__empty">{this.props.intl.formatMessage({id: 'page.noDataToShow'})}</p> : null}
           </div>
         );
     }

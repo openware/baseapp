@@ -73,14 +73,12 @@ class SignInForm extends React.Component<SignInFormProps, SignInFormState> {
             errorMessage,
             isLoading,
             onForgotPassword,
-            onConfirmationResend,
             onSignUp,
             image,
             labelSignIn,
             labelSignUp,
             emailLabel,
             passwordLabel,
-            receiveConfirmationLabel,
             forgotPasswordLabel,
         } = this.props;
         const buttonWrapperClass = cr('cr-sign-in-form__button-wrapper', {
@@ -155,12 +153,6 @@ class SignInForm extends React.Component<SignInFormProps, SignInFormState> {
                             />
                         </div>
                         <div className={'cr-sign-in-form__bottom-section'}>
-                            <div
-                                className={'cr-sign-in-form__bottom-section-resend-confirmation'}
-                                onClick={() => onConfirmationResend && onConfirmationResend(email)}
-                            >
-                                {receiveConfirmationLabel ? receiveConfirmationLabel : 'Didn\'t received your confirmation email?'}
-                            </div>
                             <div
                                 className={'cr-sign-in-form__bottom-section-password'}
                                 onClick={() => onForgotPassword(email)}

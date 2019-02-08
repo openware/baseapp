@@ -85,12 +85,6 @@ exports[`Sign in form should render 1`] = `
         className="cr-sign-in-form__bottom-section"
       >
         <div
-          className="cr-sign-in-form__bottom-section-resend-confirmation"
-          onClick={[Function]}
-        >
-          Didn't received your confirmation email?
-        </div>
-        <div
           className="cr-sign-in-form__bottom-section-password"
           onClick={[Function]}
         >

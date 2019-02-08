@@ -60,7 +60,7 @@ export class OrderBookContainer extends React.Component<Props> {
             side={'left'}
             title={this.props.intl.formatMessage({id: 'page.body.trade.header.asks'})}
             headers={this.renderHeaders()}
-            data={renderOrderBook(asks, 'asks', this.props.currentMarket)}
+            data={renderOrderBook(asks, 'asks', this.props.intl.formatMessage({id: 'page.noDataToShow'}), this.props.currentMarket)}
             rowBackgroundColor={'rgba(232, 94, 89, 0.5)'}
             maxVolume={calcMaxVolume(bids, asks)}
             orderBookEntry={accumulateVolume(asks)}

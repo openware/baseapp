@@ -35,14 +35,6 @@ describe('Sign in form', () => {
         expect((onClick as SinonSpy).calledOnceWith('potato@heliostech.fr')).toBeTruthy();
     });
 
-    it('should handle forgot onClick', () => {
-        const onClick = spy();
-        wrapper = setup({ onConfirmationResend: onClick });
-        wrapper.setState({ email: 'potato@heliostech.fr' });
-        wrapper.find('.cr-sign-in-form__bottom-section-resend-confirmation').simulate('click');
-        expect((onClick as SinonSpy).calledOnceWith('potato@heliostech.fr')).toBeTruthy();
-    });
-
     it('should handle SignIn onClick', () => {
         const onClick = spy();
         wrapper = setup({ onSignIn: onClick });

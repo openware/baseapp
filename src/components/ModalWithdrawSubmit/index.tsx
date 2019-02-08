@@ -1,5 +1,11 @@
 import { Button, Modal } from '@openware/components';
 import * as React from 'react';
+import {
+    FormattedMessage,
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
 
 interface ModalWithdrawSubmitProps {
     currency: string;
@@ -7,7 +13,16 @@ interface ModalWithdrawSubmitProps {
     show: boolean;
 }
 
-class ModalWithdrawSubmit extends React.Component<ModalWithdrawSubmitProps> {
+class ModalWithdrawSubmitComponent extends React.Component<ModalWithdrawSubmitProps & InjectedIntlProps> {
+    //tslint:disable-next-line:no-any
+    public static propsTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
+    public translate = (e: string) => {
+        return this.props.intl.formatMessage({id: e});
+    };
+
     public render() {
         const { show } = this.props;
         return (
@@ -23,21 +38,15 @@ class ModalWithdrawSubmit extends React.Component<ModalWithdrawSubmitProps> {
     private renderHeaderModalSubmit = () => {
         return (
             <div className="pg-exchange-modal-submit-header">
-                Success!
+                <FormattedMessage id="page.modal.withdraw.success" />
             </div>
         );
     };
 
     private renderBodyModalSubmit = () => {
-        const { currency } = this.props;
-        const formattedCurrency = currency.toUpperCase();
-        const text = `
-            Your ${formattedCurrency} withdrawal has been submitted successfully. Please wait to receive
-            few mandatory confirmations for the completion of this transaction.
-        `;
         return (
             <div className="pg-exchange-modal-submit-body">
-                {text}
+                <FormattedMessage id="page.modal.withdraw.success.message.content" />
             </div>
         );
     };
@@ -47,7 +56,7 @@ class ModalWithdrawSubmit extends React.Component<ModalWithdrawSubmitProps> {
             <div className="pg-exchange-modal-submit-footer">
                 <Button
                     className="pg-exchange-modal-submit-footer__button-inverse"
-                    label="OK"
+                    label={this.translate('page.modal.withdraw.success.button')}
                     onClick={this.props.onSubmit}
                 />
             </div>
@@ -55,6 +64,4 @@ class ModalWithdrawSubmit extends React.Component<ModalWithdrawSubmitProps> {
     };
 }
 
-export {
-    ModalWithdrawSubmit,
-};
+export const ModalWithdrawSubmit = injectIntl(ModalWithdrawSubmitComponent);

@@ -1,4 +1,3 @@
-import { EmailForm } from '@openware/components';
 import * as React from 'react';
 import {
     InjectedIntlProps,
@@ -17,6 +16,7 @@ import {
     RootState,
     selectForgotPasswordSuccess,
 } from '../../modules';
+import { EmailForm } from './EmailForm';
 
 interface ReduxProps {
     success: boolean;
@@ -41,7 +41,9 @@ class ForgotPasswordComponent extends React.Component<Props> {
                     <div className="pg-forgot-password___form">
                         <EmailForm
                             OnSubmit={this.handleChangeEmail}
-                            title={this.props.intl.formatMessage({id: 'page.resendConfirmation'})}
+                            title={this.props.intl.formatMessage({id: 'page.forgotPassword'})}
+                            emailLabel={this.props.intl.formatMessage({id: 'page.forgotPassword.email'})}
+                            buttonLabel={this.props.intl.formatMessage({id: 'page.forgotPassword.send'})}
                         />
                     </div>
                 </div>

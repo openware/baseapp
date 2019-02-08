@@ -73,6 +73,7 @@ export const ru: LangType = {
   'page.body.wallets.tabs.deposit.fiat.phoneNumber': 'Номер телефона:',
   'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Ваш ссылочный код:',
   'page.body.wallets.table.pending': 'Обрабатывается',
+  'page.body.wallets.tabs.deposit.fiat.admin': 'Для того, чтобы вывести эту валюту, обратитесь к администратору!',
 
   'page.body.wallets.tabs.withdraw': 'Вывод',
   'page.body.wallets.tabs.withdraw.content.address': 'Адрес для вывода',
@@ -81,6 +82,7 @@ export const ru: LangType = {
   'page.body.wallets.tabs.withdraw.content.fee': 'Налог',
   'page.body.wallets.tabs.withdraw.content.total': 'Общая сумма вывода',
   'page.body.wallets.tabs.withdraw.content.button': 'ВЫВЕСТИ',
+  'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Адресс',
 
   'page.body.wallets.tabs.withdraw.modal.confirmation': 'Подтверждение',
   'page.body.wallets.tabs.withdraw.modal.message1': 'Вы выводите',
@@ -88,7 +90,7 @@ export const ru: LangType = {
   'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Отменить',
   'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Вывести',
 
-  'page.body.wallets.tabs.withdraw.content.enable2fa': 'Вам нужно активировать 2FA, чтобы получить возможносьть выводить Ваши валюты!',
+  'page.body.wallets.tabs.withdraw.content.enable2fa': 'Вам нужно активировать 2FA, чтобы получить возможность выводить Ваши валюты!',
   'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Активировать 2FA',
 
   'page.body.openOrders.header.orderType': 'Тип сделаки',
@@ -105,6 +107,7 @@ export const ru: LangType = {
   'page.body.openOrders.header.status': 'Статус',
   'page.body.openOrders.content.status.done': 'Совершен',
   'page.body.openOrders.content.status.wait': 'Ожидание',
+  'page.body.openOrders.content.status.cancel': 'Отменен',
   'page.body.openOrders.header.button.cancelAll': 'Отменить все',
 
   'page.body.history.deposit': 'История депозитов',
@@ -118,6 +121,7 @@ export const ru: LangType = {
   'page.body.history.deposit.content.status.submitted': 'Отправлен',
   'page.body.history.deposit.content.status.canceled': 'Отменен',
   'page.body.history.deposit.content.status.rejected': 'Отвергнут',
+  'page.body.history.deposit.content.status.skipped': 'Пропущен',
 
   'page.body.history.withdraw': 'История выводов',
   'page.body.history.withdraw.header.id': 'ID',
@@ -171,7 +175,7 @@ export const ru: LangType = {
   'page.body.profile.header.account.content.twoFactorAuthentication.modalBody': 'Пожалуйста, обратитесь с администратором, чтобы отключить еe.',
   'page.body.profile.header.account.content.twoFactorAuthentication.modalHeader': 'Двухфакторная аутентификация включена.',
   'page.body.profile.header.account.content.twoFactorAuthentication.info': 'Это ваш секретный код, который можно использовать для получения доступа к Вашему' +
-                                                                            '2fa-коду с разных устройств и для восстановления доступа в случае потери вашего устройства.' +
+                                                                            ' 2fa-коду с разных устройств и для восстановления доступа в случае потери вашего устройства.' +
                                                                             'Обязательно сохраните код',
 
   'page.body.profile.header.account.profile': 'Верификация Вашего профиля',
@@ -194,6 +198,8 @@ export const ru: LangType = {
   'page.body.profile.content.action.request2fa': 'Запрошен QR-код для 2FA',
   'page.body.profile.content.action.enable2fa': 'Активация 2FA',
   'page.body.profile.content.action.login.2fa': 'Вход в систему с 2FA',
+  'page.body.profile.content.action.requestPasswordReset': 'Запрос на сброс пароля',
+  'page.body.profile.content.action.passwordReset': 'Сброс пароля',
 
   'page.body.profile.content.result.succeed': 'Успешно',
   'page.body.profile.content.result.failed': 'Ошибка',
@@ -237,6 +243,7 @@ export const ru: LangType = {
   'page.header.signIn.password': 'Пароль',
   'page.header.signIn.receiveConfirmation': 'Не получили подтверждение по электронной почте?',
   'page.header.signIn.forgotPassword': 'Забыли пароль?',
+  'page.header.signIn.createAccount': 'Создать аккаунт?',
 
   'page.header.signUp': 'Регистрация',
   'page.header.signUp.email': 'Почта',
@@ -251,4 +258,13 @@ export const ru: LangType = {
                                    ' электронную почту со спамом.',
 
   'page.resendConfirmation': 'Отправить подтверждение снова',
+  'page.forgotPassword': 'Забыли пароль',
+  'page.forgotPassword.email': 'Почта',
+  'page.forgotPassword.send': 'Отправить',
+  'page.noDataToShow': 'Нет данных для отображения',
+
+  'page.modal.withdraw.success': 'Успех!',
+  'page.modal.withdraw.success.message.content': 'Ваш вывод был успешно подтвержден. Пожалуйста, подождите, чтобы получить ' +
+                                                 'несколько обязательных подтверждений для завершения этой транзакции.',
+  'page.modal.withdraw.success.button': 'OK',
 };

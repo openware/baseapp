@@ -87,7 +87,6 @@ export class OpenOrdersContainer extends React.Component<Props> {
         return localeDate(time);
     };
 
-    // tslint:disable
     private renderData = (data: Order[]) => {
         const renderRow = item => {
           const { price, created_at, remaining_volume, origin_volume, kind, side, executed_volume, volume } = item;
@@ -104,7 +103,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
 
         return (data.length > 0)
             ? this.sortDataByDateTime(data).map(renderRow)
-            : [['There is no data to show...']];
+            : [[this.translate('page.noDataToShow')]];
     };
 
     private getType = (side: string, kind: string) => {
@@ -123,7 +122,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
 
         dataToSort.sort(sortByDateTime);
         return dataToSort;
-    };
+    }
 
     private handleCancel = (index: number) => {
         const { openOrdersData } = this.props;

@@ -7,8 +7,6 @@ import {
     TabPanel,
     WalletItemProps,
     WalletList,
-    Withdraw,
-    WithdrawProps,
 } from '@openware/components';
 import * as React from 'react';
 import {
@@ -35,6 +33,10 @@ import {
 import { ModalWithdrawConfirmation } from '../ModalWithdrawConfirmation';
 import { ModalWithdrawSubmit } from '../ModalWithdrawSubmit';
 import { WalletHistory } from './History';
+import {
+    Withdraw,
+    WithdrawProps,
+} from './Withdraw';
 
 import bch = require('bitcoincashjs');
 
@@ -252,6 +254,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             borderItem: 'empty-circle',
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,
+            withdrawAddressLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.address'}),
+            withdrawAmountLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount'}),
+            withdraw2faLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa'}),
+            withdrawFeeLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee'}),
+            withdrawTotalLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total'}),
+            withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button'}),
+            withdrawAddressLabelPlaceholder: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.addressPlaceholder'}),
         };
         return [
             {
@@ -375,7 +384,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 {this.renderSingle()}
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
                 {user.otp ? <Withdraw {...withdrawProps} /> : this.isOtpDisabled()}
-                {user.otp && currency && <WalletHistory label="withdrawal" type="withdraws" currency={currency} />}
+                {user.otp && currency && <WalletHistory label="withdraw" type="withdraws" currency={currency} />}
             </React.Fragment>
         );
     }

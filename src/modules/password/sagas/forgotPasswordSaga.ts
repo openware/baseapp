@@ -14,10 +14,7 @@ const forgotPasswordConfig: RequestOptions = {
 
 export function* forgotPasswordSaga(action: ForgotPasswordFetch) {
     try {
-        yield call(API.post(forgotPasswordConfig),
-            '/identity/users/password/generate_code',
-            action.payload,
-        );
+        yield call(API.post(forgotPasswordConfig), '/identity/users/password/generate_code', action.payload);
         yield put(forgotPasswordSuccess());
     } catch (error) {
         yield put(forgotPasswordError(error));

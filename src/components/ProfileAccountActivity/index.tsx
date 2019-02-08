@@ -84,7 +84,10 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
                 return this.props.intl.formatMessage({ id: 'page.body.profile.content.action.enable2fa'});
             case 'login::2fa':
                 return this.props.intl.formatMessage({ id: 'page.body.profile.content.action.login.2fa'});
-
+            case 'request password reset':
+                return this.props.intl.formatMessage({ id: 'page.body.profile.content.action.requestPasswordReset'});
+            case 'password reset':
+                return this.props.intl.formatMessage({ id: 'page.body.profile.content.action.passwordReset'});
             default:
               return value;
         }

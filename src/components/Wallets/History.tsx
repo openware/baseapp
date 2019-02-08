@@ -115,7 +115,7 @@ export class WalletTable extends React.Component<Props> {
 
     private retrieveData = list => {
         if (list.length === 0) {
-            return [['There is no data to show...', '', '']];
+            return [[this.props.intl.formatMessage({ id: 'page.noDataToShow'}), '', '']];
         }
         return [...list]
             .sort((a, b) => {

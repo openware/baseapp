@@ -59,7 +59,7 @@ export const en = {
   'page.body.wallets.locked': 'Locked',
   'page.body.wallets.balance': 'Balance',
   'page.body.wallets.tabs.deposit': 'Deposit',
-  'page.body.wallets.tabs.deposit.ccy.message.submit': 'Please submit a deposit payment using one of the following options. You deposit will be reflected in your account ofter 6 confirmation',
+  'page.body.wallets.tabs.deposit.ccy.message.submit': 'Please submit a deposit payment using one of the following options. Your deposit will be reflected in your account after 6 confirmations',
   'page.body.wallets.tabs.deposit.ccy.message.address': 'Deposit by Wallet Address',
   'page.body.wallets.tabs.deposit.ccy.message.button': 'COPY',
 
@@ -71,14 +71,16 @@ export const en = {
   'page.body.wallets.tabs.deposit.fiat.phoneNumber': 'Phone Number:',
   'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Your reference code:',
   'page.body.wallets.table.pending': 'Pending',
+  'page.body.wallets.tabs.deposit.fiat.admin': ' If you want to make fiat withdraw, please contact administrator!',
 
   'page.body.wallets.tabs.withdraw': 'Withdraw',
   'page.body.wallets.tabs.withdraw.content.address': 'Withdrawal Address',
   'page.body.wallets.tabs.withdraw.content.amount': 'Withdrawal Amount',
-  'page.body.wallets.tabs.withdraw.content.code2fa': '6-digit GAuthenticator Code',
+  'page.body.wallets.tabs.withdraw.content.code2fa': '6-digit Google Authenticator Code',
   'page.body.wallets.tabs.withdraw.content.fee': 'Fee',
   'page.body.wallets.tabs.withdraw.content.total': 'Total Withdraw Amount',
   'page.body.wallets.tabs.withdraw.content.button': 'WITHDRAW',
+  'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Address',
 
   'page.body.wallets.tabs.withdraw.modal.confirmation': 'Confirmation',
   'page.body.wallets.tabs.withdraw.modal.message1': 'You are withdrawing',
@@ -103,6 +105,7 @@ export const en = {
   'page.body.openOrders.header.status': 'Status',
   'page.body.openOrders.content.status.done': 'Done',
   'page.body.openOrders.content.status.wait': 'Wait',
+  'page.body.openOrders.content.status.cancel': 'Cancel',
   'page.body.openOrders.header.button.cancelAll': 'Cancel all',
 
   'page.body.history.deposit': 'Deposit History',
@@ -116,6 +119,7 @@ export const en = {
   'page.body.history.deposit.content.status.submitted': 'Submitted',
   'page.body.history.deposit.content.status.canceled': 'Canceled',
   'page.body.history.deposit.content.status.rejected': 'Rejected',
+  'page.body.history.deposit.content.status.skipped': 'Skipped',
 
   'page.body.history.withdraw': 'Withdraw History',
   'page.body.history.withdraw.header.id': 'ID',
@@ -192,6 +196,8 @@ export const en = {
   'page.body.profile.content.action.request2fa': 'Request QR code for 2FA',
   'page.body.profile.content.action.enable2fa': 'Enable 2FA',
   'page.body.profile.content.action.login.2fa': 'Login with 2FA',
+  'page.body.profile.content.action.requestPasswordReset': 'Request password reset',
+  'page.body.profile.content.action.passwordReset': 'Password reset',
 
   'page.body.profile.content.result.succeed': 'Succeed',
   'page.body.profile.content.result.failed': 'Failed',
@@ -234,6 +240,7 @@ export const en = {
   'page.header.signIn.password': 'Password',
   'page.header.signIn.receiveConfirmation': 'Didn\'t receive your confirmation email?',
   'page.header.signIn.forgotPassword': 'Forgot your password?',
+  'page.header.signIn.createAccount': 'Create an account?',
 
   'page.header.signUp': 'Sign Up',
   'page.header.signUp.email': 'Email',
@@ -248,4 +255,13 @@ export const en = {
                                     'please check your spam email',
 
   'page.resendConfirmation': 'Resend Confirmation',
+  'page.forgotPassword': 'Forgot Password',
+  'page.forgotPassword.email': 'Email',
+  'page.forgotPassword.send': 'Send',
+  'page.noDataToShow': 'There is no data to show',
+
+  'page.modal.withdraw.success': 'Success!',
+  'page.modal.withdraw.success.message.content': 'Your withdrawal has been submitted successfully. Please wait to receive' +
+  ' few mandatory confirmations for the completion of this transaction.',
+  'page.modal.withdraw.success.button': 'OK',
 };
