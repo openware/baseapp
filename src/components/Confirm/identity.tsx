@@ -10,6 +10,7 @@ import {
   connect,
   MapDispatchToPropsFunction,
 } from 'react-redux';
+import { checkDate } from '../../helpers/checkDate';
 import { RootState } from '../../modules';
 import {
     selectSendIdentitySuccess,
@@ -229,14 +230,6 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             `${formatDay}/${formatMonth}/${formatYear}` : ``;
     }
 
-    private checkDate = (date: string) => {
-        const [day, month, year] = date.split('/');
-        const inputDate = new Date(`${month}/${day}/${year}`);
-        const curDate = new Date();
-
-        return (inputDate <= curDate) ? true : false;
-    }
-
     private handleChangeDate = (e: OnChangeEvent) => {
         this.setState({
             dateOfBirth: this.formatDate(e.target.value),
@@ -256,15 +249,15 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     };
 
     private sendData = () => {
-        const dob = this.checkDate(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
+        const dob = checkDate(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
         const profileInfo = {
-          first_name: this.state.firstName,
-          last_name: this.state.lastName,
-          dob,
-          address: this.state.residentialAddress,
-          postcode: this.state.postcode,
-          city: this.state.city,
-          country: this.state.countryOfBirth,
+            first_name: this.state.firstName,
+            last_name: this.state.lastName,
+            dob,
+            address: this.state.residentialAddress,
+            postcode: this.state.postcode,
+            city: this.state.city,
+            country: this.state.countryOfBirth,
         };
         this.props.sendIdentity(profileInfo);
     }

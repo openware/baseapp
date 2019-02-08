@@ -230,4 +230,10 @@ describe('Helpers', () => {
         expect(helpers.getLanguageName('ru')).toEqual('Русский');
         expect(helpers.getLanguageName('asd')).toEqual('English');
     });
+
+    // checkDate.ts
+    it('should check current date', () => {
+        expect(helpers.checkDate('22/12/3333')).toEqual(true);
+        expect(helpers.checkDate('22/12/1333')).toEqual(false);
+    });
 });

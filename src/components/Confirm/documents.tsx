@@ -15,6 +15,7 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { checkDate } from '../../helpers/checkDate';
 import { RootState } from '../../modules';
 import {
     selectSendDocumentsSuccess,
@@ -39,7 +40,7 @@ interface DocumentsState {
     documentsType: string;
     idNumber: string;
     expiration: string;
-    scan?: File;
+    scans: File[];
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
@@ -66,6 +67,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         documentsType: this.data[0],
         idNumber: '',
         expiration: '',
+        scans: [],
     };
 
     public componentWillReceiveProps(next: Props) {
@@ -79,12 +81,11 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             documentsType,
             idNumber,
             expiration,
-            scan,
+            scans,
         }: DocumentsState = this.state;
 
         const onSelect = value => this.handleChangeDocumentsType(this.data[value]);
         const numberType = `${documentsType}${this.translate('page.body.kyc.documents.number')}`;
-        const scanName = scan && (scan.name.length > 30 ? `${scan.name.slice(0, 20)}...${scan.name.slice(-8)}` : scan.name);
 
         return (
             <React.Fragment>
@@ -156,7 +157,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                             </div>
                                         </form>
                                     </div>
-                                    {scanName && <p>{scanName}</p>}
+                                    {Array.from(scans).map(this.renderScan)}
                                 </div>
                             </div>
                         </div>
@@ -179,15 +180,32 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         });
     };
 
+    private handleFileDelete = (key: number) => () => {
+        const fileList = Array.from(this.state.scans);
+        fileList.splice(key, 1);
+        this.setState({
+            scans: fileList,
+        });
+    }
+
+    private renderScan = (scan: File, index: number) => {
+        return (
+            <div
+                className="pg-confirm__content-documents-filename"
+                key={index}
+                onClick={this.handleFileDelete(index)}
+            >
+                {scan.name}&nbsp;
+                <img src={require('../../assets/images/close.svg')}/>
+            </div>
+        );
+    }
+
     private handleChangeIdNumber = (e: OnChangeEvent) => {
         this.setState({
             idNumber: e.target.value,
         });
     };
-
-    private handleChangeScan = (scan: File) => {
-        this.setState({ scan });
-    }
 
     private formatDate = (date: string) => {
         const [day, month, year] = date.split('/');
@@ -202,14 +220,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                `${formatDay}/${formatMonth}/${formatYear}` : ``;
     }
 
-    private checkDate = (date: string) => {
-        const [day, month, year] = date.split('/');
-        const inputDate = new Date(`${month}/${day}/${year}`);
-        const curDate = new Date();
-
-        return (inputDate > curDate) ? true : false;
-    }
-
     private handleChangeExpiration = (e: OnChangeEvent) => {
         this.setState({
           expiration: this.formatDate(e.target.value),
@@ -218,10 +228,12 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     private handleUploadScan = uploadEvent => {
         const allFiles: File[] = uploadEvent.target.files;
-        const file: File = allFiles[0];
-
-        if (allFiles && file) {
-            this.handleChangeScan(file);
+        const oldFileList = Array.from(this.state.scans);
+        const additionalFileList = Array.from(allFiles).length > 5 ?  Array.from(allFiles).slice(0,5) : Array.from(allFiles);
+        if (oldFileList.length !== 5) {
+            this.setState({
+                scans: additionalFileList.concat(oldFileList),
+            });
         }
     }
     private handleFileDrop = event => {
@@ -240,23 +252,24 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     private sendDocuments = () => {
         const {
-            scan,
+            scans,
             idNumber,
             expiration,
             documentsType,
         }: DocumentsState = this.state;
 
-        const docExpire = this.checkDate(expiration) ? expiration : '';
-
         const typeOfDocuments = this.getDocumentsType(documentsType);
+        const docExpire = checkDate(expiration) ? expiration : '';
 
-        if (!scan) {
+        if (!scans.length) {
             return;
         }
 
         const request = new FormData();
 
-        request.append('upload[]', scan);
+        for (const scan of scans) {
+            request.append('upload[]', scan);
+        }
         request.append('doc_expire', docExpire);
         request.append('doc_type', typeOfDocuments);
         request.append('doc_number', idNumber);
