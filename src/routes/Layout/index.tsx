@@ -16,7 +16,7 @@ import {
     walletsReset,
 } from '../../modules';
 import {
-    OpenOrdersScreen,
+    OrdersTabScreen,
     ProfileScreen,
     SignInScreen,
     SignUpScreen,
@@ -123,7 +123,7 @@ class LayoutComponent extends React.Component<Props> {
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
                     <Route exact path="/trading" component={TradingScreen} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OpenOrdersScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={HistoryScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/confirm" component={ConfirmScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileScreen} />

@@ -2,7 +2,7 @@ export const en = {
   'page.header.navbar.signIn': 'Sign In',
   'page.header.navbar.trade': 'Trade',
   'page.header.navbar.wallets': 'Wallets',
-  'page.header.navbar.openOrders': 'Open orders',
+  'page.header.navbar.openOrders': 'Orders',
   'page.header.navbar.history': 'History',
 
   'page.header.navbar.profile': 'Profile',

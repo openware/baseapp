@@ -4,7 +4,7 @@ export * from './SignInScreen';
 export * from './VerificationScreen';
 export * from './SignUpScreen';
 export * from './ProfileScreen';
-export * from './OpenOrdersScreen';
+export * from './OrdersTabScreen';
 export * from './HistoryScreen';
 export * from './ConfirmScreen';
 export * from './FaqScreen';

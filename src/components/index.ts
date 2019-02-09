@@ -6,7 +6,7 @@ export * from './Bids';
 export * from './Asks';
 export * from './TradingChart';
 export * from './OpenOrders';
-export * from './OpenOrdersTab';
+export * from './OrdersTab';
 export * from './Order';
 export * from './Markets';
 export * from './Profile';

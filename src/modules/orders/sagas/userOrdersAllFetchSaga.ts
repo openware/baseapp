@@ -16,6 +16,7 @@ const ordersOptions: RequestOptions = {
 export function* userOrdersAllFetchSaga(action: UserOrdersAllFetch) {
     try {
         const orders = yield call(API.get(ordersOptions), `/market/orders`);
+        console.log(orders)//tslint:disable-line
         const groupedOrders: GroupedOrders = orders
             .reduce((grouped: GroupedOrders, order: Order) => ({
                 ...grouped,
@@ -28,6 +29,7 @@ export function* userOrdersAllFetchSaga(action: UserOrdersAllFetch) {
 
         yield put(userOrdersAllData(groupedOrders));
     } catch (error) {
+        console.log(error) //tslint:disable-line
         yield put(userOrdersAllError(error));
         yield put(fetchError(error));
     }

@@ -22,6 +22,7 @@ export function* userOrdersFetchSaga(action: UserOrdersFetch) {
         );
 
         const orders = yield all(requests);
+        console.log(orders)//tslint:disable-line
         const groupedOrders: GroupedOrders = orders
         // concat orders received by markets
         .reduce(

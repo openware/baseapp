@@ -48,10 +48,10 @@ describe('Helpers', () => {
     };
 
     const tradesColorsMapping = {
-        buy: {
+        sell: {
             color: 'var(--color-red)',
         },
-        sell: {
+        buy: {
             color: 'var(--color-green)',
         },
     };
