@@ -14,11 +14,12 @@ const walletsAddressOptions: RequestOptions = {
 
 export function* walletsAddressSaga(action: WalletsAddressFetch) {
     try {
-        const url = `/account/deposit_address/${action.payload.currency}`;
+        const currency = action.payload.currency.toLocaleLowerCase();
+        const url = `/account/deposit_address/${currency}`;
         const { address } = yield call(API.get(walletsAddressOptions), url);
         yield put(walletsAddressData({
             address,
-            currency: action.payload.currency,
+            currency,
         }));
     } catch (error) {
         yield put(walletsAddressError(error));

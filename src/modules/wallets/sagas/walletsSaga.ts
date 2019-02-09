@@ -2,7 +2,7 @@
 import { call, put } from 'redux-saga/effects';
 import { fetchError } from '../../';
 import { API, RequestOptions } from '../../../api';
-import { walletsAddressFetch, walletsData, walletsError } from '../actions';
+import { walletsData, walletsError } from '../actions';
 
 const walletsOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -40,16 +40,6 @@ export function* walletsSaga() {
         });
 
         yield put(walletsData(fees));
-
-        if (accounts.length > 0) {
-            const btc = accounts.find(wallet => wallet.currency.toLowerCase() === 'btc');
-            if (btc) {
-                yield put(walletsAddressFetch({ currency: btc.currency }));
-            } else {
-                const currency = accounts[0].currency;
-                yield put(walletsAddressFetch({ currency }));
-            }
-        }
     } catch (error) {
         yield put(walletsError(error));
         yield put(fetchError(error));

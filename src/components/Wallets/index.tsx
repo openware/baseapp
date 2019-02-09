@@ -119,7 +119,12 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     private description = this.translate('page.body.wallets.tabs.deposit.fiat.message2');
 
     public componentDidMount() {
-        this.props.fetchWallets();
+        if (this.props.wallets.length === 0) {
+            this.props.fetchWallets();
+        } else {
+            this.props.fetchAddress({ currency: this.props.wallets[0].currency });
+        }
+
         if (this.state.selectedWalletIndex === -1 && this.props.wallets.length) {
             this.setState({
                 selectedWalletIndex: 0,
@@ -136,6 +141,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             this.setState({
                 selectedWalletIndex: 0,
             });
+            this.props.fetchAddress({ currency: next.wallets[0].currency });
         }
 
         if (!this.props.withdrawSuccess && next.withdrawSuccess) {
