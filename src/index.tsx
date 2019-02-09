@@ -16,6 +16,7 @@ const history = createBrowserHistory();
 // tslint:disable:no-submodule-imports
 import en = require('react-intl/locale-data/en');
 import ru = require('react-intl/locale-data/ru');
+import zh = require('react-intl/locale-data/zh');
 // tslint:enable
 
 // tslint:disable-next-line:no-any
@@ -35,7 +36,7 @@ const store = createStore(
     ),
 );
 
-addLocaleData([...en, ...ru]);
+addLocaleData([...en, ...ru, ...zh]);
 sagaMiddleware.run(rootSaga);
 rangerMiddleware.run(rangerSagas);
 
