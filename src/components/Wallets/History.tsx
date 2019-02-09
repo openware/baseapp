@@ -1,4 +1,9 @@
-import { History, Pagination } from '@openware/components';
+import {
+    Decimal,
+    History,
+    Pagination,
+    WalletItemProps,
+} from '@openware/components';
 import * as moment from 'moment';
 import * as React from 'react';
 import {
@@ -21,6 +26,7 @@ import {
     selectLastElemIndex,
     selectNextPageExists,
     selectPageCount,
+    selectWallets,
 } from '../../modules';
 import { FailIcon } from './FailIcon';
 import { SucceedIcon } from './SucceedIcon';
@@ -33,6 +39,7 @@ export interface HistoryProps {
 
 export interface ReduxProps {
     list: List;
+    wallets: WalletItemProps[];
     fetching: boolean;
     fullHistory: number;
     page: number;
@@ -114,6 +121,8 @@ export class WalletTable extends React.Component<Props> {
     };
 
     private retrieveData = list => {
+        const currentWallet = this.props.wallets.find(w => w.currency === this.props.currency)
+            || { fixed: 8 };
         if (list.length === 0) {
             return [[this.props.intl.formatMessage({ id: 'page.noDataToShow'}), '', '']];
         }
@@ -125,7 +134,7 @@ export class WalletTable extends React.Component<Props> {
                 return [
                     moment(item.created_at).format('DD-MM YYYY'),
                     this.formatTxState(item.state),
-                    item.amount,
+                    <Decimal fixed={currentWallet.fixed}>{item.amount}</Decimal>,
                 ];
             });
     };
@@ -149,6 +158,7 @@ export class WalletTable extends React.Component<Props> {
 
 export const mapStateToProps = (state: RootState): ReduxProps => ({
     list: selectHistory(state),
+    wallets: selectWallets(state),
     fetching: selectHistoryLoading(state),
     fullHistory: selectFullHistory(state),
     page: selectCurrentPage(state),
