@@ -6,14 +6,13 @@
   background-size: cover;
   .pg-sign-up-screen__container {
     background: var(--transparent);
-    width: 35%;
     margin-top: 20px;
+    width: 424px;
   }
   .cr-sign-up-form {
     background: var(--base-bright);
     margin: 0 auto;
     border-radius: 4px;
-    width: 55%;
 
     &__group--focused {
       input {
@@ -21,14 +20,27 @@
       }
     }
 
-    &__button {
+    .cr-button {
       color: var(--color-white);
+      background: var(--button-disabled);
+      border-radius: 3px;
       font-size: calc(var(--gap) * 2.66);
       margin-top: calc(var(--gap) * 1.55);
+
+      &--disabled {
+        color: var(--button-dark-gray);
+        background: var(--button-disabled);
+      }
+
       &:hover {
-        background: var(--button-hover);
+        background: var(--button-hover) !important;
+      }
+
+      &:active {
+        background: var(--button-active) !important;
       }
     }
+
     &__title {
       background: var(--transparent);
       color: var(--active-color);
@@ -36,7 +48,7 @@
       margin: 40px !important;
     }
     &__label {
-      background: var(--transparent);
+      background: var(--base-bright);
       color: var(--text-muted);
       font-size: 12px;
     }
@@ -121,8 +133,8 @@
 @media screen and (max-width: 768px) {
   .pg-sign-up-screen {
     .pg-sign-up-screen__container {
-      width: 100%;
       margin: 20px 10px 0;
+      width: 100%;
     }
 
     .cr-sign-up-form {

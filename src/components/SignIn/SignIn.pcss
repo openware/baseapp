@@ -6,30 +6,34 @@
   background-size: cover;
   .pg-sign-in-screen__container {
     background: var(--transparent);
-    width: 35%;
     margin-top: 20px;
+    width: 424px;
   }
   .cr-sign-in-form {
     background: var(--base-bright);
     margin: 0 auto;
     border-radius: 4px;
-    width: 55%;
     display: flex;
     flex-direction: column;
     &__button {
       color: var(--color-white);
+      background: var(--button-primary);
       font-size: calc(var(--gap) * 2.66);
       &:hover {
         background: var(--button-hover);
       }
+      &:active {
+        background: var(--button-active);
+      }
     }
+
     &__title {
       background: var(--transparent);
       font-size: calc(var(--gap) * 4);
       margin: 40px !important;
     }
     &__label {
-      background: var(--transparent);
+      background: var(--base-bright);
       color: var(--text-muted);
       font-size: 12px;
     }
@@ -74,11 +78,10 @@
 @media screen and (max-width: 768px) {
   .pg-sign-in-screen {
     .pg-sign-in-screen__container {
-      width: 100%;
       margin: 20px 10px 0;
+      width: 100%;
     }
     .cr-sign-in-form {
-      margin: 0 auto;
       &__button {
         margin-top: calc(var(--gap) * 4);
         font-size: calc(var(--gap) * 2);
