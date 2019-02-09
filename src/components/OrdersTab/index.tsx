@@ -3,6 +3,12 @@ import {
 } from '@openware/components';
 import * as React from 'react';
 import {
+    FormattedMessage,
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
+import {
     connect,
     MapDispatchToPropsFunction,
 } from 'react-redux';
@@ -26,9 +32,14 @@ interface DispatchProps {
     ordersCancelAll: typeof ordersCancelAllFetch;
 }
 
-type Props = ReduxProps & DispatchProps;
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class Orders extends React.PureComponent<Props> {
+    //tslint:disable-next-line:no-any
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
     public componentDidMount() {
         const { getAllOrdersData, marketsFetch} = this.props;//tslint:disable-line
         marketsFetch();
@@ -36,7 +47,13 @@ class Orders extends React.PureComponent<Props> {
     }
 
     public render() {
-          const cancelAll = this.props.ordersData.length ? <React.Fragment><span onClick={this.handleCancelAll}>Cancel all<span className="pg-history-tab__close"/></span></React.Fragment> : null;
+          const cancelAll = this.props.ordersData.length ? (
+              <React.Fragment>
+                  <span onClick={this.handleCancelAll}>
+                      <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
+                      <span className="pg-history-tab__close"/>
+                  </span>
+              </React.Fragment>) : null;
 
           return (
               <div className="pg-history-tab pg-container">
@@ -59,11 +76,11 @@ class Orders extends React.PureComponent<Props> {
         return [
             {
                 content: <OrdersElement type="all" />,
-                label: 'All',
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.all'}),
             },
             {
                 content: <OrdersElement type="open"/>,
-                label: 'Open',
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.open'}),
             },
         ];
     };
@@ -84,9 +101,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
     });
 
-const OrdersTab = connect(mapStateToProps, mapDispatchToProps)(Orders);
+const OrdersTab = injectIntl(connect(mapStateToProps, mapDispatchToProps)(Orders));
 
 export {
     OrdersTab,
 };
-

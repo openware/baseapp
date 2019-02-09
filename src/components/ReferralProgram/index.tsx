@@ -1,5 +1,6 @@
 import { CopyableTextField } from '@openware/components';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { connect } from 'react-redux';
 
@@ -34,11 +35,17 @@ class ReferralProgramClass extends React.Component<ReduxProps> {
         return (
             <div className="pg-profile-page__activity">
                 <div className="pg-profile-page-header">
-                    <h3><span className="pg-profile-page__text-purple">Referral Program</span></h3>
+                    <h3>
+                        <span className="pg-profile-page__text-purple">
+                            <FormattedMessage id="page.body.profile.header.referralProgram"/>
+                        </span>
+                    </h3>
                 </div>
                 <div className="pg-copyable-text__section">
                     <CopyableTextField className="pg-copyable-text-field__input" value={referralLink} fieldId="referral-id"/>
-                    <div className="pg-copyable-text-field__button" onClick={doCopy}>Copy link</div>
+                    <div className="pg-copyable-text-field__button" onClick={doCopy}>
+                        <FormattedMessage id="page.body.profile.content.copyLink"/>
+                    </div>
                 </div>
             </div>
         );

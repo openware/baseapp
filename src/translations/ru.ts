@@ -93,6 +93,8 @@ export const ru: LangType = {
   'page.body.wallets.tabs.withdraw.content.enable2fa': 'Вам нужно активировать 2FA, чтобы получить возможность выводить Ваши валюты!',
   'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Активировать 2FA',
 
+  'page.body.openOrders.tab.all': 'Все',
+  'page.body.openOrders.tab.open': 'Открытые',
   'page.body.openOrders.header.orderType': 'Тип сделаки',
   'page.body.openOrders.header.orderType.buy.market': 'Купить / Рынок',
   'page.body.openOrders.header.orderType.buy.limit': 'Купить / Лимит',
@@ -187,6 +189,9 @@ export const ru: LangType = {
   'page.body.profile.header.account.profile.identity.unverified.title': 'Личность - подтвердить',
   'page.body.profile.header.account.profile.identity.title': 'Личность - подтверждено',
   'page.body.profile.header.account.profile.identity.message': 'Вывод средств разрешен',
+
+  'page.body.profile.header.referralProgram': 'Реферальная программа',
+  'page.body.profile.content.copyLink': 'Скопировать',
 
   'page.body.profile.header.accountActivity': 'Активность аккаунта',
   'page.body.profile.header.accountActivity.content.date': 'Дата',

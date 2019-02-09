@@ -1,5 +1,11 @@
 import { CloseButton, Decimal, History } from '@openware/components';
 import * as React from 'react';
+import {
+    FormattedMessage,
+    InjectedIntlProps,
+    injectIntl,
+    intlShape,
+} from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import {
     localeDate,
@@ -41,21 +47,40 @@ interface OrdersState {
 }
 
 
-type Props = OrdersProps & ReduxProps & DispatchProps;
+type Props = OrdersProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
 class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
+    //tslint:disable-next-line:no-any
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    };
+
     public render() {
         const { allOrdersData, openOrdersData } = this.props;
         const data = allOrdersData && openOrdersData;
-        const headers = this.renderHeaders();
+
         return (
           <div className={`pg-history-elem ${data.length ? '' : 'pg-history-elem-empty'}`}>
-            {data.length ? <History headers={headers} data={this.retrieveData()}/> : <p className="pg-history-elem__empty">No data to show</p>}
+            {data.length ? <History headers={this.renderHeaders()} data={this.retrieveData()}/> : // tslint:disable-line
+                (<p className="pg-history-elem__empty"><FormattedMessage id="page.noDataToShow" /></p>)}
           </div>
         );
     }
 
-    private renderHeaders = () => ['Date', 'Order Type', 'Pair', 'Price', 'Amount', 'Executed', 'Remaining', 'Cost remaining', 'Status', ''];
+    private renderHeaders = () => {
+        return [
+            this.props.intl.formatMessage({ id: 'page.body.history.deposit.header.date' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.orderType' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.pair' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.price' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.amount' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.executed' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.remaining' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.costRemaining' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.status' }),
+            '',
+        ];
+    };
 
     private retrieveData = () => {
         const { type, openOrdersData, allOrdersData } = this.props;
@@ -74,7 +99,12 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         }
     };
 
-    private capitalize = (str: string) => String(str).charAt(0).toUpperCase() + String(str).slice(1);
+    private getType = (side: string, orderType: string) => {
+        if (!side || !orderType) {
+            return '';
+        }
+        return this.props.intl.formatMessage({id: `page.body.openOrders.header.orderType.${side}.${orderType}`});
+    };
 
     private renderOpenOrdersRow = item => {
         const {
@@ -91,7 +121,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
 
         const currentMarket = this.props.marketsData.find(m => m.id === market)
             || { name: '', bid_precision: 0, ask_precision: 0 };
-        const orderType = `${this.capitalize(side)} / ${ord_type}`;
+        const orderType = this.getType(side, ord_type);
         const marketName = currentMarket ? currentMarket.name : market;
         const costRemaining = remaining_volume * price;
 
@@ -111,6 +141,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             <CloseButton key={id} onClick={() => this.handleCancel(id)} />,//tslint:disable-line
         ];
     }
+
     private renderAllOrdersRow = item => {
         const {
             id,
@@ -127,7 +158,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         const currentMarket = this.props.marketsData.find(m => m.id === market)
             || { name: '', bid_precision: 0, ask_precision: 0 };
 
-        const orderType = `${this.capitalize(side)} / ${ord_type}`;
+        const orderType = this.getType(side, ord_type);
         const marketName = currentMarket ? currentMarket.name : market;
         const costRemaining = remaining_volume * price;
 
@@ -149,13 +180,13 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     }
 
     private setOrderStatus = (status: string) => {
-        switch (status){
+        switch (status) {
             case 'done':
-                return <span>Filled</span>;
+                return <FormattedMessage id={`page.body.openOrders.content.status.done`}/>;
             case 'cancel':
-                return <span style={{color:'var(--color-red)'}}>Cancelled</span>;
+                return <span style={{color:'var(--color-red)'}}><FormattedMessage id={`page.body.openOrders.content.status.cancel`}/></span>;
             case 'wait':
-                return <span style={{color:'var(--color-green)'}}>Open</span>;
+                return <span style={{color:'var(--color-green)'}}><FormattedMessage id={`page.body.openOrders.content.status.wait`}/></span>;
             default:
                 return status;
         }
@@ -182,4 +213,4 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         ordersCancelById: payload => dispatch(orderCancelFetch(payload)),
     });
 
-export const OrdersElement = connect(mapStateToProps, mapDispatchToProps)(OrdersComponent);
+export const OrdersElement = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrdersComponent));

@@ -91,6 +91,8 @@ export const en = {
   'page.body.wallets.tabs.withdraw.content.enable2fa': 'You should enable 2fa for having abitity to withdraw!',
   'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2fa',
 
+  'page.body.openOrders.tab.all': 'All',
+  'page.body.openOrders.tab.open': 'Open',
   'page.body.openOrders.header.orderType': 'Order Type',
   'page.body.openOrders.header.orderType.buy.market': 'Buy / market',
   'page.body.openOrders.header.orderType.buy.limit': 'Buy / limit',
@@ -103,9 +105,9 @@ export const en = {
   'page.body.openOrders.header.remaining': 'Remaining',
   'page.body.openOrders.header.costRemaining': 'Cost Remaining',
   'page.body.openOrders.header.status': 'Status',
-  'page.body.openOrders.content.status.done': 'Done',
-  'page.body.openOrders.content.status.wait': 'Wait',
-  'page.body.openOrders.content.status.cancel': 'Cancel',
+  'page.body.openOrders.content.status.done': 'Filled',
+  'page.body.openOrders.content.status.wait': 'Open',
+  'page.body.openOrders.content.status.cancel': 'Cancelled',
   'page.body.openOrders.header.button.cancelAll': 'Cancel all',
 
   'page.body.history.deposit': 'Deposit History',
@@ -185,6 +187,9 @@ export const en = {
   'page.body.profile.header.account.profile.identity.unverified.title': 'Identity verification',
   'page.body.profile.header.account.profile.identity.title': 'Identity verified',
   'page.body.profile.header.account.profile.identity.message': 'Withdrawal allowed',
+
+  'page.body.profile.header.referralProgram': 'Referral Program',
+  'page.body.profile.content.copyLink': 'Copy Link',
 
   'page.body.profile.header.accountActivity': 'Account activity',
   'page.body.profile.header.accountActivity.content.date': 'Date',

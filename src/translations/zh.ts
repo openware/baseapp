@@ -93,6 +93,8 @@ export const zh: LangType = {
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'You should enable 2fa for having abitity to withdraw!',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2fa',
 
+    'page.body.openOrders.tab.all': 'All',
+    'page.body.openOrders.tab.open': 'Open',
     'page.body.openOrders.header.orderType':'订单类型',
     'page.body.openOrders.header.orderType.buy.market': 'Buy / market',
     'page.body.openOrders.header.orderType.buy.limit': 'Buy / limit',
@@ -187,6 +189,9 @@ export const zh: LangType = {
     'page.body.profile.header.account.profile.identity.unverified.title': '手机验证',
     'page.body.profile.header.account.profile.identity.title': 'Identity verified',
     'page.body.profile.header.account.profile.identity.message': '允许提款',
+
+    'page.body.profile.header.referralProgram': 'Referral Program',
+    'page.body.profile.content.copyLink': 'Copy Link',
 
     'page.body.profile.header.accountActivity': '帐户活动',
     'page.body.profile.header.accountActivity.content.date':'日期',

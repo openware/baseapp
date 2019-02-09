@@ -33,7 +33,9 @@ class ProfileTwoFactorAuthComponent extends React.Component<Props, ProfileTwoFac
         return (
             <React.Fragment>
                 <label className="pg-profile-page__label">
-                    <div>Two-factor authentication</div>
+                    <div>
+                        <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication" />
+                    </div>
                     <span className={className}>
                     {is2faEnabled ? <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.message.enable" />
                                   : <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.message.disable" />}
