@@ -29,7 +29,7 @@ const copy = (id: string) => {
 class ReferralProgramClass extends React.Component<ReduxProps> {
     public render() {
         const { user } = this.props;
-        const referralLink = `${window.document.location.origin}/signup?ref_id=${user.uid}`;
+        const referralLink = `${window.document.location.origin}/signup?refid=${user.uid}`;
         const doCopy = () => copy('referral-id');
         return (
             <div className="pg-profile-page__activity">

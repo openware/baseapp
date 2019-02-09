@@ -42,7 +42,7 @@ interface RouterProps {
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 
-export const extractRefID = (props: RouterProps) => new URLSearchParams(props.location.search).get('ref_id');
+export const extractRefID = (props: RouterProps) => new URLSearchParams(props.location.search).get('refid');
 
 class SignUpComponent extends React.Component<Props> {
     //tslint:disable-next-line:no-any
@@ -100,24 +100,44 @@ class SignUpComponent extends React.Component<Props> {
         this.props.history.push('/signin');
     };
     private handleSignUp = ({ email, password, recaptcha_response, refId }: SignUpFormValues) => {
-        switch (captchaType()) {
-            case 'none':
-                this.props.signUp({
-                    email,
-                    password,
-                    refid: refId,
-                });
-                break;
-            case 'recaptcha':
-            case 'geetest':
-            default:
-                this.props.signUp({
-                    email,
-                    password,
-                    recaptcha_response,
-                    refid: refId,
-                });
-                break;
+        if (refId) {
+            switch (captchaType()) {
+                case 'none':
+                    this.props.signUp({
+                        email,
+                        password,
+                        refid: refId,
+                    });
+                    break;
+                case 'recaptcha':
+                case 'geetest':
+                default:
+                    this.props.signUp({
+                        email,
+                        password,
+                        recaptcha_response,
+                        refid: refId,
+                    });
+                    break;
+            }
+        } else {
+            switch (captchaType()) {
+                case 'none':
+                    this.props.signUp({
+                        email,
+                        password,
+                    });
+                    break;
+                case 'recaptcha':
+                case 'geetest':
+                default:
+                    this.props.signUp({
+                        email,
+                        password,
+                        recaptcha_response,
+                    });
+                    break;
+            }
         }
     };
 
@@ -160,7 +180,7 @@ class SignUpComponent extends React.Component<Props> {
         this.props.history.push('/signin');
     }
 
-    private extractRefID = (url: string) => new URLSearchParams(url).get('ref_id');
+    private extractRefID = (url: string) => new URLSearchParams(url).get('refid');
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
