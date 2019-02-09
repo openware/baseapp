@@ -1,4 +1,4 @@
-import { Grid, TabPanel } from '@openware/components';
+import { Grid } from '@openware/components';
 import * as React from 'react';
 import {
     InjectedIntlProps,
@@ -49,22 +49,24 @@ const cols = {
 
 const layouts = {
     lg: [
-        { x: 0, y: 0, w: 4, h: 24, i: '0', minH: 12, minW: 4 },
-        { x: 4, y: 0, w: 4, h: 24, i: '1', minH: 18, minW: 4 },
-        { x: 8, y: 0, w: 16, h: 39, i: '2', minH: 12, minW: 5 },
-        { x: 0, y: 39, w: 4, h: 24, i: '3', minH: 10, minW: 3 },
-        { x: 4, y: 39, w: 4, h: 24, i: '4', minH: 10, minW: 3 },
-        { x: 0, y: 6, w: 8, h: 15, i: '5', minH: 10, minW: 5 },
-        { x: 8, y: 72, w: 16, h: 24, i: '6', minH: 23, minW: 5 },
+        { x: 16, y: 0, w: 4, h: 14, i: '0', minH: 12, minW: 2 },
+        { x: 16, y: 12, w: 8, h: 20, i: '1', minH: 18, minW: 4 },
+        { x: 0, y: 0, w: 16, h: 39, i: '2', minH: 12, minW: 5 },
+        { x: 16, y: 11, w: 4, h: 14, i: '3', minH: 8, minW: 3 },
+        { x: 20, y: 11, w: 4, h: 14, i: '4', minH: 8, minW: 3 },
+        { x: 16, y: 38, w: 8, h: 13, i: '5', minH: 12, minW: 5 },
+        { x: 0, y: 40, w: 16, h: 22, i: '6', minH: 8, minW: 5 },
+        { x: 26, y: 0, w: 4, h: 14, i: '7', minH: 8, minW: 4 },
     ],
     md: [
-        { x: 0, y: 0, w: 5, h: 12, i: '0', minH: 12, minW: 4 },
-        { x: 0, y: 10, w: 5, h: 18, i: '1', minH: 18, minW: 4 },
+        { x: 0, y: 0, w: 4, h: 12, i: '0', minH: 12, minW: 2 },
+        { x: 2, y: 13, w: 8, h: 18, i: '1', minH: 16, minW: 4 },
         { x: 5, y: 0, w: 19, h: 30, i: '2', minH: 12, minW: 5 },
-        { x: 0, y: 24, w: 5, h: 12, i: '3', minH: 10, minW: 3 },
-        { x: 5, y: 12, w: 5, h: 12, i: '4', minH: 10, minW: 3 },
-        { x: 0, y: 24, w: 10, h: 24, i: '5', minH: 10, minW: 5 },
-        { x: 10, y: 0, w: 14, h: 36, i: '6', minH: 8, minW: 5 },
+        { x: 0, y: 12, w: 4, h: 12, i: '3', minH: 8, minW: 3 },
+        { x: 4, y: 12, w: 4, h: 12, i: '4', minH: 8, minW: 3 },
+        { x: 0, y: 10, w: 8, h: 11, i: '5', minH: 8, minW: 4 },
+        { x: 8, y: 0, w: 19, h: 20, i: '6', minH: 6, minW: 5 },
+        { x: 0, y: 0, w: 4, h: 12, i: '7', minH: 8, minW: 2 },
     ],
     sm: [
         {
@@ -124,9 +126,9 @@ const layouts = {
         },
         {
             x: 0,
-            y: 106,
+            y: 72,
             w: 12,
-            h: 12,
+            h: 20,
             i: '5',
             minH: 12,
             minW: 7,
@@ -141,6 +143,17 @@ const layouts = {
             i: '6',
             minH: 12,
             minW: 7,
+            draggable: false,
+            resizable: false,
+        },
+        {
+            x: 30,
+            y: 0,
+            w: 6,
+            h: 15,
+            i: '7',
+            minH: 10,
+            minW: 6,
             draggable: false,
             resizable: false,
         },
@@ -209,6 +222,14 @@ class Trading extends React.Component<Props, StateProps> {
             i: 5,
             render: () => <MarketDepthsComponent />,
         },
+        {
+            i: 6,
+            render: () => <OpenOrdersComponent/>,
+        },
+        {
+            i: 7,
+            render: () => <RecentTrades/>,
+        },
     ];
 
     public async componentDidMount() {
@@ -246,40 +267,9 @@ class Trading extends React.Component<Props, StateProps> {
         return this.props.intl.formatMessage({id: e});
     };
 
-    public renderTabs = () => {
-        return [
-            {
-              content: <RecentTrades/>,
-              label: this.translate('page.body.trade.header.recentTrades'),
-            },
-            {
-                content: <OpenOrdersComponent/>,
-                label: this.translate('page.body.trade.header.openOrders'),
-            },
-        ];
-    };
-
-    public renderTrades() {
-      if (this.props.user.uid) {
-        return (
-          <div className="pg-trading-screen__tab-panel"><TabPanel  panels={this.renderTabs()} /></div>
-        );
-      } else {
-        return (
-          <React.Fragment>
-            <div className="cr-table-header__content">
-                <div className={'pg-market-depth__title'}>
-                      {this.translate('page.body.trade.header.recentTrades')}
-                </div>
-              </div>
-            <RecentTrades/>
-          </React.Fragment>
-        );
-      }
-    }
     public render() {
-        const rowHeight = 12;
-        const allGridItems = [...this.gridItems, {i: 6, render: () => this.renderTrades()}];
+        const rowHeight = 14;
+        const allGridItems = [...this.gridItems];
 
         return (
             <div className={'pg-trading-screen'}>

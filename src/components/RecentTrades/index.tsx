@@ -1,6 +1,7 @@
 import { Decimal, Table } from '@openware/components';
 import * as React from 'react';
 import {
+    FormattedMessage,
     InjectedIntlProps,
     injectIntl,
     intlShape,
@@ -17,7 +18,6 @@ import {
 } from '../../modules';
 import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modules/recentTrades';
 
-// tslint:disable no-any
 interface ReduxProps {
     recentTrades: PublicTrade[];
     currentMarket: Market | undefined;
@@ -52,6 +52,9 @@ class RecentTradesComponent extends React.Component<Props> {
     public render() {
         return (
             <div className="pg-recent-trades">
+                <div className="cr-table-header__content">
+                    <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.recentTrades" /></div>
+                </div>
                 <Table
                     data={this.getTrades(this.props.recentTrades)}
                     header={this.getHeaders()}

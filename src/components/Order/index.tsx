@@ -68,7 +68,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderSide: 'buy',
             wallet: undefined,
             price: '',
-            width: 311,
+            width: 451,
         };
         this.orderRef = React.createRef();
     }

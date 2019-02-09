@@ -2,7 +2,7 @@ import { Loader, OpenOrders } from '@openware/components';
 import classnames from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDate, preciseData } from '../../helpers';
 import { RootState } from '../../modules';
@@ -53,6 +53,9 @@ export class OpenOrdersContainer extends React.Component<Props> {
         });
         return (
             <div className={classNames}>
+                <div className="cr-table-header__content">
+                    <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.openOrders" /></div>
+                </div>
                 {openOrdersLoading ? <Loader /> : this.openOrders()}
             </div>
         );
