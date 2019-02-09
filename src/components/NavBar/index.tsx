@@ -9,7 +9,7 @@ import {
 } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { pgRoutes } from '../../constants';
-import { getLanguageName } from '../../helpers';
+// import { getLanguageName } from '../../helpers';
 import {
     changeLanguage,
     ContactError,
@@ -24,7 +24,7 @@ import {
     User,
     walletsReset,
 } from '../../modules';
-import arrow = require('./down-arrow.svg');
+// import arrow = require('./down-arrow.svg');
 
 export interface ReduxProps {
     address: string;
@@ -106,7 +106,10 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         const { location, user, lang } = this.props;
         const { isOpenLanguage } = this.state;
         const address = location ? location.pathname : '';
-        const languageName = getLanguageName(lang.toLowerCase());
+        const languageName = lang.toUpperCase();
+        const languageClassName = classnames('dropdown-menu-language-field', {
+            'dropdown-menu-language-field-active': isOpenLanguage,
+        });
 
         return (
             <div className={'pg-navbar'}>
@@ -115,10 +118,10 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                 </ul>
                 <div className="pg-navbar__header-settings">
                     {user.email ? this.getUserEmailMenu() : null}
-                    <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-toggle">
-                        <div onClick={this.toggleLanguageMenu} className="email">
+                    <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-toggle dropdown-menu-language-container">
+                        <div onClick={this.toggleLanguageMenu} className={languageClassName}>
                             {languageName}
-                            <img className="icon" src={arrow} />
+                            <img className="icon" src={require(`./${isOpenLanguage ? 'open' : 'close'}-icon.svg`)} />
                         </div>
                         {isOpenLanguage ? this.getLanguageMenu() : null}
                     </div>
@@ -129,13 +132,13 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
     private getLanguageMenu = () => {
         return (
-            <div className="dropdown-menu" role="menu">
+            <div className="dropdown-menu dropdown-menu-language" role="menu">
                 {/* tslint:disable */}
                 <div className="dropdown-menu-item-lang" onClick={e => this.handleChangeLanguage('en')}>
-                    English
+                    EN
                 </div>
                 <div className="dropdown-menu-item-lang" onClick={e => this.handleChangeLanguage('ru')}>
-                    Русский
+                    RU
                 </div>
                 <div className="dropdown-menu-item-lang" onClick={e => this.handleChangeLanguage('zh')}>
                     中国
@@ -146,14 +149,17 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
     };
 
     private getUserEmailMenu = () => {
-        const { user } = this.props;
+        // const { user } = this.props;
         const { isOpen } = this.state;
+        const userClassName = classnames('navbar-user-menu', {
+            'navbar-user-menu-active': isOpen,
+        });
 
         return (
             <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-toggle">
-                <div onClick={this.openMenu} className="email">
-                    {NavBarComponent.getUserLabelFromEmail(user.email).toUpperCase()}
-                    <img className="icon" src={arrow} />
+                <div onClick={this.openMenu} className={userClassName}>
+                    <img src={require(`./${isOpen ? 'open' : 'close'}-avatar.svg`)} />
+                    <img className="icon" src={require(`./${isOpen ? 'open' : 'close'}-icon.svg`)} />
                 </div>
                 {isOpen ? this.getUserMenu() : null}
             </div>
@@ -162,8 +168,8 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
     private getUserMenu = () => {
         return (
-            <div className="dropdown-menu" role="menu">
-                <div className="dropdown-menu-item">
+            <div className="dropdown-menu dropdown-menu-user" role="menu">
+                <div className="dropdown-menu-item-user">
                     <Link
                         className="pg-navbar__admin-logout"
                         to="/profile"
@@ -172,7 +178,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                         <FormattedMessage id={'page.header.navbar.profile'} />
                     </Link>
                 </div>
-                <div className="dropdown-menu-item">
+                <div className="dropdown-menu-item-user">
                     <Link
                         className="pg-navbar__admin-logout"
                         to="/confirm"
@@ -181,7 +187,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                         <FormattedMessage id={'page.header.navbar.kyc'} />
                     </Link>
                 </div>
-                <div className="dropdown-menu-item">
+                <div className="dropdown-menu-item-user">
                     <a className="pg-navbar__admin-logout" onClick={this.handleLogOut}>
                         <FormattedMessage id={'page.header.navbar.logout'} />
                     </a>
@@ -190,9 +196,9 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         );
     };
 
-    private static getUserLabelFromEmail(email: string): string {
-        return email.slice(0, 2);
-    }
+    // private static getUserLabelFromEmail(email: string): string {
+    //     return email.slice(0, 2);
+    // }
 
     private handleRouteChange = (to: string) => () => {
         this.setState({ isOpen: false }, () => {
@@ -211,15 +217,43 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
     };
 
     private openMenu = () => {
-        this.setState(prev => ({
-          isOpen: !prev.isOpen,
-        }));
+        this.setState({
+            isOpen: !this.state.isOpen,
+        }, () => {
+            if (this.state.isOpen) {
+                document.addEventListener('click', this.closeMenu)
+            } else {
+                document.removeEventListener('click', this.closeMenu);
+            }
+        });
     };
 
+    private closeMenu = () => {
+        this.setState({
+            isOpen: false,
+        }, () => {
+            document.removeEventListener('click', this.closeMenu);
+        })
+    }
+
     private toggleLanguageMenu = () => {
-        this.setState(prev => ({
-          isOpenLanguage: !prev.isOpenLanguage,
-        }));
+        this.setState({
+            isOpenLanguage: !this.state.isOpenLanguage,
+        }, () => {
+            if (this.state.isOpenLanguage) {
+                document.addEventListener('click', this.closeLanguageMenu)
+            } else {
+                document.removeEventListener('click', this.closeLanguageMenu);
+            }
+        });
+    }
+
+    private closeLanguageMenu = () => {
+        this.setState({
+            isOpenLanguage: false,
+        }, () => {
+            document.removeEventListener('click', this.closeLanguageMenu);
+        })
     }
 
     private handleChangeLanguage = (language: string) => {
