@@ -1,5 +1,5 @@
 .cr-email-form {
-  background: #1e2841;
+  background: var(--email-form-bg);
   max-width: 424px;
   min-height: 350px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
@@ -9,11 +9,11 @@
   &__options-group {
     width: 100%;
     height: 58px;
-    border-bottom: 2px solid #657395;
+    border-bottom: 2px solid var(--email-form-border);
   }
 
   &__option {
-    background: #28334e;
+    background: var(--header);
     display: inline-block;
     width: 100%;
     height: 58px;
@@ -31,7 +31,7 @@
     font-weight: 500;
     font-size: 14px;
     letter-spacing: 0.0357143em;
-    color: #fff;
+    color: var(--color-white);
   }
 
   &__form-content {
@@ -76,17 +76,17 @@
     left: 10px;
     padding: 2px 6px;
     border-radius: 2px;
-    background: #1e2841;
+    background: var(--email-form-bg);
     color: var(--forgot-password-label-color);
   }
 
   &__group--focused {
     .cr-email-form__label {
-      color: #3c78e0;
+      color: var(--email-form-accent);
     }
 
     input {
-      border: 1px solid #3c78e0 !important;
+      border: 1px solid var(--email-form-accent) !important;
     }
   }
 
@@ -107,7 +107,7 @@
   &__button {
     margin-left: 0;
     height: 40px;
-    background: #2e4c80;
+    background: var(--button-primary);
     border-radius: 3px;
     font-style: normal;
     font-weight: normal;
@@ -115,7 +115,7 @@
     font-size: 16px;
     text-align: center;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--color-white);
   }
 
   &__loader {
@@ -150,7 +150,7 @@
       padding: 0 10px;
       font-size: 12px;
       text-align: left;
-      border: 1px solid #737f92;
+      border: 1px solid var(--unknown-colors);
       box-sizing: border-box;
       border-radius: 4px;
     }
