@@ -161,8 +161,9 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         }
     };
 
-    private handleCancel = (index: number) => {
-        const orderToDelete = this.props.openOrdersData[index];
+    private handleCancel = (id: number) => {
+        const orderToDelete = this.props.openOrdersData.find(o => o.id === id)
+            || { id: 0 };
         const orderToDeleteId = orderToDelete.id.toString();
         this.props.ordersCancelById({ id: orderToDeleteId });
     };
