@@ -145,33 +145,6 @@ const layouts = {
     ],
 };
 
-const gridItems = [
-    {
-        i: 0,
-        render: () => <MarketsComponent />,
-    },
-    {
-        i: 1,
-        render: () => <OrderComponent />,
-    },
-    {
-        i: 2,
-        render: () => <TradingChart />,
-    },
-    {
-        i: 3,
-        render: () => <Bids />,
-    },
-    {
-        i: 4,
-        render: () => <Asks />,
-    },
-    {
-        i: 5,
-        render: () => <MarketDepthsComponent />,
-    },
-];
-
 const handleLayoutChange = () => {
     return;
 };
@@ -191,13 +164,49 @@ interface DispatchProps {
     setCurrentPrice: typeof setCurrentPrice;
 }
 
-type Props = DispatchProps & ReduxProps & InjectedIntlProps;
+interface StateProps {
+    orderComponentResized: number;
+}
 
-class Trading extends React.Component<Props> {
+type Props = DispatchProps & ReduxProps & InjectedIntlProps & StateProps;
+
+class Trading extends React.Component<Props, StateProps> {
     //tslint:disable-next-line:no-any
     public static propsTypes: React.ValidationMap<any> = {
         intl: intlShape.isRequired,
     };
+
+    public readonly state = {
+        orderComponentResized: 5,
+    };
+
+    private gridItems = [
+        {
+            i: 0,
+            render: () => <MarketsComponent />,
+        },
+        {
+            i: 1,
+            render: () => <OrderComponent size={this.state.orderComponentResized} />,
+        },
+        {
+            i: 2,
+            render: () => <TradingChart />,
+        },
+        {
+            i: 3,
+            render: () => <Bids />,
+        },
+        {
+            i: 4,
+            render: () => <Asks />,
+        },
+        {
+            i: 5,
+            render: () => <MarketDepthsComponent />,
+        },
+    ];
+
     public async componentDidMount() {
         const { wallets, markets, userLoggedIn, rangerState: { connected } } = this.props;
 
@@ -260,7 +269,7 @@ class Trading extends React.Component<Props> {
     }
     public render() {
         const rowHeight = 12;
-        const allGridItems = [...gridItems, {i: 6, render: () => this.renderTrades()}];
+        const allGridItems = [...this.gridItems, {i: 6, render: () => this.renderTrades()}];
 
         return (
             <div className={'pg-trading-screen'}>
@@ -270,14 +279,24 @@ class Trading extends React.Component<Props> {
                         className="layout"
                         children={allGridItems}
                         cols={cols}
-                        draggableHandle=".cr-table-header__content, .pg-trading-screen__tab-panel"
+                        draggableHandle=".cr-table-header__content, .pg-trading-screen__tab-panel, .draggable-container"
                         layouts={layouts}
                         rowHeight={rowHeight}
                         onLayoutChange={handleLayoutChange}
+                        handleResize={this.handleResize}
                     />
                 </div>
             </div>
         );
+    }
+
+    private handleResize = (layout, oldItem, newItem,
+                            placeholder, e, element) => {
+        if (oldItem.i === '1') {
+            this.setState({
+                orderComponentResized: newItem.w,
+            });
+        }
     }
 }
 

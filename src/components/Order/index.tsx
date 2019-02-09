@@ -41,6 +41,7 @@ interface StoreProps {
     // tslint:disable-next-line no-any
     wallet?: any;
     price: string;
+    width: number;
 }
 
 interface DispatchProps {
@@ -48,7 +49,11 @@ interface DispatchProps {
     orderExecute: typeof orderExecuteFetch;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+interface OwnProps {
+    size: number;
+}
+
+type Props = ReduxProps & DispatchProps & InjectedIntlProps & OwnProps;
 
 class OrderInsert extends React.PureComponent<Props, StoreProps> {
     //tslint:disable-next-line:no-any
@@ -63,15 +68,23 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderSide: 'buy',
             wallet: undefined,
             price: '',
+            width: 311,
         };
+        this.orderRef = React.createRef();
     }
 
     private getOrderTypes = [
         this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.limit'}),
         this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.market'}),
     ];
+    private orderRef;
 
     public componentWillReceiveProps(next: Props) {
+        if (this.props.size !== next.size) {
+            this.setState({
+                width: this.orderRef.current.clientWidth,
+            });
+        }
         if (next.wallets && (next.wallets.length === 0)) {
             this.setState({
                 wallet: undefined,
@@ -100,12 +113,15 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         const currentTicker = marketTickers[currentMarket.id];
         const defaultCurrentTicker = { last: '0' };
-
+        const headerContent = (
+            <div className="cr-table-header__content">
+                <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.newOrder" /></div>
+            </div>
+        );
         return (
-            <div className={'pg-order'}>
-                <div className="cr-table-header__content">
-                    <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.newOrder" /></div>
-                </div>
+
+            <div className={'pg-order'} ref={this.orderRef}>
+                {this.state.width > 450 ? headerContent : undefined}
                 <Order
                     disabled={executeLoading}
                     feeBuy={Number(currentMarket.ask_fee)}
@@ -128,6 +144,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     labelFirst={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy'})}
                     labelSecond={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell'})}
                     estimatedFeeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.estimatedFee'})}
+                    width={this.state.width}
                 />
                 {executeLoading && <Loader />}
             </div>
@@ -212,7 +229,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // tslint:disable-next-line
-const OrderComponent = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderInsert as any));
+const OrderComponent = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderInsert as any)) as any;
 
 export {
     OrderComponent,
