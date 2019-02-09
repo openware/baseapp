@@ -84,7 +84,8 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             type="string"
                             placeholder={this.translate('page.body.kyc.phone.phoneNumber')}
                             value={phoneNumber}
-                            onChange={this.handleChangeNumber}
+                            onClick={this.addPlusSignToPhoneNumber}
+                            onChange={this.handleChangePhoneNumber}
                         />
                         <button
                             className="pg-confirm__content-phone-col-content-send"
@@ -105,7 +106,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             type="string"
                             placeholder={this.translate('page.body.kyc.phone.code')}
                             value={confirmationCode}
-                            onChange={this.handleConfirmNumber}
+                            onChange={this.handleChangeConfirmationCode}
                         />
                     </div>
                 </div>
@@ -129,27 +130,41 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         this.props.verifyPhone(requestProps);
     }
 
-    private handleChangeNumber = (e: OnChangeEvent) => {
-        if (this.inputNumber(e)) {
+    private addPlusSignToPhoneNumber = () => {
+        if (this.state.phoneNumber.length === 0) {
+            this.setState({
+                phoneNumber: '+',
+            });
+        }
+    }
+
+    private handleChangePhoneNumber = (e: OnChangeEvent) => {
+        if (this.inputPhoneNumber(e)) {
             this.setState({
                 phoneNumber: e.target.value,
             });
         }
     }
 
-    private inputNumber = (e: OnChangeEvent) => {
-        const convertedText = e.target.value.trim();
-        const condition = new RegExp('^\\+\\d*?$');
-        return condition.test(convertedText);
-    }
-
-    private handleConfirmNumber = (e: OnChangeEvent) => {
-        if (this.inputNumber(e)) {
+    private handleChangeConfirmationCode = (e: OnChangeEvent) => {
+        if (this.inputConfirmationCode(e)) {
             this.setState({
                 confirmationCode: e.target.value,
             });
         }
     };
+
+    private inputPhoneNumber = (e: OnChangeEvent) => {
+        const convertedText = e.target.value.trim();
+        const condition = new RegExp('^\\+\\d*?$');
+        return condition.test(convertedText);
+    }
+
+    private inputConfirmationCode = (e: OnChangeEvent) => {
+        const convertedText = e.target.value.trim();
+        const condition = new RegExp('^\\d*?$');
+        return condition.test(convertedText);
+    }
 
     private handleSendCode = () => {
         const requestProps = {
