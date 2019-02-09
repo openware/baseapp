@@ -27,13 +27,16 @@ class ProfileTwoFactorAuthComponent extends React.Component<Props, ProfileTwoFac
 
     public render() {
         const { is2faEnabled } = this.state;
+        const className = is2faEnabled ? 'pg-profile-page__label-value__enabled'
+                                       : 'pg-profile-page__label-value';
+
         return (
             <React.Fragment>
-                <label>
-                    <p><FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication" /></p>
-                    <span>
-                        {is2faEnabled ? <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.message.enable" />
-                                      : <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.message.disable" />}
+                <label className="pg-profile-page__label">
+                    <div>Two-factor authentication</div>
+                    <span className={className}>
+                    {is2faEnabled ? <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.message.enable" />
+                                  : <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.message.disable" />}
                     </span>
                 </label>
                 <Checkbox
@@ -47,7 +50,7 @@ class ProfileTwoFactorAuthComponent extends React.Component<Props, ProfileTwoFac
         );
     }
 
-    private handleToggle2fa() {
+    private handleToggle2fa = () => {
         this.props.navigateTo2fa(!this.state.is2faEnabled);
     }
 }

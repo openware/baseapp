@@ -16,9 +16,9 @@ class ProfileVerificationComponent extends React.Component<ProfileVerificationPr
             <div className="pg-profile-page__box pg-profile-page__left-col__verification">
                 <div className="pg-profile-page__box-header">
                     <div className="pg-profile-page__row">
-                        <h1>
-                            <FormattedMessage id="page.body.profile.header.account.profile" />
-                        </h1>
+                      <div className="pg-profile-page__verification-header">
+                        <FormattedMessage id="page.body.profile.header.account.profile" />
+                      </div>
                     </div>
                 </div>
                 {this.renderFirstLevel(userLevel)}
@@ -36,7 +36,7 @@ class ProfileVerificationComponent extends React.Component<ProfileVerificationPr
         return (
             <div className="pg-profile-page__row pg-profile-page__level-verification">
                 <div className={titleClassName}>
-                    <p><FormattedMessage id="page.body.profile.header.account.profile.email.title" /></p>
+                    {this.renderVerificationLevel('page.body.profile.header.account.profile.email', userLevel, targetLevel)}
                     <p><FormattedMessage id="page.body.profile.header.account.profile.email.message" /></p>
                 </div>
             </div>
@@ -51,7 +51,7 @@ class ProfileVerificationComponent extends React.Component<ProfileVerificationPr
         return (
             <div className="pg-profile-page__row pg-profile-page__level-verification">
                 <div className={titleClassName}>
-                    <p><FormattedMessage id="page.body.profile.header.account.profile.phone.title" /></p>
+                    {this.renderVerificationLevel('page.body.profile.header.account.profile.phone', userLevel, targetLevel)}
                     <p><FormattedMessage id="page.body.profile.header.account.profile.phone.message" /></p>
                 </div>
             </div>
@@ -66,11 +66,35 @@ class ProfileVerificationComponent extends React.Component<ProfileVerificationPr
         return (
             <div className="pg-profile-page__row pg-profile-page__level-verification">
                 <div className={titleClassName}>
-                    <p><FormattedMessage id="page.body.profile.header.account.profile.identity.title" /></p>
+                    {this.renderVerificationLevel('page.body.profile.header.account.profile.identity', userLevel, targetLevel)}
                     <p><FormattedMessage id="page.body.profile.header.account.profile.identity.message" /></p>
                 </div>
             </div>
         );
+    }
+
+    private renderVerificationLevel(text: string, userLevel, targetLevel) {
+        if (userLevel === (targetLevel - 1)) {
+            return (
+                <a href="/confirm" className="pg-profile-page__level-verification__url">
+                    <FormattedMessage id={`${text}.unverified.title`}/>
+                </a>
+            );
+        } else {
+            if (userLevel < targetLevel) {
+                return (
+                    <p className="pg-profile-page__level-verification__name">
+                        <FormattedMessage id={`${text}.unverified.title`}/>
+                    </p>
+                );
+            } else {
+                return (
+                    <p className="pg-profile-page__level-verification__name">
+                        <FormattedMessage id={`${text}.title`}/>
+                    </p>
+                );
+            }
+        }
     }
 
     private getLevelsClassNames(currentLevel: number, targetLevel: number) {

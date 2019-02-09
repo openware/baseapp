@@ -166,8 +166,8 @@ export const ru: LangType = {
   'page.body.profile.header.account.content.password.button.cancel': 'Отменить',
 
   'page.body.profile.header.account.content.twoFactorAuthentication': 'Двухфакторная аутентификация',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.enable': '2FA - Включен',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.disable': '2FA - Отключен',
+  'page.body.profile.header.account.content.twoFactorAuthentication.message.enable': 'Включен',
+  'page.body.profile.header.account.content.twoFactorAuthentication.message.disable': 'Отключен',
   'page.body.profile.header.account.content.twoFactorAuthentication.header': 'Включить двухфакторную аутентификацию',
   'page.body.profile.header.account.content.twoFactorAuthentication.subHeader': '6-ти значный код GAuthenticator',
   'page.body.profile.header.account.content.twoFactorAuthentication.enable': 'ВКЛЮЧИТЬ 2FA',
@@ -181,8 +181,10 @@ export const ru: LangType = {
   'page.body.profile.header.account.profile': 'Верификация Вашего профиля',
   'page.body.profile.header.account.profile.email.title': 'Почта - подтверждено',
   'page.body.profile.header.account.profile.email.message': 'Депозиты и вывод средств не разрешены',
+  'page.body.profile.header.account.profile.phone.unverified.title': 'Телефон - подтвердить',
   'page.body.profile.header.account.profile.phone.title': 'Телефон - подтверждено',
   'page.body.profile.header.account.profile.phone.message': 'Депозиты и торги разрешены',
+  'page.body.profile.header.account.profile.identity.unverified.title': 'Личность - подтвердить',
   'page.body.profile.header.account.profile.identity.title': 'Личность - подтверждено',
   'page.body.profile.header.account.profile.identity.message': 'Вывод средств разрешен',
 

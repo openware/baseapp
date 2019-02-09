@@ -164,8 +164,8 @@ export const en = {
   'page.body.profile.header.account.content.password.button.cancel': 'Cancel',
 
   'page.body.profile.header.account.content.twoFactorAuthentication': 'Two-factor authentication',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.enable': '2FA - Enabled',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.disable': '2FA - Disabled',
+  'page.body.profile.header.account.content.twoFactorAuthentication.message.enable': 'Enabled',
+  'page.body.profile.header.account.content.twoFactorAuthentication.message.disable': 'Disabled',
   'page.body.profile.header.account.content.twoFactorAuthentication.header': 'Enable two factor authentication',
   'page.body.profile.header.account.content.twoFactorAuthentication.subHeader': '6-digit Google Authenticator code',
   'page.body.profile.header.account.content.twoFactorAuthentication.enable': 'ENABLE 2FA',
@@ -179,8 +179,10 @@ export const en = {
   'page.body.profile.header.account.profile': 'Profile Verification',
   'page.body.profile.header.account.profile.email.title': 'Email verified',
   'page.body.profile.header.account.profile.email.message': 'Deposit and Withdrawal not allowed',
+  'page.body.profile.header.account.profile.phone.unverified.title': 'Phone verification',
   'page.body.profile.header.account.profile.phone.title': 'Phone verified',
   'page.body.profile.header.account.profile.phone.message': 'Deposit and trade allowed',
+  'page.body.profile.header.account.profile.identity.unverified.title': 'Identity verification',
   'page.body.profile.header.account.profile.identity.title': 'Identity verified',
   'page.body.profile.header.account.profile.identity.message': 'Withdrawal allowed',
 

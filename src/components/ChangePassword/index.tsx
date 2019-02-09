@@ -46,11 +46,11 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
         const { showForm } = this.state;
         return (
             <React.Fragment>
-                <label>
-                    <p>
-                        <FormattedMessage id="page.body.profile.header.account.content.password" />
-                    </p>
-                    <span>***********</span>
+                <label className="pg-profile-page__label">
+                  <div>
+                  <FormattedMessage id="page.body.profile.header.account.content.password" />
+                  </div>
+                  <span className="pg-profile-page__label-value">***********</span>
                 </label>
                 {showForm ? this.renderForm() : this.renderPasswordView()}
             </React.Fragment>
