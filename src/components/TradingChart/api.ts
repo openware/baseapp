@@ -35,8 +35,8 @@ const config = {
     supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
 };
 
-export const klineArrayToObject = (el: number[]): KlineEvent => {
-    const [time, open, high, low, close, volume] = el;
+export const klineArrayToObject = (el: string[]): KlineEvent => {
+    const [time, open, high, low, close, volume] = el.map(parseFloat);
     return {
         time: time * 1e3,
         open,

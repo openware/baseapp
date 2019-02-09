@@ -150,12 +150,12 @@ describe('Ranger module', () => {
 
     describe('public events', () => {
         describe('kline event', () => {
-            const klineEvent: { [pair: string]: number[] } = { 'kyneth.kline-5m': [1549638900, 0.007, 0.007, 0.007, 0.007, 0] };
+            const klineEvent: { [pair: string]: string[] } = { 'kyneth.kline-5m': ['1549638900', '0.007', '0.007', '0.007', '0.007', '0'] };
             const expectedAction = {
                 type: KLINE_PUSH,
                 payload: {
                     marketId: 'kyneth',
-                    kline: [1549638900, 0.007, 0.007, 0.007, 0.007, 0],
+                    kline: ['1549638900', '0.007', '0.007', '0.007', '0.007', '0'],
                     period: '5m',
                 },
             };
