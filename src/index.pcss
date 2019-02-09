@@ -6,203 +6,124 @@
 @import '../node_modules/@openware/components/dark.pcss';
 
 :root {
+
+  /* STYLE GUIDE */
+
+  --main-bg: #1E2841;
+  --back-bg: #171C29;
+  --second-bg: #222B41;
+  --text: #657395;
+  --placeholder-text: #737F92;
+  --header: #28334E;
+  --header-text: #919EBA;
+  --button-normal: #2E4C80;
+  --white: #FFFFFF;
+  --accent: #3C78E0;
+  --green: #54B489;
+  --red: #E85E59;
+  --selected-item: #3A4663;
+
+  /* DARK.PCSS */
+
   /* typography */
   --font-family: Roboto, Helvetica, sans-serif;
   --font-weight: normal;
-
-
-  --background: #171c2b;
-  --table-dark-header-color: #1e2943;
-  --base-bright: #1a243b;
-  --color-green: #12b886;
-  --color-red: #fa5252;
-  --markets-selected-color: #2e3753;
-  --base: #869ec9;
-  --base-2: #7f8fa4;
-  --base-9: #666;
-  --base-new: #657395;
-  --header-border: #2e3753;
-  --button-primary: #2C344D;
-  --color-white: #fff;
-  --muted-text: #737F92;
-  --bright: #F4F5FA;
-  --bright-1: #E5E6EF;
-  --color-blue: #3C78E0;
-  --button-hover: #456FB8;
-  --button-active: #456FB8;
-  --button-disabled: #5F6D86;
-
-  --active-color: var(--base-new);
-  --table-text-color: var(--muted-text);
-  --base-3: var(--header-border);
-  --order-dropdown-background-color: var(--base-bright);
-  --markets-filter-color: var(--base-2);
-  --title-component-color: var(--base);
-  --markets-title-color: var(--base);
-  --order-crypto-icon-background-color: var(--base-bright);
-  --table-background: var(--base-bright);
-  --background-dark: var(--base-bright);
-  --table-even-row-background: var(--base-bright);
-  --order-button-sell: var(--color-red);
-  --transparent: transparent;
-
-    /* wallets */
-  --wallets-item-active: #7e8a9b;
-  --wallets-locked-amount: #525c72;
-  --wallets-locked-amount-active: #4d5159;
-  --wallets-item-font: #727e93;
-  --wallets-item-font-active: #222b42;
-  --wallets-item-bg: #26314a;
-  --wallets-item-bg-hover: #072040;
-  --wallets-item-border: #3b4561;
-  --wallets-font-bold: 800;
-  --wallets-balance: #e8e9f1;
-  --wallets-table-divider: #2e3554;
-
-    /* profile */
-  --profile-table-hover: #1d263e;
-  --profile-btn: #2e4c80;
-  --profile-box-head: #1f2941;
-  --profile-box: #1e2841;
-  --profile-grey: #737F92;
-  --profile-bright: var(--color-white);
-  --profile-url: var(--color-blue);
-  --profile-slider-round: #3C78E0;
-  --profile-slider: #454CA0;
-  --profile-activity-header: #28334E;
-  --profile-activity-border: #657395;
-  --wallets-font-color: #333333;
-
-  /* KYC */
-  --kyc-title-color: #7486AB;
-  --kyc-header-color: #28334E;
-  --kyc-header-border: #657395;
-  --kyc-progress-line: #2c436e;
-  --kyc-circle-color: #1E2841;
-  --kyc-active-color: #3C78E0;
-  --kyc-grey: #737F92;
-  --kyc-button: #2E4C80;
-
-  --gap: 0.5em;
-  --big-gap: 60px;
-  --active-tab-color: #3C78E0;
-  --border-radius: 5px;
-
-  /* --font-size: 12px !important;
+  --font-size: 12px !important;
   --font-size-smaller: calc(var(--font-size) * 0.9);
   --font-size-bigger: calc(var(--font-size) * 1.1);
-  --line-height: 1.2; */
-
-
+  --line-height: 1.2;
 
   /* colors */
-
-  /*
-  --background: red;
-  --base: #c1d4df;
-  --base-1: #c4c4c4;
-  --base-2: #7a96a6;
-  --base-3: #62718b;
-  --base-4: #59aeb9;
-  --base-5: #828282;
-  --base-6: #C1D4DF;
-  --base-7: #900d8b;
-  --base-8: #000;
-  --base-10: #121929;
-  --base-bright: #fff;
-  --color-red: #b8e9f5;
-  --avatar-border-alt-color: #7a96a6;
-  --avatar-background-alt-color: #2e3642;
-  --avatar-alt-font-color: #7a96a6;
-  --background-dark: #ffffff;
-  --background-wallet-item: #1e2736;
-  --background-wallet-item-active: linear-gradient(to top, #0f1425, #121a29, #161f2d, #1a2530, #1f2a34);
-  --background-dropdown: #1e2736;
-  --button-primary: linear-gradient(#3c96cd, #2c8ac3);
-  --button-hover: linear-gradient(#59b7f2, #2c97d7);
-  --button-active: linear-gradient(#2a76a4, #145780);
-  --button-disabled: linear-gradient(#264c63, #0b4365);
-  --button-dark-gray: #1a232f;
-  --outline-wallet-item-active: rgba(232, 241, 255, 0.19);
-  --grid-item-bg: rgba(255, 255, 255, 0.5);
-  --text-light-grey: #c1d4df;
-  --input-block-bg: #1e2736;
-  --input-block-border-color: #62718b;
-  --input-block-color: #7a96a6;
-  --input-block-input-border-color: #62718b;
-  --input-block-input-color: #c1d4df;
-  --order-input-border-color: #62718b;
-  --order-input-crypto-icon-bg: #252e3e;
-  --order-input-crypto-icon-color: #7a96a6;
-  --order-button-sell: #b8e9f5;
-  --order-input-input-bg: #1e2736;
-  --order-input-input-color: #c1d4df;
-  --summary-field-border-color: #3591c9;
-  --withdraw-divider-border-color: #62718b;
-  --withdraw-summary-field-message-color: #c1d4df;
-  --withdraw-summary-field-amount-color: #62718b;
-  --withdraw-button-bg: linear-gradient(91.64deg, #3c96cd 0.06%, #2c8ac3 100%);
-  --table-background: #fff;
-  --table-border-bottom: #62718b;
-  --table-header-color: #666666;
-  --table-dark-header-color: #fff;
-  --title-component-color: #c0c0c0;
-  --table-even-row-background: #fff;
-  --checkbox-background: #fff;
-  --checkbox-checked-background: #fff;
-  --checkbox-hover-background: #f7f7f7;
-  --checkbox-border-color: #C1D4DF;
-  --checkbox-symbol-color: #C1D4DF;
-  --sign-in-background-color: linear-gradient(#1f2a34, #0f1425);
-  --sign-in-label-color: #7a96a6;
-  --sign-in-input-color: #c1d4df;
-  --sign-in-input-border-color: #62718b;
-  --grid-item-bg: rgba(255, 255, 255, 0.4);
-  --sign-up-checkbox-color: #c1d4df;
-  --sign-up-checkbox-mark-color: #a9cde1;
-  --open-orders-background: #141b2b;
-  --open-orders-head: #1f2a34;
-  --order-dropdown-background-color: #1f2a34;
-  --order-crypto-icon-background-color: #252e3e;
-  --order-crypto-font-color: #7a96a6;
-  --order-input-color: #c1d4df;
-  --navbar-text-color: #666666;
-  --markets-selected-color: #C1D4DF;
-  --email-header-color: #C1D4DF;
-  --dropdown-item-hover-color: #0071c1;
-  --dropdown-bg-color: #52658f;
-  --dropdown-toggle-color: #C1D4DF;
-  --order-error-color: crimson;
-  --text-muted: #c0c0c0;
-  --header-background: #1f2a34;
-  --navbar-active-tab: #C1D4DF;
-  --trading-header: rgba(98, 113, 139, 0.2);
-  --scrollbar: #657693;
-  --scrollbar-bg: rgba(101, 118, 147, 0.6);
-  --active-color: #C1D4DF;
-  --wallet-deposit-copyable-color: #e7f3f8;
-  --wallet-item-active-bg: #C1D4DF;
-  --wallet-item-active-color: #fff;
-  --wallet-withdraw-button-background-color: #000;
-  --wallet-withdraw-button-color: #fff;
-  --wallet-withdraw-line-color: #b8e9f5;
-  --wallet-withdraw-input-label-color: #121929;
-  --input-default-color: #c0c0c0;
-  --dark-color: #000;
-  --confirm-border-color: #efeff0;
-  --tab-panel: #C0C0C0;
-  --tab-panel-active: #C1D4DF;
-  */
-
-  /* profile */
-  /*
-  --text-grey: #666666;
-  --success-color: #32D05E;
-  --secondary-color: rgba(184, 233, 245, 0.3);
-  */
+  --base: var(--text);
+  --base-1: #FA00FF;
+  --base-2: var(--text);
+  --base-3: var(--placeholder-text);
+  --base-4: #FA00FF;
+  --base-5: #FA00FF;
+  --base-6: #FA00FF;
+  --base-7: #FA00FF;
+  --base-8: #FA00FF;
+  --base-bright: var(--main-bg);
+  --background: var(--back-bg);
+  --color-red: var(--red);
+  --avatar-border-alt-color: #FA00FF;
+  --avatar-background-alt-color: #FA00FF;
+  --avatar-alt-font-color: #FA00FF;
+  --background-dark: var(--main-bg);
+  --background-wallet-item: var(--header);
+  --background-wallet-item-active: #FA00FF;
+  --background-dropdown: var(--button-normal);
+  --background-dropdown-hover: var(--header-text);
+  --background-dropdown-hover-text: var(--color-white);
+  --button-primary: var(--button-normal);
+  --button-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--button-normal);
+  --button-active: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--button-normal);
+  --button-disabled: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--button-normal);
+  --button-dark-gray: linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), var(--color-white);
+  --outline-wallet-item-active: #FA00FF;
+  --text-light-grey: #FA00FF;
+  --text-table-grey: var(--placeholder-text);
+  --input-block-bg: #FA00FF;
+  --input-block-border-color: var(--placeholder-text);
+  --input-block-color: #FA00FF;
+  --input-block-input-border-color: #FA00FF;
+  --input-block-input-color: #FA00FF;
+  --order-input-border-color: var(--placeholder-text);
+  --order-input-crypto-icon-bg: #FA00FF;
+  --order-input-crypto-icon-color: #FA00FF;
+  --order-input-input-bg: var(--transparent);
+  --order-input-input-color: var(--color-white);
+  --summary-field-border-color: #FA00FF;
+  --withdraw-divider-border-color: #FA00FF;
+  --withdraw-summary-field-message-color: #FA00FF;
+  --withdraw-summary-field-amount-color: #FA00FF;
+  --withdraw-button-bg: #FA00FF;
+  --table-background: var(--main-bg);
+  --table-border-bottom: #FA00FF;
+  --table-header-color: var(--text);
+  --table-dark-header-color: var(--header);
+  --title-component-color: var(--header-text);
+  --table-even-row-background: var(--main-bg);
+  --checkbox-background: #FA00FF;
+  --checkbox-checked-background: #FA00FF;
+  --checkbox-hover-background: #FA00FF;
+  --checkbox-border-color: var(--placeholder-text);
+  --checkbox-symbol-color: #FA00FF;
+  --transparent: transparent;
+  --sign-in-background-color: #FA00FF;
+  --sign-in-label-color: #FA00FF;
+  --sign-in-input-color: #FA00FF;
+  --sign-in-input-border-color: var(--placeholder-text);
+  --sign-up-checkbox-color: #FA00FF;
+  --sign-up-checkbox-mark-color: #FA00FF;
+  --history-action-buy: #FA00FF;
+  --history-action-sell: #FA00FF;
+  --open-orders-action-buy: var(--green);
+  --open-orders-action-sell: var(--red);
+  --open-orders-order-buy: var(--green);
+  --open-orders-order-sell: var(--red);
+  --open-orders-background: var(--button-normal);
+  --open-orders-head: #FA00FF;
+  --order-dropdown-background-color: var(--transparent);
+  --order-crypto-icon-background-color: var(--transparent);
+  --order-crypto-font-color: var(--placeholder-text);
+  --order-input-color: var(--color-white);
+  --markets-filter-color: var(--text);
+  --markets-filter-active-color: var(--color-white);
+  --markets-title-color: var(--header-text);
+  --markets-search-border-color: var(--placeholder-text);
+  --markets-selected-color: var(--text);
+  --market-info-dropdown-bg-color: #FA00FF;
+  --market-info-dropdown-color: #FA00FF;
+  --grid-item-bg: #FA00FF;
+  --grid-placeholder-bg: #FA00FF;
+  --grid-placeholder-border-color: #FA00FF;
+  --grid-resizable-border-color: var(--placeholder-text);
+  --alert-icon-size: calc(var(--gap) * 3.6);
+  --wallet-trades-item-bg-color: #FA00FF;
+  --wallet-trades-item-color: #FA00FF;
 
   /* layout */
-  /*
   --avatar-alt-height: 30px;
   --avatar-alt-width: 30px;
   --avatar-component-width: 50px;
@@ -211,9 +132,76 @@
   --checkbox-label-font-size: 16px;
   --checkbox-size: 10px;
   --checkbox-symbol-size: 10px;
+  --gap: 0.5em;
 
-  */
+/* BASEAPP COLORS */
+
+  --dropdown-border: var(--placeholder-text);
+  --background-dropdown-text: var(--placeholder-text);
+  --background-dropdown-open-text: var(--header);
+  --font-light: lighter;
+
+  --color-green: var(--green);
+  --base: var(--text);
+  --base-9: var(--placeholder-text);
+  --base-new: var(--placeholder-text);
+  --header-border: var(--text);
+  --color-white: var(--white);
+  --muted-text: var(--placeholder-text);
+  --bright: #FA00FF;
+  --bright-1: var(--white);
+  --color-blue: var(--accent);
+
+  --navbar-text-color: var(--text);
+  --text-muted: var(--placeholder-text);
+
+  --active-color: #FA00FF;
+  --table-text-color: var(--placeholder-text);
+  --order-button-sell: #FA00FF;
+  --transparent: transparent;
+
+    /* wallets */
+  --wallets-item-active: #FA00FF;
+  --wallets-locked-amount: var(--color-white);
+  --wallets-locked-amount-active: var(--color-white);
+  --wallets-item-font: var(--color-white);
+  --wallets-item-font-active: var(--color-white);
+  --wallets-item-bg: var(--main-bg);
+  --wallets-item-bg-active: var(--selected-item);
+  --wallets-item-bg-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--selected-item);
+  --wallets-item-border: var(--selected-item);
+  --wallets-font-bold: 800;
+  --wallets-balance: var(--color-white);
+  --wallets-table-divider: var(--text);
+
+    /* profile */
+  --profile-btn: var(--button-normal);
+  --profile-box-head: #FA00FF;
+  --profile-box: var(--main-bg);
+  --profile-grey: var(--placegolder-text);
+  --profile-slider-round: var(--accent);
+  --profile-slider: var(--button-normal);
+  --profile-activity-header: var(--header);
+  --profile-activity-header-font: var(--header-text);
+  --profile-activity-border: var(--text);
+  --wallets-font-color: #FA00FF;
+
+  /* KYC */
+  --kyc-title-color: var(--placeholder-text);
+  --kyc-header-color: var(--header);
+  --kyc-header-border: var(--text);
+  --kyc-progress-line: var(--placeholder-text);
+  --kyc-circle-color: var(--main-bg);
+  --kyc-active-color: var(--accent);
+  --kyc-grey: var(--placeholder-text);
+  --kyc-button: var(--button-normal);
+
+  --gap: 0.5em;
+  --big-gap: 60px;
+  --active-tab-color: var(--accent);
+  --border-radius: 5px;
 }
+
 .cr-title-component {
   font-size: 1em !important;
   width: 100%;
@@ -233,6 +221,7 @@
     position: sticky;
     top: 0;
     z-index: 9999;
+    color: var(--title-component-color);
   }
 
   &-background {
@@ -320,6 +309,7 @@ body, html {
 .cr-dropdown {
   &__list-item {
     cursor: default;
+    font-weight: var(--font-weight)
   }
 }
 
@@ -426,7 +416,7 @@ input:-webkit-autofill {
   }
 
   .cr-tab {
-    color: var(--base-new);
+    color: var(--markets-filter-color);
     font-size: 1rem;
     text-transform: none;
     box-shadow: none;

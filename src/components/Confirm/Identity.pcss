@@ -24,15 +24,15 @@
       margin-top: calc(var(--gap) * 3.2);
       margin-bottom: calc(var(--gap) * 1);
       height: 66px;
+      input {
+        color: var(--color-white) !important;
+      }
 
 
       &-is-active {
         margin-top: 0 !important;
         height: 63px !important;
         margin-bottom: 3px;
-        input {
-          color: var(--color-white) !important;
-        }
         border: 1px solid var(--kyc-active-color) !important;;
       }
 
@@ -108,11 +108,13 @@
 
           &__input--open {
             border-radius: 4px 4px 0 0;
+            color: var(--backhround-dropdown-text);
+            background: var(--background-dropdown-open-text);
           }
           &__list {
             border-color: var(--kyc-grey);
             border-bottom: 1px solid var(--kyc-grey);
-            background-color: var(--base-bright);
+            background-color: var(--background-dropdown);
             color: var(--kyc-grey);
             max-height: calc(var(--big-gap) * 1.5);
             overflow-y: auto;
@@ -122,8 +124,8 @@
             &-item {
               color: var(--kyc-grey);
               &:hover {
-                background-color: var(--active-color);
-                color: var(--base-bright);
+                background-color: var(--background-dropdown-hover);
+                color: var(--background-dropdown-hover-text);
               }
             }
           }

@@ -75,11 +75,11 @@
 
       .dropdown-menu {
         position: absolute;
-        background-color: var(--base-bright);
         margin-right: 100px;
+        background-color: var(--button-primary);
         cursor: pointer !important;
         border: 1px solid rgba(7, 7, 7, 0.15);
-        border-radius: var(--gap);
+        border-radius: var(--gap) * 0.5;
         padding-top: calc(var(--gap) * 1.33);
         padding-bottom: calc(var(--gap) * 1.33);
         margin-top: calc(var(--gap) * 0.333);
@@ -90,11 +90,18 @@
           float: left;
           padding: 0.25rem 1.6rem;
           font-size: calc(var(--gap) * 2);
+          &:hover {
+            background: var(--background-dropdown-hover);
+            opacity: 0,5;
+            a {
+              opacity: 1;
+              color: var(--background-dropdown-hover-text);
+            }
+          }
           a, span {
             text-decoration: none;
-            color: var(--base);
+            color: var(--background-dropdown-text);
             font-size: 14px;
-            background-color: var(--base-bright);
           }
         }
 

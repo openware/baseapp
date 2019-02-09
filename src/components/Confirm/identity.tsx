@@ -102,7 +102,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             <div className="pg-confirm__content-identity-forms">
                 <div className="pg-confirm__content-identity-col">
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={`pg-confirm__content-identity-col-row-content ${firstName && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                      <fieldset className={`pg-confirm__content-identity-col-row-content`}>
                           {firstName && <legend>{this.translate('page.body.kyc.identity.firstName')}</legend>}
                               <input
                                   className="pg-confirm__content-identity-col-row-content-number"
@@ -114,7 +114,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                       </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={`pg-confirm__content-identity-col-row-content ${dateOfBirth && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                      <fieldset className={`pg-confirm__content-identity-col-row-content`}>
                           {dateOfBirth && <legend>{this.translate('page.body.kyc.identity.dateOfBirth')}</legend>}
                           <MaskInput
                             className="pg-confirm__content-identity-col-row-content-number"
@@ -127,7 +127,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                       </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={`pg-confirm__content-identity-col-row-content ${residentialAddress && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                      <fieldset className={`pg-confirm__content-identity-col-row-content`}>
                           {residentialAddress && <legend>{this.translate('page.body.kyc.identity.residentialAddress')}</legend>}
                           <input
                             className="pg-confirm__content-identity-col-row-content-number"
@@ -139,7 +139,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                       </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={`pg-confirm__content-identity-col-row-content ${city && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                      <fieldset className={`pg-confirm__content-identity-col-row-content`}>
                           {city && <legend>{this.translate('page.body.kyc.identity.city')}</legend>}
                           <input
                               className="pg-confirm__content-identity-col-row-content-number"
@@ -153,7 +153,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 </div>
                 <div className="pg-confirm__content-identity-col pg-confirm__content-identity-col-right">
                   <div className="pg-confirm__content-identity-col-row">
-                    <fieldset className={`pg-confirm__content-identity-col-row-content ${lastName && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                    <fieldset className={`pg-confirm__content-identity-col-row-content`}>
                         {lastName && <legend>{this.translate('page.body.kyc.identity.lastName')}</legend>}
                             <input
                                 className="pg-confirm__content-identity-col-row-content-number"
@@ -183,7 +183,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                         </div>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={`pg-confirm__content-identity-col-row-content ${postcode && 'pg-confirm__content-identity-col-row-is-active'}`}>
+                      <fieldset className={`pg-confirm__content-identity-col-row-content`}>
                           {postcode && <legend>{this.translate('page.body.kyc.identity.postcode')}</legend>}
                           <input
                               className="pg-confirm__content-identity-col-row-content-number"

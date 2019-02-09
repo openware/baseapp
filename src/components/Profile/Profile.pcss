@@ -16,6 +16,10 @@
 
   .cr-button {
     margin-right: 0;
+    color: var(--color-white);
+    &:hover {
+      background: var(--button-hover);
+    }
   }
 
   &__level-verification {
@@ -59,6 +63,7 @@
     padding: 0 calc(var(--gap) * 4);
     background: var(--profile-activity-header);
     border-bottom: 1px solid var(--profile-activity-border);
+    color: var(--profile-activity-header-font);
   }
 
   &__switch {
@@ -278,18 +283,11 @@
     .cr-table {
 
       tr, td {
-        color: var(--profile-grey);
         background: var(--profile-box);
         padding: 20px 24px !important;
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-right: unset;
         border-left: unset;
-      }
-
-      tr:hover {
-        td {
-          background: var(--profile-table-hover);
-        }
       }
 
       thead {
@@ -306,22 +304,18 @@
     }
   }
 
-  &__text-muted {
-    color: var(--text-muted);
-  }
-
   &__text-purple {
     color: var(--profile-accent-color);
   }
 
   &__text-success {
-    color: var(--profile-bright);
+    color: var(--color-white);
     width: 100%;
     position: relative;
 
     &::after {
       display: inline;
-      color: var(--profile-bright);
+      color: var(--white-color);
       content: ' ✓';
       font-size: 30px;
       position: absolute;
@@ -348,8 +342,7 @@
   }
 
   &__btn-secondary {
-    background: var(--profile-btn) !important;
-    color: var(--profile-bright) !important;
+    color: var(--color-white);
     max-width: calc(var(--gap) * 25);
 
     &:visited {

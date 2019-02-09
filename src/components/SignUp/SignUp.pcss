@@ -22,9 +22,12 @@
     }
 
     &__button {
-      color: var(--base-bright);
+      color: var(--color-white);
       font-size: calc(var(--gap) * 2.66);
       margin-top: calc(var(--gap) * 1.55);
+      &:hover {
+        background: var(--button-hover);
+      }
     }
     &__title {
       background: var(--transparent);
@@ -39,9 +42,9 @@
     }
     &__input {
       input {
-        color: var(--dark-color);
+        color: var(--color-white);
         font-size: 14px;
-        border: 1px solid var(--button-primary);
+        border: 1px solid var(--input-block-border-color);
         border-radius: 4px;
       }
     }
@@ -60,9 +63,9 @@
     .cr-checkbox {
       padding-left: calc(2.6 * var(--checkbox-general-intent));
       &__checkitem {
-        border-color: var(--active-color);
+        border-color: var(--checkbox-border-color);
         &::after {
-          border-color: var(--active-color);
+          border-color: var(--color-white);
         }
       }
       &__label {

@@ -36,15 +36,18 @@
 
     .cr-dropdown {
       &__input {
-        background-color: inherit;
+        background-color: var(--base-bright);
         border-radius: 3px;
+        border: solid 1px var(--dropdown-border);
         &--open {
           border-radius: 3px 3px 0 0;
+          color: var(--backhround-dropdown-text);
+          background: var(--background-dropdown-open-text);
         }
         &-label {
           background-color: inherit;
           font-size: 1em;
-          font-weight: 200;
+          font-weight: var(--font-weight);
           color: var(--table-header-color);
           line-height: 28px;
         }
@@ -52,13 +55,17 @@
 
       &__list {
         border-radius: 0 0 3px 3px;
+        background: var(--background-dropdown);
+        color: var(--background-dropdown-text);
+
         &-item {
           &:hover {
-            background: var(--markets-selected-color);
+            background: var(--background-dropdown-hover);
+            color: var(--background-dropdown-hover-text);
           }
           &-label {
+            font-weight: var(--font_weight);
             background: transparent;
-            color: var(--table-header-color);
             font-size: 1em;
           }
         }
@@ -178,7 +185,8 @@
         line-height: 28px;
         background-color: inherit;
         border: none;
-      }
+        color: var(--color-white);
+    }
       .cr-crypto-icon {
         border-top: none;
         border-right: none;
