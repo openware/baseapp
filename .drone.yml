@@ -10,9 +10,9 @@ steps:
       - echo $REACT_APP_GIT_SHA > .tags
       - npm -g install yarn
       - yarn install
-      - yarn build
       - yarn lint
       - yarn test:ci --collectCoverage=true
+      - yarn build
     when:
       event:
           - push
