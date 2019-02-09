@@ -50,7 +50,7 @@ describe('KYC - Phone', () => {
               code: 500,
               message: 'Server error',
             },
-            type: 'error/ERROR_FETCH',
+            type: 'alert/ERROR_FETCH',
         };
 
         const mockSendCodeFetch = () => {
@@ -124,7 +124,7 @@ describe('KYC - Phone', () => {
               code: 500,
               message: 'Server error',
             },
-            type: 'error/ERROR_FETCH',
+            type: 'alert/ERROR_FETCH',
         };
 
         const mockVerifyCodeFetch = () => {
@@ -192,7 +192,7 @@ describe('KYC - Phone', () => {
               code: 500,
               message: 'Server error',
             },
-            type: 'error/ERROR_FETCH',
+            type: 'alert/ERROR_FETCH',
         };
 
         const mockResendCodeFetch = () => {

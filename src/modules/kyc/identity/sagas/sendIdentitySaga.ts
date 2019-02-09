@@ -1,6 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
-import { fetchError } from '../../../';
+import { fetchError, fetchSuccess } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { sendIdentityData, sendIdentityError, SendIdentityFetch } from '../actions';
 
@@ -14,6 +14,7 @@ export function* sendIdentitySaga(action: SendIdentityFetch) {
         const defaultMessage = 'Your documents are successfully accepted';
         const { message = defaultMessage } = response;
         yield put(sendIdentityData({ message }));
+        yield put(fetchSuccess(defaultMessage));
     } catch (error) {
         yield put(sendIdentityError(error));
         yield put(fetchError(error));

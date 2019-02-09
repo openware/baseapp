@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 // tslint:disable-next-line no-submodule-imports
 import { all, call } from 'redux-saga/effects';
-import { rootHandleErrorSaga } from './alert';
+import { rootHandleAlertSaga } from './alert';
 import { appReducer, AppState } from './app';
 import { rootAuthSaga } from './auth';
 import { rootSendEmailSaga } from './contact';
@@ -57,7 +57,7 @@ export function* rootSaga() {
         call(rootSendEmailSaga),
         call(rootRecentTradesSaga),
         call(rootOrderBookSaga),
-        call(rootHandleErrorSaga),
+        call(rootHandleAlertSaga),
         call(rootHistorySaga),
         call(rootUserActivitySaga),
         call(rootLabelSaga),

@@ -1,5 +1,13 @@
 import { CommonError } from '../types';
-import {  DELETE_ERROR, DELETE_ERROR_BY_INDEX, ERROR_DATA, ERROR_FETCH } from './constants';
+import {
+    DELETE_ERROR,
+    DELETE_ERROR_BY_INDEX,
+    DELETE_SUCCESS,
+    DELETE_SUCCESS_BY_INDEX,
+    ERROR_DATA, ERROR_FETCH,
+    SUCCESS_DATA,
+    SUCCESS_FETCH,
+} from './constants';
 
 export interface ErrorFecth {
     type: typeof ERROR_FETCH;
@@ -20,10 +28,33 @@ export interface DeleteErrorByIndex {
     index: number;
 }
 
-export type ErrorAction = ErrorData
+export interface SuccessFecth {
+    type: typeof SUCCESS_FETCH;
+    success: string;
+}
+
+export interface SuccessData {
+    type: typeof SUCCESS_DATA;
+    success: string;
+}
+
+export interface DeleteSuccess {
+    type: typeof DELETE_SUCCESS;
+}
+
+export interface DeleteSuccessByIndex {
+    type: typeof DELETE_SUCCESS_BY_INDEX;
+    index: number;
+}
+
+export type AlertAction = ErrorData
     | DeleteError
     | DeleteErrorByIndex
-    | ErrorFecth;
+    | ErrorFecth
+    | SuccessData
+    | DeleteSuccess
+    | DeleteSuccessByIndex
+    | SuccessFecth;
 
 export const fetchError = (error: CommonError): ErrorFecth => ({
     type: ERROR_FETCH,
@@ -41,5 +72,24 @@ export const deleteError = (): DeleteError => ({
 
 export const deleteErrorByIndex = (index: number): DeleteErrorByIndex => ({
     type: DELETE_ERROR_BY_INDEX,
+    index,
+});
+
+export const fetchSuccess = (success: string): SuccessFecth => ({
+    type: SUCCESS_FETCH,
+    success,
+});
+
+export const handleSuccess = (success: string): SuccessData => ({
+    type: SUCCESS_DATA,
+    success,
+});
+
+export const deleteSuccess = (): DeleteSuccess => ({
+    type: DELETE_SUCCESS,
+});
+
+export const deleteSuccessByIndex = (index: number): DeleteSuccessByIndex => ({
+    type: DELETE_SUCCESS_BY_INDEX,
     index,
 });

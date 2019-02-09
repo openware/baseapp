@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { AlertState, errorReducer } from './alert';
+import { alertReducer, AlertState } from './alert';
 import { authReducer, AuthState } from './auth';
 import { contactReducer, ContactState } from './contact';
 import { historyReducer, HistoryState } from './history';
@@ -70,5 +70,5 @@ export const appReducer = combineReducers({
     userActivity: userActivityReducer,
     ranger: rangerReducer,
     i18n: changeLanguageReducer,
-    alert: errorReducer,
+    alert: alertReducer,
 });

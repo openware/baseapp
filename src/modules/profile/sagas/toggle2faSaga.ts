@@ -1,6 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
-import { fetchError } from '../../';
+import { fetchError, fetchSuccess } from '../../';
 import { API, RequestOptions } from '../../../api';
 import {
     toggle2faData,
@@ -17,6 +17,7 @@ export function* toggle2faSaga(action: Toggle2FAFetch) {
         const code = { code: action.payload.code };
         yield call(API.post(enable2faOptions), '/resource/otp/enable', code);
         yield put(toggle2faData());
+        yield put(fetchSuccess('Otp was successfuly enabled'));
     } catch (error) {
         yield put(toggle2faError(error));
         yield put(fetchError(error));

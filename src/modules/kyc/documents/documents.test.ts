@@ -53,7 +53,7 @@ describe('KYC - Documents', () => {
               code: 500,
               message: 'Server error',
             },
-            type: 'error/ERROR_FETCH',
+            type: 'alert/ERROR_FETCH',
         };
 
         const mockConfirmDocumentsFetch = () => {

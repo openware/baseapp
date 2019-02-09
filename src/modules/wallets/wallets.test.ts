@@ -172,7 +172,7 @@ describe('Wallets', () => {
               code: 500,
               message: 'Server error',
             },
-            type: 'error/ERROR_FETCH',
+            type: 'alert/ERROR_FETCH',
         };
 
         const mockWalletsBalancesFetch = () => {
@@ -254,7 +254,7 @@ describe('Wallets', () => {
               code: 500,
               message: 'Server error',
             },
-            type: 'error/ERROR_FETCH',
+            type: 'alert/ERROR_FETCH',
         };
 
         const responseAddress = {
@@ -329,7 +329,7 @@ describe('Wallets', () => {
               code: 500,
               message: 'Server error',
             },
-            type: 'error/ERROR_FETCH',
+            type: 'alert/ERROR_FETCH',
         };
 
         const mockWalletsWithdrawCcyFetch = () => {
