@@ -150,46 +150,58 @@ describe('Ranger module', () => {
 
     describe('public events', () => {
         describe('kline event', () => {
-            const klineEvent: { [pair: string]: string[] } = { 'kyneth.kline-5m': ['1549638900', '0.007', '0.007', '0.007', '0.007', '0'] };
-            const expectedAction = {
-                type: KLINE_PUSH,
-                payload: {
-                    marketId: 'kyneth',
-                    kline: ['1549638900', '0.007', '0.007', '0.007', '0.007', '0'],
-                    period: '5m',
-                },
-            };
-            it('should push kline update', async () => {
-                return new Promise(resolve => {
-                    store.dispatch(rangerConnectFetch({ withAuth: false }));
-                    store.subscribe(() => {
-                        const actions = store.getActions();
-                        switch (actions.length) {
-                            case 1:
-                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
-                                return;
+            const cases = (() => {
+                const klineString = ['1549638900', '0.007', '0.007', '0.007', '0.007', '0'];
+                const klinNumber = [1549744200, 0.007, 0.007, 0.0069, 0.007, 0.011];
+                const klineEventString: { [pair: string]: string[] } = { 'kyneth.kline-5m': klineString };
+                const klineEventNumber: { [pair: string]: number[] } = { 'dasheth.kline-15m': klinNumber };
+                return [
+                    { description: 'string klines', kline: klineString, event: klineEventString, period: '5m', marketId: 'kyneth' },
+                    { description: 'number klines', kline: klinNumber, event: klineEventNumber, period: '15m', marketId: 'dasheth' },
+                ];
+            })();
 
-                            case 2:
-                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
-                                store.dispatch(rangerDirectMessage(klineEvent));
-                                return;
+            for (const { description, kline, event, period, marketId } of cases) {
+                const expectedAction = {
+                    type: KLINE_PUSH,
+                    payload: {
+                        marketId,
+                        kline,
+                        period,
+                    },
+                };
+                it(`should push ${description} update`, async () => {
+                    return new Promise(resolve => {
+                        store.dispatch(rangerConnectFetch({ withAuth: false }));
+                        store.subscribe(() => {
+                            const actions = store.getActions();
+                            switch (actions.length) {
+                                case 1:
+                                    expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                                    return;
 
-                            case 3:
-                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: klineEvent });
-                                return;
+                                case 2:
+                                    expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                    store.dispatch(rangerDirectMessage(event));
+                                    return;
 
-                            case 4:
-                                expect(actions[3]).toEqual(expectedAction);
-                                setTimeout(resolve, 30);
-                                return;
+                                case 3:
+                                    expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: event });
+                                    return;
 
-                            default:
-                                fail(`Unexpected action ${actions.length}`);
-                                break;
-                        }
+                                case 4:
+                                    expect(actions[3]).toEqual(expectedAction);
+                                    setTimeout(resolve, 30);
+                                    return;
+
+                                default:
+                                    fail(`Unexpected action ${actions.length}`);
+                                    break;
+                            }
+                        });
                     });
                 });
-            });
+            }
 
         });
 

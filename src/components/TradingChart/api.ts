@@ -2,7 +2,7 @@ import axios from 'axios';
 import { TradingChartComponent } from '.';
 import { gatewayUrl } from '../../api/config';
 import { LibrarySymbolInfo } from '../../charting_library/datafeed-api';
-import { KlineEvent, KlineState } from '../../modules';
+import { klineArrayToObject, KlineState } from '../../modules';
 import { Market } from '../../modules/markets';
 import { periodMinutesToString } from '../../modules/ranger';
 
@@ -33,18 +33,6 @@ const resolutionToSeconds = (r: string): number => {
 const config = {
     supports_time: false,
     supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
-};
-
-export const klineArrayToObject = (el: string[]): KlineEvent => {
-    const [time, open, high, low, close, volume] = el.map(parseFloat);
-    return {
-        time: time * 1e3,
-        open,
-        high,
-        low,
-        close,
-        volume,
-    };
 };
 
 export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Market[]) => {

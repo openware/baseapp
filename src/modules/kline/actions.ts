@@ -2,11 +2,13 @@ import {
     KLINE_PUSH,
 } from './constants';
 
+export type KlineRawElement = string | number;
+
 export interface KlinePush {
     type: typeof KLINE_PUSH;
     payload: {
         marketId: string;
-        kline: string[];
+        kline: KlineRawElement[];
         period: string;
     };
 }
