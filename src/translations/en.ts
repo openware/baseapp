@@ -15,7 +15,7 @@ export const en = {
   'page.body.trade.header.markets.content.change': '24h Change',
   'page.body.trade.header.markets.content.search': 'Search',
 
-  'page.body.trade.header.newOrder': 'Insert New Order',
+  'page.body.trade.header.newOrder': 'Create Order',
   'page.body.trade.header.newOrder.content.tabs.buy': 'Buy',
   'page.body.trade.header.newOrder.content.tabs.sell': 'Sell',
   'page.body.trade.header.newOrder.content.orderType': 'Order Type',
