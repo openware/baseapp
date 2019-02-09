@@ -20,7 +20,6 @@
             background: var(--transparent);
             color: var(--navbar-text-color);
             font-size: 14px;
-            font-weight: lighter;
             height: calc(var(--gap) * 4);
             outline: none;
 
@@ -143,14 +142,18 @@
                     font-size: calc(var(--big-gap) * 0.23);
                     color: var(--navbar-language-selector-color);
                     background-color: var(--navbar-language-selector-background);
-                    width: calc(var(--big-gap) * 2.2);
                     height: calc(var(--big-gap) * 0.7);
-                    padding: 0 calc(var(--big-gap) * 0.2);
                     display: flex;
                     justify-content: flex-start;
-                    align-items: center;
+                    text-align: left;
+
 
                     a {
+                        width: 100%;
+                        padding-top: calc(var(--gap) * 2.1);
+                        padding-bottom: calc(var(--gap) * 2.1) ;
+                        padding-left: calc(var(--big-gap) * 0.2);
+                        padding-right: calc(var(--big-gap) * 0.95);
                         text-decoration: none;
                         color: var(--navbar-language-selector-color);
                         font-size: calc(var(--big-gap) * 0.23);
@@ -185,7 +188,7 @@
                 padding: 0;
                 border: 0;
                 overflow: hidden;
-                margin-left: calc(var(--big-gap) * -1.18);
+                margin-left: calc(var(--big-gap) * -.45);
             }
 
             .dropdown-menu-language {
@@ -246,7 +249,6 @@
         .icon {
             color: var(--navbar-text-color);
             margin-left: calc(var(--gap) * 0.5);
-            margin-top: calc(var(--gap) * 0.5);
         }
 
         &::after {

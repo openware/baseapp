@@ -17,7 +17,6 @@
     max-width: calc(var(--big-gap) * 9.33);
     width: 100%;
     max-height: calc(var(--big-gap) * 10);
-    min-height: cacl(var(--big-gap) * 8);
     position: relative;
     border-radius: 4px;
 
@@ -29,6 +28,7 @@
       height: 14px;
       right: 10px;
       top: 10px;
+      margin: 15px 10px;
       cursor: pointer;
     }
   }
@@ -52,10 +52,12 @@
     text-align: center;
 
     &-text {
-      white-space: nowrap;
       position: absolute;
+      text-align: center;
+      display: block;
+      line-height: calc(var(--gap) * 2.5);
       top: 40px;
-      left: -55px;
+      left: -25px;
       font-size: 14px;
       color: var(--kyc-title-color);
     }
@@ -105,6 +107,13 @@
 
       &-3 {
         margin-right: 0;
+      }
+
+      &-1:after,
+      &-2:after,
+      &-3:after {
+        top: -2px;
+        position: relative;
       }
     }
 
