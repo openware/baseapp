@@ -1,11 +1,17 @@
 import axios from 'axios';
+import { TradingChartComponent } from '.';
 import { gatewayUrl } from '../../api/config';
-import { SubscribeBarsCallback } from '../../charting_library/charting_library.min';
 import { LibrarySymbolInfo } from '../../charting_library/datafeed-api';
+import { KlineEvent, KlineState } from '../../modules';
 import { Market } from '../../modules/markets';
+import { periodMinutesToString } from '../../modules/ranger';
 
 // tslint:disable-next-line no-console
 export const print = (...x) => console.log.apply(null, ['>>>> TC', ...x]);
+export interface CurrentKlineSubscription {
+    marketId?: string;
+    periodString?: string;
+}
 
 const makeHistoryUrl = (
     market: string, resolution: number, from: number, to: number,
@@ -29,107 +35,112 @@ const config = {
     supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
 };
 
-export interface TickSubscriptions {
-    [id: string]: {
-        cb: SubscribeBarsCallback;
-        ticker: string;
+export const klineArrayToObject = (el: number[]): KlineEvent => {
+    const [time, open, high, low, close, volume] = el;
+    return {
+        time: time * 1e3,
+        open,
+        high,
+        low,
+        close,
+        volume,
     };
-}
+};
 
-export const dataFeedObject = (
-    markets: Market[], subscriptions: TickSubscriptions,
-) => ({
-    onReady: cb => {
-        setTimeout(() => cb(config), 0);
+export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Market[]) => {
+    const dataFeed = {
+        onReady: cb => {
 
-    },
-    searchSymbols: (
-        userInput, exchange, symbolType, onResultReadyCallback,
-    ) => {
-        const symbols = markets.map(m => (
-            {
-                symbol: m.id,
-                full_name: m.name,
-                description: m.name,
-                exchange: 'Cryptobase',
-                ticker: m.id,
+            setTimeout(() => cb(config), 0);
+        },
+        searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
+            const symbols = markets.map(m => (
+                {
+                    symbol: m.id,
+                    full_name: m.name,
+                    description: m.name,
+                    exchange: 'Cryptobase',
+                    ticker: m.id,
+                    type: 'bitcoin',
+                }
+            ));
+            setTimeout(() => onResultReadyCallback(symbols), 0);
+        },
+        resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) => {
+            // expects a symbolInfo object in response
+            const symbol = markets.find(m => m.id === symbolName);
+            if (!symbol) {
+                return setTimeout(() => onResolveErrorCallback('Symbol not found'), 0);
+            }
+
+            const symbolStub = {
+                name: symbol.name,
+                description: '',
                 type: 'bitcoin',
-            }
-        ));
-        setTimeout(() => onResultReadyCallback(symbols), 0);
-    },
-    resolveSymbol: (
-        symbolName, onSymbolResolvedCallback, onResolveErrorCallback,
-    ) => {
-        // expects a symbolInfo object in response
-        const symbol = markets.find(m => m.id === symbolName);
-        if (!symbol) {
-            return setTimeout(() => onResolveErrorCallback('Symbol not found'), 0);
-        }
+                session: '24x7',
+                timezone: 'Etc/UTC',
+                ticker: symbol.id,
+                exchange: 'Cryptobase',
+                minmov: 1,
+                pricescale: 10000,
+                has_intraday: true,
+                intraday_multipliers: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
+                supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
+                volume_precision: 8,
+                data_status: 'streaming',
+            };
 
-        const symbolStub = {
-            name: symbol.name,
-            description: '',
-            type: 'bitcoin',
-            session: '24x7',
-            timezone: 'Etc/UTC',
-            ticker: symbol.id,
-            exchange: 'Cryptobase',
-            minmov: 1,
-            pricescale: 10000,
-            has_intraday: true,
-            intraday_multipliers: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
-            supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
-            volume_precision: 8,
-            data_status: 'streaming',
-        };
-
-        return setTimeout(() => onSymbolResolvedCallback(symbolStub), 0);
-    },
-    getBars: async (
-        symbolInfo: LibrarySymbolInfo, resolution, from, to, onHistoryCallback,
-        onErrorCallback,
-        firstDataRequest,
-    ) => {
-        const url = makeHistoryUrl(
-            symbolInfo.ticker || symbolInfo.name.toLowerCase(),
-            resolutionToSeconds(resolution),
-            from,
-            to,
-        );
-        return axios.get(url).then(({ data }) => {
-            if (data.length < 1) {
+            return setTimeout(() => onSymbolResolvedCallback(symbolStub), 0);
+        },
+        getBars: async (symbolInfo: LibrarySymbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
+            const url = makeHistoryUrl(
+                symbolInfo.ticker || symbolInfo.name.toLowerCase(),
+                resolutionToSeconds(resolution),
+                from,
+                to,
+            );
+            return axios.get(url).then(({ data }) => {
+                if (data.length < 1) {
+                    return onHistoryCallback([], { noData: true });
+                }
+                const bars = data.map(klineArrayToObject);
+                return onHistoryCallback(bars, { noData: false });
+            }).catch(e => {
                 return onHistoryCallback([], { noData: true });
+            });
+        },
+        subscribeBars: (symbolInfo: LibrarySymbolInfo, resolution, onRealtimeCallback, subscribeUID: string, onResetCacheNeededCallback) => {
+            // window.console.log(`subscribeBars called, symbolInfo: ${JSON.stringify(symbolInfo)}, resolution: ${resolution}, subscribeUID: ${subscribeUID}`);
+            dataFeed.onRealtimeCallback = (kline: KlineState) => {
+                // window.console.log(`new onRealtimeCallback called with ${JSON.stringify(kline)}`);
+
+                if (
+                    kline.last &&
+                    kline.marketId === tradingChart.currentKlineSubscription.marketId &&
+                    kline.period === tradingChart.currentKlineSubscription.periodString
+                ) {
+                    // window.console.log(`new onRealtimeCallback forwarded the last kline`);
+                    onRealtimeCallback(kline.last);
+                }
+            };
+            const marketId: string = symbolInfo.ticker!;
+            const periodString = periodMinutesToString(resolution);
+            tradingChart.props.subscribeKline(marketId, periodString);
+            tradingChart.currentKlineSubscription = {
+                marketId,
+                periodString,
+            };
+        },
+        unsubscribeBars: subscribeUID => {
+            const { marketId, periodString } = tradingChart.currentKlineSubscription;
+            if (marketId && periodString) {
+                tradingChart.props.unSubscribeKline(marketId, periodString);
             }
-            const bars = data
-                .map(el => {
-                    const [time, open, high, low, close, volume] = el;
-                    return {
-                        time: time * 1e3,
-                        open,
-                        high,
-                        low,
-                        close,
-                        volume,
-                    };
-                });
-            return onHistoryCallback(bars, { noData: false });
-        }).catch(e => {
-            return onHistoryCallback([], { noData: true });
-        });
-    },
-    subscribeBars: (
-        symbolInfo: LibrarySymbolInfo, resolution, onRealtimeCallback,
-        subscribeUID: string,
-        onResetCacheNeededCallback,
-    ) => {
-        subscriptions[subscribeUID] = {
-            cb: onRealtimeCallback,
-            ticker: symbolInfo.ticker!,
-        };
-    },
-    unsubscribeBars: subscribeUID => {
-        // tslint:disable-next-line
-        delete subscriptions[subscribeUID];
-    },
-});
+            tradingChart.currentKlineSubscription = {};
+        },
+        onRealtimeCallback: (kline: KlineState) => {
+            // window.console.log(`default onRealtimeCallback called with ${JSON.stringify(bar)}`);
+        },
+    };
+    return dataFeed;
+};

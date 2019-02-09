@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect, MapStateToProps } from 'react-redux';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import {
     AvailableSaveloadVersions,
     IChartingLibraryWidget,
@@ -8,24 +8,34 @@ import {
     widget,
 } from '../../charting_library/charting_library.min';
 import {
+    KlineState,
     Market,
     MarketsState,
     RootState,
     selectCurrentMarket,
+    selectKline,
     selectMarkets,
     selectMarketTickers,
 } from '../../modules';
-import { dataFeedObject, print, TickSubscriptions } from './api';
+import { rangerSubscribeKlineMarket, rangerUnsubscribeKlineMarket } from '../../modules/ranger';
+import { CurrentKlineSubscription, dataFeedObject, print } from './api';
 
 interface ReduxProps {
     markets: Market[];
-    currentMarket: Market | undefined;
+    currentMarket?: Market;
     tickers: MarketsState['tickers'];
+    kline: KlineState;
 }
 
-type Props = ReduxProps;
+interface DispatchProps {
+    subscribeKline: typeof rangerSubscribeKlineMarket;
+    unSubscribeKline: typeof rangerUnsubscribeKlineMarket;
+}
+
+type Props = ReduxProps & DispatchProps;
 
 export class TradingChartComponent extends React.PureComponent<Props> {
+    public currentKlineSubscription: CurrentKlineSubscription = {};
 
     private params = {
         interval: '15',
@@ -41,7 +51,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     };
 
     private tvWidget: IChartingLibraryWidget | null = null;
-    private subscriptions: TickSubscriptions = {};
+    private datafeed = dataFeedObject(this, this.props.markets);
 
     public componentWillReceiveProps(next: Props) {
         if (next.currentMarket && (!this.props.currentMarket || next.currentMarket.id !== this.props.currentMarket.id)) {
@@ -51,11 +61,15 @@ export class TradingChartComponent extends React.PureComponent<Props> {
                 this.setChart(next.markets, next.currentMarket);
             }
         }
+
+        if (next.kline && next.kline !== this.props.kline) {
+            this.datafeed.onRealtimeCallback(next.kline);
+        }
     }
 
     public componentDidMount() {
         if (this.props.currentMarket) {
-          this.setChart(this.props.markets, this.props.currentMarket);
+            this.setChart(this.props.markets, this.props.currentMarket);
         }
     }
 
@@ -84,17 +98,14 @@ export class TradingChartComponent extends React.PureComponent<Props> {
         );
     }
 
-    private setChart = (
-        markets: Market[], currentMarket: Market,
-    ) => {
-
-        const datafeed = dataFeedObject(markets, this.subscriptions);
+    private setChart = (markets: Market[], currentMarket: Market) => {
+        this.datafeed = dataFeedObject(this, this.props.markets);
 
         const widgetOptions = {
             debug: false,
             symbol: currentMarket.id,
             toolbar_bg: '#1a243b',
-            datafeed,
+            datafeed: this.datafeed,
             interval: this.params.interval,
             container_id: this.params.containerId,
             library_path: this.params.libraryPath,
@@ -169,7 +180,13 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     markets: selectMarkets(state),
     currentMarket: selectCurrentMarket(state),
     tickers: selectMarketTickers(state),
+    kline: selectKline(state),
 });
 
-export const TradingChart =
-    connect<ReduxProps, {}, {}, RootState>(reduxProps)(TradingChartComponent);
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+    dispatch => ({
+        subscribeKline: (marketId: string, periodString: string) => dispatch(rangerSubscribeKlineMarket(marketId, periodString)),
+        unSubscribeKline: (marketId: string, periodString: string) => dispatch(rangerUnsubscribeKlineMarket(marketId, periodString)),
+    });
+
+export const TradingChart = connect<ReduxProps, DispatchProps, {}, RootState>(reduxProps, mapDispatchProps)(TradingChartComponent);

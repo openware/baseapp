@@ -3,7 +3,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { Cryptobase } from '../../api';
 import { createEchoServer as createEchoServer, setupMockStore } from '../../helpers/jest';
 import { PrivateTradeEvent } from '../history';
-//import { HISTORY_PUSH_EMIT } from '../history/constants';
+import { KLINE_PUSH } from '../kline/constants';
 import { Market, Ticker, TickerEvent } from '../markets';
 import { MARKETS_TICKERS_DATA } from '../markets/constants';
 import { DEPTH_DATA } from '../orderBook/constants';
@@ -99,14 +99,14 @@ describe('Ranger module', () => {
         });
 
         it('subscribes to market kline channel', () => {
-            expect(rangerSubscribeKlineMarket(marketExample, '1w')).toEqual({
+            expect(rangerSubscribeKlineMarket(marketExample.id, '1w')).toEqual({
                 type: RANGER_DIRECT_WRITE,
                 payload: { event: 'subscribe', streams: ['abcdefg.kline-1w'] },
             });
         });
 
         it('unsubscribes from market kline channel', () => {
-            expect(rangerUnsubscribeKlineMarket(marketExample, '1w')).toEqual({
+            expect(rangerUnsubscribeKlineMarket(marketExample.id, '1w')).toEqual({
                 type: RANGER_DIRECT_WRITE,
                 payload: { event: 'unsubscribe', streams: ['abcdefg.kline-1w'] },
             });
@@ -149,6 +149,50 @@ describe('Ranger module', () => {
     });
 
     describe('public events', () => {
+        describe('kline event', () => {
+            const klineEvent: { [pair: string]: number[] } = { 'kyneth.kline-5m': [1549638900, 0.007, 0.007, 0.007, 0.007, 0] };
+            const expectedAction = {
+                type: KLINE_PUSH,
+                payload: {
+                    marketId: 'kyneth',
+                    kline: [1549638900, 0.007, 0.007, 0.007, 0.007, 0],
+                    period: '5m',
+                },
+            };
+            it('should push kline update', async () => {
+                return new Promise(resolve => {
+                    store.dispatch(rangerConnectFetch({ withAuth: false }));
+                    store.subscribe(() => {
+                        const actions = store.getActions();
+                        switch (actions.length) {
+                            case 1:
+                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                                return;
+
+                            case 2:
+                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                store.dispatch(rangerDirectMessage(klineEvent));
+                                return;
+
+                            case 3:
+                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: klineEvent });
+                                return;
+
+                            case 4:
+                                expect(actions[3]).toEqual(expectedAction);
+                                setTimeout(resolve, 30);
+                                return;
+
+                            default:
+                                fail(`Unexpected action ${actions.length}`);
+                                break;
+                        }
+                    });
+                });
+            });
+
+        });
+
         describe('markets tickers update', () => {
             const tickerEvents: { [pair: string]: TickerEvent } = {
                 ethzar: { name: 'ETH/ZAR', base_unit: 'eth', quote_unit: 'zar', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '8.0', sell: '70.0', buy: '69.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },

@@ -2,7 +2,7 @@ import { Channel, eventChannel } from 'redux-saga';
 // tslint:disable-next-line no-submodule-imports
 import { all, call, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 import { rangerUrl } from '../../../api';
-//import { pushHistoryEmit } from '../../history';
+import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket, Ticker, TickerEvent } from '../../markets';
 import { SET_CURRENT_MARKET } from '../../markets/constants';
 import { depthData } from '../../orderBook';
@@ -87,11 +87,23 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
                     }
 
                     // public
-                    const m = String(routingKey).match(/([^.]*)\.trades/);
-                    if (m) {
+
+                    const klineMatch = String(routingKey).match(/([^.]*)\.kline-(.+)/);
+                    if (klineMatch) {
+                        emitter(klinePush({
+                            marketId: klineMatch[1],
+                            kline: event,
+                            period: klineMatch[2],
+                        }));
+                        return;
+                    }
+
+                    // public
+                    const tradesMatch = String(routingKey).match(/([^.]*)\.trades/);
+                    if (tradesMatch) {
                         emitter(recentTradesPush({
                             trades: event.trades,
-                            market: m[1],
+                            market: tradesMatch[1],
                         }));
                         return;
                     }
@@ -222,11 +234,11 @@ export function* rangerSagas() {
         } catch (error) {
             market = undefined;
         }
+
         if (connectFetchPayload) {
             [channel, socket] = yield call(initRanger, connectFetchPayload, market);
             initialized = true;
             yield fork(bindSocket, channel, socket);
-
         }
     }
 }

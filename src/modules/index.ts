@@ -32,6 +32,7 @@ export * from './userActivity';
 export * from './i18n';
 export * from './history';
 export * from './kyc';
+export * from './kline';
 
 export * from './alert';
 

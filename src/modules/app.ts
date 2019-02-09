@@ -4,6 +4,7 @@ import { authReducer, AuthState } from './auth';
 import { contactReducer, ContactState } from './contact';
 import { historyReducer, HistoryState } from './history';
 import { changeLanguageReducer, LanguageState } from './i18n';
+import { klineReducer, KlineState } from './kline/reducer';
 import {
     documentsReducer,
     DocumentsState,
@@ -49,6 +50,7 @@ export interface AppState {
     ranger: RangerState;
     i18n: LanguageState;
     alert: AlertState;
+    kline: KlineState;
 }
 
 export const appReducer = combineReducers({
@@ -70,5 +72,6 @@ export const appReducer = combineReducers({
     userActivity: userActivityReducer,
     ranger: rangerReducer,
     i18n: changeLanguageReducer,
+    kline: klineReducer,
     alert: alertReducer,
 });
