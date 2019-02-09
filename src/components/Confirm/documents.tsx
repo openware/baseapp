@@ -15,7 +15,7 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { checkDate } from '../../helpers/checkDate';
+import { isDateInFuture } from '../../helpers/checkDate';
 import { RootState } from '../../modules';
 import {
     selectSendDocumentsSuccess,
@@ -259,7 +259,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         }: DocumentsState = this.state;
 
         const typeOfDocuments = this.getDocumentsType(documentsType);
-        const docExpire = checkDate(expiration) ? expiration : '';
+        const docExpire = isDateInFuture(expiration) ? expiration : '';
 
         if (!scans.length) {
             return;

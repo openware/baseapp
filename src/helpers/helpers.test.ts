@@ -233,7 +233,7 @@ describe('Helpers', () => {
 
     // checkDate.ts
     it('should check current date', () => {
-        expect(helpers.checkDate('22/12/3333')).toEqual(true);
-        expect(helpers.checkDate('22/12/1333')).toEqual(false);
+        expect(helpers.isDateInFuture('22/12/3333')).toEqual(true);
+        expect(helpers.isDateInFuture('22/12/1333')).toEqual(false);
     });
 });

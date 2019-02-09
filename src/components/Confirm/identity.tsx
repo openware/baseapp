@@ -10,7 +10,7 @@ import {
   connect,
   MapDispatchToPropsFunction,
 } from 'react-redux';
-import { checkDate } from '../../helpers/checkDate';
+import { isDateInFuture } from '../../helpers';
 import { RootState } from '../../modules';
 import {
     selectSendIdentitySuccess,
@@ -249,7 +249,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     };
 
     private sendData = () => {
-        const dob = checkDate(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
+        const dob = !isDateInFuture(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
         const profileInfo = {
             first_name: this.state.firstName,
             last_name: this.state.lastName,
