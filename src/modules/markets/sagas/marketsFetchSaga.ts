@@ -1,7 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../api';
-import { DEPTH_FETCH } from '../../orderBook/constants';
 import {
     marketsData,
     marketsError,
@@ -24,7 +23,6 @@ export function* marketsFetchSaga() {
         const markets = yield call(API.get(marketsRequestOptions), '/public/markets');
         yield put(marketsData(markets));
         yield put({ type: SET_CURRENT_MARKET, payload: markets[0] });
-        yield put({ type: DEPTH_FETCH, payload: markets[0] });
     } catch (error) {
         yield put(marketsError(error));
     }
