@@ -1,4 +1,4 @@
-import { Loader, OrderBook } from '@openware/components';
+import { Decimal, Loader, OrderBook } from '@openware/components';
 import classNames from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
@@ -7,7 +7,7 @@ import {
     MapDispatchToPropsFunction,
     MapStateToProps,
 } from 'react-redux';
-import { accumulateVolume, calcMaxVolume, renderOrderBook, sortBids } from '../../helpers';
+import { accumulateVolume, calcMaxVolume, sortBids } from '../../helpers';
 import {
     Market,
     RootState,
@@ -60,8 +60,8 @@ class OrderBookContainer extends React.Component<Props> {
             side={'right'}
             title={this.props.intl.formatMessage({id: 'page.body.trade.header.bids'})}
             headers={this.renderHeaders()}
-            data={renderOrderBook(bids, 'bids', this.props.intl.formatMessage({id: 'page.noDataToShow'}), this.props.currentMarket)}
-            rowBackgroundColor={'rgba(84, 180, 137, 0.5)'}
+            data={this.renderOrderBook(bids, 'bids', this.props.intl.formatMessage({id: 'page.noDataToShow'}), this.props.currentMarket)}
+            rowBackgroundColor={'rgba(84, 180, 137, 0.4)'}
             maxVolume={calcMaxVolume(bids, asks)}
             orderBookEntry={accumulateVolume(bids)}
             onSelect={this.handleOnSelect}
@@ -74,7 +74,21 @@ class OrderBookContainer extends React.Component<Props> {
             this.props.intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'}),
             this.props.intl.formatMessage({id: 'page.body.trade.orderbook.header.price'}),
         ];
-     }
+    }
+
+    private renderOrderBook = (array: string[][], side: string, message: string, currentMarket?: Market) => {
+        const total = accumulateVolume(array);
+        const priceFixed = currentMarket ? currentMarket.bid_precision : 0;
+        const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
+        return (array.length > 0) ? array.map((item, i) => {
+            const [price, volume] = item;
+            return [
+                    <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                    <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
+                    <span style={{ color: 'var(--open-orders-order-buy)' }} key={i}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
+                ];
+        }) : [[message]];
+    }
 
     private handleOnSelect = (index: number) => {
         const { bids, currentPrice } = this.props;
