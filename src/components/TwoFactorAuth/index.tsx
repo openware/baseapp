@@ -40,9 +40,13 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps & Inject
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="cr-sign-in-form">
-                    <h1 className="cr-sign-in-form__title" style={{ marginTop: 119 }}>
-                        {this.props.intl.formatMessage({ id: 'page.header.signIn'})}
-                    </h1>
+                    <div className="cr-sign-in-form__options-group">
+                        <div className="cr-sign-in-form__2fa-header">
+                            <div className="cr-sign-in-form__option-inner cr-sign-in-form__tab-signin">
+                                {this.props.intl.formatMessage({ id: 'page.header.signIn'})}
+                            </div>
+                        </div>
+                    </div>
                     <div className="cr-sign-in-form__form-content">
                       <div className="cr-sign-in-form__group">
                           <label className="cr-sign-in-form__label">
@@ -63,12 +67,12 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps & Inject
                                 onClick={this.handleSubmit}
                             />
                         </div>
-                        <div className="cr-sign-in-form__footer">
-                            <p className="cr-sign-in-form__footer-create">
+                        <div className={'cr-sign-in-form__2fa-bottom-section'}>
+                            <span className="cr-sign-in-form__2fa-bottom-section-text">
                                 {this.props.intl.formatMessage({id: 'page.header.signIn.createAccount'})}
-                            </p>
+                            </span>
                             <a
-                                className="cr-sign-in-form__footer-signup"
+                                className="cr-sign-in-form__2fa-bottom-section-text"
                                 onClick={onSignUp}
                             >
                                 {this.props.intl.formatMessage({id: 'page.header.signUp'})}
