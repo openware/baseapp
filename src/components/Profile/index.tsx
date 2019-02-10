@@ -30,8 +30,8 @@ class ProfileComponent extends React.Component<RouterProps> {
                     <ProfileVerification />
                 </div>
             </div>
+              <ReferralProgram />
           </div>
-          <ReferralProgram />
           <ProfileAccountActivity />
         </div>
       );

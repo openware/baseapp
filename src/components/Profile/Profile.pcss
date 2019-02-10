@@ -1,10 +1,9 @@
 .pg-profile-page {
   flex-wrap: wrap;
   height: 100%;
-  color: var(--base-8);
   align-items: flex-start !important;
   color: var(--profile-grey);
-  max-width: 85%;
+  max-width: 920px !important;
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
@@ -42,13 +41,14 @@
   &__details {
     box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
     background-color: var(--profile-box);
-    width: 80%;
-    max-width: 100%;
-    margin-top: calc(var(--gap) * 5);
+    width: 100%;
+    margin-top: calc(var(--gap) * 2);
+    border-radius: 4px;
     &-user {
       p {
         word-break: break-all;
         font-size: 45px;
+        line-height: 40px;
         margin: 0 0 25px 0;
       }
     }
@@ -64,6 +64,7 @@
     background: var(--profile-activity-header);
     border-bottom: 1px solid var(--profile-activity-border);
     color: var(--profile-activity-header-font);
+    border-radius: 4px 4px 0 0;
   }
 
   &__switch {
@@ -274,11 +275,11 @@
   }
 
   &__activity {
-    width: 80%;
-    max-width: 100%;
+    width: 100%;
     box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
     margin-top: calc(var(--gap) * 6);
     background: var(--profile-box);
+    border-radius: 4px;
 
     .cr-table {
 
@@ -384,22 +385,19 @@
 
     &__detail {
       max-width: 35%;
-    }
-
-    &__detail-title,
-    &__detail-data {
-      display: block;
-    }
-
-    &__detail-data {
-      color: var(--profile-accent-color);
-      font-size: 2rem;
-      font-weight: normal;
-    }
-
-    &__detail-title {
-      line-height: 1.1rem;
-      margin-top: calc(var(--gap) * 2);
+      &-title,
+      &-data {
+        display: block;
+      }
+      &-data {
+        color: var(--profile-accent-color);
+        font-size: 2rem;
+        font-weight: normal;
+      }
+      &-title {
+        line-height: 1.1rem;
+        margin-top: calc(var(--gap) * 2);
+      }
     }
   }
 

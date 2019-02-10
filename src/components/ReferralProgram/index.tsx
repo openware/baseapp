@@ -33,17 +33,13 @@ class ReferralProgramClass extends React.Component<ReduxProps> {
         const referralLink = `${window.document.location.origin}/signup?refid=${user.uid}`;
         const doCopy = () => copy('referral-id');
         return (
-            <div className="pg-profile-page__activity">
-                <div className="pg-profile-page-header">
-                    <h3>
-                        <span className="pg-profile-page__text-purple">
-                            <FormattedMessage id="page.body.profile.header.referralProgram"/>
-                        </span>
-                    </h3>
-                </div>
+            <div className="pg-profile-page__referral">
+                <label className="pg-profile-page__label">
+                    <FormattedMessage id="page.body.profile.header.referralProgram"/>
+                </label>
                 <div className="pg-copyable-text__section">
                     <CopyableTextField className="pg-copyable-text-field__input" value={referralLink} fieldId="referral-id"/>
-                    <div className="pg-copyable-text-field__button" onClick={doCopy}>
+                    <div className="pg-copyable-text-field__button cr-button" onClick={doCopy}>
                         <FormattedMessage id="page.body.profile.content.copyLink"/>
                     </div>
                 </div>
