@@ -33,8 +33,8 @@ export const en = {
   'page.body.trade.header.marketDepths.content.cumulativeVolume': 'Cumulative Volume:',
   'page.body.trade.header.marketDepths.content.cumulativeValue': 'Cumulative Value:',
 
-  'page.body.trade.header.asks': 'Asks',
-  'page.body.trade.header.bids': 'Bids',
+  'page.body.trade.header.asks': 'Sell Orders',
+  'page.body.trade.header.bids': 'Buy Orders',
   'page.body.trade.orderbook.header.price': 'Price',
   'page.body.trade.orderbook.header.amount': 'Amount',
   'page.body.trade.orderbook.header.volume': 'Volume',
