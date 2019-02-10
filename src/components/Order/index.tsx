@@ -17,6 +17,7 @@ import {
     selectCurrentPrice,
     selectWallets,
     setCurrentPrice,
+    Wallet,
 } from '../../modules';
 import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/markets';
 import {
@@ -38,8 +39,8 @@ interface ReduxProps {
 
 interface StoreProps {
     orderSide: string;
-    // tslint:disable-next-line no-any
-    wallet?: any;
+    walletBase?: Wallet;
+    walletQuote?: Wallet;
     price: string;
     width: number;
 }
@@ -66,7 +67,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         this.state = {
             orderSide: 'buy',
-            wallet: undefined,
             price: '',
             width: 451,
         };
@@ -74,8 +74,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     private getOrderTypes = [
-        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.limit'}),
-        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.market'}),
+        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.limit' }),
+        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.market' }),
     ];
     private orderRef;
 
@@ -85,14 +85,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                 width: this.orderRef.current.clientWidth,
             });
         }
-        if (next.wallets && (next.wallets.length === 0)) {
-            this.setState({
-                wallet: undefined,
-            });
-        }
         if ((next.currentMarket !== this.props.currentMarket) || (next.wallets !== this.props.wallets)) {
             this.setState({
-                wallet: this.getWallet(this.state.orderSide, next.currentMarket),
+                walletBase: this.getWallet(next.currentMarket.ask_unit),
+                walletQuote: this.getWallet(next.currentMarket.bid_unit),
             });
         }
         if (next.currentPrice !== this.props.currentPrice) {
@@ -107,7 +103,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         if (!currentMarket) {
             return null;
         }
-        const { wallet, price } = this.state;
+        const { walletBase, walletQuote, price } = this.state;
         const to = currentMarket.ask_unit;
         const from = currentMarket.bid_unit;
 
@@ -127,7 +123,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     feeBuy={Number(currentMarket.ask_fee)}
                     feeSell={Number(currentMarket.ask_fee)}
                     from={from}
-                    available={this.getAvailableValue(wallet)}
+                    availableBase={this.getAvailableValue(walletBase)}
+                    availableQuote={this.getAvailableValue(walletQuote)}
                     onSubmit={this.handleSubmit}
                     priceMarketBuy={Number((currentTicker || defaultCurrentTicker).last)}
                     priceMarketSell={Number((currentTicker || defaultCurrentTicker).last)}
@@ -136,14 +133,14 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     price={price}
                     orderTypes={this.getOrderTypes}
                     handleChangeInputPrice={this.handleChangePrice}
-                    amountText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.amount'})}
-                    availableText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.available'})}
-                    orderTypeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType'})}
-                    priceText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.price'})}
-                    totalText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.total'})}
-                    labelFirst={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy'})}
-                    labelSecond={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell'})}
-                    estimatedFeeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.estimatedFee'})}
+                    amountText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.amount' })}
+                    availableText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.available' })}
+                    orderTypeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType' })}
+                    priceText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.price' })}
+                    totalText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.total' })}
+                    labelFirst={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' })}
+                    labelSecond={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' })}
+                    estimatedFeeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.estimatedFee' })}
                     width={this.state.width}
                 />
                 {executeLoading && <Loader />}
@@ -191,26 +188,19 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.props.orderExecute(order);
     };
 
-    private getWallet(orderSide: string, market?: Market) {
+    private getWallet(currency: string): Wallet | undefined {
+        const currencyLower = currency.toLowerCase();
         const { wallets } = this.props;
-        const currentMarket = market ? market : this.props.currentMarket;
-        const currentMarketName = orderSide === 'sell' ?
-            (currentMarket ? currentMarket.name.split('/')[0] : '') :
-            (currentMarket ? currentMarket.name.split('/')[1] : '');
-
-        const wallet = wallets && wallets.find(w => w.currency === currentMarketName.toLowerCase());
-        return wallet;
+        return wallets ? wallets.find(w => w.currency === currencyLower) : undefined;
     }
 
     private getOrderType = (index: number, label: string) => {
-        const wallet = this.getWallet(label.toLowerCase());
         this.setState({
             orderSide: label.toLowerCase(),
-            wallet,
         });
     }
 
-    private getAvailableValue(wallet) {
+    private getAvailableValue(wallet: Wallet | undefined) {
         return wallet ? wallet.balance : 0;
     }
 }
@@ -228,7 +218,7 @@ const mapDispatchToProps = dispatch => ({
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
 });
 
-// tslint:disable-next-line
+// tslint:disable-next-line no-any
 const OrderComponent = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderInsert as any)) as any;
 
 export {
