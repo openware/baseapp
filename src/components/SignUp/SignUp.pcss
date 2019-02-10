@@ -14,6 +14,20 @@
     margin: 0 auto;
     border-radius: 4px;
 
+    &__options-group {
+      width: 100%;
+      height: 58px;
+      border-bottom: 2px solid var(--sign-in-text);
+    }
+
+    &__option {
+      background: var(--header);
+      .__selected {
+        border-bottom: 2px solid var(--sign-in-accent);
+        color: var(--color-white);
+      }
+    }
+
     &__group--focused {
       input {
         border-color: var(--button-primary) !important;
@@ -29,7 +43,7 @@
 
       &--disabled {
         color: var(--button-dark-gray);
-        background: var(--button-disabled);
+        background: var(--button-disabled) !important;
       }
 
       &:hover {
