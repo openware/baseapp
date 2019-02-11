@@ -5,7 +5,7 @@ import { userReset } from '../../';
 import { deleteError, ErrorData, handleError } from '../actions';
 
 export function* handleErrorSaga(action: ErrorData) {
-    if (action.error.message === 'Invalid Session') {
+    if (action.error.code === 401) {
         yield put(userReset());
         return;
     } else if (action.error.code === 403) {
