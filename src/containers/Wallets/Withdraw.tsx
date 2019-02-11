@@ -17,6 +17,7 @@ interface WithdrawProps {
     withdrawFeeLabel?: string;
     withdrawTotalLabel?: string;
     withdrawButtonLabel?: string;
+    withdrawDone: boolean;
 }
 
 interface WithdrawState {

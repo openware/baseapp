@@ -1,34 +1,34 @@
-// tslint:disable
 import { Loader } from '@openware/components';
+import { History } from 'history';
 import * as React from 'react';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, Switch } from 'react-router';
-import { withRouter, Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { minutesUntilAutoLogout } from '../../api/config';
 import {
     logoutFetch,
     RootState,
-    selectUserLoggedIn,
-    selectUserInfo,
     selectUserFetching,
+    selectUserInfo,
+    selectUserLoggedIn,
     User,
     userFetch,
     walletsReset,
 } from '../../modules';
 import {
-    OrdersTabScreen,
-    ProfileScreen,
-    SignInScreen,
-    SignUpScreen,
-    VerificationScreen,
-    TradingScreen,
-    WalletsScreen,
-    HistoryScreen,
+    ChangeForgottenPasswordScreen,
     ConfirmScreen,
     FaqScreen,
-    ProfileTwoFactorAuthScreen,
     ForgotPasswordScreen,
-    ChangeForgottenPasswordScreen,
+    HistoryScreen,
+    OrdersTabScreen,
+    ProfileScreen,
+    ProfileTwoFactorAuthScreen,
+    SignInScreen,
+    SignUpScreen,
+    TradingScreen,
+    VerificationScreen,
+    WalletsScreen,
 } from '../../screens';
 
 interface ReduxProps {
@@ -44,7 +44,7 @@ interface DispatchProps {
 }
 
 interface OwnProps {
-    history: any;
+    history: History;
 }
 
 type Props = ReduxProps & DispatchProps & OwnProps;
@@ -56,30 +56,52 @@ const renderLoader = () => (
 );
 
 const CHECK_INTERVAL = 15000;
-const STORE_KEY =  'lastAction';
+const STORE_KEY = 'lastAction';
 
-const PrivateRoute: React.SFC<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
+//tslint:disable-next-line no-any
+const PrivateRoute: React.FunctionComponent<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
     if (loading) {
         return renderLoader();
     }
-    return <Route {...rest} render={props => (
-        isLogged ? <CustomComponent {...props} /> :
+    const renderCustomerComponent = props => <CustomComponent {...props} />;
+
+    if (isLogged) {
+        return <Route {...rest} render={renderCustomerComponent} />;
+    }
+
+    return (
+        <Route {...rest}>
             <Redirect to={'/signin'} />
-    )} />;
+        </Route>
+    );
 };
 
-const PublicRoute: React.SFC<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
+//tslint:disable-next-line no-any
+const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
     if (loading) {
         return renderLoader();
     }
-    return <Route {...rest} render={props => (
-        !isLogged ? <CustomComponent {...props} /> :
-            <Redirect to={'/wallets'} />
-    )} />;
+
+    if (isLogged) {
+        return <Route {...rest}><Redirect to={'/wallets'} /></Route>;
+    }
+
+    const renderCustomerComponent = props => <CustomComponent {...props} />;
+    return <Route {...rest} render={renderCustomerComponent} />;
 };
 
 class LayoutComponent extends React.Component<Props> {
-    timer: any;
+    public static eventsListen = [
+        'click',
+        'keydown',
+        'scroll',
+        'resize',
+        'mousemove',
+        'TabSelect',
+        'TabHide',
+    ];
+
+    public timer;
 
     constructor(props: Props) {
         super(props);
@@ -100,15 +122,10 @@ class LayoutComponent extends React.Component<Props> {
             this.props.history.push('/trading');
         }
     }
-
     public componentWillUnmount() {
-        document.body.removeEventListener('click', () => {});
-        document.body.removeEventListener('mouseover', () => {});
-        document.body.removeEventListener('mouseout', () => {});
-        document.body.removeEventListener('keydown', () => {});
-        document.body.removeEventListener('keyup', () => {});
-        document.body.removeEventListener('keypress', () => {});
-
+        for (const type of LayoutComponent.eventsListen) {
+            document.body.removeEventListener(type, this.reset);
+        }
         clearInterval(this.timer);
     }
 
@@ -122,7 +139,7 @@ class LayoutComponent extends React.Component<Props> {
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
-                    <Route exact path="/trading" component={TradingScreen} />
+                    <Route exact={true} path="/trading" component={TradingScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={HistoryScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/confirm" component={ConfirmScreen} />
@@ -130,8 +147,7 @@ class LayoutComponent extends React.Component<Props> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/help" component={FaqScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
-                    <Route path="**"
-                           render={() => <Redirect to={'/trading'} />} />
+                    <Route path="**"><Redirect to={'/trading'} /></Route>
                 </Switch>
             </div>
         );
@@ -139,7 +155,7 @@ class LayoutComponent extends React.Component<Props> {
 
     private getLastAction = () => {
         if (localStorage.getItem(STORE_KEY) !== null) {
-            return parseInt(localStorage.getItem(STORE_KEY) || '0');
+            return parseInt(localStorage.getItem(STORE_KEY) || '0', 10);
         }
         return 0;
     };
@@ -150,12 +166,9 @@ class LayoutComponent extends React.Component<Props> {
 
     private initListener = () => {
         this.reset();
-        document.body.addEventListener('click', () => this.reset());
-        document.body.addEventListener('mouseover', ()=> this.reset());
-        document.body.addEventListener('mouseout', () => this.reset());
-        document.body.addEventListener('keydown', () => this.reset());
-        document.body.addEventListener('keyup', () => this.reset());
-        document.body.addEventListener('keypress', () => this.reset());
+        for (const type of LayoutComponent.eventsListen) {
+            document.body.addEventListener(type, this.reset);
+        }
     }
 
     private reset = () => {
@@ -175,7 +188,7 @@ class LayoutComponent extends React.Component<Props> {
         const diff = timeleft - now;
         const isTimeout = diff < 0;
         if (isTimeout && user.email) {
-          this.props.logout();
+            this.props.logout();
         }
     }
 }
@@ -192,6 +205,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     walletsReset: () => dispatch(walletsReset()),
 });
 
+// tslint:disable-next-line no-any
 const Layout = withRouter(connect(mapStateToProps, mapDispatchToProps)(LayoutComponent) as any) as any;
 
 export {

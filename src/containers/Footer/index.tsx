@@ -8,7 +8,6 @@ export interface FooterState {
     showModal: boolean;
 }
 
-// tslint:disable
 class Foot extends React.Component<{}, FooterState> {
     public state = {
         showModal: false,
@@ -16,23 +15,25 @@ class Foot extends React.Component<{}, FooterState> {
 
     public render() {
         const { showModal } = this.state;
-        return(
-          <React.Fragment>
-          {!['/confirm'].some(r=> location.pathname.includes(r)) &&
-            <footer className="pg-footer">
-                <span className="pg-footer__link" onClick={this.toggleModal}>
-                    <FormattedMessage id="page.footer.legalDocuments"/>
-                </span>
-                <LegalDocuments
-                    isOpen={showModal}
-                    footer={<Button label={'Ok'} onClick={this.toggleModal}/>}
-                />
-                <Link className="pg-footer__link" to="/help">
-                    <FormattedMessage id="page.footer.faq"/>
-                </Link>
-            </footer>
-          }
-          </React.Fragment>
+        if (location.pathname.startsWith('/confirm')) {
+            return <React.Fragment />;
+        }
+
+        return (
+            <React.Fragment>
+                <footer className="pg-footer">
+                    <span className="pg-footer__link" onClick={this.toggleModal}>
+                        <FormattedMessage id="page.footer.legalDocuments" />
+                    </span>
+                    <LegalDocuments
+                        isOpen={showModal}
+                        footer={<Button label={'Ok'} onClick={this.toggleModal} />}
+                    />
+                    <Link className="pg-footer__link" to="/help">
+                        <FormattedMessage id="page.footer.faq" />
+                    </Link>
+                </footer>
+            </React.Fragment>
         );
     }
 

@@ -6,8 +6,7 @@ import {
     HISTORY_PUSH_FINISH,
     HISTORY_RESET,
 } from './constants';
-import { List } from './reducer';
-import { PrivateTradeEvent } from './types';
+import { PrivateTradeEvent, WalletHistoryList } from './types';
 
 interface HistoryFetchPayload {
     currency?: string;
@@ -17,7 +16,7 @@ interface HistoryFetchPayload {
 }
 
 interface HistorySuccessPayload {
-    list: List;
+    list: WalletHistoryList;
     page: number;
     fullHistory: number;
 }
@@ -34,12 +33,12 @@ export interface HistoryData {
 
 export interface HistoryError {
     type: typeof HISTORY_ERROR;
-    payload: List;
+    payload: WalletHistoryList;
 }
 
 export interface HistoryPushFinish {
     type: typeof HISTORY_PUSH_FINISH;
-    payload: List;
+    payload: WalletHistoryList;
 }
 
 export interface HistoryReset {
@@ -70,7 +69,7 @@ export const successHistory = (payload: HistorySuccessPayload): HistoryData => (
     payload,
 });
 
-export const failHistory = (payload: List): HistoryError => ({
+export const failHistory = (payload: WalletHistoryList): HistoryError => ({
     type: HISTORY_ERROR,
     payload,
 });
@@ -84,7 +83,7 @@ export const pushHistoryEmit = (payload: PrivateTradeEvent): HistoryPush => ({
     payload,
 });
 
-export const pushHistoryFinish = (payload: List): HistoryPushFinish => ({
+export const pushHistoryFinish = (payload: WalletHistoryList): HistoryPushFinish => ({
     type: HISTORY_PUSH_FINISH,
     payload,
 });

@@ -66,6 +66,13 @@ class SignInComponent extends React.Component<SignInProps> {
         const passwordGroupClass = cr('cr-sign-in-form__group', {
             'cr-sign-in-form__group--focused': passwordFocused,
         });
+        const logo = image ? (
+            <h1 className="cr-sign-in-form__title">
+                <img className="cr-sign-in-form__image" src={image} alt="logo" />
+            </h1>
+        ) : null;
+
+        // tslint:disable:jsx-no-lambda
         return (
             <form>
                 <div className="cr-sign-in-form">
@@ -82,13 +89,7 @@ class SignInComponent extends React.Component<SignInProps> {
                         </div>
                     </div>
                     <div className="cr-sign-in-form__form-content">
-                        {/* tslint:disable */}
-                        {image && (
-                            <h1 className="cr-sign-in-form__title">
-                                <img className="cr-sign-in-form__image" src={image} alt="logo"/>
-                            </h1>
-                        )}
-                        {/* tslint:enable tslint:disable:jsx-no-lambda */}
+                        {logo}
                         <div className={emailGroupClass}>
                             <label className="cr-sign-in-form__label">
                                 {emailLabel ? emailLabel : 'Email'}
@@ -120,7 +121,7 @@ class SignInComponent extends React.Component<SignInProps> {
                             {passwordError && <div className={'cr-sign-in-form__error'}>{passwordError}</div>}
                         </div>
                         <div className="cr-sign-in-form__button-wrapper">
-                            <div className="cr-sign-in-form__loader">{isLoading ? <Loader/> : null}</div>
+                            <div className="cr-sign-in-form__loader">{isLoading ? <Loader /> : null}</div>
                             <Button
                                 label={isLoading ? 'Loading...' : (labelSignIn ? labelSignIn : 'Sign in')}
                                 type="submit"
@@ -141,6 +142,7 @@ class SignInComponent extends React.Component<SignInProps> {
                 </div>
             </form>
         );
+        // tslint:enable:jsx-no-lambda
     }
 
     private handleChangeEmail = (value: string) => {
@@ -151,7 +153,7 @@ class SignInComponent extends React.Component<SignInProps> {
         this.props.changePassword(value);
     }
 
-    private handleFieldFocus = (field: string) =>  {
+    private handleFieldFocus = (field: string) => {
         this.props.handleChangeFocusField(field);
     }
 
@@ -161,7 +163,7 @@ class SignInComponent extends React.Component<SignInProps> {
     }
 
     private isValidForm = () => {
-        const {email, password} = this.props;
+        const { email, password } = this.props;
         const isEmailValid = email.match(EMAIL_REGEX);
 
         return email && isEmailValid && password;

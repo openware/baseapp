@@ -1,18 +1,21 @@
-// tslint:disable
 import { delay } from 'redux-saga';
+// tslint:disable-next-line no-submodule-imports
 import { put } from 'redux-saga/effects';
 import { userReset } from '../../';
 import { deleteError, ErrorData, handleError } from '../actions';
 
 export function* handleErrorSaga(action: ErrorData) {
-    if (action.error.code === 401) {
-        yield put(userReset());
-        return;
-    } else if (action.error.code === 403) {
-        return;
-    } else {
-        yield put(handleError(action.error));
+    switch (action.error.code) {
+        case 401:
+            yield put(userReset());
+            return;
+
+        case 403:
+            return;
+
+        default:
+            yield put(handleError(action.error));
+            yield delay(5000);
+            yield put(deleteError());
     }
-    yield delay(5000)
-    yield put(deleteError())
 }

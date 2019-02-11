@@ -6,12 +6,10 @@ import {
     HISTORY_PUSH_FINISH,
     HISTORY_RESET,
 } from './constants';
-import { Deposit, History, PrivateTrade, Withdraw } from './types';
-
-export type List = History[] | Withdraw[] | Deposit[] | PrivateTrade[];
+import { WalletHistoryList } from './types';
 
 export interface HistoryState {
-    list: List;
+    list: WalletHistoryList;
     fetching: boolean;
     fullHistory: number;
     page: number;

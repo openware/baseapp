@@ -1,3 +1,4 @@
+import { Market } from '../markets';
 import * as actions from './actions';
 import {
   depthReducer,
@@ -5,9 +6,10 @@ import {
   initialOrderBook,
   orderBookReducer,
 } from './reducer';
+import { DepthState, OrderBookState } from './types';
 
 describe('orderBook reducer', () => {
-  const fakeMarket = {
+  const fakeMarket: Market = {
     id: 'btczar',
     name: 'BTC/ZAR',
     bid_fee: '0.0015',
@@ -20,9 +22,9 @@ describe('orderBook reducer', () => {
     min_bid_amount: '0.0',
     ask_precision: 4,
     bid_precision: 4,
-};
+  };
 
-  const fakeOrderBook = {
+  const fakeOrderBook: OrderBookState = {
     asks: [
       {
         id: 202440,
@@ -36,6 +38,7 @@ describe('orderBook reducer', () => {
         remaining_volume: '0.09',
         executed_volume: '0.03',
         trades_count: 1,
+        ord_type: 'limit',
       },
     ],
     bids: [
@@ -51,22 +54,23 @@ describe('orderBook reducer', () => {
         remaining_volume: '0.041',
         executed_volume: '0.059',
         trades_count: 1,
+        ord_type: 'limit',
       },
     ],
     loading: true,
   };
 
-  const fakeDepth = {
+  const fakeDepth: DepthState = {
     asks: [
-      [ '0.99', '1' ],
-      [ '0.75', '1' ],
-      [ '0.70', '1' ],
-      [ '0.60', '0.1' ],
+      ['0.99', '1'],
+      ['0.75', '1'],
+      ['0.70', '1'],
+      ['0.60', '0.1'],
     ],
     bids: [
-      [ '0.50', '0.041' ],
-      [ '0.49', '0.5' ],
-      [ '0.26', '25' ],
+      ['0.50', '0.041'],
+      ['0.49', '0.5'],
+      ['0.26', '25'],
     ],
     loading: true,
   };
@@ -81,7 +85,6 @@ describe('orderBook reducer', () => {
     expect(depthReducer(initialDepth, actions.depthFetch(fakeMarket))).toEqual(expectedState);
   });
 
-  /* tslint:disable */
   it('should handle ORDER_BOOK_DATA', () => {
     const expectedState = { ...fakeOrderBook, loading: false, error: undefined };
     expect(orderBookReducer(fakeOrderBook, actions.orderBookData(fakeOrderBook))).toEqual(expectedState);
@@ -91,6 +94,5 @@ describe('orderBook reducer', () => {
     const expectedState = { ...fakeDepth, loading: false, error: undefined };
     expect(depthReducer(fakeDepth, actions.depthData(fakeDepth))).toEqual(expectedState);
   });
-  /* tslint:enable */
 
 });

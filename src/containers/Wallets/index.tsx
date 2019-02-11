@@ -18,7 +18,7 @@ import {
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { List, RootState, selectHistory, selectUserInfo, User } from '../../modules';
+import { RootState, selectHistory, selectUserInfo, User, WalletHistoryList } from '../../modules';
 import { CommonError } from '../../modules/types';
 import {
     selectWallets,
@@ -32,13 +32,13 @@ import {
 } from '../../modules/wallets';
 import { ModalWithdrawConfirmation } from '../ModalWithdrawConfirmation';
 import { ModalWithdrawSubmit } from '../ModalWithdrawSubmit';
-import { WalletHistory } from './History';
 import {
     Withdraw,
     WithdrawProps,
 } from './Withdraw';
 
 import bch = require('bitcoincashjs');
+import { WalletHistory } from './History';
 
 interface ReduxProps {
     user: User;
@@ -46,7 +46,7 @@ interface ReduxProps {
     withdrawSuccess: boolean;
     walletsError?: CommonError;
     walletsLoading?: boolean;
-    historyList: List;
+    historyList: WalletHistoryList;
 }
 
 interface DispatchProps {
@@ -259,7 +259,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { currency, fee, type } = wallet;
         const fixed = (wallet || { fixed: 0 }).fixed;
 
-        const withdrawProps = {
+        const withdrawProps: WithdrawProps = {
             withdrawDone,
             currency,
             fee,
@@ -267,13 +267,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             borderItem: 'empty-circle',
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,
-            withdrawAddressLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.address'}),
-            withdrawAmountLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount'}),
-            withdraw2faLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa'}),
-            withdrawFeeLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee'}),
-            withdrawTotalLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total'}),
-            withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button'}),
-            withdrawAddressLabelPlaceholder: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.addressPlaceholder'}),
+            withdrawAddressLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.address' }),
+            withdrawAmountLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }),
+            withdraw2faLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' }),
+            withdrawFeeLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }),
+            withdrawTotalLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }),
+            withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
+            withdrawAddressLabelPlaceholder: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.addressPlaceholder' }),
         };
         return [
             {

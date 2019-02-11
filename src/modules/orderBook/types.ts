@@ -1,20 +1,34 @@
+import { OrderSide, OrderStatus, OrderType } from '../orders';
 import { CommonState } from '../types';
 
-/* tslint:disable */
-export interface OrderBookState extends CommonState {
-  asks: any[];
-  bids: any[];
-  loading: boolean;
+export interface OrderBookOrder {
+    id: number;
+    side: OrderSide;
+    ord_type: OrderType;
+    price: string;
+    avg_price: string;
+    state: OrderStatus;
+    market: string;
+    created_at: string;
+    volume: string;
+    remaining_volume: string;
+    executed_volume: string;
+    trades_count: number;
 }
-/* tslint:enable */
+
+export interface OrderBookState extends CommonState {
+    asks: OrderBookOrder[];
+    bids: OrderBookOrder[];
+    loading: boolean;
+}
 
 export interface OrderBookEntry extends CommonState {
-  remaining_volume: string;
-  volume: string;
+    remaining_volume: string;
+    volume: string;
 }
 
 export interface DepthState extends CommonState {
-  asks: string[][];
-  bids: string[][];
-  loading: boolean;
+    asks: string[][];
+    bids: string[][];
+    loading: boolean;
 }

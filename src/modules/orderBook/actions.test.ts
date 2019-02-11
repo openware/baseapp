@@ -1,4 +1,5 @@
 import * as actions from './actions';
+import { OrderBookState } from './types';
 
 describe('Orderbook/MarketDepth actions', () => {
 
@@ -43,7 +44,7 @@ describe('Orderbook/MarketDepth actions', () => {
   });
 
   it('should check orderbookData action creator', () => {
-    const fakeOrderBook = {
+    const fakeOrderBook: OrderBookState = {
       asks: [
         {
           id: 202440,
@@ -57,6 +58,7 @@ describe('Orderbook/MarketDepth actions', () => {
           remaining_volume: '0.09',
           executed_volume: '0.03',
           trades_count: 1,
+          ord_type: 'limit',
         },
       ],
       bids: [
@@ -72,6 +74,7 @@ describe('Orderbook/MarketDepth actions', () => {
           remaining_volume: '0.041',
           executed_volume: '0.059',
           trades_count: 1,
+          ord_type: 'limit',
         },
       ],
       loading: false,

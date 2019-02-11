@@ -3,7 +3,9 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
+import { Market } from '../../markets';
 import { orderBookData, orderBookError, orderBookFetch } from '../actions';
+import { OrderBookState } from '../types';
 
 // tslint:disable no-any no-magic-numbers
 describe('Saga: OrderBook', () => {
@@ -22,7 +24,7 @@ describe('Saga: OrderBook', () => {
     mockAxios.reset();
   });
 
-  const fakeMarket = {
+  const fakeMarket: Market = {
     id: 'btczar',
     name: 'BTC/ZAR',
     bid_fee: '0.0015',
@@ -42,7 +44,7 @@ describe('Saga: OrderBook', () => {
     message: 'Server error',
   };
 
-  const fakeOrderBook = {
+  const fakeOrderBook: OrderBookState = {
     asks: [
       {
         id: 202440,
@@ -56,6 +58,7 @@ describe('Saga: OrderBook', () => {
         remaining_volume: '0.09',
         executed_volume: '0.03',
         trades_count: 1,
+        ord_type: 'limit',
       },
     ],
     bids: [
@@ -71,6 +74,7 @@ describe('Saga: OrderBook', () => {
         remaining_volume: '0.041',
         executed_volume: '0.059',
         trades_count: 1,
+        ord_type: 'limit',
       },
     ],
     loading: false,

@@ -1,8 +1,8 @@
-// tslint:disable
-import {MarketDepths} from '@openware/components';
+import { MarketDepths } from '@openware/components';
 import * as React from 'react';
-import { connect, MapStateToProps } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { connect, MapStateToProps } from 'react-redux';
+import { preciseData } from '../../helpers';
 import {
     Market,
     RootState,
@@ -10,7 +10,6 @@ import {
     selectDepthAsks,
     selectDepthBids,
 } from '../../modules';
-import { preciseData } from '../../helpers';
 
 interface ReduxProps {
     asksItems: string[][];
@@ -29,14 +28,14 @@ const settings = {
 
 class MarketDepthContainer extends React.Component<Props> {
     public shouldComponentUpdate(prev, next) {
-        const {asksItems, bidsItems} = prev;
+        const { asksItems, bidsItems } = prev;
         const ordersLength = Number(asksItems.length) + Number(bidsItems.length);
 
         return ordersLength !== (this.props.asksItems.length + this.props.bidsItems.length);
     }
 
     public render() {
-        const {asksItems, bidsItems} = this.props;
+        const { asksItems, bidsItems } = this.props;
         const colors = {
             fillAreaAsk: '#fa5252',
             fillAreaBid: '#12b886',
@@ -51,7 +50,7 @@ class MarketDepthContainer extends React.Component<Props> {
             <div>
                 <div className="cr-table-header__content">
                     <div className={'pg-market-depth__title'}>
-                        <FormattedMessage id='page.body.trade.header.marketDepths' />
+                        <FormattedMessage id="page.body.trade.header.marketDepths" />
                     </div>
                 </div>
                 {(asksItems.length || bidsItems.length) ? this.renderMarketDepth(colors) : null}
@@ -75,13 +74,14 @@ class MarketDepthContainer extends React.Component<Props> {
         }
         const { name } = this.props.currentMarket;
         const [first, second] = name.split('/');
-        const tipLayout = ({volume, price, cumulativeVolume, cumulativePrice}) =>
+        const tipLayout = ({ volume, price, cumulativeVolume, cumulativePrice }) => (
             <span className={'pg-market-depth__tooltip'}>
-                    <span><FormattedMessage id='page.body.trade.header.marketDepths.content.price' /> : {price} {second}</span>
-                    <span><FormattedMessage id='page.body.trade.header.marketDepths.content.volume' /> : {volume} {first}</span>
-                    <span><FormattedMessage id='page.body.trade.header.marketDepths.content.cumulativeVolume' /> : {preciseData(cumulativeVolume, 2)} {second}</span>
-                    <span><FormattedMessage id='page.body.trade.header.marketDepths.content.cumulativeValue' /> : {preciseData(cumulativePrice, 2)} {first}</span>
-                </span>;
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.price" /> : {price} {second}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.volume" /> : {volume} {first}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeVolume" /> : {preciseData(cumulativeVolume, 2)} {second}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeValue" /> : {preciseData(cumulativePrice, 2)} {first}</span>
+            </span>
+        );
 
         let cumulativeVolumeData = 0;
         let cumulativePriceData = 0;
@@ -94,21 +94,21 @@ class MarketDepthContainer extends React.Component<Props> {
             cumulativePriceData = cumulativePriceData + (numberPrice * numberVolume);
             return {
                 [type]: cumulativeVolumeData,
-                cumulativePrice : preciseData(cumulativePriceData, 2),
-                cumulativeVolume : preciseData(cumulativeVolumeData, 2),
+                cumulativePrice: preciseData(cumulativePriceData, 2),
+                cumulativeVolume: preciseData(cumulativeVolumeData, 2),
                 volume: Number(volume),
                 price: Number(price),
-                name: tipLayout({volume, price, cumulativeVolume: cumulativeVolumeData, cumulativePrice: cumulativePriceData}),
+                name: tipLayout({ volume, price, cumulativeVolume: cumulativeVolumeData, cumulativePrice: cumulativePriceData }),
             };
         });
 
         return type === 'bid' ? cumulative
-                .sort((a, b) => b.bid - a.bid) :
+            .sort((a, b) => b.bid - a.bid) :
             cumulative.sort((a, b) => a.ask - b.ask);
     };
 
     private convertToDepthFormat() {
-        const {asksItems, bidsItems} = this.props;
+        const { asksItems, bidsItems } = this.props;
         const asksItemsLength = asksItems.length;
         const bidsItemsLength = bidsItems.length;
 

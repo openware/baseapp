@@ -3,7 +3,7 @@
   "version": "2.1.40",
   "private": true,
   "dependencies": {
-    "@openware/components": "^2.0.9",
+    "@openware/components": "^2.0.10",
     "@openware/cryptofont": "^0.1.6",
     "axios": "^0.18.0",
     "bitcoincashjs": "0.1.10",
@@ -99,5 +99,15 @@
       "commit-msg": "./scripts/validate_commit.js $HUSKY_GIT_PARAMS && (cd \"./$GIT_PREFIX\"; yarn lint)",
       "pre-push": "yarn lint && yarn test"
     }
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true,
+    "tslintIntegration": true,
+    "eslintIntegration": true,
+    "stylelintIntegration": true,
+    "ignorePath": ".gitignore"
   }
 }

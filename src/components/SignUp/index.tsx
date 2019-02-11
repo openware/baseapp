@@ -98,6 +98,20 @@ class SignUpForm extends React.Component<SignUpFormProps> {
         const refIdGroupClass = cr('cr-sign-up-form__group', {
             'cr-sign-up-form__group--focused': refIdFocused,
         });
+        const logo = image ? (
+            <h1 className="cr-sign-up-form__title">
+                <img className="cr-sign-up-form__image" src={image} alt="logo" />
+            </h1>
+        ) : null;
+        const captcha = hasConfirmed && captchaType !== 'none' ?
+            (
+                <div className="cr-sign-up-form__recaptcha">
+                    <ReCAPTCHA
+                        sitekey={siteKey}
+                        onChange={this.props.recaptchaOnChange}
+                    />
+                </div>
+            ) : null;
 
         return (
             <form>
@@ -110,18 +124,12 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                         </div>
                         <div className="cr-sign-up-form__option">
                             <div className="cr-sign-up-form__option-inner __selected">
-                              {labelSignUp ? labelSignUp : 'Sign Up'}
+                                {labelSignUp ? labelSignUp : 'Sign Up'}
                             </div>
                         </div>
                     </div>
                     <div className="cr-sign-up-form__form-content">
-                        {/* tslint:disable */}
-                        {image && (
-                            <h1 className="cr-sign-up-form__title">
-                                <img className="cr-sign-up-form__image" src={image} alt="logo"/>
-                            </h1>
-                        )}
-                        {/* tslint:enable tslint:disable:jsx-no-lambda */}
+                        {logo}
                         <div className={emailGroupClass}>
                             <label className="cr-sign-up-form__label">
                                 {emailLabel ? emailLabel : 'Email'}
@@ -183,23 +191,14 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                             onChange={this.props.clickCheckBox}
                             label={termsMessage ? termsMessage : 'I  agree all statements in terms of service'}
                         />
-                        {/* tslint:disable */}
-                        {hasConfirmed && captchaType !== 'none' ?
-                        <div className="cr-sign-up-form__recaptcha">
-                        <ReCAPTCHA
-                            sitekey={siteKey}
-                            onChange={this.props.recaptchaOnChange}
-                        />
-                        </div> : null}
-                        {/* tslint:enable tslint:disable:jsx-no-lambda */}
+                        {captcha}
                         <div className="cr-sign-up-form__button-wrapper">
-                            <div className="cr-sign-up-form__loader">{isLoading ? <Loader/> : null}</div>
+                            <div className="cr-sign-up-form__loader">{isLoading ? <Loader /> : null}</div>
                             <Button
                                 type="submit"
                                 className="cr-sign-up-form__button"
                                 label={isLoading ? 'Loading...' : (labelSignUp ? labelSignUp : 'Sign up')}
-                                disabled={!hasConfirmed || isLoading || this.disableButton()
-                                          || !email.match(EMAIL_REGEX) || !password || !confirmPassword}
+                                disabled={this.disableButton()}
                                 onClick={this.handleClick}
                             />
                         </div>
@@ -210,12 +209,22 @@ class SignUpForm extends React.Component<SignUpFormProps> {
     }
 
     private disableButton = (): boolean => {
-        const { captchaType, recaptchaConfirmed } = this.props;
+        const {
+            email,
+            password,
+            confirmPassword,
+            hasConfirmed,
+            recaptchaConfirmed,
+            isLoading,
+            captchaType,
+        } = this.props;
 
-        if (captchaType !== 'none') {
-            return !recaptchaConfirmed;
+        if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {
+            return true;
         }
-
+        if (captchaType !== 'none' && !recaptchaConfirmed) {
+            return true;
+        }
         return false;
     };
 
@@ -224,7 +233,7 @@ class SignUpForm extends React.Component<SignUpFormProps> {
     }
 
     private isValidForm() {
-        const {email, password, confirmPassword} = this.props;
+        const { email, password, confirmPassword } = this.props;
         const isEmailValid = email.match(EMAIL_REGEX);
         const isPasswordValid = password.match(PASSWORD_REGEX);
         const isConfirmPasswordValid = password === confirmPassword;

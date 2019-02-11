@@ -26,7 +26,6 @@ interface RouterProps {
     history: History;
 }
 
-// tslint:disable
 interface ReduxProps {
     barcode: string;
     qrUrl: string;
@@ -131,7 +130,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                 </p>
                 {secret && <CopyableTextField value={secret} fieldId="secret-2fa" />}
             </React.Fragment>
-        )
+        );
     }
 
     private handleOtpCodeChange = (value: string) => {
@@ -182,4 +181,4 @@ const ToggleTwoFactorAuth = withRouter(connected as any);
 
 export {
     ToggleTwoFactorAuth,
-}
+};

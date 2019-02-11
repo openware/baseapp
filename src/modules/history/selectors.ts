@@ -1,7 +1,7 @@
 import { RootState } from '../index';
-import { List } from './reducer';
+import { WalletHistoryList } from './types';
 
-export const selectHistory = (state: RootState): List =>
+export const selectHistory = (state: RootState): WalletHistoryList =>
     state.app.history.list;
 
 export const selectFullHistory = (state: RootState): number =>

@@ -58,12 +58,14 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     public render() {
         const { allOrdersData, openOrdersData } = this.props;
         const data = allOrdersData && openOrdersData;
+        const body = data.length ?
+            <History headers={this.renderHeaders()} data={this.retrieveData()} /> :
+            <p className="pg-history-elem__empty"><FormattedMessage id="page.noDataToShow" /></p>;
 
         return (
-          <div className={`pg-history-elem ${data.length ? '' : 'pg-history-elem-empty'}`}>
-            {data.length ? <History headers={this.renderHeaders()} data={this.retrieveData()}/> : // tslint:disable-line
-                (<p className="pg-history-elem__empty"><FormattedMessage id="page.noDataToShow" /></p>)}
-          </div>
+            <div className={`pg-history-elem ${data.length ? '' : 'pg-history-elem-empty'}`}>
+                {body}
+            </div>
         );
     }
 
@@ -87,11 +89,11 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         switch (type) {
             case 'open': {
                 return [...openOrdersData]
-                .map(item => this.renderOpenOrdersRow(item));
+                    .map(item => this.renderOpenOrdersRow(item));
             }
             case 'all': {
                 return [...allOrdersData]
-                .map(item => this.renderAllOrdersRow(item));
+                    .map(item => this.renderAllOrdersRow(item));
             }
             default: {
                 return [];
@@ -103,7 +105,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         if (!side || !orderType) {
             return '';
         }
-        return this.props.intl.formatMessage({id: `page.body.openOrders.header.orderType.${side}.${orderType}`});
+        return this.props.intl.formatMessage({ id: `page.body.openOrders.header.orderType.${side}.${orderType}` });
     };
 
     private renderOpenOrdersRow = item => {
@@ -138,7 +140,8 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             <Decimal key={id} fixed={currentMarket.ask_precision}>{remaining_volume}</Decimal>,
             <Decimal key={id} fixed={currentMarket.ask_precision}>{costRemaining.toString()}</Decimal>,
             status,
-            <CloseButton key={id} onClick={() => this.handleCancel(id)} />,//tslint:disable-line
+            // tslint:disable-next-line jsx-no-lambda
+            <CloseButton key={id} onClick={() => this.handleCancel(id)} />,
         ];
     }
 
@@ -182,11 +185,11 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     private setOrderStatus = (status: string) => {
         switch (status) {
             case 'done':
-                return <FormattedMessage id={`page.body.openOrders.content.status.done`}/>;
+                return <FormattedMessage id={`page.body.openOrders.content.status.done`} />;
             case 'cancel':
-                return <span style={{color:'var(--color-red)'}}><FormattedMessage id={`page.body.openOrders.content.status.cancel`}/></span>;
+                return <span style={{ color: 'var(--color-red)' }}><FormattedMessage id={`page.body.openOrders.content.status.cancel`} /></span>;
             case 'wait':
-                return <span style={{color:'var(--color-green)'}}><FormattedMessage id={`page.body.openOrders.content.status.wait`}/></span>;
+                return <span style={{ color: 'var(--color-green)' }}><FormattedMessage id={`page.body.openOrders.content.status.wait`} /></span>;
             default:
                 return status;
         }

@@ -9,7 +9,6 @@ import {
 } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { pgRoutes } from '../../constants';
-// import { getLanguageName } from '../../helpers';
 import {
     changeLanguage,
     ContactError,
@@ -24,7 +23,6 @@ import {
     User,
     walletsReset,
 } from '../../modules';
-// import arrow = require('./down-arrow.svg');
 
 export interface ReduxProps {
     address: string;
@@ -133,7 +131,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
     private getLanguageMenu = () => {
         return (
             <div className="dropdown-menu dropdown-menu-language" role="menu">
-                {/* tslint:disable */}
+                {/* tslint:disable jsx-no-lambda */}
                 <div className="dropdown-menu-item-lang" onClick={e => this.handleChangeLanguage('en')}>
                     EN
                 </div>
@@ -143,13 +141,12 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                 <div className="dropdown-menu-item-lang" onClick={e => this.handleChangeLanguage('zh')}>
                     中国
                 </div>
-                {/* tslin:enable */}
+                {/* tslin:enable jsx-no-lambda */}
             </div>
         );
     };
 
     private getUserEmailMenu = () => {
-        // const { user } = this.props;
         const { isOpen } = this.state;
         const userClassName = classnames('navbar-user-menu', {
             'navbar-user-menu-active': isOpen,
@@ -196,10 +193,6 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         );
     };
 
-    // private static getUserLabelFromEmail(email: string): string {
-    //     return email.slice(0, 2);
-    // }
-
     private handleRouteChange = (to: string) => () => {
         this.setState({ isOpen: false }, () => {
             this.props.history.push(to);
@@ -221,7 +214,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
             isOpen: !this.state.isOpen,
         }, () => {
             if (this.state.isOpen) {
-                document.addEventListener('click', this.closeMenu)
+                document.addEventListener('click', this.closeMenu);
             } else {
                 document.removeEventListener('click', this.closeMenu);
             }
@@ -233,7 +226,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
             isOpen: false,
         }, () => {
             document.removeEventListener('click', this.closeMenu);
-        })
+        });
     }
 
     private toggleLanguageMenu = () => {
@@ -241,7 +234,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
             isOpenLanguage: !this.state.isOpenLanguage,
         }, () => {
             if (this.state.isOpenLanguage) {
-                document.addEventListener('click', this.closeLanguageMenu)
+                document.addEventListener('click', this.closeLanguageMenu);
             } else {
                 document.removeEventListener('click', this.closeLanguageMenu);
             }
@@ -253,7 +246,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
             isOpenLanguage: false,
         }, () => {
             document.removeEventListener('click', this.closeLanguageMenu);
-        })
+        });
     }
 
     private handleChangeLanguage = (language: string) => {

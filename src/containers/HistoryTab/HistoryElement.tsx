@@ -17,7 +17,6 @@ import {
 } from '../../helpers';
 import {
     fetchHistory,
-    List,
     Market,
     RootState,
     selectCurrentPage,
@@ -31,6 +30,7 @@ import {
     selectPageCount,
     selectWallets,
     Wallet,
+    WalletHistoryList,
 } from '../../modules';
 
 interface HistoryProps {
@@ -40,7 +40,7 @@ interface HistoryProps {
 interface ReduxProps {
     marketsData: Market[];
     wallets: Wallet[];
-    list: List;
+    list: WalletHistoryList;
     fetching: boolean;
     fullHistory: number;
     page: number;

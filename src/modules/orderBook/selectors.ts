@@ -1,14 +1,6 @@
 import { RootState } from '../index';
 import { CommonError } from '../types';
-import { DepthState, OrderBookState } from './types';
-
-export const selectOrderBookAsks =
-  (state: RootState): OrderBookState['asks'] =>
-    state.app.orderBook.asks.map(ask => [ ask.price, ask.remaining_volume ]);
-
-export const selectOrderBookBids =
-  (state: RootState): OrderBookState['bids'] =>
-  state.app.orderBook.bids.map(bid => [ bid.price, bid.remaining_volume ]);
+import { DepthState } from './types';
 
 export const selectOrderBookError =
   (state: RootState): CommonError | undefined =>

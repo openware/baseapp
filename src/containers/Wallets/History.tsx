@@ -15,7 +15,6 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDate } from '../../helpers';
 import {
     fetchHistory,
-    List,
     resetHistory,
     RootState,
     selectCurrentPage,
@@ -27,6 +26,7 @@ import {
     selectNextPageExists,
     selectPageCount,
     selectWallets,
+    WalletHistoryList,
 } from '../../modules';
 import { FailIcon } from './FailIcon';
 import { SucceedIcon } from './SucceedIcon';
@@ -38,7 +38,7 @@ export interface HistoryProps {
 }
 
 export interface ReduxProps {
-    list: List;
+    list: WalletHistoryList;
     wallets: WalletItemProps[];
     fetching: boolean;
     fullHistory: number;
@@ -57,8 +57,7 @@ interface DispatchProps {
 export type Props = HistoryProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
 export class WalletTable extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
+    public static propTypes: React.ValidationMap<Props> = {
         intl: intlShape.isRequired,
     };
 
@@ -78,7 +77,7 @@ export class WalletTable extends React.Component<Props> {
     public componentWillUnmount() {
         this.props.resetHistory();
     }
-    // tslint:disable
+
     public render() {
         const { label, list, fullHistory, firstElemIndex, lastElemIndex, page, nextPageExists } = this.props;
 
@@ -90,7 +89,7 @@ export class WalletTable extends React.Component<Props> {
                 <div className="pg-history-elem__label">
                     {this.props.intl.formatMessage({ id: `page.body.history.${label}` })}
                 </div>
-                <History headers={this.getHeaders(label)} data={this.retrieveData(list)}/>
+                <History headers={this.getHeaders(label)} data={this.retrieveData(list)} />
                 <Pagination
                     firstElemIndex={firstElemIndex}
                     lastElemIndex={lastElemIndex}
@@ -105,52 +104,51 @@ export class WalletTable extends React.Component<Props> {
     }
 
     private getHeaders = (label: string) => [
-        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.date`}),
-        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.status`}),
-        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.amount`}),
+        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.date` }),
+        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.status` }),
+        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.amount` }),
     ];
 
     private onClickPrevPage = () => {
         const { page, type, currency } = this.props;
-        this.props.fetchHistory({ page: page - 1, currency, type, limit: 6 });
+        this.props.fetchHistory({ page: Number(page) - 1, currency, type, limit: 6 });
     };
 
     private onClickNextPage = () => {
         const { page, type, currency } = this.props;
-        this.props.fetchHistory({ page: page + 1, currency, type, limit: 6 });
+        this.props.fetchHistory({ page: Number(page) + 1, currency, type, limit: 6 });
     };
 
-    private retrieveData = list => {
-        const currentWallet = this.props.wallets.find(w => w.currency === this.props.currency)
-            || { fixed: 8 };
+    private retrieveData = (list: WalletHistoryList) => {
+        const { fixed } = this.props.wallets.find(w => w.currency === this.props.currency) || { fixed: 8 };
         if (list.length === 0) {
-            return [[this.props.intl.formatMessage({ id: 'page.noDataToShow'}), '', '']];
+            return [[this.props.intl.formatMessage({ id: 'page.noDataToShow' }), '', '']];
         }
-        return [...list]
-            .sort((a, b) => {
-                return moment(localeDate(a.created_at), 'DD/MM HH:mm') > moment(localeDate(b.created_at), 'DD/MM HH:mm') ? -1 : 1;
-            })
-            .map(item => {
-                return [
-                    moment(item.created_at).format('DD-MM YYYY'),
-                    this.formatTxState(item.state),
-                    <Decimal fixed={currentWallet.fixed}>{item.amount}</Decimal>,
-                ];
-            });
+        return list.sort((a, b) => {
+            return moment(localeDate(a.created_at), 'DD/MM HH:mm') > moment(localeDate(b.created_at), 'DD/MM HH:mm') ? -1 : 1;
+        }).map((item, index) => {
+            const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
+            const state = 'state' in item ? this.formatTxState(item.state) : '';
+            return [
+                moment(item.created_at).format('DD-MM YYYY'),
+                state,
+                <Decimal key={index} fixed={fixed}>{amount}</Decimal>,
+            ];
+        });
     };
 
     private formatTxState = (tx: string) => {
         const statusMapping = {
-            succeed: <SucceedIcon/>,
-            failed: <FailIcon/>,
-            accepted: <SucceedIcon/>,
-            collected: <SucceedIcon/>,
-            canceled: <FailIcon/>,
-            rejected: <FailIcon/>,
-            processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending'}),
-            prepared: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending'}),
-            submitted: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending'}),
-            skipped:  <SucceedIcon/>,
+            succeed: <SucceedIcon />,
+            failed: <FailIcon />,
+            accepted: <SucceedIcon />,
+            collected: <SucceedIcon />,
+            canceled: <FailIcon />,
+            rejected: <FailIcon />,
+            processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
+            prepared: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
+            submitted: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
+            skipped: <SucceedIcon />,
         };
         return statusMapping[tx];
     };

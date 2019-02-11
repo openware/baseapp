@@ -63,7 +63,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
                 </div>
                 <div className="pg-profile-page__row">
                     <ChangePassword
-                        onClearError={this.clearPasswordChangeError}
                         onSubmit={this.handleChangePassword}
                         success={passwordChangeSuccess}
                     />
@@ -90,11 +89,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props> {
                 <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalHeader"/>
             </div>
         );
-    };
-
-    private clearPasswordChangeError = () => {
-        //tslint:disable
-        console.log(1)
     };
 
     private renderModalBody = () => {

@@ -41,32 +41,32 @@ class Orders extends React.PureComponent<Props> {
     };
 
     public componentDidMount() {
-        const { getAllOrdersData, marketsFetch} = this.props;//tslint:disable-line
-        marketsFetch();
-        getAllOrdersData();
+        this.props.marketsFetch();
+        this.props.getAllOrdersData();
     }
 
     public render() {
-          const cancelAll = this.props.ordersData.length ? (
-              <React.Fragment>
-                  <span onClick={this.handleCancelAll}>
-                      <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
-                      <span className="pg-history-tab__close"/>
-                  </span>
-              </React.Fragment>) : null;
+        const cancelAll = this.props.ordersData.length ? (
+            <React.Fragment>
+                <span onClick={this.handleCancelAll}>
+                    <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
+                    <span className="pg-history-tab__close" />
+                </span>
+            </React.Fragment>
+        ) : null;
 
-          return (
-              <div className="pg-history-tab pg-container">
-                  <div className="pg-history-tab__tabs-content">
-                      <TabPanel
-                          panels={this.renderTabs()}
-                          onTabChange={this.handleMakeRequest}
-                          optionalHead={cancelAll}
-                      />
-                  </div>
-              </div>
-          );
-      }
+        return (
+            <div className="pg-history-tab pg-container">
+                <div className="pg-history-tab__tabs-content">
+                    <TabPanel
+                        panels={this.renderTabs()}
+                        onTabChange={this.handleMakeRequest}
+                        optionalHead={cancelAll}
+                    />
+                </div>
+            </div>
+        );
+    }
 
     private handleMakeRequest = (index: number) => {
         this.renderTabs();
@@ -76,11 +76,11 @@ class Orders extends React.PureComponent<Props> {
         return [
             {
                 content: <OrdersElement type="all" />,
-                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.all'}),
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.all' }),
             },
             {
-                content: <OrdersElement type="open"/>,
-                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.open'}),
+                content: <OrdersElement type="open" />,
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.open' }),
             },
         ];
     };

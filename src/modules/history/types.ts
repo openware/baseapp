@@ -59,14 +59,5 @@ export interface Deposit {
     state: string;
 }
 
-export interface History {
-    id: number;
-    currency: string;
-    amount: string;
-    fee: string;
-    txid: string;
-    created_at: string;
-    confirmations: number;
-    completed_at: string;
-    state: string;
-}
+export type WalletHistoryElement = Withdraw | Deposit | PrivateTrade;
+export type WalletHistoryList = WalletHistoryElement[];

@@ -9,7 +9,6 @@ import {
     userFetch,
 } from '../actions';
 
-
 describe('Module: User', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware<{}>;
@@ -44,7 +43,7 @@ describe('Module: User', () => {
         mockAxios.onGet('/resource/users/me').reply(200, fakeUser);
     };
 
-    const expectedActionsFetch = [userFetch(), userData({user: fakeUser})];
+    const expectedActionsFetch = [userFetch(), userData({ user: fakeUser })];
     const expectedActionsError = [userFetch(), userError(fakeError)];
 
     it('should fetch user in success flow', async () => {
@@ -68,8 +67,6 @@ describe('Module: User', () => {
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                //tslint:disable
-                console.log(actions)
                 if (actions.length === expectedActionsError.length) {
                     expect(actions).toEqual(expectedActionsError);
                     resolve();
