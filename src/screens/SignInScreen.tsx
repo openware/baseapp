@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SignIn } from '../components/SignIn';
+import { SignIn } from '../containers/SignIn';
 import { Titled } from '../decorators';
 
 @Titled('Sign In')

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { OrdersTab } from '../components/OrdersTab';
+import { OrdersTab } from '../containers/OrdersTab';
 import { Titled } from '../decorators';
 
 @Titled('Orders')

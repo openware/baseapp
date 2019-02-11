@@ -3,7 +3,7 @@ import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { Router } from 'react-router';
-import { Alerts, ErrorWrapper, Header } from './components';
+import { Alerts, ErrorWrapper, Header } from './containers';
 import { RootState } from './modules';
 import { Layout } from './routes';
 

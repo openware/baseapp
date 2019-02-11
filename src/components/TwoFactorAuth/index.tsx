@@ -1,81 +1,76 @@
 import { Button, Input, Loader } from '@openware/components';
 import cn from 'classnames';
 import * as React from 'react';
-import {
-    InjectedIntlProps,
-    injectIntl,
-    intlShape,
-} from 'react-intl';
 
 interface TwoFactorAuthProps {
     errorMessage?: string;
     isLoading?: boolean;
-    onSubmit: (optCode: string) => void;
+    onSubmit: () => void;
     onSignUp: () => void;
-}
-
-interface TwoFactorAuthState {
+    signInLabel: string;
+    codeLabel: string;
+    buttonLabel: string;
+    footerCreateAccountLabel: string;
+    signUpLabel: string;
     otpCode: string;
     error: string;
+    handleOtpCodeChange: (otp: string) => void;
 }
 
-class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps & InjectedIntlProps, TwoFactorAuthState> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
-    public state = {
-        otpCode: '',
-        error: '',
-    };
-
+class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
     public render() {
-        const { errorMessage, isLoading, onSignUp } = this.props;
-        const { error } = this.state;
-        const errors = errorMessage && error;
+        const {
+            errorMessage,
+            isLoading,
+            onSignUp,
+            signInLabel,
+            codeLabel,
+            buttonLabel,
+            footerCreateAccountLabel,
+            signUpLabel,
+            error,
+            otpCode,
+        } = this.props;
+
+        const errors = errorMessage || error;
         const buttonWrapperClass = cn('cr-sign-in-form__button-wrapper', {
             'cr-sign-in-form__button-wrapper--empty': !errors,
         });
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="cr-sign-in-form">
-                    <div className="cr-sign-in-form__options-group">
-                        <div className="cr-sign-in-form__2fa-header">
-                            <div className="cr-sign-in-form__option-inner cr-sign-in-form__tab-signin">
-                                {this.props.intl.formatMessage({ id: 'page.header.signIn'})}
-                            </div>
-                        </div>
-                    </div>
+                    <h1 className="cr-sign-in-form__title" style={{ marginTop: 119 }}>
+                        {signInLabel}
+                    </h1>
                     <div className="cr-sign-in-form__form-content">
                       <div className="cr-sign-in-form__group">
                           <label className="cr-sign-in-form__label">
-                              {this.props.intl.formatMessage({id: 'page.body.wallets.tabs.withdraw.content.code2fa'})}
+                              {codeLabel}
                           </label>
                           <Input
-                              value={this.state.otpCode}
-                              className={'cr-sign-in-form__input'}
-                              onChangeValue={this.handleOptCodeChange}
+                              value={otpCode}
+                              className="cr-sign-in-form__input"
+                              onChangeValue={this.props.handleOtpCodeChange}
                           />
                         </div>
                         <div className={buttonWrapperClass}>
                             <div className="cr-sign-in-form__error-message">{errors || null}</div>
                             <div className="cr-sign-in-form__loader">{isLoading ? <Loader /> : null}</div>
                             <Button
-                                label={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
+                                label={buttonLabel}
                                 className="cr-sign-in-form__button"
                                 onClick={this.handleSubmit}
                             />
                         </div>
-                        <div className={'cr-sign-in-form__2fa-bottom-section'}>
-                            <span className="cr-sign-in-form__2fa-bottom-section-text">
-                                {this.props.intl.formatMessage({id: 'page.header.signIn.createAccount'})}
-                            </span>
+                        <div className="cr-sign-in-form__footer">
+                            <p className="cr-sign-in-form__footer-create">
+                                {footerCreateAccountLabel}
+                            </p>
                             <a
                                 className="cr-sign-in-form__2fa-bottom-section-text"
                                 onClick={onSignUp}
                             >
-                                {this.props.intl.formatMessage({id: 'page.header.signUp'})}
+                                {signUpLabel}
                             </a>
                         </div>
                     </div>
@@ -85,20 +80,8 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps & Inject
     }
 
     private handleSubmit = () => {
-        const { otpCode } = this.state;
-        if (!otpCode) {
-            this.setState({
-                error: 'Please enter 2fa code',
-            });
-        }
-        this.props.onSubmit(otpCode);
-    };
-
-    private handleOptCodeChange = (value: string) => {
-        this.setState({
-            otpCode: value,
-        });
+        this.props.onSubmit();
     };
 }
 
-export const TwoFactorAuth = injectIntl(TwoFactorAuthComponent);
+export const TwoFactorAuth = TwoFactorAuthComponent;

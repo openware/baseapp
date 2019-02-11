@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Confirm } from '../components/Confirm';
+import { Confirm } from '../containers/Confirm';
 import { Titled } from '../decorators';
 
 @Titled('Confirm')

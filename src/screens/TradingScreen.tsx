@@ -15,7 +15,7 @@ import {
     OrderComponent,
     RecentTrades,
     TradingChart,
-} from '../components';
+} from '../containers';
 import {
   RootState,
   selectCurrentMarket,

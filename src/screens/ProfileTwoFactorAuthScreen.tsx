@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ToggleTwoFactorAuth } from '../components';
+import { ToggleTwoFactorAuth } from '../containers';
 import { Titled } from '../decorators';
 
 @Titled('Two factor authentication')

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Profile } from '../components/Profile';
+import { Profile } from '../containers/Profile';
 import { Titled } from '../decorators';
 
 @Titled('Profile')

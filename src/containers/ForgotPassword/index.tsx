@@ -11,12 +11,16 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { EmailForm } from '../../components';
+import {
+    EMAIL_REGEX,
+    ERROR_INVALID_EMAIL,
+} from '../../helpers';
 import {
     forgotPassword,
     RootState,
     selectForgotPasswordSuccess,
 } from '../../modules';
-import { EmailForm } from './EmailForm';
 
 interface ReduxProps {
     success: boolean;
@@ -26,15 +30,37 @@ interface DispatchProps {
     forgotPassword: typeof forgotPassword;
 }
 
+interface ForgotPasswordState {
+    email: string;
+    emailError: string;
+    emailFocused: boolean;
+}
+
 type Props = RouterProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
-class ForgotPasswordComponent extends React.Component<Props> {
+class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState> {
     //tslint:disable-next-line:no-any
     public static propTypes: React.ValidationMap<any> = {
         intl: intlShape.isRequired,
     };
 
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            email: '',
+            emailError: '',
+            emailFocused: false,
+        };
+    }
+
     public render() {
+        const {
+            email,
+            emailFocused,
+            emailError,
+        } = this.state;
+
         return (
             <div className="pg-forgot-password-screen">
                 <div className="pg-forgot-password-screen__container">
@@ -44,6 +70,12 @@ class ForgotPasswordComponent extends React.Component<Props> {
                             title={this.props.intl.formatMessage({id: 'page.forgotPassword'})}
                             emailLabel={this.props.intl.formatMessage({id: 'page.forgotPassword.email'})}
                             buttonLabel={this.props.intl.formatMessage({id: 'page.forgotPassword.send'})}
+                            email={email}
+                            emailFocused={emailFocused}
+                            emailError={emailError}
+                            validateForm={this.validateForm}
+                            handleInputEmail={this.handleInputEmail}
+                            handleFieldFocus={this.handleFocusEmail}
                         />
                     </div>
                 </div>
@@ -51,8 +83,34 @@ class ForgotPasswordComponent extends React.Component<Props> {
         );
     }
 
-    private handleChangeEmail = (email: string) => {
+    private handleChangeEmail = () => {
+        const { email } = this.state;
         this.props.forgotPassword({email});
+    };
+
+    private handleFocusEmail = () => {
+        this.setState({
+            emailFocused: !this.state.emailFocused,
+        });
+    };
+
+    private handleInputEmail = (value: string) => {
+        this.setState({
+            email: value,
+        });
+    };
+
+    private validateForm = () => {
+        const { email } = this.state;
+
+        const isEmailValid = email ? email.match(EMAIL_REGEX) : true;
+
+        if (!isEmailValid) {
+            this.setState({
+                emailError: ERROR_INVALID_EMAIL,
+            });
+            return;
+        }
     }
 }
 

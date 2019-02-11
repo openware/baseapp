@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ForgotPassword } from '../components/ForgotPassword';
+import { ForgotPassword } from '../containers/ForgotPassword';
 import { Titled } from '../decorators';
 
 @Titled('Forgot password')

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Wallets } from '../components/Wallets';
+import { Wallets } from '../containers/Wallets';
 import { Titled } from '../decorators';
 
 @Titled('Wallets')
