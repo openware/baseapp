@@ -83,8 +83,8 @@ export const en = {
   'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Address',
 
   'page.body.wallets.tabs.withdraw.modal.confirmation': 'Confirmation',
-  'page.body.wallets.tabs.withdraw.modal.message1': 'You are withdrawing',
-  'page.body.wallets.tabs.withdraw.modal.message2': 'on address. Are you sure?',
+  'page.body.wallets.tabs.withdraw.modal.message1': 'You will receive ',
+  'page.body.wallets.tabs.withdraw.modal.message2': ' on address',
   'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Cancel',
   'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Withdraw',
 

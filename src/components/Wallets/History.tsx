@@ -150,6 +150,7 @@ export class WalletTable extends React.Component<Props> {
             processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending'}),
             prepared: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending'}),
             submitted: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending'}),
+            skipped:  <SucceedIcon/>,
         };
         return statusMapping[tx];
     };

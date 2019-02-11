@@ -85,8 +85,8 @@ export const ru: LangType = {
   'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Адресс',
 
   'page.body.wallets.tabs.withdraw.modal.confirmation': 'Подтверждение',
-  'page.body.wallets.tabs.withdraw.modal.message1': 'Вы выводите',
-  'page.body.wallets.tabs.withdraw.modal.message2': 'на кошелек. Вы уверены?',
+  'page.body.wallets.tabs.withdraw.modal.message1': 'Вы выводите ',
+  'page.body.wallets.tabs.withdraw.modal.message2': ' на кошелек',
   'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Отменить',
   'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Вывести',
 

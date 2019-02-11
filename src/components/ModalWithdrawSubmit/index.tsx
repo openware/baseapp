@@ -45,7 +45,7 @@ class ModalWithdrawSubmitComponent extends React.Component<ModalWithdrawSubmitPr
 
     private renderBodyModalSubmit = () => {
         return (
-            <div className="pg-exchange-modal-submit-body">
+            <div className="pg-exchange-modal-submit-body modal-body__withdraw-submit">
                 <FormattedMessage id="page.modal.withdraw.success.message.content" />
             </div>
         );
@@ -53,7 +53,7 @@ class ModalWithdrawSubmitComponent extends React.Component<ModalWithdrawSubmitPr
 
     private renderFooterModalSubmit = () => {
         return (
-            <div className="pg-exchange-modal-submit-footer">
+            <div className="pg-exchange-modal-submit-footer modal-footer__withdraw-submit">
                 <Button
                     className="pg-exchange-modal-submit-footer__button-inverse"
                     label={this.translate('page.modal.withdraw.success.button')}

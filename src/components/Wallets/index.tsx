@@ -66,6 +66,8 @@ interface WalletsState {
     bchAddress?: string;
     filteredWallets?: WalletItemProps[] | null;
     tab: string;
+    withdrawDone: boolean;
+    total: number;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
@@ -87,6 +89,8 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             amount: 0,
             rid: '',
             tab: this.translate('page.body.wallets.tabs.deposit'),
+            withdrawDone: false,
+            total: 0,
         };
     }
     //tslint:disable:member-ordering
@@ -152,7 +156,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     public render() {
         const { wallets, historyList } = this.props;
         const {
-            amount,
+            total,
             rid,
             selectedWalletIndex,
             filteredWallets,
@@ -200,7 +204,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 />
                 <ModalWithdrawConfirmation
                     show={withdrawConfirmModal}
-                    amount={amount}
+                    amount={total}
                     currency={selectedCurrency}
                     rid={rid}
                     onSubmit={this.handleWithdraw}
@@ -215,15 +219,17 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     private toggleSubmitModal = () => {
         this.setState((state: WalletsState) => ({
             withdrawSubmitModal: !state.withdrawSubmitModal,
+            withdrawDone: true,
         }));
-    }
+    };
 
-    private toggleConfirmModal = (amount?: number, rid?: string, otpCode?: string) => {
+    private toggleConfirmModal = (amount?: number, total?: number, rid?: string, otpCode?: string) => {
         this.setState((state: WalletsState) => ({
             amount: amount ? amount : 0,
             rid: rid ? rid : '',
             otpCode: otpCode ? otpCode : '',
             withdrawConfirmModal: !state.withdrawConfirmModal,
+            total: total ? total : 0,
         }));
     }
 
@@ -243,7 +249,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     };
 
     private renderTabs(walletIndex: WalletsState['selectedWalletIndex']) {
-        const { tab } = this.state;
+        const { tab, withdrawDone } = this.state;
 
         if (walletIndex === -1) {
             return [{ content: null, label: '' }];
@@ -254,6 +260,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const fixed = (wallet || { fixed: 0 }).fixed;
 
         const withdrawProps = {
+            withdrawDone,
             currency,
             fee,
             onClick: this.toggleConfirmModal,
@@ -394,6 +401,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             </React.Fragment>
         );
     }
+
     private isOtpDisabled = () => {
         return (
             <React.Fragment>
@@ -408,13 +416,16 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             </React.Fragment>
         );
     };
+
     // tslint:disable-next-line:no-any
     private redirectToEnable2fa = (e: any) => {
         this.props.history.push('/security/2fa', { enable2fa: true });
     };
+
     private isTwoFactorAuthRequired(level: number, is2faEnabled: boolean) {
         return level > 1 || level === 1 && is2faEnabled;
     }
+
     private onWalletSelectionChange = (value: WalletItemProps) => {
         if (!value.address && !this.props.walletsLoading && value.type !== 'fiat') {
             this.props.fetchAddress({ currency: value.currency });
@@ -424,6 +435,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         );
         this.setState({
             selectedWalletIndex: nextWalletIndex,
+            withdrawDone: false,
         });
     };
 }

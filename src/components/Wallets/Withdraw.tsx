@@ -6,7 +6,7 @@ interface WithdrawProps {
     borderItem?: string;
     currency: string;
     fee: number;
-    onClick: (amount: number, rid: string, otpCode: string) => void;
+    onClick: (amount: number, total: number, rid: string, otpCode: string) => void;
     fixed: number;
     className?: string;
     twoFactorAuthRequired?: boolean;
@@ -34,11 +34,18 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         total: 0,
     };
 
+    public componentWillReceiveProps(nextProps) {
+        if (this.props.currency !== nextProps.currency || nextProps.withdrawDone) {
+            this.setState({ address: '', amount: '', otpCode: '', total: 0 });
+        }
+    }
+
     public render() {
         const {
             address,
             amount,
             total,
+            otpCode,
         } = this.state;
         const {
             borderItem,
@@ -65,7 +72,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                     <form>
                         <fieldset className="cr-withdraw__input">
                             <legend>
-                                {formattedCurrency} "{withdrawAddressLabel ? withdrawAddressLabel : 'Withdrawal Address'}"
+                                {formattedCurrency} {withdrawAddressLabel ? withdrawAddressLabel : 'Withdrawal Address'}
                             </legend>
                             <Input
                                 className="cr-input-block__input"
@@ -114,7 +121,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             className="cr-withdraw__button"
                             label={withdrawButtonLabel ? withdrawButtonLabel : 'WITHDRAW'}
                             onClick={this.handleClick}
-                            disabled={Number(total) <= 0 || !Boolean(address)}
+                            disabled={Number(total) <= 0 || !Boolean(address) || !Boolean(otpCode)}
                         />
                     </div>
                 </div>
@@ -129,7 +136,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                 <Decimal fixed={fixed}>{fee.toString()}</Decimal> {currency.toUpperCase()}
             </span>
         );
-    }
+    };
 
     private renderTotal = () => {
         const total = this.state.total;
@@ -166,7 +173,8 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     };
 
     private handleClick = () => this.props.onClick(
-        Number(this.state.amount),
+        parseFloat(this.state.amount),
+        this.state.total,
         this.state.address,
         this.state.otpCode,
     );
@@ -180,21 +188,15 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         } else {
             this.setTotal(total);
         }
-        this.setState({
-            amount: value,
-        });
+        this.setState({ amount: value });
     };
 
     private setTotal = (value: number) => {
-        this.setState({
-            total: value,
-        });
+        this.setState({ total: value });
     };
 
     private handleChangeInputAddress = (text: string) => {
-        this.setState({
-            address: text,
-        });
+        this.setState({ address: text });
     };
 
     private handleChangeInputOtpCode = (otpCode: string) => {

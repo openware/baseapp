@@ -40,26 +40,22 @@ class ModalWithdraw extends React.Component<ModalWithdrawConfirmationProps & Inj
     };
 
     private renderBody = () => {
-        const {
-            amount,
-            currency,
-            rid,
-        } = this.props;
+        const { amount, currency, rid } = this.props;
         const formattedCurrency = currency.toUpperCase();
-        const text = [
-          `${this.translate('page.body.wallets.tabs.withdraw.modal.message1')} ${amount} ${formattedCurrency} ${this.translate('page.body.wallets.tabs.withdraw.modal.message2')}`,
-          `${rid}`,
-        ];
         return (
-            <div className="pg-exchange-modal-submit-body">
-              {text.map((item,i) => <p key={i}>{item}</p>)}
+            <div className="pg-exchange-modal-submit-body modal-body__withdraw-confirm">
+                <p>
+                    {this.translate('page.body.wallets.tabs.withdraw.modal.message1')}
+                    {amount} {formattedCurrency}
+                    {this.translate('page.body.wallets.tabs.withdraw.modal.message2')} {rid}
+                </p>
             </div>
         );
     };
 
     private renderFooter = () => {
         return (
-            <div className="pg-exchange-modal-submit-footer">
+            <div className="pg-exchange-modal-submit-footer modal-footer__withdraw-confirm">
                 <Button
                     className="pg-exchange-modal-submit-footer__button-inverse"
                     label={this.translate('page.body.wallets.tabs.withdraw.modal.button.cancel')}
