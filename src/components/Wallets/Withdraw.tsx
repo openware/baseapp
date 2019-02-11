@@ -166,13 +166,14 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     };
 
     private handleClick = () => this.props.onClick(
-        parseInt(this.state.amount, 10),
+        Number(this.state.amount),
         this.state.address,
         this.state.otpCode,
     );
 
     private handleChangeInputAmount = (text: string) => {
-        const value: number = parseFloat(text);
+        const { fixed } = this.props;
+        const value: number = Number(parseFloat(text).toFixed(fixed));
         const total: number = value - this.props.fee;
         if (total < 0) {
             this.setTotal(0);
