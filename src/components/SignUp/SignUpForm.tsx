@@ -131,8 +131,8 @@ class SignUpForm extends React.Component<SignUpFormProps, SignUpFormState> {
         const confirmPasswordGroupClass = cr('cr-sign-up-form__group', {
             'cr-sign-up-form__group--focused': confirmPasswordFocused,
         });
-        const refIdLabelClass = cr('cr-sign-up-form__label', {
-            'cr-sign-up-form__label--focused': refIdFocused,
+        const refIdGroupClass = cr('cr-sign-up-form__group', {
+            'cr-sign-up-form__group--focused': refIdFocused,
         });
         return (
             <form>
@@ -199,8 +199,8 @@ class SignUpForm extends React.Component<SignUpFormProps, SignUpFormState> {
                             />
                             {confirmationError && <div className={'cr-sign-up-form__error'}>{confirmationError}</div>}
                         </div>
-                        <div className="cr-sign-up-form__group">
-                            <label className={refIdLabelClass}>
+                        <div className={refIdGroupClass}>
+                            <label className="cr-sign-up-form__label">
                                 {referalCodeLabel ? referalCodeLabel : 'Referral code'}
                             </label>
                             <Input
@@ -234,7 +234,8 @@ class SignUpForm extends React.Component<SignUpFormProps, SignUpFormState> {
                                 type="submit"
                                 className={'cr-sign-up-form__button'}
                                 label={isLoading ? 'Loading...' : (labelSignUp ? labelSignUp : 'Sign up')}
-                                disabled={!hasConfirmed || isLoading || this.disableButton()}
+                                disabled={!hasConfirmed || isLoading || this.disableButton()
+                                          || !email.match(EMAIL_REGEX) || !password || !confirmPassword}
                                 onClick={this.handleClick}
                             />
                         </div>

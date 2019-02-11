@@ -29,18 +29,27 @@
         color: var(--color-white);
       }
     }
-    &__button {
+
+    .cr-button {
       color: var(--color-white);
       background: var(--button-primary);
+      border-radius: 3px;
       font-size: calc(var(--gap) * 2.66);
-      &:hover {
-        background: var(--button-hover);
+      margin-top: calc(var(--gap) * 1.55);
+
+      &--disabled {
+        color: var(--button-dark-gray);
+        background: var(--button-disabled) !important;
       }
+
+      &:hover {
+        background: var(--button-hover) !important;
+      }
+
       &:active {
-        background: var(--button-active);
+        background: var(--button-active) !important;
       }
     }
-
     &__title {
       background: var(--transparent);
       font-size: calc(var(--gap) * 4);
@@ -83,6 +92,10 @@
       }
     }
     &__group--focused {
+      .cr-sign-in-form__label {
+        color: var(--sign-in-accent);
+      }
+
       input {
         border-color: var(--button-primary) !important;
       }

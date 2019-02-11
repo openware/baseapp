@@ -148,7 +148,7 @@ class SignInForm extends React.Component<SignInFormProps, SignInFormState> {
                                 label={isLoading ? 'Loading...' : (labelSignIn ? labelSignIn : 'Sign in')}
                                 type="submit"
                                 className={'cr-sign-in-form__button'}
-                                disabled={isLoading}
+                                disabled={isLoading || !email.match(EMAIL_REGEX) || !password}
                                 onClick={this.handleClick}
                             />
                         </div>

@@ -76,6 +76,7 @@ exports[`Sign in form should render 1`] = `
         />
         <Component
           className="cr-sign-in-form__button"
+          disabled={true}
           label="Sign in"
           onClick={[Function]}
           type="submit"

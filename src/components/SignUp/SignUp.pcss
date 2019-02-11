@@ -29,6 +29,10 @@
     }
 
     &__group--focused {
+      .cr-sign-up-form__label {
+        color: var(--sign-in-accent);
+      }
+
       input {
         border-color: var(--button-primary) !important;
       }
@@ -36,7 +40,7 @@
 
     .cr-button {
       color: var(--color-white);
-      background: var(--button-disabled);
+      background: var(--button-primary) !important;
       border-radius: 3px;
       font-size: calc(var(--gap) * 2.66);
       margin-top: calc(var(--gap) * 1.55);
