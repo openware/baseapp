@@ -280,8 +280,8 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     private getDocumentsType = (value: string) => {
         switch (value) {
            case this.data[0]: return 'Passport';
-           case this.data[1]: return 'Identity Card';
-           case this.data[2]: return 'Driver License';
+           case this.data[1]: return 'Identity card';
+           case this.data[2]: return 'Driver license';
            case this.data[3]: return 'Utility Bill';
            default: return value;
         }
