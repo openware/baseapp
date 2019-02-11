@@ -1,6 +1,7 @@
 import {
   Button,
   Dropdown,
+  Loader,
 } from '@openware/components';
 import * as React from 'react';
 import {
@@ -18,12 +19,14 @@ import { withRouter } from 'react-router-dom';
 import { isDateInFuture } from '../../helpers/checkDate';
 import { RootState } from '../../modules';
 import {
+    selectSendDocumentsLoading,
     selectSendDocumentsSuccess,
     sendDocuments,
 } from '../../modules/kyc/documents';
 
 interface ReduxProps {
     success?: string;
+    loading: boolean;
 }
 
 interface DispatchProps {
@@ -84,6 +87,8 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             scans,
         }: DocumentsState = this.state;
 
+        const { loading } = this.props;
+
         const onSelect = value => this.handleChangeDocumentsType(this.data[value]);
         const numberType = `${documentsType}${this.translate('page.body.kyc.documents.number')}`;
 
@@ -120,6 +125,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                     />
                                 </div>
                             </div>
+                        </div>
+                        <div className="pg-confirm__loader">
+                            {loading ? <Loader /> : null}
                         </div>
                         <div className="pg-confirm__content-documents-col pg-confirm__content-documents-drag">
                             <div className="pg-confirm__content-documents-col-row">
@@ -290,6 +298,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     success: selectSendDocumentsSuccess(state),
+    loading: selectSendDocumentsLoading(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

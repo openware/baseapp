@@ -17,7 +17,10 @@ describe('Documents reducer', () => {
     };
 
     it('should handle SEND_DOCUMENTS_FETCH', () => {
-        const expectedState = initialDocumentsState;
+        const expectedState = {
+            ...initialDocumentsState,
+            loading: true,
+        };
         expect(documentsReducer(initialDocumentsState, actions.sendDocuments(payloadFormData))).toEqual(expectedState);
     });
 

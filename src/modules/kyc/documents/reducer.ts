@@ -9,9 +9,10 @@ import {
 export interface DocumentsState {
     success?: string;
     error?: CommonError;
+    loading: boolean;
 }
 
-export const initialDocumentsState: DocumentsState = {};
+export const initialDocumentsState: DocumentsState = { loading: false };
 
 export const documentsReducer = (state = initialDocumentsState, action: DocumentsAction) => {
     switch (action.type) {
@@ -20,17 +21,20 @@ export const documentsReducer = (state = initialDocumentsState, action: Document
                 ...state,
                 success: undefined,
                 error: undefined,
+                loading: true,
             };
         case SEND_DOCUMENTS_DATA:
             return {
                 ...state,
                 success: action.payload.message,
                 error: undefined,
+                loading: false,
             };
         case SEND_DOCUMENTS_ERROR:
             return {
                 success: undefined,
                 error: action.payload,
+                loading: false,
             };
         default:
             return state;
