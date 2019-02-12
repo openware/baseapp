@@ -175,15 +175,6 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                     </Link>
                 </div>
                 <div className="dropdown-menu-item-user">
-                    <Link
-                        className="pg-navbar__admin-logout"
-                        to="/confirm"
-                        onClick={this.handleRouteChange('/confirm')}
-                    >
-                        <FormattedMessage id={'page.header.navbar.kyc'} />
-                    </Link>
-                </div>
-                <div className="dropdown-menu-item-user">
                     <a className="pg-navbar__admin-logout" onClick={this.handleLogOut}>
                         <FormattedMessage id={'page.header.navbar.logout'} />
                     </a>
