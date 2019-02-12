@@ -176,8 +176,8 @@ export const ru: LangType = {
   'page.body.profile.header.account.content.twoFactorAuthentication.disable': 'ОТКЛЮЧЕНА 2FA',
   'page.body.profile.header.account.content.twoFactorAuthentication.modalBody': 'Пожалуйста, обратитесь с администратором, чтобы отключить еe.',
   'page.body.profile.header.account.content.twoFactorAuthentication.modalHeader': 'Двухфакторная аутентификация включена.',
-  'page.body.profile.header.account.content.twoFactorAuthentication.info': 'Это ваш секретный код, который можно использовать для получения доступа к Вашему' +
-                                                                            ' 2fa-коду с разных устройств и для восстановления доступа в случае потери вашего устройства.' +
+  'page.body.profile.header.account.content.twoFactorAuthentication.info': 'Это ваш секретный код, который можно использовать для получения доступа к Вашему ' +
+                                                                            '2fa-коду с разных устройств и для восстановления доступа в случае потери вашего устройства. ' +
                                                                             'Обязательно сохраните код',
 
   'page.body.profile.header.account.profile': 'Верификация Вашего профиля',

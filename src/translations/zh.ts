@@ -176,8 +176,8 @@ export const zh: LangType = {
     'page.body.profile.header.account.content.twoFactorAuthentication.disable': 'DISABLE 2FA',
     'page.body.profile.header.account.content.twoFactorAuthentication.modalBody': 'Please сontact administrator to disable it.',
     'page.body.profile.header.account.content.twoFactorAuthentication.modalHeader': 'Two-factor authentication is enabled',
-    'page.body.profile.header.account.content.twoFactorAuthentication.info': 'This is your secret code that can be used to get access to your' +
-        '2fa code from different devices and to restore access if your device was lost.' +
+    'page.body.profile.header.account.content.twoFactorAuthentication.info': 'This is your secret code that can be used to get access to your ' +
+        '2fa code from different devices and to restore access if your device was lost. ' +
         'Be sure to save the code',
 
     'page.body.profile.header.account.profile': '个人资料验证',
