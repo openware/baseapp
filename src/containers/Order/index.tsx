@@ -85,7 +85,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                 width: this.orderRef.current.clientWidth,
             });
         }
-        if ((next.currentMarket !== this.props.currentMarket) || (next.wallets !== this.props.wallets)) {
+        if (next.currentMarket && ((next.currentMarket !== this.props.currentMarket) || (next.wallets !== this.props.wallets))) {
             this.setState({
                 walletBase: this.getWallet(next.currentMarket.ask_unit),
                 walletQuote: this.getWallet(next.currentMarket.bid_unit),
