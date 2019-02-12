@@ -250,7 +250,6 @@
   }
 
   .cr-order--extended {
-    padding: 0 calc(var(--gap) * 1.7);
     display: flex;
     justify-content: space-around;
 
@@ -270,10 +269,14 @@
       &__input {
         background-color: inherit;
         border-radius: 3px;
+        height: calc(var(--gap) * 5.5);
+        width: 99%;
         &--open {
           background-color: var(--table-dark-header-color);
           border-radius: 3px;
           border-bottom: solid 1px var(--dropdown-border);
+          height: calc(var(--gap) * 5.5);
+          width: 99%;
         }
         &-label {
           color: var(--base-3);
@@ -330,7 +333,7 @@
       }
 
       .cr-tab-content {
-        padding: calc(var(--gap) * 2);
+        padding-bottom: calc(var(--gap) * 2);
         padding-top: 0;
 
         &:last-child {
