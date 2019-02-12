@@ -11,7 +11,7 @@ import {
     KlineState,
     Market,
     MarketsState,
-    RootState,
+    RootState, selectCurrentLanguage,
     selectCurrentMarket,
     selectKline,
     selectMarkets,
@@ -25,6 +25,7 @@ interface ReduxProps {
     currentMarket?: Market;
     tickers: MarketsState['tickers'];
     kline: KlineState;
+    lang: string;
 }
 
 interface DispatchProps {
@@ -109,7 +110,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             interval: this.params.interval,
             container_id: this.params.containerId,
             library_path: this.params.libraryPath,
-            locale: 'en' as LanguageCode,
+            locale: this.props.lang as LanguageCode,
             disabled_features: ['use_localstorage_for_settings', 'header_symbol_search'],
             enabled_features: ['show_animated_logo'],
             charts_storage_url: this.params.chartsStorageUrl,
@@ -182,6 +183,7 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     currentMarket: selectCurrentMarket(state),
     tickers: selectMarketTickers(state),
     kline: selectKline(state),
+    lang: selectCurrentLanguage(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

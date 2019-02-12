@@ -67,11 +67,11 @@ export const ru: LangType = {
 
   'page.body.wallets.tabs.deposit.fiat.message1': 'Вы можете внести депозит в банке, используя следующие реквизиты',
   'page.body.wallets.tabs.deposit.fiat.message2': 'Пожалуйста, используйте предоставленную информацию для завершения банковского платежа. Ваш депозит станет доступным на протяжении 2х рабочих дней.',
-  'page.body.wallets.tabs.deposit.fiat.bankName': 'Название банка:',
-  'page.body.wallets.tabs.deposit.fiat.accountNumber': 'Номер счета:',
-  'page.body.wallets.tabs.deposit.fiat.accountName': 'Имя счета:',
-  'page.body.wallets.tabs.deposit.fiat.phoneNumber': 'Номер телефона:',
-  'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Ваш ссылочный код:',
+  'page.body.wallets.tabs.deposit.fiat.bankName': 'Название банка',
+  'page.body.wallets.tabs.deposit.fiat.accountNumber': 'Номер счета',
+  'page.body.wallets.tabs.deposit.fiat.accountName': 'Имя счета',
+  'page.body.wallets.tabs.deposit.fiat.phoneNumber': 'Номер телефона',
+  'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Ваш ссылочный код',
   'page.body.wallets.table.pending': 'Обрабатывается',
   'page.body.wallets.tabs.deposit.fiat.admin': 'Для того, чтобы вывести эту валюту, обратитесь к администратору!',
 

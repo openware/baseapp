@@ -65,11 +65,11 @@ export const en = {
 
   'page.body.wallets.tabs.deposit.fiat.message1': 'You can deposit in bank on this credential',
   'page.body.wallets.tabs.deposit.fiat.message2': 'Please use information below to complete you bank payment. Your deposit will be reflected in your account within two business days.',
-  'page.body.wallets.tabs.deposit.fiat.bankName': 'Bank Name:',
-  'page.body.wallets.tabs.deposit.fiat.accountNumber': 'Account number:',
-  'page.body.wallets.tabs.deposit.fiat.accountName': 'Account name:',
-  'page.body.wallets.tabs.deposit.fiat.phoneNumber': 'Phone Number:',
-  'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Your reference code:',
+  'page.body.wallets.tabs.deposit.fiat.bankName': 'Bank Name',
+  'page.body.wallets.tabs.deposit.fiat.accountNumber': 'Account number',
+  'page.body.wallets.tabs.deposit.fiat.accountName': 'Account name',
+  'page.body.wallets.tabs.deposit.fiat.phoneNumber': 'Phone Number',
+  'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Your reference code',
   'page.body.wallets.table.pending': 'Pending',
   'page.body.wallets.tabs.deposit.fiat.admin': ' If you want to make fiat withdraw, please contact administrator!',
 
@@ -256,9 +256,9 @@ export const en = {
   'page.header.signUp.referalCode': 'Referal Code',
   'page.header.signUp.terms': 'I agree with all statements in terms of service',
   'page.header.signUp.modal.header': 'VERIFY YOUR EMAIL ADDRESS',
-  'page.header.signUp.modal.body': 'To complete the registration look for an' +
-                                    'email in your inbox that provides further' +
-                                    'instruction. If you cannot find the email,' +
+  'page.header.signUp.modal.body': 'To complete the registration look for an ' +
+                                    'email in your inbox that provides further ' +
+                                    'instruction. If you cannot find the email, ' +
                                     'please check your spam email',
 
   'page.resendConfirmation': 'Resend Confirmation',
