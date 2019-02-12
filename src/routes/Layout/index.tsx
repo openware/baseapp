@@ -118,7 +118,6 @@ class LayoutComponent extends React.Component<Props> {
     public componentDidUpdate(next: Props) {
         if (!this.props.isLoggedIn && next.isLoggedIn) {
             this.props.walletsReset();
-            localStorage.clear();
             this.props.history.push('/trading');
         }
     }

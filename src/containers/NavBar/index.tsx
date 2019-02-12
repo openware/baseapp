@@ -95,7 +95,6 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
     public componentDidUpdate(next: NavbarProps) {
         if (!this.props.isLoggedIn && next.isLoggedIn) {
             this.props.walletsReset();
-            localStorage.clear();
             this.props.history.push('/trading');
         }
     }
