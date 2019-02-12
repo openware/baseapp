@@ -194,8 +194,6 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
             isOpen: false,
         }, () => {
             this.props.logout();
-            this.props.walletsReset();
-            this.props.history.push('/trading');
         });
     };
 
