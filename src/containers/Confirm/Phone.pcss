@@ -1,51 +1,82 @@
 .pg-confirm__content-phone {
   color: var(--base-10);
-  font-size: calc(var(--gap) * 2.33);
-  margin: 0 auto;
-  margin-top: calc(var(--gap) * 3);
-  max-width: 480px;
-  width: 100%;
 
   &-head {
     color: var(--color-white);
+    font-weight: var(--font-weight);
+    margin: calc(var(--gap) * 1.6) calc(var(--gap) * 3.4) calc(var(--gap) * 1.6) calc(var(--gap) * 2.5);
   }
 
   &-col {
-    margin-bottom: calc(var(--gap) * 5);
+    font-size: calc(var(--gap) * 2.33);
+    margin: 0 calc(var(--gap) * 3.4) calc(var(--gap) * 3.2) calc(var(--gap) * 3.4);
+
+    fieldset {
+      color: var(--kyc-grey);
+      border: 1px solid var(--kyc-grey);
+      border-radius: 4px;
+      box-sizing: border-box;
+      height: 49px;
+      margin-top: 16px;
+      padding-top: 4px;
+      padding-right: 4px;
+      width: 100%;
+
+      &:focus-within {
+        padding-top: 3px;
+        padding-right: 3px;
+      }
+    }
 
     &-text {
-      font-size: calc(var(--gap) * 2.33);
       color: var(--kyc-grey);
+      font-size: calc(var(--gap) * 2.33);
     }
 
     &-content {
       border-bottom: 1px solid var(--confirm-border-color);
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
+      font-weight: normal;
+      display: inline-block;
+      position: relative;
 
       &-send {
-        cursor: pointer;
-        background: var(--button-primary);
         color: var(--color-white);
+        background: var(--button-primary);
+
+        &--disabled {
+          color: var(--button-dark-gray);
+          background: var(--button-disabled) !important;
+          pointer-events: none;
+        }
+
+        &:active {
+          background: var(--button-active) !important;
+        }
+
+        &:hover {
+          background: var(--button-hover) !important;
+        }
+
       }
 
-      input, button {
-        border: none;
-        font-size: calc(var(--gap) * 2.33);
-        outline: none;
+      &--focused {
+        color: var(--color-blue) !important;
+        border: 2px solid var(--color-blue) !important;
+      }
+
+      legend {
+        background-color: var(--base-bright);
+        position:absolute;
+        top: -8px;
       }
 
       input {
-        width: 335px;
-        padding: 5px 15px;
-        display: inline;
         color: var(--color-white);
         background: var(--transparent);
-        height: 50px;
-        box-sizing: border-box;
-        border-radius: 4px;
-        border: 1px solid var(--kyc-grey);
+        border: unset;
+        bottom: 0;
+        font-size: calc(var(--gap) * 2);
+        margin-top: 10px;
 
         &::placeholder {
           color: var(--text-muted);
@@ -53,32 +84,12 @@
       }
 
       button {
-        color: var(--white-color);
-        width: 130px;
-        background: var(--button-primary);
-        opacity: 0.5;
-        border-radius: 3px;
-      }
-    }
-
-    &-content-2 {
-      border-bottom: 1px solid var(--confirm-border-color);
-      display: inline-block;
-      width: calc(var(--big-gap) * 5);
-
-      input {
+        cursor: pointer;
         border: none;
-        font-size: calc(var(--gap) * 2.33);
-        outline: none;
-      }
-
-      input {
-        color: var(--dark-color);
-        padding-bottom: calc(var(--gap) * 0.33);
-
-        &::placeholder {
-          color: var(--text-muted);
-        }
+        border-radius: 4px;
+        float: right;
+        height: 39px;
+        width: 130px;
       }
     }
   }

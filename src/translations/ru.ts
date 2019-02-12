@@ -237,6 +237,7 @@ export const ru: LangType = {
   'page.body.kyc.documents.select.utilityBill': 'Счет за коммунальные услуги',
 
   'page.body.kyc.next': 'Дальше',
+  'page.body.kyc.submit': 'Отправить',
   'page.body.kyc.head.phone': 'Верификация телефона',
   'page.body.kyc.head.identity': 'Верификация личности',
   'page.body.kyc.head.document': 'Верификация документов',

@@ -1,6 +1,7 @@
 import {
     Button,
 } from '@openware/components';
+import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
 import {
@@ -28,7 +29,9 @@ interface OnChangeEvent {
 
 interface PhoneState {
     phoneNumber: string;
+    phoneNumberFocused: boolean;
     confirmationCode: string;
+    confirmationCodeFocused: boolean;
     resendCode: boolean;
 }
 
@@ -51,7 +54,9 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
 
         this.state = {
             phoneNumber: '',
+            phoneNumberFocused: false,
             confirmationCode: '',
+            confirmationCodeFocused: false,
             resendCode: false,
         };
     }
@@ -67,18 +72,33 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     }
 
     public render() {
-        const { phoneNumber, confirmationCode } = this.state;
+        const {
+            phoneNumber,
+            phoneNumberFocused,
+            confirmationCode,
+            confirmationCodeFocused,
+        } = this.state;
         const {
             verifyPhoneSuccess,
         } = this.props;
+
+        const phoneNumberFocusedClass = cr('pg-confirm__content-phone-col-content', {
+            'pg-confirm__content-phone-col-content--focused': phoneNumberFocused,
+        });
+
+        const confirmationCodeFocusedClass = cr('pg-confirm__content-phone-col-content', {
+            'pg-confirm__content-phone-col-content--focused': confirmationCodeFocused,
+        });
+
         return (
             <div className="pg-confirm__content-phone">
                 <h2 className="pg-confirm__content-phone-head">{this.translate('page.body.kyc.phone.head')}</h2>
                 <div className="pg-confirm__content-phone-col">
-                    <p className="pg-confirm__content-phone-col-text">
+                    <div className="pg-confirm__content-phone-col-text">
                         1. {this.translate('page.body.kyc.phone.enterPhone')}
-                    </p>
-                    <div className="pg-confirm__content-phone-col-content">
+                    </div>
+                    <fieldset className={phoneNumberFocusedClass}>
+                        {phoneNumber && <legend>{this.translate('page.body.kyc.phone.phoneNumber')}</legend>}
                         <input
                             className="pg-confirm__content-phone-col-content-number"
                             type="string"
@@ -86,29 +106,34 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             value={phoneNumber}
                             onClick={this.addPlusSignToPhoneNumber}
                             onChange={this.handleChangePhoneNumber}
+                            onFocus={this.handleFieldFocus('phoneNumber')}
+                            onBlur={this.handleFieldFocus('phoneNumber')}
                         />
                         <button
-                            className="pg-confirm__content-phone-col-content-send"
+                            className={phoneNumber ? 'pg-confirm__content-phone-col-content-send' : 'pg-confirm__content-phone-col-content-send--disabled'}
                             type="button"
                             onClick={this.handleSendCode}
                         >
                             {this.state.resendCode ? this.translate('page.body.kyc.phone.resend') : this.translate('page.body.kyc.phone.send')}
                         </button>
-                    </div>
+                    </fieldset>
                 </div>
                 <div className="pg-confirm__content-phone-col">
-                    <p className="pg-confirm__content-phone-col-text">
+                    <div className="pg-confirm__content-phone-col-text">
                         2. {this.translate('page.body.kyc.phone.enterCode')}
-                    </p>
-                    <div className="pg-confirm__content-phone-col-content">
+                    </div>
+                    <fieldset className={confirmationCodeFocusedClass}>
+                        {confirmationCode && <legend>{this.translate('page.body.kyc.phone.code')}</legend>}
                         <input
                             className="pg-confirm__content-phone-col-content-number"
                             type="string"
                             placeholder={this.translate('page.body.kyc.phone.code')}
                             value={confirmationCode}
                             onChange={this.handleChangeConfirmationCode}
+                            onFocus={this.handleFieldFocus('confirmationCode')}
+                            onBlur={this.handleFieldFocus('confirmationCode')}
                         />
-                    </div>
+                    </fieldset>
                 </div>
                 {verifyPhoneSuccess && <p className="pg-confirm__success">{verifyPhoneSuccess}</p>}
                 <div className="pg-confirm__content-deep">
@@ -120,6 +145,25 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                 </div>
             </div>
         );
+    }
+
+    private handleFieldFocus = (field: string) => {
+        return () => {
+            switch (field) {
+                case 'phoneNumber':
+                    this.setState({
+                        phoneNumberFocused: !this.state.phoneNumberFocused,
+                    });
+                    break;
+                case 'confirmationCode':
+                    this.setState({
+                        confirmationCodeFocused: !this.state.confirmationCodeFocused,
+                    });
+                    break;
+                default:
+                    break;
+            }
+        };
     }
 
     private confirmPhone = () => {

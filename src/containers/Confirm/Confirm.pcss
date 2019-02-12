@@ -63,8 +63,8 @@
       text-align: center;
       display: block;
       line-height: calc(var(--gap) * 2.5);
-      top: 40px;
-      left: -25px;
+      top: 36px;
+      left: -24px;
       font-size: 14px;
       color: var(--kyc-title-color);
     }
@@ -151,6 +151,7 @@
       }
        .pg-confirm__active-1 {
         color: var(--color-white);
+        font-weight: bold;
       }
     }
 
@@ -160,6 +161,7 @@
       }
        .pg-confirm__active-2 {
         color: var(--color-white);
+        font-weight: bold;
       }
     }
     &-third {
@@ -168,13 +170,13 @@
       }
        .pg-confirm__active-3 {
         color: var(--color-white);
+        font-weight: bold;
       }
     }
   }
 
   &__content {
     width: 100%;
-    max-width: 500px;
     margin: 0 auto;
 
     input, button {
@@ -184,15 +186,15 @@
     &-deep {
       display: flex;
       justify-content: center;
-      margin: 0 auto;
+      margin: 0 calc(var(--gap) * 4);
       padding-bottom: 30px;
 
       input {
         font-weight: normal;
         background: var(--kyc-button);
         color: var(--color-white);
-        font-size: calc(var(--gap) * 2.66);
-        height: calc(var(--gap) * 5);
+        font-size: calc(var(--gap) * 2.5);
+        height: calc(var(--gap) * 4.8);
         width: 100%;
         margin: 0;
         &:hover {

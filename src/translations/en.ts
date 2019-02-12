@@ -234,6 +234,7 @@ export const en = {
   'page.body.kyc.documents.number': ': Number',
 
   'page.body.kyc.next': 'Next',
+  'page.body.kyc.submit': 'Submit',
   'page.body.kyc.head.phone': 'Phone Verification',
   'page.body.kyc.head.identity': 'Identity Verification',
   'page.body.kyc.head.document': 'Document Verification',

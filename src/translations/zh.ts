@@ -236,6 +236,7 @@ export const zh: LangType = {
     'page.body.kyc.documents.number': ': 数字',
 
     'page.body.kyc.next': '下一步',
+    'page.body.kyc.submit': 'Submit',
     'page.body.kyc.head.phone': '手机验证',
     'page.body.kyc.head.identity': '身份验证',
     'page.body.kyc.head.document': '文件验证',

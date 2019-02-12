@@ -3,6 +3,7 @@ import {
   Dropdown,
   Loader,
 } from '@openware/components';
+import cr from 'classnames';
 import * as React from 'react';
 import {
     InjectedIntlProps,
@@ -41,8 +42,10 @@ interface OnChangeEvent {
 
 interface DocumentsState {
     documentsType: string;
-    idNumber: string;
     expiration: string;
+    expirationFocused: boolean;
+    idNumber: string;
+    idNumberFocused: boolean;
     scans: File[];
 }
 
@@ -68,8 +71,10 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     public state = {
         documentsType: this.data[0],
-        idNumber: '',
         expiration: '',
+        expirationFocused: false,
+        idNumber: '',
+        idNumberFocused: false,
         scans: [],
     };
 
@@ -82,12 +87,22 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     public render() {
         const {
             documentsType,
-            idNumber,
             expiration,
+            expirationFocused,
+            idNumber,
+            idNumberFocused,
             scans,
         }: DocumentsState = this.state;
 
         const { loading } = this.props;
+
+        const expirationFocusedClass = cr('pg-confirm__content-documents-col-row-content', {
+            'pg-confirm__content-documents-col-row-content--focused': expirationFocused,
+        });
+
+        const idNumberFocusedClass = cr('pg-confirm__content-documents-col-row-content', {
+            'pg-confirm__content-documents-col-row-content--focused': idNumberFocused,
+        });
 
         const onSelect = value => this.handleChangeDocumentsType(this.data[value]);
         const numberType = `${documentsType}${this.translate('page.body.kyc.documents.number')}`;
@@ -105,25 +120,31 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                         onSelect={onSelect}
                                     />
                                 </div>
-                                <div className="pg-confirm__content-documents-col-row-content">
+                                <fieldset className={idNumberFocusedClass}>
+                                    {idNumber && <legend>{documentsType}</legend>}
                                     <input
                                       className="pg-confirm__content-documents-col-row-content-number"
                                       type="string"
                                       placeholder={numberType}
                                       value={idNumber}
                                       onChange={this.handleChangeIdNumber}
+                                      onFocus={this.handleFieldFocus('idNumber')}
+                                      onBlur={this.handleFieldFocus('idNumber')}
                                     />
-                                </div>
-                                <div className="pg-confirm__content-documents-col-row-content">
+                                </fieldset>
+                                <fieldset className={expirationFocusedClass}>
+                                    {expiration && <legend>{this.translate('page.body.kyc.documents.expiryDate')}</legend>}
                                     <MaskInput
                                       maskString="00/00/0000"
                                       mask="00/00/0000"
                                       onChange={this.handleChangeExpiration}
+                                      onFocus={this.handleFieldFocus('expiration')}
+                                      onBlur={this.handleFieldFocus('expiration')}
                                       value={expiration}
                                       className="group-input"
                                       placeholder={this.translate('page.body.kyc.documents.expiryDate')}
                                     />
-                                </div>
+                                </fieldset>
                             </div>
                         </div>
                         <div className="pg-confirm__loader">
@@ -174,7 +195,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                 <div className="pg-confirm__content-deep">
                     <Button
                         className="pg-confirm__content-phone-deep-button"
-                        label={this.translate('page.body.kyc.next')}
+                        label={this.translate('page.body.kyc.submit')}
                         onClick={this.sendDocuments}
                     />
                 </div>
@@ -215,6 +236,25 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         });
     };
 
+    private handleFieldFocus = (field: string) => {
+        return () => {
+            switch (field) {
+                case 'expiration':
+                    this.setState({
+                        expirationFocused: !this.state.expirationFocused,
+                    });
+                    break;
+                case 'idNumber':
+                    this.setState({
+                        idNumberFocused: !this.state.idNumberFocused,
+                    });
+                    break;
+                default:
+                    break;
+            }
+        };
+    }
+
     private formatDate = (date: string) => {
         const [day, month, year] = date.split('/');
 
@@ -225,7 +265,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         const formatYear = year ? parseFloat(year) : '';
 
         return (formatDay && formatMonth && formatYear) ?
-               `${formatDay}/${formatMonth}/${formatYear}` : ``;
+               `${formatDay}/${formatMonth}/${formatYear}` : date;
     }
 
     private handleChangeExpiration = (e: OnChangeEvent) => {
