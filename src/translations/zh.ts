@@ -64,6 +64,7 @@ export const zh: LangType = {
     'page.body.wallets.tabs.deposit.ccy.message.submit':'请使用其中一个提交存款付款以下选项。您的存款将反映在您的6号帐户确认中',
     'page.body.wallets.tabs.deposit.ccy.message.address':'钱包地址存款',
     'page.body.wallets.tabs.deposit.ccy.message.button': '复制',
+    'page.body.wallets.tabs.deposit.ccy.message.error': '地址生成',
 
     'page.body.wallets.tabs.deposit.fiat.message1': '你可以在银行存入此凭证',
     'page.body.wallets.tabs.deposit.fiat.message2': '请使用以下信息完成银行付款。您的存款将在两个工作日内反映在您的帐户中。.',

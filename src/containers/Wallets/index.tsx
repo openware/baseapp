@@ -352,7 +352,9 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' });
-        const error = walletsError ? walletsError.message : '';
+        const error = walletsError ?
+            walletsError.message :
+            this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
         const walletAddress = wallet.currency === 'BCH' && wallet.address
             ? bch.Address(wallet.address).toString(bch.Address.CashAddrFormat)
             : wallet.address || '';

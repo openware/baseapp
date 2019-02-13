@@ -62,6 +62,7 @@ export const en = {
   'page.body.wallets.tabs.deposit.ccy.message.submit': 'Please submit a deposit payment using one of the following options. Your deposit will be reflected in your account after 6 confirmations',
   'page.body.wallets.tabs.deposit.ccy.message.address': 'Deposit by Wallet Address',
   'page.body.wallets.tabs.deposit.ccy.message.button': 'COPY',
+  'page.body.wallets.tabs.deposit.ccy.message.error': 'Address generating',
 
   'page.body.wallets.tabs.deposit.fiat.message1': 'You can deposit in bank on this credential',
   'page.body.wallets.tabs.deposit.fiat.message2': 'Please use information below to complete you bank payment. Your deposit will be reflected in your account within two business days.',
