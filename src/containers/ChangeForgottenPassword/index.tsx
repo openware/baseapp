@@ -2,6 +2,7 @@ import {
   Button,
   Input,
 } from '@openware/components';
+import cr from 'classnames';
 import * as React from 'react';
 import {
   connect,
@@ -19,8 +20,10 @@ import {
 interface ChangeForgottenPasswordState {
     error: boolean;
     password: string;
+    passwordFocused: boolean;
     confirmToken: string;
     confirmPassword: string;
+    confirmPasswordFocused: boolean;
 }
 
 interface ReduxProps {
@@ -49,7 +52,9 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
             error: false,
             confirmToken: '',
             password: '',
+            passwordFocused: false,
             confirmPassword: '',
+            confirmPasswordFocused: false,
         };
     }
 
@@ -73,45 +78,89 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
         const {
             error,
             password,
+            passwordFocused,
             confirmPassword,
+            confirmPasswordFocused,
         } = this.state;
+
+        const passwordFocusedClass = cr('pg-change-forgotten-password-screen__container-form-body-item', {
+            'pg-change-forgotten-password-screen__container-form-body-item--focused': passwordFocused,
+        });
+
+        const confirmPasswordFocusedClass = cr('pg-change-forgotten-password-screen__container-form-body-item', {
+            'pg-change-forgotten-password-screen__container-form-body-item--focused': confirmPasswordFocused,
+        });
+
         const updatePassword = e => this.handleChange('password', e);
         const updateConfirmPassword = e => this.handleChange('confirmPassword', e);
         return (
-            <div className="pg-forgot-password-screen">
-                <div className="pg-forgot-password-screen__container">
-                    <div className="pg-forgot-password-screen__container-header">
-                        Forgot Password
-                    </div>
-                    <form className="pg-forgot-password-screen__container-body">
-                        <fieldset className="pg-forgot-password-screen__container-body-item">
-                            <legend>
-                                New password
-                            </legend>
-                            <div className="pg-forgot-password-screen__container-body-item__input">
-                                <Input type="password" value={password} onChangeValue={updatePassword} />
+            <div className="pg-change-forgotten-password-screen">
+                <div className="pg-change-forgotten-password-screen__container">
+                    <div className="pg-change-forgotten-password-screen__container-form">
+                        <div className="pg-change-forgotten-password-screen__container-form">
+                            <div className="pg-change-forgotten-password-screen__container-form-header">
+                                Reset Password
                             </div>
-                        </fieldset>
-                        <fieldset className="pg-forgot-password-screen__container-body-item">
-                            <legend>
-                                Repeat password
-                            </legend>
-                            <div className="pg-forgot-password-screen__container-body-item__input">
-                                <Input type="password" value={confirmPassword} onChangeValue={updateConfirmPassword} />
+                            <form className="pg-change-forgotten-password-screen__container-form-body">
+                                <fieldset className={passwordFocusedClass}>
+                                    {password && <legend>New password</legend>}
+                                    <div className="pg-change-forgotten-password-screen__container-form-body-item__input">
+                                        <Input
+                                            type="password"
+                                            value={password}
+                                            placeholder="New password"
+                                            onChangeValue={updatePassword}
+                                            onFocus={this.handleFieldFocus('password')}
+                                            onBlur={this.handleFieldFocus('password')}
+                                        />
+                                    </div>
+                                </fieldset>
+                                <fieldset className={confirmPasswordFocusedClass}>
+                                    {confirmPassword && <legend>Repeat password</legend>}
+                                    <div className="pg-change-forgotten-password-screen__container-form-body-item__input">
+                                        <Input
+                                            type="password"
+                                            value={confirmPassword}
+                                            placeholder="Repeat password"
+                                            onChangeValue={updateConfirmPassword}
+                                            onFocus={this.handleFieldFocus('confirmPassword')}
+                                            onBlur={this.handleFieldFocus('confirmPassword')}
+                                        />
+                                    </div>
+                                </fieldset>
+                            </form>
+                            {error && <div className="pg-change-forgotten-password-screen__container-form-alert">Passwords do not match</div>}
+                            <div className="pg-change-password-screen__container-form-footer">
+                                <Button
+                                    className="pg-change-forgotten-password-screen__container-form-footer-button"
+                                    label="Change"
+                                    onClick={this.handleSendNewPassword}
+                                />
                             </div>
-                        </fieldset>
-                    </form>
-                    {error && <div className="pg-forgot-password-screen__container-alert">Passwords do not match</div>}
-                    <div className="pg-forgot-password-screen__container-footer">
-                        <Button
-                            className="pg-forgot-password-screen__container-footer-button"
-                            label="Change"
-                            onClick={this.handleSendNewPassword}
-                        />
+                        </div>
                     </div>
                 </div>
             </div>
         );
+    }
+
+    private handleFieldFocus = (field: string) => {
+        return () => {
+            switch (field) {
+                case 'password':
+                    this.setState({
+                        passwordFocused: !this.state.passwordFocused,
+                    });
+                    break;
+                case 'confirmPassword':
+                    this.setState({
+                        confirmPasswordFocused: !this.state.confirmPasswordFocused,
+                    });
+                    break;
+                default:
+                    break;
+            }
+        };
     }
 
     private handleSendNewPassword = () => {
