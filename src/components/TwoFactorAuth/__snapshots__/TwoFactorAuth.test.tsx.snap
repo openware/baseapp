@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TwoFactorAuth component should render 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div
+    className="cr-sign-in-form"
+  >
+    <h1
+      className="cr-sign-in-form__title"
+      style={
+        Object {
+          "marginTop": 119,
+        }
+      }
+    />
+    <div
+      className="cr-sign-in-form__form-content"
+    >
+      <div
+        className="cr-sign-in-form__group"
+      >
+        <label
+          className="cr-sign-in-form__label"
+        />
+        <e
+          className="cr-sign-in-form__input"
+          onChangeValue={[MockFunction]}
+          value=""
+        />
+      </div>
+      <div
+        className="cr-sign-in-form__button-wrapper cr-sign-in-form__button-wrapper--empty"
+      >
+        <div
+          className="cr-sign-in-form__error-message"
+        />
+        <div
+          className="cr-sign-in-form__loader"
+        />
+        <Component
+          className="cr-sign-in-form__button"
+          label=""
+          onClick={[Function]}
+        />
+      </div>
+      <div
+        className="cr-sign-in-form__footer"
+      >
+        <p
+          className="cr-sign-in-form__footer-create"
+        />
+        <a
+          className="cr-sign-in-form__2fa-bottom-section-text"
+          onClick={[MockFunction]}
+        />
+      </div>
+    </div>
+  </div>
+</form>
+`;

@@ -106,4 +106,5 @@ class EmailForm extends React.Component<EmailFormProps> {
 
 export {
     EmailForm,
+    EmailFormProps,
 };

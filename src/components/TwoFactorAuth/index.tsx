@@ -2,7 +2,7 @@ import { Button, Input, Loader } from '@openware/components';
 import cn from 'classnames';
 import * as React from 'react';
 
-interface TwoFactorAuthProps {
+export interface TwoFactorAuthProps {
     errorMessage?: string;
     isLoading?: boolean;
     onSubmit: () => void;

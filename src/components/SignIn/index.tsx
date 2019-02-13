@@ -147,31 +147,31 @@ class SignInComponent extends React.Component<SignInProps> {
 
     private handleChangeEmail = (value: string) => {
         this.props.changeEmail(value);
-    }
+    };
 
     private handleChangePassword = (value: string) => {
         this.props.changePassword(value);
-    }
+    };
 
     private handleFieldFocus = (field: string) => {
         this.props.handleChangeFocusField(field);
-    }
+    };
 
     private handleSubmitForm = () => {
         this.props.refreshError();
         this.props.onSignIn();
-    }
+    };
 
     private isValidForm = () => {
         const { email, password } = this.props;
         const isEmailValid = email.match(EMAIL_REGEX);
 
         return email && isEmailValid && password;
-    }
+    };
 
     private handleValidateForm = () => {
         this.props.isFormValid();
-    }
+    };
 
     private handleClick = (label?: string, e?: React.FormEvent<HTMLInputElement>) => {
         if (e) {

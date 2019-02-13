@@ -257,4 +257,5 @@ class SignUpForm extends React.Component<SignUpFormProps> {
 
 export {
     SignUpForm,
+    SignUpFormProps,
 };
