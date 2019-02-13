@@ -24,6 +24,7 @@ import {
 import {
     RootState,
     selectSignInRequire2FA,
+    selectSignUpRequireVerification,
     selectUserFetching,
     selectUserLoggedIn,
     signIn,
@@ -34,6 +35,7 @@ interface ReduxProps {
     isLoggedIn: boolean;
     loading?: boolean;
     require2FA?: boolean;
+    requireEmailVerification?: boolean;
 }
 
 interface DispatchProps {
@@ -78,6 +80,9 @@ class SignInBox extends React.Component<Props, SignInState> {
     public componentWillReceiveProps(props: Props) {
         if (props.isLoggedIn) {
             this.props.history.push('/wallets');
+        }
+        if (props.requireEmailVerification) {
+            props.history.push('/email-verification', {email: this.state.email});
         }
     }
 
@@ -254,6 +259,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     isLoggedIn: selectUserLoggedIn(state),
     loading: selectUserFetching(state),
     require2FA: selectSignInRequire2FA(state),
+    requireEmailVerification: selectSignUpRequireVerification(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

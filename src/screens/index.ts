@@ -1,3 +1,4 @@
+export * from './EmailVerificationScreen';
 export * from './TradingScreen';
 export * from './WalletsScreen';
 export * from './SignInScreen';

@@ -3,7 +3,7 @@ import { call, put } from 'redux-saga/effects';
 import { fetchError } from '../../';
 import { API, RequestOptions } from '../../../api';
 import { userData } from '../../profile';
-import { signInError, SignInFetch, signInRequire2FA } from '../actions';
+import { signInError, SignInFetch, signInRequire2FA, signUpRequireVerification } from '../actions';
 
 
 const sessionsConfig: RequestOptions = {
@@ -20,13 +20,16 @@ export function* signInSaga(action: SignInFetch) {
 
         yield put(signInRequire2FA({ require2fa: user.otp }));
     } catch (error) {
-        const responseStatus = error.code;
-        const is2FAEnabled = responseStatus === 403;
-
-        if (is2FAEnabled) {
-            yield put(signInRequire2FA({ require2fa: true }));
-        } else {
-            yield put(signInError(error));
+        switch (error.code) {
+            case 401:
+                yield put(signUpRequireVerification({requireVerification: true}));
+                break;
+            case 403:
+                yield put(signInRequire2FA({ require2fa: true }));
+                break;
+            default:
+                yield put(signInError(error));
+                break;
         }
         yield put(fetchError(error));
     }

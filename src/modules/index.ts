@@ -5,6 +5,7 @@ import { rootHandleAlertSaga } from './alert';
 import { appReducer, AppState } from './app';
 import { rootAuthSaga } from './auth';
 import { rootSendEmailSaga } from './contact';
+import { rootEmailVerificationSaga } from './email';
 import { rootHistorySaga } from './history';
 import { rootSendDocumentsSaga } from './kyc/documents';
 import { rootSendIdentitySaga } from './kyc/identity';
@@ -37,6 +38,7 @@ export * from './kyc';
 export * from './kline';
 
 export * from './alert';
+export * from './email';
 
 export interface RootState {
     app: AppState;
@@ -65,5 +67,6 @@ export function* rootSaga() {
         call(rootUserActivitySaga),
         call(rootLabelSaga),
         call(rootOrdersHistorySaga),
+        call(rootEmailVerificationSaga),
     ]);
 }

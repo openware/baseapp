@@ -85,7 +85,7 @@ class SignUpComponent extends React.Component<Props> {
 
     public componentWillReceiveProps(props: Props) {
         if (props.requireVerification) {
-            this.openModal();
+            props.history.push('/email-verification', {email: this.state.email});
         }
     }
 
@@ -306,9 +306,9 @@ class SignUpComponent extends React.Component<Props> {
         );
     };
 
-    private openModal = () => {
-        this.setState({showModal: true});
-    };
+    // private openModal = () => {
+    //     this.setState({showModal: true});
+    // };
 
     private closeModal = () => {
         this.setState({showModal: false});

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { alertReducer, AlertState } from './alert';
 import { authReducer, AuthState } from './auth';
 import { contactReducer, ContactState } from './contact';
+import { EmailVerificationState, sendEmailVerificationReducer } from './email';
 import { historyReducer, HistoryState } from './history';
 import { changeLanguageReducer, LanguageState } from './i18n';
 import { klineReducer, KlineState } from './kline';
@@ -53,6 +54,7 @@ export interface AppState {
     alert: AlertState;
     kline: KlineState;
     ordersHistory: OrdersHistoryState;
+    sendEmailVerification: EmailVerificationState;
 }
 
 export const appReducer = combineReducers({
@@ -77,4 +79,5 @@ export const appReducer = combineReducers({
     kline: klineReducer,
     alert: alertReducer,
     ordersHistory: ordersHistoryReducer,
+    sendEmailVerification: sendEmailVerificationReducer,
 });
