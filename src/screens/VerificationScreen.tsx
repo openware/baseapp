@@ -37,9 +37,8 @@ class Verification extends React.Component<Props> {
     }
 
     public render() {
-        const { isEmailVerified, error } = this.props;
         return (
-            isEmailVerified ? <Redirect to={'/signin'} /> : <h3 className="pg-sign-up-screen">{error && error.message}</h3>
+            <Redirect to={'/signin'} />
         );
     }
 }
