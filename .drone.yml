@@ -140,7 +140,7 @@ steps:
       template: >
         {{#success build.status}}
           [SUCCESS] (Base Application) Master branch build by {{ build.author }} has succeeded!
-
+          Version is {{ build.tag }}
           Visit http://www.devkube.com to check it out!
         {{else}}
           [FAILURE] Master branch build by {{ build.author }} has failed!
