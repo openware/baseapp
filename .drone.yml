@@ -1,8 +1,9 @@
+---
 kind: pipeline
-name: default
+name: "Push"
 
 steps:
-  - name: "Test"
+  - name: "Test & Build"
     image: node:10.11
     commands:
       - echo "//registry.npmjs.org/:_authToken=199fa5c9-8c7c-4cc2-b4c4-78524fdcab41" > .npmrc
@@ -13,9 +14,71 @@ steps:
       - yarn lint
       - yarn test:ci --collectCoverage=true
       - yarn build
+
+  # - name: "Build container"
+  #   image: plugins/gcr
+  #   settings:
+  #     repo: gcr.io/openware-production/baseapp
+  #     json_key:
+  #       from_secret: openware_gcp_creds_base64
+
+  - name: "Stage with mock server"
+    image: alpine/git
+    environment:
+      PRIVATE_KEY:
+        from_secret: deploy_key
+    commands:
+      - echo "$PRIVATE_KEY" | base64 -d > id_rsa
+      - chmod 0600 id_rsa
+      - cd build/config/
+      - echo "window.env={api:{gatewayUrl:'http://api-v2.mock.openware.work/api/v2',rangerUrl:'ws://ranger.mock.openware.work'},captcha:{captchaType:'none',siteKey:''}};" > env.js
+      - cat env.js
+      - cd /drone/src/
+      - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build dfedorchenko@35.232.147.44:/home/dfedorchenko/builds/${DRONE_COMMIT_SHA:0:7}
+      - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null coverage/lcov-report dfedorchenko@35.232.147.44:/home/dfedorchenko/builds/${DRONE_COMMIT_SHA:0:7}-coverage
+      - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work"
+      - echo "http://${DRONE_COMMIT_SHA:0:7}-coverage.mock.openware.work"
+
+  - name: "Notify staging"
+    image: plugins/slack
+    settings:
+      webhook:
+        from_secret: baseapp_slack_webhook
+      channel:
+        from_secret: baseapp_slack_channel
+      template: >
+        {{#success build.status}}
+          [SUCCESS] (Base Application) Branch {{ build.branch }} by {{ build.author }} staging has succeeded!
+
+          Visit http://{{ truncate build.commit 7 }}.mock.openware.work to check it out!
+          Coverage report: http://{{ truncate build.commit 7 }}-coverage.mock.openware.work
+        {{else}}
+          [FAILURE] Branch {{ build.branch }} by {{ build.author }} staging has failed!
+        {{/success}}
+        Check the build info here: {{ build.link }}
     when:
-      event:
-          - push
+      status: [success, failure]
+
+trigger:
+  event:
+    - push
+  branch:
+    exclude:
+    - master
+
+---
+kind: pipeline
+name: "New version"
+
+steps:
+  - name: "Test"
+    image: node:10.11
+    commands:
+      - echo "//registry.npmjs.org/:_authToken=199fa5c9-8c7c-4cc2-b4c4-78524fdcab41" > .npmrc
+      - npm -g install yarn
+      - yarn install
+      - yarn lint
+      - yarn test:ci --collectCoverage=true
 
   - name: "Bump & Tag"
     image: node:10.11
@@ -35,61 +98,20 @@ steps:
       - yarn version --"$patch_level" -y
       - git push authenticated-origin HEAD:master --tags
       - git describe --tags $(git rev-list --tags --max-count=1) > .tags
-    when:
-      branch:
-          - master
-      event:
-          - push
 
   - name: "Build"
+    image: node:10.11
+    commands:
+      - export REACT_APP_GIT_SHA=$(cat .tags)
+      - npm -g install yarn
+      - yarn build
+
+  - name: "Build container"
     image: plugins/gcr
     settings:
       repo: gcr.io/openware-production/baseapp
       json_key:
         from_secret: openware_gcp_creds_base64
-    when:
-      event:
-          - push
-
-  - name: "Stage"
-    image: alpine/git
-    environment:
-      PRIVATE_KEY:
-        from_secret: deploy_key
-    commands:
-      - echo "$PRIVATE_KEY" | base64 -d > id_rsa
-      - chmod 0600 id_rsa
-      - cd build/config/
-      - echo "window.env={api:{gatewayUrl:'http://api-v2.mock.openware.work/api/v2',rangerUrl:'ws://ranger.mock.openware.work'},captcha:{captchaType:'none',siteKey:''}};" > env.js
-      - cat env.js
-      - cd /drone/src/
-      - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build dfedorchenko@35.232.147.44:/home/dfedorchenko/builds/${DRONE_COMMIT_SHA:0:7}
-      - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null coverage/lcov-report dfedorchenko@35.232.147.44:/home/dfedorchenko/builds/${DRONE_COMMIT_SHA:0:7}-coverage
-    when:
-      event:
-          - push
-
-  - name: "Notify about staging"
-    image: plugins/slack
-    settings:
-      webhook:
-        from_secret: baseapp_slack_webhook
-      channel:
-        from_secret: baseapp_slack_channel
-      template: >
-        {{#success build.status}}
-          [SUCCESS] (Base Application) Branch {{ build.branch }} by {{ build.author }} staging has succeeded!
-
-          Visit http://{{ truncate build.commit 7 }}.mock.openware.work to check it out!
-          Coverage report: http://{{ truncate build.commit 7 }}-coverage.mock.openware.work
-        {{else}}
-          [FAILURE] Branch {{ build.branch }} by {{ build.author }} staging has failed!
-        {{/success}}
-        Check the build info here: {{ build.link }}
-    when:
-      status: [success, failure]
-      event:
-          - push
 
   - name: "Redeploy on devkube"
     image: rubykube/microkube:0.2.0
@@ -100,11 +122,6 @@ steps:
       - export latest_image=gcr.io/openware-production/baseapp:$(cat .tags)
       - cd /home/app
       - bundle exec rake payload:send[frontend,$latest_image,http://www.devkube.com:1337]
-    when:
-      branch:
-          - master
-      event:
-          - push
 
   - name: "Run integration testing"
     image: cypress/base:10
@@ -112,11 +129,6 @@ steps:
       - npm install --save-dev cypress
       - export CYPRESS_baseUrl=http://www.devkube.com
       - $(npm bin)/cypress run
-    when:
-      branch:
-          - master
-      event:
-          - push
 
   - name: "Notify about redeployment on devkube"
     image: plugins/slack
@@ -136,7 +148,9 @@ steps:
         Check the build info here: {{ build.link }}
     when:
       status: [success, failure]
-      branch:
-          - master
-      event:
-          - push
+
+trigger:
+  branch:
+  - master
+  event:
+  - push
