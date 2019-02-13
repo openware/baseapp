@@ -14,3 +14,4 @@ export * from './calcMaxVolume';
 export * from './sortByPrice';
 export * from './getLanguageByCode';
 export * from './checkDate';
+export * from './sortByDate';

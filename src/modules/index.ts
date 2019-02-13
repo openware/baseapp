@@ -13,6 +13,7 @@ import { rootSendCodeSaga } from './kyc/phone';
 import { rootMarketsSaga } from './markets';
 import { rootOrderBookSaga } from './orderBook';
 import { rootOrdersSaga } from './orders';
+import { rootOrdersHistorySaga } from './ordersHistory';
 import { rootPasswordSaga } from './password';
 import { rootProfileSaga } from './profile';
 import { rootRecentTradesSaga } from './recentTrades';
@@ -26,6 +27,7 @@ export * from './profile';
 export * from './markets';
 export * from './orderBook';
 export * from './orders';
+export * from './ordersHistory';
 export * from './password';
 export * from './userActivity';
 
@@ -62,5 +64,6 @@ export function* rootSaga() {
         call(rootHistorySaga),
         call(rootUserActivitySaga),
         call(rootLabelSaga),
+        call(rootOrdersHistorySaga),
     ]);
 }

@@ -1,30 +1,24 @@
-import { CloseButton, Decimal, History } from '@openware/components';
+import { CloseButton, Decimal, History, Pagination } from '@openware/components';
 import * as React from 'react';
-import {
-    FormattedMessage,
-    InjectedIntlProps,
-    injectIntl,
-    intlShape,
-} from 'react-intl';
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import {
-    localeDate,
-    setTradeColor,
-} from '../../helpers';
-import { RootState } from '../../modules';
+import { localeDate, setTradeColor, sortByDate } from '../../helpers';
 import {
     Market,
-    selectMarkets,
-} from '../../modules/markets';
-import {
     Order,
     orderCancelFetch,
-    selectOpenOrders,
-    selectOrders,
-    selectOrdersError,
-    selectOrdersLoading,
-} from '../../modules/orders';
-import { CommonError } from '../../modules/types';
+    RootState,
+    selectCurrentPageIndex,
+    selectMarkets,
+    selectOrdersFirstElemIndex,
+    selectOrdersHistory,
+    selectOrdersHistoryLoading,
+    selectOrdersLastElemIndex,
+    selectOrdersNextPageExists,
+    selectTotalOrdersHistory,
+    userOrdersHistoryFetch,
+} from '../../modules';
+
 
 interface OrdersProps {
     type: string;
@@ -32,14 +26,18 @@ interface OrdersProps {
 
 interface ReduxProps {
     marketsData: Market[];
-    allOrdersData: Order[];
-    openOrdersData: Order[];
-    openOrdersLoading?: boolean;
-    openOrdersError?: CommonError;
+    pageIndex: number;
+    firstElemIndex: number;
+    list: Order[];
+    fetching: boolean;
+    lastElemIndex: number;
+    nextPageExists: boolean;
+    total: number;
 }
 
 interface DispatchProps {
     ordersCancelById: typeof orderCancelFetch;
+    userOrdersHistoryFetch: typeof userOrdersHistoryFetch;
 }
 
 interface OrdersState {
@@ -50,24 +48,49 @@ interface OrdersState {
 type Props = OrdersProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
 class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
+    public componentDidMount() {
+        const { type } = this.props;
+        this.props.userOrdersHistoryFetch({ pageIndex: 0, type, limit: 25 });
+    }
 
     public render() {
-        const { allOrdersData, openOrdersData } = this.props;
-        const data = allOrdersData && openOrdersData;
-        const body = data.length ?
-            <History headers={this.renderHeaders()} data={this.retrieveData()} /> :
-            <p className="pg-history-elem__empty"><FormattedMessage id="page.noDataToShow" /></p>;
-
+        const { list, fetching } = this.props;
+        const emptyMsg = this.props.intl.formatMessage({id: 'page.noDataToShow'});
         return (
-            <div className={`pg-history-elem ${data.length ? '' : 'pg-history-elem-empty'}`}>
-                {body}
+            <div className={`pg-history-elem ${list.length ? '' : 'pg-history-elem-empty'}`}>
+                {list.length ? this.renderContent() : null}
+                {!list.length && !fetching ? <p className="pg-history-elem__empty">{emptyMsg}</p> : null}
             </div>
         );
     }
+
+    public renderContent = () => {
+        const { firstElemIndex, lastElemIndex, total, pageIndex, nextPageExists } = this.props;
+        return (
+            <React.Fragment>
+                <History headers={this.renderHeaders()} data={this.retrieveData()}/>
+                <Pagination
+                    firstElemIndex={firstElemIndex}
+                    lastElemIndex={lastElemIndex}
+                    total={total}
+                    page={pageIndex}
+                    nextPageExists={nextPageExists}
+                    onClickPrevPage={this.onClickPrevPage}
+                    onClickNextPage={this.onClickNextPage}
+                />
+            </React.Fragment>
+        );
+    };
+
+    private onClickPrevPage = () => {
+        const { pageIndex, type } = this.props;
+        this.props.userOrdersHistoryFetch({ pageIndex: Number(pageIndex) - 1, type, limit: 25 });
+    };
+
+    private onClickNextPage = () => {
+        const { pageIndex, type } = this.props;
+        this.props.userOrdersHistoryFetch({ pageIndex: Number(pageIndex) + 1, type, limit: 25 });
+    };
 
     private renderHeaders = () => {
         return [
@@ -85,20 +108,48 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     };
 
     private retrieveData = () => {
-        const { type, openOrdersData, allOrdersData } = this.props;
-        switch (type) {
-            case 'open': {
-                return [...openOrdersData]
-                    .map(item => this.renderOpenOrdersRow(item));
-            }
-            case 'all': {
-                return [...allOrdersData]
-                    .map(item => this.renderAllOrdersRow(item));
-            }
-            default: {
-                return [];
-            }
-        }
+        return [...this.props.list]
+            .sort(sortByDate('created_at', 'DD/MM HH:mm'))
+            .map(item => this.renderOrdersHistoryRow(item));
+    };
+
+    private renderOrdersHistoryRow = item => {
+        const {
+            id,
+            created_at,
+            executed_volume,
+            market,
+            ord_type,
+            price,
+            avg_price,
+            remaining_volume,
+            side,
+            state,
+            volume,
+        } = item;
+
+        const currentMarket = this.props.marketsData.find(m => m.id === market)
+            || { name: '', bid_precision: 0, ask_precision: 0 };
+
+        const orderType = this.getType(side, ord_type);
+        const marketName = currentMarket ? currentMarket.name : market;
+        const costRemaining = remaining_volume * price; // price or avg_price ???
+        const date = localeDate(created_at);
+        const status = this.setOrderStatus(state);
+        const actualPrice = ord_type === 'market' || status === 'done' ? avg_price : price;
+
+        return [
+            date,
+            <span style={{ color: setTradeColor(side).color }} key={id}>{orderType}</span>,
+            marketName,
+            <Decimal key={id} fixed={currentMarket.bid_precision}>{actualPrice}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.ask_precision}>{volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.ask_precision}>{executed_volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.ask_precision}>{remaining_volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.ask_precision}>{costRemaining.toString()}</Decimal>,
+            status,
+            state === 'wait' && <CloseButton key={id} onClick={this.handleCancel(id)} />,
+        ];
     };
 
     private getType = (side: string, orderType: string) => {
@@ -107,80 +158,6 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         }
         return this.props.intl.formatMessage({ id: `page.body.openOrders.header.orderType.${side}.${orderType}` });
     };
-
-    private renderOpenOrdersRow = item => {
-        const {
-            id,
-            created_at,
-            executed_volume,
-            market, ord_type,
-            price,
-            remaining_volume,
-            side,
-            state,
-            volume,
-        } = item;
-
-        const currentMarket = this.props.marketsData.find(m => m.id === market)
-            || { name: '', bid_precision: 0, ask_precision: 0 };
-        const orderType = this.getType(side, ord_type);
-        const marketName = currentMarket ? currentMarket.name : market;
-        const costRemaining = remaining_volume * price;
-
-        const date = localeDate(created_at);
-        const status = this.setOrderStatus(state);
-
-        return [
-            date,
-            <span style={{ color: setTradeColor(side).color }} key={id}>{orderType}</span>,
-            marketName,
-            <Decimal key={id} fixed={currentMarket.bid_precision}>{price}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{executed_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{remaining_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{costRemaining.toString()}</Decimal>,
-            status,
-            // tslint:disable-next-line jsx-no-lambda
-            <CloseButton key={id} onClick={() => this.handleCancel(id)} />,
-        ];
-    }
-
-    private renderAllOrdersRow = item => {
-        const {
-            id,
-            created_at,
-            executed_volume,
-            market, ord_type,
-            price,
-            remaining_volume,
-            side,
-            state,
-            volume,
-        } = item;
-
-        const currentMarket = this.props.marketsData.find(m => m.id === market)
-            || { name: '', bid_precision: 0, ask_precision: 0 };
-
-        const orderType = this.getType(side, ord_type);
-        const marketName = currentMarket ? currentMarket.name : market;
-        const costRemaining = remaining_volume * price;
-
-        const date = localeDate(created_at);
-        const status = this.setOrderStatus(state);
-
-        return [
-            date,
-            <span style={{ color: setTradeColor(side).color }} key={id}>{orderType}</span>,
-            marketName,
-            <Decimal key={id} fixed={currentMarket.bid_precision}>{price}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{executed_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{remaining_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{costRemaining.toString()}</Decimal>,
-            status,
-            state == 'wait' && <CloseButton key={id} onClick={() => this.handleCancel(id)} />, //tslint:disable-line
-        ];
-    }
 
     private setOrderStatus = (status: string) => {
         switch (status) {
@@ -195,7 +172,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         }
     };
 
-    private handleCancel = (id: number) => {
+    private handleCancel = (id: number) => () => {
         const orderToDelete = this.props.openOrdersData.find(o => o.id === id)
             || { id: 0 };
         const orderToDeleteId = orderToDelete.id.toString();
@@ -205,15 +182,19 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     marketsData: selectMarkets(state),
-    allOrdersData: selectOrders(state),
-    openOrdersData: selectOpenOrders(state),
-    openOrdersLoading: selectOrdersLoading(state),
-    openOrdersError: selectOrdersError(state),
+    pageIndex: selectCurrentPageIndex(state),
+    firstElemIndex: selectOrdersFirstElemIndex(state, 25),
+    list: selectOrdersHistory(state),
+    fetching: selectOrdersHistoryLoading(state),
+    lastElemIndex: selectOrdersLastElemIndex(state, 25),
+    nextPageExists: selectOrdersNextPageExists(state, 25),
+    total: selectTotalOrdersHistory(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         ordersCancelById: payload => dispatch(orderCancelFetch(payload)),
+        userOrdersHistoryFetch: payload => dispatch(userOrdersHistoryFetch(payload)),
     });
 
 export const OrdersElement = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrdersComponent));

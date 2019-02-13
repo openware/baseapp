@@ -1,52 +1,42 @@
-import {
-    TabPanel,
-} from '@openware/components';
+import { TabPanel } from '@openware/components';
 import * as React from 'react';
-import {
-    FormattedMessage,
-    InjectedIntlProps,
-    injectIntl,
-    intlShape,
-} from 'react-intl';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-} from 'react-redux';
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import {
     marketsFetch,
     Order,
     ordersCancelAllFetch,
     RootState,
-    selectOrders,
-    userOrdersAllFetch,
+    selectOrdersHistory,
 } from '../../modules';
 import { OrdersElement } from './OrdersElement';
 
 interface ReduxProps {
-    ordersData: Order[];
+    list: Order[];
 }
 
 interface DispatchProps {
     marketsFetch: typeof marketsFetch;
-    getAllOrdersData: typeof userOrdersAllFetch;
     ordersCancelAll: typeof ordersCancelAllFetch;
 }
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
-class Orders extends React.PureComponent<Props> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
+interface State {
+    tab: string;
+}
+
+class Orders extends React.PureComponent<Props, State> {
+    public state = { tab: 'open' };
+
+    public tabMapping = ['open', 'all'];
 
     public componentDidMount() {
         this.props.marketsFetch();
-        this.props.getAllOrdersData();
     }
 
     public render() {
-        const cancelAll = this.props.ordersData.length ? (
+        const cancelAll = this.props.list.length ? (
             <React.Fragment>
                 <span onClick={this.handleCancelAll}>
                     <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
@@ -70,17 +60,22 @@ class Orders extends React.PureComponent<Props> {
 
     private handleMakeRequest = (index: number) => {
         this.renderTabs();
+        if (this.state.tab === this.tabMapping[index]) {
+            return;
+        }
+        this.setState({ tab: this.tabMapping[index] });
     };
 
     private renderTabs = () => {
+        const { tab } = this.state;
         return [
             {
-                content: <OrdersElement type="all" />,
-                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.all' }),
+                content: tab === 'open' ? <OrdersElement type="open"/> : null,
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.open'}),
             },
             {
-                content: <OrdersElement type="open" />,
-                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.open' }),
+                content: tab === 'all' ? <OrdersElement type="all" /> : null,
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.all'}),
             },
         ];
     };
@@ -91,13 +86,12 @@ class Orders extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    ordersData: selectOrders(state),
+    list: selectOrdersHistory(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         marketsFetch: () => dispatch(marketsFetch()),
-        getAllOrdersData: () => dispatch(userOrdersAllFetch()),
         ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
     });
 

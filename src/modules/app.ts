@@ -4,7 +4,7 @@ import { authReducer, AuthState } from './auth';
 import { contactReducer, ContactState } from './contact';
 import { historyReducer, HistoryState } from './history';
 import { changeLanguageReducer, LanguageState } from './i18n';
-import { klineReducer, KlineState } from './kline/reducer';
+import { klineReducer, KlineState } from './kline';
 import {
     documentsReducer,
     DocumentsState,
@@ -23,6 +23,7 @@ import {
     OrderBookState,
 } from './orderBook';
 import { ordersReducer, OrdersState } from './orders';
+import { ordersHistoryReducer, OrdersHistoryState } from './ordersHistory';
 import { passwordReducer, PasswordState } from './password';
 import { profileReducer, ProfileState } from './profile';
 import { rangerReducer, RangerState } from './ranger/reducer';
@@ -51,6 +52,7 @@ export interface AppState {
     i18n: LanguageState;
     alert: AlertState;
     kline: KlineState;
+    ordersHistory: OrdersHistoryState;
 }
 
 export const appReducer = combineReducers({
@@ -74,4 +76,5 @@ export const appReducer = combineReducers({
     i18n: changeLanguageReducer,
     kline: klineReducer,
     alert: alertReducer,
+    ordersHistory: ordersHistoryReducer,
 });

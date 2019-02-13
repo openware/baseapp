@@ -46,5 +46,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         deleteErrorByIndex: payload => dispatch(deleteErrorByIndex(payload)),
         deleteSuccessByIndex: payload => dispatch(deleteSuccessByIndex(payload)),
     });
-// tslint:disable-next-line:no-any
+
 export const Alerts = connect(mapStateToProps, mapDispatchToProps)(AlertComponent);
