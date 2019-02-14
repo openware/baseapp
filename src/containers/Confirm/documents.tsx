@@ -224,7 +224,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                 key={index}
                 onClick={this.handleFileDelete(index)}
             >
-                {scan.name}&nbsp;
+                {scan.name.slice(0, 27)}...&nbsp;
                 <img src={require('../../assets/images/close.svg')}/>
             </div>
         );
