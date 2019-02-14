@@ -51,12 +51,18 @@
 
         &:active {
           background: var(--button-active) !important;
+          margin-top: 1px;
+          margin-right: 1px;
         }
 
         &:hover {
           background: var(--button-hover) !important;
         }
 
+        &:focus {
+          margin-top: 1px;
+          margin-right: 1px;
+        }
       }
 
       &--focused {
@@ -67,7 +73,7 @@
       legend {
         background-color: var(--base-bright);
         position:absolute;
-        top: -8px;
+        top: calc(var(--gap) * -1.14);
       }
 
       input {
@@ -77,6 +83,7 @@
         bottom: 0;
         font-size: calc(var(--gap) * 2);
         margin-top: 10px;
+        width: 71.5%;
 
         &::placeholder {
           color: var(--text-muted);
