@@ -57,6 +57,8 @@ class MarketsContainer extends React.Component<Props> {
     public componentDidMount() {
         if (this.props.markets.length === 0) {
             this.props.tickers();
+        } else {
+            this.props.setCurrentMarket(this.props.markets[0]);
         }
         this.props.walletsFetch();
     }
