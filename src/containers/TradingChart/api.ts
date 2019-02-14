@@ -81,21 +81,24 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             return setTimeout(() => onSymbolResolvedCallback(symbolStub), 0);
         },
         getBars: async (symbolInfo: LibrarySymbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
-            const url = makeHistoryUrl(
-                symbolInfo.ticker || symbolInfo.name.toLowerCase(),
-                resolutionToSeconds(resolution),
-                from,
-                to,
-            );
-            return axios.get(url).then(({ data }) => {
-                if (data.length < 1) {
+            const today = new Date();
+            if ((to - today.getTime() / 1000) > 0) {
+                const url = makeHistoryUrl(
+                    symbolInfo.ticker || symbolInfo.name.toLowerCase(),
+                    resolutionToSeconds(resolution),
+                    from,
+                    to,
+                );
+                return axios.get(url).then(({ data }) => {
+                    if (data.length < 1) {
+                        return onHistoryCallback([], { noData: true });
+                    }
+                    const bars = data.map(klineArrayToObject);
+                    return onHistoryCallback(bars, { noData: false });
+                }).catch(e => {
                     return onHistoryCallback([], { noData: true });
-                }
-                const bars = data.map(klineArrayToObject);
-                return onHistoryCallback(bars, { noData: false });
-            }).catch(e => {
-                return onHistoryCallback([], { noData: true });
-            });
+                });
+            }
         },
         subscribeBars: (symbolInfo: LibrarySymbolInfo, resolution, onRealtimeCallback, subscribeUID: string, onResetCacheNeededCallback) => {
             // window.console.log(`subscribeBars called, symbolInfo: ${JSON.stringify(symbolInfo)}, resolution: ${resolution}, subscribeUID: ${subscribeUID}`);
