@@ -89,9 +89,9 @@ class RecentTradesComponent extends React.Component<Props> {
             : [[this.props.intl.formatMessage({ id: 'page.noDataToShow'})]];
     }
 
-    private handleOnSelect = (index: number) => {
+    private handleOnSelect = (index: string) => {
         const { recentTrades, currentPrice } = this.props;
-        const priceToSet = recentTrades[index] ? recentTrades[index].price : '';
+        const priceToSet = recentTrades[Number(index)] ? recentTrades[Number(index)].price : '';
 
         if (currentPrice !== priceToSet) {
             this.props.setCurrentPrice(priceToSet);

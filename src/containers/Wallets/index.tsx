@@ -364,6 +364,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                     {this.renderSingle()}
                     <DepositCrypto
                         data={walletAddress}
+                        handleOnCopy={this.handleOnCopy}
                         error={error}
                         text={text}
                         copiableTextFieldText={this.translate('page.body.wallets.tabs.deposit.ccy.message.address')}
@@ -381,6 +382,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 </React.Fragment>
             );
         }
+    }
+
+    private handleOnCopy = () => {
+        // todo
     }
 
     private renderWithdraw(withdrawProps: WithdrawProps, type: string) {

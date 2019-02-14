@@ -77,6 +77,7 @@ class MarketsContainer extends React.Component<Props> {
         <Markets
             filters={false}
             data={this.mapMarkets()}
+            rowKeyIndex={0}
             onSelect={this.handleOnSelect}
             headers={this.headers}
             title={this.props.intl.formatMessage({id: 'page.body.trade.header.markets'})}
@@ -100,9 +101,9 @@ class MarketsContainer extends React.Component<Props> {
         );
     }
 
-    private handleOnSelect = (index: number) => {
+    private handleOnSelect = (index: string) => {
         const { markets, currentMarket } = this.props;
-        const marketToSet = markets[index];
+        const marketToSet = markets.find(el => el.name === index);
         this.props.setCurrentPrice('');
 
         if (!currentMarket || currentMarket.id !== marketToSet.id) {

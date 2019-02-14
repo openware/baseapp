@@ -90,9 +90,9 @@ class OrderBookContainer extends React.Component<Props> {
         }) : [[message]];
     }
 
-    private handleOnSelect = (index: number) => {
+    private handleOnSelect = (index: string) => {
         const { bids, currentPrice } = this.props;
-        const priceToSet = bids[index] ? bids[index][0] : '';
+        const priceToSet = bids[Number(index)] ? bids[Number(index)][0] : '';
 
         if (currentPrice !== priceToSet) {
             this.props.setCurrentPrice(priceToSet);
