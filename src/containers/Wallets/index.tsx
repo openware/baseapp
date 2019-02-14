@@ -18,7 +18,7 @@ import {
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { RootState, selectHistory, selectUserInfo, User, WalletHistoryList } from '../../modules';
+import { fetchSuccess, RootState, selectHistory, selectUserInfo, User, WalletHistoryList } from '../../modules';
 import { CommonError } from '../../modules/types';
 import {
     selectWallets,
@@ -54,6 +54,7 @@ interface DispatchProps {
     fetchAddress: typeof walletsAddressFetch;
     clearWallets: () => void;
     walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
+    fetchSuccess: typeof fetchSuccess;
 }
 
 interface WalletsState {
@@ -347,6 +348,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         );
     };
 
+    private handleOnCopy = () => {
+      this.props.fetchSuccess(this.translate('page.body.wallets.tabs.deposit.ccy.message.success'));
+    };
+
     private renderDeposit(wallet: WalletItemProps) {
         const { walletsError, wallets } = this.props;
         const { selectedWalletIndex } = this.state;
@@ -382,10 +387,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 </React.Fragment>
             );
         }
-    }
-
-    private handleOnCopy = () => {
-        // todo
     }
 
     private renderWithdraw(withdrawProps: WithdrawProps, type: string) {
@@ -459,6 +460,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
     clearWallets: () => dispatch(walletsData([])),
+    fetchSuccess: payload => dispatch(fetchSuccess(payload)),
 });
 // tslint:disable-next-line:no-any
 export const Wallets = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletsComponent) as any));
