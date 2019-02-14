@@ -19,15 +19,23 @@
     {
       background-color: var(--kyc-grey);
     }
-    
+
     &::-webkit-scrollbar-thumb {
       background-color: var(--color-blue);
     }
   }
 
   &-col {
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
-    flex-direction: column;
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
     width: 100%;
 
     &-right {
@@ -157,14 +165,14 @@
             &::-webkit-scrollbar {
               width: 3px;
             }
-        
+
             &::-webkit-scrollbar-track
             {
               background-color: transparent;
               border-top-left-radius: 50%;
               border-bottom-left-radius: 50%;
             }
-            
+
             &::-webkit-scrollbar-thumb {
               background-color: var(--color-white);
             }
