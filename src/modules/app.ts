@@ -6,6 +6,7 @@ import { marketsReducer } from './public/markets';
 import { depthReducer, orderBookReducer  } from './public/orderBook';
 import { rangerReducer  } from './public/ranger/reducer';
 import { recentTradesReducer  } from './public/recentTrades';
+import { apiKeysReducer } from './user/apiKeys';
 import { authReducer  } from './user/auth';
 import { sendEmailVerificationReducer } from './user/emailVerification';
 import { historyReducer  } from './user/history';
@@ -45,6 +46,7 @@ export const userReducer = combineReducers({
     identity: identityReducer,
     documents: documentsReducer,
     history: historyReducer,
+    apiKeys: apiKeysReducer,
     userActivity: userActivityReducer,
     ordersHistory: ordersHistoryReducer,
     openOrders: openOrdersReducer,

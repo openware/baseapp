@@ -115,12 +115,12 @@
     &-header {
       display: flex;
       border-bottom: 1px solid var(--profile-box-header-line);
+
       h1 {
         margin: 0;
       }
     }
   }
-
   &__row {
     display: flex;
     margin-top: calc(var(--gap) * 2);
@@ -312,6 +312,208 @@
         font-weight: 500;
       }
     }
+  }
+
+  &__api-keys {
+    width: 100%;
+    box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
+    margin-top: calc(var(--gap) * 6);
+    background: var(--profile-box);
+    border-radius: 4px;
+
+    .cr-table {
+      th {
+        font-weight: 500;
+        top: 0;
+      }
+      th, td {
+        padding: calc(var(--gap) * 3.33) calc(var(--gap) * 4) !important;
+      }
+    }
+
+    &__form {
+      padding: 1em;
+    }
+
+    &__header {
+      width: 100%;
+
+      h3 {
+        float: left;
+      }
+
+      span {
+        margin: calc(var(--gap) * 1.37) 0;
+        font-size: 1.17em;
+        cursor: pointer;
+      }
+    }
+
+    &__modal-header {
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .cr-modal__container-footer {
+      display: none;
+    }
+
+    &__state {
+      text-transform: capitalize;
+
+      &__active {
+        color: var(--color-green);
+      }
+
+      &__disabled {
+        color: var(--color-red)
+      }
+
+    }
+
+    &__state-checkbox {
+      text-align: left;
+      padding-top: 1.3em;
+    }
+
+    .secret-section {
+      color: var(--gamboge);
+
+      .secret-sign {
+        float: left;
+        font-size: calc(var(--gap) * 5);
+        padding: calc(var(--gap) * 0.5) calc(var(--gap) * 1) 0 0;
+      }
+
+      .secret-warning {
+        display: inline;
+
+        span {
+          font-weight: bolder;
+        }
+      }
+    }
+
+    .note-section {
+      font-size: calc(var(--gap) * 1.5);
+
+      span {
+        font-weight: bolder;
+      }
+    }
+
+    .cr-button {
+      margin-right: 0;
+      color: var(--color-white);
+      width: calc(var(--gap) * 20);
+      height: calc(var(--gap) * 4);
+      display: inline-block;
+      font-weight: normal;
+
+      &:hover {
+        background: var(--button-hover);
+      }
+
+      span {
+        text-transform: uppercase;
+        line-height: 2;
+      }
+    }
+
+    .modal-button {
+      width: 100%;
+    }
+
+    .cr-input {
+      border-bottom: none;
+    }
+
+    .pg-copyable-text__section {
+      padding: calc(var(--gap) * 3) 0 calc(var(--gap) * 3) 0;
+      position: relative;
+
+      legend {
+        background-color: var(--base-bright);
+        position:absolute;
+        top: calc(var(--gap) * 2);
+        left: calc(var(--gap) * 2);
+      }
+
+      .pg-copyable-text-field {
+        &__input {
+          padding: 0;
+          border-color: var(--placeholder-text);
+          border-radius: var(--gap);
+
+          .cr-input {
+            border-bottom: none;
+          }
+
+          input {
+            height: calc(var(--gap) * 6.7);
+            box-sizing: border-box;
+            color: var(--color-white);
+            padding: 0 calc(var(--gap) * 2);
+            background: var(--transparent);
+          }
+        }
+
+        &__button {
+          cursor: pointer;
+          text-transform: uppercase;
+          height: calc(var(--gap) * 4);
+          width: calc(var(--gap) * 10);
+          position: absolute;
+          right: calc(var(--gap) * 1);
+          top: calc(var(--gap) * 2.2);
+          line-height: calc(var(--gap) * 4);
+          text-align: center;
+          font-size: calc(var(--gap) * 2);
+          font-weight: bolder;
+
+          span {
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+  }
+
+  &__close {
+    position: relative;
+    display: inline-block;
+    margin-left: calc(var(--gap) / 1.33);
+    height: 15px;
+    width: 15px;
+    overflow: hidden;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      background: var(--text-table-grey);
+      content: '';
+      position: absolute;
+      top: 55%;
+      left: 0;
+      height: 2px;
+      width: 100%;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__pull-right {
+    float: right;
+  }
+
+  &__text-center {
+    text-align: center;
   }
 
   &__text-purple {

@@ -9,6 +9,8 @@ import { MarketsState, rootMarketsSaga } from './public/markets';
 import { DepthState, OrderBookState, rootOrderBookSaga } from './public/orderBook';
 import { RangerState } from './public/ranger/reducer';
 import { RecentTradesState, rootRecentTradesSaga } from './public/recentTrades';
+import { ApiKeysState } from './user/apiKeys';
+import { rootApiKeysSaga } from './user/apiKeys/sagas';
 import { AuthState, rootAuthSaga } from './user/auth';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
 import { HistoryState, rootHistorySaga } from './user/history';
@@ -29,7 +31,7 @@ export * from './public/orderBook';
 export * from './public/i18n';
 export * from './public/kline';
 export * from './public/alert';
-
+export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/wallets';
 export * from './user/profile';
@@ -64,6 +66,7 @@ export interface RootState {
         identity: IdentityState;
         phone: PhoneState;
         history: HistoryState;
+        apiKeys: ApiKeysState;
         userActivity: UserActivityState;
         ordersHistory: OrdersHistoryState;
         openOrders: OpenOrdersState;
@@ -92,6 +95,7 @@ export function* rootSaga() {
         call(rootHandleAlertSaga),
         call(rootHistorySaga),
         call(rootUserActivitySaga),
+        call(rootApiKeysSaga),
         call(rootLabelSaga),
         call(rootOrdersHistorySaga),
         call(rootOpenOrdersSaga),

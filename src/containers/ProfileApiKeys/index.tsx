@@ -1,0 +1,424 @@
+import { Button, Checkbox, Input, Modal, Table } from '@openware/components';
+import * as React from 'react';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { withRouter } from 'react-router';
+import { localeFullDate } from '../../helpers/localeFullDate';
+import {
+    ApiKeyCreateFetch,
+    apiKeyCreateFetch,
+    ApiKeyDataInterface, ApiKeyDeleteFetch,
+    apiKeyDeleteFetch,
+    ApiKeys2FAModal,
+    apiKeys2FAModal,
+    apiKeysFetch, ApiKeyStateModal,
+    ApiKeyUpdateFetch, apiKeyUpdateFetch, fetchSuccess,
+    RootState,
+    selectUserInfo,
+    User,
+} from '../../modules';
+import {
+    selectApiKeys,
+    selectApiKeysDataLoaded,
+    selectApiKeysModal,
+} from '../../modules/user/apiKeys/selectors';
+
+interface ReduxProps {
+    apiKeys: ApiKeyDataInterface[] | [];
+    dataLoaded: boolean;
+    modal: ApiKeyStateModal;
+    user: User;
+}
+
+interface DispatchProps {
+    toggleApiKeys2FAModal: typeof apiKeys2FAModal;
+    getApiKeys: typeof apiKeysFetch;
+    createApiKey: typeof apiKeyCreateFetch;
+    updateApiKey: typeof apiKeyUpdateFetch;
+    deleteApiKey: typeof apiKeyDeleteFetch;
+    fetchSuccess: typeof fetchSuccess;
+}
+
+interface ProfileApiKeysState {
+    otpCode: string;
+}
+
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+
+// tslint:disable jsx-no-multiline-js
+// tslint:disable jsx-no-lambda
+class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState> {
+
+    public readonly state = {
+        otpCode: '',
+    };
+
+    public t = (key: string) => {
+        return this.props.intl.formatMessage({id: key});
+    };
+
+    public copy = (id: string) => {
+        const copyText: HTMLInputElement | null = document.querySelector(`#${id}`);
+
+        if (copyText) {
+            copyText.select();
+
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+        }
+    };
+
+    public render() {
+        const {user, dataLoaded, apiKeys} = this.props;
+        const modal = (
+            <Modal
+                show={this.props.modal.active}
+                header={this.renderModalHeader()}
+                content={this.renderModalBody()}
+                footer={null}
+            />
+        );
+
+        return (
+            <div className="pg-profile-page__api-keys">
+                <div className="pg-profile-page-header">
+                    <div className="pg-profile-page__api-keys__header">
+                        <h3>{this.t('page.body.profile.apiKeys.header')}</h3>
+                        {user.otp && dataLoaded && (
+                            <span
+                                className="pg-profile-page__pull-right"
+                                onClick={this.handleCreateKeyClick}
+                            >
+                                {this.t('page.body.profile.apiKeys.header.create')} +
+                            </span>)}
+                    </div>
+                </div>
+
+                {!user.otp && (
+                    <p className="pg-profile-page__label pg-profile-page__text-center">
+                        {this.t('page.body.profile.apiKeys.noOtp')}
+                    </p>
+                )}
+
+                {user.otp && !dataLoaded && (
+                    <div className="pg-profile-page__text-center">
+                        <div className="cr-button" onClick={this.handleGetKeysClick}>
+                            <span>Show</span>
+                        </div>
+                    </div>
+                )}
+
+                {user.otp && dataLoaded && !apiKeys.length && (
+                    <p className="pg-profile-page__label pg-profile-page__text-center">
+                        {this.t('page.body.profile.apiKeys.noKeys')}
+                    </p>
+                )}
+
+                {user.otp && dataLoaded && apiKeys.length > 0 && (
+                    <Table
+                        header={this.getTableHeaders()}
+                        data={apiKeys && apiKeys.length ? this.getTableData(apiKeys) : [[]]}
+                    />
+                )}
+
+                {modal}
+            </div>
+
+        );
+    }
+
+    private getTableHeaders = () => {
+        return [
+            this.t('page.body.profile.apiKeys.table.header.kid'),
+            this.t('page.body.profile.apiKeys.table.header.algorithm'),
+            this.t('page.body.profile.apiKeys.table.header.state'),
+            '',
+            this.t('page.body.profile.apiKeys.table.header.created'),
+            this.t('page.body.profile.apiKeys.table.header.updated'),
+            '',
+        ];
+    };
+
+    private getTableData(apiKeysData: ApiKeyDataInterface[]) {
+        return apiKeysData.map(item => (
+            [
+                item.kid,
+                item.algorithm,
+                (
+                    <div className="pg-profile-page__api-keys__state">
+                        <span
+                            className={item.state === 'active' ? 'pg-profile-page__api-keys__state__active'
+                                : 'pg-profile-page__api-keys__state__disabled'}
+                        >
+                            {item.state}
+                        </span>
+                    </div>
+                ),
+                (
+                    <div className="pg-profile-page__api-keys__state-checkbox">
+                        <Checkbox
+                            checked={item.state === 'active'}
+                            className={'pg-profile-page__switch'}
+                            onChange={() => this.handleToggleStateKeyClick(item)}
+                            label={''}
+                            slider={true}
+                        />
+                    </div>
+                )
+                ,
+                localeFullDate(item.created_at),
+                localeFullDate(item.updated_at),
+                (
+                    <span
+                        className="pg-profile-page__close"
+                        key={item.kid}
+                        onClick={() => this.handleDeleteKeyClick(item)}
+                    />
+                ),
+            ]
+        ));
+    }
+
+    private renderModalHeader = () => {
+        const headerText = this.props.modal.action === 'createSuccess' ? this.t('page.body.profile.apiKeys.modal.created_header')
+            : this.t('page.body.profile.apiKeys.modal.header');
+        return (
+            <h3 className="pg-profile-page__api-keys__modal-header">{headerText}
+                <span className="pg-profile-page__close pg-profile-page__pull-right" onClick={this.handleHide2FAModal}/>
+            </h3>
+        );
+    };
+
+    private renderModalBody = () => {
+        const {otpCode} = this.state;
+        let body = (
+            <div>
+                <h3>{this.t('page.body.profile.apiKeys.modal.title')}</h3>
+                <div className="pg-profile-two-factor-auth__form-group">
+                    <div className="pg-copyable-text__section">
+                        <legend><span>{this.t('page.body.profile.apiKeys.modal.label')}</span></legend>
+                        <div className="cr-copyable-text-field pg-copyable-text-field__input">
+                            <div className="cr-copyable-text-field__input">
+                                <Input
+                                    onChangeValue={this.handleOtpCodeChange}
+                                    placeholder={this.t('page.body.profile.apiKeys.modal.placeholder')}
+                                    value={otpCode || ''}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+        let button;
+        switch (this.props.modal.action) {
+            case 'getKeys':
+                button =
+                    (
+                        <Button
+                            label={this.t('page.body.profile.apiKeys.modal.btn.show')}
+                            onClick={this.handleGetKeys}
+                            className="modal-button"
+                        />
+                    );
+                break;
+            case 'createKey':
+                button =
+                    (
+                        <Button
+                            label={this.t('page.body.profile.apiKeys.modal.btn.create')}
+                            onClick={this.handleCreateKey}
+                            className="modal-button"
+                        />
+                    );
+                break;
+            case 'createSuccess':
+                body = (
+                    <div>
+                        <div className="pg-copyable-text__section">
+                            <legend><span>{this.t('page.body.profile.apiKeys.modal.access_key')}</span></legend>
+                            <div className="cr-copyable-text-field pg-copyable-text-field__input">
+                                <div className="cr-copyable-text-field__input">
+                                    <input value={this.props.modal.apiKey.kid} readOnly={true} id={'access-key-id'}/>
+                                </div>
+                            </div>
+                            <div
+                                className="cr-button pg-copyable-text-field__button"
+                                onClick={() => this.handleCopy('access-key-id')}
+                            >
+                                <span>{this.t('page.body.profile.apiKeys.modal.btn.copy')}</span>
+                            </div>
+                        </div>
+                        <div className="secret-section">
+                            <span className="secret-sign">&#9888;</span>
+                            <p className="secret-warning">
+                                <span>{this.t('page.body.profile.apiKeys.modal.secret_key')}</span>
+                                <br/>
+                                {this.t('page.body.profile.apiKeys.modal.secret_key_info')}
+                                <span> {this.t('page.body.profile.apiKeys.modal.secret_key_store')}</span>
+                            </p>
+                        </div>
+                        <div className="pg-copyable-text__section">
+                            <legend><span>{this.t('page.body.profile.apiKeys.modal.secret_key')}</span></legend>
+                            <div className="cr-copyable-text-field pg-copyable-text-field__input">
+                                <div className="cr-copyable-text-field__input">
+                                    <input value={this.props.modal.apiKey.secret} readOnly={true} id={'secret-key-id'}/>
+                                </div>
+                            </div>
+                            <div
+                                className="cr-button pg-copyable-text-field__button"
+                                onClick={() => this.handleCopy('secret-key-id')}
+                            >
+                                <span>{this.t('page.body.profile.apiKeys.modal.btn.copy')}</span>
+                            </div>
+                        </div>
+                        <p className="note-section">
+                            <span>{this.t('page.body.profile.apiKeys.modal.note')} </span>
+                            <br/>
+                            {this.t('page.body.profile.apiKeys.modal.note_content')}
+                        </p>
+                    </div>
+                );
+                button =
+                    (
+                        <Button
+                            label={this.t('page.body.profile.apiKeys.modal.btn.create')}
+                            onClick={this.handleCreateSuccess}
+                            className="modal-button"
+                        />
+                    );
+                break;
+            case 'updateKey':
+                button =
+                    this.props.modal.apiKey.state === 'active' ?
+                        (
+                            <Button
+                                label={this.t('page.body.profile.apiKeys.modal.btn.disabled')}
+                                onClick={this.handleUpdateKey}
+                                className="modal-button"
+                            />
+                        )
+                        :
+                        (
+                            <Button
+                                label={this.t('page.body.profile.apiKeys.modal.btn.activate')}
+                                onClick={this.handleUpdateKey}
+                                className="modal-button"
+                            />
+                        );
+                break;
+            case 'deleteKey':
+                button =
+                    (
+                        <Button
+                            label={this.t('page.body.profile.apiKeys.modal.btn.delete')}
+                            onClick={this.handleDeleteKey}
+                            className="modal-button"
+                        />
+                    );
+                break;
+            default:
+                break;
+        }
+        return (
+            <div className="pg-profile-two-factor-auth">
+                <div className="pg-profile-two-factor-auth__api-keys_form">
+                    {body}
+                    {button}
+                </div>
+            </div>
+        );
+    };
+
+    private handleHide2FAModal = () => {
+        const payload: ApiKeys2FAModal['payload'] = {active: false};
+        this.props.toggleApiKeys2FAModal(payload);
+    };
+
+    private handleOtpCodeChange = (value: string) => {
+        this.setState({
+            otpCode: value,
+        });
+    };
+
+    private handleGetKeysClick = () => {
+        const payload: ApiKeys2FAModal['payload'] = {active: true, action: 'getKeys'};
+        this.props.toggleApiKeys2FAModal(payload);
+    };
+
+    private handleGetKeys = () => {
+        const payload: ApiKeyCreateFetch['payload'] = {totp_code: this.state.otpCode};
+        this.props.getApiKeys(payload);
+        this.setState({otpCode: ''});
+    };
+
+    private handleCreateKeyClick = () => {
+        const payload: ApiKeys2FAModal['payload'] = {active: true, action: 'createKey'};
+        this.props.toggleApiKeys2FAModal(payload);
+    };
+
+    private handleCreateKey = () => {
+        const payload: ApiKeyCreateFetch['payload'] = {totp_code: this.state.otpCode};
+        this.props.createApiKey(payload);
+        this.setState({otpCode: ''});
+    };
+
+    private handleCreateSuccess = () => {
+        const payload: ApiKeys2FAModal['payload'] = {active: false};
+        this.props.toggleApiKeys2FAModal(payload);
+    };
+
+    private handleCopy = (id: string) => {
+        this.copy(id);
+        this.props.fetchSuccess('success.api_keys.copied');
+    };
+
+    private handleToggleStateKeyClick = apiKey => {
+        const payload: ApiKeys2FAModal['payload'] = {active: true, action: 'updateKey', apiKey};
+        this.props.toggleApiKeys2FAModal(payload);
+    };
+
+    private handleUpdateKey = () => {
+        const apiKey: ApiKeyDataInterface = {...this.props.modal.apiKey};
+        apiKey.state = apiKey.state === 'active' ? 'disabled' : 'active';
+        const payload: ApiKeyUpdateFetch['payload'] = {totp_code: this.state.otpCode, apiKey: apiKey};
+        this.props.updateApiKey(payload);
+        this.setState({otpCode: ''});
+    };
+
+    private handleDeleteKeyClick = apiKey => {
+        const payload: ApiKeys2FAModal['payload'] = {active: true, action: 'deleteKey', apiKey};
+        this.props.toggleApiKeys2FAModal(payload);
+    };
+
+    private handleDeleteKey = () => {
+        const payload: ApiKeyDeleteFetch['payload'] = {kid: this.props.modal.apiKey.kid, totp_code: this.state.otpCode};
+        this.props.deleteApiKey(payload);
+        this.setState({otpCode: ''});
+    }
+}
+
+const mapStateToProps = (state: RootState): ReduxProps => ({
+    apiKeys: selectApiKeys(state),
+    dataLoaded: selectApiKeysDataLoaded(state),
+    modal: selectApiKeysModal(state),
+    user: selectUserInfo(state),
+});
+
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+    dispatch => ({
+        toggleApiKeys2FAModal: (payload: ApiKeys2FAModal['payload']) => dispatch(apiKeys2FAModal(payload)),
+        getApiKeys: payload => dispatch(apiKeysFetch(payload)),
+        createApiKey: payload => dispatch(apiKeyCreateFetch(payload)),
+        updateApiKey: payload => dispatch(apiKeyUpdateFetch(payload)),
+        deleteApiKey: payload => dispatch(apiKeyDeleteFetch(payload)),
+        fetchSuccess: payload => dispatch(fetchSuccess(payload)),
+
+    });
+
+const connected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileApiKeysComponent));
+const ProfileApiKeys = withRouter(connected);
+
+export {
+    ProfileApiKeys,
+};
