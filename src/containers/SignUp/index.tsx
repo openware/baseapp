@@ -326,8 +326,8 @@ class SignUpComponent extends React.Component<Props> {
         if (!isEmailValid && !isPasswordValid) {
             this.setState({
                 confirmationError: '',
-                emailError: ERROR_INVALID_EMAIL,
-                passwordError: ERROR_INVALID_PASSWORD,
+                emailError: this.props.intl.formatMessage({ id: ERROR_INVALID_EMAIL }),
+                passwordError: this.props.intl.formatMessage({ id: ERROR_INVALID_PASSWORD }),
                 hasConfirmed: false,
             });
             return;
@@ -336,7 +336,7 @@ class SignUpComponent extends React.Component<Props> {
         if (!isEmailValid) {
             this.setState({
                 confirmationError: '',
-                emailError: ERROR_INVALID_EMAIL,
+                emailError: this.props.intl.formatMessage({ id: ERROR_INVALID_EMAIL }),
                 passwordError: '',
                 hasConfirmed: false,
             });
@@ -347,7 +347,7 @@ class SignUpComponent extends React.Component<Props> {
             this.setState({
                 confirmationError: '',
                 emailError: '',
-                passwordError: ERROR_INVALID_PASSWORD,
+                passwordError: this.props.intl.formatMessage({ id: ERROR_INVALID_PASSWORD }),
                 hasConfirmed: false,
             });
             return;
@@ -355,7 +355,7 @@ class SignUpComponent extends React.Component<Props> {
 
         if (!isConfirmPasswordValid) {
             this.setState({
-                confirmationError: ERROR_PASSWORD_CONFIRMATION,
+                confirmationError: this.props.intl.formatMessage({ id: ERROR_PASSWORD_CONFIRMATION }),
                 emailError: '',
                 passwordError: '',
                 hasConfirmed: false,

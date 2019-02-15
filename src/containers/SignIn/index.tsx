@@ -228,7 +228,7 @@ class SignInBox extends React.Component<Props, SignInState> {
 
         if (!isEmailValid) {
             this.setState({
-                emailError: ERROR_INVALID_EMAIL,
+                emailError: this.props.intl.formatMessage({ id: ERROR_INVALID_EMAIL }),
                 passwordError: '',
             });
             return;
@@ -236,7 +236,7 @@ class SignInBox extends React.Component<Props, SignInState> {
         if (!password) {
             this.setState({
                 emailError: '',
-                passwordError: ERROR_EMPTY_PASSWORD,
+                passwordError: this.props.intl.formatMessage({ id: ERROR_EMPTY_PASSWORD }),
             });
             return;
         }

@@ -1,5 +1,29 @@
 import * as helpers from './';
 
+describe('Constants regexps', () => {
+  it('should validate correct passwords', () => {
+    expect('1azeRTY@'.match(helpers.PASSWORD_REGEX)).toBeTruthy();
+    expect('1aze@RTY'.match(helpers.PASSWORD_REGEX)).toBeTruthy();
+    expect('azeRTY@2'.match(helpers.PASSWORD_REGEX)).toBeTruthy();
+    expect('azeRTY@222222222'.match(helpers.PASSWORD_REGEX)).toBeTruthy();
+  });
+
+  it('should validate correct passwords in non latin languages', () => {
+    expect('йцукRTY@2'.match(helpers.PASSWORD_REGEX)).toBeTruthy();
+    expect('azeЙЦУК@3'.match(helpers.PASSWORD_REGEX)).toBeTruthy();
+  });
+
+  it('should not validate incorrect passwords', () => {
+    expect(''.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('12345678'.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('abcdefgh'.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('ABCDEFGH'.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('aaaaBBBB'.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('aZ1@'.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('1az@RTY'.match(helpers.PASSWORD_REGEX)).toBeNull();
+  });
+});
+
 describe('Helpers', () => {
     const wallet = {
         currency: 'btc',
