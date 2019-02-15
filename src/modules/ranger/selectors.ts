@@ -6,3 +6,6 @@ export const selectRanger = (state: RootState): RangerState =>
 
 export const selectRangerIsConnected = (state: RootState): boolean =>
     state.app.ranger.connected;
+
+export const selectSubscriptions = (state: RootState): string[] =>
+    state.app.ranger.subscriptions;

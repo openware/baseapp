@@ -7,7 +7,9 @@ import {
     RANGER_DIRECT_WRITE,
     RANGER_DISCONNECT_DATA,
     RANGER_DISCONNECT_FETCH,
+    RANGER_SUBSCRIPTIONS_DATA,
 } from './constants';
+import { marketKlineStreams } from './helpers';
 
 export interface RangerConnectFetch {
     type: typeof RANGER_CONNECT_FETCH;
@@ -49,10 +51,18 @@ export interface RangerConnectError {
     };
 }
 
+export interface SubscriptionsUpdate {
+    type: typeof RANGER_SUBSCRIPTIONS_DATA;
+    payload: {
+        subscriptions: string[];
+    };
+}
+
 export type RangerAction = RangerConnectFetch |
     RangerConnectData |
     RangerConnectError |
-    RangerDisconnectData;
+    RangerDisconnectData |
+    SubscriptionsUpdate;
 
 export type RangerErrorType = typeof RANGER_CONNECT_ERROR;
 
@@ -96,43 +106,9 @@ export const marketStreams = (market: Market) => ({
     ],
 });
 
-const periodsMapNumber: { [pair: string]: number } = {
-    '1m': 1,
-    '5m': 5,
-    '15m': 15,
-    '30m': 30,
-    '1h': 60,
-    '2h': 120,
-    '4h': 240,
-    '6h': 360,
-    '12h': 720,
-    '1d': 1440,
-    '3d': 4320,
-    '1w': 10080,
-};
-
-const periodsMapString: { [pair: number]: string } = {
-    1: '1m',
-    5: '5m',
-    15: '15m',
-    30: '30m',
-    60: '1h',
-    120: '2h',
-    240: '4h',
-    360: '6h',
-    720: '12h',
-    1440: '1d',
-    4320: '3d',
-    10080: '1w',
-};
-
-export const periodStringToMinutes = (period: string): number => periodsMapNumber[period];
-export const periodMinutesToString = (period: number): string => periodsMapString[period];
-
-const marketKlineStreams = (marketId: string, periodString: string) => ({
-    channels: [
-        `${marketId}.kline-${periodString}`,
-    ],
+export const subscriptionsUpdate = (payload: SubscriptionsUpdate['payload']): SubscriptionsUpdate => ({
+    type: RANGER_SUBSCRIPTIONS_DATA,
+    payload,
 });
 
 export const rangerSubscribeMarket = (market: Market): RangerDirectMessage => rangerSubscribe(marketStreams(market));

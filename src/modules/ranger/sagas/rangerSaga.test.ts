@@ -1,15 +1,22 @@
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { Cryptobase } from '../../api';
-import { createEchoServer as createEchoServer, setupMockStore } from '../../helpers/jest';
-import { PrivateTradeEvent } from '../history';
-import { KLINE_PUSH } from '../kline/constants';
-import { Market, Ticker, TickerEvent } from '../markets';
-import { MARKETS_TICKERS_DATA } from '../markets/constants';
-import { DEPTH_DATA } from '../orderBook/constants';
-import { PublicTradeEvent } from '../recentTrades';
-import { RECENT_TRADES_PUSH } from '../recentTrades/constants';
-import { OrderEvent } from '../types';
+import {
+    rangerSagas,
+} from '.';
+import { Cryptobase } from '../../../api';
+import { createEchoServer as createEchoServer, setupMockStore } from '../../../helpers/jest';
+import { PrivateTradeEvent } from '../../history';
+import { KLINE_PUSH } from '../../kline/constants';
+import {
+    Market,
+    Ticker,
+    TickerEvent,
+} from '../../markets';
+import { MARKETS_TICKERS_DATA } from '../../markets/constants';
+import { DEPTH_DATA } from '../../orderBook/constants';
+import { PublicTradeEvent } from '../../recentTrades';
+import { RECENT_TRADES_PUSH } from '../../recentTrades/constants';
+import { OrderEvent } from '../../types';
 import {
     rangerConnectFetch,
     rangerDirectMessage,
@@ -18,15 +25,14 @@ import {
     rangerSubscribeMarket,
     rangerUnsubscribeKlineMarket,
     rangerUnsubscribeMarket,
-} from './actions';
+} from '../actions';
 import {
     RANGER_CONNECT_DATA,
     RANGER_CONNECT_FETCH,
     RANGER_DIRECT_WRITE,
     RANGER_DISCONNECT_DATA,
     RANGER_DISCONNECT_FETCH,
-} from './constants';
-import { formatTicker, rangerSagas } from './sagas';
+} from '../constants';
 
 // tslint:disable no-any no-magic-numbers no-console
 const debug = false;
@@ -64,7 +70,15 @@ describe('Ranger module', () => {
 
     beforeEach(() => {
         sagaMiddleware = createSagaMiddleware();
-        store = setupMockStore(sagaMiddleware, debug)();
+        store = setupMockStore(sagaMiddleware, debug)({
+            app: {
+                ranger: {
+                    withAuth: false,
+                    connected: false,
+                    subscriptions: [],
+                },
+            },
+        });
         sagaMiddleware.run(rangerSagas);
     });
 
@@ -222,10 +236,6 @@ describe('Ranger module', () => {
                 type: MARKETS_TICKERS_DATA,
                 payload: tickers,
             };
-
-            it('formats tickers info from events', () => {
-                expect(formatTicker(tickerEvents)).toEqual(tickers);
-            });
 
             it('should push market tickers', async () => {
                 return new Promise(resolve => {

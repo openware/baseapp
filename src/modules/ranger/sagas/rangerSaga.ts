@@ -3,18 +3,18 @@ import { Channel, eventChannel } from 'redux-saga';
 import { all, call, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 import { rangerUrl } from '../../../api';
 import { klinePush } from '../../kline';
-import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket, Ticker, TickerEvent } from '../../markets';
+import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
 import { SET_CURRENT_MARKET } from '../../markets/constants';
 import { depthData } from '../../orderBook';
 import { userOrdersUpdate } from '../../orders';
 import { recentTradesPush } from '../../recentTrades';
 import {
-    marketStreams,
     RangerConnectFetch,
     rangerDisconnectData,
     rangerDisconnectFetch,
     rangerSubscribeMarket,
     rangerUnsubscribeMarket,
+    subscriptionsUpdate,
 } from '../actions';
 import {
     RANGER_CONNECT_DATA,
@@ -23,37 +23,14 @@ import {
     RANGER_DISCONNECT_DATA,
     RANGER_DISCONNECT_FETCH,
 } from '../constants';
+import { formatTicker, generateSocketURI, streamsBuilder } from '../helpers';
+import {
+    selectSubscriptions,
+} from '../selectors';
 
-const generateSocketURI = (baseUrl: string, s: string[]) => `${baseUrl}/?stream=${s.sort().join('&stream=')}`;
-
-export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: string]: Ticker } => {
-    const tickers = {};
-    for (const market in events) {
-        if (events.hasOwnProperty(market)) {
-            const event: TickerEvent = events[market];
-            const { open, low, high, last, volume, sell, buy, avg_price, price_change_percent } = event;
-            tickers[market] = { open, low, high, last, sell, buy, vol: volume, avg_price, price_change_percent };
-        }
-    }
-    return tickers;
-};
-
-const streamsBuilder = (withAuth: boolean, period: string, market: Market | undefined) => {
-    let streams: string[] = [
-        'global.tickers',
-        'order',
-        'trade',
-    ];
-    if (market) {
-        streams = streams.concat(marketStreams(market).channels);
-    }
-    return streams;
-};
-
-// tslint:disable no-console
-const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market | undefined): [Channel<{}>, WebSocket] => {
+const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market | undefined, prevSubs: string[]): [Channel<{}>, WebSocket] => {
     const baseUrl = `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
-    const streams = streamsBuilder(withAuth, '1m', market);
+    const streams = streamsBuilder(withAuth, prevSubs, market);
 
     const ws = new WebSocket(generateSocketURI(baseUrl, streams));
     const channel = eventChannel(emitter => {
@@ -61,8 +38,8 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
             emitter({ type: RANGER_CONNECT_DATA });
         };
         ws.onerror = error => {
-            console.log(`WebSocket error ${error}`);
-            console.dir(error);
+            window.console.log(`WebSocket error ${error}`);
+            window.console.dir(error);
         };
         ws.onclose = event => {
             channel.close();
@@ -74,12 +51,13 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
             try {
                 payload = JSON.parse(data as string);
             } catch (e) {
-                console.error(`Error parsing : ${e.data}`);
+                window.console.error(`Error parsing : ${e.data}`);
             }
 
             for (const routingKey in payload) {
                 if (payload.hasOwnProperty(routingKey)) {
                     const event = payload[routingKey];
+
                     // public
                     if (/([^.]*)\.update/.test(routingKey)) {
                         emitter(depthData(event));
@@ -116,6 +94,13 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
 
                         // public
                         case 'success':
+                            switch (event.message) {
+                                case 'subscribed':
+                                case 'unsubscribed':
+                                    emitter(subscriptionsUpdate({subscriptions: event.streams}));
+                                    return;
+                                default:
+                            }
                             return;
 
                         // private
@@ -130,7 +115,7 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
 
                         default:
                     }
-                    console.log(`Unhandeled websocket channel: ${routingKey}`);
+                    window.console.log(`Unhandeled websocket channel: ${routingKey}`);
 
                 }
             }
@@ -161,7 +146,7 @@ function* writter(socket: WebSocket) {
                 socket.send(JSON.stringify(data.payload));
                 break;
             default:
-                console.log(`Ranger state is ${wsStateToString(socket)}`);
+                window.console.log(`Ranger state is ${wsStateToString(socket)}`);
                 break;
         }
     }
@@ -236,7 +221,8 @@ export function* rangerSagas() {
         }
 
         if (connectFetchPayload) {
-            [channel, socket] = yield call(initRanger, connectFetchPayload, market);
+            const prevSubs = yield select(selectSubscriptions);
+            [channel, socket] = yield call(initRanger, connectFetchPayload, market, prevSubs);
             initialized = true;
             yield fork(bindSocket, channel, socket);
         }

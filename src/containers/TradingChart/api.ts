@@ -4,7 +4,7 @@ import { gatewayUrl } from '../../api/config';
 import { LibrarySymbolInfo } from '../../charting_library/datafeed-api';
 import { klineArrayToObject, KlineState } from '../../modules';
 import { Market } from '../../modules/markets';
-import { periodMinutesToString } from '../../modules/ranger';
+import { periodMinutesToString } from '../../modules/ranger/helpers';
 
 // tslint:disable-next-line no-console
 export const print = (...x) => console.log.apply(null, ['>>>> TC', ...x]);
