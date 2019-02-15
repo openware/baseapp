@@ -2,151 +2,179 @@ import { Loader, OpenOrders } from '@openware/components';
 import classnames from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
-import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDate, preciseData } from '../../helpers';
-import { RootState } from '../../modules';
-import { Market, selectCurrentMarket } from '../../modules/markets';
 import {
-    Order,
-    orderCancelFetch,
-    selectOpenOrders,
-    selectOrdersLoading,
-    userOrdersFetch,
-} from '../../modules/orders';
+    Market,
+    openOrdersCancelFetch,
+    RootState,
+    selectCancelOpenOrdersFetching,
+    selectCurrentMarket,
+    selectOpenOrdersFetching,
+    selectOpenOrdersList,
+    selectUserLoggedIn,
+    userOpenOrdersFetch,
+} from '../../modules';
+import { OrderCommon, OrderSide } from '../../modules/types';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
-    openOrdersData: Order[];
-    openOrdersLoading?: boolean;
+    list: OrderCommon[];
+    fetching: boolean;
+    cancelFetching: boolean;
+    userLoggedIn: boolean;
 }
 
 interface DispatchProps {
-    orderHistory: typeof userOrdersFetch;
-    orderCancel: typeof orderCancelFetch;
+    userOpenOrdersFetch: typeof userOpenOrdersFetch;
+    openOrdersCancelFetch: typeof openOrdersCancelFetch;
 }
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 export class OpenOrdersContainer extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
     public componentDidMount() {
-        if (this.props.currentMarket){
-            this.props.orderHistory({market: [this.props.currentMarket], state: 'wait'});
+        const { currentMarket, userLoggedIn } = this.props;
+        if (userLoggedIn && currentMarket) {
+            this.props.userOpenOrdersFetch({ market: currentMarket });
         }
     }
 
     public componentWillReceiveProps(next: Props) {
-        if (next.currentMarket && this.props.currentMarket !== next.currentMarket) {
-            this.props.orderHistory({market: [next.currentMarket], state: 'wait'});
+        const { userLoggedIn, currentMarket } = next;
+        const { userLoggedIn: prevUserLoggedIn, currentMarket: prevCurrentMarket } = this.props;
+
+        if (!prevUserLoggedIn && userLoggedIn && currentMarket) {
+            this.props.userOpenOrdersFetch({ market: currentMarket });
+        } else if (userLoggedIn && currentMarket && prevCurrentMarket !== currentMarket) {
+            this.props.userOpenOrdersFetch({ market: currentMarket });
         }
     }
 
     public render() {
-        const { openOrdersData, openOrdersLoading } = this.props;
+        const { list, fetching } = this.props;
         const classNames = classnames('pg-open-orders', {
-            'pg-open-orders--empty': !openOrdersData.length,
-            'pg-open-orders--loading': openOrdersLoading,
+            'pg-open-orders--empty': !list.length,
+            'pg-open-orders--loading': fetching,
         });
         return (
             <div className={classNames}>
                 <div className="cr-table-header__content">
-                    <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.openOrders" /></div>
+                    <div className="cr-title-component">
+                        <FormattedMessage id="page.body.trade.header.openOrders" />
+                    </div>
                 </div>
-                {openOrdersLoading ? <Loader /> : this.openOrders()}
+                {fetching ? <Loader /> : this.openOrders()}
             </div>
         );
     }
 
-    public translate = (e: string) => {
-        return this.props.intl.formatMessage({id: e});
+    private renderHeadersKeys = () => {
+        return [
+            'Date',
+            'Action',
+            'Price',
+            'Amount',
+            'Total',
+            'Filled',
+            '',
+        ];
     };
 
     private renderHeaders = () => {
-       return [
-           this.translate('page.body.trade.header.openOrders.content.date'),
-           this.translate('page.body.trade.header.openOrders.content.action'),
-           this.translate('page.body.trade.header.openOrders.content.price'),
-           this.translate('page.body.trade.header.openOrders.content.amount'),
-           this.translate('page.body.trade.header.openOrders.content.total'),
-           this.translate('page.body.trade.header.openOrders.content.filled'),
-           '',
-         ];
-     }
-
-    private openOrders = () => (
-        <OpenOrders
-            headers={this.renderHeaders()}
-            data={this.renderData(this.props.openOrdersData)}
-            onCancel={this.handleCancel}
-        />
-    );
-
-
-    private static getDate = (time: string) => {
-        return localeDate(time);
+        return [
+            this.translate('page.body.trade.header.openOrders.content.date'),
+            this.translate('page.body.trade.header.openOrders.content.action'),
+            this.translate('page.body.trade.header.openOrders.content.price'),
+            this.translate('page.body.trade.header.openOrders.content.amount'),
+            this.translate('page.body.trade.header.openOrders.content.total'),
+            this.translate('page.body.trade.header.openOrders.content.filled'),
+            '',
+        ];
     };
 
-    private renderData = (data: Order[]) => {
-        const renderRow = item => {
-          const { price, created_at, remaining_volume, origin_volume, kind, side, executed_volume, volume } = item;
-          const resultSide = this.getType(side, kind);
-          const remaining = remaining_volume || origin_volume;
-          const total = remaining * price;
-          const executed = executed_volume || (volume - remaining_volume);
-          const filled = (executed / volume * 100).toFixed(2);
-          const priceFixed = this.props.currentMarket ? this.props.currentMarket.bid_precision : 0;
-          const amountFixed = this.props.currentMarket ? this.props.currentMarket.ask_precision : 0;
-
-          return [OpenOrdersContainer.getDate(created_at), resultSide, preciseData(price, priceFixed), preciseData(remaining, amountFixed), preciseData(total, amountFixed), `${filled}%`, ''];
-        };
-
-        return (data.length > 0)
-            ? this.sortDataByDateTime(data).map(renderRow)
-            : [[this.translate('page.noDataToShow')]];
+    private openOrders = () => {
+        return (
+            <OpenOrders
+                headersKeys={this.renderHeadersKeys()}
+                headers={this.renderHeaders()}
+                data={this.renderData()}
+                onCancel={this.handleCancel}
+            />
+        );
     };
 
-    private getType = (side: string, kind: string) => {
-        if (kind) {
-            return kind;
+    private renderData = () => {
+        const { list, currentMarket } = this.props;
+
+        if (list.length === 0) {
+            return [[this.translate('page.noDataToShow')]];
         }
 
-        return side === 'sell' ? this.props.intl.formatMessage({id: `page.body.trade.header.openOrders.content.ask`})
-                                : this.props.intl.formatMessage({id: `page.body.trade.header.openOrders.content.bid`});
+        return this.sortDataByDateTime().map((item: OrderCommon) => {
+            const { price, created_at, remaining_volume, origin_volume, side } = item;
+            const executedVolume = Number(origin_volume) - Number(remaining_volume);
+            const remainingAmount = Number(remaining_volume) * Number(price);
+            const total = Number(origin_volume) * Number(price);
+            const filled = ((executedVolume / Number(origin_volume)) * 100).toFixed(2);
+            const priceFixed = currentMarket ? currentMarket.bid_precision : 0;
+            const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
+
+            return [
+                localeDate(created_at),
+                this.getTypeIntl(side),
+                preciseData(price, priceFixed),
+                preciseData(remainingAmount, amountFixed),
+                preciseData(total, amountFixed),
+                `${filled}%`,
+                side,
+            ];
+        });
+    };
+
+    private sortDataByDateTime() {
+        const { list } = this.props;
+        return [...list].sort((a: OrderCommon, b: OrderCommon) => {
+            return moment(a.created_at) < moment(b.created_at) ? 1 : -1;
+        });
     }
 
-    private sortDataByDateTime(data: Order[]) {
-        const sortByDateTime = (a: Order, b: Order) =>
-            moment(a.created_at) < moment(b.created_at) ? 1 : -1;
-        const dataToSort = [...data];
+    private translate = (e: string) => this.props.intl.formatMessage({ id: e });
 
-        dataToSort.sort(sortByDateTime);
-        return dataToSort;
-    }
+    private getTypeIntl = (side: OrderSide) =>
+        side === 'sell'
+            ? this.props.intl.formatMessage({ id: 'page.body.trade.header.openOrders.content.ask' })
+            : this.props.intl.formatMessage({ id: 'page.body.trade.header.openOrders.content.bid' });
 
     private handleCancel = (index: number) => {
-        const { openOrdersData } = this.props;
-        const orderToDelete = this.sortDataByDateTime(openOrdersData)[index];
-        this.props.orderCancel({ id: orderToDelete.id });
+        const { list, cancelFetching } = this.props;
+        if (cancelFetching) {
+            return;
+        }
+        const orderToDelete = this.sortDataByDateTime()[index];
+        this.props.openOrdersCancelFetch({ id: orderToDelete.id, list });
     };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     currentMarket: selectCurrentMarket(state),
-    openOrdersData: selectOpenOrders(state),
-    openOrdersLoading: selectOrdersLoading(state),
+    list: selectOpenOrdersList(state),
+    fetching: selectOpenOrdersFetching(state),
+    cancelFetching: selectCancelOpenOrdersFetching(state),
+    userLoggedIn: selectUserLoggedIn(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        orderHistory: payload => dispatch(userOrdersFetch(payload)),
-        orderCancel: payload => dispatch(orderCancelFetch(payload)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    userOpenOrdersFetch: payload => dispatch(userOpenOrdersFetch(payload)),
+    openOrdersCancelFetch: payload => dispatch(openOrdersCancelFetch(payload)),
+});
 
 export type OpenOrdersProps = ReduxProps;
 
-export const OpenOrdersComponent =
-    injectIntl(connect(mapStateToProps, mapDispatchToProps)(OpenOrdersContainer));
+export const OpenOrdersComponent = injectIntl(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps,
+    )(OpenOrdersContainer),
+);

@@ -35,4 +35,12 @@ describe('Orders History selectors', () => {
     it('should check selectOrdersHistoryLoading selector', () => {
         expect(selectors.selectOrdersHistoryLoading(mockedStore)).toEqual(mockedStore.app.ordersHistory.fetching);
     });
+
+    it('should check selectCancelAllFetching selector', () => {
+        expect(selectors.selectCancelAllFetching(mockedStore)).toEqual(mockedStore.app.ordersHistory.cancelAllFetching);
+    });
+
+    it('should check selectCancelFetching selector', () => {
+        expect(selectors.selectCancelFetching(mockedStore)).toEqual(mockedStore.app.ordersHistory.cancelFetching);
+    });
 });

@@ -32,6 +32,7 @@ import {
     RANGER_DIRECT_WRITE,
     RANGER_DISCONNECT_DATA,
     RANGER_DISCONNECT_FETCH,
+    RANGER_USER_ORDER_UPDATE,
 } from '../constants';
 
 // tslint:disable no-any no-magic-numbers no-console
@@ -380,7 +381,7 @@ describe('Ranger module', () => {
             const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'wait', volume: '0.1', origin_volume: '0.1' };
             const mockOrder = { order: data };
             const expectedAction = {
-                type: 'orders/USER_ORDERS_UPDATE',
+                type: RANGER_USER_ORDER_UPDATE,
                 payload: data,
             };
             it('should push user order', async () => {
@@ -420,7 +421,7 @@ describe('Ranger module', () => {
             const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'done', volume: '0.0', origin_volume: '0.1' };
             const mockOrder = { order: data };
             const expectedAction = {
-                type: 'orders/USER_ORDERS_UPDATE',
+                type: RANGER_USER_ORDER_UPDATE,
                 payload: data,
             };
             it('should push user order', async () => {

@@ -1,5 +1,4 @@
-import { OrderSide, OrderStatus, OrderType } from '../orders';
-import { CommonState } from '../types';
+import { CommonState, OrderSide, OrderStatus, OrderType } from '../types';
 
 export interface OrderBookOrder {
     id: number;

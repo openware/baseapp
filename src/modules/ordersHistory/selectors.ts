@@ -1,8 +1,7 @@
 import { RootState } from '../index';
-import { Order } from '../orders';
+import { OrderCommon } from '../types';
 
-
-export const selectOrdersHistory = (state: RootState): Order[] =>
+export const selectOrdersHistory = (state: RootState): OrderCommon[] =>
     state.app.ordersHistory.list;
 
 export const selectTotalOrdersHistory = (state: RootState): number =>
@@ -30,3 +29,9 @@ export const selectOrdersNextPageExists = (state: RootState, limit: number): boo
 
 export const selectOrdersHistoryLoading = (state: RootState): boolean =>
     state.app.ordersHistory.fetching;
+
+export const selectCancelAllFetching = (state: RootState): boolean =>
+    state.app.ordersHistory.cancelAllFetching;
+
+export const selectCancelFetching = (state: RootState): boolean =>
+    state.app.ordersHistory.cancelFetching;

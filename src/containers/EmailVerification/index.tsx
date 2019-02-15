@@ -57,7 +57,6 @@ class EmailVerificationComponent extends React.Component<Props> {
     }
 
     private handleClick = () => {
-        window.console.log(this.props.location.state.email);
         this.props.emailVerificationFetch(this.props.location.state.email);
     }
 }

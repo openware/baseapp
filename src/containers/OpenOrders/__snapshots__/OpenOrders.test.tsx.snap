@@ -2,6 +2,7 @@
 
 exports[`OpenOrders should render 1`] = `
 <Connect(InjectIntl(Connect(OpenOrdersContainer)))
+  cancelFetching={false}
   currentMarket={
     Object {
       "ask_fee": "0.0015",
@@ -18,18 +19,22 @@ exports[`OpenOrders should render 1`] = `
       "name": "ETH/USD",
     }
   }
-  openOrdersData={
+  fetching={false}
+  list={
     Array [
       Object {
         "created_at": "2019-01-31T21:14:04+01:00",
+        "executed_volume": 10,
         "id": 131,
+        "market": "ethusd",
+        "origin_volume": 10,
         "price": 104.4313,
-        "remaining_volume": "0.0000",
+        "remaining_volume": 0,
         "side": "sell",
         "state": "wait",
-        "volume": "0.0000",
       },
     ]
   }
+  userLoggedIn={true}
 />
 `;

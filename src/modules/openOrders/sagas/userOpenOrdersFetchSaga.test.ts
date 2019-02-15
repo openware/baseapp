@@ -3,11 +3,11 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
 import { fetchError, rootSaga } from '../../index';
-import { convertOrderAPI } from '../../openOrders/helpers';
 import { OrderAPI } from '../../types';
-import { userOrdersHistoryData, userOrdersHistoryError, userOrdersHistoryFetch } from '../actions';
+import { userOpenOrdersData, userOpenOrdersError, userOpenOrdersFetch } from '../actions';
 
-describe('Orders History', () => {
+
+describe('Open Orders Cancel', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware<{}>;
     let mockAxios: MockAdapter;
@@ -28,69 +28,79 @@ describe('Orders History', () => {
         message: 'Server error',
     };
 
-    const fakeHistory: OrderAPI[] = [
+    const fakeMarket = {
+        id:'ethusd',
+        name:'ETH/USD',
+        ask_unit:'eth',
+        bid_unit:'usd',
+        ask_fee:'0.0015',
+        bid_fee:'0.0015',
+        min_ask_price:'0.0',
+        max_bid_price:'0.0',
+        min_ask_amount:'0.0',
+        min_bid_amount:'0.0',
+        ask_precision:4,
+        bid_precision:4,
+    };
+
+    const fakeOpenOrders: OrderAPI[] = [
         {
             id: 162,
             side: 'buy',
             price: '0.3',
-            state:'wait',
+            state: 'wait',
             created_at: '2018-11-29T16:54:46+01:00',
-            volume: '123.1234',
             remaining_volume: '123.1234',
-            executed_volume: '0.0',
-            market: 'ethbtc',
+            volume: '123.1234',
+            executed_volume: '0',
+            market: 'ethusd',
             ord_type: 'limit',
-            avg_price: '0.2',
+            avg_price: '0.3',
         },
         {
             id: 16,
             side: 'sell',
             price: '0.3',
             state: 'wait',
-            created_at: '2018-11-20T10:24:48+01:00',
-            volume: '123.1234',
+            created_at: '2018-11-29T16:54:46+01:00',
             remaining_volume: '123.1234',
-            executed_volume: '0.0',
-            market: 'ethbtc',
+            volume: '123.1234',
+            executed_volume: '0',
+            market: 'ethusd',
             ord_type: 'limit',
-            avg_price: '0.2',
+            avg_price: '0.3',
         },
     ];
-    const fakeHeaders = { total: 2 };
-    const fakeFetchPayloadFirstPage = { pageIndex: 0, type: 'all', limit: 25 };
-    const fakeSuccessPayloadFirstPage = {
-        list: fakeHistory.map(convertOrderAPI),
-        pageIndex: 0,
-        total: fakeHeaders.total,
+
+    const fakeFetchPayload = { market: fakeMarket };
+
+
+    const mockGetOpenOrders = () => {
+        mockAxios.onGet(`/market/orders?market=ethusd&state=wait`).reply(200, fakeOpenOrders);
     };
 
-
-    const mockOrdersHistory = () => {
-        mockAxios.onGet(`/market/orders?limit=25&page=1`).reply(200, fakeHistory, fakeHeaders);
-    };
-
-    const expectedActionsFetchWithFirstPage = [
-        userOrdersHistoryFetch(fakeFetchPayloadFirstPage),
-        userOrdersHistoryData(fakeSuccessPayloadFirstPage),
+    const expectedActionsFetch = [
+        userOpenOrdersFetch(fakeFetchPayload),
+        userOpenOrdersData(fakeOpenOrders),
     ];
     const expectedActionsError = [
-        userOrdersHistoryFetch(fakeFetchPayloadFirstPage),
-        userOrdersHistoryError(),
+        userOpenOrdersFetch(fakeFetchPayload),
+        userOpenOrdersError(),
         fetchError(fakeError),
     ];
 
-    it('should fetch currency deposit history for 1 page in success flow', async () => {
-        mockOrdersHistory();
+    it('should fetch open orders', async () => {
+        mockGetOpenOrders();
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === expectedActionsFetchWithFirstPage.length) {
-                    expect(actions).toEqual(expectedActionsFetchWithFirstPage);
+                if (actions.length === expectedActionsFetch.length) {
+                    expect(actions).toEqual(expectedActionsFetch);
                     resolve();
                 }
             });
         });
-        store.dispatch(userOrdersHistoryFetch(fakeFetchPayloadFirstPage));
+        store.dispatch(userOpenOrdersFetch(fakeFetchPayload));
         return promise;
     });
 
@@ -105,7 +115,7 @@ describe('Orders History', () => {
                 }
             });
         });
-        store.dispatch(userOrdersHistoryFetch(fakeFetchPayloadFirstPage));
+        store.dispatch(userOpenOrdersFetch(fakeFetchPayload));
         return promise;
     });
 });

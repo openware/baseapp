@@ -12,6 +12,7 @@ import { rootSendIdentitySaga } from './kyc/identity';
 import { rootLabelSaga } from './kyc/label';
 import { rootSendCodeSaga } from './kyc/phone';
 import { rootMarketsSaga } from './markets';
+import { rootOpenOrdersSaga } from './openOrders';
 import { rootOrderBookSaga } from './orderBook';
 import { rootOrdersSaga } from './orders';
 import { rootOrdersHistorySaga } from './ordersHistory';
@@ -26,6 +27,7 @@ export * from './contact';
 export * from './wallets';
 export * from './profile';
 export * from './markets';
+export * from './openOrders';
 export * from './orderBook';
 export * from './orders';
 export * from './ordersHistory';
@@ -67,6 +69,7 @@ export function* rootSaga() {
         call(rootUserActivitySaga),
         call(rootLabelSaga),
         call(rootOrdersHistorySaga),
+        call(rootOpenOrdersSaga),
         call(rootEmailVerificationSaga),
     ]);
 }

@@ -17,6 +17,7 @@ import {
     PhoneState,
 } from './kyc';
 import { marketsReducer, MarketsState } from './markets';
+import { openOrdersReducer, OpenOrdersState } from './openOrders';
 import {
     depthReducer,
     DepthState,
@@ -54,6 +55,7 @@ export interface AppState {
     alert: AlertState;
     kline: KlineState;
     ordersHistory: OrdersHistoryState;
+    openOrders: OpenOrdersState;
     sendEmailVerification: EmailVerificationState;
 }
 
@@ -79,5 +81,6 @@ export const appReducer = combineReducers({
     kline: klineReducer,
     alert: alertReducer,
     ordersHistory: ordersHistoryReducer,
+    openOrders: openOrdersReducer,
     sendEmailVerification: sendEmailVerificationReducer,
 });

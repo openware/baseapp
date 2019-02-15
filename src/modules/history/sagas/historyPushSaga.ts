@@ -1,18 +1,12 @@
 // tslint:disable-next-line
 import { put, select } from 'redux-saga/effects';
-import { MakerType, PrivateTrade, PrivateTradeEvent } from '../../';
+import { PrivateTrade, PrivateTradeEvent } from '../../';
 import { defaultStorageLimit } from '../../../api';
 import { localeDate } from '../../../helpers/localeDate';
 import { getTimezone } from '../../../helpers/timezone';
+import { kindToMakerType } from '../../helpers';
 import { HistoryPush, pushHistoryFinish } from '../actions';
 import { selectHistory } from '../selectors';
-
-
-const makerTypeMap = {
-    ask: 'sell',
-    bid: 'buy',
-};
-export const kindToMakerType = (kind: string): MakerType => makerTypeMap[kind];
 
 export function* historyPushSaga(action: HistoryPush) {
     const tradeEventToTrade = (tradeEvent: PrivateTradeEvent): PrivateTrade => {

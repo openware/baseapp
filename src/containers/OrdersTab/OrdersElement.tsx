@@ -5,9 +5,10 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDate, setTradeColor, sortByDate } from '../../helpers';
 import {
     Market,
-    Order,
-    orderCancelFetch,
+    ordersHistoryCancelFetch,
     RootState,
+    selectCancelAllFetching,
+    selectCancelFetching,
     selectCurrentPageIndex,
     selectMarkets,
     selectOrdersFirstElemIndex,
@@ -18,6 +19,7 @@ import {
     selectTotalOrdersHistory,
     userOrdersHistoryFetch,
 } from '../../modules';
+import { OrderCommon } from '../../modules/types';
 
 
 interface OrdersProps {
@@ -28,15 +30,17 @@ interface ReduxProps {
     marketsData: Market[];
     pageIndex: number;
     firstElemIndex: number;
-    list: Order[];
+    list: OrderCommon[];
     fetching: boolean;
     lastElemIndex: number;
     nextPageExists: boolean;
     total: number;
+    cancelAllFetching: boolean;
+    cancelFetching: boolean;
 }
 
 interface DispatchProps {
-    ordersCancelById: typeof orderCancelFetch;
+    ordersHistoryCancelFetch: typeof ordersHistoryCancelFetch;
     userOrdersHistoryFetch: typeof userOrdersHistoryFetch;
 }
 
@@ -125,7 +129,6 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             remaining_volume,
             side,
             state,
-            volume,
         } = item;
 
         const currentMarket = this.props.marketsData.find(m => m.id === market)
@@ -143,7 +146,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             <span style={{ color: setTradeColor(side).color }} key={id}>{orderType}</span>,
             marketName,
             <Decimal key={id} fixed={currentMarket.bid_precision}>{actualPrice}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.ask_precision}>{remaining_volume}</Decimal>,
             <Decimal key={id} fixed={currentMarket.ask_precision}>{executed_volume}</Decimal>,
             <Decimal key={id} fixed={currentMarket.ask_precision}>{remaining_volume}</Decimal>,
             <Decimal key={id} fixed={currentMarket.ask_precision}>{costRemaining.toString()}</Decimal>,
@@ -173,10 +176,11 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     };
 
     private handleCancel = (id: number) => () => {
-        const orderToDelete = this.props.openOrdersData.find(o => o.id === id)
-            || { id: 0 };
-        const orderToDeleteId = orderToDelete.id.toString();
-        this.props.ordersCancelById({ id: orderToDeleteId });
+        const { cancelAllFetching, cancelFetching, type, list } = this.props;
+        if (cancelAllFetching || cancelFetching) {
+            return;
+        }
+        this.props.ordersHistoryCancelFetch({ id, type, list });
     };
 }
 
@@ -189,11 +193,13 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     lastElemIndex: selectOrdersLastElemIndex(state, 25),
     nextPageExists: selectOrdersNextPageExists(state, 25),
     total: selectTotalOrdersHistory(state),
+    cancelAllFetching: selectCancelAllFetching(state),
+    cancelFetching: selectCancelFetching(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        ordersCancelById: payload => dispatch(orderCancelFetch(payload)),
+        ordersHistoryCancelFetch: payload => dispatch(ordersHistoryCancelFetch(payload)),
         userOrdersHistoryFetch: payload => dispatch(userOrdersHistoryFetch(payload)),
     });
 

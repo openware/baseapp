@@ -5,8 +5,8 @@ import { rangerUrl } from '../../../api';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
 import { SET_CURRENT_MARKET } from '../../markets/constants';
+import { userOpenOrdersUpdate } from '../../openOrders';
 import { depthData } from '../../orderBook';
-import { userOrdersUpdate } from '../../orders';
 import { recentTradesPush } from '../../recentTrades';
 import {
     RangerConnectFetch,
@@ -14,7 +14,9 @@ import {
     rangerDisconnectFetch,
     rangerSubscribeMarket,
     rangerUnsubscribeMarket,
+    rangerUserOrderUpdate,
     subscriptionsUpdate,
+    UserOrderUpdate,
 } from '../actions';
 import {
     RANGER_CONNECT_DATA,
@@ -22,6 +24,7 @@ import {
     RANGER_DIRECT_WRITE,
     RANGER_DISCONNECT_DATA,
     RANGER_DISCONNECT_FETCH,
+    RANGER_USER_ORDER_UPDATE,
 } from '../constants';
 import { formatTicker, generateSocketURI, streamsBuilder } from '../helpers';
 import {
@@ -65,7 +68,6 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
                     }
 
                     // public
-
                     const klineMatch = String(routingKey).match(/([^.]*)\.kline-(.+)/);
                     if (klineMatch) {
                         emitter(klinePush({
@@ -105,7 +107,7 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
 
                         // private
                         case 'order':
-                            emitter(userOrdersUpdate(event));
+                            emitter(rangerUserOrderUpdate(event));
                             return;
 
                         // private
@@ -187,6 +189,20 @@ const delay = async (ms: number) => {
     return new Promise(resolve => setTimeout(() => resolve(true), ms));
 };
 
+function* dispatchCurrentMarketOrderUpdates(action: UserOrderUpdate) {
+    let market;
+
+    try {
+        market = yield select(selectCurrentMarket);
+    } catch (error) {
+        market = undefined;
+    }
+
+    if (market && action.payload.market === market.id) {
+        yield put(userOpenOrdersUpdate(action.payload));
+    }
+}
+
 export function* rangerSagas() {
     let channel: Channel<{}>;
     let socket: WebSocket;
@@ -194,6 +210,7 @@ export function* rangerSagas() {
     let connectFetchPayload: RangerConnectFetch['payload'] | undefined;
 
     yield takeEvery(SET_CURRENT_MARKET, switchMarket());
+    yield takeEvery(RANGER_USER_ORDER_UPDATE, dispatchCurrentMarketOrderUpdates);
 
     while (true) {
         const { connectFetch, disconnectData } = yield race({

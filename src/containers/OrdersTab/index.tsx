@@ -4,15 +4,15 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import {
     marketsFetch,
-    Order,
     ordersCancelAllFetch,
     RootState,
     selectOrdersHistory,
 } from '../../modules';
+import { OrderCommon } from '../../modules/types';
 import { OrdersElement } from './OrdersElement';
 
 interface ReduxProps {
-    list: Order[];
+    list: OrderCommon[];
 }
 
 interface DispatchProps {
@@ -80,9 +80,7 @@ class Orders extends React.PureComponent<Props, State> {
         ];
     };
 
-    private handleCancelAll = () => {
-        this.props.ordersCancelAll();
-    }
+    private handleCancelAll = () => this.props.ordersCancelAll(this.state);
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -92,7 +90,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         marketsFetch: () => dispatch(marketsFetch()),
-        ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
+        ordersCancelAll: payload => dispatch(ordersCancelAllFetch(payload)),
     });
 
 const OrdersTab = injectIntl(connect(mapStateToProps, mapDispatchToProps)(Orders));

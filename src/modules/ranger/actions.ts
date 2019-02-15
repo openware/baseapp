@@ -1,5 +1,5 @@
 import { Market } from '../markets';
-import { CommonError } from '../types';
+import { CommonError, OrderEvent } from '../types';
 import {
     RANGER_CONNECT_DATA,
     RANGER_CONNECT_ERROR,
@@ -8,6 +8,7 @@ import {
     RANGER_DISCONNECT_DATA,
     RANGER_DISCONNECT_FETCH,
     RANGER_SUBSCRIPTIONS_DATA,
+    RANGER_USER_ORDER_UPDATE,
 } from './constants';
 import { marketKlineStreams } from './helpers';
 
@@ -58,6 +59,11 @@ export interface SubscriptionsUpdate {
     };
 }
 
+export interface UserOrderUpdate {
+    type: typeof RANGER_USER_ORDER_UPDATE;
+    payload: OrderEvent;
+}
+
 export type RangerAction = RangerConnectFetch |
     RangerConnectData |
     RangerConnectError |
@@ -97,6 +103,11 @@ export const rangerSubscribe = (payload: RangerSubscribe['payload']): RangerDire
 export const rangerUnsubscribe = (payload: RangerSubscribe['payload']): RangerDirectMessage => ({
     type: RANGER_DIRECT_WRITE,
     payload: { event: 'unsubscribe', streams: payload.channels },
+});
+
+export const rangerUserOrderUpdate = (payload: UserOrderUpdate['payload']): UserOrderUpdate => ({
+    type: RANGER_USER_ORDER_UPDATE,
+    payload,
 });
 
 export const marketStreams = (market: Market) => ({

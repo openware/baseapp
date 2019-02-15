@@ -1,11 +1,7 @@
-import { MarketsState } from './markets/reducer';
+import { MarketsState, TickerEvent } from './markets';
 import { OrderBookState } from './orderBook';
-
-import { TickerEvent } from './markets';
 import {
-    OrderKind,
     OrdersState,
-    OrderStatus,
 } from './orders';
 
 export interface CommonState {
@@ -13,6 +9,46 @@ export interface CommonState {
     loading?: boolean;
 }
 
+export type OrderStatus = 'wait' | 'done' | 'cancel';
+export type OrderSide = 'sell' | 'buy';
+export type OrderType = 'limit' | 'market';
+export type OrderKind = 'bid' | 'ask';
+
+export interface OrderCommon {
+    id: number;
+    price: number;
+    created_at: string;
+    state: OrderStatus;
+    remaining_volume: number;
+    origin_volume: number;
+    executed_volume: number;
+    side: OrderSide;
+    market: string;
+    ord_type?: OrderType;
+    avg_price?: number;
+    volume?: number;
+}
+
+/*
+** example: {"id":10666,"side":"buy","ord_type":"limit","price":"0.003","avg_price":"0.003","state":"wait","market":"kyneth","created_at":"2019-02-15T09:46:21+01:00","volume":"10.0","remaining_volume":"9.9","executed_volume":"0.1","trades_count":1}
+*/
+export interface OrderAPI {
+    id: number;
+    side: OrderSide;
+    ord_type: OrderType;
+    price: string;
+    state: OrderStatus;
+    market: string;
+    created_at: string;
+    volume: string; // as origin_volume
+    remaining_volume: string;
+    executed_volume: string;
+    avg_price: string;
+}
+
+/*
+** example: {"order":{"id":10666,"at":1550220381,"market":"kyneth","kind":"bid","price":"0.003","state":"wait","volume":"9.9","origin_volume":"10.0"}}
+*/
 interface OrderEvent {
     id: number;
     at: number;
@@ -20,7 +56,7 @@ interface OrderEvent {
     kind: OrderKind;
     price: string;
     state: OrderStatus;
-    volume: string;
+    volume: string; // as remaining_volume
     origin_volume: string;
 }
 

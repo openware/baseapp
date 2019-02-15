@@ -4,7 +4,7 @@ import * as React from 'react';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
-import { minutesUntilAutoLogout } from '../../api/config';
+import { minutesUntilAutoLogout } from '../../api';
 import {
     logoutFetch,
     RootState,
