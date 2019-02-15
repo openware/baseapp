@@ -4,6 +4,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import logo = require('../../assets/images/logo.svg');
 import { Label, labelFetch, RootState, selectLabelData, selectUserInfo, User } from '../../modules';
 import { Documents } from './documents';
 import { Identity } from './identity';
@@ -62,27 +63,42 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
             'pg-confirm__progress-third': currentProfileLevel === 3 || isIdentity,
         });
         return (
-          <div className="pg-confirm">
-            <div className="pg-confirm-box">
-                <a href="#" onClick={this.goBack} className="pg-confirm-box-close" />
-                <div className="pg-confirm__progress">
-                    <div className={cx}>
-                        <div className="pg-confirm__progress-circle-1">
-                          <span className="pg-confirm__title-text pg-confirm__active-1"><FormattedMessage id="page.body.kyc.head.phone"/></span>
-                        </div>
-                        <div className="pg-confirm__progress-line-1" />
-                        <div className="pg-confirm__progress-circle-2">
-                          <span className="pg-confirm__title-text pg-confirm__active-2"><FormattedMessage id="page.body.kyc.head.identity"/></span>
-                        </div>
-                        <div className="pg-confirm__progress-line-2" />
-                        <div className="pg-confirm__progress-circle-3">
-                          <span className="pg-confirm__title-text pg-confirm__active-3"><FormattedMessage id="page.body.kyc.head.document"/></span>
-                        </div>
-                    </div>
-                </div>
-                <div className="pg-confirm__content">
-                    {this.renderContent(currentProfileLevel)}
-                </div>
+          <div className="pg-wrapper">
+            <div className="pg-logo">
+              <img src={logo} className="pg-logo__img" alt="Logo" />
+            </div>
+            <div className="pg-confirm">
+              <div className="pg-confirm-box">
+                  <a
+                    href="#"
+                    onClick={this.goBack}
+                    className="pg-confirm-box-close"
+                  />
+                  <div className="pg-confirm__progress">
+                      <div className={cx}>
+                          <div className="pg-confirm__progress-circle-1">
+                            <span className="pg-confirm__title-text pg-confirm__active-1">
+                              <FormattedMessage id="page.body.kyc.head.phone"/>
+                            </span>
+                          </div>
+                          <div className="pg-confirm__progress-line-1" />
+                          <div className="pg-confirm__progress-circle-2">
+                            <span className="pg-confirm__title-text pg-confirm__active-2">
+                              <FormattedMessage id="page.body.kyc.head.identity"/>
+                            </span>
+                          </div>
+                          <div className="pg-confirm__progress-line-2" />
+                          <div className="pg-confirm__progress-circle-3">
+                            <span className="pg-confirm__title-text pg-confirm__active-3">
+                              <FormattedMessage id="page.body.kyc.head.document"/>
+                            </span>
+                          </div>
+                      </div>
+                  </div>
+                  <div className="pg-confirm__content">
+                      {this.renderContent(currentProfileLevel)}
+                  </div>
+              </div>
             </div>
           </div>
         );

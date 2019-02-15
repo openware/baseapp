@@ -2,10 +2,24 @@
 @import "./Identity.pcss";
 @import "./Documents.pcss";
 
-.pg-confirm {
+.pg-wrapper {
   background: url(assets/images/background.svg);
-  height: 100vh;
   background-size: cover;
+  height: 100vh;
+
+  .pg-logo {
+    padding-top: calc(var(--big-gap) * 2);
+    display: flex;
+    justify-content: center;
+
+    &__img {
+      height: calc(var(--big-gap) * 1.666);
+    }
+  }
+}
+
+.pg-confirm {
+  margin-top: calc(var(--big-gap) * 1);
   display: flex;
   justify-content: center;
   align-items: center;

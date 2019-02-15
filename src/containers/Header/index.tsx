@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import logo = require('../../assets/images/baseapp.svg');
+import logo = require('../../assets/images/logo.svg');
 import { NavBar } from '../NavBar';
 
 interface HeaderState {
