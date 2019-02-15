@@ -22,7 +22,7 @@ export function* emailVerificationSaga(action: EmailVerificationFetch) {
             email: action.email,
         });
         yield put(emailVerificationData());
-        yield put(fetchSuccess('Message send succefuly'));
+        yield put(fetchSuccess('Message sent successfully'));
     } catch (error) {
         yield put(emailVerificationError(error));
         yield put(fetchError(error));

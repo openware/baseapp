@@ -16,7 +16,7 @@ export function* ordersCancelAllSaga(action: OrdersCancelAllFetch) {
     try {
         yield call(API.post(ordersCancelAllOptions), `/market/orders/cancel`);
         yield put(ordersCancelAllData());
-        yield put(fetchSuccess('All orders were cenceled'));
+        yield put(fetchSuccess('All orders were canceled'));
     } catch (error) {
         yield put(ordersCancelAllError(error));
         yield put(fetchError(error));

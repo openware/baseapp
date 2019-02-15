@@ -17,7 +17,7 @@ export function* ordersCancelSaga(action: OrderCancelFetch) {
         const { id } = action.payload;
         yield call(API.post(ordersCancelOptions), `/market/orders/${id}/cancel`, action.payload);
         yield put(orderCancelData({ id }));
-        yield put(fetchSuccess('Order was cenceled'));
+        yield put(fetchSuccess('Order was canceled'));
     } catch (error) {
         yield put(orderCancelError(error));
         yield put(fetchError(error));
