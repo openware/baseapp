@@ -16,7 +16,7 @@ export function* forgotPasswordSaga(action: ForgotPasswordFetch) {
     try {
         yield call(API.post(forgotPasswordConfig), '/identity/users/password/generate_code', action.payload);
         yield put(forgotPasswordSuccess());
-        yield put(fetchSuccess('Reset password link was sent to your mail'));
+        yield put(fetchSuccess('success.password.forgot'));
     } catch (error) {
         yield put(forgotPasswordError(error));
         yield put(fetchError(error));

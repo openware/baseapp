@@ -281,4 +281,18 @@ export const ru: LangType = {
   'page.modal.withdraw.success.message.content': 'Ваш вывод был успешно подтвержден. Пожалуйста, подождите, чтобы получить ' +
                                                  'несколько обязательных подтверждений для завершения этой транзакции.',
   'page.modal.withdraw.success.button': 'OK',
+
+  // success messages
+  'success.documents.accepted': 'Ваши документы успешно приняты',
+  'success.withdraw.action': 'Вывод успешен',
+  'success.otp.enabled': '2фа успешно активирован',
+  'success.password.changed': 'Пароль изменен',
+  'success.password.forgot': 'Ссылка для спроса пароля была отправлена на вашу почту',
+  'success.password.changed.successfuly': 'Пароль успешно изменен',
+  'success.order.canceled': 'Запрос отменен',
+  'success.order.canceled.all': 'Все запросы были отменены',
+  'success.order.created': 'Запрос успешно создан',
+  'success.phone.verification.send': 'Код верификации был отправлен на ваш телефон',
+  'success.phone.confirmed': 'Ваш телефон подтвержден',
+  'success.message.sent': 'Письмо было успешно отправлено',
 };

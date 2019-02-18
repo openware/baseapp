@@ -278,4 +278,18 @@ export const en = {
   'page.modal.withdraw.success.message.content': 'Your withdrawal has been submitted successfully. Please wait to receive' +
   ' few mandatory confirmations for the completion of this transaction.',
   'page.modal.withdraw.success.button': 'OK',
+
+  // success messages
+  'success.documents.accepted': 'Your documents are successfully accepted',
+  'success.withdraw.action': 'Withdrawal was successful',
+  'success.otp.enabled': 'Otp was successfuly enabled',
+  'success.password.changed': 'Password was changed',
+  'success.password.forgot': 'Reset password link was sent to your mail',
+  'success.password.changed.successfuly': 'Password was successfuly changed',
+  'success.order.canceled': 'Order was canceled',
+  'success.order.canceled.all': 'All orders were canceled',
+  'success.order.created': 'Order was successfuly created',
+  'success.phone.verification.send': 'Verification code was sent to your phone number',
+  'success.phone.confirmed': 'Your phone was confirmed',
+  'success.message.sent': 'Message was sent successfully',
 };

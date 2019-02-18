@@ -64,7 +64,7 @@ describe('Orders History Cancel', () => {
     const expectedActionsFetch = [
         ordersHistoryCancelFetch(fakeFetchPayload),
         ordersHistoryCancelData(fakeSuccessPayload),
-        fetchSuccess('Order was canceled'),
+        fetchSuccess('success.order.canceled'),
     ];
     const expectedActionsError = [
         ordersHistoryCancelFetch(fakeFetchPayload),

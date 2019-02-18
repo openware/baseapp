@@ -20,7 +20,7 @@ export function* ordersExecuteSaga(action: OrderExecuteFetch) {
         if (order.ord_type !== 'market') {
             yield put(userOpenOrdersAppend(order));
         }
-        yield put(fetchSuccess('Order was successfuly created'));
+        yield put(fetchSuccess('success.order.created'));
     } catch (error) {
         yield put(orderExecuteError(error));
         yield put(fetchError(error));

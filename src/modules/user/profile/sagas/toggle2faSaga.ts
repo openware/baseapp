@@ -17,7 +17,7 @@ export function* toggle2faSaga(action: Toggle2FAFetch) {
         const code = { code: action.payload.code };
         yield call(API.post(enable2faOptions), '/resource/otp/enable', code);
         yield put(toggle2faData());
-        yield put(fetchSuccess('Otp was successfuly enabled'));
+        yield put(fetchSuccess('success.otp.enabled'));
     } catch (error) {
         yield put(toggle2faError(error));
         yield put(fetchError(error));

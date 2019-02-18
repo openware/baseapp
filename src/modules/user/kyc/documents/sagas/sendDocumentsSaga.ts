@@ -11,7 +11,7 @@ const sessionsConfig: RequestOptions = {
 export function* sendDocumentsSaga(action: SendDocumentsFetch) {
     try {
         const response = yield call(API.post(sessionsConfig), '/resource/documents', action.payload);
-        const defaultMessage = 'Your documents are successfully accepted';
+        const defaultMessage = 'success.documents.accepted';
         const { message = defaultMessage } = response;
         yield put(sendDocumentsData({ message }));
         yield put(fetchSuccess(defaultMessage));

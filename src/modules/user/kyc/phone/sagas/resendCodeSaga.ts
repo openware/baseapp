@@ -12,7 +12,7 @@ export function* resendCodeSaga(action: ResendCodeFetch) {
     try {
         yield call(API.post(sessionsConfig), '/resource/phones/send_code', action.payload);
         yield put(resendCodeData());
-        yield put(fetchSuccess('Verification code was sent to your phone number'));
+        yield put(fetchSuccess('success.phone.verification.send'));
     } catch (error) {
         yield put(resendCodeError(error));
         yield put(fetchError(error));
