@@ -28,9 +28,8 @@ describe('EmailForm component', () => {
     });
 
     it('should set correct titles', () => {
-        const wrapper = setup({emailLabel: 'label email', title: 'title label'});
+        const wrapper = setup({title: 'title label'});
         expect(wrapper.find('.cr-email-form__option-inner').text()).toBe('title label');
-        expect(wrapper.find('.cr-email-form__label').text()).toBe('label email');
     });
 
     it('should render error block', () => {

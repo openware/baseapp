@@ -20,6 +20,7 @@ interface EmailFormProps {
     email: string;
     emailError: string;
     emailFocused: boolean;
+    placeholder?: string;
     validateForm: () => void;
     handleInputEmail: (value: string) => void;
     handleFieldFocus: () => void;
@@ -50,26 +51,25 @@ class EmailForm extends React.Component<EmailFormProps> {
                         </div>
                     </div>
                     <div className="cr-email-form__form-content">
-                        <div className={emailGroupClass}>
-                            <label className="cr-email-form__label">
-                                {emailLabel ? emailLabel : 'Email'}
-                            </label>
+                        <fieldset className={emailGroupClass}>
+                            {email && <legend>{emailLabel}</legend>}
                             <Input
                                 type="email"
                                 value={email}
+                                placeholder="Email"
                                 className="cr-email-form__input"
                                 onChangeValue={this.props.handleInputEmail}
                                 onFocus={this.props.handleFieldFocus}
                                 onBlur={this.props.handleFieldFocus}
                             />
                             {emailError && <div className="cr-email-form__error">{emailError}</div>}
-                        </div>
+                        </fieldset>
                         <div className="cr-email-form__button-wrapper">
                             <div className="cr-email-form__loader">{isLoading ? <Loader/> : null}</div>
                             <Button
                                 label={isLoading ? 'Loading...' : buttonLabel ? buttonLabel : 'Send'}
                                 type="submit"
-                                className="cr-email-form__button"
+                                className={email ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                                 disabled={isLoading}
                                 onClick={this.handleClick}
                             />

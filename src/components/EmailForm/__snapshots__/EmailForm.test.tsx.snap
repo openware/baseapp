@@ -21,23 +21,19 @@ exports[`EmailForm component should render 1`] = `
     <div
       className="cr-email-form__form-content"
     >
-      <div
+      <fieldset
         className="cr-email-form__group"
       >
-        <label
-          className="cr-email-form__label"
-        >
-          Email
-        </label>
         <e
           className="cr-email-form__input"
           onBlur={[MockFunction]}
           onChangeValue={[MockFunction]}
           onFocus={[MockFunction]}
+          placeholder="Email"
           type="email"
           value=""
         />
-      </div>
+      </fieldset>
       <div
         className="cr-email-form__button-wrapper"
       >
@@ -45,7 +41,7 @@ exports[`EmailForm component should render 1`] = `
           className="cr-email-form__loader"
         />
         <Component
-          className="cr-email-form__button"
+          className="cr-email-form__button cr-email-form__button--disabled"
           label="Send"
           onClick={[Function]}
           type="submit"

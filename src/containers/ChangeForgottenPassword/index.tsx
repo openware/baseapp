@@ -129,10 +129,10 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                                     </div>
                                 </fieldset>
                             </form>
-                            {error && <div className="pg-change-forgotten-password-screen__container-form-alert">Passwords do not match</div>}
+                            {error && <div className="pg-change-forgotten-password-screen__container-form-alert">Fields are empty or don`t matches</div>}
                             <div className="pg-change-password-screen__container-form-footer">
                                 <Button
-                                    className="pg-change-forgotten-password-screen__container-form-footer-button"
+                                    className={updatePassword && updateConfirmPassword ? 'pg-change-forgotten-password-screen__container-form-footer-button pg-change-forgotten-password-screen__container-form-footer-button--disabled' : 'pg-change-forgotten-password-screen__container-form-footer-button'}
                                     label="Change"
                                     onClick={this.handleSendNewPassword}
                                 />
@@ -165,7 +165,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 
     private handleSendNewPassword = () => {
         const { password, confirmPassword, confirmToken } = this.state;
-        if (password === confirmPassword) {
+        if (password && password === confirmPassword) {
           this.setState({
               error: false,
           });
