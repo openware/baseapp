@@ -195,7 +195,7 @@ export const en = {
   'page.body.profile.header.account.profile.identity.message': 'Withdrawal allowed',
 
   'page.body.profile.header.referralProgram': 'Referral Program',
-  'page.body.profile.content.copyLink': 'Copy Link',
+  'page.body.profile.content.copyLink': 'Copy',
 
   'page.body.profile.header.accountActivity': 'Account activity',
   'page.body.profile.header.accountActivity.content.date': 'Date',

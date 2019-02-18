@@ -63,8 +63,9 @@ export const ru: LangType = {
   'page.body.wallets.tabs.deposit': 'Пополнить',
   'page.body.wallets.tabs.deposit.ccy.message.submit': 'Пожалуйста, внесите депозитный платеж. Ваш депозит будет доступен после 6 подтверждений',
   'page.body.wallets.tabs.deposit.ccy.message.address': 'Пополнить на кошелек',
-  'page.body.wallets.tabs.deposit.ccy.message.button': 'КОПИРОВАТЬ',
+  'page.body.wallets.tabs.deposit.ccy.message.button': 'Скопировать',
   'page.body.wallets.tabs.deposit.ccy.message.success': 'Адрес скопирован',
+
   'page.body.wallets.tabs.deposit.ccy.message.error': 'Генерация адреса',
 
   'page.body.wallets.tabs.deposit.fiat.message1': 'Вы можете внести депозит в банке, используя следующие реквизиты',

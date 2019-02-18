@@ -264,13 +264,13 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             new_password: this.state.newPassword,
             confirm_password: this.state.confirmationPassword,
         });
-    }
+    };
 
     private closeModal = () => {
         this.setState({
             showModal: false,
         });
-      }
+      };
 
     private showChangeModal = () => {
         this.setState({

@@ -1,4 +1,5 @@
 import { Table } from '@openware/components';
+import classnames from 'classnames';
 import * as React from 'react';
 import {
     FormattedMessage,
@@ -65,11 +66,19 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
             return [
                 localeFullDate(item.created_at),
                 this.getResultOfUserAction(item.action),
-                this.props.intl.formatMessage({ id: `page.body.profile.content.result.${item.result}`}),
+                this.renderResult(this.props.intl.formatMessage({ id: `page.body.profile.content.result.${item.result}`})),
                 item.user_ip,
                 item.user_agent,
             ];
         });
+    }
+
+    private renderResult(result: string) {
+        const className = classnames({
+            'pg-profile-page__activity-result-succeed': result === 'Succeed',
+            'pg-profile-page__activity-result-failed': result === 'Failed',
+        });
+        return <span className={className}>{result}</span>;
     }
 
     private getResultOfUserAction = (value: string) => {
@@ -89,7 +98,7 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
             case 'password reset':
                 return this.props.intl.formatMessage({ id: 'page.body.profile.content.action.passwordReset'});
             default:
-              return value;
+                return value;
         }
     }
 }

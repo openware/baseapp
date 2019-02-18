@@ -165,7 +165,7 @@
       height: 25%;
 
       &__info-row {
-        color: var(--profile-bright);
+        color: var(--white);
         display: flex;
         margin-bottom: calc(var(--gap) * 2.5);
 
@@ -214,7 +214,7 @@
 
     &__verification {
       .pg-profile-page__box-header {
-        color: var(--profile-bright);
+        color: var(--white);
         .pg-profile-page__row > .pg-profile-page__col:last-child {
           display: flex;
           justify-content: flex-end;
@@ -258,19 +258,20 @@
           background: var(--transparent);
         }
 
-        &__input {
-          background: var(--transparent);
-        }
-
         input {
           color: var(--profile-accent-color);
-          background: var(--transparent);
         }
       }
 
       .pg-profile-page__row {
         justify-content: space-between;
       }
+    }
+  }
+
+  .cr-copyable-text-field {
+    &__input {
+      background: var(--transparent);
     }
   }
 
@@ -301,6 +302,8 @@
         background: inherit;
         padding: calc(var(--gap) * 3.33) calc(var(--gap) * 4) !important;
         top: 0 !important;
+        color: var(--table-header-color);
+        font-weight: 500;
       }
     }
   }
