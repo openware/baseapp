@@ -163,8 +163,8 @@ describe('Helpers', () => {
 
     // localeFullDate.ts
     it('Should return correct locale full date', () => {
-        expect(helpers.localeFullDate('2018-11-29T16:54:46+01:00', 'Europe/Kiev')).toBe('2018-29-11 17:54');
-        expect(helpers.localeFullDate('2018-11-12T16:55:12-01:00', 'Europe/Kiev')).toBe('2018-12-11 19:55');
+        expect(helpers.localeFullDate('2018-11-29T16:54:46+01:00', 'Europe/Kiev')).toBe('2018-29-11 17:54:46');
+        expect(helpers.localeFullDate('2018-11-12T16:55:12-01:00', 'Europe/Kiev')).toBe('2018-12-11 19:55:12');
     });
 
     // preciseNumber.js

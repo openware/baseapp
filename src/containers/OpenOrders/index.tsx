@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeDate, preciseData } from '../../helpers';
+import { localeFullDate, preciseData, setTradeColor } from '../../helpers';
 import {
     Market,
     openOrdersCancelFetch,
@@ -16,7 +16,7 @@ import {
     selectUserLoggedIn,
     userOpenOrdersFetch,
 } from '../../modules';
-import { OrderCommon, OrderSide } from '../../modules/types';
+import { OrderCommon } from '../../modules/types';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
@@ -73,7 +73,6 @@ export class OpenOrdersContainer extends React.Component<Props> {
     private renderHeadersKeys = () => {
         return [
             'Date',
-            'Action',
             'Price',
             'Amount',
             'Total',
@@ -83,12 +82,13 @@ export class OpenOrdersContainer extends React.Component<Props> {
     };
 
     private renderHeaders = () => {
+        const currentAskUnit = this.props.currentMarket ? ` (${this.props.currentMarket.ask_unit.toUpperCase()})` : null;
+        const currentBidUnit = this.props.currentMarket ? ` (${this.props.currentMarket.bid_unit.toUpperCase()})` : null;
         return [
             this.translate('page.body.trade.header.openOrders.content.date'),
-            this.translate('page.body.trade.header.openOrders.content.action'),
-            this.translate('page.body.trade.header.openOrders.content.price'),
-            this.translate('page.body.trade.header.openOrders.content.amount'),
-            this.translate('page.body.trade.header.openOrders.content.total'),
+            this.translate('page.body.trade.header.openOrders.content.price').concat(currentBidUnit),
+            this.translate('page.body.trade.header.openOrders.content.amount').concat(currentAskUnit),
+            this.translate('page.body.trade.header.openOrders.content.total').concat(currentBidUnit),
             this.translate('page.body.trade.header.openOrders.content.filled'),
             '',
         ];
@@ -113,7 +113,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
         }
 
         return this.sortDataByDateTime().map((item: OrderCommon) => {
-            const { price, created_at, remaining_volume, origin_volume, side } = item;
+            const { id, price, created_at, remaining_volume, origin_volume, side } = item;
             const executedVolume = Number(origin_volume) - Number(remaining_volume);
             const remainingAmount = Number(remaining_volume) * Number(price);
             const total = Number(origin_volume) * Number(price);
@@ -122,12 +122,11 @@ export class OpenOrdersContainer extends React.Component<Props> {
             const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
 
             return [
-                localeDate(created_at),
-                this.getTypeIntl(side),
-                preciseData(price, priceFixed),
-                preciseData(remainingAmount, amountFixed),
-                preciseData(total, amountFixed),
-                `${filled}%`,
+                localeFullDate(created_at),
+                <span style={{ color: setTradeColor(side).color }} key={id}>{preciseData(price, priceFixed)}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>{preciseData(remainingAmount, amountFixed)}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>{preciseData(total, amountFixed)}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>{filled}%</span>,
                 side,
             ];
         });
@@ -141,12 +140,6 @@ export class OpenOrdersContainer extends React.Component<Props> {
     }
 
     private translate = (e: string) => this.props.intl.formatMessage({ id: e });
-
-    private getTypeIntl = (side: OrderSide) =>
-        side === 'sell'
-            ? this.props.intl.formatMessage({ id: 'page.body.trade.header.openOrders.content.ask' })
-            : this.props.intl.formatMessage({ id: 'page.body.trade.header.openOrders.content.bid' });
-
     private handleCancel = (index: number) => {
         const { list, cancelFetching } = this.props;
         if (cancelFetching) {
