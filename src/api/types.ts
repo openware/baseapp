@@ -6,6 +6,7 @@ export interface Config {
         rangerUrl: string;
     };
     minutesUntilAutoLogout?: string;
+    rangerReconnectPeriod?: string;
     withCredentials: boolean;
     storage: {
         defaultStorageLimit?: number;

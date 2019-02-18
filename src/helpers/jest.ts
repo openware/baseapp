@@ -13,6 +13,7 @@ const mockConfig: Config = {
         rangerUrl: '/api/v2/ranger',
     },
     minutesUntilAutoLogout: '5',
+    rangerReconnectPeriod: '1',
     withCredentials: true,
     storage: {},
     captcha: {

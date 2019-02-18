@@ -1,18 +1,12 @@
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import {
-    rangerSagas,
-} from '.';
+import { rangerSagas } from '.';
 import { Cryptobase, defaultConfig } from '../../../../api';
-import { createEchoServer as createEchoServer, setupMockStore } from '../../../../helpers/jest';
+import { createEchoServer, setupMockStore } from '../../../../helpers/jest';
 import { OrderEvent } from '../../../types';
 import { PrivateTradeEvent } from '../../../user/history';
 import { KLINE_PUSH } from '../../kline/constants';
-import {
-    Market,
-    Ticker,
-    TickerEvent,
-} from '../../markets';
+import { Market, Ticker, TickerEvent } from '../../markets';
 import { MARKETS_TICKERS_DATA } from '../../markets/constants';
 import { DEPTH_DATA } from '../../orderBook/constants';
 import { PublicTradeEvent } from '../../recentTrades';
@@ -54,6 +48,7 @@ describe('Ranger module', () => {
                 applogicUrl: '',
                 rangerUrl: `ws://localhost:${echoServerPort}`,
             },
+            rangerReconnectPeriod: '0.1',
         };
     });
 
@@ -92,6 +87,43 @@ describe('Ranger module', () => {
         bid_precision: 6,
     };
 
+    describe('automatically reconnect when connection is lost', async () => {
+        it('reconnect after some sleep time', async () => {
+            return new Promise(resolve => {
+                store.subscribe(() => {
+                    const actions = store.getActions();
+                    const lastAction = actions.slice(-1)[0];
+
+                    switch (actions.length) {
+                        case 1:
+                            expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                            return;
+
+                        case 2:
+                            expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
+                            pingServer.close();
+                            break;
+
+                        case 3:
+                            expect(lastAction).toEqual({ type: RANGER_DISCONNECT_DATA });
+                            pingServer = createEchoServer(echoServerPort, debug);
+                            break;
+
+                        case 4:
+                            expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
+                            resolve();
+                            break;
+
+                        default:
+                            break;
+                    }
+                });
+
+                store.dispatch(rangerConnectFetch({ withAuth: false }));
+            });
+        });
+    });
+
     describe('channels subscription flow', () => {
         it('subscribes to market channels', () => {
             expect(rangerSubscribeMarket(marketExample)).toEqual({
@@ -127,22 +159,23 @@ describe('Ranger module', () => {
             return new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
+                    const lastAction = actions.slice(-1)[0];
                     switch (actions.length) {
                         case 1:
-                            expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                            expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
                             return;
 
                         case 2:
-                            expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                            expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                             store.dispatch(rangerDisconnectFetch());
                             return;
 
                         case 3:
-                            expect(actions[2]).toEqual({ type: RANGER_DISCONNECT_FETCH });
+                            expect(lastAction).toEqual({ type: RANGER_DISCONNECT_FETCH });
                             return;
 
                         case 4:
-                            expect(actions[3]).toEqual({ type: RANGER_DISCONNECT_DATA });
+                            expect(lastAction).toEqual({ type: RANGER_DISCONNECT_DATA });
                             setTimeout(resolve, 30);
                             return;
 
@@ -154,7 +187,6 @@ describe('Ranger module', () => {
                 store.dispatch(rangerConnectFetch({ withAuth: false }));
             });
         });
-
     });
 
     describe('public events', () => {
@@ -165,8 +197,20 @@ describe('Ranger module', () => {
                 const klineEventString: { [pair: string]: string[] } = { 'kyneth.kline-5m': klineString };
                 const klineEventNumber: { [pair: string]: number[] } = { 'dasheth.kline-15m': klinNumber };
                 return [
-                    { description: 'string klines', kline: klineString, event: klineEventString, period: '5m', marketId: 'kyneth' },
-                    { description: 'number klines', kline: klinNumber, event: klineEventNumber, period: '15m', marketId: 'dasheth' },
+                    {
+                        description: 'string klines',
+                        kline: klineString,
+                        event: klineEventString,
+                        period: '5m',
+                        marketId: 'kyneth',
+                    },
+                    {
+                        description: 'number klines',
+                        kline: klinNumber,
+                        event: klineEventNumber,
+                        period: '15m',
+                        marketId: 'dasheth',
+                    },
                 ];
             })();
 
@@ -184,22 +228,26 @@ describe('Ranger module', () => {
                         store.dispatch(rangerConnectFetch({ withAuth: false }));
                         store.subscribe(() => {
                             const actions = store.getActions();
+                            const lastAction = actions.slice(-1)[0];
                             switch (actions.length) {
                                 case 1:
-                                    expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                                    expect(lastAction).toEqual({
+                                        type: RANGER_CONNECT_FETCH,
+                                        payload: { withAuth: false },
+                                    });
                                     return;
 
                                 case 2:
-                                    expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                    expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                     store.dispatch(rangerDirectMessage(event));
                                     return;
 
                                 case 3:
-                                    expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: event });
+                                    expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: event });
                                     return;
 
                                 case 4:
-                                    expect(actions[3]).toEqual(expectedAction);
+                                    expect(lastAction).toEqual(expectedAction);
                                     setTimeout(resolve, 30);
                                     return;
 
@@ -211,19 +259,90 @@ describe('Ranger module', () => {
                     });
                 });
             }
-
         });
 
         describe('markets tickers update', () => {
             const tickerEvents: { [pair: string]: TickerEvent } = {
-                ethzar: { name: 'ETH/ZAR', base_unit: 'eth', quote_unit: 'zar', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '8.0', sell: '70.0', buy: '69.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },
-                xrpbtc: { name: 'XRP/BTC', base_unit: 'xrp', quote_unit: 'btc', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '9.0', sell: '80.0', buy: '79.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },
-                ltcbtc: { name: 'LTC/BTC', base_unit: 'ltc', quote_unit: 'btc', low: '0.001', high: '0.145', last: '0.134', open: 0.134, volume: '10.0', sell: '90.0', buy: '89.0', at: 1547625102601, avg_price: '69.5', price_change_percent: '+10.05%' },
+                ethzar: {
+                    name: 'ETH/ZAR',
+                    base_unit: 'eth',
+                    quote_unit: 'zar',
+                    low: '0.001',
+                    high: '0.145',
+                    last: '0.134',
+                    open: 0.134,
+                    volume: '8.0',
+                    sell: '70.0',
+                    buy: '69.0',
+                    at: 1547625102601,
+                    avg_price: '69.5',
+                    price_change_percent: '+10.05%',
+                },
+                xrpbtc: {
+                    name: 'XRP/BTC',
+                    base_unit: 'xrp',
+                    quote_unit: 'btc',
+                    low: '0.001',
+                    high: '0.145',
+                    last: '0.134',
+                    open: 0.134,
+                    volume: '9.0',
+                    sell: '80.0',
+                    buy: '79.0',
+                    at: 1547625102601,
+                    avg_price: '69.5',
+                    price_change_percent: '+10.05%',
+                },
+                ltcbtc: {
+                    name: 'LTC/BTC',
+                    base_unit: 'ltc',
+                    quote_unit: 'btc',
+                    low: '0.001',
+                    high: '0.145',
+                    last: '0.134',
+                    open: 0.134,
+                    volume: '10.0',
+                    sell: '90.0',
+                    buy: '89.0',
+                    at: 1547625102601,
+                    avg_price: '69.5',
+                    price_change_percent: '+10.05%',
+                },
             };
             const tickers: { [pair: string]: Ticker } = {
-                ethzar: { low: '0.001', high: '0.145', last: '0.134', open: 0.134, vol: '8.0', sell: '70.0', buy: '69.0', avg_price: '69.5', price_change_percent: '+10.05%' },
-                xrpbtc: { low: '0.001', high: '0.145', last: '0.134', open: 0.134, vol: '9.0', sell: '80.0', buy: '79.0', avg_price: '69.5', price_change_percent: '+10.05%' },
-                ltcbtc: { low: '0.001', high: '0.145', last: '0.134', open: 0.134, vol: '10.0', sell: '90.0', buy: '89.0', avg_price: '69.5', price_change_percent: '+10.05%' },
+                ethzar: {
+                    low: '0.001',
+                    high: '0.145',
+                    last: '0.134',
+                    open: 0.134,
+                    vol: '8.0',
+                    sell: '70.0',
+                    buy: '69.0',
+                    avg_price: '69.5',
+                    price_change_percent: '+10.05%',
+                },
+                xrpbtc: {
+                    low: '0.001',
+                    high: '0.145',
+                    last: '0.134',
+                    open: 0.134,
+                    vol: '9.0',
+                    sell: '80.0',
+                    buy: '79.0',
+                    avg_price: '69.5',
+                    price_change_percent: '+10.05%',
+                },
+                ltcbtc: {
+                    low: '0.001',
+                    high: '0.145',
+                    last: '0.134',
+                    open: 0.134,
+                    vol: '10.0',
+                    sell: '90.0',
+                    buy: '89.0',
+                    avg_price: '69.5',
+                    price_change_percent: '+10.05%',
+                },
             };
             const mockGlobalTickers = { 'global.tickers': tickerEvents };
 
@@ -237,22 +356,26 @@ describe('Ranger module', () => {
                     store.dispatch(rangerConnectFetch({ withAuth: false }));
                     store.subscribe(() => {
                         const actions = store.getActions();
+                        const lastAction = actions.slice(-1)[0];
                         switch (actions.length) {
                             case 1:
-                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                                expect(lastAction).toEqual({
+                                    type: RANGER_CONNECT_FETCH,
+                                    payload: { withAuth: false },
+                                });
                                 return;
 
                             case 2:
-                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockGlobalTickers));
                                 return;
 
                             case 3:
-                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockGlobalTickers });
+                                expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockGlobalTickers });
                                 return;
 
                             case 4:
-                                expect(actions[3]).toEqual(expectedAction);
+                                expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
                                 return;
 
@@ -267,16 +390,8 @@ describe('Ranger module', () => {
 
         describe('market depth update', () => {
             const data = {
-                asks: [
-                    ['0.0005', '97.4'],
-                    ['2.0', '0.8569'],
-                    ['2.5', '1.0'],
-                    ['3.0', '1.0'],
-                ],
-                bids: [
-                    ['0.0001', '10.0'],
-                    ['0.0000008', '8.9'],
-                ],
+                asks: [['0.0005', '97.4'], ['2.0', '0.8569'], ['2.5', '1.0'], ['3.0', '1.0']],
+                bids: [['0.0001', '10.0'], ['0.0000008', '8.9']],
             };
             const mockOrderBookUpdate = { 'eurbtc.update': data };
             const expectedAction = {
@@ -288,22 +403,26 @@ describe('Ranger module', () => {
                     store.dispatch(rangerConnectFetch({ withAuth: false }));
                     store.subscribe(() => {
                         const actions = store.getActions();
+                        const lastAction = actions.slice(-1)[0];
                         switch (actions.length) {
                             case 1:
-                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                                expect(actions[0]).toEqual({
+                                    type: RANGER_CONNECT_FETCH,
+                                    payload: { withAuth: false },
+                                });
                                 return;
 
                             case 2:
-                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockOrderBookUpdate));
                                 return;
 
                             case 3:
-                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrderBookUpdate });
+                                expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrderBookUpdate });
                                 return;
 
                             case 4:
-                                expect(actions[3]).toEqual(expectedAction);
+                                expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
                                 return;
 
@@ -338,22 +457,29 @@ describe('Ranger module', () => {
                 return new Promise(resolve => {
                     store.subscribe(() => {
                         const actions = store.getActions();
+                        const lastAction = actions.slice(-1)[0];
                         switch (actions.length) {
                             case 1:
-                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                                expect(lastAction).toEqual({
+                                    type: RANGER_CONNECT_FETCH,
+                                    payload: { withAuth: false },
+                                });
                                 return;
 
                             case 2:
-                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage({ 'eurbtc.trades': mockTrades }));
                                 return;
 
                             case 3:
-                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: { 'eurbtc.trades': mockTrades } });
+                                expect(lastAction).toEqual({
+                                    type: RANGER_DIRECT_WRITE,
+                                    payload: { 'eurbtc.trades': mockTrades },
+                                });
                                 return;
 
                             case 4:
-                                expect(actions[3]).toEqual(expectedAction);
+                                expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
                                 return;
 
@@ -366,13 +492,20 @@ describe('Ranger module', () => {
                 });
             });
         });
-
-
     });
 
     describe('private events', () => {
         describe('should push new order', () => {
-            const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'wait', remaining_volume: '0.1', origin_volume: '0.1' };
+            const data: OrderEvent = {
+                id: 758,
+                at: 1546605232,
+                market: 'eurbtc',
+                kind: 'bid',
+                price: '1.17',
+                state: 'wait',
+                remaining_volume: '0.1',
+                origin_volume: '0.1',
+            };
             const mockOrder = { order: data };
             const expectedAction = {
                 type: RANGER_USER_ORDER_UPDATE,
@@ -382,22 +515,23 @@ describe('Ranger module', () => {
                 return new Promise(resolve => {
                     store.subscribe(() => {
                         const actions = store.getActions();
+                        const lastAction = actions.slice(-1)[0];
                         switch (actions.length) {
                             case 1:
-                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
                                 return;
 
                             case 2:
-                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockOrder));
                                 return;
 
                             case 3:
-                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
+                                expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
                                 return;
 
                             case 4:
-                                expect(actions[3]).toEqual(expectedAction);
+                                expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
                                 return;
 
@@ -412,7 +546,16 @@ describe('Ranger module', () => {
         });
 
         describe('should push close order', () => {
-            const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'done', remaining_volume: '0.0', origin_volume: '0.1' };
+            const data: OrderEvent = {
+                id: 758,
+                at: 1546605232,
+                market: 'eurbtc',
+                kind: 'bid',
+                price: '1.17',
+                state: 'done',
+                remaining_volume: '0.0',
+                origin_volume: '0.1',
+            };
             const mockOrder = { order: data };
             const expectedAction = {
                 type: RANGER_USER_ORDER_UPDATE,
@@ -422,22 +565,23 @@ describe('Ranger module', () => {
                 return new Promise(resolve => {
                     store.subscribe(() => {
                         const actions = store.getActions();
+                        const lastAction = actions.slice(-1)[0];
                         switch (actions.length) {
                             case 1:
-                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
                                 return;
 
                             case 2:
-                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockOrder));
                                 return;
 
                             case 3:
-                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
+                                expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
                                 return;
 
                             case 4:
-                                expect(actions[3]).toEqual(expectedAction);
+                                expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
                                 return;
 
@@ -471,23 +615,24 @@ describe('Ranger module', () => {
                 return new Promise(resolve => {
                     store.subscribe(() => {
                         const actions = store.getActions();
+                        const lastAction = actions.slice(-1)[0];
                         switch (actions.length) {
                             case 1:
-                                expect(actions[0]).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
                                 return;
 
                             case 2:
-                                expect(actions[1]).toEqual({ type: RANGER_CONNECT_DATA });
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockTrade));
                                 return;
 
                             case 3:
-                                expect(actions[2]).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockTrade });
+                                expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockTrade });
                                 setTimeout(resolve, 30);
                                 return;
 
                             // case 4:
-                            //     expect(actions[3]).toEqual(expectedTradeAction);
+                            //     expect(lastAction).toEqual(expectedTradeAction);
                             //     setTimeout(resolve, 30);
                             //     return;
 

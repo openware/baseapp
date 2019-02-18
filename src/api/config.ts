@@ -9,6 +9,7 @@ export const defaultConfig: Config = {
         rangerUrl: '',
     },
     minutesUntilAutoLogout: '5',
+    rangerReconnectPeriod: '1',
     withCredentials: true,
     captcha: {
         captchaType: 'none',
@@ -43,3 +44,4 @@ export const defaultStorageLimit = () => Cryptobase.config.storage.defaultStorag
 export const siteKey = () => Cryptobase.config.captcha.siteKey;
 export const captchaType = () => Cryptobase.config.captcha.captchaType;
 export const msAlertDisplayTime = (): string => Cryptobase.config.msAlertDisplayTime || '5000';
+export const rangerReconnectPeriod = (): number => Cryptobase.config.rangerReconnectPeriod ? Number(Cryptobase.config.rangerReconnectPeriod) : 1;
