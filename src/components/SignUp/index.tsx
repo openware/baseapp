@@ -1,10 +1,12 @@
 import {
     Button,
     Checkbox,
-    Input,
-    Loader,
 } from '@openware/components';
 import cr from 'classnames';
+import {
+    CustomInput,
+} from '../';
+
 import * as React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import {
@@ -131,58 +133,58 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                     <div className="cr-sign-up-form__form-content">
                         {logo}
                         <div className={emailGroupClass}>
-                            <label className="cr-sign-up-form__label">
-                                {emailLabel ? emailLabel : 'Email'}
-                            </label>
-                            <Input
+                            <CustomInput
                                 type="email"
-                                value={email}
-                                className="cr-sign-up-form__input"
-                                onFocus={this.props.handleFocusEmail}
-                                onBlur={this.props.handleFocusEmail}
-                                onChangeValue={this.props.handleChangeEmail}
+                                label={emailLabel || 'Email'}
+                                placeholder={emailLabel || 'Email'}
+                                defaultLabel="Email"
+                                handleChangeInput={this.props.handleChangeEmail}
+                                inputValue={email}
+                                handleFocusInput={this.props.handleFocusEmail}
+                                classNameLabel="cr-sign-up-form__label"
+                                classNameInput="cr-sign-up-form__input"
                             />
                             {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
                         </div>
                         <div className={passwordGroupClass}>
-                            <label className="cr-sign-up-form__label">
-                                {passwordLabel ? passwordLabel : 'Password'}
-                            </label>
-                            <Input
+                            <CustomInput
                                 type="password"
-                                value={password}
-                                className="cr-sign-up-form__input"
-                                onFocus={this.props.handleFocusPassword}
-                                onBlur={this.props.handleFocusPassword}
-                                onChangeValue={this.props.handleChangePassword}
+                                label={passwordLabel || 'Password'}
+                                placeholder={passwordLabel || 'Password'}
+                                defaultLabel="Password"
+                                handleChangeInput={this.props.handleChangePassword}
+                                inputValue={password}
+                                handleFocusInput={this.props.handleFocusPassword}
+                                classNameLabel="cr-sign-up-form__label"
+                                classNameInput="cr-sign-up-form__input"
                             />
                             {passwordError && <div className={'cr-sign-up-form__error'}>{passwordError}</div>}
                         </div>
                         <div className={confirmPasswordGroupClass}>
-                            <label className="cr-sign-up-form__label">
-                                {confirmPasswordLabel ? confirmPasswordLabel : 'Confirm Password'}
-                            </label>
-                            <Input
+                            <CustomInput
                                 type="password"
-                                value={confirmPassword}
-                                className="cr-sign-up-form__input"
-                                onFocus={this.props.handleFocusConfirmPassword}
-                                onBlur={this.props.handleFocusConfirmPassword}
-                                onChangeValue={this.props.handleChangeConfirmPassword}
+                                label={confirmPasswordLabel || 'Confirm Password'}
+                                placeholder={confirmPasswordLabel || 'Confirm Password'}
+                                defaultLabel="Confirm Password"
+                                handleChangeInput={this.props.handleChangeConfirmPassword}
+                                inputValue={confirmPassword}
+                                handleFocusInput={this.props.handleFocusConfirmPassword}
+                                classNameLabel="cr-sign-up-form__label"
+                                classNameInput="cr-sign-up-form__input"
                             />
                             {confirmationError && <div className={'cr-sign-up-form__error'}>{confirmationError}</div>}
                         </div>
                         <div className={refIdGroupClass}>
-                            <label className="cr-sign-up-form__label">
-                                {referalCodeLabel ? referalCodeLabel : 'Referral code'}
-                            </label>
-                            <Input
+                            <CustomInput
                                 type="text"
-                                value={refId}
-                                className="cr-sign-up-form__input"
-                                onFocus={this.props.handleFocusRefId}
-                                onBlur={this.props.handleFocusRefId}
-                                onChangeValue={this.props.handleChangeRefId}
+                                label={referalCodeLabel || 'Referral code'}
+                                placeholder={referalCodeLabel || 'Referral code'}
+                                defaultLabel="Referral code"
+                                handleChangeInput={this.props.handleChangeRefId}
+                                inputValue={refId}
+                                handleFocusInput={this.props.handleFocusRefId}
+                                classNameLabel="cr-sign-up-form__label"
+                                classNameInput="cr-sign-up-form__input"
                             />
                         </div>
                         <Checkbox
@@ -193,7 +195,6 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                         />
                         {captcha}
                         <div className="cr-sign-up-form__button-wrapper">
-                            <div className="cr-sign-up-form__loader">{isLoading ? <Loader /> : null}</div>
                             <Button
                                 type="submit"
                                 className="cr-sign-up-form__button"

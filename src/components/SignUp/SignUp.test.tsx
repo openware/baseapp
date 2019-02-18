@@ -67,20 +67,6 @@ describe('SignUp component', () => {
         expect(wrapper.find('.__selected').text()).toBe('label sign up');
     });
 
-    it('should have correct labels for input fields', () => {
-        const wrapper = setup({
-            emailLabel: 'label email',
-            passwordLabel: 'label password',
-            confirmPasswordLabel: 'label confirm password',
-            referalCodeLabel: 'label referal code',
-            termsMessage: 'label terms message',
-        });
-        expect(wrapper.find('.cr-sign-up-form__label').first().text()).toBe('label email');
-        expect(wrapper.find('.cr-sign-up-form__label').at(1).text()).toBe('label password');
-        expect(wrapper.find('.cr-sign-up-form__label').at(2).text()).toBe('label confirm password');
-        expect(wrapper.find('.cr-sign-up-form__label').last().text()).toBe('label referal code');
-    });
-
     it('should render error blocks', () => {
         const wrapper = setup({
             emailError: 'error email',
@@ -90,41 +76,6 @@ describe('SignUp component', () => {
         expect(wrapper.find('.cr-sign-up-form__error').first().text()).toBe('error email');
         expect(wrapper.find('.cr-sign-up-form__error').at(1).text()).toBe('error password');
         expect(wrapper.find('.cr-sign-up-form__error').last().text()).toBe('error refid');
-    });
-
-    it('should render loading', () => {
-        const wrapper = setup({ isLoading: true });
-        expect(wrapper.find('.cr-sign-up-form__loader').children()).toHaveLength(1);
-    });
-
-    it('should stay focused', () => {
-        const spyOnEmailField = jest.fn();
-        const spyOnPasswordField = jest.fn();
-        const spyOnConfirmationPasswordField = jest.fn();
-        const spyOnRefIdField = jest.fn();
-
-        const wrapper = setup({
-            handleFocusEmail: spyOnEmailField,
-            handleFocusPassword: spyOnPasswordField,
-            handleFocusConfirmPassword: spyOnConfirmationPasswordField,
-            handleFocusRefId: spyOnRefIdField,
-        });
-
-        wrapper.find('.cr-sign-up-form__input').first().simulate('focus');
-        expect(spyOnEmailField).toHaveBeenCalled();
-        expect(spyOnEmailField).toHaveBeenCalledTimes(1);
-
-        wrapper.find('.cr-sign-up-form__input').at(1).simulate('focus');
-        expect(spyOnPasswordField).toHaveBeenCalled();
-        expect(spyOnPasswordField).toHaveBeenCalledTimes(1);
-
-        wrapper.find('.cr-sign-up-form__input').at(2).simulate('focus');
-        expect(spyOnConfirmationPasswordField).toHaveBeenCalled();
-        expect(spyOnConfirmationPasswordField).toHaveBeenCalledTimes(1);
-
-        wrapper.find('.cr-sign-up-form__input').last().simulate('focus');
-        expect(spyOnRefIdField).toHaveBeenCalled();
-        expect(spyOnRefIdField).toHaveBeenCalledTimes(1);
     });
 
     it('should send request', () => {

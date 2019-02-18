@@ -1,10 +1,11 @@
 import {
     Button,
-    Input,
-    Loader,
 } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
+import {
+    CustomInput,
+} from '../';
 import {
     EMAIL_REGEX,
 } from '../../helpers';
@@ -91,37 +92,34 @@ class SignInComponent extends React.Component<SignInProps> {
                     <div className="cr-sign-in-form__form-content">
                         {logo}
                         <div className={emailGroupClass}>
-                            <label className="cr-sign-in-form__label">
-                                {emailLabel ? emailLabel : 'Email'}
-                            </label>
-                            <Input
+                            <CustomInput
                                 type="email"
-                                value={email}
+                                label={emailLabel || 'Email'}
                                 placeholder={emailPlaceholder}
-                                className="cr-sign-in-form__input"
-                                onChangeValue={this.handleChangeEmail}
-                                onFocus={() => this.handleFieldFocus('email')}
-                                onBlur={() => this.handleFieldFocus('email')}
+                                defaultLabel="Email"
+                                handleChangeInput={this.handleChangeEmail}
+                                inputValue={email}
+                                handleFocusInput={() => this.handleFieldFocus('email')}
+                                classNameLabel="cr-sign-in-form__label"
+                                classNameInput="cr-sign-in-form__input"
                             />
                             {emailError && <div className={'cr-sign-in-form__error'}>{emailError}</div>}
                         </div>
                         <div className={passwordGroupClass}>
-                            <label className="cr-sign-in-form__label">
-                                {passwordLabel ? passwordLabel : 'Password'}
-                            </label>
-                            <Input
+                            <CustomInput
                                 type="password"
-                                value={password}
+                                label={passwordLabel || 'Password'}
                                 placeholder={passwordPlaceholder}
-                                className="cr-sign-in-form__input"
-                                onChangeValue={this.handleChangePassword}
-                                onFocus={() => this.handleFieldFocus('password')}
-                                onBlur={() => this.handleFieldFocus('password')}
+                                defaultLabel="Password"
+                                handleChangeInput={this.handleChangePassword}
+                                inputValue={password}
+                                handleFocusInput={() => this.handleFieldFocus('password')}
+                                classNameLabel="cr-sign-in-form__label"
+                                classNameInput="cr-sign-in-form__input"
                             />
                             {passwordError && <div className={'cr-sign-in-form__error'}>{passwordError}</div>}
                         </div>
                         <div className="cr-sign-in-form__button-wrapper">
-                            <div className="cr-sign-in-form__loader">{isLoading ? <Loader /> : null}</div>
                             <Button
                                 label={isLoading ? 'Loading...' : (labelSignIn ? labelSignIn : 'Sign in')}
                                 type="submit"

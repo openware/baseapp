@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomInput component should render 1`] = `
+<Fragment>
+  <label
+    className=""
+  />
+  <e
+    className=""
+    onBlur={[MockFunction]}
+    onChangeValue={[MockFunction]}
+    onFocus={[MockFunction]}
+    placeholder=""
+    type=""
+    value=""
+  />
+</Fragment>
+`;

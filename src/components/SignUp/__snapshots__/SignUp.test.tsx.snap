@@ -33,69 +33,61 @@ exports[`SignUp component should render 1`] = `
       <div
         className="cr-sign-up-form__group"
       >
-        <label
-          className="cr-sign-up-form__label"
-        >
-          Email
-        </label>
-        <e
-          className="cr-sign-up-form__input"
-          onBlur={[MockFunction]}
-          onChangeValue={[MockFunction]}
-          onFocus={[MockFunction]}
+        <CustomInput
+          classNameInput="cr-sign-up-form__input"
+          classNameLabel="cr-sign-up-form__label"
+          defaultLabel="Email"
+          handleChangeInput={[MockFunction]}
+          handleFocusInput={[MockFunction]}
+          inputValue=""
+          label="Email"
+          placeholder="Email"
           type="email"
-          value=""
         />
       </div>
       <div
         className="cr-sign-up-form__group"
       >
-        <label
-          className="cr-sign-up-form__label"
-        >
-          Password
-        </label>
-        <e
-          className="cr-sign-up-form__input"
-          onBlur={[MockFunction]}
-          onChangeValue={[MockFunction]}
-          onFocus={[MockFunction]}
+        <CustomInput
+          classNameInput="cr-sign-up-form__input"
+          classNameLabel="cr-sign-up-form__label"
+          defaultLabel="Password"
+          handleChangeInput={[MockFunction]}
+          handleFocusInput={[MockFunction]}
+          inputValue=""
+          label="Password"
+          placeholder="Password"
           type="password"
-          value=""
         />
       </div>
       <div
         className="cr-sign-up-form__group"
       >
-        <label
-          className="cr-sign-up-form__label"
-        >
-          Confirm Password
-        </label>
-        <e
-          className="cr-sign-up-form__input"
-          onBlur={[MockFunction]}
-          onChangeValue={[MockFunction]}
-          onFocus={[MockFunction]}
+        <CustomInput
+          classNameInput="cr-sign-up-form__input"
+          classNameLabel="cr-sign-up-form__label"
+          defaultLabel="Confirm Password"
+          handleChangeInput={[MockFunction]}
+          handleFocusInput={[MockFunction]}
+          inputValue=""
+          label="Confirm Password"
+          placeholder="Confirm Password"
           type="password"
-          value=""
         />
       </div>
       <div
         className="cr-sign-up-form__group"
       >
-        <label
-          className="cr-sign-up-form__label"
-        >
-          Referral code
-        </label>
-        <e
-          className="cr-sign-up-form__input"
-          onBlur={[MockFunction]}
-          onChangeValue={[MockFunction]}
-          onFocus={[MockFunction]}
+        <CustomInput
+          classNameInput="cr-sign-up-form__input"
+          classNameLabel="cr-sign-up-form__label"
+          defaultLabel="Referral code"
+          handleChangeInput={[MockFunction]}
+          handleFocusInput={[MockFunction]}
+          inputValue=""
+          label="Referral code"
+          placeholder="Referral code"
           type="text"
-          value=""
         />
       </div>
       <Component
@@ -107,9 +99,6 @@ exports[`SignUp component should render 1`] = `
       <div
         className="cr-sign-up-form__button-wrapper"
       >
-        <div
-          className="cr-sign-up-form__loader"
-        />
         <Component
           className="cr-sign-up-form__button"
           disabled={true}

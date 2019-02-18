@@ -56,51 +56,10 @@ describe('SignIn component', () => {
         expect(wrapper.find('.cr-sign-in-form__tab-signup').text()).toBe('label sign up');
     });
 
-    it('should have correct labels for input fields', () => {
-        const wrapper = setup({emailLabel: 'label email', passwordLabel: 'label password'});
-        expect(wrapper.find('.cr-sign-in-form__label').first().text()).toBe('label email');
-        expect(wrapper.find('.cr-sign-in-form__label').last().text()).toBe('label password');
-    });
-
     it('should render error blocks', () => {
         const wrapper = setup({emailError: 'error email', passwordError: 'error password'});
         expect(wrapper.find('.cr-sign-in-form__error').first().text()).toBe('error email');
         expect(wrapper.find('.cr-sign-in-form__error').last().text()).toBe('error password');
-    });
-
-    it('should render loading', () => {
-        const wrapper = setup({ isLoading: true });
-        expect(wrapper.find('.cr-sign-in-form__loader').children()).toHaveLength(1);
-    });
-
-    it('should stay focused', () => {
-        const spyOnHandleFocusField = jest.fn();
-        const wrapper = setup({handleChangeFocusField: spyOnHandleFocusField});
-        wrapper.find('.cr-sign-in-form__input').first().simulate('focus');
-        expect(spyOnHandleFocusField).toHaveBeenCalled();
-        expect(spyOnHandleFocusField).toHaveBeenCalledTimes(1);
-        let args = 'email';
-        expect(spyOnHandleFocusField).toHaveBeenCalledWith(args);
-        wrapper.find('.cr-sign-in-form__input').last().simulate('focus');
-        expect(spyOnHandleFocusField).toHaveBeenCalled();
-        expect(spyOnHandleFocusField).toHaveBeenCalledTimes(2);
-        args = 'password';
-        expect(spyOnHandleFocusField).toHaveBeenCalledWith(args);
-    });
-
-    it('should handle blur event', () => {
-        const spyOnHandleFocusField = jest.fn();
-        const wrapper = setup({handleChangeFocusField: spyOnHandleFocusField});
-        wrapper.find('.cr-sign-in-form__input').first().simulate('blur');
-        expect(spyOnHandleFocusField).toHaveBeenCalled();
-        expect(spyOnHandleFocusField).toHaveBeenCalledTimes(1);
-        let args = 'email';
-        expect(spyOnHandleFocusField).toHaveBeenCalledWith(args);
-        wrapper.find('.cr-sign-in-form__input').last().simulate('blur');
-        expect(spyOnHandleFocusField).toHaveBeenCalled();
-        expect(spyOnHandleFocusField).toHaveBeenCalledTimes(2);
-        args = 'password';
-        expect(spyOnHandleFocusField).toHaveBeenCalledWith(args);
     });
 
     it('should send request', () => {

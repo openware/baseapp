@@ -6,20 +6,26 @@
   background-size: cover;
   .pg-sign-in-screen__container {
     background: var(--transparent);
-    margin-top: 20px;
-    width: 424px;
+    margin-top: calc(var(--gap) * 3.33);
+    width: calc(var(--big-gap) * 70.66);
   }
   .cr-sign-in-form {
     background: var(--base-bright);
     margin: 0 auto;
-    border-radius: 4px;
+    border-radius: calc(var(--gap) * 0.66);
     display: flex;
     flex-direction: column;
+    height: calc(var(--big-gap) * 5.5);
 
     &__options-group {
       width: 100%;
-      height: 58px;
+      height: calc(var(--big-gap) * 0.97);
       border-bottom: 2px solid var(--sign-in-text);
+    }
+
+    &__button-wrapper {
+      min-height: calc(var(--gap));
+      bottom: calc(var(--gap) * 3.5);
     }
 
     &__option {
@@ -33,7 +39,7 @@
     .cr-button {
       color: var(--color-white);
       background: var(--button-primary);
-      border-radius: 3px;
+      border-radius: calc(var(--gap) * 0.5);
       font-size: calc(var(--gap) * 2.66);
       margin-top: calc(var(--gap) * 1.55);
 
@@ -53,23 +59,25 @@
     &__title {
       background: var(--transparent);
       font-size: calc(var(--gap) * 4);
-      margin: 40px !important;
+      margin: calc(var(--gap) * 6.66) !important;
     }
     &__label {
       background: var(--base-bright);
       color: var(--text-muted);
-      font-size: 12px;
+      font-size: calc(var(--gap) * 2);
+      top: 0;
+      position: absolute;
     }
     &__forgot {
       color: var(--base-new);
-      padding-top: 8px;
+      padding-top: calc(var(--gap) * 1.33);
     }
     &__input {
       input {
         color: var(--color-white);
-        font-size: 14px;
+        font-size: calc(var(--gap) * 2.33);
         border: 1px solid var(--input-block-border-color);
-        border-radius: 4px;
+        border-radius: calc(var(--gap) * 0.66);
       }
     }
     &__error,
@@ -78,16 +86,16 @@
     }
     &__footer {
       position: absolute;
-      bottom: -10px;
+      bottom: calc(var(--gap) * (-1.66));
       right: 0;
       left: 0;
       &-create {
-        font-size: 14px;
+        font-size: calc(var(--gap) * 2.33);
         font-weight: bolder;
       }
       &-signup {
         color: var(--active-color);
-        font-size: 14px;
+        font-size: calc(var(--gap) * 2.33);
         font-weight: bold;
       }
     }
@@ -105,7 +113,7 @@
 @media screen and (max-width: 768px) {
   .pg-sign-in-screen {
     .pg-sign-in-screen__container {
-      margin: 20px 10px 0;
+      margin: calc(var(--gap) * 3.33) calc(var(--gap) * 1.66) 0;
       width: 100%;
     }
     .cr-sign-in-form {

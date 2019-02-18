@@ -34,45 +34,36 @@ exports[`SignIn component should render 1`] = `
       <div
         className="cr-sign-in-form__group"
       >
-        <label
-          className="cr-sign-in-form__label"
-        >
-          Email
-        </label>
-        <e
-          className="cr-sign-in-form__input"
-          onBlur={[Function]}
-          onChangeValue={[Function]}
-          onFocus={[Function]}
+        <CustomInput
+          classNameInput="cr-sign-in-form__input"
+          classNameLabel="cr-sign-in-form__label"
+          defaultLabel="Email"
+          handleChangeInput={[Function]}
+          handleFocusInput={[Function]}
+          inputValue=""
+          label="Email"
           placeholder=""
           type="email"
-          value=""
         />
       </div>
       <div
         className="cr-sign-in-form__group"
       >
-        <label
-          className="cr-sign-in-form__label"
-        >
-          Password
-        </label>
-        <e
-          className="cr-sign-in-form__input"
-          onBlur={[Function]}
-          onChangeValue={[Function]}
-          onFocus={[Function]}
+        <CustomInput
+          classNameInput="cr-sign-in-form__input"
+          classNameLabel="cr-sign-in-form__label"
+          defaultLabel="Password"
+          handleChangeInput={[Function]}
+          handleFocusInput={[Function]}
+          inputValue=""
+          label="Password"
           placeholder=""
           type="password"
-          value=""
         />
       </div>
       <div
         className="cr-sign-in-form__button-wrapper"
       >
-        <div
-          className="cr-sign-in-form__loader"
-        />
         <Component
           className="cr-sign-in-form__button"
           disabled={true}
