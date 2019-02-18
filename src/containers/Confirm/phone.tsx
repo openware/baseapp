@@ -14,8 +14,8 @@ import {
     selectVerifyPhoneSuccess,
     sendCode,
     verifyPhone,
-} from '../../modules/kyc/phone';
-import { changeUserLevel } from '../../modules/profile';
+} from '../../modules/user/kyc/phone';
+import { changeUserLevel } from '../../modules/user/profile';
 
 interface ReduxProps {
     verifyPhoneSuccess?: string;

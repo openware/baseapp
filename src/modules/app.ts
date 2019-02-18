@@ -1,69 +1,42 @@
 import { combineReducers } from 'redux';
-import { alertReducer, AlertState } from './alert';
-import { authReducer, AuthState } from './auth';
-import { contactReducer, ContactState } from './contact';
-import { EmailVerificationState, sendEmailVerificationReducer } from './email';
-import { historyReducer, HistoryState } from './history';
-import { changeLanguageReducer, LanguageState } from './i18n';
-import { klineReducer, KlineState } from './kline';
+import { alertReducer  } from './public/alert';
+import { changeLanguageReducer  } from './public/i18n';
+import { klineReducer  } from './public/kline';
+import { marketsReducer } from './public/markets';
+import { depthReducer, orderBookReducer  } from './public/orderBook';
+import { rangerReducer  } from './public/ranger/reducer';
+import { recentTradesReducer  } from './public/recentTrades';
+import { authReducer  } from './user/auth';
+import { sendEmailVerificationReducer } from './user/emailVerification';
+import { historyReducer  } from './user/history';
 import {
     documentsReducer,
-    DocumentsState,
     identityReducer,
-    IdentityState,
     labelReducer,
-    LabelState,
     phoneReducer,
-    PhoneState,
-} from './kyc';
-import { marketsReducer, MarketsState } from './markets';
-import { openOrdersReducer, OpenOrdersState } from './openOrders';
-import {
-    depthReducer,
-    DepthState,
-    orderBookReducer,
-    OrderBookState,
-} from './orderBook';
-import { ordersReducer, OrdersState } from './orders';
-import { ordersHistoryReducer, OrdersHistoryState } from './ordersHistory';
-import { passwordReducer, PasswordState } from './password';
-import { profileReducer, ProfileState } from './profile';
-import { rangerReducer, RangerState } from './ranger/reducer';
-import { recentTradesReducer, RecentTradesState } from './recentTrades';
-import { userActivityReducer, UserActivityState } from './userActivity';
-import { walletsReducer, WalletsState } from './wallets';
+} from './user/kyc';
+import { openOrdersReducer } from './user/openOrders';
+import { ordersReducer  } from './user/orders';
+import { ordersHistoryReducer  } from './user/ordersHistory';
+import { passwordReducer  } from './user/password';
+import { profileReducer  } from './user/profile';
+import { userActivityReducer  } from './user/userActivity';
+import { walletsReducer  } from './user/wallets';
 
-export interface AppState {
-    auth: AuthState;
-    contact: ContactState;
-    recentTrades: RecentTradesState;
-    orders: OrdersState;
-    password: PasswordState;
-    profile: ProfileState;
-    label: LabelState;
-    wallets: WalletsState;
-    documents: DocumentsState;
-    identity: IdentityState;
-    phone: PhoneState;
-    markets: MarketsState;
-    orderBook: OrderBookState;
-    depth: DepthState;
-    history: HistoryState;
-    userActivity: UserActivityState;
-    ranger: RangerState;
-    i18n: LanguageState;
-    alert: AlertState;
-    kline: KlineState;
-    ordersHistory: OrdersHistoryState;
-    openOrders: OpenOrdersState;
-    sendEmailVerification: EmailVerificationState;
-}
-
-export const appReducer = combineReducers({
-    auth: authReducer,
-    contact: contactReducer,
-    label: labelReducer,
+export const publicReducer = combineReducers({
     recentTrades: recentTradesReducer,
+    markets: marketsReducer,
+    orderBook: orderBookReducer,
+    depth: depthReducer,
+    ranger: rangerReducer,
+    i18n: changeLanguageReducer,
+    kline: klineReducer,
+    alert: alertReducer,
+});
+
+export const userReducer = combineReducers({
+    auth: authReducer,
+    label: labelReducer,
     orders: ordersReducer,
     password: passwordReducer,
     profile: profileReducer,
@@ -71,15 +44,8 @@ export const appReducer = combineReducers({
     phone: phoneReducer,
     identity: identityReducer,
     documents: documentsReducer,
-    markets: marketsReducer,
-    orderBook: orderBookReducer,
-    depth: depthReducer,
     history: historyReducer,
     userActivity: userActivityReducer,
-    ranger: rangerReducer,
-    i18n: changeLanguageReducer,
-    kline: klineReducer,
-    alert: alertReducer,
     ordersHistory: ordersHistoryReducer,
     openOrders: openOrdersReducer,
     sendEmailVerification: sendEmailVerificationReducer,

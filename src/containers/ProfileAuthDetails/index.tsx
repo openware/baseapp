@@ -15,7 +15,7 @@ import {
 import {
     changePasswordFetch,
     selectChangePasswordSuccess,
-} from '../../modules/profile';
+} from '../../modules/user/profile';
 import { ChangePassword } from '../ChangePassword';
 import { ProfileTwoFactorAuth } from '../ProfileTwoFactorAuth';
 

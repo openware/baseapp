@@ -16,7 +16,7 @@ import {
     selectCurrentPrice,
     setCurrentPrice,
 } from '../../modules';
-import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modules/recentTrades';
+import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modules/public/recentTrades';
 
 interface ReduxProps {
     recentTrades: PublicTrade[];

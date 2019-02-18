@@ -24,12 +24,12 @@ import {
   setCurrentPrice,
   User,
 } from '../modules';
-import { Market, marketsFetch, selectMarkets } from '../modules/markets';
-import { depthFetch } from '../modules/orderBook';
-import { rangerConnectFetch, RangerConnectFetch } from '../modules/ranger';
-import { RangerState } from '../modules/ranger/reducer';
-import { selectRanger } from '../modules/ranger/selectors';
-import { selectWallets, Wallet, walletsFetch } from '../modules/wallets';
+import { Market, marketsFetch, selectMarkets } from '../modules/public/markets';
+import { depthFetch } from '../modules/public/orderBook';
+import { rangerConnectFetch, RangerConnectFetch } from '../modules/public/ranger';
+import { RangerState } from '../modules/public/ranger/reducer';
+import { selectRanger } from '../modules/public/ranger/selectors';
+import { selectWallets, Wallet, walletsFetch } from '../modules/user/wallets';
 
 const breakpoints = {
     lg: 1200,

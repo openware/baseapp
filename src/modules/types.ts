@@ -1,8 +1,8 @@
-import { MarketsState, TickerEvent } from './markets';
-import { OrderBookState } from './orderBook';
+import { MarketsState, TickerEvent } from './public/markets';
+import { OrderBookState } from './public/orderBook';
 import {
     OrdersState,
-} from './orders';
+} from './user/orders';
 
 export interface CommonState {
     error?: CommonError;

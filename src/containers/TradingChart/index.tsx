@@ -17,7 +17,7 @@ import {
     selectMarkets,
     selectMarketTickers,
 } from '../../modules';
-import { rangerSubscribeKlineMarket, rangerUnsubscribeKlineMarket } from '../../modules/ranger';
+import { rangerSubscribeKlineMarket, rangerUnsubscribeKlineMarket } from '../../modules/public/ranger';
 import { CurrentKlineSubscription, dataFeedObject, print } from './api';
 
 interface ReduxProps {

@@ -17,9 +17,9 @@ import {
     selectMarketTickers,
     setCurrentMarket,
     Ticker,
-} from '../../modules/markets';
-import { depthFetch, orderBookFetch } from '../../modules/orderBook';
-import { walletsFetch } from '../../modules/wallets';
+} from '../../modules/public/markets';
+import { depthFetch, orderBookFetch } from '../../modules/public/orderBook';
+import { walletsFetch } from '../../modules/user/wallets';
 
 interface ReduxProps {
     userData: User;

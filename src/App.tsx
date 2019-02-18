@@ -42,7 +42,7 @@ class AppLayout extends React.Component<Props, {}, {}> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
     (state: RootState): ReduxProps => ({
-        locale: state.app.i18n,
+        locale: state.public.i18n,
     });
 
 // tslint:disable-next-line:no-any

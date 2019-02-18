@@ -1,53 +1,79 @@
 import { combineReducers } from 'redux';
 // tslint:disable-next-line no-submodule-imports
 import { all, call } from 'redux-saga/effects';
-import { rootHandleAlertSaga } from './alert';
-import { appReducer, AppState } from './app';
-import { rootAuthSaga } from './auth';
-import { rootSendEmailSaga } from './contact';
-import { rootEmailVerificationSaga } from './email';
-import { rootHistorySaga } from './history';
-import { rootSendDocumentsSaga } from './kyc/documents';
-import { rootSendIdentitySaga } from './kyc/identity';
-import { rootLabelSaga } from './kyc/label';
-import { rootSendCodeSaga } from './kyc/phone';
-import { rootMarketsSaga } from './markets';
-import { rootOpenOrdersSaga } from './openOrders';
-import { rootOrderBookSaga } from './orderBook';
-import { rootOrdersSaga } from './orders';
-import { rootOrdersHistorySaga } from './ordersHistory';
-import { rootPasswordSaga } from './password';
-import { rootProfileSaga } from './profile';
-import { rootRecentTradesSaga } from './recentTrades';
-import { rootUserActivitySaga } from './userActivity';
-import { rootWalletsSaga } from './wallets';
+import { publicReducer, userReducer } from './app';
+import { AlertState, rootHandleAlertSaga } from './public/alert';
+import { LanguageState } from './public/i18n';
+import { KlineState } from './public/kline';
+import { MarketsState, rootMarketsSaga } from './public/markets';
+import { DepthState, OrderBookState, rootOrderBookSaga } from './public/orderBook';
+import { RangerState } from './public/ranger/reducer';
+import { RecentTradesState, rootRecentTradesSaga } from './public/recentTrades';
+import { AuthState, rootAuthSaga } from './user/auth';
+import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
+import { HistoryState, rootHistorySaga } from './user/history';
+import { DocumentsState, rootSendDocumentsSaga } from './user/kyc/documents';
+import { IdentityState, rootSendIdentitySaga } from './user/kyc/identity';
+import { LabelState, rootLabelSaga } from './user/kyc/label';
+import { PhoneState, rootSendCodeSaga } from './user/kyc/phone';
+import { OpenOrdersState, rootOpenOrdersSaga } from './user/openOrders';
+import { OrdersState, rootOrdersSaga } from './user/orders';
+import { OrdersHistoryState, rootOrdersHistorySaga } from './user/ordersHistory';
+import { PasswordState, rootPasswordSaga } from './user/password';
+import { ProfileState, rootProfileSaga } from './user/profile';
+import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
+import { rootWalletsSaga, WalletsState } from './user/wallets';
 
-export * from './auth';
-export * from './contact';
-export * from './wallets';
-export * from './profile';
-export * from './markets';
-export * from './openOrders';
-export * from './orderBook';
-export * from './orders';
-export * from './ordersHistory';
-export * from './password';
-export * from './userActivity';
+export * from './public/markets';
+export * from './public/orderBook';
+export * from './public/i18n';
+export * from './public/kline';
+export * from './public/alert';
 
-export * from './i18n';
-export * from './history';
-export * from './kyc';
-export * from './kline';
-
-export * from './alert';
-export * from './email';
+export * from './user/auth';
+export * from './user/wallets';
+export * from './user/profile';
+export * from './user/openOrders';
+export * from './user/orders';
+export * from './user/ordersHistory';
+export * from './user/password';
+export * from './user/userActivity';
+export * from './user/history';
+export * from './user/kyc';
+export * from './user/emailVerification';
 
 export interface RootState {
-    app: AppState;
+    public: {
+        recentTrades: RecentTradesState;
+        markets: MarketsState;
+        orderBook: OrderBookState;
+        depth: DepthState;
+        ranger: RangerState;
+        i18n: LanguageState;
+        alert: AlertState;
+        kline: KlineState;
+    };
+    user: {
+        auth: AuthState;
+        orders: OrdersState;
+        password: PasswordState;
+        profile: ProfileState;
+        label: LabelState;
+        wallets: WalletsState;
+        documents: DocumentsState;
+        identity: IdentityState;
+        phone: PhoneState;
+        history: HistoryState;
+        userActivity: UserActivityState;
+        ordersHistory: OrdersHistoryState;
+        openOrders: OpenOrdersState;
+        sendEmailVerification: EmailVerificationState;
+    };
 }
 
 export const rootReducer = combineReducers({
-    app: appReducer,
+    public: publicReducer,
+    user: userReducer,
 });
 
 export function* rootSaga() {
@@ -61,7 +87,6 @@ export function* rootSaga() {
         call(rootSendCodeSaga),
         call(rootSendIdentitySaga),
         call(rootSendDocumentsSaga),
-        call(rootSendEmailSaga),
         call(rootRecentTradesSaga),
         call(rootOrderBookSaga),
         call(rootHandleAlertSaga),

@@ -2,14 +2,14 @@ import { Button } from '@openware/components';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { selectUserInfo, User } from '../../modules';
+import { CommonError } from '../../modules/types';
 import {
     selectTiersData,
     selectTiersDisabled,
     selectTiersError,
     Tier,
     tiersFetch,
-} from '../../modules/profile';
-import { CommonError } from '../../modules/types';
+} from '../../modules/user/profile';
 
 interface ReduxProps {
     user: User;

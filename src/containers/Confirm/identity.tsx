@@ -16,8 +16,8 @@ import { RootState } from '../../modules';
 import {
     selectSendIdentitySuccess,
     sendIdentity,
-} from '../../modules/kyc/identity';
-import { changeUserLevel } from '../../modules/profile';
+} from '../../modules/user/kyc/identity';
+import { changeUserLevel } from '../../modules/user/profile';
 import { nationalities } from './nationalities';
 
 interface ReduxProps {

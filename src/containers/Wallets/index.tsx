@@ -29,7 +29,7 @@ import {
     walletsData,
     walletsFetch,
     walletsWithdrawCcyFetch,
-} from '../../modules/wallets';
+} from '../../modules/user/wallets';
 import { ModalWithdrawConfirmation } from '../ModalWithdrawConfirmation';
 import { ModalWithdrawSubmit } from '../ModalWithdrawSubmit';
 import {

@@ -19,11 +19,11 @@ import {
     setCurrentPrice,
     Wallet,
 } from '../../modules';
-import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/markets';
+import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/public/markets';
 import {
     orderExecuteFetch,
     selectOrderExecuteLoading,
-} from '../../modules/orders';
+} from '../../modules/user/orders';
 
 interface ReduxProps {
     currentMarket: Market | undefined;

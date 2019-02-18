@@ -23,7 +23,7 @@ import {
     selectSendDocumentsLoading,
     selectSendDocumentsSuccess,
     sendDocuments,
-} from '../../modules/kyc/documents';
+} from '../../modules/user/kyc/documents';
 
 interface ReduxProps {
     success?: string;

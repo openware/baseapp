@@ -11,22 +11,17 @@ import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { pgRoutes } from '../../constants';
 import {
     changeLanguage,
-    ContactError,
     logoutFetch,
     RootState,
     selectCurrentLanguage,
-    selectSendEmailError,
-    selectSendEmailSuccess,
     selectUserInfo,
     selectUserLoggedIn,
-    sendEmail,
     User,
     walletsReset,
 } from '../../modules';
 
 export interface ReduxProps {
     address: string;
-    error?: ContactError;
     isLoggedIn: boolean;
     lang: string;
     success?: boolean;
@@ -36,7 +31,6 @@ export interface ReduxProps {
 interface DispatchProps {
     changeLanguage: typeof changeLanguage;
     logout: typeof logoutFetch;
-    sendEmail: typeof sendEmail;
     walletsReset: typeof walletsReset;
 }
 
@@ -245,9 +239,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
     (state: RootState): ReduxProps => ({
         address: '',
-        error: selectSendEmailError(state),
         lang: selectCurrentLanguage(state),
-        success: selectSendEmailSuccess(state),
         user: selectUserInfo(state),
         isLoggedIn: selectUserLoggedIn(state),
     });
@@ -256,7 +248,6 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         changeLanguage: payload => dispatch(changeLanguage(payload)),
         logout: () => dispatch(logoutFetch()),
-        sendEmail: payload => dispatch(sendEmail(payload)),
         walletsReset: () => dispatch(walletsReset()),
     });
 

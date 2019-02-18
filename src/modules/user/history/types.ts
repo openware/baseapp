@@ -1,0 +1,63 @@
+import { CommonState } from '../../types';
+
+export interface PublicTrade {
+    id: number;
+    price: string;
+    volume: string;
+    funds: string;
+    market: string;
+    created_at: string;
+    maker_type: string;
+}
+
+export interface PrivateTrade extends PublicTrade {
+    side?: string;
+    order_id?: number;
+}
+
+export interface PrivateTradeEvent {
+    id: number;
+    at: number;
+    market: string;
+    kind: string;
+    price: string;
+    volume: string;
+    ask_id: number;
+    bid_id: number;
+}
+
+export interface PrivateTradesState extends CommonState {
+    list: PrivateTrade[];
+}
+
+export type MakerType = 'buy' | 'sell';
+
+export interface Withdraw {
+    currency: string;
+    id: number;
+    type: string;
+    amount: string;
+    fee: string;
+    blockchain_txid: string;
+    rid: string;
+    state: string;
+    created_at: string;
+    updated_at: string;
+    completed_at: string;
+    done_at: string;
+}
+
+export interface Deposit {
+    currency: string;
+    id: number;
+    amount: string;
+    fee: string;
+    txid: string;
+    created_at: string;
+    confirmations: number;
+    completed_at: string;
+    state: string;
+}
+
+export type WalletHistoryElement = Withdraw | Deposit | PrivateTrade;
+export type WalletHistoryList = WalletHistoryElement[];

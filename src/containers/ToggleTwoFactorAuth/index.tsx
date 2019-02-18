@@ -20,7 +20,7 @@ import {
     selectTwoFactorAuthQR,
     selectTwoFactorAuthSuccess,
     toggle2faFetch,
-} from '../../modules/profile';
+} from '../../modules/user/profile';
 
 interface RouterProps {
     history: History;

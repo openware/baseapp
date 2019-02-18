@@ -9,7 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import { App } from './App';
 import './index.css';
 import { rootReducer, rootSaga } from './modules';
-import { rangerSagas } from './modules/ranger';
+import { rangerSagas } from './modules/public/ranger';
 
 const history = createBrowserHistory();
 

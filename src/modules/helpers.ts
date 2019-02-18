@@ -1,4 +1,4 @@
-import { MakerType } from './history';
+import { MakerType } from './user/history';
 
 const makerTypeMap = {
     ask: 'sell',
