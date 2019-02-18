@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { TradingChartComponent } from '.';
-import { gatewayUrl } from '../../api/config';
+import { tradeUrl } from '../../api/config';
 import { LibrarySymbolInfo } from '../../charting_library/datafeed-api';
 import { klineArrayToObject, KlineState } from '../../modules';
 import { Market } from '../../modules/public/markets';
@@ -15,7 +15,7 @@ export interface CurrentKlineSubscription {
 
 const makeHistoryUrl = (
     market: string, resolution: number, from: number, to: number,
-) => `${gatewayUrl()}/peatio/public/markets/${market}/k-line?period=${resolution}&time_from=${from}&time_to=${to}`;
+) => `${tradeUrl()}/public/markets/${market}/k-line?period=${resolution}&time_from=${from}&time_to=${to}`;
 
 const resolutionToSeconds = (r: string): number => {
     const minutes = parseInt(r, 10);

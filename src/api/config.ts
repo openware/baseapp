@@ -3,7 +3,9 @@ import { Config } from './types';
 
 export const defaultConfig: Config = {
     api: {
-        gatewayUrl: '/',
+        authUrl: '',
+        tradeUrl: '',
+        applogicUrl: '',
         rangerUrl: '',
     },
     minutesUntilAutoLogout: '5',
@@ -28,7 +30,9 @@ Cryptobase.config = {...window.env};
 Cryptobase.config.storage = Cryptobase.config.storage || {};
 Cryptobase.config.captcha = Cryptobase.config.captcha || defaultConfig.captcha;
 
-export const gatewayUrl = () => Cryptobase.config.api.gatewayUrl;
+export const authUrl = () => Cryptobase.config.api.authUrl;
+export const tradeUrl = () => Cryptobase.config.api.tradeUrl;
+export const applogicUrl = () => Cryptobase.config.api.applogicUrl;
 export const rangerUrl = () => Cryptobase.config.api.rangerUrl;
 export const minutesUntilAutoLogout = () => Cryptobase.config.minutesUntilAutoLogout;
 export const withCredentials = () => Cryptobase.config.withCredentials;

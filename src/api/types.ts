@@ -1,6 +1,8 @@
 export interface Config {
     api: {
-        gatewayUrl: string;
+        authUrl: string;
+        tradeUrl: string;
+        applogicUrl: string;
         rangerUrl: string;
     };
     minutesUntilAutoLogout: string;

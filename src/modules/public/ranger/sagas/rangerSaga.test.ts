@@ -48,7 +48,9 @@ describe('Ranger module', () => {
         pingServer = createEchoServer(echoServerPort, debug);
         Cryptobase.config = {
             api: {
-                gatewayUrl: '/api/v2',
+                authUrl: '',
+                tradeUrl: '',
+                applogicUrl: '',
                 rangerUrl: `ws://localhost:${echoServerPort}`,
             },
             minutesUntilAutoLogout: '5',

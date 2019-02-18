@@ -7,8 +7,10 @@ import { Config, Cryptobase } from '../api';
 
 const mockConfig: Config = {
     api: {
-        gatewayUrl: '/api/v2',
-        rangerUrl: '',
+        authUrl: '/api/v2/barong',
+        tradeUrl: '/api/v2/peatio',
+        applogicUrl: '/api/v2/applogic',
+        rangerUrl: '/api/v2/ranger',
     },
     minutesUntilAutoLogout: '5',
     withCredentials: true,

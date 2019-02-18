@@ -4,7 +4,11 @@ import axios, {
     AxiosRequestConfig,
     AxiosResponse,
 } from 'axios';
-import { gatewayUrl, withCredentials } from './config';
+import { applogicUrl,
+  authUrl,
+  tradeUrl,
+  withCredentials,
+} from './config';
 
 export type HTTPMethod =
     'get'
@@ -36,9 +40,9 @@ export interface ApiVariety {
 }
 
 const getAPI = () => ({
-    barong: `${gatewayUrl()}/barong`,
-    applogic: `${gatewayUrl()}/applogic`,
-    peatio: `${gatewayUrl()}/peatio`,
+    barong: `${authUrl()}`,
+    applogic: `${applogicUrl()}`,
+    peatio: `${tradeUrl()}`,
 });
 
 const buildRequest = (request: Request, configData: RequestOptions) => {
