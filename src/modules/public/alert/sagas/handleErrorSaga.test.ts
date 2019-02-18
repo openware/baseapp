@@ -24,11 +24,11 @@ describe('Error handler', () => {
     });
 
     describe('Fetch handle error', () => {
-        const errorCodeUnauthorized = {code: 401, message: 'Invalid Session'};
+        const errorCodeAccountNotActive = {code: 401, message: 'Your account is not active'};
 
         const expectedErrorActionUnauthorized = {
             type: 'alert/ERROR_FETCH',
-            error: errorCodeUnauthorized,
+            error: errorCodeAccountNotActive,
         };
 
         const expectedUserReset = {
@@ -46,7 +46,7 @@ describe('Error handler', () => {
                     }
                 });
             });
-            store.dispatch(fetchError(errorCodeUnauthorized));
+            store.dispatch(fetchError(errorCodeAccountNotActive));
             return promise;
         });
     });

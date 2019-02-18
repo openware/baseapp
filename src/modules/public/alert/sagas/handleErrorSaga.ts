@@ -7,9 +7,15 @@ import { deleteError, ErrorData, handleError } from '../actions';
 export function* handleErrorSaga(action: ErrorData) {
     switch (action.error.code) {
         case 401:
-            yield put(userReset());
-            return;
-
+            if (action.error.message === 'Your account is not active') {
+                yield put(userReset());
+                yield put(handleError(action.error));
+                return;
+            } else {
+                yield put(handleError(action.error));
+                break;
+            }
+            break;
         case 403:
             return;
 

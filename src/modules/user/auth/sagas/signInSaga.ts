@@ -22,7 +22,9 @@ export function* signInSaga(action: SignInFetch) {
     } catch (error) {
         switch (error.code) {
             case 401:
-                yield put(signUpRequireVerification({requireVerification: true}));
+                if (error.message === 'Your account is not active') {
+                    yield put(signUpRequireVerification({requireVerification: true}));
+                }
                 break;
             case 403:
                 yield put(signInRequire2FA({ require2fa: true }));
