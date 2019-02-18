@@ -1,184 +1,185 @@
 .pg-confirm__content-identity {
-  color: var(--base-10);
-  margin: 0 auto;
+    color: var(--base-10);
+    margin: 0 auto;
 
-  &-forms {
-    display: flex;
-    font-size: calc(var(--gap) * 2.33);
-    height: 202px;
-    margin: calc(var(--gap) * 3.5) calc(var(--gap) * 1.2) calc(var(--gap) * 5.2) calc(var(--gap) * 3);
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding-right: calc(var(--gap) * 1.5);
-
-    &::-webkit-scrollbar {
-      width: 3px;
-    }
-
-    &::-webkit-scrollbar-track
-    {
-      background-color: var(--kyc-grey);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--color-blue);
-    }
-  }
-
-  &-col {
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-flow: row wrap;
-    justify-content: space-around;
-    width: 100%;
-
-    &-right {
-      align-items: flex-end;
-    }
-
-    &-row {
-      margin-bottom: calc(var(--gap) * 2);
-
-      &-is-active {
-        margin-top: 0 !important;
-        height: 63px !important;
-        margin-bottom: 3px;
-        border: 1px solid var(--kyc-active-color) !important;
-      }
-
-      fieldset {
-        color: var(--kyc-grey);
-        border-radius: 4px;
-        border: 1px solid var(--kyc-grey);
-        box-sizing: border-box;
-        height: 49px;
-        margin-top: 8px;
-        width: 247px;
-
-        &:focus-within {
-          padding-top: 4px;
-        }
-      }
-
-      &-text {
-        display: inline-block;
+    &-forms {
+        display: flex;
         font-size: calc(var(--gap) * 2.33);
-        height: calc(var(--gap) * 5);
-        padding-right: calc(var(--gap) * 6.66);
-        text-align: right;
-        width: calc(var(--big-gap) * 2.16);
-      }
+        height: calc(var(--big-gap) * 3.36);
+        margin: calc(var(--gap) * 3.5) calc(var(--gap) * 1.2) calc(var(--gap) * 5.2) calc(var(--gap) * 3);
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-right: calc(var(--gap) * 1.5);
 
-      &-content {
-        display: inline-block;
-        position: relative;
-
-        &--focused {
-          color: var(--color-blue) !important;
-          border: 2px solid var(--color-blue) !important;
+        &::-webkit-scrollbar {
+            width: 3px;
         }
 
-        legend {
-          background-color: var(--base-bright);
-          position:absolute;
-          top: -8px;
+        &::-webkit-scrollbar-track {
+            background-color: var(--kyc-grey);
         }
 
-        input {
-          color: var(--color-white);
-          background: var(--transparent);
-          border: unset;
-          bottom: 0;
-          font-size: calc(var(--gap) * 2);
-          margin-top: 10px;
-
-          &::placeholder {
-            color: var(--text-muted);
-          }
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--color-blue);
         }
-
-        .cr-dropdown {
-          &__input, &__input--open {
-            background-color: var(--base-bright);
-            border: 1px solid var(--kyc-grey);
-            border-radius: 4px;
-            color: var(--kyc-grey);
-            height: 47px;
-            margin-top: 8px;
-            margin-right: 2px;
-            width: 245px;
-          }
-
-          &__input {
-            &-label {
-              color: var(--kyc-grey);
-              font-size: calc(var(--gap) * 2);
-              font-weight: var(--font-weight);
-              line-height: calc(var(--gap) * 6.7);
-              margin-left: 0.75em;
-            }
-
-            &-icon {
-              top: 0px;
-              right: 0px;
-              cursor: pointer;
-              position: absolute;
-              line-height: calc(var(--gap) * 6);
-              margin-right: calc(var(--gap) * 3);
-            }
-          }
-
-          &__input--open {
-            color: var(--backhround-dropdown-text);
-            background: var(--background-dropdown-open-text);
-          }
-          &__list {
-            background-color: var(--background-dropdown);
-            border: 0px;
-            border-radius: 4px;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.24), 0px 2px 8px rgba(0, 0, 0, 0.12);
-            color: var(--kyc-grey);
-            margin-top: 2px;
-            max-height: calc(var(--big-gap) * 1.6);
-            overflow-y: auto;
-            width: 99%;
-
-            &-item {
-              color: var(--kyc-grey);
-
-              &-label {
-                margin-left: 0.75em;
-              }
-
-              &:hover {
-                background-color: var(--background-dropdown-hover);
-                color: var(--background-dropdown-hover-text);
-              }
-            }
-
-            &::-webkit-scrollbar {
-              width: 3px;
-            }
-
-            &::-webkit-scrollbar-track
-            {
-              background-color: transparent;
-              border-top-left-radius: 50%;
-              border-bottom-left-radius: 50%;
-            }
-
-            &::-webkit-scrollbar-thumb {
-              background-color: var(--color-white);
-            }
-          }
-        }
-      }
     }
-  }
+
+    &-col {
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+
+        &-right {
+            align-items: flex-end;
+        }
+
+        &-row {
+            margin-bottom: calc(var(--gap) * 2);
+            &-is-active {
+                margin-top: 0 !important;
+                height: calc(var(--gap) * 10.5)!important;
+                margin-bottom: calc(var(--gap) * 0.5);
+                border: 1px solid var(--kyc-active-color) !important;
+            }
+
+            fieldset {
+                color: var(--kyc-grey);
+                border-radius: calc(var(--gap) * 0.6);
+                border: 1px solid var(--kyc-grey);
+                box-sizing: border-box;
+                height: calc(var(--gap) * 8.16);
+                margin-top: calc(var(--gap) * 1.3);
+                width: calc(var(--big-gap) * 4.12);
+
+                &:focus-within {
+                    padding-top: calc(var(--gap) * 0.6);
+                }
+            }
+
+            &-text {
+                display: inline-block;
+                font-size: calc(var(--gap) * 2.33);
+                height: calc(var(--gap) * 5);
+                padding-right: calc(var(--gap) * 6.66);
+                text-align: right;
+                width: calc(var(--big-gap) * 2.16);
+            }
+
+            &-content {
+                display: inline-block;
+                position: relative;
+
+                &-label {
+                    position: absolute;
+                    margin-left: calc(var(--gap) * 1.42);
+                    padding: 0 calc(var(--gap) * 0.33);
+                    background-color: var(--base-bright);
+                    z-index: 1;
+                }
+
+                &--focused {
+                    color: var(--color-blue) !important;
+                    border: 2px solid var(--color-blue) !important;
+                }
+
+                legend {
+                    background-color: var(--base-bright);
+                    position:absolute;
+                    top: calc(var(--gap) * -1.3);
+                }
+
+                input {
+                    color: var(--color-white);
+                    background: var(--transparent);
+                    border: unset;
+                    bottom: 0;
+                    font-size: calc(var(--gap) * 2);
+                    margin-top: calc(var(--gap) * 1.6);
+
+                    &::placeholder {
+                        color: var(--text-muted);
+                    }
+                }
+
+                .cr-dropdown {
+                    &__input, &__input--open {
+                        background-color: var(--base-bright);
+                        border: 1px solid var(--kyc-grey);
+                        border-radius: calc(var(--gap) * 0.6);
+                        color: var(--kyc-grey);
+                        height: calc(var(--gap) * 7.83);
+                        margin-top: calc(var(--gap) * 1.3);
+                        margin-right: 2px;
+                        width: calc(var(--big-gap) * 4.08);
+                        &:active {
+                            background-color: var(--base-bright);
+                        }
+                    }
+
+                    &__input {
+                        &-label {
+                            color: var(--kyc-grey);
+                            font-size: calc(var(--gap) * 2);
+                            font-weight: var(--font-weight);
+                            line-height: calc(var(--gap) * 6.7);
+                            margin-left: 0.75em;
+                        }
+
+                        &-icon {
+                            top: 0px;
+                            right: 0px;
+                            cursor: pointer;
+                            position: absolute;
+                            line-height: calc(var(--gap) * 6);
+                            margin-right: calc(var(--gap) * 3);
+                        }
+                    }
+
+                    &__input--open {
+                        color: var(--backhround-dropdown-text);
+                    }
+                    &__list {
+                        background-color: var(--background-dropdown);
+                        border: 0px;
+                        border-radius: 4px;
+                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.24), 0px 2px 8px rgba(0, 0, 0, 0.12);
+                        color: var(--kyc-grey);
+                        max-height: calc(var(--big-gap) * 1.6);
+                        overflow-y: auto;
+                        width: 99%;
+
+                        &-item {
+                            color: var(--kyc-grey);
+
+                            &-label {
+                                margin-left: 0.75em;
+                            }
+
+                            &:hover {
+                                background-color: var(--background-dropdown-hover);
+                                color: var(--background-dropdown-hover-text);
+                            }
+                        }
+
+                        &::-webkit-scrollbar {
+                            width: 3px;
+                        }
+
+                        &::-webkit-scrollbar-track {
+                            background-color: transparent;
+                            border-top-left-radius: 50%;
+                            border-bottom-left-radius: 50%;
+                        }
+
+                        &::-webkit-scrollbar-thumb {
+                            background-color: var(--color-white);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
