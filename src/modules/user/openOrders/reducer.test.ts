@@ -65,7 +65,7 @@ describe('Open Orders reducer', () => {
             state:'wait',
             created_at: '2018-11-29T16:54:46+01:00',
             remaining_volume: '123.1234',
-            volume: '123.1234',
+            origin_volume: '123.1234',
             executed_volume: '0',
             market: 'ethusd',
             avg_price: '0.0',
@@ -93,7 +93,7 @@ describe('Open Orders reducer', () => {
             kind: 'bid',
             price: '0.3',
             state: 'wait',
-            volume: '123.1234',
+            remaining_volume: '123.1234',
             origin_volume: '123.1234',
         };
         const newOrderCommon: OrderCommon = {
@@ -143,7 +143,7 @@ describe('Open Orders reducer', () => {
             const updatedOrderEvent: OrderEvent = {
                 ...newOrderEvent,
                 origin_volume: '123.1234',
-                volume: '100.1234',
+                remaining_volume: '100.1234',
             };
             const list = insertOrUpdate([newOrderCommon], convertOrderEvent(updatedOrderEvent));
             const expectedState: OpenOrdersState = {
@@ -166,11 +166,11 @@ describe('Open Orders reducer', () => {
             };
             const expectedState: OpenOrdersState = {
                 ...initialOpenOrdersState,
-                list: [newOrderCommon],
+                list: [],
             };
             expect(
                 openOrdersReducer(
-                    { ...initialOpenOrdersState, list: [newOrderCommon] },
+                    { ...initialOpenOrdersState, list: [] },
                     actions.userOpenOrdersUpdate(updatedOrderEvent),
                 ),
             ).toEqual(expectedState);

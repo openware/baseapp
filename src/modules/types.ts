@@ -40,10 +40,11 @@ export interface OrderAPI {
     state: OrderStatus;
     market: string;
     created_at: string;
-    volume: string; // as origin_volume
     remaining_volume: string;
     executed_volume: string;
+    origin_volume: string;
     avg_price: string;
+    updated_at?: string;
 }
 
 /*
@@ -56,8 +57,8 @@ interface OrderEvent {
     kind: OrderKind;
     price: string;
     state: OrderStatus;
-    volume: string; // as remaining_volume
     origin_volume: string;
+    remaining_volume: string;
 }
 
 

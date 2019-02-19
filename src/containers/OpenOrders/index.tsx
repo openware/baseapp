@@ -115,7 +115,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
         return this.sortDataByDateTime().map((item: OrderCommon) => {
             const { id, price, created_at, remaining_volume, origin_volume, side } = item;
             const executedVolume = Number(origin_volume) - Number(remaining_volume);
-            const remainingAmount = Number(remaining_volume) * Number(price);
+            const remainingAmount = Number(remaining_volume);
             const total = Number(origin_volume) * Number(price);
             const filled = ((executedVolume / Number(origin_volume)) * 100).toFixed(2);
             const priceFixed = currentMarket ? currentMarket.bid_precision : 0;

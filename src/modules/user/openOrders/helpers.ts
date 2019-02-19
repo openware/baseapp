@@ -8,8 +8,8 @@ export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
         price,
         state,
         created_at,
-        volume,
         remaining_volume,
+        origin_volume,
         executed_volume,
         market,
         ord_type,
@@ -21,7 +21,7 @@ export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
         price: Number(price),
         state,
         created_at,
-        origin_volume: Number(volume),
+        origin_volume: Number(origin_volume),
         remaining_volume: Number(remaining_volume),
         executed_volume: Number(executed_volume),
         market,
@@ -31,14 +31,14 @@ export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
 };
 
 export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
-    const { id, at, kind, price, state, volume, origin_volume, market } = orderEvent;
+    const { id, at, kind, price, state, remaining_volume, origin_volume, market } = orderEvent;
     return {
         id,
         side: kindToMakerType(kind),
         price: Number(price),
         state,
-        remaining_volume: Number(volume),
-        executed_volume: Number(origin_volume) - Number(volume),
+        remaining_volume: Number(remaining_volume),
+        executed_volume: Number(origin_volume) - Number(remaining_volume),
         origin_volume: Number(origin_volume),
         created_at: new Date(Number(at) * 1000).toISOString(),
         market,
@@ -46,31 +46,30 @@ export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
 };
 
 export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
-    const { state } = order;
-    const index = list.findIndex((value: OrderCommon) => value.id === order.id);
-    if (index === -1) {
-        if (state === 'wait') {
-            return [...list].concat({...order});
-        }
-        return [...list];
-    }
-    if (state === 'wait') {
-        return list.map(item => {
-            if (item.id === order.id) {
-                return {...order};
+    const { state, id } = order;
+    switch (state) {
+        case 'wait':
+            const index = list.findIndex((value: OrderCommon) => value.id === id);
+            if (index === -1) {
+                return list.concat({...order});
             }
-            return item;
-        });
-    } else {
-        [...list].splice(index, 1);
+            return list.map(item => {
+                if (item.id === order.id) {
+                    return {...order};
+                }
+                return item;
+            });
+        default:
+            return list.reduce((memo: OrderCommon[], item: OrderCommon): OrderCommon[] => {
+                if (id !== item.id) {
+                    memo.push(item);
+                }
+                return memo;
+            }, []);
     }
-    return [...list];
 };
 
 export const insertIfNotExisted = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
     const index = list.findIndex((value: OrderCommon) => value.id === order.id);
-    if (index === -1) {
-        return [...list].concat({...order});
-    }
-    return [...list];
+    return (index === -1) ? list.concat({...order}) : [...list];
 };

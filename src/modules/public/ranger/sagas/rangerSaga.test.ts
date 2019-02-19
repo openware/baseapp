@@ -380,7 +380,7 @@ describe('Ranger module', () => {
 
     describe('private events', () => {
         describe('should push new order', () => {
-            const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'wait', volume: '0.1', origin_volume: '0.1' };
+            const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'wait', remaining_volume: '0.1', origin_volume: '0.1' };
             const mockOrder = { order: data };
             const expectedAction = {
                 type: RANGER_USER_ORDER_UPDATE,
@@ -420,7 +420,7 @@ describe('Ranger module', () => {
         });
 
         describe('should push close order', () => {
-            const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'done', volume: '0.0', origin_volume: '0.1' };
+            const data: OrderEvent = { id: 758, at: 1546605232, market: 'eurbtc', kind: 'bid', price: '1.17', state: 'done', remaining_volume: '0.0', origin_volume: '0.1' };
             const mockOrder = { order: data };
             const expectedAction = {
                 type: RANGER_USER_ORDER_UPDATE,

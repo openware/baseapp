@@ -44,7 +44,7 @@ describe('Open Orders actions', () => {
             state:'wait',
             created_at: '2018-11-29T16:54:46+01:00',
             remaining_volume: '123.1234',
-            volume: '123.1234',
+            origin_volume: '123.1234',
             executed_volume: '0',
             market: 'ethusd',
             avg_price: '0.0',
@@ -61,7 +61,7 @@ describe('Open Orders actions', () => {
             kind: 'bid',
             price: '0.3',
             state: 'wait',
-            volume: '1.213432',
+            remaining_volume: '1.213432',
             origin_volume: '3.234234',
         };
         const expectedAction = {type: 'openOrders/USER_OPEN_ORDERS_UPDATE', payload};
