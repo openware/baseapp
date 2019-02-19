@@ -26,7 +26,7 @@ class ProfileTwoFactorAuthComponent extends React.Component<Props, ProfileTwoFac
     public render() {
         const { is2faEnabled } = this.state;
         const className = is2faEnabled ? 'pg-profile-page__label-value__enabled'
-                                       : 'pg-profile-page__label-value';
+                                       : 'pg-profile-page__label-value__disabled';
 
         return (
             <React.Fragment>
