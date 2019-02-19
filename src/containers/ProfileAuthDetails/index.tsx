@@ -345,13 +345,10 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             oldPassword,
             newPassword,
         } = this.state;
-        const isOldPasswordValid = oldPassword.match(PASSWORD_REGEX);
         const isNewPasswordValid = newPassword.match(PASSWORD_REGEX);
         const isConfirmPasswordValid = newPassword === confirmationPassword;
 
-        return (oldPassword && isOldPasswordValid) &&
-            (newPassword && isNewPasswordValid) &&
-            (confirmationPassword && isConfirmPasswordValid);
+        return oldPassword && isNewPasswordValid && isConfirmPasswordValid;
     }
 }
 
