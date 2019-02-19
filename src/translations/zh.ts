@@ -278,6 +278,9 @@ export const zh: LangType = {
 
     'page.resendConfirmation': '重新发送确认',
     'page.forgotPassword': '忘记密码',
+    'page.forgotPassword.message': 'Enter email to reset password',
+    'page.password2fa': '2FA verification',
+    'page.password2fa.message': 'Enter 2fa code from the app',
     'page.forgotPassword.email': '电子邮件',
     'page.forgotPassword.send': '发送',
     'page.noDataToShow':'没有要显示的数据...',

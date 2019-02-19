@@ -280,6 +280,9 @@ export const ru: LangType = {
 
   'page.resendConfirmation': 'Отправить подтверждение снова',
   'page.forgotPassword': 'Забыли пароль',
+  'page.forgotPassword.message': 'Введите адрес электронной почты, чтобы сбросить пароль',
+  'page.password2fa': '2FA подтверждение',
+  'page.password2fa.message': 'Введите 2FA код с приложения',
   'page.forgotPassword.email': 'Почта',
   'page.forgotPassword.send': 'Отправить',
   'page.noDataToShow': 'Нет данных для отображения',

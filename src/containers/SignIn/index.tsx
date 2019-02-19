@@ -51,6 +51,7 @@ interface SignInState {
     passwordFocused: boolean;
     otpCode: string;
     error2fa: string;
+    codeFocused: boolean;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
@@ -65,6 +66,7 @@ class SignInBox extends React.Component<Props, SignInState> {
         passwordFocused: false,
         otpCode: '',
         error2fa: '',
+        codeFocused: false,
     };
 
     public componentDidMount() {
@@ -136,20 +138,20 @@ class SignInBox extends React.Component<Props, SignInState> {
 
     private render2FA = () => {
         const { loading } = this.props;
-        const { otpCode, error2fa } = this.state;
+        const { otpCode, error2fa, codeFocused} = this.state;
         return (
             <TwoFactorAuth
                 isLoading={loading}
-                onSignUp={this.handleSignUp}
                 onSubmit={this.handle2FASignIn}
-                signInLabel={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
-                codeLabel={this.props.intl.formatMessage({id: 'page.body.wallets.tabs.withdraw.content.code2fa'})}
+                title={this.props.intl.formatMessage({id: 'page.password2fa'})}
+                label={this.props.intl.formatMessage({id: 'page.body.wallets.tabs.withdraw.content.code2fa'})}
                 buttonLabel={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
-                footerCreateAccountLabel={this.props.intl.formatMessage({id: 'page.header.signIn.createAccount'})}
-                signUpLabel={this.props.intl.formatMessage({ id: 'page.header.signUp'})}
+                message={this.props.intl.formatMessage({id: 'page.password2fa.message'})}
+                codeFocused={codeFocused}
                 otpCode={otpCode}
                 error={error2fa}
                 handleOtpCodeChange={this.handleChangeOtpCode}
+                handleChangeFocusField={this.handle2faFocus}
             />
         );
     };
@@ -215,6 +217,12 @@ class SignInBox extends React.Component<Props, SignInState> {
                 break;
         }
     };
+
+    private handle2faFocus = () => {
+      this.setState(prev => ({
+          codeFocused: !prev.codeFocused,
+      }));
+    }
 
     private validateForm = () => {
         const { email,password } = this.state;

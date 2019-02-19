@@ -1,32 +1,104 @@
-.cr-sign-in-form {
-  cr-sign-in-form__2fa-header {
-      background: var(--header);
-      display: inline-block;
-      width: 100% !important;
-      height: 58px;
-  }
+.pg-sign-in-screen {
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - calc(var(--gap) * 9.84));
+  background: url(assets/images/background.svg);
+  background-size: cover;
+  margin: 0 auto;
 
-  .cr-sign-in-form__form-content{
-    .cr-sign-in-form__2fa-bottom-section {
-    position: absolute;
-    bottom: -10px;
-    text-align: center;
-    width: 100%;
+  .pg-sign-in-screen__container {
     background: var(--transparent);
-    .cr-sign-in-form__2fa-bottom-section-text {
-        background: var(--transparent);
+    margin-top: calc(var(--gap) * 3.33);
+    width: calc(var(--gap) * 70.66);
+  }
+  .pg-2fa___form {
+    .cr-email-form {
+      background: var(--email-form-bg);
+      min-height: calc(var(--big-gap) * 5);
+
+      &__option {
+        background: var(--header);
+      }
+      &__options-group {
+        width: 100%;
+        height: calc(var(--big-gap) * 0.97);
+        border-bottom: 2px solid var(--email-form-border);
+      }
+
+      &__label {
+        background: var(--email-form-bg);
+        position: absolute;
+        top: 0px;
+      }
+      &__input {
+        input {
+          color: var(--color-white);
+          font-size: calc(var(--gap) * 2.33);
+          border: 1px solid var(--input-block-border-color);
+          border-radius: calc(var(--gap) * 0.66);
+        }
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+      &__header {
+        width: calc(var(--big-gap) * 6.3);
+        height: calc(var(--gap) * 4.33);
+        font-family: Roboto;
         font-style: normal;
         font-weight: normal;
-        line-height: 30px;
-        font-size: 14px;
+        line-height: calc(var(--gap) * 2.66);
+        font-size: calc(var(--gap) * 2.33);
         color: var(--placeholder-text);
+        margin: calc(var(--gap) * 0.83);
+      }
+      &__group--focused {
+        .cr-sign-in-form__label {
+          color: var(--sign-in-accent);
+        }
+        input {
+          border-color: var(--button-primary) !important;
+        }
+      }
+      &__button-wrapper {
+        min-height: calc(var(--gap) * 10);
+      }
+      &__button {
+        color: var(--color-white);
+        background: var(--button-primary);
+        border-radius: calc(var(--gap) * 0.5);
+        font-size: calc(var(--gap) * 2.66);
+        line-height: normal;
+        font-style: normal;
+        font-weight: normal;
+        margin-left: 0;
         text-align: center;
-        margin: 0px 5px;
+        text-transform: uppercase;
+
+        &--disabled {
+          color: var(--button-dark-gray) !important;
+          background: var(--button-disabled) !important;
+        }
 
         &:hover {
-          color: var(--placeholder-text);
+          background: var(--button-hover);
         }
-      }    
+
+        &:active {
+          background: var(--button-active);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pg-sign-in-screen {
+    .pg-sign-in-screen__container {
+      margin: calc(var(--gap) * 3.33) calc(var(--gap) * 1.66) 0;
+      width: 100%;
     }
   }
 }

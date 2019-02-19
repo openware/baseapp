@@ -1,62 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TwoFactorAuth component should render 1`] = `
-<form
-  onSubmit={[Function]}
+<div
+  className="pg-2fa___form"
 >
-  <div
-    className="cr-sign-in-form"
-  >
-    <h1
-      className="cr-sign-in-form__title"
-      style={
-        Object {
-          "marginTop": 119,
-        }
-      }
-    />
+  <form>
     <div
-      className="cr-sign-in-form__form-content"
+      className="cr-email-form"
     >
       <div
-        className="cr-sign-in-form__group"
-      >
-        <label
-          className="cr-sign-in-form__label"
-        />
-        <e
-          className="cr-sign-in-form__input"
-          onChangeValue={[MockFunction]}
-          value=""
-        />
-      </div>
-      <div
-        className="cr-sign-in-form__button-wrapper cr-sign-in-form__button-wrapper--empty"
+        className="cr-email-form__options-group"
       >
         <div
-          className="cr-sign-in-form__error-message"
-        />
-        <div
-          className="cr-sign-in-form__loader"
-        />
-        <Component
-          className="cr-sign-in-form__button"
-          label=""
-          onClick={[Function]}
-        />
+          className="cr-email-form__option"
+        >
+          <div
+            className="cr-email-form__option-inner"
+          >
+            2FA verification
+          </div>
+        </div>
       </div>
       <div
-        className="cr-sign-in-form__footer"
+        className="cr-email-form__form-content"
       >
-        <p
-          className="cr-sign-in-form__footer-create"
+        <div
+          className="cr-email-form__header"
         />
-        <a
-          className="cr-sign-in-form__2fa-bottom-section-text"
-          onClick={[MockFunction]}
-        />
+        <div
+          className="cr-email-form__group"
+        >
+          <CustomInput
+            classNameInput="cr-email-form__input"
+            classNameLabel="cr-email-form__label"
+            defaultLabel="6-digit Google Authenticator Code"
+            handleChangeInput={[Function]}
+            handleFocusInput={[MockFunction]}
+            inputValue=""
+            label="6-digit Google Authenticator Code"
+            placeholder="6-digit Google Authenticator Code"
+            type="number"
+          />
+        </div>
+        <div
+          className="cr-email-form__button-wrapper cr-email-form__button-wrapper--empty"
+        >
+          <Component
+            className="cr-email-form__button cr-email-form__button--disabled"
+            disabled={true}
+            label="Sign in"
+            onClick={[Function]}
+            type="submit"
+          />
+        </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>
 `;

@@ -5,15 +5,15 @@ import { shallow } from 'enzyme';
 
 const defaults: TwoFactorAuthProps = {
     onSubmit: jest.fn(),
-    onSignUp: jest.fn(),
-    signInLabel: '',
-    codeLabel: '',
+    label: '',
+    title: '',
     buttonLabel: '',
-    footerCreateAccountLabel: '',
-    signUpLabel: '',
+    message: '',
     otpCode: '',
     error: '',
+    codeFocused: false,
     handleOtpCodeChange: jest.fn(),
+    handleChangeFocusField: jest.fn(),
 };
 
 const setup = (props: Partial<TwoFactorAuthProps> = {}) =>

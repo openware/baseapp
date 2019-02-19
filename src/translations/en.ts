@@ -276,6 +276,9 @@ export const en = {
 
   'page.resendConfirmation': 'Resend Confirmation',
   'page.forgotPassword': 'Forgot Password',
+  'page.forgotPassword.message': 'Enter email to reset password',
+  'page.password2fa': '2FA verification',
+  'page.password2fa.message': 'Enter 2fa code from the app',
   'page.forgotPassword.email': 'Email',
   'page.forgotPassword.send': 'Send',
   'page.noDataToShow': 'There is no data to show',

@@ -1,20 +1,25 @@
-import { Button, Input, Loader } from '@openware/components';
-import cn from 'classnames';
+// tslint:disable:jsx-no-lambda
+import { Button } from '@openware/components';
+import cr from 'classnames';
+import {
+    CustomInput,
+} from '../';
+
 import * as React from 'react';
 
 export interface TwoFactorAuthProps {
     errorMessage?: string;
     isLoading?: boolean;
     onSubmit: () => void;
-    onSignUp: () => void;
-    signInLabel: string;
-    codeLabel: string;
+    title: string;
+    label: string;
     buttonLabel: string;
-    footerCreateAccountLabel: string;
-    signUpLabel: string;
+    message: string;
     otpCode: string;
     error: string;
+    codeFocused: boolean;
     handleOtpCodeChange: (otp: string) => void;
+    handleChangeFocusField: () => void;
 }
 
 class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
@@ -22,65 +27,77 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
         const {
             errorMessage,
             isLoading,
-            onSignUp,
-            signInLabel,
-            codeLabel,
+            title,
+            label,
             buttonLabel,
-            footerCreateAccountLabel,
-            signUpLabel,
+            message,
             error,
             otpCode,
+            codeFocused,
         } = this.props;
 
         const errors = errorMessage || error;
-        const buttonWrapperClass = cn('cr-sign-in-form__button-wrapper', {
-            'cr-sign-in-form__button-wrapper--empty': !errors,
+        const buttonWrapperClass = cr('cr-email-form__button-wrapper', {
+            'cr-email-form__button-wrapper--empty': !errors,
+        });
+        const emailGroupClass = cr('cr-email-form__group', {
+            'cr-email-form__group--focused': codeFocused,
         });
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="cr-sign-in-form">
-                    <h1 className="cr-sign-in-form__title" style={{ marginTop: 119 }}>
-                        {signInLabel}
-                    </h1>
-                    <div className="cr-sign-in-form__form-content">
-                      <div className="cr-sign-in-form__group">
-                          <label className="cr-sign-in-form__label">
-                              {codeLabel}
-                          </label>
-                          <Input
-                              value={otpCode}
-                              className="cr-sign-in-form__input"
-                              onChangeValue={this.props.handleOtpCodeChange}
-                          />
+            <div className="pg-2fa___form">
+                <form>
+                    <div className="cr-email-form">
+                        <div className="cr-email-form__options-group">
+                            <div className="cr-email-form__option">
+                                <div className="cr-email-form__option-inner">
+                                    {title || '2FA verification'}
+                                </div>
+                            </div>
                         </div>
-                        <div className={buttonWrapperClass}>
-                            <div className="cr-sign-in-form__error-message">{errors || null}</div>
-                            <div className="cr-sign-in-form__loader">{isLoading ? <Loader /> : null}</div>
-                            <Button
-                                label={buttonLabel}
-                                className="cr-sign-in-form__button"
-                                onClick={this.handleSubmit}
-                            />
+                        <div className="cr-email-form__form-content">
+                            <div className="cr-email-form__header">
+                              {message}
+                            </div>
+                            <div className={emailGroupClass}>
+                                <CustomInput
+                                    type="number"
+                                    label={label || '6-digit Google Authenticator Code'}
+                                    placeholder={label || '6-digit Google Authenticator Code'}
+                                    defaultLabel="6-digit Google Authenticator Code"
+                                    handleChangeInput={this.handleChangeCode}
+                                    inputValue={otpCode}
+                                    handleFocusInput={this.props.handleChangeFocusField}
+                                    classNameLabel="cr-email-form__label"
+                                    classNameInput="cr-email-form__input"
+                                />
+                                {errorMessage && <div className="cr-email-form__error">{errorMessage}</div>}
+                            </div>
+                            <div className={buttonWrapperClass}>
+                                <Button
+                                    label={isLoading ? 'Loading...' : (buttonLabel ? buttonLabel : 'Sign in')}
+                                    type="submit"
+                                    className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                                    disabled={isLoading || !otpCode.match(/.{6}/g)}
+                                    onClick={this.handleSubmit}
+                                />
+                            </div>
                         </div>
-                        <div className="cr-sign-in-form__footer">
-                            <p className="cr-sign-in-form__footer-create">
-                                {footerCreateAccountLabel}
-                            </p>
-                            <a
-                                className="cr-sign-in-form__2fa-bottom-section-text"
-                                onClick={onSignUp}
-                            >
-                                {signUpLabel}
-                            </a>
-                        </div>
+
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         );
     }
 
     private handleSubmit = () => {
         this.props.onSubmit();
+    };
+
+    private handleChangeCode = (otpCode: string) => {
+        if (otpCode.match(/.{6}/g)) {
+          this.handleSubmit();
+        }
+        this.props.handleOtpCodeChange(otpCode);
     };
 }
 
