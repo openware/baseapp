@@ -1,6 +1,6 @@
-import { OrderCommon, OrderEvent } from '../../types';
+import { OrderAPI, OrderCommon, OrderEvent } from '../../types';
 import * as actions from './actions';
-import { convertOrderEvent, insertOrUpdate } from './helpers';
+import { convertOrderAPI, convertOrderEvent, insertOrUpdate } from './helpers';
 import {
     initialOpenOrdersState,
     openOrdersReducer,
@@ -57,22 +57,24 @@ describe('Open Orders reducer', () => {
     });
 
     describe('USER_OPEN_ORDERS_APPEND', () => {
-        const newOrder: OrderCommon = {
+        const newOrder: OrderAPI = {
             id: 162,
             side: 'buy',
-            price: 0.3,
+            price: '0.3',
+            ord_type: 'limit',
             state:'wait',
             created_at: '2018-11-29T16:54:46+01:00',
-            remaining_volume: 123.1234,
-            origin_volume: 123.1234,
-            executed_volume: 0,
+            remaining_volume: '123.1234',
+            volume: '123.1234',
+            executed_volume: '0',
             market: 'ethusd',
+            avg_price: '0.0',
         };
 
         it('inserts order', () => {
             const expectedState = {
                 ...initialOpenOrdersState,
-                list: [newOrder],
+                list: [convertOrderAPI(newOrder)],
             };
             expect(
                 openOrdersReducer(
@@ -143,8 +145,7 @@ describe('Open Orders reducer', () => {
                 origin_volume: '123.1234',
                 volume: '100.1234',
             };
-            const someOrderCommon: OrderCommon = { ...newOrderCommon, id: 12 };
-            const list = insertOrUpdate([someOrderCommon], convertOrderEvent(updatedOrderEvent));
+            const list = insertOrUpdate([newOrderCommon], convertOrderEvent(updatedOrderEvent));
             const expectedState: OpenOrdersState = {
                 ...initialOpenOrdersState,
                 list,
@@ -152,7 +153,7 @@ describe('Open Orders reducer', () => {
 
             expect(
                 openOrdersReducer(
-                    { ...initialOpenOrdersState, list: [someOrderCommon, newOrderCommon] },
+                    { ...initialOpenOrdersState, list: [newOrderCommon] },
                     actions.userOpenOrdersUpdate(updatedOrderEvent),
                 ),
             ).toEqual(expectedState);
@@ -163,14 +164,13 @@ describe('Open Orders reducer', () => {
                 ...newOrderEvent,
                 state: 'done',
             };
-            const someOrderCommon: OrderCommon = { ...newOrderCommon, id: 12 };
             const expectedState: OpenOrdersState = {
                 ...initialOpenOrdersState,
-                list: [someOrderCommon],
+                list: [newOrderCommon],
             };
             expect(
                 openOrdersReducer(
-                    { ...initialOpenOrdersState, list: [someOrderCommon, newOrderCommon] },
+                    { ...initialOpenOrdersState, list: [newOrderCommon] },
                     actions.userOpenOrdersUpdate(updatedOrderEvent),
                 ),
             ).toEqual(expectedState);

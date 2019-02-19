@@ -46,26 +46,31 @@ export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
 };
 
 export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
-    const {state} = order;
+    const { state } = order;
     const index = list.findIndex((value: OrderCommon) => value.id === order.id);
     if (index === -1) {
         if (state === 'wait') {
-            return list.concat(order);
+            return [...list].concat({...order});
         }
-        return list;
+        return [...list];
     }
     if (state === 'wait') {
-        list[index] = order;
+        return list.map(item => {
+            if (item.id === order.id) {
+                return {...order};
+            }
+            return item;
+        });
     } else {
-        list.splice(index, 1);
+        [...list].splice(index, 1);
     }
-    return list;
+    return [...list];
 };
 
 export const insertIfNotExisted = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
     const index = list.findIndex((value: OrderCommon) => value.id === order.id);
     if (index === -1) {
-        return list.concat(order);
+        return [...list].concat({...order});
     }
-    return list;
+    return [...list];
 };

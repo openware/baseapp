@@ -36,7 +36,7 @@ export interface UserOpenOrdersUpdate {
 
 export interface UserOpenOrdersAppend {
     type: typeof USER_OPEN_ORDERS_APPEND;
-    payload: OrderCommon;
+    payload: OrderAPI;
 }
 
 export interface UserOpenOrdersReset {

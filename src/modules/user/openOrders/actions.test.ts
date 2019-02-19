@@ -1,4 +1,4 @@
-import { OrderCommon, OrderEvent } from '../../types';
+import { OrderAPI, OrderEvent } from '../../types';
 import * as actions from './actions';
 
 
@@ -36,16 +36,18 @@ describe('Open Orders actions', () => {
     });
 
     it('should check userOpenOrdersAppend action creator', () => {
-        const payload: OrderCommon = {
+        const payload: OrderAPI = {
             id: 162,
             side: 'buy',
-            price: 0.3,
+            price: '0.3',
+            ord_type: 'limit',
             state:'wait',
             created_at: '2018-11-29T16:54:46+01:00',
-            remaining_volume: 123.1234,
-            origin_volume: 123.1234,
-            executed_volume: 0,
+            remaining_volume: '123.1234',
+            volume: '123.1234',
+            executed_volume: '0',
             market: 'ethusd',
+            avg_price: '0.0',
         };
         const expectedAction = {type: 'openOrders/USER_OPEN_ORDERS_APPEND', payload};
         expect(actions.userOpenOrdersAppend(payload)).toEqual(expectedAction);

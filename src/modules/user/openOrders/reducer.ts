@@ -41,7 +41,7 @@ export const openOrdersReducer = (
         case USER_OPEN_ORDERS_ERROR:
             return { ...state, fetching: false, list: [] };
         case USER_OPEN_ORDERS_APPEND:
-            return { ...state, list: insertIfNotExisted(state.list, action.payload) };
+            return { ...state, list: insertIfNotExisted(state.list, convertOrderAPI(action.payload)) };
         case USER_OPEN_ORDERS_RESET:
             return initialOpenOrdersState;
         case OPEN_ORDERS_CANCEL_FETCH:
