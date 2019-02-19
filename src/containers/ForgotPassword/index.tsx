@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import {
   connect,
@@ -39,11 +38,6 @@ interface ForgotPasswordState {
 type Props = RouterProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
 class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     constructor(props: Props) {
         super(props);
 

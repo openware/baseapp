@@ -3,7 +3,6 @@ import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import {
     connect,
@@ -16,7 +15,6 @@ import {
     walletsFetch,
 } from '../../modules';
 import { HistoryElement } from './HistoryElement';
-
 
 interface DispatchProps {
     resetHistory: typeof resetHistory;
@@ -32,11 +30,6 @@ interface State {
 }
 
 class History extends React.Component<Props, State> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public state = { tab: 'deposits' };
 
     public tabMapping = ['deposits', 'withdraws', 'trades'];

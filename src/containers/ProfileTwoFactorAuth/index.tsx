@@ -1,9 +1,7 @@
 /* tslint:disable jsx-no-lambda  jsx-no-multiline-js */
 import { Checkbox } from '@openware/components';
 import * as React from 'react';
-import {
-    FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 interface ProfileTwoFactorAuthProps {
     is2faEnabled: boolean;

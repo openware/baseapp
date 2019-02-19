@@ -9,7 +9,6 @@ import {
     FormattedMessage,
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect } from 'react-redux';
 import {
@@ -57,11 +56,6 @@ interface OwnProps {
 type Props = ReduxProps & DispatchProps & InjectedIntlProps & OwnProps;
 
 class OrderInsert extends React.PureComponent<Props, StoreProps> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     constructor(props: Props) {
         super(props);
 
@@ -77,6 +71,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.limit' }),
         this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.market' }),
     ];
+
     private orderRef;
 
     public componentWillReceiveProps(next: Props) {

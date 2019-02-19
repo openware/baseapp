@@ -140,6 +140,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
     }
 
     private translate = (e: string) => this.props.intl.formatMessage({ id: e });
+
     private handleCancel = (index: number) => {
         const { list, cancelFetching } = this.props;
         if (cancelFetching) {

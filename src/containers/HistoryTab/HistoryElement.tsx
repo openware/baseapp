@@ -4,7 +4,6 @@ import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
 import {
@@ -57,11 +56,6 @@ interface DispatchProps {
 type Props = HistoryProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
 class HistoryComponent extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public componentDidMount() {
         const { type } = this.props;
         this.props.fetchHistory({ page: 0, type, limit: 25 });

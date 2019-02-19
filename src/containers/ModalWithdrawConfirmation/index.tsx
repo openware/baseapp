@@ -1,6 +1,9 @@
 import { Button, Modal } from '@openware/components';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
+import {
+    InjectedIntlProps,
+    injectIntl,
+} from 'react-intl';
 
 interface ModalWithdrawConfirmationProps {
     amount: number;
@@ -11,11 +14,9 @@ interface ModalWithdrawConfirmationProps {
     show: boolean;
 }
 
-class ModalWithdraw extends React.Component<ModalWithdrawConfirmationProps & InjectedIntlProps> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
+type Props = ModalWithdrawConfirmationProps & InjectedIntlProps;
+
+class ModalWithdraw extends React.Component<Props> {
     public translate = (e: string) => {
         return this.props.intl.formatMessage({id: e});
     };

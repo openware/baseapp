@@ -8,7 +8,7 @@ export interface FooterState {
     showModal: boolean;
 }
 
-class Foot extends React.Component<{}, FooterState> {
+class FooterComponent extends React.Component<{}, FooterState> {
     public state = {
         showModal: false,
     };
@@ -44,8 +44,8 @@ class Foot extends React.Component<{}, FooterState> {
     };
 }
 
-// tslint:disable-next-line
-const Footer = withRouter(Foot as any);
+// tslint:disable-next-line:no-any
+const Footer = withRouter(FooterComponent as any);
 
 export {
     Footer,

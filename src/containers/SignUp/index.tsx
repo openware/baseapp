@@ -5,7 +5,6 @@ import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import {
     connect,
@@ -52,11 +51,6 @@ type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 export const extractRefID = (props: RouterProps) => new URLSearchParams(props.location.search).get('refid');
 
 class SignUpComponent extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public readonly state = {
         showModal: false,
         email: '',
@@ -305,10 +299,6 @@ class SignUpComponent extends React.Component<Props> {
             </div>
         );
     };
-
-    // private openModal = () => {
-    //     this.setState({showModal: true});
-    // };
 
     private closeModal = () => {
         this.setState({showModal: false});

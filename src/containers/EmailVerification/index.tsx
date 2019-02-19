@@ -29,12 +29,12 @@ interface ReduxProps {
 type Props = DispatchProps & ReduxProps & OwnProps;
 
 class EmailVerificationComponent extends React.Component<Props> {
-
     public componentDidMount() {
         if (!this.props.location.state || !this.props.location.state.email) {
             this.props.history.push('/signin');
         }
     }
+
     public render() {
         const { emailVerificationLoading } = this.props;
 

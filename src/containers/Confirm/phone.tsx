@@ -3,7 +3,7 @@ import {
 } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import {
   connect,
   MapDispatchToPropsFunction,
@@ -45,10 +45,6 @@ interface DispatchProps {
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class PhoneComponent extends React.Component<Props, PhoneState> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
     constructor(props: Props) {
         super(props);
 

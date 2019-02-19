@@ -5,7 +5,7 @@ import {
 } from '@openware/components';
 import { History } from 'history';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import {
     connect,
     MapDispatchToProps,
@@ -45,10 +45,6 @@ interface State {
 }
 
 class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
     public state = {
         otpCode: '',
     };

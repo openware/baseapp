@@ -3,7 +3,6 @@ import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import {
     connect,
@@ -57,11 +56,6 @@ interface SignInState {
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 
 class SignInBox extends React.Component<Props, SignInState> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public state = {
         email: '',
         emailError: '',

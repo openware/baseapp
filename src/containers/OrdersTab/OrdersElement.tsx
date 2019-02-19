@@ -21,7 +21,6 @@ import {
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
 
-
 interface OrdersProps {
     type: string;
 }

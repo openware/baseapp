@@ -4,7 +4,6 @@ import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RootState, selectUserInfo, setCurrentPrice, User } from '../../modules';
@@ -43,11 +42,6 @@ interface DispatchProps {
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class MarketsContainer extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     private headers = [
         this.props.intl.formatMessage({id: 'page.body.trade.header.markets.content.pair'}),
         this.props.intl.formatMessage({id: 'page.body.trade.header.markets.content.price'}),

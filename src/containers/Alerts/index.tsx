@@ -4,7 +4,6 @@ import FadeIn from 'react-fade-in';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import {
@@ -29,11 +28,6 @@ interface DispatchProps {
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class AlertComponent extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public deleteErrorByIndex = (key: number) => {
         this.props.deleteErrorByIndex(key);
     };
@@ -43,7 +37,7 @@ class AlertComponent extends React.Component<Props> {
     };
 
     public translate = (id: string) => {
-        return this.props.intl.formatMessage({ id });
+        return id ? this.props.intl.formatMessage({ id }) : '';
     };
 
     //tslint:disable:jsx-no-lambda

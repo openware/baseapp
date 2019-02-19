@@ -1,7 +1,7 @@
 import { Decimal, Loader, OrderBook } from '@openware/components';
 import classNames from 'classnames';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import {
     connect,
     MapDispatchToPropsFunction,
@@ -37,11 +37,6 @@ interface DispatchProps {
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class OrderBookContainer extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public render() {
         const { bids, bidsLoading, asks } = this.props;
         const cn = classNames('', {

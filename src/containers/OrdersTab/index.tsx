@@ -1,6 +1,10 @@
 import { TabPanel } from '@openware/components';
 import * as React from 'react';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import {
+    FormattedMessage,
+    InjectedIntlProps,
+    injectIntl,
+} from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import {
     marketsFetch,

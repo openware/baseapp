@@ -4,7 +4,6 @@ import {
     FormattedMessage,
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDateSec, setTradeColor } from '../../helpers';
@@ -32,11 +31,6 @@ interface DispatchProps {
 type Props = DispatchProps & ReduxProps & InjectedIntlProps;
 
 class RecentTradesComponent extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public componentWillReceiveProps(next: Props) {
         if (next.currentMarket && this.props.currentMarket !== next.currentMarket) {
           this.props.tradesFetch(next.currentMarket);

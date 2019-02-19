@@ -13,7 +13,6 @@ import {
     FormattedMessage,
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -74,11 +73,6 @@ interface WalletsState {
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 
 class WalletsComponent extends React.Component<Props, WalletsState> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     constructor(props: Props) {
         super(props);
 
@@ -94,6 +88,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             total: 0,
         };
     }
+
     //tslint:disable:member-ordering
     public translate = (id: string) => this.props.intl.formatMessage({ id });
 
@@ -447,6 +442,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         });
     };
 }
+
 const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
     wallets: selectWallets(state),
@@ -455,6 +451,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     withdrawSuccess: selectWithdrawSuccess(state),
     historyList: selectHistory(state),
 });
+
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchWallets: () => dispatch(walletsFetch()),
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
@@ -462,5 +459,6 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     clearWallets: () => dispatch(walletsData([])),
     fetchSuccess: payload => dispatch(fetchSuccess(payload)),
 });
+
 // tslint:disable-next-line:no-any
 export const Wallets = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletsComponent) as any));

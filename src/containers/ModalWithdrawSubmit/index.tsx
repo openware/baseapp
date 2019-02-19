@@ -4,7 +4,6 @@ import {
     FormattedMessage,
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 
 interface ModalWithdrawSubmitProps {
@@ -13,12 +12,9 @@ interface ModalWithdrawSubmitProps {
     show: boolean;
 }
 
-class ModalWithdrawSubmitComponent extends React.Component<ModalWithdrawSubmitProps & InjectedIntlProps> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
+type Props = ModalWithdrawSubmitProps & InjectedIntlProps;
 
+class ModalWithdrawSubmitComponent extends React.Component<Props> {
     public translate = (e: string) => {
         return this.props.intl.formatMessage({id: e});
     };

@@ -5,7 +5,6 @@ import {
     FormattedMessage,
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeFullDate } from '../../helpers';
@@ -27,11 +26,6 @@ interface DispatchProps {
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class ProfileAccountActivityComponent extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public componentDidMount() {
         this.props.getUserActivity();
     }

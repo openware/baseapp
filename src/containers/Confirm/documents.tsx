@@ -8,7 +8,6 @@ import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import {
@@ -53,11 +52,6 @@ type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 
 // tslint:disable:member-ordering
 class DocumentsComponent extends React.Component<Props, DocumentsState> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public translate = (e: string) => {
         return this.props.intl.formatMessage({id: e});
     };

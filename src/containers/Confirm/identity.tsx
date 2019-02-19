@@ -5,7 +5,7 @@ import {
 import cr from 'classnames';
 import countries = require('country-list');
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl, intlShape } from 'react-intl';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import {
   connect,
@@ -55,10 +55,6 @@ interface IdentityState {
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class IdentityComponent extends React.Component<Props, IdentityState> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
     public state = {
         city: '',
         countryOfBirth: '',

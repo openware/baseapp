@@ -9,7 +9,6 @@ import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { localeDate } from '../../helpers';
@@ -57,10 +56,6 @@ interface DispatchProps {
 export type Props = HistoryProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
 export class WalletTable extends React.Component<Props> {
-    public static propTypes: React.ValidationMap<Props> = {
-        intl: intlShape.isRequired,
-    };
-
     public componentDidMount() {
         const { type, currency } = this.props;
         this.props.fetchHistory({ page: 0, currency, type, limit: 6 });

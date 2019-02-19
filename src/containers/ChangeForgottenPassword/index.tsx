@@ -36,9 +36,9 @@ interface DispatchProps {
 
 interface HistoryProps {
     history: {
-      location: {
-        search: string;
-      };
+        location: {
+            search: string;
+        };
     };
 }
 

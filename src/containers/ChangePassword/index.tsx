@@ -4,7 +4,6 @@ import {
     FormattedMessage,
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { CommonError } from '../../modules/types';
 
@@ -27,11 +26,6 @@ interface ChangePasswordState {
 type Props = ChangePasswordProps & InjectedIntlProps;
 
 class ChangePasswordComponent extends React.Component<Props, ChangePasswordState> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     constructor(props: Props) {
         super(props);
 
