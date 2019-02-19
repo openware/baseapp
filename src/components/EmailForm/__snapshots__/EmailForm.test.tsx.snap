@@ -21,27 +21,30 @@ exports[`EmailForm component should render 1`] = `
     <div
       className="cr-email-form__form-content"
     >
-      <fieldset
+      <div
+        className="cr-email-form__header"
+      />
+      <div
         className="cr-email-form__group"
       >
-        <e
-          className="cr-email-form__input"
-          onBlur={[MockFunction]}
-          onChangeValue={[MockFunction]}
-          onFocus={[MockFunction]}
+        <CustomInput
+          classNameInput="cr-email-form__input"
+          classNameLabel="cr-email-form__label"
+          defaultLabel="Email"
+          handleChangeInput={[MockFunction]}
+          handleFocusInput={[MockFunction]}
+          inputValue=""
+          label="Email"
           placeholder="Email"
           type="email"
-          value=""
         />
-      </fieldset>
+      </div>
       <div
         className="cr-email-form__button-wrapper"
       >
-        <div
-          className="cr-email-form__loader"
-        />
         <Component
           className="cr-email-form__button cr-email-form__button--disabled"
+          disabled={true}
           label="Send"
           onClick={[Function]}
           type="submit"

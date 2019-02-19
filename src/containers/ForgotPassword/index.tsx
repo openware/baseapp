@@ -67,6 +67,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
                             email={email}
                             emailFocused={emailFocused}
                             emailError={emailError}
+                            message="Enter email to reset password"
                             validateForm={this.validateForm}
                             handleInputEmail={this.handleInputEmail}
                             handleFieldFocus={this.handleFocusEmail}

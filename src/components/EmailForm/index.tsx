@@ -1,9 +1,11 @@
 import {
     Button,
-    Input,
-    Loader,
 } from '@openware/components';
 import cr from 'classnames';
+import {
+    CustomInput,
+} from '../';
+
 import * as React from 'react';
 import {
     EMAIL_REGEX,
@@ -18,6 +20,7 @@ interface EmailFormProps {
     className?: string;
     emailLabel?: string;
     email: string;
+    message: string;
     emailError: string;
     emailFocused: boolean;
     placeholder?: string;
@@ -33,6 +36,7 @@ class EmailForm extends React.Component<EmailFormProps> {
             buttonLabel,
             isLoading,
             emailLabel,
+            message,
             email,
             emailFocused,
             emailError,
@@ -51,26 +55,29 @@ class EmailForm extends React.Component<EmailFormProps> {
                         </div>
                     </div>
                     <div className="cr-email-form__form-content">
-                        <fieldset className={emailGroupClass}>
-                            {email && <legend>{emailLabel}</legend>}
-                            <Input
+                        <div className="cr-email-form__header">
+                          {message}
+                        </div>
+                        <div className={emailGroupClass}>
+                            <CustomInput
                                 type="email"
-                                value={email}
-                                placeholder="Email"
-                                className="cr-email-form__input"
-                                onChangeValue={this.props.handleInputEmail}
-                                onFocus={this.props.handleFieldFocus}
-                                onBlur={this.props.handleFieldFocus}
+                                label={emailLabel || 'Email'}
+                                placeholder={emailLabel || 'Email'}
+                                defaultLabel="Email"
+                                handleChangeInput={this.props.handleInputEmail}
+                                inputValue={email}
+                                handleFocusInput={this.props.handleFieldFocus}
+                                classNameLabel="cr-email-form__label"
+                                classNameInput="cr-email-form__input"
                             />
                             {emailError && <div className="cr-email-form__error">{emailError}</div>}
-                        </fieldset>
+                        </div>
                         <div className="cr-email-form__button-wrapper">
-                            <div className="cr-email-form__loader">{isLoading ? <Loader/> : null}</div>
                             <Button
                                 label={isLoading ? 'Loading...' : buttonLabel ? buttonLabel : 'Send'}
                                 type="submit"
                                 className={email ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
-                                disabled={isLoading}
+                                disabled={isLoading || !email.match(EMAIL_REGEX)}
                                 onClick={this.handleClick}
                             />
                         </div>

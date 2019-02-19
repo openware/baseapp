@@ -7,6 +7,7 @@ const defaults: EmailFormProps = {
     OnSubmit: jest.fn(),
     email: '',
     emailError: '',
+    message: '',
     emailFocused: false,
     validateForm: jest.fn(),
     handleInputEmail: jest.fn(),
@@ -25,11 +26,6 @@ describe('EmailForm component', () => {
     it('renders without crashing', () => {
         const wrapper = setup();
         expect(wrapper).toBeDefined();
-    });
-
-    it('should set correct titles', () => {
-        const wrapper = setup({title: 'title label'});
-        expect(wrapper.find('.cr-email-form__option-inner').text()).toBe('title label');
     });
 
     it('should render error block', () => {
