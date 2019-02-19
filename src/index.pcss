@@ -252,10 +252,20 @@
   }
 
   &-background {
-    top: 60px;
+    top: calc(var(--gap) * 9.67);
 
     &__row {
-      padding: 16px;
+      padding: calc(var(--gap) * 2.6666);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    &-background {
+      top: calc(var(--gap) * 8.49);
+
+      &__row {
+        padding: calc(var(--gap) * 2.375);
+      }
     }
   }
 
