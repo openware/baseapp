@@ -164,11 +164,23 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     private setOrderStatus = (status: string) => {
         switch (status) {
             case 'done':
-                return <FormattedMessage id={`page.body.openOrders.content.status.done`} />;
+                return (
+                    <span className="pg-history-elem-executed">
+                        <FormattedMessage id={`page.body.openOrders.content.status.done`} />
+                    </span>
+                );
             case 'cancel':
-                return <span style={{ color: 'var(--color-red)' }}><FormattedMessage id={`page.body.openOrders.content.status.cancel`} /></span>;
+                return (
+                    <span className="pg-history-elem-canceled">
+                        <FormattedMessage id={`page.body.openOrders.content.status.cancel`} />
+                    </span>
+                );
             case 'wait':
-                return <span style={{ color: 'var(--color-green)' }}><FormattedMessage id={`page.body.openOrders.content.status.wait`} /></span>;
+                return (
+                    <span className="pg-history-elem-opened">
+                        <FormattedMessage id={`page.body.openOrders.content.status.wait`} />
+                    </span>
+                );
             default:
                 return status;
         }

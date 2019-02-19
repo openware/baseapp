@@ -107,7 +107,7 @@ export const en = {
   'page.body.openOrders.header.remaining': 'Remaining',
   'page.body.openOrders.header.costRemaining': 'Cost Remaining',
   'page.body.openOrders.header.status': 'Status',
-  'page.body.openOrders.content.status.done': 'Filled',
+  'page.body.openOrders.content.status.done': 'Executed',
   'page.body.openOrders.content.status.wait': 'Open',
   'page.body.openOrders.content.status.cancel': 'Cancelled',
   'page.body.openOrders.header.button.cancelAll': 'Cancel all',
