@@ -64,7 +64,7 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                                     label={label || '6-digit Google Authenticator Code'}
                                     placeholder={label || '6-digit Google Authenticator Code'}
                                     defaultLabel="6-digit Google Authenticator Code"
-                                    handleChangeInput={this.handleChangeCode}
+                                    handleChangeInput={this.props.handleOtpCodeChange}
                                     inputValue={otpCode}
                                     handleFocusInput={this.props.handleChangeFocusField}
                                     classNameLabel="cr-email-form__label"
@@ -75,7 +75,6 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                             <div className={buttonWrapperClass}>
                                 <Button
                                     label={isLoading ? 'Loading...' : (buttonLabel ? buttonLabel : 'Sign in')}
-                                    type="submit"
                                     className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                                     disabled={isLoading || !otpCode.match(/.{6}/g)}
                                     onClick={this.handleSubmit}
@@ -91,13 +90,6 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
 
     private handleSubmit = () => {
         this.props.onSubmit();
-    };
-
-    private handleChangeCode = (otpCode: string) => {
-        if (otpCode.match(/.{6}/g)) {
-          this.handleSubmit();
-        }
-        this.props.handleOtpCodeChange(otpCode);
     };
 }
 

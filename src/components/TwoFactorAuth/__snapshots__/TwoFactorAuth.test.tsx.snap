@@ -34,7 +34,7 @@ exports[`TwoFactorAuth component should render 1`] = `
             classNameInput="cr-email-form__input"
             classNameLabel="cr-email-form__label"
             defaultLabel="6-digit Google Authenticator Code"
-            handleChangeInput={[Function]}
+            handleChangeInput={[MockFunction]}
             handleFocusInput={[MockFunction]}
             inputValue=""
             label="6-digit Google Authenticator Code"
@@ -50,7 +50,6 @@ exports[`TwoFactorAuth component should render 1`] = `
             disabled={true}
             label="Sign in"
             onClick={[Function]}
-            type="submit"
           />
         </div>
       </div>
