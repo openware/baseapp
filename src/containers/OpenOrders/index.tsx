@@ -1,6 +1,5 @@
 import { Loader, OpenOrders } from '@openware/components';
 import classnames from 'classnames';
-import * as moment from 'moment';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
@@ -112,7 +111,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
             return [[this.translate('page.noDataToShow')]];
         }
 
-        return this.sortDataByDateTime().map((item: OrderCommon) => {
+        return list.map((item: OrderCommon) => {
             const { id, price, created_at, remaining_volume, origin_volume, side } = item;
             const executedVolume = Number(origin_volume) - Number(remaining_volume);
             const remainingAmount = Number(remaining_volume);
@@ -132,13 +131,6 @@ export class OpenOrdersContainer extends React.Component<Props> {
         });
     };
 
-    private sortDataByDateTime() {
-        const { list } = this.props;
-        return [...list].sort((a: OrderCommon, b: OrderCommon) => {
-            return moment(a.created_at) < moment(b.created_at) ? 1 : -1;
-        });
-    }
-
     private translate = (e: string) => this.props.intl.formatMessage({ id: e });
 
     private handleCancel = (index: number) => {
@@ -146,7 +138,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
         if (cancelFetching) {
             return;
         }
-        const orderToDelete = this.sortDataByDateTime()[index];
+        const orderToDelete = list[index];
         this.props.openOrdersCancelFetch({ id: orderToDelete.id, list });
     };
 }

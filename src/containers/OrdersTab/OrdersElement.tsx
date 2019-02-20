@@ -2,7 +2,7 @@ import { CloseButton, Decimal, History, Pagination } from '@openware/components'
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeDate, setTradeColor, sortByDate } from '../../helpers';
+import { localeDate, setTradeColor } from '../../helpers';
 import {
     Market,
     ordersHistoryCancelFetch,
@@ -112,14 +112,12 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
 
     private retrieveData = () => {
         return [...this.props.list]
-            .sort(sortByDate('created_at', 'DD/MM HH:mm'))
             .map(item => this.renderOrdersHistoryRow(item));
     };
 
     private renderOrdersHistoryRow = item => {
         const {
             id,
-            created_at,
             executed_volume,
             market,
             ord_type,
@@ -128,6 +126,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             remaining_volume,
             side,
             state,
+            updated_at,
         } = item;
 
         const currentMarket = this.props.marketsData.find(m => m.id === market)
@@ -136,7 +135,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         const orderType = this.getType(side, ord_type);
         const marketName = currentMarket ? currentMarket.name : market;
         const costRemaining = remaining_volume * price; // price or avg_price ???
-        const date = localeDate(created_at);
+        const date = localeDate(updated_at);
         const status = this.setOrderStatus(state);
         const actualPrice = ord_type === 'market' || status === 'done' ? avg_price : price;
 

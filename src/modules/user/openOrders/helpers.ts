@@ -14,6 +14,7 @@ export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
         market,
         ord_type,
         avg_price,
+        updated_at,
     } = order;
     return {
         id,
@@ -27,6 +28,7 @@ export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
         market,
         ord_type,
         avg_price: Number(avg_price),
+        updated_at,
     };
 };
 

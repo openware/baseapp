@@ -27,6 +27,7 @@ export interface OrderCommon {
     ord_type?: OrderType;
     avg_price?: number;
     volume?: number;
+    updated_at?: string;
 }
 
 /*

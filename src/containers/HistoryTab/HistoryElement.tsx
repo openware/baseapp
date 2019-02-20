@@ -1,5 +1,4 @@
 import { Decimal, History, Pagination } from '@openware/components';
-import * as moment from 'moment';
 import * as React from 'react';
 import {
     InjectedIntlProps,
@@ -136,9 +135,6 @@ class HistoryComponent extends React.Component<Props> {
     private retrieveData = () => {
         const { type, list } = this.props;
         return [...list]
-            .sort((a, b) => {
-                return moment(localeDate(a.created_at), 'DD/MM HH:mm') > moment(localeDate(b.created_at), 'DD/MM HH:mm') ? -1 : 1;
-            })
             .map(item => this.renderTableRow(type, item));
     };
 
