@@ -27,11 +27,18 @@ import {
     RANGER_USER_ORDER_UPDATE,
 } from '../constants';
 import { formatTicker, generateSocketURI, streamsBuilder } from '../helpers';
-import {
-    selectSubscriptions,
-} from '../selectors';
+import { selectSubscriptions } from '../selectors';
 
-const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market | undefined, prevSubs: string[]): [Channel<{}>, WebSocket] => {
+interface RangerBuffer {
+    messages: object[];
+}
+
+const initRanger = (
+    { withAuth }: RangerConnectFetch['payload'],
+    market: Market | undefined,
+    prevSubs: string[],
+    buffer: RangerBuffer,
+): [Channel<{}>, WebSocket] => {
     const baseUrl = `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
     const streams = streamsBuilder(withAuth, prevSubs, market);
 
@@ -39,6 +46,10 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
     const channel = eventChannel(emitter => {
         ws.onopen = () => {
             emitter({ type: RANGER_CONNECT_DATA });
+            while (buffer.messages.length > 0) {
+                const message = buffer.messages.shift();
+                ws.send(JSON.stringify(message));
+            }
         };
         ws.onerror = error => {
             window.console.log(`WebSocket error ${error}`);
@@ -70,21 +81,25 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
                     // public
                     const klineMatch = String(routingKey).match(/([^.]*)\.kline-(.+)/);
                     if (klineMatch) {
-                        emitter(klinePush({
-                            marketId: klineMatch[1],
-                            kline: event,
-                            period: klineMatch[2],
-                        }));
+                        emitter(
+                            klinePush({
+                                marketId: klineMatch[1],
+                                kline: event,
+                                period: klineMatch[2],
+                            }),
+                        );
                         return;
                     }
 
                     // public
                     const tradesMatch = String(routingKey).match(/([^.]*)\.trades/);
                     if (tradesMatch) {
-                        emitter(recentTradesPush({
-                            trades: event.trades,
-                            market: tradesMatch[1],
-                        }));
+                        emitter(
+                            recentTradesPush({
+                                trades: event.trades,
+                                market: tradesMatch[1],
+                            }),
+                        );
                         return;
                     }
 
@@ -99,7 +114,7 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
                             switch (event.message) {
                                 case 'subscribed':
                                 case 'unsubscribed':
-                                    emitter(subscriptionsUpdate({subscriptions: event.streams}));
+                                    emitter(subscriptionsUpdate({ subscriptions: event.streams }));
                                     return;
                                 default:
                             }
@@ -118,7 +133,6 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
                         default:
                     }
                     window.console.log(`Unhandeled websocket channel: ${routingKey}`);
-
                 }
             }
         };
@@ -130,26 +144,13 @@ const initRanger = ({ withAuth }: RangerConnectFetch['payload'], market: Market 
     return [channel, ws];
 };
 
-const wsStateToString = (socket: WebSocket) => {
-    switch (socket.readyState) {
-        case socket.OPEN: return 'OPEN';
-        case socket.CLOSED: return 'CLOSED';
-        case socket.CLOSING: return 'CLOSING';
-        case socket.CONNECTING: return 'CONNECTING';
-        default: return `UNKNOWN ${socket.readyState}`;
-    }
-};
-
-function* writter(socket: WebSocket) {
+function* writter(socket: WebSocket, buffer: { messages: object[] }) {
     while (true) {
         const data = yield take(RANGER_DIRECT_WRITE);
-        switch (socket.readyState) {
-            case socket.OPEN:
-                socket.send(JSON.stringify(data.payload));
-                break;
-            default:
-                window.console.log(`Ranger state is ${wsStateToString(socket)}`);
-                break;
+        if (socket.readyState === socket.OPEN) {
+            socket.send(JSON.stringify(data.payload));
+        } else {
+            buffer.messages.push(data.payload);
         }
     }
 }
@@ -177,12 +178,8 @@ function* watchDisconnect(socket: WebSocket, channel: Channel<{}>) {
     socket.close();
 }
 
-function* bindSocket(channel: Channel<{}>, socket: WebSocket) {
-    yield all([
-        call(reader, channel),
-        call(writter, socket),
-        call(watchDisconnect, socket, channel),
-    ]);
+function* bindSocket(channel: Channel<{}>, socket: WebSocket, buffer: RangerBuffer) {
+    yield all([call(reader, channel), call(writter, socket, buffer), call(watchDisconnect, socket, channel)]);
 }
 
 const delay = async (ms: number) => {
@@ -212,10 +209,9 @@ function* getSubscriptions() {
 }
 
 export function* rangerSagas() {
-    let channel: Channel<{}>;
-    let socket: WebSocket;
     let initialized = false;
     let connectFetchPayload: RangerConnectFetch['payload'] | undefined;
+    const buffer: RangerBuffer = { messages: new Array() };
 
     yield takeEvery(SET_CURRENT_MARKET, switchMarket());
     yield takeEvery(RANGER_USER_ORDER_UPDATE, dispatchCurrentMarketOrderUpdates);
@@ -247,9 +243,9 @@ export function* rangerSagas() {
 
         if (connectFetchPayload) {
             const prevSubs = yield getSubscriptions();
-            [channel, socket] = yield call(initRanger, connectFetchPayload, market, prevSubs);
+            const [channel, socket] = yield call(initRanger, connectFetchPayload, market, prevSubs, buffer);
             initialized = true;
-            yield fork(bindSocket, channel, socket);
+            yield fork(bindSocket, channel, socket, buffer);
         }
     }
 }

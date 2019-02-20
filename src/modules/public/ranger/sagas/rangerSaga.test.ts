@@ -26,6 +26,7 @@ import {
     RANGER_DIRECT_WRITE,
     RANGER_DISCONNECT_DATA,
     RANGER_DISCONNECT_FETCH,
+    RANGER_SUBSCRIPTIONS_DATA,
     RANGER_USER_ORDER_UPDATE,
 } from '../constants';
 
@@ -88,7 +89,7 @@ describe('Ranger module', () => {
     };
 
     describe('automatically reconnect when connection is lost', async () => {
-        it('reconnect after some sleep time', async () => {
+        it('reconnects after some time', async () => {
             return new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
@@ -115,6 +116,77 @@ describe('Ranger module', () => {
                             break;
 
                         default:
+                            break;
+                    }
+                });
+
+                store.dispatch(rangerConnectFetch({ withAuth: false }));
+            });
+        });
+
+        it('bufferizes messages sent while the connection was not ready and send them once connection is back', async () => {
+            return new Promise(resolve => {
+                store.subscribe(() => {
+                    const actions = store.getActions();
+                    const lastAction = actions.slice(-1)[0];
+                    const msg1 = rangerDirectMessage({
+                        success: {
+                            message: 'subscribed',
+                            streams: ['etheur.trades'],
+                        },
+                    });
+                    const msg2 = rangerDirectMessage({
+                        success: {
+                            message: 'subscribed',
+                            streams: ['btceur.trades'],
+                        },
+                    });
+                    switch (actions.length) {
+                        case 1:
+                            expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+                            return;
+
+                        case 2:
+                            expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
+                            pingServer.close();
+                            break;
+
+                        case 3:
+                            expect(lastAction).toEqual({ type: RANGER_DISCONNECT_DATA });
+                            store.dispatch(msg1);
+                            store.dispatch(msg2);
+                            break;
+
+                        case 4:
+                            expect(lastAction).toEqual(msg1);
+                            break;
+
+                        case 5:
+                            expect(lastAction).toEqual(msg2);
+                            pingServer = createEchoServer(echoServerPort, debug);
+                            break;
+
+                        case 6:
+                            expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
+                            break;
+
+                        case 7:
+                            expect(lastAction).toEqual({
+                                type: RANGER_SUBSCRIPTIONS_DATA,
+                                payload: { subscriptions: ['etheur.trades'] },
+                            });
+                            break;
+
+                        case 8:
+                            expect(lastAction).toEqual({
+                                type: RANGER_SUBSCRIPTIONS_DATA,
+                                payload: { subscriptions: ['btceur.trades'] },
+                            });
+                            resolve();
+                            break;
+
+                        default:
+                            fail();
                             break;
                     }
                 });
