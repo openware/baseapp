@@ -307,8 +307,36 @@
     .cr-deposit-crypto {
         &__copyable {
             .cr-copyable-text-field__button {
+                position: absolute;
+                right: calc(var(--gap) * 6.5);
+                margin-top: 0;
                 background: var(--button-primary);
+                height: calc(var(--gap) * 6);
+                width: calc(var(--gap) * 20);
+                font-size: unset;
+                font-weight: bolder;
             }
+
+            .cr-copyable-text-field {
+                padding: 0;
+            }
+
+            .cr-copyable-text-field__input {
+                padding: 0;
+                input {
+                  padding: calc(var(--gap) * 2.2);
+                }
+            }
+
+            &-title {
+                position: absolute;
+                margin-top: calc(var(--gap) * -1.3);
+                background: var(--base-bright);
+            }
+        }
+        &__copyable-area,
+        &__copyable-title {
+          margin-bottom: 0;
         }
     }
 
