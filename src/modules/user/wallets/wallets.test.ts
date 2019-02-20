@@ -3,7 +3,19 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
+import { ALERT_ERROR_DATA, ALERT_ERROR_PUSH, ALERT_SUCCESS_DATA, ALERT_SUCCESS_PUSH } from '../../public/alert/constants';
 import { walletsAddressFetch, walletsFetch, walletsWithdrawCcyFetch } from './actions';
+import {
+    WALLETS_ADDRESS_DATA,
+    WALLETS_ADDRESS_ERROR,
+    WALLETS_ADDRESS_FETCH,
+    WALLETS_DATA,
+    WALLETS_ERROR,
+    WALLETS_FETCH,
+    WALLETS_WITHDRAW_CCY_DATA,
+    WALLETS_WITHDRAW_CCY_ERROR,
+    WALLETS_WITHDRAW_CCY_FETCH,
+} from './constants';
 
 const debug = false;
 
@@ -151,28 +163,20 @@ describe('Wallets', () => {
         ];
 
         const expectedWalletsFetch = {
-            type: 'wallets/WALLETS_FETCH',
+            type: WALLETS_FETCH,
         };
 
         const expectedWalletsData = {
-            type: 'wallets/WALLETS_DATA',
+            type: WALLETS_DATA,
             payload: walletsDataActionPayload,
         };
 
         const expectedWalletsError = {
-            type: 'wallets/WALLETS_ERROR',
+            type: WALLETS_ERROR,
             payload: {
                 code: 500,
                 message: ['Server error'],
             },
-        };
-
-        const expectedCallErrorHandler = {
-            error: {
-              code: 500,
-              message: ['Server error'],
-            },
-            type: 'alert/ERROR_FETCH',
         };
 
         const mockWalletsBalancesFetch = () => {
@@ -195,9 +199,11 @@ describe('Wallets', () => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === 2) {
-                        expect(actions[0]).toEqual(expectedWalletsFetch);
-                        expect(actions[1]).toEqual(expectedWalletsData);
-                        resolve();
+                        expect(actions).toEqual([expectedWalletsFetch, expectedWalletsData]);
+                        setTimeout(resolve, 0.01);
+                    }
+                    if (actions.length === 3) {
+                        fail();
                     }
                 });
             });
@@ -210,11 +216,12 @@ describe('Wallets', () => {
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
+                    if (actions.length === 2) {
+                        expect(actions).toEqual([expectedWalletsFetch, expectedWalletsError]);
+                        setTimeout(resolve, 0.01);
+                    }
                     if (actions.length === 3) {
-                        expect(actions[0]).toEqual(expectedWalletsFetch);
-                        expect(actions[1]).toEqual(expectedWalletsError);
-                        expect(actions[2]).toEqual(expectedCallErrorHandler);
-                        resolve();
+                        fail();
                     }
                 });
             });
@@ -229,12 +236,12 @@ describe('Wallets', () => {
         };
 
         const expectedWalletsAddressFetch = {
-            type: 'wallets/WALLETS_ADDRESS_FETCH',
+            type: WALLETS_ADDRESS_FETCH,
             payload: payload,
         };
 
         const expectedWalletsAddressData = {
-            type: 'wallets/WALLETS_ADDRESS_DATA',
+            type: WALLETS_ADDRESS_DATA,
             payload: {
                 address: 'address',
                 currency: payload.currency,
@@ -242,19 +249,11 @@ describe('Wallets', () => {
         };
 
         const expectedWalletsAddressError = {
-            type: 'wallets/WALLETS_ADDRESS_ERROR',
+            type: WALLETS_ADDRESS_ERROR,
             payload: {
                 code: 500,
                 message: ['Server error'],
             },
-        };
-
-        const expectedCallErrorHandler = {
-            error: {
-              code: 500,
-              message: ['Server error'],
-            },
-            type: 'alert/ERROR_FETCH',
         };
 
         const responseAddress = {
@@ -271,9 +270,11 @@ describe('Wallets', () => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === 2) {
-                        expect(actions[0]).toEqual(expectedWalletsAddressFetch);
-                        expect(actions[1]).toEqual(expectedWalletsAddressData);
-                        resolve();
+                        expect(actions).toEqual([expectedWalletsAddressFetch, expectedWalletsAddressData]);
+                        setTimeout(resolve, 0.01);
+                    }
+                    if (actions.length === 3) {
+                        fail();
                     }
                 });
             });
@@ -282,15 +283,47 @@ describe('Wallets', () => {
         });
 
         it('should handle wallet address error', async () => {
+            const expectedCallErrorHandler = {
+                error: {
+                    code: 500,
+                    message: ['Server error'],
+                },
+                type: 'alert/ERROR_FETCH',
+            };
+            const expectedErrorData = {
+                type: 'alert/ERROR_DATA',
+                error: {
+                    code: 500,
+                    message: ['Server error'],
+                },
+            };
             mockNetworkError(mockAxios);
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
-                    if (actions.length === 3) {
-                        expect(actions[0]).toEqual(expectedWalletsAddressFetch);
-                        expect(actions[1]).toEqual(expectedWalletsAddressError);
-                        expect(actions[2]).toEqual(expectedCallErrorHandler);
-                        resolve();
+                    const lastAction = actions.slice(-1)[0];
+
+                    switch (actions.length) {
+                        case 1:
+                            expect(lastAction).toEqual(expectedWalletsAddressFetch);
+                            break;
+
+                        case 2:
+                            expect(lastAction).toEqual(expectedWalletsAddressError);
+                            break;
+
+                        case 3:
+                            expect(lastAction).toEqual(expectedCallErrorHandler);
+                            break;
+
+                        case 4:
+                            expect(lastAction).toEqual(expectedErrorData);
+                            setTimeout(resolve, 0.01);
+                            break;
+
+                        default:
+                            fail(`Unexpected action: ${JSON.stringify(lastAction)}`);
+                            break;
                     }
                 });
             });
@@ -307,44 +340,47 @@ describe('Wallets', () => {
             rid: '2NCimTNGnbm92drX7ARcwBKw6rvr456VWym',
         };
 
-        const expectedWalletsWithdrawCcyFetch = {
-            type: 'wallets/WALLETS_WITHDRAW_CCY_FETCH',
-            payload: payload,
-        };
-
-        const expectedWalletsWithdrawCcyData = {
-            type: 'wallets/WALLETS_WITHDRAW_CCY_DATA',
-        };
-
-        const expectedWalletsWithdrawCcyError = {
-            type: 'wallets/WALLETS_WITHDRAW_CCY_ERROR',
-            payload: {
-                code: 500,
-                message: ['Server error'],
-            },
-        };
-
-        const expectedCallErrorHandler = {
-            error: {
-              code: 500,
-              message: ['Server error'],
-            },
-            type: 'alert/ERROR_FETCH',
-        };
-
         const mockWalletsWithdrawCcyFetch = () => {
             mockAxios.onPost('/account/withdraws').reply(201);
         };
 
+        const expectedWalletsWithdrawCcyFetch = {
+            type: WALLETS_WITHDRAW_CCY_FETCH,
+            payload: payload,
+        };
+
         it('should send withdraw', async () => {
+            const expectedWalletsWithdrawCcyData = {
+                type: WALLETS_WITHDRAW_CCY_DATA,
+            };
+
+            const expectedSuccessAlertPush = { type: ALERT_SUCCESS_PUSH, success: 'success.withdraw.action' };
+            const expectedSuccessAlertData = { type: ALERT_SUCCESS_DATA, success: 'success.withdraw.action' };
+
             mockWalletsWithdrawCcyFetch();
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
-                    if (actions.length === 2) {
-                        expect(actions[0]).toEqual(expectedWalletsWithdrawCcyFetch);
-                        expect(actions[1]).toEqual(expectedWalletsWithdrawCcyData);
-                        resolve();
+                    const lastAction = actions.slice(-1)[0];
+
+                    switch (actions.length) {
+                        case 1:
+                            expect(lastAction).toEqual(expectedWalletsWithdrawCcyFetch);
+                            break;
+                        case 2:
+                            expect(lastAction).toEqual(expectedWalletsWithdrawCcyData);
+                            break;
+                        case 3:
+                            expect(lastAction).toEqual(expectedSuccessAlertPush);
+                            break;
+                        case 4:
+                            expect(lastAction).toEqual(expectedSuccessAlertData);
+                            setTimeout(resolve, 0.01);
+                            break;
+
+                        default:
+                            fail(`Unexpected action: ${JSON.stringify(lastAction)}`);
+                            break;
                     }
                 });
             });
@@ -353,15 +389,53 @@ describe('Wallets', () => {
         });
 
         it('should handle withdraw error', async () => {
+            const expectedWalletsWithdrawCcyError = {
+                type: WALLETS_WITHDRAW_CCY_ERROR,
+                payload: {
+                    code: 500,
+                    message: ['Server error'],
+                },
+            };
+            const expectedCallErrorHandler = {
+                error: {
+                    code: 500,
+                    message: ['Server error'],
+                },
+                type: ALERT_ERROR_PUSH,
+            };
+            const expectedErrorAlert = {
+                type: ALERT_ERROR_DATA,
+                error: {
+                    code: 500,
+                    message: ['Server error'],
+                },
+            };
             mockNetworkError(mockAxios);
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
-                    if (actions.length === 3) {
-                        expect(actions[0]).toEqual(expectedWalletsWithdrawCcyFetch);
-                        expect(actions[1]).toEqual(expectedWalletsWithdrawCcyError);
-                        expect(actions[2]).toEqual(expectedCallErrorHandler);
-                        resolve();
+                    const lastAction = actions.slice(-1)[0];
+                    switch (actions.length) {
+                        case 1:
+                            expect(lastAction).toEqual(expectedWalletsWithdrawCcyFetch);
+                            break;
+
+                        case 2:
+                            expect(lastAction).toEqual(expectedWalletsWithdrawCcyError);
+                            break;
+
+                        case 3:
+                            expect(lastAction).toEqual(expectedCallErrorHandler);
+                            break;
+
+                        case 4:
+                            expect(lastAction).toEqual(expectedErrorAlert);
+                            setTimeout(resolve, 0.01);
+                            break;
+
+                        default:
+                            fail(`Unexpected action number ${actions.length}: ${JSON.stringify(lastAction)}`);
+                            break;
                     }
                 });
             });

@@ -3,7 +3,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import {
     rangerSagas,
 } from '.';
-import { Cryptobase } from '../../../../api';
+import { Cryptobase, defaultConfig } from '../../../../api';
 import { createEchoServer as createEchoServer, setupMockStore } from '../../../../helpers/jest';
 import { OrderEvent } from '../../../types';
 import { PrivateTradeEvent } from '../../../user/history';
@@ -47,20 +47,12 @@ describe('Ranger module', () => {
     beforeAll(() => {
         pingServer = createEchoServer(echoServerPort, debug);
         Cryptobase.config = {
+            ...defaultConfig,
             api: {
                 authUrl: '',
                 tradeUrl: '',
                 applogicUrl: '',
                 rangerUrl: `ws://localhost:${echoServerPort}`,
-            },
-            minutesUntilAutoLogout: '5',
-            withCredentials: true,
-            storage: {
-                defaultStorageLimit: 10,
-            },
-            captcha: {
-                captchaType: 'none',
-                siteKey: '',
             },
         };
     });

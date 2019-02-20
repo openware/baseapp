@@ -16,7 +16,7 @@ export function* walletsWithdrawCcySaga(action: WalletsWithdrawCcyFetch) {
     try {
         yield call(API.post(walletsWithdrawCcyOptions), '/account/withdraws', action.payload);
         yield put(walletsWithdrawCcyData());
-        yield put(pushAlertSuccess('success.withdraw.actionl'));
+        yield put(pushAlertSuccess('success.withdraw.action'));
     } catch (error) {
         yield put(walletsWithdrawCcyError(error));
         yield put(pushAlertError(error));

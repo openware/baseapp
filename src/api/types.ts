@@ -5,7 +5,7 @@ export interface Config {
         applogicUrl: string;
         rangerUrl: string;
     };
-    minutesUntilAutoLogout: string;
+    minutesUntilAutoLogout?: string;
     withCredentials: boolean;
     storage: {
         defaultStorageLimit?: number;
@@ -14,4 +14,5 @@ export interface Config {
         captchaType: 'recaptcha' | 'geetest' | 'none';
         siteKey: string;
     };
+    msAlertDisplayTime?: string;
 }

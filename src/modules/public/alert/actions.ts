@@ -1,49 +1,49 @@
 import { CommonError } from '../../types';
 import {
-    DELETE_ERROR,
-    DELETE_ERROR_BY_INDEX,
-    DELETE_SUCCESS,
-    DELETE_SUCCESS_BY_INDEX,
-    ERROR_DATA, ERROR_FETCH,
-    SUCCESS_DATA,
-    SUCCESS_FETCH,
+    ALERT_DELETE_ERROR,
+    ALERT_DELETE_ERROR_BY_INDEX,
+    ALERT_DELETE_SUCCESS,
+    ALERT_DELETE_SUCCESS_BY_INDEX,
+    ALERT_ERROR_DATA, ALERT_ERROR_PUSH,
+    ALERT_SUCCESS_DATA,
+    ALERT_SUCCESS_PUSH,
 } from './constants';
 
 export interface ErrorFecth {
-    type: typeof ERROR_FETCH;
+    type: typeof ALERT_ERROR_PUSH;
     error: CommonError;
 }
 
 export interface ErrorData {
-    type: typeof ERROR_DATA;
+    type: typeof ALERT_ERROR_DATA;
     error: CommonError;
 }
 
 export interface DeleteError {
-    type: typeof DELETE_ERROR;
+    type: typeof ALERT_DELETE_ERROR;
 }
 
 export interface DeleteErrorByIndex {
-    type: typeof DELETE_ERROR_BY_INDEX;
+    type: typeof ALERT_DELETE_ERROR_BY_INDEX;
     index: number;
 }
 
 export interface SuccessFecth {
-    type: typeof SUCCESS_FETCH;
+    type: typeof ALERT_SUCCESS_PUSH;
     success: string;
 }
 
 export interface SuccessData {
-    type: typeof SUCCESS_DATA;
+    type: typeof ALERT_SUCCESS_DATA;
     success: string;
 }
 
 export interface DeleteSuccess {
-    type: typeof DELETE_SUCCESS;
+    type: typeof ALERT_DELETE_SUCCESS;
 }
 
 export interface DeleteSuccessByIndex {
-    type: typeof DELETE_SUCCESS_BY_INDEX;
+    type: typeof ALERT_DELETE_SUCCESS_BY_INDEX;
     index: number;
 }
 
@@ -57,39 +57,39 @@ export type AlertAction = ErrorData
     | SuccessFecth;
 
 export const pushAlertError = (error: CommonError): ErrorFecth => ({
-    type: ERROR_FETCH,
+    type: ALERT_ERROR_PUSH,
     error,
 });
 
 export const handleError = (error: CommonError): ErrorData => ({
-    type: ERROR_DATA,
+    type: ALERT_ERROR_DATA,
     error,
 });
 
 export const deleteError = (): DeleteError => ({
-    type: DELETE_ERROR,
+    type: ALERT_DELETE_ERROR,
 });
 
 export const deleteErrorByIndex = (index: number): DeleteErrorByIndex => ({
-    type: DELETE_ERROR_BY_INDEX,
+    type: ALERT_DELETE_ERROR_BY_INDEX,
     index,
 });
 
 export const pushAlertSuccess = (success: string): SuccessFecth => ({
-    type: SUCCESS_FETCH,
+    type: ALERT_SUCCESS_PUSH,
     success,
 });
 
 export const handleSuccess = (success: string): SuccessData => ({
-    type: SUCCESS_DATA,
+    type: ALERT_SUCCESS_DATA,
     success,
 });
 
 export const deleteSuccess = (): DeleteSuccess => ({
-    type: DELETE_SUCCESS,
+    type: ALERT_DELETE_SUCCESS,
 });
 
 export const deleteSuccessByIndex = (index: number): DeleteSuccessByIndex => ({
-    type: DELETE_SUCCESS_BY_INDEX,
+    type: ALERT_DELETE_SUCCESS_BY_INDEX,
     index,
 });
