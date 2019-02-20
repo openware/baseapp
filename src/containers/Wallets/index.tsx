@@ -17,7 +17,7 @@ import {
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { fetchSuccess, RootState, selectHistory, selectUserInfo, User, WalletHistoryList } from '../../modules';
+import { pushAlertSuccess, RootState, selectHistory, selectUserInfo, User, WalletHistoryList } from '../../modules';
 import {
     selectWallets,
     selectWalletsLoading,
@@ -50,7 +50,7 @@ interface DispatchProps {
     fetchAddress: typeof walletsAddressFetch;
     clearWallets: () => void;
     walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
-    fetchSuccess: typeof fetchSuccess;
+    fetchSuccess: typeof pushAlertSuccess;
 }
 
 interface WalletsState {
@@ -453,7 +453,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
     clearWallets: () => dispatch(walletsData([])),
-    fetchSuccess: payload => dispatch(fetchSuccess(payload)),
+    fetchSuccess: payload => dispatch(pushAlertSuccess(payload)),
 });
 
 // tslint:disable-next-line:no-any

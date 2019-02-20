@@ -29,7 +29,7 @@ describe('Profile reducer', () => {
         const expectedState = {
             ...initialAlertState,
         };
-        expect(alertReducer(initialAlertState, actions.fetchError(error))).toEqual(expectedState);
+        expect(alertReducer(initialAlertState, actions.pushAlertError(error))).toEqual(expectedState);
     });
 
     it('should handle DELETE_ERROR_BY_INDEX', () => {
@@ -60,7 +60,7 @@ describe('Profile reducer', () => {
         const expectedState = {
             ...initialAlertState,
         };
-        expect(alertReducer(initialAlertState, actions.fetchSuccess(success))).toEqual(expectedState);
+        expect(alertReducer(initialAlertState, actions.pushAlertSuccess(success))).toEqual(expectedState);
     });
 
     it('should handle DELETE_SUCCESS_BY_INDEX', () => {

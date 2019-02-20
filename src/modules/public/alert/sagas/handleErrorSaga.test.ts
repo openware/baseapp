@@ -3,7 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../../';
 import { setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { fetchError } from '../actions';
+import { pushAlertError } from '../actions';
 
 const debug = false;
 
@@ -46,7 +46,7 @@ describe('Error handler', () => {
                     }
                 });
             });
-            store.dispatch(fetchError(errorCodeAccountNotActive));
+            store.dispatch(pushAlertError(errorCodeAccountNotActive));
             return promise;
         });
     });

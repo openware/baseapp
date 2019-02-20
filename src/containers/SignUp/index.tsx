@@ -67,7 +67,6 @@ class SignUpComponent extends React.Component<Props> {
     };
 
     public componentDidMount() {
-        this.props.signUpError({ code: undefined, message: undefined });
         const referralCode = this.extractRefID(this.props.location.search) || '';
         this.setState({
             refId: referralCode,

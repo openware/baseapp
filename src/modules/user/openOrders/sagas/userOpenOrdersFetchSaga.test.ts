@@ -3,7 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { fetchError } from '../../../public/alert';
+import { pushAlertError } from '../../../public/alert';
 import { OrderAPI } from '../../../types';
 import { userOpenOrdersData, userOpenOrdersError, userOpenOrdersFetch } from '../actions';
 
@@ -87,7 +87,7 @@ describe('Open Orders Cancel', () => {
     const expectedActionsError = [
         userOpenOrdersFetch(fakeFetchPayload),
         userOpenOrdersError(),
-        fetchError(fakeError),
+        pushAlertError(fakeError),
     ];
 
     it('should fetch open orders', async () => {

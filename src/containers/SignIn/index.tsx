@@ -1,25 +1,11 @@
 import cx from 'classnames';
 import * as React from 'react';
-import {
-    InjectedIntlProps,
-    injectIntl,
-} from 'react-intl';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-    MapStateToProps,
-} from 'react-redux';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import {
-    SignInComponent,
-    TwoFactorAuth,
-} from '../../components';
-import {
-    EMAIL_REGEX,
-    ERROR_EMPTY_PASSWORD,
-    ERROR_INVALID_EMAIL,
-} from '../../helpers';
+import { SignInComponent, TwoFactorAuth } from '../../components';
+import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL } from '../../helpers';
 import {
     RootState,
     selectAlertState,
@@ -79,11 +65,11 @@ class SignInBox extends React.Component<Props, SignInState> {
             this.props.history.push('/wallets');
         }
         if (props.requireEmailVerification) {
-            props.history.push('/email-verification', {email: this.state.email});
+            props.history.push('/email-verification', { email: this.state.email });
         }
         if (props.alert.error.length) {
             if (props.alert.error.find(e => e.message[0] === 'identity.session.not_active')) {
-                this.props.history.push('/email-verification', {email: this.state.email});
+                this.props.history.push('/email-verification', { email: this.state.email });
             }
         }
     }
@@ -94,40 +80,31 @@ class SignInBox extends React.Component<Props, SignInState> {
         const className = cx('pg-sign-in-screen__container', { loading });
         return (
             <div className="pg-sign-in-screen">
-                <div className={className}>
-                    {require2FA ? this.render2FA() : this.renderSignInForm()}
-                </div>
+                <div className={className}>{require2FA ? this.render2FA() : this.renderSignInForm()}</div>
             </div>
         );
     }
 
     private renderSignInForm = () => {
         const { loading } = this.props;
-        const {
-            email,
-            emailError,
-            emailFocused,
-            password,
-            passwordError,
-            passwordFocused,
-        } = this.state;
+        const { email, emailError, emailFocused, password, passwordError, passwordFocused } = this.state;
 
         return (
             <SignInComponent
                 email={email}
                 emailError={emailError}
                 emailFocused={emailFocused}
-                emailPlaceholder={this.props.intl.formatMessage({ id: 'page.header.signIn.email'})}
+                emailPlaceholder={this.props.intl.formatMessage({ id: 'page.header.signIn.email' })}
                 password={password}
                 passwordError={passwordError}
                 passwordFocused={passwordFocused}
-                passwordPlaceholder={this.props.intl.formatMessage({ id: 'page.header.signIn.password'})}
-                labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
-                labelSignUp={this.props.intl.formatMessage({ id: 'page.header.signUp'})}
-                emailLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.email'})}
-                passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.password'})}
-                receiveConfirmationLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.receiveConfirmation'})}
-                forgotPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.forgotPassword'})}
+                passwordPlaceholder={this.props.intl.formatMessage({ id: 'page.header.signIn.password' })}
+                labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn' })}
+                labelSignUp={this.props.intl.formatMessage({ id: 'page.header.signUp' })}
+                emailLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.email' })}
+                passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.password' })}
+                receiveConfirmationLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.receiveConfirmation' })}
+                forgotPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.forgotPassword' })}
                 isLoading={loading}
                 onForgotPassword={this.forgotPassword}
                 onSignUp={this.handleSignUp}
@@ -139,20 +116,19 @@ class SignInBox extends React.Component<Props, SignInState> {
                 changePassword={this.handleChangePasswordValue}
             />
         );
-    }
-
+    };
 
     private render2FA = () => {
         const { loading } = this.props;
-        const { otpCode, error2fa, codeFocused} = this.state;
+        const { otpCode, error2fa, codeFocused } = this.state;
         return (
             <TwoFactorAuth
                 isLoading={loading}
                 onSubmit={this.handle2FASignIn}
-                title={this.props.intl.formatMessage({id: 'page.password2fa'})}
-                label={this.props.intl.formatMessage({id: 'page.body.wallets.tabs.withdraw.content.code2fa'})}
-                buttonLabel={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
-                message={this.props.intl.formatMessage({id: 'page.password2fa.message'})}
+                title={this.props.intl.formatMessage({ id: 'page.password2fa' })}
+                label={this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' })}
+                buttonLabel={this.props.intl.formatMessage({ id: 'page.header.signIn' })}
+                message={this.props.intl.formatMessage({ id: 'page.password2fa.message' })}
                 codeFocused={codeFocused}
                 otpCode={otpCode}
                 error={error2fa}
@@ -225,13 +201,13 @@ class SignInBox extends React.Component<Props, SignInState> {
     };
 
     private handle2faFocus = () => {
-      this.setState(prev => ({
-          codeFocused: !prev.codeFocused,
-      }));
-    }
+        this.setState(prev => ({
+            codeFocused: !prev.codeFocused,
+        }));
+    };
 
     private validateForm = () => {
-        const { email,password } = this.state;
+        const { email, password } = this.state;
         const isEmailValid = email.match(EMAIL_REGEX);
 
         if (!isEmailValid) {
@@ -271,15 +247,18 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     requireEmailVerification: selectSignUpRequireVerification(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        signIn: data => dispatch(signIn(data)),
-        signInError: error => dispatch(signInError(error)),
-    });
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    signIn: data => dispatch(signIn(data)),
+    signInError: error => dispatch(signInError(error)),
+});
 
-// tslint:disable-next-line no-any
-const SignIn = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(SignInBox) as any));
+// tslint:disable no-any
+const SignIn = injectIntl(
+    withRouter(connect(
+        mapStateToProps,
+        mapDispatchProps,
+    )(SignInBox) as any),
+);
+// tslint:enable no-any
 
-export {
-    SignIn,
-};
+export { SignIn };

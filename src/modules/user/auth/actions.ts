@@ -80,7 +80,8 @@ export interface TestAuthState {
     type: typeof TEST_AUTH_STATE;
 }
 
-export type AuthAction = SignInFetch
+export type AuthAction =
+    | SignInFetch
     | SignInError
     | SignInRequire2FA
     | SignUpFetch
@@ -108,8 +109,8 @@ export const signInRequire2FA = (payload: SignInRequire2FA['payload']): SignInRe
 });
 
 export const signUp = (payload: SignUpFetch['payload']): SignUpFetch => ({
-   type: SIGN_UP_FETCH,
-   payload,
+    type: SIGN_UP_FETCH,
+    payload,
 });
 
 export const signUpError = (payload: SignUpError['payload']): SignUpError => ({
@@ -117,11 +118,10 @@ export const signUpError = (payload: SignUpError['payload']): SignUpError => ({
     payload,
 });
 
-export const signUpRequireVerification =
-    (payload: SignUpRequireVerification['payload']): SignUpRequireVerification => ({
-        type: SIGN_UP_REQUIRE_VERIFICATION,
-        payload,
-    });
+export const signUpRequireVerification = (payload: SignUpRequireVerification['payload']): SignUpRequireVerification => ({
+    type: SIGN_UP_REQUIRE_VERIFICATION,
+    payload,
+});
 
 export const verificationFetch = (payload: VerificationFetch['payload']): VerificationFetch => ({
     type: VERIFICATION_FETCH,

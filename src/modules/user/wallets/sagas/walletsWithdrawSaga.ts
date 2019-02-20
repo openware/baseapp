@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { fetchError, fetchSuccess } from '../../../public/alert';
+import { pushAlertError, pushAlertSuccess } from '../../../public/alert';
 import {
     walletsWithdrawCcyData,
     walletsWithdrawCcyError,
@@ -16,9 +16,9 @@ export function* walletsWithdrawCcySaga(action: WalletsWithdrawCcyFetch) {
     try {
         yield call(API.post(walletsWithdrawCcyOptions), '/account/withdraws', action.payload);
         yield put(walletsWithdrawCcyData());
-        yield put(fetchSuccess('success.withdraw.actionl'));
+        yield put(pushAlertSuccess('success.withdraw.actionl'));
     } catch (error) {
         yield put(walletsWithdrawCcyError(error));
-        yield put(fetchError(error));
+        yield put(pushAlertError(error));
     }
 }

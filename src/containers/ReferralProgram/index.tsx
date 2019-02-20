@@ -9,7 +9,7 @@ import {
 import { connect, MapDispatchToProps } from 'react-redux';
 
 import {
-    fetchSuccess,
+    pushAlertSuccess,
     RootState,
     selectUserInfo,
     User,
@@ -20,7 +20,7 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    fetchSuccess: typeof fetchSuccess;
+    fetchSuccess: typeof pushAlertSuccess;
 }
 
 
@@ -78,7 +78,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
-    fetchSuccess: payload => dispatch(fetchSuccess(payload)),
+    fetchSuccess: payload => dispatch(pushAlertSuccess(payload)),
 });
 
 // tslint:disable-next-line

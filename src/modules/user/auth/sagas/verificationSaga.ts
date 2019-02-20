@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { fetchError } from '../../../public/alert';
+import { pushAlertError } from '../../../public/alert';
 import { signUpError, VerificationFetch, verificationSuccess } from '../actions';
 
 const verificationConfig: RequestOptions = {
@@ -14,6 +14,6 @@ export function* verificationSaga(action: VerificationFetch) {
         yield put(verificationSuccess());
     } catch (error) {
         yield put(signUpError(error));
-        yield put(fetchError(error));
+        yield put(pushAlertError(error));
     }
 }

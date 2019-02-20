@@ -56,7 +56,7 @@ export type AlertAction = ErrorData
     | DeleteSuccessByIndex
     | SuccessFecth;
 
-export const fetchError = (error: CommonError): ErrorFecth => ({
+export const pushAlertError = (error: CommonError): ErrorFecth => ({
     type: ERROR_FETCH,
     error,
 });
@@ -75,7 +75,7 @@ export const deleteErrorByIndex = (index: number): DeleteErrorByIndex => ({
     index,
 });
 
-export const fetchSuccess = (success: string): SuccessFecth => ({
+export const pushAlertSuccess = (success: string): SuccessFecth => ({
     type: SUCCESS_FETCH,
     success,
 });

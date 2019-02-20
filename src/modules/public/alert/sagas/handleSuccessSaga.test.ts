@@ -3,7 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../../';
 import { setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { fetchSuccess } from '../actions';
+import { pushAlertSuccess } from '../actions';
 
 const debug = false;
 
@@ -47,7 +47,7 @@ describe('Error handler', () => {
                     }
                 });
             });
-            store.dispatch(fetchSuccess(successMessage));
+            store.dispatch(pushAlertSuccess(successMessage));
             return promise;
         });
     });

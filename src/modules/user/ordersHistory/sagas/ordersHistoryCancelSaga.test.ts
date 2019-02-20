@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { fetchError, fetchSuccess, rootSaga } from '../../../index';
+import { pushAlertError, pushAlertSuccess, rootSaga } from '../../../index';
 import { OrderCommon } from '../../../types';
 import { ordersHistoryCancelData, ordersHistoryCancelError, ordersHistoryCancelFetch } from '../actions';
 
@@ -64,12 +64,12 @@ describe('Orders History Cancel', () => {
     const expectedActionsFetch = [
         ordersHistoryCancelFetch(fakeFetchPayload),
         ordersHistoryCancelData(fakeSuccessPayload),
-        fetchSuccess('success.order.canceled'),
+        pushAlertSuccess('success.order.canceled'),
     ];
     const expectedActionsError = [
         ordersHistoryCancelFetch(fakeFetchPayload),
         ordersHistoryCancelError(),
-        fetchError(fakeError),
+        pushAlertError(fakeError),
     ];
 
     it('should cancel order', async () => {

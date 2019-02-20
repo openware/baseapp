@@ -2,8 +2,8 @@
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import {
-    fetchError,
-    fetchSuccess,
+    pushAlertError,
+    pushAlertSuccess,
 } from '../../../public/alert';
 import {
     emailVerificationData,
@@ -22,9 +22,9 @@ export function* emailVerificationSaga(action: EmailVerificationFetch) {
             email: action.email,
         });
         yield put(emailVerificationData());
-        yield put(fetchSuccess('success.message.sent'));
+        yield put(pushAlertSuccess('success.message.sent'));
     } catch (error) {
         yield put(emailVerificationError(error));
-        yield put(fetchError(error));
+        yield put(pushAlertError(error));
     }
 }

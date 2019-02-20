@@ -21,7 +21,7 @@ describe('Alert actions', () => {
 
     it('should check fetchError action creator', () => {
         const expectedAction = { type: 'alert/ERROR_FETCH', error };
-        expect(actions.fetchError(error)).toEqual(expectedAction);
+        expect(actions.pushAlertError(error)).toEqual(expectedAction);
     });
 
     it('should check deleteErrorByIndex action creator', () => {
@@ -40,7 +40,7 @@ describe('Alert actions', () => {
 
     it('should check fetchSuccess action creator', () => {
         const expectedAction = { type: 'alert/SUCCESS_FETCH', success };
-        expect(actions.fetchSuccess(success)).toEqual(expectedAction);
+        expect(actions.pushAlertSuccess(success)).toEqual(expectedAction);
     });
 
     it('should check deleteSuccessByIndex action creator', () => {
