@@ -11,6 +11,7 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { PASSWORD_REGEX } from '../../helpers';
 import {
     changeForgotPasswordFetch,
     RootState,
@@ -132,8 +133,9 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                             {error && <div className="pg-change-forgotten-password-screen__container-form-alert">Fields are empty or don`t matches</div>}
                             <div className="pg-change-password-screen__container-form-footer">
                                 <Button
-                                    className={updatePassword && updateConfirmPassword ? 'pg-change-forgotten-password-screen__container-form-footer-button pg-change-forgotten-password-screen__container-form-footer-button--disabled' : 'pg-change-forgotten-password-screen__container-form-footer-button'}
+                                    className="pg-change-forgotten-password-screen__container-form-footer-button"
                                     label="Change"
+                                    disabled={this.disableButton()}
                                     onClick={this.handleSendNewPassword}
                                 />
                             </div>
@@ -143,6 +145,15 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
             </div>
         );
     }
+
+    private disableButton = (): boolean => {
+        const {
+            password,
+            confirmPassword,
+        } = this.state;
+
+        return !password || !confirmPassword;
+    };
 
     private handleFieldFocus = (field: string) => {
         return () => {
@@ -165,20 +176,20 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 
     private handleSendNewPassword = () => {
         const { password, confirmPassword, confirmToken } = this.state;
-        if (password && password === confirmPassword) {
-          this.setState({
-              error: false,
-          });
-          this.props.changeForgotPasswordFetch({
-            reset_password_token: confirmToken,
-            password: password,
-            confirm_password: confirmPassword,
-          });
-        } else {
-          this.setState({
-              error: true,
-          });
-        }
+        const isPasswordValid = password.match(PASSWORD_REGEX);
+        const isConfirmPasswordValid = password === confirmPassword;
+
+        this.setState({
+            error: !(isPasswordValid && isConfirmPasswordValid),
+        }, () => {
+            if (!this.state.error) {
+                this.props.changeForgotPasswordFetch({
+                    reset_password_token: confirmToken,
+                    password: password,
+                    confirm_password: confirmPassword,
+                });
+            }
+        });
     };
 
     private handleChange = (key: string, value: string) => {
