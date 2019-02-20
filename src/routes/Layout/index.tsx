@@ -48,7 +48,7 @@ interface OwnProps {
     history: History;
 }
 
-type Props = ReduxProps & DispatchProps & OwnProps;
+export type LayoutProps = ReduxProps & DispatchProps & OwnProps;
 
 const renderLoader = () => (
     <div className="pg-loader-container">
@@ -91,7 +91,7 @@ const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent,
     return <Route {...rest} render={renderCustomerComponent} />;
 };
 
-class LayoutComponent extends React.Component<Props> {
+class LayoutComponent extends React.Component<LayoutProps> {
     public static eventsListen = [
         'click',
         'keydown',
@@ -104,7 +104,7 @@ class LayoutComponent extends React.Component<Props> {
 
     public timer;
 
-    constructor(props: Props) {
+    constructor(props: LayoutProps) {
         super(props);
 
         this.initListener();
@@ -116,7 +116,7 @@ class LayoutComponent extends React.Component<Props> {
         this.check();
     }
 
-    public componentDidUpdate(next: Props) {
+    public componentDidUpdate(next: LayoutProps) {
         if (!this.props.isLoggedIn && next.isLoggedIn) {
             this.props.walletsReset();
             this.props.history.push('/trading');

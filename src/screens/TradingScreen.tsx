@@ -3,7 +3,6 @@ import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction, MapStateToProps} from 'react-redux';
 import {
@@ -17,12 +16,12 @@ import {
     TradingChart,
 } from '../containers';
 import {
-  RootState,
-  selectCurrentMarket,
-  selectUserInfo,
-  selectUserLoggedIn,
-  setCurrentPrice,
-  User,
+    RootState,
+    selectCurrentMarket,
+    selectUserInfo,
+    selectUserLoggedIn,
+    setCurrentPrice,
+    User,
 } from '../modules';
 import { Market, marketsFetch, selectMarkets } from '../modules/public/markets';
 import { depthFetch } from '../modules/public/orderBook';
@@ -188,11 +187,6 @@ interface StateProps {
 type Props = DispatchProps & ReduxProps & InjectedIntlProps & StateProps;
 
 class Trading extends React.Component<Props, StateProps> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public readonly state = {
         orderComponentResized: 5,
     };

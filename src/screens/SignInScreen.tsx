@@ -3,14 +3,10 @@ import { SignIn } from '../containers/SignIn';
 import { Titled } from '../decorators';
 
 @Titled('Sign In')
-class SignInScreen extends React.Component {
+export class SignInScreen extends React.Component {
     public render() {
         return (
            <SignIn />
         );
     }
 }
-
-export {
-    SignInScreen,
-};

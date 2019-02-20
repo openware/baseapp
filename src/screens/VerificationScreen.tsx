@@ -1,5 +1,9 @@
 import * as React from 'react';
-import {connect, MapDispatchToPropsFunction, MapStateToProps} from 'react-redux';
+import {
+    connect,
+    MapDispatchToPropsFunction,
+    MapStateToProps,
+} from 'react-redux';
 import { Redirect } from 'react-router';
 import {
     AuthError,

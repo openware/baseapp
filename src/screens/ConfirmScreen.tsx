@@ -3,14 +3,10 @@ import { Confirm } from '../containers/Confirm';
 import { Titled } from '../decorators';
 
 @Titled('Confirm')
-class ConfirmScreen extends React.Component {
+export class ConfirmScreen extends React.Component {
     public render() {
         return (
             <Confirm />
         );
     }
 }
-
-export {
-    ConfirmScreen,
-};
