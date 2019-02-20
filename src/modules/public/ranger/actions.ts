@@ -48,7 +48,7 @@ export interface RangerConnectError {
     type: typeof RANGER_CONNECT_ERROR;
     payload?: {
         code: number;
-        message: string;
+        message: string[];
     };
 }
 

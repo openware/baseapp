@@ -6,12 +6,11 @@ import {
 } from 'react-redux';
 import { Redirect } from 'react-router';
 import {
-    AuthError,
     RootState,
-    selectAuthError,
     selectEmailVerified,
     verificationFetch,
 } from '../modules';
+import { CommonError } from '../modules/types';
 
 interface DispatchProps {
     verification: typeof verificationFetch;
@@ -19,7 +18,7 @@ interface DispatchProps {
 
 interface ReduxProps {
     isEmailVerified?: boolean;
-    error?: AuthError;
+    error?: CommonError;
 }
 
 export interface RouterProps {
@@ -49,7 +48,6 @@ class Verification extends React.Component<Props> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     isEmailVerified: selectEmailVerified(state),
-    error: selectAuthError(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =

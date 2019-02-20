@@ -69,7 +69,7 @@ describe('Markets reducer', () => {
 
     const error = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     it('should handle MARKETS_FETCH', () => {

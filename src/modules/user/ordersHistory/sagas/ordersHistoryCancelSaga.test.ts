@@ -24,7 +24,7 @@ describe('Orders History Cancel', () => {
 
     const fakeError = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     const fakeHistory: OrderCommon[] = [

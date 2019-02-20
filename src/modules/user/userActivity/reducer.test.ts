@@ -21,7 +21,7 @@ describe('UserActivity reducer', () => {
 
     const error = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     it('should handle USER_ACTIVITY_FETCH', () => {

@@ -39,7 +39,7 @@ describe('Saga: depth', () => {
 
   const fakeError = {
     code: 500,
-    message: 'Server error',
+    message: ['Server error'],
   };
 
   const fakeDepth = {

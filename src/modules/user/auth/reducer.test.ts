@@ -5,7 +5,7 @@ import { authReducer, initialStateAuth } from './reducer';
 describe('Auth reducer', () => {
     const error = {
         code: 401,
-        message: 'Invalid Session',
+        message: ['Invalid Session'],
     };
 
     it('should return initial state', () => {
@@ -18,14 +18,14 @@ describe('Auth reducer', () => {
     });
 
     it('should handle LOGOUT_FAILURE', () => {
-        const expectedState = { ...initialStateAuth, logoutError: error.message };
+        const expectedState = { ...initialStateAuth, logoutError: error };
         expect(authReducer(initialStateAuth, actions.logoutError(error))).toEqual(expectedState);
     });
 
     it('should handle SIGN_IN_ERROR', () => {
         const payload = {
             code: 500,
-            message: 'Server error',
+            message: ['Server error'],
         };
         const expectedState = { ...initialStateAuth, authError: payload };
         expect(authReducer(initialStateAuth, actions.signInError(payload))).toEqual(expectedState);
@@ -40,7 +40,7 @@ describe('Auth reducer', () => {
     it('should handle AUTH_ERROR', () => {
         const payload = {
             code: 500,
-            message: 'Server error',
+            message: ['Server error'],
         };
         const expectedState = { ...initialStateAuth, authError: payload };
         expect(authReducer(initialStateAuth, actions.signUpError(payload))).toEqual(expectedState);

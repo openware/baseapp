@@ -10,7 +10,7 @@ describe('Auth actions', () => {
     it('should check logoutError action creator', () => {
         const payload = {
             code: 401,
-            message: 'Invalid Session',
+            message: ['Invalid Session'],
         };
         const expectedAction = { type: 'auth/LOGOUT_FAILURE', payload };
         expect(actions.logoutError(payload)).toEqual(expectedAction);
@@ -28,7 +28,7 @@ describe('Auth actions', () => {
     it('should check signInError action creator', () => {
         const payload = {
             code: 500,
-            message: 'Server error',
+            message: ['Server error'],
         };
         const expectedAction = { type: 'auth/SIGN_IN_ERROR', payload };
         expect(actions.signInError(payload)).toEqual(expectedAction);

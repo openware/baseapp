@@ -24,7 +24,7 @@ describe('Module: Generate 2fa QR', () => {
 
     const fakeError = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     const fakeCredentials =  {

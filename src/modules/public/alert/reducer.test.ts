@@ -4,7 +4,7 @@ import {  alertReducer, initialAlertState } from './reducer';
 describe('Profile reducer', () => {
     const error = {
         code: 401,
-        message: 'Invalid Session',
+        message: ['Invalid Session'],
     };
 
     const success = 'success';

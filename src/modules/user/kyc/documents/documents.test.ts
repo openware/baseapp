@@ -44,14 +44,14 @@ describe('KYC - Documents', () => {
             type: 'documents/SEND_DOCUMENTS_ERROR',
             payload: {
                 code: 500,
-                message: 'Server error',
+                message: ['Server error'],
             },
         };
 
         const expectedCallErrorHandler = {
             error: {
               code: 500,
-              message: 'Server error',
+              message: ['Server error'],
             },
             type: 'alert/ERROR_FETCH',
         };

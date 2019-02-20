@@ -24,14 +24,14 @@ describe('Error handler', () => {
     });
 
     describe('Fetch handle error', () => {
-        const errorCodeAccountNotActive = {code: 401, message: 'Your account is not active'};
+        const errorCodeAccountNotActive = {code: 401, message: ['Your account is not active']};
 
         const expectedErrorActionUnauthorized = {
             type: 'alert/ERROR_FETCH',
             error: errorCodeAccountNotActive,
         };
 
-        const expectedUserReset = {
+        const expectedUserAlert = {
             type: 'profile/RESET_USER',
         };
 
@@ -41,7 +41,7 @@ describe('Error handler', () => {
                     const actions = store.getActions();
                     if (actions.length === 2) {
                         expect(actions[0]).toEqual(expectedErrorActionUnauthorized);
-                        expect(actions[1]).toEqual(expectedUserReset);
+                        expect(actions[1]).toEqual(expectedUserAlert);
                         resolve();
                     }
                 });

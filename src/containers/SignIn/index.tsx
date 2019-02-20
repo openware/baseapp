@@ -22,6 +22,7 @@ import {
 } from '../../helpers';
 import {
     RootState,
+    selectAlertState,
     selectSignInRequire2FA,
     selectSignUpRequireVerification,
     selectUserFetching,
@@ -79,6 +80,11 @@ class SignInBox extends React.Component<Props, SignInState> {
         }
         if (props.requireEmailVerification) {
             props.history.push('/email-verification', {email: this.state.email});
+        }
+        if (props.alert.error.length) {
+            if (props.alert.error.find(e => e.message[0] === 'identity.session.not_active')) {
+                this.props.history.push('/email-verification', {email: this.state.email});
+            }
         }
     }
 
@@ -258,6 +264,7 @@ class SignInBox extends React.Component<Props, SignInState> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    alert: selectAlertState(state),
     isLoggedIn: selectUserLoggedIn(state),
     loading: selectUserFetching(state),
     require2FA: selectSignInRequire2FA(state),

@@ -15,7 +15,7 @@ describe('Profile reducer', () => {
 
     const error = {
         code: 401,
-        message: 'Invalid Session',
+        message: ['Invalid Session'],
     };
 
     it('should handle GET_LABEL_FETCH', () => {

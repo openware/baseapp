@@ -12,9 +12,6 @@ const sessionsConfig: RequestOptions = {
 
 export function* signInSaga(action: SignInFetch) {
     try {
-        // clear error
-        yield put(signInError({ code: undefined, message: undefined }));
-
         const user = yield call(API.post(sessionsConfig), '/identity/sessions', action.payload);
         yield put(userData({ user }));
 

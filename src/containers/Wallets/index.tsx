@@ -18,10 +18,8 @@ import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { fetchSuccess, RootState, selectHistory, selectUserInfo, User, WalletHistoryList } from '../../modules';
-import { CommonError } from '../../modules/types';
 import {
     selectWallets,
-    selectWalletsError,
     selectWalletsLoading,
     selectWithdrawSuccess,
     walletsAddressFetch,
@@ -43,7 +41,6 @@ interface ReduxProps {
     user: User;
     wallets: WalletItemProps[];
     withdrawSuccess: boolean;
-    walletsError?: CommonError;
     walletsLoading?: boolean;
     historyList: WalletHistoryList;
 }
@@ -446,7 +443,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
     wallets: selectWallets(state),
-    walletsError: selectWalletsError(state),
     walletsLoading: selectWalletsLoading(state),
     withdrawSuccess: selectWithdrawSuccess(state),
     historyList: selectHistory(state),

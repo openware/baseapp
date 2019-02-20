@@ -24,7 +24,7 @@ describe('Orders Cancel All', () => {
 
     const fakeError = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     const fakeFetchPayload = { tab: 'open' };

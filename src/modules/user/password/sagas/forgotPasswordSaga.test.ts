@@ -24,12 +24,12 @@ describe('FORGOT PASSWORD SAGA', () => {
 
     const fakeError = {
         code: 422,
-        message: 'User doesn\'t exist or has already been activated',
+        message: ['User doesn\'t exist or has already been activated'],
     };
 
     const fakeNetworkError = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     const fakeRequest =  {

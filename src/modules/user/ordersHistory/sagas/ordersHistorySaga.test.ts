@@ -25,7 +25,7 @@ describe('Orders History', () => {
 
     const fakeError = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     const fakeHistory: OrderAPI[] = [
@@ -63,7 +63,6 @@ describe('Orders History', () => {
         pageIndex: 0,
         total: fakeHeaders.total,
     };
-
 
     const mockOrdersHistory = () => {
         mockAxios.onGet(`/market/orders?limit=25&page=1`).reply(200, fakeHistory, fakeHeaders);

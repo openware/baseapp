@@ -1,6 +1,5 @@
 import { RootState } from '../../index';
 
-
 const selectOrdersState = (state: RootState): RootState['user']['orders'] =>
     state.user.orders;
 

@@ -9,10 +9,9 @@ import { ordersReducer } from './reducer';
 describe('Orders reducer', () => {
     const buy: OrderSide = 'buy';
 
-
     const someError = {
         code: 51,
-        message: 'something went wrong',
+        message: ['something went wrong'],
     };
 
     it('supports orderExecuteFetch', () => {
@@ -52,5 +51,4 @@ describe('Orders reducer', () => {
                 executeError: someError,
             });
     });
-
 });

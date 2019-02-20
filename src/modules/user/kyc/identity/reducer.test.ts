@@ -21,7 +21,7 @@ describe('Identity reducer', () => {
 
     const error = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     it('should handle SEND_IDENTITY_FETCH', () => {

@@ -5,6 +5,3 @@ export const selectUserActivity = (state: RootState) =>
 
 export const selectUserActivityLoading = (state: RootState): boolean | undefined =>
     state.user.userActivity.loading;
-
-export const selectUserActivityError = (state: RootState) =>
-    state.user.userActivity.error;

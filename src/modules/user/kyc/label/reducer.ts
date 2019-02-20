@@ -1,4 +1,5 @@
-import { CommonError, Label, LabelAction } from './actions';
+import { CommonError } from '../../../types';
+import { Label, LabelAction } from './actions';
 import {
     GET_LABEL_DATA,
     GET_LABEL_ERROR,

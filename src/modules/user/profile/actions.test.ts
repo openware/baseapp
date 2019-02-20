@@ -4,7 +4,7 @@ import * as actions from './actions';
 describe('Profile actions', () => {
     const error = {
         code: 401,
-        message: 'Invalid Session',
+        message: ['Invalid Session'],
     };
 
     describe('User actions', () => {

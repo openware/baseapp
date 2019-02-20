@@ -1,5 +1,4 @@
 import { RootState } from '../..';
-import { CommonError } from '../../types';
 import { PublicTrade } from '../../user/history';
 import { selectCurrentMarket } from '../markets';
 
@@ -13,6 +12,3 @@ export const selectRecentTradesOfCurrentMarket = (state: RootState): PublicTrade
 
 export const selectRecentTradesLoading = (state: RootState): boolean | undefined =>
     state.public.recentTrades.loading;
-
-export const selectRecentTradesError = (state: RootState): CommonError | undefined =>
-    state.public.recentTrades.error;

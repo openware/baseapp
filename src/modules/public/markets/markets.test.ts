@@ -98,7 +98,7 @@ describe('Saga: marketsFetchSaga', () => {
 
     const fakeError = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     const mockMarkets = () => {

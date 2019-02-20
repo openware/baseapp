@@ -1,4 +1,5 @@
-import { AuthAction, AuthError } from './actions';
+import { CommonError } from '../../types';
+import { AuthAction } from './actions';
 import {
     AUTH_ERROR,
     LOGOUT_FAILURE,
@@ -14,15 +15,14 @@ export interface AuthState {
     require2FA?: boolean;
     requireVerification?: boolean;
     emailVerified?: boolean;
-    logoutError?: string;
-    authError?: AuthError;
+    logoutError?: CommonError;
+    authError?: CommonError;
 }
 
 export const initialStateAuth: AuthState = {
     require2FA: false,
     requireVerification: false,
     emailVerified: false,
-    logoutError: '',
 };
 
 export const authReducer = (state = initialStateAuth, action: AuthAction) => {
@@ -48,7 +48,7 @@ export const authReducer = (state = initialStateAuth, action: AuthAction) => {
         case LOGOUT_FETCH:
             return { ...state };
         case LOGOUT_FAILURE:
-            return { ...state, logoutError: action.payload.message };
+            return { ...state, logoutError: action.payload };
         default:
             return state;
     }

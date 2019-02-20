@@ -22,11 +22,9 @@ import {
     PASSWORD_REGEX,
 } from '../../helpers';
 import {
-    AuthError,
     RootState,
     selectSignUpRequireVerification,
     signUp,
-    signUpError,
 } from '../../modules';
 
 interface ReduxProps {
@@ -36,7 +34,6 @@ interface ReduxProps {
 
 interface DispatchProps {
     signUp: typeof signUp;
-    signUpError: typeof signUpError;
 }
 
 interface RouterProps {
@@ -362,7 +359,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         signUp: credentials => dispatch(signUp(credentials)),
-        signUpError: (error: AuthError) => dispatch(signUpError(error)),
     });
 
 // tslint:disable-next-line:no-any

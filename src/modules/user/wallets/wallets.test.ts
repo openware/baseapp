@@ -163,14 +163,14 @@ describe('Wallets', () => {
             type: 'wallets/WALLETS_ERROR',
             payload: {
                 code: 500,
-                message: 'Server error',
+                message: ['Server error'],
             },
         };
 
         const expectedCallErrorHandler = {
             error: {
               code: 500,
-              message: 'Server error',
+              message: ['Server error'],
             },
             type: 'alert/ERROR_FETCH',
         };
@@ -245,14 +245,14 @@ describe('Wallets', () => {
             type: 'wallets/WALLETS_ADDRESS_ERROR',
             payload: {
                 code: 500,
-                message: 'Server error',
+                message: ['Server error'],
             },
         };
 
         const expectedCallErrorHandler = {
             error: {
               code: 500,
-              message: 'Server error',
+              message: ['Server error'],
             },
             type: 'alert/ERROR_FETCH',
         };
@@ -320,14 +320,14 @@ describe('Wallets', () => {
             type: 'wallets/WALLETS_WITHDRAW_CCY_ERROR',
             payload: {
                 code: 500,
-                message: 'Server error',
+                message: ['Server error'],
             },
         };
 
         const expectedCallErrorHandler = {
             error: {
               code: 500,
-              message: 'Server error',
+              message: ['Server error'],
             },
             type: 'alert/ERROR_FETCH',
         };

@@ -23,9 +23,7 @@ describe('SignIn saga', () => {
         mockAxios.reset();
     });
 
-    const fake2FAError = { code: 403, message: 'Require 2fa' };
-
-    const clearError = { code: undefined, message: undefined };
+    const fake2FAError = { code: 403, message: ['Require 2fa'] };
 
     const fakeCredentials = { email: 'john.barong@gmail.com', password: '123123' };
 
@@ -48,19 +46,16 @@ describe('SignIn saga', () => {
 
     const expectedActionsFetch = [
         signIn(fakeCredentials),
-        signInError(clearError),
         userData({user: fakeUser}),
         signInRequire2FA({ require2fa: false }),
     ];
     const expectedActions2FAError = [
         signIn(fakeCredentials),
-        signInError(clearError),
         signInRequire2FA({ require2fa: true }),
     ];
     const expectedActionsNetworkError = [
         signIn(fakeCredentials),
-        signInError(clearError),
-        signInError({ code: 500, message: 'Server error' }),
+        signInError({ code: 500, message: ['Server error'] }),
     ];
 
     it('should signin user in success flow', async () => {

@@ -87,7 +87,6 @@ describe('recentTrade reducer', () => {
         });
     });
 
-
     it('supports recentTradesData', () => {
         expect(recentTradesReducer(undefined, recentTradesData(fakeTrades))).toEqual({
             loading: false,
@@ -167,7 +166,7 @@ describe('recentTrade reducer', () => {
     it('supports recentTradesError', () => {
         const error = {
             code: 421,
-            message: 'BADDDD!',
+            message: ['BADDDD!'],
         };
         expect(recentTradesReducer(undefined, recentTradesError(error))).toEqual({
             loading: false,

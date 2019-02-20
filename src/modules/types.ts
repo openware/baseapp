@@ -77,7 +77,7 @@ export type RangerEvent = TickerEvent | OrderEvent | MarketUpdateEvent;
 
 export interface CommonError {
     code: number;
-    message: string;
+    message: string[];
 }
 
 export interface CoreState {

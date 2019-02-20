@@ -41,14 +41,14 @@ describe('KYC - Phone', () => {
             type: 'phone/SEND_CODE_ERROR',
             payload: {
                 code: 500,
-                message: 'Server error',
+                message: ['Server error'],
             },
         };
 
         const expectedCallErrorHandler = {
             error: {
               code: 500,
-              message: 'Server error',
+              message: ['Server error'],
             },
             type: 'alert/ERROR_FETCH',
         };
@@ -115,14 +115,14 @@ describe('KYC - Phone', () => {
             type: 'phone/VERIFY_PHONE_ERROR',
             payload: {
                 code: 500,
-                message: 'Server error',
+                message: ['Server error'],
             },
         };
 
         const expectedCallErrorHandler = {
             error: {
               code: 500,
-              message: 'Server error',
+              message: ['Server error'],
             },
             type: 'alert/ERROR_FETCH',
         };
@@ -183,14 +183,14 @@ describe('KYC - Phone', () => {
             type: 'phone/RESEND_CODE_ERROR',
             payload: {
                 code: 500,
-                message: 'Server error',
+                message: ['Server error'],
             },
         };
 
         const expectedCallErrorHandler = {
             error: {
               code: 500,
-              message: 'Server error',
+              message: ['Server error'],
             },
             type: 'alert/ERROR_FETCH',
         };

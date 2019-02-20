@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import {
     AUTH_ERROR,
     LOGOUT_FAILURE,
@@ -21,14 +22,9 @@ export interface SignInFetch {
     };
 }
 
-export interface AuthError {
-    code?: number;
-    message?: string;
-}
-
 export interface SignInError {
     type: typeof SIGN_IN_ERROR;
-    payload: AuthError;
+    payload: CommonError;
 }
 
 export interface SignInRequire2FA {
@@ -50,7 +46,7 @@ export interface SignUpFetch {
 
 export interface SignUpError {
     type: typeof AUTH_ERROR;
-    payload: AuthError;
+    payload: CommonError;
 }
 
 export interface SignUpRequireVerification {
@@ -71,18 +67,13 @@ export interface VerificationSuccess {
     type: typeof VERIFICATION_SUCCESS;
 }
 
-export interface LogoutError {
-    code?: number;
-    message?: string;
-}
-
 export interface LogoutFetch {
     type: typeof LOGOUT_FETCH;
 }
 
 export interface LogoutFailed {
     type: typeof LOGOUT_FAILURE;
-    payload: LogoutError;
+    payload: CommonError;
 }
 
 export interface TestAuthState {

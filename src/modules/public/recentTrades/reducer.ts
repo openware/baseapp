@@ -1,7 +1,7 @@
 import { defaultStorageLimit } from '../../../api';
 import { localeDate } from '../../../helpers/localeDate';
 import { getTimezone } from '../../../helpers/timezone';
-import { CommonState } from '../../types';
+import { CommonError } from '../../types';
 import { PublicTrade } from '../../user/history';
 import { RecentTradesActions } from './actions';
 import {
@@ -12,8 +12,10 @@ import {
 } from './constants';
 import { PublicTradeEvent } from './types';
 
-export interface RecentTradesState extends CommonState {
+export interface RecentTradesState {
     list: PublicTrade[];
+    loading: boolean;
+    error?: CommonError;
 }
 
 const initialState: RecentTradesState = {
@@ -47,7 +49,7 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
             return {
                 list: [],
                 loading: false,
-                error: action.error,
+                error: action.payload,
             };
         }
         case RECENT_TRADES_FETCH: {

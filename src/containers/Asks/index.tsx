@@ -18,16 +18,13 @@ import {
     selectCurrentPrice,
     selectDepthAsks,
     selectDepthBids,
-    selectDepthError,
     selectDepthLoading,
     setCurrentPrice,
 } from '../../modules';
-import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
     asks: string[][];
     asksLoading: boolean;
-    asksError?: CommonError;
     bids: string[][];
     currentMarket: Market | undefined;
     currentPrice: string;
@@ -102,7 +99,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     asks: selectDepthAsks(state),
     bids: selectDepthBids(state),
     asksLoading: selectDepthLoading(state),
-    asksError: selectDepthError(state),
     currentMarket: selectCurrentMarket(state),
     currentPrice: selectCurrentPrice(state),
 });

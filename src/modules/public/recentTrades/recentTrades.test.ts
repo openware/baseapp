@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../..';
-import { setupMockAxios, setupMockStore } from '../../../helpers/jest';
+import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
 import { getTimezone, setTimezone } from '../../../helpers/timezone';
 import { Market } from '../markets';
 import { recentTradesFetch } from './actions';
@@ -61,19 +61,8 @@ describe('Trades module', () => {
         },
     ];
 
-    const userTradesError = {
-        error: {
-            code: 500,
-            message: 'Cannot fetch trades',
-        },
-    };
-
     const mockOrders = () => {
         mockAxios.onGet('/public/markets/xrpbtc/trades').reply(200, fakeTrades);
-    };
-
-    const mockOrdersError = () => {
-        mockAxios.onGet('/public/markets/xrpbtc/trades').reply(500, userTradesError);
     };
 
     const currentMarket: Market = {
@@ -89,7 +78,7 @@ describe('Trades module', () => {
         min_bid_amount: '0.0',
         ask_precision: 4,
         bid_precision: 4,
-};
+    };
 
     const expectTradesFetch = { payload: currentMarket, type: RECENT_TRADES_FETCH };
     const expectedTradesData = {
@@ -128,9 +117,9 @@ describe('Trades module', () => {
     describe('working scenario', () => {
         const expectedTradesError = {
             type: RECENT_TRADES_ERROR,
-            error: {
+            payload: {
                 code: 500,
-                message: 'Cannot fetch trades',
+                message: ['Server error'],
             },
         };
 
@@ -152,7 +141,7 @@ describe('Trades module', () => {
         });
 
         it('should handle fetch orders error', async () => {
-            mockOrdersError();
+            mockNetworkError(mockAxios);
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();

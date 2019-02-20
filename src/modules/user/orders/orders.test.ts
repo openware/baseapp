@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../..';
-import { setupMockAxios, setupMockStore } from '../../../helpers/jest';
+import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
 import { orderExecuteFetch } from './';
 import { OrderExecution } from './actions';
 import { ORDER_EXECUTE_DATA, ORDER_EXECUTE_ERROR, ORDER_EXECUTE_FETCH } from './constants';
@@ -31,19 +31,8 @@ describe('Orders', () => {
         trades_count: 0,
     };
 
-    const orderExecuteError = {
-        error: {
-            code: 500,
-            message: 'Cannot execute order',
-        },
-    };
-
     const mockOrderExecute = () => {
         mockAxios.onPost('/api/v2/peatio/market/orders').reply(200, executedOrder);
-    };
-
-    const mockOrderExecuteError = () => {
-        mockAxios.onPost('/api/v2/peatio/market/orders').reply(500, orderExecuteError);
     };
 
     afterEach(() => {
@@ -79,7 +68,7 @@ describe('Orders', () => {
             type: ORDER_EXECUTE_ERROR,
             payload: {
                 code: 500,
-                message: 'Cannot execute order',
+                message: ['Server error'],
             },
         };
 
@@ -100,7 +89,7 @@ describe('Orders', () => {
         });
 
         it('should handle order execute error', async () => {
-            mockOrderExecuteError();
+            mockNetworkError(mockAxios);
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();

@@ -43,17 +43,18 @@ class AlertComponent extends React.Component<Props> {
     //tslint:disable:jsx-no-lambda
     public render() {
         return (
-        <div className="pg-alerts">
-            {this.props.alert.error.map((w, k) => <FadeIn key={k}><div onClick={() => this.deleteErrorByIndex(k)}><Alert description={w.code.toString(10)} title={w.message} type="error" /></div></FadeIn>)}
-            {this.props.alert.success.map((w, k) => <FadeIn key={k}><div onClick={() => this.deleteSuccessByIndex(k)}><Alert description="" title={this.translate(w)} type="success" /></div></FadeIn>)}
-        </div>
-      );
+            <div className="pg-alerts">
+                {this.props.alert.error.map((w, k) => <FadeIn key={k}><div onClick={() => this.deleteErrorByIndex(k)}><Alert description={w.code.toString(10)} title={this.translate(w.message)} type="error" /></div></FadeIn>)}
+                {this.props.alert.success.map((w, k) => <FadeIn key={k}><div onClick={() => this.deleteSuccessByIndex(k)}><Alert description="" title={this.translate(w)} type="success" /></div></FadeIn>)}
+            </div>
+        );
     }
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     alert: selectAlertState(state),
 });
+
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         deleteError: () => dispatch(deleteError()),

@@ -3,7 +3,7 @@ import * as actions from './actions';
 
 const error = {
     code: 401,
-    message: 'Invalid Session',
+    message: ['Invalid Session'],
 };
 
 const success = 'success';

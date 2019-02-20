@@ -24,7 +24,7 @@ describe('Module: Toggle 2fa', () => {
 
     const fakeError = {
         code: 500,
-        message: 'Server error',
+        message: ['Server error'],
     };
 
     const fakeCredentials =  {

@@ -50,7 +50,7 @@ describe('User activity', () => {
             type: 'user-activity/USER_ACTIVITY_ERROR',
             payload: {
                 code: 500,
-                message: 'Server error',
+                message: ['Server error'],
             },
         };
 

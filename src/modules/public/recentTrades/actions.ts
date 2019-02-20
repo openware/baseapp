@@ -22,7 +22,7 @@ export interface RecentTradesData {
 
 export interface RecentTradesError {
     type: typeof RECENT_TRADES_ERROR;
-    error: CommonError;
+    payload?: CommonError;
 }
 
 export interface RecentTradesPush {
@@ -54,7 +54,7 @@ export const recentTradesPush = (payload: RecentTradesPush['payload']): RecentTr
     payload,
 });
 
-export const recentTradesError = (error: RecentTradesError['error']): RecentTradesError => ({
+export const recentTradesError = (payload: RecentTradesError['payload']): RecentTradesError => ({
     type: RECENT_TRADES_ERROR,
-    error,
+    payload,
 });

@@ -20,7 +20,7 @@ describe('Orderbook/MarketDepth actions', () => {
 
   const fakeError = {
     code: 500,
-    message: 'Server error',
+    message: ['Server error'],
   };
 
   it('should check orderbook action creator', () => {

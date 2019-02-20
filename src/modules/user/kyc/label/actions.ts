@@ -1,3 +1,4 @@
+import { CommonError } from '../../../types';
 import {
     GET_LABEL_DATA,
     GET_LABEL_ERROR,
@@ -10,11 +11,6 @@ export interface Label {
     scope: string;
     updated_at: string;
     value: string;
-}
-
-export interface CommonError {
-    code: number;
-    message: string;
 }
 
 export interface LabelFetch {

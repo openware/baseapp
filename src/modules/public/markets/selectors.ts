@@ -1,5 +1,4 @@
 import { RootState } from '../../index';
-import { CommonError } from '../../types';
 import { MarketsState } from './reducer';
 import { Market } from './types';
 
@@ -10,9 +9,6 @@ export const selectMarkets = (state: RootState): Market[] =>
 
 export const selectMarketsLoading = (state: RootState): boolean | undefined =>
     selectMarketsState(state).loading;
-
-export const selectMarketsError = (state: RootState): CommonError | undefined =>
-    selectMarketsState(state).error;
 
 export const selectCurrentMarket = (state: RootState): Market | undefined =>
     selectMarketsState(state).currentMarket;

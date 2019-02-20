@@ -19,7 +19,6 @@ import {
     ChangeForgottenPasswordScreen,
     ConfirmScreen,
     EmailVerificationScreen,
-    FaqScreen,
     ForgotPasswordScreen,
     HistoryScreen,
     OrdersTabScreen,
@@ -146,7 +145,6 @@ class LayoutComponent extends React.Component<LayoutProps> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/confirm" component={ConfirmScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/help" component={FaqScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
                     <Route path="**"><Redirect to={'/trading'} /></Route>
                 </Switch>

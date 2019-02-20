@@ -8,7 +8,6 @@ export * from './ProfileScreen';
 export * from './OrdersTabScreen';
 export * from './HistoryScreen';
 export * from './ConfirmScreen';
-export * from './FaqScreen';
 export * from './ProfileTwoFactorAuthScreen';
 export * from './ForgotPasswordScreen';
 export * from './ChangeForgottenPasswordScreen';

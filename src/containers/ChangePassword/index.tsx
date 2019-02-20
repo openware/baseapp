@@ -5,7 +5,6 @@ import {
     InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
-import { CommonError } from '../../modules/types';
 
 type OnClearError = () => void;
 type OnSubmitChangePassword = (oldPassword: string, newPassword: string, confirmPassword: string) => void;
@@ -14,7 +13,6 @@ interface ChangePasswordProps {
     onClearError: OnClearError;
     onSubmit: OnSubmitChangePassword;
     success?: boolean;
-    error?: CommonError;
 }
 
 interface ChangePasswordState {
