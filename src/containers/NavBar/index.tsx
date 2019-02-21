@@ -44,27 +44,6 @@ type NavbarProps = OwnProps & ReduxProps & RouteProps & DispatchProps;
 const shouldUnderline = (address: string, url: string, index: number): boolean =>
     (url === '/trade' && address === '/trading') || address === url || (address === '/' && index === 0);
 
-const navItem = (address: string, onLinkChange?: () => void) => (values: string[], index: number) => {
-    const [name, url] = values;
-    const cx = classnames('pg-navbar__content-item', {
-        'pg-navbar__content-item--active': shouldUnderline(address, url, index),
-    });
-
-    const handleLinkChange = () => {
-        if (onLinkChange) {
-            onLinkChange();
-        }
-    };
-
-    return (
-        <li onClick={handleLinkChange} key={index}>
-            <Link className={cx} to={url}>
-                <FormattedMessage id={name} />
-            </Link>
-        </li>
-    );
-};
-
 interface NavbarState {
     isOpen: boolean;
     isOpenLanguage: boolean;
@@ -93,6 +72,28 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         }
     }
 
+    public navItem = (address: string, onLinkChange?: () => void) => (values: string[], index: number) => {
+        const [name, url] = values;
+        const isLoggedIn = this.props;
+        const cx = classnames('pg-navbar__content-item', {
+            'pg-navbar__content-item--active': shouldUnderline(address, url, index),
+            'pg-navbar__content-item-logging': isLoggedIn.user.email,
+        });
+        const handleLinkChange = () => {
+            if (onLinkChange) {
+                onLinkChange();
+            }
+        };
+
+        return (
+            <li onClick={handleLinkChange} key={index}>
+                <Link className={cx} to={url}>
+                    <FormattedMessage id={name} />
+                </Link>
+            </li>
+        );
+    };
+
     public render() {
         const { location, user, lang } = this.props;
         const { isOpenLanguage } = this.state;
@@ -105,7 +106,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         return (
             <div className={'pg-navbar'}>
                 <ul className="pg-navbar__content">
-                    {pgRoutes(!!user.email).map(navItem(address, this.props.onLinkChange))}
+                    {pgRoutes(!!user.email).map(this.navItem(address, this.props.onLinkChange))}
                 </ul>
                 <div className="pg-navbar__header-settings">
                     {user.email ? this.getUserEmailMenu() : null}
