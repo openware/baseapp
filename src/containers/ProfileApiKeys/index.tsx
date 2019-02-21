@@ -1,9 +1,12 @@
-import { Button, Checkbox, Input, Modal, Table } from '@openware/components';
+import { Button, Checkbox, Table } from '@openware/components';
+import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
+import { CustomInput } from '../../components';
 import { localeFullDate } from '../../helpers/localeFullDate';
+
 import {
     ApiKeyCreateFetch,
     apiKeyCreateFetch,
@@ -41,6 +44,7 @@ interface DispatchProps {
 
 interface ProfileApiKeysState {
     otpCode: string;
+    codeFocused: boolean;
 }
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
@@ -48,9 +52,9 @@ type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 // tslint:disable jsx-no-multiline-js
 // tslint:disable jsx-no-lambda
 class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState> {
-
-    public readonly state = {
+    public state = {
         otpCode: '',
+        codeFocused: false,
     };
 
     public t = (key: string) => {
@@ -70,14 +74,14 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
 
     public render() {
         const {user, dataLoaded, apiKeys} = this.props;
-        const modal = (
-            <Modal
-                show={this.props.modal.active}
-                header={this.renderModalHeader()}
-                content={this.renderModalBody()}
-                footer={null}
-            />
-        );
+        const modal = this.props.modal.active ? (
+           <div className="cr-modal">
+              <div className="cr-email-form">
+                  {this.renderModalHeader()}
+                  {this.renderModalBody()}
+              </div>
+           </div>
+        ) : null;
 
         return (
             <div className="pg-profile-page__api-keys">
@@ -183,33 +187,23 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         const headerText = this.props.modal.action === 'createSuccess' ? this.t('page.body.profile.apiKeys.modal.created_header')
             : this.t('page.body.profile.apiKeys.modal.header');
         return (
-            <h3 className="pg-profile-page__api-keys__modal-header">{headerText}
-                <span className="pg-profile-page__close pg-profile-page__pull-right" onClick={this.handleHide2FAModal}/>
-            </h3>
+              <div className="cr-email-form__options-group">
+                  <div className="cr-email-form__option">
+                      <div className="cr-email-form__option-inner">
+                          {headerText}
+                          <span className="pg-profile-page__close pg-profile-page__pull-right" onClick={this.handleHide2FAModal}/>
+                      </div>
+                  </div>
+              </div>
         );
     };
 
     private renderModalBody = () => {
-        const {otpCode} = this.state;
-        let body = (
-            <div>
-                <h3>{this.t('page.body.profile.apiKeys.modal.title')}</h3>
-                <div className="pg-profile-two-factor-auth__form-group">
-                    <div className="pg-copyable-text__section">
-                        <legend><span>{this.t('page.body.profile.apiKeys.modal.label')}</span></legend>
-                        <div className="cr-copyable-text-field pg-copyable-text-field__input">
-                            <div className="cr-copyable-text-field__input">
-                                <Input
-                                    onChangeValue={this.handleOtpCodeChange}
-                                    placeholder={this.t('page.body.profile.apiKeys.modal.placeholder')}
-                                    value={otpCode || ''}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
+        const {otpCode, codeFocused} = this.state;
+        const emailGroupClass = cr('cr-email-form__group', {
+            'cr-email-form__group--focused': codeFocused,
+        });
+        let body;
         let button;
         switch (this.props.modal.action) {
             case 'getKeys':
@@ -218,7 +212,8 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Button
                             label={this.t('page.body.profile.apiKeys.modal.btn.show')}
                             onClick={this.handleGetKeys}
-                            className="modal-button"
+                            disabled={!otpCode.match(/.{6}/g)}
+                            className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                         />
                     );
                 break;
@@ -228,13 +223,21 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Button
                             label={this.t('page.body.profile.apiKeys.modal.btn.create')}
                             onClick={this.handleCreateKey}
-                            className="modal-button"
+                            className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                         />
                     );
                 break;
             case 'createSuccess':
+                button =
+                    (
+                        <Button
+                            label={this.t('page.body.profile.apiKeys.modal.btn.create')}
+                            onClick={this.handleCreateSuccess}
+                            className={'cr-email-form__button'}
+                        />
+                    );
                 body = (
-                    <div>
+                    <div className="cr-success-create">
                         <div className="pg-copyable-text__section">
                             <legend><span>{this.t('page.body.profile.apiKeys.modal.access_key')}</span></legend>
                             <div className="cr-copyable-text-field pg-copyable-text-field__input">
@@ -244,7 +247,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             </div>
                             <div
                                 className="cr-button pg-copyable-text-field__button"
-                                onClick={() => this.handleCopy('access-key-id')}
+                                onClick={() => this.handleCopy('access-key-id', 'access')}
                             >
                                 <span>{this.t('page.body.profile.apiKeys.modal.btn.copy')}</span>
                             </div>
@@ -267,7 +270,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             </div>
                             <div
                                 className="cr-button pg-copyable-text-field__button"
-                                onClick={() => this.handleCopy('secret-key-id')}
+                                onClick={() => this.handleCopy('secret-key-id', 'secret')}
                             >
                                 <span>{this.t('page.body.profile.apiKeys.modal.btn.copy')}</span>
                             </div>
@@ -277,15 +280,10 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             <br/>
                             {this.t('page.body.profile.apiKeys.modal.note_content')}
                         </p>
+                        <div className="button-confirmation">
+                          {button}
+                        </div>
                     </div>
-                );
-                button =
-                    (
-                        <Button
-                            label={this.t('page.body.profile.apiKeys.modal.btn.create')}
-                            onClick={this.handleCreateSuccess}
-                            className="modal-button"
-                        />
                     );
                 break;
             case 'updateKey':
@@ -295,7 +293,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             <Button
                                 label={this.t('page.body.profile.apiKeys.modal.btn.disabled')}
                                 onClick={this.handleUpdateKey}
-                                className="modal-button"
+                                className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                             />
                         )
                         :
@@ -303,7 +301,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             <Button
                                 label={this.t('page.body.profile.apiKeys.modal.btn.activate')}
                                 onClick={this.handleUpdateKey}
-                                className="modal-button"
+                                className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                             />
                         );
                 break;
@@ -313,22 +311,48 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Button
                             label={this.t('page.body.profile.apiKeys.modal.btn.delete')}
                             onClick={this.handleDeleteKey}
-                            className="modal-button"
+                            className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                         />
                     );
                 break;
             default:
                 break;
         }
-        return (
-            <div className="pg-profile-two-factor-auth">
-                <div className="pg-profile-two-factor-auth__api-keys_form">
-                    {body}
-                    {button}
+        body = !body ? (
+                <div className="cr-email-form__form-content">
+                    <div className="cr-email-form__header">
+                      {this.t('page.body.profile.apiKeys.modal.title')}
+                    </div>
+                    <div className={emailGroupClass}>
+                        <CustomInput
+                            type="number"
+                            label={this.t('page.body.profile.apiKeys.modal.label')}
+                            placeholder={this.t('page.body.profile.apiKeys.modal.placeholder')}
+                            defaultLabel="2FA code"
+                            handleChangeInput={this.handleOtpCodeChange}
+                            inputValue={otpCode || ''}
+                            handleFocusInput={this.handleChangeFocusField}
+                            classNameLabel="cr-email-form__label"
+                            classNameInput="cr-email-form__input"
+                        />
+                    </div>
+                    <div className="cr-email-form__button-wrapper">
+                      {button}
+                    </div>
                 </div>
-            </div>
+        ) : body;
+        return (
+            <React.Fragment>
+              {body}
+            </React.Fragment>
         );
     };
+
+    private handleChangeFocusField = () => {
+      this.setState(prev => ({
+        codeFocused: !prev.codeFocused,
+      }));
+    }
 
     private handleHide2FAModal = () => {
         const payload: ApiKeys2FAModal['payload'] = {active: false};
@@ -368,9 +392,9 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         this.props.toggleApiKeys2FAModal(payload);
     };
 
-    private handleCopy = (id: string) => {
+    private handleCopy = (id: string, type: string) => {
         this.copy(id);
-        this.props.fetchSuccess('success.api_keys.copied');
+        this.props.fetchSuccess(`success.api_keys.copied.${type}`);
     };
 
     private handleToggleStateKeyClick = apiKey => {

@@ -3,7 +3,7 @@
   height: 100%;
   align-items: flex-start !important;
   color: var(--profile-grey);
-  max-width: 920px !important;
+  max-width: calc(var(--big-gap) * 15.33) !important;
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
@@ -319,7 +319,7 @@
     box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
     margin-top: calc(var(--gap) * 6);
     background: var(--profile-box);
-    border-radius: 4px;
+    border-radius: calc(var(--gap) * 0.66);
 
     .cr-table {
       th {
@@ -378,6 +378,12 @@
 
     .secret-section {
       color: var(--gamboge);
+      margin: calc(var(--gap) * 3);
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      line-height: calc(var(--gap) * 3);
+      font-size: calc(var(--gap) * 2.33);
 
       .secret-sign {
         float: left;
@@ -396,10 +402,20 @@
 
     .note-section {
       font-size: calc(var(--gap) * 1.5);
+      margin: calc(var(--gap) * 3);
+      padding: calc(var(--gap) * 2);
 
       span {
         font-weight: bolder;
       }
+    }
+    .button-confirmation {
+        margin: calc(var(--gap) * 3);
+        bottom: calc(var(--gap) * 4.33);
+        padding-left: calc(var(--gap) * 0.66);
+        input {
+          margin: auto;
+        }
     }
 
     .cr-button {
@@ -428,54 +444,59 @@
       border-bottom: none;
     }
 
-    .pg-copyable-text__section {
-      padding: calc(var(--gap) * 3) 0 calc(var(--gap) * 3) 0;
-      position: relative;
+    .cr-success-create {
+      min-height: calc(var(--big-gap) * 6.46);
+      .pg-copyable-text__section {
+        margin: auto;
+        max-width: calc(var(--big-gap) * 6.33);
+        padding: calc(var(--gap) * 3) 0 calc(var(--gap) * 3) 0;
+        position: relative;
 
-      legend {
-        background-color: var(--base-bright);
-        position:absolute;
-        top: calc(var(--gap) * 2);
-        left: calc(var(--gap) * 2);
-      }
-
-      .pg-copyable-text-field {
-        &__input {
-          padding: 0;
-          border-color: var(--placeholder-text);
-          border-radius: var(--gap);
-
-          .cr-input {
-            border-bottom: none;
-          }
-
-          input {
-            height: calc(var(--gap) * 6.7);
-            box-sizing: border-box;
-            color: var(--color-white);
-            padding: 0 calc(var(--gap) * 2);
-            background: var(--transparent);
-          }
+        legend {
+          background-color: var(--base-bright);
+          position:absolute;
+          top: calc(var(--gap) * 2);
+          left: calc(var(--gap) * 2);
         }
 
-        &__button {
-          cursor: pointer;
-          text-transform: uppercase;
-          height: calc(var(--gap) * 4);
-          width: calc(var(--gap) * 10);
-          position: absolute;
-          right: calc(var(--gap) * 1);
-          top: calc(var(--gap) * 2.2);
-          line-height: calc(var(--gap) * 4);
-          text-align: center;
-          font-size: calc(var(--gap) * 2);
-          font-weight: bolder;
+        .pg-copyable-text-field {
+          &__input {
+            padding: 0;
+            border-color: var(--placeholder-text);
+            border-radius: var(--gap);
 
-          span {
+            .cr-input {
+              border-bottom: none;
+            }
+
+            input {
+              height: calc(var(--gap) * 6.7);
+              box-sizing: border-box;
+              color: var(--color-white);
+              padding: 0 calc(var(--gap) * 2);
+              background: var(--transparent);
+            }
+          }
+
+          &__button {
+            cursor: pointer;
             text-transform: uppercase;
+            height: calc(var(--gap) * 4);
+            width: calc(var(--gap) * 10);
+            position: absolute;
+            right: calc(var(--gap) * 1);
+            top: calc(var(--gap) * 2.8);
+            line-height: calc(var(--gap) * 4);
+            text-align: center;
+            font-size: calc(var(--gap) * 2);
+            font-weight: bolder;
+
+            span {
+              text-transform: uppercase;
+            }
           }
         }
-      }
+    }
     }
   }
 
@@ -483,8 +504,8 @@
     position: relative;
     display: inline-block;
     margin-left: calc(var(--gap) / 1.33);
-    height: 15px;
-    width: 15px;
+    height: calc(var(--gap) * 2.5);
+    width: calc(var(--gap) * 2.5);
     overflow: hidden;
     cursor: pointer;
 
@@ -694,7 +715,7 @@
         margin-top: calc(var(--gap) * 2);
       }
     }
-  }
+  }note-secti
 
   &__currency {
     color: var(--profile-accent-color);
@@ -714,5 +735,100 @@
 @media (max-width: 780px) {
   .pg-profile-page {
     flex-direction: column;
+  }
+}
+
+.cr-modal {
+  .cr-email-form {
+    background: var(--email-form-bg);
+    min-height: calc(var(--big-gap) * 5);
+    width: calc(var(--big-gap) * 7.06);
+
+    &__option {
+      background: var(--header);
+    }
+    &__options-group {
+      width: 100%;
+      height: calc(var(--big-gap) * 0.97);
+      border-bottom: 2px solid var(--email-form-border);
+    }
+
+    &__label {
+      background: var(--email-form-bg);
+      position: absolute;
+      top: 0px;
+    }
+    &__input {
+      input {
+        color: var(--color-white);
+        font-size: calc(var(--gap) * 2.33);
+        border: 1px solid var(--input-block-border-color);
+        border-radius: calc(var(--gap) * 0.66);
+      }
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+    &__header {
+      width: calc(var(--big-gap) * 6.3);
+      height: calc(var(--gap) * 4.33);
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      line-height: calc(var(--gap) * 2.66);
+      font-size: calc(var(--gap) * 2.33);
+      color: var(--placeholder-text);
+      margin: calc(var(--gap) * 0.83);
+    }
+    &__group--focused {
+      .cr-sign-in-form__label {
+        color: var(--sign-in-accent);
+      }
+      input {
+        border-color: var(--button-primary) !important;
+      }
+    }
+    &__button-wrapper {
+      min-height: calc(var(--gap) * 10);
+    }
+    &__button {
+      color: var(--color-white);
+      background: var(--button-primary);
+      border-radius: calc(var(--gap) * 0.5);
+      font-size: calc(var(--gap) * 2.66);
+      width: calc(var(--big-gap) * 6.3);
+      height: calc(var(--gap) * 5);
+      line-height: normal;
+      font-style: normal;
+      font-weight: normal;
+      margin-left: 0;
+      text-align: center;
+      text-transform: uppercase;
+
+      &--disabled {
+        color: var(--button-dark-gray) !important;
+        background: var(--button-disabled) !important;
+      }
+
+      &:hover {
+        background: var(--button-hover);
+      }
+
+      &:active {
+        background: var(--button-active);
+      }
+    }
+    .pg-profile-page__close {
+        position: absolute;
+        display: inline-block;
+        right: calc(var(--gap) * 3.33);
+        margin-top: calc(var(--gap) * 2.6);
+        height: calc(var(--gap) * 2.5);
+        width: calc(var(--gap) * 2.5);
+        overflow: hidden;
+        cursor: pointer;
+    }
   }
 }
