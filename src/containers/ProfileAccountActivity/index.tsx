@@ -69,8 +69,8 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
 
     private renderResult(result: string) {
         const className = classnames({
-            'pg-profile-page__activity-result-succeed': result === 'Succeed',
-            'pg-profile-page__activity-result-failed': result === 'Failed',
+            'pg-profile-page__activity-result-succeed': result === this.props.intl.formatMessage({id: 'page.body.profile.content.result.succeed'}),
+            'pg-profile-page__activity-result-failed': result === this.props.intl.formatMessage({id: 'page.body.profile.content.result.failed'}),
         });
         return <span className={className}>{result}</span>;
     }
