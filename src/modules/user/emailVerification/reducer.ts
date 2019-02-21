@@ -3,9 +3,9 @@ import {
 } from '../../types';
 import { EmailVerificationAction } from './actions';
 import {
-    SEND_EMAIL_VERIFICATION_DATA,
-    SEND_EMAIL_VERIFICATION_ERROR,
-    SEND_EMAIL_VERIFICATION_FETCH,
+    EMAIL_VERIFICATION_DATA,
+    EMAIL_VERIFICATION_ERROR,
+    EMAIL_VERIFICATION_FETCH,
 } from './constants';
 
 export interface EmailVerificationState {
@@ -21,20 +21,20 @@ export const initialState: EmailVerificationState = {
 
 export const sendEmailVerificationReducer = (state = initialState, action: EmailVerificationAction) => {
     switch (action.type) {
-        case SEND_EMAIL_VERIFICATION_DATA:
+        case EMAIL_VERIFICATION_DATA:
             return {
                 ...state,
                 loading: false,
                 success: true,
             };
-        case SEND_EMAIL_VERIFICATION_ERROR:
+        case EMAIL_VERIFICATION_ERROR:
             return {
                 ...state,
                 loading: false,
                 success: false,
                 error: action.error,
             };
-        case SEND_EMAIL_VERIFICATION_FETCH:
+        case EMAIL_VERIFICATION_FETCH:
             return {
                 ...state,
                 loading: true,

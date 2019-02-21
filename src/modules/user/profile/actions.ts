@@ -1,25 +1,25 @@
 import { CommonError } from '../../types';
 import {
-    CHANGE_PASSWORD_DATA,
-    CHANGE_PASSWORD_ERROR,
-    CHANGE_PASSWORD_FETCH,
-    CHANGE_USER_LEVEL,
-    ENABLE_USER_2FA,
-    GENERATE_2FA_QRCODE_DATA,
-    GENERATE_2FA_QRCODE_ERROR,
-    GENERATE_2FA_QRCODE_FETCH,
-    GET_USER_DATA,
-    GET_USER_ERROR,
-    GET_USER_FETCH,
-    RESET_USER,
-    TEST_PROFILE_STATE,
-    TIERS_DATA,
-    TIERS_DISABLE,
-    TIERS_ERROR,
-    TIERS_FETCH,
-    TOGGLE_2FA_DATA,
-    TOGGLE_2FA_ERROR,
-    TOGGLE_2FA_FETCH,
+    PROFILE_CHANGE_PASSWORD_DATA,
+    PROFILE_CHANGE_PASSWORD_ERROR,
+    PROFILE_CHANGE_PASSWORD_FETCH,
+    PROFILE_CHANGE_USER_LEVEL,
+    PROFILE_ENABLE_USER_2FA,
+    PROFILE_GENERATE_2FA_QRCODE_DATA,
+    PROFILE_GENERATE_2FA_QRCODE_ERROR,
+    PROFILE_GENERATE_2FA_QRCODE_FETCH,
+    PROFILE_RESET_USER,
+    PROFILE_TEST_STATE,
+    PROFILE_TIERS_DATA,
+    PROFILE_TIERS_DISABLE,
+    PROFILE_TIERS_ERROR,
+    PROFILE_TIERS_FETCH,
+    PROFILE_TOGGLE_2FA_DATA,
+    PROFILE_TOGGLE_2FA_ERROR,
+    PROFILE_TOGGLE_2FA_FETCH,
+    PROFILE_USER_DATA,
+    PROFILE_USER_ERROR,
+    PROFILE_USER_FETCH,
 } from './constants';
 
 export interface Tier {
@@ -39,7 +39,7 @@ export interface User {
 }
 
 export interface ChangePasswordFetch {
-    type: typeof CHANGE_PASSWORD_FETCH;
+    type: typeof PROFILE_CHANGE_PASSWORD_FETCH;
     payload: {
         old_password: string;
         new_password: string;
@@ -48,16 +48,16 @@ export interface ChangePasswordFetch {
 }
 
 export interface ChangePasswordData {
-    type: typeof CHANGE_PASSWORD_DATA;
+    type: typeof PROFILE_CHANGE_PASSWORD_DATA;
 }
 
 export interface ChangePasswordError {
-    type: typeof CHANGE_PASSWORD_ERROR;
+    type: typeof PROFILE_CHANGE_PASSWORD_ERROR;
     payload: CommonError | undefined;
 }
 
 export interface Toggle2FAFetch {
-    type: typeof TOGGLE_2FA_FETCH;
+    type: typeof PROFILE_TOGGLE_2FA_FETCH;
     payload: {
         code: string;
         enable: boolean;
@@ -65,20 +65,20 @@ export interface Toggle2FAFetch {
 }
 
 export interface Toggle2FAData {
-    type: typeof TOGGLE_2FA_DATA;
+    type: typeof PROFILE_TOGGLE_2FA_DATA;
 }
 
 export interface Toggle2FAError {
-    type: typeof TOGGLE_2FA_ERROR;
+    type: typeof PROFILE_TOGGLE_2FA_ERROR;
     payload: CommonError;
 }
 
 export interface Generate2faQRFetch {
-    type: typeof GENERATE_2FA_QRCODE_FETCH;
+    type: typeof PROFILE_GENERATE_2FA_QRCODE_FETCH;
 }
 
 export interface Generate2faQRData {
-    type: typeof GENERATE_2FA_QRCODE_DATA;
+    type: typeof PROFILE_GENERATE_2FA_QRCODE_DATA;
     payload: {
         barcode: string;
         url: string;
@@ -86,12 +86,12 @@ export interface Generate2faQRData {
 }
 
 export interface Generate2faQRError {
-    type: typeof GENERATE_2FA_QRCODE_ERROR;
+    type: typeof PROFILE_GENERATE_2FA_QRCODE_ERROR;
     payload: CommonError;
 }
 
 export interface TiersFetch {
-    type: typeof TIERS_FETCH;
+    type: typeof PROFILE_TIERS_FETCH;
     payload: {
         uid: string;
         currency: string;
@@ -99,52 +99,52 @@ export interface TiersFetch {
 }
 
 export interface TiersData {
-    type: typeof TIERS_DATA;
+    type: typeof PROFILE_TIERS_DATA;
     payload: Tier;
 }
 
 export interface TiersError {
-    type: typeof TIERS_ERROR;
+    type: typeof PROFILE_TIERS_ERROR;
     payload: CommonError;
 }
 
 export interface TiersDisable {
-    type: typeof TIERS_DISABLE;
+    type: typeof PROFILE_TIERS_DISABLE;
 }
 
 export interface UserFetch {
-    type: typeof GET_USER_FETCH;
+    type: typeof PROFILE_USER_FETCH;
 }
 
 export interface UserInfo {
-    type: typeof GET_USER_DATA;
+    type: typeof PROFILE_USER_DATA;
     payload: {
         user: User;
     };
 }
 
 export interface UserError {
-    type: typeof GET_USER_ERROR;
+    type: typeof PROFILE_USER_ERROR;
     payload: CommonError;
 }
 
 export interface UserReset {
-    type: typeof RESET_USER;
+    type: typeof PROFILE_RESET_USER;
 }
 
 export interface TestProfileState {
-    type: typeof TEST_PROFILE_STATE;
+    type: typeof PROFILE_TEST_STATE;
 }
 
 export interface ChangeUserLevel {
-    type: typeof CHANGE_USER_LEVEL;
+    type: typeof PROFILE_CHANGE_USER_LEVEL;
     payload: {
         level: number;
     };
 }
 
 export interface EnableUser2fa {
-    type: typeof ENABLE_USER_2FA;
+    type: typeof PROFILE_ENABLE_USER_2FA;
 }
 
 export type ProfileAction =
@@ -170,90 +170,90 @@ export type ProfileAction =
     | EnableUser2fa;
 
 export const changePasswordFetch = (payload: ChangePasswordFetch['payload']): ChangePasswordFetch => ({
-    type: CHANGE_PASSWORD_FETCH,
+    type: PROFILE_CHANGE_PASSWORD_FETCH,
     payload,
 });
 
 export const changePasswordData = (): ChangePasswordData => ({
-    type: CHANGE_PASSWORD_DATA,
+    type: PROFILE_CHANGE_PASSWORD_DATA,
 });
 
 export const changePasswordError = (payload: ChangePasswordError['payload']): ChangePasswordError => ({
-    type: CHANGE_PASSWORD_ERROR,
+    type: PROFILE_CHANGE_PASSWORD_ERROR,
     payload,
 });
 
 export const toggle2faFetch = (payload: Toggle2FAFetch['payload']): Toggle2FAFetch => ({
-    type: TOGGLE_2FA_FETCH,
+    type: PROFILE_TOGGLE_2FA_FETCH,
     payload,
 });
 
 export const toggle2faData = (): Toggle2FAData => ({
-    type: TOGGLE_2FA_DATA,
+    type: PROFILE_TOGGLE_2FA_DATA,
 });
 
 export const toggle2faError = (payload: Toggle2FAError['payload']): Toggle2FAError => ({
-    type: TOGGLE_2FA_ERROR,
+    type: PROFILE_TOGGLE_2FA_ERROR,
     payload,
 });
 
 export const generate2faQRFetch = (): Generate2faQRFetch => ({
-    type: GENERATE_2FA_QRCODE_FETCH,
+    type: PROFILE_GENERATE_2FA_QRCODE_FETCH,
 });
 
 export const generate2faQRData = (payload: Generate2faQRData['payload']): Generate2faQRData => ({
-    type: GENERATE_2FA_QRCODE_DATA,
+    type: PROFILE_GENERATE_2FA_QRCODE_DATA,
     payload,
 });
 
 export const generate2faQRError = (payload: Generate2faQRError['payload']): Generate2faQRError => ({
-    type: GENERATE_2FA_QRCODE_ERROR,
+    type: PROFILE_GENERATE_2FA_QRCODE_ERROR,
     payload,
 });
 
 export const tiersFetch = (payload: TiersFetch['payload']): TiersFetch => ({
-    type: TIERS_FETCH,
+    type: PROFILE_TIERS_FETCH,
     payload,
 });
 
 export const tiersData = (payload: TiersData['payload']): TiersData => ({
-    type: TIERS_DATA,
+    type: PROFILE_TIERS_DATA,
     payload,
 });
 
 export const tiersError = (payload: TiersError['payload']): TiersError => ({
-    type: TIERS_ERROR,
+    type: PROFILE_TIERS_ERROR,
     payload,
 });
 
 export const tiersDisable = (): TiersDisable => ({
-    type: TIERS_DISABLE,
+    type: PROFILE_TIERS_DISABLE,
 });
 
 export const userFetch = (): UserFetch => ({
-    type: GET_USER_FETCH,
+    type: PROFILE_USER_FETCH,
 });
 
 export const userData = (payload: UserInfo['payload']): UserInfo => ({
-    type: GET_USER_DATA,
+    type: PROFILE_USER_DATA,
     payload,
 });
 
 export const userError = (payload: UserError['payload']): UserError => ({
-    type: GET_USER_ERROR,
+    type: PROFILE_USER_ERROR,
     payload,
 });
 
 export const userReset = (): UserReset => ({
-    type: RESET_USER,
+    type: PROFILE_RESET_USER,
 });
 
 export const changeUserLevel =
     (payload: ChangeUserLevel['payload']): ChangeUserLevel => ({
-        type: CHANGE_USER_LEVEL,
+        type: PROFILE_CHANGE_USER_LEVEL,
         payload,
     });
 
 export const enableUser2fa = (): EnableUser2fa => ({
-        type: ENABLE_USER_2FA,
+        type: PROFILE_ENABLE_USER_2FA,
     });

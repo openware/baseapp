@@ -2,13 +2,13 @@ import { CommonError } from '../../types';
 import { AuthAction } from './actions';
 import {
     AUTH_ERROR,
-    LOGOUT_FAILURE,
-    LOGOUT_FETCH,
-    SIGN_IN_ERROR,
-    SIGN_IN_REQUIRE_2FA,
-    SIGN_UP_REQUIRE_VERIFICATION,
-    VERIFICATION_FETCH,
-    VERIFICATION_SUCCESS,
+    AUTH_LOGOUT_FAILURE,
+    AUTH_LOGOUT_FETCH,
+    AUTH_SIGN_IN_ERROR,
+    AUTH_SIGN_IN_REQUIRE_2FA,
+    AUTH_SIGN_UP_REQUIRE_VERIFICATION,
+    AUTH_VERIFICATION_FETCH,
+    AUTH_VERIFICATION_SUCCESS,
 } from './constants';
 
 export interface AuthState {
@@ -27,27 +27,27 @@ export const initialStateAuth: AuthState = {
 
 export const authReducer = (state = initialStateAuth, action: AuthAction) => {
     switch (action.type) {
-        case SIGN_IN_REQUIRE_2FA:
+        case AUTH_SIGN_IN_REQUIRE_2FA:
             return {
                 ...state,
                 require2FA: action.payload.require2fa,
             };
-        case SIGN_UP_REQUIRE_VERIFICATION:
+        case AUTH_SIGN_UP_REQUIRE_VERIFICATION:
             return {
                 ...state,
                 requireVerification: action.payload.requireVerification,
             };
-        case VERIFICATION_FETCH:
+        case AUTH_VERIFICATION_FETCH:
             return { ...state, emailVerified: false };
-        case VERIFICATION_SUCCESS:
+        case AUTH_VERIFICATION_SUCCESS:
             return { ...state, emailVerified: true };
         case AUTH_ERROR:
             return { ...state, authError: action.payload };
-        case SIGN_IN_ERROR:
+        case AUTH_SIGN_IN_ERROR:
             return { ...state, authError: action.payload };
-        case LOGOUT_FETCH:
+        case AUTH_LOGOUT_FETCH:
             return { ...state };
-        case LOGOUT_FAILURE:
+        case AUTH_LOGOUT_FAILURE:
             return { ...state, logoutError: action.payload };
         default:
             return state;

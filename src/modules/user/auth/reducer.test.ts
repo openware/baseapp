@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import { TEST_AUTH_STATE } from './constants';
+import { AUTH_TEST_STATE } from './constants';
 import { authReducer, initialStateAuth } from './reducer';
 
 describe('Auth reducer', () => {
@@ -9,7 +9,7 @@ describe('Auth reducer', () => {
     };
 
     it('should return initial state', () => {
-        expect(authReducer(undefined, { type: TEST_AUTH_STATE })).toEqual(initialStateAuth);
+        expect(authReducer(undefined, { type: AUTH_TEST_STATE })).toEqual(initialStateAuth);
     });
 
     it('should handle LOGOUT_FETCH', () => {

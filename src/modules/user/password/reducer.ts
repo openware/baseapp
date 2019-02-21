@@ -1,11 +1,11 @@
 import { CommonError, CommonState } from '../../types';
 import { PasswordAction } from './actions';
 import {
-    CHANGE_FORGOT_PASSWORD_FETCH,
-    CHANGE_FORGOT_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_ERROR,
-    FORGOT_PASSWORD_FETCH,
-    FORGOT_PASSWORD_SUCCESS,
+    PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH,
+    PASSWORD_CHANGE_FORGOT_PASSWORD_SUCCESS,
+    PASSWORD_FORGOT_ERROR,
+    PASSWORD_FORGOT_FETCH,
+    PASSWORD_FORGOT_SUCCESS,
 } from './constants';
 
 export interface PasswordState extends CommonState {
@@ -22,23 +22,23 @@ const initialState: PasswordState = {
 
 export const passwordReducer = (state = initialState, action: PasswordAction) => {
     switch (action.type) {
-        case FORGOT_PASSWORD_FETCH:
+        case PASSWORD_FORGOT_FETCH:
             return { ...state, loading: true };
-        case FORGOT_PASSWORD_SUCCESS:
+        case PASSWORD_FORGOT_SUCCESS:
             return {
                 ...state,
                 forgotPasswordRequested: true,
                 loading: false,
             };
-        case FORGOT_PASSWORD_ERROR:
+        case PASSWORD_FORGOT_ERROR:
             return {
                 ...state,
                 forgotPasswordError: action.payload,
                 loading: false,
             };
-        case CHANGE_FORGOT_PASSWORD_FETCH:
+        case PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH:
             return { ...state, loading: true };
-        case CHANGE_FORGOT_PASSWORD_SUCCESS:
+        case PASSWORD_CHANGE_FORGOT_PASSWORD_SUCCESS:
             return {
                 ...state,
                 forgotPasswordChanged: true,

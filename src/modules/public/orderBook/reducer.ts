@@ -9,6 +9,8 @@ import {
 } from './constants';
 import { DepthState, OrderBookState } from './types';
 
+// TODO: Move market depth to his own module
+
 export const initialOrderBook: OrderBookState = {
   asks: [],
   bids: [],

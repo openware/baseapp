@@ -1,50 +1,50 @@
 import { CommonError } from '../../../types';
 import {
-    RESEND_CODE_DATA,
-    RESEND_CODE_ERROR,
-    RESEND_CODE_FETCH,
-    SEND_CODE_DATA,
-    SEND_CODE_ERROR,
-    SEND_CODE_FETCH,
-    VERIFY_PHONE_DATA,
-    VERIFY_PHONE_ERROR,
-    VERIFY_PHONE_FETCH,
+    PHONE_RESEND_CODE_DATA,
+    PHONE_RESEND_CODE_ERROR,
+    PHONE_RESEND_CODE_FETCH,
+    PHONE_SEND_CODE_DATA,
+    PHONE_SEND_CODE_ERROR,
+    PHONE_SEND_CODE_FETCH,
+    PHONE_VERIFY_DATA,
+    PHONE_VERIFY_ERROR,
+    PHONE_VERIFY_FETCH,
 } from './constants';
 
 export interface SendCodeFetch {
-    type: typeof SEND_CODE_FETCH;
+    type: typeof PHONE_SEND_CODE_FETCH;
     payload: {
         phone_number: string;
     };
 }
 
 export interface SendCodeData {
-    type: typeof SEND_CODE_DATA;
+    type: typeof PHONE_SEND_CODE_DATA;
 }
 
 export interface SendCodeError {
-    type: typeof SEND_CODE_ERROR;
+    type: typeof PHONE_SEND_CODE_ERROR;
     payload: CommonError;
 }
 
 export interface ResendCodeFetch {
-    type: typeof RESEND_CODE_FETCH;
+    type: typeof PHONE_RESEND_CODE_FETCH;
     payload: {
         phone_number: string;
     };
 }
 
 export interface ResendCodeData {
-    type: typeof RESEND_CODE_DATA;
+    type: typeof PHONE_RESEND_CODE_DATA;
 }
 
 export interface ResendCodeError {
-    type: typeof RESEND_CODE_ERROR;
+    type: typeof PHONE_RESEND_CODE_ERROR;
     payload: CommonError;
 }
 
 export interface VerifyPhoneFetch {
-    type: typeof VERIFY_PHONE_FETCH;
+    type: typeof PHONE_VERIFY_FETCH;
     payload: {
         phone_number: string;
         verification_code: string;
@@ -52,14 +52,14 @@ export interface VerifyPhoneFetch {
 }
 
 export interface VerifyPhoneData {
-    type: typeof VERIFY_PHONE_DATA;
+    type: typeof PHONE_VERIFY_DATA;
     payload: {
         message: string;
     };
 }
 
 export interface VerifyPhoneError {
-    type: typeof VERIFY_PHONE_ERROR;
+    type: typeof PHONE_VERIFY_ERROR;
     payload: CommonError;
 }
 
@@ -74,44 +74,44 @@ export type PhoneAction = SendCodeFetch
     | ResendCodeData;
 
 export const sendCode = (payload: SendCodeFetch['payload']): SendCodeFetch => ({
-    type: SEND_CODE_FETCH,
+    type: PHONE_SEND_CODE_FETCH,
     payload,
 });
 
 export const sendCodeData = (): SendCodeData => ({
-    type: SEND_CODE_DATA,
+    type: PHONE_SEND_CODE_DATA,
 });
 
 export const sendCodeError = (payload: SendCodeError['payload']): SendCodeError => ({
-    type: SEND_CODE_ERROR,
+    type: PHONE_SEND_CODE_ERROR,
     payload,
 });
 
 export const resendCode = (payload: ResendCodeFetch['payload']): ResendCodeFetch => ({
-    type: RESEND_CODE_FETCH,
+    type: PHONE_RESEND_CODE_FETCH,
     payload,
 });
 
 export const resendCodeData = (): ResendCodeData => ({
-    type: RESEND_CODE_DATA,
+    type: PHONE_RESEND_CODE_DATA,
 });
 
 export const resendCodeError = (payload: ResendCodeError['payload']): ResendCodeError => ({
-    type: RESEND_CODE_ERROR,
+    type: PHONE_RESEND_CODE_ERROR,
     payload,
 });
 
 export const verifyPhone = (payload: VerifyPhoneFetch['payload']): VerifyPhoneFetch => ({
-    type: VERIFY_PHONE_FETCH,
+    type: PHONE_VERIFY_FETCH,
     payload,
 });
 
 export const verifyPhoneData = (payload: VerifyPhoneData['payload']): VerifyPhoneData => ({
-    type: VERIFY_PHONE_DATA,
+    type: PHONE_VERIFY_DATA,
     payload,
 });
 
 export const verifyPhoneError = (payload: VerifyPhoneError['payload']): VerifyPhoneError => ({
-    type: VERIFY_PHONE_ERROR,
+    type: PHONE_VERIFY_ERROR,
     payload,
 });

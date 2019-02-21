@@ -6,10 +6,10 @@ import {
     ORDERS_HISTORY_CANCEL_DATA,
     ORDERS_HISTORY_CANCEL_ERROR,
     ORDERS_HISTORY_CANCEL_FETCH,
-    TEST_ORDERS_HISTORY_STATE,
-    USER_ORDERS_HISTORY_DATA,
-    USER_ORDERS_HISTORY_ERROR,
-    USER_ORDERS_HISTORY_FETCH,
+    ORDERS_HISTORY_DATA,
+    ORDERS_HISTORY_ERROR,
+    ORDERS_HISTORY_FETCH,
+    ORDERS_TEST_HISTORY_STATE,
 } from './constants';
 
 
@@ -26,21 +26,21 @@ export interface UserOrdersHistoryDataPayload {
 }
 
 export interface UserOrdersHistoryFetch {
-    type: typeof USER_ORDERS_HISTORY_FETCH;
+    type: typeof ORDERS_HISTORY_FETCH;
     payload: UserOrdersHistoryFetchPayload;
 }
 
 export interface UserOrdersHistoryData {
-    type: typeof USER_ORDERS_HISTORY_DATA;
+    type: typeof ORDERS_HISTORY_DATA;
     payload: UserOrdersHistoryDataPayload;
 }
 
 export interface UserOrdersHistoryError {
-    type: typeof USER_ORDERS_HISTORY_ERROR;
+    type: typeof ORDERS_HISTORY_ERROR;
 }
 
 export interface TestOrdersHistoryState {
-    type: typeof TEST_ORDERS_HISTORY_STATE;
+    type: typeof ORDERS_TEST_HISTORY_STATE;
 }
 
 export interface OrdersCancelAllFetch {
@@ -91,17 +91,17 @@ export type OrdersHistoryAction =
 
 
 export const userOrdersHistoryFetch = (payload: UserOrdersHistoryFetchPayload): UserOrdersHistoryFetch => ({
-    type: USER_ORDERS_HISTORY_FETCH,
+    type: ORDERS_HISTORY_FETCH,
     payload,
 });
 
 export const userOrdersHistoryData = (payload: UserOrdersHistoryDataPayload): UserOrdersHistoryData => ({
-    type: USER_ORDERS_HISTORY_DATA,
+    type: ORDERS_HISTORY_DATA,
     payload,
 });
 
 export const userOrdersHistoryError = (): UserOrdersHistoryError => ({
-    type: USER_ORDERS_HISTORY_ERROR,
+    type: ORDERS_HISTORY_ERROR,
 });
 
 export const ordersCancelAllFetch = (payload: OrdersCancelAllFetch['payload']): OrdersCancelAllFetch => ({

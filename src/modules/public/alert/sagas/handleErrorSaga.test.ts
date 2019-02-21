@@ -4,7 +4,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../../';
 import { Cryptobase, defaultConfig } from '../../../../api';
 import { setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { RESET_USER } from '../../../user/profile/constants';
+import { PROFILE_RESET_USER } from '../../../user/profile/constants';
 import { pushAlertError } from '../actions';
 import { ALERT_DELETE_ERROR, ALERT_ERROR_DATA, ALERT_ERROR_PUSH } from '../constants';
 
@@ -39,7 +39,7 @@ describe('Error handler', () => {
         };
 
         const expectedUserProfileReset = {
-            type: RESET_USER,
+            type: PROFILE_RESET_USER,
         };
 
         const expectedAlertErrorData = {

@@ -1,15 +1,15 @@
 import { CommonError } from '../../../types';
 import { PhoneAction } from './actions';
 import {
-    RESEND_CODE_DATA,
-    RESEND_CODE_ERROR,
-    RESEND_CODE_FETCH,
-    SEND_CODE_DATA,
-    SEND_CODE_ERROR,
-    SEND_CODE_FETCH,
-    VERIFY_PHONE_DATA,
-    VERIFY_PHONE_ERROR,
-    VERIFY_PHONE_FETCH,
+    PHONE_RESEND_CODE_DATA,
+    PHONE_RESEND_CODE_ERROR,
+    PHONE_RESEND_CODE_FETCH,
+    PHONE_SEND_CODE_DATA,
+    PHONE_SEND_CODE_ERROR,
+    PHONE_SEND_CODE_FETCH,
+    PHONE_VERIFY_DATA,
+    PHONE_VERIFY_ERROR,
+    PHONE_VERIFY_FETCH,
 } from './constants';
 
 export interface PhoneState {
@@ -24,49 +24,49 @@ export const initialPhoneState: PhoneState = {
 
 export const phoneReducer = (state = initialPhoneState, action: PhoneAction) => {
     switch (action.type) {
-        case SEND_CODE_FETCH:
+        case PHONE_SEND_CODE_FETCH:
             return {
                 ...state,
                 codeSend: false,
                 error: undefined,
                 successMessage: undefined,
             };
-        case SEND_CODE_DATA:
+        case PHONE_SEND_CODE_DATA:
             return {
                 ...state,
                 codeSend: true,
             };
-        case SEND_CODE_ERROR:
+        case PHONE_SEND_CODE_ERROR:
             return {
                 codeSend: false,
                 error: action.payload,
             };
-        case VERIFY_PHONE_DATA:
+        case PHONE_VERIFY_DATA:
             return {
                 ...state,
                 successMessage: action.payload.message,
                 error: undefined,
             };
-        case VERIFY_PHONE_ERROR:
+        case PHONE_VERIFY_ERROR:
             return {
                 codeSend: false,
                 error: action.payload,
             };
-        case VERIFY_PHONE_FETCH:
-        case RESEND_CODE_FETCH:
+        case PHONE_VERIFY_FETCH:
+        case PHONE_RESEND_CODE_FETCH:
             return {
                 ...state,
                 codeSend: false,
                 error: undefined,
                 successMessage: undefined,
             };
-        case RESEND_CODE_DATA:
+        case PHONE_RESEND_CODE_DATA:
             return {
                 ...state,
                 codeSend: true,
             };
 
-        case RESEND_CODE_ERROR:
+        case PHONE_RESEND_CODE_ERROR:
             return {
                 codeSend: false,
                 error: action.payload,

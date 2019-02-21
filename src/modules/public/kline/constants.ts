@@ -1,3 +1,3 @@
-export const KLINE_FETCH = 'klines/KLINE_FETCH';
-export const KLINE_ERROR = 'recentTrades/KLINE_ERROR';
-export const KLINE_PUSH = 'recentTrades/KLINE_PUSH';
+export const KLINE_FETCH = 'klines/FETCH';
+export const KLINE_ERROR = 'kline/ERROR';
+export const KLINE_PUSH = 'kline/PUSH';

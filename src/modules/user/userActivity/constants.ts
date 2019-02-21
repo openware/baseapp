@@ -1,3 +1,3 @@
-export const USER_ACTIVITY_FETCH = 'user-activity/USER_ACTIVITY_FETCH';
-export const USER_ACTIVITY_DATA = 'user-activity/USER_ACTIVITY_DATA';
-export const USER_ACTIVITY_ERROR = 'user-activity/USER_ACTIVITY_ERROR';
+export const USER_ACTIVITY_FETCH = 'userActivity/FETCH';
+export const USER_ACTIVITY_DATA = 'userActivity/DATA';
+export const USER_ACTIVITY_ERROR = 'userActivity/ERROR';

@@ -4,7 +4,7 @@ import {
     ORDER_EXECUTE_DATA,
     ORDER_EXECUTE_ERROR,
     ORDER_EXECUTE_FETCH,
-    SET_CURRENT_PRICE,
+    ORDERS_SET_CURRENT_PRICE,
 } from './constants';
 
 
@@ -29,7 +29,7 @@ export const ordersReducer = (state = initialState, action: OrdersAction) => {
             return { ...state, executeLoading: false, executeError: undefined };
         case ORDER_EXECUTE_ERROR:
             return { ...state, executeLoading: false, executeError: action.payload };
-        case SET_CURRENT_PRICE:
+        case ORDERS_SET_CURRENT_PRICE:
           return { ...state, currentPrice: action.payload };
 
         default:

@@ -1,10 +1,10 @@
-export const USER_OPEN_ORDERS_FETCH = 'openOrders/USER_OPEN_ORDERS_FETCH';
-export const USER_OPEN_ORDERS_DATA = 'openOrders/USER_OPEN_ORDERS_DATA';
-export const USER_OPEN_ORDERS_ERROR = 'openOrders/USER_OPEN_ORDERS_ERROR';
-export const USER_OPEN_ORDERS_APPEND = 'openOrders/USER_OPEN_ORDERS_APPEND';
-export const USER_OPEN_ORDERS_UPDATE = 'openOrders/USER_OPEN_ORDERS_UPDATE';
-export const USER_OPEN_ORDERS_RESET = 'openOrders/USER_OPEN_ORDERS_RESET';
+export const OPEN_ORDERS_FETCH = 'openOrders/FETCH';
+export const OPEN_ORDERS_DATA = 'openOrders/DATA';
+export const OPEN_ORDERS_ERROR = 'openOrders/ERROR';
+export const OPEN_ORDERS_APPEND = 'openOrders/APPEND';
+export const OPEN_ORDERS_UPDATE = 'openOrders/UPDATE';
+export const OPEN_ORDERS_RESET = 'openOrders/RESET';
 
-export const OPEN_ORDERS_CANCEL_FETCH = 'openOrders/OPEN_ORDERS_CANCEL_FETCH';
-export const OPEN_ORDERS_CANCEL_DATA = 'openOrders/OPEN_ORDERS_CANCEL_DATA';
-export const OPEN_ORDERS_CANCEL_ERROR = 'openOrders/OPEN_ORDERS_CANCEL_ERROR';
+export const OPEN_ORDERS_CANCEL_FETCH = 'openOrders/CANCEL_FETCH';
+export const OPEN_ORDERS_CANCEL_DATA = 'openOrders/CANCEL_DATA';
+export const OPEN_ORDERS_CANCEL_ERROR = 'openOrders/CANCEL_ERROR';

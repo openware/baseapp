@@ -4,6 +4,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
 import { getUserActivity } from './actions';
+import { USER_ACTIVITY_DATA, USER_ACTIVITY_ERROR, USER_ACTIVITY_FETCH } from './constants';
 
 const debug = false;
 
@@ -38,16 +39,16 @@ describe('User activity', () => {
             },
         ];
         const expectedUserActivityFetch = {
-            type: 'user-activity/USER_ACTIVITY_FETCH',
+            type: USER_ACTIVITY_FETCH,
         };
 
         const expectedUserActivityData = {
-            type: 'user-activity/USER_ACTIVITY_DATA',
+            type: USER_ACTIVITY_DATA,
             payload: payload,
         };
 
         const expectedUserActivityError = {
-            type: 'user-activity/USER_ACTIVITY_ERROR',
+            type: USER_ACTIVITY_ERROR,
             payload: {
                 code: 500,
                 message: ['Server error'],

@@ -1,12 +1,12 @@
 import { OrderAPI } from '../../types';
 import { convertOrderAPI } from '../openOrders/helpers';
 import * as actions from './actions';
-import { TEST_ORDERS_HISTORY_STATE } from './constants';
+import { ORDERS_TEST_HISTORY_STATE } from './constants';
 import { initialOrdersHistoryState, ordersHistoryReducer } from './reducer';
 
 describe('Orders History reducer', () => {
     it('should return initial state', () => {
-        expect(ordersHistoryReducer(undefined, { type: TEST_ORDERS_HISTORY_STATE })).toEqual(initialOrdersHistoryState);
+        expect(ordersHistoryReducer(undefined, { type: ORDERS_TEST_HISTORY_STATE })).toEqual(initialOrdersHistoryState);
     });
 
     it('should handle USER_ORDERS_HISTORY_FETCH', () => {

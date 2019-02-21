@@ -1,32 +1,32 @@
 import { CommonError } from '../../types';
 
 import {
-    CHANGE_FORGOT_PASSWORD_FETCH,
-    CHANGE_FORGOT_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_ERROR,
-    FORGOT_PASSWORD_FETCH,
-    FORGOT_PASSWORD_SUCCESS,
-    TEST_FORGOT_PASSWORD,
+    PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH,
+    PASSWORD_CHANGE_FORGOT_PASSWORD_SUCCESS,
+    PASSWORD_FORGOT_ERROR,
+    PASSWORD_FORGOT_FETCH,
+    PASSWORD_FORGOT_SUCCESS,
+    PASSWORD_TEST_FORGOT_PASSWORD,
 } from './constants';
 
 export interface ForgotPasswordFetch {
-    type: typeof FORGOT_PASSWORD_FETCH;
+    type: typeof PASSWORD_FORGOT_FETCH;
     payload: {
         email: string;
     };
 }
 
 export interface ForgotPasswordError {
-    type: typeof FORGOT_PASSWORD_ERROR;
+    type: typeof PASSWORD_FORGOT_ERROR;
     payload: CommonError;
 }
 
 export interface ForgotPasswordSuccess {
-    type: typeof FORGOT_PASSWORD_SUCCESS;
+    type: typeof PASSWORD_FORGOT_SUCCESS;
 }
 
 export interface ChangeForgotPasswordFetch {
-    type: typeof CHANGE_FORGOT_PASSWORD_FETCH;
+    type: typeof PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH;
     payload: {
         reset_password_token: string;
         password: string,
@@ -35,11 +35,11 @@ export interface ChangeForgotPasswordFetch {
 }
 
 export interface ChangeForgotPasswordSuccess {
-    type: typeof CHANGE_FORGOT_PASSWORD_SUCCESS;
+    type: typeof PASSWORD_CHANGE_FORGOT_PASSWORD_SUCCESS;
 }
 
 export interface TestForgotPassword {
-    type: typeof TEST_FORGOT_PASSWORD;
+    type: typeof PASSWORD_TEST_FORGOT_PASSWORD;
 }
 
 export type PasswordAction = ForgotPasswordFetch
@@ -50,24 +50,24 @@ export type PasswordAction = ForgotPasswordFetch
     | TestForgotPassword;
 
 export const forgotPassword = (payload: ForgotPasswordFetch['payload']): ForgotPasswordFetch => ({
-   type: FORGOT_PASSWORD_FETCH,
+   type: PASSWORD_FORGOT_FETCH,
    payload,
 });
 
 export const forgotPasswordError = (payload: ForgotPasswordError['payload']): ForgotPasswordError => ({
-    type: FORGOT_PASSWORD_ERROR,
+    type: PASSWORD_FORGOT_ERROR,
     payload,
 });
 
 export const forgotPasswordSuccess = (): ForgotPasswordSuccess => ({
-    type: FORGOT_PASSWORD_SUCCESS,
+    type: PASSWORD_FORGOT_SUCCESS,
 });
 
 export const changeForgotPasswordFetch = (payload: ChangeForgotPasswordFetch['payload']): ChangeForgotPasswordFetch => ({
-    type: CHANGE_FORGOT_PASSWORD_FETCH,
+    type: PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH,
     payload,
 });
 
 export const changeForgotPasswordSuccess = (): ChangeForgotPasswordSuccess => ({
-    type: CHANGE_FORGOT_PASSWORD_SUCCESS,
+    type: PASSWORD_CHANGE_FORGOT_PASSWORD_SUCCESS,
 });

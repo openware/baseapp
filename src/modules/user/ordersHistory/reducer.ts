@@ -7,9 +7,9 @@ import {
     ORDERS_HISTORY_CANCEL_DATA,
     ORDERS_HISTORY_CANCEL_ERROR,
     ORDERS_HISTORY_CANCEL_FETCH,
-    USER_ORDERS_HISTORY_DATA,
-    USER_ORDERS_HISTORY_ERROR,
-    USER_ORDERS_HISTORY_FETCH,
+    ORDERS_HISTORY_DATA,
+    ORDERS_HISTORY_ERROR,
+    ORDERS_HISTORY_FETCH,
 } from './constants';
 
 export interface OrdersHistoryState {
@@ -40,9 +40,9 @@ export const ordersHistoryReducer = (
     action: OrdersHistoryAction,
 ): OrdersHistoryState => {
     switch (action.type) {
-        case USER_ORDERS_HISTORY_FETCH:
+        case ORDERS_HISTORY_FETCH:
             return { ...state, fetching: true };
-        case USER_ORDERS_HISTORY_DATA:
+        case ORDERS_HISTORY_DATA:
             return {
                 ...state,
                 list: action.payload.list,
@@ -50,7 +50,7 @@ export const ordersHistoryReducer = (
                 pageIndex: action.payload.pageIndex,
                 total: action.payload.total,
             };
-        case USER_ORDERS_HISTORY_ERROR:
+        case ORDERS_HISTORY_ERROR:
             return { ...state, list: [], total: 0, pageIndex: 0, fetching: false };
         case ORDERS_CANCEL_ALL_FETCH:
             return { ...state, cancelAllFetching: true, cancelAllError: false };

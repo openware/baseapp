@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import { TEST_FORGOT_PASSWORD } from './constants';
+import { PASSWORD_TEST_FORGOT_PASSWORD } from './constants';
 import { passwordReducer } from './reducer';
 
 describe('Forgot password reducer', () => {
@@ -19,7 +19,7 @@ describe('Forgot password reducer', () => {
     };
 
     it('should return initial state', () => {
-        expect(passwordReducer(undefined, { type: TEST_FORGOT_PASSWORD })).toEqual(initialState);
+        expect(passwordReducer(undefined, { type: PASSWORD_TEST_FORGOT_PASSWORD })).toEqual(initialState);
     });
 
     it('should handle forgot password fetch', () => {

@@ -1,3 +1,3 @@
-export const SEND_EMAIL_VERIFICATION_DATA = 'send_email_verification/DATA';
-export const SEND_EMAIL_VERIFICATION_ERROR = 'send_email_verification/ERROR';
-export const SEND_EMAIL_VERIFICATION_FETCH = 'send_email_verification/FETCH';
+export const EMAIL_VERIFICATION_DATA = 'emailVerification/DATA';
+export const EMAIL_VERIFICATION_ERROR = 'emailVerification/ERROR';
+export const EMAIL_VERIFICATION_FETCH = 'emailVerification/FETCH';

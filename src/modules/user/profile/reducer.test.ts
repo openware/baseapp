@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import { TEST_PROFILE_STATE } from './constants';
+import { PROFILE_TEST_STATE } from './constants';
 import { initialStateProfile, profileReducer } from './reducer';
 
 describe('Profile reducer', () => {
@@ -19,7 +19,7 @@ describe('Profile reducer', () => {
     };
 
     it('should return initial state', () => {
-        expect(profileReducer(undefined, { type: TEST_PROFILE_STATE })).toEqual(initialStateProfile);
+        expect(profileReducer(undefined, { type: PROFILE_TEST_STATE })).toEqual(initialStateProfile);
     });
 
     it('should handle GET_USER_FETCH', () => {
