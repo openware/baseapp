@@ -305,6 +305,7 @@ export const ru: LangType = {
     'success.phone.verification.send': 'Код верификации был отправлен на ваш телефон',
     'success.phone.confirmed': 'Ваш телефон подтвержден',
     'success.message.sent': 'Письмо было успешно отправлено',
+    'success.email.confirmed': 'Емейл был успешно подтвержден',
 
     // error messages
     // barong

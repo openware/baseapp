@@ -303,6 +303,7 @@ export const zh: LangType = {
     'success.phone.verification.send': 'Verification code was sent to your phone number',
     'success.phone.confirmed': 'Your phone was confirmed',
     'success.message.sent': 'Message was sent successfully',
+    'success.email.confirmed': 'Your email address has been successfully confirmed',
 
     // error messages
     // barong

@@ -296,6 +296,7 @@ export const en = {
     'success.phone.verification.send': 'Verification code was sent to your phone',
     'success.phone.confirmed': 'Your phone was confirmed',
     'success.message.sent': 'Message was sent',
+    'success.email.confirmed': 'Your email address has been successfully confirmed',
 
     // error messages
     // barong
