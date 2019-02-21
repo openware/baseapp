@@ -72,14 +72,14 @@ class MarketDepthContainer extends React.Component<Props> {
         if (!this.props.currentMarket) {
             return;
         }
-        const { name } = this.props.currentMarket;
-        const [first, second] = name.split('/');
+
+        const [askCurrency, bidCurrency] = [this.props.currentMarket.ask_unit.toUpperCase(), this.props.currentMarket.bid_unit.toUpperCase()];
         const tipLayout = ({ volume, price, cumulativeVolume, cumulativePrice }) => (
             <span className={'pg-market-depth__tooltip'}>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.price" /> : {price} {second}</span>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.volume" /> : {volume} {first}</span>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeVolume" /> : {preciseData(cumulativeVolume, 2)} {second}</span>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeValue" /> : {preciseData(cumulativePrice, 2)} {first}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.price" /> : {price} {bidCurrency}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.volume" /> : {volume} {askCurrency}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeVolume" /> : {preciseData(cumulativeVolume, 2)} {askCurrency}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeValue" /> : {preciseData(cumulativePrice, 2)} {bidCurrency}</span>
             </span>
         );
 
