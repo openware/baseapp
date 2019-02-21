@@ -1,6 +1,6 @@
-import { Channel, eventChannel } from 'redux-saga';
+import { Channel, delay, eventChannel } from 'redux-saga';
 // tslint:disable-next-line no-submodule-imports
-import { all, call, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
+import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 import { rangerUrl } from '../../../../api';
 import { userOpenOrdersUpdate } from '../../../user/openOrders';
 import { klinePush } from '../../kline';
@@ -179,12 +179,8 @@ function* watchDisconnect(socket: WebSocket, channel: Channel<{}>) {
 }
 
 function* bindSocket(channel: Channel<{}>, socket: WebSocket, buffer: RangerBuffer) {
-    yield all([call(reader, channel), call(writter, socket, buffer), call(watchDisconnect, socket, channel)]);
+    return yield all([call(reader, channel), call(writter, socket, buffer), call(watchDisconnect, socket, channel)]);
 }
-
-const delay = async (ms: number) => {
-    return new Promise(resolve => setTimeout(() => resolve(true), ms));
-};
 
 function* dispatchCurrentMarketOrderUpdates(action: UserOrderUpdate) {
     let market;
@@ -212,7 +208,7 @@ export function* rangerSagas() {
     let initialized = false;
     let connectFetchPayload: RangerConnectFetch['payload'] | undefined;
     const buffer: RangerBuffer = { messages: new Array() };
-
+    let pipes;
     yield takeEvery(SET_CURRENT_MARKET, switchMarket());
     yield takeEvery(RANGER_USER_ORDER_UPDATE, dispatchCurrentMarketOrderUpdates);
 
@@ -245,7 +241,10 @@ export function* rangerSagas() {
             const prevSubs = yield getSubscriptions();
             const [channel, socket] = yield call(initRanger, connectFetchPayload, market, prevSubs, buffer);
             initialized = true;
-            yield fork(bindSocket, channel, socket, buffer);
+            if (pipes) {
+                yield cancel(pipes);
+            }
+            pipes = yield fork(bindSocket, channel, socket, buffer);
         }
     }
 }
