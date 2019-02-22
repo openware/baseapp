@@ -492,10 +492,16 @@
     }
 
     &__button-2fa {
-        color: var(--base) !important;
-        font-size: calc(var(--gap) * 2);
-        padding: calc(var(--gap) * 2) !important;
-        width: auto !important;
+        &.cr-button {
+            background: var(--button-primary);
+            color: var(--color-white) ;
+            font-size: calc(var(--gap) * 2);
+            padding: calc(var(--gap) * 2);
+            width: auto;
+            &:hover {
+                background: var(--button-hover);
+            }
+        }
     }
 }
 
