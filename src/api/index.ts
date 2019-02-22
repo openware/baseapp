@@ -13,6 +13,7 @@ export type RequestMethod = (config: RequestOptions) =>
 export interface ApiWrapper {
     get: RequestMethod;
     post: RequestMethod;
+    patch: RequestMethod;
     put: RequestMethod;
     delete: RequestMethod;
 }
@@ -27,6 +28,13 @@ export const API: ApiWrapper = {
     post: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
         makeRequest({
             method: 'post',
+            body,
+            url,
+        }, config),
+
+    patch: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
+        makeRequest({
+            method: 'patch',
             body,
             url,
         }, config),

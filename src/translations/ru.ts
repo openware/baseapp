@@ -234,7 +234,8 @@ export const ru: LangType = {
 
     'success.api_keys.fetched': 'Successfully fetched API keys',
     'success.api_keys.created': 'API key was created',
-    'success.api_keys.copied': 'API key was copied',
+    'success.api_keys.copied.access': 'Access key was copied',
+    'success.api_keys.copied.secret': 'Secret key was copied',
     'success.api_keys.updated': 'API key was updated',
     'success.api_keys.deleted': 'API key was deleted',
 

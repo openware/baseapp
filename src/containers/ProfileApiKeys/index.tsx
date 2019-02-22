@@ -15,7 +15,7 @@ import {
     ApiKeys2FAModal,
     apiKeys2FAModal,
     apiKeysFetch, ApiKeyStateModal,
-    ApiKeyUpdateFetch, apiKeyUpdateFetch, fetchSuccess,
+    ApiKeyUpdateFetch, apiKeyUpdateFetch, pushAlertSuccess,
     RootState,
     selectUserInfo,
     User,
@@ -39,7 +39,7 @@ interface DispatchProps {
     createApiKey: typeof apiKeyCreateFetch;
     updateApiKey: typeof apiKeyUpdateFetch;
     deleteApiKey: typeof apiKeyDeleteFetch;
-    fetchSuccess: typeof fetchSuccess;
+    fetchSuccess: typeof pushAlertSuccess;
 }
 
 interface ProfileApiKeysState {
@@ -75,12 +75,12 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
     public render() {
         const {user, dataLoaded, apiKeys} = this.props;
         const modal = this.props.modal.active ? (
-           <div className="cr-modal">
-              <div className="cr-email-form">
-                  {this.renderModalHeader()}
-                  {this.renderModalBody()}
-              </div>
-           </div>
+            <div className="cr-modal">
+                <div className="cr-email-form">
+                    {this.renderModalHeader()}
+                    {this.renderModalBody()}
+                </div>
+            </div>
         ) : null;
 
         return (
@@ -187,14 +187,17 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         const headerText = this.props.modal.action === 'createSuccess' ? this.t('page.body.profile.apiKeys.modal.created_header')
             : this.t('page.body.profile.apiKeys.modal.header');
         return (
-              <div className="cr-email-form__options-group">
-                  <div className="cr-email-form__option">
-                      <div className="cr-email-form__option-inner">
-                          {headerText}
-                          <span className="pg-profile-page__close pg-profile-page__pull-right" onClick={this.handleHide2FAModal}/>
-                      </div>
-                  </div>
-              </div>
+            <div className="cr-email-form__options-group">
+                <div className="cr-email-form__option">
+                    <div className="cr-email-form__option-inner">
+                        {headerText}
+                        <span
+                            className="pg-profile-page__close pg-profile-page__pull-right"
+                            onClick={this.handleHide2FAModal}
+                        />
+                    </div>
+                </div>
+            </div>
         );
     };
 
@@ -281,10 +284,10 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             {this.t('page.body.profile.apiKeys.modal.note_content')}
                         </p>
                         <div className="button-confirmation">
-                          {button}
+                            {button}
                         </div>
                     </div>
-                    );
+                );
                 break;
             case 'updateKey':
                 button =
@@ -319,39 +322,39 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                 break;
         }
         body = !body ? (
-                <div className="cr-email-form__form-content">
-                    <div className="cr-email-form__header">
-                      {this.t('page.body.profile.apiKeys.modal.title')}
-                    </div>
-                    <div className={emailGroupClass}>
-                        <CustomInput
-                            type="number"
-                            label={this.t('page.body.profile.apiKeys.modal.label')}
-                            placeholder={this.t('page.body.profile.apiKeys.modal.placeholder')}
-                            defaultLabel="2FA code"
-                            handleChangeInput={this.handleOtpCodeChange}
-                            inputValue={otpCode || ''}
-                            handleFocusInput={this.handleChangeFocusField}
-                            classNameLabel="cr-email-form__label"
-                            classNameInput="cr-email-form__input"
-                        />
-                    </div>
-                    <div className="cr-email-form__button-wrapper">
-                      {button}
-                    </div>
+            <div className="cr-email-form__form-content">
+                <div className="cr-email-form__header">
+                    {this.t('page.body.profile.apiKeys.modal.title')}
                 </div>
+                <div className={emailGroupClass}>
+                    <CustomInput
+                        type="number"
+                        label={this.t('page.body.profile.apiKeys.modal.label')}
+                        placeholder={this.t('page.body.profile.apiKeys.modal.placeholder')}
+                        defaultLabel="2FA code"
+                        handleChangeInput={this.handleOtpCodeChange}
+                        inputValue={otpCode || ''}
+                        handleFocusInput={this.handleChangeFocusField}
+                        classNameLabel="cr-email-form__label"
+                        classNameInput="cr-email-form__input"
+                    />
+                </div>
+                <div className="cr-email-form__button-wrapper">
+                    {button}
+                </div>
+            </div>
         ) : body;
         return (
             <React.Fragment>
-              {body}
+                {body}
             </React.Fragment>
         );
     };
 
     private handleChangeFocusField = () => {
-      this.setState(prev => ({
-        codeFocused: !prev.codeFocused,
-      }));
+        this.setState(prev => ({
+            codeFocused: !prev.codeFocused,
+        }));
     }
 
     private handleHide2FAModal = () => {
@@ -436,7 +439,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         createApiKey: payload => dispatch(apiKeyCreateFetch(payload)),
         updateApiKey: payload => dispatch(apiKeyUpdateFetch(payload)),
         deleteApiKey: payload => dispatch(apiKeyDeleteFetch(payload)),
-        fetchSuccess: payload => dispatch(fetchSuccess(payload)),
+        fetchSuccess: payload => dispatch(pushAlertSuccess(payload)),
 
     });
 
