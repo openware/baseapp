@@ -51,8 +51,6 @@ class MarketsContainer extends React.Component<Props> {
     public componentDidMount() {
         if (this.props.markets.length === 0) {
             this.props.tickers();
-        } else {
-            this.props.setCurrentMarket(this.props.markets[0]);
         }
         this.props.walletsFetch();
     }
@@ -69,17 +67,22 @@ class MarketsContainer extends React.Component<Props> {
         );
     }
 
-    private markets = () => (
-        <Markets
-            filters={false}
-            data={this.mapMarkets()}
-            rowKeyIndex={0}
-            onSelect={this.handleOnSelect}
-            headers={this.headers}
-            title={this.props.intl.formatMessage({id: 'page.body.trade.header.markets'})}
-            filterPlaceholder={this.props.intl.formatMessage({ id: 'page.body.trade.header.markets.content.search'})}
-        />
-    );
+    private markets = () => {
+        const { currentMarket } = this.props;
+        const key = currentMarket && currentMarket.name;
+        return (
+            <Markets
+                filters={false}
+                data={this.mapMarkets()}
+                rowKeyIndex={0}
+                onSelect={this.handleOnSelect}
+                selectedKey={key}
+                headers={this.headers}
+                title={this.props.intl.formatMessage({id: 'page.body.trade.header.markets'})}
+                filterPlaceholder={this.props.intl.formatMessage({ id: 'page.body.trade.header.markets.content.search'})}
+            />
+        );
+    };
 
     private mapMarkets() {
         const { markets, marketTickers } = this.props;
