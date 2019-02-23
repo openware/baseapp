@@ -15,6 +15,14 @@ exports[`EmailForm component should render 1`] = `
           className="cr-email-form__option-inner"
         >
           Forgot password
+          <div
+            className="cr-email-form__cros-icon"
+            onClick={[Function]}
+          >
+            <img
+              src="test-file-stub"
+            />
+          </div>
         </div>
       </div>
     </div>

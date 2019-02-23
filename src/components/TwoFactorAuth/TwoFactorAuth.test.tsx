@@ -14,6 +14,7 @@ const defaults: TwoFactorAuthProps = {
     codeFocused: false,
     handleOtpCodeChange: jest.fn(),
     handleChangeFocusField: jest.fn(),
+    handleClose2fa: jest.fn(),
 };
 
 const setup = (props: Partial<TwoFactorAuthProps> = {}) =>

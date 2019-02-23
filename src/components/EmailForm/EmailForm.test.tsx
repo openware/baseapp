@@ -12,6 +12,7 @@ const defaults: EmailFormProps = {
     validateForm: jest.fn(),
     handleInputEmail: jest.fn(),
     handleFieldFocus: jest.fn(),
+    handleReturnBack: jest.fn(),
 };
 
 const setup = (props: Partial<EmailFormProps> = {}) =>

@@ -15,6 +15,7 @@ import {
     selectUserLoggedIn,
     signIn,
     signInError,
+    signInRequire2FA,
 } from '../../modules';
 
 interface ReduxProps {
@@ -27,6 +28,7 @@ interface ReduxProps {
 interface DispatchProps {
     signIn: typeof signIn;
     signInError: typeof signInError;
+    signInRequire2FA: typeof signInRequire2FA;
 }
 
 interface SignInState {
@@ -134,6 +136,7 @@ class SignInBox extends React.Component<Props, SignInState> {
                 error={error2fa}
                 handleOtpCodeChange={this.handleChangeOtpCode}
                 handleChangeFocusField={this.handle2faFocus}
+                handleClose2fa={this.handleClose}
             />
         );
     };
@@ -237,6 +240,10 @@ class SignInBox extends React.Component<Props, SignInState> {
             password: value,
         });
     };
+
+    private handleClose = () => {
+        this.props.signInRequire2FA({ require2fa: false });
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
@@ -250,6 +257,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     signIn: data => dispatch(signIn(data)),
     signInError: error => dispatch(signInError(error)),
+    signInRequire2FA: payload => dispatch(signInRequire2FA(payload)),
 });
 
 // tslint:disable no-any

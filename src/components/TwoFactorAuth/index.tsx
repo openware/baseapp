@@ -1,4 +1,3 @@
-// tslint:disable:jsx-no-lambda
 import { Button } from '@openware/components';
 import cr from 'classnames';
 import {
@@ -20,6 +19,7 @@ export interface TwoFactorAuthProps {
     codeFocused: boolean;
     handleOtpCodeChange: (otp: string) => void;
     handleChangeFocusField: () => void;
+    handleClose2fa: () => void;
 }
 
 class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
@@ -51,6 +51,9 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                             <div className="cr-email-form__option">
                                 <div className="cr-email-form__option-inner">
                                     {title || '2FA verification'}
+                                    <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
+                                        <img src={require('../EmailForm/close.svg')}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -81,11 +84,14 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                                 />
                             </div>
                         </div>
-
                     </div>
                 </form>
             </div>
         );
+    }
+
+    private handleCancel = () => {
+        this.props.handleClose2fa();
     }
 
     private handleSubmit = () => {

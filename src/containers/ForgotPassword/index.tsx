@@ -71,6 +71,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
                             validateForm={this.validateForm}
                             handleInputEmail={this.handleInputEmail}
                             handleFieldFocus={this.handleFocusEmail}
+                            handleReturnBack={this.handleComeBack}
                         />
                     </div>
                 </div>
@@ -106,7 +107,11 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
             });
             return;
         }
-    }
+    };
+
+    private handleComeBack = () => {
+        this.props.history.goBack();
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

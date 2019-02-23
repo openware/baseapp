@@ -27,6 +27,7 @@ interface EmailFormProps {
     validateForm: () => void;
     handleInputEmail: (value: string) => void;
     handleFieldFocus: () => void;
+    handleReturnBack: () => void;
 }
 
 class EmailForm extends React.Component<EmailFormProps> {
@@ -51,6 +52,9 @@ class EmailForm extends React.Component<EmailFormProps> {
                         <div className="cr-email-form__option">
                             <div className="cr-email-form__option-inner">
                                 {title ? title : 'Forgot password'}
+                                <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
+                                    <img src={require('./close.svg')}/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,6 +89,10 @@ class EmailForm extends React.Component<EmailFormProps> {
                 </div>
             </form>
         );
+    }
+
+    private handleCancel = () => {
+        this.props.handleReturnBack();
     }
 
     private handleSubmitForm() {
