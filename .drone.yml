@@ -96,7 +96,8 @@ steps:
       - git_msg=$(git log -n1 --pretty=oneline)
       - patch_level=$( (echo $git_msg | grep -q MAJOR-BUMP && echo major) || (echo $git_msg | grep -q MINOR-BUMP && echo minor) || echo patch)
       - yarn version --"$patch_level" -y
-      - git push authenticated-origin HEAD:master --tags
+      - git push authenticated-origin HEAD:master
+      - git push authenticated-origin --tags
       - git describe --tags $(git rev-list --tags --max-count=1) > .tags
 
   - name: "Build"
