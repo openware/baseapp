@@ -1,5 +1,5 @@
 // tslint:disable-next-line
-import { call, put } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import {
     marketsData,
@@ -7,8 +7,9 @@ import {
     marketsTickersData,
     marketsTickersError,
     MarketsTickersFetch,
+    setCurrentMarketIfUnset,
 } from '../actions';
-import { SET_CURRENT_MARKET } from '../constants';
+import { MARKETS_FETCH, MARKETS_TICKERS_FETCH } from '../constants';
 
 const marketsRequestOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -18,11 +19,16 @@ const tickersOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
+export function* rootMarketsSaga() {
+    yield takeLatest(MARKETS_FETCH, marketsFetchSaga);
+    yield takeLatest(MARKETS_TICKERS_FETCH, tickersSaga);
+}
+
 export function* marketsFetchSaga() {
     try {
         const markets = yield call(API.get(marketsRequestOptions), '/public/markets');
         yield put(marketsData(markets));
-        yield put({ type: SET_CURRENT_MARKET, payload: markets[0] });
+        yield put(setCurrentMarketIfUnset(markets[0]));
     } catch (error) {
         yield put(marketsError(error));
     }
@@ -41,7 +47,6 @@ export function* tickersSaga(action: MarketsTickersFetch) {
             }, {});
             yield put(marketsTickersData(convertedTickers));
         }
-
     } catch (error) {
         yield put(marketsTickersError(error));
     }

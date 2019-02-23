@@ -1,8 +1,8 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../..';
-import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
+import { rootSaga } from '../../..';
+import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import {
     marketsData,
     marketsError,
@@ -10,8 +10,9 @@ import {
     marketsTickersData,
     marketsTickersError,
     marketsTickersFetch,
-} from './actions';
-import { Market, Ticker } from './types';
+    setCurrentMarketIfUnset,
+} from '../actions';
+import { Market, Ticker } from '../types';
 
 // tslint:disable no-any no-magic-numbers
 describe('Saga: marketsFetchSaga', () => {
@@ -109,25 +110,23 @@ describe('Saga: marketsFetchSaga', () => {
         mockAxios.onGet('/public/markets/tickers').reply(200, marketsTickersListResponse);
     };
 
-    const expectedActionsMarketsFetch = [marketsFetch(), marketsData(fakeMarkets)];
-    const expectedActionsMarketsError = [marketsFetch(), marketsError(fakeError)];
-
     const marketsTickersList = {
         btceth: btcethTicker,
         btcusd: btcusdTicker,
     };
 
-    const expectedActionsTickersFetch = [marketsTickersFetch(), marketsTickersData(marketsTickersList)];
-    const expectedActionsTickersError = [marketsTickersFetch(), marketsTickersError(fakeError)];
-
     it('should fetch markets', async () => {
+        const expectedActions = [marketsFetch(), marketsData(fakeMarkets), setCurrentMarketIfUnset(fakeMarkets[0])];
         mockMarkets();
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === expectedActionsMarketsFetch.length) {
-                    expect(actions).toEqual(expectedActionsMarketsFetch);
-                    resolve();
+                if (actions.length === expectedActions.length) {
+                    expect(actions).toEqual(expectedActions);
+                    setTimeout(resolve, 0.01);
+                }
+                if (actions.length > expectedActions.length) {
+                    fail(`Unexpected action: ${JSON.stringify(actions.slice(-1)[0])}`);
                 }
             });
         });
@@ -136,13 +135,17 @@ describe('Saga: marketsFetchSaga', () => {
     });
 
     it('should trigger an error on market fetch', async () => {
+        const expectedActions = [marketsFetch(), marketsError(fakeError)];
         mockNetworkError(mockAxios);
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === expectedActionsMarketsError.length) {
-                    expect(actions).toEqual(expectedActionsMarketsError);
-                    resolve();
+                if (actions.length === expectedActions.length) {
+                    expect(actions).toEqual(expectedActions);
+                    setTimeout(resolve, 0.01);
+                }
+                if (actions.length > expectedActions.length) {
+                    fail(`Unexpected action: ${JSON.stringify(actions.slice(-1)[0])}`);
                 }
             });
         });
@@ -151,13 +154,17 @@ describe('Saga: marketsFetchSaga', () => {
     });
 
     it('should fetch tickers', async () => {
+        const expectedActions = [marketsTickersFetch(), marketsTickersData(marketsTickersList)];
         mockTickers();
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === expectedActionsTickersFetch.length) {
-                    expect(actions).toEqual(expectedActionsTickersFetch);
-                    resolve();
+                if (actions.length === expectedActions.length) {
+                    expect(actions).toEqual(expectedActions);
+                    setTimeout(resolve, 0.01);
+                }
+                if (actions.length > expectedActions.length) {
+                    fail(`Unexpected action: ${JSON.stringify(actions.slice(-1)[0])}`);
                 }
             });
         });
@@ -166,18 +173,21 @@ describe('Saga: marketsFetchSaga', () => {
     });
 
     it('should trigger an error on tickers fetch', async () => {
+        const expectedActions = [marketsTickersFetch(), marketsTickersError(fakeError)];
         mockNetworkError(mockAxios);
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === expectedActionsTickersError.length) {
-                    expect(actions).toEqual(expectedActionsTickersError);
-                    resolve();
+                if (actions.length === expectedActions.length) {
+                    expect(actions).toEqual(expectedActions);
+                    setTimeout(resolve, 0.01);
+                }
+                if (actions.length > expectedActions.length) {
+                    fail(`Unexpected action: ${JSON.stringify(actions.slice(-1)[0])}`);
                 }
             });
         });
         store.dispatch(marketsTickersFetch());
         return promise;
     });
-
 });

@@ -4,10 +4,11 @@ import {
     MARKETS_DATA,
     MARKETS_ERROR,
     MARKETS_FETCH,
+    MARKETS_SET_CURRENT_MARKET,
+    MARKETS_SET_CURRENT_MARKET_IFUNSET,
     MARKETS_TICKERS_DATA,
     MARKETS_TICKERS_ERROR,
     MARKETS_TICKERS_FETCH,
-    SET_CURRENT_MARKET,
 } from './constants';
 import { Market, Ticker } from './types';
 
@@ -52,7 +53,16 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
                 error: action.payload,
             };
 
-        case SET_CURRENT_MARKET:
+        case MARKETS_SET_CURRENT_MARKET:
+            return {
+                ...state,
+                currentMarket: action.payload,
+            };
+
+        case MARKETS_SET_CURRENT_MARKET_IFUNSET:
+            if (state.currentMarket) {
+                return state;
+            }
             return {
                 ...state,
                 currentMarket: action.payload,

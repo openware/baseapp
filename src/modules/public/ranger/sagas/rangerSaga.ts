@@ -5,7 +5,7 @@ import { rangerUrl } from '../../../../api';
 import { userOpenOrdersUpdate } from '../../../user/openOrders';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
-import { SET_CURRENT_MARKET } from '../../markets/constants';
+import { MARKETS_SET_CURRENT_MARKET } from '../../markets/constants';
 import { depthData } from '../../orderBook';
 import { recentTradesPush } from '../../recentTrades';
 import {
@@ -209,7 +209,7 @@ export function* rangerSagas() {
     let connectFetchPayload: RangerConnectFetch['payload'] | undefined;
     const buffer: RangerBuffer = { messages: new Array() };
     let pipes;
-    yield takeEvery(SET_CURRENT_MARKET, switchMarket());
+    yield takeEvery(MARKETS_SET_CURRENT_MARKET, switchMarket());
     yield takeEvery(RANGER_USER_ORDER_UPDATE, dispatchCurrentMarketOrderUpdates);
 
     while (true) {

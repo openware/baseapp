@@ -110,6 +110,24 @@ describe('Markets reducer', () => {
         expect(marketsReducer(initialMarketsState, actions.setCurrentMarket(fakeMarkets[0]))).toEqual(expectedState);
     });
 
+    describe('setCurrentMarketIfUnset', () => {
+        it('set current market when not defined', () => {
+            const expectedState: MarketsState = {
+                ...initialMarketsState,
+                currentMarket: fakeMarkets[0],
+            };
+            expect(marketsReducer(initialMarketsState, actions.setCurrentMarketIfUnset(fakeMarkets[0]))).toEqual(expectedState);
+        });
+
+        it('does not set current market when already defined', () => {
+            const state: MarketsState = {
+                ...initialMarketsState,
+                currentMarket: fakeMarkets[0],
+            };
+            expect(marketsReducer(state, actions.setCurrentMarketIfUnset(fakeMarkets[1]))).toEqual(state);
+        });
+    });
+
     it('should handle MARKETS_TICKERS_FETCH', () => {
         const expectedState: MarketsState = {
             ...initialMarketsState,
