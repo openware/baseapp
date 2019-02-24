@@ -1,6 +1,10 @@
 import { Loader } from '@openware/components';
 import { History } from 'history';
 import * as React from 'react';
+import {
+    InjectedIntlProps,
+    injectIntl,
+} from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
@@ -26,7 +30,7 @@ interface ReduxProps {
     emailVerificationLoading: boolean;
 }
 
-type Props = DispatchProps & ReduxProps & OwnProps;
+type Props = DispatchProps & ReduxProps & OwnProps & InjectedIntlProps;
 
 class EmailVerificationComponent extends React.Component<Props> {
     public componentDidMount() {
@@ -38,9 +42,9 @@ class EmailVerificationComponent extends React.Component<Props> {
     public render() {
         const { emailVerificationLoading } = this.props;
 
-        const title = 'verify your email address';
-        const text = 'To complete the registration look for an email in your inbox that provides futher instructions. If you cannot find the email, please check your spam email';
-        const button = 'Resend confirmation letter';
+        const title = this.props.intl.formatMessage({ id: 'page.header.signUp.modal.header' });
+        const text = this.props.intl.formatMessage({ id: 'page.header.signUp.modal.body' });
+        const button = this.props.intl.formatMessage({ id: 'page.resendConfirmation' });
         return (
             <div className="pg-emailverification-container">
                 <div className="pg-emailverification">
@@ -70,4 +74,4 @@ const mapDispatchProps = {
 };
 
 //tslint:disable-next-line:no-any
-export const EmailVerification = withRouter(connect(mapStateToProps, mapDispatchProps)(EmailVerificationComponent) as any);
+export const EmailVerification = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(EmailVerificationComponent) as any));
