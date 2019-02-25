@@ -71,11 +71,11 @@ class RecentTradesComponent extends React.Component<Props> {
         const amountFixed = this.props.currentMarket ? this.props.currentMarket.ask_precision : 0;
 
         const renderRow = item => {
-            const { id, created_at, maker_type, price, volume } = item;
+            const { id, created_at, taker_type, price, volume } = item;
             return [
-                <span style={{ color: setTradeColor(maker_type).color }} key={id}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
-                <span style={{ color: setTradeColor(maker_type).color }} key={id}><Decimal fixed={amountFixed}>{volume}</Decimal></span>,
-                <span style={{ color: setTradeColor(maker_type).color }} key={id}>{localeDateSec(created_at).slice(5)}</span>,
+                <span style={{ color: setTradeColor(taker_type).color }} key={id}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
+                <span style={{ color: setTradeColor(taker_type).color }} key={id}><Decimal fixed={amountFixed}>{volume}</Decimal></span>,
+                <span style={{ color: setTradeColor(taker_type).color }} key={id}>{localeDateSec(created_at).slice(5)}</span>,
             ];
         };
         return (trades.length > 0)

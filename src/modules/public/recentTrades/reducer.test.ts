@@ -30,7 +30,7 @@ describe('recentTrade reducer', () => {
             funds: '0.00059',
             market: 'bchbtc',
             created_at: '2019-01-14T03:13:08-08:00',
-            maker_type: 'sell',
+            taker_type: 'sell',
         },
         {
             id: 162414,
@@ -39,7 +39,7 @@ describe('recentTrade reducer', () => {
             funds: '0.0001',
             market: 'bchbtc',
             created_at: '2019-01-14T03:13:08-08:00',
-            maker_type: 'buy',
+            taker_type: 'buy',
         },
     ];
     const fakeTradeEvents: PublicTradeEvent[] = [
@@ -66,7 +66,7 @@ describe('recentTrade reducer', () => {
         funds: '0.00059',
         market: 'bchbtc',
         created_at: '2019-01-14T12:13:08-08:00',
-        maker_type: 'sell',
+        taker_type: 'sell',
     };
 
     let tz;

@@ -19,7 +19,7 @@ export function* historyPushSaga(action: HistoryPush) {
             funds: `${funds}`,
             market,
             created_at: localeDate(at, getTimezone(), ''),
-            maker_type: kindToMakerType(kind),
+            taker_type: kindToMakerType(kind),
         };
     };
 

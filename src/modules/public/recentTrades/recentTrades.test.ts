@@ -39,7 +39,7 @@ describe('Trades module', () => {
             funds: '0.00059',
             market: 'bchbtc',
             created_at: '2018-12-18T14:21:23+01:00',
-            maker_type: 'sell',
+            taker_type: 'sell',
         },
         {
             id: 162412,
@@ -48,7 +48,7 @@ describe('Trades module', () => {
             funds: '0.0001',
             market: 'bchbtc',
             created_at: '2018-12-18T14:21:23+01:00',
-            maker_type: 'buy',
+            taker_type: 'buy',
         },
         {
             id: 162411,
@@ -57,7 +57,7 @@ describe('Trades module', () => {
             funds: '0.0005',
             market: 'bchbtc',
             created_at: '2018-12-18T14:21:23+01:00',
-            maker_type: 'buy',
+            taker_type: 'buy',
         },
     ];
 
@@ -91,7 +91,7 @@ describe('Trades module', () => {
                 funds: '0.00059',
                 market: 'bchbtc',
                 created_at: '2018-12-18T14:21:23+01:00',
-                maker_type: 'sell',
+                taker_type: 'sell',
             },
             {
                 id: 162412,
@@ -100,7 +100,7 @@ describe('Trades module', () => {
                 funds: '0.0001',
                 market: 'bchbtc',
                 created_at: '2018-12-18T14:21:23+01:00',
-                maker_type: 'buy',
+                taker_type: 'buy',
             },
             {
                 id: 162411,
@@ -109,7 +109,7 @@ describe('Trades module', () => {
                 funds: '0.0005',
                 market: 'bchbtc',
                 created_at: '2018-12-18T14:21:23+01:00',
-                maker_type: 'buy',
+                taker_type: 'buy',
             },
         ],
     };

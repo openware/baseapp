@@ -7,7 +7,7 @@ export interface PublicTrade {
     funds: string;
     market: string;
     created_at: string;
-    maker_type: string;
+    taker_type: string;
 }
 
 export interface PrivateTrade extends PublicTrade {
