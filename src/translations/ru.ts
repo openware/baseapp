@@ -418,7 +418,7 @@ export const ru: LangType = {
     'account.withdraw.empty_rid': 'Rid отсутствует, rid пуст',
     'account.withdraw.non_decimal_amount': 'Значение суммы, которую вы отправили, не может быть проанализировано в десятичном виде',
     'account.withdraw.non_positive_amount': 'Значение суммы должно быть положительным',
-    'account.deposit.not_permitted': 'Пожалуйста, пройдите соответствующие шаги проверки для внесения средств',
+    'account.deposit.not_permitted': 'Deposits allows after phone verification',
     'account.withdraw.not_permitted': 'Пожалуйста, пройдите соответствующие шаги проверки для вывода средств',
     'account.withdraw.insufficient_balance': 'Недостаточно средств на счете',
     'account.withdraw.invalid_amount': 'Неверная сумма снятия',

@@ -416,7 +416,7 @@ export const zh: LangType = {
     'account.withdraw.empty_rid': 'Rid is missing, rid is empty',
     'account.withdraw.non_decimal_amount': 'Amount value you send could not be parsed into Decimal type',
     'account.withdraw.non_positive_amount': 'Amount value must be positive',
-    'account.deposit.not_permitted': 'Please, pass the corresponding verification steps to deposit funds',
+    'account.deposit.not_permitted': 'Deposits allows after phone verification',
     'account.withdraw.not_permitted': 'Please, pass the corresponding verification steps to withdraw funds',
     'account.withdraw.insufficient_balance': 'Account balance is insufficient',
     'account.withdraw.invalid_amount': 'Invalid withdraw amount',

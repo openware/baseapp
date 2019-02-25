@@ -1,4 +1,5 @@
 import { RootState } from '../../';
+import { CommonError } from '../../types';
 import { Wallet } from './types';
 
 export const selectWallets = (state: RootState): Wallet[] =>
@@ -9,3 +10,6 @@ export const selectWalletsLoading = (state: RootState): boolean =>
 
 export const selectWithdrawSuccess = (state: RootState): boolean =>
     state.user.wallets.wallets.withdrawSuccess;
+
+export const selectWalletsAddressError = (state: RootState): CommonError | undefined =>
+    state.user.wallets.wallets.error;

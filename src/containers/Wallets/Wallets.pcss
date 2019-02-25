@@ -336,6 +336,30 @@
         }
     }
 
+    .cr-copyable-text-field__disabled {
+        .cr-deposit-crypto {
+            &__copyable {
+                .cr-copyable-text-field__button {
+                    background: var(--button-disabled);
+                    color: var(--button-dark-gray);
+                    cursor: not-allowed;
+                }
+                .cr-copyable-text-field__input {
+                    input {
+                        &:focus,
+                        &:hover {
+                            outline: none;
+                            cursor: not-allowed;
+                        }
+                    }
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+
     .cr-tab-panel__navigation-container {
         background: var(--table-dark-header-color);
         border-bottom: 1px solid var(--header-border);

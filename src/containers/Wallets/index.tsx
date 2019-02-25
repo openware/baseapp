@@ -8,6 +8,7 @@ import {
     WalletItemProps,
     WalletList,
 } from '@openware/components';
+import classnames from 'classnames';
 import * as React from 'react';
 import {
     FormattedMessage,
@@ -18,8 +19,10 @@ import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { pushAlertSuccess, RootState, selectHistory, selectUserInfo, User, WalletHistoryList } from '../../modules';
+import { CommonError } from '../../modules/types';
 import {
     selectWallets,
+    selectWalletsAddressError,
     selectWalletsLoading,
     selectWithdrawSuccess,
     walletsAddressFetch,
@@ -41,6 +44,7 @@ interface ReduxProps {
     user: User;
     wallets: WalletItemProps[];
     withdrawSuccess: boolean;
+    addressDepositError?: CommonError;
     walletsLoading?: boolean;
     historyList: WalletHistoryList;
 }
@@ -156,7 +160,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             withdrawSubmitModal,
             withdrawConfirmModal,
         }: WalletsState = this.state;
-
         const formattedWallets = wallets.map((wallet: WalletItemProps) => ({
             ...wallet,
             currency: wallet.currency.toUpperCase(),
@@ -345,28 +348,36 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     };
 
     private renderDeposit(wallet: WalletItemProps) {
-        const { walletsError, wallets } = this.props;
+        const { addressDepositError, wallets } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' });
-        const error = walletsError ?
-            walletsError.message :
+        const error = addressDepositError ?
+            this.props.intl.formatMessage({id: addressDepositError.message}) :
             this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
+
         const walletAddress = wallet.currency === 'BCH' && wallet.address
             ? bch.Address(wallet.address).toString(bch.Address.CashAddrFormat)
             : wallet.address || '';
+
+        const className = classnames({
+            'cr-copyable-text-field__disabled': walletAddress === '',
+        });
+
         if (wallet.type === 'coin') {
             return (
                 <React.Fragment>
                     {this.renderSingle()}
+                    <div className={className}>
                     <DepositCrypto
                         data={walletAddress}
-                        handleOnCopy={this.handleOnCopy}
+                        handleOnCopy={walletAddress !== '' ? this.handleOnCopy : () => {return;}}
                         error={error}
                         text={text}
                         copiableTextFieldText={this.translate('page.body.wallets.tabs.deposit.ccy.message.address')}
                         copyButtonText={this.translate('page.body.wallets.tabs.deposit.ccy.message.button')}
                     />
+                    </div>
                     {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
                 </React.Fragment>
             );
@@ -444,6 +455,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
     wallets: selectWallets(state),
     walletsLoading: selectWalletsLoading(state),
+    addressDepositError: selectWalletsAddressError(state),
     withdrawSuccess: selectWithdrawSuccess(state),
     historyList: selectHistory(state),
 });
