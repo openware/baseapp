@@ -49,11 +49,7 @@ interface DispatchProps {
     orderExecute: typeof orderExecuteFetch;
 }
 
-interface OwnProps {
-    size: number;
-}
-
-type Props = ReduxProps & DispatchProps & InjectedIntlProps & OwnProps;
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class OrderInsert extends React.PureComponent<Props, StoreProps> {
     constructor(props: Props) {
@@ -62,8 +58,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.state = {
             orderSide: 'buy',
             price: '',
-            width: 451,
+            width: 0,
         };
+
         this.orderRef = React.createRef();
     }
 
@@ -74,12 +71,15 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
     private orderRef;
 
-    public componentWillReceiveProps(next: Props) {
-        if (this.props.size !== next.size) {
+    public componentDidUpdate() {
+        if (this.orderRef.current && this.state.width !== this.orderRef.current.clientWidth) {
             this.setState({
                 width: this.orderRef.current.clientWidth,
             });
         }
+    }
+
+    public componentWillReceiveProps(next: Props) {
         if (next.currentMarket && ((next.currentMarket !== this.props.currentMarket) || (next.wallets !== this.props.wallets))) {
             this.setState({
                 walletBase: this.getWallet(next.currentMarket.ask_unit),
