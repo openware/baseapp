@@ -85,7 +85,7 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.content.fee': 'Налог',
     'page.body.wallets.tabs.withdraw.content.total': 'Общая сумма вывода',
     'page.body.wallets.tabs.withdraw.content.button': 'ВЫВЕСТИ',
-    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Адресс',
+    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Адрес для вывода',
 
     'page.body.wallets.tabs.withdraw.modal.confirmation': 'Подтверждение',
     'page.body.wallets.tabs.withdraw.modal.message1': 'Вы выводите ',

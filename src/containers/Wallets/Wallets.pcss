@@ -201,35 +201,64 @@
                 }
             }
         }
-        &__input {
-            border: 1px solid var(--base-2);
-            border-radius: calc(var(--gap) * 0.66);
+
+        &__group__address,
+        &__group__amount,
+        &__group__code {
+          background: var(--transparent);
+          margin-bottom: calc(var(--gap) * 1.83);
+          position: relative;
+          width: 100%;
+          .cr-withdraw__label {
+            position: absolute;
+            top: 0px;
+            left: calc(var(--gap) * 1.66);
+            padding: calc(var(--gap) * 0.33) var(--gap);
+            border-radius: calc(var(--gap) * 0.33);
+            background: var(--main-bg);
+          }
+          .cr-withdraw__input {
+            width: 100%;
+            margin-top: calc(var(--gap) * 1.33);
+            input {
+              color: var(--color-white);
+              width: 100%;
+              height: calc(var(--gap) * 8.33);
+              padding: 0 calc(var(--gap) * 1.66);
+              font-size: calc(var(--gap) * 2);
+              text-align: left;
+              border: 1px solid var(--placeholder-text);
+              -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+              border-radius: calc(var(--gap) * 0.66)
+            }
+          }
         }
 
-        .cr-input-block {
-            border: none;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.05);
-            font-size: calc(var(--gap) * 2.3);
-            background-color: var(--base-bright);
-            color: var(--wallet-withdraw-input-label-color);
-            display: flex;
-            align-items: center;
-
-            &__input {
-                border: none;
-                color: var(--wallet-withdraw-input-label-color);
-                width: 100%;
-
-                input {
-                    color: var(--dark-color);
-                    font-size: calc(var(--gap) * 2.3);
-                    text-align: left;
-                    width: 100%;
-                    &::placeholder {
-                        color: var(--input-default-color);
-                    }
-                }
+        &__group__amount {
+          width: 50%;
+        }
+        &__group__code {
+          width: 45%;
+          .cr-withdraw__input {
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
             }
+          }
+        }
+
+        &__group__address--focused,
+        &__group__amount--focused,
+        &__group__code--focused {
+          .cr-withdraw__label {
+            color: var(--sign-in-accent) !important;
+          }
+
+          input {
+            border-color: var(--button-primary) !important;
+          }
         }
 
         &__divider {
@@ -249,7 +278,7 @@
             margin-top: calc(var(--gap) * 1.5);
             margin-bottom: 0;
             margin-left: 0;
-            padding-right: 20px;
+            padding-right: calc(var(--gap) * 2.33);
 
             .cr-summary-field-message {
                 color: var(--table-text-color);
@@ -267,7 +296,7 @@
         }
 
         &__deep {
-            flex-grow: 1;
+            width: calc(var(--gap) * 29);
             .cr-button {
                 color: var(--color-white);
                 background: var(--profile-btn);
@@ -278,6 +307,18 @@
                 width: 90%;
                 margin-bottom: 0;
                 margin-right: 0;
+                &--disabled {
+                  color: var(--button-dark-gray) !important;
+                  background: var(--button-disabled) !important;
+                }
+
+                &:hover {
+                  background: var(--button-hover);
+                }
+
+                &:active {
+                  background: var(--button-active);
+                }
             }
         }
     }

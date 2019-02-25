@@ -82,7 +82,7 @@ export const en = {
     'page.body.wallets.tabs.withdraw.content.fee': 'Fee',
     'page.body.wallets.tabs.withdraw.content.total': 'Total Withdraw Amount',
     'page.body.wallets.tabs.withdraw.content.button': 'WITHDRAW',
-    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Address',
+    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Withdraw Address',
 
     'page.body.wallets.tabs.withdraw.modal.confirmation': 'Confirmation',
     'page.body.wallets.tabs.withdraw.modal.message1': 'You will receive ',

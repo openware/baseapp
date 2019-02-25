@@ -84,7 +84,7 @@ export const zh: LangType = {
     'page.body.wallets.tabs.withdraw.content.fee':'费用',
     'page.body.wallets.tabs.withdraw.content.total':'总提款金额',
     'page.body.wallets.tabs.withdraw.content.button':'撤回',
-    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': '地址',
+    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': '撤回地址',
 
     'page.body.wallets.tabs.withdraw.modal.confirmation': '确认',
     'page.body.wallets.tabs.withdraw.modal.message1': '您将收到',
