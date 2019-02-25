@@ -9,7 +9,6 @@ import {
     FormattedMessage,
     InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -65,10 +64,6 @@ interface State {
 type Props = ReduxProps & DispatchProps & RouterProps & ProfileProps & InjectedIntlProps & OnChangeEvent;
 
 class ProfileAuthDetailsComponent extends React.Component<Props, State> {
-    //tslint:disable-next-line:no-any
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
     constructor(props: Props) {
         super(props);
 
@@ -83,12 +78,21 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             confirmPasswordFocus: false,
         };
     }
-    private changeSuccess = this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.change.success'});
+
+    public componentWillReceiveProps(next: Props) {
+        if (next.passwordChangeSuccess) {
+            this.setState({
+                showChangeModal: false,
+                oldPassword: '',
+                newPassword: '',
+                confirmationPassword: '',
+            });
+        }
+    }
 
     public render() {
         const {
             user,
-            passwordChangeSuccess,
         } = this.props;
         const {
             oldPasswordFocus,
@@ -155,7 +159,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         />
                     </fieldset>
                 </div>
-                {passwordChangeSuccess && this.changeSuccess}
             </div>
         );
 
@@ -280,11 +283,11 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
 
     private handleNavigateTo2fa = (enable2fa: boolean) => {
         if (enable2fa) {
-          this.props.history.push('/security/2fa', { enable2fa });
+            this.props.history.push('/security/2fa', { enable2fa });
         } else {
-          this.setState({
-              showModal: !this.state.showModal,
-          });
+            this.setState({
+                showModal: !this.state.showModal,
+            });
         }
     }
 
@@ -363,7 +366,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const ProfileAuthDetailsConnected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent));
-// tslint:disable-next-line
+// tslint:disable-next-line:no-any
 const ProfileAuthDetails = withRouter(ProfileAuthDetailsConnected as any);
 
 export {
