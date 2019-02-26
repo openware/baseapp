@@ -13,6 +13,9 @@ import {
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
+  CustomInput,
+} from '../../components';
+import {
     PASSWORD_REGEX,
 } from '../../helpers';
 import {
@@ -103,64 +106,80 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             confirmPasswordFocus,
         } = this.state;
 
-        const oldPasswordClass = cr('group-content', {
-            'group-content--focused': oldPasswordFocus,
+        const oldPasswordClass = cr('cr-email-form__group', {
+            'cr-email-form__group--focused': oldPasswordFocus,
         });
 
-        const newPasswordClass = cr('group-content', {
-            'group-content--focused': newPasswordFocus,
+        const newPasswordClass = cr('cr-email-form__group', {
+            'cr-email-form__group--focused': newPasswordFocus,
         });
 
-        const confirmPasswordClass = cr('group-content', {
-            'group-content--focused': confirmPasswordFocus,
+        const confirmPasswordClass = cr('cr-email-form__group', {
+            'cr-email-form__group--focused': confirmPasswordFocus,
         });
 
         const changeModalBody = (
-            <div className="column">
-                <div className="group">
-                    <fieldset className={oldPasswordClass}>
-                        {oldPassword && <legend>{this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}</legend>}
-                        <input
-                            className="group-content-input"
-                            value={oldPassword}
-                            placeholder={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
-                            onChange={this.handleOldPassword}
-                            type="password"
-                            onFocus={this.handleFieldFocus('oldPassword')}
-                            onBlur={this.handleFieldFocus('oldPassword')}
-                        />
-                    </fieldset>
+            <div className="cr-email-form__form-content">
+                <div className={oldPasswordClass}>
+                    <CustomInput
+                        type="password"
+                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
+                        placeholder={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
+                        defaultLabel="Old password"
+                        handleChangeInput={this.handleOldPassword}
+                        inputValue={oldPassword}
+                        handleFocusInput={this.handleFieldFocus('oldPassword')}
+                        classNameLabel="cr-email-form__label"
+                        classNameInput="cr-email-form__input"
+                    />
                 </div>
-                <div className="group">
-                    <fieldset className={newPasswordClass}>
-                        {newPassword && <legend>{this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}</legend>}
-                        <input
-                            className="group-content-input"
-                            value={newPassword}
-                            placeholder={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
-                            onChange={this.handleNewPassword}
-                            type="password"
-                            onFocus={this.handleFieldFocus('newPassword')}
-                            onBlur={this.handleFieldFocus('newPassword')}
-                        />
-                    </fieldset>
+                <div className={newPasswordClass}>
+                    <CustomInput
+                        type="password"
+                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
+                        placeholder={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
+                        defaultLabel="New password"
+                        handleChangeInput={this.handleNewPassword}
+                        inputValue={newPassword}
+                        handleFocusInput={this.handleFieldFocus('newPassword')}
+                        classNameLabel="cr-email-form__label"
+                        classNameInput="cr-email-form__input"
+                    />
                 </div>
-                <div className="group">
-                    <fieldset className={confirmPasswordClass}>
-                        {confirmationPassword && <legend>{this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}</legend>}
-                        <input
-                            className="group-content-input"
-                            value={confirmationPassword}
-                            placeholder={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}
-                            onChange={this.handleConfPassword}
-                            type="password"
-                            onFocus={this.handleFieldFocus('confirmationPassword')}
-                            onBlur={this.handleFieldFocus('confirmationPassword')}
-                        />
-                    </fieldset>
+                <div className={confirmPasswordClass}>
+                    <CustomInput
+                        type="password"
+                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}
+                        placeholder={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}
+                        defaultLabel="Password confirmation"
+                        handleChangeInput={this.handleConfPassword}
+                        inputValue={confirmationPassword}
+                        handleFocusInput={this.handleFieldFocus('confirmationPassword')}
+                        classNameLabel="cr-email-form__label"
+                        classNameInput="cr-email-form__input"
+                    />
+                </div>
+                <div className="cr-email-form__button-wrapper">
+                    <Button
+                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.change'})}
+                        className={this.isValidForm() ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                        disabled={!this.isValidForm()}
+                        onClick={this.handleChangePassword}
+                    />
                 </div>
             </div>
         );
+
+        const modal = this.state.showChangeModal ? (
+            <div className="cr-modal">
+              <div className="cr-email-form">
+                <div className="pg-change-password-screen">
+                  {this.renderChangeModalHeader()}
+                  {changeModalBody}
+                </div>
+              </div>
+            </div>
+        ) : null;
 
         return (
             <div className="pg-profile-page__box pg-profile-page__left-col__basic">
@@ -188,12 +207,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         onClick={this.showChangeModal}
                         label={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change'})}
                     />
-                    <Modal
-                        show={this.state.showChangeModal}
-                        header={this.renderChangeModalHeader()}
-                        content={changeModalBody}
-                        footer={this.renderChangeModalFooter()}
-                    />
+                    {modal}
                 </div>
                 <div className="pg-profile-page__row">
                     <ProfileTwoFactorAuth
@@ -242,23 +256,16 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
     };
 
     private renderChangeModalHeader = () => (
-        <div className="pg-modal-change-password__header">
-            <div/>
-            <div>
-                <FormattedMessage id="page.body.profile.header.account.content.password.change"/>
-            </div>
-            <div onClick={this.handleCancel}>
-                <img src={require('./close.svg')}/>
+        <div className="cr-email-form__options-group">
+            <div className="cr-email-form__option">
+              <div className="cr-email-form__option-inner">
+                  <FormattedMessage id="page.body.profile.header.account.content.password.change"/>
+                  <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
+                      <img src={require('./close.svg')}/>
+                  </div>
+              </div>
             </div>
         </div>
-    );
-
-    private renderChangeModalFooter = () => (
-        <Button
-            label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.change'})}
-            onClick={this.handleChangePassword}
-            disabled={!this.isValidForm()}
-        />
     );
 
     private handleChangePassword = () => {
@@ -291,21 +298,21 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         }
     }
 
-    private handleOldPassword = (e: OnChangeEvent) => {
+    private handleOldPassword = (value: string) => {
         this.setState({
-            oldPassword: e.target.value,
+            oldPassword: value,
         });
     }
 
-    private handleConfPassword = (e: OnChangeEvent) => {
+    private handleConfPassword = (value: string) => {
         this.setState({
-            confirmationPassword: e.target.value,
+            confirmationPassword: value,
         });
     }
 
-    private handleNewPassword = (e: OnChangeEvent) => {
+    private handleNewPassword = (value: string) => {
         this.setState({
-            newPassword: e.target.value,
+            newPassword: value,
         });
     }
 
