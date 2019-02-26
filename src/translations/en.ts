@@ -301,7 +301,7 @@ export const en = {
     'page.header.signUp.password.message.error': 'Password must contain at least 8 symbols, at least one capital letter and one digit',
     'page.header.signUp.confirmPassword': 'Confirm Password',
     'page.header.signUp.confirmPassword.message.error': 'Passwords don\'t match',
-    'page.header.signUp.referalCode': 'Referal Code',
+    'page.header.signUp.referalCode': 'Referral Code',
     'page.header.signUp.terms': 'I have read and agree to the Terms of Service',
     'page.header.signUp.modal.header': 'VERIFY YOUR EMAIL ADDRESS',
     'page.header.signUp.modal.body': 'To complete registration, check for an ' +
