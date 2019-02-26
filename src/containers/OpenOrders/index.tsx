@@ -108,7 +108,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
         const { list, currentMarket } = this.props;
 
         if (list.length === 0) {
-            return [[this.translate('page.noDataToShow')]];
+            return [[[''],[''], this.translate('page.noDataToShow')]];
         }
 
         return list.map((item: OrderCommon) => {

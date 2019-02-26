@@ -80,7 +80,7 @@ class RecentTradesComponent extends React.Component<Props> {
         };
         return (trades.length > 0)
             ? trades.map(renderRow)
-            : [[this.props.intl.formatMessage({ id: 'page.noDataToShow'})]];
+            : [[[''], this.props.intl.formatMessage({ id: 'page.noDataToShow'})]];
     }
 
     private handleOnSelect = (index: string) => {

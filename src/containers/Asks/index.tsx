@@ -82,7 +82,7 @@ export class OrderBookContainer extends React.Component<Props> {
                     <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
                     <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
                 ];
-        }) : [[message]];
+        }) : [[[''], message]];
     }
 
     private handleOnSelect = (index: string) => {

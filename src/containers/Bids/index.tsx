@@ -79,7 +79,7 @@ class OrderBookContainer extends React.Component<Props> {
                     <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
                     <span style={{ color: 'var(--open-orders-order-buy)' }} key={i}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
                 ];
-        }) : [[message]];
+        }) : [[[''], message]];
     }
 
     private handleOnSelect = (index: string) => {
