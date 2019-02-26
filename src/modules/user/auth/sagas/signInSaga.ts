@@ -19,17 +19,17 @@ export function* signInSaga(action: SignInFetch) {
     } catch (error) {
         switch (error.code) {
             case 401:
-                if (error.message === 'Your account is not active') {
+                if (error.message.indexOf('identity.session.not_active') > -1) {
                     yield put(signUpRequireVerification({requireVerification: true}));
                 }
+                yield put(pushAlertError(error));
                 break;
             case 403:
                 yield put(signInRequire2FA({ require2fa: true }));
                 break;
             default:
                 yield put(signInError(error));
-                break;
+                yield put(pushAlertError(error));
         }
-        yield put(pushAlertError(error));
     }
 }

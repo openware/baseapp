@@ -16,6 +16,7 @@ import {
     signIn,
     signInError,
     signInRequire2FA,
+    signUpRequireVerification,
 } from '../../modules';
 
 interface ReduxProps {
@@ -29,6 +30,7 @@ interface DispatchProps {
     signIn: typeof signIn;
     signInError: typeof signInError;
     signInRequire2FA: typeof signInRequire2FA;
+    signUpRequireVerification: typeof signUpRequireVerification;
 }
 
 interface SignInState {
@@ -60,6 +62,7 @@ class SignInBox extends React.Component<Props, SignInState> {
 
     public componentDidMount() {
         this.props.signInError({ code: undefined, message: undefined });
+        this.props.signUpRequireVerification({requireVerification: false});
     }
 
     public componentWillReceiveProps(props: Props) {
@@ -68,11 +71,6 @@ class SignInBox extends React.Component<Props, SignInState> {
         }
         if (props.requireEmailVerification) {
             props.history.push('/email-verification', { email: this.state.email });
-        }
-        if (props.alert.error.length) {
-            if (props.alert.error.find(e => e.message[0] === 'identity.session.not_active')) {
-                this.props.history.push('/email-verification', { email: this.state.email });
-            }
         }
     }
 
@@ -258,6 +256,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch
     signIn: data => dispatch(signIn(data)),
     signInError: error => dispatch(signInError(error)),
     signInRequire2FA: payload => dispatch(signInRequire2FA(payload)),
+    signUpRequireVerification: data => dispatch(signUpRequireVerification(data)),
 });
 
 // tslint:disable no-any
