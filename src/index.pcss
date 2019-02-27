@@ -402,6 +402,11 @@ body, html {
   .cr-grid-item__body {
     background: var(--base-bright);
     border-radius: 3px;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
