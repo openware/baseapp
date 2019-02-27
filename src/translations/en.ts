@@ -194,7 +194,7 @@ export const en = {
     'page.body.profile.content.copyLink': 'Copy',
 
     'page.body.profile.apiKeys.header': 'My API Keys',
-    'page.body.profile.apiKeys.header.create': 'Create',
+    'page.body.profile.apiKeys.header.create': 'Create new',
 
     'page.body.profile.apiKeys.noOtp': 'Please enable Two-factor authentication',
     'page.body.profile.apiKeys.show': 'Show',

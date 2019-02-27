@@ -93,7 +93,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                                 className="pg-profile-page__pull-right"
                                 onClick={this.handleCreateKeyClick}
                             >
-                                {this.t('page.body.profile.apiKeys.header.create')} +
+                                {this.t('page.body.profile.apiKeys.header.create')}
                             </span>)}
                     </div>
                 </div>
@@ -135,8 +135,8 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         return [
             this.t('page.body.profile.apiKeys.table.header.kid'),
             this.t('page.body.profile.apiKeys.table.header.algorithm'),
-            this.t('page.body.profile.apiKeys.table.header.state'),
             '',
+            this.t('page.body.profile.apiKeys.table.header.state'),
             this.t('page.body.profile.apiKeys.table.header.created'),
             this.t('page.body.profile.apiKeys.table.header.updated'),
             '',
