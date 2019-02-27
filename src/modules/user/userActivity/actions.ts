@@ -5,6 +5,17 @@ import {
     USER_ACTIVITY_FETCH,
 } from './constants';
 
+interface UserActivityFetchPayload {
+    page: number;
+    limit: number;
+}
+
+export interface UserActivitySuccessPayload {
+    list: UserActivityDataInterface[];
+    page: number;
+    total: number;
+}
+
 export interface UserActivityDataInterface {
     id: number;
     user_id: number;
@@ -19,11 +30,12 @@ export interface UserActivityDataInterface {
 
 export interface UserActivityFetch {
     type: typeof USER_ACTIVITY_FETCH;
+    payload: UserActivityFetchPayload;
 }
 
 export interface UserActivityData {
     type: typeof USER_ACTIVITY_DATA;
-    payload: UserActivityDataInterface[];
+    payload: UserActivitySuccessPayload;
 }
 
 export interface UserActivityError {
@@ -36,8 +48,9 @@ export type UserActivityAction =
     | UserActivityData
     | UserActivityError;
 
-export const getUserActivity = (): UserActivityFetch => ({
+export const getUserActivity = (payload: UserActivityFetchPayload): UserActivityFetch => ({
     type: USER_ACTIVITY_FETCH,
+    payload,
 });
 
 export const userActivityData = (payload: UserActivityData['payload']): UserActivityData => ({

@@ -1,10 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../..';
-import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
-import { getUserActivity } from './actions';
-import { USER_ACTIVITY_DATA, USER_ACTIVITY_ERROR, USER_ACTIVITY_FETCH } from './constants';
+import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { rootSaga } from '../../../index';
+import { getUserActivity, userActivityData, userActivityError } from '../actions';
 
 const debug = false;
 
@@ -38,40 +37,38 @@ describe('User activity', () => {
                 created_at: '2019-01-22T15:08:36.000Z',
             },
         ];
-        const expectedUserActivityFetch = {
-            type: USER_ACTIVITY_FETCH,
-        };
 
-        const expectedUserActivityData = {
-            type: USER_ACTIVITY_DATA,
-            payload: payload,
-        };
+        const fakeHeaders = { total: 1 };
 
-        const expectedUserActivityError = {
-            type: USER_ACTIVITY_ERROR,
-            payload: {
-                code: 500,
-                message: ['Server error'],
-            },
-        };
+        const fakeSuccessPayloadFirstPage = { list: payload, page: 0, total: fakeHeaders.total };
+        const fakeFetchPayloadFirstPage = { page: 0, limit: 2 };
 
         const mockUserActivityFetch = () => {
-            mockAxios.onGet('/resource/users/activity/all').reply(200, payload);
+            mockAxios.onGet('/resource/users/activity?limit=2&page=1').reply(200, payload, fakeHeaders);
         };
 
-        it('should handle user activity error', async () => {
+        const expectedActionsFetchWithFirstPage = [
+            getUserActivity(fakeFetchPayloadFirstPage),
+            userActivityData(fakeSuccessPayloadFirstPage),
+        ];
+        const expectedActionsError = [
+            getUserActivity(fakeFetchPayloadFirstPage),
+            userActivityError({ code: 500, message: ['Server error'] }),
+        ];
+
+        it('should fetch user activity for 1 page in success flow', async () => {
             mockUserActivityFetch();
+
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
-                    if (actions.length === 2) {
-                        expect(actions[0]).toEqual(expectedUserActivityFetch);
-                        expect(actions[1]).toEqual(expectedUserActivityData);
+                    if (actions.length === expectedActionsFetchWithFirstPage.length) {
+                        expect(actions).toEqual(expectedActionsFetchWithFirstPage);
                         resolve();
                     }
                 });
             });
-            store.dispatch(getUserActivity());
+            store.dispatch(getUserActivity(fakeFetchPayloadFirstPage));
             return promise;
         });
 
@@ -80,14 +77,13 @@ describe('User activity', () => {
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
-                    if (actions.length === 2) {
-                        expect(actions[0]).toEqual(expectedUserActivityFetch);
-                        expect(actions[1]).toEqual(expectedUserActivityError);
+                    if (actions.length === expectedActionsError.length) {
+                        expect(actions).toEqual(expectedActionsError);
                         resolve();
                     }
                 });
             });
-            store.dispatch(getUserActivity());
+            store.dispatch(getUserActivity(fakeFetchPayloadFirstPage));
             return promise;
         });
     });

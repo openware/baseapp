@@ -1,4 +1,4 @@
-import { Table } from '@openware/components';
+import { Pagination, Table } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -11,39 +11,79 @@ import { localeFullDate } from '../../helpers';
 import {
     getUserActivity,
     RootState,
+    selectTotalNumber,
     selectUserActivity,
+    selectUserActivityCurrentPage,
+    selectUserActivityFirstElemIndex,
+    selectUserActivityLastElemIndex,
+    selectUserActivityLoading,
+    selectUserActivityNextPageExists,
+    selectUserActivityPageCount,
     UserActivityDataInterface,
 } from '../../modules';
 
 interface ReduxProps {
-    userActivity?: UserActivityDataInterface[];
+    loading: boolean;
+    total: number;
+    page: number;
+    pageCount: number;
+    firstElemIndex: number;
+    lastElemIndex: number;
+    nextPageExists: boolean;
+    userActivity: UserActivityDataInterface[];
 }
 
 interface DispatchProps {
     getUserActivity: typeof getUserActivity;
 }
 
+const paginationLimit = 25;
+
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class ProfileAccountActivityComponent extends React.Component<Props> {
     public componentDidMount() {
-        this.props.getUserActivity();
+        window.console.log(this.props);
+        this.props.getUserActivity({ page: 0, limit: paginationLimit });
     }
 
     public render() {
-        const { userActivity } = this.props;
+        const { loading, userActivity } = this.props;
+        const emptyMsg = this.props.intl.formatMessage({id: 'page.noDataToShow'});
+
         return (
             <div className="pg-profile-page__activity">
                 <div className="pg-profile-page-header">
                     <h3><FormattedMessage id="page.body.profile.header.accountActivity" /></h3>
                 </div>
-                <Table
-                    header={this.getHeaders()}
-                    data={userActivity ? this.getActivityData(userActivity) : [['', '', 'There is no date to show']]}
-                />
+                <div className={`pg-history-elem ${userActivity.length ? '' : 'pg-history-empty'}`}>
+                    {userActivity.length ? this.renderContent() : null}
+                    {!userActivity.length && !loading ? <p className="pg-history-elem__empty">{emptyMsg}</p> : null}
+                </div>
             </div>
         );
     }
+
+    public renderContent = () => {
+        const { total, firstElemIndex, lastElemIndex, page, nextPageExists, userActivity } = this.props;
+        return (
+            <React.Fragment>
+                <Table
+                    header={this.getHeaders()}
+                    data={this.getActivityData(userActivity)}
+                />
+                <Pagination
+                    firstElemIndex={firstElemIndex}
+                    lastElemIndex={lastElemIndex}
+                    total={total}
+                    page={page}
+                    nextPageExists={nextPageExists}
+                    onClickPrevPage={this.onClickPrevPage}
+                    onClickNextPage={this.onClickNextPage}
+                />
+            </React.Fragment>
+        );
+    };
 
     private getHeaders = () => {
         return [
@@ -95,19 +135,32 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
                 return value;
         }
     }
+
+    private onClickPrevPage = () => {
+        const { page } = this.props;
+        this.props.getUserActivity({ page: Number(page) - 1, limit: paginationLimit });
+    };
+
+    private onClickNextPage = () => {
+        const { page } = this.props;
+        this.props.getUserActivity({ page: Number(page) + 1, limit: paginationLimit });
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     userActivity: selectUserActivity(state),
+    loading: selectUserActivityLoading(state),
+    total: selectTotalNumber(state),
+    page: selectUserActivityCurrentPage(state),
+    pageCount: selectUserActivityPageCount(state, paginationLimit),
+    firstElemIndex: selectUserActivityFirstElemIndex(state, paginationLimit),
+    lastElemIndex: selectUserActivityLastElemIndex(state, paginationLimit),
+    nextPageExists: selectUserActivityNextPageExists(state, paginationLimit),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        getUserActivity: () => dispatch(getUserActivity()),
+        getUserActivity: params => dispatch(getUserActivity(params)),
     });
 
-const ProfileAccountActivity = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAccountActivityComponent));
-
-export {
-    ProfileAccountActivity,
-};
+export const ProfileAccountActivity = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAccountActivityComponent));
