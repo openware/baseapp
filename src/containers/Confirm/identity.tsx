@@ -17,7 +17,7 @@ import {
     selectSendIdentitySuccess,
     sendIdentity,
 } from '../../modules/user/kyc/identity';
-import { changeUserLevel } from '../../modules/user/profile';
+import { labelFetch } from '../../modules/user/kyc/label';
 import { nationalities } from './nationalities';
 
 interface ReduxProps {
@@ -26,7 +26,7 @@ interface ReduxProps {
 
 interface DispatchProps {
     sendIdentity: typeof sendIdentity;
-    changeUserLevel: typeof changeUserLevel;
+    labelFetch: typeof labelFetch;
 }
 
 interface OnChangeEvent {
@@ -85,7 +85,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
     public componentDidUpdate(prev: Props) {
         if (!prev.success && this.props.success) {
-            this.props.changeUserLevel({ level: 3 });
+            this.props.labelFetch();
         }
     }
 
@@ -366,7 +366,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         sendIdentity: payload => dispatch(sendIdentity(payload)),
-        changeUserLevel: payload => dispatch(changeUserLevel(payload)),
+        labelFetch: () => dispatch(labelFetch()),
     });
 
 // tslint:disable-next-line
