@@ -9,7 +9,7 @@ import {
 import { connect, MapDispatchToProps } from 'react-redux';
 
 import {
-    pushAlertSuccess,
+    alertPush,
     RootState,
     selectUserInfo,
     User,
@@ -20,7 +20,7 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    fetchSuccess: typeof pushAlertSuccess;
+    fetchSuccess: typeof alertPush;
 }
 
 
@@ -51,7 +51,7 @@ class ReferralProgramClass extends React.Component<Props> {
 
     public doCopy = () => {
         copy('referral-id');
-        this.props.fetchSuccess(this.translate('page.body.wallets.tabs.deposit.ccy.message.success'));
+        this.props.fetchSuccess({message: this.translate('page.body.wallets.tabs.deposit.ccy.message.success'), type: 'success'});
     };
 
     public render() {
@@ -78,7 +78,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
-    fetchSuccess: payload => dispatch(pushAlertSuccess(payload)),
+    fetchSuccess: payload => dispatch(alertPush(payload)),
 });
 
 // tslint:disable-next-line

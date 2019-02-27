@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
-import { pushAlertError, pushAlertSuccess } from '../../../../public/alert';
+import { alertPush } from '../../../../public/alert';
 import { sendDocumentsData, sendDocumentsError, SendDocumentsFetch } from '../actions';
 
 const sessionsConfig: RequestOptions = {
@@ -14,9 +14,9 @@ export function* sendDocumentsSaga(action: SendDocumentsFetch) {
         const defaultMessage = 'success.documents.accepted';
         const { message = defaultMessage } = response;
         yield put(sendDocumentsData({ message }));
-        yield put(pushAlertSuccess(defaultMessage));
+        yield put(alertPush({ message: defaultMessage, type: 'success'}));
     } catch (error) {
         yield put(sendDocumentsError(error));
-        yield put(pushAlertError(error));
+        yield put(alertPush({ message: error.message, code: error.code, type: 'error'}));
     }
 }

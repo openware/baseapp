@@ -49,11 +49,12 @@ describe('KYC - Documents', () => {
         };
 
         const expectedCallErrorHandler = {
-            error: {
-              code: 500,
-              message: ['Server error'],
+            payload: {
+                type: 'error',
+                code: 500,
+                message: ['Server error'],
             },
-            type: 'alert/ERROR_FETCH',
+            type: 'alert/ALERT_PUSH',
         };
 
         const mockConfirmDocumentsFetch = () => {

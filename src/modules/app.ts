@@ -32,7 +32,7 @@ export const publicReducer = combineReducers({
     ranger: rangerReducer,
     i18n: changeLanguageReducer,
     kline: klineReducer,
-    alert: alertReducer,
+    alerts: alertReducer,
 });
 
 export const userReducer = combineReducers({

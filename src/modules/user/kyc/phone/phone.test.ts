@@ -46,11 +46,12 @@ describe('KYC - Phone', () => {
         };
 
         const expectedCallErrorHandler = {
-            error: {
-              code: 500,
-              message: ['Server error'],
+            payload: {
+                type: 'error',
+                code: 500,
+                message: ['Server error'],
             },
-            type: 'alert/ERROR_FETCH',
+            type: 'alert/ALERT_PUSH',
         };
 
         const mockSendCodeFetch = () => {
@@ -120,11 +121,12 @@ describe('KYC - Phone', () => {
         };
 
         const expectedCallErrorHandler = {
-            error: {
-              code: 500,
-              message: ['Server error'],
+            payload: {
+                type: 'error',
+                code: 500,
+                message: ['Server error'],
             },
-            type: 'alert/ERROR_FETCH',
+            type: 'alert/ALERT_PUSH',
         };
 
         const mockVerifyCodeFetch = () => {
@@ -188,11 +190,12 @@ describe('KYC - Phone', () => {
         };
 
         const expectedCallErrorHandler = {
-            error: {
-              code: 500,
-              message: ['Server error'],
+            payload: {
+                type: 'error',
+                code: 500,
+                message: ['Server error'],
             },
-            type: 'alert/ERROR_FETCH',
+            type: 'alert/ALERT_PUSH',
         };
 
         const mockResendCodeFetch = () => {

@@ -7,59 +7,51 @@ import {
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import {
+    alertDelete,
+    alertDeleteByIndex,
     AlertState,
-    deleteError,
-    deleteErrorByIndex,
-    deleteSuccessByIndex,
     RootState,
     selectAlertState,
 } from '../../modules';
 
 interface ReduxProps {
-    alert: AlertState;
+    alerts: AlertState;
 }
 
 interface DispatchProps {
-    deleteError: typeof deleteError;
-    deleteErrorByIndex: typeof deleteErrorByIndex;
-    deleteSuccessByIndex: typeof deleteSuccessByIndex;
+    alertDelete: typeof alertDelete;
+    alertDeleteByIndex: typeof alertDeleteByIndex;
 }
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class AlertComponent extends React.Component<Props> {
-    public deleteErrorByIndex = (key: number) => {
-        this.props.deleteErrorByIndex(key);
-    };
-
-    public deleteSuccessByIndex = (key: number) => {
-        this.props.deleteSuccessByIndex(key);
+    public deleteAlertByIndex = (key: number) => {
+        this.props.alertDeleteByIndex(key);
     };
 
     public translate = (id: string) => {
         return id ? this.props.intl.formatMessage({ id }) : '';
     };
 
-    //tslint:disable:jsx-no-lambda
+    // tslint:disable:jsx-no-lambda
     public render() {
         return (
             <div className="pg-alerts">
-                {this.props.alert.error.map((w, k) => <FadeIn key={k}><div onClick={() => this.deleteErrorByIndex(k)}><Alert description={w.code.toString(10)} title={this.translate(w.message)} type="error" /></div></FadeIn>)}
-                {this.props.alert.success.map((w, k) => <FadeIn key={k}><div onClick={() => this.deleteSuccessByIndex(k)}><Alert description="" title={this.translate(w)} type="success" /></div></FadeIn>)}
+                {this.props.alerts.alerts.map((w, k) => <FadeIn key={k}><div onClick={() => this.deleteAlertByIndex(k)}><Alert description={w.code && w.code.toString(10)} title={this.translate(w.message)} type={w.type} /></div></FadeIn>)}
             </div>
         );
     }
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    alert: selectAlertState(state),
+    alerts: selectAlertState(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        deleteError: () => dispatch(deleteError()),
-        deleteErrorByIndex: payload => dispatch(deleteErrorByIndex(payload)),
-        deleteSuccessByIndex: payload => dispatch(deleteSuccessByIndex(payload)),
+        alertDelete: () => dispatch(alertDelete()),
+        alertDeleteByIndex: payload => dispatch(alertDeleteByIndex(payload)),
     });
 
 export const Alerts = injectIntl(connect(mapStateToProps, mapDispatchToProps)(AlertComponent));

@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { pushAlertError } from '../../../public/alert';
+import { alertPush } from '../../../public/alert';
 import {
     walletsAddressData,
     walletsAddressError,
@@ -23,6 +23,6 @@ export function* walletsAddressSaga(action: WalletsAddressFetch) {
         }));
     } catch (error) {
         yield put(walletsAddressError(error));
-        yield put(pushAlertError(error));
+        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
     }
 }

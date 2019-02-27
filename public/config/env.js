@@ -11,4 +11,6 @@ window.env = {
         captchaType: 'none',
         siteKey: '',
     },
+    rangerReconnectPeriod: '1',
+    msAlertDisplayTime: '5000',
 };

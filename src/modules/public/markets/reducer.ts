@@ -1,4 +1,4 @@
-import { CommonError, CommonState } from '../../types';
+import { CommonState } from '../../types';
 import { MarketsAction } from './actions';
 import {
     MARKETS_DATA,
@@ -20,7 +20,6 @@ export interface MarketsState extends CommonState {
     };
     tickerLoading: boolean;
     loading: boolean;
-    error?: CommonError;
 }
 
 export const initialMarketsState: MarketsState = {
@@ -37,20 +36,17 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
             return {
                 ...state,
                 loading: true,
-                error: undefined,
             };
         case MARKETS_DATA:
             return {
                 ...state,
                 loading: false,
-                error: undefined,
                 list: action.payload,
             };
         case MARKETS_ERROR:
             return {
                 ...state,
                 loading: false,
-                error: action.payload,
             };
 
         case MARKETS_SET_CURRENT_MARKET:
@@ -72,7 +68,6 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
             return {
                 ...state,
                 tickerLoading: true,
-                error: undefined,
             };
         case MARKETS_TICKERS_DATA:
             return {
@@ -84,7 +79,6 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
             return {
                 ...state,
                 tickerLoading: false,
-                error: action.payload,
             };
 
         default:

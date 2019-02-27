@@ -67,16 +67,10 @@ describe('Markets reducer', () => {
         btcusd: btcusdTicker,
     };
 
-    const error = {
-        code: 500,
-        message: ['Server error'],
-    };
-
     it('should handle MARKETS_FETCH', () => {
         const expectedState: MarketsState = {
             ...initialMarketsState,
             loading: true,
-            error: undefined,
         };
         expect(marketsReducer(initialMarketsState, actions.marketsFetch())).toEqual(expectedState);
     });
@@ -86,7 +80,6 @@ describe('Markets reducer', () => {
             ...initialMarketsState,
             tickerLoading: false,
             loading: false,
-            error: undefined,
             list: fakeMarkets,
         };
         expect(marketsReducer(initialMarketsState, actions.marketsData(fakeMarkets))).toEqual(expectedState);
@@ -97,9 +90,8 @@ describe('Markets reducer', () => {
             ...initialMarketsState,
             tickerLoading: false,
             loading: false,
-            error: error,
         };
-        expect(marketsReducer(initialMarketsState, actions.marketsError(error))).toEqual(expectedState);
+        expect(marketsReducer(initialMarketsState, actions.marketsError())).toEqual(expectedState);
     });
 
     it('should handle SET_CURRENT_MARKET', () => {
@@ -133,7 +125,6 @@ describe('Markets reducer', () => {
             ...initialMarketsState,
             tickerLoading: true,
             loading: false,
-            error: undefined,
         };
         expect(marketsReducer(initialMarketsState, actions.marketsTickersFetch())).toEqual(expectedState);
     });
@@ -151,10 +142,7 @@ describe('Markets reducer', () => {
             ...initialMarketsState,
             tickerLoading: false,
             loading: false,
-            error: error,
         };
-        expect(marketsReducer(initialMarketsState, actions.marketsTickersError(error))).toEqual(expectedState);
+        expect(marketsReducer(initialMarketsState, actions.marketsTickersError())).toEqual(expectedState);
     });
-
-
 });

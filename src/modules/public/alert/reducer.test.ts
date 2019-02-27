@@ -1,73 +1,67 @@
 import * as actions from './actions';
-import {  alertReducer, initialAlertState } from './reducer';
+import {
+    alertReducer,
+    AlertState,
+    initialAlertState,
+} from './reducer';
 
-describe('Profile reducer', () => {
-    const error = {
-        code: 401,
-        message: ['Invalid Session'],
-    };
-
-    const success = 'success';
-
-    it('should handle ERROR_DATA', () => {
-        const expectedState = {
-            ...initialAlertState,
-            error: [ ...initialAlertState.error, error ],
+describe('Alerts reducer', () => {
+    it('should handle ALERT_DATA', () => {
+        const payload = {
+            code: 400,
+            type: 'error',
+            message: 'Error',
         };
-        expect(alertReducer(initialAlertState, actions.handleError(error))).toEqual(expectedState);
+        const expectedState: AlertState = {
+            ...initialAlertState,
+            alerts: [payload],
+        };
+        expect(alertReducer(initialAlertState, actions.alertData(payload))).toEqual(expectedState);
     });
 
-    it('should handle DELETE_ERROR', () => {
-        const expectedState = {
-            ...initialAlertState,
-            error: [ ...initialAlertState.error ],
+    it('should handle ALERT_DELETE', () => {
+        const payload = {
+            code: 400,
+            type: 'error',
+            message: 'Error',
         };
-        expect(alertReducer(initialAlertState, actions.deleteError())).toEqual(expectedState);
+
+        const payloadToBeDeleted = {
+            code: 401,
+            type: 'error',
+            message: 'Error',
+        };
+
+        const alertState: AlertState = {
+            alerts: [payloadToBeDeleted, payload, payload],
+        };
+
+        const expectedState: AlertState = {
+            alerts: [payload, payload],
+        };
+        expect(alertReducer(alertState, actions.alertDelete())).toEqual(expectedState);
     });
 
-    it('should handle ERROR_FETCH', () => {
-        const expectedState = {
-            ...initialAlertState,
+    it('should handle ALERT_DELETE_BY_INDEX', () => {
+        const payload = {
+            code: 400,
+            type: 'error',
+            message: 'Error',
         };
-        expect(alertReducer(initialAlertState, actions.pushAlertError(error))).toEqual(expectedState);
-    });
 
-    it('should handle DELETE_ERROR_BY_INDEX', () => {
-        const expectedState = {
-            ...initialAlertState,
-            error: [ ...initialAlertState.error ],
+        const payloadToBeDeleted = {
+            code: 401,
+            type: 'error',
+            message: 'Error',
         };
-        expect(alertReducer(initialAlertState, actions.deleteErrorByIndex(1))).toEqual(expectedState);
-    });
 
-    it('should handle SUCCESS_DATA', () => {
-        const expectedState = {
-            ...initialAlertState,
-            success: [ ...initialAlertState.success, success ],
+        const alertState: AlertState = {
+            alerts: [payload, payloadToBeDeleted, payload],
         };
-        expect(alertReducer(initialAlertState, actions.handleSuccess(success))).toEqual(expectedState);
-    });
 
-    it('should handle DELETE_SUCCESS', () => {
-        const expectedState = {
-            ...initialAlertState,
-            success: [ ...initialAlertState.success ],
+        const expectedState: AlertState = {
+            alerts: [payload, payload],
         };
-        expect(alertReducer(initialAlertState, actions.deleteSuccess())).toEqual(expectedState);
-    });
-
-    it('should handle SUCCESS_FETCH', () => {
-        const expectedState = {
-            ...initialAlertState,
-        };
-        expect(alertReducer(initialAlertState, actions.pushAlertSuccess(success))).toEqual(expectedState);
-    });
-
-    it('should handle DELETE_SUCCESS_BY_INDEX', () => {
-        const expectedState = {
-            ...initialAlertState,
-            success: [ ...initialAlertState.success ],
-        };
-        expect(alertReducer(initialAlertState, actions.deleteSuccessByIndex(1))).toEqual(expectedState);
+        expect(alertReducer(alertState, actions.alertDeleteByIndex(1))).toEqual(expectedState);
     });
 });

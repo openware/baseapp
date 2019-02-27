@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { pushAlertError, pushAlertSuccess } from '../../../public/alert';
+import { alertPush } from '../../../public/alert';
 import { userOpenOrdersAppend } from '../../openOrders';
 import {
     orderExecuteData,
@@ -20,9 +20,9 @@ export function* ordersExecuteSaga(action: OrderExecuteFetch) {
         if (order.ord_type !== 'market') {
             yield put(userOpenOrdersAppend(order));
         }
-        yield put(pushAlertSuccess('success.order.created'));
+        yield put(alertPush({ message: 'success.order.created', type: 'success'}));
     } catch (error) {
         yield put(orderExecuteError(error));
-        yield put(pushAlertError(error));
+        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
     }
 }

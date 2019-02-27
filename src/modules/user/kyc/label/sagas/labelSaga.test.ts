@@ -32,13 +32,13 @@ describe('Module: label', () => {
     };
 
     const data = [
-      {
-        created_at: '2018-12-10T12:49:00Z',
-        key: 'email',
-        scope: 'private',
-        updated_at: '2018-12-10T12:49:00Z',
-        value: 'verified',
-      },
+        {
+            created_at: '2018-12-10T12:49:00Z',
+            key: 'email',
+            scope: 'private',
+            updated_at: '2018-12-10T12:49:00Z',
+            value: 'verified',
+        },
     ];
 
     const mockLabel = () => {

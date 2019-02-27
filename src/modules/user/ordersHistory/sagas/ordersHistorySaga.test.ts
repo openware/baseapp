@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { pushAlertError, rootSaga } from '../../../index';
+import { alertPush, rootSaga } from '../../../index';
 import { OrderAPI } from '../../../types';
 import { convertOrderAPI } from '../../openOrders/helpers';
 import { userOrdersHistoryData, userOrdersHistoryError, userOrdersHistoryFetch } from '../actions';
@@ -26,6 +26,7 @@ describe('Orders History', () => {
     const fakeError = {
         code: 500,
         message: ['Server error'],
+        type: 'error',
     };
 
     const fakeHistory: OrderAPI[] = [
@@ -75,7 +76,7 @@ describe('Orders History', () => {
     const expectedActionsError = [
         userOrdersHistoryFetch(fakeFetchPayloadFirstPage),
         userOrdersHistoryError(),
-        pushAlertError(fakeError),
+        alertPush(fakeError),
     ];
 
     it('should fetch currency deposit history for 1 page in success flow', async () => {

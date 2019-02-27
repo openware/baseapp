@@ -43,7 +43,6 @@ type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 class ProfileAccountActivityComponent extends React.Component<Props> {
     public componentDidMount() {
-        window.console.log(this.props);
         this.props.getUserActivity({ page: 0, limit: paginationLimit });
     }
 

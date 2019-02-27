@@ -52,7 +52,7 @@ export interface RootState {
         depth: DepthState;
         ranger: RangerState;
         i18n: LanguageState;
-        alert: AlertState;
+        alerts: AlertState;
         kline: KlineState;
     };
     user: {

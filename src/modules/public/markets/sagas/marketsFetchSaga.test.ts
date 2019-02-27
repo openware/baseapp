@@ -3,6 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { alertData, alertPush } from '../../alert';
 import {
     marketsData,
     marketsError,
@@ -97,11 +98,6 @@ describe('Saga: marketsFetchSaga', () => {
         },
     };
 
-    const fakeError = {
-        code: 500,
-        message: ['Server error'],
-    };
-
     const mockMarkets = () => {
         mockAxios.onGet('/public/markets').reply(200, fakeMarkets);
     };
@@ -113,6 +109,12 @@ describe('Saga: marketsFetchSaga', () => {
     const marketsTickersList = {
         btceth: btcethTicker,
         btcusd: btcusdTicker,
+    };
+
+    const alertDataPayload = {
+        message: ['Server error'],
+        code: 500,
+        type: 'error',
     };
 
     it('should fetch markets', async () => {
@@ -135,7 +137,7 @@ describe('Saga: marketsFetchSaga', () => {
     });
 
     it('should trigger an error on market fetch', async () => {
-        const expectedActions = [marketsFetch(), marketsError(fakeError)];
+        const expectedActions = [marketsFetch(), marketsError(), alertPush(alertDataPayload), alertData(alertDataPayload)];
         mockNetworkError(mockAxios);
         const promise = new Promise(resolve => {
             store.subscribe(() => {
@@ -173,7 +175,7 @@ describe('Saga: marketsFetchSaga', () => {
     });
 
     it('should trigger an error on tickers fetch', async () => {
-        const expectedActions = [marketsTickersFetch(), marketsTickersError(fakeError)];
+        const expectedActions = [marketsTickersFetch(), marketsTickersError(), alertPush(alertDataPayload), alertData(alertDataPayload)];
         mockNetworkError(mockAxios);
         const promise = new Promise(resolve => {
             store.subscribe(() => {

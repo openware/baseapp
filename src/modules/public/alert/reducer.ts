@@ -1,62 +1,30 @@
-import { CommonError } from '../../types';
-import { AlertAction } from './actions';
+import { Alert, AlertAction } from './actions';
 import {
-    ALERT_DELETE_ERROR,
-    ALERT_DELETE_ERROR_BY_INDEX,
-    ALERT_DELETE_SUCCESS,
-    ALERT_DELETE_SUCCESS_BY_INDEX,
-    ALERT_ERROR_DATA, ALERT_ERROR_PUSH,
-    ALERT_SUCCESS_DATA,
-    ALERT_SUCCESS_PUSH,
+    ALERT_DATA,
+    ALERT_DELETE,
+    ALERT_DELETE_BY_INDEX,
 } from './constants';
 
 export interface AlertState {
-    error: CommonError[];
-    success: string[];
+    alerts: Alert[];
 }
 
-export const initialAlertState: AlertState = { error: [], success: [] };
+export const initialAlertState: AlertState = { alerts: [] };
 
 export const alertReducer = (state = initialAlertState, action: AlertAction) => {
     switch (action.type) {
-        case ALERT_ERROR_DATA:
+        case ALERT_DATA:
             return {
-                ...state,
-                error: [...state.error, action.error],
+                alerts: [...state.alerts, action.payload],
             };
-        case ALERT_DELETE_ERROR:
+        case ALERT_DELETE:
             return {
-                ...state,
-                error: [...state.error.slice(1, state.error.length)],
+                alerts: [...state.alerts.slice(1, state.alerts.length)],
             };
-          case ALERT_DELETE_ERROR_BY_INDEX:
-              return {
-                  ...state,
-                  error: [...state.error.slice(0, action.index).concat(...state.error.slice(action.index + 1))],
-              };
-          case ALERT_ERROR_PUSH:
-              return {
-                  ...state,
-              };
-          case ALERT_SUCCESS_DATA:
-              return {
-                  ...state,
-                  success: [...state.success, action.success],
-              };
-          case ALERT_DELETE_SUCCESS:
-              return {
-                  ...state,
-                  success: [...state.success.slice(1, state.success.length)],
-              };
-          case ALERT_DELETE_SUCCESS_BY_INDEX:
-              return {
-                  ...state,
-                  success: [...state.success.slice(0, action.index).concat(...state.success.slice(action.index + 1))],
-              };
-          case ALERT_SUCCESS_PUSH:
-              return {
-                  ...state,
-              };
+        case ALERT_DELETE_BY_INDEX:
+            return {
+                alerts: [...state.alerts.slice(0, action.index).concat(...state.alerts.slice(action.index + 1))],
+            };
         default:
             return state;
     }

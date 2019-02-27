@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { pushAlertError, pushAlertSuccess } from '../../../public/alert';
+import { alertPush } from '../../../public/alert';
 import { apiKeys2FAModal, apiKeysData, ApiKeysFetch } from '../actions';
 
 const apiKeysOptions: RequestOptions = {
@@ -13,9 +13,9 @@ export function* apiKeysSaga(action: ApiKeysFetch) {
         const {totp_code} = action.payload;
         const apiKeys = yield call(API.get(apiKeysOptions), `/resource/api_keys?totp_code=${totp_code}`);
         yield put(apiKeysData(apiKeys));
-        yield put(pushAlertSuccess('success.api_keys.fetched'));
+        yield put(alertPush({message: 'success.api_keys.fetched', type: 'success'}));
     } catch (error) {
-        yield put(pushAlertError(error));
+        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
     } finally {
         yield put(apiKeys2FAModal({active: false}));
     }

@@ -8,14 +8,15 @@ import { CustomInput } from '../../components';
 import { localeFullDate } from '../../helpers/localeFullDate';
 
 import {
+    alertPush,
     ApiKeyCreateFetch,
-    apiKeyCreateFetch,
-    ApiKeyDataInterface, ApiKeyDeleteFetch,
+    apiKeyCreateFetch, ApiKeyDataInterface,
+    ApiKeyDeleteFetch,
     apiKeyDeleteFetch,
     ApiKeys2FAModal,
-    apiKeys2FAModal,
-    apiKeysFetch, ApiKeyStateModal,
-    ApiKeyUpdateFetch, apiKeyUpdateFetch, pushAlertSuccess,
+    apiKeys2FAModal, apiKeysFetch,
+    ApiKeyStateModal, ApiKeyUpdateFetch,
+    apiKeyUpdateFetch,
     RootState,
     selectUserInfo,
     User,
@@ -39,7 +40,7 @@ interface DispatchProps {
     createApiKey: typeof apiKeyCreateFetch;
     updateApiKey: typeof apiKeyUpdateFetch;
     deleteApiKey: typeof apiKeyDeleteFetch;
-    fetchSuccess: typeof pushAlertSuccess;
+    fetchSuccess: typeof alertPush;
 }
 
 interface ProfileApiKeysState {
@@ -397,7 +398,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
 
     private handleCopy = (id: string, type: string) => {
         this.copy(id);
-        this.props.fetchSuccess(`success.api_keys.copied.${type}`);
+        this.props.fetchSuccess({message: `success.api_keys.copied.${type}`, type: 'success'});
     };
 
     private handleToggleStateKeyClick = apiKey => {
@@ -439,8 +440,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         createApiKey: payload => dispatch(apiKeyCreateFetch(payload)),
         updateApiKey: payload => dispatch(apiKeyUpdateFetch(payload)),
         deleteApiKey: payload => dispatch(apiKeyDeleteFetch(payload)),
-        fetchSuccess: payload => dispatch(pushAlertSuccess(payload)),
-
+        fetchSuccess: payload => dispatch(alertPush(payload)),
     });
 
 const connected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileApiKeysComponent));

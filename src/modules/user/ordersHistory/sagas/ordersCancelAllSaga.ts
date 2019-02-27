@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put, select } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { pushAlertError, pushAlertSuccess } from '../../../index';
+import { alertPush } from '../../../index';
 import {
     ordersCancelAllData,
     ordersCancelAllError,
@@ -28,9 +28,9 @@ export function* ordersCancelAllSaga(action: OrdersCancelAllFetch) {
             });
         }
         yield put(ordersCancelAllData(list));
-        yield put(pushAlertSuccess('success.order.canceled.all'));
+        yield put(alertPush({ message: 'success.order.canceled.all', type: 'success'}));
     } catch (error) {
         yield put(ordersCancelAllError());
-        yield put(pushAlertError(error));
+        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
     }
 }

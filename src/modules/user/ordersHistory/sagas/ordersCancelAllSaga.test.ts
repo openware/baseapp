@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { pushAlertError, pushAlertSuccess, rootSaga } from '../../../index';
+import { alertPush, rootSaga } from '../../../index';
 import { ordersCancelAllData, ordersCancelAllError, ordersCancelAllFetch } from '../actions';
 
 
@@ -23,6 +23,7 @@ describe('Orders Cancel All', () => {
     });
 
     const fakeError = {
+        type: 'error',
         code: 500,
         message: ['Server error'],
     };
@@ -38,12 +39,12 @@ describe('Orders Cancel All', () => {
     const expectedActionsSuccess = [
         ordersCancelAllFetch(fakeFetchPayload),
         ordersCancelAllData(fakeSuccessPayload),
-        pushAlertSuccess('success.order.canceled.all'),
+        alertPush({ message: 'success.order.canceled.all', type: 'success'}),
     ];
     const expectedActionsError = [
         ordersCancelAllFetch(fakeFetchPayload),
         ordersCancelAllError(),
-        pushAlertError(fakeError),
+        alertPush(fakeError),
     ];
 
     it('should cancel all open orders', async () => {

@@ -3,7 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
-import { ALERT_ERROR_DATA, ALERT_ERROR_PUSH, ALERT_SUCCESS_DATA, ALERT_SUCCESS_PUSH } from '../../public/alert/constants';
+import { ALERT_DATA, ALERT_PUSH } from '../../public/alert/constants';
 import { walletsAddressFetch, walletsFetch, walletsWithdrawCcyFetch } from './actions';
 import {
     WALLETS_ADDRESS_DATA,
@@ -202,9 +202,6 @@ describe('Wallets', () => {
                         expect(actions).toEqual([expectedWalletsFetch, expectedWalletsData]);
                         setTimeout(resolve, 0.01);
                     }
-                    if (actions.length === 3) {
-                        fail();
-                    }
                 });
             });
             store.dispatch(walletsFetch());
@@ -219,9 +216,6 @@ describe('Wallets', () => {
                     if (actions.length === 2) {
                         expect(actions).toEqual([expectedWalletsFetch, expectedWalletsError]);
                         setTimeout(resolve, 0.01);
-                    }
-                    if (actions.length === 3) {
-                        fail();
                     }
                 });
             });
@@ -273,9 +267,6 @@ describe('Wallets', () => {
                         expect(actions).toEqual([expectedWalletsAddressFetch, expectedWalletsAddressData]);
                         setTimeout(resolve, 0.01);
                     }
-                    if (actions.length === 3) {
-                        fail();
-                    }
                 });
             });
             store.dispatch(walletsAddressFetch(payload));
@@ -284,17 +275,19 @@ describe('Wallets', () => {
 
         it('should handle wallet address error', async () => {
             const expectedCallErrorHandler = {
-                error: {
+                payload: {
                     code: 500,
                     message: ['Server error'],
+                    type: 'error',
                 },
-                type: 'alert/ERROR_FETCH',
+                type: ALERT_PUSH,
             };
             const expectedErrorData = {
-                type: 'alert/ERROR_DATA',
-                error: {
+                type: ALERT_DATA,
+                payload: {
                     code: 500,
                     message: ['Server error'],
+                    type: 'error',
                 },
             };
             mockNetworkError(mockAxios);
@@ -354,8 +347,21 @@ describe('Wallets', () => {
                 type: WALLETS_WITHDRAW_CCY_DATA,
             };
 
-            const expectedSuccessAlertPush = { type: ALERT_SUCCESS_PUSH, success: 'success.withdraw.action' };
-            const expectedSuccessAlertData = { type: ALERT_SUCCESS_DATA, success: 'success.withdraw.action' };
+            const expectedSuccessAlertPush = {
+                type: ALERT_PUSH,
+                payload: {
+                    message: 'success.withdraw.action',
+                    type: 'success',
+                },
+            };
+
+            const expectedSuccessAlertData = {
+                type: ALERT_DATA,
+                payload: {
+                    message: 'success.withdraw.action',
+                    type: 'success',
+                },
+            };
 
             mockWalletsWithdrawCcyFetch();
             const promise = new Promise(resolve => {
@@ -397,17 +403,19 @@ describe('Wallets', () => {
                 },
             };
             const expectedCallErrorHandler = {
-                error: {
+                payload: {
                     code: 500,
                     message: ['Server error'],
+                    type: 'error',
                 },
-                type: ALERT_ERROR_PUSH,
+                type: ALERT_PUSH,
             };
             const expectedErrorAlert = {
-                type: ALERT_ERROR_DATA,
-                error: {
+                type: ALERT_DATA,
+                payload: {
                     code: 500,
                     message: ['Server error'],
+                    type: 'error',
                 },
             };
             mockNetworkError(mockAxios);
