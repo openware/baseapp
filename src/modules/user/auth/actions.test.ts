@@ -20,6 +20,7 @@ describe('Auth actions', () => {
         const payload = {
             email: 'john.barong@gmail.com',
             password: '123123',
+            lang: 'EN',
         };
         const expectedAction = { type: 'auth/SIGN_IN_FETCH', payload };
         expect(actions.signIn(payload)).toEqual(expectedAction);

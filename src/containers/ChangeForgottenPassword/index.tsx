@@ -15,6 +15,7 @@ import { CustomInput } from '../../components';
 import { PASSWORD_REGEX } from '../../helpers';
 import {
     changeForgotPasswordFetch,
+    changeLanguage,
     RootState,
     selectChangeForgotPasswordSuccess,
 } from '../../modules';
@@ -34,6 +35,7 @@ interface ReduxProps {
 
 interface DispatchProps {
     changeForgotPasswordFetch: typeof changeForgotPasswordFetch;
+    changeLanguage: typeof changeLanguage;
 }
 
 interface HistoryProps {
@@ -63,10 +65,14 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
     public componentDidMount() {
         const { history } = this.props;
         const token = new URLSearchParams(history.location.search).get('reset_token');
+        const lang = new URLSearchParams(history.location.search).get('lang');
         if (token) {
             this.setState({
                 confirmToken: token,
             });
+        }
+        if (lang) {
+            this.props.changeLanguage(lang);
         }
     }
 
@@ -213,6 +219,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         changeForgotPasswordFetch: credentials => dispatch(changeForgotPasswordFetch(credentials)),
+        changeLanguage: lang => dispatch(changeLanguage(lang)),
     });
 
 // tslint:disable-next-line:no-any

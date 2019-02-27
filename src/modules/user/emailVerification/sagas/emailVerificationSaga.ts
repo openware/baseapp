@@ -19,7 +19,8 @@ const sessionsConfig: RequestOptions = {
 export function* emailVerificationSaga(action: EmailVerificationFetch) {
     try {
         yield call(API.post(sessionsConfig), '/identity/users/email/generate_code', {
-            email: action.email,
+            email: action.payload.email,
+            lang: action.payload.lang,
         });
         yield put(emailVerificationData());
         yield put(pushAlertSuccess('success.message.sent'));

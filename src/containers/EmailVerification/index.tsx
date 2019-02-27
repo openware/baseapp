@@ -10,6 +10,7 @@ import { withRouter } from 'react-router-dom';
 import {
     emailVerificationFetch,
     RootState,
+    selectCurrentLanguage,
     selectSendEmailVerificationLoading,
 } from '../../modules';
 
@@ -61,12 +62,16 @@ class EmailVerificationComponent extends React.Component<Props> {
     }
 
     private handleClick = () => {
-        this.props.emailVerificationFetch(this.props.location.state.email);
+        this.props.emailVerificationFetch({
+          email: this.props.location.state.email,
+          lang: this.props.i18n.toUpperCase(),
+        });
     }
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     emailVerificationLoading: selectSendEmailVerificationLoading(state),
+    i18n: selectCurrentLanguage(state),
 });
 
 const mapDispatchProps = {

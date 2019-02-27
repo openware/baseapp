@@ -26,14 +26,14 @@ describe('Email Verification Saga', () => {
         message: ['Server error'],
     };
 
-    const fakeEmail = 'test@gmail.com';
+    const fakePayload = {email: 'test@gmail.com', lang: 'EN'};
 
     const mockResendVerificationEmail = () => {
         mockAxios.onPost('/identity/users/email/generate_code').reply(201);
     };
 
-    const expectedActionsFetch = [emailVerificationFetch(fakeEmail), emailVerificationData()];
-    const expectedActionsError = [emailVerificationFetch(fakeEmail), emailVerificationError(fakeError)];
+    const expectedActionsFetch = [emailVerificationFetch(fakePayload), emailVerificationData()];
+    const expectedActionsError = [emailVerificationFetch(fakePayload), emailVerificationError(fakeError)];
 
     it('should resend confirmation email in success flow', async () => {
         mockResendVerificationEmail();
@@ -47,7 +47,7 @@ describe('Email Verification Saga', () => {
             });
         });
 
-        store.dispatch(emailVerificationFetch(fakeEmail));
+        store.dispatch(emailVerificationFetch(fakePayload));
         return promise;
     });
 
@@ -62,7 +62,7 @@ describe('Email Verification Saga', () => {
                 }
             });
         });
-        store.dispatch(emailVerificationFetch(fakeEmail));
+        store.dispatch(emailVerificationFetch(fakePayload));
         return promise;
     });
 });

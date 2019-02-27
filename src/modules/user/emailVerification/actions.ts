@@ -18,7 +18,10 @@ export interface EmailVerificationError {
 
 export interface EmailVerificationFetch {
     type: typeof EMAIL_VERIFICATION_FETCH;
-    email: string;
+    payload: {
+      email: string;
+      lang: string;
+    };
 }
 
 export type EmailVerificationAction =
@@ -35,7 +38,7 @@ export const emailVerificationError = (error: CommonError): EmailVerificationErr
     error,
 });
 
-export const emailVerificationFetch = (email: string): EmailVerificationFetch => ({
+export const emailVerificationFetch = (payload: EmailVerificationFetch['payload']): EmailVerificationFetch => ({
     type: EMAIL_VERIFICATION_FETCH,
-    email,
+    payload,
 });

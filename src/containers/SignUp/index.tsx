@@ -23,6 +23,7 @@ import {
 } from '../../helpers';
 import {
     RootState,
+    selectCurrentLanguage,
     selectSignUpRequireVerification,
     signUp,
 } from '../../modules';
@@ -225,6 +226,8 @@ class SignUpComponent extends React.Component<Props> {
             refId,
         } = this.state;
 
+        const { i18n } = this.props;
+
         if (refId) {
             switch (captchaType()) {
                 case 'none':
@@ -232,6 +235,7 @@ class SignUpComponent extends React.Component<Props> {
                         email,
                         password,
                         refid: refId,
+                        lang: i18n.toUpperCase(),
                     });
                     break;
                 case 'recaptcha':
@@ -242,6 +246,7 @@ class SignUpComponent extends React.Component<Props> {
                         password,
                         recaptcha_response,
                         refid: refId,
+                        lang: i18n.toUpperCase(),
                     });
                     break;
             }
@@ -251,6 +256,7 @@ class SignUpComponent extends React.Component<Props> {
                     this.props.signUp({
                         email,
                         password,
+                        lang: i18n.toUpperCase(),
                     });
                     break;
                 case 'recaptcha':
@@ -260,6 +266,7 @@ class SignUpComponent extends React.Component<Props> {
                         email,
                         password,
                         recaptcha_response,
+                        lang: i18n.toUpperCase(),
                     });
                     break;
             }
@@ -353,6 +360,7 @@ class SignUpComponent extends React.Component<Props> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     requireVerification: selectSignUpRequireVerification(state),
+    i18n: selectCurrentLanguage(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

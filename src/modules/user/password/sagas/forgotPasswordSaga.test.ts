@@ -34,6 +34,7 @@ describe('FORGOT PASSWORD SAGA', () => {
 
     const fakeRequest =  {
         email: 'test@test.com',
+        lang: 'EN',
     };
 
     const mockForgotPassword = () => {

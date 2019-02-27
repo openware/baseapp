@@ -18,6 +18,7 @@ import {
 import {
     forgotPassword,
     RootState,
+    selectCurrentLanguage,
     selectForgotPasswordSuccess,
 } from '../../modules';
 
@@ -81,7 +82,11 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
 
     private handleChangeEmail = () => {
         const { email } = this.state;
-        this.props.forgotPassword({email});
+        const { i18n } = this.props;
+        this.props.forgotPassword({
+          email,
+          lang: i18n.toUpperCase(),
+        });
     };
 
     private handleFocusEmail = () => {
@@ -116,6 +121,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     success: selectForgotPasswordSuccess(state),
+    i18n: selectCurrentLanguage(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
