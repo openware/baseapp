@@ -25,6 +25,9 @@ export function* signInSaga(action: SignInFetch) {
                 yield put(pushAlertError(error));
                 break;
             case 403:
+                if (error.message.indexOf('identity.session.invalid_otp') > -1) {
+                    yield put(pushAlertError(error));
+                }
                 yield put(signInRequire2FA({ require2fa: true }));
                 break;
             default:

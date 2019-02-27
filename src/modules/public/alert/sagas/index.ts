@@ -15,16 +15,17 @@ export function* handleSuccessSaga(action: SuccessData) {
 export function* handleErrorSaga(action: ErrorData) {
     switch (action.error.code) {
         case 401:
-            if (action.error.message[0] === 'identity.session.not_active') {
+            if (action.error.message.indexOf('identity.session.not_active') > -1) {
                 yield put(userReset());
                 yield put(handleError(action.error));
             } else {
                 yield put(handleError(action.error));
             }
             break;
-
         case 403:
-            // TODO: What is this case we are ignoring?
+            if (action.error.message.indexOf('identity.session.invalid_otp') > -1) {
+                yield put(handleError(action.error));
+            }
             return;
 
         default:
