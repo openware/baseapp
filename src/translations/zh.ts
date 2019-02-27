@@ -298,6 +298,11 @@ export const zh: LangType = {
     'page.header.signIn.password.message.error': '无效的密码',
     'page.header.signIn.receiveConfirmation': '没有收到您的确认电子邮件',
     'page.header.signIn.forgotPassword': '忘记密码？',
+    'page.header.signIn.resetPassword.title': 'Reset password',
+    'page.header.signIn.resetPassword.newPassword': 'New password',
+    'page.header.signIn.resetPassword.repeatPassword': 'Repeat password',
+    'page.header.signIn.resetPassword.button': 'Change',
+    'page.header.signIn.resetPassword.error': 'Fields are empty or don`t matches',
     'page.header.signIn.createAccount': '创建一个帐户？',
 
     'page.header.signUp': '注册',

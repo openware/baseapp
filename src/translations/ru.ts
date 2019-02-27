@@ -300,6 +300,11 @@ export const ru: LangType = {
     'page.header.signIn.password.message.error': 'Неправильный пароль',
     'page.header.signIn.receiveConfirmation': 'Не получили подтверждение по электронной почте?',
     'page.header.signIn.forgotPassword': 'Забыли пароль?',
+    'page.header.signIn.resetPassword.title': 'Reset password',
+    'page.header.signIn.resetPassword.newPassword': 'New password',
+    'page.header.signIn.resetPassword.repeatPassword': 'Repeat password',
+    'page.header.signIn.resetPassword.button': 'Change',
+    'page.header.signIn.resetPassword.error': 'Fields are empty or don`t matches',
     'page.header.signIn.createAccount': 'Создать аккаунт?',
 
     'page.header.signUp': 'Регистрация',

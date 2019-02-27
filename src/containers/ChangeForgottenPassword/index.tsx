@@ -1,9 +1,9 @@
 import {
   Button,
-  Input,
 } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import {
   connect,
   MapDispatchToPropsFunction,
@@ -11,6 +11,7 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { CustomInput } from '../../components';
 import { PASSWORD_REGEX } from '../../helpers';
 import {
     changeForgotPasswordFetch,
@@ -43,7 +44,7 @@ interface HistoryProps {
     };
 }
 
-type Props = RouterProps & DispatchProps & HistoryProps & ReduxProps;
+type Props = RouterProps & DispatchProps & HistoryProps & ReduxProps & InjectedIntlProps;
 
 class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForgottenPasswordState> {
     constructor(props: Props) {
@@ -84,12 +85,12 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
             confirmPasswordFocused,
         } = this.state;
 
-        const passwordFocusedClass = cr('pg-change-forgotten-password-screen__container-form-body-item', {
-            'pg-change-forgotten-password-screen__container-form-body-item--focused': passwordFocused,
+        const passwordFocusedClass = cr('cr-email-form__group', {
+            'cr-email-form__group--focused': passwordFocused,
         });
 
-        const confirmPasswordFocusedClass = cr('pg-change-forgotten-password-screen__container-form-body-item', {
-            'pg-change-forgotten-password-screen__container-form-body-item--focused': confirmPasswordFocused,
+        const confirmPasswordFocusedClass = cr('cr-email-form__group', {
+            'cr-email-form__group--focused': confirmPasswordFocused,
         });
 
         const updatePassword = e => this.handleChange('password', e);
@@ -97,50 +98,55 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
         return (
             <div className="pg-change-forgotten-password-screen">
                 <div className="pg-change-forgotten-password-screen__container">
-                    <div className="pg-change-forgotten-password-screen__container-form">
-                        <div className="pg-change-forgotten-password-screen__container-form">
-                            <div className="pg-change-forgotten-password-screen__container-form-header">
-                                Reset Password
+                    <form>
+                        <div className="cr-email-form">
+                            <div className="cr-email-form__options-group">
+                                <div className="cr-email-form__option">
+                                    <div className="cr-email-form__option-inner">
+                                        {this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.title'})}
+                                    </div>
+                                </div>
                             </div>
-                            <form className="pg-change-forgotten-password-screen__container-form-body">
-                                <fieldset className={passwordFocusedClass}>
-                                    {password && <legend>New password</legend>}
-                                    <div className="pg-change-forgotten-password-screen__container-form-body-item__input">
-                                        <Input
-                                            type="password"
-                                            value={password}
-                                            placeholder="New password"
-                                            onChangeValue={updatePassword}
-                                            onFocus={this.handleFieldFocus('password')}
-                                            onBlur={this.handleFieldFocus('password')}
-                                        />
-                                    </div>
-                                </fieldset>
-                                <fieldset className={confirmPasswordFocusedClass}>
-                                    {confirmPassword && <legend>Repeat password</legend>}
-                                    <div className="pg-change-forgotten-password-screen__container-form-body-item__input">
-                                        <Input
-                                            type="password"
-                                            value={confirmPassword}
-                                            placeholder="Repeat password"
-                                            onChangeValue={updateConfirmPassword}
-                                            onFocus={this.handleFieldFocus('confirmPassword')}
-                                            onBlur={this.handleFieldFocus('confirmPassword')}
-                                        />
-                                    </div>
-                                </fieldset>
-                            </form>
-                            {error && <div className="pg-change-forgotten-password-screen__container-form-alert">Fields are empty or don`t matches</div>}
-                            <div className="pg-change-password-screen__container-form-footer">
-                                <Button
-                                    className="pg-change-forgotten-password-screen__container-form-footer-button"
-                                    label="Change"
-                                    disabled={this.disableButton()}
-                                    onClick={this.handleSendNewPassword}
-                                />
+                            <div className="cr-email-form__form-content">
+                                <div className={passwordFocusedClass}>
+                                    <CustomInput
+                                        type="password"
+                                        label={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.newPassword'})}
+                                        placeholder={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.newPassword'})}
+                                        defaultLabel="New password"
+                                        handleChangeInput={updatePassword}
+                                        inputValue={password}
+                                        handleFocusInput={this.handleFieldFocus('password')}
+                                        classNameLabel="cr-email-form__label"
+                                        classNameInput="cr-email-form__input"
+                                    />
+                                </div>
+                                <div className={confirmPasswordFocusedClass}>
+                                    <CustomInput
+                                        type="password"
+                                        label={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.repeatPassword'})}
+                                        placeholder={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.repeatPassword'})}
+                                        defaultLabel="Repeat password"
+                                        handleChangeInput={updateConfirmPassword}
+                                        inputValue={confirmPassword}
+                                        handleFocusInput={this.handleFieldFocus('confirmPassword')}
+                                        classNameLabel="cr-email-form__label"
+                                        classNameInput="cr-email-form__input"
+                                    />
+                                </div>
+                                {error && <div className="cr-email-form__error">{this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.error'})}</div>}
+                                <div className="cr-email-form__button-wrapper">
+                                    <Button
+                                        label={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.button'})}
+                                        type="submit"
+                                        className={!this.disableButton() ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                                        disabled={this.disableButton()}
+                                        onClick={this.handleSendNewPassword}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         );
@@ -210,7 +216,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line:no-any
-const ChangeForgottenPassword = withRouter(connect(mapStateToProps, mapDispatchProps)(ChangeForgottenPasswordComponent) as any);
+const ChangeForgottenPassword = withRouter(injectIntl(connect(mapStateToProps, mapDispatchProps)(ChangeForgottenPasswordComponent) as any));
 
 export {
     ChangeForgottenPassword,

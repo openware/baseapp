@@ -292,6 +292,11 @@ export const en = {
     'page.header.signIn.password.message.error': 'Password is invalid',
     'page.header.signIn.receiveConfirmation': 'Didn\'t receive your confirmation email?',
     'page.header.signIn.forgotPassword': 'Forgot your password?',
+    'page.header.signIn.resetPassword.title': 'Reset password',
+    'page.header.signIn.resetPassword.newPassword': 'New password',
+    'page.header.signIn.resetPassword.repeatPassword': 'Repeat password',
+    'page.header.signIn.resetPassword.button': 'Change',
+    'page.header.signIn.resetPassword.error': 'Fields are empty or don`t matches',
     'page.header.signIn.createAccount': 'Create an account?',
 
     'page.header.signUp': 'Sign Up',
