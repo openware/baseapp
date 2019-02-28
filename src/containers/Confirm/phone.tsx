@@ -5,8 +5,8 @@ import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import {
-  connect,
-  MapDispatchToPropsFunction,
+    connect,
+    MapDispatchToPropsFunction,
 } from 'react-redux';
 import { RootState } from '../../modules';
 import {
@@ -58,7 +58,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     }
 
     public translate = (e: string) => {
-        return this.props.intl.formatMessage({id: e});
+        return this.props.intl.formatMessage({ id: e });
     };
 
     public componentDidUpdate(prev: Props) {
@@ -182,6 +182,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         if (this.inputPhoneNumber(e)) {
             this.setState({
                 phoneNumber: e.target.value,
+                resendCode: false,
             });
         }
     }
@@ -211,12 +212,12 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
             phone_number: String(this.state.phoneNumber),
         };
         if (!this.state.resendCode) {
-          this.props.sendCode(requestProps);
-          this.setState({
-              resendCode: true,
-          });
+            this.props.sendCode(requestProps);
+            this.setState({
+                resendCode: true,
+            });
         } else {
-          this.props.resendCode(requestProps);
+            this.props.resendCode(requestProps);
         }
     };
 }
