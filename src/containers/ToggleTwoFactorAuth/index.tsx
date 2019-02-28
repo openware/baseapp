@@ -105,6 +105,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                         onChangeValue={this.handleOtpCodeChange}
                         type="tel"
                         value={otpCode}
+                        onKeyPress={this.handleEnterPress}
                     />
                 </div>
                 <Button label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.enable')} onClick={submitHandler} />
@@ -134,6 +135,15 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
             otpCode: value,
         });
     }
+
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        const enable2fa = this.get2faAction();
+        const submitHandler = enable2fa ? this.handleEnable2fa : this.handleDisable2fa;
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            submitHandler();
+        }
+    };
 
     private handleEnable2fa = () => {
         this.props.toggle2fa({

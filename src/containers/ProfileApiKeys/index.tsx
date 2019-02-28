@@ -332,6 +332,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         handleFocusInput={this.handleChangeFocusField}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
+                        onKeyPress={this.handleEnterPress}
                     />
                 </div>
                 <div className="cr-email-form__button-wrapper">
@@ -361,6 +362,35 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         this.setState({
             otpCode: value,
         });
+    };
+
+    private renderOnClick = () => {
+        switch (this.props.modal.action) {
+            case 'getKeys':
+                this.handleGetKeys();
+                break;
+            case 'createKey':
+                this.handleCreateKey();
+                break;
+            case 'createSuccess':
+                this.handleCreateSuccess();
+                break;
+            case 'updateKey':
+                this.handleUpdateKey();
+                break;
+            case 'deleteKey':
+                this.handleDeleteKey();
+                break;
+            default:
+                break;
+        }
+    };
+
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.renderOnClick();
+        }
     };
 
     private handleGetKeysClick = () => {

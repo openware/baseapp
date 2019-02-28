@@ -72,6 +72,7 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                                     handleFocusInput={this.props.handleChangeFocusField}
                                     classNameLabel="cr-email-form__label"
                                     classNameInput="cr-email-form__input"
+                                    onKeyPress={this.handleEnterPress}
                                 />
                                 {errorMessage && <div className="cr-email-form__error">{errorMessage}</div>}
                             </div>
@@ -97,6 +98,13 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
     private handleSubmit = () => {
         this.props.onSubmit();
     };
+
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.handleSubmit();
+        }
+    }
 }
 
 export const TwoFactorAuth = TwoFactorAuthComponent;

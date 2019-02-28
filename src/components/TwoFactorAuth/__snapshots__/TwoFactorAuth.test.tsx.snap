@@ -46,6 +46,7 @@ exports[`TwoFactorAuth component should render 1`] = `
             handleFocusInput={[MockFunction]}
             inputValue=""
             label="6-digit Google Authenticator Code"
+            onKeyPress={[Function]}
             placeholder="6-digit Google Authenticator Code"
             type="number"
           />

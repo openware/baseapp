@@ -1,6 +1,4 @@
-import {
-    Input,
-} from '@openware/components';
+import { Input } from '@openware/components';
 import * as React from 'react';
 
 interface CustomInputProps {
@@ -13,6 +11,7 @@ interface CustomInputProps {
     classNameLabel: string;
     classNameInput: string;
     placeholder: string;
+    onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 class CustomInput extends React.Component<CustomInputProps> {
@@ -25,6 +24,7 @@ class CustomInput extends React.Component<CustomInputProps> {
             classNameLabel,
             classNameInput,
             type,
+            onKeyPress,
         } = this.props;
 
         return (
@@ -40,6 +40,7 @@ class CustomInput extends React.Component<CustomInputProps> {
                     onFocus={this.props.handleFocusInput}
                     onBlur={this.props.handleFocusInput}
                     onChangeValue={this.props.handleChangeInput}
+                    onKeyPress={onKeyPress}
                 />
             </React.Fragment>
         );
