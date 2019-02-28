@@ -53,10 +53,6 @@
                 height: calc(var(--gap) * 8.16);
                 margin-top: calc(var(--gap) * 1.3);
                 width: calc(var(--big-gap) * 4.12);
-
-                &:focus-within {
-                    padding-top: calc(var(--gap) * 0.6);
-                }
             }
 
             &-text {
@@ -81,8 +77,8 @@
                 }
 
                 &--focused {
-                    color: var(--color-blue) !important;
-                    border: 2px solid var(--color-blue) !important;
+                    color: var(--accent) !important;
+                    border: 1px solid var(--accent) !important;
                 }
 
                 legend {
@@ -92,20 +88,28 @@
                 }
 
                 input {
+                    width: 100%;
                     color: var(--color-white);
                     background: var(--transparent);
                     border: unset;
                     bottom: 0;
                     font-size: calc(var(--gap) * 2);
-                    margin-top: calc(var(--gap) * 1.6);
+                    margin-top: calc(var(--gap) * 2);
 
                     &::placeholder {
                         color: var(--text-muted);
                     }
                 }
 
+                &:focus-within {
+                    color: var(--color-blue);
+                }
+
                 .cr-dropdown {
                     &__input, &__input--open {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
                         background-color: var(--base-bright);
                         border: 1px solid var(--kyc-grey);
                         border-radius: calc(var(--gap) * 0.6);
@@ -124,22 +128,21 @@
                             text-shadow: 0 0 0 var(--kyc-grey);
                             font-size: calc(var(--gap) * 2);
                             font-weight: var(--font-weight);
-                            line-height: calc(var(--gap) * 6.7);
+                            line-height: calc(var(--gap) * 8);
                             margin-left: 0.75em;
                         }
 
                         &-icon {
-                            top: 0px;
-                            right: 0px;
                             cursor: pointer;
                             position: absolute;
-                            line-height: calc(var(--gap) * 6);
+                            line-height: calc(var(--gap) * 7);
                             margin-right: calc(var(--gap) * 3);
                         }
                     }
 
                     &__input--open {
                         color: var(--backhround-dropdown-text);
+                        border-color: var(--color-blue);
                     }
                     &__list {
                         background-color: var(--background-dropdown);

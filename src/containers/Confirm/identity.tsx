@@ -3,7 +3,7 @@ import {
     Dropdown,
 } from '@openware/components';
 import cr from 'classnames';
-import countries = require('country-list');
+import countries = require('i18n-iso-countries');
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
@@ -12,16 +12,17 @@ import {
   MapDispatchToPropsFunction,
 } from 'react-redux';
 import { isDateInFuture } from '../../helpers';
-import { RootState } from '../../modules';
+import {RootState, selectCurrentLanguage} from '../../modules';
 import {
     selectSendIdentitySuccess,
     sendIdentity,
 } from '../../modules/user/kyc/identity';
 import { labelFetch } from '../../modules/user/kyc/label';
-import { nationalities } from './nationalities';
+import { nationalities } from '../../translations/nationalities';
 
 interface ReduxProps {
     success?: string;
+    lang: string;
 }
 
 interface DispatchProps {
@@ -72,13 +73,6 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         residentialAddressFocused: false,
     };
 
-    public componentDidMount() {
-        this.setState({
-          countryOfBirth: countries().getCodes()[0],
-          nationality: nationalities[0],
-        });
-    }
-
     public translate = (e: string) => {
         return this.props.intl.formatMessage({id: e});
     };
@@ -103,8 +97,10 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             lastNameFocused,
             postcodeFocused,
             residentialAddressFocused,
+            countryOfBirth,
+            nationality,
         } = this.state;
-        const { success } = this.props;
+        const { success, lang } = this.props;
 
         const cityGroupClass = cr('pg-confirm__content-identity-col-row-content', {
             'pg-confirm__content-identity-col-row-content--focused': cityFocused,
@@ -130,10 +126,18 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             'pg-confirm__content-identity-col-row-content--focused': residentialAddressFocused,
         });
 
-        const dataNationalities = nationalities;
+        const dataNationalities = nationalities.map(value => {
+            return this.translate(value);
+        });
         const onSelectNationality = value => this.selectNationality(dataNationalities[value]);
 
-        const dataCountries = countries().getNames();
+        /* tslint:disable */
+        countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+        countries.registerLocale(require("i18n-iso-countries/langs/ru.json"));
+        countries.registerLocale(require("i18n-iso-countries/langs/zh.json"));
+        /* tslint:enable */
+
+        const dataCountries = Object.values(countries.getNames(lang));
         const onSelectCountry = value => this.selectCountry(dataCountries[value]);
 
         return (
@@ -216,24 +220,26 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     <div className="pg-confirm__content-identity-col-row">
                       <div className="pg-confirm__content-identity-col-row-content">
                           <div className="pg-confirm__content-identity-col-row-content-label">
-                              {this.translate('page.body.kyc.identity.nationality')}
+                              {nationality && this.translate('page.body.kyc.identity.nationality')}
                           </div>
                         <Dropdown
                           className="pg-confirm__content-documents-col-row-content-number"
                           list={dataNationalities}
                           onSelect={onSelectNationality}
+                          placeholder={this.translate('page.body.kyc.identity.nationality')}
                         />
                       </div>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
                       <div className="pg-confirm__content-identity-col-row-content">
                           <div className="pg-confirm__content-identity-col-row-content-label">
-                              {this.translate('page.body.kyc.identity.CoR')}
+                              {countryOfBirth && this.translate('page.body.kyc.identity.CoR')}
                           </div>
                         <Dropdown
                           className="pg-confirm__content-documents-col-row-content-number"
                           list={dataCountries}
                           onSelect={onSelectCountry}
+                          placeholder={this.translate('page.body.kyc.identity.CoR')}
                         />
                       </div>
                     </div>
@@ -340,7 +346,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
     private selectCountry = (value: string) => {
         this.setState({
-            countryOfBirth: countries().getCode(value),
+            countryOfBirth: countries.getAlpha2Code(value, this.props.lang),
         });
     };
 
@@ -361,6 +367,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     success: selectSendIdentitySuccess(state),
+    lang: selectCurrentLanguage(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

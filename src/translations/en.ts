@@ -1,3 +1,5 @@
+import { nationalitiesNames } from './nationalities';
+
 export const en = {
     'page.header.navbar.signIn': 'Sign In',
     'page.header.navbar.trade': 'Trade',
@@ -473,4 +475,6 @@ export const en = {
     'public.k_line.invalid_limit': 'Invalid limit',
 
     'server.internal_error': 'Internal Server Error',
+
+    ...nationalitiesNames,
 };

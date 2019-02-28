@@ -1,4 +1,5 @@
 import { LangType } from '.';
+import { nationalitiesNames } from './nationalities';
 
 export const ru: LangType = {
     'page.header.navbar.signIn': 'Войти',
@@ -482,4 +483,6 @@ export const ru: LangType = {
     'public.k_line.invalid_limit': 'Неверный лимит',
 
     'server.internal_error': 'Внутренняя ошибка сервера',
+
+    ...nationalitiesNames,
 };

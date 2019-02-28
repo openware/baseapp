@@ -2511,11 +2511,6 @@ cosmiconfig@^5.0.0, cosmiconfig@^5.0.7:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
 
-country-list@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/country-list/-/country-list-1.1.1.tgz#daa9237456b443aee104161766aad2cf0883660b"
-  integrity sha512-Fpmov7vGmUAFurh8VniQU8vXcRvPuCchTiC/zSaPdjziCEwRqK6nW3A4t7R2vCknbhSHy+bbRQSBbn9rOsLZRw==
-
 cpx@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/cpx/-/cpx-1.5.0.tgz#185be018511d87270dedccc293171e37655ab88f"
@@ -4902,6 +4897,11 @@ husky@^1.0.0-rc.13:
     read-pkg "^4.0.1"
     run-node "^1.0.0"
     slash "^2.0.0"
+
+i18n-iso-countries@^3.7.8:
+  version "3.7.8"
+  resolved "https://registry.yarnpkg.com/i18n-iso-countries/-/i18n-iso-countries-3.7.8.tgz#e5ae94b227e3cf0071ec78da490e2cb427342049"
+  integrity sha512-NkT3lRiw7D4kKtSAVjVdHCvGlc2UOe0ALKa9IfEx0LkEDf0q3YgjP/veVk0d/OZ7yqUNzV8aJP4lJc6RPj++Gw==
 
 iconv-lite@0.4.23:
   version "0.4.23"

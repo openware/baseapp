@@ -1,4 +1,5 @@
 import { LangType } from '.';
+import { nationalitiesNames } from './nationalities';
 
 export const zh: LangType = {
     'page.header.navbar.signIn': '登录',
@@ -480,4 +481,6 @@ export const zh: LangType = {
     'public.k_line.invalid_limit': 'Invalid limit',
 
     'server.internal_error': 'Internal Server Error',
+
+    ...nationalitiesNames,
 };
