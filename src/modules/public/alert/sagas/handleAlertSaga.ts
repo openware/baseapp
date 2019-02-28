@@ -14,8 +14,12 @@ export function* handleAlertSaga(action: AlertPush) {
                     yield put(alertData(action.payload));
                     return;
                 } else {
-                    yield call(callAlertData, action);
-                    break;
+                    if (action.payload.message.indexOf('authz.invalid_session') > -1) {
+                        yield put(userReset());
+                    } else {
+                        yield call(callAlertData, action);
+                        break;
+                    }
                 }
                 break;
             case 403:
