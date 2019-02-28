@@ -1,6 +1,6 @@
 {
   "name": "@openware/base-app",
-  "version": "2.1.114",
+  "version": "2.1.115",
   "private": true,
   "dependencies": {
     "@openware/components": "^2.0.24",
@@ -8,8 +8,8 @@
     "axios": "^0.18.0",
     "bitcoincashjs": "0.1.10",
     "history": "^4.7.2",
-    "immutability-helper": "^3.0.0",
     "i18n-iso-countries": "^3.7.8",
+    "immutability-helper": "^3.0.0",
     "js-yaml": "^3.12.0",
     "moment": "^2.23.0",
     "moment-timezone": "^0.5.23",
