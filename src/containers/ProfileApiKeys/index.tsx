@@ -1,4 +1,4 @@
-import { Button, Checkbox, Table } from '@openware/components';
+import { Button, Checkbox, CopyableTextField, Table } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
@@ -243,18 +243,15 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                 body = (
                     <div className="cr-success-create">
                         <div className="pg-copyable-text__section">
-                            <legend><span>{this.t('page.body.profile.apiKeys.modal.access_key')}</span></legend>
-                            <div className="cr-copyable-text-field pg-copyable-text-field__input">
-                                <div className="cr-copyable-text-field__input">
-                                    <input value={this.props.modal.apiKey.kid} readOnly={true} id={'access-key-id'}/>
-                                </div>
-                            </div>
-                            <div
-                                className="cr-button pg-copyable-text-field__button"
-                                onClick={() => this.handleCopy('access-key-id', 'access')}
-                            >
-                                <span>{this.t('page.body.profile.apiKeys.modal.btn.copy')}</span>
-                            </div>
+                            <fieldset onClick={() => this.handleCopy('access-key-id', 'access')}>
+                                <legend><span>{this.t('page.body.profile.apiKeys.modal.access_key')}</span></legend>
+                                <CopyableTextField
+                                  className="pg-copyable-text-field__input"
+                                  fieldId={'access-key-id'}
+                                  value={this.props.modal.apiKey.kid}
+                                  copyButtonText={this.t('page.body.profile.content.copyLink')}
+                                />
+                            </fieldset>
                         </div>
                         <div className="secret-section">
                             <span className="secret-sign">&#9888;</span>
@@ -266,18 +263,15 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             </p>
                         </div>
                         <div className="pg-copyable-text__section">
-                            <legend><span>{this.t('page.body.profile.apiKeys.modal.secret_key')}</span></legend>
-                            <div className="cr-copyable-text-field pg-copyable-text-field__input">
-                                <div className="cr-copyable-text-field__input">
-                                    <input value={this.props.modal.apiKey.secret} readOnly={true} id={'secret-key-id'}/>
-                                </div>
-                            </div>
-                            <div
-                                className="cr-button pg-copyable-text-field__button"
-                                onClick={() => this.handleCopy('secret-key-id', 'secret')}
-                            >
-                                <span>{this.t('page.body.profile.apiKeys.modal.btn.copy')}</span>
-                            </div>
+                            <fieldset onClick={() => this.handleCopy('secret-key-id', 'secret')}>
+                                <legend><span>{this.t('page.body.profile.apiKeys.modal.secret_key')}</span></legend>
+                                <CopyableTextField
+                                  className="pg-copyable-text-field__input"
+                                  fieldId={'secret_key-id'}
+                                  value={this.props.modal.apiKey.secret}
+                                  copyButtonText={this.t('page.body.profile.content.copyLink')}
+                                />
+                            </fieldset>
                         </div>
                         <p className="note-section">
                             <span>{this.t('page.body.profile.apiKeys.modal.note')} </span>
@@ -396,11 +390,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         this.props.toggleApiKeys2FAModal(payload);
     };
 
-    private handleCopy = (id: string, type: string) => {
-        this.copy(id);
-        this.props.fetchSuccess({message: `success.api_keys.copied.${type}`, type: 'success'});
-    };
-
     private handleToggleStateKeyClick = apiKey => {
         const payload: ApiKeys2FAModal['payload'] = {active: true, action: 'updateKey', apiKey};
         this.props.toggleApiKeys2FAModal(payload);
@@ -412,6 +401,11 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         const payload: ApiKeyUpdateFetch['payload'] = {totp_code: this.state.otpCode, apiKey: apiKey};
         this.props.updateApiKey(payload);
         this.setState({otpCode: ''});
+    };
+
+    private handleCopy = (id: string, type: string) => {
+        this.copy(id);
+        this.props.fetchSuccess({ message: `success.api_keys.copied.${type}`, type: 'success'});
     };
 
     private handleDeleteKeyClick = apiKey => {

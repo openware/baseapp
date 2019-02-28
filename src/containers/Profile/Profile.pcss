@@ -451,7 +451,7 @@
     }
 
     .note-section {
-      font-size: calc(var(--gap) * 1.5);
+      font-size: calc(var(--gap) * 2);
       margin: calc(var(--gap) * 3);
       padding: calc(var(--gap) * 2);
 
@@ -496,57 +496,47 @@
 
     .cr-success-create {
       min-height: calc(var(--big-gap) * 6.46);
+
       .pg-copyable-text__section {
         margin: auto;
+        overflow: hidden;
         max-width: calc(var(--big-gap) * 6.33);
-        padding: calc(var(--gap) * 3) 0 calc(var(--gap) * 3) 0;
+        padding: calc(var(--gap) * 4) 0 calc(var(--gap) * 2) 0;
         position: relative;
 
-        legend {
-          background-color: var(--base-bright);
-          position:absolute;
-          top: calc(var(--gap) * 2);
-          left: calc(var(--gap) * 2);
-        }
-
-        .pg-copyable-text-field {
-          &__input {
-            padding: 0;
-            border-color: var(--placeholder-text);
-            border-radius: var(--gap);
-
-            .cr-input {
-              border-bottom: none;
-            }
-
-            input {
-              height: calc(var(--gap) * 6.7);
-              box-sizing: border-box;
-              color: var(--color-white);
-              padding: 0 calc(var(--gap) * 2);
-              background: var(--transparent);
-            }
+        fieldset {
+          border: 1px solid var(--input-block-border-color);
+          padding: 0 8px 0 9px;
+          border-radius: var(--gap);
+          legend {
+            color: var(--text-muted);
           }
 
-          &__button {
-            cursor: pointer;
-            text-transform: uppercase;
-            height: calc(var(--gap) * 4);
-            width: calc(var(--gap) * 10);
-            position: absolute;
-            right: calc(var(--gap) * 1);
-            top: calc(var(--gap) * 2.8);
-            line-height: calc(var(--gap) * 4);
-            text-align: center;
-            font-size: calc(var(--gap) * 2);
-            font-weight: bolder;
-
-            span {
-              text-transform: uppercase;
+          &:focus-within {
+            border: 1px solid var(--button-primary) !important;
+            legend {
+              color: var(--accent) !important;
+            }
+          }
+          .cr-copyable-text-field {
+            padding: 0 0 9px 2px;
+            border: none;
+            &__input {
+              border: none;
+              input {
+                color: var(--color-white);
+              }
+              .cr-copyable-text-field__button {
+                background: var(--button-normal);
+                color: var(--white);
+                &:hover {
+                  background: var(--button-hover);
+                }
+              }
             }
           }
         }
-    }
+      }
     }
   }
 
