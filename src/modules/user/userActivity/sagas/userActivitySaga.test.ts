@@ -44,7 +44,7 @@ describe('User activity', () => {
         const fakeFetchPayloadFirstPage = { page: 0, limit: 2 };
 
         const mockUserActivityFetch = () => {
-            mockAxios.onGet('/resource/users/activity?limit=2&page=1').reply(200, payload, fakeHeaders);
+            mockAxios.onGet('/resource/users/activity/all?limit=2&page=1').reply(200, payload, fakeHeaders);
         };
 
         const expectedActionsFetchWithFirstPage = [
