@@ -1,4 +1,5 @@
 import { Decimal, Table } from '@openware/components';
+import classnames from 'classnames';
 import * as React from 'react';
 import {
     FormattedMessage,
@@ -44,7 +45,12 @@ class RecentTradesComponent extends React.Component<Props> {
     }
 
     public render() {
+
+        const className = classnames({
+            'cr-table__noData' : !this.props.recentTrades.length,
+        });
         return (
+          <div className={className}>
             <div className="pg-recent-trades">
                 <div className="cr-table-header__content">
                     <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.recentTrades" /></div>
@@ -55,6 +61,7 @@ class RecentTradesComponent extends React.Component<Props> {
                     onSelect={this.handleOnSelect}
                 />
             </div>
+          </div>
         );
     }
 
