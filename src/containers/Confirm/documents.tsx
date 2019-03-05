@@ -112,6 +112,8 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                         className="pg-confirm__content-documents-col-row-content-number"
                                         list={this.data}
                                         onSelect={onSelect}
+                                        elemHeight={40}
+                                        listHeight={160}
                                     />
                                 </div>
                                 <fieldset className={idNumberFocusedClass}>
