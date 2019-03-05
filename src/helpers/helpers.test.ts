@@ -15,10 +15,10 @@ describe('Constants regexps', () => {
 
   it('should not validate incorrect passwords', () => {
     expect(''.match(helpers.PASSWORD_REGEX)).toBeNull();
-    expect('12345678'.match(helpers.PASSWORD_REGEX)).toBeNull();
-    expect('abcdefgh'.match(helpers.PASSWORD_REGEX)).toBeNull();
-    expect('ABCDEFGH'.match(helpers.PASSWORD_REGEX)).toBeNull();
-    expect('aaaaBBBB'.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('1234568'.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('abcdegh'.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('ABCDFGH'.match(helpers.PASSWORD_REGEX)).toBeNull();
+    expect('aaaBBBB'.match(helpers.PASSWORD_REGEX)).toBeNull();
     expect('aZ1@'.match(helpers.PASSWORD_REGEX)).toBeNull();
     expect('1az@RTY'.match(helpers.PASSWORD_REGEX)).toBeNull();
   });
