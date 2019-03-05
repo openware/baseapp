@@ -34,6 +34,7 @@ exports[`SignUp component should render 1`] = `
         className="cr-sign-up-form__group"
       >
         <CustomInput
+          autoFocus={true}
           classNameInput="cr-sign-up-form__input"
           classNameLabel="cr-sign-up-form__label"
           defaultLabel="Email"
@@ -49,6 +50,7 @@ exports[`SignUp component should render 1`] = `
         className="cr-sign-up-form__group"
       >
         <CustomInput
+          autoFocus={false}
           classNameInput="cr-sign-up-form__input"
           classNameLabel="cr-sign-up-form__label"
           defaultLabel="Password"
@@ -64,6 +66,7 @@ exports[`SignUp component should render 1`] = `
         className="cr-sign-up-form__group"
       >
         <CustomInput
+          autoFocus={false}
           classNameInput="cr-sign-up-form__input"
           classNameLabel="cr-sign-up-form__label"
           defaultLabel="Confirm Password"
@@ -79,6 +82,7 @@ exports[`SignUp component should render 1`] = `
         className="cr-sign-up-form__group"
       >
         <CustomInput
+          autoFocus={false}
           classNameInput="cr-sign-up-form__input"
           classNameLabel="cr-sign-up-form__label"
           defaultLabel="Referral code"

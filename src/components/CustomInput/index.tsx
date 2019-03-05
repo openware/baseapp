@@ -11,6 +11,7 @@ interface CustomInputProps {
     classNameLabel: string;
     classNameInput: string;
     placeholder: string;
+    autoFocus?: boolean;
     onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
@@ -24,6 +25,7 @@ class CustomInput extends React.Component<CustomInputProps> {
             classNameLabel,
             classNameInput,
             type,
+            autoFocus,
             onKeyPress,
         } = this.props;
 
@@ -40,6 +42,7 @@ class CustomInput extends React.Component<CustomInputProps> {
                     onFocus={this.props.handleFocusInput}
                     onBlur={this.props.handleFocusInput}
                     onChangeValue={this.props.handleChangeInput}
+                    autoFocus={autoFocus}
                     onKeyPress={onKeyPress}
                 />
             </React.Fragment>

@@ -125,6 +125,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                                         handleFocusInput={this.handleFieldFocus('password')}
                                         classNameLabel="cr-email-form__label"
                                         classNameInput="cr-email-form__input"
+                                        autoFocus={true}
                                     />
                                 </div>
                                 <div className={confirmPasswordFocusedClass}>
@@ -138,6 +139,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                                         handleFocusInput={this.handleFieldFocus('confirmPassword')}
                                         classNameLabel="cr-email-form__label"
                                         classNameInput="cr-email-form__input"
+                                        autoFocus={false}
                                     />
                                 </div>
                                 {error && <div className="cr-email-form__error">{this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.error'})}</div>}

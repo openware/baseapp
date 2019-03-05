@@ -132,6 +132,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         handleFocusInput={this.handleFieldFocus('oldPassword')}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
+                        autoFocus={true}
                     />
                 </div>
                 <div className={newPasswordClass}>
@@ -145,6 +146,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         handleFocusInput={this.handleFieldFocus('newPassword')}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
+                        autoFocus={false}
                     />
                 </div>
                 <div className={confirmPasswordClass}>
@@ -158,6 +160,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         handleFocusInput={this.handleFieldFocus('confirmationPassword')}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
+                        autoFocus={false}
                     />
                 </div>
                 <div className="cr-email-form__button-wrapper">

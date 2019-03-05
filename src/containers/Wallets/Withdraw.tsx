@@ -100,6 +100,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             handleFocusInput={() => this.handleFieldFocus('address')}
                             classNameLabel="cr-withdraw__label"
                             classNameInput="cr-withdraw__input"
+                            autoFocus={false}
                         />
                     </div>
                     <div className="cr-withdraw__divider cr-withdraw__divider-one" />
@@ -186,6 +187,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                       handleFocusInput={() => this.handleFieldFocus('code')}
                       classNameLabel="cr-withdraw__label"
                       classNameInput="cr-withdraw__input"
+                      autoFocus={false}
                   />
               </div>
               <div className="cr-withdraw__divider cr-withdraw__divider-two" />

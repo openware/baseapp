@@ -73,6 +73,7 @@ class EmailForm extends React.Component<EmailFormProps> {
                                 handleFocusInput={this.props.handleFieldFocus}
                                 classNameLabel="cr-email-form__label"
                                 classNameInput="cr-email-form__input"
+                                autoFocus={true}
                             />
                             {emailError && <div className="cr-email-form__error">{emailError}</div>}
                         </div>

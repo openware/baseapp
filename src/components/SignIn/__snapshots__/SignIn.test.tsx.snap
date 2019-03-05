@@ -35,6 +35,7 @@ exports[`SignIn component should render 1`] = `
         className="cr-sign-in-form__group"
       >
         <CustomInput
+          autoFocus={true}
           classNameInput="cr-sign-in-form__input"
           classNameLabel="cr-sign-in-form__label"
           defaultLabel="Email"
@@ -50,6 +51,7 @@ exports[`SignIn component should render 1`] = `
         className="cr-sign-in-form__group"
       >
         <CustomInput
+          autoFocus={false}
           classNameInput="cr-sign-in-form__input"
           classNameLabel="cr-sign-in-form__label"
           defaultLabel="Password"

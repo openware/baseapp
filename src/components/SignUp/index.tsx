@@ -143,6 +143,7 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                                 handleFocusInput={this.props.handleFocusEmail}
                                 classNameLabel="cr-sign-up-form__label"
                                 classNameInput="cr-sign-up-form__input"
+                                autoFocus={true}
                             />
                             {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
                         </div>
@@ -157,6 +158,7 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                                 handleFocusInput={this.props.handleFocusPassword}
                                 classNameLabel="cr-sign-up-form__label"
                                 classNameInput="cr-sign-up-form__input"
+                                autoFocus={false}
                             />
                             {passwordError && <div className={'cr-sign-up-form__error'}>{passwordError}</div>}
                         </div>
@@ -171,6 +173,7 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                                 handleFocusInput={this.props.handleFocusConfirmPassword}
                                 classNameLabel="cr-sign-up-form__label"
                                 classNameInput="cr-sign-up-form__input"
+                                autoFocus={false}
                             />
                             {confirmationError && <div className={'cr-sign-up-form__error'}>{confirmationError}</div>}
                         </div>
@@ -185,6 +188,7 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                                 handleFocusInput={this.props.handleFocusRefId}
                                 classNameLabel="cr-sign-up-form__label"
                                 classNameInput="cr-sign-up-form__input"
+                                autoFocus={false}
                             />
                         </div>
                         <Checkbox

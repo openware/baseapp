@@ -39,6 +39,7 @@ exports[`TwoFactorAuth component should render 1`] = `
           className="cr-email-form__group"
         >
           <CustomInput
+            autoFocus={true}
             classNameInput="cr-email-form__input"
             classNameLabel="cr-email-form__label"
             defaultLabel="6-digit Google Authenticator Code"

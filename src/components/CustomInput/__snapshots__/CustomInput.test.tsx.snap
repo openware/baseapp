@@ -6,6 +6,7 @@ exports[`CustomInput component should render 1`] = `
     className=""
   />
   <e
+    autoFocus={false}
     className=""
     onBlur={[MockFunction]}
     onChangeValue={[MockFunction]}

@@ -332,6 +332,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         handleFocusInput={this.handleChangeFocusField}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
+                        autoFocus={true}
                         onKeyPress={this.handleEnterPress}
                     />
                 </div>

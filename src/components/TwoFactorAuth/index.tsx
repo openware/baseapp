@@ -73,6 +73,7 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                                     classNameLabel="cr-email-form__label"
                                     classNameInput="cr-email-form__input"
                                     onKeyPress={this.handleEnterPress}
+                                    autoFocus={true}
                                 />
                                 {errorMessage && <div className="cr-email-form__error">{errorMessage}</div>}
                             </div>

@@ -13,6 +13,7 @@ const defaults: CustomInputProps = {
     classNameLabel: '',
     classNameInput: '',
     placeholder: '',
+    autoFocus: false,
 };
 
 const setup = (props: Partial<CustomInputProps> = {}) =>
