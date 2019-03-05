@@ -1,5 +1,27 @@
+.cr-table__noData {
+    .pg-recent-trades {
+        .cr-table td, .cr-table th {
+            text-align: right;
+            &:nth-child(2){
+                text-align: center;
+                width: 62%;
+            }
+        }
+
+        .cr-table td {
+            &:nth-child(1) {
+                width: 1%;
+                text-align: right;
+            }
+        }
+    }
+}
+
 .pg-recent-trades {
-    .cr-table td:nth-child(2), .cr-table th:nth-child(2) {
-        text-align: center;
+    .cr-table td, .cr-table th {
+        text-align: right;
+        &:nth-child(2){
+            width: 40%;
+        }
     }
 }

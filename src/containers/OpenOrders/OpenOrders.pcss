@@ -21,6 +21,9 @@
 .cr-open-orders .cr-table th,
 .cr-open-orders .cr-table td {
   width: auto !important;
+  &:nth-child(n+1) {
+    text-align: right;
+  }
 }
 
 .pg-open-orders--loading {
@@ -35,6 +38,9 @@
 .pg-open-orders--empty {
   .cr-table__body {
     tr {
+      td:nth-child(3) {
+        text-align: center;
+      }
       td:last-child {
         display: block;
         width: 100%;
