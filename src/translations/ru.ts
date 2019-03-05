@@ -376,6 +376,7 @@ export const ru: LangType = {
     'resource.password.doesnt_match': 'Новые пароли не совпадают',
     'resource.password.prev_pass_not_correct': 'Предыдущий пароль неверен',
     'resource.password.no_change_provided': 'Новый пароль не может быть таким же, как старый',
+    'resource.document.empty_doc_expire': 'Expiration Date is invalid',
 
     'identity.user.invalid_referral_format': 'Неверный формат UID реферала',
     'identity.user.referral_doesnt_exist': 'Реферал не существует',
@@ -425,6 +426,90 @@ export const ru: LangType = {
     'authz.invalid_api_key_headers': 'Пустые или отсутствующие заголовки ключей API',
     'authz.permission_denied': 'Путь занесен в черный список',
     'authz.unexistent_apikey': 'Заголовок X-Auth-Apikey недействителен',
+
+    // validation errors
+    // admin module
+    'admin.user.non_integer_page': 'Page Value you send could not be parsed into Integer type',
+    'admin.user.non_positive_page': 'Page value must be positive',
+    'admin.user.non_integer_limit': 'Limit Value you send could not be parsed into Integer type',
+    'admin.user.invalid_limit': 'Limit invalid value',
+    'admin.user.missing_uid': 'User with this UID is missing',
+    'admin.user.empty_uid': 'UID is missing or empty',
+    'admin.user.empty_state': 'State is missing or empty',
+    'admin.user.empty_otp': 'OTP code is missing or empty',
+    'admin.user.empty_role': 'Role is missing or empty',
+    'admin.user.one_of_role_state_otp': 'One of role state otp',
+    'admin.user.missing_key': 'Key is missing',
+    'admin.user.empty_key': 'Key is missing or empty',
+    'admin.user.missing_scope': 'Scope is missing',
+    'admin.user.empty_scope': 'Scope is missing or empty',
+    'admin.user.missing_value': 'Value is missing',
+    'admin.user.empty_value': 'Value is missing or empty',
+
+    // identity module
+    'identity.user.missing_email': 'Email is missing',
+    'identity.user.empty_email': 'Email is missing or empty',
+    'identity.user.missing_password': 'Password is missing',
+    'identity.user.empty_password': 'Password is missing or empty',
+    'identity.user.missing_token': 'Token is missing',
+    'identity.user.empty_token': 'Token is missing or empty',
+    'identity.user.missing_reset_password_token': 'Reset password token is missing',
+    'identity.user.empty_reset_password_token': 'Reset password token is missing or empty',
+    'identity.user.missing_confirm_password': 'Confirm password is missing',
+    'identity.user.empty_confirm_password': 'Confirm password is missing or empty',
+
+    'identity.session.missing_emai': 'Email is missing',
+    'identity.session.missing_password': 'Password is missing',
+    'identity.session.invalid_captcha_format': 'Invalid captcha format',
+
+    // resource module
+    'resource.otp.missing_code': 'OTP code is missing',
+    'resource.otp.empty_code': 'OTP code is missing or empty',
+
+    'resource.labels.missing_key': 'Key is missing',
+    'resource.labels.empty_key': 'Key is missing or empty',
+    'resource.labels.missing_value': 'Value is missing',
+    'resource.labels.empty_value': 'Value is missing or empty',
+
+    'resource.documents.missing_doc_expire': 'Documents expire is missing',
+    'resource.documents.empty_doc_expire': 'Documents expire is missing or empty',
+    'resource.documents.missing_doc_type': 'Documents type is missing',
+    'resource.documents.empty_doc_type': 'Documents type is missing or empty',
+    'resource.documents.missing_doc_number': 'Documents number is missing',
+    'resource.documents.empty_doc_number': 'Documents number is missing or empty',
+    'resource.documents.missing_upload': 'Upload is missing',
+
+
+    'resource.user.missing_topic': 'Topic is missing',
+    'resource.user.empty_topic': 'Topic is missing or empty',
+    'resource.user.missing_old_password': 'Old password is missing',
+    'resource.user.empty_old_password': 'Old password is missing or empty',
+    'resource.user.missing_new_password': 'New password is missing',
+    'resource.user.empty_new_password': 'New password is missing or empty',
+    'resource.user.missing_confirm_password': 'Confirm password is missing',
+    'resource.user.empty_confirm_password': 'Confirm password is missing or empty',
+
+    'resource.profile.missing_first_name': 'First name is missing',
+    'resource.profile.missing_last_name': 'Last name is missing',
+    'resource.profile.missing_dob': 'Date of birth is missing',
+    'resource.profile.missing_address': 'Address is missing',
+    'resource.profile.missing_postcode': 'Postcode is missing',
+    'resource.profile.missing_city': 'City is missing',
+    'resource.profile.missing_country': 'Country is missing',
+
+    'resource.api_key.missing_algorithm': 'Algorithm is missing',
+    'resource.api_key.empty_algorithm': 'Algorithm is missing or empty',
+    'resource.api_key.empty_kid': 'KID is missing or empty',
+    'resource.api_key.empty_scope': 'Scope is missing or empty',
+    'resource.api_key.missing_totp': 'TOTP code is missing',
+    'resource.api_key.empty_totp': 'TOTP code is missing or empty',
+    'resource.api_key.missing_kid': 'KID is missing',
+    'resource.api_key.empty_state': 'State is missing or empty',
+
+    'resource.phone.missing_phone_number': 'Phone number is missing',
+    'resource.phone.empty_phone_number': 'Phone number is missing or empty',
+    'resource.phone.missing_verification_code': 'Verification code is missing',
+    'resource.phone.empty_verification_code': 'Verification code is missing or empty',
 
     // peatio
     'account.currency.doesnt_exist': 'Валюта не существует',
