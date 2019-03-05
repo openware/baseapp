@@ -353,7 +353,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     };
 
     private handleOnCopy = () => {
-      this.props.fetchSuccess({ message: 'page.body.wallets.tabs.deposit.ccy.message.success', type: 'success'});
+      this.props.fetchSuccess({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
     };
 
     private renderDeposit(wallet: WalletItemProps) {
