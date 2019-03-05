@@ -38,7 +38,7 @@ class AlertComponent extends React.Component<Props> {
     public render() {
         return (
             <div className="pg-alerts">
-                {this.props.alerts.alerts.map((w, k) => <FadeIn key={k}><div onClick={() => this.deleteAlertByIndex(k)}><Alert description={w.code && w.code.toString(10)} title={this.translate(w.message)} type={w.type} /></div></FadeIn>)}
+                {this.props.alerts.alerts.map(w => w.message.map((msg, index) => <FadeIn key={index}><div onClick={() => this.deleteAlertByIndex(index)}><Alert description={w.code && w.code.toString(10)} title={this.translate(msg)} type={w.type} /></div></FadeIn>))}
             </div>
         );
     }
