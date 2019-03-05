@@ -362,7 +362,7 @@ export const ru: LangType = {
     'resource.api_key.missing_otp': 'Учетная запись включила 2FA, но код OTP отсутствует',
     'resource.api_key.invalid_otp': 'Код OTP недействителен',
     'resource.phone.twillio': 'Что-то не так с Twilio Clientt',
-    'resource.phone.invalid_num ': 'Номер телефона недействителен',
+    'resource.phone.invalid_num': 'Номер телефона недействителен',
     'resource.phone.number_exist': 'Номер телефона уже существует',
     'resource.phone.verification_invalid': 'Телефон не найден или код подтверждения недействителен',
     'resource.documents.limit_reached': 'Максимальное количество документов уже достигнуто',

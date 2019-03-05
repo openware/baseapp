@@ -360,7 +360,7 @@ export const zh: LangType = {
     'resource.api_key.missing_otp': 'Theaccount has enabled 2FA but OTP code is missing',
     'resource.api_key.invalid_otp': 'OTP code is invalid',
     'resource.phone.twillio': 'Something wrong with Twilio Client',
-    'resource.phone.invalid_num ': 'Phone number is invalid',
+    'resource.phone.invalid_num': 'Phone number is invalid',
     'resource.phone.number_exist': 'Phone number already exists',
     'resource.phone.verification_invalid': 'Phone is not found or verification code is invalid',
     'resource.documents.limit_reached': 'Maximum number of documents already reached',
