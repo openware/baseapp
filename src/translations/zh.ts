@@ -177,15 +177,18 @@ export const zh: LangType = {
     'page.body.profile.header.account.content.twoFactorAuthentication': '双因素身份验证',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.enable': '已启用',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.disable': '已禁用',
-    'page.body.profile.header.account.content.twoFactorAuthentication.header': '启用双因素身份验证',
+    'page.body.profile.header.account.content.twoFactorAuthentication.header': 'Google Authenticator',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.1': 'Download and install Google Authenticator application from ',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.or': 'or ',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.2': 'Scan QR code or use secret MFA code:',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.3': '* Save this secret in a secure location. This code can used to gain 2FA access from a different device.',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.mfa': 'MFA code',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.4': 'Enter 2fa code from the app',
     'page.body.profile.header.account.content.twoFactorAuthentication.subHeader': '6位Google身份验证器代码',
-    'page.body.profile.header.account.content.twoFactorAuthentication.enable': '启用 2FA',
+    'page.body.profile.header.account.content.twoFactorAuthentication.enable': '启用',
     'page.body.profile.header.account.content.twoFactorAuthentication.disable': '禁用 2FA',
     'page.body.profile.header.account.content.twoFactorAuthentication.modalBody': '请联系管理员禁用它。',
     'page.body.profile.header.account.content.twoFactorAuthentication.modalHeader': '启用双因素身份验证',
-    'page.body.profile.header.account.content.twoFactorAuthentication.info': '这是您的密码，可用于访问您的 ' +
-        '来自不同设备的2fa代码，并在您的设备丢失时恢复访问权限。 ' +
-        '一定要保存代码',
 
     'page.body.profile.header.account.profile': '个人资料验证',
     'page.body.profile.header.account.profile.email.title': '经过电子邮件验证',

@@ -2,7 +2,182 @@
   margin-top: calc(var(--gap) * 4);
 
   &__header {
+    padding: 0 calc(var(--gap) * 4.1);
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--email-form-border);
+    background: var(--header);
+    height: calc(var(--gap) * 9.66);
+    margin: 0 auto;
     text-align: center;
+    text-transform: uppercase;
+    line-height: calc(var(--gap) * 9.66);
+    font-style: normal;
+    font-size: calc(var(--gap) * 2.33);
+    color: var(--white);
+
+    img {
+      cursor: pointer;
+    }
+  }
+
+  &__copyablefield {
+    display: flex;
+    justify-content: space-between;
+    padding: calc(var(--gap) * 3) calc(var(--gap) * 4.66);
+    position: relative;
+    padding-left: calc(var(--gap) * 12.5);
+
+    fieldset {
+      background: inherit;
+      border-radius: calc(var(--gap) * 0.66);
+      border: 1px solid var(--base-2);
+      flex-grow: 1;
+      padding: 0;
+      overflow: hidden;
+
+      legend {
+        position: absolute;
+        margin-top: calc(var(--gap) * -1.3);
+        left: calc(var(--gap) * 14);
+        background: var(--base-bright);
+      }
+
+      .cr-copyable-text-field {
+        padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+      }
+
+      &:focus-within {
+        overflow: hidden;
+        border: 1px solid var(--color-blue) !important;
+        border-radius: calc(var(--gap) * 0.66);
+        legend {
+          color: var(--color-blue) !important;
+        }
+      }
+
+      .cr-deposit-crypto__copyable-title {
+        position: absolute;
+        margin-top: calc(var(--gap) * -1.3);
+        background: var(--base-bright);
+      }
+
+      .pg-copyable-text-field {
+        &__input {
+          padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+          border: none;
+
+          input {
+            box-sizing: border-box;
+            color: var(--placeholder-text);
+            background: var(--transparent);
+          }
+
+          .cr-copyable-text-field__button {
+            background: var(--button-normal);
+            color: var(--white);
+
+            &:hover {
+              background: var(--button-hover);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__body {
+    display: flex;
+    justify-content: space-between;
+    padding: calc(var(--gap) * 3) calc(var(--gap) * 4.66);
+
+    fieldset {
+      color: var(--kyc-grey);
+      border-radius: calc(var(--gap) * 0.6);
+      border: 1px solid var(--kyc-grey);
+      box-sizing: border-box;
+      padding-left: var(--gap);
+      height: calc(var(--gap) * 6.56);
+      width: calc(var(--big-gap) * 4.12);
+      margin: calc(var(--gap) * 2) 0;
+
+      &:focus-within {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      legend {
+        background-color: var(--base-bright);
+        position:absolute;
+        top: calc(var(--gap) * -1.3);
+      }
+
+      input {
+        color: var(--color-white);
+        background: var(--transparent);
+        border: unset;
+        bottom: 0;
+        font-size: calc(var(--gap) * 2);
+        margin-top: calc(var(--gap) * 1.16);
+
+        &::placeholder {
+          color: var(--text-muted);
+        }
+      }
+    }
+
+    &--input {
+      max-width: calc(var(--big-gap) * 2.5);
+      position: relative;
+    }
+
+    &--text {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &--last {
+        justify-content: center;
+
+        span {
+          font-size: calc(var(--font-size) * 3);
+        }
+      }
+
+      span {
+        font-size: calc(var(--font-size) * 3);
+      }
+
+      &--group {
+        display: flex;
+        align-items: center;
+        margin: calc(var(--gap) * 2) 0;
+
+        a {
+          color: var(--accent);
+        }
+
+        div {
+          padding: 0 calc(var(--gap) * 1.5) 0 calc(var(--gap) * 4.16);
+
+        }
+      }
+    }
+
+    .pg-profile-two-factor-auth__qr {
+      height: calc(var(--big-gap) * 2.5);
+    }
+
+    .cr-input {
+      width: 100%;
+
+      input {
+        font-size: var(--font-size);
+        color: var(--base-3);
+        text-align: left;
+        width: 100%;
+      }
+    }
   }
 
   &__title {
@@ -14,45 +189,33 @@
   &__form {
     background: var(--base-bright);
     margin: 0 auto;
-    max-width: calc(var(--gap) * 60);
-    padding: calc(var(--gap) * 8) calc(var(--gap) * 8);
-  }
+    max-width: calc(var(--gap) * 90);
 
-  &__form-group {
-    margin: calc(var(--gap) * 2) 0;
+    .cr-copyable-text-field {
+      border: none;
 
-    .cr-input {
-      border-bottom: 1px solid var(--sign-in-input-border-color);
-      width: 100%;
+      .cr-button {
+        color: var(--white);
+        width: 50%;
+      }
 
       input {
-        color: var(--dark-color);
-        font-size: 2rem;
-        height: calc(var(--gap) * 4);
-        text-align: left;
-        width: 100%;
+        margin: 0;
       }
-    }
-  }
-
-  &-form-group {
-    &__label {
-      color: var(--text-muted);
     }
   }
 
   &__error {
     color: var(--order-error-color);
-    font-size: 1.16rem;
   }
 
   &__info {
     color: var(--dark-color);
-    font-size: 1.16rem;
   }
 
   .cr-button {
-    margin: calc(var(--gap) * 2) 0;
+    max-width: calc(var(--big-gap) * 8.18);
+    margin: calc(var(--gap) * 2) calc(var(--gap) * 3);
     height: 50px;
     background: var(--button-primary);
     color: var(--color-white);
@@ -63,7 +226,7 @@
     border-color: var(--sign-in-input-border-color);
 
     input {
-      font-size: 1.2rem;
+      font-size: var(--font-size);
       color: var(--dark-color);
     }
   }

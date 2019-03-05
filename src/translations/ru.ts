@@ -178,15 +178,18 @@ export const ru: LangType = {
     'page.body.profile.header.account.content.twoFactorAuthentication': 'Двухфакторная аутентификация',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.enable': 'Включен',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.disable': 'Отключен',
-    'page.body.profile.header.account.content.twoFactorAuthentication.header': 'Включить двухфакторную аутентификацию',
+    'page.body.profile.header.account.content.twoFactorAuthentication.header': 'Google Authenticator',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.1': 'Download and install Google Authenticator application from ',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.or': 'or ',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.2': 'Scan QR code or use secret MFA code:',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.3': '* Save this secret in a secure location. This code can used to gain 2FA access from a different device.',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.mfa': 'MFA code',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.4': 'Enter 2fa code from the app',
     'page.body.profile.header.account.content.twoFactorAuthentication.subHeader': '6-ти значный код GAuthenticator',
-    'page.body.profile.header.account.content.twoFactorAuthentication.enable': 'ВКЛЮЧИТЬ 2FA',
+    'page.body.profile.header.account.content.twoFactorAuthentication.enable': 'ВКЛЮЧИТЬ',
     'page.body.profile.header.account.content.twoFactorAuthentication.disable': 'ОТКЛЮЧЕНА 2FA',
     'page.body.profile.header.account.content.twoFactorAuthentication.modalBody': 'Пожалуйста, обратитесь с администратором, чтобы отключить еe.',
     'page.body.profile.header.account.content.twoFactorAuthentication.modalHeader': 'Двухфакторная аутентификация включена.',
-    'page.body.profile.header.account.content.twoFactorAuthentication.info': 'Это ваш секретный код, который можно использовать для получения доступа к Вашему ' +
-                                                                              '2fa-коду с разных устройств и для восстановления доступа в случае потери вашего устройства. ' +
-                                                                              'Обязательно сохраните код',
 
     'page.body.profile.header.account.profile': 'Верификация Вашего профиля',
     'page.body.profile.header.account.profile.email.title': 'Почта - подтверждено',
