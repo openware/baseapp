@@ -191,6 +191,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         className="pg-confirm__content-phone-deep-button"
                         label={this.translate('page.body.kyc.submit')}
                         onClick={this.sendDocuments}
+                        disabled={this.handleCheckButtonDisabled()}
                     />
                 </div>
             </React.Fragment>
@@ -290,6 +291,15 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     private handleDragOver = event => {
       event.preventDefault();
       event.stopPropagation();
+    }
+
+    private handleCheckButtonDisabled = () => {
+        const {
+            expiration,
+            idNumber,
+            scans,
+        } = this.state;
+        return !scans.length || !idNumber || !expiration;
     }
 
     private sendDocuments = () => {

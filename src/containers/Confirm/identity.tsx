@@ -265,6 +265,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                       className="pg-confirm__content-phone-deep-button"
                       label={this.translate('page.body.kyc.next')}
                       onClick={this.sendData}
+                      disabled={this.handleCheckButtonDisabled()}
                   />
               </div>
           </div>
@@ -349,6 +350,20 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             countryOfBirth: countries.getAlpha2Code(value, this.props.lang),
         });
     };
+
+    private handleCheckButtonDisabled = () => {
+        const {
+            city,
+            dateOfBirth,
+            firstName,
+            lastName,
+            postcode,
+            residentialAddress,
+            countryOfBirth,
+            nationality,
+        } = this.state;
+        return !firstName || !lastName  || !dateOfBirth || !nationality || !residentialAddress || !countryOfBirth || !city || !postcode;
+    }
 
     private sendData = () => {
         const dob = !isDateInFuture(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
