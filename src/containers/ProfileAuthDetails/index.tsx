@@ -89,6 +89,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                 oldPassword: '',
                 newPassword: '',
                 confirmationPassword: '',
+                confirmPasswordFocus: false,
             });
         }
     }
@@ -160,11 +161,11 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                     />
                 </div>
                 <div className="cr-email-form__button-wrapper">
-                    <Button
-                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.change'})}
+                    <input
+                        type={'submit'}
+                        value={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.change'})}
                         className={this.isValidForm() ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                         disabled={!this.isValidForm()}
-                        onClick={this.handleChangePassword}
                     />
                 </div>
             </div>
@@ -172,12 +173,12 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
 
         const modal = this.state.showChangeModal ? (
             <div className="cr-modal">
-              <div className="cr-email-form">
+              <form className="cr-email-form" onSubmit={this.handleChangePassword}>
                 <div className="pg-change-password-screen">
                   {this.renderChangeModalHeader()}
                   {changeModalBody}
                 </div>
-              </div>
+              </form>
             </div>
         ) : null;
 
@@ -268,7 +269,10 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         </div>
     );
 
-    private handleChangePassword = () => {
+    private handleChangePassword = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         this.props.changePassword({
             old_password: this.state.oldPassword,
             new_password: this.state.newPassword,
