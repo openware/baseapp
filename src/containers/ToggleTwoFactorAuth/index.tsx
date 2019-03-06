@@ -12,7 +12,7 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {alertPush, RootState} from '../../modules';
+import { alertPush, RootState } from '../../modules';
 import {
     enableUser2fa,
     generate2faQRFetch,
@@ -70,7 +70,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
         }
     }
     public translate = (e: string) => {
-        return this.props.intl.formatMessage({id: e});
+        return this.props.intl.formatMessage({ id: e });
     };
 
     public componentWillReceiveProps(next: Props) {
@@ -111,12 +111,12 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
         return (
             <div className="pg-profile-two-factor-auth__form">
                 <div className="pg-profile-two-factor-auth__header">
-                    <div/>
+                    <div />
                     <div className="pg-profile-two-factor-auth__title">
                         {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.header')}
                     </div>
                     <div className="cr-email-form__cros-icon" onClick={this.goBack}>
-                        <img src={require('./close.svg')}/>
+                        <img src={require('./close.svg')} />
                     </div>
                 </div>
                 <div className="pg-profile-two-factor-auth__body">
@@ -134,7 +134,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                             <span>2</span>
                             <div>
                                 {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.2')}
-                                <br/>
+                                <br />
                                 {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.3')}
                             </div>
                         </div>
@@ -163,7 +163,6 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                             value={otpCode}
                             placeholder={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
                             onKeyPress={this.handleEnterPress}
-                            autoFocus={true}
                         />
                     </fieldset>
                 </div>
