@@ -6,7 +6,7 @@ import {
 
 describe('Constants', () => {
     const expectedRoutesForLoggedInUser = [
-      ['page.header.navbar.trade', '/trade'],
+      ['page.header.navbar.trade', '/trading/'],
       ['page.header.navbar.wallets', '/wallets'],
       ['page.header.navbar.openOrders', '/orders'],
       ['page.header.navbar.history', '/history'],
@@ -14,7 +14,7 @@ describe('Constants', () => {
 
     const expectedRoutesForNotLoggedInUser = [
       ['page.header.navbar.signIn', '/signin'],
-      ['page.header.navbar.trade', '/trade'],
+      ['page.header.navbar.trade', '/trading/'],
     ];
 
     it('Rendering correct title prefix', () => {

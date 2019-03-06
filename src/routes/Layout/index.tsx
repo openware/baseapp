@@ -7,7 +7,9 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { minutesUntilAutoLogout } from '../../api';
 import {
     logoutFetch,
+    Market,
     RootState,
+    selectCurrentMarket,
     selectUserFetching,
     selectUserInfo,
     selectUserLoggedIn,
@@ -32,6 +34,7 @@ import {
 } from '../../screens';
 
 interface ReduxProps {
+    currentMarket: Market | undefined;
     user: User;
     isLoggedIn: boolean;
     userLoading?: boolean;
@@ -105,7 +108,6 @@ class LayoutComponent extends React.Component<LayoutProps> {
 
     constructor(props: LayoutProps) {
         super(props);
-
         this.initListener();
     }
 
@@ -116,9 +118,12 @@ class LayoutComponent extends React.Component<LayoutProps> {
     }
 
     public componentDidUpdate(next: LayoutProps) {
-        if (!this.props.isLoggedIn && next.isLoggedIn) {
+        const { isLoggedIn, history } = this.props;
+        if (!isLoggedIn && next.isLoggedIn) {
             this.props.walletsReset();
-            this.props.history.push('/trading');
+            if (!history.location.pathname.includes('/trading')) {
+                history.push('/trading/');
+            }
         }
     }
     public componentWillUnmount() {
@@ -139,14 +144,14 @@ class LayoutComponent extends React.Component<LayoutProps> {
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationScreen} />
-                    <Route exact={true} path="/trading" component={TradingScreen} />
+                    <Route exact={true} path="/trading/:market?" component={TradingScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={HistoryScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/confirm" component={ConfirmScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
-                    <Route path="**"><Redirect to={'/trading'} /></Route>
+                    <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
             </div>
         );
@@ -193,6 +198,7 @@ class LayoutComponent extends React.Component<LayoutProps> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    currentMarket: selectCurrentMarket(state),
     user: selectUserInfo(state),
     isLoggedIn: selectUserLoggedIn(state),
     userLoading: selectUserFetching(state),

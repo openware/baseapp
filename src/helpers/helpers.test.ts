@@ -260,4 +260,15 @@ describe('Helpers', () => {
         expect(helpers.isDateInFuture('22/12/3333')).toEqual(true);
         expect(helpers.isDateInFuture('22/12/1333')).toEqual(false);
     });
+
+    // getUrlPart.ts
+    it('should extract a segment part of a url', () => {
+        expect(helpers.getUrlPart(2, '/trading')).toEqual('');
+        expect(helpers.getUrlPart(2, '/trading/')).toEqual('');
+        expect(helpers.getUrlPart(2, '/trading/btcusd')).toEqual('btcusd');
+        expect(helpers.getUrlPart(2, '/trading/BTCUSD')).toEqual('BTCUSD');
+        expect(helpers.getUrlPart(2, '/trading/btcusd/something')).toEqual('btcusd');
+        expect(helpers.getUrlPart(2, '/trading/btcusd#something')).toEqual('btcusd');
+        expect(helpers.getUrlPart(2, '/trading/btcusd?something')).toEqual('btcusd');
+    });
 });

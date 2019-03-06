@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Layout, LayoutProps } from './';
 
 const defaults: LayoutProps = {
+    currentMarket: undefined,
     user: {
         email: '',
         level: 0,

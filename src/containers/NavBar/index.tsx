@@ -12,8 +12,10 @@ import { pgRoutes } from '../../constants';
 import {
     changeLanguage,
     logoutFetch,
+    Market,
     RootState,
     selectCurrentLanguage,
+    selectCurrentMarket,
     selectUserInfo,
     selectUserLoggedIn,
     User,
@@ -21,6 +23,7 @@ import {
 } from '../../modules';
 
 export interface ReduxProps {
+    currentMarket: Market | undefined;
     address: string;
     isLoggedIn: boolean;
     lang: string;
@@ -41,8 +44,6 @@ export interface OwnProps {
 
 type NavbarProps = OwnProps & ReduxProps & RouteProps & DispatchProps;
 
-const shouldUnderline = (address: string, url: string, index: number): boolean =>
-    (url === '/trade' && address === '/trading') || address === url || (address === '/' && index === 0);
 
 interface NavbarState {
     isOpen: boolean;
@@ -65,29 +66,22 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         errorModal: false,
     };
 
-    public componentDidUpdate(next: NavbarProps) {
-        if (!this.props.isLoggedIn && next.isLoggedIn) {
-            this.props.walletsReset();
-            this.props.history.push('/trading');
-        }
-    }
-
     public navItem = (address: string, onLinkChange?: () => void) => (values: string[], index: number) => {
         const [name, url] = values;
-        const isLoggedIn = this.props;
+        const { isLoggedIn, currentMarket } = this.props;
         const cx = classnames('pg-navbar__content-item', {
-            'pg-navbar__content-item--active': shouldUnderline(address, url, index),
-            'pg-navbar__content-item-logging': isLoggedIn.user.email,
+            'pg-navbar__content-item--active': this.shouldUnderline(address, url),
+            'pg-navbar__content-item-logging': isLoggedIn,
         });
         const handleLinkChange = () => {
             if (onLinkChange) {
                 onLinkChange();
             }
         };
-
+        const path = url.includes('/trading') && currentMarket ? `/trading/${currentMarket.id}` : url;
         return (
             <li onClick={handleLinkChange} key={index}>
-                <Link className={cx} to={url}>
+                <Link className={cx} to={path}>
                     <FormattedMessage id={name} />
                 </Link>
             </li>
@@ -121,6 +115,9 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
             </div>
         );
     }
+
+    private shouldUnderline = (address: string, url: string): boolean =>
+        (url === '/trading/' && address.includes('/trading')) || address === url;
 
     private getLanguageMenu = () => {
         return (
@@ -239,6 +236,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
     (state: RootState): ReduxProps => ({
+        currentMarket: selectCurrentMarket(state),
         address: '',
         lang: selectCurrentLanguage(state),
         user: selectUserInfo(state),

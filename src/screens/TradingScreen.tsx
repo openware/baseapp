@@ -1,10 +1,7 @@
 import { Grid } from '@openware/components';
 import * as React from 'react';
-import {
-    InjectedIntlProps,
-    injectIntl,
-} from 'react-intl';
-import {connect, MapDispatchToPropsFunction, MapStateToProps} from 'react-redux';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import {
     Asks,
     Bids,
@@ -15,11 +12,13 @@ import {
     RecentTrades,
     TradingChart,
 } from '../containers';
+import { getUrlPart } from '../helpers';
 import {
     RootState,
     selectCurrentMarket,
     selectUserInfo,
     selectUserLoggedIn,
+    setCurrentMarket,
     setCurrentPrice,
     User,
 } from '../modules';
@@ -98,13 +97,14 @@ interface DispatchProps {
     accountWallets: typeof walletsFetch;
     rangerConnect: typeof rangerConnectFetch;
     setCurrentPrice: typeof setCurrentPrice;
+    setCurrentMarket: typeof setCurrentMarket;
 }
 
 interface StateProps {
     orderComponentResized: number;
 }
 
-type Props = DispatchProps & ReduxProps & InjectedIntlProps & StateProps;
+type Props = DispatchProps & ReduxProps & RouteComponentProps;
 
 class Trading extends React.Component<Props, StateProps> {
     public readonly state = {
@@ -146,7 +146,7 @@ class Trading extends React.Component<Props, StateProps> {
         },
     ];
 
-    public async componentDidMount() {
+    public componentDidMount() {
         const { wallets, markets, currentMarket, userLoggedIn, rangerState: { connected } } = this.props;
 
         if (markets.length < 1) {
@@ -161,6 +161,9 @@ class Trading extends React.Component<Props, StateProps> {
         if (!connected) {
             this.props.rangerConnect({ withAuth: userLoggedIn });
         }
+        if (!userLoggedIn && currentMarket) {
+            this.props.history.replace(`/trading/${currentMarket.id}`);
+        }
     }
 
     public componentWillUnmount() {
@@ -168,18 +171,18 @@ class Trading extends React.Component<Props, StateProps> {
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { userLoggedIn } = this.props;
+        const { userLoggedIn, history, markets, currentMarket } = this.props;
         if (userLoggedIn !== nextProps.userLoggedIn) {
             this.props.rangerConnect({ withAuth: nextProps.userLoggedIn });
         }
-        if (nextProps.currentMarket && this.props.currentMarket !== nextProps.currentMarket) {
+        if (markets.length !== nextProps.markets.length) {
+            this.setMarketFromUrlIfExists(nextProps.markets);
+        }
+        if (nextProps.currentMarket && currentMarket !== nextProps.currentMarket) {
+            history.replace(`/trading/${nextProps.currentMarket.id}`);
             this.props.depthFetch(nextProps.currentMarket);
         }
     }
-
-    public translate = (e: string) => {
-        return this.props.intl.formatMessage({id: e});
-    };
 
     public render() {
         const rowHeight = 14;
@@ -204,12 +207,18 @@ class Trading extends React.Component<Props, StateProps> {
         );
     }
 
-    private handleResize = (layout, oldItem, newItem,
-                            placeholder, e, element) => {
+    private setMarketFromUrlIfExists = (markets: Market[]): void => {
+        const urlMarket: string = getUrlPart(2, window.location.pathname);
+        const market: Market | undefined = markets.find(item => item.id === urlMarket);
+        // if part is existed market, set it as currentMarket, else select first one
+        if (market) {
+            this.props.setCurrentMarket(market);
+        }
+    };
+
+    private handleResize = (layout, oldItem, newItem) => {
         if (oldItem.i === '1') {
-            this.setState({
-                orderComponentResized: newItem.w,
-            });
+            this.setState({ orderComponentResized: newItem.w });
         }
     }
 }
@@ -229,9 +238,11 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     accountWallets: () => dispatch(walletsFetch()),
     rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
+    setCurrentMarket: payload => dispatch(setCurrentMarket(payload)),
 });
 
-const TradingScreen = injectIntl(connect(mapStateToProps, mapDispatchToProps)(Trading));
+// tslint:disable-next-line no-any
+const TradingScreen = withRouter(connect(mapStateToProps, mapDispatchToProps)(Trading) as any);
 
 export {
     TradingScreen,
