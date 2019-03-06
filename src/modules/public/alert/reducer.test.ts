@@ -10,7 +10,7 @@ describe('Alerts reducer', () => {
         const payload = {
             code: 400,
             type: 'error',
-            message: 'Error',
+            message: ['Error'],
         };
         const expectedState: AlertState = {
             ...initialAlertState,
@@ -23,13 +23,13 @@ describe('Alerts reducer', () => {
         const payload = {
             code: 400,
             type: 'error',
-            message: 'Error',
+            message: ['Error'],
         };
 
         const payloadToBeDeleted = {
             code: 401,
             type: 'error',
-            message: 'Error',
+            message: ['Error'],
         };
 
         const alertState: AlertState = {
@@ -46,13 +46,13 @@ describe('Alerts reducer', () => {
         const payload = {
             code: 400,
             type: 'error',
-            message: 'Error',
+            message: ['Error'],
         };
 
         const payloadToBeDeleted = {
             code: 401,
             type: 'error',
-            message: 'Error',
+            message: ['Error'],
         };
 
         const alertState: AlertState = {

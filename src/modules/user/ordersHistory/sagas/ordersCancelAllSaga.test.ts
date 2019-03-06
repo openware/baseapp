@@ -39,7 +39,7 @@ describe('Orders Cancel All', () => {
     const expectedActionsSuccess = [
         ordersCancelAllFetch(fakeFetchPayload),
         ordersCancelAllData(fakeSuccessPayload),
-        alertPush({ message: 'success.order.canceled.all', type: 'success'}),
+        alertPush({ message: ['success.order.canceled.all'], type: 'success'}),
     ];
     const expectedActionsError = [
         ordersCancelAllFetch(fakeFetchPayload),

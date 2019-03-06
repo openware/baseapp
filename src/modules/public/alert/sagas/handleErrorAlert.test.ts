@@ -90,7 +90,7 @@ describe('Alert error handler', () => {
 
     const errorCodeAccount2faNeeded = {
         code: 403,
-        message: '',
+        message: [''],
         type: 'error',
     };
 

@@ -31,7 +31,7 @@ export function* ordersHistoryCancelSaga(action: OrdersHistoryCancelFetch) {
         }
 
         yield put(ordersHistoryCancelData(updatedList));
-        yield put(alertPush({ message: 'success.order.canceled', type: 'success'}));
+        yield put(alertPush({ message: ['success.order.canceled'], type: 'success'}));
     } catch (error) {
         yield put(ordersHistoryCancelError());
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

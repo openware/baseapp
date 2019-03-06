@@ -350,7 +350,7 @@ describe('Wallets', () => {
             const expectedSuccessAlertPush = {
                 type: ALERT_PUSH,
                 payload: {
-                    message: 'success.withdraw.action',
+                    message: ['success.withdraw.action'],
                     type: 'success',
                 },
             };
@@ -358,7 +358,7 @@ describe('Wallets', () => {
             const expectedSuccessAlertData = {
                 type: ALERT_DATA,
                 payload: {
-                    message: 'success.withdraw.action',
+                    message: ['success.withdraw.action'],
                     type: 'success',
                 },
             };

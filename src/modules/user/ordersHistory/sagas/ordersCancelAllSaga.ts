@@ -28,7 +28,7 @@ export function* ordersCancelAllSaga(action: OrdersCancelAllFetch) {
             });
         }
         yield put(ordersCancelAllData(list));
-        yield put(alertPush({ message: 'success.order.canceled.all', type: 'success'}));
+        yield put(alertPush({ message: ['success.order.canceled.all'], type: 'success'}));
     } catch (error) {
         yield put(ordersCancelAllError());
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

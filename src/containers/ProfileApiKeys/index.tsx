@@ -436,7 +436,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
 
     private handleCopy = (id: string, type: string) => {
         this.copy(id);
-        this.props.fetchSuccess({ message: `success.api_keys.copied.${type}`, type: 'success'});
+        this.props.fetchSuccess({ message: [`success.api_keys.copied.${type}`], type: 'success'});
     };
 
     private handleDeleteKeyClick = apiKey => {

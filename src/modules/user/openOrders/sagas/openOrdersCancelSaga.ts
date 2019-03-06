@@ -17,7 +17,7 @@ export function* openOrdersCancelSaga(action: OpenOrdersCancelFetch) {
         const updatedList = list.filter(order => order.id !== id);
 
         yield put(openOrdersCancelData(updatedList));
-        yield put(alertPush({ message: 'success.order.canceled', type: 'success'}));
+        yield put(alertPush({ message: ['success.order.canceled'], type: 'success'}));
     } catch (error) {
         yield put(openOrdersCancelError());
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

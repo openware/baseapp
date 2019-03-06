@@ -14,7 +14,7 @@ export function* apiKeyUpdateSaga(action: ApiKeyUpdateFetch) {
         const {kid, state} = action.payload.apiKey;
         const updatedApiKey = yield call(API.patch(updateOptions), `/resource/api_keys/${kid}`, {totp_code, state});
         yield put(apiKeyUpdate(updatedApiKey));
-        yield put(alertPush({message: 'success.api_keys.updated', type: 'success'}));
+        yield put(alertPush({message: ['success.api_keys.updated'], type: 'success'}));
     } catch (error) {
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
     } finally {

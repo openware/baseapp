@@ -13,7 +13,7 @@ export function* apiKeysSaga(action: ApiKeysFetch) {
         const {totp_code} = action.payload;
         const apiKeys = yield call(API.get(apiKeysOptions), `/resource/api_keys?totp_code=${totp_code}`);
         yield put(apiKeysData(apiKeys));
-        yield put(alertPush({message: 'success.api_keys.fetched', type: 'success'}));
+        yield put(alertPush({message: ['success.api_keys.fetched'], type: 'success'}));
     } catch (error) {
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
     } finally {

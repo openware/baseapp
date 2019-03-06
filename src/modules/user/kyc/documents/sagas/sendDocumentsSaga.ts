@@ -14,7 +14,7 @@ export function* sendDocumentsSaga(action: SendDocumentsFetch) {
         const defaultMessage = 'success.documents.accepted';
         const { message = defaultMessage } = response;
         yield put(sendDocumentsData({ message }));
-        yield put(alertPush({ message: defaultMessage, type: 'success'}));
+        yield put(alertPush({ message: [defaultMessage], type: 'success'}));
     } catch (error) {
         yield put(sendDocumentsError(error));
         yield put(alertPush({ message: error.message, code: error.code, type: 'error'}));

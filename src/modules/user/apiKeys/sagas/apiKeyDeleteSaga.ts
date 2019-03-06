@@ -13,7 +13,7 @@ export function* apiKeyDeleteSaga(action: ApiKeyDeleteFetch) {
         const {kid, totp_code} = action.payload;
         yield call(API.delete(deleteOptions), `/resource/api_keys/${kid}?totp_code=${totp_code}`);
         yield put(apiKeyDelete({kid}));
-        yield put(alertPush({message: 'success.api_keys.deleted', type: 'success'}));
+        yield put(alertPush({message: ['success.api_keys.deleted'], type: 'success'}));
     } catch (error) {
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
     } finally {

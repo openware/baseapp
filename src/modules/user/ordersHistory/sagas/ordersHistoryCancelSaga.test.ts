@@ -65,7 +65,7 @@ describe('Orders History Cancel', () => {
     const expectedActionsFetch = [
         ordersHistoryCancelFetch(fakeFetchPayload),
         ordersHistoryCancelData(fakeSuccessPayload),
-        alertPush({ message: 'success.order.canceled', type: 'success'}),
+        alertPush({ message: ['success.order.canceled'], type: 'success'}),
     ];
     const expectedActionsError = [
         ordersHistoryCancelFetch(fakeFetchPayload),

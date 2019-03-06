@@ -14,7 +14,7 @@ export function* sendIdentitySaga(action: SendIdentityFetch) {
         const defaultMessage = 'success.documents.accepted';
         const { message = defaultMessage } = response;
         yield put(sendIdentityData({ message }));
-        yield put(alertPush({message: defaultMessage, type: 'success'}));
+        yield put(alertPush({message: [defaultMessage], type: 'success'}));
     } catch (error) {
         yield put(sendIdentityError(error));
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

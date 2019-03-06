@@ -22,7 +22,7 @@ export function* emailVerificationSaga(action: EmailVerificationFetch) {
             lang: action.payload.lang,
         });
         yield put(emailVerificationData());
-        yield put(alertPush({message: 'success.message.sent', type: 'success'}));
+        yield put(alertPush({message: ['success.message.sent'], type: 'success'}));
     } catch (error) {
         yield put(emailVerificationError(error));
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

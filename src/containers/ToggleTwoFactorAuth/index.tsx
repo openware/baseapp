@@ -81,7 +81,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
 
     public doCopy = () => {
         copy('referral-id');
-        this.props.fetchSuccess({message: this.translate('page.body.wallets.tabs.deposit.ccy.message.success'), type: 'success'});
+        this.props.fetchSuccess({message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
     };
 
     public render() {

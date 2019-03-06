@@ -8,7 +8,7 @@ import {
 export interface Alert {
     type: string;
     code?: number;
-    message: string[] | string;
+    message: string[];
 }
 
 export interface AlertPush {
