@@ -172,6 +172,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const formattedWallets = wallets.map((wallet: WalletItemProps) => ({
             ...wallet,
             currency: wallet.currency.toUpperCase(),
+            iconUrl: wallet.iconUrl ? wallet.iconUrl : '',
         }));
 
         const maybeNoResults = filteredWallets && !filteredWallets.length

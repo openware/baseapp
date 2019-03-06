@@ -9,6 +9,7 @@ export interface Wallet {
     explorerTransaction: string;
     explorerAddress: string;
     fixed: number;
+    iconUrl?: string;
 }
 
 export interface WalletAddress {
