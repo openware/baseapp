@@ -61,10 +61,10 @@
   resolved "https://registry.yarnpkg.com/@openware/coding-standards/-/coding-standards-0.1.6.tgz#05011cb86880f34b24d7fe15427bcfb55fcfef6a"
   integrity sha512-UnVfrYcTVNGImb2l9BI3gHmBR0UAm2c42HsnC9tpRCEfV7dGm1lMPINjMD17jPo2e6L9riyYQOb8Jz3IF+U/Cg==
 
-"@openware/components@^2.0.24":
-  version "2.0.24"
-  resolved "https://registry.yarnpkg.com/@openware/components/-/components-2.0.24.tgz#5045934ffc9a032fa4c603f7c2e28a9c47e5df65"
-  integrity sha512-q/uDwFxLUaUm1CcjC8Cxk8UoSCiDrk5FQUn7JmfWAGTJj54W1n4sqIIDQiidtWDy/jSqsLYMS/d0xzH+hahovQ==
+"@openware/components@^2.0.25":
+  version "2.0.25"
+  resolved "https://registry.yarnpkg.com/@openware/components/-/components-2.0.25.tgz#cf0280c99afbba8817446419a0673c3fc707a5b7"
+  integrity sha512-6AW67ZP4E0pzj+4SNmdikRTQ3xxCDPAt9KBcRcesuLz6vk/0QePUXcGqtWxujnRvjCOBBVSKazwnUGxEFKvQxA==
   dependencies:
     "@openware/cryptofont" "^0.1.4"
     qrcode.react "^0.9.2"
