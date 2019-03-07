@@ -78,13 +78,13 @@ export const en = {
     'page.body.wallets.tabs.deposit.fiat.admin': ' To initiate a fiat withdrawal, please contact administrator!',
 
     'page.body.wallets.tabs.withdraw': 'Withdraw',
-    'page.body.wallets.tabs.withdraw.content.address': 'Withdraw Address',
-    'page.body.wallets.tabs.withdraw.content.amount': 'Withdraw Amount',
+    'page.body.wallets.tabs.withdraw.content.address': 'Withdrawal Address',
+    'page.body.wallets.tabs.withdraw.content.amount': 'Withdrawal Amount',
     'page.body.wallets.tabs.withdraw.content.code2fa': '2FA code',
     'page.body.wallets.tabs.withdraw.content.fee': 'Fee',
-    'page.body.wallets.tabs.withdraw.content.total': 'Total Withdraw Amount',
+    'page.body.wallets.tabs.withdraw.content.total': 'Total Withdrawal Amount',
     'page.body.wallets.tabs.withdraw.content.button': 'WITHDRAW',
-    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Withdraw Address',
+    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Withdrawal Address',
 
     'page.body.wallets.tabs.withdraw.modal.confirmation': 'Confirmation',
     'page.body.wallets.tabs.withdraw.modal.message1': 'You will receive ',
@@ -127,7 +127,7 @@ export const en = {
     'page.body.history.deposit.content.status.rejected': 'Rejected',
     'page.body.history.deposit.content.status.skipped': 'Skipped',
 
-    'page.body.history.withdraw': 'Withdraw History',
+    'page.body.history.withdraw': 'Withdrawal History',
     'page.body.history.withdraw.header.id': 'ID',
     'page.body.history.withdraw.header.date': 'Date',
     'page.body.history.withdraw.header.currency': 'Currency',
@@ -336,7 +336,7 @@ export const en = {
 
     // success messages
     'success.documents.accepted': 'Documents upload was successful',
-    'success.withdraw.action': 'Withdraw request was received',
+    'success.withdraw.action': 'Withdrawal request was received',
     'success.otp.enabled': '2FA was enabled',
     'success.password.changed': 'Password was changed',
     'success.password.forgot': 'Password reset link has been sent to your email',
