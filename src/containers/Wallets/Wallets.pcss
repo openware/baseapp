@@ -69,6 +69,11 @@
 
             &__info {
                 align-items: center;
+                .cr-wallet-item__image-icon {
+                    max-height: calc(var(--gap) * 4.5);
+                    margin-left: calc(var(--gap) * 2);
+                    margin-right: calc(var(--gap) * 1.5);
+                }
             }
 
             &__description {
@@ -491,6 +496,10 @@
                 display: flex;
                 justify-content: space-between;
                 flex-grow: 2;
+            }
+            &__image-icon {
+                margin-right: calc(var(--gap) * 7);
+                max-height: calc(var(--gap) * 8);
             }
             .cr-wallet-item {
                 &__icon-code {

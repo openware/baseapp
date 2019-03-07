@@ -99,7 +99,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         };
     }
 
-    //tslint:disable:member-ordering
+    //tslint:disable member-ordering
     public translate = (id: string) => this.props.intl.formatMessage({ id });
 
     private bankData = [
@@ -247,7 +247,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         return this.consist(item.currency, term);
     };
 
-    // tslint:disable-next-line
+    // tslint:disable-next-line no-any
     private searchCallback = (value: any[]) => {
         this.setState({
             filteredWallets: value,
@@ -319,10 +319,11 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     private renderSingle = () => {
         const { selectedWalletIndex } = this.state;
         const { wallets } = this.props;
-        const balance = (wallets[selectedWalletIndex] || { balance: 0 }).balance;
-        const lockedAmount = (wallets[selectedWalletIndex] || { locked: 0 }).locked;
-        const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-        const selectedFixed = (wallets[selectedWalletIndex] || { fixed: 0 }).fixed;
+        const selectedWallet = wallets[selectedWalletIndex];
+        const balance = (selectedWallet || { balance: 0 }).balance;
+        const lockedAmount = (selectedWallet || { locked: 0 }).locked;
+        const currency = (selectedWallet || { currency: '' }).currency;
+        const selectedFixed = (selectedWallet || { fixed: 0 }).fixed;
         const stringBalance = balance.toString();
         const stringLocked = lockedAmount ? lockedAmount.toString() : undefined;
 
@@ -345,12 +346,17 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 </span>
             </div>
         );
-        return (
+        const iconUrl = selectedWallet ? selectedWallet.iconUrl : null;
+        const formatBlock = innerBlock => (
             <div className="cr-wallet-item__single">
-                <span className={`cr-wallet-item__icon-code cr-crypto-font-${formattedCurrency}`} />
+                {innerBlock}
                 <div className="cr-wallet-item__single-balance">{locked}{displayBalance}</div>
             </div>
         );
+        if (iconUrl) {
+            return formatBlock(<img className="cr-wallet-item__single__image-icon" src={iconUrl} />);
+        }
+        return formatBlock(<span className={`cr-wallet-item__icon-code cr-crypto-font-${formattedCurrency}`} />);
     };
 
     private handleOnCopy = () => {
