@@ -100,7 +100,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     }
 
     private setChart = (markets: Market[], currentMarket: Market) => {
-        this.datafeed = dataFeedObject(this, this.props.markets);
+        this.datafeed = dataFeedObject(this, markets);
 
         const widgetOptions = {
             debug: false,
