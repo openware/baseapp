@@ -371,6 +371,8 @@ export const en = {
     'resource.password.prev_pass_not_correct': 'Previous password is not correct',
     'resource.password.no_change_provided': 'New password cant be the same, as old one',
     'resource.document.empty_doc_expire': 'Expiration Date is invalid',
+    'password.requirements': 'Password does not meet the minimum requirements',
+    'password.password.password_strength': 'Password is too weak',
 
     'identity.user.invalid_referral_format': 'Invalid referral uid format',
     'identity.user.referral_doesnt_exist': 'Referral doesn\'t exist',

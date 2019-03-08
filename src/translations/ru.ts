@@ -377,6 +377,8 @@ export const ru: LangType = {
     'resource.password.prev_pass_not_correct': 'Предыдущий пароль неверен',
     'resource.password.no_change_provided': 'Новый пароль не может быть таким же, как старый',
     'resource.document.empty_doc_expire': 'Expiration Date is invalid',
+    'password.requirements': 'Password does not meet the minimum requirements',
+    'password.password.password_strength': 'Password is too weak',
 
     'identity.user.invalid_referral_format': 'Неверный формат UID реферала',
     'identity.user.referral_doesnt_exist': 'Реферал не существует',
