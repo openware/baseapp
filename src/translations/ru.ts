@@ -38,6 +38,7 @@ export const ru: LangType = {
 
     'page.body.trade.header.asks': 'Запросы на продажу',
     'page.body.trade.header.bids': 'Запросы на покупку',
+    'page.body.trade.orderbook': 'Order Book',
     'page.body.trade.orderbook.header.price': 'Цена',
     'page.body.trade.orderbook.header.amount': 'Кол.',
     'page.body.trade.orderbook.header.volume': 'Объем',

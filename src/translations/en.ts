@@ -37,6 +37,7 @@ export const en = {
 
     'page.body.trade.header.asks': 'Asks',
     'page.body.trade.header.bids': 'Bids',
+    'page.body.trade.orderbook': 'Order Book',
     'page.body.trade.orderbook.header.price': 'Price',
     'page.body.trade.orderbook.header.amount': 'Amount',
     'page.body.trade.orderbook.header.volume': 'Total',

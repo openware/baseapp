@@ -3,11 +3,10 @@ import * as React from 'react';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import {
-    Asks,
-    Bids,
     MarketDepthsComponent,
     MarketsComponent,
     OpenOrdersComponent,
+    OrderBook,
     OrderComponent,
     RecentTrades,
     TradingChart,
@@ -47,34 +46,31 @@ const cols = {
 
 const layouts = {
     lg: [
-        { x: 16, y: 0, w: 4, h: 14, i: '0', minH: 12, minW: 2 },
+        { x: 26, y: 0, w: 4, h: 14, i: '0', minH: 12, minW: 2 },
         { x: 16, y: 18, w: 8, h: 20, i: '1', minH: 18, minW: 4 },
         { x: 0, y: 0, w: 16, h: 39, i: '2', minH: 12, minW: 5 },
-        { x: 16, y: 14, w: 4, h: 14, i: '3', minH: 8, minW: 3 },
-        { x: 20, y: 14, w: 4, h: 14, i: '4', minH: 8, minW: 3 },
-        { x: 16, y: 38, w: 8, h: 13, i: '5', minH: 12, minW: 5 },
-        { x: 0, y: 40, w: 16, h: 22, i: '6', minH: 8, minW: 5 },
-        { x: 26, y: 0, w: 4, h: 14, i: '7', minH: 8, minW: 4 },
+        { x: 16, y: 0, w: 4, h: 28, i: '3', minH: 20, minW: 4 },
+        { x: 16, y: 38, w: 8, h: 13, i: '4', minH: 12, minW: 5 },
+        { x: 0, y: 40, w: 16, h: 22, i: '5', minH: 8, minW: 5 },
+        { x: 26, y: 11, w: 4, h: 14, i: '6', minH: 8, minW: 4 },
     ],
     md: [
-        { x: 18, y: 0, w: 6, h: 15, i: '0', minH: 12, minW: 2 },
-        { x: 14, y: 30, w: 10, h: 20, i: '1', minH: 16, minW: 4 },
-        { x: 0, y: 0, w: 18, h: 30, i: '2', minH: 12, minW: 5 },
-        { x: 0, y: 30, w: 7, h: 12, i: '3', minH: 8, minW: 3 },
-        { x: 7, y: 30, w: 7, h: 12, i: '4', minH: 8, minW: 3 },
-        { x: 14, y: 42, w: 10, h: 12, i: '5', minH: 8, minW: 4 },
-        { x: 0, y: 42, w: 14, h: 20, i: '6', minH: 6, minW: 5 },
-        { x: 18, y: 12, w: 6, h: 15, i: '7', minH: 8, minW: 2 },
+        { x: 0, y: 0, w: 4, h: 12, i: '0', minH: 12, minW: 2 },
+        { x: 2, y: 13, w: 8, h: 18, i: '1', minH: 16, minW: 4 },
+        { x: 5, y: 0, w: 19, h: 30, i: '2', minH: 12, minW: 5 },
+        { x: 0, y: 12, w: 8, h: 18, i: '3', minH: 18, minW: 4 },
+        { x: 0, y: 10, w: 8, h: 11, i: '4', minH: 8, minW: 4 },
+        { x: 8, y: 0, w: 19, h: 20, i: '5', minH: 6, minW: 5 },
+        { x: 0, y: 0, w: 4, h: 12, i: '6', minH: 8, minW: 2 },
     ],
     sm: [
         { x: 0, y: 0, w: 12, h: 16, i: '0', minH: 15, minW: 4, draggable: false, resizable: false },
         { x: 0, y: 12, w: 12, h: 26, i: '1', minH: 24, minW: 5, draggable: false, resizable: false },
         { x: 0, y: 30, w: 12, h: 30, i: '2', minH: 30, minW: 5, draggable: false, resizable: false },
-        { x: 0, y: 60, w: 12, h: 12, i: '3', minH: 12, minW: 3, draggable: false, resizable: false },
-        { x: 0, y: 72, w: 12, h: 12, i: '4', minH: 12, minW: 3, draggable: false, resizable: false },
-        { x: 0, y: 96, w: 12, h: 12, i: '5', minH: 12, minW: 7, draggable: false, resizable: false },
-        { x: 0, y: 84, w: 12, h: 20, i: '6', minH: 12, minW: 7, draggable: false, resizable: false },
-        { x: 30, y: 0, w: 12, h: 16, i: '7', minH: 10, minW: 6, draggable: false, resizable: false },
+        { x: 0, y: 60, w: 12, h: 18, i: '3', minH: 18, minW: 4, draggable: false, resizable: false },
+        { x: 0, y: 96, w: 12, h: 12, i: '4', minH: 12, minW: 7, draggable: false, resizable: false },
+        { x: 0, y: 84, w: 12, h: 20, i: '5', minH: 12, minW: 7, draggable: false, resizable: false },
+        { x: 30, y: 0, w: 12, h: 16, i: '6', minH: 10, minW: 6, draggable: false, resizable: false },
     ],
 };
 
@@ -102,6 +98,7 @@ interface DispatchProps {
 
 interface StateProps {
     orderComponentResized: number;
+    orderBookComponentResized: number;
 }
 
 type Props = DispatchProps & ReduxProps & RouteComponentProps;
@@ -109,6 +106,7 @@ type Props = DispatchProps & ReduxProps & RouteComponentProps;
 class Trading extends React.Component<Props, StateProps> {
     public readonly state = {
         orderComponentResized: 5,
+        orderBookComponentResized: 5,
     };
 
     private gridItems = [
@@ -126,22 +124,18 @@ class Trading extends React.Component<Props, StateProps> {
         },
         {
             i: 3,
-            render: () => <Bids />,
+            render: () => <OrderBook size={this.state.orderBookComponentResized} />,
         },
         {
             i: 4,
-            render: () => <Asks />,
-        },
-        {
-            i: 5,
             render: () => <MarketDepthsComponent />,
         },
         {
-            i: 6,
+            i: 5,
             render: () => <OpenOrdersComponent/>,
         },
         {
-            i: 7,
+            i: 6,
             render: () => <RecentTrades/>,
         },
     ];
@@ -217,8 +211,19 @@ class Trading extends React.Component<Props, StateProps> {
     };
 
     private handleResize = (layout, oldItem, newItem) => {
-        if (oldItem.i === '1') {
-            this.setState({ orderComponentResized: newItem.w });
+        switch (oldItem.i) {
+            case '1':
+                this.setState({
+                    orderComponentResized: newItem.w,
+                });
+                break;
+            case '3':
+                this.setState({
+                    orderBookComponentResized: newItem.w,
+                });
+                break;
+            default:
+                break;
         }
     }
 }

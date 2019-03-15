@@ -38,6 +38,7 @@ export const zh: LangType = {
 
     'page.body.trade.header.asks': '问',
     'page.body.trade.header.bids': '出价',
+    'page.body.trade.orderbook': '訂單簿',
     'page.body.trade.orderbook.header.price': '价格',
     'page.body.trade.orderbook.header.amount': '金额',
     'page.body.trade.orderbook.header.volume': '音量',
