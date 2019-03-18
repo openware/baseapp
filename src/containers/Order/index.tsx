@@ -82,8 +82,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     public componentWillReceiveProps(next: Props) {
         if (next.currentMarket && ((next.currentMarket !== this.props.currentMarket) || (next.wallets !== this.props.wallets))) {
             this.setState({
-                walletBase: this.getWallet(next.currentMarket.ask_unit),
-                walletQuote: this.getWallet(next.currentMarket.bid_unit),
+                walletBase: this.getWallet(next.currentMarket.ask_unit, next.wallets),
+                walletQuote: this.getWallet(next.currentMarket.bid_unit, next.wallets),
             });
         }
         if (next.currentPrice !== this.props.currentPrice) {
@@ -183,10 +183,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.props.orderExecute(order);
     };
 
-    private getWallet(currency: string): Wallet | undefined {
+    private getWallet(currency: string, wallets: WalletItemProps[]) {
         const currencyLower = currency.toLowerCase();
-        const { wallets } = this.props;
-        return wallets ? wallets.find(w => w.currency === currencyLower) : undefined;
+        return wallets.find(w => w.currency === currencyLower) as Wallet;
     }
 
     private getOrderType = (index: number, label: string) => {
