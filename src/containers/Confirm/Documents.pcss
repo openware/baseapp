@@ -162,7 +162,19 @@
       &-content-3 {
         margin-left: 2px;
         width: calc(var(--big-gap) * 3.81);
+        position: relative;
 
+        .pg-confirm__content-documents-col-row-content-label {
+          position: absolute;
+          margin-left: calc(var(--gap) * 1.42);
+          margin-top: calc(var(--gap) * (-1.33));
+          padding: 0 calc(var(--gap) * 0.33);
+          background-color: var(--base-bright);
+          z-index: 1;
+        }
+        &:focus-within {
+          color: var(--color-blue);
+        }
         .cr-dropdown {
           &__input, &__input--open {
             background-color: var(--base-bright);
@@ -193,7 +205,7 @@
 
           &__input--open {
             color: var(--backhround-dropdown-text);
-            background: var(--background-dropdown-open-text);
+            border-color: var(--color-blue);
           }
 
           &__list {

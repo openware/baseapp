@@ -277,6 +277,7 @@ export const en = {
     'page.body.kyc.documents.select.driverLicense': 'Driver License',
     'page.body.kyc.documents.select.utilityBill': 'Utility Bill',
     'page.body.kyc.documents.number': ': Number',
+    'page.body.kyc.documentsType': 'Document type',
 
     'page.body.kyc.next': 'Next',
     'page.body.kyc.submit': 'Submit',

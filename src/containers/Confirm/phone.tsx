@@ -104,6 +104,8 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             onChange={this.handleChangePhoneNumber}
                             onFocus={this.handleFieldFocus('phoneNumber')}
                             onBlur={this.handleFieldFocus('phoneNumber')}
+                            onKeyPress={this.handleSendEnterPress}
+                            autoFocus={true}
                         />
                         <button
                             className={phoneNumber ? 'pg-confirm__content-phone-col-content-send' : 'pg-confirm__content-phone-col-content-send--disabled'}
@@ -128,6 +130,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             onChange={this.handleChangeConfirmationCode}
                             onFocus={this.handleFieldFocus('confirmationCode')}
                             onBlur={this.handleFieldFocus('confirmationCode')}
+                            onKeyPress={this.handleConfirmEnterPress}
                         />
                     </fieldset>
                 </div>
@@ -147,6 +150,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         return () => {
             switch (field) {
                 case 'phoneNumber':
+                    this.addPlusSignToPhoneNumber();
                     this.setState({
                         phoneNumberFocused: !this.state.phoneNumberFocused,
                     });
@@ -160,6 +164,20 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                     break;
             }
         };
+    }
+
+    private handleConfirmEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.confirmPhone();
+        }
+    }
+
+    private handleSendEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.handleSendCode();
+        }
     }
 
     private confirmPhone = () => {

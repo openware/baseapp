@@ -280,6 +280,7 @@ export const zh: LangType = {
     'page.body.kyc.documents.select.driverLicense': '驾驶执照',
     'page.body.kyc.documents.select.utilityBill': '效用法案',
     'page.body.kyc.documents.number': ': 数字',
+    'page.body.kyc.documentsType': 'Document type',
 
     'page.body.kyc.next': '下一步',
     'page.body.kyc.submit': '提交',

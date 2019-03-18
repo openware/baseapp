@@ -64,7 +64,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     ];
 
     public state = {
-        documentsType: this.data[0],
+        documentsType: '',
         expiration: '',
         expirationFocused: false,
         idNumber: '',
@@ -99,8 +99,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         });
 
         const onSelect = value => this.handleChangeDocumentsType(this.data[value]);
-        const numberType = `${documentsType}${this.translate('page.body.kyc.documents.number')}`;
-
+        const numberType = `${documentsType || this.translate('page.body.kyc.documentsType')}${this.translate('page.body.kyc.documents.number')}`;
         return (
             <React.Fragment>
                 <div className="pg-confirm__content-documents">
@@ -108,9 +107,13 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         <div className="pg-confirm__content-documents-col">
                             <div className="pg-confirm__content-documents-col-row">
                                 <div className="pg-confirm__content-documents-col-row-content-3">
+                                    <div className="pg-confirm__content-documents-col-row-content-label">
+                                        {documentsType && this.translate('page.body.kyc.documentsType')}
+                                    </div>
                                     <Dropdown
                                         className="pg-confirm__content-documents-col-row-content-number"
                                         list={this.data}
+                                        placeholder={this.translate('page.body.kyc.documentsType')}
                                         onSelect={onSelect}
                                         elemHeight={40}
                                         listHeight={160}

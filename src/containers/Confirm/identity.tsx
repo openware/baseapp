@@ -155,107 +155,109 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                   onChange={this.handleChange('firstName')}
                                   onFocus={this.handleFieldFocus('firstName')}
                                   onBlur={this.handleFieldFocus('firstName')}
+                                  autoFocus={true}
                               />
                       </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={dateOfBirthGroupClass}>
-                          {dateOfBirth && <legend>{this.translate('page.body.kyc.identity.dateOfBirth')}</legend>}
-                          <MaskInput
-                            className="pg-confirm__content-identity-col-row-content-number"
-                            maskString="00/00/0000"
-                            mask="00/00/0000"
-                            onChange={this.handleChangeDate}
-                            onFocus={this.handleFieldFocus('dateOfBirth')}
-                            onBlur={this.handleFieldFocus('dateOfBirth')}
-                            value={dateOfBirth}
-                            placeholder={this.translate('page.body.kyc.identity.dateOfBirth')}
-                          />
-                      </fieldset>
+                        <fieldset className={lastNameGroupClass}>
+                            {lastName && <legend>{this.translate('page.body.kyc.identity.lastName')}</legend>}
+                                <input
+                                    className="pg-confirm__content-identity-col-row-content-number"
+                                    type="string"
+                                    placeholder={this.translate('page.body.kyc.identity.lastName')}
+                                    value={lastName}
+                                    onChange={this.handleChange('lastName')}
+                                    onFocus={this.handleFieldFocus('lastName')}
+                                    onBlur={this.handleFieldFocus('lastName')}
+                                />
+                        </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={residentialAddressGroupClass}>
-                          {residentialAddress && <legend>{this.translate('page.body.kyc.identity.residentialAddress')}</legend>}
-                          <input
-                            className="pg-confirm__content-identity-col-row-content-number"
-                            type="string"
-                            placeholder={this.translate('page.body.kyc.identity.residentialAddress')}
-                            value={residentialAddress}
-                            onChange={this.handleChange('residentialAddress')}
-                            onFocus={this.handleFieldFocus('residentialAddress')}
-                            onBlur={this.handleFieldFocus('residentialAddress')}
-                          />
-                      </fieldset>
+                        <fieldset className={dateOfBirthGroupClass}>
+                            {dateOfBirth && <legend>{this.translate('page.body.kyc.identity.dateOfBirth')}</legend>}
+                            <MaskInput
+                                className="pg-confirm__content-identity-col-row-content-number"
+                                maskString="00/00/0000"
+                                mask="00/00/0000"
+                                onChange={this.handleChangeDate}
+                                onFocus={this.handleFieldFocus('dateOfBirth')}
+                                onBlur={this.handleFieldFocus('dateOfBirth')}
+                                value={dateOfBirth}
+                                placeholder={this.translate('page.body.kyc.identity.dateOfBirth')}
+                            />
+                        </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={cityGroupClass}>
-                          {city && <legend>{this.translate('page.body.kyc.identity.city')}</legend>}
-                          <input
-                              className="pg-confirm__content-identity-col-row-content-number"
-                              type="string"
-                              placeholder={this.translate('page.body.kyc.identity.city')}
-                              value={city}
-                              onChange={this.handleChange('city')}
-                              onFocus={this.handleFieldFocus('city')}
-                              onBlur={this.handleFieldFocus('city')}
-                          />
-                      </fieldset>
+                        <div className="pg-confirm__content-identity-col-row-content">
+                            <div className="pg-confirm__content-identity-col-row-content-label">
+                                {nationality && this.translate('page.body.kyc.identity.nationality')}
+                            </div>
+                            <Dropdown
+                                className="pg-confirm__content-documents-col-row-content-number"
+                                list={dataNationalities}
+                                onSelect={onSelectNationality}
+                                placeholder={this.translate('page.body.kyc.identity.nationality')}
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="pg-confirm__content-identity-col pg-confirm__content-identity-col-right">
-                  <div className="pg-confirm__content-identity-col-row">
-                    <fieldset className={lastNameGroupClass}>
-                        {lastName && <legend>{this.translate('page.body.kyc.identity.lastName')}</legend>}
+                    <div className="pg-confirm__content-identity-col-row">
+                        <fieldset className={residentialAddressGroupClass}>
+                            {residentialAddress && <legend>{this.translate('page.body.kyc.identity.residentialAddress')}</legend>}
                             <input
                                 className="pg-confirm__content-identity-col-row-content-number"
                                 type="string"
-                                placeholder={this.translate('page.body.kyc.identity.lastName')}
-                                value={lastName}
-                                onChange={this.handleChange('lastName')}
-                                onFocus={this.handleFieldFocus('lastName')}
-                                onBlur={this.handleFieldFocus('lastName')}
+                                placeholder={this.translate('page.body.kyc.identity.residentialAddress')}
+                                value={residentialAddress}
+                                onChange={this.handleChange('residentialAddress')}
+                                onFocus={this.handleFieldFocus('residentialAddress')}
+                                onBlur={this.handleFieldFocus('residentialAddress')}
                             />
-                    </fieldset>
-                  </div>
-                    <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-content">
-                          <div className="pg-confirm__content-identity-col-row-content-label">
-                              {nationality && this.translate('page.body.kyc.identity.nationality')}
-                          </div>
-                        <Dropdown
-                          className="pg-confirm__content-documents-col-row-content-number"
-                          list={dataNationalities}
-                          onSelect={onSelectNationality}
-                          placeholder={this.translate('page.body.kyc.identity.nationality')}
-                        />
-                      </div>
+                        </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
-                      <div className="pg-confirm__content-identity-col-row-content">
-                          <div className="pg-confirm__content-identity-col-row-content-label">
-                              {countryOfBirth && this.translate('page.body.kyc.identity.CoR')}
-                          </div>
-                        <Dropdown
-                          className="pg-confirm__content-documents-col-row-content-number"
-                          list={dataCountries}
-                          onSelect={onSelectCountry}
-                          placeholder={this.translate('page.body.kyc.identity.CoR')}
-                        />
-                      </div>
+                        <div className="pg-confirm__content-identity-col-row-content">
+                            <div className="pg-confirm__content-identity-col-row-content-label">
+                                {countryOfBirth && this.translate('page.body.kyc.identity.CoR')}
+                            </div>
+                            <Dropdown
+                                className="pg-confirm__content-documents-col-row-content-number"
+                                list={dataCountries}
+                                onSelect={onSelectCountry}
+                                placeholder={this.translate('page.body.kyc.identity.CoR')}
+                            />
+                        </div>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={postcodeGroupClass}>
-                          {postcode && <legend>{this.translate('page.body.kyc.identity.postcode')}</legend>}
-                          <input
-                              className="pg-confirm__content-identity-col-row-content-number"
-                              type="string"
-                              placeholder={this.translate('page.body.kyc.identity.postcode')}
-                              value={postcode}
-                              onChange={this.handleChange('postcode')}
-                              onFocus={this.handleFieldFocus('postcode')}
-                              onBlur={this.handleFieldFocus('postcode')}
-                          />
-                      </fieldset>
+                        <fieldset className={cityGroupClass}>
+                            {city && <legend>{this.translate('page.body.kyc.identity.city')}</legend>}
+                            <input
+                                className="pg-confirm__content-identity-col-row-content-number"
+                                type="string"
+                                placeholder={this.translate('page.body.kyc.identity.city')}
+                                value={city}
+                                onChange={this.handleChange('city')}
+                                onFocus={this.handleFieldFocus('city')}
+                                onBlur={this.handleFieldFocus('city')}
+                            />
+                        </fieldset>
+                    </div>
+                    <div className="pg-confirm__content-identity-col-row">
+                        <fieldset className={postcodeGroupClass}>
+                            {postcode && <legend>{this.translate('page.body.kyc.identity.postcode')}</legend>}
+                            <input
+                                className="pg-confirm__content-identity-col-row-content-number"
+                                type="string"
+                                placeholder={this.translate('page.body.kyc.identity.postcode')}
+                                value={postcode}
+                                onChange={this.handleChange('postcode')}
+                                onFocus={this.handleFieldFocus('postcode')}
+                                onBlur={this.handleFieldFocus('postcode')}
+                                onKeyPress={this.handleConfirmEnterPress}
+                            />
+                        </fieldset>
                     </div>
                 </div>
               </div>
@@ -272,6 +274,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         );
     }
 
+    private scrollToElement = (displayedElem: number) => {
+            const element: HTMLElement = document.getElementsByClassName('pg-confirm__content-identity-col-row')[displayedElem] as HTMLElement;
+            element && element.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
+    }
+
     private handleFieldFocus = (field: string) => {
         return () => {
             switch (field) {
@@ -279,35 +286,42 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     this.setState({
                         cityFocused: !this.state.cityFocused,
                     });
+                    this.scrollToElement(6);
                     break;
                 case 'dateOfBirth':
                     this.setState({
                         dateOfBirthFocused: !this.state.dateOfBirthFocused,
                     });
+                    this.scrollToElement(2);
                     break;
                 case 'firstName':
                     this.setState({
                         firstNameFocused: !this.state.firstNameFocused,
                     });
+                    this.scrollToElement(0);
                     break;
                 case 'lastName':
                     this.setState({
                         lastNameFocused: !this.state.lastNameFocused,
                     });
+                    this.scrollToElement(1);
                     break;
                 case 'postcode':
                     this.setState({
                         postcodeFocused: !this.state.postcodeFocused,
                     });
+                    this.scrollToElement(7);
                     break;
                 case 'residentialAddress':
                     this.setState({
                         residentialAddressFocused: !this.state.residentialAddressFocused,
                     });
+                    this.scrollToElement(4);
                     break;
                 default:
                     break;
             }
+
         };
     }
 
@@ -319,6 +333,13 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             });
         };
     };
+
+    private handleConfirmEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter' && !this.handleCheckButtonDisabled()) {
+            event.preventDefault();
+            this.sendData();
+        }
+    }
 
     private formatDate = (date: string) => {
         const [day, month, year] = date.split('/');
