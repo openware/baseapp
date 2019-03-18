@@ -16,15 +16,6 @@ export function* walletsSaga() {
     try {
         const accounts = yield call(API.get(walletsOptions), '/account/balances');
         const currencies = yield call(API.get(currenciesOptions), '/public/currencies');
-        const withdrawFeesResponse = yield call(API.get(walletsOptions), '/public/fees/withdraw');
-
-        const depositFees = withdrawFeesResponse.reduce((total, fee) => ({
-            ...total,
-            [fee.currency]: {
-                fee: fee.fee,
-                type: fee.type,
-            },
-        }), {});
 
         const fees = accounts.map(wallet => {
             const currencyInfo = currencies.find(item => item.id === wallet.currency);
@@ -33,8 +24,8 @@ export function* walletsSaga() {
                 name: currencyInfo.name,
                 explorerTransaction: currencyInfo!.explorer_transaction,
                 explorerAddress: currencyInfo!.explorer_address,
-                fee: depositFees[wallet.currency]!.fee.value,
-                type: depositFees[wallet.currency]!.type,
+                fee: currencyInfo!.withdraw_fee,
+                type: currencyInfo!.type,
                 fixed: currencyInfo!.precision,
                 iconUrl: currencyInfo.icon_url,
             });
