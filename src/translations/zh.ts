@@ -9,7 +9,6 @@ export const zh: LangType = {
     'page.header.navbar.history':'历史',
 
     'page.header.navbar.profile': '个人资料',
-    'page.header.navbar.kyc':'KYC',
     'page.header.navbar.logout':'退出',
 
     'page.body.trade.header.markets':'市场',
@@ -53,15 +52,11 @@ export const zh: LangType = {
 
     'page.body.trade.header.openOrders':'打开订单',
     'page.body.trade.header.openOrders.content.date':'日期',
-    'page.body.trade.header.openOrders.content.action':'行动',
     'page.body.trade.header.openOrders.content.state':'状态',
-    'page.body.trade.header.openOrders.content.state.wait': '等',
     'page.body.trade.header.openOrders.content.price': '价格',
     'page.body.trade.header.openOrders.content.amount': '金额',
     'page.body.trade.header.openOrders.content.total': '总计',
     'page.body.trade.header.openOrders.content.filled': '填充',
-    'page.body.trade.header.openOrders.content.ask': '问',
-    'page.body.trade.header.openOrders.content.bid': '出价',
 
     'page.body.wallets.locked':'已锁定',
     'page.body.wallets.balance': '平衡',
@@ -103,10 +98,6 @@ export const zh: LangType = {
     'page.body.openOrders.tab.all': '全',
     'page.body.openOrders.tab.open': '打开',
     'page.body.openOrders.header.orderType':'订单类型',
-    'page.body.openOrders.header.orderType.buy.market': '买 / 市场',
-    'page.body.openOrders.header.orderType.buy.limit': '买 / 限制',
-    'page.body.openOrders.header.orderType.sell.market': '卖 / 市场',
-    'page.body.openOrders.header.orderType.sell.limit': '卖 / 限制',
     'page.body.openOrders.header.pair': '配对',
     'page.body.openOrders.header.amount': '金额',
     'page.body.openOrders.header.price': '价格',
@@ -298,7 +289,6 @@ export const zh: LangType = {
 
     'page.footer.legalDocuments':'法律文件',
     'page.footer.faq':'常见问题',
-    'page.footer.language':'语言',
 
     'page.header.signIn': '登录',
     'page.header.signIn.email': '电子邮件',
@@ -311,7 +301,6 @@ export const zh: LangType = {
     'page.header.signIn.resetPassword.repeatPassword': 'Repeat password',
     'page.header.signIn.resetPassword.button': 'Change',
     'page.header.signIn.resetPassword.error': 'Fields are empty or don`t matches',
-    'page.header.signIn.createAccount': '创建一个帐户？',
 
     'page.header.signUp': '注册',
     'page.header.signUp.email': '电子邮件',
@@ -382,6 +371,8 @@ export const zh: LangType = {
     'password.requirements': 'Password does not meet the minimum requirements',
     'password.password.password_strength': 'Password is too weak',
 
+    'email.taken': 'Email already have been taken',
+
     'identity.user.invalid_referral_format': 'Invalid referral uid format',
     'identity.user.referral_doesnt_exist': 'Referral doesn\'t exist',
     'identity.user.active_or_doesnt_exist': 'User doesn\'t exist or has already been activated',
@@ -413,13 +404,6 @@ export const zh: LangType = {
 
     'totp.error': 'OTP code is invalid',
 
-    'admin.user.update_himself': 'Admin can\'t update himself',
-    'admin.user.enable_2fa': 'Manual 2FA enabling not allowed',
-    'admin.user.state_no_change': 'Can\'t change state',
-    'admin.user.doesnt_exist': 'User with such UID doesnt exist',
-    'admin.label.doesnt_exist': 'Label with such key doesnt exist or not assigned to chosen user',
-    'admin.access.denied': 'Access Denied: User is not Admin',
-
     'record.not_found': 'Record is not found',
     'jwt.decode_and_verify': 'Failed to decode and verify JWT',
     'authz.invalid_session': 'Failed to decode cookies',
@@ -432,24 +416,6 @@ export const zh: LangType = {
     'authz.unexistent_apikey': 'X-Auth-Apikey header is invalid',
 
     // validation errors
-    // admin module
-    'admin.user.non_integer_page': 'Page Value you send could not be parsed into Integer type',
-    'admin.user.non_positive_page': 'Page value must be positive',
-    'admin.user.non_integer_limit': 'Limit Value you send could not be parsed into Integer type',
-    'admin.user.invalid_limit': 'Limit invalid value',
-    'admin.user.missing_uid': 'User with this UID is missing',
-    'admin.user.empty_uid': 'UID is missing or empty',
-    'admin.user.empty_state': 'State is missing or empty',
-    'admin.user.empty_otp': 'OTP code is missing or empty',
-    'admin.user.empty_role': 'Role is missing or empty',
-    'admin.user.one_of_role_state_otp': 'One of role state otp',
-    'admin.user.missing_key': 'Key is missing',
-    'admin.user.empty_key': 'Key is missing or empty',
-    'admin.user.missing_scope': 'Scope is missing',
-    'admin.user.empty_scope': 'Scope is missing or empty',
-    'admin.user.missing_value': 'Value is missing',
-    'admin.user.empty_value': 'Value is missing or empty',
-
     // identity module
     'identity.user.missing_email': 'Email is missing',
     'identity.user.empty_email': 'Email is missing or empty',
