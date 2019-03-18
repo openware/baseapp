@@ -1,0 +1,201 @@
+@import "./MarketsTabs/MarketsTabs.pcss";
+@import "./MarketsList/MarketsList.pcss";
+
+:root {
+  --market-selector-animation-duration: 0.2s;
+}
+
+.pg-trading-header-selector {
+  background-color: var(--trading-header-selector-background);
+  border-radius: 4px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &-search {
+    height: calc(var(--big-gap) * 0.7);
+    width: calc(var(--big-gap) * 5.3);
+    margin: 6px;
+    border: solid 1px var(--trading-header-search-border);
+    border-radius: 4px;
+    display: flex;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    animation-name: pg-trading-header-selector-search;
+    animation-duration: var(--market-selector-animation-duration);
+
+    &-icon {
+      height: 100%;
+      width: calc(var(--big-gap) * 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: solid 1px var(--trading-header-search-border);
+    }
+
+    &-field {
+      width: calc(100% - calc(var(--big-gap) * 0.6));
+      border: none;
+      outline: none;
+      background: none;
+      color: var(--trading-header-search-border);
+      padding: 0 calc(var(--big-gap) * 0.1);
+      font-size: calc(var(--big-gap) * 0.25);
+      line-height: calc(var(--big-gap) * 0.25);
+    }
+  }
+
+  &-market {
+    font-size: var(--trading-header-font-size-bigger);
+    color: var(--trading-header-white);
+    padding: 0 calc(var(--big-gap) * 0.23);
+  }
+
+  &-title {
+    font-size: var(--trading-header-font-size);
+    color: var(--trading-header-selector-title);
+    padding-left: calc(var(--big-gap) * 0.95);
+  }
+
+  &-icon-open {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 calc(var(--big-gap) * 0.28) 0 calc(var(--big-gap) * 0.55);
+    animation-name: pg-trading-header-selector-open;
+    animation-duration: var(--market-selector-animation-duration);
+    margin-left: calc(var(--big-gap) * 1.5);
+  }
+
+  &-icon-close {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 calc(var(--big-gap) * 0.28);
+    animation-name: pg-trading-header-selector-close;
+    animation-duration: var(--market-selector-animation-duration);
+    margin-left: 0;
+  }
+
+  &-icon-img-open {
+    transform-origin: center;
+    transform: rotate(90deg);
+    animation-name: pg-trading-header-selector-open-icon;
+    animation-duration: var(--market-selector-animation-duration);
+  }
+
+  &-icon-img-close {
+    transform-origin: center;
+    transform: rotate(0);
+    animation-name: pg-trading-header-selector-close-icon;
+    animation-duration: var(--market-selector-animation-duration);
+  }
+
+  &-list-container-open {
+    left: calc(var(--big-gap) * -0.23);
+    top: calc(var(--big-gap) * -0.082);
+    width: calc(var(--big-gap) * 5.6);
+    height: 100vh;
+    padding-left: calc(var(--gap));
+    background: var(--trading-header-background);
+    display: block;
+    position: absolute;
+    z-index: 99999;
+
+    overflow-y: scroll;
+    animation-name: pg-trading-header-selector-list-container-open;
+    animation-duration: var(--market-selector-animation-duration);
+  }
+
+  &-list-container-close {
+    top: 0;
+    width: 0;
+    height: 0;
+    display: none;
+    z-index: 99999;
+    animation-name: pg-trading-header-selector-list-container-close;
+    animation-duration: var(--market-selector-animation-duration);
+  }
+}
+
+.pg-trading-header-selector-market {
+  width: calc(var(--big-gap));
+}
+
+@keyframes pg-trading-header-selector-open {
+  from {
+    margin-left: 0;
+  }
+  to {
+    margin-left: calc(var(--big-gap) * 1.5);
+  }
+}
+
+@keyframes pg-trading-header-selector-close {
+  from {
+    margin-left: calc(var(--big-gap) * 1.5);
+  }
+  to {
+    margin-left: 0;
+  }
+}
+
+@keyframes pg-trading-header-selector-open-icon {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes pg-trading-header-selector-close-icon {
+  from {
+    transform: rotate(90deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+}
+
+@keyframes pg-trading-header-selector-list-container-open {
+  from {
+    width: 0;
+    height: 0;
+    top: 0;
+  }
+  to {
+    width: calc(var(--big-gap) * 5.6);
+    height: calc(100vh - var(--big-gap) * 1.1);
+    top: calc(var(--big-gap) * -0.082);
+  }
+}
+
+@keyframes pg-trading-header-selector-list-container-close {
+  from {
+    width: calc(var(--big-gap) * 5.6);
+    height: calc(100vh - var(--big-gap) * 1.1);
+    top: calc(var(--big-gap) * -0.082);
+  }
+  to {
+    width: 0;
+    height: 0;
+    top: 0;
+  }
+}
+
+@keyframes pg-trading-header-selector-search {
+  from {
+    width: 0;
+    height: 0;
+  }
+  to {
+    height: calc(var(--big-gap) * 0.7);
+    width: calc(var(--big-gap) * 5);
+  }
+}

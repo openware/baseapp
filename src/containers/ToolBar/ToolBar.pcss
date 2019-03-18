@@ -1,0 +1,92 @@
+@import "./PriceBar/PriceBar.pcss";
+@import "./ProgressLabel/ProgressLabel.pcss";
+@import "./MarketSelector/MarketSelector.pcss";
+
+.pg-trading-header-container {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 43px;
+  border: 5px solid var(--trading-header-background);
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  border-radius: calc(var(--big-gap) * 0.07);
+  background-color: var(--trading-header-background);
+  margin-bottom: -5px;
+
+  &-dropdown {
+    &-selector {
+      height: calc(var(--big-gap) * 0.77);
+      width: calc(var(--big-gap) * 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--trading-header-btn-close);
+      border-radius: calc(var(--big-gap) * 0.07);
+
+      &-open {
+        height: calc(var(--big-gap) * 0.77);
+        width: calc(var(--big-gap) * 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: calc(var(--big-gap) * 0.07);
+        background: var(--trading-header-btn-open);
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &-stats {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &-daily {
+    display: flex;
+    flex-direction: row;
+    width: calc(var(--big-gap) * 9);
+    justify-content: space-between;
+    margin-right: calc(var(--big-gap) * 1);
+    margin-left: 5px;
+
+    &-last {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 996px) {
+    &-daily {
+      width: calc(var(--big-gap) * 5);
+    }
+
+    &-daily-last {
+      display: block;
+    }
+  }
+
+  &-total {
+    display: flex;
+    flex-direction: row;
+    width: calc(var(--big-gap) * 2.4);
+    justify-content: space-between;
+    margin-right: 1%;
+  }
+
+  @media screen and (max-width: 768px) {
+    &-total {
+      display: none;
+    }
+  }
+
+  &-selector {
+    height: 100%;
+    display: flex;
+  }
+}

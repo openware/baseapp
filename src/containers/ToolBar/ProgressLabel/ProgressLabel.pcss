@@ -1,0 +1,22 @@
+.pg-trading-header-progress-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    &-additional {
+        color: var(--trading-header-title);
+        font-size: var(--trading-header-font-size);
+    }
+
+    &-progress {
+        &-positive {
+            color: var(--trading-header-positive);
+            font-size: var(--trading-header-font-size-bigger);
+        }
+
+        &-negative {
+            color: var(--trading-header-negative);
+            font-size: var(--trading-header-font-size-bigger);
+        }
+    }
+}

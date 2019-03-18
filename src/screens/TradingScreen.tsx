@@ -4,11 +4,11 @@ import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redu
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import {
     MarketDepthsComponent,
-    MarketsComponent,
     OpenOrdersComponent,
     OrderBook,
     OrderComponent,
     RecentTrades,
+    ToolBar,
     TradingChart,
 } from '../containers';
 import { getUrlPart } from '../helpers';
@@ -46,16 +46,14 @@ const cols = {
 
 const layouts = {
     lg: [
-        { x: 26, y: 0, w: 4, h: 14, i: '0', minH: 12, minW: 2 },
         { x: 16, y: 18, w: 8, h: 20, i: '1', minH: 18, minW: 4 },
         { x: 0, y: 0, w: 16, h: 39, i: '2', minH: 12, minW: 5 },
         { x: 16, y: 0, w: 4, h: 28, i: '3', minH: 20, minW: 4 },
         { x: 16, y: 38, w: 8, h: 13, i: '4', minH: 12, minW: 5 },
         { x: 0, y: 40, w: 16, h: 22, i: '5', minH: 8, minW: 5 },
-        { x: 26, y: 11, w: 4, h: 14, i: '6', minH: 8, minW: 4 },
+        { x: 26, y: 11, w: 4, h: 28, i: '6', minH: 8, minW: 4 },
     ],
     md: [
-        { x: 0, y: 0, w: 4, h: 12, i: '0', minH: 12, minW: 2 },
         { x: 2, y: 13, w: 8, h: 18, i: '1', minH: 16, minW: 4 },
         { x: 5, y: 0, w: 19, h: 30, i: '2', minH: 12, minW: 5 },
         { x: 0, y: 12, w: 8, h: 18, i: '3', minH: 18, minW: 4 },
@@ -64,7 +62,6 @@ const layouts = {
         { x: 0, y: 0, w: 4, h: 12, i: '6', minH: 8, minW: 2 },
     ],
     sm: [
-        { x: 0, y: 0, w: 12, h: 16, i: '0', minH: 15, minW: 4, draggable: false, resizable: false },
         { x: 0, y: 12, w: 12, h: 26, i: '1', minH: 24, minW: 5, draggable: false, resizable: false },
         { x: 0, y: 30, w: 12, h: 30, i: '2', minH: 30, minW: 5, draggable: false, resizable: false },
         { x: 0, y: 60, w: 12, h: 18, i: '3', minH: 18, minW: 4, draggable: false, resizable: false },
@@ -110,10 +107,6 @@ class Trading extends React.Component<Props, StateProps> {
     };
 
     private gridItems = [
-        {
-            i: 0,
-            render: () => <MarketsComponent />,
-        },
         {
             i: 1,
             render: () => <OrderComponent size={this.state.orderComponentResized} />,
@@ -185,6 +178,7 @@ class Trading extends React.Component<Props, StateProps> {
         return (
             <div className={'pg-trading-screen'}>
                 <div className={'pg-trading-wrap'}>
+                    <ToolBar/>
                     <Grid
                         breakpoints={breakpoints}
                         className="layout"

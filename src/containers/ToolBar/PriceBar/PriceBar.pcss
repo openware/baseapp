@@ -1,0 +1,42 @@
+.pg-trading-header-price-bar {
+  position: relative;
+  height: 5px;
+  width: calc(var(--big-gap) * 6);
+
+  &-filler {
+    display: flex;
+    height: 12px;
+
+    &-left {
+      height: 3px;
+      margin-top: 3px;
+      background-color: rgba(84, 180, 137, .3);;
+      border: 1px solid rgba(84, 180, 137, .7);
+      border-radius: 20px 0 0 20px;
+    }
+
+    &-cursor {
+      width: 2px;
+      height: 100%;
+      margin: 0 -1px 0 -1px;
+      background-color: var(--base);
+    }
+
+    &-right {
+      height: 3px;
+      margin-top: 3px;
+      background-color: rgba(232, 94, 89, .3);
+      border: 1px solid rgba(232, 94, 89, .7);
+      border-radius: 0 20px 20px 0;
+    }
+  }
+
+  &-text {
+    position: absolute;
+    margin-top: 14px;
+  }
+
+  @media screen and (max-width: 996px) {
+    display: none;
+  }
+}

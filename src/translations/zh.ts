@@ -13,10 +13,13 @@ export const zh: LangType = {
     'page.header.navbar.logout':'退出',
 
     'page.body.trade.header.markets':'市场',
+    'page.body.trade.header.markets.content.market': 'Market',
     'page.body.trade.header.markets.content.pair':'配对',
     'page.body.trade.header.markets.content.price':'价格',
+    'page.body.trade.header.markets.content.last_price': 'Last Price',
     'page.body.trade.header.markets.content.change': '24h 更改',
     'page.body.trade.header.markets.content.search':'搜索',
+    'page.body.trade.header.markets.content.volume': 'Volume',
 
     'page.body.trade.header.newOrder': '卖订单',
     'page.body.trade.header.newOrder.content.tabs.buy': '购买订单',

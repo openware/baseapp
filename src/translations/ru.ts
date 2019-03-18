@@ -13,10 +13,13 @@ export const ru: LangType = {
     'page.header.navbar.logout': 'Выйти',
 
     'page.body.trade.header.markets': 'Рынки',
+    'page.body.trade.header.markets.content.market': 'Market',
     'page.body.trade.header.markets.content.pair': 'Рыночная пара',
     'page.body.trade.header.markets.content.price': 'Цена',
+    'page.body.trade.header.markets.content.last_price': 'Last Price',
     'page.body.trade.header.markets.content.change': 'Изменение цены за 24ч',
     'page.body.trade.header.markets.content.search': 'Поиск',
+    'page.body.trade.header.markets.content.volume': 'Volume',
 
     'page.body.trade.header.newOrder': 'Создать новую сделку',
     'page.body.trade.header.newOrder.content.tabs.buy': 'Купить',
