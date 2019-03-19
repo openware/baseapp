@@ -38,6 +38,9 @@ interface State {
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
+// render big/small breakpoint
+const breakpoint = 449;
+
 class OrderBookContainer extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
@@ -75,7 +78,7 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     private orderBook = (bids, asks) => {
-        const isLarge = this.state.width >= 450;
+        const isLarge = this.state.width >= breakpoint;
         const asksData = isLarge ? asks : asks.slice(0).reverse();
         return (
             <React.Fragment>
@@ -134,7 +137,7 @@ class OrderBookContainer extends React.Component<Props, State> {
 
     private renderOrderBook = (array: string[][], side: string, message: string, currentMarket?: Market) => {
         let total = accumulateVolume(array);
-        const isLarge = this.state.width > 450;
+        const isLarge = this.state.width > breakpoint;
         const priceFixed = currentMarket ? currentMarket.bid_precision : 0;
         const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
         return (array.length > 0) ? array.map((item, i) => {
@@ -166,19 +169,21 @@ class OrderBookContainer extends React.Component<Props, State> {
         }) : [[[''], message]];
     }
 
-    private handleOnSelect = (index: string, side: string) => {
-        const { currentPrice } = this.props;
-        const priceToSet = this.props[side][Number(index)] ? this.props[side][Number(index)][0] : '';
+    private handleOnSelectBids = (index: string) => {
+        const { currentPrice, bids } = this.props;
+        const priceToSet = bids[Number(index)] ? bids[Number(index)][0] : '';
         if (currentPrice !== priceToSet) {
             this.props.setCurrentPrice(priceToSet);
         }
-    }
-
-    private handleOnSelectBids = (index: string) => {
-        this.handleOnSelect(index, 'bids');
     };
     private handleOnSelectAsks = (index: string) => {
-        this.handleOnSelect(index, 'asks');
+        const { currentPrice, asks } = this.props;
+        const isLarge = this.state.width >= breakpoint;
+        const asksData = isLarge ? asks : asks.slice(0).reverse();
+        const priceToSet = asksData[Number(index)] ? asksData[Number(index)][0] : '';
+        if (currentPrice !== priceToSet) {
+            this.props.setCurrentPrice(priceToSet);
+        }
     };
 }
 
