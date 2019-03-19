@@ -40,7 +40,7 @@ interface StoreProps {
     orderSide: string;
     walletBase?: Wallet;
     walletQuote?: Wallet;
-    price: string;
+    priceLimit: number;
     width: number;
 }
 
@@ -57,7 +57,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         this.state = {
             orderSide: 'buy',
-            price: '',
+            priceLimit: 0,
             width: 0,
         };
 
@@ -86,9 +86,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                 walletQuote: this.getWallet(next.currentMarket.bid_unit, next.wallets),
             });
         }
-        if (next.currentPrice !== this.props.currentPrice) {
+        if (+next.currentPrice && next.currentPrice !== this.state.priceLimit) {
             this.setState({
-                price: next.currentPrice,
+                priceLimit: +next.currentPrice,
             });
         }
     }
@@ -98,7 +98,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         if (!currentMarket) {
             return null;
         }
-        const { walletBase, walletQuote, price } = this.state;
+        const { walletBase, walletQuote, priceLimit } = this.state;
         const to = currentMarket.ask_unit;
         const from = currentMarket.bid_unit;
 
@@ -112,7 +112,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         return (
 
             <div className={'pg-order'} ref={this.orderRef}>
-                {this.state.width > 450 ? headerContent : undefined}
+                {this.state.width > 449 ? headerContent : undefined}
                 <Order
                     disabled={executeLoading}
                     feeBuy={Number(currentMarket.ask_fee)}
@@ -123,11 +123,12 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     onSubmit={this.handleSubmit}
                     priceMarketBuy={Number((currentTicker || defaultCurrentTicker).last)}
                     priceMarketSell={Number((currentTicker || defaultCurrentTicker).last)}
+                    priceLimit={priceLimit}
                     to={to}
                     handleSendType={this.getOrderType}
-                    price={price}
                     orderTypes={this.getOrderTypes}
-                    handleChangeInputPrice={this.handleChangePrice}
+                    currentMarketAskPrecision={currentMarket.ask_precision}
+                    currentMarketBidPrecision={currentMarket.bid_precision}
                     amountText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.amount' })}
                     availableText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.available' })}
                     orderTypeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType' })}
@@ -136,35 +137,13 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     labelFirst={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' })}
                     labelSecond={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' })}
                     estimatedFeeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.estimatedFee' })}
+                    submitBuyButtonText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' })}
+                    submitSellButtonText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' })}
                     width={this.state.width}
                 />
                 {executeLoading && <Loader />}
             </div>
         );
-    }
-
-    private changeState = (value: string) => {
-        this.setState({
-            price: value ? value : '',
-        });
-    };
-
-    private handleChangePrice = (value: string) => {
-        const convertedText = value
-            .replace(',', '.')
-            .replace('-', '');
-        const isDotFirst = convertedText[0] === '.';
-
-        if (isDotFirst) {
-            this.changeState('0.');
-            return;
-        }
-
-        const condition = new RegExp('^(?:[\\d-]*\\.?[\\d-]*|[\\d-]*\\.[\\d-])$');
-
-        if (convertedText.match(condition)) {
-            this.changeState(convertedText);
-        }
     }
 
     private handleSubmit = (value: OrderProps) => {
