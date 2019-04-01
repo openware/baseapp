@@ -45,14 +45,14 @@ describe('recentTrade reducer', () => {
     const fakeTradeEvents: PublicTradeEvent[] = [
         {
             tid: 162413,
-            type: 'sell',
+            taker_type: 'sell',
             date: 1547464388,
             price: '0.01',
             amount: '0.059',
         },
         {
             tid: 162414,
-            type: 'buy',
+            taker_type: 'buy',
             date: 1547464388,
             price: '0.01',
             amount: '0.01',

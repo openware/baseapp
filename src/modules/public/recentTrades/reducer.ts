@@ -27,7 +27,7 @@ export const convertTradeEventToTrade = (market: string, trade: PublicTradeEvent
     market,
     id: trade.tid,
     created_at: localeDate(trade.date, getTimezone(), ''),
-    taker_type: trade.type,
+    taker_type: trade.taker_type,
     price: String(trade.price),
     volume: String(trade.amount),
     funds: String(Number(trade.price) * Number(trade.amount)),

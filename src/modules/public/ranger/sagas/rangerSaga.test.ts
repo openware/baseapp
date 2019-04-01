@@ -510,7 +510,7 @@ describe('Ranger module', () => {
         describe('trades', () => {
             const tradeEvent: PublicTradeEvent = {
                 tid: 100022,
-                type: 'buy',
+                taker_type: 'buy',
                 date: 1547464388,
                 price: '0.0002',
                 amount: '0.00015',
