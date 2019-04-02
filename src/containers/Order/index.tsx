@@ -16,7 +16,7 @@ import {
     selectCurrentPrice,
     selectWallets,
     setCurrentPrice,
-    Wallet,
+    Wallet, walletsFetch,
 } from '../../modules';
 import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/public/markets';
 import {
@@ -38,13 +38,12 @@ interface ReduxProps {
 
 interface StoreProps {
     orderSide: string;
-    walletBase?: Wallet;
-    walletQuote?: Wallet;
     priceLimit: number;
     width: number;
 }
 
 interface DispatchProps {
+    accountWallets: typeof walletsFetch;
     setCurrentPrice: typeof setCurrentPrice;
     orderExecute: typeof orderExecuteFetch;
 }
@@ -80,11 +79,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     public componentWillReceiveProps(next: Props) {
-        if (next.currentMarket && ((next.currentMarket !== this.props.currentMarket) || (next.wallets !== this.props.wallets))) {
-            this.setState({
-                walletBase: this.getWallet(next.currentMarket.ask_unit, next.wallets),
-                walletQuote: this.getWallet(next.currentMarket.bid_unit, next.wallets),
-            });
+        if (!next.wallets || next.wallets.length === 0) {
+            this.props.accountWallets();
         }
         if (+next.currentPrice && next.currentPrice !== this.state.priceLimit) {
             this.setState({
@@ -94,11 +90,15 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     public render() {
-        const { executeLoading, marketTickers, currentMarket } = this.props;
+        const { executeLoading, marketTickers, currentMarket, wallets } = this.props;
         if (!currentMarket) {
             return null;
         }
-        const { walletBase, walletQuote, priceLimit } = this.state;
+        const { priceLimit } = this.state;
+
+        const walletBase = this.getWallet(currentMarket.ask_unit, wallets);
+        const walletQuote = this.getWallet(currentMarket.bid_unit, wallets);
+
         const to = currentMarket.ask_unit;
         const from = currentMarket.bid_unit;
 
@@ -187,6 +187,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    accountWallets: () => dispatch(walletsFetch()),
     orderExecute: payload => dispatch(orderExecuteFetch(payload)),
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
 });
