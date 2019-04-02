@@ -4,7 +4,7 @@ import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { LanguageState } from './public/i18n';
-import { KlineState } from './public/kline';
+import { KlineState, rootKlineFetchSaga } from './public/kline';
 import { MarketsState, rootMarketsSaga } from './public/markets';
 import { DepthState, OrderBookState, rootOrderBookSaga } from './public/orderBook';
 import { RangerState } from './public/ranger/reducer';
@@ -100,5 +100,6 @@ export function* rootSaga() {
         call(rootOrdersHistorySaga),
         call(rootOpenOrdersSaga),
         call(rootEmailVerificationSaga),
+        call(rootKlineFetchSaga),
     ]);
 }

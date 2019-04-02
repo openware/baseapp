@@ -1,4 +1,6 @@
 import {
+    KLINE_DATA,
+    KLINE_FETCH,
     KLINE_PUSH,
 } from './constants';
 
@@ -13,8 +15,25 @@ export interface KlinePush {
     };
 }
 
-export type KlineActions =
-    KlinePush;
+export interface KlineFetch {
+    type: typeof KLINE_FETCH;
+    payload: {
+        market: string;
+        resolution: number;
+        from: string;
+        to: string;
+    };
+}
+
+export interface KlineData {
+    type: typeof KLINE_DATA;
+    // tslint:disable-next-line:no-any
+    payload: any;
+}
+
+export type KlineActions = KlinePush
+    | KlineFetch
+    | KlineData;
 
 
 export const klinePush = (payload: KlinePush['payload']): KlinePush => ({
@@ -22,3 +41,12 @@ export const klinePush = (payload: KlinePush['payload']): KlinePush => ({
     payload,
 });
 
+export const klineFetch = (payload: KlineFetch['payload']): KlineFetch => ({
+    type: KLINE_FETCH,
+    payload,
+});
+
+export const klineData = (payload: KlineData['payload']): KlineData => ({
+    type: KLINE_DATA,
+    payload,
+});

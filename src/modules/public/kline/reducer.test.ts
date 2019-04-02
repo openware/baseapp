@@ -1,21 +1,7 @@
-import { klinePush } from './actions';
-import { klineReducer, KlineState } from './reducer';
+import * as actions from './actions';
+import { initialKlineState, klineReducer } from './reducer';
 
 describe('kline reducer', () => {
-    const expectedState: KlineState = {
-        last: {
-            time: 1549730700000,
-            close: 7.606824173956803,
-            open: 7.4794122620116195,
-            high: 7.690157507290136,
-            low: 7.396078928678286,
-            volume: 36.98530655029049,
-        },
-        marketId: 'ethusd',
-        period: '15m',
-        loading: false,
-    };
-
     it('supports kline push action with string kline', () => {
         const kline = ['1549730700', '7.4794122620116195', '7.690157507290136', '7.396078928678286', '7.606824173956803', '36.98530655029049'];
         const payload = {
@@ -24,7 +10,21 @@ describe('kline reducer', () => {
             kline,
         };
 
-        expect(klineReducer(undefined, klinePush(payload))).toEqual(expectedState);
+        const expectedState = {
+            ...initialKlineState,
+            marketId: 'ethusd',
+            period: '15m',
+            last: {
+                time: 1549730700000,
+                close: 7.606824173956803,
+                open: 7.4794122620116195,
+                high: 7.690157507290136,
+                low: 7.396078928678286,
+                volume: 36.98530655029049,
+            },
+        };
+
+        expect(klineReducer(undefined, actions.klinePush(payload))).toEqual(expectedState);
     });
 
     it('supports kline push action with number kline', () => {
@@ -34,6 +34,45 @@ describe('kline reducer', () => {
             period: '15m',
             kline,
         };
-        expect(klineReducer(undefined, klinePush(payload))).toEqual(expectedState);
+
+        const expectedState = {
+            ...initialKlineState,
+            marketId: 'ethusd',
+            period: '15m',
+            last: {
+                time: 1549730700000,
+                close: 7.606824173956803,
+                open: 7.4794122620116195,
+                high: 7.690157507290136,
+                low: 7.396078928678286,
+                volume: 36.98530655029049,
+            },
+        };
+
+        expect(klineReducer(undefined, actions.klinePush(payload))).toEqual(expectedState);
+    });
+
+    it('supports kline fetch action', () => {
+        const payload = {
+            market: '',
+            resolution: 0,
+            from: '',
+            to: '',
+        };
+        const expectedState = {
+            ...initialKlineState,
+            loading: true,
+        };
+        expect(klineReducer(undefined, actions.klineFetch(payload))).toEqual(expectedState);
+    });
+
+    it('supports kline data action', () => {
+        const payload = [{}];
+        const expectedState = {
+            ...initialKlineState,
+            loading: false,
+            data: payload,
+        };
+        expect(klineReducer(undefined, actions.klineData(payload))).toEqual(expectedState);
     });
 });

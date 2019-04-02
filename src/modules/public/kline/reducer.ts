@@ -1,6 +1,8 @@
 import { CommonState } from '../../types';
 import { KlineActions, KlineRawElement } from './actions';
 import {
+    KLINE_DATA,
+    KLINE_FETCH,
     KLINE_PUSH,
 } from './constants';
 import { KlineEvent } from './types';
@@ -10,6 +12,8 @@ export interface KlineState extends CommonState {
     marketId?: string;
     period?: string;
     loading: boolean;
+    // tslint:disable-next-line:no-any
+    data: any;
 }
 
 export const klineArrayToObject = (el: KlineRawElement[]): KlineEvent => {
@@ -23,6 +27,7 @@ export const klineArrayToObject = (el: KlineRawElement[]): KlineEvent => {
                 throw (new Error(`unexpected type ${typeof e} in kline: ${el}`));
         }
     });
+
     return {
         time: time * 1e3,
         open,
@@ -33,14 +38,15 @@ export const klineArrayToObject = (el: KlineRawElement[]): KlineEvent => {
     };
 };
 
-const initialState: KlineState = {
+export const initialKlineState: KlineState = {
     last: undefined,
     marketId: undefined,
     period: undefined,
     loading: false,
+    data: [],
 };
 
-export const klineReducer = (state = initialState, action: KlineActions): KlineState => {
+export const klineReducer = (state = initialKlineState, action: KlineActions): KlineState => {
     switch (action.type) {
         case KLINE_PUSH:
             const { kline, marketId, period } = action.payload;
@@ -49,6 +55,17 @@ export const klineReducer = (state = initialState, action: KlineActions): KlineS
                 marketId,
                 period,
                 last: klineArrayToObject(kline),
+            };
+        case KLINE_FETCH:
+            return {
+                ...state,
+                loading: true,
+            };
+        case KLINE_DATA:
+            return {
+                ...state,
+                loading: false,
+                data: action.payload,
             };
         default:
             return state;
