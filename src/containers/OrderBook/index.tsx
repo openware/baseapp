@@ -7,7 +7,7 @@ import {
     MapDispatchToPropsFunction,
     MapStateToProps,
 } from 'react-redux';
-import { accumulateVolume, calcMaxVolume, sortBids } from '../../helpers';
+import { accumulateVolume, calcMaxVolume, sortAsks, sortBids } from '../../helpers';
 import {
     Market,
     RootState,
@@ -72,7 +72,7 @@ class OrderBookContainer extends React.Component<Props, State> {
 
         return (
             <div className={cn} ref={this.orderRef}>
-                {isLoading ? <Loader /> : this.orderBook(sortBids(bids), asks)}
+                {isLoading ? <Loader /> : this.orderBook(sortBids(bids), sortAsks(asks))}
             </div>
         );
     }
