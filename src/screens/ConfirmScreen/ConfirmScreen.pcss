@@ -1,0 +1,216 @@
+.pg-wrapper {
+  background: url(assets/images/background.svg);
+  background-size: cover;
+  height: 100vh;
+
+  .pg-logo {
+    padding-top: calc(var(--big-gap) * 2);
+    display: flex;
+    justify-content: center;
+
+    &__img {
+      height: calc(var(--big-gap) * 1.666);
+    }
+  }
+}
+
+.pg-confirm {
+  margin-top: calc(var(--big-gap) * 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__loader {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 50%;
+  }
+
+  &-box {
+    background-color: var(--base-bright);
+    display: block;
+    margin: 0 auto;
+    max-width: calc(var(--big-gap) * 9.33);
+    width: 100%;
+    max-height: calc(var(--big-gap) * 10);
+    position: relative;
+    border-radius: 4px;
+
+    &-close {
+      background: url(assets/images/close.svg);
+      background-size: cover;
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      right: 10px;
+      top: 10px;
+      margin: 15px 10px;
+      cursor: pointer;
+    }
+  }
+
+  &__success,
+  &__error {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  &__error {
+    color: var(--order-error-color);
+  }
+
+  &__success {
+    color: var(--success-color);
+  }
+
+  &__title {
+    color: var(--active-color);
+    text-align: center;
+
+    &-text {
+      position: absolute;
+      text-align: center;
+      display: block;
+      line-height: calc(var(--gap) * 2.5);
+      top: 36px;
+      left: -24px;
+      font-size: 14px;
+      color: var(--kyc-title-color);
+    }
+  }
+
+  &__progress {
+    margin: 0 auto;
+    height: 100px;
+    background: var(--kyc-header-color);
+    border-bottom: 1px solid var(--kyc-header-border);
+    border-radius: 4px 4px 0 0;
+
+    &-circle {
+      &-1,
+      &-2,
+      &-3 {
+        background: var(--kyc-circle-color);
+        border-radius: 50%;
+        box-sizing: border-box;
+        height: 25px;
+        position: relative;
+        width: 25px;
+        margin-top: 20px;
+        &:after {
+          font-size: 12px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          font-weight: bold;
+          color: var(--color-white);
+          margin-top: 2px;
+        }
+      }
+
+      &-1:after {
+        content: "1";
+      }
+
+      &-2:after {
+        content: "2";
+      }
+
+      &-3:after {
+        content: "3";
+      }
+
+      &-3 {
+        margin-right: 0;
+      }
+
+      &-1:after,
+      &-2:after,
+      &-3:after {
+        top: -2px;
+        position: relative;
+      }
+    }
+
+    &-line {
+      &-1,
+      &-2 {
+        display: inline-block;
+        background-color: var(--kyc-progress-line);
+        flex: 1;
+        height: 1px;
+        margin: 20px 10px 0 10px;
+      }
+    }
+
+    &-items {
+      display: flex;
+      position: relative;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 360px;
+      width: 100%;
+      margin: auto;
+    }
+
+    &-first {
+      .pg-confirm__progress-circle-1 {
+        background: var(--kyc-active-color);
+      }
+       .pg-confirm__active-1 {
+        color: var(--color-white);
+        font-weight: bold;
+      }
+    }
+
+    &-second {
+      .pg-confirm__progress-circle-2 {
+        background: var(--kyc-active-color);
+      }
+       .pg-confirm__active-2 {
+        color: var(--color-white);
+        font-weight: bold;
+      }
+    }
+    &-third {
+      .pg-confirm__progress-circle-3 {
+        background: var(--kyc-active-color);
+      }
+       .pg-confirm__active-3 {
+        color: var(--color-white);
+        font-weight: bold;
+      }
+    }
+  }
+
+  &__content {
+    width: 100%;
+    margin: 0 auto;
+
+    input, button {
+      outline: none;
+    }
+
+    &-deep {
+      display: flex;
+      justify-content: center;
+      margin: 0 calc(var(--gap) * 4);
+      padding-bottom: 30px;
+
+      input {
+        font-weight: normal;
+        background: var(--kyc-button);
+        color: var(--color-white);
+        font-size: calc(var(--gap) * 2.5);
+        height: calc(var(--gap) * 4.8);
+        width: 100%;
+        margin: 0;
+        &:hover {
+          background: var(--button-hover);
+        }
+      }
+    }
+  }
+}

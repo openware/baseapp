@@ -1,5 +1,5 @@
-import { Modal, TabPanel } from '@openware/components';
 import * as React from 'react';
+import { Modal, TabPanel } from '../../components';
 
 const panels = [
     {
@@ -33,7 +33,15 @@ export interface LegalDocumentsProps {
     footer: React.ReactNode;
 }
 
-class LegalDocuments extends React.Component<LegalDocumentsProps> {
+interface State {
+    currentTabIndex: number;
+}
+
+class LegalDocuments extends React.Component<LegalDocumentsProps, State> {
+    public state = {
+        currentTabIndex: 0,
+    };
+
     public render() {
       return(
           <Modal
@@ -46,10 +54,12 @@ class LegalDocuments extends React.Component<LegalDocumentsProps> {
       );
     }
 
+    private onCurrentTabChange = index => this.setState({ currentTabIndex: index });
+
     private renderModalBody = () => {
         return(
             <div>
-                <TabPanel panels={panels}/>
+                <TabPanel panels={panels} currentTabIndex={this.state.currentTabIndex} onCurrentTabChange={this.onCurrentTabChange}/>
             </div>
         );
     };

@@ -1,0 +1,81 @@
+.cr-order-item {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: calc(var(--gap) * 2);
+    width: 100%;
+
+    .cr-dropdown,
+    .cr-order-input,
+    &__percentage-buttons,
+    &__total,
+    &__available,
+    &__fee {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    &__dropdown__label {
+        background-color: inherit;
+        margin-left: calc(var(--gap) * 2);
+        padding: 0 calc(var(--gap) * 0.5);
+        position: absolute;
+        top: calc(var(--gap) * -1.3);
+        z-index: 1;
+    }
+
+    .cr-dropdown {
+        &__input-label {
+            margin-left: calc(var(--gap) * 2);
+        }
+
+        &__list {
+            margin-top: calc(var(--gap) * 5.2);
+            width: calc(100% - 2px);
+        }
+    }
+
+    &--compact {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    &__label {
+        font-size: var(--font-size);
+        font-weight: 200;
+        color: var(--base-2);
+        line-height: calc(var(--font-size) * 2);
+    }
+
+    &__total,
+    &__available,
+    &__fee {
+        &__label {
+            text-align: left;
+        }
+
+        &__content {
+            text-align: right;
+
+            &__currency {
+                margin-left: var(--gap);
+            }
+        }
+    }
+
+    .cr-order-input {
+        &__crypto-icon {
+            width: auto;
+        }
+        &__input {
+            .cr-order-input__price {
+                display: inline-block;
+                background: transparent !important;
+                margin-bottom: 5px;
+                margin-top: 5px;
+                margin-right: 20px;
+            }
+        }
+    }
+}

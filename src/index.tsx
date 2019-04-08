@@ -1,3 +1,5 @@
+// tslint:disable:no-submodule-imports
+import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';

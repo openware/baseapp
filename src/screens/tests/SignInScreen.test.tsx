@@ -1,11 +1,25 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { SignInScreen } from '../';
+import { InjectedIntlProps } from 'react-intl';
+import { connect, Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { rootReducer } from '../../modules';
+import { SignInScreen } from '../SignInScreen';
 
-describe('SignInScreen test', () => {
+const store = createStore(rootReducer);
+const Identity = connect()(SignInScreen);
+
+const setup = (props: Partial<InjectedIntlProps> = {}) =>
+    shallow(
+        <Provider store={store}>
+            <Identity />
+        </Provider>,
+    );
+
+describe('SignInScreen', () => {
+    const wrapper = setup();
+
     it('should render', () => {
-        const wrapper = shallow(<SignInScreen />);
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper).toBeDefined();
     });
 });

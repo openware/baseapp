@@ -1,0 +1,92 @@
+.cr-deposit-crypto {
+    background: var(--transparent);
+    color: var(--table-text-color);
+    display: flex;
+    font-size: var(--font-size);
+    padding: calc(var(--gap) * 3);
+    flex-direction: column;
+
+    div:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .cr-deposit-info {
+        background-color: inherit;
+        font-size: calc(var(--gap) * 2.3);
+        width: 56%;
+        line-height: 25px;
+        margin-bottom: calc(var(--gap) * 3);
+    }
+
+    &__copyable {
+        margin-top: calc(var(--gap) * 2.5);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &-title {
+            background-color: inherit;
+            color: var(--table-text-color);
+            font-size: calc(var(--gap) * 2);
+            margin-left: var(--gap);
+        }
+
+        &-area {
+            margin-top: calc(var(--gap) * -1.1);
+        }
+
+        .cr-copyable-text-field {
+            &__input {
+                background: inherit;
+                padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+
+                input {
+                    background: unset;
+                    color: var(--table-text-color);
+                }
+
+                .cr-copyable-text-field__button {
+                    background: var(--button-normal);
+                    color: var(--white);
+                    width: 28%;
+
+                    &:hover {
+                        background: var(--button-hover);
+                    }
+                }
+            }
+        }
+
+        fieldset {
+            &:focus-within {
+                border: 1px solid var(--color-blue);
+                legend {
+                    color: var(--color-blue);
+                }
+            }
+        }
+    }
+
+    .qr-code {
+        margin-top: calc(var(--gap) * 3);
+        margin-left: calc(var(--gap) * 3);
+
+        svg {
+            border: 1px solid var(--color-white);
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .cr-deposit-crypto {
+        padding: 0;
+        .cr-deposit-info {
+            text-align: center;
+            width: 100%;
+        }
+        .cr-deposit-crypto__copyable-area {
+            height: calc(var(--gap) * 5);
+        }
+    }
+}

@@ -1,0 +1,629 @@
+.pg-wallet {
+    align-items: flex-start !important;
+    display: flex;
+    margin-top: calc(var(--gap) * 2) !important;
+    justify-content: flex-start;
+    padding: 0 0 calc(var(--gap) * 2) !important;
+    border-radius: var(--gap);
+    max-width: 920px !important;
+
+    .pg-wallet__loading {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pg-wallet__tabs-content-height {
+        max-height: 88.5vh;
+    }
+
+    .pg-wallet__tabs-content {
+        width: 100%;
+    }
+
+    .cr-crypto-icon {
+      color: var(--white-color);
+      opacity: 0.5;
+    }
+
+    .cr-wallet-list {
+        background-color: var(--wallets-item-bg);
+        margin-top: 0;
+        overflow: auto;
+        margin-bottom: 0;
+
+        li {
+            padding: 0 !important;
+            &:last-child {
+                .cr-wallet-item {
+                    border-bottom: 0.5px solid var(--wallets-item-border);
+                }
+            }
+
+
+        }
+
+        .cr-wallet-item {
+            border-color: var(--wallets-item-border);
+            border-radius: 0;
+            color: var(--wallets-item-font);
+
+            &:hover {
+                background: var(--wallets-item-bg-hover);
+            }
+
+            &__info {
+                align-items: center;
+                .cr-wallet-item__image-icon {
+                    max-height: calc(var(--gap) * 4.5);
+                    margin-left: calc(var(--gap) * 2);
+                    margin-right: calc(var(--gap) * 1.5);
+                }
+            }
+
+            &__description {
+                background: transparent;
+
+                span {
+                    color: var(--color-white);
+                    &:nth-child(1) {
+                        opacity: 0.5
+                    }
+                    &:nth-child(2) {
+                        font-weight: var(--font-light);
+                        margin-top: calc(var(--gap) * .6);
+                        color: var(--wallets-locked-amount);
+                        font-size: calc(var(--gap) * 1.9);
+                        opacity: 0.3
+                    }
+                }
+            }
+
+            &__amount-locked {
+                color: var(--wallets-locked-amount);
+                padding-top: calc(var(--gap) * .6);
+                font-size: calc(var(--gap) * 1.9);
+                opacity: 0.60;
+
+                path {
+                    fill: var(--color-white);
+                }
+            }
+
+            &__icon {
+                margin-left: calc(var(--gap) * 2);
+                margin-right: calc(var(--gap) * 1.5);
+                min-width: 23px; /* update after changing icon lib */
+            }
+
+            &__balance {
+                font-weight: var(--font-light);
+                opacity: 0.5;
+            }
+
+            &--active {
+                background-color: var(--wallets-item-bg-active);
+                outline: none;
+                border: none;
+                color: var(--wallets-item-font-active);
+
+                &:hover {
+                  background: var(--wallets-item-bg-active);
+                }
+
+                .cr-crypto-icon {
+                  color: var(--white-color);
+                  opacity: 1;
+                }
+
+                .cr-wallet-item__amount-locked {
+                    color: var(--wallets-item-font-active);
+                    opacity: 1;
+
+                    path {
+                        fill: var(--color-white);
+                    }
+                }
+
+                .cr-wallet-item__description {
+                    span {
+                        opacity: 1;
+                    }
+                }
+
+                .cr-wallet-item__balance {
+                  opacity: 1;
+                }
+
+                div {
+                    margin-right: auto;
+                }
+
+                &::before {
+                    content: '';
+                    width: 4px;
+                    background-color: var(--color-blue);
+                    height: calc(var(--gap) * 9);
+                    border-top-left-radius: calc(var(--gap) * 0.66);
+                    border-bottom-left-radius: calc(var(--gap) * 0.66);
+                }
+            }
+        }
+    }
+    .pg-wallet__tabs {
+        background: var(--base-bright);
+    }
+
+    .cr-withdraw {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        color: var(--table-text-color);
+        padding: calc(var(--gap) * 5) calc(var(--gap) * 3) calc(var(--gap) * 3);
+        &-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &:nth-child(1) {
+                flex-direction: row;
+                flex-wrap: wrap;
+
+                form:nth-child(1) {
+                    margin-top: 0;
+                    width: 100%;
+                }
+
+                form {
+                    margin-top: 20px;
+                    width: 48%;
+                }
+            }
+
+            &:nth-child(2) {
+                flex-direction: row;
+                align-items: center;
+                padding-top: 20px;
+
+                div:nth-child(1) {
+                    flex-grow: 2;
+                }
+            }
+        }
+
+        &__group__address,
+        &__group__amount,
+        &__group__code {
+          background: var(--transparent);
+          margin-bottom: calc(var(--gap) * 1.83);
+          position: relative;
+          width: 100%;
+          .cr-withdraw__label {
+            position: absolute;
+            top: 0px;
+            left: calc(var(--gap) * 1.66);
+            padding: calc(var(--gap) * 0.33) var(--gap);
+            border-radius: calc(var(--gap) * 0.33);
+            background: var(--main-bg);
+          }
+          .cr-withdraw__input {
+            width: 100%;
+            margin-top: calc(var(--gap) * 1.33);
+            input {
+              color: var(--color-white);
+              width: 100%;
+              height: calc(var(--gap) * 8.33);
+              padding: 0 calc(var(--gap) * 1.66);
+              font-size: calc(var(--gap) * 2);
+              text-align: left;
+              border: 1px solid var(--placeholder-text);
+              -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+              border-radius: calc(var(--gap) * 0.66)
+            }
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+              cursor: pointer;
+            }
+          }
+        }
+
+        &__group__amount {
+          width: 50%;
+        }
+        &__group__code {
+          width: 45%;
+          .cr-withdraw__input {
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+          }
+        }
+
+        &__group__address--focused,
+        &__group__amount--focused,
+        &__group__code--focused {
+          .cr-withdraw__label {
+            color: var(--sign-in-accent) !important;
+          }
+
+          input {
+            border-color: var(--button-primary) !important;
+          }
+        }
+
+        &__divider {
+            background-color: var(--wallet-withdraw-line-color);
+            margin-left: calc(var(--gap) * 3.49);
+            display: none;
+            &-two {
+                position: absolute;
+                height: calc(var(--gap) * 12);
+            }
+        }
+
+        &__deep {
+            width: calc(var(--gap) * 29);
+            .cr-button {
+                color: var(--color-white);
+                background: var(--profile-btn);
+                font-size: calc(var(--gap) * 2.66);
+                border-radius: calc(var(--gap) * 0.5);
+                height: calc(var(--gap) * 5.5);
+                font-weight: normal;
+                width: 90%;
+                margin-bottom: 0;
+                margin-right: 0;
+                &--disabled {
+                  color: var(--button-dark-gray) !important;
+                  background: var(--button-disabled) !important;
+                }
+
+                &:hover {
+                  background: var(--button-hover);
+                }
+
+                &:active {
+                  background: var(--button-active);
+                }
+            }
+        }
+    }
+
+    .cr-wallet-item__amount-locked {
+        background: none;
+    }
+
+    .cr-tab {
+        background: var(--transparent);
+        border: 0;
+        box-shadow: none;
+        cursor: pointer;
+        font-size: calc(var(--gap) * 2.6);
+
+        &__active {
+            border-bottom: 1px solid var(--active-tab-color);
+            background: var(--transparent);
+        }
+    }
+
+    .cr-copyable-text-field__disabled {
+        .cr-deposit-crypto {
+            &__copyable {
+                fieldset {
+                    &:focus-within {
+                        border-color: var(--base-2);
+                        legend {
+                            color: var(--table-text-color);
+                        }
+                    }
+                }
+                .cr-deposit-crypto__copyable-area {
+                    .cr-copyable-text-field__button {
+                        background: var(--button-disabled);
+                        color: var(--button-dark-gray);
+                        cursor: not-allowed;
+                        &:hover {
+                            background: var(--button-disabled);
+                            color: var(--button-dark-gray);
+                        }
+                    }
+                    .cr-copyable-text-field__input {
+                        input {
+                            &:focus,
+                            &:hover {
+                                outline: none;
+                                cursor: not-allowed;
+                            }
+                        }
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    .cr-tab-panel__navigation-container {
+        background: var(--table-dark-header-color);
+        border-bottom: 1px solid var(--header-border);
+        border-radius: 0;
+        margin-bottom: 0;
+        &-navigation {
+            padding-bottom: 0;
+            box-shadow: none;
+        }
+    }
+
+    .cr-tab-content {
+        background: var(--base-bright);
+        display: none;
+        border-bottom-right-radius: calc(var(--gap) * .5);
+        border-bottom-left-radius: calc(var(--gap) * .5);
+        padding: calc(var(--gap) * 5) calc(var(--gap) * 2) 0;
+        &__active {
+            display: flex;
+        }
+    }
+
+    .cr-wallet-item {
+        cursor: pointer;
+        background: var(--background-wallet-item);
+        color: var(--bright-1);
+        height: calc(var(--gap) * 9);
+        box-sizing: border-box;
+        border-bottom: 1px solid var(--wallets-item-border);
+        border-radius: calc(var(--gap) * 0.5);
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12);
+        font-size: calc(var(--gap) * 2.66);
+
+        & > * {
+            background: var(--transparent);
+        }
+
+        &__icon {
+            margin-left: calc(var(--gap) * 1.5);
+            margin-right: calc(var(--gap) * 3);
+        }
+
+        &__icon,
+        &__icon-code {
+            flex-grow: 1;
+            margin-left: calc(var(--gap) * .6);
+        }
+
+        &__amount-locked {
+            &-icon {
+                display: inline-block;
+                margin-right: calc(var(--gap) * 1);
+            }
+        }
+
+        &--active {
+            border-radius: calc(var(--gap) * 0.66);
+            background: var(--active-color);
+            outline: none;
+
+            .cr-wallet-item__icon,
+            .cr-wallet-item__icon-code {
+                background: transparent;
+                color: var(--wallet-item-active-color);
+            }
+        }
+    }
+
+    .pg-wallet__tabs-content {
+        display: flex;
+        background: var(--background);
+    }
+
+    .cr-search {
+        display: none;
+    }
+
+    .cr-wallet-item__balance {
+        margin-right: calc(var(--gap) * 3);
+    }
+
+    &__error {
+        color: var(--order-error-color);
+        font-size: 1.2rem;
+        margin-left: calc(var(--gap) * 4);
+    }
+
+    &__otp-code {
+        margin-left: calc(var(--gap) * 5);
+
+        label {
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .cr-input {
+            border-bottom: 1px solid black;
+            display: block;
+            width: calc(var(--gap) * 20);
+
+            input {
+                color: var(--dark-color);
+                font-size: 1.2rem;
+                padding: var(--gap) 0;
+                text-align: left;
+                width: 100%;
+            }
+        }
+    }
+
+    &__enable-2fa-message {
+        font-size: calc(var(--gap) * 3);
+        text-align: center;
+    }
+
+    &__button-2fa {
+        &.cr-button {
+            background: var(--button-primary);
+            color: var(--color-white) ;
+            font-size: calc(var(--gap) * 2);
+            padding: calc(var(--gap) * 2);
+            width: auto;
+            &:hover {
+                background: var(--button-hover);
+            }
+        }
+    }
+}
+
+.pg-history-elem__wallet {
+    padding: calc(var(--gap) * 3);
+
+    .pg-history-elem__label {
+        color: var(--wallets-balance);
+        font-size: calc(var(--gap) * 5);
+        font-weight: 300;
+    }
+
+    &__pagination {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: calc(var(--gap) * 2.5) 0 0;
+
+        button {
+            cursor: pointer;
+            margin-left: calc(var(--gap) * 4.5);
+        }
+    }
+
+    .cr-table-container {
+        .cr-table-header__content {
+            display: none;
+        }
+        .cr-table {
+            background: var(--transparent);
+            border-collapse: collapse;
+            &__head {
+                margin: 10px;
+                &-row {
+                    border-bottom: 1px solid var(--wallets-table-divider);
+                    th {
+                        background-color: var(--background-dark);
+                        color: var(--table-text-color);
+                        font-size: 12px !important;
+                        font-weight: 500;
+                        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+                        padding: calc(var(--gap) * 2.5) var(--gap) calc(var(--gap) * 2.5) var(--gap) !important;
+                        text-align: right;
+                        position: static;
+                        width: calc(var(--big-gap) * 2);
+
+                        &:first-child {
+                            text-align: left;
+                            margin-left: 10px;
+                        }
+
+                        &:nth-child(7) {
+                            white-space: nowrap;
+                        }
+                    }
+                }
+            }
+            &__body {
+                background-color: var(--background-dark);
+                tr {
+                    background-color: var(--background-dark);
+                    border-bottom: 1px solid var(--wallets-table-divider);
+                    td {
+                        background-color: var(--background-dark);
+                        color: var(--table-text-color);
+                        font-size: 13px !important;
+                        font-weight: 400;
+                        padding: calc(var(--gap) * 2.5) var(--gap) calc(var(--gap) * 2.5) var(--gap) !important;
+                        margin-top: calc(var(--gap) * 1.66) !important;
+                        margin-bottom: calc(var(--gap) * 1.66) !important;
+                        text-align: right;
+
+                        &:first-child {
+                            text-align: left;
+                            border-bottom-left-radius: calc(var(--gap) * .5);
+                        }
+                        &:last-child {
+                            border-bottom-right-radius: calc(var(--gap) * .5);
+
+                            &:first-letter {
+                                text-transform: uppercase;
+                            }
+                        }
+                        a {
+                            color: var(--table-text-color);
+                            text-decoration: none;
+                        }
+                    }
+                    &:last-child {
+                        td {
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 640px) {
+    .cr-wallet-item__single {
+        margin: 0;
+        .cr-wallet-item__icon-code {
+            margin-left: 0;
+        }
+
+        .cr-wallet-item__balance-locked,
+        .cr-wallet-item__balance-amount {
+            font-size: calc(var(--gap) * 3);
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .pg-wallet {
+        width: 100% !important;
+        margin-top: 0 !important;
+    }
+    .cr-wallet-item__single {
+        .cr-wallet-item__amount-locked {
+            margin-right: calc(var(--gap) * 4);
+        }
+        .cr-wallet-item__balance {
+            margin-right: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .pg-wallet .cr-wallet-item {
+        font-size: calc(var(--gap) * 2);
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .cr-wallet-item__single {
+        .cr-wallet-item__icon-code {
+            font-size: calc(var(--gap) * 5);
+        }
+        .cr-wallet-item__amount-locked,
+        .cr-wallet-item__balance,
+        .cr-wallet-item__balance-locked,
+        .cr-wallet-item__balance-amount {
+            font-size: calc(var(--gap) * 2);
+        }
+
+    }
+
+
+}
+

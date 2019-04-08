@@ -1,10 +1,10 @@
-import { Button, Checkbox, CopyableTextField, Table } from '@openware/components';
+import { Button, Checkbox, Table } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
-import { CustomInput } from '../../components';
+import { CopyableTextField, CustomInput } from '../../components';
 import { localeFullDate } from '../../helpers/localeFullDate';
 
 import {
@@ -114,9 +114,9 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                 )}
 
                 {user.otp && dataLoaded && !apiKeys.length && (
-                    <p className="pg-profile-page__label pg-profile-page__text-center">
+                    <div className="pg-profile-page__label pg-profile-page__text-center">
                         {this.t('page.body.profile.apiKeys.noKeys')}
-                    </p>
+                    </div>
                 )}
 
                 {user.otp && dataLoaded && apiKeys.length > 0 && (
@@ -136,8 +136,8 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         return [
             this.t('page.body.profile.apiKeys.table.header.kid'),
             this.t('page.body.profile.apiKeys.table.header.algorithm'),
-            '',
             this.t('page.body.profile.apiKeys.table.header.state'),
+            '',
             this.t('page.body.profile.apiKeys.table.header.created'),
             this.t('page.body.profile.apiKeys.table.header.updated'),
             '',

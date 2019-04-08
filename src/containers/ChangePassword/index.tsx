@@ -34,25 +34,25 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
         };
     }
 
+    public componentWillReceiveProps(next: ChangePasswordProps) {
+        if (!this.props.success && next.success) {
+            this.handleCancel();
+        }
+    }
+
     public render() {
         const { showForm } = this.state;
         return (
             <React.Fragment>
                 <label className="pg-profile-page__label">
-                  <div>
-                  <FormattedMessage id="page.body.profile.header.account.content.password" />
-                  </div>
-                  <span className="pg-profile-page__label-value">***********</span>
+                    <div>
+                        <FormattedMessage id="page.body.profile.header.account.content.password" />
+                    </div>
+                    <span className="pg-profile-page__label-value">***********</span>
                 </label>
                 {showForm ? this.renderForm() : this.renderPasswordView()}
             </React.Fragment>
         );
-    }
-
-    public componentWillReceiveProps(next: ChangePasswordProps) {
-        if (!this.props.success && next.success) {
-            this.handleCancel();
-        }
     }
 
     private renderPasswordView = () => {
@@ -65,7 +65,7 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
                 />
             </React.Fragment>
         );
-    }
+    };
 
     private renderForm = () => {
         const { oldPassword, newPassword } = this.state;
@@ -101,29 +101,29 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
                 </div>
             </div>
         );
-    }
+    };
 
     private toggleShowForm = () => {
         this.setState((state: ChangePasswordState) => ({
             showForm: !state.showForm,
         }));
-    }
+    };
 
     private handleOldPasswordChange = (value: string) => {
         this.setState({
             oldPassword: value,
         });
-    }
+    };
 
     private handleNewPasswordChange = (value: string) => {
         this.setState({
             newPassword: value,
         });
-    }
+    };
 
     private handleSubmit = () => {
         this.props.onSubmit(this.state.oldPassword, this.state.newPassword, this.state.newPassword);
-    }
+    };
 
     private handleCancel = () => {
         this.setState({
@@ -132,7 +132,7 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
             newPassword: '',
         });
         this.props.onClearError();
-    }
+    };
 }
 
 export const ChangePassword = injectIntl(ChangePasswordComponent);

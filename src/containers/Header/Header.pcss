@@ -17,6 +17,10 @@ header {
     }
   }
 
+  &__location {
+    display: none;
+  }
+
   &__navbar {
     background: var(--background-dark);
     padding-top: 3px;
@@ -33,9 +37,9 @@ header {
   &__toggler {
     display: none;
     position: absolute;
-    top: 25px;
+    top: 15px;
     z-index: 11;
-    right: 25px;
+    left: 25px;
   }
 
   .pg-container {
@@ -47,27 +51,55 @@ header {
 @media screen and (max-width: 768px) {
   .pg-header {
     position: relative;
+    justify-content: none;
+    height: calc(var(--gap) * 6);
+
+    &__logo {
+      display: none;
+    }
+
+    &__location {
+      display: block;
+      font-size: 18px;
+      text-align: center;
+      text-transform: uppercase;
+      color: var(--color-white);
+      text-decoration: none;
+    }
+
     &--active {
       position: static;
       .pg-header__navbar {
         display: block;
-        position: absolute;
-        right: 0;
+        position: fixed;
+        left: 0;
         background: var(--background-dark);
+        -webkit-animation: slide-right .3s ease-out;
+        -moz-animation: slide-right .3s ease-out;
       }
     }
+
     &__navbar {
+      margin-left: 0;
       height: 100vh;
       bottom: 0;
       z-index: 666;
       max-width: calc(var(--gap) * 33);
-      padding: 0 var(--gap);
       position: absolute;
       width: 100%;
       display: none;
-      /* right: calc(var(--gap) * -33); */
-      transition: all 0.2s linear;
+      transition: all 1s ease;
+      &::after {
+        background: rgba(0, 0, 0, 0.8);
+        width: 100vw;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 264px;
+      }
     }
+
     &__toggler {
       cursor: pointer;
       width: 30px;
@@ -82,23 +114,19 @@ header {
         margin-bottom: 5px;
         transition: all 0.2s linear;
       }
-      &--active {
-        z-index: 667;
-        .pg-header__toggler-item {
-          &:nth-child(1),
-          &:nth-child(3){
-            transform: translate(0px, 13px) rotate(-45deg) scalex(1.1);
-            margin: 0;
-          }
-          &:nth-child(2){
-            height: 0;
-            margin: 0;
-          }
-          &:nth-child(3){
-            transform: translate(0px, 9px) rotate(45deg) scalex(1.1);
-          }
-        }
-      }
     }
   }
+
+  .pg-container {
+    justify-content: center !important;
+  }
+}
+
+@-webkit-keyframes slide-right {
+      0% { opacity: 0; -webkit-transform: translateX(-100%); }
+    100% { opacity: 1; -webkit-transform: translateX(0); }
+}
+@-moz-keyframes slide-right {
+      0% { opacity: 0; -moz-transform: translateX(-100%); }
+    100% { opacity: 1; -moz-transform: translateX(0); }
 }

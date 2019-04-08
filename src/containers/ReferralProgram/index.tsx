@@ -1,4 +1,3 @@
-import { CopyableTextField } from '@openware/components';
 import * as React from 'react';
 import {
     FormattedMessage,
@@ -7,7 +6,7 @@ import {
     intlShape,
 } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
-
+import { CopyableTextField } from '../../components';
 import {
     alertPush,
     RootState,
@@ -58,7 +57,7 @@ class ReferralProgramClass extends React.Component<Props> {
         const { user } = this.props;
         const referralLink = `${window.document.location.origin}/signup?refid=${user.uid}`;
         return (
-            <div className="pg-profile-page__referral">
+            <div className="pg-profile-page__referral mb-3">
                 <fieldset className="pg-copyable-text__section" onClick={this.doCopy}>
                     <legend className="cr-deposit-crypto__copyable-title">
                         <FormattedMessage id="page.body.profile.header.referralProgram"/>
@@ -68,7 +67,6 @@ class ReferralProgramClass extends React.Component<Props> {
                         value={referralLink}
                         fieldId="referral-id"
                         copyButtonText={this.translate('page.body.profile.content.copyLink')}
-
                     />
                 </fieldset>
             </div>

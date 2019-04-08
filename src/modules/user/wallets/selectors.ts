@@ -13,3 +13,6 @@ export const selectWithdrawSuccess = (state: RootState): boolean =>
 
 export const selectWalletsAddressError = (state: RootState): CommonError | undefined =>
     state.user.wallets.wallets.error;
+
+export const selectMobileWalletUi = (state: RootState): string =>
+    state.user.wallets.wallets.mobileWalletChosen;

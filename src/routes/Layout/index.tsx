@@ -136,7 +136,7 @@ class LayoutComponent extends React.Component<LayoutProps> {
     public render() {
         const { isLoggedIn, userLoading } = this.props;
         return (
-            <div className="pg-layout">
+            <div className="container-fluid pg-layout">
                 <Switch>
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />

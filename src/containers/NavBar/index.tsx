@@ -99,6 +99,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
         return (
             <div className={'pg-navbar'}>
+                {user.email ? this.getProfile() : null}
                 <ul className="pg-navbar__content">
                     {pgRoutes(!!user.email).map(this.navItem(address, this.props.onLinkChange))}
                 </ul>
@@ -112,12 +113,37 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                         {isOpenLanguage ? this.getLanguageMenu() : null}
                     </div>
                 </div>
+                <div className="pg-navbar__header-language" onClick={this.toggleLanguageMenu}>
+                    <span>LANGUAGE</span>
+                    <span>
+                        {languageName}
+                        <img className="icon" src={require(`./${isOpenLanguage ? 'open' : 'close'}-icon.svg`)} />
+                    </span>
+                    {isOpenLanguage ? this.getLanguageMenu() : null}
+                </div>
             </div>
         );
     }
 
     private shouldUnderline = (address: string, url: string): boolean =>
         (url === '/trading/' && address.includes('/trading')) || address === url;
+
+    private getProfile = () => {
+        const { user } = this.props;
+        return (
+            <div className="pg-navbar__header-profile">
+                <Link
+                    className="pg-navbar__admin-logout"
+                    to="/profile"
+                    onClick={this.handleRouteChange('/profile')}
+                >
+                    <FormattedMessage id={'page.header.navbar.profile'} />
+                </Link>
+                <span>{user.email}</span>
+                <img onClick={this.handleLogOut} className="pg-navbar__header-profile-logout" src={require(`./logout.svg`)} />
+            </div>
+        );
+    };
 
     private getLanguageMenu = () => {
         return (

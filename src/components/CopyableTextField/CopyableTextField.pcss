@@ -1,0 +1,74 @@
+.cr-copyable-text-field {
+    border: 1px solid var(--base-2);
+    background: var(--background-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: inherit;
+    border-radius: calc(var(--gap) * 0.66);
+    flex-grow: 1;
+    padding: 0;
+
+
+    &__input {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        color: var(--base-3);
+        background: var(--background-dark);
+        background: inherit;
+        //padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+
+        input {
+            background: unset;
+            color: var(--table-text-color);
+        }
+
+        .cr-copyable-text-field__button {
+            background: var(--button-normal);
+            color: var(--white);
+            width: 28%;
+
+            &:hover {
+                background: var(--button-hover);
+            }
+        }
+    }
+
+    .cr-copyable-text-field {
+        padding: 0;
+    }
+
+    input {
+        width: 100%;
+        border-radius: 0;
+        border-style: none;
+        color: var(--base-3);
+        background: var(--background-dark);
+        outline: none;
+    }
+
+    .cr-copyable-text-field__button {
+        cursor: pointer;
+        color: var(--color-white);
+        background: #2e4c80;
+        font-size: calc(var(--gap) * 2.66);
+        border-radius: calc(var(--gap) * 0.5);
+        height: calc(var(--gap) * 5);
+        font-weight: normal;
+        width: calc(var(--gap) * 12);
+        margin-top: var(--gap) 0 var(--gap) 0;
+        text-transform: uppercase;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+
+        &::selection {
+            background: transparent;
+        }
+
+        &:hover {
+            background: var(--button-hover);
+        }
+    }
+}

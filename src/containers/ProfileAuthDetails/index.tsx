@@ -1,7 +1,4 @@
-import {
-    Button,
-    Modal,
-} from '@openware/components';
+import { Button } from '@openware/components';
 import cr from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
@@ -14,6 +11,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
   CustomInput,
+  Modal,
 } from '../../components';
 import {
     PASSWORD_REGEX,

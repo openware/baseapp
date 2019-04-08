@@ -1,10 +1,8 @@
 // tslint:disable:jsx-no-lambda
-import { Button, Decimal, Input, SummaryField } from '@openware/components';
+import { Button, Decimal, Input } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
-import {
-    CustomInput,
-} from '../../components';
+import { CustomInput, SummaryField } from '../../components';
 
 interface WithdrawProps {
     borderItem?: string;
@@ -124,7 +122,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                 <div className="cr-withdraw-column">
                     <div>
                         <SummaryField
-                            className="cr-withdraw__summary-field "
+                            className="cr-withdraw__summary-field"
                             message={withdrawFeeLabel ? withdrawFeeLabel : 'Fee'}
                             content={this.renderFee()}
                             borderItem={borderItem}

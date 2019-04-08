@@ -1,10 +1,24 @@
 import * as React from 'react';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import logo = require('../../assets/images/logo.svg');
+import {
+  RootState,
+  selectMobileWalletUi,
+  setMobileWalletUi,
+} from '../../modules';
 import { NavBar } from '../NavBar';
 
 interface HeaderState {
     isActive: boolean;
+}
+
+interface ReduxProps {
+    mobileWallet: string;
+}
+
+interface DispatchProps {
+    setMobileWalletUi: typeof setMobileWalletUi;
 }
 
 // tslint:disable no-any jsx-no-multiline-js
@@ -18,7 +32,7 @@ class Head extends React.Component<any, HeaderState> {
     }
 
     public render() {
-        const { location } = this.props;
+        const { location, mobileWallet } = this.props;
         const { isActive } = this.state;
         return (
           <React.Fragment>
@@ -30,16 +44,27 @@ class Head extends React.Component<any, HeaderState> {
                             <img src={logo} className="pg-logo__img" alt="Logo" />
                         </div>
                     </Link>
-                    <div className="pg-header__navbar">
-                        <NavBar onLinkChange={this.toggleModal}/>
+                    <div className="pg-header__location">
+                        {mobileWallet ? <span>{mobileWallet}</span> : <span>{location.pathname.split('/')[1]}</span>}
                     </div>
-                    <div
-                        onClick={this.toggleModal}
-                        className={`pg-header__toggler ${isActive ? 'pg-header__toggler--active' : ''}`}
-                    >
-                        <span className="pg-header__toggler-item"/>
-                        <span className="pg-header__toggler-item"/>
-                        <span className="pg-header__toggler-item"/>
+                    {mobileWallet ?
+                        <div
+                            onClick={this.backWallets}
+                            className="pg-header__toggler"
+                        >
+                            <img src={require(`./back.svg`)} />
+                        </div> :
+                        <div
+                            onClick={this.openMenu}
+                            className={`pg-header__toggler ${isActive ? 'pg-header__toggler--active' : ''}`}
+                        >
+                            <span className="pg-header__toggler-item"/>
+                            <span className="pg-header__toggler-item"/>
+                            <span className="pg-header__toggler-item"/>
+                        </div>
+                    }
+                    <div className="pg-header__navbar">
+                        <NavBar onLinkChange={this.closeMenu}/>
                     </div>
                 </div>
             </header>}
@@ -47,14 +72,44 @@ class Head extends React.Component<any, HeaderState> {
         );
     }
 
-    private toggleModal = () => {
-        this.setState(prev => ({
-            isActive: !prev.isActive,
-        }));
+    private openMenu = () => {
+        this.setState({
+            isActive: true,
+        });
+        document.getElementsByClassName('pg-header__navbar')[0].addEventListener('click', this.handleOutsideClick);
+    }
+
+    private backWallets = () => {
+        this.props.setMobileWalletUi('');
+    }
+
+    private closeMenu = (e: any) => {
+        this.setState({
+            isActive: false,
+        });
+        this.props.setMobileWalletUi('');
+    }
+
+    private handleOutsideClick = (e: any) => {
+        if (e.offsetX > e.target.clientWidth) {
+            this.setState({
+                isActive: false,
+            });
+            document.getElementsByClassName('pg-header__navbar')[0].removeEventListener('click', this.handleOutsideClick);
+        }
     }
 }
 
-const Header = withRouter(Head as any);
+const mapStateToProps = (state: RootState): ReduxProps => ({
+    mobileWallet: selectMobileWalletUi(state),
+});
+
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+    dispatch => ({
+        setMobileWalletUi: payload => dispatch(setMobileWalletUi(payload)),
+    });
+
+const Header = withRouter(connect(mapStateToProps, mapDispatchToProps)(Head) as any) as any;
 
 export {
     HeaderState,

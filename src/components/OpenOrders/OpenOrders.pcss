@@ -1,0 +1,46 @@
+.cr-open-orders {
+  &__price {
+    background: transparent;
+    font-size: inherit;
+
+    &--buy {
+      color: var(--open-orders-action-buy);
+    }
+
+    &--sell {
+      color: var(--open-orders-action-sell);
+    }
+  }
+
+  &__order {
+    &--buy {
+      color: var(--open-orders-order-buy);
+    }
+
+    &--sell {
+      color: var(--open-orders-order-sell);
+    }
+  }
+
+  .cr-table {
+    th,
+    td {
+      &:first-child {
+        text-align: left;
+      }
+
+      &:last-child {
+        width: 7%;
+        padding: 0;
+      }
+
+      &:nth-last-child(2) {
+        text-align: right;
+      }
+
+      &:not(:last-child) {
+        width: 30%;
+      }
+    }
+  }
+}

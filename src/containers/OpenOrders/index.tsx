@@ -1,8 +1,9 @@
-import { Loader, OpenOrders } from '@openware/components';
+import { Loader } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { OpenOrders } from '../../components';
 import { localeFullDate, preciseData, setTradeColor } from '../../helpers';
 import {
     Market,

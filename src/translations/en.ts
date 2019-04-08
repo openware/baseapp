@@ -170,7 +170,7 @@ export const en = {
     'page.body.profile.header.account.content.password.change.success': 'Success!',
     'page.body.profile.header.account.content.password.change': 'Change password',
 
-    'page.body.profile.header.account.content.twoFactorAuthentication': 'Two-factor authentication',
+    'page.body.profile.header.account.content.twoFactorAuthentication': '2FA',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.enable': 'Enabled',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.disable': 'Disabled',
     'page.body.profile.header.account.content.twoFactorAuthentication.header': 'Google Authenticator',
@@ -188,10 +188,10 @@ export const en = {
 
     'page.body.profile.header.account.profile': 'Profile Verification',
     'page.body.profile.header.account.profile.email.title': 'Email verified',
-    'page.body.profile.header.account.profile.email.message': 'Deposit and Withdraw disabled',
+    'page.body.profile.header.account.profile.email.message': 'Deposit/Withdraw enabled',
     'page.body.profile.header.account.profile.phone.unverified.title': 'Phone verification',
     'page.body.profile.header.account.profile.phone.title': 'Phone verified',
-    'page.body.profile.header.account.profile.phone.message': 'Deposit and Trade enabled',
+    'page.body.profile.header.account.profile.phone.message': 'Deposit/Trade enabled',
     'page.body.profile.header.account.profile.identity.unverified.title': 'Identity verification',
     'page.body.profile.header.account.profile.identity.title': 'Identity verified',
     'page.body.profile.header.account.profile.identity.message': 'Withdraw enabled',

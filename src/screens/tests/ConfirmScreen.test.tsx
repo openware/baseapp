@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { ConfirmScreen } from '../';
+import { ConfirmScreen } from '../ConfirmScreen';
 
 describe('ConfirmScreen test', () => {
     it('should render', () => {

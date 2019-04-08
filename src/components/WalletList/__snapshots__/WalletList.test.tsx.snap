@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WalletList should render 1`] = `
+<ul
+  className="cr-wallet-list"
+>
+  <li
+    key="0"
+    onClick={[Function]}
+    style={
+      Object {
+        "listStyleType": "none",
+        "padding": "calc(var(--gap) * 0.5) calc(var(--gap))",
+      }
+    }
+  >
+    <WalletItem
+      active={true}
+      address="something-0"
+      balance={456}
+      currency="BTC"
+      fee={0.123}
+      fixed={8}
+      key="0"
+      locked={1}
+      name="Bitcoin"
+      type="fiat"
+    />
+  </li>
+  <li
+    key="1"
+    onClick={[Function]}
+    style={
+      Object {
+        "listStyleType": "none",
+        "padding": "calc(var(--gap) * 0.5) calc(var(--gap))",
+      }
+    }
+  >
+    <WalletItem
+      active={false}
+      address="something-1"
+      balance={456}
+      currency="USD"
+      fee={0.123}
+      fixed={8}
+      key="1"
+      locked={100}
+      name="United states Dollar"
+      type="coin"
+    />
+  </li>
+  <li
+    key="2"
+    onClick={[Function]}
+    style={
+      Object {
+        "listStyleType": "none",
+        "padding": "calc(var(--gap) * 0.5) calc(var(--gap))",
+      }
+    }
+  >
+    <WalletItem
+      active={false}
+      address="something-2"
+      balance={2}
+      currency="BTC"
+      fee={0.3}
+      fixed={8}
+      key="2"
+      locked={0.4}
+      name="Bitcoin - 2"
+      type="fiat"
+    />
+  </li>
+</ul>
+`;

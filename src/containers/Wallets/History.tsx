@@ -1,9 +1,4 @@
-import {
-    Decimal,
-    History,
-    Pagination,
-    WalletItemProps,
-} from '@openware/components';
+import { Decimal, Pagination } from '@openware/components';
 import * as moment from 'moment';
 import * as React from 'react';
 import {
@@ -11,6 +6,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { History, WalletItemProps } from '../../components';
 import { localeDate } from '../../helpers';
 import {
     fetchHistory,

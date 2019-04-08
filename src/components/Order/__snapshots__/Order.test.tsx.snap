@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Order should match snapshot 1`] = `
+<div
+  className="cr-order cr-order--extended"
+>
+  <div
+    className="cr-order--extended__buy"
+  >
+    <e
+      fixed={true}
+      hideMode="hide"
+      onTabChange={[Function]}
+      panels={
+        Array [
+          Object {
+            "content": <e
+              available={12}
+              currentMarketAskPrecision={4}
+              currentMarketBidPrecision={5}
+              fee={10}
+              from="btc"
+              onSubmit={[Function]}
+              orderTypes={
+                Array [
+                  "Limit",
+                  "Market",
+                ]
+              }
+              priceMarket={5}
+              to="eth"
+              type="buy"
+            />,
+            "label": "Buy",
+          },
+        ]
+      }
+    />
+  </div>
+  <div
+    className="cr-order--extended__sell"
+  >
+    <e
+      fixed={true}
+      hideMode="hide"
+      onTabChange={[Function]}
+      panels={
+        Array [
+          Object {
+            "content": <e
+              available={200}
+              currentMarketAskPrecision={4}
+              currentMarketBidPrecision={5}
+              fee={10}
+              from="btc"
+              onSubmit={[Function]}
+              orderTypes={
+                Array [
+                  "Limit",
+                  "Market",
+                ]
+              }
+              priceMarket={10}
+              to="eth"
+              type="sell"
+            />,
+            "label": "Sell",
+          },
+        ]
+      }
+    />
+  </div>
+</div>
+`;

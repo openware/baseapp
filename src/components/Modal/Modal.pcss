@@ -1,0 +1,54 @@
+.cr-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: var(--gap);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+    outline: 1px solid var(--base-3);
+    margin: 0 auto;
+    min-width: 50% !important;
+
+    &-header {
+      outline: 1px solid var(--base-3);
+      margin-bottom: calc(var(--gap) * 3);
+      color: var(--base);
+      font-size: var(--font-size-bigger);
+      padding: calc(var(--gap) * 3);
+    }
+
+    &-content {
+      flex: 1;
+      margin-bottom: calc(var(--gap) * 3);
+      color: var(--base-2);
+      padding: calc(var(--gap) * 3);
+
+      input {
+        color: var(--base-2);
+      }
+    }
+
+    &-footer {
+      outline: 1px solid var(--base-3);
+      padding: calc(var(--gap) * 3);
+    }
+  }
+
+  .cr-email-form {
+    width: 100% !important;
+    &__button {
+      max-width: 100%;
+    }
+  }
+}

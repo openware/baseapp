@@ -16,3 +16,4 @@ export * from './getLanguageByCode';
 export * from './checkDate';
 export * from './sortByDate';
 export * from './getUrlPart';
+export * from './setDocumentTitle';

@@ -1,0 +1,244 @@
+.pg-profile-two-factor-auth {
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+
+  &__header {
+    border-bottom: 2px solid var(--email-form-border);
+    background: var(--header);
+    height: calc(var(--gap) * 9.66);
+    text-transform: uppercase;
+    line-height: calc(var(--gap) * 9.66);
+    font-style: normal;
+    font-size: calc(var(--gap) * 2.33);
+    color: var(--white);
+
+    img {
+      cursor: pointer;
+    }
+  }
+
+  &__copyablefield {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding-left: calc(var(--gap) * 11.5);
+
+    fieldset {
+      background: inherit;
+      border-radius: calc(var(--gap) * 0.66);
+      border: 1px solid var(--base-2);
+      flex-grow: 1;
+      width: 100%;
+      overflow: hidden;
+
+      .cr-copyable-text-field {
+        padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+      }
+
+      &:focus-within {
+        overflow: hidden;
+        border: 1px solid var(--color-blue) !important;
+        border-radius: calc(var(--gap) * 0.66);
+        legend {
+          color: var(--color-blue) !important;
+        }
+      }
+
+      .cr-deposit-crypto__copyable-title {
+        position: absolute;
+        margin-top: calc(var(--gap) * -1.3);
+        background: var(--base-bright);
+      }
+
+      .pg-copyable-text-field {
+        &__input {
+          padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+          border: none;
+
+          input {
+            box-sizing: border-box;
+            color: var(--placeholder-text);
+            background: var(--transparent);
+          }
+
+          .cr-copyable-text-field__button {
+            background: var(--button-normal);
+            color: var(--white);
+
+            &:hover {
+              background: var(--button-hover);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__body {
+    fieldset {
+      color: var(--kyc-grey);
+      border-radius: calc(var(--gap) * 0.6);
+      border: 1px solid var(--kyc-grey);
+      box-sizing: border-box;
+      padding-left: var(--gap);
+      height: calc(var(--gap) * 6.56);
+      width: 100%;
+      max-width: 100%;
+      margin: calc(var(--gap) * 2) 0;
+
+      &:focus-within {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      legend {
+        background-color: var(--base-bright);
+        position:absolute;
+        top: calc(var(--gap) * -1.3);
+      }
+
+      input {
+        color: var(--color-white);
+        background: var(--transparent);
+        border: unset;
+        bottom: 0;
+        font-size: calc(var(--gap) * 2);
+        margin-top: calc(var(--gap) * 1.16);
+
+        &::placeholder {
+          color: var(--text-muted);
+        }
+      }
+    }
+
+    &--input {
+      position: relative;
+      width: 100%;
+    }
+
+    &--text {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &--last {
+        justify-content: center;
+
+        span {
+          font-size: calc(var(--font-size) * 3);
+        }
+      }
+
+      span {
+        font-size: calc(var(--font-size) * 3);
+      }
+
+      &--group {
+        display: flex;
+        align-items: center;
+        margin: calc(var(--gap) * 2) 0;
+
+        a {
+          color: var(--accent);
+        }
+
+        div {
+          padding: 0 calc(var(--gap) * 1.5) 0 calc(var(--gap) * 4.16);
+        }
+      }
+    }
+
+    .pg-profile-two-factor-auth__qr {
+        height: calc(var(--big-gap) * 2.66);
+    }
+
+    .cr-input {
+      width: 100%;
+
+      input {
+        font-size: var(--font-size);
+        color: var(--base-3);
+        text-align: left;
+        width: 100%;
+      }
+    }
+  }
+
+  &__form {
+    background: var(--base-bright);
+
+    .cr-copyable-text-field {
+      border: none;
+
+      .cr-button {
+        color: var(--white);
+        width: 55%;
+      }
+
+      input {
+        margin: 0;
+      }
+    }
+  }
+
+  &__error {
+    color: var(--order-error-color);
+  }
+
+  &__info {
+    color: var(--dark-color);
+  }
+
+  .cr-button {
+    background: var(--button-primary);
+    color: var(--color-white);
+    font-size: calc(var(--gap) * 2.66);
+  }
+
+  .cr-copyable-text-field {
+    border-color: var(--sign-in-input-border-color);
+
+    input {
+      font-size: var(--font-size);
+      color: var(--dark-color);
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .pg-profile-two-factor-auth__qr {
+      height: calc(var(--big-gap) * 2) !important;
+      padding-left: 0 !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .pg-profile-two-factor-auth {
+    width: 100%;
+  }
+
+  .pg-profile-two-factor-auth__qr {
+      height: calc(var(--big-gap) * 1.8) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .pg-profile-two-factor-auth {
+    width: 100%;
+  }
+
+  .pg-profile-two-factor-auth__qr {
+      height: calc(var(--big-gap) * 5) !important;
+      display: block;
+      margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .pg-profile-two-factor-auth__qr {
+      height: calc(var(--big-gap) * 4) !important;
+      display: block;
+      margin: 0 auto;
+  }
+}

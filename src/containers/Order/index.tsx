@@ -1,9 +1,4 @@
-import {
-    Loader,
-    Order,
-    OrderProps,
-    WalletItemProps,
-} from '@openware/components';
+import { Loader } from '@openware/components';
 import * as React from 'react';
 import {
     FormattedMessage,
@@ -11,6 +6,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
+import { Order, OrderProps, WalletItemProps } from '../../components';
 import {
     RootState,
     selectCurrentPrice,

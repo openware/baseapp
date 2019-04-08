@@ -1,6 +1,7 @@
 import { CommonError } from '../../types';
 import { WalletsAction } from './actions';
 import {
+    SET_MOBILE_WALLET_UI,
     WALLETS_ADDRESS_DATA,
     WALLETS_ADDRESS_ERROR,
     WALLETS_ADDRESS_FETCH,
@@ -20,6 +21,7 @@ export interface WalletsState {
         loading: boolean;
         withdrawSuccess: boolean;
         error?: CommonError;
+        mobileWalletChosen: string;
     };
 }
 
@@ -28,6 +30,7 @@ export const initialWalletsState: WalletsState = {
         list: [],
         loading: false,
         withdrawSuccess: false,
+        mobileWalletChosen: '',
     },
 };
 
@@ -105,6 +108,9 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 loading: false,
                 error: action.payload,
             };
+
+        case SET_MOBILE_WALLET_UI:
+            return { ...state, mobileWalletChosen: action.payload };
         default:
             return state;
     }
@@ -120,6 +126,7 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
         case WALLETS_ADDRESS_ERROR:
         case WALLETS_WITHDRAW_CCY_FETCH:
         case WALLETS_WITHDRAW_CCY_DATA:
+        case SET_MOBILE_WALLET_UI:
         case WALLETS_WITHDRAW_CCY_ERROR:
             const walletsListState = { ...state.wallets };
             return {
@@ -133,6 +140,7 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
                     list: [],
                     loading: false,
                     withdrawSuccess: false,
+                    mobileWalletChosen: '',
                 },
             };
         default:

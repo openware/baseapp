@@ -69,6 +69,10 @@
     animation-name: pg-trading-header-selector-open;
     animation-duration: var(--market-selector-animation-duration);
     margin-left: calc(var(--big-gap) * 1.5);
+    background: var(--trading-header-btn-open);
+    left: 220px;
+    width: 30px;
+    position: absolute;
   }
 
   &-icon-close {
@@ -120,6 +124,19 @@
     z-index: 99999;
     animation-name: pg-trading-header-selector-list-container-close;
     animation-duration: var(--market-selector-animation-duration);
+  }
+
+  @media screen and (max-width: 576px) {
+    &-list-container-open {
+      width: calc(var(--big-gap) * 5);
+    }
+    &-icon-open {
+      left: 175px;
+      width: 30px;
+    }
+    &-search {
+      width: calc(var(--big-gap) * 4);
+    }
   }
 }
 

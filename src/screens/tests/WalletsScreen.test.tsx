@@ -1,11 +1,25 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { WalletsScreen } from '../';
+import { InjectedIntlProps } from 'react-intl';
+import { connect, Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { rootReducer } from '../../modules';
+import { WalletsScreen } from '../WalletsScreen';
 
-describe('WalletsScreen test', () => {
+const store = createStore(rootReducer);
+const Wallets = connect()(WalletsScreen);
+
+const setup = (props: Partial<InjectedIntlProps> = {}) =>
+    shallow(
+        <Provider store={store}>
+            <Wallets />
+        </Provider>,
+    );
+
+describe('WalletsScreen', () => {
+    const wrapper = setup();
+
     it('should render', () => {
-        const wrapper = shallow(<WalletsScreen />);
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper).toBeDefined();
     });
 });

@@ -66,6 +66,7 @@ describe('walletsList reducer', () => {
                 list: [],
                 loading: true,
                 withdrawSuccess: false,
+                mobileWalletChosen: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsFetch())).toEqual(expectedState);
@@ -77,6 +78,7 @@ describe('walletsList reducer', () => {
                 list: wallets,
                 loading: false,
                 withdrawSuccess: false,
+                mobileWalletChosen: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsData(wallets))).toEqual(expectedState);
@@ -89,6 +91,7 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 error: error,
+                mobileWalletChosen: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsError(error))).toEqual(expectedState);
@@ -100,6 +103,7 @@ describe('walletsList reducer', () => {
                 list: [],
                 loading: true,
                 withdrawSuccess: false,
+                mobileWalletChosen: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressFetch(addressFetchPayload))).toEqual(expectedState);
@@ -111,6 +115,7 @@ describe('walletsList reducer', () => {
                 list: [],
                 loading: false,
                 withdrawSuccess: false,
+                mobileWalletChosen: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressData(addressDataPayload))).toEqual(expectedState);
@@ -123,6 +128,7 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 error: error,
+                mobileWalletChosen: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressError(error))).toEqual(expectedState);
@@ -134,6 +140,7 @@ describe('walletsList reducer', () => {
                 list: [],
                 loading: true,
                 withdrawSuccess: false,
+                mobileWalletChosen: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyFetch(withdrawCcyFetchPayload))).toEqual(expectedState);
@@ -145,6 +152,7 @@ describe('walletsList reducer', () => {
                 list: [],
                 loading: false,
                 withdrawSuccess: true,
+                mobileWalletChosen: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyData())).toEqual(expectedState);
@@ -157,6 +165,7 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 error: error,
+                mobileWalletChosen: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyError(error))).toEqual(expectedState);

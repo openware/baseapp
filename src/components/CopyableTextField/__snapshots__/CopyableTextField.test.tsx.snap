@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CopyableTextField should render 1`] = `
+<div
+  className="cr-copyable-text-field"
+>
+  <div
+    className="cr-copyable-text-field__input"
+  >
+    <input
+      id="copy_id"
+      onClick={[Function]}
+      readOnly={true}
+      type="text"
+      value="1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4dfE"
+    />
+    <Component
+      className="cr-copyable-text-field__button"
+      label="Copy"
+      noMargin={true}
+      onClick={[Function]}
+      type="text"
+    />
+  </div>
+</div>
+`;
