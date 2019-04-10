@@ -65,7 +65,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
                         <FormattedMessage id="page.body.trade.header.openOrders" />
                     </div>
                 </div>
-                {fetching ? <Loader /> : this.openOrders()}
+                {fetching ? <div className="open-order-loading"><Loader /></div> : this.openOrders()}
             </div>
         );
     }

@@ -1,4 +1,4 @@
-import { Button } from '@openware/components';
+import { Button, Loader } from '@openware/components';
 import bch = require('bitcoincashjs');
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
@@ -126,7 +126,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     }
 
     public render() {
-        const { wallets, historyList, mobileWalletChosen } = this.props;
+        const { wallets, historyList, mobileWalletChosen, walletsLoading } = this.props;
         const {
             total,
             rid,
@@ -147,6 +147,9 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             <React.Fragment>
                 <EstimatedValue wallets={wallets}/>
                 <div className="pg-container pg-wallet">
+                    <div className="text-center">
+                        {walletsLoading && <Loader />}
+                    </div>
                     <div className={`row no-gutters pg-wallet__tabs-content ${!historyList.length && 'pg-wallet__tabs-content-height'}`}>
                         <div className={`col-md-5 col-sm-12 col-12 ${mobileWalletChosen && 'd-none d-md-block'}`}>
                             <WalletList

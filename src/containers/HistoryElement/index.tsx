@@ -1,4 +1,4 @@
-import { Decimal, Pagination } from '@openware/components';
+import { Decimal, Loader, Pagination } from '@openware/components';
 import * as React from 'react';
 import {
     InjectedIntlProps,
@@ -65,6 +65,7 @@ class HistoryComponent extends React.Component<Props> {
         const { list, fetching } = this.props;
         return (
           <div className={`pg-history-elem ${list.length ? '' : 'pg-history-elem-empty'}`}>
+              {fetching && <Loader />}
               {list.length ? this.renderContent() : null}
               {!list.length && !fetching ? <p className="pg-history-elem__empty">{this.props.intl.formatMessage({id: 'page.noDataToShow'})}</p> : null}
           </div>

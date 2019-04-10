@@ -1,4 +1,4 @@
-import { CloseButton, Decimal, Pagination } from '@openware/components';
+import { CloseButton, Decimal, Loader, Pagination } from '@openware/components';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
@@ -62,6 +62,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         const emptyMsg = this.props.intl.formatMessage({id: 'page.noDataToShow'});
         return (
             <div className={`pg-history-elem ${list.length ? '' : 'pg-history-elem-empty'}`}>
+                {fetching && <Loader />}
                 {list.length ? this.renderContent() : null}
                 {!list.length && !fetching ? <p className="pg-history-elem__empty">{emptyMsg}</p> : null}
             </div>

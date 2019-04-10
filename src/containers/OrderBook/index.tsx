@@ -72,7 +72,7 @@ class OrderBookContainer extends React.Component<Props, State> {
 
         return (
             <div className={cn} ref={this.orderRef}>
-                {isLoading ? <Loader /> : this.orderBook(sortBids(bids), sortAsks(asks))}
+                {isLoading ? <div><Loader /></div> : this.orderBook(sortBids(bids), sortAsks(asks))}
             </div>
         );
     }

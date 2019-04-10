@@ -62,7 +62,7 @@ class MarketsContainer extends React.Component<Props> {
         });
         return (
             <div className={className}>
-                {marketsLoading ? <Loader /> : this.markets()}
+                {marketsLoading ? <div><Loader /></div> : this.markets()}
             </div>
         );
     }
