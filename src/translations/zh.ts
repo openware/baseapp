@@ -58,6 +58,8 @@ export const zh: LangType = {
     'page.body.trade.header.openOrders.content.total': '总计',
     'page.body.trade.header.openOrders.content.filled': '填充',
 
+    'page.body.wallets.estimated_value': 'Estimated Value',
+
     'page.body.wallets.locked':'已锁定',
     'page.body.wallets.balance': '平衡',
     'page.body.wallets.tabs.deposit':'存款',

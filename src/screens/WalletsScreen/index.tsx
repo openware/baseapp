@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { CurrencyInfo, DepositCrypto, DepositFiat, TabPanel, WalletItemProps, WalletList } from '../../components';
 import { ModalWithdrawConfirmation } from '../../containers/ModalWithdrawConfirmation';
 import { ModalWithdrawSubmit } from '../../containers/ModalWithdrawSubmit';
+import { EstimatedValue } from '../../containers/Wallets/EstimatedValue';
 import { WalletHistory } from '../../containers/Wallets/History';
 import { Withdraw, WithdrawProps } from '../../containers/Wallets/Withdraw';
 import { setDocumentTitle } from '../../helpers';
@@ -143,39 +144,42 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const selectedCurrency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
 
         return (
-            <div className="pg-container pg-wallet">
-                <div className={`row no-gutters pg-wallet__tabs-content ${!historyList.length && 'pg-wallet__tabs-content-height'}`}>
-                    <div className={`col-md-5 col-sm-12 col-12 ${mobileWalletChosen && 'd-none d-md-block'}`}>
-                        <WalletList
-                            onWalletSelectionChange={this.onWalletSelectionChange}
-                            walletItems={filteredWallets || formattedWallets}
-                            activeIndex={this.state.activeIndex}
-                            onActiveIndexChange={this.onActiveIndexChange}
-                        />
+            <React.Fragment>
+                <EstimatedValue wallets={wallets}/>
+                <div className="pg-container pg-wallet">
+                    <div className={`row no-gutters pg-wallet__tabs-content ${!historyList.length && 'pg-wallet__tabs-content-height'}`}>
+                        <div className={`col-md-5 col-sm-12 col-12 ${mobileWalletChosen && 'd-none d-md-block'}`}>
+                            <WalletList
+                                onWalletSelectionChange={this.onWalletSelectionChange}
+                                walletItems={filteredWallets || formattedWallets}
+                                activeIndex={this.state.activeIndex}
+                                onActiveIndexChange={this.onActiveIndexChange}
+                            />
+                        </div>
+                        <div className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${!mobileWalletChosen && 'd-none d-md-block'}`}>
+                            <TabPanel
+                                panels={this.renderTabs(selectedWalletIndex)}
+                                onTabChange={this.onTabChange}
+                                currentTabIndex={currentTabIndex}
+                                onCurrentTabChange={this.onCurrentTabChange}
+                            />
+                        </div>
                     </div>
-                    <div className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${!mobileWalletChosen && 'd-none d-md-block'}`}>
-                        <TabPanel
-                            panels={this.renderTabs(selectedWalletIndex)}
-                            onTabChange={this.onTabChange}
-                            currentTabIndex={currentTabIndex}
-                            onCurrentTabChange={this.onCurrentTabChange}
-                        />
-                    </div>
+                    <ModalWithdrawSubmit
+                        show={withdrawSubmitModal}
+                        currency={selectedCurrency}
+                        onSubmit={this.toggleSubmitModal}
+                    />
+                    <ModalWithdrawConfirmation
+                        show={withdrawConfirmModal}
+                        amount={total}
+                        currency={selectedCurrency}
+                        rid={rid}
+                        onSubmit={this.handleWithdraw}
+                        onDismiss={this.toggleConfirmModal}
+                    />
                 </div>
-                <ModalWithdrawSubmit
-                    show={withdrawSubmitModal}
-                    currency={selectedCurrency}
-                    onSubmit={this.toggleSubmitModal}
-                />
-                <ModalWithdrawConfirmation
-                    show={withdrawConfirmModal}
-                    amount={total}
-                    currency={selectedCurrency}
-                    rid={rid}
-                    onSubmit={this.handleWithdraw}
-                    onDismiss={this.toggleConfirmModal}
-                />
-            </div>
+            </React.Fragment>
         );
     }
 

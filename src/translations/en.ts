@@ -57,6 +57,8 @@ export const en = {
     'page.body.trade.header.openOrders.content.total': 'Value',
     'page.body.trade.header.openOrders.content.filled': 'Filled',
 
+    'page.body.wallets.estimated_value': 'Estimated Value',
+
     'page.body.wallets.locked': 'Locked',
     'page.body.wallets.balance': 'Balance',
     'page.body.wallets.tabs.deposit': 'Deposit',

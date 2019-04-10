@@ -58,6 +58,8 @@ export const ru: LangType = {
     'page.body.trade.header.openOrders.content.total': 'Всего',
     'page.body.trade.header.openOrders.content.filled': 'Заполненный',
 
+    'page.body.wallets.estimated_value': 'Оценочная стоимость',
+
     'page.body.wallets.locked': 'В ордерах',
     'page.body.wallets.balance': 'Баланс',
     'page.body.wallets.tabs.deposit': 'Пополнить',

@@ -1,0 +1,28 @@
+.pg-estimated-value {
+  display: flex;
+  background: var(--main-bg);
+  filter: brightness(85%);
+
+  &__container {
+    margin: 3px auto;
+    padding: 5px;
+    width: 920px;
+
+    .value-container {
+      font-size: 120%;
+      margin-left: var(--gap);
+      vertical-align: middle;
+
+      .value {
+        color: var(--bright-1);
+      }
+
+      .value-sign {
+        padding: 3px;
+        border-radius: 10%;
+        background: var(--back-bg);
+        margin-left: var(--gap);
+      }
+    }
+  }
+}
