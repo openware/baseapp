@@ -2,6 +2,7 @@ import { Channel, delay, eventChannel } from 'redux-saga';
 // tslint:disable-next-line no-submodule-imports
 import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 import { rangerUrl } from '../../../../api';
+import { store } from '../../../../store';
 import { userOpenOrdersUpdate } from '../../../user/openOrders';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
@@ -72,9 +73,14 @@ const initRanger = (
                 if (payload.hasOwnProperty(routingKey)) {
                     const event = payload[routingKey];
 
+                    const currentMarket = selectCurrentMarket(store.getState());
+                    const orderBookMatch = routingKey.match(/([^.]*)\.update/);
+
                     // public
-                    if (/([^.]*)\.update/.test(routingKey)) {
-                        emitter(depthData(event));
+                    if (orderBookMatch) {
+                        if (currentMarket && orderBookMatch[1] === currentMarket.id) {
+                            emitter(depthData(event));
+                        }
                         return;
                     }
 

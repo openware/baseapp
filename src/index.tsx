@@ -5,13 +5,13 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { addLocaleData } from 'react-intl';
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose, createStore } from 'redux';
-import createSagaMiddleware from 'redux-saga';
 
 import { App } from './App';
 import './index.css';
-import { rootReducer, rootSaga } from './modules';
+import { rootSaga } from './modules';
 import { rangerSagas } from './modules/public/ranger';
+import { rangerMiddleware, sagaMiddleware, store } from './store';
+
 
 const history = createBrowserHistory();
 
@@ -21,22 +21,6 @@ import ru = require('react-intl/locale-data/ru');
 import zh = require('react-intl/locale-data/zh');
 // tslint:enable
 
-// tslint:disable-next-line:no-any
-const composeEnhancer: typeof compose = (window as any)
-    .__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const sagaMiddleware = createSagaMiddleware();
-const rangerMiddleware = createSagaMiddleware();
-
-const store = createStore(
-    rootReducer,
-    composeEnhancer(
-        applyMiddleware(
-            sagaMiddleware,
-            rangerMiddleware,
-        ),
-    ),
-);
 
 addLocaleData([...en, ...ru, ...zh]);
 sagaMiddleware.run(rootSaga);

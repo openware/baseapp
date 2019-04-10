@@ -8,7 +8,6 @@ import { PrivateTradeEvent } from '../../../user/history';
 import { KLINE_PUSH } from '../../kline/constants';
 import { Market, Ticker, TickerEvent } from '../../markets';
 import { MARKETS_TICKERS_DATA } from '../../markets/constants';
-import { DEPTH_DATA } from '../../orderBook/constants';
 import { PublicTradeEvent } from '../../recentTrades';
 import { RECENT_TRADES_PUSH } from '../../recentTrades/constants';
 import {
@@ -466,11 +465,8 @@ describe('Ranger module', () => {
                 bids: [['0.0001', '10.0'], ['0.0000008', '8.9']],
             };
             const mockOrderBookUpdate = { 'eurbtc.update': data };
-            const expectedAction = {
-                type: DEPTH_DATA,
-                payload: data,
-            };
-            it('should push order book', async () => {
+
+            it('should not push order book if market is not selected', async () => {
                 return new Promise(resolve => {
                     store.dispatch(rangerConnectFetch({ withAuth: false }));
                     store.subscribe(() => {
@@ -484,17 +480,13 @@ describe('Ranger module', () => {
                                 });
                                 return;
 
-                            case 2:
+                           case 2:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockOrderBookUpdate));
                                 return;
 
                             case 3:
                                 expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrderBookUpdate });
-                                return;
-
-                            case 4:
-                                expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
                                 return;
 
