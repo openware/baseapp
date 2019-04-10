@@ -90,7 +90,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
         const { i18n } = this.props;
         this.props.forgotPassword({
             email,
-            lang: i18n.toUpperCase(),
+            lang: i18n.toLowerCase(),
         });
     };
 
