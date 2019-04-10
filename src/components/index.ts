@@ -15,3 +15,4 @@ export * from './TabPanel';
 export * from './Modal';
 export * from './Order';
 export * from './CurrencyInfo';
+export * from './OrderForm';

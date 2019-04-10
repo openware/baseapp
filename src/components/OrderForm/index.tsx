@@ -151,30 +151,12 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
     }
 
     public componentWillReceiveProps(next: OrderFormProps) {
-        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.state.currentMarketBidPrecision);
-        if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
-            this.setState({
-                price: nextPriceLimitTruncated,
-            });
-        }
-
-        if (this.state.orderType === 'Market' && next.priceMarket && next.priceMarket !== this.state.priceMarket) {
-            this.setState({
-                priceMarket: +Decimal.format(next.priceMarket, this.state.currentMarketBidPrecision),
-            });
-        }
-
-        if (next.currentMarketAskPrecision && next.currentMarketAskPrecision !== this.state.currentMarketAskPrecision) {
-            this.setState({
-                currentMarketAskPrecision: next.currentMarketAskPrecision,
-            });
-        }
-
-        if (next.currentMarketBidPrecision && next.currentMarketBidPrecision !== this.state.currentMarketBidPrecision) {
-            this.setState({
-                currentMarketBidPrecision: next.currentMarketBidPrecision,
-            });
-        }
+        this.setState({
+            price: String(next.priceLimit),
+            priceMarket: next.priceMarket,
+            currentMarketAskPrecision: next.currentMarketAskPrecision,
+            currentMarketBidPrecision: next.currentMarketBidPrecision,
+        });
     }
 
     public render() {
@@ -367,7 +349,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             default:
                 break;
         }
-    }
+    };
 
     private handlePriceChange = (value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));

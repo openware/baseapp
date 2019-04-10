@@ -14,7 +14,7 @@ exports[`Order should match snapshot 1`] = `
       panels={
         Array [
           Object {
-            "content": <e
+            "content": <OrderForm
               available={12}
               currentMarketAskPrecision={4}
               currentMarketBidPrecision={5}
@@ -47,7 +47,7 @@ exports[`Order should match snapshot 1`] = `
       panels={
         Array [
           Object {
-            "content": <e
+            "content": <OrderForm
               available={200}
               currentMarketAskPrecision={4}
               currentMarketBidPrecision={5}
