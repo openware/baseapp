@@ -115,7 +115,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
                 }
             };
             const marketId: string = symbolInfo.ticker!;
-            const periodString = periodMinutesToString(resolution);
+            const periodString = periodMinutesToString(resolutionToSeconds(resolution));
             tradingChart.props.subscribeKline(marketId, periodString);
             tradingChart.currentKlineSubscription = {
                 marketId,
