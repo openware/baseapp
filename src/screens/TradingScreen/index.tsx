@@ -1,7 +1,7 @@
-import { Grid } from '@openware/components';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Grid } from '../../components/Grid';
 import {
     MarketDepthsComponent,
     OpenOrdersComponent,
@@ -21,6 +21,7 @@ import {
     setCurrentPrice,
     User,
 } from '../../modules';
+import { GridLayoutState, saveLayouts, selectGridLayoutState } from '../../modules/public/gridLayout';
 import { Market, marketsFetch, selectMarkets } from '../../modules/public/markets';
 import { depthFetch } from '../../modules/public/orderBook';
 import { rangerConnectFetch, RangerConnectFetch } from '../../modules/public/ranger';
@@ -44,37 +45,6 @@ const cols = {
     xxs: 12,
 };
 
-const layouts = {
-    lg: [
-        { x: 16, y: 18, w: 8, h: 21, i: '1', minH: 21, maxH: 21, minW: 4 },
-        { x: 0, y: 0, w: 16, h: 39, i: '2', minH: 12, minW: 5 },
-        { x: 16, y: 0, w: 4, h: 28, i: '3', minH: 20, minW: 4 },
-        { x: 16, y: 38, w: 8, h: 13, i: '4', minH: 12, minW: 5 },
-        { x: 0, y: 40, w: 16, h: 23, i: '5', minH: 8, minW: 5 },
-        { x: 26, y: 11, w: 4, h: 28, i: '6', minH: 8, minW: 4 },
-    ],
-    md: [
-        { x: 14, y: 30, w: 10, h: 21, i: '1', minH: 21, maxH: 21, minW: 4 },
-        { x: 0, y: 0, w: 18, h: 30, i: '2', minH: 12, minW: 5 },
-        { x: 0, y: 30, w: 14, h: 13, i: '3', minH: 8, minW: 3 },
-        { x: 14, y: 42, w: 10, h: 12, i: '4', minH: 8, minW: 4 },
-        { x: 0, y: 42, w: 14, h: 20, i: '5', minH: 6, minW: 5 },
-        { x: 18, y: 12, w: 6, h: 30, i: '6', minH: 8, minW: 2 },
-    ],
-    sm: [
-        { x: 0, y: 12, w: 12, h: 22, i: '1', minH: 22, maxH: 22, minW: 5, draggable: false, resizable: false },
-        { x: 0, y: 28, w: 12, h: 30, i: '2', minH: 30, minW: 5, draggable: false, resizable: false },
-        { x: 0, y: 58, w: 12, h: 18, i: '3', minH: 12, minW: 3, draggable: false, resizable: false },
-        { x: 0, y: 94, w: 12, h: 12, i: '4', minH: 12, minW: 7, draggable: false, resizable: false },
-        { x: 0, y: 82, w: 12, h: 20, i: '5', minH: 12, minW: 7, draggable: false, resizable: false },
-        { x: 30, y: 0, w: 12, h: 16, i: '6', minH: 10, minW: 6, draggable: false, resizable: false },
-    ],
-};
-
-const handleLayoutChange = () => {
-    return;
-};
-
 interface ReduxProps {
     currentMarket: Market | undefined;
     markets: Market[];
@@ -82,6 +52,7 @@ interface ReduxProps {
     user: User;
     rangerState: RangerState;
     userLoggedIn: boolean;
+    rgl: GridLayoutState;
 }
 
 interface DispatchProps {
@@ -91,6 +62,7 @@ interface DispatchProps {
     rangerConnect: typeof rangerConnectFetch;
     setCurrentPrice: typeof setCurrentPrice;
     setCurrentMarket: typeof setCurrentMarket;
+    saveLayouts: typeof saveLayouts;
 }
 
 interface StateProps {
@@ -100,6 +72,7 @@ interface StateProps {
 
 type Props = DispatchProps & ReduxProps & RouteComponentProps;
 
+// tslint:disable:jsx-no-lambda
 class Trading extends React.Component<Props, StateProps> {
     public readonly state = {
         orderComponentResized: 5,
@@ -175,6 +148,7 @@ class Trading extends React.Component<Props, StateProps> {
     public render() {
         const rowHeight = 14;
         const allGridItems = [...this.gridItems];
+        const {rgl} = this.props;
 
         return (
             <div className={'pg-trading-screen'}>
@@ -186,9 +160,9 @@ class Trading extends React.Component<Props, StateProps> {
                         children={allGridItems}
                         cols={cols}
                         draggableHandle=".cr-table-header__content, .pg-trading-screen__tab-panel, .draggable-container"
-                        layouts={layouts}
+                        layouts={rgl.layouts}
                         rowHeight={rowHeight}
-                        onLayoutChange={handleLayoutChange}
+                        onLayoutChange={(layout, layouts) => this.handleLayoutChange(layout, layouts)}
                         handleResize={this.handleResize}
                     />
                 </div>
@@ -203,6 +177,10 @@ class Trading extends React.Component<Props, StateProps> {
         if (market) {
             this.props.setCurrentMarket(market);
         }
+    };
+
+    private handleLayoutChange = (layout, layouts) => {
+        this.props.saveLayouts({key: 'layouts', layouts});
     };
 
     private handleResize = (layout, oldItem, newItem) => {
@@ -220,7 +198,7 @@ class Trading extends React.Component<Props, StateProps> {
             default:
                 break;
         }
-    }
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
@@ -230,6 +208,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     user: selectUserInfo(state),
     rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
+    rgl: selectGridLayoutState(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
@@ -239,6 +218,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     setCurrentMarket: payload => dispatch(setCurrentMarket(payload)),
+    saveLayouts: payload => dispatch(saveLayouts(payload)),
 });
 
 // tslint:disable-next-line no-any

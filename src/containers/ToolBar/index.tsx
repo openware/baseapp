@@ -3,7 +3,11 @@ import {
 } from '@openware/components';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
-import { connect, MapStateToProps } from 'react-redux';
+import {
+    connect,
+    MapDispatchToPropsFunction,
+    MapStateToProps,
+} from 'react-redux';
 import {
     Market,
     RootState,
@@ -12,6 +16,7 @@ import {
     selectMarketTickers,
     Ticker,
 } from '../../modules';
+import { resetLayouts } from '../../modules/public/gridLayout';
 import {
     MarketSelector,
 } from './MarketSelector';
@@ -32,7 +37,11 @@ interface State {
     isOpen: boolean;
 }
 
-type Props = ReduxProps & InjectedIntlProps;
+interface DispatchProps {
+    resetLayouts: typeof resetLayouts;
+}
+
+type Props = DispatchProps & ReduxProps & InjectedIntlProps;
 
 class ToolBarComponent extends React.Component<Props, State> {
     public readonly state = {
@@ -58,6 +67,14 @@ class ToolBarComponent extends React.Component<Props, State> {
             <div className="pg-trading-header-container">
                 <div className="pg-trading-header-container-selector">
                     <MarketSelector/>
+                </div>
+                <div className={'pg-trading-header-container-reset-button'}>
+                    <input
+                        type={'button'}
+                        value={'Reset Layout'}
+                        className={'cr-button'}
+                        onClick={this.handleResetLayout}
+                    />
                 </div>
                 <div className="pg-trading-header-container-stats">
                     <div className="pg-trading-header-container-daily">
@@ -110,7 +127,11 @@ class ToolBarComponent extends React.Component<Props, State> {
         const defaultTicker = {low: 0, last: 0, high: 0, vol: 0, price_change_percent: '+0.00%'};
 
         return currentMarket && (marketTickers[currentMarket.id] || defaultTicker)[value];
-    }
+    };
+
+    private handleResetLayout = () => {
+        this.props.resetLayouts({key: 'layouts'});
+    };
 }
 
 const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
@@ -119,4 +140,8 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     marketTickers: selectMarketTickers(state),
 });
 
-export const ToolBar = injectIntl(connect<ReduxProps, {}, {}, RootState>(reduxProps)(ToolBarComponent));
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    resetLayouts: payload => dispatch(resetLayouts(payload)),
+});
+
+export const ToolBar = injectIntl(connect(reduxProps, mapDispatchToProps)(ToolBarComponent));

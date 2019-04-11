@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { alertReducer  } from './public/alert';
 import { currenciesReducer } from './public/currencies';
+import { gridLayoutReducer } from './public/gridLayout/reducer';
 import { changeLanguageReducer  } from './public/i18n';
 import { klineReducer  } from './public/kline';
 import { marketsReducer } from './public/markets';
@@ -37,6 +38,7 @@ export const publicReducer = combineReducers({
     i18n: changeLanguageReducer,
     kline: klineReducer,
     alerts: alertReducer,
+    rgl: gridLayoutReducer,
 });
 
 export const userReducer = combineReducers({

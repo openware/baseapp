@@ -4,6 +4,7 @@ import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
+import { GridLayoutState } from './public/gridLayout/reducer';
 import { LanguageState } from './public/i18n';
 import { KlineState, rootKlineFetchSaga } from './public/kline';
 import { MarketsState, rootMarketsSaga } from './public/markets';
@@ -61,6 +62,7 @@ export interface RootState {
         i18n: LanguageState;
         alerts: AlertState;
         kline: KlineState;
+        rgl: GridLayoutState;
     };
     user: {
         auth: AuthState;

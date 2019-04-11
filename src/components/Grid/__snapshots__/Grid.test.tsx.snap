@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Grid should render 1`] = `
+<div
+  className="cr-grid"
+  data-react-toolbox="grid"
+>
+  <div
+    className="cr-grid__grid-wrapper"
+  >
+    <WidthProvider
+      breakpoints={
+        Object {
+          "lg": 1200,
+          "md": 996,
+          "sm": 768,
+          "xs": 480,
+          "xxs": 0,
+        }
+      }
+      cols={
+        Object {
+          "lg": 12,
+          "md": 10,
+          "sm": 768,
+          "xs": 480,
+          "xxs": 0,
+        }
+      }
+      layouts={
+        Object {
+          "lg": Array [
+            Object {
+              "h": 9,
+              "i": "0",
+              "w": 3,
+              "x": 0,
+              "y": 0,
+            },
+            Object {
+              "h": 5,
+              "i": "1",
+              "w": 3,
+              "x": 3,
+              "y": 0,
+            },
+            Object {
+              "h": 5,
+              "i": "2",
+              "w": 3,
+              "x": 7,
+              "y": 0,
+            },
+            Object {
+              "h": 4,
+              "i": "3",
+              "w": 3,
+              "x": 0,
+              "y": 7,
+            },
+          ],
+          "md": Array [
+            Object {
+              "h": 9,
+              "i": "0",
+              "w": 3,
+              "x": 0,
+              "y": 0,
+            },
+            Object {
+              "h": 5,
+              "i": "1",
+              "w": 3,
+              "x": 3,
+              "y": 0,
+            },
+            Object {
+              "h": 5,
+              "i": "2",
+              "w": 3,
+              "x": 7,
+              "y": 0,
+            },
+            Object {
+              "h": 4,
+              "i": "3",
+              "w": 3,
+              "x": 0,
+              "y": 7,
+            },
+          ],
+          "sm": Array [
+            Object {
+              "h": 9,
+              "i": "0",
+              "w": 3,
+              "x": 0,
+              "y": 0,
+            },
+            Object {
+              "h": 5,
+              "i": "1",
+              "w": 3,
+              "x": 3,
+              "y": 0,
+            },
+            Object {
+              "h": 5,
+              "i": "2",
+              "w": 3,
+              "x": 7,
+              "y": 0,
+            },
+            Object {
+              "h": 4,
+              "i": "3",
+              "w": 3,
+              "x": 0,
+              "y": 7,
+            },
+          ],
+        }
+      }
+      margin={
+        Array [
+          5,
+          5,
+        ]
+      }
+      measureBeforeMount={false}
+      onLayoutChange={[Function]}
+      rowHeight={30}
+    >
+      <div
+        key="0"
+      >
+        <Component>
+          Child Body 0
+        </Component>
+      </div>
+      <div
+        key="1"
+      >
+        <Component>
+          Child Body 1
+        </Component>
+      </div>
+      <div
+        key="2"
+      >
+        <Component>
+          Child Body 2
+        </Component>
+      </div>
+      <div
+        key="3"
+      >
+        <Component>
+          Child Body 3
+        </Component>
+      </div>
+    </WidthProvider>
+  </div>
+</div>
+`;

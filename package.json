@@ -19,6 +19,7 @@
     "react-dom": "^16.4.2",
     "react-fade-in": "^0.1.6",
     "react-google-recaptcha": "^1.0.4",
+    "react-grid-layout": "^0.16.6",
     "react-intl": "^2.8.0",
     "react-maskinput": "^1.0.1",
     "react-redux": "^5.0.7",

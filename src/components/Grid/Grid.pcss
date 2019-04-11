@@ -1,0 +1,76 @@
+.cr-grid {
+  position: relative;
+}
+
+:global .react-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+}
+
+:global .react-grid-item {
+  background: var(--grid-item-bg) !important;
+  transition: all 200ms ease;
+  transition-property: left, top;
+
+  &.cssTransforms {
+    transition-property: transform;
+  }
+
+  &.resizing {
+    will-change: width, height;
+    z-index: 1;
+
+    .cr-grid-item {
+      pointer-events: none;
+    }
+  }
+
+  &.react-draggable-dragging {
+    transition: none;
+    will-change: transform;
+    z-index: 3;
+  }
+
+  &.react-grid-placeholder {
+    background: var(--grid-placeholder-bg);
+    border: 1px solid var(--grid-placeholder-border-color);
+    transition-duration: 100ms;
+    user-select: none;
+    z-index: 2;
+  }
+
+  .react-resizable-handle {
+    border: 2.81px solid var(--grid-resizable-border-color);
+    border-left-color: transparent;
+    border-top-color: transparent;
+    bottom: 0;
+    cursor: se-resize;
+    height: 0;
+    opacity: 0.8;
+    position: absolute;
+    right: 0;
+    width: 0;
+
+    &::after {
+      border-bottom: 1px solid var(--grid-resizable-border-color);
+      content: '';
+      opacity: 0.8;
+      position: absolute;
+      transform: rotate(-45deg);
+      bottom: calc(var(--gap) * 0.7);
+      right: calc(var(--gap) * (-1));
+      width: calc(var(--gap) * 3.9);
+    }
+
+    &::before {
+      border-bottom: 1px solid var(--grid-resizable-border-color);
+      content: '';
+      opacity: 0.8;
+      position: absolute;
+      transform: rotate(-45deg);
+      bottom: calc(var(--gap) * 0.3);
+      right: calc(var(--gap) * (-0.6));
+      width: calc(var(--gap) * 2.2);
+    }
+  }
+}
