@@ -17,6 +17,8 @@ const defaultProps: OrderComponentProps = {
     availableQuote: 12,
     from: 'btc',
     to: 'eth',
+    asks: [['10','1']],
+    bids: [['10','1']],
 };
 
 const setup = (props: Partial<OrderComponentProps> = {}) =>

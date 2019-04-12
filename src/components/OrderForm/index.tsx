@@ -1,6 +1,7 @@
 import { Button, CryptoIcon, Decimal, Dropdown, OrderInput, PercentageButton } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { getAmount, getTotalPrice } from '../../helpers/getTotalPrice';
 import { OrderProps } from '../Order';
 
 // tslint:disable:no-magic-numbers jsx-no-lambda jsx-no-multiline-js
@@ -97,6 +98,10 @@ interface OrderFormProps {
      * Text for submit Button.
      */
     submitButtonText?: string;
+    /**
+     * proposal data for buy or sell [[price, volume]]
+     */
+    proposals: string[][];
 }
 
 interface OrderFormState {
@@ -128,10 +133,10 @@ const cleanPositiveFloatInput = (text: string) => {
     return cleanInput;
 };
 
-const checkButtonIsDisabled = (safeAmount: number, safePrice: number, props: OrderFormProps, state: OrderFormState) => {
+const checkButtonIsDisabled = (safeAmount: number, safePrice: number, price: string, props: OrderFormProps, state: OrderFormState) => {
     const invalidAmount = safeAmount <= 0;
-    const invalidLimitPrice = safePrice <= 0 && state.orderType === 'Limit';
-    const invalidMarketPrice = props.priceMarket <= 0 && state.orderType === 'Market';
+    const invalidLimitPrice = Number(price) <= 0 && state.orderType === 'Limit';
+    const invalidMarketPrice = safePrice <= 0 && state.orderType === 'Market';
     return props.disabled || !props.available || invalidAmount || invalidLimitPrice || invalidMarketPrice;
 };
 
@@ -151,8 +156,14 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
     }
 
     public componentWillReceiveProps(next: OrderFormProps) {
+        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.state.currentMarketBidPrecision);
+        if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
+            this.setState({
+                price: nextPriceLimitTruncated,
+            });
+        }
+
         this.setState({
-            price: String(next.priceLimit),
             priceMarket: next.priceMarket,
             currentMarketAskPrecision: next.currentMarketAskPrecision,
             currentMarketBidPrecision: next.currentMarketBidPrecision,
@@ -175,6 +186,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             availableText,
             estimatedFeeText,
             submitButtonText,
+            proposals,
         } = this.props;
         const {
             orderType,
@@ -187,9 +199,11 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             amountFocused,
         } = this.state;
         const safeAmount = Number(amount) || 0;
-        const safePrice = Number(price) || 0;
+        const totalPrice = getTotalPrice(amount, proposals, type);
+        const safePrice = totalPrice / Number(amount) || priceMarket;
+
         const total = orderType === 'Market'
-            ? safeAmount * priceMarket : safeAmount * safePrice;
+            ? totalPrice : safeAmount * (Number(price) || 0);
         const amountPercentageArray = [0.25, 0.5, 0.75, 1];
 
         const cx = classnames('cr-order-form', className);
@@ -222,7 +236,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                                     {handleSetValue(priceText, '')}
                                 </legend>
                                 <div className="cr-order-input__fieldset__input">
-                                    <span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(priceMarket, currentMarketBidPrecision), '0')}</span>
+                                    &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision), '0')}</span>
                                 </div>
                             </fieldset>
                             <div className="cr-order-input__crypto-icon">
@@ -270,9 +284,15 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                             {handleSetValue(totalText, 'Total')}
                         </label>
                         <div className="cr-order-item__total__content">
-                            <span className="cr-order-item__total__content__amount">
-                                {Decimal.format(total, currentMarketAskPrecision)}
-                            </span>
+                            {orderType === 'Limit' ? (
+                                <span className="cr-order-item__total__content__amount">
+                                    {Decimal.format(total, currentMarketAskPrecision)}
+                                </span>
+                            ) : (
+                                <span className="cr-order-item__total__content__amount">
+                                    &asymp;{Decimal.format(total, currentMarketAskPrecision)}
+                                </span>
+                            )}
                             <span className="cr-order-item__total__content__currency">
                                 {from.toUpperCase()}
                             </span>
@@ -317,7 +337,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                 </div>
                 <div className="cr-order-item">
                     <Button
-                        disabled={checkButtonIsDisabled(safeAmount, safePrice, this.props, this.state)}
+                        disabled={checkButtonIsDisabled(safeAmount, safePrice, price, this.props, this.state)}
                         label={submitButtonText || type}
                         noMargin={true}
                         onClick={this.handleSubmit}
@@ -377,15 +397,15 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                 switch (this.state.orderType) {
                     case 'Limit':
                         this.setState({
-                            amount: this.props.available && +this.state.price ? (
+                            amount: this.props.available && + this.state.price ? (
                                 Decimal.format(this.props.available / +this.state.price * value, this.state.currentMarketAskPrecision)
                             ) : '',
                         });
                         break;
                     case 'Market':
                         this.setState({
-                            amount: this.props.available && this.state.priceMarket ? (
-                                Decimal.format(this.props.available / this.state.priceMarket * value, this.state.currentMarketAskPrecision)
+                            amount: this.props.available ? (
+                                Decimal.format(getAmount(Number(this.props.available), this.props.proposals, this.props.type, value), this.state.currentMarketAskPrecision)
                             ) : '',
                         });
                         break;

@@ -28,6 +28,14 @@ exports[`Order should match snapshot 1`] = `
                 ]
               }
               priceMarket={5}
+              proposals={
+                Array [
+                  Array [
+                    "10",
+                    "1",
+                  ],
+                ]
+              }
               to="eth"
               type="buy"
             />,
@@ -61,6 +69,14 @@ exports[`Order should match snapshot 1`] = `
                 ]
               }
               priceMarket={10}
+              proposals={
+                Array [
+                  Array [
+                    "10",
+                    "1",
+                  ],
+                ]
+              }
               to="eth"
               type="sell"
             />,

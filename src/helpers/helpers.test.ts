@@ -101,6 +101,15 @@ describe('Helpers', () => {
         ['0.49', '0.5'],
     ];
 
+    const proposals: string[][] = [
+        ['12', '20'],
+        ['12.5', '11'],
+        ['12.7', '5'],
+        ['12.8', '13'],
+        ['13', '50'],
+        ['13.1', '10'],
+    ];
+
     // emailValidation.js
     it('Rendering correct regular expression for email validation', () => {
         expect(helpers.EMAIL_REGEX).toEqual(/^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/);
@@ -270,5 +279,32 @@ describe('Helpers', () => {
         expect(helpers.getUrlPart(2, '/trading/btcusd/something')).toEqual('btcusd');
         expect(helpers.getUrlPart(2, '/trading/btcusd#something')).toEqual('btcusd');
         expect(helpers.getUrlPart(2, '/trading/btcusd?something')).toEqual('btcusd');
+    });
+
+    // getTotalPrice.ts
+    it('should return correct total price', () => {
+        expect(helpers.getTotalPrice('0', [['0','0']], 'buy')).toEqual(0);
+        expect(helpers.getTotalPrice('2', [['0','0']], 'buy')).toEqual(0);
+        expect(helpers.getTotalPrice('0', [['2','10']], 'buy')).toEqual(0);
+        expect(helpers.getTotalPrice('2', [['2','10']], 'buy')).toEqual(4);
+        expect(helpers.getTotalPrice('10', proposals, 'buy')).toEqual(120);
+
+        expect(helpers.getTotalPrice('0', [['0','0']], 'sell')).toEqual(0);
+        expect(helpers.getTotalPrice('2', [['0','0']], 'sell')).toEqual(0);
+        expect(helpers.getTotalPrice('0', [['2','10']], 'sell')).toEqual(0);
+        expect(helpers.getTotalPrice('2', [['2','10']], 'sell')).toEqual(4);
+        expect(helpers.getTotalPrice('5', proposals, 'sell')).toEqual(65.5);
+    });
+
+    it('should return correct total price if amount more then orderBook amount', () => {
+        expect(helpers.getTotalPrice('1000', proposals, 'buy')).toEqual(13060.5);
+        expect(helpers.getTotalPrice('1000', proposals, 'sell')).toEqual(12080.4);
+    });
+
+    it('should return correct total amount for percent', () => {
+        expect(helpers.getAmount(1000, proposals, 'buy', 0.25)).toEqual(20.8);
+        expect(helpers.getAmount(500, proposals, 'buy', 0.5)).toEqual(20.8);
+        expect(helpers.getAmount(500, proposals, 'buy', 0.75)).toEqual(30.8);
+        expect(helpers.getAmount(1000, proposals, 'buy', 1)).toEqual(79.2);
     });
 });

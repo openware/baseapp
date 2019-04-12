@@ -128,6 +128,14 @@ export interface OrderComponentProps {
      *
      */
     width?: number;
+    /**
+     * proposals for buy
+     */
+    bids: string[][];
+    /**
+     * proposals for sell
+     */
+    asks: string[][];
 }
 
 const defaultOrderTypes: DropdownElem[] = [
@@ -204,11 +212,14 @@ class Order extends React.PureComponent<OrderComponentProps> {
             labelFirst,
             labelSecond,
             orderTypes,
+            asks,
+            bids,
         } = this.props;
         return [
             {
                 content: (
                     <OrderForm
+                        proposals={asks}
                         disabled={disabled}
                         fee={feeBuy}
                         type="buy"
@@ -235,6 +246,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
             {
                 content: (
                     <OrderForm
+                        proposals={bids}
                         fee={feeSell}
                         type="sell"
                         from={from}
@@ -280,11 +292,13 @@ class Order extends React.PureComponent<OrderComponentProps> {
             submitBuyButtonText,
             labelFirst,
             orderTypes,
+            asks,
         } = this.props;
         return [
             {
                 content: (
                     <OrderForm
+                        proposals={asks}
                         disabled={disabled}
                         fee={feeBuy}
                         type="buy"
@@ -330,11 +344,13 @@ class Order extends React.PureComponent<OrderComponentProps> {
             submitSellButtonText,
             labelSecond,
             orderTypes,
+            bids,
         } = this.props;
         return [
             {
                 content: (
                     <OrderForm
+                        proposals={bids}
                         fee={feeSell}
                         type="sell"
                         from={from}

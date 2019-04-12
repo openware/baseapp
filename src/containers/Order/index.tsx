@@ -10,6 +10,8 @@ import { Order, OrderProps, WalletItemProps } from '../../components';
 import {
     RootState,
     selectCurrentPrice,
+    selectDepthAsks,
+    selectDepthBids,
     selectWallets,
     setCurrentPrice,
     Wallet, walletsFetch,
@@ -28,6 +30,8 @@ interface ReduxProps {
             last: string;
         },
     };
+    bids: string[][];
+    asks: string[][];
     wallets: WalletItemProps[];
     currentPrice: string;
 }
@@ -86,7 +90,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     public render() {
-        const { executeLoading, marketTickers, currentMarket, wallets } = this.props;
+        const { executeLoading, marketTickers, currentMarket, wallets, asks, bids } = this.props;
         if (!currentMarket) {
             return null;
         }
@@ -110,6 +114,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             <div className={'pg-order'} ref={this.orderRef}>
                 {this.state.width > 449 ? headerContent : undefined}
                 <Order
+                    asks={asks}
+                    bids={bids}
                     disabled={executeLoading}
                     feeBuy={Number(currentMarket.ask_fee)}
                     feeSell={Number(currentMarket.ask_fee)}
@@ -175,6 +181,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 }
 
 const mapStateToProps = (state: RootState) => ({
+    bids: selectDepthBids(state),
+    asks: selectDepthAsks(state),
     currentMarket: selectCurrentMarket(state),
     executeLoading: selectOrderExecuteLoading(state),
     marketTickers: selectMarketTickers(state),

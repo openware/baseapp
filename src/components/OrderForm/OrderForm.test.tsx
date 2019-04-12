@@ -25,6 +25,7 @@ const defaultProps = {
     from: 'btc',
     to: 'eth',
     onSubmit: spy(),
+    proposals: [['10','1']],
 };
 
 const setup = (props: Partial<OrderFormProps> = {}) =>
@@ -88,6 +89,7 @@ describe('OrderForm', () => {
     it('should disable button if price is 0 in Limit order', () => {
         const onSubmit: SinonSpy = spy();
         const wrapper = setup({ onSubmit });
+
         const orderState = { orderType: 'Limit', amount: '0.05' };
         wrapper.setState(orderState);
 
@@ -315,7 +317,8 @@ describe('OrderForm', () => {
     it('should display correct values', () => {
         const fee = 0.0001;
         const type = 'buy';
-        const wrapper = setup({fee, type});
+        const proposals = [['2', '200']];
+        const wrapper = setup({fee, type, proposals});
         const nextState = { total: '0', price: '2' };
 
         wrapper.setState(nextState);
@@ -339,7 +342,8 @@ describe('OrderForm', () => {
         const type = 'buy';
         const currentMarketAskPrecision = 3;
         const currentMarketBidPrecision = 2;
-        const wrapper = setup({fee, type, currentMarketAskPrecision, currentMarketBidPrecision});
+        const proposals = [['2', '5']];
+        const wrapper = setup({fee, type, currentMarketAskPrecision, currentMarketBidPrecision, proposals});
         const nextState = { total: '0', price: '2' };
 
         wrapper.setState(nextState);
