@@ -73,7 +73,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
             });
         }
         if (lang) {
-            this.props.changeLanguage(lang);
+            this.props.changeLanguage(lang.toLowerCase());
         }
     }
 

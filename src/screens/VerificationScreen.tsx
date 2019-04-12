@@ -42,7 +42,7 @@ class Verification extends React.Component<Props> {
             this.props.verification({ token });
         }
         if (lang) {
-            this.props.changeLanguage(lang);
+            this.props.changeLanguage(lang.toLowerCase());
         }
     }
 
