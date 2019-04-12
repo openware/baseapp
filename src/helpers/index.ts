@@ -18,3 +18,5 @@ export * from './sortByDate';
 export * from './getUrlPart';
 export * from './setDocumentTitle';
 export * from './getTotalPrice';
+export * from './capitalize';
+export * from './timeConvert';

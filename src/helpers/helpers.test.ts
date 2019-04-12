@@ -307,4 +307,40 @@ describe('Helpers', () => {
         expect(helpers.getAmount(500, proposals, 'buy', 0.75)).toEqual(30.8);
         expect(helpers.getAmount(1000, proposals, 'buy', 1)).toEqual(79.2);
     });
+
+    // capitalize.ts
+    it('Should correctly convert to capitalized string', () => {
+        expect(helpers.capitalize('helios')).toEqual('Helios');
+        expect(helpers.capitalize('')).toEqual('');
+        expect(helpers.capitalize(' ')).toEqual(' ');
+    });
+
+    //  timeConvert.js
+    it('Should correctly convert date', () => {
+        expect(helpers.dateTo12HFormat('2019-01-22T15:18:33.000Z')).toBe('Jan 22, 2019 3:18 PM');
+        expect(helpers.dateTo12HFormat('2019-01-22T08:08:36.000Z')).toBe('Jan 22, 2019 8:08 AM');
+    });
+
+    it('Should correctly convert time', () => {
+        expect(helpers.timeTo12HFormat('15:18:33')).toBe('3:18 PM');
+        expect(helpers.timeTo12HFormat('08:08:36')).toBe('8:08 AM');
+    });
+
+    // checkDate.ts
+    describe('monthNameToNumber', () => {
+        it('return month number from name', () => {
+            expect(helpers.monthNameToNumber('January')).toBe('01');
+            expect(helpers.monthNameToNumber('February')).toBe('02');
+            expect(helpers.monthNameToNumber('March')).toBe('03');
+            expect(helpers.monthNameToNumber('April')).toBe('04');
+            expect(helpers.monthNameToNumber('May')).toBe('05');
+            expect(helpers.monthNameToNumber('June')).toBe('06');
+            expect(helpers.monthNameToNumber('July')).toBe('07');
+            expect(helpers.monthNameToNumber('August')).toBe('08');
+            expect(helpers.monthNameToNumber('September')).toBe('09');
+            expect(helpers.monthNameToNumber('October')).toBe('10');
+            expect(helpers.monthNameToNumber('November')).toBe('11');
+            expect(helpers.monthNameToNumber('December')).toBe('12');
+        });
+    });
 });
