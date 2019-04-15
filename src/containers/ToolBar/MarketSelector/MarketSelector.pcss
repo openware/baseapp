@@ -13,19 +13,25 @@
   align-items: center;
   cursor: pointer;
 
+  &-search-wrapper {
+    width: calc(var(--big-gap) * 5.45);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    animation-name: pg-trading-header-selector-search;
+    animation-duration: var(--market-selector-animation-duration);
+    background: var(--trading-header-background);
+    padding-top: calc(var(--big-gap) * 0.7);
+  }
+
   &-search {
     height: calc(var(--big-gap) * 0.7);
-    width: calc(var(--big-gap) * 5.3);
     margin: 6px;
     border: solid 1px var(--trading-header-search-border);
     border-radius: 4px;
     display: flex;
     overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    animation-name: pg-trading-header-selector-search;
-    animation-duration: var(--market-selector-animation-duration);
 
     &-icon {
       height: 100%;
@@ -109,9 +115,10 @@
     background: var(--trading-header-background);
     display: block;
     position: absolute;
-    z-index: 99999;
+    z-index: 10;
 
     overflow-y: scroll;
+    overflow-x: hidden;
     animation-name: pg-trading-header-selector-list-container-open;
     animation-duration: var(--market-selector-animation-duration);
   }
@@ -121,7 +128,7 @@
     width: 0;
     height: 0;
     display: none;
-    z-index: 99999;
+    z-index: 10;
     animation-name: pg-trading-header-selector-list-container-close;
     animation-duration: var(--market-selector-animation-duration);
   }

@@ -77,15 +77,17 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
                 <div className={listClassName}>
                     <MarketsTabs onSelect={this.marketsTabsSelectHandler}/>
                     <MarketsList search={searchFieldValue} currencyQuote={marketsTabsSelectedValue}/>
-                    <div className={searchSelectorClassName}>
-                        <div className="pg-trading-header-selector-search-icon">
-                            <img src={require('../icons/search.svg')} />
+                    <div className={'pg-trading-header-selector-search-wrapper'}>
+                        <div className={searchSelectorClassName}>
+                            <div className="pg-trading-header-selector-search-icon">
+                                <img src={require('../icons/search.svg')} />
+                            </div>
+                            <input
+                                className="pg-trading-header-selector-search-field"
+                                onChange={this.searchFieldChangeHandler}
+                                value={searchFieldValue}
+                            />
                         </div>
-                        <input
-                            className="pg-trading-header-selector-search-field"
-                            onChange={this.searchFieldChangeHandler}
-                            value={searchFieldValue}
-                        />
                     </div>
                 </div>
             </div>
