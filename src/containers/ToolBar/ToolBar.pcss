@@ -86,6 +86,31 @@
     }
   }
   
+  @media screen and (max-width: 480px) {
+    .pg-trading-header-selector-container {
+      width: 100%;
+    }
+
+    height: unset;
+    .pg-trading-header-selector {
+      height: 43px !important;
+      width: 100%;
+
+      &-title {
+        padding-left: calc(100% - var(--big-gap) * 3.4);
+      }
+
+      .pg-trading-header-selector-icon-open {
+        height: 43px !important;
+      }
+    }
+
+    &-stats {
+      display: none;
+    }
+  }
+
+    
   @media screen and (max-width: 576px) {
     height: unset;
     &-selector {
