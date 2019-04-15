@@ -1,9 +1,7 @@
-type FormType = 'buy' | 'sell';
-
-export const getTotalPrice = (amount: string, proposals: string[][], type: FormType) => {
+export const getTotalPrice = (amount: string, proposals: string[][]) => {
     let sum = Number(amount);
 
-    const list = type === 'buy' ? proposals : proposals.slice(0).reverse();
+    const list = proposals;
     let total = 0;
 
     for (const proposal of list) {
@@ -28,10 +26,10 @@ export const getTotalPrice = (amount: string, proposals: string[][], type: FormT
     return total;
 };
 
-export const getAmount = (avaiblePrice: number, proposals: string[][], type: FormType, value: number) => {
+export const getAmount = (avaiblePrice: number, proposals: string[][], value: number) => {
     let sum = avaiblePrice * value;
 
-    const list = type === 'buy' ? proposals : proposals.slice(0).reverse();
+    const list = proposals;
     let totalAmount = 0;
 
     for (const proposal of list) {

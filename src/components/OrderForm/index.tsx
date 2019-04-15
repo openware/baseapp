@@ -199,7 +199,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             amountFocused,
         } = this.state;
         const safeAmount = Number(amount) || 0;
-        const totalPrice = getTotalPrice(amount, proposals, type);
+        const totalPrice = getTotalPrice(amount, proposals);
         const safePrice = totalPrice / Number(amount) || priceMarket;
 
         const total = orderType === 'Market'
@@ -405,7 +405,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                     case 'Market':
                         this.setState({
                             amount: this.props.available ? (
-                                Decimal.format(getAmount(Number(this.props.available), this.props.proposals, this.props.type, value), this.state.currentMarketAskPrecision)
+                                Decimal.format(getAmount(Number(this.props.available), this.props.proposals, value), this.state.currentMarketAskPrecision)
                             ) : '',
                         });
                         break;
