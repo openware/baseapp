@@ -147,7 +147,6 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                                 <div className="cr-email-form__button-wrapper">
                                     <Button
                                         label={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.button'})}
-                                        type="submit"
                                         className={!this.disableButton() ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                                         disabled={this.disableButton()}
                                         onClick={this.handleSendNewPassword}

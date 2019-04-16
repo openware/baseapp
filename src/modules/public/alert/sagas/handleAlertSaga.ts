@@ -26,6 +26,9 @@ export function* handleAlertSaga(action: AlertPush) {
                 if (action.payload.message.indexOf('identity.session.invalid_otp') > -1) {
                     yield call(callAlertData, action);
                 }
+                if (action.payload.message.indexOf('jwt.decode_and_verify') > -1) {
+                    yield call(callAlertData, action);
+                }
                 return;
             default:
                 yield call(callAlertData, action);
