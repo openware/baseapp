@@ -1,4 +1,10 @@
 export const getTotalPrice = (amount: string, proposals: string[][]) => {
+    for (const p of proposals) {
+        if (p.length < 2) {
+            return 0;
+        }
+    }
+
     let sum = Number(amount);
 
     const list = proposals;
@@ -18,7 +24,7 @@ export const getTotalPrice = (amount: string, proposals: string[][]) => {
         }
     }
 
-    if (sum > 0) { // sum is bigger then order book liqudity
+    if (sum > 0 && list.length >= 1) { // sum is bigger then order book liqudity
         const lastPrice = Number(list[list.length - 1][0]);
         total += lastPrice * sum;
     }

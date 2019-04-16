@@ -294,6 +294,12 @@ describe('Helpers', () => {
         expect(helpers.getTotalPrice('1000', proposals)).toEqual(13060.5);
     });
 
+    it('should return 0 total price if invalid args', () => {
+        expect(helpers.getTotalPrice('1', [])).toEqual(0);
+        expect(helpers.getTotalPrice('2', [[]])).toEqual(0);
+        expect(helpers.getTotalPrice('3', [['', '']])).toEqual(0);
+    });
+
     it('should return correct total amount for percent', () => {
         expect(helpers.getAmount(1000, proposals, 0.25)).toEqual(20.8);
         expect(helpers.getAmount(500, proposals, 0.5)).toEqual(20.8);
