@@ -18,6 +18,7 @@ import { DocumentsState, rootSendDocumentsSaga } from './user/kyc/documents';
 import { IdentityState, rootSendIdentitySaga } from './user/kyc/identity';
 import { LabelState, rootLabelSaga } from './user/kyc/label';
 import { PhoneState, rootSendCodeSaga } from './user/kyc/phone';
+import { NewHistoryState, rootNewHistorySaga } from './user/newHistory';
 import { OpenOrdersState, rootOpenOrdersSaga } from './user/openOrders';
 import { OrdersState, rootOrdersSaga } from './user/orders';
 import { OrdersHistoryState, rootOrdersHistorySaga } from './user/ordersHistory';
@@ -41,6 +42,7 @@ export * from './user/ordersHistory';
 export * from './user/password';
 export * from './user/userActivity';
 export * from './user/history';
+export * from './user/newHistory';
 export * from './user/kyc';
 export * from './user/emailVerification';
 
@@ -66,6 +68,7 @@ export interface RootState {
         identity: IdentityState;
         phone: PhoneState;
         history: HistoryState;
+        newHistory: NewHistoryState;
         apiKeys: ApiKeysState;
         userActivity: UserActivityState;
         ordersHistory: OrdersHistoryState;
@@ -94,6 +97,7 @@ export function* rootSaga() {
         call(rootOrderBookSaga),
         call(rootHandleAlertSaga),
         call(rootHistorySaga),
+        call(rootNewHistorySaga),
         call(rootUserActivitySaga),
         call(rootApiKeysSaga),
         call(rootLabelSaga),

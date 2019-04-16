@@ -16,6 +16,7 @@ import {
     labelReducer,
     phoneReducer,
 } from './user/kyc';
+import { newHistoryReducer } from './user/newHistory';
 import { openOrdersReducer } from './user/openOrders';
 import { ordersReducer  } from './user/orders';
 import { ordersHistoryReducer  } from './user/ordersHistory';
@@ -46,6 +47,7 @@ export const userReducer = combineReducers({
     identity: identityReducer,
     documents: documentsReducer,
     history: historyReducer,
+    newHistory: newHistoryReducer,
     apiKeys: apiKeysReducer,
     userActivity: userActivityReducer,
     ordersHistory: ordersHistoryReducer,
