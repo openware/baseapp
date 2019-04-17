@@ -52,7 +52,7 @@ describe('History saga', () => {
         }],
     };
 
-    const url = `/account/history?currency=${fakeRequest.currency}&filter=deposit+withdraw&time_from=${fakeRequest.time_from}&time_to=${fakeRequest.time_to}`;
+    const url = `/account/history?currency=${fakeRequest.currency}&filter=${encodeURIComponent(fakeRequest.filter)}&time_from=${fakeRequest.time_from}&time_to=${fakeRequest.time_to}`;
     const mocksHistory = () => {
         mockAxios.onGet(url).reply(200, fakeSuccessPayload.list);
     };
