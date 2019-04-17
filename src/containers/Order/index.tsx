@@ -11,7 +11,7 @@ import {
     RootState,
     selectCurrentPrice,
     selectDepthAsks,
-    selectDepthBids,
+    selectDepthBids, selectUserLoggedIn,
     selectWallets,
     setCurrentPrice,
     Wallet, walletsFetch,
@@ -79,8 +79,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     public componentWillReceiveProps(next: Props) {
-        if (!next.wallets || next.wallets.length === 0) {
-            this.props.accountWallets();
+        const {userLoggedIn, accountWallets} = this.props;
+        if (userLoggedIn && (!next.wallets || next.wallets.length === 0)) {
+            accountWallets();
         }
         if (+next.currentPrice && next.currentPrice !== this.state.priceLimit) {
             this.setState({
@@ -188,6 +189,7 @@ const mapStateToProps = (state: RootState) => ({
     marketTickers: selectMarketTickers(state),
     wallets: selectWallets(state),
     currentPrice: selectCurrentPrice(state),
+    userLoggedIn: selectUserLoggedIn(state),
 });
 
 const mapDispatchToProps = dispatch => ({
