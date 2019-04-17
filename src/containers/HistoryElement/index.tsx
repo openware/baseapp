@@ -145,20 +145,20 @@ class HistoryComponent extends React.Component<Props> {
         switch (type) {
             case 'deposits': {
                 const { txid, created_at, currency, amount } = item;
-                const state = this.props.intl.formatMessage({id: `page.body.history.deposit.content.status.${item.state.toLowerCase()}`});
+                const state = this.props.intl.formatMessage({id: `page.body.history.deposit.content.status.${item.state}`});
                 const blockchainLink = this.getBlockchainLink(currency, txid);
                 const wallet = wallets.find(obj => obj.currency === currency);
                 return [
                     <div className="pg-history-elem__hide" key={txid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid}</a></div>,
                     localeDate(created_at),
-                    currency.toUpperCase(),
+                    currency && currency.toUpperCase(),
                     wallet && preciseData(amount, wallet.fixed),
                     <span style={{ color: setDepositStatusColor(item.state) }} key={txid}>{state}</span>,
                 ];
             }
             case 'withdraws': {
                 const { txid, created_at, currency, amount, fee, rid } = item;
-                const state = this.props.intl.formatMessage({id: `page.body.history.withdraw.content.status.${item.state.toLowerCase()}`});
+                const state = this.props.intl.formatMessage({ id: `page.body.history.withdraw.content.status.${item.state}` });
                 const blockchainLink = this.getBlockchainLink(currency, txid, rid);
                 const wallet = wallets.find(obj => obj.currency === currency);
                 return [
