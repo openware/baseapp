@@ -13,9 +13,8 @@ export interface CurrentKlineSubscription {
     periodString?: string;
 }
 
-const makeHistoryUrl = (
-    market: string, resolution: number, from: number, to: number,
-) => `${tradeUrl()}/public/markets/${market}/k-line?period=${resolution}&time_from=${from}&time_to=${to}`;
+const makeHistoryUrl = (market: string, resolution: number, from: number, to: number) =>
+    `${tradeUrl()}/public/markets/${market}/k-line?period=${resolution}&time_from=${from}&time_to=${to}`;
 
 const resolutionToSeconds = (r: string): number => {
     const minutes = parseInt(r, 10);
@@ -38,20 +37,17 @@ const config = {
 export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Market[]) => {
     const dataFeed = {
         onReady: cb => {
-
             setTimeout(() => cb(config), 0);
         },
         searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
-            const symbols = markets.map(m => (
-                {
-                    symbol: m.id,
-                    full_name: m.name,
-                    description: m.name,
-                    exchange: 'Cryptobase',
-                    ticker: m.id,
-                    type: 'bitcoin',
-                }
-            ));
+            const symbols = markets.map(m => ({
+                symbol: m.id,
+                full_name: m.name,
+                description: m.name,
+                exchange: 'Cryptobase',
+                ticker: m.id,
+                type: 'bitcoin',
+            }));
             setTimeout(() => onResultReadyCallback(symbols), 0);
         },
         resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) => {
@@ -80,37 +76,47 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
 
             return setTimeout(() => onSymbolResolvedCallback(symbolStub), 0);
         },
-        getBars: async (symbolInfo: LibrarySymbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
-            const today = new Date();
-            if ((to - today.getTime() / 1000) > 0) {
-                const url = makeHistoryUrl(
-                    symbolInfo.ticker || symbolInfo.name.toLowerCase(),
-                    resolutionToSeconds(resolution),
-                    from,
-                    to,
-                );
-                return axios.get(url).then(({ data }) => {
+        getBars: async (
+            symbolInfo: LibrarySymbolInfo,
+            resolution,
+            from,
+            to,
+            onHistoryCallback,
+            onErrorCallback,
+            firstDataRequest,
+        ) => {
+            const url = makeHistoryUrl(
+                symbolInfo.ticker || symbolInfo.name.toLowerCase(),
+                resolutionToSeconds(resolution),
+                from,
+                to,
+            );
+            return axios
+                .get(url)
+                .then(({ data }) => {
                     if (data.length < 1) {
                         return onHistoryCallback([], { noData: true });
                     }
                     const bars = data.map(klineArrayToObject);
                     return onHistoryCallback(bars, { noData: false });
-                }).catch(e => {
+                })
+                .catch(e => {
                     return onHistoryCallback([], { noData: true });
                 });
-            }
         },
-        subscribeBars: (symbolInfo: LibrarySymbolInfo, resolution, onRealtimeCallback, subscribeUID: string, onResetCacheNeededCallback) => {
-            // window.console.log(`subscribeBars called, symbolInfo: ${JSON.stringify(symbolInfo)}, resolution: ${resolution}, subscribeUID: ${subscribeUID}`);
+        subscribeBars: (
+            symbolInfo: LibrarySymbolInfo,
+            resolution,
+            onRealtimeCallback,
+            subscribeUID: string,
+            onResetCacheNeededCallback,
+        ) => {
             dataFeed.onRealtimeCallback = (kline: KlineState) => {
-                // window.console.log(`new onRealtimeCallback called with ${JSON.stringify(kline)}`);
-
                 if (
                     kline.last &&
                     kline.marketId === tradingChart.currentKlineSubscription.marketId &&
                     kline.period === tradingChart.currentKlineSubscription.periodString
                 ) {
-                    // window.console.log(`new onRealtimeCallback forwarded the last kline`);
                     onRealtimeCallback(kline.last);
                 }
             };
@@ -122,7 +128,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
                 periodString,
             };
         },
-        unsubscribeBars: subscribeUID => {
+        unsubscribeBars: (subscribeUID: string) => {
             const { marketId, periodString } = tradingChart.currentKlineSubscription;
             if (marketId && periodString) {
                 tradingChart.props.unSubscribeKline(marketId, periodString);
