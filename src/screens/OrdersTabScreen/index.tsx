@@ -11,6 +11,7 @@ import { setDocumentTitle } from '../../helpers';
 import {
     marketsFetch,
     ordersCancelAllFetch,
+    resetOrdersHistory,
     RootState,
     selectOrdersHistory,
 } from '../../modules';
@@ -23,6 +24,7 @@ interface ReduxProps {
 interface DispatchProps {
     marketsFetch: typeof marketsFetch;
     ordersCancelAll: typeof ordersCancelAllFetch;
+    resetOrdersHistory: typeof resetOrdersHistory;
 }
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
@@ -40,6 +42,10 @@ class Orders extends React.PureComponent<Props, State> {
     public componentDidMount() {
         setDocumentTitle('Orders');
         this.props.marketsFetch();
+    }
+
+    public componentWillUnmount() {
+        this.props.resetOrdersHistory();
     }
 
     public render() {
@@ -74,6 +80,7 @@ class Orders extends React.PureComponent<Props, State> {
         if (this.state.tab === this.tabMapping[index]) {
             return;
         }
+        this.props.resetOrdersHistory();
         this.setState({ tab: this.tabMapping[index] });
     };
 
@@ -102,6 +109,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         marketsFetch: () => dispatch(marketsFetch()),
         ordersCancelAll: payload => dispatch(ordersCancelAllFetch(payload)),
+        resetOrdersHistory: () => dispatch(resetOrdersHistory()),
     });
 
 const OrdersTabScreen = injectIntl(connect(mapStateToProps, mapDispatchToProps)(Orders));

@@ -9,6 +9,7 @@ import {
     ORDERS_HISTORY_DATA,
     ORDERS_HISTORY_ERROR,
     ORDERS_HISTORY_FETCH,
+    ORDERS_HISTORY_RESET,
     ORDERS_TEST_HISTORY_STATE,
 } from './constants';
 
@@ -77,6 +78,10 @@ export interface OrdersHistoryCancelError {
     type: typeof ORDERS_HISTORY_CANCEL_ERROR;
 }
 
+export interface OrdersHistoryReset {
+    type: typeof ORDERS_HISTORY_RESET;
+}
+
 export type OrdersHistoryAction =
     UserOrdersHistoryFetch
     | UserOrdersHistoryData
@@ -87,7 +92,8 @@ export type OrdersHistoryAction =
     | OrdersCancelAllError
     | OrdersHistoryCancelFetch
     | OrdersHistoryCancelData
-    | OrdersHistoryCancelError;
+    | OrdersHistoryCancelError
+    | OrdersHistoryReset;
 
 
 export const userOrdersHistoryFetch = (payload: UserOrdersHistoryFetchPayload): UserOrdersHistoryFetch => ({
@@ -130,4 +136,8 @@ export const ordersHistoryCancelData = (payload: OrdersHistoryCancelData['payloa
 
 export const ordersHistoryCancelError = (): OrdersHistoryCancelError => ({
     type: ORDERS_HISTORY_CANCEL_ERROR,
+});
+
+export const resetOrdersHistory = (): OrdersHistoryReset => ({
+    type: ORDERS_HISTORY_RESET,
 });

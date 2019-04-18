@@ -10,6 +10,7 @@ import {
     ORDERS_HISTORY_DATA,
     ORDERS_HISTORY_ERROR,
     ORDERS_HISTORY_FETCH,
+    ORDERS_HISTORY_RESET,
 } from './constants';
 
 export interface OrdersHistoryState {
@@ -64,6 +65,9 @@ export const ordersHistoryReducer = (
             return { ...state, cancelFetching: false, list: action.payload, total: state.total ? state.total - 1 : 0 };
         case ORDERS_HISTORY_CANCEL_ERROR:
             return { ...state, cancelFetching: false, cancelError: true };
+        case ORDERS_HISTORY_RESET: {
+            return { ...state, list: [], total: 0, pageIndex: 0, fetching: false };
+        }
         default:
             return state;
     }

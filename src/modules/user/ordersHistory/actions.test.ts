@@ -9,6 +9,7 @@ import {
     ORDERS_HISTORY_DATA,
     ORDERS_HISTORY_ERROR,
     ORDERS_HISTORY_FETCH,
+    ORDERS_HISTORY_RESET,
 } from './constants';
 
 describe('Orders History actions', () => {
@@ -61,5 +62,11 @@ describe('Orders History actions', () => {
     it('should check ordersHistoryCancelError action creator', () => {
         const expectedAction = { type: ORDERS_HISTORY_CANCEL_ERROR };
         expect(actions.ordersHistoryCancelError()).toEqual(expectedAction);
+    });
+
+
+    it('should check resetOrdersHistory action creator', () => {
+        const expectedAction = { type: ORDERS_HISTORY_RESET };
+        expect(actions.resetOrdersHistory()).toEqual(expectedAction);
     });
 });

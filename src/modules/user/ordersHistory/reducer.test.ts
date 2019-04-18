@@ -97,4 +97,11 @@ describe('Orders History reducer', () => {
         const expectedState = { ...initialOrdersHistoryState, cancelError: true, cancelFetching: false };
         expect(ordersHistoryReducer(initialState, actions.ordersHistoryCancelError())).toEqual(expectedState);
     });
+
+    it('should handle ORDERS_HISTORY_RESET', () => {
+        const initialState = { ...initialOrdersHistoryState, fetching: true };
+        const expectedState = { ...initialOrdersHistoryState, list: [], total: 0, pageIndex: 0, fetching: false };
+        expect(ordersHistoryReducer(initialState, actions.resetOrdersHistory())).toEqual(expectedState);
+    });
+
 });
