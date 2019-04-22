@@ -109,9 +109,11 @@
       &-settings {
           float: right;
           display: inherit;
+          align-items: center;
 
           &__account-dropdown {
               margin-right: calc(var(--gap) * 1);
+              cursor: pointer;
 
               a {
                   font-size: calc(var(--gap) * 2.333);
@@ -183,7 +185,11 @@
               .navbar-user-menu {
                   display: flex;
                   padding: calc(var(--big-gap) * 0.17) calc(var(--big-gap) * 0.25) calc(var(--big-gap) * 0.14);
-                  height: 100%;
+                  position: absolute;
+                  height: calc(var(--big-gap) * 1.05);
+                  z-index: 10;
+                  right: calc(var(--big-gap) * 1.07);
+                  top: 0;
                   margin-top: calc(var(--big-gap) * -0.18);
 
                   &-active {
@@ -200,6 +206,7 @@
                   border: 0;
                   overflow: hidden;
                   right: calc(var(--big-gap) * -.6);
+                  margin-top: calc(var(--big-gap) * 0.53);
               }
 
               .dropdown-menu-language {
@@ -219,7 +226,6 @@
                       color: var(--navbar-language-selector-current-color);
                       font-size: calc(var(--big-gap) * 0.23);
                       height: 100%;
-                      margin-top: calc(var(--big-gap) * -0.17);
                       padding: calc(var(--big-gap) * 0.17) 0px calc(var(--big-gap) * 0.125);
 
                       &-active {
