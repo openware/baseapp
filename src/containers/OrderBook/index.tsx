@@ -78,7 +78,7 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     private orderBook = (bids, asks) => {
-        const isLarge = this.state.width >= breakpoint;
+        const isLarge = this.state.width > breakpoint;
         const asksData = isLarge ? asks : asks.slice(0).reverse();
         return (
             <React.Fragment>

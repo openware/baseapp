@@ -113,7 +113,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         return (
 
             <div className={'pg-order'} ref={this.orderRef}>
-                {this.state.width > 449 ? headerContent : undefined}
+                {this.state.width >= 449 ? headerContent : undefined}
                 <Order
                     asks={asks}
                     bids={bids}
