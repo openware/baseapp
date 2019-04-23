@@ -261,7 +261,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     </div>
                 </div>
               </div>
-              {success && <p className="pg-confirm__success">{success}</p>}
+              {success && <p className="pg-confirm__success">{this.translate(success)}</p>}
               <div className="pg-confirm__content-deep">
                   <Button
                       className="pg-confirm__content-phone-deep-button"
