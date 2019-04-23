@@ -57,11 +57,6 @@ describe('Module: Wallets', () => {
             locked:0,
         },
         {
-            currency: 'trst',
-            balance:0,
-            locked:0,
-        },
-        {
             currency: 'usd',
             balance:0,
             locked:0,
@@ -184,10 +179,19 @@ describe('Module: Wallets', () => {
         },
     ];
 
-    const fakeWallets: Wallet[] = fakeAccounts.map(wallet => {
-        const currencyInfo = fakeCurrencies.find(item => item.id === wallet.currency);
+    const fakeWallets: Wallet[] = fakeCurrencies.map(currencyInfo => {
+        let walletInfo = fakeAccounts.find(wallet => wallet.currency === currencyInfo.id);
+
+        if (!walletInfo) {
+            walletInfo = {
+                balance: 0,
+                currency: currencyInfo.id,
+                locked: 0,
+            };
+        }
+
         return ({
-            ...wallet,
+            ...walletInfo,
             name: currencyInfo ? currencyInfo.name : '',
             explorerTransaction: currencyInfo!.explorer_transaction,
             explorerAddress: currencyInfo!.explorer_address,
