@@ -38,9 +38,17 @@ export const zh: LangType = {
     'page.body.trade.header.marketDepths.content.cumulativeVolume': '累积量:',
     'page.body.trade.header.marketDepths.content.cumulativeValue': '累积值:',
 
+    'page.body.trade.toolBar.lowest': 'Lowest 24h',
+    'page.body.trade.toolBar.lastPrice': 'Last Price',
+    'page.body.trade.toolBar.selectMarket': 'Select Market',
+    'page.body.trade.toolBar.highest': 'Highest 24h',
+    'page.body.trade.toolBar.volume': '24h Volume',
+    'page.body.trade.toolBar.change': 'change',
+
     'page.body.trade.header.asks': '问',
     'page.body.trade.header.bids': '出价',
     'page.body.trade.orderbook': '訂單簿',
+    'page.body.trade.orderbook.lastMarket': 'Last Market Price',
     'page.body.trade.orderbook.header.price': '价格',
     'page.body.trade.orderbook.header.amount': '金额',
     'page.body.trade.orderbook.header.volume': '音量',

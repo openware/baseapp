@@ -38,9 +38,17 @@ export const ru: LangType = {
     'page.body.trade.header.marketDepths.content.cumulativeVolume': 'Общий объем:',
     'page.body.trade.header.marketDepths.content.cumulativeValue': 'Общее значение:',
 
+    'page.body.trade.toolBar.lowest': 'Низший 24h',
+    'page.body.trade.toolBar.lastPrice': 'Последняя цена',
+    'page.body.trade.toolBar.selectMarket': 'Выберите рынок',
+    'page.body.trade.toolBar.highest': 'Наибольший 24h',
+    'page.body.trade.toolBar.volume': '24h Объем',
+    'page.body.trade.toolBar.change': 'изменинение',
+
     'page.body.trade.header.asks': 'Заявки на продажу',
     'page.body.trade.header.bids': 'Заявки на покупку',
     'page.body.trade.orderbook': 'Книга ордеров',
+    'page.body.trade.orderbook.lastMarket': 'Последняя рыночная цена',
     'page.body.trade.orderbook.header.price': 'Цена',
     'page.body.trade.orderbook.header.amount': 'Кол.',
     'page.body.trade.orderbook.header.volume': 'Объем',

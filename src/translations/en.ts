@@ -37,9 +37,17 @@ export const en = {
     'page.body.trade.header.marketDepths.content.cumulativeVolume': 'Total:',
     'page.body.trade.header.marketDepths.content.cumulativeValue': 'Estimated Value:',
 
+    'page.body.trade.toolBar.lowest': 'Lowest 24h',
+    'page.body.trade.toolBar.lastPrice': 'Last Price',
+    'page.body.trade.toolBar.selectMarket': 'Select Market',
+    'page.body.trade.toolBar.highest': 'Highest 24h',
+    'page.body.trade.toolBar.volume': '24h Volume',
+    'page.body.trade.toolBar.change': 'change',
+
     'page.body.trade.header.asks': 'Asks',
     'page.body.trade.header.bids': 'Bids',
     'page.body.trade.orderbook': 'Order Book',
+    'page.body.trade.orderbook.lastMarket': 'Last Market Price',
     'page.body.trade.orderbook.header.price': 'Price',
     'page.body.trade.orderbook.header.amount': 'Amount',
     'page.body.trade.orderbook.header.volume': 'Total',

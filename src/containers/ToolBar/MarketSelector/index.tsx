@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import {
     Market,
@@ -66,7 +67,7 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
                         {currentMarket && currentMarket.name}
                     </div>
                     <div className="pg-trading-header-selector-title">
-                        Select Market
+                        <FormattedMessage id="page.body.trade.toolBar.selectMarket" />
                     </div>
                     <div className={iconClassName}>
                         <div className={iconImgClassName}>

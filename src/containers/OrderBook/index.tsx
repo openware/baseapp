@@ -119,11 +119,11 @@ class OrderBookContainer extends React.Component<Props, State> {
                   <span className={cn}>
                       {Decimal.format(Number((marketTickers[currentMarket.id] || defaultTicker).last), currentMarket.ask_precision)} {currentMarket.bid_unit.toUpperCase()}
                   </span>
-                  <span>Last Market Price</span>
+                  <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
               </React.Fragment>
             );
         } else {
-          return <React.Fragment><span className={'cr-combined-order-book__market-negative'}>0</span><span>Last Market Price</span></React.Fragment>;
+          return <React.Fragment><span className={'cr-combined-order-book__market-negative'}>0</span><span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span></React.Fragment>;
         }
     };
 

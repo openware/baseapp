@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
     percentage: number;
@@ -20,7 +21,7 @@ export class PriceBar extends React.Component<Props> {
                 <div className="pg-trading-header-price-bar-filler">
                     <div className="pg-trading-header-price-bar-filler-left" style={{width: `${percentage}%`}}/>
                     <div className="pg-trading-header-price-bar-filler-cursor"/>
-                    <div className="pg-trading-header-price-bar-text" style={style}>Last Price: {lastPrice} {bidUnit}</div>
+                    <div className="pg-trading-header-price-bar-text" style={style}><FormattedMessage id="page.body.trade.toolBar.lastPrice" />: {lastPrice} {bidUnit}</div>
                     <div
                         className="pg-trading-header-price-bar-filler-right"
                         style={{width: `${100 - percentage}%`}}

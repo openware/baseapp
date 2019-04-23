@@ -2,6 +2,7 @@ import {
     Decimal,
 } from '@openware/components';
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import {
     Market,
@@ -31,9 +32,15 @@ interface State {
     isOpen: boolean;
 }
 
-class ToolBarComponent extends React.Component<ReduxProps, State> {
+type Props = ReduxProps & InjectedIntlProps;
+
+class ToolBarComponent extends React.Component<Props, State> {
     public readonly state = {
         isOpen: false,
+    };
+
+    public translate = (id: string) => {
+        return id ? this.props.intl.formatMessage({ id }) : '';
     };
 
     public render() {
@@ -57,14 +64,14 @@ class ToolBarComponent extends React.Component<ReduxProps, State> {
                         <ProgressLabel
                             progress={currentMarket && Decimal.format(Number(this.getTickerValue('low')), currentMarket.ask_precision)}
                             isPositive={true}
-                            additional="Lowest 24h"
+                            additional={this.translate('page.body.trade.toolBar.lowest')}
                             bidUnit={bidUnit}
                         />
                         <div className="pg-trading-header-container-daily-last">
                             <ProgressLabel
                                 progress={currentMarket && Decimal.format(Number(this.getTickerValue('last')), currentMarket.ask_precision)}
                                 isPositive={true}
-                                additional="Last Price"
+                                additional={this.translate('page.body.trade.toolBar.lastPrice')}
                                 bidUnit={bidUnit}
                             />
                         </div>
@@ -76,7 +83,7 @@ class ToolBarComponent extends React.Component<ReduxProps, State> {
                         <ProgressLabel
                             progress={currentMarket && Decimal.format(Number(this.getTickerValue('high')), currentMarket.ask_precision)}
                             isPositive={false}
-                            additional="Highest 24h"
+                            additional={this.translate('page.body.trade.toolBar.highest')}
                             bidUnit={bidUnit}
                         />
                     </div>
@@ -84,13 +91,13 @@ class ToolBarComponent extends React.Component<ReduxProps, State> {
                         <ProgressLabel
                             progress={currentMarket && Decimal.format(Number(this.getTickerValue('vol')), currentMarket.ask_precision)}
                             isPositive={true}
-                            additional="24h Volume"
+                            additional={this.translate('page.body.trade.toolBar.volume')}
                             bidUnit={bidUnit}
                         />
                         <ProgressLabel
                             progress={currentMarket && (marketTickers[currentMarket.id] || defaultTicker).price_change_percent}
                             isPositive={isPositive}
-                            additional="Change"
+                            additional={this.translate('page.body.trade.toolBar.change')}
                         />
                     </div>
                 </div>
@@ -112,4 +119,4 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     marketTickers: selectMarketTickers(state),
 });
 
-export const ToolBar = connect<ReduxProps, {}, {}, RootState>(reduxProps)(ToolBarComponent);
+export const ToolBar = injectIntl(connect<ReduxProps, {}, {}, RootState>(reduxProps)(ToolBarComponent));
