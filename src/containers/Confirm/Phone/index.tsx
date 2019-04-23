@@ -134,7 +134,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                         />
                     </fieldset>
                 </div>
-                {verifyPhoneSuccess && <p className="pg-confirm__success">{verifyPhoneSuccess}</p>}
+                {verifyPhoneSuccess && <p className="pg-confirm__success">{this.translate(verifyPhoneSuccess)}</p>}
                 <div className="pg-confirm__content-deep">
                     <Button
                         className="pg-confirm__content-phone-deep-button"
