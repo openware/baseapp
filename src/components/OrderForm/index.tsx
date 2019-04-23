@@ -31,6 +31,10 @@ interface OrderFormProps {
      */
     orderTypes: DropdownElem[];
     /**
+     * Available types of order without translations
+     */
+    orderTypesIndex: DropdownElem[];
+    /**
      * Additional class name. By default element receives `cr-order` class
      * @default empty
      */
@@ -348,9 +352,9 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
     }
 
     private handleOrderTypeChange = (index: number) => {
-        const { orderTypes } = this.props;
+        const { orderTypesIndex } = this.props;
         this.setState({
-            orderType: orderTypes[index],
+            orderType: orderTypesIndex[index],
         });
     };
 

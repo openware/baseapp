@@ -21,7 +21,7 @@
 .cr-open-orders .cr-table th,
 .cr-open-orders .cr-table td {
   width: auto !important;
-  &:nth-child(n+1) {
+  &:not(:first-child) {
     text-align: right;
   }
 }

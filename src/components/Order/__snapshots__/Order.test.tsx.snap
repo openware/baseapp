@@ -27,6 +27,12 @@ exports[`Order should match snapshot 1`] = `
                   "Market",
                 ]
               }
+              orderTypesIndex={
+                Array [
+                  "Limit",
+                  "Market",
+                ]
+              }
               priceMarket={5}
               proposals={
                 Array [
@@ -63,6 +69,12 @@ exports[`Order should match snapshot 1`] = `
               from="btc"
               onSubmit={[Function]}
               orderTypes={
+                Array [
+                  "Limit",
+                  "Market",
+                ]
+              }
+              orderTypesIndex={
                 Array [
                   "Limit",
                   "Market",

@@ -124,6 +124,7 @@ export interface OrderComponentProps {
      */
     labelSecond?: string;
     orderTypes?: DropdownElem[];
+    orderTypesIndex?: DropdownElem[];
     /**
      *
      */
@@ -212,6 +213,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
             labelFirst,
             labelSecond,
             orderTypes,
+            orderTypesIndex,
             asks,
             bids,
         } = this.props;
@@ -230,6 +232,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         priceLimit={priceLimit}
                         onSubmit={this.props.onSubmit}
                         orderTypes={orderTypes ? orderTypes : defaultOrderTypes}
+                        orderTypesIndex={orderTypesIndex ? orderTypesIndex : defaultOrderTypes}
                         currentMarketAskPrecision={currentMarketAskPrecision}
                         currentMarketBidPrecision={currentMarketBidPrecision}
                         orderTypeText={orderTypeText}
@@ -256,6 +259,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         priceLimit={priceLimit}
                         onSubmit={this.props.onSubmit}
                         orderTypes={orderTypes ? orderTypes : defaultOrderTypes}
+                        orderTypesIndex={orderTypesIndex ? orderTypesIndex : defaultOrderTypes}
                         currentMarketAskPrecision={currentMarketAskPrecision}
                         currentMarketBidPrecision={currentMarketBidPrecision}
                         orderTypeText={orderTypeText}
@@ -292,6 +296,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
             submitBuyButtonText,
             labelFirst,
             orderTypes,
+            orderTypesIndex,
             asks,
         } = this.props;
         return [
@@ -309,6 +314,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         priceLimit={priceLimit}
                         onSubmit={this.props.onSubmit}
                         orderTypes={orderTypes ? orderTypes : defaultOrderTypes}
+                        orderTypesIndex={orderTypesIndex ? orderTypesIndex : defaultOrderTypes}
                         currentMarketAskPrecision={currentMarketAskPrecision}
                         currentMarketBidPrecision={currentMarketBidPrecision}
                         orderTypeText={orderTypeText}
@@ -344,6 +350,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
             submitSellButtonText,
             labelSecond,
             orderTypes,
+            orderTypesIndex,
             bids,
         } = this.props;
         return [
@@ -360,6 +367,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         priceLimit={priceLimit}
                         onSubmit={this.props.onSubmit}
                         orderTypes={orderTypes ? orderTypes : defaultOrderTypes}
+                        orderTypesIndex={orderTypesIndex ? orderTypesIndex : defaultOrderTypes}
                         currentMarketAskPrecision={currentMarketAskPrecision}
                         currentMarketBidPrecision={currentMarketBidPrecision}
                         orderTypeText={orderTypeText}

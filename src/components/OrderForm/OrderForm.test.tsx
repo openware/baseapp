@@ -15,6 +15,7 @@ const defaultOrderTypes: DropdownElem[] = [
 
 const defaultProps = {
     orderTypes: defaultOrderTypes,
+    orderTypesIndex: defaultOrderTypes,
     type: 'buy' as FormType,
     currentMarketAskPrecision: 4,
     currentMarketBidPrecision: 5,
