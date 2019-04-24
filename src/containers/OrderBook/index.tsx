@@ -142,9 +142,9 @@ class OrderBookContainer extends React.Component<Props, State> {
         const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
         return (array.length > 0) ? array.map((item, i) => {
             const [price, volume] = item;
-            const index = array.length - i - 1;
             switch (side) {
-                case 'bids':
+                case 'asks':
+                    total = isLarge ? accumulateVolume(array) : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
                     return [
                         <span key={i}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
                         <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
@@ -158,11 +158,10 @@ class OrderBookContainer extends React.Component<Props, State> {
                             <span key={i}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
                             ];
                     } else {
-                        total = accumulateVolume(array.slice(0).reverse());
                         return [
                             <span key={i}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
                             <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed}>{total[index]}</Decimal>,
+                            <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
                             ];
                     }
             }
