@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { alertReducer  } from './public/alert';
+import { currenciesReducer } from './public/currencies';
 import { changeLanguageReducer  } from './public/i18n';
 import { klineReducer  } from './public/kline';
 import { marketsReducer } from './public/markets';
@@ -26,6 +27,7 @@ import { userActivityReducer  } from './user/userActivity';
 import { walletsReducer  } from './user/wallets';
 
 export const publicReducer = combineReducers({
+    currencies: currenciesReducer,
     recentTrades: recentTradesReducer,
     markets: marketsReducer,
     orderBook: orderBookReducer,

@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
+import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
 import { LanguageState } from './public/i18n';
 import { KlineState, rootKlineFetchSaga } from './public/kline';
 import { MarketsState, rootMarketsSaga } from './public/markets';
@@ -29,6 +30,7 @@ import { rootWalletsSaga, WalletsState } from './user/wallets';
 
 export * from './public/markets';
 export * from './public/orderBook';
+export * from './public/currencies';
 export * from './public/i18n';
 export * from './public/kline';
 export * from './public/alert';
@@ -48,6 +50,7 @@ export * from './user/emailVerification';
 
 export interface RootState {
     public: {
+        currencies: CurrenciesState;
         recentTrades: RecentTradesState;
         markets: MarketsState;
         orderBook: OrderBookState;
@@ -85,6 +88,7 @@ export const rootReducer = combineReducers({
 export function* rootSaga() {
     yield all([
         call(rootAuthSaga),
+        call(rootCurrenciesSaga),
         call(rootMarketsSaga),
         call(rootOrdersSaga),
         call(rootProfileSaga),
