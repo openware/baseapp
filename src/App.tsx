@@ -4,6 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { Router } from 'react-router';
 import { Alerts, ErrorWrapper, Footer, Header } from './containers';
+import { GuardWrapper } from './containers/Guard';
 import { RootState } from './modules';
 import { Layout } from './routes';
 
@@ -28,14 +29,17 @@ class AppLayout extends React.Component<Props, {}, {}> {
         const { lang, messages } = locale;
         return (
             <IntlProvider locale={lang} messages={messages} key={lang}>
-                <Router history={history}>
-                    <ErrorWrapper>
-                        <Header />
-                        <Alerts />
-                        <Layout />
-                        <Footer />
-                    </ErrorWrapper>
-                </Router>
+
+                <GuardWrapper>
+                    <Router history={history}>
+                        <ErrorWrapper>
+                            <Header/>
+                            <Alerts/>
+                            <Layout/>
+                            <Footer/>
+                        </ErrorWrapper>
+                    </Router>
+                </GuardWrapper>
             </IntlProvider>
         );
     }

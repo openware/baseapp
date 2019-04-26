@@ -299,6 +299,10 @@ export const en = {
     'page.body.kyc.head.identity': 'Identity Verification',
     'page.body.kyc.head.document': 'Document Verification',
 
+    'page.body.lock.oops': 'Oops!',
+    'page.body.lock.expired': 'It seems your trial has expired',
+    'page.body.lock.visit': 'Visit',
+
     'page.footer.legalDocuments': 'Legal documents',
     'page.footer.faq': 'FAQ',
 

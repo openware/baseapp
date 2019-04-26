@@ -304,6 +304,10 @@ export const ru: LangType = {
     'page.body.kyc.head.identity': 'Верификация личности',
     'page.body.kyc.head.document': 'Верификация документов',
 
+    'page.body.lock.oops': 'Ой!',
+    'page.body.lock.expired': 'Похоже, что ваш пробный период истек',
+    'page.body.lock.visit': 'Перейти на',
+
     'page.footer.legalDocuments': 'Документы',
     'page.footer.faq': 'Помощь',
 

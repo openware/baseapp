@@ -3,9 +3,9 @@ const webpack = require('webpack');
 
 module.exports = function override(config, env) {
     if (!config.plugins) {
-        config.plugins = [new webpack.DefinePlugin({'process.env.EXPIRATION_TIME': JSON.stringify(process.env.EXPIRATION_TIME)})];
+        config.plugins = [new webpack.DefinePlugin({'process.env.BUILD_EXPIRE': JSON.stringify(process.env.BUILD_EXPIRE)})];
     } else {
-        config.plugins.push(new webpack.DefinePlugin({'process.env.EXPIRATION_TIME': JSON.stringify(process.env.EXPIRATION_TIME)}));
+        config.plugins.push(new webpack.DefinePlugin({'process.env.BUILD_EXPIRE': JSON.stringify(process.env.BUILD_EXPIRE)}));
     }
 
     if (process.env.NODE_ENV === 'production') {

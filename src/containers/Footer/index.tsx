@@ -8,7 +8,7 @@ class FooterComponent extends React.Component {
             return <React.Fragment />;
         }
 
-        const startDate = process.env.EXPIRATION_TIME ? (new Date(+process.env.EXPIRATION_TIME)).getTime() : '';
+        const startDate = process.env.BUILD_EXPIRE ? (new Date(+process.env.BUILD_EXPIRE)).getTime() : '';
         const today = new Date().getTime();
 
         return (
