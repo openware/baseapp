@@ -42,7 +42,7 @@ export const en = {
     'page.body.trade.toolBar.selectMarket': 'Select Market',
     'page.body.trade.toolBar.highest': 'Highest 24h',
     'page.body.trade.toolBar.volume': '24h Volume',
-    'page.body.trade.toolBar.change': 'change',
+    'page.body.trade.toolBar.change': 'Change',
 
     'page.body.trade.header.asks': 'Asks',
     'page.body.trade.header.bids': 'Bids',
