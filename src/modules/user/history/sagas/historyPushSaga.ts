@@ -17,7 +17,7 @@ export function* historyPushSaga(action: HistoryPush) {
             volume,
             funds: `${funds}`,
             market,
-            created_at: localeDate(at, getTimezone(), ''),
+            created_at: localeDate(at, 'fullDate', getTimezone()),
             taker_type: kindToMakerType(kind),
         };
     };

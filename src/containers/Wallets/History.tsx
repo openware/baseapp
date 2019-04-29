@@ -116,7 +116,7 @@ export class WalletTable extends React.Component<Props> {
             return [[this.props.intl.formatMessage({ id: 'page.noDataToShow' }), '', '']];
         }
         return list.sort((a, b) => {
-            return moment(localeDate(a.created_at), 'DD/MM HH:mm') > moment(localeDate(b.created_at), 'DD/MM HH:mm') ? -1 : 1;
+            return moment(localeDate(a.created_at, 'shortDate'), 'DD/MM HH:mm') > moment(localeDate(b.created_at, 'shortDate'), 'DD/MM HH:mm') ? -1 : 1;
         }).map((item, index) => {
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const state = 'state' in item ? this.formatTxState(item.state) : '';

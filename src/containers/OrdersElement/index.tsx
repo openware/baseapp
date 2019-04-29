@@ -138,7 +138,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         const orderType = this.getType(side, ord_type);
         const marketName = currentMarket ? currentMarket.name : market;
         const costRemaining = remaining_volume * price; // price or avg_price ???
-        const date = localeDate(updated_at);
+        const date = localeDate(updated_at, 'shortDate');
         const status = this.setOrderStatus(state);
         const actualPrice = ord_type === 'market' || status === 'done' ? avg_price : price;
 

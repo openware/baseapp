@@ -4,7 +4,7 @@ import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { OpenOrders } from '../../components';
-import { localeFullDate, preciseData, setTradeColor } from '../../helpers';
+import { localeDate, preciseData, setTradeColor } from '../../helpers';
 import {
     Market,
     openOrdersCancelFetch,
@@ -122,7 +122,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
             const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
 
             return [
-                localeFullDate(created_at),
+                localeDate(created_at, 'fullDate'),
                 <span style={{ color: setTradeColor(side).color }} key={id}>{preciseData(price, priceFixed)}</span>,
                 <span style={{ color: setTradeColor(side).color }} key={id}>{preciseData(remainingAmount, amountFixed)}</span>,
                 <span style={{ color: setTradeColor(side).color }} key={id}>{preciseData(total, amountFixed)}</span>,

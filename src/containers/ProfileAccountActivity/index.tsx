@@ -7,7 +7,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeFullDate } from '../../helpers';
+import { localeDate } from '../../helpers';
 import {
     getUserActivity,
     RootState,
@@ -97,7 +97,7 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
     private getActivityData(userData: UserActivityDataInterface[]) {
         return userData.map(item => {
             return [
-                localeFullDate(item.created_at),
+                localeDate(item.created_at, 'fullDate'),
                 this.getResultOfUserAction(item.action),
                 this.renderResult(this.props.intl.formatMessage({ id: `page.body.profile.content.result.${item.result}`})),
                 item.user_ip,

@@ -29,7 +29,7 @@ describe('recentTrade reducer', () => {
             volume: '0.059',
             funds: '0.00059',
             market: 'bchbtc',
-            created_at: '2019-01-14T03:13:08-08:00',
+            created_at: '2019-01-14T11:13:08.000Z',
             taker_type: 'sell',
         },
         {
@@ -38,7 +38,7 @@ describe('recentTrade reducer', () => {
             volume: '0.01',
             funds: '0.0001',
             market: 'bchbtc',
-            created_at: '2019-01-14T03:13:08-08:00',
+            created_at: '2019-01-14T11:13:08.000Z',
             taker_type: 'buy',
         },
     ];

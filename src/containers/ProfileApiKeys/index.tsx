@@ -5,7 +5,7 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
 import { CopyableTextField, CustomInput } from '../../components';
-import { localeFullDate } from '../../helpers/localeFullDate';
+import { localeDate } from '../../helpers/localeDate';
 
 import {
     alertPush,
@@ -171,8 +171,8 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                     </div>
                 )
                 ,
-                localeFullDate(item.created_at),
-                localeFullDate(item.updated_at),
+                localeDate(item.created_at, 'fullDate'),
+                localeDate(item.updated_at, 'fullDate'),
                 (
                     <span
                         className="pg-profile-page__close"

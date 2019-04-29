@@ -150,7 +150,7 @@ class HistoryComponent extends React.Component<Props> {
                 const wallet = wallets.find(obj => obj.currency === currency);
                 return [
                     <div className="pg-history-elem__hide" key={txid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid}</a></div>,
-                    localeDate(created_at),
+                    localeDate(created_at, 'shortDate'),
                     currency && currency.toUpperCase(),
                     wallet && preciseData(amount, wallet.fixed),
                     <span style={{ color: setDepositStatusColor(item.state) }} key={txid}>{state}</span>,
@@ -163,7 +163,7 @@ class HistoryComponent extends React.Component<Props> {
                 const wallet = wallets.find(obj => obj.currency === currency);
                 return [
                     <div className="pg-history-elem__hide" key={txid || rid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid || rid}</a></div>,
-                    localeDate(created_at),
+                    localeDate(created_at, 'shortDate'),
                     uppercase(currency),
                     wallet && preciseData(amount, wallet.fixed),
                     fee,
@@ -177,7 +177,7 @@ class HistoryComponent extends React.Component<Props> {
                 const marketName = marketToDisplay ? marketToDisplay.name : market;
                 const sideText = setTradesType(side).text.toLowerCase() ? this.props.intl.formatMessage({id: `page.body.history.trade.content.side.${setTradesType(side).text.toLowerCase()}`}) : '';
                 return [
-                    localeDate(created_at),
+                    localeDate(created_at, 'shortDate'),
                     <span style={{ color: setTradesType(side).color }} key={id}>{sideText}</span>,
                     marketName,
                     <Decimal key={id} fixed={marketToDisplay.bid_precision}>{price}</Decimal>,

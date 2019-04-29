@@ -1,6 +1,4 @@
 import { defaultStorageLimit } from '../../../api';
-import { localeDate } from '../../../helpers/localeDate';
-import { getTimezone } from '../../../helpers/timezone';
 import { CommonError } from '../../types';
 import { PublicTrade } from '../../user/history';
 import { RecentTradesActions } from './actions';
@@ -26,7 +24,7 @@ const initialState: RecentTradesState = {
 export const convertTradeEventToTrade = (market: string, trade: PublicTradeEvent): PublicTrade => ({
     market,
     id: trade.tid,
-    created_at: localeDate(trade.date, getTimezone(), ''),
+    created_at: new Date(trade.date * 1000).toISOString(),
     taker_type: trade.taker_type,
     price: String(trade.price),
     volume: String(trade.amount),

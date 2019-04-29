@@ -7,7 +7,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeDateSec, setTradeColor } from '../../helpers';
+import { localeDate, setTradeColor } from '../../helpers';
 import {
     Market,
     PublicTrade,
@@ -82,7 +82,7 @@ class RecentTradesComponent extends React.Component<Props> {
             return [
                 <span style={{ color: setTradeColor(taker_type).color }} key={id}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
                 <span style={{ color: setTradeColor(taker_type).color }} key={id}><Decimal fixed={amountFixed}>{volume}</Decimal></span>,
-                <span style={{ color: setTradeColor(taker_type).color }} key={id}>{localeDateSec(created_at).slice(5)}</span>,
+                <span style={{ color: setTradeColor(taker_type).color }} key={id}>{localeDate(created_at, 'time')}</span>,
             ];
         };
         return (trades.length > 0)
