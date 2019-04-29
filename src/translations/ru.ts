@@ -43,7 +43,7 @@ export const ru: LangType = {
     'page.body.trade.toolBar.selectMarket': 'Выберите рынок',
     'page.body.trade.toolBar.highest': 'Наибольший 24h',
     'page.body.trade.toolBar.volume': '24h Объем',
-    'page.body.trade.toolBar.change': 'изменинение',
+    'page.body.trade.toolBar.change': 'Изменинение',
 
     'page.body.trade.header.asks': 'Заявки на продажу',
     'page.body.trade.header.bids': 'Заявки на покупку',
