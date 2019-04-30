@@ -155,7 +155,7 @@ class Trading extends React.Component<Props, StateProps> {
     }
 
     public componentWillUnmount() {
-        this.props.setCurrentPrice('');
+        this.props.setCurrentPrice(undefined);
     }
 
     public componentWillReceiveProps(nextProps) {

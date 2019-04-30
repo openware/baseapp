@@ -11,13 +11,13 @@ import {
 export interface OrdersState extends CommonState {
     executeLoading: boolean;
     executeError?: CommonError;
-    currentPrice: string;
+    currentPrice: number | undefined;
 }
 
 
 const initialState: OrdersState = {
     executeLoading: false,
-    currentPrice: '',
+    currentPrice: undefined,
 };
 
 

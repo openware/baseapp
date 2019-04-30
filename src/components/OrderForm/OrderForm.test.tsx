@@ -22,11 +22,13 @@ const defaultProps = {
     available: 50,
     fee: 1,
     priceMarket: 5,
+    priceLimit: 12,
     price: '',
     from: 'btc',
     to: 'eth',
     onSubmit: spy(),
     proposals: [['10','1']],
+    listenInputPrice: spy(),
 };
 
 const setup = (props: Partial<OrderFormProps> = {}) =>
@@ -377,5 +379,19 @@ describe('OrderForm', () => {
         const estimatedFee = wrapper.find('.cr-order-item__fee').find('.cr-order-item__fee__content').find('.cr-order-item__fee__content__amount').props().children;
 
         expect(estimatedFee).toEqual('0.0440');
+    });
+
+
+    const findInputPrice = (wrapper: ShallowWrapper) => wrapper.find('.cr-order-item').at(1).find('div').last().children().last();
+
+    it('should handle change price when it was set as priceLimit', () => {
+        const wrapper = setup();
+        const inputPrice = findInputPrice(wrapper);
+
+        inputPrice.props().handleChangeValue('1');
+        expect(wrapper.state('price')).toBe('1');
+
+        inputPrice.props().handleChangeValue('123456');
+        expect(wrapper.state('price')).toBe('123456');
     });
 });

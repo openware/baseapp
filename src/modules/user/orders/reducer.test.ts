@@ -23,7 +23,7 @@ describe('Orders reducer', () => {
         };
         expect(ordersReducer(undefined, orderExecuteFetch(orderExecution)))
             .toEqual({
-                currentPrice: '',
+                currentPrice: undefined,
                 executeLoading: true,
                 executeError: undefined,
             });
@@ -31,13 +31,13 @@ describe('Orders reducer', () => {
 
     it('supports orderExecuteData', () => {
         const initialState = {
-            currentPrice: '',
+            currentPrice: undefined,
             executeLoading: false,
         };
 
         expect(ordersReducer(initialState, orderExecuteData()))
             .toEqual({
-                currentPrice: '',
+                currentPrice: undefined,
                 executeLoading: false,
                 executeError: undefined,
             });
@@ -46,7 +46,7 @@ describe('Orders reducer', () => {
     it('supports orderExecuteError', () => {
         expect(ordersReducer(undefined, orderExecuteError(someError)))
             .toEqual({
-                currentPrice: '',
+                currentPrice: undefined,
                 executeLoading: false,
                 executeError: someError,
             });

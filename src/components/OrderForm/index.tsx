@@ -106,6 +106,10 @@ interface OrderFormProps {
      * proposal data for buy or sell [[price, volume]]
      */
     proposals: string[][];
+    /**
+     * start handling change price
+     */
+    listenInputPrice?: () => void;
 }
 
 interface OrderFormState {
@@ -364,6 +368,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                 this.setState(prev => ({
                     priceFocused: !prev.priceFocused,
                 }));
+                this.props.listenInputPrice && this.props.listenInputPrice();
                 break;
             case this.props.amountText:
                 this.setState(prev => ({
@@ -383,6 +388,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                 price: convertedValue,
             });
         }
+        this.props.listenInputPrice && this.props.listenInputPrice();
     };
 
     private handleAmountChange = (value: string) => {

@@ -82,7 +82,7 @@ class MarketsListComponent extends React.Component<Props, State> {
         const { markets } = this.props;
         const marketToSet = markets.find(el => el.name === key);
 
-        this.props.setCurrentPrice('');
+        this.props.setCurrentPrice();
         if (marketToSet) {
             this.props.setCurrentMarket(marketToSet);
             this.props.depthFetch(marketToSet);

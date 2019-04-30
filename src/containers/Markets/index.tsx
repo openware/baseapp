@@ -103,7 +103,7 @@ class MarketsContainer extends React.Component<Props> {
     private handleOnSelect = (index: string) => {
         const { markets, currentMarket } = this.props;
         const marketToSet = markets.find(el => el.name === index);
-        this.props.setCurrentPrice('');
+        this.props.setCurrentPrice();
 
         if (!currentMarket || currentMarket.id !== marketToSet.id) {
             this.props.setCurrentMarket(marketToSet);

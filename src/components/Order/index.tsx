@@ -137,6 +137,10 @@ export interface OrderComponentProps {
      * proposals for sell
      */
     asks: string[][];
+    /**
+     * start handling change price
+     */
+    listenInputPrice?: () => void;
 }
 
 const defaultOrderTypes: DropdownElem[] = [
@@ -216,6 +220,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
             orderTypesIndex,
             asks,
             bids,
+            listenInputPrice,
         } = this.props;
         return [
             {
@@ -242,6 +247,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         availableText={availableText}
                         estimatedFeeText={estimatedFeeText}
                         submitButtonText={submitBuyButtonText}
+                        listenInputPrice={listenInputPrice}
                     />
                 ),
                 label: labelFirst ? labelFirst : 'Buy',
@@ -269,6 +275,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         availableText={availableText}
                         estimatedFeeText={estimatedFeeText}
                         submitButtonText={submitSellButtonText}
+                        listenInputPrice={listenInputPrice}
                     />
                 ),
                 label: labelSecond ? labelSecond : 'Sell',
@@ -298,6 +305,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
             orderTypes,
             orderTypesIndex,
             asks,
+            listenInputPrice,
         } = this.props;
         return [
             {
@@ -324,6 +332,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         availableText={availableText}
                         estimatedFeeText={estimatedFeeText}
                         submitButtonText={submitBuyButtonText}
+                        listenInputPrice={listenInputPrice}
                     />
                 ),
                 label: labelFirst ? labelFirst : 'Buy',
@@ -352,6 +361,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
             orderTypes,
             orderTypesIndex,
             bids,
+            listenInputPrice,
         } = this.props;
         return [
             {
@@ -377,6 +387,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         availableText={availableText}
                         estimatedFeeText={estimatedFeeText}
                         submitButtonText={submitSellButtonText}
+                        listenInputPrice={listenInputPrice}
                     />
                 ),
                 label: labelSecond ? labelSecond : 'Sell',

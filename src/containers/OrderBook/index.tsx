@@ -25,7 +25,7 @@ interface ReduxProps {
     isLoading: boolean;
     asks: string[][];
     currentMarket: Market | undefined;
-    currentPrice: string;
+    currentPrice: number | undefined;
 }
 
 interface DispatchProps {
@@ -170,7 +170,7 @@ class OrderBookContainer extends React.Component<Props, State> {
 
     private handleOnSelectBids = (index: string) => {
         const { currentPrice, bids } = this.props;
-        const priceToSet = bids[Number(index)] ? bids[Number(index)][0] : '';
+        const priceToSet = bids[Number(index)] && Number(bids[Number(index)][0]);
         if (currentPrice !== priceToSet) {
             this.props.setCurrentPrice(priceToSet);
         }
@@ -179,7 +179,7 @@ class OrderBookContainer extends React.Component<Props, State> {
         const { currentPrice, asks } = this.props;
         const isLarge = this.state.width >= breakpoint;
         const asksData = isLarge ? asks : asks.slice(0).reverse();
-        const priceToSet = asksData[Number(index)] ? asksData[Number(index)][0] : '';
+        const priceToSet = asksData[Number(index)] && Number(asksData[Number(index)][0]);
         if (currentPrice !== priceToSet) {
             this.props.setCurrentPrice(priceToSet);
         }

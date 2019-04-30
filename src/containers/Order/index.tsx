@@ -33,12 +33,12 @@ interface ReduxProps {
     bids: string[][];
     asks: string[][];
     wallets: WalletItemProps[];
-    currentPrice: string;
+    currentPrice: number | undefined;
 }
 
 interface StoreProps {
     orderSide: string;
-    priceLimit: number;
+    priceLimit: number | undefined;
     width: number;
 }
 
@@ -56,7 +56,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         this.state = {
             orderSide: 'buy',
-            priceLimit: 0,
+            priceLimit: undefined,
             width: 0,
         };
 
@@ -143,6 +143,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     submitBuyButtonText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' })}
                     submitSellButtonText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' })}
                     width={this.state.width}
+                    listenInputPrice={this.listenInputPrice}
                 />
                 {executeLoading && <Loader />}
             </div>
@@ -154,7 +155,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             return;
         }
         const { type, price, orderType, amount } = value;
-        this.props.setCurrentPrice('');
+        this.props.setCurrentPrice();
         const resultData = {
             market: this.props.currentMarket.id,
             side: type,
@@ -178,6 +179,13 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
     private getAvailableValue(wallet: Wallet | undefined) {
         return wallet ? wallet.balance : 0;
+    }
+
+    private listenInputPrice = () => {
+        this.setState({
+            priceLimit: undefined,
+        });
+        this.props.setCurrentPrice();
     }
 }
 

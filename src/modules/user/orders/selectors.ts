@@ -6,5 +6,5 @@ const selectOrdersState = (state: RootState): RootState['user']['orders'] =>
 export const selectOrderExecuteLoading = (state: RootState): boolean =>
     selectOrdersState(state).executeLoading;
 
-export const selectCurrentPrice = (state: RootState): string =>
+export const selectCurrentPrice = (state: RootState): number | undefined =>
     selectOrdersState(state).currentPrice;

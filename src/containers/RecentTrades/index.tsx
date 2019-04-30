@@ -21,7 +21,7 @@ import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modu
 interface ReduxProps {
     recentTrades: PublicTrade[];
     currentMarket: Market | undefined;
-    currentPrice: string;
+    currentPrice: number | undefined;
 }
 
 interface DispatchProps {
@@ -92,7 +92,7 @@ class RecentTradesComponent extends React.Component<Props> {
 
     private handleOnSelect = (index: string) => {
         const { recentTrades, currentPrice } = this.props;
-        const priceToSet = recentTrades[Number(index)] ? recentTrades[Number(index)].price : '';
+        const priceToSet = recentTrades[Number(index)] && Number(recentTrades[Number(index)].price);
 
         if (currentPrice !== priceToSet) {
             this.props.setCurrentPrice(priceToSet);

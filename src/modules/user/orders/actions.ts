@@ -30,7 +30,7 @@ export interface OrderExecuteError {
 
 export interface SetCurrentPrice {
   type: typeof ORDERS_SET_CURRENT_PRICE;
-  payload: string;
+  payload: number | undefined;
 }
 
 export type OrdersAction =
