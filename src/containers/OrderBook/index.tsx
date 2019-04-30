@@ -64,10 +64,11 @@ class OrderBookContainer extends React.Component<Props, State> {
 
     public render() {
         const { bids, isLoading, asks } = this.props;
+        const isLarge = this.state.width > breakpoint;
         const cn = classNames('pg-combined-order-book ', {
             'cr-combined-order-book--loading': isLoading,
-            'pg-combined-order-book--no-data-asks': !asks.length,
-            'pg-combined-order-book--no-data-bids': !bids.length,
+            'pg-combined-order-book--no-data-first': (!asks.length && !isLarge) || (!bids.length && isLarge),
+            'pg-combined-order-book--no-data-second': (!bids.length && !isLarge) || (!asks.length && isLarge),
         });
 
         return (

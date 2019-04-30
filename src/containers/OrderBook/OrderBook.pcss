@@ -2,22 +2,24 @@
   height: 100%;
   overflow: hidden;
 
-  &--no-data-asks {
+  &--no-data-first {
     .cr-order-book {
-      &:last-child {
+      &:first-child {
         .cr-table {
           &__body {
-            td:first-child {
-              display: none;
-            }
-            td:nth-child(2) {
-              position: absolute;
-              right: 0;
-              left: 0;
-              padding-left: 0 !important;
-              padding-right: 0 !important;
-              text-align: center !important;
-              width: 100% !important;
+            tr {
+              td:first-child {
+                display: none;
+              }
+              td:nth-child(2) {
+                position: absolute;
+                right: 0;
+                left: 0;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                text-align: center !important;
+                width: 100% !important;
+              }
             }
           }
         }
@@ -25,22 +27,24 @@
     }
   }
 
-  &--no-data-bids {
+  &--no-data-second {
     .cr-order-book {
-      &:first-child {
+      &:last-child {
         .cr-table {
           &__body {
-            td:first-child {
-              display: none;
-            }
-            td:nth-child(2) {
-              position: absolute;
-              right: 0;
-              left: 0;
-              padding-left: 0 !important;
-              padding-right: 0 !important;
-              text-align: center !important;
-              width: 100% !important;
+            tr {
+              td:first-child {
+                display: none;
+              }
+              td:nth-child(2) {
+                position: absolute;
+                right: 0;
+                left: 0;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                text-align: center !important;
+                width: 100% !important;
+              }
             }
           }
         }
