@@ -291,7 +291,7 @@ export const ru: LangType = {
     'page.body.kyc.documents.maxNum': 'Максимальное число 5',
     'page.body.kyc.documents.upload': 'Загрузите свое удостоверение личности с фотографией',
     'page.body.kyc.documents.number': ': Номер документа',
-    'page.body.kyc.documentsType': 'Document type',
+    'page.body.kyc.documentsType': 'Тип документа',
 
     'page.body.kyc.documents.select.passport': 'Паспорт',
     'page.body.kyc.documents.select.identityCard': 'Удостоверение личности',
