@@ -14,7 +14,7 @@ import {
     selectUserInfo,
     selectUserLoggedIn,
     User,
-    userFetch,
+    userFetch, walletsFetch,
     walletsReset,
 } from '../../modules';
 import {
@@ -44,6 +44,7 @@ interface DispatchProps {
     logout: typeof logoutFetch;
     userFetch: typeof userFetch;
     walletsReset: typeof walletsReset;
+    walletsFetch: typeof walletsFetch;
 }
 
 interface OwnProps {
@@ -59,6 +60,7 @@ const renderLoader = () => (
 );
 
 const CHECK_INTERVAL = 15000;
+const WALLETS_FETCH_INTERVAL = 3000;
 const STORE_KEY = 'lastAction';
 
 //tslint:disable-next-line no-any
@@ -105,6 +107,7 @@ class LayoutComponent extends React.Component<LayoutProps> {
     ];
 
     public timer;
+    public walletsFetchInterval;
 
     constructor(props: LayoutProps) {
         super(props);
@@ -112,6 +115,9 @@ class LayoutComponent extends React.Component<LayoutProps> {
     }
 
     public componentDidMount() {
+        this.walletsFetchInterval = setInterval(() => {
+            this.props.walletsFetch();
+        }, WALLETS_FETCH_INTERVAL);
         this.props.userFetch();
         this.initInterval();
         this.check();
@@ -131,6 +137,7 @@ class LayoutComponent extends React.Component<LayoutProps> {
             document.body.removeEventListener(type, this.reset);
         }
         clearInterval(this.timer);
+        clearInterval(this.walletsFetchInterval);
     }
 
     public render() {
@@ -208,6 +215,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     logout: () => dispatch(logoutFetch()),
     userFetch: () => dispatch(userFetch()),
     walletsReset: () => dispatch(walletsReset()),
+    walletsFetch: () => dispatch(walletsFetch()),
 });
 
 // tslint:disable-next-line no-any

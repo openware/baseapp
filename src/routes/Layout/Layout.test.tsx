@@ -17,6 +17,7 @@ const defaults: LayoutProps = {
     logout: jest.fn(),
     userFetch: jest.fn(),
     walletsReset: jest.fn(),
+    walletsFetch: jest.fn(),
     history: createBrowserHistory(),
 };
 
