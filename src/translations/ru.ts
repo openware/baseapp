@@ -354,6 +354,7 @@ export const ru: LangType = {
 
     // success messages
     'success.documents.accepted': 'Ваши документы успешно приняты',
+    'success.identity.accepted': 'Данные профиля успешно приняты',
     'success.withdraw.action': 'Вывод успешен',
     'success.otp.enabled': '2FA успешно активирован',
     'success.password.changed': 'Пароль изменен',

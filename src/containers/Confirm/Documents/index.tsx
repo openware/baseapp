@@ -18,7 +18,7 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import close = require('../../../assets/images/close.svg');
 import { isDateInFuture } from '../../../helpers/checkDate';
-import { RootState } from '../../../modules';
+import { alertPush, RootState } from '../../../modules';
 import {
     selectSendDocumentsLoading,
     selectSendDocumentsSuccess,
@@ -32,6 +32,7 @@ interface ReduxProps {
 
 interface DispatchProps {
     sendDocuments: typeof sendDocuments;
+    fetchAlert: typeof alertPush;
 }
 
 interface OnChangeEvent {
@@ -278,11 +279,13 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     private handleUploadScan = uploadEvent => {
         const allFiles: File[] = uploadEvent.target.files;
         const oldFileList = Array.from(this.state.scans);
-        const additionalFileList = Array.from(allFiles).length > 5 ?  Array.from(allFiles).slice(0,5) : Array.from(allFiles);
-        if (oldFileList.length !== 5) {
-            this.setState({
-                scans: additionalFileList.concat(oldFileList),
-            });
+        const documentsCount = 5;
+        const additionalFileList = Array.from(allFiles).length > documentsCount ?  Array.from(allFiles).slice(0,documentsCount) : Array.from(allFiles);
+        if (oldFileList.length + additionalFileList.length <= documentsCount) {
+            this.setState({ scans: additionalFileList.concat(oldFileList) });
+        } else {
+            this.setState({ scans: additionalFileList.concat(oldFileList).slice(0,documentsCount) });
+            this.props.fetchAlert({ message: ['resource.documents.limit_reached'], type: 'error'});
         }
     }
     private handleFileDrop = event => {
@@ -353,6 +356,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
+        fetchAlert: payload => dispatch(alertPush(payload)),
         sendDocuments: payload => dispatch(sendDocuments(payload)),
     });
 

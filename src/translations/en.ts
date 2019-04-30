@@ -348,6 +348,7 @@ export const en = {
 
     // success messages
     'success.documents.accepted': 'Documents upload was successful',
+    'success.identity.accepted': 'Identity upload was successful',
     'success.withdraw.action': 'Withdrawal request was received',
     'success.otp.enabled': '2FA was enabled',
     'success.password.changed': 'Password was changed',
