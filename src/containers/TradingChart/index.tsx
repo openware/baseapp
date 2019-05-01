@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import {
-    AvailableSaveloadVersions,
     IChartingLibraryWidget,
     LanguageCode,
     ThemeName,
@@ -42,8 +41,6 @@ export class TradingChartComponent extends React.PureComponent<Props> {
         interval: '15',
         containerId: 'tv_chart_container',
         libraryPath: '/charting_library/',
-        chartsStorageUrl: 'https://saveload.tradingview.com',
-        chartsStorageApiVersion: '1.1' as AvailableSaveloadVersions,
         clientId: 'tradingview.com',
         userId: 'public_user_id',
         fullscreen: false,
@@ -113,8 +110,6 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             locale: this.props.lang as LanguageCode,
             disabled_features: ['use_localstorage_for_settings', 'header_symbol_search'],
             enabled_features: ['show_animated_logo'],
-            charts_storage_url: this.params.chartsStorageUrl,
-            charts_storage_api_version: this.params.chartsStorageApiVersion,
             client_id: this.params.clientId,
             user_id: this.params.userId,
             fullscreen: this.params.fullscreen,
