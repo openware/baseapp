@@ -52,7 +52,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
         },
         resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) => {
             // expects a symbolInfo object in response
-            const symbol = markets.find(m => m.id === symbolName);
+            const symbol = markets.find(m => m.id === symbolName || m.name === symbolName);
             if (!symbol) {
                 return setTimeout(() => onResolveErrorCallback('Symbol not found'), 0);
             }
@@ -64,7 +64,6 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
                 session: '24x7',
                 timezone: 'Etc/UTC',
                 ticker: symbol.id,
-                exchange: 'Cryptobase',
                 minmov: 1,
                 pricescale: 10000,
                 has_intraday: true,
