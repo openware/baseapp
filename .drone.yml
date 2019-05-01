@@ -2,6 +2,9 @@
 kind: pipeline
 name: "Push"
 
+concurrency:
+  limit: 2
+
 steps:
   - name: "Test & Build"
     image: node:10.11
@@ -69,6 +72,9 @@ trigger:
 ---
 kind: pipeline
 name: "New version"
+
+concurrency:
+  limit: 2
 
 steps:
   - name: "Test"
