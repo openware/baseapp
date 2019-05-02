@@ -6,6 +6,7 @@ import {
     ThemeName,
     widget,
 } from '../../charting_library/charting_library.min';
+import { stdTimezoneOffset } from '../../helpers';
 import {
     KlineState,
     Market,
@@ -18,6 +19,7 @@ import {
 } from '../../modules';
 import { rangerSubscribeKlineMarket, rangerUnsubscribeKlineMarket } from '../../modules/public/ranger';
 import { CurrentKlineSubscription, dataFeedObject, print } from './api';
+import { getTradingChartTimezone } from './timezones';
 
 interface ReduxProps {
     markets: Market[];
@@ -98,7 +100,8 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
     private setChart = (markets: Market[], currentMarket: Market) => {
         this.datafeed = dataFeedObject(this, markets);
-
+        const currentTimeOffset = new Date().getTimezoneOffset();
+        const clockPeriod = currentTimeOffset === stdTimezoneOffset(new Date()) ? 'STD' : 'DST';
         const widgetOptions = {
             debug: false,
             symbol: currentMarket.id,
@@ -137,6 +140,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             loading_screen: {
                 backgroundColor: '#1E2841',
             },
+            timezone: getTradingChartTimezone(currentTimeOffset, clockPeriod),
             popup_width: '000',
             // hide_top_toolbar: true,
             enable_publishing: false,
