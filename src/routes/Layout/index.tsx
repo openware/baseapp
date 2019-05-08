@@ -115,9 +115,6 @@ class LayoutComponent extends React.Component<LayoutProps> {
     }
 
     public componentDidMount() {
-        this.walletsFetchInterval = setInterval(() => {
-            this.props.walletsFetch();
-        }, WALLETS_FETCH_INTERVAL);
         this.props.userFetch();
         this.initInterval();
         this.check();
@@ -125,6 +122,13 @@ class LayoutComponent extends React.Component<LayoutProps> {
 
     public componentDidUpdate(next: LayoutProps) {
         const { isLoggedIn, history } = this.props;
+
+        if (!this.walletsFetchInterval && isLoggedIn) {
+            this.walletsFetchInterval = setInterval(() => {
+                this.props.walletsFetch();
+            }, WALLETS_FETCH_INTERVAL);
+        }
+
         if (!isLoggedIn && next.isLoggedIn) {
             this.props.walletsReset();
             if (!history.location.pathname.includes('/trading')) {
