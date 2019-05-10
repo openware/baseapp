@@ -13,6 +13,17 @@ describe('Profile reducer', () => {
             state: 'active',
         },
     };
+
+    const profileIdentity = {
+        first_name: '',
+        last_name: '',
+        dob: '',
+        address: '',
+        postcode: '',
+        city: '',
+        country: '',
+    };
+
     const error = {
         code: 401,
         message: ['Invalid Session'],
@@ -52,6 +63,38 @@ describe('Profile reducer', () => {
             userData: { ...initialStateProfile.userData, isFetching: false, error },
         };
         expect(profileReducer(actualState, actions.userError(error))).toEqual(expectedState);
+    });
+
+    it('should handle GET_IDENTITY_FETCH', () => {
+        const expectedState = {
+            ...initialStateProfile,
+            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: true },
+        };
+        expect(profileReducer(initialStateProfile, actions.profileIdentityFetch())).toEqual(expectedState);
+    });
+
+    it('should handle GET_IDENTITY_DATA', () => {
+        const actualState = {
+            ...initialStateProfile,
+            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: true },
+        };
+        const expectedState = {
+            ...initialStateProfile,
+            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: false, profileIdentity: profileIdentity },
+        };
+        expect(profileReducer(actualState, actions.profileIdentityData(profileIdentity))).toEqual(expectedState);
+    });
+
+    it('should handle GET_IDENTITY_ERROR', () => {
+        const actualState = {
+            ...initialStateProfile,
+            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: true },
+        };
+        const expectedState = {
+            ...initialStateProfile,
+            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: false, error },
+        };
+        expect(profileReducer(actualState, actions.profileIdentityError(error))).toEqual(expectedState);
     });
 
     it('should handle RESET_USER', () => {

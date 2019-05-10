@@ -26,3 +26,7 @@ export const PROFILE_TEST_STATE = 'profile/TEST_PROFILE_STATE';
 export const PROFILE_CHANGE_USER_LEVEL = 'profile/CHANGE_USER_LEVEL';
 
 export const PROFILE_ENABLE_USER_2FA = 'profile/ENABLE_USER_2FA';
+
+export const PROFILE_IDENTITY_FETCH = 'profile/GET_IDENTITY_FETCH';
+export const PROFILE_IDENTITY_DATA = 'profile/GET_IDENTITY_DATA';
+export const PROFILE_IDENTITY_ERROR = 'profile/GET_IDENTITY_ERROR';

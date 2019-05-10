@@ -1,5 +1,5 @@
 import { CommonError } from '../../types';
-import { ProfileAction, Tier, User } from './actions';
+import { ProfileAction, ProfileIdentity, Tier, User } from './actions';
 import {
     PROFILE_CHANGE_PASSWORD_DATA,
     PROFILE_CHANGE_PASSWORD_ERROR,
@@ -9,6 +9,9 @@ import {
     PROFILE_GENERATE_2FA_QRCODE_DATA,
     PROFILE_GENERATE_2FA_QRCODE_ERROR,
     PROFILE_GENERATE_2FA_QRCODE_FETCH,
+    PROFILE_IDENTITY_DATA,
+    PROFILE_IDENTITY_ERROR,
+    PROFILE_IDENTITY_FETCH,
     PROFILE_RESET_USER,
     PROFILE_TIERS_DATA,
     PROFILE_TIERS_DISABLE,
@@ -43,6 +46,11 @@ export interface ProfileState {
         error?: CommonError;
         isFetching: boolean;
     };
+    profileIdentity: {
+        profileIdentity: ProfileIdentity;
+        error?: CommonError;
+        isFetching: boolean;
+    };
 }
 
 const defaultTier = {
@@ -61,6 +69,16 @@ const defaultUser = {
     uid: '',
 };
 
+const defaultProfileIdentity = {
+    first_name: '',
+    last_name: '',
+    dob: '',
+    address: '',
+    postcode: '',
+    city: '',
+    country: '',
+};
+
 export const initialStateProfile: ProfileState = {
     passwordChange: {
         success: false,
@@ -75,6 +93,10 @@ export const initialStateProfile: ProfileState = {
     },
     userData: {
         user: defaultUser,
+        isFetching: true,
+    },
+    profileIdentity: {
+        profileIdentity: defaultProfileIdentity,
         isFetching: true,
     },
 };
@@ -228,6 +250,30 @@ export const userReducer = (state: ProfileState['userData'], action: ProfileActi
     }
 };
 
+export const profileIdentityReducer = (state: ProfileState['profileIdentity'], action: ProfileAction) => {
+    switch (action.type) {
+        case PROFILE_IDENTITY_FETCH:
+            return {
+                ...state,
+                isFetching: true,
+            };
+        case PROFILE_IDENTITY_DATA:
+            return {
+                ...state,
+                isFetching: false,
+                profileIdentity: action.payload,
+            };
+        case PROFILE_IDENTITY_ERROR:
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload,
+            };
+        default:
+            return state;
+    }
+};
+
 export const profileReducer = (state = initialStateProfile, action: ProfileAction) => {
     switch (action.type) {
         case PROFILE_CHANGE_PASSWORD_FETCH:
@@ -271,6 +317,15 @@ export const profileReducer = (state = initialStateProfile, action: ProfileActio
             return {
                 ...state,
                 userData: userReducer(userState, action),
+            };
+
+        case PROFILE_IDENTITY_FETCH:
+        case PROFILE_IDENTITY_DATA:
+        case PROFILE_IDENTITY_ERROR:
+            const profileIdentityState = { ...state.profileIdentity };
+            return {
+                ...state,
+                profileIdentity: profileIdentityReducer(profileIdentityState, action),
             };
         default:
             return state;

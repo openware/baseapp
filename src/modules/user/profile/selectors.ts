@@ -1,5 +1,5 @@
 import { RootState } from '../..';
-import { Tier, User } from './actions';
+import { ProfileIdentity, Tier, User } from './actions';
 
 export const selectChangePasswordSuccess = (state: RootState): boolean | undefined =>
     state.user.profile.passwordChange.success;
@@ -26,6 +26,9 @@ export const selectUserLoggedIn = (state: RootState): boolean => {
 
 export const selectUserInfo = (state: RootState): User =>
     state.user.profile.userData.user;
+
+export const selectProfileIdentityInfo = (state: RootState): ProfileIdentity =>
+    state.user.profile.profileIdentity.profileIdentity;
 
 export const selectUserFetching = (state: RootState): boolean =>
     state.user.profile.userData.isFetching;

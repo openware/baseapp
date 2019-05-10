@@ -49,6 +49,32 @@ describe('Profile actions', () => {
         });
     });
 
+    describe('profileIdentity actions', () => {
+        it('should check profileIdentityFetch action creator', () => {
+            const expectedAction = { type: 'profile/GET_IDENTITY_FETCH' };
+            expect(actions.profileIdentityFetch()).toEqual(expectedAction);
+        });
+
+        it('should check profileIdentityData action creator', () => {
+            const payload = {
+                first_name: 'qwq',
+                last_name: 'qw',
+                dob: 'qwqw',
+                address: 'qwq',
+                postcode: 'qw',
+                city: 'qwqwq',
+                country: 'qwq',
+            };
+            const expectedAction = { type: 'profile/GET_IDENTITY_DATA', payload };
+            expect(actions.profileIdentityData(payload)).toEqual(expectedAction);
+        });
+
+        it('should check profileIdentityError action creator', () => {
+            const expectedAction = { type: 'profile/GET_IDENTITY_ERROR', payload: error };
+            expect(actions.profileIdentityError(error)).toEqual(expectedAction);
+        });
+    });
+
     describe('Change password actions', () => {
         it('should check changePasswordFetch action creator', () => {
             const payload = {

@@ -8,6 +8,9 @@ import {
     PROFILE_GENERATE_2FA_QRCODE_DATA,
     PROFILE_GENERATE_2FA_QRCODE_ERROR,
     PROFILE_GENERATE_2FA_QRCODE_FETCH,
+    PROFILE_IDENTITY_DATA,
+    PROFILE_IDENTITY_ERROR,
+    PROFILE_IDENTITY_FETCH,
     PROFILE_RESET_USER,
     PROFILE_TEST_STATE,
     PROFILE_TIERS_DATA,
@@ -36,6 +39,16 @@ export interface User {
     role: string;
     state: string;
     uid: string;
+}
+
+export interface ProfileIdentity {
+  first_name: string;
+  last_name: string;
+  dob: string;
+  address: string;
+  postcode: string;
+  city: string;
+  country: string;
 }
 
 export interface ChangePasswordFetch {
@@ -143,6 +156,20 @@ export interface ChangeUserLevel {
     };
 }
 
+export interface ProfileIdentityFetch {
+    type: typeof PROFILE_IDENTITY_FETCH;
+}
+
+export interface ProfileIdentityInfo {
+    type: typeof PROFILE_IDENTITY_DATA;
+    payload: ProfileIdentity;
+}
+
+export interface ProfileIdentityError {
+    type: typeof PROFILE_IDENTITY_ERROR;
+    payload: CommonError;
+}
+
 export interface EnableUser2fa {
     type: typeof PROFILE_ENABLE_USER_2FA;
 }
@@ -167,7 +194,10 @@ export type ProfileAction =
     | UserReset
     | TestProfileState
     | ChangeUserLevel
-    | EnableUser2fa;
+    | EnableUser2fa
+    | ProfileIdentityFetch
+    | ProfileIdentityInfo
+    | ProfileIdentityError;
 
 export const changePasswordFetch = (payload: ChangePasswordFetch['payload']): ChangePasswordFetch => ({
     type: PROFILE_CHANGE_PASSWORD_FETCH,
@@ -257,3 +287,17 @@ export const changeUserLevel =
 export const enableUser2fa = (): EnableUser2fa => ({
         type: PROFILE_ENABLE_USER_2FA,
     });
+
+export const profileIdentityFetch = (): ProfileIdentityFetch => ({
+    type: PROFILE_IDENTITY_FETCH,
+});
+
+export const profileIdentityData = (payload: ProfileIdentityInfo['payload']): ProfileIdentityInfo => ({
+    type: PROFILE_IDENTITY_DATA,
+    payload,
+});
+
+export const profileIdentityError = (payload: ProfileIdentityError['payload']): ProfileIdentityError => ({
+    type: PROFILE_IDENTITY_ERROR,
+    payload,
+});
