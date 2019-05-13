@@ -1,5 +1,4 @@
 import { Decimal, Pagination } from '@openware/components';
-import * as moment from 'moment';
 import * as React from 'react';
 import {
     InjectedIntlProps,
@@ -116,12 +115,12 @@ export class WalletTable extends React.Component<Props> {
             return [[this.props.intl.formatMessage({ id: 'page.noDataToShow' }), '', '']];
         }
         return list.sort((a, b) => {
-            return moment(localeDate(a.created_at, 'shortDate'), 'DD/MM HH:mm') > moment(localeDate(b.created_at, 'shortDate'), 'DD/MM HH:mm') ? -1 : 1;
+            return localeDate(a.created_at, 'fullDate') > localeDate(b.created_at, 'fullDate') ? -1 : 1;
         }).map((item, index) => {
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const state = 'state' in item ? this.formatTxState(item.state) : '';
             return [
-                moment(item.created_at).format('DD-MM YYYY'),
+                localeDate(item.created_at, 'fullDate'),
                 state,
                 <Decimal key={index} fixed={fixed}>{amount}</Decimal>,
             ];
