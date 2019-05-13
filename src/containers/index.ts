@@ -25,3 +25,4 @@ export * from './ToolBar';
 export * from './Confirm/Documents';
 export * from './Confirm/Phone';
 export * from './Confirm/Identity';
+export * from './WalletsFetch';

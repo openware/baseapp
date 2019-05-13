@@ -5,6 +5,7 @@ import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { minutesUntilAutoLogout } from '../../api';
+import { WalletsFetch } from '../../containers';
 import {
     logoutFetch,
     Market,
@@ -14,7 +15,7 @@ import {
     selectUserInfo,
     selectUserLoggedIn,
     User,
-    userFetch, walletsFetch,
+    userFetch,
     walletsReset,
 } from '../../modules';
 import {
@@ -44,7 +45,6 @@ interface DispatchProps {
     logout: typeof logoutFetch;
     userFetch: typeof userFetch;
     walletsReset: typeof walletsReset;
-    walletsFetch: typeof walletsFetch;
 }
 
 interface OwnProps {
@@ -60,7 +60,6 @@ const renderLoader = () => (
 );
 
 const CHECK_INTERVAL = 15000;
-const WALLETS_FETCH_INTERVAL = 3000;
 const STORE_KEY = 'lastAction';
 
 //tslint:disable-next-line no-any
@@ -123,12 +122,6 @@ class LayoutComponent extends React.Component<LayoutProps> {
     public componentDidUpdate(next: LayoutProps) {
         const { isLoggedIn, history } = this.props;
 
-        if (!this.walletsFetchInterval && isLoggedIn) {
-            this.walletsFetchInterval = setInterval(() => {
-                this.props.walletsFetch();
-            }, WALLETS_FETCH_INTERVAL);
-        }
-
         if (!isLoggedIn && next.isLoggedIn) {
             this.props.walletsReset();
             if (!history.location.pathname.includes('/trading')) {
@@ -164,6 +157,7 @@ class LayoutComponent extends React.Component<LayoutProps> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
+                {isLoggedIn && <WalletsFetch/>}
             </div>
         );
     }
@@ -219,7 +213,6 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     logout: () => dispatch(logoutFetch()),
     userFetch: () => dispatch(userFetch()),
     walletsReset: () => dispatch(walletsReset()),
-    walletsFetch: () => dispatch(walletsFetch()),
 });
 
 // tslint:disable-next-line no-any
