@@ -46,7 +46,7 @@ export interface ProfileState {
         error?: CommonError;
         isFetching: boolean;
     };
-    profileIdentity: {
+    identity: {
         profileIdentity: ProfileIdentity;
         error?: CommonError;
         isFetching: boolean;
@@ -95,7 +95,7 @@ export const initialStateProfile: ProfileState = {
         user: defaultUser,
         isFetching: true,
     },
-    profileIdentity: {
+    identity: {
         profileIdentity: defaultProfileIdentity,
         isFetching: true,
     },
@@ -250,7 +250,7 @@ export const userReducer = (state: ProfileState['userData'], action: ProfileActi
     }
 };
 
-export const profileIdentityReducer = (state: ProfileState['profileIdentity'], action: ProfileAction) => {
+export const profileIdentityReducer = (state: ProfileState['identity'], action: ProfileAction) => {
     switch (action.type) {
         case PROFILE_IDENTITY_FETCH:
             return {
@@ -261,7 +261,7 @@ export const profileIdentityReducer = (state: ProfileState['profileIdentity'], a
             return {
                 ...state,
                 isFetching: false,
-                profileIdentity: action.payload,
+                identity: action.payload,
             };
         case PROFILE_IDENTITY_ERROR:
             return {
@@ -322,10 +322,10 @@ export const profileReducer = (state = initialStateProfile, action: ProfileActio
         case PROFILE_IDENTITY_FETCH:
         case PROFILE_IDENTITY_DATA:
         case PROFILE_IDENTITY_ERROR:
-            const profileIdentityState = { ...state.profileIdentity };
+            const profileIdentityState = { ...state.identity };
             return {
                 ...state,
-                profileIdentity: profileIdentityReducer(profileIdentityState, action),
+                identity: profileIdentityReducer(profileIdentityState, action),
             };
         default:
             return state;

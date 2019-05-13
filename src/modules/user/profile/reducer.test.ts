@@ -68,7 +68,7 @@ describe('Profile reducer', () => {
     it('should handle GET_IDENTITY_FETCH', () => {
         const expectedState = {
             ...initialStateProfile,
-            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: true },
+            identity: { ...initialStateProfile.identity, isFetching: true },
         };
         expect(profileReducer(initialStateProfile, actions.profileIdentityFetch())).toEqual(expectedState);
     });
@@ -76,11 +76,11 @@ describe('Profile reducer', () => {
     it('should handle GET_IDENTITY_DATA', () => {
         const actualState = {
             ...initialStateProfile,
-            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: true },
+            identity: { ...initialStateProfile.identity, isFetching: true },
         };
         const expectedState = {
             ...initialStateProfile,
-            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: false, profileIdentity: profileIdentity },
+            identity: { ...initialStateProfile.identity, isFetching: false, identity: profileIdentity },
         };
         expect(profileReducer(actualState, actions.profileIdentityData(profileIdentity))).toEqual(expectedState);
     });
@@ -88,11 +88,11 @@ describe('Profile reducer', () => {
     it('should handle GET_IDENTITY_ERROR', () => {
         const actualState = {
             ...initialStateProfile,
-            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: true },
+            identity: { ...initialStateProfile.identity, isFetching: true },
         };
         const expectedState = {
             ...initialStateProfile,
-            profileIdentity: { ...initialStateProfile.profileIdentity, isFetching: false, error },
+            identity: { ...initialStateProfile.identity, isFetching: false, error },
         };
         expect(profileReducer(actualState, actions.profileIdentityError(error))).toEqual(expectedState);
     });

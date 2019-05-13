@@ -28,7 +28,7 @@ export const selectUserInfo = (state: RootState): User =>
     state.user.profile.userData.user;
 
 export const selectProfileIdentityInfo = (state: RootState): ProfileIdentity =>
-    state.user.profile.profileIdentity.profileIdentity;
+    state.user.profile.identity.profileIdentity;
 
 export const selectUserFetching = (state: RootState): boolean =>
     state.user.profile.userData.isFetching;
