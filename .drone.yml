@@ -68,6 +68,7 @@ trigger:
   branch:
     exclude:
     - master
+    - obfuscated-*
 
 ---
 kind: pipeline
@@ -159,5 +160,63 @@ steps:
 trigger:
   branch:
   - master
+  event:
+  - push
+
+---
+kind: pipeline
+name: "Obfuscated build"
+
+concurrency:
+  limit: 2
+
+steps:
+  - name: "Build & obfuscate"
+    image: node:10.11
+    commands:
+      - export BUILD_DOMAIN=$(cat .obfuscated-domain)
+      - export BUILD_EXPIRE=$(cat .obfuscated-expire)
+      - echo "//registry.npmjs.org/:_authToken=199fa5c9-8c7c-4cc2-b4c4-78524fdcab41" > .npmrc
+      - export REACT_APP_GIT_SHA=$(git rev-parse --short HEAD)
+      - echo $BUILD_DOMAIN | base64 -w0 | cut -c -6 > .tags
+      - echo $BUILD_DOMAIN && echo $BUILD_EXPIRE
+      - npm -g install yarn
+      - yarn install
+      - yarn build
+
+  - name: "Build container"
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: obfuscated_registry_username
+      password:
+        from_secret: obfuscated_registry_password
+      repo:
+        from_secret: obfuscated_registry_url
+      registry:
+        from_secret: obfuscated_registry
+
+  - name: Notify by email
+    image: namshi/smtp
+    environment:
+      SMARTHOST_ADDRESS: smtp.sendgrid.net
+      SMARTHOST_PORT: 2525
+      SMARTHOST_USER:
+        from_secret: sendgrid_username
+      SMARTHOST_PASSWORD:
+        from_secret: sendgrid_password
+      SMARTHOST_ALIASES: "*.sendgrid.net"
+    commands:
+      - /bin/entrypoint.sh
+      - tag=$(cat .tags)
+      - recipient=$(cat .obfuscated-email)
+      - domain=$(cat .obfuscated-domain)
+      - echo $image $recipient
+      - echo You can pull your image for $domain from quay.io/openware/baseapp-trial:$tag | mailx -r trial@openware.com -s "Baseapp Trial Image" $recipient
+      - sleep 5 # Wait for the email to be sent from the queue
+
+trigger:
+  branch:
+  - obfuscated-*
   event:
   - push
