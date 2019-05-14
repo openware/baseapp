@@ -27,6 +27,7 @@ import { PasswordState, rootPasswordSaga } from './user/password';
 import { ProfileState, rootProfileSaga } from './user/profile';
 import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
+import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
 
 export * from './public/markets';
 export * from './public/orderBook';
@@ -47,6 +48,7 @@ export * from './user/history';
 export * from './user/newHistory';
 export * from './user/kyc';
 export * from './user/emailVerification';
+export * from './user/withdrawLimit';
 
 export interface RootState {
     public: {
@@ -77,6 +79,7 @@ export interface RootState {
         ordersHistory: OrdersHistoryState;
         openOrders: OpenOrdersState;
         sendEmailVerification: EmailVerificationState;
+        withdrawLimit: WithdrawLimitState;
     };
 }
 
@@ -109,5 +112,6 @@ export function* rootSaga() {
         call(rootOpenOrdersSaga),
         call(rootEmailVerificationSaga),
         call(rootKlineFetchSaga),
+        call(rootWithdrawLimitSaga),
     ]);
 }

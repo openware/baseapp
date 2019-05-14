@@ -25,6 +25,7 @@ import { passwordReducer  } from './user/password';
 import { profileReducer  } from './user/profile';
 import { userActivityReducer  } from './user/userActivity';
 import { walletsReducer  } from './user/wallets';
+import { withdrawLimitReducer  } from './user/withdrawLimit';
 
 export const publicReducer = combineReducers({
     currencies: currenciesReducer,
@@ -55,4 +56,5 @@ export const userReducer = combineReducers({
     ordersHistory: ordersHistoryReducer,
     openOrders: openOrdersReducer,
     sendEmailVerification: sendEmailVerificationReducer,
+    withdrawLimit: withdrawLimitReducer,
 });
