@@ -8,11 +8,14 @@ import {
 } from './constants';
 import { PrivateTradeEvent, WalletHistoryList } from './types';
 
-interface HistoryFetchPayload {
+export interface HistoryFetchPayload {
     currency?: string;
     page: number;
     type: string;
     limit: number;
+    market?: string;
+    time_from?: string;
+    time_to?: string;
 }
 
 interface HistorySuccessPayload {

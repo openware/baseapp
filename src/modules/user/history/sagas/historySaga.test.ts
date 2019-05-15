@@ -57,7 +57,7 @@ describe('CurrencyHistory', () => {
     const fakeFetchPayloadFirstPage = { page: 0, currency: 'btc', type: 'deposits', limit: 6 };
 
     const mockHistory = () => {
-        mockAxios.onGet(`/account/deposits?limit=6&page=1&currency=btc`).reply(200, fakeHistory, fakeHeaders);
+        mockAxios.onGet(`/account/deposits?page=1&currency=btc&limit=6`).reply(200, fakeHistory, fakeHeaders);
     };
 
     const expectedActionsFetchWithFirstPage = [

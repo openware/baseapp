@@ -317,6 +317,21 @@ describe('Helpers', () => {
         expect(helpers.timeTo12HFormat('08:08:36')).toBe('8:08 AM');
     });
 
+    // getHistorySagaParam.ts
+    it('Should return correct params', () => {
+        expect(helpers.getHistorySagaParam({ page: 0, limit: 25, type: 'deposits' })).toBe('page=1&limit=25');
+        expect(helpers.getHistorySagaParam({ page: 0, limit: 10, type: 'withdraws' })).toBe('page=1&limit=10');
+        expect(helpers.getHistorySagaParam({ page: 0, limit: 5, type: 'trades' })).toBe('page=1&limit=5');
+        expect(helpers.getHistorySagaParam({ page: 0, currency: 'btc', type: 'deposits', limit: 6 })).toBe('page=1&currency=btc&limit=6');
+        expect(helpers.getHistorySagaParam({ page: 0, currency: 'btc', type: 'withdraws', limit: 25 })).toBe('page=1&currency=btc&limit=25');
+        expect(helpers.getHistorySagaParam({ page: 0, limit: 25, type: 'trades', market: 'btcusd' })).toBe('page=1&limit=25&market=btcusd');
+        expect(helpers.getHistorySagaParam({ page: 0, limit: 25, type: 'trades', time_from: '1557878400' })).toBe('page=1&limit=25&time_from=1557878400');
+        expect(helpers.getHistorySagaParam({ page: 0, limit: 25, type: 'trades', time_from: '1557878400', time_to: '1557964799' })).toBe('page=1&limit=25&time_from=1557878400&time_to=1557964799');
+        expect(helpers.getHistorySagaParam({ page: 0, limit: 25, type: 'trades', market: 'btcusd', time_from: '1557878400', time_to: '1557964799' })).toBe('page=1&limit=25&market=btcusd&time_from=1557878400&time_to=1557964799');
+        expect(helpers.getHistorySagaParam({ page: 0, limit: 25, type: 'trades', time_from: '1557878400', time_to: '1557964799' })).toBe('page=1&limit=25&time_from=1557878400&time_to=1557964799');
+
+    });
+
     // checkDate.ts
     describe('monthNameToNumber', () => {
         it('return month number from name', () => {

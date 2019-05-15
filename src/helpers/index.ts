@@ -18,3 +18,4 @@ export * from './setDocumentTitle';
 export * from './getTotalPrice';
 export * from './capitalize';
 export * from './timeConvert';
+export * from './getHistorySagaParam';
