@@ -115,7 +115,7 @@ steps:
     commands:
       - mkdir -p ~/.ssh
       - echo $GITOLITE_KEY | base64 -d > ~/.ssh/id_rsa
-      - git remote add gitolite git@git.openware.com
+      - git remote add gitolite git@git.openware.com:baseapp
       - git push -f --no-verify gitolite HEAD:master
 
   - name: "Build"
