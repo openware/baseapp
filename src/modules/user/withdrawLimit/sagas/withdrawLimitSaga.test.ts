@@ -30,12 +30,12 @@ describe('Module: WithdrawLimit', () => {
         message: ['Server error'],
     };
 
-    const fakeData = [{
+    const fakeData = {
         limit: 3,
         period: 48,
-        withdrawed_amount: 0.3,
-        limit_currency: 'btc',
-    }];
+        withdrawal_amount: 0.3,
+        currency: 'btc',
+    };
 
     const mockWithdrawLimit = () => {
         mockAxios.onGet('/private/withdraws').reply(200, fakeData);

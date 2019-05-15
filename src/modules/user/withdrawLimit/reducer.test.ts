@@ -6,14 +6,12 @@ import {
 import { WithdrawLimit } from './types';
 
 describe('withdrawLimitList reducer', () => {
-    const withdrawLimit: WithdrawLimit[] = [
-        {
+    const withdrawLimit: WithdrawLimit = {
             limit: 3,
             period: 48,
-            withdrawed_amount: 0.3,
-            limit_currency: 'btc',
-        },
-    ];
+            withdrawal_amount: 0.3,
+            currency: 'btc',
+        };
 
     const error = {
         code: 500,
@@ -22,7 +20,12 @@ describe('withdrawLimitList reducer', () => {
 
     it('should handle WITHDRAW_LIMIT_FETCH', () => {
         const expectedState = {
-            list: [],
+            data: {
+                limit: '0.0',
+                period: 0,
+                withdrawal_amount: '0.0',
+                currency: '',
+            },
             loading: true,
             success: false,
          };
@@ -31,7 +34,7 @@ describe('withdrawLimitList reducer', () => {
 
     it('should handle WITHDRAW_LIMIT_DATA', () => {
         const expectedState = {
-            list: withdrawLimit,
+            data: withdrawLimit,
             loading: false,
             success: true,
          };
@@ -40,7 +43,12 @@ describe('withdrawLimitList reducer', () => {
 
     it('should handle WITHDRAW_LIMIT_ERROR', () => {
         const expectedState = {
-            list: [],
+            data: {
+                limit: '0.0',
+                period: 0,
+                withdrawal_amount: '0.0',
+                currency: '',
+            },
             loading: false,
             success: false,
             error: error,

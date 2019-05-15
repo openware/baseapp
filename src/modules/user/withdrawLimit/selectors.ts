@@ -2,8 +2,8 @@ import { RootState } from '../../';
 import { CommonError } from '../../types';
 import { WithdrawLimit } from './types';
 
-export const selectWithdrawLimit = (state: RootState): WithdrawLimit[] =>
-    state.user.withdrawLimit.list;
+export const selectWithdrawLimit = (state: RootState): WithdrawLimit =>
+    state.user.withdrawLimit.data;
 
 export const selectWithdrawLimitLoading = (state: RootState): boolean =>
     state.user.withdrawLimit.loading;

@@ -11,7 +11,7 @@ describe('WithdrawLimit selectors', () => {
     const state = createStore(rootReducer).getState();
 
     it('should select list', () => {
-        expect(selectWithdrawLimit(state)).toEqual(state.user.withdrawLimit.list);
+        expect(selectWithdrawLimit(state)).toEqual(state.user.withdrawLimit.data);
     });
 
     it('should select loading', () => {

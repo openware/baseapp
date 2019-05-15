@@ -14,7 +14,7 @@ export interface WithdrawLimitFetch {
 
 export interface WithdrawLimitData {
     type: typeof WITHDRAW_LIMIT_DATA;
-    payload: WithdrawLimit[];
+    payload: WithdrawLimit;
 }
 
 export interface WithdrawLimitError {

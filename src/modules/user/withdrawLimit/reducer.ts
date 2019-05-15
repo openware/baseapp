@@ -8,14 +8,19 @@ import {
 import { WithdrawLimit } from './types';
 
 export interface WithdrawLimitState {
-    list: WithdrawLimit[];
+    data: WithdrawLimit;
     loading: boolean;
     success: boolean;
     error?: CommonError;
 }
 
 export const initialWithdrawLimitState: WithdrawLimitState = {
-    list: [],
+    data: {
+        limit: '0.0',
+        period: 0,
+        withdrawal_amount: '0.0',
+        currency: '',
+    },
     loading: false,
     success: false,
 };
@@ -28,12 +33,11 @@ export const withdrawLimitReducer = (state = initialWithdrawLimitState, action: 
                 loading: true,
             };
         case WITHDRAW_LIMIT_DATA:
-            const list = [...action.payload];
             return {
                 ...state,
                 loading: false,
                 success: true,
-                list,
+                data: action.payload,
             };
         case WITHDRAW_LIMIT_ERROR:
             return {
