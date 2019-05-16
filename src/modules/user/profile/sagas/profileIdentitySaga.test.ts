@@ -30,7 +30,7 @@ describe('Module: ProfileIdentity', () => {
         message: ['Server error'],
     };
 
-    const fakeData = {
+    const fakeIdentity = {
         first_name: 'qwq',
         last_name: 'qw',
         dob: 'qwqw',
@@ -40,8 +40,26 @@ describe('Module: ProfileIdentity', () => {
         country: 'qwq',
     };
 
+    const fakeData = {
+        first_name: 'qwq',
+        last_name: 'qw',
+        dob: 'qwqw',
+        address: 'qwq',
+        postcode: 'qw',
+        city: 'qwqwq',
+        country: 'qwq',
+        number: '380936898411',
+    };
+
+    const fakePhone = [{
+      country: 'UA',
+      number: '380936898411',
+      validated_at: '2019-05-16T14:43:15.000Z',
+    }];
+
     const mockProfileIdentity = () => {
-        mockAxios.onGet('/resource/profiles/me').reply(200, fakeData);
+        mockAxios.onGet('/resource/profiles/me').reply(200, fakeIdentity);
+        mockAxios.onGet('/resource/phones').reply(200, fakePhone);
     };
 
     const expectedActionsFetch = [profileIdentityFetch(), profileIdentityData(fakeData)];

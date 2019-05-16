@@ -12,7 +12,9 @@ const userOptions: RequestOptions = {
 
 export function* profileIdentitySaga() {
     try {
+        const profilePhone = yield call(API.get(userOptions), '/resource/phones');
         const profileIdentity = yield call(API.get(userOptions), '/resource/profiles/me');
+        profileIdentity.number = profilePhone.filter(w => w.validated_at)[0].number;
         yield put(profileIdentityData(profileIdentity));
     } catch (error) {
         yield put(profileIdentityError(error));

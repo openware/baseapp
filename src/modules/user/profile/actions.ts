@@ -49,6 +49,7 @@ export interface ProfileIdentity {
   postcode: string;
   city: string;
   country: string;
+  number: string;
 }
 
 export interface ChangePasswordFetch {

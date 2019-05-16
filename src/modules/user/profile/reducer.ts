@@ -77,6 +77,7 @@ const defaultProfileIdentity = {
     postcode: '',
     city: '',
     country: '',
+    number: '',
 };
 
 export const initialStateProfile: ProfileState = {
@@ -261,7 +262,7 @@ export const profileIdentityReducer = (state: ProfileState['identity'], action: 
             return {
                 ...state,
                 isFetching: false,
-                identity: action.payload,
+                profileIdentity: action.payload,
             };
         case PROFILE_IDENTITY_ERROR:
             return {

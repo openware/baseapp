@@ -22,6 +22,7 @@ describe('Profile reducer', () => {
         postcode: '',
         city: '',
         country: '',
+        number: '',
     };
 
     const error = {
@@ -80,7 +81,7 @@ describe('Profile reducer', () => {
         };
         const expectedState = {
             ...initialStateProfile,
-            identity: { ...initialStateProfile.identity, isFetching: false, identity: profileIdentity },
+            identity: { ...initialStateProfile.identity, isFetching: false, profileIdentity: profileIdentity },
         };
         expect(profileReducer(actualState, actions.profileIdentityData(profileIdentity))).toEqual(expectedState);
     });

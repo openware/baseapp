@@ -64,6 +64,7 @@ describe('Profile actions', () => {
                 postcode: 'qw',
                 city: 'qwqwq',
                 country: 'qwq',
+                number: '123213',
             };
             const expectedAction = { type: 'profile/GET_IDENTITY_DATA', payload };
             expect(actions.profileIdentityData(payload)).toEqual(expectedAction);
