@@ -68,14 +68,6 @@ class ToolBarComponent extends React.Component<Props, State> {
                 <div className="pg-trading-header-container-selector">
                     <MarketSelector/>
                 </div>
-                <div className={'pg-trading-header-container-reset-button'}>
-                    <input
-                        type={'button'}
-                        value={'Reset Layout'}
-                        className={'cr-button'}
-                        onClick={this.handleResetLayout}
-                    />
-                </div>
                 <div className="pg-trading-header-container-stats">
                     <div className="pg-trading-header-container-daily">
                         <ProgressLabel
@@ -127,10 +119,6 @@ class ToolBarComponent extends React.Component<Props, State> {
         const defaultTicker = {low: 0, last: 0, high: 0, vol: 0, price_change_percent: '+0.00%'};
 
         return currentMarket && (marketTickers[currentMarket.id] || defaultTicker)[value];
-    };
-
-    private handleResetLayout = () => {
-        this.props.resetLayouts({key: 'layouts'});
     };
 }
 

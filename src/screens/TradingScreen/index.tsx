@@ -162,7 +162,7 @@ class Trading extends React.Component<Props, StateProps> {
                         draggableHandle=".cr-table-header__content, .pg-trading-screen__tab-panel, .draggable-container"
                         layouts={rgl.layouts}
                         rowHeight={rowHeight}
-                        onLayoutChange={(layout, layouts) => this.handleLayoutChange(layout, layouts)}
+                        onLayoutChange={() => {return;}}
                         handleResize={this.handleResize}
                     />
                 </div>
@@ -177,10 +177,6 @@ class Trading extends React.Component<Props, StateProps> {
         if (market) {
             this.props.setCurrentMarket(market);
         }
-    };
-
-    private handleLayoutChange = (layout, layouts) => {
-        this.props.saveLayouts({key: 'layouts', layouts});
     };
 
     private handleResize = (layout, oldItem, newItem) => {
