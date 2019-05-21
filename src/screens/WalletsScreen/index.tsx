@@ -99,8 +99,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         setDocumentTitle('Wallets');
         if (this.props.wallets.length === 0) {
             this.props.fetchWallets();
-        } else {
-            this.props.fetchAddress({ currency: this.props.wallets[0].currency });
         }
 
         if (this.state.selectedWalletIndex === -1 && this.props.wallets.length) {
@@ -117,7 +115,9 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             this.setState({
                 selectedWalletIndex: 0,
             });
-            this.props.fetchAddress({ currency: next.wallets[0].currency });
+            if (next.wallets[0].type === 'coin') {
+                this.props.fetchAddress({ currency: next.wallets[0].currency });
+            }
         }
 
         if (!this.props.withdrawSuccess && next.withdrawSuccess) {
