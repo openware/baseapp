@@ -89,4 +89,26 @@ describe('Request Builder', () => {
         };
         expect(formatError(responseError)).toEqual(expectedError);
     });
+
+    it('should return empty array if error message is undefined', () => {
+        const config: AxiosRequestConfig = {};
+
+        const responseError: AxiosError = {
+            name: '',
+            message: '',
+            config: config,
+            response: {
+                status: 500,
+                statusText: 'qwert',
+                headers: 'qwerty',
+                config,
+                data: undefined,
+            },
+        };
+        const expectedError = {
+            code: 500,
+            message: [],
+        };
+        expect(formatError(responseError)).toEqual(expectedError);
+    });
 });
