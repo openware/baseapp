@@ -18,6 +18,7 @@ import {
     selectHistory,
     selectMobileWalletUi,
     selectUserInfo,
+    selectWalletAddress,
     selectWallets,
     selectWalletsAddressError,
     selectWalletsLoading,
@@ -41,6 +42,7 @@ interface ReduxProps {
     walletsLoading?: boolean;
     historyList: WalletHistoryList;
     mobileWalletChosen: string;
+    selectedWalletAddress: string;
 }
 
 interface DispatchProps {
@@ -97,12 +99,16 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     public componentDidMount() {
         setDocumentTitle('Wallets');
+        const { wallets, fetchAddress } = this.props;
+        const { selectedWalletIndex } = this.state;
+
         if (this.props.wallets.length === 0) {
             this.props.fetchWallets();
         }
 
-        if (this.state.selectedWalletIndex === -1 && this.props.wallets.length) {
+        if (selectedWalletIndex === -1 && wallets.length) {
             this.setState({ selectedWalletIndex: 0 });
+            fetchAddress({ currency: wallets[0].currency });
         }
     }
 
@@ -265,7 +271,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     };
 
     private renderDeposit(wallet: WalletItemProps) {
-        const { addressDepositError, wallets } = this.props;
+        const { addressDepositError, wallets, selectedWalletAddress } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' });
@@ -273,9 +279,9 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             this.props.intl.formatMessage({id: addressDepositError.message}) :
             this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
 
-        const walletAddress = wallet.currency === 'BCH' && wallet.address
-            ? bch.Address(wallet.address).toString(bch.Address.CashAddrFormat)
-            : wallet.address || '';
+        const walletAddress = wallet.currency === 'BCH' && selectedWalletAddress
+            ? bch.Address(selectedWalletAddress).toString(bch.Address.CashAddrFormat)
+            : selectedWalletAddress || '';
 
         if (wallet.type === 'coin') {
             return (
@@ -369,6 +375,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     withdrawSuccess: selectWithdrawSuccess(state),
     historyList: selectHistory(state),
     mobileWalletChosen: selectMobileWalletUi(state),
+    selectedWalletAddress: selectWalletAddress(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({

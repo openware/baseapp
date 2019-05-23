@@ -22,6 +22,7 @@ export interface WalletsState {
         withdrawSuccess: boolean;
         error?: CommonError;
         mobileWalletChosen: string;
+        selectedWalletAddress: string;
     };
 }
 
@@ -31,6 +32,7 @@ export const initialWalletsState: WalletsState = {
         loading: false,
         withdrawSuccess: false,
         mobileWalletChosen: '',
+        selectedWalletAddress: '',
     },
 };
 
@@ -68,18 +70,10 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
             );
 
             if (walletIndex !== -1) {
-                const list = [ ...state.list ];
-                const updatedWallet = {
-                    ...state.list[walletIndex],
-                    address: action.payload.address,
-                };
-
-                list.splice(walletIndex, 1, updatedWallet);
-
                 return {
                     ...state,
                     loading: false,
-                    list,
+                    selectedWalletAddress: action.payload.address,
                 };
             }
 
@@ -141,6 +135,7 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
                     loading: false,
                     withdrawSuccess: false,
                     mobileWalletChosen: '',
+                    selectedWalletAddress: '',
                 },
             };
         default:

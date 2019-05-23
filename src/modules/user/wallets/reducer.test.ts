@@ -56,7 +56,7 @@ describe('walletsList reducer', () => {
     };
 
     const addressDataPayload = {
-        currency: 'currency',
+        currency: 'btc',
         address: 'address',
     };
 
@@ -67,6 +67,7 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsFetch())).toEqual(expectedState);
@@ -79,6 +80,7 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsData(wallets))).toEqual(expectedState);
@@ -92,6 +94,7 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
+                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsError(error))).toEqual(expectedState);
@@ -104,21 +107,33 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressFetch(addressFetchPayload))).toEqual(expectedState);
     });
 
     it('should handle WALLETS_ADDRESS_DATA', () => {
-        const expectedState = {
+        const initialState = {
             wallets: {
-                list: [],
+                list: wallets,
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletAddress: '',
+            },
+        };
+
+        const expectedState = {
+            wallets: {
+                list: wallets,
+                loading: false,
+                withdrawSuccess: false,
+                mobileWalletChosen: '',
+                selectedWalletAddress: 'address',
             },
          };
-        expect(walletsReducer(initialWalletsState, actions.walletsAddressData(addressDataPayload))).toEqual(expectedState);
+        expect(walletsReducer(initialState, actions.walletsAddressData(addressDataPayload))).toEqual(expectedState);
     });
 
     it('should handle WALLETS_ADDRESS_ERROR', () => {
@@ -129,6 +144,7 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
+                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressError(error))).toEqual(expectedState);
@@ -141,6 +157,7 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyFetch(withdrawCcyFetchPayload))).toEqual(expectedState);
@@ -153,6 +170,7 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: true,
                 mobileWalletChosen: '',
+                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyData())).toEqual(expectedState);
@@ -166,6 +184,7 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
+                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyError(error))).toEqual(expectedState);
