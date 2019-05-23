@@ -19,3 +19,4 @@ export * from './getTotalPrice';
 export * from './capitalize';
 export * from './timeConvert';
 export * from './getHistorySagaParam';
+export * from './getUserAgent';

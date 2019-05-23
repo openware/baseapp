@@ -7,7 +7,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { localeDate } from '../../helpers';
+import { getUserAgent, localeDate } from '../../helpers';
 import {
     getUserActivity,
     RootState,
@@ -101,7 +101,7 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
                 this.getResultOfUserAction(item.action),
                 this.renderResult(this.props.intl.formatMessage({ id: `page.body.profile.content.result.${item.result}`})),
                 item.user_ip,
-                item.user_agent,
+                getUserAgent(item.user_agent),
             ];
         });
     }

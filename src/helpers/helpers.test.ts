@@ -332,6 +332,16 @@ describe('Helpers', () => {
 
     });
 
+    // getUserAgent.ts
+    it('Should return correct params', () => {
+        expect(helpers.getUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36')).toBe('Chrome 71 Linux x86_64');
+        expect(helpers.getUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36')).toBe('Chrome 71 Windows 10');
+        expect(helpers.getUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/73.0.3683.86 Chrome/73.0.3683.86 Safari/537.36')).toBe('Chromium 73 Ubuntu ');
+        expect(helpers.getUserAgent('PostmanRuntime/7.6.0')).toBe('PostmanRuntime/7.6.0');
+        expect(helpers.getUserAgent('Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.4; en; rv:1.9.0.19) Gecko/2011091218 Camino/2.0.9 (like Firefox/3.0.19)')).toBe('Camino 2 Mac OS 10.4');
+        expect(helpers.getUserAgent('Mozilla/4.0 (compatible; MSIE 5.0; Windows 95) Opera 6.01 [en]')).toBe('Opera 6 Windows 95');
+    });
+
     // checkDate.ts
     describe('monthNameToNumber', () => {
         it('return month number from name', () => {
