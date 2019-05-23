@@ -4,8 +4,8 @@ import { getTimezone } from './timezone';
 export const localeDate = (date, format, timezone = getTimezone()) => {
     const getFormat = type => {
         return {
-            fullDate: 'YYYY-DD-MM HH:mm:ss',
-            shortDate: 'YYYY-DD-MM HH:mm',
+            fullDate: 'DD-MM-YYYY HH:mm:ss',
+            shortDate: 'DD-MM-YYYY HH:mm',
             time: 'HH:mm:ss',
           }[type];
     };
