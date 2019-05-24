@@ -16,11 +16,11 @@ describe('Api Keys reducers', () => {
     });
 
     it('should handle API_KEY_UPDATE', () => {
-        const payload: actions.ApiKeyUpdate['payload'] = {kid: '1', state: 'active'} as actions.ApiKeyDataInterface;
+        const payload: actions.ApiKeyUpdate['payload'] = {kid: '1', state: 'active', updated_at: '28-05-2019 13:52:18'} as actions.ApiKeyDataInterface;
         const expectedState = {...initialApiKeysState, apiKeys: [payload]};
         expect(apiKeysReducer({
             ...initialApiKeysState,
-            apiKeys: [{kid: '1', state: 'disabled'}] as actions.ApiKeyDataInterface[],
+            apiKeys: [{kid: '1', state: 'disabled', updated_at: '28-05-2019 13:52:10'}] as actions.ApiKeyDataInterface[],
         }, actions.apiKeyUpdate(payload)).apiKeys).toEqual(expectedState.apiKeys);
     });
 
