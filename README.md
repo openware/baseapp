@@ -20,11 +20,11 @@ $ yarn build
 
 In `<rootDir>`
 
-```bash  
+```bash
 $ yarn start
 ```
 
-### Testing
+## Test
 
 In `<rootDir>`
 
@@ -33,3 +33,18 @@ $ yarn test
 ```
 
 For more options for `jest` run `yarn test --help`.
+
+## Obfuscate
+
+To prepare an obfuscated build, run:
+
+```
+docker build -t baseapp:obfuscated
+  --build-arg BUILD_EXPIRE=1560761577000(unix epoch seconds)
+  --build-arg BUILD_DOMAIN="example.com"
+  -f Dockerfile-obfuscator .
+```
+where `BUILD_EXPIRE` is a Unix Timestamp of the build expiration date in seconds,
+​            `BUILD_DOMAIN` is the domain which you'd like to use during the deployment
+
+The resulting image would be accessible by the `baseapp:obfuscated` tag.
