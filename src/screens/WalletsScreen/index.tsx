@@ -108,7 +108,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         if (selectedWalletIndex === -1 && wallets.length) {
             this.setState({ selectedWalletIndex: 0 });
-            fetchAddress({ currency: wallets[0].currency });
+            wallets[0].type === 'coin' && fetchAddress({ currency: wallets[0].currency });
         }
     }
 
@@ -121,9 +121,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             this.setState({
                 selectedWalletIndex: 0,
             });
-            if (next.wallets[0].type === 'coin') {
-                this.props.fetchAddress({ currency: next.wallets[0].currency });
-            }
+            next.wallets[0].type === 'coin' && this.props.fetchAddress({ currency: next.wallets[0].currency });
         }
 
         if (!this.props.withdrawSuccess && next.withdrawSuccess) {
