@@ -148,6 +148,7 @@ export const ru: LangType = {
     'page.body.history.withdraw.header.status': 'Статус',
     'page.body.history.withdraw.content.status.prepared': 'Подготовлен',
     'page.body.history.withdraw.content.status.submitted': 'Отправлен',
+    'page.body.history.withdraw.content.status.skipped': 'Принят',
     'page.body.history.withdraw.content.status.canceled': 'Отменен',
     'page.body.history.withdraw.content.status.accepted': 'Принят',
     'page.body.history.withdraw.content.status.suspected': 'Просматривается',

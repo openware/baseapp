@@ -146,6 +146,7 @@ export const en = {
     'page.body.history.withdraw.header.status': 'Status',
     'page.body.history.withdraw.content.status.prepared': 'Prepared',
     'page.body.history.withdraw.content.status.submitted': 'Submitted',
+    'page.body.history.withdraw.content.status.skipped': 'Skipped',
     'page.body.history.withdraw.content.status.canceled': 'Cancelled',
     'page.body.history.withdraw.content.status.accepted': 'Accepted',
     'page.body.history.withdraw.content.status.suspected': 'Suspected',
