@@ -36,6 +36,9 @@ describe('KYC - Identity', () => {
             postcode: 'postcode',
             city: 'city',
             country: 'country',
+            metadata: {
+                nationality: 'nationality',
+            },
         };
 
         const expectedConfirmIdentityFetch = {

@@ -15,6 +15,9 @@ export interface SendIdentityFetch {
         postcode: string;
         city: string;
         country: string;
+        metadata: {
+            nationality: string,
+        },
     };
 }
 

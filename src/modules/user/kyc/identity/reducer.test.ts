@@ -17,6 +17,9 @@ describe('Identity reducer', () => {
         postcode: 'postcode',
         city: 'city',
         country: 'country',
+        metadata: {
+            nationality: 'nationality',
+        },
     };
 
     const error = {

@@ -42,7 +42,9 @@ interface IdentityState {
     dateOfBirth: string;
     firstName: string;
     lastName: string;
-    nationality: string;
+    metadata: {
+        nationality: string,
+    };
     postcode: string;
     residentialAddress: string;
     cityFocused: boolean;
@@ -62,7 +64,9 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         dateOfBirth: '',
         firstName: '',
         lastName: '',
-        nationality: '',
+        metadata: {
+            nationality: '',
+        },
         postcode: '',
         residentialAddress: '',
         cityFocused: false,
@@ -98,7 +102,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             postcodeFocused,
             residentialAddressFocused,
             countryOfBirth,
-            nationality,
+            metadata,
         } = this.state;
         const { success, lang } = this.props;
 
@@ -191,7 +195,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     <div className="pg-confirm__content-identity-col-row">
                         <div className="pg-confirm__content-identity-col-row-content">
                             <div className="pg-confirm__content-identity-col-row-content-label">
-                                {nationality && this.translate('page.body.kyc.identity.nationality')}
+                                {metadata.nationality && this.translate('page.body.kyc.identity.nationality')}
                             </div>
                             <Dropdown
                                 className="pg-confirm__content-documents-col-row-content-number"
@@ -362,7 +366,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
     private selectNationality = (value: string) => {
         this.setState({
-            nationality: value,
+            metadata: { nationality: value },
         });
     };
 
@@ -381,9 +385,9 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             postcode,
             residentialAddress,
             countryOfBirth,
-            nationality,
+            metadata,
         } = this.state;
-        return !firstName || !lastName  || !dateOfBirth || !nationality || !residentialAddress || !countryOfBirth || !city || !postcode;
+        return !firstName || !lastName  || !dateOfBirth || !metadata.nationality || !residentialAddress || !countryOfBirth || !city || !postcode;
     }
 
     private sendData = () => {
@@ -396,6 +400,9 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             postcode: this.state.postcode,
             city: this.state.city,
             country: this.state.countryOfBirth,
+            metadata: {
+                nationality: this.state.metadata.nationality,
+            },
         };
         this.props.sendIdentity(profileInfo);
     }
