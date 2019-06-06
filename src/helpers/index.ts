@@ -20,3 +20,4 @@ export * from './capitalize';
 export * from './timeConvert';
 export * from './getHistorySagaParam';
 export * from './getUserAgent';
+export * from './formatDate';

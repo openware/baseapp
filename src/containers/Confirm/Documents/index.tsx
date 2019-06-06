@@ -17,6 +17,7 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import close = require('../../../assets/images/close.svg');
+import { formatDate } from '../../../helpers';
 import { isDateInFuture } from '../../../helpers/checkDate';
 import { alertPush, RootState } from '../../../modules';
 import {
@@ -257,22 +258,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         };
     }
 
-    private formatDate = (date: string) => {
-        const [day, month, year] = date.split('/');
-
-        let formatDay = day ? day : '';
-        formatDay = formatDay === '' || parseFloat(formatDay) <= 31 ? formatDay : '31';
-        let formatMonth = month ? month : '';
-        formatMonth = formatMonth === '' || parseFloat(formatMonth) <= 12 ? formatMonth : '12';
-        const formatYear = year ? parseFloat(year) : '';
-
-        return (formatDay && formatMonth && formatYear) ?
-               `${formatDay}/${formatMonth}/${formatYear}` : date;
-    }
-
     private handleChangeExpiration = (e: OnChangeEvent) => {
         this.setState({
-          expiration: this.formatDate(e.target.value),
+          expiration: formatDate(e.target.value),
         });
     }
 

@@ -139,6 +139,12 @@ describe('Helpers', () => {
         expect(helpers.setDepositStatusColor('rejected')).toEqual('var(--color-red)');
     });
 
+    it('Should return correct date', () => {
+        expect(helpers.formatDate('33/33/3333')).toEqual('31/12/3333');
+        expect(helpers.formatDate('99/12/3333')).toEqual('31/12/3333');
+        expect(helpers.formatDate('11/33/3333')).toEqual('11/12/3333');
+    });
+
     it('Should return correct withdraw status color', () => {
         expect(helpers.setWithdrawStatusColor('prepared')).toEqual('');
         expect(helpers.setWithdrawStatusColor('submitted')).toEqual('');

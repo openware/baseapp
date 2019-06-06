@@ -11,7 +11,7 @@ import {
   connect,
   MapDispatchToPropsFunction,
 } from 'react-redux';
-import { isDateInFuture } from '../../../helpers';
+import { formatDate, isDateInFuture } from '../../../helpers';
 import {RootState, selectCurrentLanguage} from '../../../modules';
 import {
     selectSendIdentitySuccess,
@@ -345,22 +345,9 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         }
     }
 
-    private formatDate = (date: string) => {
-        const [day, month, year] = date.split('/');
-
-        let formatDay = day ? day : '';
-        formatDay = formatDay === '' || parseFloat(formatDay) <= 31 ? formatDay : '31';
-        let formatMonth = month ? month : '';
-        formatMonth = formatMonth === '' || parseFloat(formatMonth) <= 12 ? formatMonth : '12';
-        const formatYear = year ? parseFloat(year) : '';
-
-        return (formatDay && formatMonth && formatYear) ?
-            `${formatDay}/${formatMonth}/${formatYear}` : date;
-    }
-
     private handleChangeDate = (e: OnChangeEvent) => {
         this.setState({
-            dateOfBirth: this.formatDate(e.target.value),
+            dateOfBirth: formatDate(e.target.value),
         });
     }
 
