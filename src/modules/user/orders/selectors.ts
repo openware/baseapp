@@ -11,3 +11,6 @@ export const selectCurrentPrice = (state: RootState): number | undefined =>
 
 export const selectAmount = (state: RootState): string =>
     selectOrdersState(state).amount;
+
+export const selectOrderType = (state: RootState): string =>
+    selectOrdersState(state).orderType;

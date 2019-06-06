@@ -2,8 +2,10 @@ import { OrderSide } from '../../types';
 import {
     orderExecuteData,
     orderExecuteError,
-    orderExecuteFetch, setAmount,
+    orderExecuteFetch,
+    setAmount,
     setCurrentPrice,
+    setOrderType,
 } from './actions';
 import { ordersReducer } from './reducer';
 
@@ -19,6 +21,7 @@ describe('Orders reducer', () => {
         executeLoading: false,
         currentPrice: undefined,
         amount: '',
+        orderType: '',
     };
 
     it('supports orderExecuteFetch', () => {
@@ -34,6 +37,7 @@ describe('Orders reducer', () => {
                 executeLoading: true,
                 executeError: undefined,
                 amount: '',
+                orderType: '',
             });
     });
 
@@ -44,6 +48,7 @@ describe('Orders reducer', () => {
                 executeLoading: false,
                 executeError: undefined,
                 amount: '',
+                orderType: '',
             });
     });
 
@@ -54,6 +59,7 @@ describe('Orders reducer', () => {
                 executeLoading: false,
                 executeError: someError,
                 amount: '',
+                orderType: '',
             });
     });
 
@@ -64,6 +70,7 @@ describe('Orders reducer', () => {
                 executeLoading: false,
                 executeError: undefined,
                 amount: '',
+                orderType: '',
             });
     });
 
@@ -74,6 +81,18 @@ describe('Orders reducer', () => {
                 executeLoading: false,
                 executeError: undefined,
                 amount: '42',
+                orderType: '',
+            });
+    });
+
+    it('supports setOrderType', () => {
+        expect(ordersReducer(initialState, setOrderType('Market')))
+            .toEqual({
+                currentPrice: undefined,
+                executeLoading: false,
+                executeError: undefined,
+                amount: '',
+                orderType: 'Market',
             });
     });
 });

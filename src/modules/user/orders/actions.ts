@@ -5,6 +5,7 @@ import {
     ORDER_EXECUTE_FETCH,
     ORDERS_SET_AMOUNT,
     ORDERS_SET_CURRENT_PRICE,
+    ORDERS_SET_ORDER_TYPE,
 } from './constants';
 
 export interface OrderExecution {
@@ -39,13 +40,18 @@ export interface SetAmount {
     payload: string;
 }
 
+export interface SetOrderType {
+    type: typeof ORDERS_SET_ORDER_TYPE;
+    payload: string;
+}
+
 export type OrdersAction =
     OrderExecuteFetch
     | OrderExecuteData
     | OrderExecuteError
     | SetCurrentPrice
-    | SetAmount;
-
+    | SetAmount
+    | SetOrderType;
 
 export const orderExecuteFetch =
     (payload: OrderExecuteFetch['payload']): OrderExecuteFetch => ({
@@ -74,3 +80,10 @@ export const setAmount =
         type: ORDERS_SET_AMOUNT,
         payload,
     });
+
+export const setOrderType =
+    (payload: SetOrderType['payload']): SetOrderType => ({
+        type: ORDERS_SET_ORDER_TYPE,
+        payload,
+    });
+
