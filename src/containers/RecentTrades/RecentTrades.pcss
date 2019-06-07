@@ -21,10 +21,11 @@
     .cr-table__body {
       cursor: pointer;
     }
+    .cr-table th {
+        width: calc(100%/3);
+        white-space: nowrap;
+      }
     .cr-table td, .cr-table th {
-        text-align: right;
-        &:nth-child(2){
-            width: 40%;
-        }
+        text-align: right !important;
     }
 }

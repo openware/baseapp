@@ -66,10 +66,11 @@ class RecentTradesComponent extends React.Component<Props> {
     }
 
     private getHeaders = () => {
+        const { intl, currentMarket } = this.props;
         return [
-            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.price'}),
-            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.amount'}),
-            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.time'}),
+            `${intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.price'})} (${currentMarket && currentMarket.bid_unit.toUpperCase()})`,
+            `${intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.amount'})} (${currentMarket && currentMarket.ask_unit.toUpperCase()})`,
+            intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.time'}),
         ];
     };
 

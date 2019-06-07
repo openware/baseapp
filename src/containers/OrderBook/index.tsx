@@ -129,12 +129,13 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private renderHeaders = () => {
+        const { intl, currentMarket } = this.props;
         return [
-            this.props.intl.formatMessage({id: 'page.body.trade.orderbook.header.price'}),
-            this.props.intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'}),
-            this.props.intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'}),
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})} (${currentMarket && currentMarket.bid_unit.toUpperCase()})`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})} (${currentMarket && currentMarket.ask_unit.toUpperCase()})`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})} (${currentMarket && currentMarket.ask_unit.toUpperCase()})`,
         ];
-    }
+    };
 
     private renderOrderBook = (array: string[][], side: string, message: string, currentMarket?: Market) => {
         let total = accumulateVolume(array);
