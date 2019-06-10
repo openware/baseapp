@@ -4,6 +4,7 @@ import {
     ORDER_EXECUTE_DATA,
     ORDER_EXECUTE_ERROR,
     ORDER_EXECUTE_FETCH,
+    ORDERS_SET_AMOUNT,
     ORDERS_SET_CURRENT_PRICE,
 } from './constants';
 
@@ -12,14 +13,15 @@ export interface OrdersState extends CommonState {
     executeLoading: boolean;
     executeError?: CommonError;
     currentPrice: number | undefined;
+    amount: string;
 }
 
 
 const initialState: OrdersState = {
     executeLoading: false,
     currentPrice: undefined,
+    amount: '',
 };
-
 
 export const ordersReducer = (state = initialState, action: OrdersAction) => {
     switch (action.type) {
@@ -31,7 +33,8 @@ export const ordersReducer = (state = initialState, action: OrdersAction) => {
             return { ...state, executeLoading: false, executeError: action.payload };
         case ORDERS_SET_CURRENT_PRICE:
           return { ...state, currentPrice: action.payload };
-
+        case ORDERS_SET_AMOUNT:
+            return { ...state, amount: action.payload };
         default:
             return state;
     }

@@ -8,3 +8,6 @@ export const selectOrderExecuteLoading = (state: RootState): boolean =>
 
 export const selectCurrentPrice = (state: RootState): number | undefined =>
     selectOrdersState(state).currentPrice;
+
+export const selectAmount = (state: RootState): string =>
+    selectOrdersState(state).amount;

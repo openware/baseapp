@@ -3,6 +3,7 @@ import {
     ORDER_EXECUTE_DATA,
     ORDER_EXECUTE_ERROR,
     ORDER_EXECUTE_FETCH,
+    ORDERS_SET_AMOUNT,
     ORDERS_SET_CURRENT_PRICE,
 } from './constants';
 
@@ -33,11 +34,17 @@ export interface SetCurrentPrice {
   payload: number | undefined;
 }
 
+export interface SetAmount {
+    type: typeof ORDERS_SET_AMOUNT;
+    payload: string;
+}
+
 export type OrdersAction =
     OrderExecuteFetch
     | OrderExecuteData
     | OrderExecuteError
-    | SetCurrentPrice;
+    | SetCurrentPrice
+    | SetAmount;
 
 
 export const orderExecuteFetch =
@@ -61,3 +68,9 @@ export const setCurrentPrice =
     type: ORDERS_SET_CURRENT_PRICE,
     payload,
   });
+
+export const setAmount =
+    (payload: SetAmount['payload']): SetAmount => ({
+        type: ORDERS_SET_AMOUNT,
+        payload,
+    });

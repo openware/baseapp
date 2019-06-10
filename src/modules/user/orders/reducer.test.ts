@@ -2,7 +2,8 @@ import { OrderSide } from '../../types';
 import {
     orderExecuteData,
     orderExecuteError,
-    orderExecuteFetch,
+    orderExecuteFetch, setAmount,
+    setCurrentPrice,
 } from './actions';
 import { ordersReducer } from './reducer';
 
@@ -12,6 +13,12 @@ describe('Orders reducer', () => {
     const someError = {
         code: 51,
         message: ['something went wrong'],
+    };
+
+    const initialState = {
+        executeLoading: false,
+        currentPrice: undefined,
+        amount: '',
     };
 
     it('supports orderExecuteFetch', () => {
@@ -26,20 +33,17 @@ describe('Orders reducer', () => {
                 currentPrice: undefined,
                 executeLoading: true,
                 executeError: undefined,
+                amount: '',
             });
     });
 
     it('supports orderExecuteData', () => {
-        const initialState = {
-            currentPrice: undefined,
-            executeLoading: false,
-        };
-
         expect(ordersReducer(initialState, orderExecuteData()))
             .toEqual({
                 currentPrice: undefined,
                 executeLoading: false,
                 executeError: undefined,
+                amount: '',
             });
     });
 
@@ -49,6 +53,27 @@ describe('Orders reducer', () => {
                 currentPrice: undefined,
                 executeLoading: false,
                 executeError: someError,
+                amount: '',
+            });
+    });
+
+    it('supports setCurrentPrice', () => {
+        expect(ordersReducer(initialState, setCurrentPrice(42)))
+            .toEqual({
+                currentPrice: 42,
+                executeLoading: false,
+                executeError: undefined,
+                amount: '',
+            });
+    });
+
+    it('supports setAmount', () => {
+        expect(ordersReducer(initialState, setAmount('42')))
+            .toEqual({
+                currentPrice: undefined,
+                executeLoading: false,
+                executeError: undefined,
+                amount: '42',
             });
     });
 });
