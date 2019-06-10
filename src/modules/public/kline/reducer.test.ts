@@ -75,4 +75,16 @@ describe('kline reducer', () => {
         };
         expect(klineReducer(undefined, actions.klineData(payload))).toEqual(expectedState);
     });
+
+    it('supports klineUpdateTimeRange action', () => {
+        const payload = {
+            from: 12345,
+            to: 123456,
+        };
+        const expectedState = {
+            ...initialKlineState,
+            range: payload,
+        };
+        expect(klineReducer(undefined, actions.klineUpdateTimeRange(payload))).toEqual(expectedState);
+    });
 });

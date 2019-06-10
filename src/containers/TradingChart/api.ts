@@ -2,12 +2,17 @@ import axios from 'axios';
 import { TradingChartComponent } from '.';
 import { tradeUrl } from '../../api/config';
 import { LibrarySymbolInfo } from '../../charting_library/datafeed-api';
-import { klineArrayToObject, KlineState } from '../../modules';
+import {
+    klineArrayToObject,
+    KlineState,
+    klineUpdatePeriod,
+    klineUpdateTimeRange,
+} from '../../modules';
 import { Market } from '../../modules/public/markets';
 import { periodMinutesToString } from '../../modules/public/ranger/helpers';
+import { store } from '../../store';
 
-// tslint:disable-next-line no-console
-export const print = (...x) => console.log.apply(null, ['>>>> TC', ...x]);
+export const print = (...x) => window.console.log.apply(null, ['>>>> TC', ...x]);
 export interface CurrentKlineSubscription {
     marketId?: string;
     periodString?: string;
@@ -30,6 +35,7 @@ const resolutionToSeconds = (r: string): number => {
 };
 
 const config = {
+    supports_timescale_marks: true,
     supports_time: false,
     supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
 };
@@ -51,8 +57,8 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             setTimeout(() => onResultReadyCallback(symbols), 0);
         },
         resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) => {
-            // expects a symbolInfo object in response
             const symbol = markets.find(m => m.id === symbolName || m.name === symbolName);
+
             if (!symbol) {
                 return setTimeout(() => onResolveErrorCallback('Symbol not found'), 0);
             }
@@ -74,6 +80,18 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             };
 
             return setTimeout(() => onSymbolResolvedCallback(symbolStub), 0);
+        },
+        getTimescaleMarks: async (
+            symbolInfo: LibrarySymbolInfo,
+            from,
+            to,
+            onDataCallback,
+            resolution,
+        ) => {
+            const range = tradingChart.tvWidget!.activeChart().getVisibleRange();
+            const period = tradingChart.tvWidget!.activeChart().resolution();
+            store.dispatch(klineUpdateTimeRange(range));
+            store.dispatch(klineUpdatePeriod(period));
         },
         getBars: async (
             symbolInfo: LibrarySymbolInfo,
@@ -121,6 +139,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             };
             const marketId: string = symbolInfo.ticker!;
             const periodString = periodMinutesToString(resolutionToSeconds(resolution));
+
             tradingChart.props.subscribeKline(marketId, periodString);
             tradingChart.currentKlineSubscription = {
                 marketId,

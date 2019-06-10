@@ -9,9 +9,12 @@ import {
 import { stdTimezoneOffset } from '../../helpers';
 import {
     KlineState,
+    klineUpdatePeriod,
+    klineUpdateTimeRange,
     Market,
     MarketsState,
-    RootState, selectCurrentLanguage,
+    RootState,
+    selectCurrentLanguage,
     selectCurrentMarket,
     selectKline,
     selectMarkets,
@@ -32,12 +35,15 @@ interface ReduxProps {
 interface DispatchProps {
     subscribeKline: typeof rangerSubscribeKlineMarket;
     unSubscribeKline: typeof rangerUnsubscribeKlineMarket;
+    klineUpdateTimeRange: typeof klineUpdateTimeRange;
+    klineUpdatePeriod: typeof klineUpdatePeriod;
 }
 
 type Props = ReduxProps & DispatchProps;
 
 export class TradingChartComponent extends React.PureComponent<Props> {
     public currentKlineSubscription: CurrentKlineSubscription = {};
+    public tvWidget: IChartingLibraryWidget | null = null;
 
     private params = {
         interval: '15',
@@ -50,7 +56,6 @@ export class TradingChartComponent extends React.PureComponent<Props> {
         studiesOverrides: {},
     };
 
-    private tvWidget: IChartingLibraryWidget | null = null;
     private datafeed = dataFeedObject(this, this.props.markets);
 
     public componentWillReceiveProps(next: Props) {
@@ -78,8 +83,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             try {
                 this.tvWidget.remove();
             } catch (error) {
-                // tslint:disable-next-line no-console
-                console.log(`TradingChart unmount failed: ${error}`);
+                window.console.log(`TradingChart unmount failed: ${error}`);
             }
         }
     }
@@ -90,18 +94,21 @@ export class TradingChartComponent extends React.PureComponent<Props> {
                 <div className="cr-table-header__content">
                     {this.props.currentMarket ? this.props.currentMarket.name : ''}
                 </div>
-                <div
-                    id={this.params.containerId}
-                    className="pg-trading-chart"
-                />
+                <div id={this.params.containerId} className="pg-trading-chart" />
             </React.Fragment>
         );
     }
 
     private setChart = (markets: Market[], currentMarket: Market) => {
+        const { kline } = this.props;
         this.datafeed = dataFeedObject(this, markets);
         const currentTimeOffset = new Date().getTimezoneOffset();
         const clockPeriod = currentTimeOffset === stdTimezoneOffset(new Date()) ? 'STD' : 'DST';
+        const timeframe = '1D';
+
+        if (this.props.kline.period) {
+            this.params.interval = this.props.kline.period;
+        }
         const widgetOptions = {
             debug: false,
             symbol: currentMarket.id,
@@ -142,7 +149,6 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             },
             timezone: getTradingChartTimezone(currentTimeOffset, clockPeriod),
             popup_width: '000',
-            // hide_top_toolbar: true,
             enable_publishing: false,
             withdateranges: false,
             hide_side_toolbar: false,
@@ -155,14 +161,37 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             show_popup_button: true,
             popup_height: '50',
             height: 610,
+            timeframe: timeframe,
         };
 
         this.tvWidget = new widget(widgetOptions);
+
+        let previousRange = { from: 0, to: 0 };
+        if (kline.range.from !== 0 && kline.range.to !== 0) {
+            previousRange = this.props.kline.range;
+        }
+
+        let previousResolution = '';
+        if (kline.period) {
+            previousResolution = kline.period;
+        }
 
         this.tvWidget.onChartReady(() => {
             this.tvWidget!.activeChart().setSymbol(currentMarket.id, () => {
                 print('Symbol set', currentMarket.id);
             });
+
+            if (previousRange.from !== 0 && previousRange.to !== 0) {
+                this.tvWidget!.activeChart().setVisibleRange(previousRange, () => {
+                    print('Range set', previousRange);
+                });
+            }
+
+            if (previousResolution) {
+                this.tvWidget!.activeChart().setResolution(previousResolution.toUpperCase(), () => {
+                    print('Resolution set', previousResolution);
+                });
+            }
         });
     };
 
@@ -185,10 +214,11 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     lang: selectCurrentLanguage(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        subscribeKline: (marketId: string, periodString: string) => dispatch(rangerSubscribeKlineMarket(marketId, periodString)),
-        unSubscribeKline: (marketId: string, periodString: string) => dispatch(rangerUnsubscribeKlineMarket(marketId, periodString)),
-    });
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    klineUpdateTimeRange: payload => dispatch(klineUpdateTimeRange(payload)),
+    subscribeKline: (marketId: string, periodString: string) => dispatch(rangerSubscribeKlineMarket(marketId, periodString)),
+    unSubscribeKline: (marketId: string, periodString: string) => dispatch(rangerUnsubscribeKlineMarket(marketId, periodString)),
+    klineUpdatePeriod: payload => dispatch(klineUpdatePeriod(payload)),
+});
 
 export const TradingChart = connect<ReduxProps, DispatchProps, {}, RootState>(reduxProps, mapDispatchProps)(TradingChartComponent);
