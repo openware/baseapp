@@ -1,6 +1,6 @@
 {
   "name": "@openware/base-app",
-  "version": "2.1.211",
+  "version": "2.1.212",
   "private": true,
   "dependencies": {
     "@openware/components": "2.0.39",
