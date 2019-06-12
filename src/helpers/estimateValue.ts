@@ -34,7 +34,7 @@ export const estimateWithMarket = (targetCurrency: string, walletCurrency: strin
 
     if (market && marketTicker) {
         if (targetCurrency === market.ask_unit) {
-            return walletTotal * (1 / Number(marketTicker.last));
+            return Number(marketTicker.last) > 0 ? walletTotal * (1 / Number(marketTicker.last)) : 0;
         } else {
             return walletTotal * Number(marketTicker.last);
         }
