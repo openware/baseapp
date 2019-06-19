@@ -1,14 +1,19 @@
-import { Decimal } from '@openware/components';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { WalletItemProps } from '../../../components/WalletItem';
-import { estimateValue, estimateWithMarket, findPrecision } from '../../../helpers/estimateValue';
+import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
+import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
 import {
+    currenciesFetch,
+    Currency,
     marketsFetch,
+    marketsTickersFetch,
     RootState,
+    selectCurrencies,
     selectMarkets,
-    selectMarketTickers, selectUserLoggedIn,
+    selectMarketTickers,
+    selectUserLoggedIn,
 } from '../../../modules';
 import { Market, Ticker } from '../../../modules/public/markets';
 import { rangerConnectFetch, RangerConnectFetch } from '../../../modules/public/ranger';
@@ -21,8 +26,9 @@ interface EstimatedValueProps {
 }
 
 interface ReduxProps {
+    currencies: Currency[];
     markets: Market[];
-    marketTickers: {
+    tickers: {
         [key: string]: Ticker,
     };
     rangerState: RangerState;
@@ -30,7 +36,9 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    marketsFetch: typeof marketsFetch;
+    fetchCurrencies: typeof currenciesFetch;
+    fetchMarkets: typeof marketsFetch;
+    fetchTickers: typeof marketsTickersFetch;
     rangerConnect: typeof rangerConnectFetch;
 }
 
@@ -38,10 +46,23 @@ type Props = DispatchProps & ReduxProps & EstimatedValueProps & InjectedIntlProp
 
 class EstimatedValueContainer extends React.Component<Props> {
     public componentDidMount(): void {
-        const {markets, userLoggedIn, rangerState: {connected}} = this.props;
+        const {
+            currencies,
+            fetchCurrencies,
+            fetchMarkets,
+            fetchTickers,
+            markets,
+            rangerState: {connected},
+            userLoggedIn,
+        } = this.props;
 
-        if (markets.length < 1) {
-            this.props.marketsFetch();
+        if (markets.length === 0) {
+            fetchMarkets();
+            fetchTickers();
+        }
+
+        if (currencies.length === 0) {
+            fetchCurrencies();
         }
 
         if (!connected) {
@@ -49,51 +70,83 @@ class EstimatedValueContainer extends React.Component<Props> {
         }
     }
 
+    public componentWillReceiveProps(next: Props) {
+        const {
+            currencies,
+            fetchCurrencies,
+            fetchMarkets,
+            fetchTickers,
+            markets,
+        } = this.props;
+
+        if (next.markets.length === 0 && next.markets !== markets) {
+            fetchMarkets();
+            fetchTickers();
+        }
+
+        if (next.currencies.length === 0 && next.currencies !== currencies) {
+            fetchCurrencies();
+        }
+    }
+
     public render(): React.ReactNode {
-        const {wallets, markets, marketTickers} = this.props;
-        const primaryCurrency = 'usd';
-        const primaryCurrencyPrecision = findPrecision(primaryCurrency, markets);
-        const estimatedValue = estimateValue(primaryCurrency, wallets, markets, marketTickers);
-        const secondaryCurrency = 'eth';
-        const secondaryCurrencyPrecision = findPrecision(secondaryCurrency, markets);
-        const estimatedValueSecondary = estimateWithMarket(secondaryCurrency, primaryCurrency, estimatedValue, markets, marketTickers);
+        const {
+            currencies,
+            markets,
+            tickers,
+            wallets,
+        } = this.props;
+        const estimatedValue = estimateValue(VALUATION_PRIMARY_CURRENCY, currencies, wallets, markets, tickers);
 
         return (
             <div className="pg-estimated-value">
                 <div className="pg-estimated-value__container">
-                    {this.t('page.body.wallets.estimated_value')}
+                    {this.translate('page.body.wallets.estimated_value')}
                     <span className="value-container">
                         <span className="value">
-                            {Decimal.format(estimatedValue, primaryCurrencyPrecision)}
+                            {estimatedValue}
                         </span>
-                        <span className="value-sign">{primaryCurrency.toUpperCase()}</span>
+                        <span className="value-sign">{VALUATION_PRIMARY_CURRENCY.toUpperCase()}</span>
                     </span>
-
-                    <span className="value-container">
-                        <span className="value">
-                            {Decimal.format(estimatedValueSecondary, secondaryCurrencyPrecision)}
-                        </span>
-                        <span className="value-sign">{secondaryCurrency.toUpperCase()}</span>
-                    </span>
+                    {VALUATION_SECONDARY_CURRENCY && this.renderSecondaryCurrencyValuation(estimatedValue)}
                 </div>
             </div>
         );
     }
 
-    public t = (key: string) => {
-        return this.props.intl.formatMessage({id: key});
+    public translate = (key: string) => this.props.intl.formatMessage({id: key});
+
+    private renderSecondaryCurrencyValuation = (estimatedValue: string) => {
+        const {
+            currencies,
+            markets,
+            tickers,
+        } = this.props;
+        const estimatedValueSecondary = estimateUnitValue(VALUATION_SECONDARY_CURRENCY, VALUATION_PRIMARY_CURRENCY, +estimatedValue, currencies, markets, tickers);
+
+        return (
+            <span className="value-container">
+                <span className="value">
+                    {estimatedValueSecondary}
+                </span>
+                <span className="value-sign">{VALUATION_SECONDARY_CURRENCY.toUpperCase()}</span>
+            </span>
+        );
     };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
+    currencies: selectCurrencies(state),
     markets: selectMarkets(state),
-    marketTickers: selectMarketTickers(state),
+    tickers: selectMarketTickers(state),
     rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    marketsFetch: () => dispatch(marketsFetch()),
+    fetchCurrencies: () => dispatch(currenciesFetch()),
+    fetchMarkets: () => dispatch(marketsFetch()),
+    fetchTickers: () => dispatch(marketsTickersFetch()),
     rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
 });
 

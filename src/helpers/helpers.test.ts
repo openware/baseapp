@@ -1,3 +1,4 @@
+import { Currency } from '../modules/public/currencies';
 import * as helpers from './';
 
 describe('Constants regexps', () => {
@@ -180,6 +181,13 @@ describe('Helpers', () => {
         expect(helpers.preciseData(3.141592, 0)).toBe('3');
         expect(helpers.preciseData(3.141592, 8)).toBe('3.14159200');
         expect(helpers.preciseData(3.141592)).toBe('3');
+    });
+
+    // handleCCYPrecision.ts
+    it('Should return correctly precised numbers', () => {
+        const currencies = [{id: 'eth', precision: 5}, {id: 'usd', precision: 4}, {id: 'btc', precision: 8}, {id: 'zar', precision: 8}] as Currency[];
+        expect(helpers.handleCCYPrecision(currencies, 'btc', 4)).toBe(8);
+        expect(helpers.handleCCYPrecision(currencies, 'trst', 4)).toBe(4);
     });
 
     // setTradeColor.ts

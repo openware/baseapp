@@ -1,5 +1,9 @@
+import { Decimal } from '@openware/components';
 import { WalletItemProps } from '../components/WalletItem';
+import { DEFAULT_CCY_PRECISION } from '../constants';
+import { Currency } from '../modules/public/currencies';
 import { Market, Ticker } from '../modules/public/markets';
+import { handleCCYPrecision } from './';
 
 export interface MarketTicker {
     [key: string]: Ticker;
@@ -28,29 +32,40 @@ const getWalletTotal = (wallet: WalletItemProps): number => {
     return Number(wallet.balance) + (Number(wallet.locked) || 0);
 };
 
-export const estimateWithMarket = (targetCurrency: string, walletCurrency: string, walletTotal: number, markets: Market[], marketTickers: MarketTicker): number => {
-    const market = findMarket(targetCurrency, walletCurrency, markets);
+export const estimateWithMarket = (targetCurrency: string, walletCurrency: string, walletTotal: number, currencies: Currency[], markets: Market[], marketTickers: MarketTicker): number => {
+    const formattedTargetCurrency = targetCurrency.toLowerCase();
+    const formattedWalletCurrency = walletCurrency.toLowerCase();
+    const market = findMarket(formattedTargetCurrency, formattedWalletCurrency, markets);
     const marketTicker = findMarketTicker(market && market.id || '', marketTickers);
+    const targetCurrencyPrecision = handleCCYPrecision(currencies, formattedTargetCurrency, DEFAULT_CCY_PRECISION);
+
+    if (formattedTargetCurrency === formattedWalletCurrency) {
+        return Number(Decimal.format(walletTotal, targetCurrencyPrecision));
+    }
 
     if (market && marketTicker) {
-        if (targetCurrency === market.ask_unit) {
-            return Number(marketTicker.last) > 0 ? walletTotal * (1 / Number(marketTicker.last)) : 0;
+        if (formattedTargetCurrency === market.ask_unit) {
+            const precisedValue = Number(Decimal.format(walletTotal * (Number(marketTicker.last) !== 0 ? 1 / Number(marketTicker.last) : 0), targetCurrencyPrecision));
+            return precisedValue;
         } else {
-            return walletTotal * Number(marketTicker.last);
+            const precisedValue = Number(Decimal.format(walletTotal * Number(marketTicker.last), targetCurrencyPrecision));
+            return precisedValue;
         }
     }
 
     return 0;
 };
 
-const estimateWithoutMarket = (targetCurrency: string, wallet: WalletItemProps, markets: Market[], marketTickers: MarketTicker): number => {
+const estimateWithoutMarket = (targetCurrency: string, walletCurrency: string, walletTotal: number, currencies: Currency[], markets: Market[], marketTickers: MarketTicker): number => {
     const secondaryCurrencies: string[] = [];
+    const formattedTargetCurrency = targetCurrency.toLowerCase();
+    const formattedWalletCurrency = walletCurrency.toLowerCase();
 
     for (const market of markets) {
-        if (market.ask_unit === targetCurrency) {
+        if (market.ask_unit === formattedTargetCurrency) {
             secondaryCurrencies.push(market.bid_unit);
         }
-        if (market.bid_unit === targetCurrency) {
+        if (market.bid_unit === formattedTargetCurrency) {
             secondaryCurrencies.push(market.ask_unit);
         }
     }
@@ -59,8 +74,8 @@ const estimateWithoutMarket = (targetCurrency: string, wallet: WalletItemProps, 
     outer:
         for (const secondaryCurrency of secondaryCurrencies) {
             for (const market of markets) {
-                if (market.ask_unit === secondaryCurrency && market.bid_unit === wallet.currency ||
-                    market.bid_unit === secondaryCurrency && market.ask_unit === wallet.currency) {
+                if (market.ask_unit === secondaryCurrency && market.bid_unit === formattedWalletCurrency ||
+                    market.bid_unit === secondaryCurrency && market.ask_unit === formattedWalletCurrency) {
                     selectedSecondaryCurrency = secondaryCurrency;
                     break outer;
                 }
@@ -68,8 +83,8 @@ const estimateWithoutMarket = (targetCurrency: string, wallet: WalletItemProps, 
         }
 
     if (selectedSecondaryCurrency) {
-        const secondaryCurrencyValue = estimateWithMarket(selectedSecondaryCurrency, wallet.currency, getWalletTotal(wallet), markets, marketTickers);
-        return estimateWithMarket(targetCurrency, selectedSecondaryCurrency, secondaryCurrencyValue, markets, marketTickers);
+        const secondaryCurrencyValue = estimateWithMarket(selectedSecondaryCurrency, formattedWalletCurrency, walletTotal, currencies, markets, marketTickers);
+        return estimateWithMarket(targetCurrency, selectedSecondaryCurrency, secondaryCurrencyValue, currencies, markets, marketTickers);
     } else {
         // 'No secondary currency found for', wallet.currency
     }
@@ -77,21 +92,34 @@ const estimateWithoutMarket = (targetCurrency: string, wallet: WalletItemProps, 
     return 0;
 };
 
-export const estimateValue = (targetCurrency: string, wallets: WalletItemProps[], markets: Market[], marketTickers: MarketTicker): number => {
+export const estimateValue = (targetCurrency: string, currencies: Currency[], wallets: WalletItemProps[], markets: Market[], marketTickers: MarketTicker): string => {
+    const formattedTargetCurrency = targetCurrency.toLowerCase();
     let estimatedValue = 0;
 
     for (const wallet of wallets) {
-        if (wallet.currency === targetCurrency) {
+        const formattedWalletCurrency = wallet.currency.toLowerCase();
+
+        if (formattedWalletCurrency === formattedTargetCurrency) {
             const walletTotal = Number(wallet.balance) + (Number(wallet.locked) || 0);
             estimatedValue += walletTotal;
-        } else if (isMarketPresent(targetCurrency, wallet.currency, markets)) {
-            estimatedValue += estimateWithMarket(targetCurrency, wallet.currency, getWalletTotal(wallet), markets, marketTickers);
+        } else if (isMarketPresent(formattedTargetCurrency, formattedWalletCurrency, markets)) {
+            estimatedValue += estimateWithMarket(formattedTargetCurrency, formattedWalletCurrency, getWalletTotal(wallet), currencies, markets, marketTickers);
         } else {
-            estimatedValue += estimateWithoutMarket(targetCurrency, wallet, markets, marketTickers);
+            estimatedValue += estimateWithoutMarket(formattedTargetCurrency, wallet.currency, getWalletTotal(wallet), currencies, markets, marketTickers);
         }
     }
 
-    return estimatedValue;
+    const targetCurrencyPrecision = handleCCYPrecision(currencies, formattedTargetCurrency, DEFAULT_CCY_PRECISION);
+    const precisedEstimatedValue = Decimal.format(estimatedValue, targetCurrencyPrecision);
+
+    return precisedEstimatedValue;
+};
+
+export const estimateUnitValue = (targetCurrency: string, currentCurrency: string, total: number, currencies: Currency[], markets: Market[], marketTickers: MarketTicker): string => {
+    const estimated = estimateWithMarket(targetCurrency, currentCurrency, total, currencies, markets, marketTickers) || estimateWithoutMarket(targetCurrency, currentCurrency, total, currencies, markets, marketTickers);
+    const formattedTargetCurrency = targetCurrency.toLowerCase();
+    const targetCurrencyPrecision = handleCCYPrecision(currencies, formattedTargetCurrency, DEFAULT_CCY_PRECISION);
+    return Decimal.format(estimated, targetCurrencyPrecision);
 };
 
 export const findPrecision = (unit: string, markets: Market[]) => {
