@@ -209,6 +209,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         });
         let body;
         let button;
+        const isDisabled = !otpCode.match(/.{6}/g);
         switch (this.props.modal.action) {
             case 'getKeys':
                 button =
@@ -216,8 +217,8 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Button
                             label={this.t('page.body.profile.apiKeys.modal.btn.show')}
                             onClick={this.handleGetKeys}
-                            disabled={!otpCode.match(/.{6}/g)}
-                            className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                            disabled={isDisabled}
+                            className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                         />
                     );
                 break;
@@ -227,7 +228,8 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Button
                             label={this.t('page.body.profile.apiKeys.modal.btn.create')}
                             onClick={this.handleCreateKey}
-                            className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                            className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                            disabled={isDisabled}
                         />
                     );
                 break;
@@ -291,7 +293,8 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             <Button
                                 label={this.t('page.body.profile.apiKeys.modal.btn.disabled')}
                                 onClick={this.handleUpdateKey}
-                                className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                                className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                                disabled={isDisabled}
                             />
                         )
                         :
@@ -299,7 +302,8 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             <Button
                                 label={this.t('page.body.profile.apiKeys.modal.btn.activate')}
                                 onClick={this.handleUpdateKey}
-                                className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                                className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                                disabled={isDisabled}
                             />
                         );
                 break;
@@ -309,7 +313,8 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Button
                             label={this.t('page.body.profile.apiKeys.modal.btn.delete')}
                             onClick={this.handleDeleteKey}
-                            className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                            className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                            disabled={isDisabled}
                         />
                     );
                 break;
@@ -357,6 +362,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
     private handleHide2FAModal = () => {
         const payload: ApiKeys2FAModal['payload'] = {active: false};
         this.props.toggleApiKeys2FAModal(payload);
+        this.setState({ otpCode: '' });
     };
 
     private handleOtpCodeChange = (value: string) => {
