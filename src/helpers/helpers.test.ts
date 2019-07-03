@@ -125,6 +125,17 @@ describe('Helpers', () => {
         expect(helpers.handleFilter(wallet, 'c')).toBe(true);
     });
 
+    // formatCCYAddress.ts
+    it('Should right format BCH address', () => {
+        expect(helpers.formatCCYAddress('BTC', '')).toEqual('');
+        expect(helpers.formatCCYAddress('BTC', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL')).toEqual('2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL');
+        expect(helpers.formatCCYAddress('BCH', '')).toEqual('');
+        expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2c0')).toEqual('');
+        expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2c')).toEqual('');
+        expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cLa')).toEqual('');
+        expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL')).toEqual('bchtest:prdlsx39pn5v6yxmcgaqgeg6zd48snqaay69chcgwx');
+    });
+
     // historyTableUtils.js
     it('Should render correct depositColorMapping, withdrawColorMapping and tradesColorMapping', () => {
         expect(helpers.depositColorMapping).toEqual(depositColors);

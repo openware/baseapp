@@ -4,6 +4,7 @@ export * from './capitalize';
 export * from './checkDate';
 export * from './emailValidation';
 export * from './filterData';
+export * from './formatCCYAddress';
 export * from './formatDate';
 export * from './getHistorySagaParam';
 export * from './getLanguageByCode';

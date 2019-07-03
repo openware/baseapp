@@ -1,5 +1,4 @@
 import { Button, Loader } from '@openware/components';
-import bch = require('bitcoincashjs');
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
@@ -11,7 +10,7 @@ import { ModalWithdrawSubmit } from '../../containers/ModalWithdrawSubmit';
 import { EstimatedValue } from '../../containers/Wallets/EstimatedValue';
 import { WalletHistory } from '../../containers/Wallets/History';
 import { Withdraw, WithdrawProps } from '../../containers/Wallets/Withdraw';
-import { setDocumentTitle } from '../../helpers';
+import { formatCCYAddress, setDocumentTitle } from '../../helpers';
 import {
     alertPush,
     RootState,
@@ -277,9 +276,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             this.props.intl.formatMessage({id: addressDepositError.message}) :
             this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
 
-        const walletAddress = wallet.currency === 'BCH' && selectedWalletAddress
-            ? bch.Address(selectedWalletAddress).toString(bch.Address.CashAddrFormat)
-            : selectedWalletAddress || '';
+        const walletAddress = formatCCYAddress(currency, selectedWalletAddress);
 
         if (wallet.type === 'coin') {
             return (
