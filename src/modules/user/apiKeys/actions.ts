@@ -15,7 +15,7 @@ export interface ApiKeyDataInterface {
     algorithm: string;
     created_at: string;
     kid: string;
-    scope: typeof Array;
+    scope?: typeof Array;
     secret?: string;
     state: string;
     updated_at: string;
@@ -23,9 +23,6 @@ export interface ApiKeyDataInterface {
 
 export interface ApiKeysFetch {
     type: typeof API_KEYS_FETCH;
-    payload: {
-        totp_code: string,
-    };
 }
 
 export interface ApiKeysData {
@@ -79,9 +76,8 @@ export interface ApiKeys2FAModal {
     payload: ApiKeysState['modal'];
 }
 
-export const apiKeysFetch = (payload: ApiKeysFetch['payload']): ApiKeysFetch => ({
+export const apiKeysFetch = (): ApiKeysFetch => ({
     type: API_KEYS_FETCH,
-    payload,
 });
 
 export const apiKeysData = (payload: ApiKeysData['payload']): ApiKeysData => ({

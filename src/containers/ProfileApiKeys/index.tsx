@@ -73,6 +73,10 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         }
     };
 
+    public componentDidMount(): void {
+        this.props.getApiKeys();
+    }
+
     public render() {
         const {user, dataLoaded, apiKeys} = this.props;
         const modal = this.props.modal.active ? (
@@ -103,14 +107,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                     <p className="pg-profile-page__label pg-profile-page__text-center">
                         {this.t('page.body.profile.apiKeys.noOtp')}
                     </p>
-                )}
-
-                {user.otp && !dataLoaded && (
-                    <div className="pg-profile-page__text-center">
-                        <div className="cr-button" onClick={this.handleGetKeysClick}>
-                            <span>Show</span>
-                        </div>
-                    </div>
                 )}
 
                 {user.otp && dataLoaded && !apiKeys.length && (
@@ -211,17 +207,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         let button;
         const isDisabled = !otpCode.match(/.{6}/g);
         switch (this.props.modal.action) {
-            case 'getKeys':
-                button =
-                    (
-                        <Button
-                            label={this.t('page.body.profile.apiKeys.modal.btn.show')}
-                            onClick={this.handleGetKeys}
-                            disabled={isDisabled}
-                            className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
-                        />
-                    );
-                break;
             case 'createKey':
                 button =
                     (
@@ -357,7 +342,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         this.setState(prev => ({
             codeFocused: !prev.codeFocused,
         }));
-    }
+    };
 
     private handleHide2FAModal = () => {
         const payload: ApiKeys2FAModal['payload'] = {active: false};
@@ -373,9 +358,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
 
     private renderOnClick = () => {
         switch (this.props.modal.action) {
-            case 'getKeys':
-                this.handleGetKeys();
-                break;
             case 'createKey':
                 this.handleCreateKey();
                 break;
@@ -398,17 +380,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
             event.preventDefault();
             this.renderOnClick();
         }
-    };
-
-    private handleGetKeysClick = () => {
-        const payload: ApiKeys2FAModal['payload'] = {active: true, action: 'getKeys'};
-        this.props.toggleApiKeys2FAModal(payload);
-    };
-
-    private handleGetKeys = () => {
-        const payload: ApiKeyCreateFetch['payload'] = {totp_code: this.state.otpCode};
-        this.props.getApiKeys(payload);
-        this.setState({otpCode: ''});
     };
 
     private handleCreateKeyClick = () => {
@@ -467,7 +438,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         toggleApiKeys2FAModal: (payload: ApiKeys2FAModal['payload']) => dispatch(apiKeys2FAModal(payload)),
-        getApiKeys: payload => dispatch(apiKeysFetch(payload)),
+        getApiKeys: () => dispatch(apiKeysFetch()),
         createApiKey: payload => dispatch(apiKeyCreateFetch(payload)),
         updateApiKey: payload => dispatch(apiKeyUpdateFetch(payload)),
         deleteApiKey: payload => dispatch(apiKeyDeleteFetch(payload)),

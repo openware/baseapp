@@ -11,9 +11,8 @@ import {
 // tslint:disable no-object-literal-type-assertion
 describe('Api Keys actions', () => {
     it('should check apiKeysFetch action creator', () => {
-        const payload = {totp_code: '123456'};
-        const expectedAction = {type: API_KEYS_FETCH, payload};
-        expect(actions.apiKeysFetch(payload)).toEqual(expectedAction);
+        const expectedAction = {type: API_KEYS_FETCH};
+        expect(actions.apiKeysFetch()).toEqual(expectedAction);
     });
 
     it('should check apiKeysData action creator', () => {
