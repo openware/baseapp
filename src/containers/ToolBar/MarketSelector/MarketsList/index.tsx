@@ -58,7 +58,7 @@ class MarketsListComponent extends React.Component<Props, State> {
         super(props);
 
         this.state = {
-            sortBy: 'id',
+            sortBy: 'none',
             reverseOrder: false,
         };
     }
@@ -110,9 +110,9 @@ class MarketsListComponent extends React.Component<Props, State> {
             'pg-dropdown-markets-list-container__header-selected': obj.selected,
         });
 
-        const arrowClassname = classnames({
-            'pg-dropdown-markets-list-container__arrow-down': !(obj.id === sortBy && !reverseOrder),
-            'pg-dropdown-markets-list-container__arrow-up': obj.id === sortBy && !reverseOrder,
+        const arrowClassname = classnames('pg-dropdown-markets-list-container__none', {
+            'arrow-down': sortBy !== 'none' && obj.id === sortBy && !reverseOrder,
+            'arrow-up': sortBy !== 'none' && obj.id === sortBy && reverseOrder,
         });
 
         return (
@@ -145,7 +145,10 @@ class MarketsListComponent extends React.Component<Props, State> {
 
         const {sortBy, reverseOrder} = this.state;
 
-        marketsMapped.sort((a, b) => a[sortBy] > b[sortBy] ? 1 : b[sortBy] > a[sortBy] ? -1 : 0);
+        if (sortBy !== 'none') {
+            marketsMapped.sort((a, b) => a[sortBy] > b[sortBy] ? 1 : b[sortBy] > a[sortBy] ? -1 : 0);
+        }
+
         reverseOrder && marketsMapped.reverse();
 
         return marketsMapped.reduce((pV, cV) => {
@@ -180,8 +183,10 @@ class MarketsListComponent extends React.Component<Props, State> {
         const {sortBy, reverseOrder} = this.state;
         if (key !== sortBy) {
             this.setState({sortBy: key, reverseOrder: false});
+        } else if (key === sortBy && !reverseOrder) {
+            this.setState({reverseOrder: true});
         } else {
-            this.setState({reverseOrder: !reverseOrder});
+            this.setState({sortBy: 'none', reverseOrder: false});
         }
     }
 }
