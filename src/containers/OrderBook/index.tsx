@@ -118,7 +118,7 @@ class OrderBookContainer extends React.Component<Props, State> {
           return (
               <React.Fragment>
                   <span className={cn}>
-                      {Decimal.format(Number((marketTickers[currentMarket.id] || defaultTicker).last), currentMarket.ask_precision)} {currentMarket.bid_unit.toUpperCase()}
+                      {Decimal.format(Number((marketTickers[currentMarket.id] || defaultTicker).last), currentMarket.price_precision)} {currentMarket.quote_unit.toUpperCase()}
                   </span>
                   <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
               </React.Fragment>
@@ -131,17 +131,17 @@ class OrderBookContainer extends React.Component<Props, State> {
     private renderHeaders = () => {
         const { intl, currentMarket } = this.props;
         return [
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})} (${currentMarket && currentMarket.bid_unit.toUpperCase()})`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})} (${currentMarket && currentMarket.ask_unit.toUpperCase()})`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})} (${currentMarket && currentMarket.ask_unit.toUpperCase()})`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})} (${currentMarket && currentMarket.quote_unit.toUpperCase()})`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})} (${currentMarket && currentMarket.base_unit.toUpperCase()})`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})} (${currentMarket && currentMarket.base_unit.toUpperCase()})`,
         ];
     };
 
     private renderOrderBook = (array: string[][], side: string, message: string, currentMarket?: Market) => {
         let total = accumulateVolume(array);
         const isLarge = this.state.width > breakpoint;
-        const priceFixed = currentMarket ? currentMarket.bid_precision : 0;
-        const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
+        const priceFixed = currentMarket ? currentMarket.price_precision : 0;
+        const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
         return (array.length > 0) ? array.map((item, i) => {
             const [price, volume] = item;
             switch (side) {

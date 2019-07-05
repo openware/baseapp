@@ -1,21 +1,21 @@
+import { Market } from '../markets';
 import * as actions from './actions';
 import { DEPTH_DATA, DEPTH_ERROR, DEPTH_FETCH, ORDER_BOOK_DATA, ORDER_BOOK_ERROR, ORDER_BOOK_FETCH } from './constants';
 import { OrderBookState } from './types';
 
 describe('Orderbook/MarketDepth actions', () => {
-    const fakeMarket = {
+    const fakeMarket: Market = {
         id: 'btczar',
         name: 'BTC/ZAR',
         bid_fee: '0.0015',
         ask_fee: '0.0015',
-        ask_unit: 'btc',
-        bid_unit: 'zar',
-        min_ask_price: '0.0',
-        max_bid_price: '0.0',
-        min_ask_amount: '0.0',
-        min_bid_amount: '0.0',
-        ask_precision: 4,
-        bid_precision: 4,
+        base_unit: 'btc',
+        quote_unit: 'zar',
+        min_price: '0.0',
+        max_price: '0.0',
+        min_amount: '0.0',
+        amount_precision: 4,
+        price_precision: 4,
     };
 
     const fakeError = {

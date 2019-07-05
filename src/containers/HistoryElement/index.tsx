@@ -173,16 +173,16 @@ class HistoryComponent extends React.Component<Props> {
             case 'trades': {
                 const { id, created_at, side, market, price, funds, volume } = item;
                 const marketToDisplay = marketsData.find(m => m.id === market) ||
-                    { name: '', bid_precision: 0, ask_precision: 0 };
+                    { name: '', price_precision: 0, amount_precision: 0 };
                 const marketName = marketToDisplay ? marketToDisplay.name : market;
                 const sideText = setTradesType(side).text.toLowerCase() ? this.props.intl.formatMessage({id: `page.body.history.trade.content.side.${setTradesType(side).text.toLowerCase()}`}) : '';
                 return [
                     localeDate(created_at, 'fullDate'),
                     <span style={{ color: setTradesType(side).color }} key={id}>{sideText}</span>,
                     marketName,
-                    <Decimal key={id} fixed={marketToDisplay.bid_precision}>{price}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.ask_precision}>{volume}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.bid_precision}>{funds}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.price_precision}>{price}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{volume}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{funds}</Decimal>,
                 ];
             }
             default: {

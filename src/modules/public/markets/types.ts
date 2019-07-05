@@ -1,16 +1,16 @@
 export interface Market {
     id: string;
     name: string;
-    ask_unit: string;
-    bid_unit: string;
+    base_unit: string;
+    quote_unit: string;
     ask_fee: string;
     bid_fee: string;
-    min_ask_price: string;
-    max_bid_price: string;
-    min_ask_amount: string;
-    min_bid_amount: string;
-    ask_precision: number;
-    bid_precision: number;
+    min_price: string;
+    max_price: string;
+    min_amount: string;
+    amount_precision: number;
+    price_precision: number;
+    state?: string;
 }
 
 export interface Ticker {

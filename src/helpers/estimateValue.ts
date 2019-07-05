@@ -11,8 +11,8 @@ export interface MarketTicker {
 
 const findMarket = (askUnit: string, bidUnit: string, markets: Market[]): Market | null => {
     for (const market of markets) {
-        if (market.ask_unit === askUnit && market.bid_unit === bidUnit ||
-            market.ask_unit === bidUnit && market.bid_unit === askUnit) {
+        if (market.base_unit === askUnit && market.quote_unit === bidUnit ||
+            market.base_unit === bidUnit && market.quote_unit === askUnit) {
             return market;
         }
     }
@@ -44,7 +44,7 @@ export const estimateWithMarket = (targetCurrency: string, walletCurrency: strin
     }
 
     if (market && marketTicker) {
-        if (formattedTargetCurrency === market.ask_unit) {
+        if (formattedTargetCurrency === market.base_unit) {
             const precisedValue = Number(Decimal.format(walletTotal * (Number(marketTicker.last) !== 0 ? 1 / Number(marketTicker.last) : 0), targetCurrencyPrecision));
             return precisedValue;
         } else {
@@ -62,11 +62,11 @@ const estimateWithoutMarket = (targetCurrency: string, walletCurrency: string, w
     const formattedWalletCurrency = walletCurrency.toLowerCase();
 
     for (const market of markets) {
-        if (market.ask_unit === formattedTargetCurrency) {
-            secondaryCurrencies.push(market.bid_unit);
+        if (market.base_unit === formattedTargetCurrency) {
+            secondaryCurrencies.push(market.quote_unit);
         }
-        if (market.bid_unit === formattedTargetCurrency) {
-            secondaryCurrencies.push(market.ask_unit);
+        if (market.quote_unit === formattedTargetCurrency) {
+            secondaryCurrencies.push(market.base_unit);
         }
     }
 
@@ -74,8 +74,8 @@ const estimateWithoutMarket = (targetCurrency: string, walletCurrency: string, w
     outer:
         for (const secondaryCurrency of secondaryCurrencies) {
             for (const market of markets) {
-                if (market.ask_unit === secondaryCurrency && market.bid_unit === formattedWalletCurrency ||
-                    market.bid_unit === secondaryCurrency && market.ask_unit === formattedWalletCurrency) {
+                if (market.base_unit === secondaryCurrency && market.quote_unit === formattedWalletCurrency ||
+                    market.quote_unit === secondaryCurrency && market.base_unit === formattedWalletCurrency) {
                     selectedSecondaryCurrency = secondaryCurrency;
                     break outer;
                 }
@@ -124,11 +124,11 @@ export const estimateUnitValue = (targetCurrency: string, currentCurrency: strin
 
 export const findPrecision = (unit: string, markets: Market[]) => {
     for (const market of markets) {
-        if (market.ask_unit === unit) {
-            return market.ask_precision;
+        if (market.base_unit === unit) {
+            return market.amount_precision;
         }
-        if (market.bid_unit === unit) {
-            return market.bid_precision;
+        if (market.quote_unit === unit) {
+            return market.price_precision;
         }
     }
 

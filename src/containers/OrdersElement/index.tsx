@@ -133,7 +133,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         } = item;
 
         const currentMarket = this.props.marketsData.find(m => m.id === market)
-            || { name: '', bid_precision: 0, ask_precision: 0 };
+            || { name: '', price_precision: 0, amount_precision: 0 };
 
         const orderType = this.getType(side, ord_type);
         const marketName = currentMarket ? currentMarket.name : market;
@@ -146,11 +146,11 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             date,
             <span style={{ color: setTradeColor(side).color }} key={id}>{orderType}</span>,
             marketName,
-            <Decimal key={id} fixed={currentMarket.bid_precision}>{actualPrice}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{origin_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{executed_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{remaining_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.ask_precision}>{costRemaining.toString()}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.price_precision}>{actualPrice}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision}>{origin_volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision}>{executed_volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision}>{remaining_volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision}>{costRemaining.toString()}</Decimal>,
             status,
             state === 'wait' && <CloseButton key={id} onClick={this.handleCancel(id)} />,
         ];

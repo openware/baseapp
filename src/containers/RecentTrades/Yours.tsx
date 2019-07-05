@@ -97,8 +97,8 @@ class YoursComponent extends React.Component<Props> {
     private renderRow = item => {
         const { currentMarket } = this.props;
         const { id, created_at, price, volume, taker_type } = item;
-        const priceFixed = currentMarket ? currentMarket.bid_precision : 0;
-        const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
+        const priceFixed = currentMarket ? currentMarket.price_precision : 0;
+        const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
         const takerSide = taker_type === 'sell' ?  'ask' : 'bid';
 
         return [

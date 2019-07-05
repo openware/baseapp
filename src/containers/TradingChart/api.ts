@@ -71,7 +71,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
                 timezone: 'Etc/UTC',
                 ticker: symbol.id,
                 minmov: 1,
-                pricescale: 10000,
+                pricescale: Math.pow(10, symbol.price_precision),
                 has_intraday: true,
                 intraday_multipliers: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],
                 supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', 'd', '3d'],

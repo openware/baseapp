@@ -97,11 +97,11 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         }
         const { priceLimit } = this.state;
 
-        const walletBase = this.getWallet(currentMarket.ask_unit, wallets);
-        const walletQuote = this.getWallet(currentMarket.bid_unit, wallets);
+        const walletBase = this.getWallet(currentMarket.base_unit, wallets);
+        const walletQuote = this.getWallet(currentMarket.quote_unit, wallets);
 
-        const to = currentMarket.ask_unit;
-        const from = currentMarket.bid_unit;
+        const to = currentMarket.base_unit;
+        const from = currentMarket.quote_unit;
 
         const currentTicker = marketTickers[currentMarket.id];
         const defaultCurrentTicker = { last: '0' };
@@ -130,8 +130,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     to={to}
                     handleSendType={this.getOrderType}
                     orderTypes={this.getOrderTypes}
-                    currentMarketAskPrecision={currentMarket.ask_precision}
-                    currentMarketBidPrecision={currentMarket.bid_precision}
+                    currentMarketAskPrecision={currentMarket.amount_precision}
+                    currentMarketBidPrecision={currentMarket.price_precision}
                     amountText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.amount' })}
                     availableText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.available' })}
                     orderTypeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType' })}

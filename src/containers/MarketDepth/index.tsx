@@ -1,8 +1,7 @@
-import { MarketDepths } from '@openware/components';
+import { Decimal, MarketDepths } from '@openware/components';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
-import { preciseData } from '../../helpers';
 import {
     Market,
     RootState,
@@ -27,6 +26,15 @@ const settings = {
 };
 
 class MarketDepthContainer extends React.Component<Props> {
+    public componentWillReceiveProps(next: Props) {
+        const { currentMarket } = next;
+        const { currentMarket: prevCurrentMarket} = this.props;
+
+        if (currentMarket && currentMarket !== prevCurrentMarket) {
+            this.forceUpdate();
+        }
+    }
+
     public shouldComponentUpdate(prev, next) {
         const { asksItems, bidsItems } = prev;
         const ordersLength = Number(asksItems.length) + Number(bidsItems.length);
@@ -69,17 +77,19 @@ class MarketDepthContainer extends React.Component<Props> {
     }
 
     private convertToCumulative = (data, type) => {
-        if (!this.props.currentMarket) {
+        const { currentMarket } = this.props;
+
+        if (!currentMarket) {
             return;
         }
 
-        const [askCurrency, bidCurrency] = [this.props.currentMarket.ask_unit.toUpperCase(), this.props.currentMarket.bid_unit.toUpperCase()];
+        const [askCurrency, bidCurrency] = [currentMarket.base_unit.toUpperCase(), currentMarket.quote_unit.toUpperCase()];
         const tipLayout = ({ volume, price, cumulativeVolume, cumulativePrice }) => (
             <span className={'pg-market-depth__tooltip'}>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.price" /> : {price} {bidCurrency}</span>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.volume" /> : {volume} {askCurrency}</span>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeVolume" /> : {preciseData(cumulativeVolume, 2)} {askCurrency}</span>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeValue" /> : {preciseData(cumulativePrice, 2)} {bidCurrency}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.price" /> : {Decimal.format(price, currentMarket.price_precision)} {bidCurrency}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.volume" /> : {Decimal.format(volume, currentMarket.amount_precision)} {askCurrency}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeVolume" /> : {Decimal.format(cumulativeVolume, currentMarket.amount_precision)} {askCurrency}</span>
+                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeValue" /> : {Decimal.format(cumulativePrice, currentMarket.price_precision)} {bidCurrency}</span>
             </span>
         );
 
@@ -88,16 +98,16 @@ class MarketDepthContainer extends React.Component<Props> {
 
         const cumulative = data.map((item, index) => {
             const [price, volume] = item;
-            const numberVolume = Number(volume);
-            const numberPrice = Number(price);
-            cumulativeVolumeData = numberVolume + cumulativeVolumeData;
-            cumulativePriceData = cumulativePriceData + (numberPrice * numberVolume);
+            const numberVolume = Decimal.format(volume, currentMarket.amount_precision);
+            const numberPrice = Decimal.format(price, currentMarket.price_precision);
+            cumulativeVolumeData = +numberVolume + cumulativeVolumeData;
+            cumulativePriceData = cumulativePriceData + (+numberPrice * +numberVolume);
             return {
-                [type]: cumulativeVolumeData,
-                cumulativePrice: preciseData(cumulativePriceData, 2),
-                cumulativeVolume: preciseData(cumulativeVolumeData, 2),
-                volume: Number(volume),
-                price: Number(price),
+                [type]: Decimal.format(cumulativeVolumeData, currentMarket.amount_precision),
+                cumulativePrice: Decimal.format(cumulativePriceData, currentMarket.price_precision),
+                cumulativeVolume: Decimal.format(cumulativeVolumeData, currentMarket.amount_precision),
+                volume: Decimal.format(+volume, currentMarket.amount_precision),
+                price: Decimal.format(+numberPrice, currentMarket.price_precision),
                 name: tipLayout({ volume, price, cumulativeVolume: cumulativeVolumeData, cumulativePrice: cumulativePriceData }),
             };
         });

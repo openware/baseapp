@@ -33,7 +33,7 @@ describe('estimateValue', () => {
     it('should convert using market ask unit', () => {
         const targetCurrency = 'btc';
         const wallets = [{currency: 'usd', balance: '903.0008', locked: '100.12345'}] as unknown as WalletItemProps[];
-        const markets = [{id: 'btcusd', name: 'BTC/USD', ask_unit: 'btc', bid_unit: 'usd'}] as Market[];
+        const markets = [{id: 'btcusd', name: 'BTC/USD', base_unit: 'btc', quote_unit: 'usd'}] as Market[];
         const marketTickers = {btcusd: {last: '1.0001'}} as unknown as MarketTicker;
 
         expect(estimateValue(targetCurrency, currencies, wallets, markets, marketTickers)).toEqual('1003.023');
@@ -42,7 +42,7 @@ describe('estimateValue', () => {
     it('should convert using market bid unit', () => {
         const targetCurrency = 'btc';
         const wallets = [{currency: 'usd', balance: '903.0008', locked: '100.12345'}] as unknown as WalletItemProps[];
-        const markets = [{id: 'usdbtc', name: 'USD/BTC', ask_unit: 'usd', bid_unit: 'btc'}] as Market[];
+        const markets = [{id: 'usdbtc', name: 'USD/BTC', base_unit: 'usd', quote_unit: 'btc'}] as Market[];
         const marketTickers = {usdbtc: {last: '0.9999'}} as unknown as MarketTicker;
 
         expect(estimateValue(targetCurrency, currencies, wallets, markets, marketTickers)).toEqual('1003.023');
@@ -52,8 +52,8 @@ describe('estimateValue', () => {
         const targetCurrency = 'btc';
         const wallets = [{currency: 'bch', balance: '900.0', locked: '100.0'}] as unknown as WalletItemProps[];
         const markets = [
-            {id: 'btczar', name: 'BTC/ZAR', ask_unit: 'btc', bid_unit: 'zar'},
-            {id: 'bchzar', name: 'BCH/ZAR', ask_unit: 'bch', bid_unit: 'zar'},
+            {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
+            {id: 'bchzar', name: 'BCH/ZAR', base_unit: 'bch', quote_unit: 'zar'},
         ] as Market[];
         const marketTickers = {btczar: {last: '0.1'}, bchzar: {last: '10'}} as unknown as MarketTicker;
 
@@ -64,8 +64,8 @@ describe('estimateValue', () => {
         const targetCurrency = 'btc';
         const wallets = [{currency: 'bch', balance: '0.9', locked: '0.1'}] as unknown as WalletItemProps[];
         const markets = [
-            {id: 'btczar', name: 'BTC/ZAR', ask_unit: 'btc', bid_unit: 'zar'},
-            {id: 'bchzar', name: 'BCH/ZAR', ask_unit: 'bch', bid_unit: 'zar'},
+            {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
+            {id: 'bchzar', name: 'BCH/ZAR', base_unit: 'bch', quote_unit: 'zar'},
         ] as Market[];
         const marketTickers = {btczar: {last: '10'}, bchzar: {last: '10'}} as unknown as MarketTicker;
 
@@ -76,8 +76,8 @@ describe('estimateValue', () => {
         const targetCurrency = 'btc';
         const wallets = [{currency: 'bch', balance: '2.004', locked: '0.001'}] as unknown as WalletItemProps[];
         const markets = [
-            {id: 'btczar', name: 'BTC/ZAR', ask_unit: 'btc', bid_unit: 'zar'},
-            {id: 'bchzar', name: 'BCH/ZAR', ask_unit: 'bch', bid_unit: 'zar'},
+            {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
+            {id: 'bchzar', name: 'BCH/ZAR', base_unit: 'bch', quote_unit: 'zar'},
         ] as Market[];
         const marketTickers = {btczar: {last: '9.995'}, bchzar: {last: '5.005'}} as unknown as MarketTicker;
 
@@ -88,9 +88,9 @@ describe('estimateValue', () => {
         const targetCurrency = 'btc';
         const wallets = [{currency: 'bch', balance: '1.9', locked: '0.1'}] as unknown as WalletItemProps[];
         const markets = [
-            {id: 'btczar', name: 'BTC/ZAR', ask_unit: 'btc', bid_unit: 'zar'},
-            {id: 'ltczar', name: 'LTC/ZAR', ask_unit: 'ltc', bid_unit: 'zar'},
-            {id: 'bchltc', name: 'BCH/LTC', ask_unit: 'bch', bid_unit: 'ltc'},
+            {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
+            {id: 'ltczar', name: 'LTC/ZAR', base_unit: 'ltc', quote_unit: 'zar'},
+            {id: 'bchltc', name: 'BCH/LTC', base_unit: 'bch', quote_unit: 'ltc'},
         ] as Market[];
         const marketTickers = {
             btczar: {last: '1'},
@@ -106,8 +106,8 @@ describe('estimateValue', () => {
         const currentCurrency = 'bch';
         const total = 1;
         const markets = [
-            {id: 'btczar', name: 'BTC/ZAR', ask_unit: 'btc', bid_unit: 'zar'},
-            {id: 'bchzar', name: 'BCH/ZAR', ask_unit: 'bch', bid_unit: 'zar'},
+            {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
+            {id: 'bchzar', name: 'BCH/ZAR', base_unit: 'bch', quote_unit: 'zar'},
         ] as Market[];
         const marketTickers = {
             btczar: {last: '0.1'},
@@ -122,8 +122,8 @@ describe('estimateValue', () => {
         const currentCurrency = 'bch';
         const total = 1;
         const markets = [
-            {id: 'btczar', name: 'BTC/ZAR', ask_unit: 'btc', bid_unit: 'zar'},
-            {id: 'bchzar', name: 'BCH/ZAR', ask_unit: 'bch', bid_unit: 'zar'},
+            {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
+            {id: 'bchzar', name: 'BCH/ZAR', base_unit: 'bch', quote_unit: 'zar'},
         ] as Market[];
         const marketTickers = {
             btczar: {last: '0.00000001'},
@@ -138,8 +138,8 @@ describe('estimateValue', () => {
         const currentCurrency = 'bch';
         const total = 0.00000001;
         const markets = [
-            {id: 'btczar', name: 'BTC/ZAR', ask_unit: 'btc', bid_unit: 'zar'},
-            {id: 'bchzar', name: 'BCH/ZAR', ask_unit: 'bch', bid_unit: 'zar'},
+            {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
+            {id: 'bchzar', name: 'BCH/ZAR', base_unit: 'bch', quote_unit: 'zar'},
         ] as Market[];
         const marketTickers = {
             btczar: {last: '0.0001'},
@@ -154,7 +154,7 @@ describe('estimateValue', () => {
         const currentCurrency = 'btc';
         const total = 1;
         const markets = [
-            {id: 'btczar', name: 'BTC/ZAR', ask_unit: 'btc', bid_unit: 'zar'},
+            {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
         ] as Market[];
         const marketTickers = {
             btczar: {last: '0.00000001'},
@@ -166,7 +166,7 @@ describe('estimateValue', () => {
     it('should find precision using market ask unit', () => {
         const unit = 'btc';
         const markets = [
-            {id: 'btczar', name: 'BTC/ZAR', ask_unit: 'btc', bid_unit: 'zar', ask_precision: 3},
+            {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar', amount_precision: 3},
         ] as Market[];
 
         expect(findPrecision(unit, markets)).toEqual(3);
@@ -175,7 +175,7 @@ describe('estimateValue', () => {
     it('should find precision using market bid unit', () => {
         const unit = 'btc';
         const markets = [
-            {id: 'zarbtc', name: 'ZAR/BTC', ask_unit: 'zar', bid_unit: 'btc', bid_precision: 5},
+            {id: 'zarbtc', name: 'ZAR/BTC', base_unit: 'zar', quote_unit: 'btc', price_precision: 5},
         ] as Market[];
 
         expect(findPrecision(unit, markets)).toEqual(5);

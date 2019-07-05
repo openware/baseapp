@@ -5,18 +5,17 @@ exports[`OpenOrders should render 1`] = `
   cancelFetching={false}
   currentMarket={
     Object {
+      "amount_precision": 4,
       "ask_fee": "0.0015",
-      "ask_precision": 4,
-      "ask_unit": "eth",
+      "base_unit": "eth",
       "bid_fee": "0.0015",
-      "bid_precision": 4,
-      "bid_unit": "usd",
       "id": "ethusd",
-      "max_bid_price": "0.0",
-      "min_ask_amount": "0.0",
-      "min_ask_price": "0.0",
-      "min_bid_amount": "0.0",
+      "max_price": "0.0",
+      "min_amount": "0.0",
+      "min_price": "0.0",
       "name": "ETH/USD",
+      "price_precision": 4,
+      "quote_unit": "usd",
     }
   }
   fetching={false}

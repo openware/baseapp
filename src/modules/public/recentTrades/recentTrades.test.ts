@@ -70,14 +70,13 @@ describe('Trades module', () => {
         id: 'xrpbtc',
         bid_fee: '0.0015',
         ask_fee: '0.0015',
-        ask_unit: 'xrp',
-        bid_unit: 'btc',
-        min_ask_price: '0.0',
-        max_bid_price: '0.0',
-        min_ask_amount: '0.0',
-        min_bid_amount: '0.0',
-        ask_precision: 4,
-        bid_precision: 4,
+        base_unit: 'xrp',
+        quote_unit: 'btc',
+        min_price: '0.0',
+        max_price: '0.0',
+        min_amount: '0.0',
+        amount_precision: 4,
+        price_precision: 4,
     };
 
     const expectTradesFetch = { payload: currentMarket, type: RECENT_TRADES_FETCH };

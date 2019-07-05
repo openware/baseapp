@@ -94,7 +94,7 @@ class MarketsContainer extends React.Component<Props> {
         return markets.map((market: Market) =>
             ([
                 market.name,
-                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.ask_precision),
+                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision),
                 (marketTickers[market.id] || defaultTicker).price_change_percent,
             ]),
         );

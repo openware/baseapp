@@ -169,8 +169,8 @@ class MarketsListComponent extends React.Component<Props, State> {
             });
             return [
                 market.name,
-                (<span className={classname}>{Decimal.format(Number(market.last), market.ask_precision)}</span>),
-                (<span className={classname}>{Decimal.format(Number(market.vol), market.ask_precision)}</span>),
+                (<span className={classname}>{Decimal.format(Number(market.last), market.price_precision)}</span>),
+                (<span className={classname}>{Decimal.format(Number(market.vol), market.amount_precision)}</span>),
                 (<span className={classname}>{market.price_change_percent}</span>),
             ];
         });

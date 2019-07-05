@@ -3,6 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { Market } from '../../../../modules';
 import { alertPush } from '../../../public/alert';
 import { OrderAPI } from '../../../types';
 import { userOpenOrdersData, userOpenOrdersError, userOpenOrdersFetch } from '../actions';
@@ -30,19 +31,18 @@ describe('Open Orders Cancel', () => {
         type: 'error',
     };
 
-    const fakeMarket = {
+    const fakeMarket: Market = {
         id:'ethusd',
         name:'ETH/USD',
-        ask_unit:'eth',
-        bid_unit:'usd',
+        base_unit:'eth',
+        quote_unit:'usd',
         ask_fee:'0.0015',
         bid_fee:'0.0015',
-        min_ask_price:'0.0',
-        max_bid_price:'0.0',
-        min_ask_amount:'0.0',
-        min_bid_amount:'0.0',
-        ask_precision:4,
-        bid_precision:4,
+        min_price:'0.0',
+        max_price:'0.0',
+        min_amount:'0.0',
+        amount_precision:4,
+        price_precision:4,
     };
 
     const fakeOpenOrders: OrderAPI[] = [

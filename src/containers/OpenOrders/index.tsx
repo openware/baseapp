@@ -82,8 +82,8 @@ export class OpenOrdersContainer extends React.Component<Props> {
     };
 
     private renderHeaders = () => {
-        const currentAskUnit = this.props.currentMarket ? ` (${this.props.currentMarket.ask_unit.toUpperCase()})` : null;
-        const currentBidUnit = this.props.currentMarket ? ` (${this.props.currentMarket.bid_unit.toUpperCase()})` : null;
+        const currentAskUnit = this.props.currentMarket ? ` (${this.props.currentMarket.base_unit.toUpperCase()})` : null;
+        const currentBidUnit = this.props.currentMarket ? ` (${this.props.currentMarket.quote_unit.toUpperCase()})` : null;
         return [
             this.translate('page.body.trade.header.openOrders.content.date'),
             this.translate('page.body.trade.header.openOrders.content.price').concat(currentBidUnit),
@@ -118,8 +118,8 @@ export class OpenOrdersContainer extends React.Component<Props> {
             const remainingAmount = Number(remaining_volume);
             const total = Number(origin_volume) * Number(price);
             const filled = ((executedVolume / Number(origin_volume)) * 100).toFixed(2);
-            const priceFixed = currentMarket ? currentMarket.bid_precision : 0;
-            const amountFixed = currentMarket ? currentMarket.ask_precision : 0;
+            const priceFixed = currentMarket ? currentMarket.price_precision : 0;
+            const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
 
             return [
                 localeDate(created_at, 'fullDate'),

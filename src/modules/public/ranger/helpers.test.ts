@@ -103,16 +103,15 @@ describe('ranger helpers', () => {
         const marketExample: Market = {
             id: 'abcdefg',
             name: 'ABCD/EFG',
-            ask_unit: 'abcd',
-            bid_unit: 'efg',
+            base_unit: 'abcd',
+            quote_unit: 'efg',
             ask_fee: '0.001',
             bid_fee: '0.002',
-            min_ask_price: '0.015',
-            max_bid_price: '0.016',
-            min_ask_amount: '0.00001',
-            min_bid_amount: '0.00002',
-            ask_precision: 6,
-            bid_precision: 6,
+            min_price: '0.015',
+            max_price: '0.016',
+            min_amount: '0.00001',
+            amount_precision: 6,
+            price_precision: 6,
         };
 
         it('returns public streams without market', () => {
