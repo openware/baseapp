@@ -1,3 +1,5 @@
+import { customNationalitiesNames } from '../custom/translations/nationalities';
+
 export const nationalitiesNames = {
     'page.body.kyc.nationalities.afghan': 'Afghan',
     'page.body.kyc.nationalities.albanian': 'Albanian',
@@ -192,6 +194,8 @@ export const nationalitiesNames = {
     'page.body.kyc.nationalities.yemenite': 'Yemenite',
     'page.body.kyc.nationalities.zambian': 'Zambian',
     'page.body.kyc.nationalities.zimbabwean': 'Zimbabwean',
+
+    ...customNationalitiesNames,
 };
 
 export const nationalities = Object.keys(nationalitiesNames);

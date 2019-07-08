@@ -1,5 +1,5 @@
-import { LangType } from '.';
-import { nationalitiesNames } from './nationalities';
+import { LangType } from '../../translations';
+import { nationalitiesNames } from '../../translations/nationalities';
 
 export const ru: LangType = {
     'page.header.navbar.signIn': 'Войти',
