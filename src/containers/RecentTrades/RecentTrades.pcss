@@ -21,22 +21,17 @@
     .cr-table__body {
       cursor: pointer;
     }
-    .cr-table th {
-        width: calc(100%/3);
-        white-space: nowrap;
-      }
     .cr-table td, .cr-table th {
         text-align: right;
         &:first-child {
-            width: 10%;
-            text-align: right;
+            width: 50%;
+            text-align: left;
         }
         &:nth-child(2){
-            width: 80%;
-            text-align: center;
+            width: auto;
         }
         &:nth-child(3) {
-            width: 10%;
+            width: 50%;
         }
     }
     .cr-table thead th {

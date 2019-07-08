@@ -81,9 +81,9 @@ class YoursComponent extends React.Component<Props> {
 
     private getHeaders = () => {
         return [
-            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.price' }),
-            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.amount' }),
             this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.time' }),
+            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.amount' }),
+            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.price' }),
         ];
     };
 
@@ -102,9 +102,9 @@ class YoursComponent extends React.Component<Props> {
         const takerSide = taker_type === 'sell' ?  'ask' : 'bid';
 
         return [
-            <span style={{ color: setTradesType(takerSide).color }} key={id}><Decimal key={id} fixed={priceFixed}>{price}</Decimal></span>,
-            <span style={{ color: setTradesType(takerSide).color }} key={id}><Decimal key={id} fixed={amountFixed}>{volume}</Decimal></span>,
             <span style={{ color: setTradesType(takerSide).color }} key={id}>{localeDate(created_at, 'time')}</span>,
+            <span style={{ color: setTradesType(takerSide).color }} key={id}><Decimal key={id} fixed={amountFixed}>{volume}</Decimal></span>,
+            <span style={{ color: setTradesType(takerSide).color }} key={id}><Decimal key={id} fixed={priceFixed}>{price}</Decimal></span>,
         ];
     };
 
