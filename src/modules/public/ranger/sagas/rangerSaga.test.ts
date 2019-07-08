@@ -5,6 +5,7 @@ import { Cryptobase, defaultConfig } from '../../../../api';
 import { createEchoServer, setupMockStore } from '../../../../helpers/jest';
 import { OrderEvent } from '../../../types';
 import { PrivateTradeEvent } from '../../../user/history';
+import { HISTORY_PUSH_EMIT } from '../../../user/history/constants';
 import { KLINE_PUSH } from '../../kline/constants';
 import { Market, Ticker, TickerEvent } from '../../markets';
 import { MARKETS_TICKERS_DATA } from '../../markets/constants';
@@ -671,10 +672,10 @@ describe('Ranger module', () => {
                 market: 'eurbtc',
             };
             const mockTrade = { trade: privateTradeEvent };
-            // const expectedTradeAction = {
-            //     type: HISTORY_PUSH_EMIT,
-            //     payload: privateTradeEvent,
-            // };
+            const expectedTradeAction = {
+                type: HISTORY_PUSH_EMIT,
+                payload: privateTradeEvent,
+            };
             it('should push trades', async () => {
                 return new Promise(resolve => {
                     store.subscribe(() => {
@@ -695,10 +696,10 @@ describe('Ranger module', () => {
                                 setTimeout(resolve, 30);
                                 return;
 
-                            // case 4:
-                            //     expect(lastAction).toEqual(expectedTradeAction);
-                            //     setTimeout(resolve, 30);
-                            //     return;
+                            case 4:
+                                expect(lastAction).toEqual(expectedTradeAction);
+                                setTimeout(resolve, 30);
+                                return;
 
                             default:
                                 fail(`Unexpected action ${actions.length}`);

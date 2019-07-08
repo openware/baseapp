@@ -4,7 +4,7 @@
             text-align: right;
             &:nth-child(2){
                 text-align: center;
-                width: 62%;
+                width: 100%;
             }
         }
 
@@ -26,6 +26,79 @@
         white-space: nowrap;
       }
     .cr-table td, .cr-table th {
-        text-align: right !important;
+        text-align: right;
+        &:first-child {
+            width: 10%;
+            text-align: right;
+        }
+        &:nth-child(2){
+            width: 80%;
+            text-align: center;
+        }
+        &:nth-child(3) {
+            width: 10%;
+        }
+    }
+    .cr-table thead th {
+        top: calc(var(--gap) * 5.18);
+    }
+    .cr-tab-panel {
+        &__navigation-container {
+            flex-direction: row-reverse;
+            border-top-left-radius: calc(var(--gap) * 0.5);
+            border-top-right-radius: calc(var(--gap) * 0.5);
+            margin-bottom: 0;
+            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+        }
+        &__optinal-head {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            color: var(--markets-title-color);
+            padding: calc(var(--gap) * 1.5) calc(var(--gap) * 1.5) calc(var(--gap) * 1.33);
+        }
+        .cr-tab {
+            padding: calc(var(--gap) * 1.5) calc(var(--gap) * 2) 0;
+            &__active {
+                font-weight: bold;
+            }
+        }
+        .cr-tab-content {
+            &__noData {
+                .cr-table td, .cr-table th {
+                    text-align: right;
+                    &:nth-child(2){
+                        width: 100%;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+
+    &-unlogged {
+        .cr-tab-panel .cr-tab__active {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 1280px) {
+    .pg-recent-trades {
+        .cr-tab-panel {
+            .cr-tab {
+                padding-right: calc(var(--gap) * 1.5);
+                padding-left: calc(var(--gap) * 1.5);
+            }
+        }
+        .cr-tab-panel {
+            &__optinal-head {
+                padding-right: calc(var(--gap) * 1);
+                padding-left: calc(var(--gap) * 1.5);
+            }
+        }
     }
 }

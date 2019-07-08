@@ -9,6 +9,12 @@ describe('Currency History actions', () => {
         expect(actions.fetchHistory(payload)).toEqual(expectedAction);
     });
 
+    it('should check fetchHistory action creator with market pair', () => {
+        const payload = { page: 0, market: 'ethbtc', type: 'trades', limit: 0 };
+        const expectedAction = { type: HISTORY_FETCH, payload };
+        expect(actions.fetchHistory(payload)).toEqual(expectedAction);
+    });
+
     it('should check successHistory action creator', () => {
         const payload = { list: [], page: 2, fullHistory: 0 };
         const expectedAction = { type: HISTORY_DATA, payload };

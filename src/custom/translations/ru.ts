@@ -57,6 +57,8 @@ export const ru: LangType = {
     'page.body.trade.header.recentTrades.content.time': 'Время',
     'page.body.trade.header.recentTrades.content.price': 'Цена',
     'page.body.trade.header.recentTrades.content.amount': 'Кол.',
+    'page.body.trade.header.market': 'Рыночные сделки',
+    'page.body.trade.header.yours': 'Ваши сделки',
 
     'page.body.trade.header.openOrders': 'Активные ордера',
     'page.body.trade.header.openOrders.content.date': 'Дата',

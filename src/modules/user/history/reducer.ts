@@ -1,3 +1,4 @@
+import { getUnique } from '../../../helpers/getUnique';
 import { HistoryActions } from './actions';
 import {
     HISTORY_DATA,
@@ -42,7 +43,9 @@ export const historyReducer = (state = initialState, action: HistoryActions) => 
             return { ...state, list: [], fullHistory: 0, page: 0 };
         }
         case HISTORY_PUSH_FINISH: {
-            return { ...state, list: action.payload };
+            let list = [...action.payload];
+            list = getUnique(list, 'id');
+            return { ...state, list: list };
         }
         default:
             return state;

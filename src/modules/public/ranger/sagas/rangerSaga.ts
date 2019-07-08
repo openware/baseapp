@@ -3,6 +3,7 @@ import { Channel, delay, eventChannel } from 'redux-saga';
 import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 import { rangerUrl } from '../../../../api';
 import { store } from '../../../../store';
+import { pushHistoryEmit } from '../../../user/history';
 import { userOpenOrdersUpdate } from '../../../user/openOrders';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
@@ -133,7 +134,7 @@ const initRanger = (
 
                         // private
                         case 'trade':
-                            // emitter(pushHistoryEmit(event));
+                            emitter(pushHistoryEmit(event));
                             return;
 
                         default:
