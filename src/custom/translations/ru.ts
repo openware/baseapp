@@ -272,6 +272,7 @@ export const ru: LangType = {
 
     'page.body.profile.content.result.succeed': 'Успешно',
     'page.body.profile.content.result.failed': 'Ошибка',
+    'page.body.profile.content.result.denied': 'Отказано',
 
     'page.body.kyc.phone.head': 'Подтверждение телефона',
     'page.body.kyc.phone.enterPhone': 'Введите свой номер телефона',

@@ -267,6 +267,7 @@ export const en = {
 
     'page.body.profile.content.result.succeed': 'Succeed',
     'page.body.profile.content.result.failed': 'Failed',
+    'page.body.profile.content.result.denied': 'Denied',
 
     'page.body.kyc.phone.head': 'Verify Phone',
     'page.body.kyc.phone.enterPhone': 'Enter phone number',
