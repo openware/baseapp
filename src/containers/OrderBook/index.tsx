@@ -131,9 +131,9 @@ class OrderBookContainer extends React.Component<Props, State> {
     private renderHeaders = () => {
         const { intl, currentMarket } = this.props;
         return [
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})} (${currentMarket && currentMarket.quote_unit.toUpperCase()})`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})} (${currentMarket && currentMarket.base_unit.toUpperCase()})`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})} (${currentMarket && currentMarket.base_unit.toUpperCase()})`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n(${currentMarket && currentMarket.quote_unit.toUpperCase()})`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n(${currentMarket && currentMarket.base_unit.toUpperCase()})`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})}\n(${currentMarket && currentMarket.base_unit.toUpperCase()})`,
         ];
     };
 
