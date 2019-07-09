@@ -1,6 +1,7 @@
 import { LayoutGrid } from '../components/Grid';
+import { customLayouts } from '../custom/helpers/layout';
 
-export const defaultLayouts = {
+export const layouts = {
   lg: [
       { x: 16, y: 18, w: 8, h: 21, i: '1', minH: 21, maxH: 21, minW: 4 },
       { x: 0, y: 0, w: 16, h: 39, i: '2', minH: 12, minW: 5 },
@@ -25,6 +26,7 @@ export const defaultLayouts = {
       { x: 0, y: 82, w: 12, h: 20, i: '5', minH: 12, minW: 7, draggable: false, resizable: false },
       { x: 30, y: 0, w: 12, h: 16, i: '6', minH: 10, minW: 6, draggable: false, resizable: false },
   ],
+  ...customLayouts,
 };
 
 export const getLayoutFromLS = (key: string): LayoutGrid | undefined => {
@@ -52,7 +54,7 @@ export const resetLayout = (key: string): void => {
     if (localStorage) {
         localStorage.setItem(
             'rgl',
-            JSON.stringify({[key]: defaultLayouts}),
+            JSON.stringify({[key]: layouts}),
         );
     }
 };

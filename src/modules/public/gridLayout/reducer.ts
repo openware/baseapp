@@ -1,5 +1,10 @@
 import { LayoutGrid } from '../../../components/Grid';
-import { defaultLayouts, getLayoutFromLS, resetLayout, saveLayoutToLS } from '../../../helpers/layout';
+import {
+    getLayoutFromLS,
+    layouts,
+    resetLayout,
+    saveLayoutToLS,
+} from '../../../helpers/layout';
 import { RESET_LAYOUTS, SAVE_LAYOUTS } from './constants';
 
 export interface GridLayoutState {
@@ -7,7 +12,7 @@ export interface GridLayoutState {
 }
 
 export const initialLayoutState: GridLayoutState = {
-    layouts: getLayoutFromLS('layouts') || defaultLayouts,
+    layouts: getLayoutFromLS('layouts') || layouts,
 };
 
 export const gridLayoutReducer = (state = initialLayoutState, action) => {
@@ -20,7 +25,7 @@ export const gridLayoutReducer = (state = initialLayoutState, action) => {
         case RESET_LAYOUTS:
             resetLayout(action.payload.key);
             return {
-                layouts: defaultLayouts,
+                layouts: layouts,
             };
         default:
             return state;
