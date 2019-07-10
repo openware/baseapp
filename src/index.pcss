@@ -1,11 +1,5 @@
 @import '../node_modules/@openware/components/dark.pcss';
-@import "routes/Layout/Layout.pcss";
-@import "components/style.pcss";
-@import "containers/style.pcss";
-@import "components/style.pcss";
-@import "screens/style.pcss";
-@import "fonts.pcss";
-@import "colors.pcss";
+@import "styles/style.pcss";
 @import "custom/styles/style.pcss";
 
 :root {
@@ -16,6 +10,16 @@
   --font-size-smaller: calc(var(--font-size) * 0.9);
   --font-size-bigger: calc(var(--font-size) * 1.1);
   --line-height: 1.2;
+
+  /* layout */
+  --avatar-alt-height: 30px;
+  --avatar-alt-width: 30px;
+  --avatar-component-width: 50px;
+  --avatar-alt-font-size: 26px;
+  --checkbox-general-intent: 10px;
+  --checkbox-label-font-size: 16px;
+  --checkbox-size: 10px;
+  --checkbox-symbol-size: 10px;
 
   /* measures */
   --gap: 0.5em;
@@ -100,9 +104,12 @@ body, html {
   font-size: var(--font-size);
   font-weight: var(--font-weight);
   color: var(--base);
-  background-color: var(--background);
   padding: 0;
   margin: 0;
+}
+
+body {
+  background: var(--background);
 }
 
 .pg-container {

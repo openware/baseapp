@@ -1,22 +1,4 @@
-:root {
-  /* main colors */
-
-  --main-bg: #1E2841;
-  --back-bg: #171C29;
-  --second-bg: #222B41;
-  --text: #657395;
-  --placeholder-text: #737F92;
-  --header: #27324F;
-  --header-text: #919EBA;
-  --button-normal: #2E4C80;
-  --white: #FFFFFF;
-  --accent: #3C78E0;
-  --green: #54B489;
-  --red: #E85E59;
-  --selected-item: #3A4663;
-  --gamboge: #E0A300;
-
-  /* colors */
+:root, .light-mode {
   --active-tab-color: var(--accent);
   --base: var(--text);
   --base-1: #FA00FF;
@@ -37,7 +19,6 @@
   --background-wallet-item: var(--header);
   --background-wallet-item-active: #FA00FF;
   --background-dropdown: var(--button-normal);
-  --background-dropdown-hover: var(--header-text);
   --background-dropdown-hover-text: var(--color-white);
   --button-primary: var(--button-normal);
   --button-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--button-normal);
@@ -108,31 +89,11 @@
   --wallet-trades-item-color: #FA00FF;
 
   /* orders */
-  --orders-button-percentage-normal: linear-gradient(0deg, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.11)), var(--selected-item);
-  --orders-button-percentage-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--orders-button-percentage-normal);
-  --orders-button-percentage-active: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--orders-button-percentage-normal);
-  --orders-button-green-normal: var(--color-green);
-  --orders-button-green-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--orders-button-green-normal);
-  --orders-button-green-active: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--orders-button-green-normal);
-  --orders-button-red-normal: var(--color-red);
-  --orders-button-red-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--orders-button-red-normal);
-  --orders-button-red-active: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--orders-button-red-normal);
   --orders-execute-color: #b18d4f;
   --orders-border-color: var(--text);
   --orders-placeholder-color: var(--placeholder-text);
   --orders-text-secondary-color: var(--header-text);
-  --orders-text-primary-color: var(--color-white);
-
-  /* layout */
-  --avatar-alt-height: 30px;
-  --avatar-alt-width: 30px;
-  --avatar-component-width: 50px;
-  --avatar-alt-font-size: 26px;
-  --checkbox-general-intent: 10px;
-  --checkbox-label-font-size: 16px;
-  --checkbox-size: 10px;
-  --checkbox-symbol-size: 10px;
-  --gap: 0.5em;
+  --orders-text-primary-color: var(--bright-1);
 
   /* alerts */
   --alert-background-color: var(--main-bg);
@@ -159,10 +120,9 @@
   --base-9: var(--placeholder-text);
   --base-new: var(--placeholder-text);
   --header-border: var(--placeholder-text);
-  --color-white: var(--white);
+  --color-white: var(--bright-1);
   --muted-text: var(--placeholder-text);
-  --bright: #FA00FF;
-  --bright-1: var(--white);
+  --bright-1: var(--bright);
   --color-blue: var(--accent);
 
   --navbar-text-color: var(--text);
@@ -212,7 +172,6 @@
 
   /* NavBar languages */
   --navbar-language-selector-background: var(--button-normal);
-  --navbar-language-selector-background-hover: var(--header-text);
   --navbar-language-selector-color: var(--placeholder-text);
   --navbar-language-selector-current-color: var(--text);
   --navbar-language-selector-current-background: var(--header);
@@ -224,7 +183,7 @@
   --email-confirmation-screen-text-color: var(--placeholder-text);
 
   /* Email verification screen */
-  --email-verification-screen-background: #1E2841;
+  --email-verification-screen-background: var(--main-bg);
 
   /* ToolBar */
   --trading-header-background: var(--back-bg);
@@ -238,4 +197,8 @@
   --trading-header-positive: var(--green);
   --trading-header-negative: var(--red);
   --trading-header-search-border: var(--header-border);
+
+  /* Tradingview */
+  --trading-view-background: var(--main-bg);
+  --trading-view-border-color: var(--second-bg);
 }

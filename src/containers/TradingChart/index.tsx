@@ -17,6 +17,7 @@ import {
     Market,
     MarketsState,
     RootState,
+    selectCurrentColorTheme,
     selectCurrentLanguage,
     selectCurrentMarket,
     selectKline,
@@ -40,6 +41,7 @@ import { getTradingChartTimezone } from './timezones';
 
 interface ReduxProps {
     markets: Market[];
+    colorTheme: string;
     currentMarket?: Market;
     tickers: MarketsState['tickers'];
     kline: KlineState;
@@ -62,11 +64,15 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     private datafeed = dataFeedObject(this, this.props.markets);
 
     public componentWillReceiveProps(next: Props) {
+        if (next.currentMarket && next.colorTheme && next.colorTheme !== this.props.colorTheme) {
+            this.setChart(next.markets, next.currentMarket, next.colorTheme);
+        }
+
         if (next.currentMarket && (!this.props.currentMarket || next.currentMarket.id !== this.props.currentMarket.id)) {
             if (this.props.currentMarket && (this.props.currentMarket.id && this.tvWidget)) {
                 this.updateChart(next.currentMarket);
             } else {
-                this.setChart(next.markets, next.currentMarket);
+                this.setChart(next.markets, next.currentMarket, next.colorTheme);
             }
         }
 
@@ -76,8 +82,14 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     }
 
     public componentDidMount() {
-        if (this.props.currentMarket) {
-            this.setChart(this.props.markets, this.props.currentMarket);
+        const {
+            colorTheme,
+            currentMarket,
+            markets,
+        } = this.props;
+
+        if (currentMarket) {
+            this.setChart(markets, currentMarket, colorTheme);
         }
     }
 
@@ -102,11 +114,12 @@ export class TradingChartComponent extends React.PureComponent<Props> {
         );
     }
 
-    private setChart = (markets: Market[], currentMarket: Market) => {
+    private setChart = (markets: Market[], currentMarket: Market, colorTheme: string) => {
         const { kline } = this.props;
         this.datafeed = dataFeedObject(this, markets);
         const currentTimeOffset = new Date().getTimezoneOffset();
         const clockPeriod = currentTimeOffset === stdTimezoneOffset(new Date()) ? 'STD' : 'DST';
+        const lightMode = colorTheme === 'light';
 
         if (this.props.kline.period) {
             widgetParams.interval = this.props.kline.period;
@@ -120,7 +133,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             timezone: getTradingChartTimezone(currentTimeOffset, clockPeriod),
         };
 
-        this.tvWidget = new widget({...defaultWidgetOptions, ...widgetOptions});
+        this.tvWidget = new widget({...defaultWidgetOptions, ...widgetOptions(lightMode)});
 
         let previousRange = { from: 0, to: 0 };
         if (kline.range.from !== 0 && kline.range.to !== 0) {
@@ -164,6 +177,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
 const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     markets: selectMarkets(state),
+    colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
     tickers: selectMarketTickers(state),
     kline: selectKline(state),

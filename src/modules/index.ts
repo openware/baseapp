@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
+import { ColorThemeState } from './public/colorTheme';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
 import { GridLayoutState } from './public/gridLayout/reducer';
 import { LanguageState } from './public/i18n';
@@ -32,6 +33,7 @@ import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit'
 
 export * from './public/markets';
 export * from './public/orderBook';
+export * from './public/colorTheme';
 export * from './public/currencies';
 export * from './public/i18n';
 export * from './public/kline';
@@ -53,6 +55,7 @@ export * from './user/withdrawLimit';
 
 export interface RootState {
     public: {
+        colorTheme: ColorThemeState;
         currencies: CurrenciesState;
         recentTrades: RecentTradesState;
         markets: MarketsState;

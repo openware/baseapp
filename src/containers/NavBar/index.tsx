@@ -8,12 +8,22 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
+import moon = require('../../assets/images/moon.svg');
+import {
+    CloseAvatar,
+    CloseIcon,
+    OpenAvatar,
+    OpenIcon,
+} from '../../assets/images/NavBarIcons';
+import sun = require('../../assets/images/sun.svg');
 import { pgRoutes } from '../../constants';
 import {
+    changeColorTheme,
     changeLanguage,
     logoutFetch,
     Market,
     RootState,
+    selectCurrentColorTheme,
     selectCurrentLanguage,
     selectCurrentMarket,
     selectUserInfo,
@@ -23,6 +33,7 @@ import {
 } from '../../modules';
 
 export interface ReduxProps {
+    colorTheme: string;
     currentMarket: Market | undefined;
     address: string;
     isLoggedIn: boolean;
@@ -32,6 +43,7 @@ export interface ReduxProps {
 }
 
 interface DispatchProps {
+    changeColorTheme: typeof changeColorTheme;
     changeLanguage: typeof changeLanguage;
     logout: typeof logoutFetch;
     walletsReset: typeof walletsReset;
@@ -44,7 +56,6 @@ export interface OwnProps {
 
 type NavbarProps = OwnProps & ReduxProps & RouteProps & DispatchProps;
 
-
 interface NavbarState {
     isOpen: boolean;
     isOpenLanguage: boolean;
@@ -55,6 +66,7 @@ interface NavbarState {
     errorModal: boolean;
 }
 
+// tslint:disable:jsx-no-lambda
 class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
     public readonly state = {
         isOpen: false,
@@ -76,12 +88,13 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         const handleLinkChange = () => {
             if (onLinkChange) {
                 onLinkChange();
+                this.handleToggleCurrentStyleModeClass('basic');
             }
         };
         const path = url.includes('/trading') && currentMarket ? `/trading/${currentMarket.id}` : url;
         return (
-            <li onClick={handleLinkChange} key={index}>
-                <Link className={cx} to={path}>
+            <li key={index}>
+                <Link className={cx} to={path} onClick={handleLinkChange}>
                     <FormattedMessage id={name} />
                 </Link>
             </li>
@@ -89,13 +102,21 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
     };
 
     public render() {
-        const { location, user, lang } = this.props;
+        const {
+            colorTheme,
+            lang,
+            location,
+            user,
+        } = this.props;
         const { isOpenLanguage } = this.state;
         const address = location ? location.pathname : '';
         const languageName = lang.toUpperCase();
+
         const languageClassName = classnames('dropdown-menu-language-field', {
             'dropdown-menu-language-field-active': isOpenLanguage,
         });
+
+        this.handleToggleCurrentStyleModeClass(colorTheme);
 
         return (
             <div className={'pg-navbar'}>
@@ -104,11 +125,16 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                     {pgRoutes(!!user.email).map(this.navItem(address, this.props.onLinkChange))}
                 </ul>
                 <div className="pg-navbar__header-settings">
+                    <div className="pg-navbar__header-settings__switcher">
+                        <div className="pg-navbar__header-settings__switcher__items">
+                            {this.getLightDarkMode()}
+                        </div>
+                    </div>
                     {user.email ? this.getUserEmailMenu() : null}
                     <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-toggle dropdown-menu-language-container">
                         <div onClick={this.toggleLanguageMenu} className={languageClassName}>
                             {languageName}
-                            <img className="icon" src={require(`./${isOpenLanguage ? 'open' : 'close'}-icon.svg`)} />
+                            {this.getLanguageMenuIcon()}
                         </div>
                         {isOpenLanguage ? this.getLanguageMenu() : null}
                     </div>
@@ -122,6 +148,29 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                     {isOpenLanguage ? this.getLanguageMenu() : null}
                 </div>
             </div>
+        );
+    }
+
+    private getLanguageMenuIcon = () => {
+        const { colorTheme } = this.props;
+        const { isOpenLanguage } = this.state;
+
+        if (colorTheme === 'light') {
+            return (
+                isOpenLanguage ? (
+                    <span className="icon"><OpenIcon fillColor="#6e6987" /></span>
+                ) : (
+                    <span className="icon"><CloseIcon fillColor="#657395" /></span>
+                )
+            );
+        }
+
+        return (
+            isOpenLanguage ? (
+                <span className="icon"><OpenIcon fillColor="white" /></span>
+            ) : (
+                <span className="icon"><CloseIcon fillColor="#657395" /></span>
+            )
         );
     }
 
@@ -148,14 +197,30 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
     private getLanguageMenu = () => {
         return (
             <div className="dropdown-menu dropdown-menu-language" role="menu">
-                {/* tslint:disable jsx-no-lambda */}
                 <div className="dropdown-menu-item-lang" onClick={e => this.handleChangeLanguage('en')}>
                     EN
                 </div>
                 <div className="dropdown-menu-item-lang" onClick={e => this.handleChangeLanguage('ru')}>
                     RU
                 </div>
-                {/* tslin:enable jsx-no-lambda */}
+            </div>
+        );
+    };
+
+    private getLightDarkMode = () => {
+        const { colorTheme } = this.props;
+
+        if (colorTheme === 'basic') {
+            return (
+                <div className="pg-navbar__header-settings__switcher__items__item" onClick={e => this.handleChangeCurrentStyleMode('light')}>
+                    <img src={moon} />
+                </div>
+            );
+        }
+
+        return (
+            <div className="pg-navbar__header-settings__switcher__items__item" onClick={e => this.handleChangeCurrentStyleMode('basic')}>
+                <img src={sun} />
             </div>
         );
     };
@@ -169,13 +234,47 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         return (
             <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-toggle">
                 <div onClick={this.openMenu} className={userClassName}>
-                    <img src={require(`./${isOpen ? 'open' : 'close'}-avatar.svg`)} />
-                    <img className="icon" src={require(`./${isOpen ? 'open' : 'close'}-icon.svg`)} />
+                    {this.getUserEmailMenuIcon()}
                 </div>
                 {isOpen ? this.getUserMenu() : null}
             </div>
         );
     };
+
+    private getUserEmailMenuIcon = () => {
+        const { colorTheme } = this.props;
+        const { isOpen } = this.state;
+
+        if (colorTheme === 'light') {
+            return (
+                isOpen ? (
+                    <React.Fragment>
+                        <OpenAvatar fillColor="#6e6987"/>
+                        <span className="icon"><OpenIcon fillColor="#6e6987"/></span>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <CloseAvatar fillColor="#737F92"/>
+                        <span className="icon"><CloseIcon fillColor="#657395"/></span>
+                    </React.Fragment>
+                )
+            );
+        }
+
+        return (
+            isOpen ? (
+                <React.Fragment>
+                    <OpenAvatar fillColor="white"/>
+                    <span className="icon"><OpenIcon fillColor="white"/></span>
+                </React.Fragment>
+            ) : (
+                <React.Fragment>
+                    <CloseAvatar fillColor="#737F92"/>
+                    <span className="icon"><CloseIcon fillColor="#657395"/></span>
+                </React.Fragment>
+            )
+        );
+    }
 
     private getUserMenu = () => {
         return (
@@ -198,10 +297,25 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         );
     };
 
+    private handleChangeCurrentStyleMode = (value: string) => {
+        this.props.changeColorTheme(value);
+        this.handleToggleCurrentStyleModeClass(value);
+    };
+
+    private handleToggleCurrentStyleModeClass = (value: string) => {
+        const rootElement = document.getElementsByTagName('body')[0];
+        if (value === 'light') {
+            rootElement && rootElement.classList.add('light-mode');
+        } else {
+            rootElement && rootElement.classList.remove('light-mode');
+        }
+    }
+
     private handleRouteChange = (to: string) => () => {
         this.setState({ isOpen: false }, () => {
             this.props.history.push(to);
         });
+        this.handleToggleCurrentStyleModeClass('basic');
     }
 
     private handleLogOut = () => {
@@ -259,6 +373,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
     (state: RootState): ReduxProps => ({
+        colorTheme: selectCurrentColorTheme(state),
         currentMarket: selectCurrentMarket(state),
         address: '',
         lang: selectCurrentLanguage(state),
@@ -268,6 +383,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
+        changeColorTheme: payload => dispatch(changeColorTheme(payload)),
         changeLanguage: payload => dispatch(changeLanguage(payload)),
         logout: () => dispatch(logoutFetch()),
         walletsReset: () => dispatch(walletsReset()),
