@@ -123,6 +123,8 @@ steps:
     image: node:10.11
     commands:
       - export REACT_APP_GIT_SHA=$(cat .tags)
+      - export BUILD_DOMAIN=$(cat .domains)
+      - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
       - npm -g install yarn
       - yarn build
 
