@@ -11,6 +11,9 @@ export const en = {
     'page.header.navbar.profile': 'Profile',
     'page.header.navbar.logout': 'Logout',
 
+    'page.body.trade.header.market': 'Market',
+    'page.body.trade.header.yours': 'Yours',
+
     'page.body.trade.header.markets': 'Markets',
     'page.body.trade.header.markets.content.market': 'Market',
     'page.body.trade.header.markets.content.pair': 'Pair',
