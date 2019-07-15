@@ -119,7 +119,6 @@ export class TradingChartComponent extends React.PureComponent<Props> {
         this.datafeed = dataFeedObject(this, markets);
         const currentTimeOffset = new Date().getTimezoneOffset();
         const clockPeriod = currentTimeOffset === stdTimezoneOffset(new Date()) ? 'STD' : 'DST';
-        const lightMode = colorTheme === 'light';
 
         if (this.props.kline.period) {
             widgetParams.interval = this.props.kline.period;
@@ -133,7 +132,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             timezone: getTradingChartTimezone(currentTimeOffset, clockPeriod),
         };
 
-        this.tvWidget = new widget({...defaultWidgetOptions, ...widgetOptions(lightMode)});
+        this.tvWidget = new widget({...defaultWidgetOptions, ...widgetOptions(colorTheme)});
 
         let previousRange = { from: 0, to: 0 };
         if (kline.range.from !== 0 && kline.range.to !== 0) {

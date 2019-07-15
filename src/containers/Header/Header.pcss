@@ -1,11 +1,11 @@
 header {
-  padding: calc(var(--gap) * 1.3) 0;
+  padding: 0;
+  padding-bottom: calc(var(--gap) * 1.3);
 }
 
 .pg-header {
-  background-color: var(--background-dark);
+  background-color: var(--header-background-cover);
   margin: 0 auto;
-  min-height: calc(var(--big-gap) * 1.05);
 
   .pg-logo__img {
     height: calc(var(--gap) * 3.666);
@@ -13,6 +13,8 @@ header {
 
   &__logo {
     img {
+      width: calc(var(--gap) * 19.67);
+      height: calc(var(--gap) * 3.5);
       vertical-align: middle;
       border-style: none;
     }
@@ -32,7 +34,9 @@ header {
 
   &__content {
     align-items: center;
+    box-shadow: 1px 1px 5px rgba(46, 76, 128, 0.2);
     display: flex;
+    height: calc(var(--gap) * 10.67);
   }
 
   &__toggler {
@@ -44,8 +48,10 @@ header {
   }
 
   .pg-container {
+    background: var(--background-dark);
     justify-content: flex-start;
-    width: 98%;
+    padding: 0 2%;
+    width: 100%;
   }
 }
 
@@ -119,6 +125,7 @@ header {
   }
 
   .pg-container {
+    height: 46px;
     justify-content: center !important;
   }
 }

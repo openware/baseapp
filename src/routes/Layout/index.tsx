@@ -6,10 +6,12 @@ import { Route, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { minutesUntilAutoLogout } from '../../api';
 import { WalletsFetch } from '../../containers';
+import { toggleColorTheme } from '../../helpers';
 import {
     logoutFetch,
     Market,
     RootState,
+    selectCurrentColorTheme,
     selectCurrentMarket,
     selectUserFetching,
     selectUserInfo,
@@ -35,6 +37,7 @@ import {
 } from '../../screens';
 
 interface ReduxProps {
+    colorTheme: string;
     currentMarket: Market | undefined;
     user: User;
     isLoggedIn: boolean;
@@ -138,7 +141,14 @@ class LayoutComponent extends React.Component<LayoutProps> {
     }
 
     public render() {
-        const { isLoggedIn, userLoading } = this.props;
+        const {
+            colorTheme,
+            isLoggedIn,
+            userLoading,
+        } = this.props;
+
+        toggleColorTheme(colorTheme);
+
         return (
             <div className="container-fluid pg-layout">
                 <Switch>
@@ -203,6 +213,7 @@ class LayoutComponent extends React.Component<LayoutProps> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
     user: selectUserInfo(state),
     isLoggedIn: selectUserLoggedIn(state),

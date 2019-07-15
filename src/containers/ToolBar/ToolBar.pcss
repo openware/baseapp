@@ -15,7 +15,7 @@
   z-index: 2;
   border-radius: calc(var(--big-gap) * 0.07);
   background-color: var(--trading-header-background);
-  margin-bottom: -5px;
+  margin-bottom: -3px;
 
   &-dropdown {
     &-selector {
@@ -66,6 +66,7 @@
   }
 
   &-stats {
+    color: var(--placeholder-text);
     display: flex;
     justify-content: flex-end;
   }
@@ -81,6 +82,10 @@
     &-last {
       display: none;
     }
+  }
+
+  .pg-trading-header-selector-container {
+    box-shadow: 1px 1px 5px rgba(46, 76, 128, 0.2);
   }
 
   @media screen and (max-width: 996px) {

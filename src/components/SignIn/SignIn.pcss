@@ -19,7 +19,7 @@
     height: 58px;
 
     .__selected {
-      border-bottom: 2px solid #3c78e0;
+      border-bottom: 2px solid var(--input-block-border-color);
       color: var(--bright-1);
     }
   }
@@ -87,11 +87,11 @@
 
   &__group--focused {
     .cr-sign-in-form__label {
-      color: #3c78e0;
+      color: var(--accent);
     }
 
     input {
-      border: 1px solid #3c78e0 !important;
+      border: 1px solid var(--accent) !important;
     }
   }
 

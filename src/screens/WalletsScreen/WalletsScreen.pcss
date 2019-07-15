@@ -75,7 +75,7 @@
                         opacity: 0.5
                     }
                     &:nth-child(2) {
-                        font-weight: var(--font-light);
+                        font-weight: normal;
                         margin-top: calc(var(--gap) * .6);
                         color: var(--wallets-locked-amount);
                         font-size: calc(var(--gap) * 1.9);
@@ -102,7 +102,7 @@
             }
 
             &__balance {
-                font-weight: var(--font-light);
+                font-weight: normal;
                 opacity: 0.5;
             }
 
@@ -157,6 +157,7 @@
     }
     .pg-wallet__tabs {
         background: var(--base-bright);
+        border-left: 1px solid var(--wallets-item-border);
     }
 
     .cr-withdraw {
@@ -209,7 +210,7 @@
             left: calc(var(--gap) * 1.66);
             padding: calc(var(--gap) * 0.33) var(--gap);
             border-radius: calc(var(--gap) * 0.33);
-            background: var(--main-bg);
+            background: var(--estimated-value-background);
           }
           .cr-withdraw__input {
             width: 100%;
@@ -255,7 +256,7 @@
           }
 
           input {
-            border-color: var(--button-primary) !important;
+            border-color: var(--sign-in-accent) !important;
           }
         }
 
@@ -272,7 +273,7 @@
         &__deep {
             width: calc(var(--gap) * 29);
             .cr-button {
-                color: var(--color-white);
+                color: var(--white);
                 background: var(--profile-btn);
                 font-size: calc(var(--gap) * 2.66);
                 border-radius: calc(var(--gap) * 0.5);
@@ -471,7 +472,7 @@
     &__button-2fa {
         &.cr-button {
             background: var(--button-primary);
-            color: var(--color-white) ;
+            color: var(--white) ;
             font-size: calc(var(--gap) * 2);
             padding: calc(var(--gap) * 2);
             width: auto;
@@ -513,7 +514,7 @@
             &__head {
                 margin: 10px;
                 &-row {
-                    border-bottom: 1px solid var(--wallets-table-divider);
+                    border-bottom: 1px solid var(--header-border);
                     th {
                         background-color: var(--background-dark);
                         color: var(--table-text-color);
@@ -540,7 +541,7 @@
                 background-color: var(--background-dark);
                 tr {
                     background-color: var(--background-dark);
-                    border-bottom: 1px solid var(--wallets-table-divider);
+                    border-bottom: 1px solid var(--header-border);
                     td {
                         background-color: var(--background-dark);
                         color: var(--table-text-color);

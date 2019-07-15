@@ -67,18 +67,20 @@
   }
 
   &-icon-open {
-    height: 100%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 0 calc(var(--big-gap) * 0.28) 0 calc(var(--big-gap) * 0.55);
-    animation-name: pg-trading-header-selector-open;
     animation-duration: var(--market-selector-animation-duration);
-    margin-left: calc(var(--big-gap) * 1.5);
+    animation-name: pg-trading-header-selector-open;
     background: var(--trading-header-btn-open);
+    border-bottom-right-radius: calc(var(--gap) * 0.34);
+    border-top-right-radius: calc(var(--gap) * 0.34);
+    display: flex;
+    height: 100%;
+    justify-content: center;
     left: 220px;
-    width: 30px;
+    margin-left: calc(var(--big-gap) * 1.5);
+    padding: 0 calc(var(--big-gap) * 0.28) 0 calc(var(--big-gap) * 0.55);
     position: absolute;
+    width: 30px;
   }
 
   &-icon-close {
@@ -107,14 +109,15 @@
   }
 
   &-list-container-open {
+    background: var(--trading-header-background);
+    box-shadow: 4px 4px 10px rgba(46, 76, 128, 0.2);
+    display: block;
+    height: 100vh;
     left: calc(var(--big-gap) * -0.23);
+    padding-left: calc(var(--gap));
+    position: absolute;
     top: calc(var(--big-gap) * -0.082);
     width: calc(var(--big-gap) * 5.6);
-    height: 100vh;
-    padding-left: calc(var(--gap));
-    background: var(--trading-header-background);
-    display: block;
-    position: absolute;
     z-index: 10;
 
     overflow-y: scroll;

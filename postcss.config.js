@@ -13,6 +13,7 @@ module.exports = {
                 'background-color': 'var(--background-dark)',
             },
         }),
+        require('postcss-hexrgba'),
         require('autoprefixer'),
     ],
 };

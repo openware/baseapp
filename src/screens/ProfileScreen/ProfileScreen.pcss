@@ -16,7 +16,7 @@
 
   .cr-button {
     margin-right: 0;
-    color: var(--color-white);
+    color: var(--white);
 
     &:hover {
       background: var(--button-hover);
@@ -354,7 +354,7 @@
 
       tr, td {
         background: var(--profile-box);
-        border-top: 1px solid var(--text);
+        border-top: 1px solid var(--header-border);
       }
 
       th, td {
@@ -373,7 +373,7 @@
       th {
         background: inherit;
         top: 0 !important;
-        color: var(--table-header-color);
+        color: var(--table-header-text);
         font-weight: 500;
       }
     }
@@ -420,7 +420,7 @@
 
       &__body {
           tr {
-              border-top: 1px solid var(--text);
+              border-top: 1px solid var(--header-border);
           }
       }
     }
@@ -516,7 +516,7 @@
 
     .cr-button {
       margin-right: 0;
-      color: var(--color-white);
+      color: var(--white);
       width: calc(var(--gap) * 20);
       height: calc(var(--gap) * 4);
       display: inline-block;
@@ -559,7 +559,7 @@
           }
 
           &:focus-within {
-            border: 1px solid var(--button-primary) !important;
+            border: 1px solid var(--sign-in-accent) !important;
             legend {
               color: var(--accent) !important;
             }
@@ -576,7 +576,7 @@
 
               .cr-copyable-text-field__button {
                 background: var(--button-normal);
-                color: var(--bright-1);
+                color: var(--white);
                 width: calc(var(--gap) * 10);
 
                 &:hover {
@@ -717,7 +717,7 @@
     }
 
     &:hover {
-      color: var(--color-white);
+      color: var(--white);
       background: var(--profile-btn);
     }
 
@@ -836,7 +836,7 @@
       }
 
       input {
-        border-color: var(--button-primary) !important;
+        border-color: var(--sign-in-accent) !important;
       }
     }
 
@@ -845,7 +845,7 @@
     }
 
     &__button {
-      color: var(--color-white);
+      color: var(--white);
       background: var(--button-primary);
       border-radius: calc(var(--gap) * 0.5);
       font-size: calc(var(--gap) * 2.66);

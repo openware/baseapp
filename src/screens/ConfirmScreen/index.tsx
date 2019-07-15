@@ -5,13 +5,23 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import logo = require('../../assets/images/logo.svg');
+import logoLight = require('../../assets/images/logoLight.svg');
 import { Documents } from '../../containers/Confirm/Documents';
 import { Identity } from '../../containers/Confirm/Identity';
 import { Phone } from '../../containers/Confirm/Phone';
 import { setDocumentTitle } from '../../helpers';
-import { Label, labelFetch, RootState, selectLabelData, selectUserInfo, User } from '../../modules';
+import {
+    Label,
+    labelFetch,
+    RootState,
+    selectCurrentColorTheme,
+    selectLabelData,
+    selectUserInfo,
+    User,
+} from '../../modules';
 
 interface ReduxProps {
+    colorTheme: string;
     userData: User;
     labels: Label[];
 }
@@ -55,8 +65,13 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
       this.props.history.goBack();
     }
 
+    // tslint:disable:jsx-no-multiline-js
     public render() {
-        const { userData, labels } = this.props;
+        const {
+            colorTheme,
+            userData,
+            labels,
+        } = this.props;
         const isIdentity = labels.find(w => w.key === 'profile' && w.value === 'verified');
         const currentProfileLevel = userData.level;
         const cx = classnames('pg-confirm__progress-items', {
@@ -65,46 +80,51 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
             'pg-confirm__progress-third': currentProfileLevel === 3 || isIdentity,
         });
         return (
-          <div className="pg-wrapper">
-            <div className="pg-logo">
-              <img src={logo} className="pg-logo__img" alt="Logo" />
+            <div className="pg-wrapper">
+                <div className="pg-logo">
+                    {colorTheme === 'light' ? (
+                        <img src={logoLight} className="pg-logo__img" alt="Logo" />
+                    ) : (
+                        <img src={logo} className="pg-logo__img" alt="Logo" />
+                    )}
+                </div>
+                <div className="pg-confirm">
+                    <div className="pg-confirm-box">
+                        <a
+                            href="#"
+                            onClick={this.goBack}
+                            className="pg-confirm-box-close"
+                        />
+                        <div className="pg-confirm__progress">
+                            <div className={cx}>
+                                <div className="pg-confirm__progress-circle-1">
+                                    <span className="pg-confirm__title-text pg-confirm__active-1">
+                                    <FormattedMessage id="page.body.kyc.head.phone"/>
+                                    </span>
+                                </div>
+                                <div className="pg-confirm__progress-line-1" />
+                                <div className="pg-confirm__progress-circle-2">
+                                    <span className="pg-confirm__title-text pg-confirm__active-2">
+                                    <FormattedMessage id="page.body.kyc.head.identity"/>
+                                    </span>
+                                </div>
+                                <div className="pg-confirm__progress-line-2" />
+                                <div className="pg-confirm__progress-circle-3">
+                                    <span className="pg-confirm__title-text pg-confirm__active-3">
+                                    <FormattedMessage id="page.body.kyc.head.document"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="pg-confirm__content">
+                            {this.renderContent(currentProfileLevel)}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="pg-confirm">
-              <div className="pg-confirm-box">
-                  <a
-                    href="#"
-                    onClick={this.goBack}
-                    className="pg-confirm-box-close"
-                  />
-                  <div className="pg-confirm__progress">
-                      <div className={cx}>
-                          <div className="pg-confirm__progress-circle-1">
-                            <span className="pg-confirm__title-text pg-confirm__active-1">
-                              <FormattedMessage id="page.body.kyc.head.phone"/>
-                            </span>
-                          </div>
-                          <div className="pg-confirm__progress-line-1" />
-                          <div className="pg-confirm__progress-circle-2">
-                            <span className="pg-confirm__title-text pg-confirm__active-2">
-                              <FormattedMessage id="page.body.kyc.head.identity"/>
-                            </span>
-                          </div>
-                          <div className="pg-confirm__progress-line-2" />
-                          <div className="pg-confirm__progress-circle-3">
-                            <span className="pg-confirm__title-text pg-confirm__active-3">
-                              <FormattedMessage id="page.body.kyc.head.document"/>
-                            </span>
-                          </div>
-                      </div>
-                  </div>
-                  <div className="pg-confirm__content">
-                      {this.renderContent(currentProfileLevel)}
-                  </div>
-              </div>
-            </div>
-          </div>
         );
     }
+    //tslint:enable:jsx-no-multiline-js
 
     private renderContent = (level: number) => {
         const { labels } = this.props;
@@ -119,6 +139,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
+    colorTheme: selectCurrentColorTheme(state),
     userData: selectUserInfo(state),
     labels: selectLabelData(state),
 });

@@ -2,8 +2,10 @@ import * as React from 'react';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import logo = require('../../assets/images/logo.svg');
+import logoLight = require('../../assets/images/logoLight.svg');
 import {
   RootState,
+  selectCurrentColorTheme,
   selectMobileWalletUi,
   setMobileWalletUi,
 } from '../../modules';
@@ -14,6 +16,7 @@ interface HeaderState {
 }
 
 interface ReduxProps {
+    colorTheme: string;
     mobileWallet: string;
 }
 
@@ -32,8 +35,13 @@ class Head extends React.Component<any, HeaderState> {
     }
 
     public render() {
-        const { location, mobileWallet } = this.props;
+        const {
+            colorTheme,
+            location,
+            mobileWallet,
+        } = this.props;
         const { isActive } = this.state;
+
         return (
           <React.Fragment>
           {!['/confirm'].some(r => location.pathname.includes(r)) &&
@@ -41,7 +49,11 @@ class Head extends React.Component<any, HeaderState> {
                 <div className="pg-container pg-header__content">
                     <Link to={'/wallets'} className="pg-header__logo">
                         <div className="pg-logo">
+                        {colorTheme === 'light' ? (
+                            <img src={logoLight} className="pg-logo__img" alt="Logo" />
+                        ) : (
                             <img src={logo} className="pg-logo__img" alt="Logo" />
+                        )}
                         </div>
                     </Link>
                     <div className="pg-header__location">
@@ -101,6 +113,7 @@ class Head extends React.Component<any, HeaderState> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
+    colorTheme: selectCurrentColorTheme(state),
     mobileWallet: selectMobileWalletUi(state),
 });
 

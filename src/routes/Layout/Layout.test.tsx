@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Layout, LayoutProps } from './';
 
 const defaults: LayoutProps = {
+    colorTheme: 'basic',
     currentMarket: undefined,
     user: {
         email: '',

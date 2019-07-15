@@ -5,7 +5,6 @@ import { connect, MapStateToProps } from 'react-redux';
 import {
     Market,
     RootState,
-    selectCurrentColorTheme,
     selectCurrentMarket,
 } from '../../../modules';
 import {
@@ -19,7 +18,6 @@ import {
 } from './MarketsTabs';
 
 interface ReduxProps {
-    colorTheme: string;
     currentMarket?: Market;
 }
 
@@ -38,7 +36,6 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
 
     public render() {
         const {
-            colorTheme,
             currentMarket,
         } = this.props;
         const {
@@ -74,7 +71,7 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
                     </div>
                     <div className={iconClassName}>
                         <div className={iconImgClassName}>
-                            <ArrowIcon color={isOpen ? (colorTheme === 'basic' ? '#FFFFFF' : '#2F2854') : '#737F92'}/>
+                            <ArrowIcon color={isOpen ? '#FFFFFF' : '#737F92'}/>
                         </div>
                     </div>
                 </div>
@@ -118,7 +115,6 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
 }
 
 const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
-    colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
 });
 

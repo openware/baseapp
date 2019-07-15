@@ -12,6 +12,7 @@
   --line-height: 1.2;
 
   /* layout */
+  --alert-icon-size: calc(var(--gap) * 3.6);
   --avatar-alt-height: 30px;
   --avatar-alt-width: 30px;
   --avatar-component-width: 50px;
@@ -20,6 +21,7 @@
   --checkbox-label-font-size: 16px;
   --checkbox-size: 10px;
   --checkbox-symbol-size: 10px;
+  --wallets-font-bold: 800;
 
   /* measures */
   --gap: 0.5em;
@@ -114,6 +116,7 @@ body {
 
 .pg-container {
   width: 95%;
+  box-shadow: 1px 1px 5px rgba(46, 76, 128, 0.2);
   box-sizing: border-box;
   margin: 0 auto;
   display: flex;
@@ -130,8 +133,14 @@ body {
     th {
       font-size: 1em !important;
     }
+
     th:last-child {
       width: calc(var(--big-gap) * 0.7);
+    }
+
+    tr th {
+      color: var(--table-header-text);
+      font-weight: 500;
     }
   }
 
@@ -190,7 +199,7 @@ body {
 }
 
 :global .react-grid-item {
-  background: #182034 !important;
+  background: var(--trading-screen-background) !important;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border: none !important;
   border-radius: 3px;
@@ -262,7 +271,7 @@ input:-webkit-autofill {
 .cr-tab-panel {
   &__navigation-container {
     background: var(--profile-activity-header);
-    border-bottom: 1px solid var(--base-new);
+    border-bottom: 1px solid var(--header-border);
     border-top-left-radius: var(--gap);
     border-top-right-radius: var(--gap);
 

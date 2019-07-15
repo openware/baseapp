@@ -8,15 +8,15 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
-import moon = require('../../assets/images/moon.svg');
+import { LogoutIcon } from '../../assets/images/LogoutIcon';
+import { Moon } from '../../assets/images/Moon';
 import {
-    CloseAvatar,
+    AvatarIcon,
     CloseIcon,
-    OpenAvatar,
     OpenIcon,
 } from '../../assets/images/NavBarIcons';
-import sun = require('../../assets/images/sun.svg');
-import { pgRoutes } from '../../constants';
+import { Sun } from '../../assets/images/Sun';
+import { colors, pgRoutes } from '../../constants';
 import {
     changeColorTheme,
     changeLanguage,
@@ -88,7 +88,6 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         const handleLinkChange = () => {
             if (onLinkChange) {
                 onLinkChange();
-                this.handleToggleCurrentStyleModeClass('basic');
             }
         };
         const path = url.includes('/trading') && currentMarket ? `/trading/${currentMarket.id}` : url;
@@ -103,7 +102,6 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
     public render() {
         const {
-            colorTheme,
             lang,
             location,
             user,
@@ -115,8 +113,6 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         const languageClassName = classnames('dropdown-menu-language-field', {
             'dropdown-menu-language-field-active': isOpenLanguage,
         });
-
-        this.handleToggleCurrentStyleModeClass(colorTheme);
 
         return (
             <div className={'pg-navbar'}>
@@ -158,18 +154,18 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         if (colorTheme === 'light') {
             return (
                 isOpenLanguage ? (
-                    <span className="icon"><OpenIcon fillColor="#6e6987" /></span>
+                    <span className="icon"><OpenIcon fillColor={colors.light.navbar.language} /></span>
                 ) : (
-                    <span className="icon"><CloseIcon fillColor="#657395" /></span>
+                    <span className="icon"><CloseIcon fillColor={colors.light.navbar.language} /></span>
                 )
             );
         }
 
         return (
             isOpenLanguage ? (
-                <span className="icon"><OpenIcon fillColor="white" /></span>
+                <span className="icon"><OpenIcon fillColor={colors.basic.navbar.language} /></span>
             ) : (
-                <span className="icon"><CloseIcon fillColor="#657395" /></span>
+                <span className="icon"><CloseIcon fillColor={colors.basic.navbar.language} /></span>
             )
         );
     }
@@ -178,7 +174,8 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         (url === '/trading/' && address.includes('/trading')) || address === url;
 
     private getProfile = () => {
-        const { user } = this.props;
+        const { colorTheme,  user } = this.props;
+
         return (
             <div className="pg-navbar__header-profile">
                 <Link
@@ -189,7 +186,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                     <FormattedMessage id={'page.header.navbar.profile'} />
                 </Link>
                 <span>{user.email}</span>
-                <img onClick={this.handleLogOut} className="pg-navbar__header-profile-logout" src={require(`./logout.svg`)} />
+                <LogoutIcon onClick={() => this.handleLogOut()} className="pg-navbar__header-profile-logout" fillColor={colorTheme === 'light' ? colors.light.navbar.logout : colors.basic.navbar.logout}/>
             </div>
         );
     };
@@ -212,16 +209,26 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
         if (colorTheme === 'basic') {
             return (
-                <div className="pg-navbar__header-settings__switcher__items__item" onClick={e => this.handleChangeCurrentStyleMode('light')}>
-                    <img src={moon} />
-                </div>
+                <React.Fragment>
+                    <div className="switcher-item" onClick={e => this.handleChangeCurrentStyleMode('light')}>
+                        <Sun fillColor={colors.light.navbar.sun}/>
+                    </div>
+                    <div className="switcher-item switcher-item--active">
+                        <Moon fillColor={colors.light.navbar.moon}/>
+                    </div>
+                </React.Fragment>
             );
         }
 
         return (
-            <div className="pg-navbar__header-settings__switcher__items__item" onClick={e => this.handleChangeCurrentStyleMode('basic')}>
-                <img src={sun} />
-            </div>
+            <React.Fragment>
+                <div className="switcher-item switcher-item--active">
+                    <Sun fillColor={colors.basic.navbar.sun}/>
+                </div>
+                <div className="switcher-item" onClick={e => this.handleChangeCurrentStyleMode('basic')}>
+                    <Moon fillColor={colors.basic.navbar.moon}/>
+                </div>
+            </React.Fragment>
         );
     };
 
@@ -249,13 +256,13 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
             return (
                 isOpen ? (
                     <React.Fragment>
-                        <OpenAvatar fillColor="#6e6987"/>
-                        <span className="icon"><OpenIcon fillColor="#6e6987"/></span>
+                        <AvatarIcon fillColor={colors.light.navbar.avatar}/>
+                        <span className="icon"><OpenIcon fillColor={colors.light.navbar.avatar}/></span>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <CloseAvatar fillColor="#737F92"/>
-                        <span className="icon"><CloseIcon fillColor="#657395"/></span>
+                        <AvatarIcon fillColor={colors.light.navbar.avatar}/>
+                        <span className="icon"><CloseIcon fillColor={colors.light.navbar.avatar}/></span>
                     </React.Fragment>
                 )
             );
@@ -264,13 +271,13 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         return (
             isOpen ? (
                 <React.Fragment>
-                    <OpenAvatar fillColor="white"/>
-                    <span className="icon"><OpenIcon fillColor="white"/></span>
+                    <AvatarIcon fillColor={colors.basic.navbar.avatar}/>
+                    <span className="icon"><OpenIcon fillColor={colors.basic.navbar.avatar}/></span>
                 </React.Fragment>
             ) : (
                 <React.Fragment>
-                    <CloseAvatar fillColor="#737F92"/>
-                    <span className="icon"><CloseIcon fillColor="#657395"/></span>
+                    <AvatarIcon fillColor={colors.basic.navbar.avatar}/>
+                    <span className="icon"><CloseIcon fillColor={colors.basic.navbar.avatar}/></span>
                 </React.Fragment>
             )
         );
@@ -299,23 +306,12 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
     private handleChangeCurrentStyleMode = (value: string) => {
         this.props.changeColorTheme(value);
-        this.handleToggleCurrentStyleModeClass(value);
     };
-
-    private handleToggleCurrentStyleModeClass = (value: string) => {
-        const rootElement = document.getElementsByTagName('body')[0];
-        if (value === 'light') {
-            rootElement && rootElement.classList.add('light-mode');
-        } else {
-            rootElement && rootElement.classList.remove('light-mode');
-        }
-    }
 
     private handleRouteChange = (to: string) => () => {
         this.setState({ isOpen: false }, () => {
             this.props.history.push(to);
         });
-        this.handleToggleCurrentStyleModeClass('basic');
     }
 
     private handleLogOut = () => {

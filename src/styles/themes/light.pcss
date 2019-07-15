@@ -1,35 +1,62 @@
 .light-mode {
   --main-bg: #fff;
-  --back-bg: #f4f4f6;
+  --back-bg: #fff;
   --second-bg: #222B41;
   --text: #9290a5;
-  --placeholder-text: #848297;
+  --placeholder-text: #28334E;
   --header: #fff;
-  --header-text: #2F2854;
-  --button-normal: #F0F1FF;
+  --header-text: #050505;
+  --button-normal: #2E4C80;
   --white: #fff;
-  --bright: #2F2854;
-  --accent: #3c78e0;
-  --green: #05aa81;
-  --red: #d15256;
+  --bright: #050505;
+  --accent: #2E4C80;
+  --green: #54B489;
+  --red: #BD3039;
   --selected-item: #F0F1FF;
   --gamboge: #E0A300;
 
   /* linear-gradients */
-  --background-dropdown-hover: #fff;
+  --background-dropdown: var(--selected-item);
+  --background-dropdown-hover: #f5f5ff;
+  --button-dark-gray: rgba(#fff, 0.5);
+  --copyable-field-border: rgba(#28334E, 0.3);
+  --header-border: rgba(#28334E, 0.1);
+  --input-block-border-color: rgba(#28334E, 0.5);
+  --text-muted: rgba(#28334E, 0.5);
+  --table-header-color: var(--bright);
+  --table-header-text: rgba(#28334E, 0.7);
+  --trading-header-background: var(--header);
+  --sign-in-accent: var(--placeholder-text);
+  --trading-header-btn-open: #2E4C80;
+  --trading-grid-background:#182034;
+  --trading-screen-background: #F0F1F5;
+
+  /* KYC */
+  --kyc-circle-color: var(--selected-item);
 
   /* orders */
-  --orders-button-percentage-normal: linear-gradient(0deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.11)), var(--selected-item);
-  --orders-button-percentage-hover: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--orders-button-percentage-normal);
-  --orders-button-percentage-active: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--orders-button-percentage-normal);
+  --orders-border-color: #C9CCD2;
+  --orders-button-percentage-text: #6D7075;
+  --orders-button-percentage-normal: #D5DBE6;
+  --orders-button-percentage-hover: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--orders-button-percentage-normal);
+  --orders-button-percentage-active: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--orders-button-percentage-normal);
   --orders-button-green-normal: var(--green);
-  --orders-button-green-hover: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--orders-button-green-normal);
-  --orders-button-green-active: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--orders-button-green-normal);
+  --orders-button-green-hover: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--orders-button-green-normal);
+  --orders-button-green-active: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--orders-button-green-normal);
   --orders-button-red-normal: var(--red);
-  --orders-button-red-hover: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--orders-button-red-normal);
-  --orders-button-red-active: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--orders-button-red-normal);
+  --orders-button-red-hover: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--orders-button-red-normal);
+  --orders-button-red-active: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--orders-button-red-normal);
 
   /* NavBar languages */
+  --navbar-language-selector-background: var(--selected-item);
+  --navbar-language-selector-color: var(--placeholder-text);
+  --navbar-language-selector-current-color: var(--text);
+  --navbar-language-selector-current-background: var(--header);
   --navbar-language-selector-color-hover: var(--header-text);
-  --navbar-language-selector-background-hover: #f5f5ff;
+  --navbar-language-selector-background-hover: var(--background-dropdown-hover);
+
+  /* wallets */
+  --estimated-value-background: var(--main-bg);
+  --estimated-value-label-text: var(--white);
+  --estimated-value-label-background: var(--button-normal);
 }

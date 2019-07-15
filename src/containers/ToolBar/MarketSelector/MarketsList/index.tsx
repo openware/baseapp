@@ -7,6 +7,7 @@ import {
     intlShape,
 } from 'react-intl';
 import { connect } from 'react-redux';
+import { SortAsc, SortDefault, SortDesc } from '../../../../assets/images/SortIcons';
 import {
     depthFetch,
     Market,
@@ -44,6 +45,18 @@ interface State {
     sortBy: string;
     reverseOrder: boolean;
 }
+
+const handleChangeSortIcon = (sortBy: string, id: string, reverseOrder: boolean) => {
+    if (sortBy !== 'none' && id === sortBy && !reverseOrder) {
+        return <SortDesc/>;
+    }
+
+    if (sortBy !== 'none' && id === sortBy && reverseOrder) {
+        return <SortAsc/>;
+    }
+
+    return <SortDefault/>;
+};
 
 type Props = ReduxProps & OwnProps & DispatchProps & InjectedIntlProps;
 
@@ -110,15 +123,12 @@ class MarketsListComponent extends React.Component<Props, State> {
             'pg-dropdown-markets-list-container__header-selected': obj.selected,
         });
 
-        const arrowClassname = classnames('pg-dropdown-markets-list-container__none', {
-            'arrow-down': sortBy !== 'none' && obj.id === sortBy && !reverseOrder,
-            'arrow-up': sortBy !== 'none' && obj.id === sortBy && reverseOrder,
-        });
-
         return (
             <span className={classname} key={obj.id} onClick={() => this.handleHeaderClick(obj.id)}>
             {this.props.intl.formatMessage({id: `page.body.trade.header.markets.content.${obj.translationKey}`})}
-                <i className={arrowClassname}/>
+                <span className="sort-icon">
+                    {handleChangeSortIcon(sortBy, obj.id, reverseOrder)}
+                </span>
             </span>
         );
     });

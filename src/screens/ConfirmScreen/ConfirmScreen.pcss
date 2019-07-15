@@ -4,12 +4,12 @@
   height: 100vh;
 
   .pg-logo {
-    padding-top: calc(var(--big-gap) * 2);
+    padding-top: calc(var(--big-gap) * 2.5);
     display: flex;
     justify-content: center;
 
     &__img {
-      height: calc(var(--big-gap) * 1.666);
+      height: calc(var(--big-gap) * 1.08);
     }
   }
 }
@@ -29,6 +29,7 @@
 
   &-box {
     background-color: var(--base-bright);
+    box-shadow: 1px 1px 5px rgba(46, 76, 128, 0.2);
     display: block;
     margin: 0 auto;
     max-width: calc(var(--big-gap) * 9.33);
@@ -158,6 +159,10 @@
     &-first {
       .pg-confirm__progress-circle-1 {
         background: var(--kyc-active-color);
+
+        &:after {
+          color: var(--white);
+        }
       }
        .pg-confirm__active-1 {
         color: var(--color-white);
@@ -168,6 +173,10 @@
     &-second {
       .pg-confirm__progress-circle-2 {
         background: var(--kyc-active-color);
+
+        &:after {
+          color: var(--white);
+        }
       }
        .pg-confirm__active-2 {
         color: var(--color-white);
@@ -177,6 +186,10 @@
     &-third {
       .pg-confirm__progress-circle-3 {
         background: var(--kyc-active-color);
+
+        &:after {
+          color: var(--white);
+        }
       }
        .pg-confirm__active-3 {
         color: var(--color-white);
@@ -202,7 +215,7 @@
       input {
         font-weight: normal;
         background: var(--kyc-button);
-        color: var(--color-white);
+        color: var(--white);
         font-size: calc(var(--gap) * 2.5);
         height: calc(var(--gap) * 4.8);
         width: 100%;

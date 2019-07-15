@@ -1,4 +1,5 @@
 :root, .light-mode {
+  --transparent: transparent;
   --active-tab-color: var(--accent);
   --base: var(--text);
   --base-1: #FA00FF;
@@ -18,18 +19,16 @@
   --background-dark: var(--main-bg);
   --background-wallet-item: var(--header);
   --background-wallet-item-active: #FA00FF;
-  --background-dropdown: var(--button-normal);
   --background-dropdown-hover-text: var(--color-white);
   --button-primary: var(--button-normal);
-  --button-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--button-normal);
-  --button-active: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--button-normal);
-  --button-disabled: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--button-normal);
-  --button-dark-gray: linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), var(--color-white);
+  --button-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--button-normal);
+  --button-active: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--button-normal);
+  --button-disabled: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--button-normal);
+  --header-background-cover: var(--back-bg);
   --outline-wallet-item-active: #FA00FF;
   --text-light-grey: #FA00FF;
   --text-table-grey: var(--placeholder-text);
   --input-block-bg: #FA00FF;
-  --input-block-border-color: var(--placeholder-text);
   --input-block-color: #FA00FF;
   --input-block-input-border-color: #FA00FF;
   --input-block-input-color: #FA00FF;
@@ -45,7 +44,6 @@
   --withdraw-button-bg: #FA00FF;
   --table-background: var(--main-bg);
   --table-border-bottom: #FA00FF;
-  --table-header-color: var(--placeholder-text);
   --table-dark-header-color: var(--header);
   --title-component-color: var(--header-text);
   --table-even-row-background: var(--main-bg);
@@ -54,7 +52,6 @@
   --checkbox-hover-background: #FA00FF;
   --checkbox-border-color: var(--placeholder-text);
   --checkbox-symbol-color: #FA00FF;
-  --transparent: transparent;
   --sign-in-background-color: var(--main-bg);
   --sign-in-label-color: #FA00FF;
   --sign-in-input-color: #FA00FF;
@@ -84,13 +81,11 @@
   --grid-placeholder-bg: #FA00FF;
   --grid-placeholder-border-color: #FA00FF;
   --grid-resizable-border-color: var(--placeholder-text);
-  --alert-icon-size: calc(var(--gap) * 3.6);
   --wallet-trades-item-bg-color: #FA00FF;
   --wallet-trades-item-color: #FA00FF;
 
   /* orders */
   --orders-execute-color: #b18d4f;
-  --orders-border-color: var(--text);
   --orders-placeholder-color: var(--placeholder-text);
   --orders-text-secondary-color: var(--header-text);
   --orders-text-primary-color: var(--bright-1);
@@ -99,14 +94,13 @@
   --alert-background-color: var(--main-bg);
   --alert-description-color: var(--text);
 
-/* BASEAPP COLORS */
+  /* BASEAPP COLORS */
 
   --dropdown-border: var(--placeholder-text);
   --background-dropdown-text: var(--placeholder-text);
   --background-dropdown-open-text: var(--header);
   --font-light: lighter;
   --sign-in-text: var(--text);
-  --sign-in-accent: var(--accent);
   --email-form-bg: var(--main-bg);
   --email-form-border: var(--text);
   --email-form-accent: var(--accent);
@@ -116,22 +110,18 @@
   --sign-up--modal-text: var(--placeholder-text);
 
   --color-green: var(--green);
-  --base: var(--text);
   --base-9: var(--placeholder-text);
   --base-new: var(--placeholder-text);
-  --header-border: var(--placeholder-text);
   --color-white: var(--bright-1);
   --muted-text: var(--placeholder-text);
   --bright-1: var(--bright);
   --color-blue: var(--accent);
 
   --navbar-text-color: var(--text);
-  --text-muted: var(--placeholder-text);
 
   --active-color: #FA00FF;
   --table-text-color: var(--placeholder-text);
   --order-button-sell: #FA00FF;
-  --transparent: transparent;
 
     /* wallets */
   --wallets-item-active: #FA00FF;
@@ -141,9 +131,8 @@
   --wallets-item-font-active: var(--color-white);
   --wallets-item-bg: var(--main-bg);
   --wallets-item-bg-active: var(--selected-item);
-  --wallets-item-bg-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--selected-item);
+  --wallets-item-bg-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--selected-item);
   --wallets-item-border: var(--selected-item);
-  --wallets-font-bold: 800;
   --wallets-balance: var(--color-white);
   --wallets-table-divider: var(--text);
 
@@ -156,7 +145,7 @@
   --profile-slider: var(--button-normal);
   --profile-activity-header: var(--header);
   --profile-activity-header-font: var(--header-text);
-  --profile-activity-border: var(--text);
+  --profile-activity-border: var(--header-border);
   --profile-url: var(--accent);
   --wallets-font-color: #FA00FF;
 
@@ -165,16 +154,9 @@
   --kyc-header-color: var(--header);
   --kyc-header-border: var(--text);
   --kyc-progress-line: var(--placeholder-text);
-  --kyc-circle-color: var(--main-bg);
   --kyc-active-color: var(--accent);
   --kyc-grey: var(--placeholder-text);
   --kyc-button: var(--button-normal);
-
-  /* NavBar languages */
-  --navbar-language-selector-background: var(--button-normal);
-  --navbar-language-selector-color: var(--placeholder-text);
-  --navbar-language-selector-current-color: var(--text);
-  --navbar-language-selector-current-background: var(--header);
 
   /* Resend email confirmation screen */
   --email-confirmation-screen-background: var(--main-bg);
@@ -186,11 +168,11 @@
   --email-verification-screen-background: var(--main-bg);
 
   /* ToolBar */
-  --trading-header-background: var(--back-bg);
+  --trading-header-white: var(--bright);
   --trading-header-btn-close: var(--table-dark-header-color);
-  --trading-header-btn-open: var(--table-dark-header-color);
   --trading-header-selector-background: var(--background-dark);
   --trading-header-selector-border: var(--header-border);
+  --trading-header-selector-title: var(--placeholder-text);
   --trading-header-list-background: var(--trading-header-background);
   --trading-header-fastsearch-button-color-active: var(--bright-1);
   --trading-header-fastsearch-button-border-active: var(--accent);
@@ -200,5 +182,4 @@
 
   /* Tradingview */
   --trading-view-background: var(--main-bg);
-  --trading-view-border-color: var(--second-bg);
 }
