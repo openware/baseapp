@@ -102,6 +102,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 
     public render() {
         const {
+            colorTheme,
             lang,
             location,
             user,
@@ -122,7 +123,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                 </ul>
                 <div className="pg-navbar__header-settings">
                     <div className="pg-navbar__header-settings__switcher">
-                        <div className="pg-navbar__header-settings__switcher__items">
+                        <div className="pg-navbar__header-settings__switcher__items" onClick={e => this.handleChangeCurrentStyleMode(colorTheme === 'light' ? 'basic' : 'light')}>
                             {this.getLightDarkMode()}
                         </div>
                     </div>
@@ -210,7 +211,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
         if (colorTheme === 'basic') {
             return (
                 <React.Fragment>
-                    <div className="switcher-item" onClick={e => this.handleChangeCurrentStyleMode('light')}>
+                    <div className="switcher-item">
                         <Sun fillColor={colors.light.navbar.sun}/>
                     </div>
                     <div className="switcher-item switcher-item--active">
@@ -225,7 +226,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
                 <div className="switcher-item switcher-item--active">
                     <Sun fillColor={colors.basic.navbar.sun}/>
                 </div>
-                <div className="switcher-item" onClick={e => this.handleChangeCurrentStyleMode('basic')}>
+                <div className="switcher-item">
                     <Moon fillColor={colors.basic.navbar.moon}/>
                 </div>
             </React.Fragment>
