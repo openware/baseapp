@@ -4,7 +4,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { alertPush, rootSaga } from '../../../index';
 import { OrderCommon } from '../../../types';
-import { ordersHistoryCancelData, ordersHistoryCancelError, ordersHistoryCancelFetch } from '../actions';
+import { ordersHistoryCancelError, ordersHistoryCancelFetch } from '../actions';
 
 describe('Orders History Cancel', () => {
     let store: MockStoreEnhanced;
@@ -54,18 +54,13 @@ describe('Orders History Cancel', () => {
     ];
 
     const fakeFetchPayload = { id: 16, type: 'all', list: fakeHistory };
-    const fakeSuccessPayload: OrderCommon[] = fakeHistory.map(order => {
-        order.state = 'cancel';
-        return order;
-    });
     const mockOrderCancel = id => {
         mockAxios.onPost(`/market/orders/${id}/cancel`).reply(200);
     };
 
     const expectedActionsFetch = [
         ordersHistoryCancelFetch(fakeFetchPayload),
-        ordersHistoryCancelData(fakeSuccessPayload),
-        alertPush({ message: ['success.order.canceled'], type: 'success'}),
+        alertPush({ message: ['success.order.cancelling'], type: 'success'}),
     ];
     const expectedActionsError = [
         ordersHistoryCancelFetch(fakeFetchPayload),

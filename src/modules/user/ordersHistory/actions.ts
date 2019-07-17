@@ -1,4 +1,4 @@
-import { OrderCommon } from '../../types';
+import {OrderCommon, OrderEvent} from '../../types';
 import {
     ORDERS_CANCEL_ALL_DATA,
     ORDERS_CANCEL_ALL_ERROR,
@@ -9,6 +9,7 @@ import {
     ORDERS_HISTORY_DATA,
     ORDERS_HISTORY_ERROR,
     ORDERS_HISTORY_FETCH,
+    ORDERS_HISTORY_RANGER_DATA,
     ORDERS_HISTORY_RESET,
     ORDERS_TEST_HISTORY_STATE,
 } from './constants';
@@ -34,6 +35,11 @@ export interface UserOrdersHistoryFetch {
 export interface UserOrdersHistoryData {
     type: typeof ORDERS_HISTORY_DATA;
     payload: UserOrdersHistoryDataPayload;
+}
+
+export interface UserOrdersHistoryRangerData {
+    type: typeof ORDERS_HISTORY_RANGER_DATA;
+    payload: OrderEvent;
 }
 
 export interface UserOrdersHistoryError {
@@ -85,6 +91,7 @@ export interface OrdersHistoryReset {
 export type OrdersHistoryAction =
     UserOrdersHistoryFetch
     | UserOrdersHistoryData
+    | UserOrdersHistoryRangerData
     | UserOrdersHistoryError
     | TestOrdersHistoryState
     | OrdersCancelAllFetch
@@ -103,6 +110,11 @@ export const userOrdersHistoryFetch = (payload: UserOrdersHistoryFetchPayload): 
 
 export const userOrdersHistoryData = (payload: UserOrdersHistoryDataPayload): UserOrdersHistoryData => ({
     type: ORDERS_HISTORY_DATA,
+    payload,
+});
+
+export const userOrdersHistoryRangerData = (payload: OrderEvent): UserOrdersHistoryRangerData => ({
+    type: ORDERS_HISTORY_RANGER_DATA,
     payload,
 });
 

@@ -1,3 +1,4 @@
+import { OrderEvent } from '../../types';
 import * as actions from './actions';
 import {
     ORDERS_CANCEL_ALL_DATA,
@@ -9,6 +10,7 @@ import {
     ORDERS_HISTORY_DATA,
     ORDERS_HISTORY_ERROR,
     ORDERS_HISTORY_FETCH,
+    ORDERS_HISTORY_RANGER_DATA,
     ORDERS_HISTORY_RESET,
 } from './constants';
 
@@ -68,5 +70,20 @@ describe('Orders History actions', () => {
     it('should check resetOrdersHistory action creator', () => {
         const expectedAction = { type: ORDERS_HISTORY_RESET };
         expect(actions.resetOrdersHistory()).toEqual(expectedAction);
+    });
+
+    it('should check userOrdersHistoryRangerData action creator', () => {
+        const payload: OrderEvent = {
+            id: 1,
+            at: 123123123,
+            market: 'ethusd',
+            kind: 'bid',
+            price: '0.3',
+            state: 'wait',
+            remaining_volume: '1.213432',
+            origin_volume: '3.234234',
+        };
+        const expectedAction = { type: ORDERS_HISTORY_RANGER_DATA, payload };
+        expect(actions.userOrdersHistoryRangerData(payload)).toEqual(expectedAction);
     });
 });

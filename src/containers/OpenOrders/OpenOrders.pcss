@@ -16,6 +16,45 @@
     width: 3.5%;
     padding: 0 !important;
   }
+
+  .cr-table-header {
+    &__content {
+      padding: 9px 9px 9px 12px;
+    }
+
+    &__cancel {
+      float: right;
+      cursor: pointer;
+    }
+
+    &__close {
+      position: relative;
+      display: inline-block;
+      margin-left: calc(var(--gap) / 1.33);
+      height: calc(var(--gap) * 2);
+      width: calc(var(--gap) * 2);
+      cursor: pointer;
+
+      &::before,
+      &::after {
+        background: var(--text-table-grey);
+        content: '';
+        position: absolute;
+        top: 55%;
+        left: 0;
+        height: 2px;
+        width: 100%;
+      }
+
+      &::before {
+        transform: rotate(45deg);
+      }
+
+      &::after {
+        transform: rotate(-45deg);
+      }
+    }
+  }
 }
 
 .cr-open-orders .cr-table th,

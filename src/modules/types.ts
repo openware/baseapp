@@ -60,6 +60,8 @@ interface OrderEvent {
     state: OrderStatus;
     origin_volume: string;
     remaining_volume: string;
+    ord_type?: OrderType;
+    updated_at?: string;
 }
 
 

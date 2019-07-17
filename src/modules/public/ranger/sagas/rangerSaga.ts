@@ -5,6 +5,7 @@ import { rangerUrl } from '../../../../api';
 import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
 import { userOpenOrdersUpdate } from '../../../user/openOrders';
+import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
 import { MARKETS_SET_CURRENT_MARKET } from '../../markets/constants';
@@ -203,6 +204,10 @@ function* dispatchCurrentMarketOrderUpdates(action: UserOrderUpdate) {
     }
 }
 
+function* dispatchOrderHistoryUpdates(action: UserOrderUpdate) {
+    yield put(userOrdersHistoryRangerData(action.payload));
+}
+
 function* getSubscriptions() {
     try {
         return yield select(selectSubscriptions);
@@ -218,6 +223,7 @@ export function* rangerSagas() {
     let pipes;
     yield takeEvery(MARKETS_SET_CURRENT_MARKET, switchMarket());
     yield takeEvery(RANGER_USER_ORDER_UPDATE, dispatchCurrentMarketOrderUpdates);
+    yield takeEvery(RANGER_USER_ORDER_UPDATE, dispatchOrderHistoryUpdates);
 
     while (true) {
         const { connectFetch, disconnectData } = yield race({

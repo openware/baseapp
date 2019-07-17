@@ -33,7 +33,17 @@ export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
 };
 
 export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
-    const { id, at, kind, price, state, remaining_volume, origin_volume, market } = orderEvent;
+    const {
+        id,
+        at,
+        kind,
+        price,
+        state,
+        remaining_volume,
+        origin_volume,
+        market, ord_type,
+        updated_at,
+    } = orderEvent;
     return {
         id,
         side: kindToMakerType(kind),
@@ -44,6 +54,8 @@ export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
         origin_volume: Number(origin_volume),
         created_at: new Date(Number(at) * 1000).toISOString(),
         market,
+        ord_type,
+        updated_at,
     };
 };
 

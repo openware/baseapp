@@ -8,6 +8,7 @@ import { localeDate, preciseData, setTradeColor } from '../../helpers';
 import {
     Market,
     openOrdersCancelFetch,
+    ordersCancelAllFetch,
     RootState,
     selectCancelOpenOrdersFetching,
     selectCurrentMarket,
@@ -29,6 +30,7 @@ interface ReduxProps {
 interface DispatchProps {
     userOpenOrdersFetch: typeof userOpenOrdersFetch;
     openOrdersCancelFetch: typeof openOrdersCancelFetch;
+    ordersCancelAll: typeof ordersCancelAllFetch;
 }
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
@@ -63,6 +65,11 @@ export class OpenOrdersContainer extends React.Component<Props> {
                 <div className="cr-table-header__content">
                     <div className="cr-title-component">
                         <FormattedMessage id="page.body.trade.header.openOrders" />
+
+                        <span className="cr-table-header__cancel" onClick={this.handleCancelAll}>
+                            <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
+                            <span className="cr-table-header__close" />
+                        </span>
                     </div>
                 </div>
                 {fetching ? <div className="open-order-loading"><Loader /></div> : this.openOrders()}
@@ -135,13 +142,15 @@ export class OpenOrdersContainer extends React.Component<Props> {
     private translate = (e: string) => this.props.intl.formatMessage({ id: e });
 
     private handleCancel = (index: number) => {
-        const { list, cancelFetching } = this.props;
-        if (cancelFetching) {
-            return;
-        }
+        const { list } = this.props;
         const orderToDelete = list[index];
         this.props.openOrdersCancelFetch({ id: orderToDelete.id, list });
     };
+
+    private handleCancelAll = () => {
+        const { currentMarket } = this.props;
+        this.props.ordersCancelAll({market: currentMarket.id});
+    }
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -155,6 +164,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     userOpenOrdersFetch: payload => dispatch(userOpenOrdersFetch(payload)),
     openOrdersCancelFetch: payload => dispatch(openOrdersCancelFetch(payload)),
+    ordersCancelAll: payload => dispatch(ordersCancelAllFetch(payload)),
 });
 
 export type OpenOrdersProps = ReduxProps;

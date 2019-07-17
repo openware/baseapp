@@ -1,4 +1,5 @@
 import { OrderCommon } from '../../types';
+import { convertOrderEvent } from '../openOrders/helpers';
 import { OrdersHistoryAction } from './actions';
 import {
     ORDERS_CANCEL_ALL_DATA,
@@ -10,8 +11,10 @@ import {
     ORDERS_HISTORY_DATA,
     ORDERS_HISTORY_ERROR,
     ORDERS_HISTORY_FETCH,
+    ORDERS_HISTORY_RANGER_DATA,
     ORDERS_HISTORY_RESET,
 } from './constants';
+import { insertOrUpdate } from './helpers';
 
 export interface OrdersHistoryState {
     list: OrderCommon[];
@@ -51,6 +54,8 @@ export const ordersHistoryReducer = (
                 pageIndex: action.payload.pageIndex,
                 total: action.payload.total,
             };
+        case ORDERS_HISTORY_RANGER_DATA:
+            return { ...state, cancelFetching: false, list: insertOrUpdate(state.list, convertOrderEvent(action.payload)) };
         case ORDERS_HISTORY_ERROR:
             return { ...state, list: [], total: 0, pageIndex: 0, fetching: false };
         case ORDERS_CANCEL_ALL_FETCH:

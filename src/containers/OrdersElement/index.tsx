@@ -58,22 +58,28 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     }
 
     public render() {
-        const { list, fetching } = this.props;
+        const { fetching, type, list } = this.props;
+        let updateList = list;
+
+        if (type === 'open') {
+            updateList = list.filter(o => o.state === 'wait');
+        }
+
         const emptyMsg = this.props.intl.formatMessage({id: 'page.noDataToShow'});
         return (
-            <div className={`pg-history-elem ${list.length ? '' : 'pg-history-elem-empty'}`}>
+            <div className={`pg-history-elem ${updateList.length ? '' : 'pg-history-elem-empty'}`}>
                 {fetching && <Loader />}
-                {list.length ? this.renderContent() : null}
-                {!list.length && !fetching ? <p className="pg-history-elem__empty">{emptyMsg}</p> : null}
+                {updateList.length ? this.renderContent(updateList) : null}
+                {!updateList.length && !fetching ? <p className="pg-history-elem__empty">{emptyMsg}</p> : null}
             </div>
         );
     }
 
-    public renderContent = () => {
+    public renderContent = list => {
         const { firstElemIndex, lastElemIndex, total, pageIndex, nextPageExists } = this.props;
         return (
             <React.Fragment>
-                <History headers={this.renderHeaders()} data={this.retrieveData()}/>
+                <History headers={this.renderHeaders()} data={this.retrieveData(list)}/>
                 <Pagination
                     firstElemIndex={firstElemIndex}
                     lastElemIndex={lastElemIndex}
@@ -112,9 +118,8 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         ];
     };
 
-    private retrieveData = () => {
-        return [...this.props.list]
-            .map(item => this.renderOrdersHistoryRow(item));
+    private retrieveData = list => {
+        return list.map(item => this.renderOrdersHistoryRow(item));
     };
 
     private renderOrdersHistoryRow = item => {
@@ -130,15 +135,15 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             side,
             state,
             updated_at,
+            created_at,
         } = item;
-
         const currentMarket = this.props.marketsData.find(m => m.id === market)
             || { name: '', price_precision: 0, amount_precision: 0 };
 
         const orderType = this.getType(side, ord_type);
         const marketName = currentMarket ? currentMarket.name : market;
         const costRemaining = remaining_volume * price; // price or avg_price ???
-        const date = localeDate(updated_at, 'fullDate');
+        const date = localeDate(updated_at ? updated_at : created_at, 'fullDate');
         const status = this.setOrderStatus(state);
         const actualPrice = ord_type === 'market' || status === 'done' ? avg_price : price;
 

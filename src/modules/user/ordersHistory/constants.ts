@@ -1,5 +1,6 @@
 export const ORDERS_HISTORY_FETCH = 'ordersHistory/FETCH';
 export const ORDERS_HISTORY_DATA = 'ordersHistory/DATA';
+export const ORDERS_HISTORY_RANGER_DATA = 'ordersHistory/RANGER_DATA';
 export const ORDERS_HISTORY_ERROR = 'ordersHistory/ERROR';
 export const ORDERS_TEST_HISTORY_STATE = 'ordersHistory/TEST_STATE';
 

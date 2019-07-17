@@ -598,7 +598,22 @@ describe('Ranger module', () => {
                                 expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
                                 return;
-
+                            case 5:
+                                expect(lastAction).toEqual({
+                                    type: 'ordersHistory/RANGER_DATA',
+                                    payload:
+                                        {
+                                            id: 758,
+                                            at: 1546605232,
+                                            market: 'eurbtc',
+                                            kind: 'bid',
+                                            price: '1.17',
+                                            state: 'wait',
+                                            remaining_volume: '0.1',
+                                            origin_volume: '0.1',
+                                        },
+                                });
+                                return;
                             default:
                                 fail(`Unexpected action ${actions.length}`);
                                 break;
@@ -648,7 +663,22 @@ describe('Ranger module', () => {
                                 expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
                                 return;
-
+                            case 5:
+                                expect(lastAction).toEqual({
+                                    type: 'ordersHistory/RANGER_DATA',
+                                    payload:
+                                        {
+                                            id: 758,
+                                            at: 1546605232,
+                                            market: 'eurbtc',
+                                            kind: 'bid',
+                                            price: '1.17',
+                                            state: 'done',
+                                            remaining_volume: '0.0',
+                                            origin_volume: '0.1',
+                                        },
+                                });
+                                return;
                             default:
                                 fail(`Unexpected action ${actions.length}`);
                                 break;

@@ -1,8 +1,9 @@
-import { OrderAPI } from '../../types';
-import { convertOrderAPI } from '../openOrders/helpers';
+import { OrderAPI, OrderCommon, OrderEvent } from '../../types';
+import { convertOrderAPI, convertOrderEvent } from '../openOrders/helpers';
 import * as actions from './actions';
 import { ORDERS_TEST_HISTORY_STATE } from './constants';
-import { initialOrdersHistoryState, ordersHistoryReducer } from './reducer';
+import { insertOrUpdate } from './helpers';
+import { initialOrdersHistoryState, ordersHistoryReducer, OrdersHistoryState } from './reducer';
 
 describe('Orders History reducer', () => {
     it('should return initial state', () => {
@@ -104,4 +105,58 @@ describe('Orders History reducer', () => {
         expect(ordersHistoryReducer(initialState, actions.resetOrdersHistory())).toEqual(expectedState);
     });
 
+    describe('ORDERS_HISTORY_RANGER_DATA', () => {
+        const newOrderEvent: OrderEvent = {
+            id: 162,
+            at: 1550180631,
+            market: 'ethusd',
+            kind: 'bid',
+            price: '0.3',
+            state: 'wait',
+            remaining_volume: '123.1234',
+            origin_volume: '123.1234',
+        };
+        const newOrderCommon: OrderCommon = {
+            id: 162,
+            side: 'buy',
+            price: 0.3,
+            state:'wait',
+            created_at: '2018-11-29T16:54:46+01:00',
+            remaining_volume: 123.1234,
+            origin_volume: 123.1234,
+            executed_volume: 0,
+            market: 'ethusd',
+        };
+
+        it('insert new order', () => {
+            const list = insertOrUpdate([], convertOrderEvent(newOrderEvent));
+            const expectedState: OrdersHistoryState = { ...initialOrdersHistoryState, list };
+            expect(
+                ordersHistoryReducer(
+                    initialOrdersHistoryState,
+                    actions.userOrdersHistoryRangerData(newOrderEvent),
+                ),
+            ).toEqual(expectedState);
+        });
+
+        it('update order in the list', () => {
+            const updatedOrderEvent: OrderEvent = {
+                ...newOrderEvent,
+                origin_volume: '123.1234',
+                remaining_volume: '100.1234',
+            };
+            const list = insertOrUpdate([newOrderCommon], convertOrderEvent(updatedOrderEvent));
+            const expectedState: OrdersHistoryState = {
+                ...initialOrdersHistoryState,
+                list,
+            };
+
+            expect(
+                ordersHistoryReducer(
+                    { ...initialOrdersHistoryState, list: [newOrderCommon] },
+                    actions.userOrdersHistoryRangerData(updatedOrderEvent),
+                ),
+            ).toEqual(expectedState);
+        });
+    });
 });

@@ -5,7 +5,7 @@ import { rootSaga } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { alertPush } from '../../../public/alert';
 import { OrderCommon } from '../../../types';
-import { openOrdersCancelData, openOrdersCancelError, openOrdersCancelFetch } from '../actions';
+import { openOrdersCancelError, openOrdersCancelFetch } from '../actions';
 
 describe('Open Orders Cancel', () => {
     let store: MockStoreEnhanced;
@@ -55,7 +55,6 @@ describe('Open Orders Cancel', () => {
     ];
 
     const fakeFetchPayload = { id: 16, list: fakeHistory };
-    const fakeSuccessPayload = fakeHistory.filter(order => order.id !== fakeFetchPayload.id);
 
     const mockOrderCancel = id => {
         mockAxios.onPost(`/market/orders/${id}/cancel`).reply(200);
@@ -63,8 +62,7 @@ describe('Open Orders Cancel', () => {
 
     const expectedActionsFetch = [
         openOrdersCancelFetch(fakeFetchPayload),
-        openOrdersCancelData(fakeSuccessPayload),
-        alertPush({ message: ['success.order.canceled'], type: 'success'}),
+        alertPush({ message: ['success.order.cancelling'], type: 'success'}),
     ];
     const expectedActionsError = [
         openOrdersCancelFetch(fakeFetchPayload),
