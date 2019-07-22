@@ -109,16 +109,23 @@ export class WalletTable extends React.Component<Props> {
         this.props.fetchHistory({ page: Number(page) + 1, currency, type, limit: 6 });
     };
 
-    private retrieveData = (list: WalletHistoryList) => {
-        const { fixed } = this.props.wallets.find(w => w.currency === this.props.currency) || { fixed: 8 };
+    private retrieveData = list => {
+        const {
+            currency,
+            intl,
+            type,
+            wallets,
+        } = this.props;
+        const { fixed } = wallets.find(w => w.currency === currency) || { fixed: 8 };
         if (list.length === 0) {
-            return [[this.props.intl.formatMessage({ id: 'page.noDataToShow' }), '', '']];
+            return [[intl.formatMessage({ id: 'page.noDataToShow' }), '', '']];
         }
         return list.sort((a, b) => {
             return localeDate(a.created_at, 'fullDate') > localeDate(b.created_at, 'fullDate') ? -1 : 1;
         }).map((item, index) => {
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
-            const state = 'state' in item ? this.formatTxState(item.state) : '';
+            const confirmations = type === 'deposits' && item.confirmations;
+            const state = 'state' in item ? this.formatTxState(item.state, confirmations) : '';
             return [
                 localeDate(item.created_at, 'fullDate'),
                 state,
@@ -127,7 +134,7 @@ export class WalletTable extends React.Component<Props> {
         });
     };
 
-    private formatTxState = (tx: string) => {
+    private formatTxState = (tx: string, confirmations?: number) => {
         const statusMapping = {
             succeed: <SucceedIcon />,
             failed: <FailIcon />,
@@ -137,7 +144,7 @@ export class WalletTable extends React.Component<Props> {
             rejected: <FailIcon />,
             processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
             prepared: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
-            submitted: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
+            submitted: confirmations !== undefined ? confirmations : this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
             skipped: <SucceedIcon />,
         };
         return statusMapping[tx];
