@@ -6,6 +6,7 @@ export interface Currency {
     explorer_address: string;
     type: string;
     deposit_fee: string;
+    min_confirmations: number;
     min_deposit_amount: string;
     withdraw_fee: string;
     min_withdraw_amount: string;

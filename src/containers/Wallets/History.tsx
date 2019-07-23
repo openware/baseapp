@@ -133,6 +133,7 @@ export class WalletTable extends React.Component<Props> {
     private retrieveData = list => {
         const {
             currency,
+            currencies,
             intl,
             type,
             wallets,
@@ -146,7 +147,9 @@ export class WalletTable extends React.Component<Props> {
         }).map((item, index) => {
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const confirmations = type === 'deposits' && item.confirmations;
-            const state = 'state' in item ? this.formatTxState(item.state, confirmations) : '';
+            const itemCurrency = currencies.find(cur => cur.id === currency);
+            const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
+            const state = 'state' in item ? this.formatTxState(item.state, confirmations, minConfirmations) : '';
             return [
                 localeDate(item.created_at, 'fullDate'),
                 state,
@@ -155,7 +158,7 @@ export class WalletTable extends React.Component<Props> {
         });
     };
 
-    private formatTxState = (tx: string, confirmations?: number) => {
+    private formatTxState = (tx: string, confirmations?: number, minConfirmations?: number) => {
         const statusMapping = {
             succeed: <SucceedIcon />,
             failed: <FailIcon />,
@@ -165,7 +168,11 @@ export class WalletTable extends React.Component<Props> {
             rejected: <FailIcon />,
             processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
             prepared: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
-            submitted: confirmations !== undefined ? confirmations : this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
+            submitted: (confirmations !== undefined && minConfirmations !== undefined) ? (
+                `${confirmations}/${minConfirmations}`
+            ) : (
+                this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' })
+            ),
             skipped: <SucceedIcon />,
         };
         return statusMapping[tx];
