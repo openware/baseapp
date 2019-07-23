@@ -147,7 +147,7 @@ export class WalletTable extends React.Component<Props> {
         }).map((item, index) => {
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const confirmations = type === 'deposits' && item.confirmations;
-            const itemCurrency = currencies.find(cur => cur.id === currency);
+            const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
             const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
             const state = 'state' in item ? this.formatTxState(item.state, confirmations, minConfirmations) : '';
             return [

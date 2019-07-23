@@ -15,9 +15,12 @@ import {
     uppercase,
 } from '../../helpers';
 import {
+    currenciesFetch,
+    Currency,
     fetchHistory,
     Market,
     RootState,
+    selectCurrencies,
     selectCurrentPage,
     selectFirstElemIndex,
     selectFullHistory,
@@ -37,6 +40,7 @@ interface HistoryProps {
 }
 
 interface ReduxProps {
+    currencies: Currency[];
     marketsData: Market[];
     wallets: Wallet[];
     list: WalletHistoryList;
@@ -50,6 +54,7 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
+    fetchCurrencies: typeof currenciesFetch;
     fetchHistory: typeof fetchHistory;
 }
 
@@ -57,8 +62,20 @@ type Props = HistoryProps & ReduxProps & DispatchProps & InjectedIntlProps;
 
 class HistoryComponent extends React.Component<Props> {
     public componentDidMount() {
-        const { type } = this.props;
+        const { currencies, type } = this.props;
         this.props.fetchHistory({ page: 0, type, limit: 25 });
+
+        if (currencies.length === 0) {
+            this.props.fetchCurrencies();
+        }
+    }
+
+    public componentWillReceiveProps(nextProps) {
+        const { currencies } = this.props;
+
+        if (nextProps.currencies.length === 0 && nextProps.currencies !== currencies) {
+            this.props.fetchCurrencies();
+        }
     }
 
     public render() {
@@ -141,13 +158,25 @@ class HistoryComponent extends React.Component<Props> {
     };
 
     private renderTableRow = (type, item) => {
-        const { marketsData, wallets } = this.props;
+        const {
+            currencies,
+            intl,
+            marketsData,
+            wallets,
+        } = this.props;
         switch (type) {
             case 'deposits': {
-                const { txid, created_at, currency, amount } = item;
-                const state = this.props.intl.formatMessage({id: `page.body.history.deposit.content.status.${item.state}`});
+                const { amount, confirmations, created_at, currency, txid } = item;
                 const blockchainLink = this.getBlockchainLink(currency, txid);
                 const wallet = wallets.find(obj => obj.currency === currency);
+                const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
+                const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
+                const state = (item.state === 'submitted' && confirmations !== undefined && minConfirmations !== undefined) ? (
+                    `${confirmations}/${minConfirmations}`
+                ) : (
+                    intl.formatMessage({id: `page.body.history.deposit.content.status.${item.state}`})
+                );
+
                 return [
                     <div className="pg-history-elem__hide" key={txid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid}</a></div>,
                     localeDate(created_at, 'fullDate'),
@@ -158,7 +187,7 @@ class HistoryComponent extends React.Component<Props> {
             }
             case 'withdraws': {
                 const { txid, created_at, currency, amount, fee, rid } = item;
-                const state = this.props.intl.formatMessage({ id: `page.body.history.withdraw.content.status.${item.state}` });
+                const state = intl.formatMessage({ id: `page.body.history.withdraw.content.status.${item.state}` });
                 const blockchainLink = this.getBlockchainLink(currency, txid, rid);
                 const wallet = wallets.find(obj => obj.currency === currency);
                 return [
@@ -175,7 +204,7 @@ class HistoryComponent extends React.Component<Props> {
                 const marketToDisplay = marketsData.find(m => m.id === market) ||
                     { name: '', price_precision: 0, amount_precision: 0 };
                 const marketName = marketToDisplay ? marketToDisplay.name : market;
-                const sideText = setTradesType(side).text.toLowerCase() ? this.props.intl.formatMessage({id: `page.body.history.trade.content.side.${setTradesType(side).text.toLowerCase()}`}) : '';
+                const sideText = setTradesType(side).text.toLowerCase() ? intl.formatMessage({id: `page.body.history.trade.content.side.${setTradesType(side).text.toLowerCase()}`}) : '';
                 return [
                     localeDate(created_at, 'fullDate'),
                     <span style={{ color: setTradesType(side).color }} key={id}>{sideText}</span>,
@@ -192,7 +221,8 @@ class HistoryComponent extends React.Component<Props> {
     };
 
     private getBlockchainLink = (currency: string, txid: string, rid?: string) => {
-        const currencyInfo = this.props.wallets.find(wallet => wallet.currency === currency);
+        const { wallets } = this.props;
+        const currencyInfo = wallets && wallets.find(wallet => wallet.currency === currency);
         if (currencyInfo) {
             if (txid) {
                 return currencyInfo.explorerTransaction.replace('#{txid}', txid);
@@ -207,6 +237,7 @@ class HistoryComponent extends React.Component<Props> {
 
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
+    currencies: selectCurrencies(state),
     marketsData: selectMarkets(state),
     wallets: selectWallets(state),
     list: selectHistory(state),
@@ -222,6 +253,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
+        fetchCurrencies: () => dispatch(currenciesFetch()),
         fetchHistory: params => dispatch(fetchHistory(params)),
     });
 
