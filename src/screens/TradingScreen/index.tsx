@@ -1,3 +1,4 @@
+import { Decimal } from '@openware/components';
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -15,10 +16,12 @@ import { getUrlPart, setDocumentTitle } from '../../helpers';
 import {
     RootState,
     selectCurrentMarket,
+    selectMarketTickers,
     selectUserInfo,
     selectUserLoggedIn,
     setCurrentMarket,
     setCurrentPrice,
+    Ticker,
     User,
 } from '../../modules';
 import { GridLayoutState, saveLayouts, selectGridLayoutState } from '../../modules/public/gridLayout';
@@ -53,6 +56,9 @@ interface ReduxProps {
     rangerState: RangerState;
     userLoggedIn: boolean;
     rgl: GridLayoutState;
+    tickers: {
+        [pair: string]: Ticker,
+    };
 }
 
 interface DispatchProps {
@@ -132,16 +138,28 @@ class Trading extends React.Component<Props, StateProps> {
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { userLoggedIn, history, markets, currentMarket } = this.props;
+        const {
+            currentMarket,
+            history,
+            markets,
+            userLoggedIn,
+        } = this.props;
+
         if (userLoggedIn !== nextProps.userLoggedIn) {
             this.props.rangerConnect({ withAuth: nextProps.userLoggedIn });
         }
+
         if (markets.length !== nextProps.markets.length) {
             this.setMarketFromUrlIfExists(nextProps.markets);
         }
+
         if (nextProps.currentMarket && currentMarket !== nextProps.currentMarket) {
             history.replace(`/trading/${nextProps.currentMarket.id}`);
             this.props.depthFetch(nextProps.currentMarket);
+        }
+
+        if (nextProps.currentMarket && nextProps.tickers) {
+            this.setTradingTitle(nextProps.currentMarket, nextProps.tickers);
         }
     }
 
@@ -173,10 +191,15 @@ class Trading extends React.Component<Props, StateProps> {
     private setMarketFromUrlIfExists = (markets: Market[]): void => {
         const urlMarket: string = getUrlPart(2, window.location.pathname);
         const market: Market | undefined = markets.find(item => item.id === urlMarket);
-        // if part is existed market, set it as currentMarket, else select first one
+
         if (market) {
             this.props.setCurrentMarket(market);
         }
+    };
+
+    private setTradingTitle = (market: Market, tickers: ReduxProps['tickers']) => {
+        const tickerPrice = tickers[market.id] ? tickers[market.id].last : '0.0';
+        document.title = `${Decimal.format(tickerPrice, market.price_precision)} ${market.name}`;
     };
 
     private handleResize = (layout, oldItem, newItem) => {
@@ -205,6 +228,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
     rgl: selectGridLayoutState(state),
+    tickers: selectMarketTickers(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
