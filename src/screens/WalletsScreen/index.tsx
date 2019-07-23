@@ -351,7 +351,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     private onWalletSelectionChange = (value: WalletItemProps) => {
         const { wallets } = this.props;
-        if (!value.address && !this.props.walletsLoading && value.type !== 'fiat') {
+        if (!value.address && wallets.length && value.type !== 'fiat') {
             this.props.fetchAddress({ currency: value.currency });
         }
         const nextWalletIndex = this.props.wallets.findIndex(
