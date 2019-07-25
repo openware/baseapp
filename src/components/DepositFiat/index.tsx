@@ -11,10 +11,11 @@ interface DepositFiatProps {
      * Sets title describing the data displayed in children
      */
     title: string;
+    uid: string;
 }
 
 
-const bankData = [
+const bankData = uid => [
     {
         key: <FormattedMessage id="page.body.wallets.tabs.deposit.fiat.bankName" />,
         value: 'Diamant Bank',
@@ -33,7 +34,7 @@ const bankData = [
     },
     {
         key: <FormattedMessage id="page.body.wallets.tabs.deposit.fiat.referenceCode" />,
-        value: '8374982374',
+        value: uid,
     },
 ];
 
@@ -42,7 +43,11 @@ const bankData = [
  * deposit
  */
 const DepositFiat: React.FunctionComponent<DepositFiatProps> = (props: DepositFiatProps) => {
-    const { description, title } = props;
+    const {
+        description,
+        title,
+        uid,
+    } = props;
 
     const renderDetails = (detail, index: number) => {
         return (
@@ -57,7 +62,7 @@ const DepositFiat: React.FunctionComponent<DepositFiatProps> = (props: DepositFi
         <div className="cr-deposit-fiat">
             <p className="cr-deposit-fiat__title">{title}</p>
             <p className="cr-deposit-fiat__description">{description}</p>
-            <div className="cr-deposit-fiat-credentials">{bankData.map(renderDetails)}</div>
+            <div className="cr-deposit-fiat-credentials">{bankData(uid).map(renderDetails)}</div>
         </div>
     );
 };
