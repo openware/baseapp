@@ -328,7 +328,7 @@ export const en = {
     'page.header.signUp.email': 'Email',
     'page.header.signUp.email.message.error': 'Email is invalid',
     'page.header.signUp.password': 'Password',
-    'page.header.signUp.password.message.error': 'Password must contain at least 8 symbols, at least one capital letter and one digit',
+    'page.header.signUp.password.message.error': 'Password must contain at least 8 characters, at least one capital letter and one digit',
     'page.header.signUp.confirmPassword': 'Confirm Password',
     'page.header.signUp.confirmPassword.message.error': 'Passwords don\'t match',
     'page.header.signUp.referalCode': 'Referral Code',
