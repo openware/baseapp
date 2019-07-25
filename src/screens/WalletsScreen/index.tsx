@@ -268,7 +268,12 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     };
 
     private renderDeposit(wallet: WalletItemProps) {
-        const { addressDepositError, wallets, selectedWalletAddress } = this.props;
+        const {
+            addressDepositError,
+            selectedWalletAddress,
+            user,
+            wallets,
+         } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' });
@@ -298,7 +303,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
-                    <DepositFiat title={this.title} description={this.description} />
+                    <DepositFiat title={this.title} description={this.description} uid={user ? user.uid : ''}/>
                     {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
                 </React.Fragment>
             );

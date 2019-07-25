@@ -109,7 +109,7 @@ exports[`DepositFiat should match snapshot 1`] = `
       <p
         className="cr-deposit-fiat-detail__value"
       >
-        8374982374
+        42389734
       </p>
     </div>
   </div>
