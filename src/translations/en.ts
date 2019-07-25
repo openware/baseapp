@@ -550,7 +550,7 @@ export const en = {
     'market.trade.non_integer_timestamp': 'Timestamp value you send could not be parsed into Integer type',
     'market.trade.empty_timestamp': 'Timestamp is missing or empty',
     'market.trade.invalid_order_by': 'Invalid order_by',
-    'market.order.insufficient_market_liquidity': 'Isufficient market liquidity',
+    'market.order.insufficient_market_liquidity': 'Insufficient market liquidity ',
     'market.order.invalid_volume_or_price': 'Invalid volume or price',
     'market.order.create_error': 'Failed to create error',
     'market.order.cancel_error': 'Failed to cancel error',
