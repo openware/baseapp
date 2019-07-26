@@ -89,7 +89,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                 <div className="cr-withdraw-column">
                     <div className={withdrawAddressClass}>
                         <CustomInput
-                            type="email"
+                            type="text"
                             label={withdrawAddressLabel || 'Withdrawal Addres'}
                             placeholder={withdrawAddressLabelPlaceholder || 'Withdrawal Addres'}
                             defaultLabel="Withdrawal Addres"
