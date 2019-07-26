@@ -63,6 +63,8 @@ class ToolBarComponent extends React.Component<Props, State> {
         const percentage = ((last - low) / ((high - low) / 100)) || 0;
 
         const bidUnit = currentMarket && currentMarket.quote_unit.toUpperCase();
+        const askUnit = currentMarket && currentMarket.base_unit.toUpperCase();
+
         return (
             <div className="pg-trading-header-container">
                 <div className="pg-trading-header-container-selector">
@@ -101,7 +103,7 @@ class ToolBarComponent extends React.Component<Props, State> {
                             progress={currentMarket && Decimal.format(Number(this.getTickerValue('vol')), currentMarket.amount_precision)}
                             isPositive={true}
                             additional={this.translate('page.body.trade.toolBar.volume')}
-                            bidUnit={bidUnit}
+                            bidUnit={askUnit}
                         />
                         <ProgressLabel
                             progress={currentMarket && (marketTickers[currentMarket.id] || defaultTicker).price_change_percent}
