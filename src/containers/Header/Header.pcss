@@ -59,7 +59,6 @@ header {
   .pg-header {
     position: relative;
     justify-content: none;
-    height: calc(var(--gap) * 6);
 
     &__logo {
       display: none;
@@ -88,8 +87,8 @@ header {
 
     &__navbar {
       margin-left: 0;
-      height: 100vh;
-      bottom: 0;
+      min-height: calc(100vh - 56px);
+      top: 0;
       z-index: 666;
       max-width: calc(var(--gap) * 33);
       position: absolute;
