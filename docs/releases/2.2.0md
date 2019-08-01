@@ -1,0 +1,12 @@
+#### Overview
+
+BaseApp frontend v2.2.0 fully compatible with Barong v2.2.20 and Peatio v2.2.19. 
+
+## New features comparing with v2.1.0:
+
+  - Ability to switch between dark and light themes;
+  - Added user's trade on recent trades component;
+  - Improved sorting on market selector component;
+  - List API keys immediately without providing 2FA code;
+  - Cancelling orders by event from WS;
+  - General UI fixes, platform stabilization and small improvements.
