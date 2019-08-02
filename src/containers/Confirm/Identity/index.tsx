@@ -108,6 +108,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
         const cityGroupClass = cr('pg-confirm__content-identity-col-row-content', {
             'pg-confirm__content-identity-col-row-content--focused': cityFocused,
+            'pg-confirm__content-identity-col-row-content--wrong': city && !this.handleValidateInput('city', city),
         });
 
         const dateOfBirthGroupClass = cr('pg-confirm__content-identity-col-row-content', {
@@ -116,18 +117,22 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
         const firstNameGroupClass = cr('pg-confirm__content-identity-col-row-content', {
             'pg-confirm__content-identity-col-row-content--focused': firstNameFocused,
+            'pg-confirm__content-identity-col-row-content--wrong': firstName && !this.handleValidateInput('firstName', firstName),
         });
 
         const lastNameGroupClass = cr('pg-confirm__content-identity-col-row-content', {
             'pg-confirm__content-identity-col-row-content--focused': lastNameFocused,
+            'pg-confirm__content-identity-col-row-content--wrong': lastName && !this.handleValidateInput('lastName', lastName),
         });
 
         const postcodeGroupClass = cr('pg-confirm__content-identity-col-row-content', {
             'pg-confirm__content-identity-col-row-content--focused': postcodeFocused,
+            'pg-confirm__content-identity-col-row-content--wrong': postcode && !this.handleValidateInput('postcode', postcode),
         });
 
         const residentialAddressGroupClass = cr('pg-confirm__content-identity-col-row-content', {
             'pg-confirm__content-identity-col-row-content--focused': residentialAddressFocused,
+            'pg-confirm__content-identity-col-row-content--wrong': residentialAddress && !this.handleValidateInput('residentialAddress', residentialAddress),
         });
 
         const dataNationalities = nationalities.map(value => {
@@ -363,6 +368,28 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         });
     };
 
+    private handleValidateInput = (field: string, value: string): boolean => {
+        switch (field) {
+            case 'firstName':
+                const firstNameRegex = new RegExp(`^[a-zA-Z]{1,100}$`);
+                return value.match(firstNameRegex) ? true : false;
+            case 'lastName':
+                const lastNameRegex = new RegExp(`^[a-zA-Z]{1,100}$`);
+                return value.match(lastNameRegex) ? true : false;
+            case 'residentialAddress':
+                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9\-,.;/\\s]+$`);
+                return value.match(residentialAddressRegex) ? true : false;
+            case 'city':
+                const cityRegex = new RegExp(`^[a-zA-Z]+$`);
+                return value.match(cityRegex) ? true : false;
+            case 'postcode':
+                const postcodeRegex = new RegExp(`^[0-9\-]{1,12}$`);
+                return value.match(postcodeRegex) ? true : false;
+            default:
+                return true;
+        }
+    }
+
     private handleCheckButtonDisabled = () => {
         const {
             city,
@@ -374,7 +401,23 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             countryOfBirth,
             metadata,
         } = this.state;
-        return !firstName || !lastName  || !dateOfBirth || !metadata.nationality || !residentialAddress || !countryOfBirth || !city || !postcode;
+
+        const firstNameValid = this.handleValidateInput('firstName', firstName);
+        const lastNameValid = this.handleValidateInput('lastName', lastName);
+        const residentialAddressValid = this.handleValidateInput('residentialAddress', residentialAddress);
+        const cityValid = this.handleValidateInput('city', city);
+        const postcodeValid = this.handleValidateInput('postcode', postcode);
+
+        return (
+            !firstNameValid
+            || !lastNameValid
+            || !dateOfBirth
+            || !metadata.nationality
+            || !residentialAddressValid
+            || !countryOfBirth
+            || !cityValid
+            || !postcodeValid
+        );
     }
 
     private sendData = () => {
