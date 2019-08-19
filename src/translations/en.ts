@@ -307,6 +307,7 @@ export const en = {
 
     'page.body.lock.oops': 'Oops!',
     'page.body.lock.expired': 'It seems your trial has expired',
+    'page.body.lock.license': 'It seems your license key is invalid',
     'page.body.lock.visit': 'Visit',
 
     'page.footer.legalDocuments': 'Legal documents',

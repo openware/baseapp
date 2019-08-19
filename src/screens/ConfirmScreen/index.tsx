@@ -9,6 +9,7 @@ import logoLight = require('../../assets/images/logoLight.svg');
 import { Documents } from '../../containers/Confirm/Documents';
 import { Identity } from '../../containers/Confirm/Identity';
 import { Phone } from '../../containers/Confirm/Phone';
+import { VersionGuardWrapper } from '../../decorators';
 import { setDocumentTitle } from '../../helpers';
 import {
     Label,
@@ -63,7 +64,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
     public goBack = event => {
       event.preventDefault();
       this.props.history.goBack();
-    }
+    };
 
     // tslint:disable:jsx-no-multiline-js
     public render() {
@@ -117,7 +118,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                             </div>
                         </div>
                         <div className="pg-confirm__content">
-                            {this.renderContent(currentProfileLevel)}
+                            {VersionGuardWrapper(this.renderContent, Phone)}
                         </div>
                     </div>
                 </div>
@@ -126,8 +127,8 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
     }
     //tslint:enable:jsx-no-multiline-js
 
-    private renderContent = (level: number) => {
-        const { labels } = this.props;
+    private renderContent = () => {
+        const { labels, userData: { level } } = this.props;
         const isIdentity = labels.find(w => w.key === 'profile' && w.value === 'verified');
         switch (level) {
             case 1: return <Phone />;

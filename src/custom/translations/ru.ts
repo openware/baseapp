@@ -310,6 +310,7 @@ export const ru: LangType = {
 
     'page.body.lock.oops': 'Ой!',
     'page.body.lock.expired': 'Похоже, что ваш пробный период истек',
+    'page.body.lock.license': 'Похоже, что лицензионный ключ не верный',
     'page.body.lock.visit': 'Перейти на',
 
     'page.footer.legalDocuments': 'Документы',

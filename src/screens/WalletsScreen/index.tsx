@@ -10,9 +10,12 @@ import { ModalWithdrawSubmit } from '../../containers/ModalWithdrawSubmit';
 import { EstimatedValue } from '../../containers/Wallets/EstimatedValue';
 import { WalletHistory } from '../../containers/Wallets/History';
 import { Withdraw, WithdrawProps } from '../../containers/Wallets/Withdraw';
+import { WithdrawLite } from '../../containers/Wallets/WithdrawLite';
+import { VersionGuardWrapper } from '../../decorators';
 import { formatCCYAddress, setDocumentTitle } from '../../helpers';
 import {
     alertPush,
+    openGuardModal,
     RootState,
     selectHistory,
     selectMobileWalletUi,
@@ -51,6 +54,7 @@ interface DispatchProps {
     walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
     fetchSuccess: typeof alertPush;
     setMobileWalletUi: typeof setMobileWalletUi;
+    openGuardModal: typeof openGuardModal;
 }
 
 interface WalletsState {
@@ -164,7 +168,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         </div>
                         <div className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${!mobileWalletChosen && 'd-none d-md-block'}`}>
                             <TabPanel
-                                panels={this.renderTabs(selectedWalletIndex)}
+                                panels={this.renderTabs()}
                                 onTabChange={this.onTabChange}
                                 currentTabIndex={currentTabIndex}
                                 onCurrentTabChange={this.onCurrentTabChange}
@@ -212,40 +216,20 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }));
     };
 
-    private renderTabs(walletIndex: WalletsState['selectedWalletIndex']) {
-        const { tab, withdrawDone } = this.state;
+    private renderTabs() {
+        const { tab, selectedWalletIndex } = this.state;
 
-        if (walletIndex === -1) {
+        if (selectedWalletIndex === -1) {
             return [{ content: null, label: '' }];
         }
-        const { user: { level, otp }, wallets } = this.props;
-        const wallet = wallets[walletIndex];
-        const { currency, fee, type } = wallet;
-        const fixed = (wallet || { fixed: 0 }).fixed;
 
-        const withdrawProps: WithdrawProps = {
-            withdrawDone,
-            currency,
-            fee,
-            onClick: this.toggleConfirmModal,
-            borderItem: 'empty-circle',
-            twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
-            fixed,
-            withdrawAddressLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.address' }),
-            withdrawAmountLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }),
-            withdraw2faLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' }),
-            withdrawFeeLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }),
-            withdrawTotalLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }),
-            withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
-            withdrawAddressLabelPlaceholder: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.addressPlaceholder' }),
-        };
         return [
             {
-                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit(wallet) : null,
+                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit() : null,
                 label: this.translate('page.body.wallets.tabs.deposit'),
             },
             {
-                content: tab === this.translate('page.body.wallets.tabs.withdraw') ? this.renderWithdraw(withdrawProps, type) : null,
+                content: tab === this.translate('page.body.wallets.tabs.withdraw') ? this.renderWithdraw() : null,
                 label: this.translate('page.body.wallets.tabs.withdraw'),
             },
         ];
@@ -267,13 +251,8 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         this.props.fetchSuccess({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
     };
 
-    private renderDeposit(wallet: WalletItemProps) {
-        const {
-            addressDepositError,
-            selectedWalletAddress,
-            user,
-            wallets,
-         } = this.props;
+    private renderDeposit = () => {
+        const { addressDepositError, wallets, user, selectedWalletAddress } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' });
@@ -283,7 +262,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         const walletAddress = formatCCYAddress(currency, selectedWalletAddress);
 
-        if (wallet.type === 'coin') {
+        if (wallets[selectedWalletIndex].type === 'coin') {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
@@ -308,13 +287,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 </React.Fragment>
             );
         }
-    }
+    };
 
-    private renderWithdraw(withdrawProps: WithdrawProps, type: string) {
+    private renderWithdraw = () => {
         const { walletsError, user, wallets } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-        if (type === 'fiat') {
+        if (wallets[selectedWalletIndex].type === 'fiat') {
             return (
                 <p className="pg-wallet__enable-2fa-message">
                     {this.translate('page.body.wallets.tabs.deposit.fiat.admin')}
@@ -325,11 +304,47 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             <React.Fragment>
                 <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
-                {user.otp ? <Withdraw {...withdrawProps} /> : this.isOtpDisabled()}
+                {this.renderWithdrawBlock()}
                 {user.otp && currency && <WalletHistory label="withdraw" type="withdraws" currency={currency} />}
             </React.Fragment>
         );
-    }
+    };
+
+    private renderWithdrawBlock = () => VersionGuardWrapper(this.renderEnterpriseContent, this.renderLiteContent);
+
+    private renderLiteContent = () => <WithdrawLite openModal={this.props.openGuardModal}/>;
+
+    private renderEnterpriseContent = () => {
+        const { withdrawDone, selectedWalletIndex } = this.state;
+
+        if (selectedWalletIndex === -1) {
+            return [{ content: null, label: '' }];
+        }
+        const { user: { level, otp }, wallets } = this.props;
+        const wallet = wallets[selectedWalletIndex];
+        const { currency, fee } = wallet;
+        const fixed = (wallet || { fixed: 0 }).fixed;
+
+        const withdrawProps: WithdrawProps = {
+            withdrawDone,
+            currency,
+            fee,
+            onClick: this.toggleConfirmModal,
+            borderItem: 'empty-circle',
+            twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
+            fixed,
+            withdrawAddressLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.address' }),
+            withdrawAmountLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }),
+            withdraw2faLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' }),
+            withdrawFeeLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }),
+            withdrawTotalLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }),
+            withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
+            withdrawAddressLabelPlaceholder: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.addressPlaceholder' }),
+        };
+
+        return otp ? <Withdraw {...withdrawProps} /> : this.isOtpDisabled();
+    };
+
 
     private isOtpDisabled = () => {
         return (
@@ -385,6 +400,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     clearWallets: () => dispatch(walletsData([])),
     fetchSuccess: payload => dispatch(alertPush(payload)),
     setMobileWalletUi: payload => dispatch(setMobileWalletUi(payload)),
+    openGuardModal: () => dispatch(openGuardModal()),
 });
 
 // tslint:disable-next-line:no-any

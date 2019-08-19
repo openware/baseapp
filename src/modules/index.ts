@@ -5,7 +5,7 @@ import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { ColorThemeState } from './public/colorTheme';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
-import { GridLayoutState } from './public/gridLayout/reducer';
+import { GridLayoutState } from './public/gridLayout';
 import { LanguageState } from './public/i18n';
 import { KlineState, rootKlineFetchSaga } from './public/kline';
 import { MarketsState, rootMarketsSaga } from './public/markets';
@@ -16,6 +16,7 @@ import { ApiKeysState } from './user/apiKeys';
 import { rootApiKeysSaga } from './user/apiKeys/sagas';
 import { AuthState, rootAuthSaga } from './user/auth';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
+import { GuardState, rootGuardSaga } from './user/guard';
 import { HistoryState, rootHistorySaga } from './user/history';
 import { DocumentsState, rootSendDocumentsSaga } from './user/kyc/documents';
 import { IdentityState, rootSendIdentitySaga } from './user/kyc/identity';
@@ -52,6 +53,7 @@ export * from './user/newHistory';
 export * from './user/kyc';
 export * from './user/emailVerification';
 export * from './user/withdrawLimit';
+export * from './user/guard';
 
 export interface RootState {
     public: {
@@ -85,6 +87,7 @@ export interface RootState {
         openOrders: OpenOrdersState;
         sendEmailVerification: EmailVerificationState;
         withdrawLimit: WithdrawLimitState;
+        guard: GuardState;
     };
 }
 
@@ -118,5 +121,6 @@ export function* rootSaga() {
         call(rootEmailVerificationSaga),
         call(rootKlineFetchSaga),
         call(rootWithdrawLimitSaga),
+        call(rootGuardSaga),
     ]);
 }

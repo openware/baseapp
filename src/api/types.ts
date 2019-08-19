@@ -4,6 +4,7 @@ export interface Config {
         tradeUrl: string;
         applogicUrl: string;
         rangerUrl: string;
+        tenkoUrl: string;
     };
     minutesUntilAutoLogout?: string;
     rangerReconnectPeriod?: string;
@@ -16,4 +17,5 @@ export interface Config {
         siteKey: string;
     };
     msAlertDisplayTime?: string;
+    licenseKey?: string;
 }

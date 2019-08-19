@@ -48,3 +48,18 @@ where `BUILD_EXPIRE` is a Unix Timestamp of the build expiration date in seconds
 ​            `BUILD_DOMAIN` is the domain which you'd like to use during the deployment
 
 The resulting image would be accessible by the `baseapp:obfuscated` tag.
+
+## Working on Enterprise version
+
+1. Link the Enterprise containers
+
+```bash
+  cd src/containers/
+  unlink index.ts
+  ln -s indexEnterprise.ts index.ts
+```
+
+2. Run the application with the correct environment
+```bash
+REACT_APP_BUILD_VERSION=Enterprise yarn start
+```

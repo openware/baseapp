@@ -8,6 +8,8 @@ concurrency:
 steps:
   - name: "Test & Build"
     image: node:10.11
+    environment:
+      REACT_APP_BUILD_VERSION: Enterprise
     commands:
       - echo "//registry.npmjs.org/:_authToken=199fa5c9-8c7c-4cc2-b4c4-78524fdcab41" > .npmrc
       - export REACT_APP_GIT_SHA=$(git rev-parse --short HEAD)
@@ -113,21 +115,38 @@ steps:
       - git remote add gitolite git@git.openware.com:baseapp
       - GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push -f --no-verify gitolite HEAD:master
 
-  - name: "Build"
-    image: node:10.11
-    commands:
-      - export REACT_APP_GIT_SHA=$(cat .tags)
-      - export BUILD_DOMAIN=$(cat .domains)
-      - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
-      - npm -g install yarn
-      - yarn build
-
-  - name: "Build container"
+  - name: "Build enterprise image"
     image: plugins/gcr
+    environment:
+      BUILD_EXPIRE: $(date -d "+1 month" +%s000)
+      BUILD_DOMAIN: $(cat .domains)
+      REACT_APP_BUILD_VERSION: Enterprise
     settings:
       repo: gcr.io/openware-production/baseapp
+      build_args_from_env:
+        - BUILD_DOMAIN
+        - BUILD_EXPIRE
       json_key:
         from_secret: openware_gcp_creds_base64
+
+  - name: "Build lite image"
+    image: plugins/docker
+    environment:
+      BUILD_EXPIRE: $(date -d "+1 month" +%s000)
+      REACT_APP_BUILD_VERSION: Lite
+      REACT_APP_TENKO_PUBLIC_KEY:
+        from_secret: tenko_public_key
+    settings:
+      username:
+        from_secret: quay_username
+      password:
+        from_secret: quay_password
+      repo: quay.io/openware/baseapp-lite
+      build_args_from_env:
+        - REACT_APP_BUILD_VERSION
+        - REACT_APP_TENKO_PUBLIC_KEY
+        - BUILD_EXPIRE
+      registry: quay.io
 
   - name: "Redeploy on devkube"
     image: rubykube/microkube:0.2.0

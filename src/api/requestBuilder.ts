@@ -4,10 +4,12 @@ import axios, {
     AxiosRequestConfig,
     AxiosResponse,
 } from 'axios';
-import { applogicUrl,
-  authUrl,
-  tradeUrl,
-  withCredentials,
+import {
+    applogicUrl,
+    authUrl,
+    tenkoUrl,
+    tradeUrl,
+    withCredentials,
 } from './config';
 
 export type HTTPMethod =
@@ -23,7 +25,7 @@ export interface JsonBody {
 }
 
 export interface RequestOptions {
-    apiVersion: 'applogic' | 'peatio' | 'barong';
+    apiVersion: 'applogic' | 'peatio' | 'barong' | 'tenko';
     withHeaders?: boolean;
 }
 
@@ -43,6 +45,7 @@ const getAPI = () => ({
     barong: `${authUrl()}`,
     applogic: `${applogicUrl()}`,
     peatio: `${tradeUrl()}`,
+    tenko: `${tenkoUrl()}`,
 });
 
 const buildRequest = (request: Request, configData: RequestOptions) => {

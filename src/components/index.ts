@@ -17,3 +17,4 @@ export * from './Order';
 export * from './CurrencyInfo';
 export * from './OrderForm';
 export * from './Grid';
+export * from './GuardModal';

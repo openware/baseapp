@@ -13,10 +13,12 @@ import {
   CustomInput,
   Modal,
 } from '../../components';
+import { VersionGuardWrapper } from '../../decorators';
 import {
     PASSWORD_REGEX,
 } from '../../helpers';
 import {
+    openGuardModal,
   RootState,
   selectUserInfo,
   User,
@@ -26,6 +28,7 @@ import {
     selectChangePasswordSuccess,
 } from '../../modules/user/profile';
 import { ProfileTwoFactorAuth } from '../ProfileTwoFactorAuth';
+import { ProfileTwoFactorAuthLite } from '../ProfileTwoFactorAuthLite';
 
 interface ReduxProps {
     user: User;
@@ -45,6 +48,7 @@ interface OnChangeEvent {
 interface DispatchProps {
     changePassword: typeof changePasswordFetch;
     clearPasswordChangeError: () => void;
+    openGuardModal: typeof openGuardModal;
 }
 
 interface ProfileProps {
@@ -211,12 +215,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                     />
                     {modal}
                 </div>
-                <div className="pg-profile-page__row">
-                    <ProfileTwoFactorAuth
-                        is2faEnabled={user.otp}
-                        navigateTo2fa={this.handleNavigateTo2fa}
-                    />
-                </div>
+                {VersionGuardWrapper(this.renderProfileTwoFactor, this.renderProfileTwoFactorLite)}
                 <Modal
                     show={this.state.showModal}
                     header={this.renderModalHeader()}
@@ -226,6 +225,22 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             </div>
         );
     }
+
+    private renderProfileTwoFactor = () => {
+        return (
+            <div className="pg-profile-page__row">
+                <ProfileTwoFactorAuth is2faEnabled={this.props.user.otp} navigateTo2fa={this.handleNavigateTo2fa}/>
+            </div>
+        );
+    };
+
+    private renderProfileTwoFactorLite = () => {
+        return (
+            <div className="pg-profile-page__row">
+                <ProfileTwoFactorAuthLite openModal={this.props.openGuardModal}/>
+            </div>
+        );
+    };
 
     private renderModalHeader = () => {
         return (
@@ -375,6 +390,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps = dispatch => ({
     changePassword: ({ old_password, new_password, confirm_password }) =>
         dispatch(changePasswordFetch({ old_password, new_password, confirm_password })),
+    openGuardModal: () => dispatch(openGuardModal()),
 });
 
 const ProfileAuthDetailsConnected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent));
