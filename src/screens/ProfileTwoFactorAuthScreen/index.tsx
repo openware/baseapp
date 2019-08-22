@@ -258,9 +258,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchSuccess: payload => dispatch(alertPush(payload)),
 });
 
-const connected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ToggleTwoFactorAuthComponent));
-// tslint:disable-next-line
-const ProfileTwoFactorAuthScreen = withRouter(connected as any);
+const ProfileTwoFactorAuthScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(ToggleTwoFactorAuthComponent) as any));
 
 export {
     ProfileTwoFactorAuthScreen,

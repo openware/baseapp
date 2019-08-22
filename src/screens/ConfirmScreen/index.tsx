@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import logo = require('../../assets/images/logo.svg');
@@ -40,7 +40,7 @@ interface DispatchProps {
     labelFetch: typeof labelFetch;
 }
 
-type Props = ReduxProps & HistoryProps & DispatchProps;
+type Props = ReduxProps & HistoryProps & DispatchProps & InjectedIntlProps;
 
 class ConfirmComponent extends React.Component<Props, ConfirmState> {
     constructor(props: Props) {
@@ -150,4 +150,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // tslint:disable-next-line
-export const ConfirmScreen = withRouter(connect(mapStateToProps, mapDispatchToProps)(ConfirmComponent) as any);
+export const ConfirmScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(ConfirmComponent) as any));

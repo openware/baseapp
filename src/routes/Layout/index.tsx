@@ -7,6 +7,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { minutesUntilAutoLogout } from '../../api';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
+import { gaTracker } from '../../helpers/gaTracker';
 import {
     logoutFetch,
     Market,
@@ -152,19 +153,19 @@ class LayoutComponent extends React.Component<LayoutProps> {
         return (
             <div className="container-fluid pg-layout">
                 <Switch>
-                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInScreen} />
-                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />
-                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpScreen} />
-                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordScreen} />
-                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
-                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationScreen} />
-                    <Route exact={true} path="/trading/:market?" component={TradingScreen} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={HistoryScreen} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/confirm" component={ConfirmScreen} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileScreen} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={gaTracker(SignInScreen, {})} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={gaTracker(VerificationScreen, {})} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={gaTracker(SignUpScreen, {})} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={gaTracker(ForgotPasswordScreen, {})} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={gaTracker(ChangeForgottenPasswordScreen, {})} />
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={gaTracker(EmailVerificationScreen, {})} />
+                    <Route exact={true} path="/trading/:market?" component={gaTracker(TradingScreen, {})} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={gaTracker(OrdersTabScreen, {})} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={gaTracker(HistoryScreen, {})} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/confirm" component={gaTracker(ConfirmScreen, {})} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={gaTracker(ProfileScreen, {})} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={gaTracker(WalletsScreen, {})} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={gaTracker(ProfileTwoFactorAuthScreen, {})} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}

@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ConfirmScreen test should render 1`] = `
-<Route>
-  <Component />
-</Route>
-`;
+exports[`ConfirmScreen test should render 1`] = `<Connect(InjectIntl(withRouter(Connect(ConfirmComponent)))) />`;

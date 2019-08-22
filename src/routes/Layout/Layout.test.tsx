@@ -3,6 +3,8 @@ import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import { Layout, LayoutProps } from './';
 
+jest.mock('react-ga');
+
 const defaults: LayoutProps = {
     colorTheme: 'basic',
     currentMarket: undefined,

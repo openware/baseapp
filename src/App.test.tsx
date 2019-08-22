@@ -6,6 +6,8 @@ import { createStore } from 'redux';
 import { App } from './App';
 import { rootReducer } from './modules';
 
+jest.mock('react-ga');
+
 const store = createStore(rootReducer);
 const history = createBrowserHistory();
 

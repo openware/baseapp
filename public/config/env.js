@@ -12,6 +12,7 @@ window.env = {
         captchaType: 'none',
         siteKey: '',
     },
+    gaTrackerKey: '',
     rangerReconnectPeriod: '1',
     msAlertDisplayTime: '5000',
     licenseKey: '',

@@ -225,7 +225,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line:no-any
-const ChangeForgottenPasswordScreen = withRouter(injectIntl(connect(mapStateToProps, mapDispatchProps)(ChangeForgottenPasswordComponent) as any));
+const ChangeForgottenPasswordScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(ChangeForgottenPasswordComponent) as any));
 
 export {
     ChangeForgottenPasswordScreen,

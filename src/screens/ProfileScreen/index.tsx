@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { ProfileAccountActivity } from '../../containers/ProfileAccountActivity';
@@ -11,7 +11,7 @@ import { ReferralProgram } from '../../containers/ReferralProgram';
 import { VersionGuardWrapper } from '../../decorators';
 import { setDocumentTitle } from '../../helpers';
 
-class ProfileComponent extends React.Component<RouterProps> {
+class ProfileComponent extends React.Component<RouterProps, InjectedIntlProps> {
 
     public componentDidMount() {
         setDocumentTitle('Profile');
@@ -60,7 +60,7 @@ class ProfileComponent extends React.Component<RouterProps> {
 }
 
 // tslint:disable-next-line:no-any
-const ProfileScreen = withRouter(ProfileComponent as any);
+const ProfileScreen = injectIntl(withRouter(ProfileComponent as any));
 
 export {
     ProfileScreen,

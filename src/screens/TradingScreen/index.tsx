@@ -1,5 +1,6 @@
 import { Decimal } from '@openware/components';
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Grid } from '../../components/Grid';
@@ -76,7 +77,7 @@ interface StateProps {
     orderBookComponentResized: number;
 }
 
-type Props = DispatchProps & ReduxProps & RouteComponentProps;
+type Props = DispatchProps & ReduxProps & RouteComponentProps & InjectedIntlProps;
 
 // tslint:disable:jsx-no-lambda
 class Trading extends React.Component<Props, StateProps> {
@@ -242,7 +243,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
 });
 
 // tslint:disable-next-line no-any
-const TradingScreen = withRouter(connect(mapStateToProps, mapDispatchToProps)(Trading) as any);
+const TradingScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Trading) as any));
 
 export {
     TradingScreen,

@@ -19,6 +19,7 @@
     "react-date-picker": "^7.0.0",
     "react-dom": "^16.4.2",
     "react-fade-in": "^0.1.6",
+    "react-ga": "^2.6.0",
     "react-google-recaptcha": "^1.0.4",
     "react-grid-layout": "^0.16.6",
     "react-intl": "^2.8.0",
