@@ -29,6 +29,26 @@ interface DispatchProps {
 
 type Props = DispatchProps & ReduxProps & InjectedIntlProps;
 
+const handleHighlightValue = (prevValue: string, curValue: string) => {
+    let highlighted = '';
+    let val = curValue;
+    let prev = prevValue;
+
+    while (val !== prev && val.length > 0) {
+        highlighted = val[val.length - 1] + highlighted;
+        val = val.slice(0, -1);
+        prev = prev.slice(0, -1);
+    }
+
+    return (
+        <React.Fragment>
+            <span className="cr-decimal__opacity">{val}</span>
+            <span>{highlighted}</span>
+        </React.Fragment>
+    );
+};
+
+
 class MarketComponent extends React.Component<Props> {
     public componentWillReceiveProps(next: Props) {
         if (next.currentMarket && this.props.currentMarket !== next.currentMarket) {
@@ -66,12 +86,14 @@ class MarketComponent extends React.Component<Props> {
         const priceFixed = this.props.currentMarket ? this.props.currentMarket.price_precision : 0;
         const amountFixed = this.props.currentMarket ? this.props.currentMarket.amount_precision : 0;
 
-        const renderRow = item => {
-            const { id, created_at, taker_type, price, volume } = item;
+        const renderRow = (item, i) => {
+            const { created_at, taker_type, price, volume } = item;
+            const higlightedDate = handleHighlightValue(String(localeDate(trades[i - 1] ? trades[i - 1].created_at : '', 'time')), String(localeDate(created_at, 'time')));
+
             return [
-                <span style={{ color: setTradeColor(taker_type).color }} key={id}>{localeDate(created_at, 'time')}</span>,
-                <span style={{ color: setTradeColor(taker_type).color }} key={id}><Decimal fixed={amountFixed}>{volume}</Decimal></span>,
-                <span style={{ color: setTradeColor(taker_type).color }} key={id}><Decimal fixed={priceFixed}>{price}</Decimal></span>,
+                <span style={{ color: setTradeColor(taker_type).color }} key={i}>{higlightedDate}</span>,
+                <span style={{ color: setTradeColor(taker_type).color }} key={i}><Decimal fixed={amountFixed}>{volume}</Decimal></span>,
+                <span style={{ color: setTradeColor(taker_type).color }} key={i}><Decimal fixed={priceFixed} prevValue={trades[i - 1] ? trades[i - 1].price : 0}>{price}</Decimal></span>,
             ];
         };
         return (trades.length > 0)
@@ -103,5 +125,6 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
 const MarketTab = injectIntl(connect(mapStateToProps, mapDispatchToProps)(MarketComponent));
 
 export {
+    handleHighlightValue,
     MarketTab,
 };

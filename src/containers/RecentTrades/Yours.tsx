@@ -20,6 +20,7 @@ import {
     setCurrentPrice,
     WalletHistoryList,
 } from '../../modules';
+import { handleHighlightValue } from './Market';
 
 interface ReduxProps {
     marketsData: Market[];
@@ -94,17 +95,18 @@ class YoursComponent extends React.Component<Props> {
             : [[[''], this.props.intl.formatMessage({ id: 'page.noDataToShow' })]];
     };
 
-    private renderRow = item => {
-        const { currentMarket } = this.props;
+    private renderRow = (item, i) => {
+        const { currentMarket, list } = this.props;
         const { id, created_at, price, volume, taker_type } = item;
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
         const takerSide = taker_type === 'sell' ?  'ask' : 'bid';
+        const higlightedDate = handleHighlightValue(String(localeDate([...list][i - 1] ? [...list][i - 1].created_at : '', 'time')), String(localeDate(created_at, 'time')));
 
         return [
-            <span style={{ color: setTradesType(takerSide).color }} key={id}>{localeDate(created_at, 'time')}</span>,
+            <span style={{ color: setTradesType(takerSide).color }} key={id}>{higlightedDate}</span>,
             <span style={{ color: setTradesType(takerSide).color }} key={id}><Decimal key={id} fixed={amountFixed}>{volume}</Decimal></span>,
-            <span style={{ color: setTradesType(takerSide).color }} key={id}><Decimal key={id} fixed={priceFixed}>{price}</Decimal></span>,
+            <span style={{ color: setTradesType(takerSide).color }} key={id}><Decimal key={id} fixed={priceFixed} prevValue={[...list][i - 1] ? [...list][i - 1].price : 0}>{price}</Decimal></span>,
         ];
     };
 

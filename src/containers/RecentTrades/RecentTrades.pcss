@@ -37,6 +37,13 @@
     .cr-table thead th {
         top: calc(var(--gap) * 5.18);
     }
+
+    .cr-table td {           
+        span > span:first-child.cr-decimal__opacity {
+            opacity: 0.6;
+        }
+    }
+
     .cr-tab-panel {
         &__navigation-container {
             flex-direction: row-reverse;
