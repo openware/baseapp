@@ -27,4 +27,5 @@ export * from './WalletsFetch';
 // lite containers
 export { ProfileTwoFactorAuthLite as ProfileTwoFactorAuth } from './ProfileTwoFactorAuthLite';
 export { ProfileVerificationLite as ProfileVerification } from './ProfileVerificationLite';
+export { ProfileApiKeysLite as ProfileApiKeys } from './ProfileApiKeysLite';
 export { PhoneLite as Phone } from './Confirm/PhoneLite';

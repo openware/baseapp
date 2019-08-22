@@ -22,7 +22,7 @@ export const VersionGuardWrapper = (EnterpriseComponent, LiteComponent?, locked=
         public render() {
             const { version } = this.props;
 
-            if (version === 'lite') {
+            if (version === 'Lite') {
                 return (
                     <div className="guard-version">
                         {LiteComponent  && locked && this.renderLocker()}

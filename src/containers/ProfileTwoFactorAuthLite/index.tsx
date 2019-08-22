@@ -4,7 +4,9 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 interface Props {
-    openModal: () => void;
+    openModal?: () => void;
+    is2faEnabled?: boolean;
+    navigateTo2fa?: (e) => void;
 }
 
 class ProfileTwoFactorAuthLiteComponent extends React.Component<Props> {
@@ -31,7 +33,9 @@ class ProfileTwoFactorAuthLiteComponent extends React.Component<Props> {
     }
 
     private handleToggle2fa = () => {
-        this.props.openModal();
+        if (this.props.openModal) {
+            this.props.openModal();
+        }
     }
 }
 

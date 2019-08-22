@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import logo = require('../../assets/images/logo.svg');
 import logoLight = require('../../assets/images/logoLight.svg');
+import { Phone } from '../../containers';
 import { Documents } from '../../containers/Confirm/Documents';
 import { Identity } from '../../containers/Confirm/Identity';
-import { Phone } from '../../containers/Confirm/Phone';
 import { VersionGuardWrapper } from '../../decorators';
 import { setDocumentTitle } from '../../helpers';
 import {

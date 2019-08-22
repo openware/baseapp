@@ -2,11 +2,9 @@ import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { ProfileApiKeys, ProfileVerification } from '../../containers';
 import { ProfileAccountActivity } from '../../containers/ProfileAccountActivity';
-import { ProfileApiKeys } from '../../containers/ProfileApiKeys';
-import { ProfileApiKeysLite } from '../../containers/ProfileApiKeysLite';
 import { ProfileAuthDetails } from '../../containers/ProfileAuthDetails';
-import { ProfileVerification } from '../../containers/ProfileVerification';
 import { ReferralProgram } from '../../containers/ReferralProgram';
 import { VersionGuardWrapper } from '../../decorators';
 import { setDocumentTitle } from '../../helpers';
@@ -48,7 +46,7 @@ class ProfileComponent extends React.Component<RouterProps, InjectedIntlProps> {
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        {VersionGuardWrapper(ProfileApiKeys, ProfileApiKeysLite, false)}
+                        {VersionGuardWrapper(ProfileApiKeys, ProfileApiKeys, false)}
                     </div>
                     <div className="col-12">
                         <ProfileAccountActivity/>

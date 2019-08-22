@@ -79,7 +79,7 @@ class AppLayout extends React.Component<Props, {}, {}> {
                             <Header/>
                             <Alerts/>
                             <Layout/>
-                            <Footer buildExpire={expiresAt}/>
+                            <Footer expiresAt={expiresAt}/>
                         </ErrorWrapper>
                     </Router>
                     {guardModal && <GuardModal onClose={this.props.closeGuardModal}/>}

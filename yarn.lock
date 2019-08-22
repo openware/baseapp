@@ -68,10 +68,10 @@
   resolved "https://registry.yarnpkg.com/@openware/coding-standards/-/coding-standards-0.1.6.tgz#05011cb86880f34b24d7fe15427bcfb55fcfef6a"
   integrity sha512-UnVfrYcTVNGImb2l9BI3gHmBR0UAm2c42HsnC9tpRCEfV7dGm1lMPINjMD17jPo2e6L9riyYQOb8Jz3IF+U/Cg==
 
-"@openware/components@2.0.41":
-  version "2.0.41"
-  resolved "https://registry.yarnpkg.com/@openware/components/-/components-2.0.41.tgz#86e977240b80d82f2c807a554600ff83091eda83"
-  integrity sha512-Khd0/kV7y4MSDTW6iFL/uzW5rIQWxrSC5n6Fw9/m1ggspGvkhkFaaKieg9Rwt+ARKiUHSyZQypFAjUttiuKlxg==
+"@openware/components@2.0.45":
+  version "2.0.45"
+  resolved "https://registry.yarnpkg.com/@openware/components/-/components-2.0.45.tgz#95aa76377f2761e17a47d7f8a52be6c2ec891542"
+  integrity sha512-xW4j72aE6lsrtOKM6RC9At44eNPkW291zh2Qt1MOiTGbvWTw6EYB7iZcJ1gTzX3J2s/E3btfDdOE0i3gKkYQjA==
   dependencies:
     "@openware/cryptofont" "^0.1.4"
     qrcode.react "^0.9.2"
@@ -9397,6 +9397,11 @@ react-fade-in@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/react-fade-in/-/react-fade-in-0.1.6.tgz#59efdd54c3ddc7b1dbe0c7a2993f4efe4af4049f"
   integrity sha512-ZlZPWckmXA74KMOZFxTnB74mRAxpkbGcTG8kbgzhZguSksY7+7LpwQG01yDkz9Y4f01toH5N31rU7lNcbxE7qg==
+
+react-ga@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.6.0.tgz#c3fe830ead2ad25117e1d33280d9698de9b28496"
+  integrity sha512-GWHBWZDFjDGMkIk1LzroIn0mNTygKw3adXuqvGvheFZvlbpqMPbHsQsTdQBIxRRdXGQM/Zq+dQLRPKbwIHMTaw==
 
 react-google-recaptcha@^1.0.4:
   version "1.0.5"

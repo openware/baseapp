@@ -310,7 +310,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
     };
 
     private handleChangeCurrentStyleMode = (value: string) => {
-        if (this.props.version === 'lite') {
+        if (this.props.version === 'Lite') {
             this.props.openGuardModal();
         } else {
             this.props.changeColorTheme(value);
