@@ -28,3 +28,4 @@ export * from './WalletsFetch';
 export * from './ProfileTwoFactorAuth';
 export * from './ProfileAuthDetails';
 export * from './Confirm/Phone';
+export * from './ProfileApiKeys';

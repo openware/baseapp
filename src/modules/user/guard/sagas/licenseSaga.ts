@@ -13,7 +13,6 @@ export function* licenseSaga() {
         const payload = { domain: window.location.hostname, key: window.env.licenseKey };
         const res = yield call(API.put(requestOptions), '/activate', payload);
         yield put(licenseData({ token: res.token }));
-        localStorage.setItem('token', res.token);
     } catch (error) {
         yield put(licenseError());
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

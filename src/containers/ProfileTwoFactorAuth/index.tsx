@@ -4,8 +4,9 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 interface ProfileTwoFactorAuthProps {
-    is2faEnabled: boolean;
-    navigateTo2fa: (enable2fa: boolean) => void;
+    is2faEnabled?: boolean;
+    navigateTo2fa?: (enable2fa: boolean) => void;
+    openModal?: () => void;
 }
 
 interface ProfileTwoFactorAuthState {
@@ -19,7 +20,7 @@ class ProfileTwoFactorAuthComponent extends React.Component<Props, ProfileTwoFac
         super(props);
 
         this.state = {
-          is2faEnabled: props.is2faEnabled,
+          is2faEnabled: props.is2faEnabled || false,
         };
     }
 
@@ -51,8 +52,10 @@ class ProfileTwoFactorAuthComponent extends React.Component<Props, ProfileTwoFac
     }
 
     private handleToggle2fa = () => {
-        this.props.navigateTo2fa(!this.state.is2faEnabled);
-    }
+        if (this.props.navigateTo2fa) {
+            this.props.navigateTo2fa(!this.state.is2faEnabled);
+        }
+    };
 }
 
 export const ProfileTwoFactorAuth = ProfileTwoFactorAuthComponent;

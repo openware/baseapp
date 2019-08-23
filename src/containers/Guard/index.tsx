@@ -51,6 +51,10 @@ class GuardWrapper extends React.Component<Props> {
                 } else if (window.location.hostname !== domain) {
                     return false;
                 }
+                const lsToken = localStorage.getItem('token');
+                if (!lsToken) {
+                    localStorage.setItem('token', token);
+                }
                 this.props.setLicenseExpiration({ expiresAt: expire_at });
                 return true;
             } catch (e) {
