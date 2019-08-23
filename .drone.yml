@@ -126,6 +126,7 @@ steps:
       build_args_from_env:
         - BUILD_DOMAIN
         - BUILD_EXPIRE
+        - REACT_APP_BUILD_VERSION
       json_key:
         from_secret: openware_gcp_creds_base64
 
