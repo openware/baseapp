@@ -13,7 +13,7 @@ module.exports = function override(config, env) {
         if (!tenkoPublicKey) {
             throw new Error('REACT_APP_TENKO_PUBLIC_KEY must be set to build Lite version');
         }
-        console.log(`REACT_APP_TENKO_PUBLIC_KEY: ${tenkoPublicKey}`);
+        console.log(`LICENSE SERVER KEY:\n${(new Buffer(tenkoPublicKey, 'base64')).toString('ascii')}`);
     }
 
     if (process.env.NODE_ENV === 'production') {
