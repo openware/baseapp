@@ -1,15 +1,16 @@
 export const PG_TITLE_PREFIX = 'Cryptobase';
 
-export const pgRoutes = (isLoggedIn: boolean): string[][] => {
+export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
     const routes = [
-        ['page.header.navbar.trade', '/trading/'],
-        ['page.header.navbar.wallets', '/wallets'],
-        ['page.header.navbar.openOrders', '/orders'],
-        ['page.header.navbar.history', '/history'],
+        ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.wallets', '/wallets', `wallets${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
     ];
     const routesUnloggedIn = [
-        ['page.header.navbar.signIn', '/signin'],
-        ['page.header.navbar.trade', '/trading/'],
+        ['page.header.navbar.signIn', '/signin', `signin${isLight ? 'Light' : ''}`],
+        ['page.header.signUp', '/signup', `signup${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
     ];
     return isLoggedIn ? routes : routesUnloggedIn;
 };

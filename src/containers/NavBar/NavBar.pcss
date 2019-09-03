@@ -1,6 +1,6 @@
 .pg-navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   position: relative;
   padding: 0;
@@ -147,7 +147,12 @@
       &__account-dropdown {
         margin-right: calc(var(--gap) * 1);
         cursor: pointer;
-        width: calc(var(--gap) * 5);
+        width: calc(var(--big-gap) * 1.2);
+        &:hover {
+          .dropdown-menu-language-selected {
+            color: var(--white);
+          }
+        }
 
         a {
           font-size: calc(var(--gap) * 2.333);
@@ -172,11 +177,12 @@
             font-size: calc(var(--big-gap) * 0.23);
             color: var(--navbar-language-selector-color);
             background-color: var(--navbar-language-selector-background);
-            width: calc(var(--big-gap) * 0.9);
+            width: calc(var(--big-gap) * 1.4);
             height: calc(var(--big-gap) * 0.7);
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
+            padding: 14px 20px 14px 11px;
 
             &:hover {
               color: var(--navbar-language-selector-color-hover);
@@ -252,7 +258,8 @@
           display: flex;
           flex-direction: column;
           border-radius: 4px;
-          margin-top: calc(var(--gap) * 1.2);
+          top: 75px;
+          left: 11px;
           padding: 0;
           border: 0;
           overflow: hidden;
@@ -268,10 +275,6 @@
             &-active {
               color: var(--placeholder-text);
               background-color: inherit;
-            }
-
-            img {
-              margin-top: 0.5px !important;
             }
           }
         }

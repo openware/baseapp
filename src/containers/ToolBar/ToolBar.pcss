@@ -8,14 +8,14 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 43px;
-  border: 5px solid var(--trading-header-background);
+  //height: 43px;
+  border: none;
   position: sticky;
   top: 0;
   z-index: 2;
   border-radius: calc(var(--big-gap) * 0.07);
   background-color: var(--trading-header-background);
-  margin-bottom: -3px;
+  margin-bottom: -5px;
 
   &-dropdown {
     &-selector {
@@ -117,7 +117,7 @@
       width: 100%;
     }
 
-    height: unset;
+    height: 0;
     .pg-trading-header-selector {
       height: 43px !important;
       width: 100%;
@@ -138,7 +138,7 @@
 
     
   @media screen and (max-width: 576px) {
-    height: unset;
+    height: 0;
     &-selector {
       height: 43px !important;
       width: 100%;

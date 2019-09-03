@@ -18,6 +18,7 @@ steps:
       - echo $REACT_APP_GIT_SHA > .tags
       - export BUILD_DOMAIN=$(cat .domains)
       - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
+      - cd src/containers/ && unlink index.ts && ln -s index$REACT_APP_BUILD_VERSION.ts index.ts
       - npm -g install yarn
       - yarn install
       - yarn lint

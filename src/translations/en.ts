@@ -11,6 +11,9 @@ export const en = {
     'page.header.navbar.profile': 'Profile',
     'page.header.navbar.logout': 'Logout',
 
+    'page.sidebar.group.text': 'Fee Group:',
+    'page.sidebar.group.value': 'Base',
+
     'page.body.trade.header.market': 'Market',
     'page.body.trade.header.yours': 'Yours',
 

@@ -4,7 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { Router } from 'react-router';
 import { GuardModal } from './components';
-import { Alerts, ErrorWrapper, Footer, Header } from './containers';
+import { Alerts, ErrorWrapper, Footer, Header, Sidebar } from './containers';
 import { GuardWrapper } from './containers/Guard';
 import {
     closeGuardModal,
@@ -77,6 +77,7 @@ class AppLayout extends React.Component<Props, {}, {}> {
                     <Router history={history}>
                         <ErrorWrapper>
                             <Header/>
+                            <Sidebar/>
                             <Alerts/>
                             <Layout/>
                             <Footer expiresAt={expiresAt}/>

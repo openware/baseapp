@@ -14,7 +14,7 @@
   cursor: pointer;
 
   &-search-wrapper {
-    width: calc(var(--big-gap) * 5.45);
+    width: calc(var(--big-gap) * 5.36);
     position: fixed;
     bottom: 0;
     left: 0;
@@ -46,7 +46,7 @@
       border: none;
       outline: none;
       background: none;
-      color: var(--trading-header-search-border);
+      color: var(--bright-1);
       padding: 0 calc(var(--big-gap) * 0.1);
       font-size: calc(var(--big-gap) * 0.25);
       line-height: calc(var(--big-gap) * 0.25);
@@ -116,7 +116,7 @@
     left: calc(var(--big-gap) * -0.23);
     padding-left: calc(var(--gap));
     position: absolute;
-    top: calc(var(--big-gap) * -0.082);
+    top: 0;
     width: calc(var(--big-gap) * 5.6);
     z-index: 10;
 
@@ -145,13 +145,19 @@
       width: 30px;
     }
     &-search {
-      width: calc(var(--big-gap) * 4);
+      width: calc(var(--big-gap) * 4.5);
     }
   }
 }
 
 .pg-trading-header-selector-market {
   width: calc(var(--big-gap));
+}
+
+@media screen and (max-width: 768px) {
+  .pg-trading-header-selector-search-wrapper {
+    width: calc(var(--big-gap) * 4.7);
+  }
 }
 
 @keyframes pg-trading-header-selector-open {

@@ -23,6 +23,7 @@ export * from './ToolBar';
 export * from './Confirm/Documents';
 export * from './Confirm/Identity';
 export * from './WalletsFetch';
+export * from './Sidebar';
 
 // lite containers
 export { ProfileTwoFactorAuthLite as ProfileTwoFactorAuth } from './ProfileTwoFactorAuthLite';

@@ -3,9 +3,11 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as ReactGA from 'react-ga';
 import { addLocaleData } from 'react-intl';
 import { Provider } from 'react-redux';
 
+import { gaTrackerKey } from './api';
 import { App } from './App';
 import { customLocaleData } from './custom/translations';
 import './index.css';
@@ -15,6 +17,20 @@ import { rangerMiddleware, sagaMiddleware, store } from './store';
 
 
 const history = createBrowserHistory();
+const gaKey = gaTrackerKey();
+
+const trackPageToGA = (page: string) => {
+    ReactGA.set({ page });
+    ReactGA.pageview(page);
+};
+
+if (gaKey) {
+    ReactGA.initialize(gaKey);
+    trackPageToGA(window.location.pathname);
+    history.listen(location => {
+        trackPageToGA(location.pathname);
+    });
+}
 
 // tslint:disable-next-line:no-submodule-imports
 import en = require('react-intl/locale-data/en');

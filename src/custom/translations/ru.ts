@@ -11,6 +11,9 @@ export const ru: LangType = {
     'page.header.navbar.profile': 'Профиль',
     'page.header.navbar.logout': 'Выйти',
 
+    'page.sidebar.group.text': 'Fee Group:',
+    'page.sidebar.group.value': 'Base',
+
     'page.body.trade.header.markets': 'Рынки',
     'page.body.trade.header.markets.content.pair': 'Пара',
     'page.body.trade.header.markets.content.price': 'Цена',
