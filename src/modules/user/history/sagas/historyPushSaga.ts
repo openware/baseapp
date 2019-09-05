@@ -9,13 +9,12 @@ import { PrivateTrade, PrivateTradeEvent } from '../types';
 
 export function* historyPushSaga(action: HistoryPush) {
     const tradeEventToTrade = (tradeEvent: PrivateTradeEvent): PrivateTrade => {
-        const { id, at, market, kind, price, volume } = tradeEvent;
-        const funds = Number(price) * Number(volume);
+        const { id, at, market, kind, price, total, amount } = tradeEvent;
         return {
             id,
             price,
-            volume,
-            funds: `${funds}`,
+            total,
+            amount,
             market,
             created_at: localeDate(at, 'fullDate', getTimezone()),
             taker_type: kindToMakerType(kind),

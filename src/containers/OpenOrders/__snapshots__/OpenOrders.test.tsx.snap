@@ -6,9 +6,7 @@ exports[`OpenOrders should render 1`] = `
   currentMarket={
     Object {
       "amount_precision": 4,
-      "ask_fee": "0.0015",
       "base_unit": "eth",
-      "bid_fee": "0.0015",
       "id": "ethusd",
       "max_price": "0.0",
       "min_amount": "0.0",

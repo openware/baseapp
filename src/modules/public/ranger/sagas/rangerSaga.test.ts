@@ -79,8 +79,6 @@ describe('Ranger module', () => {
         name: 'ABCD/EFG',
         base_unit: 'abcd',
         quote_unit: 'efg',
-        ask_fee: '0.001',
-        bid_fee: '0.002',
         min_price: '0.015',
         max_price: '0.016',
         min_amount: '0.00001',
@@ -507,6 +505,7 @@ describe('Ranger module', () => {
                 date: 1547464388,
                 price: '0.0002',
                 amount: '0.00015',
+                total: '0.00000003',
             };
             const mockTrades = {
                 trades: [tradeEvent],
@@ -696,7 +695,8 @@ describe('Ranger module', () => {
                 kind: 'bid',
                 at: 1546605232,
                 price: '1.17',
-                volume: '0.1',
+                total: '0.117',
+                amount: '0.1',
                 ask_id: 651,
                 bid_id: 758,
                 market: 'eurbtc',

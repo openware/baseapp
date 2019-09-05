@@ -27,8 +27,6 @@ describe('Saga: OrderBook', () => {
     const fakeMarket: Market = {
         id: 'btczar',
         name: 'BTC/ZAR',
-        bid_fee: '0.0015',
-        ask_fee: '0.0015',
         base_unit: 'btc',
         quote_unit: 'zar',
         min_price: '0.0',

@@ -6,8 +6,6 @@ import { Order, OrderComponentProps } from './';
 // tslint:disable:no-magic-numbers
 
 const defaultProps: OrderComponentProps = {
-    feeBuy: 10,
-    feeSell: 10,
     onSubmit: spy(),
     priceMarketBuy: 5,
     priceMarketSell: 10,

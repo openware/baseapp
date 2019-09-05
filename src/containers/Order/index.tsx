@@ -118,8 +118,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     asks={asks}
                     bids={bids}
                     disabled={executeLoading}
-                    feeBuy={Number(currentMarket.ask_fee)}
-                    feeSell={Number(currentMarket.ask_fee)}
                     from={from}
                     availableBase={this.getAvailableValue(walletBase)}
                     availableQuote={this.getAvailableValue(walletQuote)}
@@ -139,7 +137,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     totalText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.total' })}
                     labelFirst={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' })}
                     labelSecond={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' })}
-                    estimatedFeeText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.estimatedFee' })}
                     submitBuyButtonText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' })}
                     submitSellButtonText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' })}
                     width={this.state.width}

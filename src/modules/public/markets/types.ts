@@ -3,8 +3,6 @@ export interface Market {
     name: string;
     base_unit: string;
     quote_unit: string;
-    ask_fee: string;
-    bid_fee: string;
     min_price: string;
     max_price: string;
     min_amount: string;

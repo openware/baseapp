@@ -11,8 +11,6 @@ describe('recentTrade reducer', () => {
     const market: Market = {
         id: 'ethbtc',
         name: 'ETH/BTC',
-        bid_fee: '0.0015',
-        ask_fee: '0.0015',
         base_unit: 'eth',
         quote_unit: 'btc',
         min_price: '0.0',
@@ -25,8 +23,8 @@ describe('recentTrade reducer', () => {
         {
             id: 162413,
             price: '0.01',
-            volume: '0.059',
-            funds: '0.00059',
+            total: '0.00059',
+            amount: '0.059',
             market: 'bchbtc',
             created_at: '2019-01-14T11:13:08.000Z',
             taker_type: 'sell',
@@ -34,8 +32,8 @@ describe('recentTrade reducer', () => {
         {
             id: 162414,
             price: '0.01',
-            volume: '0.01',
-            funds: '0.0001',
+            total: '0.0001',
+            amount: '0.01',
             market: 'bchbtc',
             created_at: '2019-01-14T11:13:08.000Z',
             taker_type: 'buy',
@@ -48,6 +46,7 @@ describe('recentTrade reducer', () => {
             date: 1547464388,
             price: '0.01',
             amount: '0.059',
+            total: '0.00059',
         },
         {
             tid: 162414,
@@ -55,14 +54,15 @@ describe('recentTrade reducer', () => {
             date: 1547464388,
             price: '0.01',
             amount: '0.01',
+            total: '0.0001',
         },
     ];
 
     const trade: PublicTrade = {
         id: 162413,
         price: '0.01',
-        volume: '0.059',
-        funds: '0.00059',
+        total: '0.059',
+        amount: '0.00059',
         market: 'bchbtc',
         created_at: '2019-01-14T12:13:08-08:00',
         taker_type: 'sell',

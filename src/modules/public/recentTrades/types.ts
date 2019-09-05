@@ -4,4 +4,5 @@ export interface PublicTradeEvent {
     date: number;
     price: string;
     amount: string;
+    total: string;
 }

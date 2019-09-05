@@ -3,8 +3,8 @@ import { CommonState } from '../../types';
 export interface PublicTrade {
     id: number;
     price: string;
-    volume: string;
-    funds: string;
+    total: string;
+    amount: string;
     market: string;
     created_at: string;
     taker_type: string;
@@ -21,9 +21,10 @@ export interface PrivateTradeEvent {
     market: string;
     kind: string;
     price: string;
-    volume: string;
     ask_id: number;
     bid_id: number;
+    total: string;
+    amount: string;
 }
 
 export interface PrivateTradesState extends CommonState {

@@ -36,8 +36,6 @@ describe('Open Orders Cancel', () => {
         name:'ETH/USD',
         base_unit:'eth',
         quote_unit:'usd',
-        ask_fee:'0.0015',
-        bid_fee:'0.0015',
         min_price:'0.0',
         max_price:'0.0',
         min_amount:'0.0',

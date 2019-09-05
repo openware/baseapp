@@ -20,11 +20,11 @@ export const withdrawColorMapping = {
 };
 
 export const tradesColorMapping = {
-    ask: {
+    sell: {
         color: 'var(--color-red)',
         text: 'Sell',
     },
-    bid: {
+    buy: {
         color: 'var(--color-green)',
         text: 'Buy',
     },

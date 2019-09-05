@@ -36,7 +36,6 @@ export const en = {
     'page.body.trade.header.newOrder.content.amount': 'Amount',
     'page.body.trade.header.newOrder.content.total': 'Total',
     'page.body.trade.header.newOrder.content.available': 'Available',
-    'page.body.trade.header.newOrder.content.estimatedFee': 'Fee',
 
     'page.body.trade.header.marketDepths': 'Market Depth',
     'page.body.trade.header.marketDepths.content.price': 'Price:',
@@ -171,7 +170,7 @@ export const en = {
     'page.body.history.trade.content.side.sell': 'Sell',
     'page.body.history.trade.header.market': 'Market',
     'page.body.history.trade.header.price': 'Price',
-    'page.body.history.trade.header.funds': 'Funds',
+    'page.body.history.trade.header.total': 'Total',
     'page.body.history.trade.header.amount': 'Amount',
     'page.body.history.trade.header.balance': 'Balance',
 

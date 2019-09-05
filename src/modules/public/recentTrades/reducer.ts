@@ -27,8 +27,8 @@ export const convertTradeEventToTrade = (market: string, trade: PublicTradeEvent
     created_at: new Date(trade.date * 1000).toISOString(),
     taker_type: trade.taker_type,
     price: String(trade.price),
-    volume: String(trade.amount),
-    funds: String(Number(trade.price) * Number(trade.amount)),
+    amount: String(trade.amount),
+    total: String(trade.total),
 });
 
 export const convertTradeEventList = (market: string, trades: PublicTradeEvent[]): PublicTrade[] =>

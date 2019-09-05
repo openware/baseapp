@@ -105,8 +105,6 @@ describe('ranger helpers', () => {
             name: 'ABCD/EFG',
             base_unit: 'abcd',
             quote_unit: 'efg',
-            ask_fee: '0.001',
-            bid_fee: '0.002',
             min_price: '0.015',
             max_price: '0.016',
             min_amount: '0.00001',

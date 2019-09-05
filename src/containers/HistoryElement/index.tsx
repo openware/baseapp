@@ -143,7 +143,7 @@ class HistoryComponent extends React.Component<Props> {
                   this.props.intl.formatMessage({id: 'page.body.history.trade.header.market'}),
                   this.props.intl.formatMessage({id: 'page.body.history.trade.header.price'}),
                   this.props.intl.formatMessage({id: 'page.body.history.trade.header.amount'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.funds'}),
+                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.total'}),
               ];
           default:
               return [];
@@ -200,7 +200,7 @@ class HistoryComponent extends React.Component<Props> {
                 ];
             }
             case 'trades': {
-                const { id, created_at, side, market, price, funds, volume } = item;
+                const { id, created_at, side, market, price, amount, total } = item;
                 const marketToDisplay = marketsData.find(m => m.id === market) ||
                     { name: '', price_precision: 0, amount_precision: 0 };
                 const marketName = marketToDisplay ? marketToDisplay.name : market;
@@ -210,8 +210,8 @@ class HistoryComponent extends React.Component<Props> {
                     <span style={{ color: setTradesType(side).color }} key={id}>{sideText}</span>,
                     marketName,
                     <Decimal key={id} fixed={marketToDisplay.price_precision}>{price}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{volume}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{funds}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{amount}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{total}</Decimal>,
                 ];
             }
             default: {

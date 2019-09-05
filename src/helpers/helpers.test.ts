@@ -57,11 +57,11 @@ describe('Helpers', () => {
     };
 
     const tradesColors = {
-        ask: {
+        sell: {
             color: 'var(--color-red)',
             text: 'Sell',
         },
-        bid: {
+        buy: {
             color: 'var(--color-green)',
             text: 'Buy',
         },
@@ -171,8 +171,8 @@ describe('Helpers', () => {
     });
 
     it('Should return correct trade type', () => {
-        expect(helpers.setTradesType('ask')).toEqual(tradesColors.ask);
-        expect(helpers.setTradesType('bid')).toEqual(tradesColors.bid);
+        expect(helpers.setTradesType('sell')).toEqual(tradesColors.sell);
+        expect(helpers.setTradesType('buy')).toEqual(tradesColors.buy);
         expect(helpers.setTradesType('')).toEqual(defaultTradeType);
     });
 
