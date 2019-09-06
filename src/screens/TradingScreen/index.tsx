@@ -115,7 +115,7 @@ class Trading extends React.Component<Props, StateProps> {
 
     public componentDidMount() {
         setDocumentTitle('Trading');
-        const { wallets, markets, currentMarket, userLoggedIn, rangerState: { connected } } = this.props;
+        const { wallets, markets, currentMarket, userLoggedIn, rangerState: { connected, withAuth } } = this.props;
 
         if (markets.length < 1) {
             this.props.marketsFetch();
@@ -127,6 +127,10 @@ class Trading extends React.Component<Props, StateProps> {
             this.props.depthFetch(currentMarket);
         }
         if (!connected) {
+            this.props.rangerConnect({ withAuth: userLoggedIn });
+        }
+
+        if (userLoggedIn && !withAuth) {
             this.props.rangerConnect({ withAuth: userLoggedIn });
         }
     }
