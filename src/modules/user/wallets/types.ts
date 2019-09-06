@@ -21,7 +21,7 @@ export interface WalletWithdrawCCY {
     amount: number;
     currency: string;
     otp: string;
-    rid: string;
+    beneficiary_id: string;
 }
 
 export interface WalletWithdrawFiat {
@@ -29,5 +29,5 @@ export interface WalletWithdrawFiat {
     currency: string;
     currency_type: string;
     otp: string;
-    rid: string;
+    beneficiary_id: string;
 }

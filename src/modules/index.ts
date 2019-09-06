@@ -15,6 +15,7 @@ import { RecentTradesState, rootRecentTradesSaga } from './public/recentTrades';
 import { ApiKeysState } from './user/apiKeys';
 import { rootApiKeysSaga } from './user/apiKeys/sagas';
 import { AuthState, rootAuthSaga } from './user/auth';
+import { BeneficiariesState, rootBeneficiariesSaga } from './user/beneficiaries';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
 import { GuardState, rootGuardSaga } from './user/guard';
 import { HistoryState, rootHistorySaga } from './user/history';
@@ -41,6 +42,7 @@ export * from './public/kline';
 export * from './public/alert';
 export * from './user/apiKeys';
 export * from './user/auth';
+export * from './user/beneficiaries';
 export * from './user/wallets';
 export * from './user/profile';
 export * from './user/openOrders';
@@ -71,6 +73,7 @@ export interface RootState {
     };
     user: {
         auth: AuthState;
+        beneficiaries: BeneficiariesState;
         orders: OrdersState;
         password: PasswordState;
         profile: ProfileState;
@@ -99,6 +102,7 @@ export const rootReducer = combineReducers({
 export function* rootSaga() {
     yield all([
         call(rootAuthSaga),
+        call(rootBeneficiariesSaga),
         call(rootCurrenciesSaga),
         call(rootMarketsSaga),
         call(rootOrdersSaga),

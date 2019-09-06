@@ -1,0 +1,153 @@
+import * as actions from './actions';
+import {
+    BENEFICIARIES_ACTIVATE,
+    BENEFICIARIES_ACTIVATE_DATA,
+    BENEFICIARIES_ACTIVATE_ERROR,
+    BENEFICIARIES_CREATE,
+    BENEFICIARIES_CREATE_DATA,
+    BENEFICIARIES_CREATE_ERROR,
+    BENEFICIARIES_DATA,
+    BENEFICIARIES_DELETE,
+    BENEFICIARIES_DELETE_DATA,
+    BENEFICIARIES_DELETE_ERROR,
+    BENEFICIARIES_ERROR,
+    BENEFICIARIES_FETCH,
+} from './constants';
+import { Beneficiary } from './types';
+
+describe('Beneficiaries actions', () => {
+    const fakeBeneficiariesArray: Beneficiary[] = [
+        {
+            id: 1,
+            currency: 'eth',
+            name: 'First company',
+            state: 'active',
+            data: {
+                address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
+            },
+        },
+        {
+            id: 2,
+            currency: 'usd',
+            name: 'Second company',
+            state: 'archieved',
+            description: 'Information about second company',
+            data: {
+                address: 'Somestreet 42, City',
+                country: 'Wakanda',
+                full_name: 'Some name',
+                account_number: '1234512345',
+                account_type: 'Account type',
+                bank_name: 'First bank',
+                bank_address: 'Anotherstreet 13',
+                bank_country: 'Wakanda',
+            },
+        },
+    ];
+
+    const fakeError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
+    it('should check beneficiariesActivate action creator', () => {
+        const payload = {
+            pin: '123456',
+            id: 1,
+        };
+
+        const expectedAction = { type: BENEFICIARIES_ACTIVATE, payload };
+        expect(actions.beneficiariesActivate(payload)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesActivateData action creator', () => {
+        const fakeActiveBeneficiary: Beneficiary = {
+            id: 1,
+            currency: 'eth',
+            name: 'Company Name',
+            state: 'active',
+            data: {
+                address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
+            },
+        };
+
+        const expectedAction = { type: BENEFICIARIES_ACTIVATE_DATA, payload: fakeActiveBeneficiary };
+        expect(actions.beneficiariesActivateData(fakeActiveBeneficiary)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesActivateError action creator', () => {
+        const expectedAction = { type: BENEFICIARIES_ACTIVATE_ERROR, payload: fakeError };
+        expect(actions.beneficiariesActivateError(fakeError)).toEqual(expectedAction);
+    });
+
+
+    it('should check beneficiariesCreate action creator', () => {
+        const fakeCreatePayload = {
+            currency: 'eth',
+            name: 'Company Name',
+            description: 'Some description',
+            data: '{"address": "0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a"}',
+        };
+
+        const expectedAction = {type: BENEFICIARIES_CREATE, payload: fakeCreatePayload };
+        expect(actions.beneficiariesCreate(fakeCreatePayload)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesCreateData action creator', () => {
+        const fakeCreateBeneficiary: Beneficiary = {
+            id: 1,
+            currency: 'eth',
+            name: 'Company Name',
+            state: 'pending',
+            data: {
+                address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
+            },
+        };
+
+        const expectedAction = { type: BENEFICIARIES_CREATE_DATA, payload: fakeCreateBeneficiary };
+        expect(actions.beneficiariesCreateData(fakeCreateBeneficiary)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesCreateError action creator', () => {
+        const expectedAction = { type: BENEFICIARIES_CREATE_ERROR, payload: fakeError };
+        expect(actions.beneficiariesCreateError(fakeError)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesDelete action creator', () => {
+        const payload = {
+            id: 1,
+        };
+
+        const expectedAction = {type: BENEFICIARIES_DELETE, payload };
+        expect(actions.beneficiariesDelete(payload)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesDeleteData action creator', () => {
+        const payload = {
+            id: 1,
+        };
+
+        const expectedAction = { type: BENEFICIARIES_DELETE_DATA, payload };
+        expect(actions.beneficiariesDeleteData(payload)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesDeleteError action creator', () => {
+        const expectedAction = { type: BENEFICIARIES_DELETE_ERROR, payload: fakeError };
+        expect(actions.beneficiariesDeleteError(fakeError)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesFetch action creator', () => {
+        const expectedAction = { type: BENEFICIARIES_FETCH };
+        expect(actions.beneficiariesFetch()).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesData action creator', () => {
+        const expectedAction = { type: BENEFICIARIES_DATA, payload: fakeBeneficiariesArray };
+        expect(actions.beneficiariesData(fakeBeneficiariesArray)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesError action creator', () => {
+        const expectedAction = { type: BENEFICIARIES_ERROR, payload: fakeError };
+        expect(actions.beneficiariesError(fakeError)).toEqual(expectedAction);
+    });
+});

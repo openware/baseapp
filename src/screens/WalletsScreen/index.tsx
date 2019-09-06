@@ -15,8 +15,12 @@ import { VersionGuardWrapper } from '../../decorators';
 import { formatCCYAddress, setDocumentTitle } from '../../helpers';
 import {
     alertPush,
+    beneficiariesFetch,
+    Beneficiary,
     openGuardModal,
     RootState,
+    selectBeneficiariesActivateSuccess,
+    selectBeneficiariesDeleteSuccess,
     selectHistory,
     selectMobileWalletUi,
     selectUserInfo,
@@ -45,9 +49,12 @@ interface ReduxProps {
     historyList: WalletHistoryList;
     mobileWalletChosen: string;
     selectedWalletAddress: string;
+    beneficiariesActivateSuccess: boolean;
+    beneficiariesDeleteSuccess: boolean;
 }
 
 interface DispatchProps {
+    fetchBeneficiaries: typeof beneficiariesFetch;
     fetchWallets: typeof walletsFetch;
     fetchAddress: typeof walletsAddressFetch;
     clearWallets: () => void;
@@ -57,11 +64,21 @@ interface DispatchProps {
     openGuardModal: typeof openGuardModal;
 }
 
+const defaultBeneficiary: Beneficiary = {
+    id: 0,
+    currency: '',
+    name: '',
+    state: '',
+    data: {
+        address: '',
+    },
+};
+
 interface WalletsState {
     activeIndex: number;
     otpCode: string;
     amount: number;
-    rid: string;
+    beneficiary: Beneficiary;
     selectedWalletIndex: number;
     withdrawSubmitModal: boolean;
     withdrawConfirmModal: boolean;
@@ -86,7 +103,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             withdrawConfirmModal: false,
             otpCode: '',
             amount: 0,
-            rid: '',
+            beneficiary: defaultBeneficiary,
             tab: this.translate('page.body.wallets.tabs.deposit'),
             withdrawDone: false,
             total: 0,
@@ -109,6 +126,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             this.props.fetchWallets();
         }
 
+        if (wallets.length > 0) {
+            this.props.fetchBeneficiaries();
+        }
+
         if (selectedWalletIndex === -1 && wallets.length) {
             this.setState({ selectedWalletIndex: 0 });
             wallets[0].type === 'coin' && fetchAddress({ currency: wallets[0].currency });
@@ -120,23 +141,36 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     }
 
     public componentWillReceiveProps(next: Props) {
-        if (this.props.wallets.length === 0 && next.wallets.length > 0) {
+        const {
+            wallets,
+            beneficiariesActivateSuccess,
+            beneficiariesDeleteSuccess,
+            withdrawSuccess,
+        } = this.props;
+
+        if (wallets.length === 0 && next.wallets.length > 0) {
             this.setState({
                 selectedWalletIndex: 0,
             });
+            this.props.fetchBeneficiaries();
             next.wallets[0].type === 'coin' && this.props.fetchAddress({ currency: next.wallets[0].currency });
         }
 
-        if (!this.props.withdrawSuccess && next.withdrawSuccess) {
+        if (!withdrawSuccess && next.withdrawSuccess) {
             this.toggleSubmitModal();
+        }
+
+        if ((next.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) ||
+            (next.beneficiariesDeleteSuccess && !beneficiariesDeleteSuccess)) {
+            this.props.fetchBeneficiaries();
         }
     }
 
     public render() {
         const { wallets, historyList, mobileWalletChosen, walletsLoading } = this.props;
         const {
+            beneficiary,
             total,
-            rid,
             selectedWalletIndex,
             filteredWallets,
             withdrawSubmitModal,
@@ -149,6 +183,15 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             iconUrl: wallet.iconUrl ? wallet.iconUrl : '',
         }));
         const selectedCurrency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
+
+        let confirmationAddress = '';
+        if (wallets[selectedWalletIndex]) {
+            confirmationAddress = wallets[selectedWalletIndex].type === 'fiat' ? (
+                beneficiary.name
+            ) : (
+                beneficiary.data ? (beneficiary.data.address as string) : ''
+            );
+        }
 
         return (
             <React.Fragment>
@@ -184,7 +227,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         show={withdrawConfirmModal}
                         amount={total}
                         currency={selectedCurrency}
-                        rid={rid}
+                        rid={confirmationAddress}
                         onSubmit={this.handleWithdraw}
                         onDismiss={this.toggleConfirmModal}
                     />
@@ -206,10 +249,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }));
     };
 
-    private toggleConfirmModal = (amount?: number, total?: number, rid?: string, otpCode?: string) => {
+    private toggleConfirmModal = (amount?: number, total?: number, beneficiary?: Beneficiary, otpCode?: string) => {
         this.setState((state: WalletsState) => ({
             amount: amount ? amount : 0,
-            rid: rid ? rid : '',
+            beneficiary: beneficiary ? beneficiary : defaultBeneficiary,
             otpCode: otpCode ? otpCode : '',
             withdrawConfirmModal: !state.withdrawConfirmModal,
             total: total ? total : 0,
@@ -236,13 +279,18 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     }
 
     private handleWithdraw = () => {
-        const { selectedWalletIndex, otpCode, amount, rid } = this.state;
+        const { selectedWalletIndex, otpCode, amount, beneficiary } = this.state;
         if (selectedWalletIndex === -1) {
             return;
         }
 
         const { currency } = this.props.wallets[selectedWalletIndex];
-        const withdrawRequest = { amount, currency: currency.toLowerCase(), otp: otpCode, rid };
+        const withdrawRequest = {
+            amount,
+            currency: currency.toLowerCase(),
+            otp: otpCode,
+            beneficiary_id: beneficiary.id,
+        };
         this.props.walletsWithdrawCcy(withdrawRequest);
         this.toggleConfirmModal();
     };
@@ -293,13 +341,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { walletsError, user, wallets } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-        if (wallets[selectedWalletIndex].type === 'fiat') {
-            return (
-                <p className="pg-wallet__enable-2fa-message">
-                    {this.translate('page.body.wallets.tabs.deposit.fiat.admin')}
-                </p>
-            );
-        }
+
         return (
             <React.Fragment>
                 <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
@@ -322,7 +364,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }
         const { user: { level, otp }, wallets } = this.props;
         const wallet = wallets[selectedWalletIndex];
-        const { currency, fee } = wallet;
+        const { currency, fee, type } = wallet;
         const fixed = (wallet || { fixed: 0 }).fixed;
 
         const withdrawProps: WithdrawProps = {
@@ -333,13 +375,12 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             borderItem: 'empty-circle',
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,
-            withdrawAddressLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.address' }),
+            type,
             withdrawAmountLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }),
             withdraw2faLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' }),
             withdrawFeeLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }),
             withdrawTotalLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }),
             withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
-            withdrawAddressLabelPlaceholder: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.addressPlaceholder' }),
         };
 
         return otp ? <Withdraw {...withdrawProps} /> : this.isOtpDisabled();
@@ -391,9 +432,12 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     historyList: selectHistory(state),
     mobileWalletChosen: selectMobileWalletUi(state),
     selectedWalletAddress: selectWalletAddress(state),
+    beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
+    beneficiariesDeleteSuccess: selectBeneficiariesDeleteSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
+    fetchBeneficiaries: () => dispatch(beneficiariesFetch()),
     fetchWallets: () => dispatch(walletsFetch()),
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),

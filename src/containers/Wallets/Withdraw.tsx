@@ -2,18 +2,22 @@
 import { Button, Decimal, Input } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
-import { CustomInput, SummaryField } from '../../components';
+import {
+    Beneficiaries,
+    CustomInput,
+    SummaryField,
+} from '../../components';
+import { Beneficiary } from '../../modules';
 
 interface WithdrawProps {
     borderItem?: string;
     currency: string;
     fee: number;
-    onClick: (amount: number, total: number, rid: string, otpCode: string) => void;
+    onClick: (amount: number, total: number, beneficiary: Beneficiary, otpCode: string) => void;
     fixed: number;
     className?: string;
+    type: 'fiat' | 'coin';
     twoFactorAuthRequired?: boolean;
-    withdrawAddressLabelPlaceholder?: string;
-    withdrawAddressLabel?: string;
     withdrawAmountLabel?: string;
     withdraw2faLabel?: string;
     withdrawFeeLabel?: string;
@@ -22,11 +26,20 @@ interface WithdrawProps {
     withdrawDone: boolean;
 }
 
+const defaultBeneficiary: Beneficiary = {
+    id: 0,
+    currency: '',
+    name: '',
+    state: '',
+    data: {
+        address: '',
+    },
+};
+
 interface WithdrawState {
-    address: string;
     amount: number | string;
+    beneficiary: Beneficiary;
     otpCode: string;
-    withdrawAddressFocused: boolean;
     withdrawAmountFocused: boolean;
     withdrawCodeFocused: boolean;
     total: number;
@@ -34,10 +47,9 @@ interface WithdrawState {
 
 class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     public state = {
-        address: '',
         amount: '',
+        beneficiary: defaultBeneficiary,
         otpCode: '',
-        withdrawAddressFocused: false,
         withdrawAmountFocused: false,
         withdrawCodeFocused: false,
         total: 0,
@@ -45,25 +57,28 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
 
     public componentWillReceiveProps(nextProps) {
         if (this.props.currency !== nextProps.currency || nextProps.withdrawDone) {
-            this.setState({ address: '', amount: '', otpCode: '', total: 0 });
+            this.setState({
+                amount: '',
+                otpCode: '',
+                total: 0,
+            });
         }
     }
 
     public render() {
         const {
-            address,
             amount,
+            beneficiary,
             total,
-            withdrawAddressFocused,
             withdrawAmountFocused,
             otpCode,
         } = this.state;
         const {
             borderItem,
             className,
+            currency,
+            type,
             twoFactorAuthRequired,
-            withdrawAddressLabelPlaceholder,
-            withdrawAddressLabel,
             withdrawAmountLabel,
             withdrawFeeLabel,
             withdrawTotalLabel,
@@ -76,10 +91,6 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             'cr-withdraw__divider-two': !twoFactorAuthRequired,
         });
 
-        const withdrawAddressClass = classnames('cr-withdraw__group__address', {
-          'cr-withdraw__group__address--focused': withdrawAddressFocused,
-        });
-
         const withdrawAmountClass = classnames('cr-withdraw__group__amount', {
           'cr-withdraw__group__amount--focused': withdrawAmountFocused,
         });
@@ -87,18 +98,11 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         return (
             <div className={cx}>
                 <div className="cr-withdraw-column">
-                    <div className={withdrawAddressClass}>
-                        <CustomInput
-                            type="text"
-                            label={withdrawAddressLabel || 'Withdrawal Addres'}
-                            placeholder={withdrawAddressLabelPlaceholder || 'Withdrawal Addres'}
-                            defaultLabel="Withdrawal Addres"
-                            handleChangeInput={this.handleChangeInputAddress}
-                            inputValue={address}
-                            handleFocusInput={() => this.handleFieldFocus('address')}
-                            classNameLabel="cr-withdraw__label"
-                            classNameInput="cr-withdraw__input"
-                            autoFocus={false}
+                    <div className="cr-withdraw__group__address">
+                        <Beneficiaries
+                            currency={currency}
+                            type={type}
+                            onChangeValue={this.handleChangeBeneficiary}
                         />
                     </div>
                     <div className="cr-withdraw__divider cr-withdraw__divider-one" />
@@ -139,7 +143,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             className="cr-withdraw__button"
                             label={withdrawButtonLabel ? withdrawButtonLabel : 'WITHDRAW'}
                             onClick={this.handleClick}
-                            disabled={Number(total) <= 0 || !Boolean(address) || !Boolean(otpCode)}
+                            disabled={Number(total) <= 0 || !Boolean(beneficiary.id) || !Boolean(otpCode)}
                         />
                     </div>
                 </div>
@@ -196,7 +200,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     private handleClick = () => this.props.onClick(
         parseFloat(this.state.amount),
         this.state.total,
-        this.state.address,
+        this.state.beneficiary,
         this.state.otpCode,
     );
 
@@ -205,11 +209,6 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             case 'amount':
                 this.setState(prev => ({
                     withdrawAmountFocused: !prev.withdrawAmountFocused,
-                }));
-                break;
-            case 'address':
-                this.setState(prev => ({
-                    withdrawAddressFocused: !prev.withdrawAddressFocused,
                 }));
                 break;
             case 'code':
@@ -238,8 +237,10 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         this.setState({ total: value });
     };
 
-    private handleChangeInputAddress = (text: string) => {
-        this.setState({ address: text });
+    private handleChangeBeneficiary = (value: Beneficiary) => {
+        this.setState({
+            beneficiary: value,
+        });
     };
 
     private handleChangeInputOtpCode = (otpCode: string) => {

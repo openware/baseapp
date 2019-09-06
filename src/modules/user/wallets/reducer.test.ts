@@ -48,7 +48,7 @@ describe('walletsList reducer', () => {
         amount: 0.1,
         currency: 'btc',
         otp: '123123',
-        rid: '2NCimTNGnbm92drX7ARcwBKw6rvr456VWym',
+        beneficiary_id: '2NCimTNGnbm92drX7ARcwBKw6rvr456VWym',
     };
 
     const addressFetchPayload = {

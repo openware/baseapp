@@ -93,13 +93,11 @@ export const ru: LangType = {
     'page.body.wallets.tabs.deposit.fiat.admin': 'Для того, чтобы вывести эту валюту, обратитесь к администратору!',
 
     'page.body.wallets.tabs.withdraw': 'Вывод',
-    'page.body.wallets.tabs.withdraw.content.address': 'Адрес для вывода',
     'page.body.wallets.tabs.withdraw.content.amount': 'Сумма вывода',
     'page.body.wallets.tabs.withdraw.content.code2fa': '6-ти значный GAuthenticator код',
     'page.body.wallets.tabs.withdraw.content.fee': 'Комиссия',
     'page.body.wallets.tabs.withdraw.content.total': 'Сумма вывода',
     'page.body.wallets.tabs.withdraw.content.button': 'ВЫВЕСТИ',
-    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Адрес для вывода',
 
     'page.body.wallets.tabs.withdraw.modal.confirmation': 'Подтверждение',
     'page.body.wallets.tabs.withdraw.modal.message1': 'Вы получите ',
@@ -109,6 +107,48 @@ export const ru: LangType = {
 
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'Вам нужно активировать 2FA, чтобы получить возможность выводить Ваши валюты!',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Активировать 2FA',
+
+    'success.beneficiaries.created': 'Beficiaries: successfully created',
+    'success.beneficiaries.activated': 'Beficiaries: successfully activated',
+    'success.beneficiaries.deleted': 'Beficiaries: successfully deleted',
+
+    'page.body.wallets.beneficiaries.title': 'Withdraw address',
+    'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',
+    'page.body.wallets.beneficiaries.dropdown.address': 'Address',
+    'page.body.wallets.beneficiaries.dropdown.select': 'Select',
+
+    'page.body.wallets.beneficiaries.dropdown.fiat.account': 'Account',
+    'page.body.wallets.beneficiaries.dropdown.fiat.bankOfBeneficiary': 'Bank of Beneficiary',
+    'page.body.wallets.beneficiaries.dropdown.fiat.beneficiary': 'Beneficiary',
+    'page.body.wallets.beneficiaries.dropdown.fiat.description': 'Description',
+    'page.body.wallets.beneficiaries.dropdown.fiat.name': 'Name',
+    'page.body.wallets.beneficiaries.dropdown.fiat.fullName': 'Full Name',
+
+    'page.body.wallets.beneficiaries.addAddress': 'Add Address',
+    'page.body.wallets.beneficiaries.addAddressModal.header': 'Add new withdrawal address',
+
+    'page.body.wallets.beneficiaries.addAddressModal.body.coinAddress': 'Blockchain Address',
+    'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
+    'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
+
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatName': 'Description',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName': 'Full Name',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatAccountNumber': 'Account Number',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankName': 'Bank Name',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankSwiftCode': 'Bank Swift Code (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankName': 'Intermediary Bank Name (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode': 'Intermediary Bank Swift Code (optional)',
+
+    'page.body.wallets.beneficiaries.addAddressModal.body.button': 'submit for confirmation',
+
+    'page.body.wallets.beneficiaries.confirmationModal.header': 'Confirm new address',
+    'page.body.wallets.beneficiaries.confirmationModal.body.text': 'We have sent you an email containing a confirmation code pin, please enter it below to save the new address:',
+    'page.body.wallets.beneficiaries.confirmationModal.body.confirmationModalCode': 'Pin code',
+    'page.body.wallets.beneficiaries.confirmationModal.body.button': 'confirm',
+
+    'page.body.wallets.beneficiaries.tipAddress': 'Address',
+    'page.body.wallets.beneficiaries.tipName': 'Name',
+    'page.body.wallets.beneficiaries.tipDescription': 'Note',
 
     'page.body.openOrders.tab.all': 'Все',
     'page.body.openOrders.tab.open': 'Открытые',

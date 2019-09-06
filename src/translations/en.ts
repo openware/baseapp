@@ -93,13 +93,11 @@ export const en = {
     'page.body.wallets.tabs.deposit.fiat.admin': ' To initiate a fiat withdrawal, please contact administrator!',
 
     'page.body.wallets.tabs.withdraw': 'Withdraw',
-    'page.body.wallets.tabs.withdraw.content.address': 'Withdrawal Address',
     'page.body.wallets.tabs.withdraw.content.amount': 'Withdrawal Amount',
     'page.body.wallets.tabs.withdraw.content.code2fa': '2FA code',
     'page.body.wallets.tabs.withdraw.content.fee': 'Fee',
     'page.body.wallets.tabs.withdraw.content.total': 'Total Withdrawal Amount',
     'page.body.wallets.tabs.withdraw.content.button': 'WITHDRAW',
-    'page.body.wallets.tabs.withdraw.content.addressPlaceholder': 'Withdrawal Address',
 
     'page.body.wallets.tabs.withdraw.modal.confirmation': 'Confirmation',
     'page.body.wallets.tabs.withdraw.modal.message1': 'You will receive ',
@@ -109,6 +107,49 @@ export const en = {
 
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'To withdraw you have to enable 2FA',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2FA',
+
+    'success.beneficiaries.created': 'Beficiaries: successfully created',
+    'success.beneficiaries.activated': 'Beficiaries: successfully activated',
+    'success.beneficiaries.deleted': 'Beficiaries: successfully deleted',
+
+    'page.body.wallets.beneficiaries.title': 'Withdraw address',
+    'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',
+    'page.body.wallets.beneficiaries.dropdown.address': 'Address',
+    'page.body.wallets.beneficiaries.dropdown.select': 'Select',
+
+    'page.body.wallets.beneficiaries.dropdown.fiat.account': 'Account',
+    'page.body.wallets.beneficiaries.dropdown.fiat.bankOfBeneficiary': 'Bank of Beneficiary',
+    'page.body.wallets.beneficiaries.dropdown.fiat.beneficiary': 'Beneficiary',
+    'page.body.wallets.beneficiaries.dropdown.fiat.description': 'Description',
+    'page.body.wallets.beneficiaries.dropdown.fiat.name': 'Name',
+    'page.body.wallets.beneficiaries.dropdown.fiat.fullName': 'Full Name',
+
+    'page.body.wallets.beneficiaries.addAddress': 'Add Address',
+    'page.body.wallets.beneficiaries.addAddressModal.header': 'Add new withdrawal address',
+
+    'page.body.wallets.beneficiaries.addAddressModal.body.coinAddress': 'Blockchain Address',
+    'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
+    'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
+
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatName': 'Description',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName': 'Full Name',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatAccountNumber': 'Account Number',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankName': 'Bank Name',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankSwiftCode': 'Bank Swift Code (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankName': 'Intermediary Bank Name (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode': 'Intermediary Bank Swift Code (optional)',
+
+
+    'page.body.wallets.beneficiaries.addAddressModal.body.button': 'submit for confirmation',
+
+    'page.body.wallets.beneficiaries.confirmationModal.header': 'Confirm new address',
+    'page.body.wallets.beneficiaries.confirmationModal.body.text': 'We have sent you an email containing a confirmation code pin, please enter it below to save the new address:',
+    'page.body.wallets.beneficiaries.confirmationModal.body.confirmationModalCode': 'Pin code',
+    'page.body.wallets.beneficiaries.confirmationModal.body.button': 'confirm',
+
+    'page.body.wallets.beneficiaries.tipAddress': 'Address',
+    'page.body.wallets.beneficiaries.tipName': 'Name',
+    'page.body.wallets.beneficiaries.tipDescription': 'Note',
 
     'page.body.openOrders.tab.all': 'All',
     'page.body.openOrders.tab.open': 'Open',

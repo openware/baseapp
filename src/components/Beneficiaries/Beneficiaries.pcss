@@ -1,0 +1,468 @@
+.pg-beneficiaries {
+  &__title {
+    color: var(--color-white);
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 40px;
+  }
+
+  &__add {
+    align-items: center;
+    background-color: var(--beneficiaries-primary-0-06);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    padding: 13px;
+    transition: .2s;
+
+    &__label {
+      color: var(--color-white);
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 12px;
+    }
+
+    &__icon {
+      height: 11px;
+      margin-right: 10px;
+      width: 11px;
+    }
+
+    &:hover {
+      background-color: var(--beneficiaries-primary-0-1);
+    }
+  }
+
+  .beneficiaries-add-address-modal--coin .cr-email-form {
+    min-height: calc(var(--big-gap) * 6.6);
+  }
+
+  .beneficiaries-add-address-modal--fiat .cr-email-form {
+    min-height: calc(var(--big-gap) * 12);
+  }
+
+  .beneficiaries-confirmation-modal .cr-email-form {
+    min-height: calc(var(--big-gap) * 5.65);
+  }
+
+  .beneficiaries-confirmation-modal {
+    .confirmation-modal__content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 60px;
+      margin: 10px 0 20px;
+
+      &__icon {
+        margin: 0 19px 0 10px;
+        width: 44px;
+      }
+
+      &__text {
+        align-items: center;
+        color: var(--placeholder-text);
+        display: flex;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: normal;
+        line-height: 20px;
+        margin: 0 10px 0 0;
+      }
+    }
+  }
+
+  &__dropdown {
+    align-items: center;
+    background-color: var(--beneficiaries-primary-0-06);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    transition: .2s;
+    width: 100%;
+
+    &__select, .select {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 22px 0 13px;
+      transition: .2s;
+      user-select: none;
+      width: 100%;
+
+
+      &__left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 70px;
+        width: 75%;
+  
+        &__title {
+          color: var(--placeholder-text);
+          font-style: normal;
+          font-weight: 500;
+          font-size: 10px;
+          line-height: 12px;
+        }
+  
+        &__address {
+          color: var(--color-white);
+          font-family: Roboto;
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 12px;
+          margin-right: 12px;
+          margin-top: 9px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+  
+      &__right {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        width: 25%;
+  
+        &__tip {
+          background-image: url();
+          display: flex;
+          height: 13px;
+          margin-right: 28px;
+          margin-top: -1px;
+          width: 13px;
+
+          &:hover {
+            svg {
+              path {
+                fill: var(--accent);
+              }
+            }
+          }
+        }
+  
+        &__select {
+          color: var(--placeholder-text);
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 12px;
+          line-height: 12px;
+          margin-right: 12px;
+        }
+  
+        &__chevron {
+          display: flex;
+          transition: transform .3s;
+          width: 12px;
+        }
+      }
+  
+      &:hover {
+        background-color: var(--beneficiaries-primary-0-1);
+      }
+    }
+
+    .fiat-select {
+      height: 125px;
+
+      .select__left {
+        height: 125px;
+
+        span:nth-child(2) {
+          margin-bottom: 15px;
+        }
+      }
+    }
+
+    &__tip, .tip {
+      background: var(--profile-box);
+      border-radius: 4px;
+      box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.35);
+      display: flex;
+      padding: 24px;
+      position: absolute;
+      right: -80px;
+      top: 110px;
+      width: 70%;
+      z-index: 20;
+
+      &__content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        &__block {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 23px;
+          width: 100%;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          &__label {
+            color: var(--placeholder-text);
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 12px;
+          }
+
+          &__value {
+            color: var(--color-white);
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 18px;
+            opacity: 0.8;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+
+    .fiat-tip {
+      top: 135px;
+    }
+
+    &--open {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      .select__right__chevron {
+        transform: rotate(-180deg);
+      }
+    }
+
+    &__body {
+      align-items: center;
+      background-color: var(--background-wallet-item);
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: absolute;
+      top: 110px;
+      transition: .2s;
+      width: 100%;
+      z-index: 10;
+
+      &__item, .item {
+        align-items: center;
+        border-top: 1px solid var(--wallets-item-border);
+        display: flex;
+        flex-direction: row;
+        height: 70px;
+        padding: 0 22px 0 13px;
+        width: 100%;
+
+        &__left {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: 70px;
+          width: 75%;
+    
+          &__title {
+            color: var(--placeholder-text);
+            font-style: normal;
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 12px;
+          }
+    
+          &__address {
+            color: var(--color-white);
+            font-family: Roboto;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 12px;
+            margin-right: 12px;
+            margin-top: 9px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+    
+        &__right {
+          align-items: center;
+          display: flex;
+          justify-content: flex-end;
+          width: 25%;
+    
+          &__delete {
+            height: 18px;
+            width: 15px;
+    
+            svg {
+              width: 15px;
+            }
+
+            &:hover {
+              svg {
+                path {
+                  fill: var(--accent);
+                }
+              }
+            }
+          }
+        }
+
+        &:hover {
+          background-color: var(--beneficiaries-primary-0-1);
+        }
+      }
+
+      &__add, .add {
+        align-items: center;
+        background-color: var(--background-wallet-item);
+        border-top: 1px solid var(--wallets-item-border);
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        height: 50px;
+        justify-content: space-between;
+        padding: 13px;
+        transition: .2s;
+        width: 100%;
+    
+        &__label {
+          color: var(--color-white);
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 12px;
+        }
+    
+        &__icon {
+          height: 11px;
+          margin-right: 10px;
+          width: 11px;
+        }
+    
+        &:hover {
+          background-color: var(--beneficiaries-primary-0-1);
+        }
+      }
+    }
+
+    .fiat-body {
+      top: 165px;
+
+      .item__left {
+        width: 37.5%;
+
+        &:first-child {
+          margin-right: 30px;
+        }
+      }
+    }
+  }
+
+  .cr-email-form {
+    background: var(--email-form-bg);
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.35);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+    &__option {
+      background: var(--header);
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      
+      &-inner {
+        color: var(--color-white);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: normal;
+        line-height: 60px;
+        text-transform: lowercase;
+
+        &:first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    &__label {
+      background: var(--email-form-bg);
+      margin-top: -2px;
+    }
+
+    &__input {
+      background: transparent;
+      border-radius: 4px;
+
+      input {
+        border: 1px solid var(--input-block-border-color) !important;
+        color: var(--color-white);
+      }
+    }
+
+    &__group--focused {
+      .cr-email-form__label {
+        color: var(--accent);
+      }
+
+      input {
+        background: var(--email-form-bg);
+        border: 1px solid var(--accent) !important;
+      }
+    }
+
+    &__button {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      outline: none;
+
+      &--disabled {
+        color: var(--beneficiaries-primary-0-8) !important;
+      }
+    }
+  }
+  
+  .beneficiaries-add-address-modal {
+    .cr-email-form__form-content {
+      .cr-email-form__group--optional {
+        .cr-email-form__input {
+          background: var(--beneficiaries-primary-0-04);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .pg-beneficiaries__dropdown__tip, .tip {
+    right: 0 !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .pg-beneficiaries__dropdown__select, .select {
+    &__left {
+      width: 55% !important;
+    }
+  }
+}
