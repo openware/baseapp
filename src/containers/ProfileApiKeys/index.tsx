@@ -255,7 +255,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                                 <CopyableTextField
                                   className="pg-copyable-text-field__input"
                                   fieldId={'secret_key-id'}
-                                  value={this.props.modal.apiKey.secret}
+                                  value={this.props.modal.apiKey.secret.data.value}
                                   copyButtonText={this.t('page.body.profile.content.copyLink')}
                                 />
                             </fieldset>
