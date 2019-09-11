@@ -10,8 +10,10 @@ steps:
     image: node:10.11
     environment:
       REACT_APP_BUILD_VERSION: Enterprise
+      NPM_AUTH_TOKEN:
+        from_secret: drone_npm_auth_token
     commands:
-      - echo "//registry.npmjs.org/:_authToken=199fa5c9-8c7c-4cc2-b4c4-78524fdcab41" > .npmrc
+      - echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > .npmrc
       - export REACT_APP_GIT_SHA=$(git rev-parse --short HEAD)
       - echo $REACT_APP_GIT_SHA > .tags
       - export BUILD_DOMAIN=$(cat .domains)
@@ -76,8 +78,11 @@ concurrency:
 steps:
   - name: "Test"
     image: node:10.11
+    environment:
+      NPM_AUTH_TOKEN:
+        from_secret: drone_npm_auth_token
     commands:
-      - echo "//registry.npmjs.org/:_authToken=199fa5c9-8c7c-4cc2-b4c4-78524fdcab41" > .npmrc
+      - echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > .npmrc
       - npm -g install yarn
       - yarn install
       - yarn lint
