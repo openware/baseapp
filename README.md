@@ -6,7 +6,7 @@ Base Crypto Application
 ## Add npm token for install components library
 
 ```bash
-$ echo "//registry.npmjs.org/:_authToken=199fa5c9-8c7c-4cc2-b4c4-78524fdcab41" > ~/.npmrc
+$ echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
 ```
 
 ## Install
