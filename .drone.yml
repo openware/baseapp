@@ -124,21 +124,24 @@ steps:
   - name: "Build enterprise image"
     image: plugins/gcr
     environment:
-      BUILD_EXPIRE: $(date -d "+1 month" +%s000)
+      NPM_AUTH_TOKEN:
+        from_secret: drone_npm_auth_token
       BUILD_DOMAIN: $(cat .domains)
       REACT_APP_BUILD_VERSION: Enterprise
     settings:
       repo: gcr.io/openware-production/baseapp
       build_args_from_env:
         - BUILD_DOMAIN
-        - BUILD_EXPIRE
         - REACT_APP_BUILD_VERSION
+        - NPM_AUTH_TOKEN
       json_key:
         from_secret: openware_gcp_creds_base64
 
   - name: "Build lite image"
     image: plugins/docker
     environment:
+      NPM_AUTH_TOKEN:
+        from_secret: drone_npm_auth_token
       BUILD_EXPIRE: $(date -d "+1 month" +%s000)
       REACT_APP_BUILD_VERSION: Lite
       REACT_APP_TENKO_PUBLIC_KEY:
@@ -153,6 +156,7 @@ steps:
         - REACT_APP_BUILD_VERSION
         - REACT_APP_TENKO_PUBLIC_KEY
         - BUILD_EXPIRE
+        - NPM_AUTH_TOKEN
       registry: quay.io
 
   - name: "Redeploy on devkube"
