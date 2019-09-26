@@ -224,10 +224,10 @@ class HistoryComponent extends React.Component<Props> {
         const { wallets } = this.props;
         const currencyInfo = wallets && wallets.find(wallet => wallet.currency === currency);
         if (currencyInfo) {
-            if (txid) {
+            if (txid && currencyInfo.explorerTransaction) {
                 return currencyInfo.explorerTransaction.replace('#{txid}', txid);
             }
-            if (rid) {
+            if (rid && currencyInfo.explorerAddress) {
                 return currencyInfo.explorerAddress.replace('#{address}', rid);
             }
         }
