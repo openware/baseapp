@@ -401,6 +401,7 @@ export const en = {
     'success.identity.accepted': 'Identity upload was successful',
     'success.withdraw.action': 'Withdrawal request was received',
     'success.otp.enabled': '2FA was enabled',
+    'success.otp.disabled': '2FA was disabled',
     'success.password.changed': 'Password was changed',
     'success.password.forgot': 'Password reset link has been sent to your email',
     'success.password.changed.successfuly': 'Password was changed',

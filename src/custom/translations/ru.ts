@@ -404,6 +404,7 @@ export const ru: LangType = {
     'success.identity.accepted': 'Данные профиля успешно приняты',
     'success.withdraw.action': 'Вывод успешен',
     'success.otp.enabled': '2FA успешно активирован',
+    'success.otp.disabled': '2FA успешно деактивирован',
     'success.password.changed': 'Пароль изменен',
     'success.password.forgot': 'Ссылка для сброса пароля была отправлена на вашу почту',
     'success.password.changed.successfuly': 'Пароль успешно изменен',

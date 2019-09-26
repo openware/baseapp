@@ -5,7 +5,6 @@ import {
     PROFILE_CHANGE_PASSWORD_ERROR,
     PROFILE_CHANGE_PASSWORD_FETCH,
     PROFILE_CHANGE_USER_LEVEL,
-    PROFILE_ENABLE_USER_2FA,
     PROFILE_GENERATE_2FA_QRCODE_DATA,
     PROFILE_GENERATE_2FA_QRCODE_ERROR,
     PROFILE_GENERATE_2FA_QRCODE_FETCH,
@@ -20,6 +19,7 @@ import {
     PROFILE_TOGGLE_2FA_DATA,
     PROFILE_TOGGLE_2FA_ERROR,
     PROFILE_TOGGLE_2FA_FETCH,
+    PROFILE_TOGGLE_USER_2FA,
     PROFILE_USER_DATA,
     PROFILE_USER_ERROR,
     PROFILE_USER_FETCH,
@@ -238,12 +238,12 @@ export const userReducer = (state: ProfileState['userData'], action: ProfileActi
                     level: action.payload.level,
                 },
             };
-        case PROFILE_ENABLE_USER_2FA:
+        case PROFILE_TOGGLE_USER_2FA:
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    otp: true,
+                    otp: !state.user.otp,
                 },
             };
         default:
@@ -313,7 +313,7 @@ export const profileReducer = (state = initialStateProfile, action: ProfileActio
         case PROFILE_RESET_USER:
         case PROFILE_USER_ERROR:
         case PROFILE_CHANGE_USER_LEVEL:
-        case PROFILE_ENABLE_USER_2FA:
+        case PROFILE_TOGGLE_USER_2FA:
             const userState = { ...state.userData };
             return {
                 ...state,

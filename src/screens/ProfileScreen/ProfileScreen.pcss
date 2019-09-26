@@ -252,6 +252,34 @@
           }
         }
       }
+
+      .pg-profile-page__disable-2fa-modal {
+        .cr-modal__container-header {
+          padding: 0;
+          height: 58px;
+
+          .cr-email-form__cros-icon {
+            cursor: pointer;
+            display: inline-block;
+            height: calc(var(--gap) * 2.5);
+            margin-top: calc(var(--gap) * 0.2);
+            margin-left: calc(var(--gap) * 3.6);
+            position: absolute;
+            width: calc(var(--gap) * 2.5);
+          }
+        }
+
+        .cr-email-form__group {
+          margin-top: calc(var(--gap) * 3);
+        }
+
+        .pg-exchange-modal-submit-footer__button-inverse {
+          &--disabled {
+            color: var(--button-dark-gray) !important;
+            background: var(--button-disabled) !important;
+          }
+        }
+      }
     }
 
     &__verification {

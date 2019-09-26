@@ -4,7 +4,6 @@ import {
     PROFILE_CHANGE_PASSWORD_ERROR,
     PROFILE_CHANGE_PASSWORD_FETCH,
     PROFILE_CHANGE_USER_LEVEL,
-    PROFILE_ENABLE_USER_2FA,
     PROFILE_GENERATE_2FA_QRCODE_DATA,
     PROFILE_GENERATE_2FA_QRCODE_ERROR,
     PROFILE_GENERATE_2FA_QRCODE_FETCH,
@@ -20,6 +19,7 @@ import {
     PROFILE_TOGGLE_2FA_DATA,
     PROFILE_TOGGLE_2FA_ERROR,
     PROFILE_TOGGLE_2FA_FETCH,
+    PROFILE_TOGGLE_USER_2FA,
     PROFILE_USER_DATA,
     PROFILE_USER_ERROR,
     PROFILE_USER_FETCH,
@@ -171,8 +171,8 @@ export interface ProfileIdentityError {
     payload: CommonError;
 }
 
-export interface EnableUser2fa {
-    type: typeof PROFILE_ENABLE_USER_2FA;
+export interface ToggleUser2fa {
+    type: typeof PROFILE_TOGGLE_USER_2FA;
 }
 
 export type ProfileAction =
@@ -195,7 +195,7 @@ export type ProfileAction =
     | UserReset
     | TestProfileState
     | ChangeUserLevel
-    | EnableUser2fa
+    | ToggleUser2fa
     | ProfileIdentityFetch
     | ProfileIdentityInfo
     | ProfileIdentityError;
@@ -285,8 +285,8 @@ export const changeUserLevel =
         payload,
     });
 
-export const enableUser2fa = (): EnableUser2fa => ({
-        type: PROFILE_ENABLE_USER_2FA,
+export const toggleUser2fa = (): ToggleUser2fa => ({
+        type: PROFILE_TOGGLE_USER_2FA,
     });
 
 export const profileIdentityFetch = (): ProfileIdentityFetch => ({

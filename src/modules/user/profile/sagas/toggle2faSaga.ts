@@ -14,10 +14,12 @@ const enable2faOptions: RequestOptions = {
 
 export function* toggle2faSaga(action: Toggle2FAFetch) {
     try {
-        const code = { code: action.payload.code };
-        yield call(API.post(enable2faOptions), '/resource/otp/enable', code);
+        const enable = action.payload.enable;
+        const code = { code: action.payload.code};
+
+        yield call(API.post(enable2faOptions), `/resource/otp/${enable ? 'enable' : 'disable'}`, code);
         yield put(toggle2faData());
-        yield put(alertPush({message: ['success.otp.enabled'], type: 'success'}));
+        yield put(alertPush({message: [`success.otp.${enable ? 'enabled' : 'disabled'}`], type: 'success'}));
     } catch (error) {
         yield put(toggle2faError(error));
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
