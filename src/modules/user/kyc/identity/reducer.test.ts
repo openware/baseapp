@@ -17,9 +17,7 @@ describe('Identity reducer', () => {
         postcode: 'postcode',
         city: 'city',
         country: 'country',
-        metadata: {
-            nationality: 'nationality',
-        },
+        metadata: `{'nationality': 'nationality'}`,
     };
 
     const error = {
@@ -28,14 +26,22 @@ describe('Identity reducer', () => {
     };
 
     it('should handle SEND_IDENTITY_FETCH', () => {
-        const expectedState = initialIdentityState;
+        const expectedState = {
+            ...initialIdentityState,
+            send: {
+                ...initialIdentityState.send,
+            },
+        };
         expect(identityReducer(initialIdentityState, actions.sendIdentity(confirmIdentityPayload))).toEqual(expectedState);
     });
 
     it('should handle SEND_IDENTITY_DATA', () => {
         const expectedState = {
             ...initialIdentityState,
-            success: confirmIdentityResponse.message,
+            send: {
+                ...initialIdentityState.send,
+                success: confirmIdentityResponse.message,
+            },
         };
         expect(identityReducer(initialIdentityState, actions.sendIdentityData(confirmIdentityResponse))).toEqual(expectedState);
     });
@@ -43,8 +49,43 @@ describe('Identity reducer', () => {
     it('should handle SEND_IDENTITY_ERROR', () => {
         const expectedState = {
             ...initialIdentityState,
-            error: error,
-        };
+            send: {
+                ...initialIdentityState.send,
+                error: error,
+            },
+         };
         expect(identityReducer(initialIdentityState, actions.sendIdentityError(error))).toEqual(expectedState);
+    });
+
+    it('should handle EDIT_IDENTITY_FETCH', () => {
+        const expectedState = {
+            ...initialIdentityState,
+            edit: {
+                ...initialIdentityState.edit,
+            },
+        };
+        expect(identityReducer(initialIdentityState, actions.editIdentity(confirmIdentityPayload))).toEqual(expectedState);
+    });
+
+    it('should handle EDIT_IDENTITY_DATA', () => {
+        const expectedState = {
+            ...initialIdentityState,
+            edit: {
+                ...initialIdentityState.edit,
+                success: confirmIdentityResponse.message,
+            },
+        };
+        expect(identityReducer(initialIdentityState, actions.editIdentityData(confirmIdentityResponse))).toEqual(expectedState);
+    });
+
+    it('should handle EDIT_IDENTITY_ERROR', () => {
+        const expectedState = {
+            ...initialIdentityState,
+            edit: {
+                ...initialIdentityState.edit,
+                error: error,
+            },
+         };
+        expect(identityReducer(initialIdentityState, actions.editIdentityError(error))).toEqual(expectedState);
     });
 });

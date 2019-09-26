@@ -3,7 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { sendIdentity } from './actions';
+import { editIdentity, sendIdentity } from './actions';
 
 const debug = false;
 
@@ -36,9 +36,7 @@ describe('KYC - Identity', () => {
             postcode: 'postcode',
             city: 'city',
             country: 'country',
-            metadata: {
-                nationality: 'nationality',
-            },
+            metadata: `{'nationality': 'nationality'}`,
         };
 
         const expectedConfirmIdentityFetch = {
@@ -102,6 +100,61 @@ describe('KYC - Identity', () => {
                 });
             });
             store.dispatch(sendIdentity(confirmIdentityPayload));
+            return promise;
+        });
+
+        const mockEditIdentityFetch = () => {
+            mockAxios.onPut(`/resource/profiles`).reply(200, confirmIdentityResponse);
+        };
+
+        const expectedEditIdentityFetch = {
+            type: 'identity/EDIT_IDENTITY_FETCH',
+            payload: confirmIdentityPayload,
+        };
+
+        const expectedEditIdentityData = {
+            type: 'identity/EDIT_IDENTITY_DATA',
+            payload: confirmIdentityResponse,
+        };
+
+        const expectedEditIdentityError = {
+            type: 'identity/EDIT_IDENTITY_ERROR',
+            payload: {
+                code: 500,
+                message: ['Server error'],
+            },
+        };
+
+        it('should fetch edit identity data', async () => {
+            mockEditIdentityFetch();
+            const promise = new Promise(resolve => {
+                store.subscribe(() => {
+                    const actions = store.getActions();
+                    if (actions.length === 2) {
+                        expect(actions[0]).toEqual(expectedEditIdentityFetch);
+                        expect(actions[1]).toEqual(expectedEditIdentityData);
+                        resolve();
+                    }
+                });
+            });
+            store.dispatch(editIdentity(confirmIdentityPayload));
+            return promise;
+        });
+
+        it('should handle confirm identity error', async () => {
+            mockNetworkError(mockAxios);
+            const promise = new Promise(resolve => {
+                store.subscribe(() => {
+                    const actions = store.getActions();
+                    if (actions.length === 3) {
+                        expect(actions[0]).toEqual(expectedEditIdentityFetch);
+                        expect(actions[1]).toEqual(expectedEditIdentityError);
+                        expect(actions[2]).toEqual(expectedCallErrorHandler);
+                        resolve();
+                    }
+                });
+            });
+            store.dispatch(editIdentity(confirmIdentityPayload));
             return promise;
         });
     });

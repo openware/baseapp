@@ -12,20 +12,31 @@ import {
   MapDispatchToPropsFunction,
 } from 'react-redux';
 import { formatDate, isDateInFuture } from '../../../helpers';
-import {RootState, selectCurrentLanguage} from '../../../modules';
 import {
+    editIdentity,
+    Label,
+    labelFetch,
+    RootState,
+    selectCurrentLanguage,
+    selectEditIdentitySuccess,
+    selectLabelData,
     selectSendIdentitySuccess,
+    selectUserInfo,
     sendIdentity,
-} from '../../../modules/user/kyc/identity';
-import { labelFetch } from '../../../modules/user/kyc/label';
+    User,
+} from '../../../modules';
 import { nationalities } from '../../../translations/nationalities';
 
 interface ReduxProps {
-    success?: string;
+    editSuccess?: string;
+    sendSuccess?: string;
     lang: string;
+    labels: Label[];
+    user: User;
 }
 
 interface DispatchProps {
+    editIdentity: typeof editIdentity;
     sendIdentity: typeof sendIdentity;
     labelFetch: typeof labelFetch;
 }
@@ -82,12 +93,22 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     };
 
     public componentDidUpdate(prev: Props) {
-        if (!prev.success && this.props.success) {
+        const {
+            editSuccess,
+            sendSuccess,
+        } = this.props;
+
+        if ((!prev.editSuccess && editSuccess) || (!prev.sendSuccess && sendSuccess)) {
             this.props.labelFetch();
         }
     }
 
     public render() {
+        const {
+            editSuccess,
+            sendSuccess,
+            lang,
+        } = this.props;
         const {
             city,
             dateOfBirth,
@@ -104,7 +125,6 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             countryOfBirth,
             metadata,
         } = this.state;
-        const { success, lang } = this.props;
 
         const cityGroupClass = cr('pg-confirm__content-identity-col-row-content', {
             'pg-confirm__content-identity-col-row-content--focused': cityFocused,
@@ -270,7 +290,8 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     </div>
                 </div>
               </div>
-              {success && <p className="pg-confirm__success">{this.translate(success)}</p>}
+              {sendSuccess && !editSuccess && <p className="pg-confirm__success">{this.translate(sendSuccess)}</p>}
+              {editSuccess && !sendSuccess && <p className="pg-confirm__success">{this.translate(editSuccess)}</p>}
               <div className="pg-confirm__content-deep">
                   <Button
                       className="pg-confirm__content-phone-deep-button"
@@ -421,6 +442,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     }
 
     private sendData = () => {
+        const { labels, user } = this.props;
         const dob = !isDateInFuture(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
         const profileInfo = {
             first_name: this.state.firstName,
@@ -430,21 +452,31 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             postcode: this.state.postcode,
             city: this.state.city,
             country: this.state.countryOfBirth,
-            metadata: {
+            metadata: JSON.stringify({
                 nationality: this.state.metadata.nationality,
-            },
+            }),
         };
-        this.props.sendIdentity(profileInfo);
+        const isIdentity = labels.length && labels.find(w => w.key === 'profile' && w.value === 'verified' && w.scope === 'private');
+
+        if (!isIdentity && user.profile && user.profile.address) {
+            this.props.editIdentity(profileInfo);
+        } else {
+            this.props.sendIdentity(profileInfo);
+        }
     }
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    success: selectSendIdentitySuccess(state),
+    editSuccess: selectEditIdentitySuccess(state),
+    sendSuccess: selectSendIdentitySuccess(state),
     lang: selectCurrentLanguage(state),
+    labels: selectLabelData(state),
+    user: selectUserInfo(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
+        editIdentity: payload => dispatch(editIdentity(payload)),
         sendIdentity: payload => dispatch(sendIdentity(payload)),
         labelFetch: () => dispatch(labelFetch()),
     });

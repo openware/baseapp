@@ -1,24 +1,17 @@
 import { CommonError } from '../../../types';
 import {
+    EDIT_IDENTITY_DATA,
+    EDIT_IDENTITY_ERROR,
+    EDIT_IDENTITY_FETCH,
     SEND_IDENTITY_DATA,
     SEND_IDENTITY_ERROR,
     SEND_IDENTITY_FETCH,
 } from './constants';
+import { IdentityData } from './types';
 
 export interface SendIdentityFetch {
     type: typeof SEND_IDENTITY_FETCH;
-    payload: {
-        first_name: string;
-        last_name: string;
-        dob: string;
-        address: string;
-        postcode: string;
-        city: string;
-        country: string;
-        metadata: {
-            nationality: string,
-        },
-    };
+    payload: IdentityData;
 }
 
 export interface SendIdentityData {
@@ -33,9 +26,29 @@ export interface SendIdentityError {
     payload: CommonError;
 }
 
+export interface EditIdentityFetch {
+    type: typeof EDIT_IDENTITY_FETCH;
+    payload: IdentityData;
+}
+
+export interface EditIdentityData {
+    type: typeof EDIT_IDENTITY_DATA;
+    payload: {
+        message: string;
+    };
+}
+
+export interface EditIdentityError {
+    type: typeof EDIT_IDENTITY_ERROR;
+    payload: CommonError;
+}
+
 export type IdentityAction = SendIdentityFetch
     | SendIdentityData
-    | SendIdentityError;
+    | SendIdentityError
+    | EditIdentityFetch
+    | EditIdentityData
+    | EditIdentityError;
 
 export const sendIdentity = (payload: SendIdentityFetch['payload']): SendIdentityFetch => ({
     type: SEND_IDENTITY_FETCH,
@@ -49,5 +62,20 @@ export const sendIdentityData = (payload: SendIdentityData['payload']): SendIden
 
 export const sendIdentityError = (payload: SendIdentityError['payload']): SendIdentityError => ({
     type: SEND_IDENTITY_ERROR,
+    payload,
+});
+
+export const editIdentity = (payload: EditIdentityFetch['payload']): EditIdentityFetch => ({
+    type: EDIT_IDENTITY_FETCH,
+    payload,
+});
+
+export const editIdentityData = (payload: EditIdentityData['payload']): EditIdentityData => ({
+    type: EDIT_IDENTITY_DATA,
+    payload,
+});
+
+export const editIdentityError = (payload: EditIdentityError['payload']): EditIdentityError => ({
+    type: EDIT_IDENTITY_ERROR,
     payload,
 });
