@@ -13,7 +13,7 @@ interface DispatchProps {
 }
 
 interface ProfileVerificationProps {
-    openModal: () => void;
+    openModal?: () => void;
 }
 
 type Props =  DispatchProps & ProfileVerificationProps & ReduxProps;

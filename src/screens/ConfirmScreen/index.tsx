@@ -9,7 +9,6 @@ import logoLight = require('../../assets/images/logoLight.svg');
 import { Phone } from '../../containers';
 import { Documents } from '../../containers/Confirm/Documents';
 import { Identity } from '../../containers/Confirm/Identity';
-import { VersionGuardWrapper } from '../../decorators';
 import { setDocumentTitle } from '../../helpers';
 import {
     Label,
@@ -118,7 +117,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                             </div>
                         </div>
                         <div className="pg-confirm__content">
-                            {VersionGuardWrapper(this.renderContent, Phone)}
+                            {this.renderContent}
                         </div>
                     </div>
                 </div>

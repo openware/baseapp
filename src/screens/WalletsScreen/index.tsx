@@ -5,13 +5,11 @@ import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { CurrencyInfo, DepositCrypto, DepositFiat, TabPanel, WalletItemProps, WalletList } from '../../components';
+import { Withdraw, WithdrawProps } from '../../containers';
 import { ModalWithdrawConfirmation } from '../../containers/ModalWithdrawConfirmation';
 import { ModalWithdrawSubmit } from '../../containers/ModalWithdrawSubmit';
 import { EstimatedValue } from '../../containers/Wallets/EstimatedValue';
 import { WalletHistory } from '../../containers/Wallets/History';
-import { Withdraw, WithdrawProps } from '../../containers/Wallets/Withdraw';
-import { WithdrawLite } from '../../containers/Wallets/WithdrawLite';
-import { VersionGuardWrapper } from '../../decorators';
 import { formatCCYAddress, setDocumentTitle } from '../../helpers';
 import {
     alertPush,
@@ -346,15 +344,11 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             <React.Fragment>
                 <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
-                {this.renderWithdrawBlock()}
+                {this.renderEnterpriseContent()}
                 {user.otp && currency && <WalletHistory label="withdraw" type="withdraws" currency={currency} />}
             </React.Fragment>
         );
     };
-
-    private renderWithdrawBlock = () => VersionGuardWrapper(this.renderEnterpriseContent, this.renderLiteContent);
-
-    private renderLiteContent = () => <WithdrawLite openModal={this.props.openGuardModal}/>;
 
     private renderEnterpriseContent = () => {
         const { withdrawDone, selectedWalletIndex } = this.state;
@@ -381,6 +375,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             withdrawFeeLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }),
             withdrawTotalLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }),
             withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
+            openModal: this.props.openGuardModal,
         };
 
         return otp ? <Withdraw {...withdrawProps} /> : this.isOtpDisabled();

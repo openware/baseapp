@@ -6,7 +6,6 @@ import { ProfileApiKeys, ProfileVerification } from '../../containers';
 import { ProfileAccountActivity } from '../../containers/ProfileAccountActivity';
 import { ProfileAuthDetails } from '../../containers/ProfileAuthDetails';
 import { ReferralProgram } from '../../containers/ReferralProgram';
-import { VersionGuardWrapper } from '../../decorators';
 import { setDocumentTitle } from '../../helpers';
 
 class ProfileComponent extends React.Component<RouterProps, InjectedIntlProps> {
@@ -35,18 +34,18 @@ class ProfileComponent extends React.Component<RouterProps, InjectedIntlProps> {
                             </div>
                         </div>
                         <div className="col-12 col-md-6">
-                            {VersionGuardWrapper(ProfileVerification, ProfileVerification)}
+                            <ProfileVerification/>
                         </div>
                     </div>
                     <div className="row px-4">
                         <div className="col-12 mx-0">
-                            {VersionGuardWrapper(ReferralProgram)}
+                            <ReferralProgram/>
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        {VersionGuardWrapper(ProfileApiKeys, ProfileApiKeys, false)}
+                        <ProfileApiKeys/>
                     </div>
                     <div className="col-12">
                         <ProfileAccountActivity/>

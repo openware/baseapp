@@ -3,9 +3,24 @@ import { Button, Decimal, Input } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import { CustomInput, SummaryField } from '../../components';
+import { Beneficiary } from '../../modules';
 
 interface WithdrawLiteProps {
-    openModal: () => void;
+    borderItem?: string;
+    currency: string;
+    fee: number;
+    onClick: (amount: number, total: number, beneficiary: Beneficiary, otpCode: string) => void;
+    fixed: number;
+    className?: string;
+    type: 'fiat' | 'coin';
+    twoFactorAuthRequired?: boolean;
+    withdrawAmountLabel?: string;
+    withdraw2faLabel?: string;
+    withdrawFeeLabel?: string;
+    withdrawTotalLabel?: string;
+    withdrawButtonLabel?: string;
+    withdrawDone: boolean;
+    openModal?: () => void;
 }
 
 class WithdrawLite extends React.Component<WithdrawLiteProps> {
@@ -110,15 +125,15 @@ class WithdrawLite extends React.Component<WithdrawLiteProps> {
         );
     };
 
-    private handleClick = () => this.props.openModal();
+    private handleClick = () => this.props.openModal;
 
-    private handleFieldFocus = () => this.props.openModal();
+    private handleFieldFocus = () => this.props.openModal;
 
-    private handleChangeInputAmount = () => this.props.openModal();
+    private handleChangeInputAmount = () => this.props.openModal;
 
-    private handleChangeInputAddress = () => this.props.openModal();
+    private handleChangeInputAddress = () => this.props.openModal;
 
-    private handleChangeInputOtpCode = () => this.props.openModal();
+    private handleChangeInputOtpCode = () => this.props.openModal;
 }
 
 export {

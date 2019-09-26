@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileTwoFactorAuth } from '../';
 import { CustomInput, Modal } from '../../components';
-import { VersionGuardWrapper } from '../../decorators';
 import { PASSWORD_REGEX } from '../../helpers';
 import {
     openGuardModal,
@@ -226,7 +225,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                     />
                     {modal}
                 </div>
-                {VersionGuardWrapper(this.renderProfileTwoFactor, this.renderProfileTwoFactorLite)}
+                {this.renderProfileTwoFactor()}
                 <Modal
                     className="pg-profile-page__disable-2fa-modal"
                     show={this.state.showModal}
@@ -245,14 +244,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                     <ProfileTwoFactorAuth is2faEnabled={this.props.user.otp} navigateTo2fa={this.handleNavigateTo2fa}/>
                 </div>
             </React.Fragment>
-        );
-    };
-
-    private renderProfileTwoFactorLite = () => {
-        return (
-            <div className="pg-profile-page__row">
-                <ProfileTwoFactorAuth openModal={this.props.openGuardModal}/>
-            </div>
         );
     };
 

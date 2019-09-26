@@ -24,6 +24,7 @@ interface WithdrawProps {
     withdrawTotalLabel?: string;
     withdrawButtonLabel?: string;
     withdrawDone: boolean;
+    openModal?: () => void;
 }
 
 const defaultBeneficiary: Beneficiary = {

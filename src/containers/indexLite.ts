@@ -23,6 +23,7 @@ export * from './ToolBar';
 export * from './Confirm/Documents';
 export * from './Confirm/Identity';
 export * from './WalletsFetch';
+export * from './Withdraw';
 export * from './Sidebar';
 
 // lite containers
@@ -30,3 +31,4 @@ export { ProfileTwoFactorAuthLite as ProfileTwoFactorAuth } from './ProfileTwoFa
 export { ProfileVerificationLite as ProfileVerification } from './ProfileVerificationLite';
 export { ProfileApiKeysLite as ProfileApiKeys } from './ProfileApiKeysLite';
 export { PhoneLite as Phone } from './Confirm/PhoneLite';
+export { WithdrawLite as Withdraw } from './WithdrawLite';
