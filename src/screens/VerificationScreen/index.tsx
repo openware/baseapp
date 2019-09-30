@@ -11,8 +11,8 @@ import {
     RootState,
     selectEmailVerified,
     verificationFetch,
-} from '../modules';
-import { CommonError } from '../modules/types';
+} from '../../modules';
+import { CommonError } from '../../modules/types';
 
 interface DispatchProps {
     verification: typeof verificationFetch;
