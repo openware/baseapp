@@ -117,7 +117,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                             </div>
                         </div>
                         <div className="pg-confirm__content">
-                            {this.renderContent}
+                            {this.renderContent()}
                         </div>
                     </div>
                 </div>
