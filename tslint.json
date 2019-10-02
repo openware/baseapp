@@ -15,6 +15,7 @@
       "single",
       "jsx-double"
     ],
-    "no-magic-numbers": false
+    "no-magic-numbers": false,
+    "jsx-no-lambda": false
   }
 }

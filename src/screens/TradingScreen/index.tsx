@@ -79,7 +79,6 @@ interface StateProps {
 
 type Props = DispatchProps & ReduxProps & RouteComponentProps & InjectedIntlProps;
 
-// tslint:disable:jsx-no-lambda
 class Trading extends React.Component<Props, StateProps> {
     public readonly state = {
         orderComponentResized: 5,
