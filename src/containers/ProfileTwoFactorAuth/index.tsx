@@ -1,4 +1,4 @@
-/* tslint:disable jsx-no-lambda  jsx-no-multiline-js */
+/* tslint:disable jsx-no-multiline-js */
 import { Checkbox } from '@openware/components';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -20,8 +20,16 @@ class ProfileTwoFactorAuthComponent extends React.Component<Props, ProfileTwoFac
         super(props);
 
         this.state = {
-          is2faEnabled: props.is2faEnabled || false,
+            is2faEnabled: props.is2faEnabled || false,
         };
+    }
+
+    public componentWillReceiveProps(next: ProfileTwoFactorAuthProps) {
+        if (next.is2faEnabled !== this.props.is2faEnabled) {
+            this.setState({
+                is2faEnabled: next.is2faEnabled || false,
+            });
+        }
     }
 
     public render() {
