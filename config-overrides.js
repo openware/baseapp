@@ -8,6 +8,8 @@ module.exports = function override(config, env) {
     config.plugins.push(new webpack.DefinePlugin({ 'process.env.BUILD_EXPIRE': JSON.stringify(process.env.BUILD_EXPIRE) }));
     const buildVersion = process.env.REACT_APP_BUILD_VERSION ? process.env.REACT_APP_BUILD_VERSION : 'Lite'
     const tenkoPublicKey = process.env.REACT_APP_TENKO_PUBLIC_KEY;
+    const version = process.env.REACT_APP_GIT_SHA || 'snapshot';
+    const commonJSFilename = `commons.${version}.js`;
 
     if (buildVersion == 'Lite') {
         if (!tenkoPublicKey) {
@@ -20,7 +22,7 @@ module.exports = function override(config, env) {
         config.plugins.push(
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'commons',
-                filename: 'commons.js',
+                filename: commonJSFilename,
                 minChunks: module => /node_modules/.test(module.resource)
             })
         );
@@ -28,7 +30,7 @@ module.exports = function override(config, env) {
         const domain = process.env.BUILD_DOMAIN ? process.env.BUILD_DOMAIN.split(',') : [];
 
         config.plugins.push(
-            new JavaScriptObfuscator({ rotateUnicodeArray: true, domainLock: domain }, ['commons.js'])
+            new JavaScriptObfuscator({ rotateUnicodeArray: true, domainLock: domain }, [commonJSFilename])
         );
     }
 
