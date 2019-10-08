@@ -1,6 +1,4 @@
-import {
-    Button,
-} from '@openware/components';
+import { Button } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
@@ -60,12 +58,6 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     public translate = (e: string) => {
         return this.props.intl.formatMessage({ id: e });
     };
-
-    public componentDidUpdate(prev: Props) {
-        if (!prev.verifyPhoneSuccess && this.props.verifyPhoneSuccess) {
-            this.props.changeUserLevel({ level: 2 });
-        }
-    }
 
     public render() {
         const {

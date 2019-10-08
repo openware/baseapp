@@ -60,6 +60,14 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
         });
     }
 
+    public componentWillReceiveProps(next: Props) {
+        if (next.userData.level !== this.state.level) {
+            this.setState({
+                level: next.userData.level,
+            });
+        }
+    }
+
     public goBack = event => {
       event.preventDefault();
       this.props.history.goBack();
@@ -127,8 +135,10 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
     //tslint:enable:jsx-no-multiline-js
 
     private renderContent = () => {
-        const { labels, userData: { level } } = this.props;
+        const { labels } = this.props;
+        const { level } = this.state;
         const isIdentity = labels.find(w => w.key === 'profile' && w.value === 'verified');
+
         switch (level) {
             case 1: return <Phone />;
             case 2: return isIdentity ? <Documents /> : <Identity />;
