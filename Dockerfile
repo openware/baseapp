@@ -1,6 +1,5 @@
 FROM node:10.11 AS builder
 
-
 WORKDIR /home/node
 COPY --chown=node:node . .
 
