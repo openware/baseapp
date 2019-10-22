@@ -53,6 +53,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
                 exchange: 'Cryptobase',
                 ticker: m.id,
                 type: 'bitcoin',
+                currency_code: m.quote_unit.toUpperCase(),
             }));
             setTimeout(() => onResultReadyCallback(symbols), 0);
         },
@@ -65,6 +66,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
 
             const symbolStub = {
                 name: symbol.name,
+                currency_code: symbol.quote_unit.toUpperCase(),
                 description: '',
                 type: 'bitcoin',
                 session: '24x7',
