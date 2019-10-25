@@ -5,7 +5,7 @@ export * from './types';
 export * from './config';
 
 export interface RequestOptions {
-    apiVersion: 'applogic' | 'peatio' | 'barong';
+    apiVersion: 'applogic' | 'peatio' | 'barong' | 'arke';
     withHeaders?: boolean;
 }
 
