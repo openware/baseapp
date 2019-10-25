@@ -6,6 +6,7 @@ import axios, {
 } from 'axios';
 import {
     applogicUrl,
+    arkeUrl,
     authUrl,
     tradeUrl,
     withCredentials,
@@ -24,7 +25,7 @@ export interface JsonBody {
 }
 
 export interface RequestOptions {
-    apiVersion: 'applogic' | 'peatio' | 'barong';
+    apiVersion: 'applogic' | 'peatio' | 'barong' | 'arke';
     withHeaders?: boolean;
 }
 
@@ -44,6 +45,7 @@ const getAPI = () => ({
     barong: `${authUrl()}`,
     applogic: `${applogicUrl()}`,
     peatio: `${tradeUrl()}`,
+    arke: `${arkeUrl()}`,
 });
 
 const buildRequest = (request: Request, configData: RequestOptions) => {

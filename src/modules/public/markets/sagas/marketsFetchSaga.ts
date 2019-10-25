@@ -17,7 +17,7 @@ const marketsRequestOptions: RequestOptions = {
 };
 
 const tickersOptions: RequestOptions = {
-    apiVersion: 'peatio',
+    apiVersion: 'arke',
 };
 
 export function* rootMarketsSaga() {
