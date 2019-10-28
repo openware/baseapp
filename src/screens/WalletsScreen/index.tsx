@@ -254,6 +254,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             otpCode: otpCode ? otpCode : '',
             withdrawConfirmModal: !state.withdrawConfirmModal,
             total: total ? total : 0,
+            withdrawDone: false,
         }));
     };
 
