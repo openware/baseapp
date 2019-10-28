@@ -15,10 +15,13 @@ import {
     alertPush,
     beneficiariesFetch,
     Beneficiary,
+    currenciesFetch,
+    Currency,
     openGuardModal,
     RootState,
     selectBeneficiariesActivateSuccess,
     selectBeneficiariesDeleteSuccess,
+    selectCurrencies,
     selectHistory,
     selectMobileWalletUi,
     selectUserInfo,
@@ -49,6 +52,7 @@ interface ReduxProps {
     selectedWalletAddress: string;
     beneficiariesActivateSuccess: boolean;
     beneficiariesDeleteSuccess: boolean;
+    currencies: Currency[];
 }
 
 interface DispatchProps {
@@ -60,6 +64,7 @@ interface DispatchProps {
     fetchSuccess: typeof alertPush;
     setMobileWalletUi: typeof setMobileWalletUi;
     openGuardModal: typeof openGuardModal;
+    currenciesFetch: typeof currenciesFetch;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -131,6 +136,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         if (selectedWalletIndex === -1 && wallets.length) {
             this.setState({ selectedWalletIndex: 0 });
             wallets[0].type === 'coin' && fetchAddress({ currency: wallets[0].currency });
+        }
+
+        if (!this.props.currencies.length) {
+            this.props.currenciesFetch();
         }
     }
 
@@ -299,10 +308,12 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     };
 
     private renderDeposit = () => {
-        const { addressDepositError, wallets, user, selectedWalletAddress } = this.props;
+        const { addressDepositError, wallets, user, selectedWalletAddress, currencies } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-        const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' });
+        const currencyItem = currencies && currencies.find(item => item.id === currency) || { min_confirmations: 6 };
+        const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
+                                                   { confirmations: currencyItem.min_confirmations });
         const error = addressDepositError ?
             this.props.intl.formatMessage({id: addressDepositError.message}) :
             this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
@@ -430,6 +441,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     selectedWalletAddress: selectWalletAddress(state),
     beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
     beneficiariesDeleteSuccess: selectBeneficiariesDeleteSuccess(state),
+    currencies: selectCurrencies(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
@@ -441,6 +453,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchSuccess: payload => dispatch(alertPush(payload)),
     setMobileWalletUi: payload => dispatch(setMobileWalletUi(payload)),
     openGuardModal: () => dispatch(openGuardModal()),
+    currenciesFetch: () => dispatch(currenciesFetch()),
 });
 
 // tslint:disable-next-line:no-any
