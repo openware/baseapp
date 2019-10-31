@@ -177,7 +177,9 @@ const switchMarket = () => {
             yield put(rangerUnsubscribeMarket(previousMarket));
         }
         previousMarket = action.payload;
-        yield put(rangerSubscribeMarket(action.payload));
+        if (action.payload) {
+            yield put(rangerSubscribeMarket(action.payload));
+        }
     };
 };
 
