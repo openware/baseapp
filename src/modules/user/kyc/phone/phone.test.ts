@@ -99,7 +99,7 @@ describe('KYC - Phone', () => {
         };
 
         const verifyCodeDataPayload = {
-            message: 'message',
+            message: 'success.phone.confirmation.message',
         };
 
         const expectedVerifyCodeFetch = {

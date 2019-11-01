@@ -412,6 +412,7 @@ export const en = {
     'success.order.created': 'Order was created',
     'success.phone.verification.send': 'Verification code was sent to your phone',
     'success.phone.confirmed': 'Your phone was confirmed',
+    'success.phone.confirmation.message': 'Success!',
     'success.message.sent': 'Message was sent',
     'success.email.confirmed': 'Your email address has been successfully confirmed',
 

@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, signUpRequireVerification } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { userData } from '../../profile';
 import { signIn, signInError, signInRequire2FA } from '../actions';
@@ -47,6 +47,7 @@ describe('SignIn saga', () => {
     const expectedActionsFetch = [
         signIn(fakeCredentials),
         userData({user: fakeUser}),
+        signUpRequireVerification({ requireVerification: fakeUser.state === 'pending' }),
         signInRequire2FA({ require2fa: false }),
     ];
     const expectedActions2FAError = [

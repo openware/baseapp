@@ -415,6 +415,7 @@ export const ru: LangType = {
     'success.order.created': 'Запрос успешно создан',
     'success.phone.verification.send': 'Код верификации был отправлен на ваш телефон',
     'success.phone.confirmed': 'Ваш телефон подтвержден',
+    'success.phone.confirmation.message': 'Успех!',
     'success.message.sent': 'Письмо было успешно отправлено',
     'success.email.confirmed': 'Email был успешно подтвержден',
 
