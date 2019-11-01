@@ -51,18 +51,23 @@
     padding: 7px 0;
     margin-bottom: 7px;
     border-bottom: 1px solid var(--profile-activity-border);
+
+    a {
+      width: 100%;
+    }
+
     &-link {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       padding: 9px 23px;
       width: 100%;
+
       &:hover {
-        background-color: var(--nav-item-hover);
-        a {
-          color: var(--color-white);
-        }
+        background-color: var(--nav-item-hover) !important;
+        color: var(--color-white);
       }
+
       &-img {
         margin-right: 14px;
       }
@@ -87,12 +92,16 @@
       }
     }
   }
+
   .route-selected {
-    background-color: var(--nav-item-hover);
-    a {
-      color: var(--color-white);
+    color: var(--color-white);
+
+    .pg-sidebar-wrapper-nav-item,
+    .pg-sidebar-wrapper-profile-link {
+      background-color: var(--nav-item-selected);
     }
   }
+
   &-nav {
     padding: 0 0 11px;
     border-bottom: 1px solid var(--profile-activity-border);
@@ -101,12 +110,12 @@
       justify-content: flex-start;
       align-items: center;
       padding: 9px 23px;
+
       &:hover {
-        background-color: var(--nav-item-hover);
-        a {
-          color: var(--color-white);
-        }
+        background-color: var(--nav-item-hover) !important;
+        color: var(--color-white);
       }
+
       &-img-wrapper {
         width: 24px;
         margin-right: 14px;
@@ -131,8 +140,10 @@
       align-items: center;
       padding: 9px 23px;
       width: 100%;
+
       &:hover {
-        background-color: var(--nav-item-hover);
+        background-color: var(--nav-item-hover) !important;
+
         p {
           color: var(--color-white);
         }

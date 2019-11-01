@@ -93,20 +93,20 @@ class SidebarContainer extends React.Component<Props, State> {
         const path = url.includes('/trading') && currentMarket ? `/trading/${currentMarket.id}` : url;
         const isActive = (url === '/trading/' && address.includes('/trading')) || address === url;
         return (
-            <div className={`pg-sidebar-wrapper-nav-item ${isActive && 'route-selected'}`} key={index}>
-                <div className="pg-sidebar-wrapper-nav-item-img-wrapper">
-                    <img
-                        className="pg-sidebar-wrapper-nav-item-img"
-                        src={require(`../../assets/images/sidebar/${img}.svg`)}
-                        alt="icon"
-                    />
-                </div>
-                <p className="pg-sidebar-wrapper-nav-item-text">
-                    <Link to={path} onClick={handleLinkChange}>
+            <Link to={path} onClick={handleLinkChange} className={`${isActive && 'route-selected'}`}>
+                <div className="pg-sidebar-wrapper-nav-item" key={index}>
+                    <div className="pg-sidebar-wrapper-nav-item-img-wrapper">
+                        <img
+                            className="pg-sidebar-wrapper-nav-item-img"
+                            src={require(`../../assets/images/sidebar/${img}.svg`)}
+                            alt="icon"
+                        />
+                    </div>
+                    <p className="pg-sidebar-wrapper-nav-item-text">
                         <FormattedMessage id={name} />
-                    </Link>
-                </p>
-            </div>
+                    </p>
+                </div>
+            </Link>
         );
     };
 
@@ -119,18 +119,18 @@ class SidebarContainer extends React.Component<Props, State> {
 
         return isLoggedIn && (
             <div className="pg-sidebar-wrapper-profile">
-                <div className={`pg-sidebar-wrapper-profile-link ${isActive && 'route-selected'}`}>
-                    <img
-                        className="pg-sidebar-wrapper-profile-link-img"
-                        src={require(`../../assets/images/sidebar/profile${isLight ? 'Light' : '' }.svg`)}
-                        alt="icon"
-                    />
-                    <p className="pg-sidebar-wrapper-profile-link-text">
-                        <Link to="/profile" onClick={handleLinkChange}>
+                <Link to="/profile" onClick={handleLinkChange} className={`${isActive && 'route-selected'}`}>
+                    <div className="pg-sidebar-wrapper-profile-link">
+                        <img
+                            className="pg-sidebar-wrapper-profile-link-img"
+                            src={require(`../../assets/images/sidebar/profile${isLight ? 'Light' : '' }.svg`)}
+                            alt="icon"
+                        />
+                        <p className="pg-sidebar-wrapper-profile-link-text">
                             <FormattedMessage id={'page.header.navbar.profile'} />
-                        </Link>
-                    </p>
-                </div>
+                        </p>
+                    </div>
+                </Link>
             </div>
         );
     };
