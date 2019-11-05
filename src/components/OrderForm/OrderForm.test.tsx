@@ -330,8 +330,8 @@ describe('OrderForm', () => {
         const total = wrapper.find('.cr-order-item__total').find('.cr-order-item__total__content').find('.cr-order-item__total__content__amount').props().children;
         const available = wrapper.find('.cr-order-item__available').find('.cr-order-item__available__content').find('.cr-order-item__available__content__amount').props().children;
 
-        expect(total).toEqual('220.0000');
-        expect(available).toEqual('50.0000');
+        expect(total).toEqual('220.00000');
+        expect(available).toEqual('50.00000');
     });
 
     it('should display values with correct precision', () => {
@@ -352,8 +352,8 @@ describe('OrderForm', () => {
         const total = wrapper.find('.cr-order-item__total').find('.cr-order-item__total__content').find('.cr-order-item__total__content__amount').props().children;
         const available = wrapper.find('.cr-order-item__available').find('.cr-order-item__available__content').find('.cr-order-item__available__content__amount').props().children;
 
-        expect(total).toEqual('0.200');
-        expect(available).toEqual('50.000');
+        expect(total).toEqual('0.20');
+        expect(available).toEqual('50.00');
     });
 
     const findInputPrice = (wrapper: ShallowWrapper) => wrapper.find('.cr-order-item').at(1).find('div').last().children().last();

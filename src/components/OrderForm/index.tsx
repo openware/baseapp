@@ -205,6 +205,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
 
         const cx = classnames('cr-order-form', className);
         const currencyCodeFrom = `${from.toUpperCase()}-alt`;
+        const availablePrecision = type === 'buy' ? currentMarketBidPrecision : currentMarketAskPrecision;
         const availableCurrency = type === 'buy' ? from : to;
 
         return (
@@ -283,11 +284,11 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                         <div className="cr-order-item__total__content">
                             {orderType === 'Limit' ? (
                                 <span className="cr-order-item__total__content__amount">
-                                    {Decimal.format(total, currentMarketAskPrecision)}
+                                    {Decimal.format(total, currentMarketBidPrecision)}
                                 </span>
                             ) : (
                                 <span className="cr-order-item__total__content__amount">
-                                    &asymp;{Decimal.format(total, currentMarketAskPrecision)}
+                                    &asymp;{Decimal.format(total, currentMarketBidPrecision)}
                                 </span>
                             )}
                             <span className="cr-order-item__total__content__currency">
@@ -303,7 +304,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                         </label>
                         <div className="cr-order-item__available__content">
                             <span className="cr-order-item__available__content__amount">
-                                {available ? Decimal.format(available, currentMarketAskPrecision) : ''}
+                                {available ? Decimal.format(available, availablePrecision) : ''}
                             </span>
                             <span className="cr-order-item__available__content__currency">
                                 {available ? availableCurrency.toUpperCase() : ''}
