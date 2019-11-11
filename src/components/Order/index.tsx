@@ -11,6 +11,7 @@ export interface OrderProps {
     orderType: string | React.ReactNode;
     price: number | string;
     amount: number | string;
+    available: number;
 }
 
 export type OnSubmitCallback = (order: OrderProps) => void;

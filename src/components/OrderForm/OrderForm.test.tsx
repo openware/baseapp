@@ -85,7 +85,7 @@ describe('OrderForm', () => {
         const submitButton = wrapper.find(Button);
         submitButton.simulate('click');
 
-        expect(onSubmit.calledOnceWith({type: 'buy', orderType: 'Limit', price: nextState.price, amount: nextState.amount})).toBeTruthy();
+        expect(onSubmit.calledOnceWith({type: 'buy', orderType: 'Limit', price: nextState.price, amount: nextState.amount, available: 50})).toBeTruthy();
     });
 
     it('should disable button if price is 0 in Limit order', () => {

@@ -405,7 +405,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
     };
 
     private handleSubmit = () => {
-        const { type } = this.props;
+        const { available, type } = this.props;
         const { amount, price, priceMarket, orderType } = this.state;
 
         const order = {
@@ -413,6 +413,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             orderType,
             amount,
             price: orderType === 'Market' ? priceMarket : price,
+            available: available || 0,
         };
 
         this.props.onSubmit(order);

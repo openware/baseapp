@@ -37,6 +37,11 @@ export const en = {
     'page.body.trade.header.newOrder.content.total': 'Total',
     'page.body.trade.header.newOrder.content.available': 'Available',
 
+    'error.order.create.minAmount': 'Amount is too low. Minimum amount is {amount} {currency}',
+    'error.order.create.minPrice': 'Price is too low. Minimum price is {price} {currency}',
+    'error.order.create.maxPrice': 'Price is too high. Maximum price is {price} {currency}',
+    'error.order.create.available': 'Balance exceeded. Available {available} {currency}',
+
     'page.body.trade.header.marketDepths': 'Market Depth',
     'page.body.trade.header.marketDepths.content.price': 'Price:',
     'page.body.trade.header.marketDepths.content.volume': 'Amount:',

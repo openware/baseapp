@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux';
 import { Order, OrderProps, WalletItemProps } from '../../components';
 import {
+    alertPush,
     RootState,
     selectCurrentPrice,
     selectDepthAsks,
@@ -46,6 +47,7 @@ interface DispatchProps {
     accountWallets: typeof walletsFetch;
     setCurrentPrice: typeof setCurrentPrice;
     orderExecute: typeof orderExecuteFetch;
+    pushAlert: typeof alertPush;
 }
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
@@ -148,19 +150,86 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     private handleSubmit = (value: OrderProps) => {
-        if (!this.props.currentMarket) {
+        const { currentMarket } = this.props;
+
+        if (!currentMarket) {
             return;
         }
-        const { type, price, orderType, amount } = value;
+
+        const {
+            amount,
+            available,
+            orderType,
+            price,
+            type,
+        } = value;
+
         this.props.setCurrentPrice();
+
         const resultData = {
-            market: this.props.currentMarket.id,
+            market: currentMarket.id,
             side: type,
             volume: amount.toString(),
             ord_type: (orderType as string).toLowerCase(),
         };
+
         const order = orderType === 'Limit' ? { ...resultData, price: price.toString() } : resultData;
-        this.props.orderExecute(order);
+        let orderAllowed = true;
+
+        if (+resultData.volume < +currentMarket.min_amount) {
+            this.props.pushAlert({
+                message: [this.props.intl.formatMessage(
+                    { id: 'error.order.create.minAmount' },
+                    { amount: currentMarket.min_amount, currency: currentMarket.base_unit.toUpperCase()},
+                )],
+                type: 'error',
+            });
+
+            orderAllowed = false;
+        }
+
+        if (+price < +currentMarket.min_price) {
+            this.props.pushAlert({
+                message: [this.props.intl.formatMessage(
+                    { id: 'error.order.create.minPrice' },
+                    { price: currentMarket.min_price, currency: currentMarket.quote_unit.toUpperCase()},
+                )],
+                type: 'error',
+            });
+
+            orderAllowed = false;
+        }
+
+        if (+currentMarket.max_price && +price > +currentMarket.max_price) {
+            this.props.pushAlert({
+                message: [this.props.intl.formatMessage(
+                    { id: 'error.order.create.maxPrice' },
+                    { price: currentMarket.max_price, currency: currentMarket.quote_unit.toUpperCase()},
+                )],
+                type: 'error',
+            });
+
+            orderAllowed = false;
+        }
+
+        if (+available < (+amount * +price)) {
+            this.props.pushAlert({
+                message: [this.props.intl.formatMessage(
+                    { id: 'error.order.create.available' },
+                    { available: available, currency: order.side === 'buy' ?
+                        currentMarket.quote_unit.toUpperCase() :
+                        currentMarket.base_unit.toUpperCase(),
+                    },
+                )],
+                type: 'error',
+            });
+
+            orderAllowed = false;
+        }
+
+        if (orderAllowed) {
+            this.props.orderExecute(order);
+        }
     };
 
     private getWallet(currency: string, wallets: WalletItemProps[]) {
@@ -200,6 +269,7 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = dispatch => ({
     accountWallets: () => dispatch(walletsFetch()),
     orderExecute: payload => dispatch(orderExecuteFetch(payload)),
+    pushAlert: payload => dispatch(alertPush(payload)),
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
 });
 
