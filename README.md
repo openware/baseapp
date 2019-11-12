@@ -3,7 +3,7 @@
 Base Crypto Application
 ---
 
-## Add npm token for install components library
+## Add an npm auth token for install components library
 
 ```bash
 $ echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
@@ -50,12 +50,11 @@ docker build -t baseapp:obfuscated
   --build-arg BUILD_DOMAIN="example.com"
   -f Dockerfile-obfuscator .
 ```
-where `BUILD_EXPIRE` is a Unix Timestamp of the build expiration date in seconds,
-​            `BUILD_DOMAIN` is the domain which you'd like to use during the deployment
+You can find all the available build args in the `available Docker build args` section
 
 The resulting image would be accessible by the `baseapp:obfuscated` tag.
 
-## Working on Enterprise version
+## Working with Enterprise version
 
 1. Link the Enterprise containers
 
@@ -69,3 +68,45 @@ The resulting image would be accessible by the `baseapp:obfuscated` tag.
 ```bash
 REACT_APP_BUILD_VERSION=Enterprise yarn start
 ```
+
+## Enterprise Docker image build
+
+To prepare an enterprise build, run:
+
+```bash
+docker build -t baseapp:enterprise 
+  --build-arg REACT_APP_BUILD_VERSION="Enterprise" .
+```
+
+The resulting image would be accessible by the `baseapp:enterprise` tag.
+
+## Available Docker build args
+
+While building a Docker image you can pass build-dependant arguments using `--build-arg`: 
+`docker build -t baseapp:latest
+  --build-arg BUILD_DOMAIN="example.com" .`
+
+| Argument                 | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| `REACT_APP_BUILD_VERSION`                  | Use `Enterprise` to get a full-fledged baseapp build or `Lite` to build a limited trial version |
+| `BUILD_EXPIRE`               |  Unix Timestamp of the build expiration date in seconds |
+| `BUILD_DOMAIN`               |  Domain which you'd like to use during the deployment |
+| `REACT_APP_TENKO_PUBLIC_KEY` |  Tenko public key used only for Lite version builds | 
+| `NPM_AUTH_TOKEN` |  The authentication token of npmjs.com used to fetch private packages |
+
+## env.js configuration explanation
+
+In `public/config` open `env.js`
+
+
+| Argument                 | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| `api`    | URLs of `barong`, `peatio`, `applogic`, `ranger` and `tenko` API endpoints. You can use mockserver (<https://github.com/openware/mockserver>) with default `env.js` values |
+| `minutesUntilAutoLogout`                |  Autologout time in minutes  |
+| `withCredentials`               |  `false` or `true` if you want to include cookies as part of the request(https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials)   |
+| `captcha - captchaType`         |  `'recaptcha'`, `'geetest'` or `'none'`   |
+| `captcha - siteKey`         |  Recaptha site key   |
+| `gaTrackerKey` |  Google Analytics tracker key  |
+| `rangerReconnectPeriod` |  Reconnection time for the Ranger WS service in minutes    |
+| `msAlertDisplayTime` |  Alert message display duration in milliseconds    |
+| `licenseKey` |  Openware license key which can be generated at <https://openware.com/licenses>   |
