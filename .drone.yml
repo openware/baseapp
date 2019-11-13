@@ -26,7 +26,7 @@ steps:
       - yarn build
 
   - name: "Stage with mock server"
-    image: alpine/git
+    image: instrumentisto/rsync-ssh
     environment:
       PRIVATE_KEY:
         from_secret: deploy_key
@@ -37,8 +37,8 @@ steps:
       - echo "window.env={api:{authUrl:'http://api-v2.mock.openware.work/api/v2/barong',tradeUrl:'http://api-v2.mock.openware.work/api/v2/peatio',applogicUrl:'http://api-v2.mock.openware.work/api/v2/applogic',rangerUrl:'ws://ranger.mock.openware.work/api/v2/ranger'},captcha:{captchaType:'none',siteKey:''}};" > env.js
       - cat env.js
       - cd /drone/src/
-      - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}
-      - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null coverage/lcov-report mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}-coverage
+      - rsync -avzhre "ssh -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" build/ mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}
+      - rsync -avzhre "ssh -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" coverage/lcov-report/ mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}-coverage
       - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work"
       - echo "http://${DRONE_COMMIT_SHA:0:7}-coverage.mock.openware.work"
 
