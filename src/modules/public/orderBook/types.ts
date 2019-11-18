@@ -31,3 +31,13 @@ export interface DepthState extends CommonState {
     bids: string[][];
     loading: boolean;
 }
+
+export interface DepthIncrementState {
+    asks: string[][];
+    bids: string[][];
+}
+
+export interface DepthIncrementUpdateData {
+    asks: string[] | null;
+    bids: string[] | null;
+}

@@ -9,7 +9,7 @@ import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
 import { MARKETS_SET_CURRENT_MARKET } from '../../markets/constants';
-import { depthData } from '../../orderBook';
+import { depthData, depthDataIncrement, depthDataSnapshot } from '../../orderBook';
 import { recentTradesPush } from '../../recentTrades';
 import {
     RangerConnectFetch,
@@ -77,11 +77,29 @@ const initRanger = (
 
                     const currentMarket = selectCurrentMarket(store.getState());
                     const orderBookMatch = routingKey.match(/([^.]*)\.update/);
+                    const orderBookMatchSnap = routingKey.match(/([^.]*)\.ob-snap/);
+                    const orderBookMatchInc = routingKey.match(/([^.]*)\.ob-inc/);
 
                     // public
                     if (orderBookMatch) {
                         if (currentMarket && orderBookMatch[1] === currentMarket.id) {
                             emitter(depthData(event));
+                        }
+                        return;
+                    }
+
+                    // public
+                    if (orderBookMatchSnap) {
+                        if (currentMarket && orderBookMatchSnap[1] === currentMarket.id) {
+                            emitter(depthDataSnapshot(event));
+                        }
+                        return;
+                    }
+
+                    // public
+                    if (orderBookMatchInc) {
+                        if (currentMarket && orderBookMatchInc[1] === currentMarket.id) {
+                            emitter(depthDataIncrement(event));
                         }
                         return;
                     }

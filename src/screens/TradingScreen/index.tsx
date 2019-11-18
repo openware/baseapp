@@ -3,6 +3,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { incrementalOrderBook } from '../../api';
 import { Grid } from '../../components/Grid';
 import {
     MarketDepthsComponent,
@@ -122,7 +123,7 @@ class Trading extends React.Component<Props, StateProps> {
         if (!wallets || wallets.length === 0) {
             this.props.accountWallets();
         }
-        if (currentMarket) {
+        if (currentMarket && !incrementalOrderBook()) {
             this.props.depthFetch(currentMarket);
         }
         if (!connected) {
@@ -158,7 +159,10 @@ class Trading extends React.Component<Props, StateProps> {
             const marketNotMatched = nextProps.currentMarket.id !== marketFromUrl[marketFromUrl.length - 1];
             if (marketNotMatched) {
                 history.replace(`/trading/${nextProps.currentMarket.id}`);
-                this.props.depthFetch(nextProps.currentMarket);
+
+                if (!incrementalOrderBook()) {
+                  this.props.depthFetch(nextProps.currentMarket);
+                }
             }
         }
 

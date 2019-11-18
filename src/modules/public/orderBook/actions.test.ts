@@ -1,6 +1,15 @@
 import { Market } from '../markets';
 import * as actions from './actions';
-import { DEPTH_DATA, DEPTH_ERROR, DEPTH_FETCH, ORDER_BOOK_DATA, ORDER_BOOK_ERROR, ORDER_BOOK_FETCH } from './constants';
+import {
+    DEPTH_DATA,
+    DEPTH_DATA_INCREMENT,
+    DEPTH_DATA_SNAPSHOT,
+    DEPTH_ERROR,
+    DEPTH_FETCH,
+    ORDER_BOOK_DATA,
+    ORDER_BOOK_ERROR,
+    ORDER_BOOK_FETCH,
+} from './constants';
 import { OrderBookState } from './types';
 
 describe('Orderbook/MarketDepth actions', () => {
@@ -89,5 +98,29 @@ describe('Orderbook/MarketDepth actions', () => {
         };
         const expectedAction = { type: DEPTH_DATA, payload: fakeDepth };
         expect(actions.depthData(fakeDepth)).toEqual(expectedAction);
+    });
+
+    it('should check depthDataSnapshot action creator', () => {
+        const fakeDepth = {
+            asks: [['0.99', '1'], ['0.98', '20']],
+            bids: [['0.50', '0.041'], ['0.49', '0.5'], ['0.26', '25']],
+        };
+        const expectedAction = { type: DEPTH_DATA_SNAPSHOT, payload: fakeDepth };
+        expect(actions.depthDataSnapshot(fakeDepth)).toEqual(expectedAction);
+    });
+
+    it('should check depthDataIncrement action creator', () => {
+        const fakeOrder = {
+            asks: ['0.99', '0.5'],
+            bids: null,
+        };
+
+        const fakeDepth = {
+            asks: ['0.99', '0.5'],
+            bids: null,
+        };
+
+        const expectedAction = { type: DEPTH_DATA_INCREMENT, payload: fakeDepth };
+        expect(actions.depthDataIncrement(fakeOrder)).toEqual(expectedAction);
     });
 });

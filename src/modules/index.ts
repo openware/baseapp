@@ -9,7 +9,12 @@ import { GridLayoutState } from './public/gridLayout';
 import { LanguageState } from './public/i18n';
 import { KlineState, rootKlineFetchSaga } from './public/kline';
 import { MarketsState, rootMarketsSaga } from './public/markets';
-import { DepthState, OrderBookState, rootOrderBookSaga } from './public/orderBook';
+import {
+    DepthIncrementState,
+    DepthState,
+    OrderBookState,
+    rootOrderBookSaga,
+} from './public/orderBook';
 import { RangerState } from './public/ranger/reducer';
 import { RecentTradesState, rootRecentTradesSaga } from './public/recentTrades';
 import { ApiKeysState } from './user/apiKeys';
@@ -65,6 +70,7 @@ export interface RootState {
         markets: MarketsState;
         orderBook: OrderBookState;
         depth: DepthState;
+        incrementDepth: DepthIncrementState;
         ranger: RangerState;
         i18n: LanguageState;
         alerts: AlertState;

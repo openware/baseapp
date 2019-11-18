@@ -19,4 +19,5 @@ export interface Config {
     gaTrackerKey?: string;
     msAlertDisplayTime?: string;
     licenseKey?: string;
+    incrementalOrderBook: boolean;
 }

@@ -2,11 +2,17 @@ import { Market } from '../markets';
 import * as actions from './actions';
 import {
   depthReducer,
+  incrementDepthReducer,
   initialDepth,
   initialOrderBook,
   orderBookReducer,
 } from './reducer';
-import { DepthState, OrderBookState } from './types';
+import {
+  DepthIncrementState,
+  DepthIncrementUpdateData,
+  DepthState,
+  OrderBookState,
+} from './types';
 
 describe('orderBook reducer', () => {
   const fakeMarket: Market = {
@@ -92,4 +98,65 @@ describe('orderBook reducer', () => {
     expect(depthReducer(fakeDepth, actions.depthData(fakeDepth))).toEqual(expectedState);
   });
 
+  it('should handle DEPTH_DATA_SNAPSHOT', () => {
+    const fakeInitialState: DepthIncrementState = {
+      asks: [],
+      bids: [],
+    };
+
+    const fakeUpdatedDepth: DepthIncrementState = {
+      asks: [
+        ['0.99', '1'],
+        ['0.75', '1'],
+        ['0.70', '1'],
+        ['0.60', '0.1'],
+      ],
+      bids: [
+        ['0.50', '0.041'],
+        ['0.49', '0.5'],
+        ['0.26', '25'],
+      ],
+    };
+
+    const expectedState = { ...fakeUpdatedDepth };
+    expect(incrementDepthReducer(fakeInitialState, actions.depthDataSnapshot(fakeUpdatedDepth))).toEqual(expectedState);
+  });
+
+  it('should handle DEPTH_DATA_INCREMENT', () => {
+    const fakeInitialState: DepthIncrementState = {
+      asks: [
+        ['0.99', '1'],
+        ['0.75', '1'],
+        ['0.70', '1'],
+        ['0.60', '0.1'],
+      ],
+      bids: [
+        ['0.50', '0.041'],
+        ['0.49', '0.5'],
+        ['0.26', '25'],
+      ],
+    };
+
+    const fakeOrder: DepthIncrementUpdateData = {
+      asks: ['0.99', '1.2'],
+      bids: null,
+    };
+
+    const fakeUpdatedDepth: DepthIncrementState = {
+      asks: [
+        ['0.99', '1.2'],
+        ['0.75', '1'],
+        ['0.70', '1'],
+        ['0.60', '0.1'],
+      ],
+      bids: [
+        ['0.50', '0.041'],
+        ['0.49', '0.5'],
+        ['0.26', '25'],
+      ],
+    };
+
+    const expectedState = { ...fakeUpdatedDepth };
+    expect(incrementDepthReducer(fakeInitialState, actions.depthDataIncrement(fakeOrder))).toEqual(expectedState);
+  });
 });

@@ -1,7 +1,7 @@
 import { Decimal, MarketDepths } from '@openware/components';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { connect, MapStateToProps } from 'react-redux';
+import { connect } from 'react-redux';
 import {
     Market,
     RootState,
@@ -134,7 +134,7 @@ class MarketDepthContainer extends React.Component<Props> {
     }
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps = (state: RootState) => ({
     asksItems: selectDepthAsks(state),
     bidsItems: selectDepthBids(state),
     currentMarket: selectCurrentMarket(state),

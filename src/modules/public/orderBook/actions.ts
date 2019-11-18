@@ -2,13 +2,20 @@ import { CommonError } from '../../types';
 import { Market } from '../markets/types';
 import {
   DEPTH_DATA,
+  DEPTH_DATA_INCREMENT,
+  DEPTH_DATA_SNAPSHOT,
   DEPTH_ERROR,
   DEPTH_FETCH,
   ORDER_BOOK_DATA,
   ORDER_BOOK_ERROR,
   ORDER_BOOK_FETCH,
 } from './constants';
-import { DepthState, OrderBookState } from './types';
+import {
+  DepthIncrementState,
+  DepthIncrementUpdateData,
+  DepthState,
+  OrderBookState,
+} from './types';
 
 export interface OrderBookFetch {
   type: typeof ORDER_BOOK_FETCH;
@@ -45,10 +52,22 @@ export interface DepthError {
   error: CommonError;
 }
 
+export interface DepthDataIncrement {
+  type: typeof DEPTH_DATA_INCREMENT;
+  payload: DepthIncrementUpdateData;
+}
+
+export interface DepthDataSnapshot {
+  type: typeof DEPTH_DATA_SNAPSHOT;
+  payload: DepthIncrementState;
+}
+
 export type DepthActions =
   DepthFetch
   | DepthData
-  | DepthError;
+  | DepthError
+  | DepthDataIncrement
+  | DepthDataSnapshot;
 
 export const orderBookFetch = (payload: OrderBookFetch['payload']): OrderBookFetch => ({
   type: ORDER_BOOK_FETCH,
@@ -72,6 +91,16 @@ export const depthFetch = (payload: DepthFetch['payload']): DepthFetch => ({
 
 export const depthData = (payload: DepthData['payload']): DepthData => ({
   type: DEPTH_DATA,
+  payload,
+});
+
+export const depthDataIncrement = (payload: DepthDataIncrement['payload']): DepthDataIncrement => ({
+  type: DEPTH_DATA_INCREMENT,
+  payload,
+});
+
+export const depthDataSnapshot = (payload: DepthDataSnapshot['payload']): DepthDataSnapshot => ({
+  type: DEPTH_DATA_SNAPSHOT,
   payload,
 });
 

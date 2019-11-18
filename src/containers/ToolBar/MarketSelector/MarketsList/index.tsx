@@ -7,11 +7,11 @@ import {
     intlShape,
 } from 'react-intl';
 import { connect } from 'react-redux';
+import { incrementalOrderBook } from '../../../../api';
 import { SortAsc, SortDefault, SortDesc } from '../../../../assets/images/SortIcons';
 import {
     depthFetch,
     Market,
-    orderBookFetch,
     RootState,
     selectCurrentMarket,
     selectMarkets,
@@ -32,7 +32,6 @@ interface ReduxProps {
 interface DispatchProps {
     setCurrentMarket: typeof setCurrentMarket;
     depthFetch: typeof depthFetch;
-    orderBookFetch: typeof orderBookFetch;
     setCurrentPrice: typeof setCurrentPrice;
 }
 
@@ -98,8 +97,9 @@ class MarketsListComponent extends React.Component<Props, State> {
         this.props.setCurrentPrice();
         if (marketToSet) {
             this.props.setCurrentMarket(marketToSet);
-            this.props.depthFetch(marketToSet);
-            this.props.orderBookFetch(marketToSet);
+            if (!incrementalOrderBook()) {
+              this.props.depthFetch(marketToSet);
+            }
         }
     };
 
@@ -210,7 +210,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps = {
     setCurrentMarket,
     depthFetch,
-    orderBookFetch,
     setCurrentPrice,
 };
 

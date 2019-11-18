@@ -25,6 +25,25 @@ steps:
       - yarn test:ci --collectCoverage=true
       - yarn build
 
+  - name: "Build enterprise image"
+    image: plugins/gcr
+    environment:
+      BUILD_EXPIRE: "3 month"
+      NPM_AUTH_TOKEN:
+        from_secret: drone_npm_auth_token
+      REACT_APP_BUILD_VERSION: Enterprise
+    settings:
+      repo: gcr.io/openware-production/baseapp
+      build_args_from_env:
+        - BUILD_EXPIRE
+        - REACT_APP_BUILD_VERSION
+        - NPM_AUTH_TOKEN
+      json_key:
+        from_secret: openware_gcp_creds_base64
+    when:
+      branch:
+        - rc/**
+
   - name: "Stage with mock server"
     image: instrumentisto/rsync-ssh
     environment:
@@ -117,12 +136,12 @@ steps:
     environment:
       NPM_AUTH_TOKEN:
         from_secret: drone_npm_auth_token
-      BUILD_DOMAIN: $(cat .domains)
+      BUILD_EXPIRE: "3 month"
       REACT_APP_BUILD_VERSION: Enterprise
     settings:
       repo: gcr.io/openware-production/baseapp
       build_args_from_env:
-        - BUILD_DOMAIN
+        - BUILD_EXPIRE
         - REACT_APP_BUILD_VERSION
         - NPM_AUTH_TOKEN
       json_key:
@@ -133,7 +152,6 @@ steps:
     environment:
       NPM_AUTH_TOKEN:
         from_secret: drone_npm_auth_token
-      BUILD_EXPIRE: $(date -d "+1 month" +%s000)
       REACT_APP_BUILD_VERSION: Lite
       REACT_APP_TENKO_PUBLIC_KEY:
         from_secret: tenko_public_key
@@ -146,7 +164,6 @@ steps:
       build_args_from_env:
         - REACT_APP_BUILD_VERSION
         - REACT_APP_TENKO_PUBLIC_KEY
-        - BUILD_EXPIRE
         - NPM_AUTH_TOKEN
       registry: quay.io
 

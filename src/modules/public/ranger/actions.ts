@@ -1,3 +1,4 @@
+import { incrementalOrderBook } from '../../../api';
 import { CommonError, OrderEvent } from '../../types';
 import { Market } from '../markets';
 import {
@@ -113,7 +114,7 @@ export const rangerUserOrderUpdate = (payload: UserOrderUpdate['payload']): User
 export const marketStreams = (market: Market) => ({
     channels: [
         `${market.id}.trades`,
-        `${market.id}.update`,
+        incrementalOrderBook() ? `${market.id}.ob-inc` : `${market.id}.update`,
     ],
 });
 

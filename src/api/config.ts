@@ -20,6 +20,7 @@ export const defaultConfig: Config = {
     gaTrackerKey: '',
     msAlertDisplayTime: '5000',
     licenseKey: '',
+    incrementalOrderBook: false,
 };
 
 export const Cryptobase = {
@@ -50,3 +51,4 @@ export const captchaType = () => Cryptobase.config.captcha.captchaType;
 export const gaTrackerKey = (): string => Cryptobase.config.gaTrackerKey || '';
 export const msAlertDisplayTime = (): string => Cryptobase.config.msAlertDisplayTime || '5000';
 export const rangerReconnectPeriod = (): number => Cryptobase.config.rangerReconnectPeriod ? Number(Cryptobase.config.rangerReconnectPeriod) : 1;
+export const incrementalOrderBook = (): boolean => Cryptobase.config.incrementalOrderBook || false;

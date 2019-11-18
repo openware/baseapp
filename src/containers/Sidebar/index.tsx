@@ -93,8 +93,8 @@ class SidebarContainer extends React.Component<Props, State> {
         const path = url.includes('/trading') && currentMarket ? `/trading/${currentMarket.id}` : url;
         const isActive = (url === '/trading/' && address.includes('/trading')) || address === url;
         return (
-            <Link to={path} onClick={handleLinkChange} className={`${isActive && 'route-selected'}`}>
-                <div className="pg-sidebar-wrapper-nav-item" key={index}>
+            <Link to={path} key={index} onClick={handleLinkChange} className={`${isActive && 'route-selected'}`}>
+                <div className="pg-sidebar-wrapper-nav-item">
                     <div className="pg-sidebar-wrapper-nav-item-img-wrapper">
                         <img
                             className="pg-sidebar-wrapper-nav-item-img"

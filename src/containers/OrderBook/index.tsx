@@ -2,11 +2,7 @@ import { CombinedOrderBook, Decimal, Loader } from '@openware/components';
 import classNames from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-    MapStateToProps,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { accumulateVolume, calcMaxVolume, sortAsks, sortBids } from '../../helpers';
 import {
     Market,
@@ -21,11 +17,11 @@ import {
 } from '../../modules';
 
 interface ReduxProps {
-    bids: string[][];
-    isLoading: boolean;
     asks: string[][];
+    bids: string[][];
     currentMarket: Market | undefined;
     currentPrice: number | undefined;
+    orderBookLoading: boolean;
 }
 
 interface DispatchProps {
@@ -63,17 +59,21 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     public render() {
-        const { bids, isLoading, asks } = this.props;
+        const {
+            asks,
+            bids,
+            orderBookLoading,
+        } = this.props;
         const isLarge = this.state.width > breakpoint;
         const cn = classNames('pg-combined-order-book ', {
-            'cr-combined-order-book--loading': isLoading,
+            'cr-combined-order-book--loading': orderBookLoading,
             'pg-combined-order-book--no-data-first': (!asks.length && !isLarge) || (!bids.length && isLarge),
             'pg-combined-order-book--no-data-second': (!bids.length && !isLarge) || (!asks.length && isLarge),
         });
 
         return (
             <div className={cn} ref={this.orderRef}>
-                {isLoading ? <div><Loader /></div> : this.orderBook(sortBids(bids), sortAsks(asks))}
+                {orderBookLoading ? <div><Loader /></div> : this.orderBook(sortBids(bids), sortAsks(asks))}
             </div>
         );
     }
@@ -188,10 +188,10 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps = (state: RootState) => ({
     bids: selectDepthBids(state),
     asks: selectDepthAsks(state),
-    isLoading: selectDepthLoading(state),
+    orderBookLoading: selectDepthLoading(state),
     currentMarket: selectCurrentMarket(state),
     currentPrice: selectCurrentPrice(state),
     marketTickers: selectMarketTickers(state),
