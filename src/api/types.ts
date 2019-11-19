@@ -18,4 +18,6 @@ export interface Config {
     gaTrackerKey?: string;
     msAlertDisplayTime?: string;
     incrementalOrderBook: boolean;
+    // tslint:disable-next-line: no-any
+    plugins: any[];
 }

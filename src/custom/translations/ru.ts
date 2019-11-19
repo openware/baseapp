@@ -7,6 +7,7 @@ export const ru: LangType = {
     'page.header.navbar.wallets': 'Кошельки',
     'page.header.navbar.openOrders': 'Ордера',
     'page.header.navbar.history': 'История',
+    'page.header.navbar.ieo': 'IEO',
 
     'page.header.navbar.profile': 'Профиль',
     'page.header.navbar.logout': 'Выйти',

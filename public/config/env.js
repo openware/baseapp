@@ -15,4 +15,7 @@ window.env = {
     rangerReconnectPeriod: '1',
     msAlertDisplayTime: '5000',
     incrementalOrderBook: true,
+    plugins: [
+        { name: 'ieo', config: { types: [ 'proportional', 'fcfs' ], metadata: true } },
+    ],
 };

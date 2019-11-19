@@ -20,6 +20,7 @@ import {
     userFetch,
     walletsReset,
 } from '../../modules';
+import { renderPluginsRoutes } from '../../plugins/routes';
 import {
     ChangeForgottenPasswordScreen,
     ConfirmScreen,
@@ -166,6 +167,7 @@ class LayoutComponent extends React.Component<LayoutProps> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
+                    {renderPluginsRoutes()}
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}
