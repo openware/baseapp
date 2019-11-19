@@ -1,0 +1,17 @@
+export const IEO_ORDERS_FETCH = 'ieo/ORDERS_FETCH';
+export const IEO_ORDERS_DATA = 'ieo/ORDERS_DATA';
+export const IEO_ORDERS_ERROR = 'ieo/ORDERS_ERROR';
+export const IEO_ORDERS_POP = 'ieo/ORDERS_POP';
+export const IEO_ORDERS_PUSH = 'ieo/ORDERS_PUSH';
+
+export const IEO_ORDER_CANCEL_FETCH = 'ieo/ORDER_CANCEL_FETCH';
+export const IEO_ORDER_CANCEL_DATA = 'ieo/ORDER_CANCEL_DATA';
+export const IEO_ORDER_CANCEL_ERROR = 'ieo/ORDER_CANCEL_ERROR';
+
+export const IEO_ORDER_EXECUTE_FETCH = 'ieo/ORDER_EXECUTE_FETCH';
+export const IEO_ORDER_EXECUTE_DATA = 'ieo/ORDER_EXECUTE_DATA';
+export const IEO_ORDER_EXECUTE_ERROR = 'ieo/ORDER_EXECUTE_ERROR';
+
+export const IEO_HISTORY_FETCH = 'ieo/HISTORY_FETCH';
+export const IEO_HISTORY_DATA = 'ieo/HISTORY_DATA';
+export const IEO_HISTORY_ERROR = 'ieo/HISTORY_ERROR';

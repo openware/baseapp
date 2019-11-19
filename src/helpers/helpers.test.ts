@@ -384,4 +384,25 @@ describe('Helpers', () => {
             expect(helpers.monthNameToNumber('December')).toBe('12');
         });
     });
+
+    it('buildQueryString', () => {
+        expect(helpers.buildQueryString({ page: 0, limit: 25 })).toBe('page=0&limit=25');
+        expect(helpers.buildQueryString({ page: 1, limit: 10 })).toBe('page=1&limit=10');
+        expect(helpers.buildQueryString({ page: 2, limit: 5 })).toBe('page=2&limit=5');
+        expect(helpers.buildQueryString({ page: 2, limit: 5, uid: 'ID873B710D88' })).toBe('page=2&limit=5&uid=ID873B710D88');
+        expect(helpers.buildQueryString({ page: 2, limit: 5, uid: 'ID873B710D88' })).toBe('page=2&limit=5&uid=ID873B710D88');
+        expect(helpers.buildQueryString({
+            page: 1,
+            limit: 50,
+            uid: 'ID873B710D88',
+            role: 'admin',
+        })).toBe('page=1&limit=50&uid=ID873B710D88&role=admin');
+    });
+
+    it('buildQueryStringArray', () => {
+        expect(helpers.buildQueryStringArray(['distributing', 'ongoing'], 'state')).toBe('state[]=distributing&state[]=ongoing');
+        expect(helpers.buildQueryStringArray(['red', 'green', 'blue'], 'colors')).toBe('colors[]=red&colors[]=green&colors[]=blue');
+        expect(helpers.buildQueryStringArray(['red'], 'colors')).toBe('colors[]=red');
+        expect(helpers.buildQueryStringArray([], '')).toBe('');
+    });
 });
