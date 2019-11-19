@@ -1,4 +1,5 @@
 import { en as customTranslations } from '../custom/translations/en';
+import { en as pluginsTranslations } from '../plugins/translations/en';
 import { nationalitiesNames } from './nationalities';
 
 export const en = {
@@ -7,12 +8,17 @@ export const en = {
     'page.header.navbar.wallets': 'Wallets',
     'page.header.navbar.openOrders': 'Orders',
     'page.header.navbar.history': 'History',
+    'page.header.navbar.ieo': 'IEO',
 
     'page.header.navbar.profile': 'Profile',
     'page.header.navbar.logout': 'Logout',
 
     'page.sidebar.group.text': 'Fee Group:',
     'page.sidebar.group.value': 'Base',
+
+    'page.body.trade.header.upcoming': 'Upcoming',
+    'page.body.trade.header.inProgress': 'In Progress',
+    'page.body.trade.header.past': 'Past',
 
     'page.body.trade.header.market': 'Market',
     'page.body.trade.header.yours': 'Yours',
@@ -791,4 +797,5 @@ export const en = {
 
     ...nationalitiesNames,
     ...customTranslations,
+    ...pluginsTranslations,
 };

@@ -26,6 +26,7 @@ export const defaultConfig: Config = {
     passwordEntropyStep: 0,
     showLanding: true,
     sentryEnabled: false,
+    plugins: [],
 };
 
 export const Cryptobase = {
@@ -65,3 +66,4 @@ export const isFinexEnabled = (): boolean => Cryptobase.config.finex || false;
 export const passwordEntropyStep = ():number => Cryptobase.config.passwordEntropyStep;
 export const showLanding = (): boolean => Cryptobase.config.showLanding;
 export const sentryEnabled = () => Cryptobase.config.sentryEnabled || defaultConfig.sentryEnabled;
+export const pluginsList = () => Cryptobase.config.plugins || [];

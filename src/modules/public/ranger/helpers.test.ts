@@ -111,12 +111,14 @@ describe('ranger helpers', () => {
         it('returns public streams without market', () => {
             expect(streamsBuilder(false, [], undefined)).toEqual([
                 'global.tickers',
+                'ieo.tickers',
             ]);
         });
 
         it('returns public streams with market', () => {
             expect(streamsBuilder(false, [], marketExample)).toEqual([
                 'global.tickers',
+                'ieo.tickers',
                 'abcdefg.trades',
                 'abcdefg.update',
             ]);
@@ -125,6 +127,7 @@ describe('ranger helpers', () => {
         it('includes private streams', () => {
             expect(streamsBuilder(true, [], undefined)).toEqual([
                 'global.tickers',
+                'ieo.tickers',
                 'order',
                 'trade',
             ]);
@@ -133,6 +136,7 @@ describe('ranger helpers', () => {
         it('includes public/privates streams with market', () => {
             expect(streamsBuilder(true, [], marketExample)).toEqual([
                 'global.tickers',
+                'ieo.tickers',
                 'order',
                 'trade',
                 'abcdefg.trades',
@@ -145,6 +149,7 @@ describe('ranger helpers', () => {
                 streamsBuilder(true, ['some subscription'], marketExample),
             ).toEqual([
                 'global.tickers',
+                'ieo.tickers',
                 'order',
                 'trade',
                 'abcdefg.trades',
@@ -158,6 +163,7 @@ describe('ranger helpers', () => {
                 streamsBuilder(true, ['global.tickers'], marketExample),
             ).toEqual([
                 'global.tickers',
+                'ieo.tickers',
                 'order',
                 'trade',
                 'abcdefg.trades',
@@ -173,6 +179,7 @@ describe('ranger helpers', () => {
 
             expect(streamsBuilder(true, [], undefined)).toEqual([
                 'global.tickers',
+                'ieo.tickers',
                 'order',
                 'trade',
                 'balances',

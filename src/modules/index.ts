@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 // tslint:disable-next-line no-submodule-imports
 import { all, call } from 'redux-saga/effects';
+import { OrderIEOState, PublicIEOState, rootIEOOrderSaga, rootPublicIEOSaga } from '../plugins/ieo/modules';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
@@ -90,6 +91,7 @@ export interface RootState {
         recentTrades: RecentTradesState;
         depth: DepthState;
         incrementDepth: DepthIncrementState;
+        ieo: PublicIEOState,
     };
     user: {
         apiKeys: ApiKeysState;
@@ -112,6 +114,7 @@ export interface RootState {
         userActivity: UserActivityState;
         wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
+        ieo: OrderIEOState,
     };
 }
 
@@ -152,5 +155,7 @@ export function* rootSaga() {
         call(rootUserActivitySaga),
         call(rootWalletsSaga),
         call(rootWithdrawLimitSaga),
+        call(rootIEOOrderSaga),
+        call(rootPublicIEOSaga),
     ]);
 }

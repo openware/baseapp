@@ -21,4 +21,10 @@ window.env = {
     passwordEntropyStep: 14,
     showLanding: true,
     sentryEnabled: false,
+    plugins: [ 
+        {
+            name: 'ieo',
+            config: { types: [ 'proportional' ], metadata: true }
+        },
+    ],
 };

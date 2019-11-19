@@ -1,5 +1,6 @@
 import { isFinexEnabled } from '../../../api';
 import { DEFAULT_TRADING_VIEW_INTERVAL } from '../../../constants';
+import { DataIEOInterface } from '../../../plugins/ieo/modules/public';
 import { Market, Ticker, TickerEvent } from '../markets';
 import { marketStreams } from './actions';
 
@@ -36,8 +37,8 @@ export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: 
     return tickers;
 };
 
-export const streamsBuilder = (withAuth: boolean, prevSubscriptions: string[], market: Market | undefined) => {
-    let streams: string[] = ['global.tickers'];
+export const streamsBuilder = (withAuth: boolean, prevSubscriptions: string[], market: Market | undefined, ieo?: DataIEOInterface) => {
+    let streams: string[] = ['global.tickers', 'ieo.tickers'];
 
     if (withAuth) {
         streams = [

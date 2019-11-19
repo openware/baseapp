@@ -1,3 +1,5 @@
+import { pluginsConstants } from '../plugins/constants';
+
 export const PG_TITLE_PREFIX = 'Cryptobase';
 
 export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
@@ -6,11 +8,13 @@ export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => 
         ['page.header.navbar.wallets', '/wallets', `wallets${isLight ? 'Light' : ''}`],
         ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
         ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
+        ...pluginsConstants(isLight),
     ];
     const routesUnloggedIn = [
         ['page.header.navbar.signIn', '/signin', `signin${isLight ? 'Light' : ''}`],
         ['page.header.signUp', '/signup', `signup${isLight ? 'Light' : ''}`],
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
+        ...pluginsConstants(isLight),
     ];
 
     return isLoggedIn ? routes : routesUnloggedIn;

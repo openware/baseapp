@@ -1,0 +1,42 @@
+.pg-blur {
+  align-items: center;
+  backdrop-filter: blur(2px);
+  background: rgba(22, 23, 33, 0.7);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+
+  &__content {
+    &__title {
+      align-items: center;
+      color: var(--white);
+      display: flex;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: normal;
+      justify-content: center;
+      letter-spacing: 0.971429px;
+      line-height: 25px;
+      text-align: center;
+    }
+
+    &__countdown {
+      align-items: center;
+      color: var(--white);
+      display: flex;
+      font-size: 40px;
+      font-style: normal;
+      font-weight: bold;
+      justify-content: center;
+      letter-spacing: 0.170714em;
+      line-height: 58px;
+      text-align: center;
+      text-transform: capitalize;
+    }
+  }
+}

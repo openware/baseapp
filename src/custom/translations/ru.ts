@@ -1,3 +1,4 @@
+import { ru as pluginsTranslations } from '../../plugins/translations/ru';
 import { LangType } from '../../translations';
 import { nationalitiesNames } from '../../translations/nationalities';
 
@@ -7,12 +8,17 @@ export const ru: LangType = {
     'page.header.navbar.wallets': 'Кошельки',
     'page.header.navbar.openOrders': 'Ордера',
     'page.header.navbar.history': 'История',
+    'page.header.navbar.ieo': 'IEO',
 
     'page.header.navbar.profile': 'Профиль',
     'page.header.navbar.logout': 'Выйти',
 
     'page.sidebar.group.text': 'Fee Group:',
     'page.sidebar.group.value': 'Base',
+
+    'page.body.trade.header.upcoming': 'Upcoming',
+    'page.body.trade.header.inProgress': 'In progress',
+    'page.body.trade.header.past': 'Past',
 
     'page.body.trade.header.markets': 'Рынки',
     'page.body.trade.header.markets.content.pair': 'Пара',
@@ -793,4 +799,5 @@ export const ru: LangType = {
     'password.strength.tip.digit': 'At least One digit',
 
     ...nationalitiesNames,
+    ...pluginsTranslations,
 };

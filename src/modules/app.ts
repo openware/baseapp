@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { ieoOrderReducer, publicIEOReducer } from '../plugins/ieo/modules';
 import { alertReducer  } from './public/alert';
 import { blocklistAccessReducer } from './public/blocklistAccess';
 import { changeColorThemeReducer  } from './public/colorTheme';
@@ -57,6 +58,7 @@ export const publicReducer = combineReducers({
     alerts: alertReducer,
     rgl: gridLayoutReducer,
     memberLevels: memberLevelsReducer,
+    ieo: publicIEOReducer,
 });
 
 export const userReducer = combineReducers({
@@ -80,4 +82,5 @@ export const userReducer = combineReducers({
     sendEmailVerification: sendEmailVerificationReducer,
     captchaKeys: getGeetestCaptchaReducer,
     withdrawLimit: withdrawLimitReducer,
+    ieo: ieoOrderReducer,
 });

@@ -26,4 +26,6 @@ export interface Config {
     passwordEntropyStep: number;
     showLanding: boolean;
     sentryEnabled?: boolean;
+    // tslint:disable-next-line: no-any
+    plugins: any[];
 }

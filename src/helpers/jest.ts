@@ -31,6 +31,7 @@ const mockConfig: Config = {
     passwordEntropyStep: 0,
     showLanding: true,
     sentryEnabled: false,
+    plugins: [],
 };
 
 // tslint:disable no-any no-console

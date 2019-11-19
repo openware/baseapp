@@ -1,0 +1,24 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+
+{
+  "id": 3,
+  "key": "IEO-trst-3",
+  "value": {
+    "twitter": "657",
+    "website": "123",
+    "telegram": "345",
+    "whitepaper": "134",
+    "precision": "4",
+    "bitcointalk": "8987",
+    "introduction": "dsfgfyfmnggfdtykfmgndftnbxvftd\nyghjkbkjgjcy",
+    "icon_url": "https://cdn1.iconfinder.com/data/icons/flat-world-currency-1/432/Flat_Currency_Bitcoin-512.png"
+  },
+  "created_at": "2019-11-27T09:59:06.397Z",
+  "updated_at": "2019-11-27T09:59:06.397Z"
+}

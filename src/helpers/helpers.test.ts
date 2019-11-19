@@ -390,4 +390,30 @@ describe('Helpers', () => {
             expect(helpers.cleanPositiveFloatInput('00.0')).toBe('0.0');
         });
     });
+
+    it('buildQueryString', () => {
+        expect(helpers.buildQueryString({ page: 0, limit: 25 })).toBe('page=0&limit=25');
+        expect(helpers.buildQueryString({ page: 1, limit: 10 })).toBe('page=1&limit=10');
+        expect(helpers.buildQueryString({ page: 2, limit: 5 })).toBe('page=2&limit=5');
+        expect(helpers.buildQueryString({ page: 2, limit: 5, uid: 'ID873B710D88' })).toBe('page=2&limit=5&uid=ID873B710D88');
+        expect(helpers.buildQueryString({ page: 2, limit: 5, uid: 'ID873B710D88' })).toBe('page=2&limit=5&uid=ID873B710D88');
+        expect(helpers.buildQueryString({
+            page: 1,
+            limit: 50,
+            uid: 'ID873B710D88',
+            role: 'admin',
+        })).toBe('page=1&limit=50&uid=ID873B710D88&role=admin');
+    });
+
+    it('buildQueryStringArray', () => {
+        expect(helpers.buildQueryStringArray(['distributing', 'ongoing'], 'state')).toBe('state[]=distributing&state[]=ongoing');
+        expect(helpers.buildQueryStringArray(['red', 'green', 'blue'], 'colors')).toBe('colors[]=red&colors[]=green&colors[]=blue');
+        expect(helpers.buildQueryStringArray(['red'], 'colors')).toBe('colors[]=red');
+        expect(helpers.buildQueryStringArray([], '')).toBe('');
+    });
+
+    it('getCountdownDate', () => {
+        expect(helpers.getCountdownDate('2019-10-01T15:55:00.000Z')).toBe('00:00:00');
+        expect(helpers.getCountdownDate('2019-10-01T15:55:00.000Z', '5m')).toBe('00:00:00');
+    });
 });
