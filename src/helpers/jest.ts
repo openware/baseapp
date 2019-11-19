@@ -24,6 +24,7 @@ const mockConfig: Config = {
     gaTrackerKey: '',
     licenseKey: '',
     incrementalOrderBook: false,
+    plugins: [],
 };
 
 // tslint:disable no-any no-console
