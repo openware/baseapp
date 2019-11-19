@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 // tslint:disable-next-line no-submodule-imports
 import { all, call } from 'redux-saga/effects';
+import { pluginsReducer, PluginsState, rootPluginsSaga } from '../plugins/modules';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { ColorThemeState } from './public/colorTheme';
@@ -95,11 +96,13 @@ export interface RootState {
         sendEmailVerification: EmailVerificationState;
         withdrawLimit: WithdrawLimitState;
     };
+    plugins: PluginsState;
 }
 
 export const rootReducer = combineReducers({
     public: publicReducer,
     user: userReducer,
+    plugins: pluginsReducer,
 });
 
 export function* rootSaga() {
@@ -128,5 +131,7 @@ export function* rootSaga() {
         call(rootEmailVerificationSaga),
         call(rootKlineFetchSaga),
         call(rootWithdrawLimitSaga),
+        call(rootGuardSaga),
+        call(rootPluginsSaga),
     ]);
 }
