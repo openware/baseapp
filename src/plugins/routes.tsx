@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { pluginsList } from '../api/config';
+import { pluginsList } from '../api';
 import { IEORoutes } from './ieo';
 
 export const renderPluginsRoutes = () => {
