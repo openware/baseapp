@@ -15,6 +15,10 @@ export const ru: LangType = {
     'page.sidebar.group.text': 'Fee Group:',
     'page.sidebar.group.value': 'Base',
 
+    'page.body.trade.header.upcoming': 'Upcoming',
+    'page.body.trade.header.inProgress': 'inProgress',
+    'page.body.trade.header.past': 'Past',
+
     'page.body.trade.header.markets': 'Рынки',
     'page.body.trade.header.markets.content.pair': 'Пара',
     'page.body.trade.header.markets.content.price': 'Цена',
