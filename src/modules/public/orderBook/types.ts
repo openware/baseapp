@@ -35,6 +35,7 @@ export interface DepthState extends CommonState {
 export interface DepthIncrementState {
     asks: string[][];
     bids: string[][];
+    loading: boolean;
 }
 
 export interface DepthIncrementUpdateData {

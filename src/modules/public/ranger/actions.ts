@@ -1,6 +1,8 @@
 import { incrementalOrderBook } from '../../../api';
+import { store } from '../../../store';
 import { CommonError, OrderEvent } from '../../types';
 import { Market } from '../markets';
+import { depthIncrementSubscribe } from '../orderBook';
 import {
     RANGER_CONNECT_DATA,
     RANGER_CONNECT_ERROR,
@@ -111,12 +113,29 @@ export const rangerUserOrderUpdate = (payload: UserOrderUpdate['payload']): User
     payload,
 });
 
-export const marketStreams = (market: Market) => ({
-    channels: [
+export const marketStreams = (market: Market) => {
+    const channels = [
         `${market.id}.trades`,
-        incrementalOrderBook() ? `${market.id}.ob-inc` : `${market.id}.update`,
-    ],
-});
+    ];
+
+    if (incrementalOrderBook()) {
+        store.dispatch(depthIncrementSubscribe());
+
+        return {
+            channels: [
+                ...channels,
+                `${market.id}.ob-inc`,
+            ],
+        };
+    }
+
+    return {
+        channels: [
+            ...channels,
+            `${market.id}.update`,
+        ],
+    };
+};
 
 export const subscriptionsUpdate = (payload: SubscriptionsUpdate['payload']): SubscriptionsUpdate => ({
     type: RANGER_SUBSCRIPTIONS_DATA,

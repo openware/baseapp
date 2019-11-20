@@ -7,3 +7,4 @@ export const DEPTH_DATA = 'depth/DATA';
 export const DEPTH_DATA_INCREMENT = 'depth/DATA_INCREMENT';
 export const DEPTH_DATA_SNAPSHOT = 'depth/DATA_SNAPSHOT';
 export const DEPTH_ERROR = 'depth/ERROR';
+export const DEPTH_INCREMENT_SUBSCRIBE = 'depth/INCREMENT_SUBSCRIBE';

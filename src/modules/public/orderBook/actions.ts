@@ -6,6 +6,7 @@ import {
   DEPTH_DATA_SNAPSHOT,
   DEPTH_ERROR,
   DEPTH_FETCH,
+  DEPTH_INCREMENT_SUBSCRIBE,
   ORDER_BOOK_DATA,
   ORDER_BOOK_ERROR,
   ORDER_BOOK_FETCH,
@@ -62,12 +63,17 @@ export interface DepthDataSnapshot {
   payload: DepthIncrementState;
 }
 
+export interface DepthIncrementSubscribe {
+  type: typeof DEPTH_INCREMENT_SUBSCRIBE;
+}
+
 export type DepthActions =
   DepthFetch
   | DepthData
   | DepthError
   | DepthDataIncrement
-  | DepthDataSnapshot;
+  | DepthDataSnapshot
+  | DepthIncrementSubscribe;
 
 export const orderBookFetch = (payload: OrderBookFetch['payload']): OrderBookFetch => ({
   type: ORDER_BOOK_FETCH,
@@ -107,4 +113,8 @@ export const depthDataSnapshot = (payload: DepthDataSnapshot['payload']): DepthD
 export const depthError = (error: DepthError['error']): DepthError => ({
   type: DEPTH_ERROR,
   error,
+});
+
+export const depthIncrementSubscribe = (): DepthIncrementSubscribe => ({
+  type: DEPTH_INCREMENT_SUBSCRIBE,
 });
