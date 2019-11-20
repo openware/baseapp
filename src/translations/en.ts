@@ -15,6 +15,10 @@ export const en = {
     'page.sidebar.group.text': 'Fee Group:',
     'page.sidebar.group.value': 'Base',
 
+    'page.body.trade.header.upcoming': 'Upcoming',
+    'page.body.trade.header.inProgress': 'In Progress',
+    'page.body.trade.header.past': 'Past',
+
     'page.body.trade.header.market': 'Market',
     'page.body.trade.header.yours': 'Yours',
 
