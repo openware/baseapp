@@ -1,0 +1,101 @@
+.pg-ieo__card {
+  display: flex;
+  flex-direction: column;
+  max-width: calc(var(--gap) * 26.875);
+  margin: calc(var(--gap) * 2.875) calc(var(--gap) * 2.875) calc(var(--gap) * 2.875) 0;
+  color: var(--white);
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: var(--ieo-header-bg);
+    border-bottom: 1px solid var(--ieo-header-border);
+    padding: 0 calc(var(--gap) * 2.875);
+
+    &__icon {
+      height: calc(var(--gap) * 6.625);
+      width: calc(var(--gap) * 6.625);
+      margin: calc(var(--gap) * 1.5) calc(var(--gap) * 2.875)  calc(var(--gap) * 1.5) 0;
+    }
+
+    &__text {
+      font-weight: normal;
+      font-size: calc(var(--gap) * 4);
+    }
+  }
+
+  &-content {
+    display: flex;
+    align-items: space-between;
+    flex-direction: column;
+    background: var(--main-bg);
+    padding: 0 calc(var(--gap) * 2.875);
+
+    &__title {
+      font-weight: normal;
+      font-size: var(--font-size);
+      margin-top: calc(var(--gap) * 2.5)
+    }
+
+    &__text {
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      font-size: calc(var(--gap) * 1.25);
+      margin-top: calc(var(--gap) *  2.875);
+    }
+
+    &-block {
+      margin-top: calc(var(--gap) * 1.25);
+      margin-bottom: calc(var(--gap) *  2.625);
+
+      &__text {
+        font-size: calc(var(--gap) * 1.25);
+
+        .text-bold {
+          font-weight: bold;
+        }
+      }
+
+      &__row {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        margin-top: 8px;
+      }
+
+      .content {
+        background: var(--white);
+        border-radius: 3px;
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        font-family: Noto Sans KR;
+        font-style: normal;
+        margin: 2px;
+        height: 100%;
+
+        &__ieo-countdown {
+          align-items: center;
+          display: flex;
+          font-family: Noto Sans KR;
+          font-size: 15px;
+          font-style: normal;
+          font-weight: 500;
+          justify-content: flex-end;
+          letter-spacing: 0.0357143em;
+          line-height: 22px;
+          padding: 2px 14px;
+          text-align: center;
+          text-transform: capitalize;
+          transition: .2s;
+
+          &--red {
+            color: var(--green);
+            transition: .2s;
+          }
+        }
+      }
+    }
+  }
+}
