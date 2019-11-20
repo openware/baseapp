@@ -207,12 +207,22 @@
           z-index: 222;
           width: 50%;
           display: table;
+
+          th:first-child {
+            text-align: left;
+          }
         }
 
-        tbody::before {
-          content: '';
-          display: block;
-          height: calc(var(--gap)* 6);
+        tbody {
+          td:first-child {
+            text-align: left;
+          }
+        
+          &::before {
+            content: '';
+            display: block;
+            height: calc(var(--gap)* 6);
+          }
         }
       }
 
