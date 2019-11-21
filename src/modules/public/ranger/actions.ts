@@ -119,7 +119,7 @@ export const marketStreams = (market: Market) => {
     ];
 
     if (incrementalOrderBook()) {
-        store.dispatch(depthIncrementSubscribe());
+        store.dispatch(depthIncrementSubscribe(market.id));
 
         return {
             channels: [

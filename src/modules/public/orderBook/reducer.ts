@@ -32,6 +32,7 @@ export const initialDepth: DepthState = {
 };
 
 export const initialIncrementDepth: DepthIncrementState = {
+  marketId: undefined,
   asks: [],
   bids: [],
   loading: false,
@@ -98,7 +99,8 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
     case DEPTH_INCREMENT_SUBSCRIBE:
       return {
         ...state,
-        loading: true,
+        marketId: action.payload,
+        loading: state.marketId === undefined || state.marketId !== action.payload,
       };
     case DEPTH_DATA_INCREMENT:
       if (action.payload.asks) {

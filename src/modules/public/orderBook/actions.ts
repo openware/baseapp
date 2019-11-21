@@ -1,5 +1,5 @@
 import { CommonError } from '../../types';
-import { Market } from '../markets/types';
+import { Market, MarketId } from '../markets/types';
 import {
   DEPTH_DATA,
   DEPTH_DATA_INCREMENT,
@@ -65,6 +65,7 @@ export interface DepthDataSnapshot {
 
 export interface DepthIncrementSubscribe {
   type: typeof DEPTH_INCREMENT_SUBSCRIBE;
+  payload: MarketId;
 }
 
 export type DepthActions =
@@ -115,6 +116,7 @@ export const depthError = (error: DepthError['error']): DepthError => ({
   error,
 });
 
-export const depthIncrementSubscribe = (): DepthIncrementSubscribe => ({
+export const depthIncrementSubscribe = (payload: DepthIncrementSubscribe['payload']): DepthIncrementSubscribe => ({
   type: DEPTH_INCREMENT_SUBSCRIBE,
+  payload,
 });

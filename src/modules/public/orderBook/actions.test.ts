@@ -127,7 +127,7 @@ describe('Orderbook/MarketDepth actions', () => {
     });
 
     it('should check depthIncrementSubscribe action creator', () => {
-        const expectedAction = { type: DEPTH_INCREMENT_SUBSCRIBE };
-        expect(actions.depthIncrementSubscribe()).toEqual(expectedAction);
+        const expectedAction = { type: DEPTH_INCREMENT_SUBSCRIBE, payload: 'ABCXYZ' };
+        expect(actions.depthIncrementSubscribe('ABCXYZ')).toEqual(expectedAction);
     });
 });

@@ -1,4 +1,4 @@
-import { Market } from '../markets';
+import { Market, MarketId } from '../markets';
 import * as actions from './actions';
 import {
   depthReducer,
@@ -338,6 +338,7 @@ describe('orderBook reducer', () => {
   });
 
   it('should handle DEPTH_INCREMENT_SUBSCRIBE', () => {
+    const marketId: MarketId = 'BTCUSD';
     const fakeInitialState: DepthIncrementState = {
       asks: [],
       bids: [],
@@ -345,11 +346,31 @@ describe('orderBook reducer', () => {
     };
 
     const expectedState: DepthIncrementState = {
+      marketId: 'BTCUSD',
       asks: [],
       bids: [],
       loading: true,
     };
 
-    expect(incrementDepthReducer(fakeInitialState, actions.depthIncrementSubscribe())).toEqual(expectedState);
+    expect(incrementDepthReducer(fakeInitialState, actions.depthIncrementSubscribe(marketId))).toEqual(expectedState);
+  });
+
+  it('does not set loading true on DEPTH_INCREMENT_SUBSCRIBE from the same market', () => {
+    const marketId: MarketId = 'BTCUSD';
+    const fakeInitialState: DepthIncrementState = {
+      marketId: 'BTCUSD',
+      asks: [],
+      bids: [],
+      loading: false,
+    };
+
+    const expectedState: DepthIncrementState = {
+      marketId: 'BTCUSD',
+      asks: [],
+      bids: [],
+      loading: false,
+    };
+
+    expect(incrementDepthReducer(fakeInitialState, actions.depthIncrementSubscribe(marketId))).toEqual(expectedState);
   });
 });

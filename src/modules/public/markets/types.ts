@@ -1,5 +1,7 @@
+export type MarketId = string;
+
 export interface Market {
-    id: string;
+    id: MarketId;
     name: string;
     base_unit: string;
     quote_unit: string;

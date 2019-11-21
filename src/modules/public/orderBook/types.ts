@@ -1,4 +1,5 @@
 import { CommonState, OrderSide, OrderStatus, OrderType } from '../../types';
+import { MarketId } from '../markets';
 
 export interface OrderBookOrder {
     id: number;
@@ -33,6 +34,7 @@ export interface DepthState extends CommonState {
 }
 
 export interface DepthIncrementState {
+    marketId?: MarketId;
     asks: string[][];
     bids: string[][];
     loading: boolean;
