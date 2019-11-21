@@ -3,6 +3,9 @@ import {
     IEO_DATA,
     IEO_ERROR,
     IEO_FETCH,
+    IEO_ITEM_DATA,
+    IEO_ITEM_ERROR,
+    IEO_ITEM_FETCH,
     IEO_SET_CURRENT_IEO,
     IEO_UPDATE,
 } from './constants';
@@ -23,6 +26,21 @@ export interface ErrorIEO {
     payload: CommonError;
 }
 
+export interface FetchIEOItem {
+    type: typeof IEO_ITEM_FETCH;
+    payload: string | number;
+}
+
+export interface DataIEOItem {
+    type: typeof IEO_ITEM_DATA;
+    payload: DataIEOInterface;
+}
+
+export interface ErrorIEOItem {
+    type: typeof IEO_ITEM_ERROR;
+    payload: CommonError;
+}
+
 export interface SetCurrentIEO {
     type: typeof IEO_SET_CURRENT_IEO;
     payload?: DataIEOInterface;
@@ -38,7 +56,10 @@ export type IEOAction =
     | DataIEO
     | ErrorIEO
     | SetCurrentIEO
-    | UpdateIEO;
+    | UpdateIEO
+    | FetchIEOItem
+    | DataIEOItem
+    | ErrorIEOItem;
 
 export const fetchIEO = (payload?: FetchIEO['payload']): FetchIEO => ({
     type: IEO_FETCH,
@@ -52,6 +73,21 @@ export const ieoData = (payload: DataIEO['payload']): DataIEO => ({
 
 export const ieoError = (payload: ErrorIEO['payload']): ErrorIEO => ({
     type: IEO_ERROR,
+    payload,
+});
+
+export const fetchItemIEO = (payload: FetchIEOItem['payload']): FetchIEOItem => ({
+    type: IEO_ITEM_FETCH,
+    payload,
+});
+
+export const ieoItemData = (payload: DataIEOItem['payload']): DataIEOItem => ({
+    type: IEO_ITEM_DATA,
+    payload,
+});
+
+export const ieoItemError = (payload: ErrorIEOItem['payload']): ErrorIEOItem => ({
+    type: IEO_ITEM_ERROR,
     payload,
 });
 

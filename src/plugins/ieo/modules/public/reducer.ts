@@ -4,6 +4,9 @@ import {
     IEO_DATA,
     IEO_ERROR,
     IEO_FETCH,
+    IEO_ITEM_DATA,
+    IEO_ITEM_ERROR,
+    IEO_ITEM_FETCH,
     IEO_SET_CURRENT_IEO,
     IEO_UPDATE,
 } from './constants';
@@ -15,6 +18,7 @@ export interface PublicIEOState {
     list: DataIEOInterface[];
     success: boolean;
     error?: CommonError;
+    ieoItem?: DataIEOInterface;
 }
 
 export const initialPublicIEOState: PublicIEOState = {
@@ -50,6 +54,26 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
             return {
                 ...state,
                 currentIEO: action.payload,
+            };
+        case IEO_ITEM_FETCH:
+            return {
+                ...state,
+                loading: true,
+                success: false,
+            };
+        case IEO_ITEM_DATA:
+            return {
+                ...state,
+                ieoItem: action.payload,
+                loading: false,
+                success: true,
+            };
+        case IEO_ITEM_ERROR:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
+                success: false,
             };
         case IEO_UPDATE:
             const index = state.list.findIndex(el => String(el.id) === String(action.payload.id));

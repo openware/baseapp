@@ -45,6 +45,9 @@ describe('IEO reducer', () => {
         },
     ];
 
+    const payloadId = 331;
+    const payloadIEOItem = payload[0];
+
     const error = {
         code: 500,
         message: ['Server error'],
@@ -79,6 +82,37 @@ describe('IEO reducer', () => {
         };
 
         expect(publicIEOReducer(initialPublicIEOState, actions.ieoError(error))).toEqual(expectedState);
+    });
+
+    it('should handle IEO_ITEM_FETCH', () => {
+        const expectedState = {
+            ...initialPublicIEOState,
+            loading: true,
+            success: false,
+        };
+        expect(publicIEOReducer(initialPublicIEOState, actions.fetchItemIEO(payloadId))).toEqual(expectedState);
+    });
+
+    it('should handle IEO_ITEM_DATA', () => {
+        const expectedState = {
+            ...initialPublicIEOState,
+            ieoItem: payloadIEOItem,
+            loading: false,
+            success: true,
+        };
+
+        expect(publicIEOReducer(initialPublicIEOState, actions.ieoItemData(payloadIEOItem))).toEqual(expectedState);
+    });
+
+    it('should handle IEO_ITEM_ERROR', () => {
+        const expectedState = {
+            ...initialPublicIEOState,
+            loading: false,
+            success: false,
+            error: error,
+        };
+
+        expect(publicIEOReducer(initialPublicIEOState, actions.ieoItemError(error))).toEqual(expectedState);
     });
 
     describe('should handle IEO_SET_CURRENT_IEO', () => {
