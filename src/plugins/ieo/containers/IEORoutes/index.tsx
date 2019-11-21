@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route } from 'react-router';
-import { IEOListScreen } from '../../';
+import { IEOListScreen } from '../../screens/IEOListScreen';
 
 export const IEORoutes: React.FunctionComponent = () => {
     return (
