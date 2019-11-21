@@ -3,6 +3,9 @@ import {
     IEO_DATA,
     IEO_ERROR,
     IEO_FETCH,
+    IEO_ITEM_DATA,
+    IEO_ITEM_ERROR,
+    IEO_ITEM_FETCH,
     IEO_SET_CURRENT_IEO,
     IEO_UPDATE,
 } from './constants';
@@ -27,7 +30,7 @@ describe('IEO actions', () => {
         },
     ];
 
-    const fakeIEO = [
+    const fakeIEOList = [
         {
             id: 331,
             name: 'test',
@@ -51,14 +54,18 @@ describe('IEO actions', () => {
         },
     ];
 
+    const fakeIEOId = 331;
+
+    const fakeIEOItem = fakeIEOList[0];
+
     it('should check fetchIEO action creator', () => {
         const expectedAction = { type: IEO_FETCH };
         expect(actions.fetchIEO()).toEqual(expectedAction);
     });
 
     it('should check ieoData action creator', () => {
-        const expectedAction = { type: IEO_DATA, payload: fakeIEO };
-        expect(actions.ieoData(fakeIEO)).toEqual(expectedAction);
+        const expectedAction = { type: IEO_DATA, payload: fakeIEOList };
+        expect(actions.ieoData(fakeIEOList)).toEqual(expectedAction);
     });
 
     it('should check ieoError action creator', () => {
@@ -67,13 +74,29 @@ describe('IEO actions', () => {
         expect(actions.ieoError(payload)).toEqual(expectedAction);
     });
 
+    it('should check fetchItemIEO action creator', () => {
+        const expectedAction = { type: IEO_ITEM_FETCH, payload: fakeIEOId };
+        expect(actions.fetchItemIEO(fakeIEOId)).toEqual(expectedAction);
+    });
+
+    it('should check ieoItemData action creator', () => {
+        const expectedAction = { type: IEO_ITEM_DATA, payload: fakeIEOItem };
+        expect(actions.ieoItemData(fakeIEOItem)).toEqual(expectedAction);
+    });
+
+    it('should check ieoItemError action creator', () => {
+        const payload = { code: 500, message: ['Server error'] };
+        const expectedAction = { type: IEO_ITEM_ERROR, payload };
+        expect(actions.ieoItemError(payload)).toEqual(expectedAction);
+    });
+
     it('should check setCurrentIEO action creator', () => {
-        const expectedAction = { type: IEO_SET_CURRENT_IEO, payload: fakeIEO[0] };
-        expect(actions.setCurrentIEO(fakeIEO[0])).toEqual(expectedAction);
+        const expectedAction = { type: IEO_SET_CURRENT_IEO, payload: fakeIEOList[0] };
+        expect(actions.setCurrentIEO(fakeIEOList[0])).toEqual(expectedAction);
     });
 
     it('should check ieoRangerData action creator', () => {
-        const expectedAction = { type: IEO_UPDATE, payload: fakeIEO[0] };
-        expect(actions.ieoUpdate(fakeIEO[0])).toEqual(expectedAction);
+        const expectedAction = { type: IEO_UPDATE, payload: fakeIEOList[0] };
+        expect(actions.ieoUpdate(fakeIEOList[0])).toEqual(expectedAction);
     });
 });
