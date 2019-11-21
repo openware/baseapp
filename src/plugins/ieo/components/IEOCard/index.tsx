@@ -11,6 +11,7 @@ interface Props {
     translations;
     onIEOSelect: (ieo: DataIEOInterface) => void;
     handleFetchIEO: () => void;
+    onClick: (ieo: DataIEOInterface) => void;
 }
 
 interface State {
@@ -111,7 +112,7 @@ export class IEOCard extends React.Component<Props, State> {
         const { currency } = this.props;
 
         return (
-            <div className="pg-ieo__card">
+            <div className="pg-ieo__card" onClick={this.handleClick}>
                 <div className="pg-ieo__card-header">
                     {currency && <img className="pg-ieo__card-header__icon" src={currency.icon_url} />}
                     <span className="pg-ieo__card-header__text">{currency_id && currency_id.toUpperCase()}</span>
@@ -124,6 +125,12 @@ export class IEOCard extends React.Component<Props, State> {
             </div>
         );
     }
+
+    private handleClick = () => {
+        const { ieo } = this.props;
+
+        this.props.onClick(ieo);
+    };
 
     private getContent = (state: string) => {
         switch (state) {
