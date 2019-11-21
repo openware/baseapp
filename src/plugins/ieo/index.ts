@@ -2,3 +2,4 @@
 export * from './containers';
 export * from './screens';
 export * from './modules';
+export * from './screens';

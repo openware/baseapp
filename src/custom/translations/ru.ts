@@ -1,3 +1,4 @@
+import { ru as pluginsTranslations } from '../../plugins/translations/ru';
 import { LangType } from '../../translations';
 import { nationalitiesNames } from '../../translations/nationalities';
 
@@ -642,4 +643,5 @@ export const ru: LangType = {
     'server.internal_error': 'Внутренняя ошибка сервера',
 
     ...nationalitiesNames,
+    ...pluginsTranslations,
 };
