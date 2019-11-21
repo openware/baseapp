@@ -1,50 +1,50 @@
-export const handleIncrementalUpdate = (depthOld: string[][], newOrder: string[], type: string): string[][] => {
-    if (!newOrder[0]) {
+export const handleIncrementalUpdate = (depthOld: string[][], newLevel: string[], type: string): string[][] => {
+    if (newLevel.length !== 2) {
         return depthOld;
     }
+    const newLevelPrice = +newLevel[0];
+    const newLevelVolume = +newLevel[1];
     const depthNew = [...depthOld];
 
-    depthOld.some((prevOrder, index) => {
-        if (type === 'asks' && +newOrder[1]) {
-            if (newOrder[0] < prevOrder[0]) {
-                depthNew.splice(index, 0, newOrder);
+    if (depthOld.length === 0) {
+      return [newLevel];
+    }
 
-                return true;
+    for (let index = 0; index < depthOld.length; index++) {
+        const levelPrice = +depthOld[index][0];
+        if (type === 'asks' && newLevelVolume > 0) {
+            if (newLevelPrice < levelPrice) {
+                depthNew.splice(index, 0, newLevel);
+                break;
             }
 
-            if (newOrder[0] > prevOrder[0] && index === (depthOld.length - 1)) {
-                depthNew.push(newOrder);
-
-                return true;
-            }
-        }
-
-        if (type === 'bids' && +newOrder[1]) {
-            if (newOrder[0] > prevOrder[0]) {
-                depthNew.splice(index, 0, newOrder);
-
-                return true;
-            }
-
-            if (newOrder[0] < prevOrder[0] && index === (depthOld.length - 1)) {
-                depthNew.push(newOrder);
-
-                return true;
+            if (newLevelPrice > levelPrice && index === (depthOld.length - 1)) {
+                depthNew.push(newLevel);
+                break;
             }
         }
 
-        if (newOrder[0] === prevOrder[0]) {
-            if (!+newOrder[1]) {
+        if (type === 'bids' && newLevelVolume > 0) {
+            if (newLevelPrice > levelPrice) {
+                depthNew.splice(index, 0, newLevel);
+                break;
+            }
+
+            if (newLevelPrice < levelPrice && index === (depthOld.length - 1)) {
+                depthNew.push(newLevel);
+                break;
+            }
+        }
+
+        if (newLevelPrice === levelPrice) {
+            if (newLevelVolume === 0) {
                 depthNew.splice(index, 1);
             } else {
-                depthNew.splice(index, 1, newOrder);
+                depthNew.splice(index, 1, newLevel);
             }
-
-            return true;
+            break;
         }
-
-        return false;
-    });
+    }
 
     return depthNew;
 };
