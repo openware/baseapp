@@ -177,12 +177,12 @@ steps:
       - cd /home/app
       - bundle exec rake payload:send[frontend,$latest_image,http://www.devkube.com:1337]
 
-  - name: "Run integration testing"
-    image: cypress/browsers:chrome69
-    commands:
-      - npm install --save-dev cypress
-      - export CYPRESS_baseUrl=http://www.devkube.com
-      - $(npm bin)/cypress run --browser chrome
+  # - name: "Run integration testing"
+  #   image: cypress/browsers:chrome69
+  #   commands:
+  #     - npm install --save-dev cypress
+  #     - export CYPRESS_baseUrl=http://www.devkube.com
+  #     - $(npm bin)/cypress run --browser chrome
 
   - name: "Notify about redeployment on devkube"
     image: plugins/slack
