@@ -8,7 +8,7 @@ import { userOpenOrdersUpdate } from '../../../user/openOrders';
 import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
-import { MARKETS_SET_CURRENT_MARKET } from '../../markets/constants';
+import { MARKETS_SET_CURRENT_MARKET, MARKETS_SET_CURRENT_MARKET_IFUNSET } from '../../markets/constants';
 import { depthData, depthDataIncrement, depthDataSnapshot } from '../../orderBook';
 import { recentTradesPush } from '../../recentTrades';
 import {
@@ -188,9 +188,13 @@ function* reader(channel) {
     }
 }
 
-const switchMarket = () => {
-    let previousMarket: Market;
+let previousMarket: Market | undefined;
+
+const switchMarket = (subscribeOnInitOnly: boolean) => {
     return function*(action: SetCurrentMarket) {
+        if (subscribeOnInitOnly && previousMarket !== undefined) {
+            return;
+        }
         if (previousMarket && previousMarket.id !== action.payload.id) {
             yield put(rangerUnsubscribeMarket(previousMarket));
         }
@@ -241,7 +245,8 @@ export function* rangerSagas() {
     let connectFetchPayload: RangerConnectFetch['payload'] | undefined;
     const buffer: RangerBuffer = { messages: new Array() };
     let pipes;
-    yield takeEvery(MARKETS_SET_CURRENT_MARKET, switchMarket());
+    yield takeEvery(MARKETS_SET_CURRENT_MARKET, switchMarket(false));
+    yield takeEvery(MARKETS_SET_CURRENT_MARKET_IFUNSET, switchMarket(true));
     yield takeEvery(RANGER_USER_ORDER_UPDATE, dispatchCurrentMarketOrderUpdates);
     yield takeEvery(RANGER_USER_ORDER_UPDATE, dispatchOrderHistoryUpdates);
 
