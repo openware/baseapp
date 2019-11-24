@@ -17,6 +17,7 @@ import {
     fetchItemIEO,
     selectCurrentIEO,
     selectIEOItem,
+    selectIEOLoading,
     selectIEOSuccess,
     setCurrentIEO,
 } from '../../modules';
@@ -26,6 +27,7 @@ interface ReduxProps {
     ieo?: DataIEOInterface;
     ieoSuccess?: boolean;
     currencies: Currency[];
+    loading: boolean;
 }
 
 interface DispatchProps {
@@ -38,27 +40,51 @@ type Props = ReduxProps & DispatchProps & RouterProps;
 
 class IEODetailsContainer extends React.Component<Props> {
     public componentDidMount() {
-        const { history } = this.props;
+        const { history, currencies } = this.props;
         if (history.location.pathname) {
             const urlIEOId = getUrlPart(2, this.props.history.location.pathname);
             this.props.fetchItemIEO(urlIEOId);
         }
+
+        if (!currencies.length) {
+            this.props.fetchCurrencies();
+        }
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { history } = this.props;
+        const { history, currencies } = this.props;
 
         if (history.location.pathname !== nextProps.history.location.pathname) {
             const urlIEOId = getUrlPart(2, nextProps.history.location.pathname);
             this.props.fetchItemIEO(urlIEOId);
         }
+
+        if (!nextProps.currencies.length && JSON.stringify(nextProps.currencies) !== JSON.stringify(currencies)) {
+            this.props.fetchCurrencies();
+        }
     }
 
     public render() {
+        const { ieo, loading } = this.props;
+
         return (
             <div className="container pg-ieo-page">
+                {ieo && !loading ? this.renderContent() : null}
+            </div>
+        );
+    }
+
+    private renderContent = () => {
+        const { currencies, ieo } = this.props;
+        const currencyItem = currencies.length && ieo && currencies.find(cur => cur.id === ieo.currency_id);
+
+        return (
+            <React.Fragment>
                 <div className="pg-ieo-page__info">
-                    <IEOInfo />
+                    <IEOInfo
+                        currency={currencyItem}
+                        ieo={ieo}
+                    />
                 </div>
                 <div className="pg-ieo-page__details">
                     <IEODetails />
@@ -66,7 +92,7 @@ class IEODetailsContainer extends React.Component<Props> {
                 <div className="pg-ieo-page__product-intiduction">
                     <IEOProjectIntroduction />
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }
@@ -76,6 +102,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     ieo: selectIEOItem(state),
     ieoSuccess: selectIEOSuccess(state),
     currencies: selectCurrencies(state),
+    loading: selectIEOLoading(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
