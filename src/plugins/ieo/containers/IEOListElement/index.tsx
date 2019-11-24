@@ -45,7 +45,6 @@ class IEOListContainer extends React.Component<Props> {
                 <IEOCard
                     ieo={item}
                     onIEOSelect={this.handleSelectIEO}
-                    translations={this.props.translation}
                     key={index}
                     currency={currencyItem}
                     handleFetchIEO={this.props.handleFetchIEO}
