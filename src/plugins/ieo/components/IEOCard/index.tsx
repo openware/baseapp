@@ -8,7 +8,6 @@ import { DataIEOInterface } from '../../modules';
 interface Props {
     ieo: DataIEOInterface;
     currency?: Currency;
-    translations;
     onIEOSelect: (ieo: DataIEOInterface) => void;
     handleFetchIEO: () => void;
     onClick: (ieo: DataIEOInterface) => void;
