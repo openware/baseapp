@@ -1,8 +1,8 @@
 .ieo-profile-details {
   background: var(--main-bg);
   color: var(--white);
-  margin-bottom: 20px;
-  border-radius: 5px;
+  margin-bottom: calc(var(--gap) * 5);
+  border-radius: calc(var(--gap) * 1.25);
 
   &__header {
     display: flex;
@@ -10,14 +10,14 @@
     justify-content: flex-start;
     align-items: center;
     padding: 0 calc(var(--gap) * 5.75) 0 calc(var(--gap) * 5.75);
-    padding-right: calc(var(--gap) * 2.5);
+    padding-left: calc(var(--gap) * 2.5);
     width: 100%;
     background: var(--ieo-header-bg);
     font-size: calc(var(--gap) * 3);
     font-weight: bold;
     line-height: calc(var(--gap) * 3.2);
     border-radius: calc(var(--gap) * 1.25) calc(var(--gap) * 1.25) 0 0;
-    border-bottom: calc(var(--gap) * 0.25) solid rgba(255, 255, 255, 0.2); /*add to variable list*/
+    border-bottom: calc(var(--gap) * 0.25) solid var(--ieo-header-border);
   }
 
   &__body {
@@ -30,8 +30,8 @@
 
     &__left {
       width: 50%;
-      padding: 0 calc(var(--gap) * 5.75) 0 calc(var(--gap) * 5.75);
-      margin: calc(var(--gap) * 10) 0 calc(var(--gap) * 10) 0;
+      padding: 0 calc(var(--gap) * 4);
+      margin: calc(var(--gap) * 3.5) 0;
 
       &__row {
         display: flex;
@@ -49,15 +49,15 @@
 
     &__right {
       width: 50%;
-      padding: 0 calc(var(--gap) * 5.75) 0 calc(var(--gap) * 5.75);
-      margin: calc(var(--gap) * 10) 0 calc(var(--gap) * 10) 0;
+      padding: 0 calc(var(--gap) * 4);
+      margin: calc(var(--gap) * 3.5) 0;
 
       &__row {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
-        margin: calc(var(--gap) * 3.25) 0 calc(var(--gap) * 3.25) 0;
+        margin: calc(var(--gap) * 3.25) 0;
       }
 
       @media (max-width: 991.99px) {
