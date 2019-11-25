@@ -1,5 +1,5 @@
 export const en = {
-    'page.body.ieo.profile.info.price.close.in': 'Price Close In',
+    'page.body.ieo.profile.info.price.close.in': 'Presale Close In',
     'page.body.ieo.profile.info.price': 'Price',
     'page.body.ieo.profile.info.goal': 'Goal',
     'page.body.ieo.profile.info.progress': 'Progress',
@@ -14,7 +14,7 @@ export const en = {
     'page.body.ieo.profile.details.pre.sale.price': 'Pre-sale price',
     'page.body.ieo.profile.details.minimum.contribution': 'Minimum contribution',
     'page.body.ieo.profile.details.ieo.start': 'IEO Start Time',
-    'page.body.ieo.profile.details.ieo.end': 'IEO End TIme',
+    'page.body.ieo.profile.details.ieo.end': 'IEO End Time',
 
     'page.body.ieo.profile.details.technological.foundation': 'Technological foundation',
     'page.body.ieo.profile.details.website': 'Website',
@@ -40,4 +40,11 @@ export const en = {
     'page.page.body.ieo.profile.introduction.dom.willoffer': 'DOM willoffer variety of payment methods, including banking, cash or cryptocurrency transactions. OWC will be built on EOS blockchain ecosystem and operate without any fees for both counterparties.',
     'page.page.body.ieo.profile.introduction.businesscompanies': 'Businesscompanies will be able to open virtual branches on OWC, using value-added services of the platform. DOM will also introduce a secured smart contract system, allowing to implement any business logic and solve the safety issues.',
     'page.page.body.ieo.profile.introduction.learn.more': 'Learn more on the company\'s website www.openware.com',
+
+    'page.body.ieo.card.start.date': 'Start date',
+    'page.body.ieo.card.end.date': 'End date',
+    'page.body.ieo.card.countdown': 'Countdown',
+    'page.body.ieo.card.raised': 'Raised',
+    'page.body.ieo.card.supply': 'Supply',
+    'page.body.ieo.card.end': 'End',
 };
