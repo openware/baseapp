@@ -1,30 +1,30 @@
 .ieo-profile-project-introduction {
   background: var(--main-bg);
   color: var(--white);
-  margin-bottom: 20px;
-  border-radius: 5px;
+  margin-bottom: calc(var(--gap) * 5);
+  border-radius: calc(var(--gap) * 1.25);
 
   &__header {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    padding: 0 calc(var(--gap) * 5.75) 0 calc(var(--gap) * 5.75);
-    padding-right: 10px;
+    padding: 0 calc(var(--gap) * 5.75);
+    padding-left: calc(var(--gap) * 2.5);
     width: 100%;
     background: var(--ieo-header-bg);
     font-size: calc(var(--gap) * 3);
     font-weight: bold;
     line-height: calc(var(--gap) * 3.2);
     border-radius: calc(var(--gap) * 1.25) calc(var(--gap) * 1.25) 0 0;
-    border-bottom: calc(var(--gap) * 0.25) solid rgba(255, 255, 255, 0.2); /*add to variable list*/
-  }
+    border-bottom: calc(var(--gap) * 0.25) solid var(--ieo-header-border);
+	}
 
   &__body {
-    padding: calc(var(--gap) * 5.75);
+		padding: calc(var(--gap) * 3.8);
 
-    p {
-      padding: calc(var(--gap) * 2.5);
+    p{
+      padding: var(--gap) 0;
       font-size: calc(var(--gap) * 2);
       line-height: calc(var(--gap) * 2.5);
     }

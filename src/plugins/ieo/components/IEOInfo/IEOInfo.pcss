@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: calc(var(--gap) * 5.75);
+    padding: calc(var(--gap) * 2.75);
     width: 70%;
     font-size: calc(var(--gap) * 3);
     font-weight: bold;
@@ -62,18 +62,21 @@
         }
       }
 
+      @media (max-width: 576px) {
+        flex-direction: column;
+      }
+
       &__value {
-        margin: calc(var(--gap) * 2.5);
+        margin: 0 calc(var(--gap) * 2.5);
         width: 65%;
 
         .expiration-time {
-          margin-bottom: calc(var(--gap) * 3.75);
+          margin-bottom: calc(var(--gap) * 2.5);
 
           &__label {
             font-size: calc(var(--gap) * 1.5);
             font-weight: 400;
             opacity: 0.6;
-            padding: calc(var(--gap) * 0.75);
           }
 
           &__value {
@@ -86,36 +89,32 @@
         }
 
         .ieo-price {
-          margin-bottom: calc(var(--gap) * 3.75);
+          margin-bottom: calc(var(--gap) * 1.825);
 
           &__label {
             font-size: calc(var(--gap) * 1.5);
             line-height: calc(var(--gap) * 1.7);
             font-weight: 400;
             opacity: 0.6;
-            padding: calc(var(--gap) * 0.75);
           }
 
           &__value {
             font-size: calc(var(--gap) * 2);
-            padding: calc(var(--gap) * 0.75);
           }
         }
 
         .ieo-goal {
-          margin-bottom: calc(var(--gap) * 3.75);
+          margin-bottom: calc(var(--gap) * 1.825);
 
           &__label {
             font-size: calc(var(--gap) * 1.5);
             line-height: calc(var(--gap) * 1.7);
             font-weight: 400;
             opacity: 0.6;
-            padding: calc(var(--gap) * 0.75);
           }
 
           &__value {
             font-size: calc(var(--gap) * 2);
-            padding: calc(var(--gap) * 0.75);
           }
         }
 
@@ -123,13 +122,13 @@
           &__progress-bar {
             height: calc(var(--gap) * 2);
             width: 100%;
-            background: var(--ieo-header-bg);
+            background: var(--progress-bar);
             border-radius: calc(var(--gap) * 1.25);
 
           &__current {
             height: calc(var(--gap) * 2);
               width: 20%;
-              background: #0fdd81;
+              background: var(--progress-green);
               border-radius: calc(var(--gap) * 1.25)
             }
           }
@@ -146,7 +145,7 @@
             }
 
             &__current-value {
-              color: #0fdd81; /*add this color to variables list*/
+              color: var(--progress-green);
               font-size: calc(var(--gap) * 1.5);
             }
           }
@@ -155,11 +154,11 @@
     }
 
     &__description {
-      margin-top: calc(var(--gap) * 6);
-      padding: calc(var(--gap) * 5.75) 0 calc(var(--gap) * 5.75) 0;
+      margin-top: calc(var(--gap) * 3);
+      padding: calc(var(--gap) * 2.75) 0;
       font-size: calc(var(--gap) * 1.5);
       line-height: calc(var(--gap) * 2.5);
-      border-top: calc(var(--gap) * 0.25) solid #46557d; /*add this color to variable list*/
+      border-top: calc(var(--gap) * 0.25) solid var(--border-top);
     }
   }
 
@@ -167,5 +166,44 @@
     background: var(--ieo-header-bg);
     padding: calc(var(--gap) * 2.5);
     border-radius: 0 calc(var(--gap) * 1.25) calc(var(--gap) * 1.25) 0;
+    width: 30%;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .ieo-profile-info__main {
+    width: 100%;
+    padding: calc(var(--gap) * 2);
+
+    &__info {
+      &__coin-area {
+        width: 100%;
+        justify-content: center;
+        padding: 0;
+      }
+
+      &__value {
+        width: 100%;
+        margin: calc(var(--gap) * 2.5) 0 calc(var(--gap) * 2.5) 0;
+
+        .expiration-time,
+        .ieo-price,
+        .ieo-goal,
+        .curent-progress-block {
+          margin-bottom: calc(var(--gap) * 1.75);
+        }
+
+        .curent-progress-block {
+          &__price {
+            font-size: calc(var(--gap) * 1.7);
+          }
+        }
+      }
+    }
+
+    &__description {
+      margin-top: 0;
+    }
   }
 }
