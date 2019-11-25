@@ -18,7 +18,7 @@ export interface PublicIEOState {
     list: DataIEOInterface[];
     success: boolean;
     error?: CommonError;
-    ieoItem?: DataIEOInterface;
+    ieoDetails?: any; // tslint:disable-line
 }
 
 export const initialPublicIEOState: PublicIEOState = {
@@ -64,7 +64,8 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
         case IEO_ITEM_DATA:
             return {
                 ...state,
-                ieoItem: action.payload,
+                currentIEO: action.payload.ieo,
+                ieoDetails: action.payload.details,
                 loading: false,
                 success: true,
             };
