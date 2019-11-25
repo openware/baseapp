@@ -18,8 +18,7 @@
     justify-content: flex-start;
     padding: calc(var(--gap) * 2.75);
     width: 70%;
-    font-size: calc(var(--gap) * 3);
-    font-weight: bold;
+    font-weight: normal;
     line-height: calc(var(--gap) * 3.2);
 
     &__info {
@@ -37,7 +36,9 @@
           margin: 0 auto;
 
           img {
-            width: 100%;
+            width: calc(var(--big-gap) * 1.66);
+            height: calc(var(--big-gap) * 1.66);
+            margin-top: calc(var(--gap) * 3);
           }
 
           @media (max-width: 991.98px) {
@@ -46,9 +47,9 @@
         }
 
         &__coin-currency {
-          font-size: calc(var(--gap) * 4);
+          font-size: calc(var(--big-gap) * 0.533);
           font-weight: bold;
-          margin: calc(var(--gap) * 2.5);
+          margin: calc(var(--big-gap) * 0.3) 0 calc(var(--big-gap) * 0.2) 0;
 
           @media (max-width: 991.98px) {
             margin-top: calc(var(--gap) * 5);
@@ -56,8 +57,7 @@
         }
 
         &__currency-name {
-          font-size: calc(var(--gap) * 1.3);
-          opacity: 0.6;
+          font-size: var(--font-size);
           font-weight: 400;
         }
       }
@@ -71,16 +71,17 @@
         width: 65%;
 
         .expiration-time {
-          margin-bottom: calc(var(--gap) * 2.5);
+          margin-bottom: calc(var(--gap) * 3.75);
 
           &__label {
-            font-size: calc(var(--gap) * 1.5);
-            font-weight: 400;
+            font-size: var(--font-size);
             opacity: 0.6;
+            padding-bottom: calc(var(--gap) * 0.75);
           }
 
           &__value {
-            font-size: calc(var(--gap) * 3.75);
+            font-size: calc(var(--big-gap) * 0.5);
+            font-weight: bold;
 
             @media (max-width: 991.99px) {
               font-size: calc(var(--gap) * 2.8);
@@ -89,32 +90,34 @@
         }
 
         .ieo-price {
-          margin-bottom: calc(var(--gap) * 1.825);
+          margin-bottom: calc(var(--gap) * 3.75);
 
           &__label {
-            font-size: calc(var(--gap) * 1.5);
+            font-size: var(--font-size);
             line-height: calc(var(--gap) * 1.7);
-            font-weight: 400;
+            padding-bottom: calc(var(--gap) * 0.5);
             opacity: 0.6;
           }
 
           &__value {
-            font-size: calc(var(--gap) * 2);
+            font-size: calc(var(--gap) * 2.5);
+            font-weight: bold;
           }
         }
 
         .ieo-goal {
-          margin-bottom: calc(var(--gap) * 1.825);
+          margin-bottom: calc(var(--gap) * 3.75);
 
           &__label {
-            font-size: calc(var(--gap) * 1.5);
+            font-size: var(--font-size);
             line-height: calc(var(--gap) * 1.7);
-            font-weight: 400;
+            padding-bottom: calc(var(--gap) * 0.5);
             opacity: 0.6;
           }
 
           &__value {
-            font-size: calc(var(--gap) * 2);
+            font-size: calc(var(--gap) * 2.5);
+            font-weight: bold;
           }
         }
 
@@ -126,11 +129,16 @@
             border-radius: calc(var(--gap) * 1.25);
 
           &__current {
-            height: calc(var(--gap) * 2);
+              height: calc(var(--gap) * 2);
               width: 20%;
               background: var(--progress-green);
               border-radius: calc(var(--gap) * 1.25)
             }
+          }
+
+          &__price {
+            font-size: calc(var(--gap) * 2.5);
+            margin-bottom: calc(var(--gap) * 1.25);
           }
 
           &__value {
@@ -139,14 +147,14 @@
             justify-content: space-between;
 
             &__label {
-              font-size: calc(var(--gap) * 1.5);
+              font-size: calc(var(--gap) * 1.66);
               font-weight: 400;
               opacity: 0.6;
             }
 
             &__current-value {
               color: var(--progress-green);
-              font-size: calc(var(--gap) * 1.5);
+              font-size: calc(var(--gap) * 1.66);
             }
           }
         }
@@ -154,19 +162,36 @@
     }
 
     &__description {
-      margin-top: calc(var(--gap) * 3);
-      padding: calc(var(--gap) * 2.75) 0;
-      font-size: calc(var(--gap) * 1.5);
+      margin-top: calc(var(--big-gap) * 0.4);
+      padding: calc(var(--big-gap) * 0.4) 0;
+      font-size: var(--font-size);
       line-height: calc(var(--gap) * 2.5);
       border-top: calc(var(--gap) * 0.25) solid var(--border-top);
+      letter-spacing: 0.02em;
+      font-weight: 300;
     }
   }
 
   &__order {
     background: var(--ieo-header-bg);
-    padding: calc(var(--gap) * 2.5);
     border-radius: 0 calc(var(--gap) * 1.25) calc(var(--gap) * 1.25) 0;
     width: 30%;
+    position: relative;
+
+    .pg-order .cr-order .cr-tab-panel .cr-tab-content .cr-order-item {
+
+      .cr-button {
+        background: var(--orders-button-green-normal);
+      }
+
+      .cr-order-input__fieldset__label {
+        background-color: var(--ieo-header-bg);
+      }
+
+      .cr-order-item__total__label {
+        color: var(--white);
+      }
+    }
   }
 }
 

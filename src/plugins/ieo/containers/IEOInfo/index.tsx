@@ -1,13 +1,11 @@
 import { Decimal } from '@openware/components';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { OrderIEO } from '../';
 import { getCountdownDate, localeDate } from '../../../../helpers';
 import { Currency } from '../../../../modules';
-import { IEOOrder } from '../../components/IEOOrder';
+import { Blur } from '../../components';
 import { DataIEOInterface } from '../../modules';
-
-const availableBase = 12;
-const availableQuote = 11;
 
 interface OwnProps {
     currency: Currency;
@@ -130,11 +128,8 @@ class IEOInfoComponent extends React.Component<Props, State> {
                     </div>
                 </div>
                 <div className="ieo-profile-info__order">
-                    <IEOOrder
-                        availableBase={availableBase}
-                        availableQuote={availableQuote}
-                        onSubmit={this.handleSubmit}
-                    />
+                    <OrderIEO currentIEO={ieo} />
+                    {ieo.state === 'preparing' ? <Blur title={this.props.intl.formatMessage({ id: 'page.body.ieo.details.order.content.blur.title' })} ieo={ieo}/> : null}
                 </div>
             </div>
         );
@@ -281,8 +276,6 @@ class IEOInfoComponent extends React.Component<Props, State> {
             </div>
         );
     }
-
-    private handleSubmit = () => { window.console.log('submit'); };
 }
 
 export const IEOInfo = injectIntl(IEOInfoComponent);

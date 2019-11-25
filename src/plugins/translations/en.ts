@@ -47,4 +47,9 @@ export const en = {
     'page.body.ieo.card.raised': 'Raised',
     'page.body.ieo.card.supply': 'Supply',
     'page.body.ieo.card.end': 'End',
+
+    'page.body.ieo.details.order.youWillGet': 'You will get',
+    'page.body.ieo.details.order.youWillPay': 'You will pay',
+    'page.body.ieo.details.order.content.blur.title': 'Sales will be start after',
+
 };
