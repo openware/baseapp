@@ -69,19 +69,6 @@ describe('OrderForm', () => {
         expect(submitButton.props().label.toLowerCase()).toBe('sell');
     });
 
-    it('should call onSubmit callback', () => {
-        const onSubmit: SinonSpy = spy();
-        const wrapper = setup({ onSubmit });
-
-        const nextState = { price: '135.58', amount: '0.34' };
-        wrapper.setState(nextState);
-
-        const submitButton = wrapper.find(Button);
-        submitButton.simulate('click');
-
-        expect(onSubmit.calledOnceWith({type: 'buy', orderType: 'Limit', price: nextState.price, amount: nextState.amount})).toBeTruthy();
-    });
-
     it('should disable button if price is 0 in Limit order', () => {
         const onSubmit: SinonSpy = spy();
         const wrapper = setup({ onSubmit });
@@ -325,7 +312,7 @@ describe('OrderForm', () => {
         const available = wrapper.find('.cr-order-item__available').find('.cr-order-item__available__content').find('.cr-order-item__available__content__amount').props().children;
 
         expect(total).toEqual('220.0000');
-        expect(available).toEqual('50.0000');
+        expect(available).toEqual('50.00000');
     });
 
     it('should display values with correct precision', () => {
@@ -347,7 +334,7 @@ describe('OrderForm', () => {
         const available = wrapper.find('.cr-order-item__available').find('.cr-order-item__available__content').find('.cr-order-item__available__content__amount').props().children;
 
         expect(total).toEqual('0.200');
-        expect(available).toEqual('50.000');
+        expect(available).toEqual('50.00');
     });
 
     const findInputPrice = (wrapper: ShallowWrapper) => wrapper.find('.cr-order-item').at(0).find('div').last().children().last();

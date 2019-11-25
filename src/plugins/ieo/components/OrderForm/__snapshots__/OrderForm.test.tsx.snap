@@ -94,7 +94,7 @@ exports[`OrderForm should match snapshot 1`] = `
         <span
           className="cr-order-item__available__content__amount"
         >
-          50.0000
+          50.00000
         </span>
         <span
           className="cr-order-item__available__content__currency"

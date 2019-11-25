@@ -33,7 +33,10 @@ export interface FetchIEOItem {
 
 export interface DataIEOItem {
     type: typeof IEO_ITEM_DATA;
-    payload: DataIEOInterface;
+    payload: {
+        ieo: DataIEOInterface;
+        details?: any; // tslint:disable-line
+    };
 }
 
 export interface ErrorIEOItem {
