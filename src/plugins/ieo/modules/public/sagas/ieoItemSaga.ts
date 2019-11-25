@@ -1,6 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
+import { pluginsList } from '../../../../../api/config';
 import {
     FetchIEOItem,
     ieoItemData,
@@ -15,7 +16,19 @@ const requestOptions: RequestOptions = {
 export function* ieoItemSaga(action: FetchIEOItem) {
     try {
         const data = yield call(API.get(requestOptions), `/public/ieo/sales/${action.payload}`);
-        yield put(ieoItemData(data));
+        const ieoPlugin = pluginsList().find(item => item.name === 'ieo');
+
+        if (ieoPlugin && ieoPlugin.config.metadata) {
+            const details = yield call(
+                API.get(requestOptions),
+                `/public/metadata/search?key=IEO-${data.currency_id}-${data.id}`,
+            );
+            const detailsData = JSON.parse(details.value);
+
+            yield put(ieoItemData({ ieo: data, details: detailsData }));
+        } else {
+            yield put(ieoItemData({ ieo: data }));
+        }
     } catch (error) {
         yield put(ieoItemError(error));
     }

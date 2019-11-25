@@ -18,5 +18,5 @@ export const selectCurrentIEO = (state: RootState): DataIEOInterface | undefined
     state.plugins.ieo.public.currentIEO;
 
 export const selectIEOItem = (state: RootState): DataIEOInterface | undefined =>
-    state.plugins.ieo.public.ieoItem;
+    state.plugins.ieo.public.currentIEO;
 

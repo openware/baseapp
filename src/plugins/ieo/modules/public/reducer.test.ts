@@ -96,12 +96,12 @@ describe('IEO reducer', () => {
     it('should handle IEO_ITEM_DATA', () => {
         const expectedState = {
             ...initialPublicIEOState,
-            ieoItem: payloadIEOItem,
+            currentIEO: payloadIEOItem,
             loading: false,
             success: true,
         };
 
-        expect(publicIEOReducer(initialPublicIEOState, actions.ieoItemData(payloadIEOItem))).toEqual(expectedState);
+        expect(publicIEOReducer(initialPublicIEOState, actions.ieoItemData({ ieo: payloadIEOItem }))).toEqual(expectedState);
     });
 
     it('should handle IEO_ITEM_ERROR', () => {

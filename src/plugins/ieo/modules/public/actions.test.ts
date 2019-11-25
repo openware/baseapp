@@ -80,8 +80,8 @@ describe('IEO actions', () => {
     });
 
     it('should check ieoItemData action creator', () => {
-        const expectedAction = { type: IEO_ITEM_DATA, payload: fakeIEOItem };
-        expect(actions.ieoItemData(fakeIEOItem)).toEqual(expectedAction);
+        const expectedAction = { type: IEO_ITEM_DATA, payload: { ieo: fakeIEOItem } };
+        expect(actions.ieoItemData({ ieo: fakeIEOItem })).toEqual(expectedAction);
     });
 
     it('should check ieoItemError action creator', () => {
