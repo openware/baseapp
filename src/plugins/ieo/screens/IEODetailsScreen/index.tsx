@@ -9,9 +9,8 @@ import {
     RootState,
     selectCurrencies,
 } from '../../../../modules';
-import { IEODetails } from '../../components/IEODetails';
-import { IEOInfo } from '../../components/IEOInfo';
-import { IEOProjectIntroduction } from '../../components/IEOProjectIntroduction';
+import { IEODetails, IEOProjectIntroduction } from '../../components';
+import { IEOInfo } from '../../containers';
 import {
     DataIEOInterface,
     fetchItemIEO,
