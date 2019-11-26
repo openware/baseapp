@@ -24,22 +24,6 @@ export const en = {
     'page.body.ieo.profile.details.bicointalk': 'BikoinTalk',
 
     'page.body.ieo.profile.introduction.header': 'Project Introduction',
-    'page.body.ieo.profile.introduction.welcome': 'Welcome to the new investment horizons.',
-    'page.page.body.ieo.profile.introduction.coin.market': 'The Open Ware coin market,and EOS-based platform to buy and sell natural and lab-grown diamonds, heirloom or other jewellery, is opening the formerly closed diamond market for everybody.',
-    'page.page.body.ieo.profile.introduction.owc.present': 'OWC willpresent a marketplace and a trading platform for businesses and individuals working as a reliable tool for B2B, B2C or P2P relations.',
-    'page.page.body.ieo.profile.introduction.buy.directly': 'Buy directly from diamond producers, wholesalers and individual market participants. Sell your diamond ring or other jewellery to anyone in the world. Open your own shop with OWC token-powered services, launch ads and promotional campaigns.',
-    'page.page.body.ieo.profile.introduction.other.options': 'Other options available for OWC token are:',
-    'page.page.body.ieo.profile.introduction.option.first': '- transaction insurance',
-    'page.page.body.ieo.profile.introduction.option.second': '- storageservices',
-    'page.page.body.ieo.profile.introduction.option.third': '- relevant search, helping to find the best offers based on a particular request',
-    'page.page.body.ieo.profile.introduction.option.fourth': '- trade statistics, giving a deeper glimpse on the diamond markets’ supply and demand.',
-    'page.page.body.ieo.profile.introduction.complex.deal': 'For complex deals our consultants are ready to help and manage the technical aspect, assuring the deal will be done the fastest way possible. For clients who wish to learn about the special offers as soon as they appear on the platform, OWC will offer premium support by personal manager.',
-    'page.page.body.ieo.profile.introduction.togetether.funcrtions': 'All together these functions will serve to bring the best trading experience and open a new world of possibilities for the open diamond market participants.',
-    'page.page.body.ieo.profile.introduction.market.remains': 'The OWC market remains a closed area where most investors are not allowed. We believe that access to the OWC market is a natural right of any individual and build Openware Market to operate worldwide.',
-    'page.page.body.ieo.profile.introduction.dom': 'The DOM platform will allow users to choose between natural or lab-grown diamonds from the manufacturers or individuals and individually agree on the prices.',
-    'page.page.body.ieo.profile.introduction.dom.willoffer': 'DOM willoffer variety of payment methods, including banking, cash or cryptocurrency transactions. OWC will be built on EOS blockchain ecosystem and operate without any fees for both counterparties.',
-    'page.page.body.ieo.profile.introduction.businesscompanies': 'Businesscompanies will be able to open virtual branches on OWC, using value-added services of the platform. DOM will also introduce a secured smart contract system, allowing to implement any business logic and solve the safety issues.',
-    'page.page.body.ieo.profile.introduction.learn.more': 'Learn more on the company\'s website www.openware.com',
 
     'page.body.ieo.card.start.date': 'Start date',
     'page.body.ieo.card.end.date': 'End date',
@@ -51,5 +35,8 @@ export const en = {
     'page.body.ieo.details.order.youWillGet': 'You will get',
     'page.body.ieo.details.order.youWillPay': 'You will pay',
     'page.body.ieo.details.order.content.blur.title': 'Sales will be start after',
-
+    'page.body.ieo.details.order.content.blur.titleFinished': 'Sales have been finished',
+    'page.body.ieo.details.info.startsAt': 'Starts at',
+    'page.body.ieo.details.info.finishesAt': 'Finishes at',
+    'page.body.ieo.details.info.finishedAt': 'Finished at',
 };
