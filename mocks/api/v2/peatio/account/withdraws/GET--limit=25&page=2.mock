@@ -1,0 +1,54 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: total
+Total: 28
+
+[
+  {
+    "id":125,
+    "currency":"bch",
+    "type":"coin",
+    "amount":"0.002",
+    "fee":"0.001",
+    "blockchain_txid":null,
+    "rid":"2MwS8Fevd8qmPeqdYUMrCGDwK6aum6bnwqx",
+    "state":"prepared",
+    "created_at":"2018-08-28T16:50:04+02:00",
+    "updated_at":"2018-08-28T16:50:04+02:00",
+    "completed_at":null,
+    "done_at":null
+  },
+  {
+    "id":124,
+    "currency":"bch",
+    "type":"coin",
+    "amount":"0.002",
+    "fee":"0.001",
+    "blockchain_txid":null,
+    "rid":"2MwS8Fevd8qmPeqdYUMrCGDwK6aum6bnwqx",
+    "state":"prepared",
+    "created_at":"2018-08-28T16:49:56+02:00",
+    "updated_at":"2018-08-28T16:49:56+02:00",
+    "completed_at":null,
+    "done_at":null
+  },
+  {
+    "id":123,
+    "currency":"btc",
+    "type":"coin",
+    "amount":"0.75",
+    "fee":"0.0001",
+    "blockchain_txid":null,
+    "rid":"2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF",
+    "state":"processing",
+    "created_at":"2018-08-27T09:26:21+02:00",
+    "updated_at":"2018-08-27T09:26:24+02:00",
+    "completed_at":null,
+    "done_at":null
+
+  }
+]

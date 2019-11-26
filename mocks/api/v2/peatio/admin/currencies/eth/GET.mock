@@ -1,0 +1,33 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 16
+
+{
+    "name": "Ethereum",
+    "symbol": "Ξ",
+    "type": "coin",
+    "deposit_fee": "0.0",
+    "min_deposit_amount": "0.01",
+    "withdraw_fee": "0.01",
+    "min_withdraw_amount": "0.03",
+    "withdraw_limit_24h": "60.0",
+    "withdraw_limit_72h": "180.0",
+    "base_factor": 1000000000000000000,
+    "precision": 8,
+    "min_confirmations": 6,
+    "code": "eth",
+    "blockchain_key": "eth-mainnet",
+    "min_collection_amount": "0.01",
+    "position": 2,
+    "enabled": true,
+    "options": {
+        "erc20_contract_address": "",
+        "gas_limit": 21000,
+        "gas_price": 4000000000
+    },
+    "created_at": "2019-05-31T17:45:34+02:00",
+    "updated_at": "2019-06-17T09:13:51+02:00"
+}

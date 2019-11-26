@@ -1,0 +1,409 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 50
+
+[
+    {
+        "id": 152,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 153,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 154,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 155,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 156,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 157,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 158,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 159,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 160,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 161,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 162,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 163,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 164,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 165,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 166,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 167,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 168,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 169,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 170,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 171,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 172,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 173,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 174,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 175,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 176,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 177,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 178,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 179,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 180,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 181,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 182,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 183,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 184,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 185,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 186,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 187,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 188,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 189,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 190,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 191,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 192,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 193,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 194,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 195,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 196,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 197,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 198,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 199,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 200,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 201,
+        "scope": "ip",
+        "value": "127.0.0.1",
+        "status": "enabled",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    }
+]

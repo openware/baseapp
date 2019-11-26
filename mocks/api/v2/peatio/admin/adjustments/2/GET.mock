@@ -1,0 +1,65 @@
+HTTP/2 200
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+
+{
+    "id": 2,
+    "reason": "Binance deposit",
+    "description": "Lorem ipsum — dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "amount": "2,000.00",
+    "creator_uid": "UID54545454",
+    "currency": "BTC",
+    "state": "pending",
+    "category": "balance_anomaly",
+    "asset_account_code": 101,
+    "receiving_account_code": "201",
+    "receiving_member_uid": "UID12321123",
+    "created_at": "2019-05-31T15:13:36+02:00",
+    "updated_at": "2019-05-31T15:13:36+02:00",
+    "asset": {
+        "id": 1,
+        "code": "code",
+        "currency": "btc",
+        "credit": "1221.00",
+        "debit": "0.00",
+        "uid": "UID12321123",
+        "rid": "RID12321123",
+        "reference_type": "deposit",
+        "created_at": "2019-05-31T15:13:36+02:00"
+    },
+    "liability": {
+        "id": 1,
+        "code": "code",
+        "currency": "btc",
+        "credit": "1221.00",
+        "debit": "0.00",
+        "uid": "UID12321123",
+        "rid": "RID12321123",
+        "reference_type": "deposit",
+        "created_at": "2019-05-31T15:13:36+02:00"
+    },
+    "revenue": {
+        "id": 2,
+        "code": "code",
+        "currency": "btc",
+        "credit": "1221.00",
+        "debit": "0.00",
+        "uid": "UID12321123",
+        "rid": "RID12321123",
+        "reference_type": "deposit",
+        "created_at": "2019-05-31T15:13:36+02:00"
+    },
+    "expense": {
+        "id": 2,
+        "code": "code",
+        "currency": "btc",
+        "credit": "1221.00",
+        "debit": "0.00",
+        "uid": "UID12321123",
+        "rid": "RID12321123",
+        "reference_type": "deposit",
+        "created_at": "2019-05-31T15:13:36+02:00"
+    }
+}
+

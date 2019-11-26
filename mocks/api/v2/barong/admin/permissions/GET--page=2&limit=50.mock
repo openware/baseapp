@@ -1,0 +1,509 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 100
+
+[
+    {
+        "id": 152,
+        "action": "ACCEPT",
+        "role": "superadmin",
+        "verb": "ALL",
+        "path": "api/v2",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 153,
+        "action": "ACCEPT",
+        "role": "superadmin",
+        "verb": "ALL",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 154,
+        "action": "ACCEPT",
+        "role": "superadmin",
+        "verb": "GET",
+        "path": "assets",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 155,
+        "action": "ACCEPT",
+        "role": "superadmin",
+        "verb": "GET",
+        "path": "api/v2/ranger",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 156,
+        "action": "AUDIT",
+        "role": "superadmin",
+        "verb": "POST",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 157,
+        "action": "AUDIT",
+        "role": "superadmin",
+        "verb": "PUT",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 158,
+        "action": "AUDIT",
+        "role": "superadmin",
+        "verb": "DELETE",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 159,
+        "action": "AUDIT",
+        "role": "superadmin",
+        "verb": "POST",
+        "path": "api/v2/",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 160,
+        "action": "AUDIT",
+        "role": "superadmin",
+        "verb": "PUT",
+        "path": "api/v2/",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 161,
+        "action": "AUDIT",
+        "role": "superadmin",
+        "verb": "DELETE",
+        "path": "api/v2/",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 162,
+        "action": "ACCEPT",
+        "role": "admin",
+        "verb": "ALL",
+        "path": "api/v2",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 163,
+        "action": "ACCEPT",
+        "role": "admin",
+        "verb": "ALL",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 164,
+        "action": "ACCEPT",
+        "role": "admin",
+        "verb": "GET",
+        "path": "assets",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 165,
+        "action": "ACCEPT",
+        "role": "admin",
+        "verb": "GET",
+        "path": "api/v2/ranger",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 166,
+        "action": "DROP",
+        "role": "admin",
+        "verb": "ALL",
+        "path": "api/v2/barong/admin/permissions",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 167,
+        "action": "DROP",
+        "role": "admin",
+        "verb": "ALL",
+        "path": "api/v2/barong/admin/activities/admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 168,
+        "action": "AUDIT",
+        "role": "admin",
+        "verb": "POST",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 169,
+        "action": "AUDIT",
+        "role": "admin",
+        "verb": "PUT",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 170,
+        "action": "AUDIT",
+        "role": "admin",
+        "verb": "DELETE",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 171,
+        "action": "AUDIT",
+        "role": "admin",
+        "verb": "POST",
+        "path": "api/v2/",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 172,
+        "action": "AUDIT",
+        "role": "admin",
+        "verb": "PUT",
+        "path": "api/v2/",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 173,
+        "action": "AUDIT",
+        "role": "admin",
+        "verb": "DELETE",
+        "path": "api/v2/",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 174,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "admin/deposits",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 175,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "admin/withdraws",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 176,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "admin/members",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 177,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "admin/operations",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 178,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "admin/balance_sheet",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 179,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "admin/income_statement",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 180,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "assets",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 181,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "admin/deposits/usd",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 182,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "POST",
+        "path": "admin/deposits/usd",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 183,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "admin/deposits/fth",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 184,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "POST",
+        "path": "admin/deposits/fth",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 185,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "api/v2/barong/admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 186,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "PUT",
+        "path": "api/v2/barong/admin/users",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 187,
+        "action": "DROP",
+        "role": "accountant",
+        "verb": "PUT",
+        "path": "api/v2/barong/admin/users/labels",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 188,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "POST",
+        "path": "api/v2/barong/admin/users/update",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 189,
+        "action": "DROP",
+        "role": "accountant",
+        "verb": "POST",
+        "path": "api/v2/barong/admin/users/labels/update",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 190,
+        "action": "DROP",
+        "role": "accountant",
+        "verb": "ALL",
+        "path": "api/v2/barong/admin/permissions",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 191,
+        "action": "DROP",
+        "role": "accountant",
+        "verb": "ALL",
+        "path": "api/v2/barong/admin/activities/admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 192,
+        "action": "AUDIT",
+        "role": "accountant",
+        "verb": "POST",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 193,
+        "action": "AUDIT",
+        "role": "accountant",
+        "verb": "PUT",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 194,
+        "action": "AUDIT",
+        "role": "accountant",
+        "verb": "DELETE",
+        "path": "admin",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 195,
+        "action": "AUDIT",
+        "role": "accountant",
+        "verb": "POST",
+        "path": "api/v2/",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:09.000Z",
+        "updated_at": "2019-07-11T14:22:09.000Z"
+    },
+    {
+        "id": 196,
+        "action": "AUDIT",
+        "role": "accountant",
+        "verb": "PUT",
+        "path": "api/v2/",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 197,
+        "action": "AUDIT",
+        "role": "accountant",
+        "verb": "DELETE",
+        "path": "api/v2/",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 198,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "ALL",
+        "path": "api/v2/peatio/account",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 199,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "ALL",
+        "path": "api/v2/peatio/market",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 200,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "ALL",
+        "path": "api/v2/barong/resource",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    },
+    {
+        "id": 201,
+        "action": "ACCEPT",
+        "role": "accountant",
+        "verb": "GET",
+        "path": "api/v2/ranger",
+        "topic": "Update",
+        "created_at": "2019-07-11T14:22:10.000Z",
+        "updated_at": "2019-07-11T14:22:10.000Z"
+    }
+]

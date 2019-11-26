@@ -1,0 +1,55 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+
+[
+  {
+    "currency":"bch",
+    "balance":"10.12",
+    "locked":"0.1"
+  },
+  {
+    "currency":"btc",
+    "balance":"0.21026373",
+    "locked":"0.0"
+  },
+  {
+    "currency":"eth",
+    "balance":"5.0",
+    "locked":"0.0"
+  },
+  {
+    "currency":"dash",
+    "balance":"5.0",
+    "locked":"0.0"
+  },
+  {
+    "currency":"ltc",
+    "balance":"6.0",
+    "locked":"0.0"
+  },
+  {
+    "currency":"xrp",
+    "balance":"1234.0",
+    "locked":"0.0"
+  },
+  {
+    "currency":"zar",
+    "balance":"1000.0",
+    "locked":"0.0"
+  },
+  {
+    "currency":"usd",
+    "balance":"1000.0",
+    "locked":"0.0"
+  },
+  {
+    "currency":"eur",
+    "balance":"1000.0",
+    "locked":"0.0"
+  }
+]

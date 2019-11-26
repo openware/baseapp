@@ -1,0 +1,31 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 50
+
+[
+    {
+        "email": "asdasdas123123d@mail.com",
+        "uid": "IDD40BD7AB48",
+        "role": "member",
+        "level": 0,
+        "otp": false,
+        "state": "pending",
+        "profile": null,
+        "created_at": "2019-04-23T15:18:48Z",
+        "updated_at": "2019-04-23T15:18:48Z"
+    },
+    {
+        "email": "asdasdas123123d@mail.com",
+        "uid": "IDD40BD7AB48",
+        "role": "member",
+        "level": 0,
+        "otp": false,
+        "state": "pending",
+        "profile": null,
+        "created_at": "2019-04-23T15:18:48Z",
+        "updated_at": "2019-04-23T15:18:48Z"
+    }
+]

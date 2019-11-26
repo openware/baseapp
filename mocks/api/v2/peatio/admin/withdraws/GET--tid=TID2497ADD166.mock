@@ -1,0 +1,31 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 50
+
+[
+    {
+        "id": 1,
+        "currency": "usd",
+        "type": "fiat",
+        "amount": "0.02",
+        "fee": "0.01",
+        "blockchain_txid": "0xf78aec7dcb8610227a27d5cb13bcf03717e4092a8eb82dad9e3ebdd42343793d",
+        "rid": "0x977c1b9061f1d1afe5c12d13ce867f59995dff8b",
+        "state": "succeed",
+        "confirmations": 246466,
+        "note": null,
+        "created_at": "2019-06-06T23:53:20+02:00",
+        "updated_at": "2019-06-07T09:36:22+02:00",
+        "done_at": "2019-06-07T09:36:22+02:00",
+        "member": 7,
+        "account": 64,
+        "block_number": 7910372,
+        "sum": "0.03",
+        "tid": "TID2497ADD166",
+        "uid":"ID280AAB3CF0",
+        "email":"superadmin@barong.io"
+    }
+]

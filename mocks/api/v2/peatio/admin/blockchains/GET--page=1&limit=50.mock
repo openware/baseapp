@@ -1,0 +1,135 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 9
+
+[
+    {
+        "id": 1,
+        "key": "btc-testnet",
+        "name": "Bitcoin Testnet",
+        "client": "bitcoin",
+        "server": "http://user:password@127.0.0.1:18332",
+        "height": 1350003,
+        "explorer_address": "https://testnet.blockchain.info/address/#{address}",
+        "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
+        "min_confirmations": 6,
+        "status": "disabled",
+        "created_at": "2019-05-31T15:13:36+02:00",
+        "updated_at": "2019-07-12T12:29:19+02:00"
+    },
+    {
+        "id": 2,
+        "key": "eth-mainnet",
+        "name": "Ethereum Mainnet",
+        "client": "parity",
+        "server": "http://35.204.11.17:8545",
+        "height": 8156832,
+        "explorer_address": "https://etherscan.io/address/#{address}",
+        "explorer_transaction": "https://etherscan.io/tx/#{txid}",
+        "min_confirmations": 6,
+        "status": "active",
+        "created_at": "2019-05-31T16:16:47+02:00",
+        "updated_at": "2019-07-15T19:08:46+02:00"
+    },
+    {
+        "id": 3,
+        "key": "btc-mainnet",
+        "name": "Bitcoin Mainnet",
+        "client": "bitcoin",
+        "server": "http://Gae6shePhei8liiSheK1eiwaekai3aeG:EiJai2aubeisheeXi2shoqueivoo3jip@34.90.210.219:8332",
+        "height": 585526,
+        "explorer_address": "https://www.blockchain.com/btc/address/#{address}",
+        "explorer_transaction": "https://www.blockchain.com/btc/tx/#{txid}",
+        "min_confirmations": 6,
+        "status": "active",
+        "created_at": "2019-05-31T16:43:33+02:00",
+        "updated_at": "2019-07-15T19:07:25+02:00"
+    },
+    {
+        "id": 4,
+        "key": "bch-mainnet",
+        "name": "Bitcoin Cash Mainnet",
+        "client": "bitcoin",
+        "server": "http://euhungaixahr0axei9oyeKeihahpahPh:ieyoo1zoh0Xoo1oe6voh2ahree8feeng@34.90.223.254:18332",
+        "height": 584993,
+        "explorer_address": "https://www.blockchain.com/bch/address/#{address}",
+        "explorer_transaction": "https://www.blockchain.com/bch/tx/#{txid}",
+        "min_confirmations": 6,
+        "status": "disabled",
+        "created_at": "2019-05-31T16:53:37+02:00",
+        "updated_at": "2019-07-12T15:45:43+02:00"
+    },
+    {
+        "id": 5,
+        "key": "ltc-mainnet",
+        "name": "Litecoin Mainnet",
+        "client": "litecoin",
+        "server": "http://haleir2uch2Ahdeabierubeesoht5iec:aikiexi2ooqu2iet0ath8vahGh4thah5@34.90.255.192:9332",
+        "height": 1668175,
+        "explorer_address": "https://chain.so/address/LTC/#{address}",
+        "explorer_transaction": "https://chain.so/tx/LTC/#{txid}",
+        "min_confirmations": 6,
+        "status": "active",
+        "created_at": "2019-05-31T17:03:56+02:00",
+        "updated_at": "2019-07-15T19:08:40+02:00"
+    },
+    {
+        "id": 6,
+        "key": "dash-mainnet",
+        "name": "Dash Mainnet",
+        "client": "bitcoin",
+        "server": "http://phar9ahpheeThainaighoh2phuo2Ohqu:io3go1eex4neeg6aeSeaGh5dooW5Ooco@34.90.161.211:19998",
+        "height": 1084841,
+        "explorer_address": "https://chain.so/address/DASH/#{address}",
+        "explorer_transaction": "https://chain.so/tx/DASH/#{txid}",
+        "min_confirmations": 6,
+        "status": "disabled",
+        "created_at": "2019-05-31T17:09:26+02:00",
+        "updated_at": "2019-07-12T17:44:52+02:00"
+    },
+    {
+        "id": 7,
+        "key": "xrp-mainnet",
+        "name": "Ripple Mainnet",
+        "client": "bitcoin",
+        "server": "http://ofoh9iiqu5KaeTiihaezoMienguacahb:kaegew5aroopha5eimei6Eiv9Rouseu8@34.90.9.81:5005",
+        "height": 47747865,
+        "explorer_address": "https://bithomp.com/explorer/#{address}",
+        "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
+        "min_confirmations": 6,
+        "status": "disabled",
+        "created_at": "2019-05-31T17:22:58+02:00",
+        "updated_at": "2019-07-12T17:45:25+02:00"
+    },
+    {
+        "id": 8,
+        "key": "eth-rinkeby",
+        "name": "Ethereum Rinkeby",
+        "client": "geth",
+        "server": "http://geth:8545",
+        "height": 4000000,
+        "explorer_address": "https://rinkeby.etherscan.io/address/#{address}",
+        "explorer_transaction": "https://rinkeby.etherscan.io/tx/#{txid}",
+        "min_confirmations": 6,
+        "status": "active",
+        "created_at": "2019-08-16T12:29:59+02:00",
+        "updated_at": "2019-08-16T12:29:59+02:00"
+    },
+    {
+        "id": 9,
+        "key": "eth-mainet",
+        "name": "Ethereum Mainet",
+        "client": "geth",
+        "server": "http://geth:8545",
+        "height": 7500000,
+        "explorer_address": "https://etherscan.io/address/#{address}",
+        "explorer_transaction": "https://etherscan.io/tx/#{txid}",
+        "min_confirmations": 6,
+        "status": "disabled",
+        "created_at": "2019-08-16T12:29:59+02:00",
+        "updated_at": "2019-08-16T12:29:59+02:00"
+    }
+]
