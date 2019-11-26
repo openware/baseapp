@@ -10,6 +10,7 @@ import { Currency } from '../../../../modules';
 import { IEOCard } from '../../components';
 import {
     DataIEOInterface,
+    resetIEOList,
     setCurrentIEO,
 } from '../../modules';
 
@@ -22,6 +23,7 @@ interface OwnProps {
 
 interface DispatchProps {
     setCurrentIEO: typeof setCurrentIEO;
+    resetIEOList: typeof resetIEOList;
 }
 
 type Props = DispatchProps & RouterProps & InjectedIntlProps & OwnProps;
@@ -56,12 +58,14 @@ class IEOListContainer extends React.Component<Props> {
 
     private handleSelectIEO = (ieo: DataIEOInterface) => {
         this.props.setCurrentIEO(ieo);
+        this.props.resetIEOList();
         ieo && this.props.history.push(`/ieo/${ieo.id}`);
     };
 }
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     setCurrentIEO: payload => dispatch(setCurrentIEO(payload)),
+    resetIEOList: () => dispatch(resetIEOList()),
 });
 
 // tslint:disable-next-line:no-any

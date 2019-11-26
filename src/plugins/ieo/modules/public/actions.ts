@@ -6,6 +6,7 @@ import {
     IEO_ITEM_DATA,
     IEO_ITEM_ERROR,
     IEO_ITEM_FETCH,
+    IEO_RESET_DATA,
     IEO_SET_CURRENT_IEO,
     IEO_UPDATE,
 } from './constants';
@@ -19,6 +20,10 @@ export interface FetchIEO {
 export interface DataIEO {
     type: typeof IEO_DATA;
     payload: DataIEOInterface[];
+}
+
+export interface ResetIEO {
+    type: typeof IEO_RESET_DATA;
 }
 
 export interface ErrorIEO {
@@ -62,7 +67,8 @@ export type IEOAction =
     | UpdateIEO
     | FetchIEOItem
     | DataIEOItem
-    | ErrorIEOItem;
+    | ErrorIEOItem
+    | ResetIEO;
 
 export const fetchIEO = (payload?: FetchIEO['payload']): FetchIEO => ({
     type: IEO_FETCH,
@@ -72,6 +78,10 @@ export const fetchIEO = (payload?: FetchIEO['payload']): FetchIEO => ({
 export const ieoData = (payload: DataIEO['payload']): DataIEO => ({
     type: IEO_DATA,
     payload,
+});
+
+export const resetIEOList = (): ResetIEO => ({
+    type: IEO_RESET_DATA,
 });
 
 export const ieoError = (payload: ErrorIEO['payload']): ErrorIEO => ({

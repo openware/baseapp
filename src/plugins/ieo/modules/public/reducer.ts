@@ -7,6 +7,7 @@ import {
     IEO_ITEM_DATA,
     IEO_ITEM_ERROR,
     IEO_ITEM_FETCH,
+    IEO_RESET_DATA,
     IEO_SET_CURRENT_IEO,
     IEO_UPDATE,
 } from './constants';
@@ -39,6 +40,13 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
             return {
                 ...state,
                 list: action.payload,
+                loading: false,
+                success: true,
+            };
+        case IEO_RESET_DATA:
+            return {
+                ...state,
+                list: [],
                 loading: false,
                 success: true,
             };
