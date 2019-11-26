@@ -1,4 +1,8 @@
 import * as React from 'react';
+import {
+    InjectedIntlProps,
+    injectIntl,
+} from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
@@ -41,7 +45,7 @@ interface DispatchProps {
     rangerConnect: typeof rangerConnectFetch;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps;
+type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 
 class IEODetailsContainer extends React.Component<Props> {
     public componentDidMount() {
@@ -98,6 +102,12 @@ class IEODetailsContainer extends React.Component<Props> {
 
         return (
             <React.Fragment>
+                <div className="pg-currentIEO-page__back" onClick={this.handleClickBack}>
+                    <img src={require('../../assets/images/back-icon.svg')} className="back-icon" />&nbsp;&nbsp;
+                    <span className="pg-currentIEO-page__back-text">
+                        {this.props.intl.formatMessage({ id: 'page.body.ieo.details.header.backToList'})}
+                    </span>
+                </div>
                 <div className="pg-currentIEO-page__info">
                     <IEOInfo
                         currency={currencyItem}
@@ -113,7 +123,11 @@ class IEODetailsContainer extends React.Component<Props> {
                 </div>
             </React.Fragment>
         );
-    }
+    };
+
+    private handleClickBack = () => {
+        this.props.history.push('/ieo');
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -133,5 +147,5 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const IEODetailsScreen = withRouter(connect(mapStateToProps, mapDispatchToProps)(IEODetailsContainer) as any);
+export const IEODetailsScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(IEODetailsContainer) as any));
 

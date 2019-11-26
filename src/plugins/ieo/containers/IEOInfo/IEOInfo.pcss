@@ -6,7 +6,7 @@
   flex-direction: row;
   justify-content: space-between;
   background: var(--main-bg);
-  border-radius: calc(var(--gap) * 1.25);
+  border-radius: calc(var(--gap) * 0.5);
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: calc(var(--gap) * 2.75);
+    padding: calc(var(--gap) * 6.5) calc(var(--gap) * 3.83);
     width: 70%;
     font-weight: normal;
     line-height: calc(var(--gap) * 3.2);
@@ -28,9 +28,9 @@
 
       &__coin-area {
         text-align: center;
-        width: 35%;
+        width: calc(var(--gap) * 26.66);
         background: var(--ieo-header-bg);
-        border-radius: calc(var(--gap) * 1.25);
+        border-radius: calc(var(--gap) * 0.5);
 
         &__coin-logo {
           margin: 0 auto;
@@ -68,7 +68,7 @@
       }
 
       &__value {
-        margin: 0 calc(var(--gap) * 2.5);
+        margin: 0 calc(var(--gap) * 3.83);
         width: 65%;
 
         .expiration-time {
