@@ -86,6 +86,10 @@ class IEODetailsContainer extends React.Component<Props> {
         }
     }
 
+    public componentWillUnmount() {
+        this.props.setCurrentIEO(undefined);
+    }
+
     public render() {
         const { currentIEO, loading } = this.props;
 
