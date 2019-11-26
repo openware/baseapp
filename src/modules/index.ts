@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 // tslint:disable-next-line no-submodule-imports
 import { all, call } from 'redux-saga/effects';
-import { pluginsReducer, PluginsState, rootPluginsSaga } from '../plugins/modules';
+import { OrderIEOState, PublicIEOState, rootIEOOrderSaga, rootPublicIEOSaga } from '../plugins/ieo/modules';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { ColorThemeState } from './public/colorTheme';
@@ -77,6 +77,7 @@ export interface RootState {
         alerts: AlertState;
         kline: KlineState;
         rgl: GridLayoutState;
+        ieo: PublicIEOState,
     };
     user: {
         auth: AuthState;
@@ -98,14 +99,13 @@ export interface RootState {
         sendEmailVerification: EmailVerificationState;
         withdrawLimit: WithdrawLimitState;
         guard: GuardState;
+        ieo: OrderIEOState,
     };
-    plugins: PluginsState;
 }
 
 export const rootReducer = combineReducers({
     public: publicReducer,
     user: userReducer,
-    plugins: pluginsReducer,
 });
 
 export function* rootSaga() {
@@ -135,6 +135,7 @@ export function* rootSaga() {
         call(rootKlineFetchSaga),
         call(rootWithdrawLimitSaga),
         call(rootGuardSaga),
-        call(rootPluginsSaga),
+        call(rootIEOOrderSaga),
+        call(rootPublicIEOSaga),
     ]);
 }
