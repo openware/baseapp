@@ -1,9 +1,12 @@
 .pg-ieo__card {
   display: flex;
   flex-direction: column;
-  min-width: calc(var(--gap) * 26.875);
+  width: calc(var(--gap) * 36.33);
+  min-height: calc(var(--gap) * 39.33);
   margin: calc(var(--gap) * 2.875) calc(var(--gap) * 2.875) calc(var(--gap) * 2.875) 0;
   color: var(--white);
+  background: var(--main-bg);
+  position: relative;
 
   &-header {
     display: flex;
@@ -11,17 +14,17 @@
     align-items: center;
     background: var(--ieo-header-bg);
     border-bottom: 1px solid var(--ieo-header-border);
-    padding: 0 calc(var(--gap) * 2.875);
+    padding: 0 calc(var(--gap) * 3.833);
 
     &__icon {
-      height: calc(var(--gap) * 6.625);
-      width: calc(var(--gap) * 6.625);
-      margin: calc(var(--gap) * 1.5) calc(var(--gap) * 2.875)  calc(var(--gap) * 1.5) 0;
+      height: calc(var(--gap) * 8.75);
+      width: calc(var(--gap) * 8.75);
+      margin: calc(var(--gap) * 2) calc(var(--gap) * 2.875)  calc(var(--gap) * 2) 0;
     }
 
     &__text {
       font-weight: normal;
-      font-size: calc(var(--gap) * 4);
+      font-size: calc(var(--gap) * 5.33);
     }
   }
 
@@ -30,7 +33,7 @@
     align-items: space-between;
     flex-direction: column;
     background: var(--main-bg);
-    padding: 0 calc(var(--gap) * 2.875);
+    padding: 0 calc(var(--gap) * 3.833);
 
     &__title {
       font-weight: normal;
@@ -41,16 +44,19 @@
     &__text {
       font-weight: 300;
       letter-spacing: 0.02em;
-      font-size: calc(var(--gap) * 1.25);
-      margin-top: calc(var(--gap) *  2.875);
+      font-size: calc(var(--gap) * 1.66);
+      margin-top: calc(var(--gap) *  3.83);
     }
 
     &-block {
       margin-top: calc(var(--gap) * 1.25);
-      margin-bottom: calc(var(--gap) *  2.625);
+      position: absolute;
+      bottom: calc(var(--gap) *  3.83);
+      right: calc(var(--gap) *  3.83);
+      left: calc(var(--gap) *  3.83);
 
       &__text {
-        font-size: calc(var(--gap) * 1.25);
+        font-size: calc(var(--gap) * 1.66);
 
         .text-bold {
           font-weight: bold;
@@ -65,11 +71,10 @@
       }
 
       .content {
-
         &__ieo-countdown {
           align-items: center;
           display: flex;
-          font-size: calc(var(--gap) * 1.375);
+          font-size: calc(var(--gap) * 1.83);
           font-weight: bold;
           letter-spacing: 0.0357143em;
           line-height: calc(var(--gap) * 1.5);
@@ -85,9 +90,10 @@
       }
 
       .progress-bar {
-        margin: calc(var(--gap) * 1.5) calc(var(--gap) * 1.5) calc(var(--gap) * 1.5) calc(var(--gap) * 2.5);
-        height: calc(var(--gap) * 2.5);
-        width: 80%;
+        margin-top: calc(var(--gap) * 3);
+        margin-bottom: calc(var(--gap) * 1.33);
+        height: calc(var(--gap) * 1.66);
+        width: 100%;
         border-radius: calc(var(--gap) * 0.75);
         background: var(--progress-bar);
 
