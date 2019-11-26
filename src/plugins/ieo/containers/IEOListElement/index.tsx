@@ -39,9 +39,9 @@ class IEOListContainer extends React.Component<Props> {
         const { ieo, currencies } = this.props;
 
         return ieo.length ? ieo.map((item, index) => {
-            const currencyItem = currencies.length && currencies.find(cur => cur.id === item.currency_id);
+            const currencyItem = item && currencies.length && currencies.find(cur => cur.id === item.currency_id);
 
-            return (
+            return item ? (
                 <IEOCard
                     ieo={item}
                     onIEOSelect={this.handleSelectIEO}
@@ -50,7 +50,7 @@ class IEOListContainer extends React.Component<Props> {
                     handleFetchIEO={this.props.handleFetchIEO}
                     onClick={this.handleSelectIEO}
                 />
-            );
+            ) : null;
         }) : null;
     }
 
