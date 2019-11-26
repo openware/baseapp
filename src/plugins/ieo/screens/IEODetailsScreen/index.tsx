@@ -19,16 +19,12 @@ import {
     DataIEOInterface,
     fetchItemIEO,
     selectCurrentIEO,
-    selectIEOItem,
     selectIEOLoading,
-    selectIEOSuccess,
     setCurrentIEO,
 } from '../../modules';
 
 interface ReduxProps {
     currentIEO?: DataIEOInterface;
-    ieo?: DataIEOInterface;
-    ieoSuccess?: boolean;
     currencies: Currency[];
     loading: boolean;
     userLoggedIn: boolean;
@@ -84,31 +80,31 @@ class IEODetailsContainer extends React.Component<Props> {
     }
 
     public render() {
-        const { ieo, loading } = this.props;
+        const { currentIEO, loading } = this.props;
 
         return (
-            <div className="container pg-ieo-page">
-                {ieo && !loading ? this.renderContent() : null}
+            <div className="container pg-currentIEO-page">
+                {currentIEO && !loading ? this.renderContent() : null}
             </div>
         );
     }
 
     private renderContent = () => {
-        const { currencies, ieo } = this.props;
-        const currencyItem = currencies.length && ieo && currencies.find(cur => cur.id === ieo.currency_id);
+        const { currencies, currentIEO } = this.props;
+        const currencyItem = currencies.length && currentIEO && currencies.find(cur => cur.id === currentIEO.currency_id);
 
         return (
             <React.Fragment>
-                <div className="pg-ieo-page__info">
+                <div className="pg-currentIEO-page__info">
                     <IEOInfo
                         currency={currencyItem}
-                        ieo={ieo}
+                        ieo={currentIEO}
                     />
                 </div>
-                <div className="pg-ieo-page__details">
+                <div className="pg-currentIEO-page__details">
                     <IEODetails />
                 </div>
-                <div className="pg-ieo-page__product-intiduction">
+                <div className="pg-currentIEO-page__product-intiduction">
                     <IEOProjectIntroduction />
                 </div>
             </React.Fragment>
@@ -118,8 +114,6 @@ class IEODetailsContainer extends React.Component<Props> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     currentIEO: selectCurrentIEO(state),
-    ieo: selectIEOItem(state),
-    ieoSuccess: selectIEOSuccess(state),
     currencies: selectCurrencies(state),
     loading: selectIEOLoading(state),
     rangerState: selectRanger(state),
