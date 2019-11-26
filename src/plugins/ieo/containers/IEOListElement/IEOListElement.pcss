@@ -1,8 +1,14 @@
-.pg-ieo-page__list {
+.pg-ieo-page{
+  &__list {
     display: flex;
     flex-direction: row;
 
     @media(max-width: 576px) {
-        flex-direction: column;
+      flex-direction: column;
     }
+  }
+
+  &__header {
+    color: var(--header-text);
+  }
 }
