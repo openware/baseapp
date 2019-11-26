@@ -106,13 +106,10 @@ class IEODetailsContainer extends React.Component<Props> {
                     />
                 </div>
                 <div className="pg-currentIEO-page__details">
-                    <IEODetails
-                        currentIEO={currentIEO}
-                        ieoDetails={ieoDetails}
-                    />
+                    {ieoDetails ? <IEODetails currentIEO={currentIEO} ieoDetails={ieoDetails} /> : null}
                 </div>
                 <div className="pg-currentIEO-page__product-intiduction">
-                    <IEOProjectIntroduction introduction={ieoDetails.introduction}/>
+                    {ieoDetails ? <IEOProjectIntroduction introduction={ieoDetails.introduction}/> : null}
                 </div>
             </React.Fragment>
         );
