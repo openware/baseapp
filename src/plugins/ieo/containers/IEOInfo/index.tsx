@@ -130,6 +130,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
                 <div className="ieo-profile-info__order">
                     <OrderIEO currentIEO={ieo} />
                     {ieo.state === 'preparing' ? <Blur title={this.props.intl.formatMessage({ id: 'page.body.ieo.details.order.content.blur.title' })} ieo={ieo}/> : null}
+                    {ieo.state === 'finished' ? <Blur title={this.props.intl.formatMessage({ id: 'page.body.ieo.details.order.content.blur.titleFinished' })} ieo={ieo}/> : null}
                 </div>
             </div>
         );
@@ -156,7 +157,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
             <div className="ieo-profile-info__main__info__value">
                 <div className="expiration-time">
                     <div className="expiration-time__label">
-                        Starts at
+                        {this.translate('page.body.ieo.details.info.startsAt')}
                     </div>
                     <div className="expiration-time__value">
                         {localeDate(ieo.starts_at, 'fullDate')}
@@ -164,7 +165,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
                 </div>
                 <div className="expiration-time">
                     <div className="expiration-time__label">
-                        Finishes at
+                        {this.translate('page.body.ieo.details.info.finishesAt')}
                     </div>
                     <div className="expiration-time__value">
                         {localeDate(ieo.finishes_at, 'fullDate')}
@@ -252,9 +253,17 @@ class IEOInfoComponent extends React.Component<Props, State> {
 
         return (
             <div className="ieo-profile-info__main__info__value">
+                <div className="expiration-time">
+                    <div className="expiration-time__label">
+                        {this.translate('page.body.ieo.details.info.finishedAt')}
+                    </div>
+                    <div className="expiration-time__value">
+                        {localeDate(ieo.finishes_at, 'fullDate')}
+                    </div>
+                </div>
                 <div className="ieo-price">
                     <div className="ieo-price__label">
-                        Raised
+                        {this.translate('page.body.ieo.card.raised')}
                     </div>
                     <div className="ieo-price__value">
                         {amountOfQuote} {amountOfQuote && ieo.pairs[0].quote_currency_id && ieo.pairs[0].quote_currency_id.toUpperCase()}

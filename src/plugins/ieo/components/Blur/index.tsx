@@ -71,7 +71,7 @@ export class Blur extends React.Component<Props, State> {
     }
 
     public render() {
-        const { className, title } = this.props;
+        const { className, title, ieo } = this.props;
         const { countdownValue } = this.state;
 
         const countDownColorClass = classnames('pg-blur__content__countdown', {
@@ -83,7 +83,7 @@ export class Blur extends React.Component<Props, State> {
             <div className={`pg-blur ${className}`}>
                 <div className="pg-blur__content">
                     {title ? <span className="pg-blur__content__title">{title}</span> : null}
-                    <div className={countDownColorClass}>{countdownValue}</div>
+                    {ieo.state !== 'finished' ? <div className={countDownColorClass}>{countdownValue}</div> : null}
                 </div>
             </div>
         );

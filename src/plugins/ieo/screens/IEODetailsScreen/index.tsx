@@ -19,6 +19,7 @@ import {
     DataIEOInterface,
     fetchItemIEO,
     selectCurrentIEO,
+    selectCurrentIEODetails,
     selectIEOLoading,
     setCurrentIEO,
 } from '../../modules';
@@ -29,6 +30,8 @@ interface ReduxProps {
     loading: boolean;
     userLoggedIn: boolean;
     rangerState: RangerState;
+    // tslint:disable-next-line: no-any
+    ieoDetails: any;
 }
 
 interface DispatchProps {
@@ -90,7 +93,7 @@ class IEODetailsContainer extends React.Component<Props> {
     }
 
     private renderContent = () => {
-        const { currencies, currentIEO } = this.props;
+        const { currencies, currentIEO, ieoDetails } = this.props;
         const currencyItem = currencies.length && currentIEO && currencies.find(cur => cur.id === currentIEO.currency_id);
 
         return (
@@ -102,7 +105,10 @@ class IEODetailsContainer extends React.Component<Props> {
                     />
                 </div>
                 <div className="pg-currentIEO-page__details">
-                    <IEODetails />
+                    <IEODetails
+                        currentIEO={currentIEO}
+                        ieoDetails={ieoDetails}
+                    />
                 </div>
                 <div className="pg-currentIEO-page__product-intiduction">
                     <IEOProjectIntroduction />
@@ -118,6 +124,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     loading: selectIEOLoading(state),
     rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
+    ieoDetails: selectCurrentIEODetails(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
