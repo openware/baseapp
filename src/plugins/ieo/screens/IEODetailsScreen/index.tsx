@@ -93,7 +93,7 @@ class IEODetailsContainer extends React.Component<Props> {
     }
 
     private renderContent = () => {
-        const { currencies, currentIEO, ieoDetails } = this.props;
+        const { currencies, currentIEO, ieoDetails, userLoggedIn } = this.props;
         const currencyItem = currencies.length && currentIEO && currencies.find(cur => cur.id === currentIEO.currency_id);
 
         return (
@@ -102,6 +102,7 @@ class IEODetailsContainer extends React.Component<Props> {
                     <IEOInfo
                         currency={currencyItem}
                         ieo={currentIEO}
+                        isLoggedIn={userLoggedIn}
                     />
                 </div>
                 <div className="pg-currentIEO-page__details">
@@ -111,7 +112,7 @@ class IEODetailsContainer extends React.Component<Props> {
                     />
                 </div>
                 <div className="pg-currentIEO-page__product-intiduction">
-                    <IEOProjectIntroduction />
+                    <IEOProjectIntroduction introduction={ieoDetails.introduction}/>
                 </div>
             </React.Fragment>
         );
