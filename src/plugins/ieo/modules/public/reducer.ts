@@ -79,15 +79,20 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
         case IEO_UPDATE:
             const index = state.list.findIndex(el => String(el.id) === String(action.payload.id));
             const list = state.list.slice();
+            let currentIEO = state.currentIEO;
             if (index !== -1){
                 list[index] = action.payload;
             } else {
                 list.push(action.payload);
+                if (currentIEO && currentIEO.id === action.payload.id) {
+                    currentIEO = action.payload;
+                }
             }
 
             return {
                 ...state,
                 list,
+                currentIEO,
             };
         default:
             return state;
