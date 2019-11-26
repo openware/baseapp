@@ -3,6 +3,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rangerSagas } from '.';
 import { Cryptobase, defaultConfig } from '../../../../api';
 import { createEchoServer, setupMockStore } from '../../../../helpers/jest';
+import { DataIEOInterface } from '../../../../plugins/ieo/modules';
 import { OrderEvent } from '../../../types';
 import { PrivateTradeEvent } from '../../../user/history';
 import { HISTORY_PUSH_EMIT } from '../../../user/history/constants';
@@ -84,6 +85,47 @@ describe('Ranger module', () => {
         min_amount: '0.00001',
         amount_precision: 6,
         price_precision: 6,
+    };
+
+    const fakeIEOPairs = [
+        {
+            id: 104,
+            sale_id: 331,
+            quote_currency_id: 'btc',
+            price: '2.4',
+            created_at: '2019-09-19T10:30:02.000Z',
+            updated_at: '2019-09-19T10:30:02.000Z',
+        },
+        {
+            id: 105,
+            sale_id: 331,
+            quote_currency_id: 'usd',
+            price: '1.4',
+            created_at: '2019-09-19T10:30:02.000Z',
+            updated_at: '2019-09-19T10:30:02.000Z',
+        },
+    ];
+
+    const ieoExample: DataIEOInterface = {
+        id: 331,
+        name: 'test',
+        introduction_url: null,
+        owner_uid: '946111b1-02cd-472d-8e12-38a321d20bb8',
+        currency_id: 'eth',
+        supply: '34.2',
+        low_goal: '0.0',
+        commission: '0.0',
+        min_amount: '0.0',
+        min_unit: '0.0',
+        state: 'pending',
+        collected_amount: '12.0',
+        ratio: '6.4',
+        starts_at: '2019-09-19T10:30:02.000Z',
+        finishes_at: '2019-09-22T10:30:02.000Z',
+        created_at: '2019-09-19T10:30:02.000Z',
+        updated_at: '2019-09-19T10:30:02.000Z',
+        pairs: fakeIEOPairs,
+        type: 'proportional',
     };
 
     describe('automatically reconnect when connection is lost', async () => {
@@ -737,6 +779,42 @@ describe('Ranger module', () => {
                         }
                     });
                     store.dispatch(rangerConnectFetch({ withAuth: true }));
+                });
+            });
+        });
+
+        describe('ieo', () => {
+            const mockIEOUpdate = { 'eth.ieo-sale': ieoExample };
+
+            it('should push ieo', async () => {
+                return new Promise(resolve => {
+                    store.dispatch(rangerConnectFetch({ withAuth: false }));
+                    store.subscribe(() => {
+                        const actions = store.getActions();
+                        const lastAction = actions.slice(-1)[0];
+                        switch (actions.length) {
+                            case 1:
+                                expect(actions[0]).toEqual({
+                                    type: RANGER_CONNECT_FETCH,
+                                    payload: { withAuth: false },
+                                });
+                                return;
+
+                           case 2:
+                                expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
+                                store.dispatch(rangerDirectMessage(mockIEOUpdate));
+                                return;
+
+                            case 3:
+                                expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockIEOUpdate });
+                                setTimeout(resolve, 30);
+                                return;
+
+                            default:
+                                fail(`Unexpected action ${actions.length}`);
+                                break;
+                        }
+                    });
                 });
             });
         });
