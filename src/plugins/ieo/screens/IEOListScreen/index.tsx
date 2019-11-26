@@ -98,34 +98,31 @@ class IEOListContainer extends React.Component<Props> {
 
     private renderContent = () =>  {
         const { currencies } = this.props;
+        const listPreparing = this.handleFilterIEO(['preparing']);
+        const listInProgress = this.handleFilterIEO(['ongoing', 'distributing']);
+        const listPast = this.handleFilterIEO(['finished']);
 
         return (
             <React.Fragment>
-                <span className="pg-ieo-page__header">
-                    {this.translate('page.body.trade.header.upcoming')}
-                </span>
+                {listPreparing.length ? <span className="pg-ieo-page__header">{this.translate('page.body.trade.header.upcoming')}</span> : null}
                 <IEOListElement
                     state={[ 'preparing' ]}
                     currencies={currencies}
-                    ieo={this.handleFilterIEO(['preparing'])}
+                    ieo={listPreparing}
                     handleFetchIEO={this.handleFetchIEO}
                 />
-                <span className="pg-ieo-page__header">
-                    {this.translate('page.body.trade.header.inProgress')}
-                </span>
+                {listInProgress.length ? <span className="pg-ieo-page__header">{this.translate('page.body.trade.header.inProgress')}</span> : null}
                 <IEOListElement
                     state={['ongoing', 'distributing']}
                     currencies={currencies}
-                    ieo={this.handleFilterIEO(['ongoing', 'distributing'])}
+                    ieo={listInProgress}
                     handleFetchIEO={this.handleFetchIEO}
                 />
-                <span className="pg-ieo-page__header">
-                    {this.translate('page.body.trade.header.past')}
-                </span>
+                {listPast.length ? <span className="pg-ieo-page__header">{this.translate('page.body.trade.header.past')}</span> : null}
                 <IEOListElement
                     state={[ 'finished' ]}
                     currencies={currencies}
-                    ieo={this.handleFilterIEO(['finished'])}
+                    ieo={listPast}
                     handleFetchIEO={this.handleFetchIEO}
                 />
             </React.Fragment>
