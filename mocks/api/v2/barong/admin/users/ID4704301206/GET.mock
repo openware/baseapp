@@ -1,0 +1,40 @@
+ID51704201206HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 50
+
+
+{
+    "id":1,
+    "email":"john@sbcglobal.net",
+    "role":"member",
+    "level":2,
+    "otp":false,
+    "state":"active",
+    "created_at":"2019-02-25T12:41:14Z",
+    "updated_at":"2019-02-25T12:41:14Z",
+    "referral_uid": "IDA1DD9A4147",
+    "profile": {
+        "address": "3 Avenue des Champs Elysees",
+        "city": "Paris",
+        "country": "France",
+        "dob": "1999-05-21",
+        "first_name": "John",
+        "last_name": "Snow",
+        "postcode": "666666",
+        "metadata": "{\"nationality\": \"albanian\"}"
+    },
+    "labels": [
+        {
+        "key": "phone",
+        "value": "verify",
+        "scope": "private",
+        "created_at": "2019-05-16T14:01:49Z",
+        "updated_at": "2019-05-16T14:01:49Z"
+        }
+    ],
+    "phones": "+380234823918",
+    "documents":[{"upload":{"url":"https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzEwNC84MTkvb3JpZ2luYWwvY3V0ZS1raXR0ZW4uanBn"},"doc_type":"Driver license","doc_number":"343434","doc_expire":"3030-12-30","metadata":null,"created_at":"2019-03-14T10:17:50Z","updated_at":"2019-03-14T10:17:50Z"},{"upload":{"url":"https://cdn1us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/2019/02/captain-marvel-cat-goose.jpg?itok=adx00vhf"},"doc_type":"Identity card","doc_number":"123","doc_expire":"2020-12-22","metadata":null,"created_at":"2019-03-30T23:43:47Z","updated_at":"2019-03-30T23:43:47Z"}]
+}

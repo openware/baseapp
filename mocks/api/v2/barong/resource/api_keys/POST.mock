@@ -1,0 +1,14 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+
+{
+    "algorithm": "HS256",
+    "created_at": "2019-02-14T15:56:57Z",
+    "kid": "5c3933e8c8f97071",
+    "scope": [],
+    "secret": "27757139646497bf91389d9e70cf973c",
+    "state": "active",
+    "updated_at": "2019-02-14T15:56:57Z"
+}

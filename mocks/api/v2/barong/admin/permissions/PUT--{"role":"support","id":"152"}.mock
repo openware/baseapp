@@ -1,0 +1,12 @@
+HTTP/2 200 
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+
+{
+    "role": "support",
+    "verb": "get",
+    "path": "api/v2/ranger/",
+    "action": "accept",
+    "id": "152"
+}

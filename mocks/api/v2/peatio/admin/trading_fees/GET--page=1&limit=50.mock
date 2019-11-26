@@ -1,0 +1,90 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 50
+
+[
+    {
+        "id": 1,
+        "group": "any",
+        "market_id": "ethusd",
+        "maker": "0.1",
+        "taker": "0.02",
+        "created_at": "2019-08-26T16:32:22+02:00",
+        "updated_at": "2019-08-26T16:32:22+02:00"
+    },
+    {
+        "id": 2,
+        "group": "any",
+        "market_id": "fthusd",
+        "maker": "0.0015",
+        "taker": "0.0015",
+        "created_at": "2019-08-26T16:32:22+02:00",
+        "updated_at": "2019-08-26T16:32:22+02:00"
+    },
+    {
+        "id": 3,
+        "group": "any",
+        "market_id": "trsteth",
+        "maker": "0.0015",
+        "taker": "0.0015",
+        "created_at": "2019-08-26T16:32:22+02:00",
+        "updated_at": "2019-08-26T16:32:22+02:00"
+    },
+    {
+        "id": 4,
+        "group": "any",
+        "market_id": "usdtrst",
+        "maker": "0.05",
+        "taker": "0.01",
+        "created_at": "2019-08-26T16:32:22+02:00",
+        "updated_at": "2019-08-26T16:32:22+02:00"
+    },
+    {
+        "id": 5,
+        "group": "any",
+        "market_id": "any",
+        "maker": "0.002",
+        "taker": "0.002",
+        "created_at": "2019-08-26T16:32:23+02:00",
+        "updated_at": "2019-08-26T16:32:23+02:00"
+    },
+    {
+        "id": 6,
+        "group": "vip-0",
+        "market_id": "any",
+        "maker": "0.001",
+        "taker": "0.002",
+        "created_at": "2019-08-26T16:32:23+02:00",
+        "updated_at": "2019-08-26T16:32:23+02:00"
+    },
+    {
+        "id": 7,
+        "group": "vip-1",
+        "market_id": "any",
+        "maker": "0.0008",
+        "taker": "0.0018",
+        "created_at": "2019-08-26T16:32:23+02:00",
+        "updated_at": "2019-08-26T16:32:23+02:00"
+    },
+    {
+        "id": 8,
+        "group": "vip-2",
+        "market_id": "any",
+        "maker": "0.0006",
+        "taker": "0.0016",
+        "created_at": "2019-08-26T16:32:23+02:00",
+        "updated_at": "2019-08-26T16:32:23+02:00"
+    },
+    {
+        "id": 9,
+        "group": "vip-3",
+        "market_id": "any",
+        "maker": "0.0",
+        "taker": "0.0014",
+        "created_at": "2019-08-26T16:32:23+02:00",
+        "updated_at": "2019-08-26T16:32:23+02:00"
+    }
+]

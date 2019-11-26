@@ -1,0 +1,19 @@
+HTTP/2 200
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+
+{
+    "id": 1,
+    "key": "btc-testnet",
+    "name": "Bitcoin Testnet",
+    "client": "bitcoin",
+    "server": "http://user:password@127.0.0.1:18332",
+    "height": 1350003,
+    "explorer_address": "https://testnet.blockchain.info/address/#{address}",
+    "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
+    "min_confirmations": 6,
+    "status": "disabled",
+    "created_at": "2019-05-31T15:13:36+02:00",
+    "updated_at": "2019-07-12T12:29:19+02:00"
+}

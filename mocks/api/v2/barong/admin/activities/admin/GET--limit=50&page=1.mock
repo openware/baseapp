@@ -1,0 +1,207 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 60
+
+[
+  {
+    "user_ip": "176.37.131.245,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36 OPR/60.0.3255.170",
+    "topic": "activities",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"page\":\"1\",\"wallet\":{\"id\":\"7\",\"blockchain_key\":\"eth\",\"currency_id\":\"7\"},\"path\":\"api/v2/barong/admin/activities\"}",
+    "admin": {
+      "email": "superadmin@barong.io",
+      "uid": "IDABE33F71F5",
+      "role": "superadmin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T15:59:32Z"
+  },
+  {
+    "user_ip": "176.37.131.245,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36 OPR/60.0.3255.170",
+    "topic": "activities",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"path\":\"api/v2/barong/admin/metrics\",\"created_at\":\"1563224400\"}",
+    "admin": {
+      "email": "superadmin@barong.io",
+      "uid": "IDABE33F71F5",
+      "role": "superadmin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T15:59:31Z"
+  },
+  {
+    "user_ip": "195.214.197.210,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:67.0) Gecko/20100101 Firefox/67.0",
+    "topic": "activities",
+    "action": "read",
+    "result": "succeed",
+    "data": null,
+    "admin": {
+      "email": "superadmin@barong.io",
+      "uid": "IDABE33F71F5",
+      "role": "superadmin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T13:38:36Z"
+  },
+  {
+    "user_ip": "195.214.197.210,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:67.0) Gecko/20100101 Firefox/67.0",
+    "topic": "metrics",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"path\":\"api/v2/barong/admin/metrics\"}",
+    "admin": {
+      "email": "superadmin@barong.io",
+      "uid": "IDABE33F71F5",
+      "role": "superadmin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T13:38:34Z"
+  },
+  {
+    "user_ip": "195.214.197.210,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:67.0) Gecko/20100101 Firefox/67.0",
+    "topic": "users",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"limit\":\"50\",\"page\":\"1\",\"extended\":\"true\",\"path\":\"api/v2/barong/admin/users\"}",
+    "admin": {
+      "email": "superadmin@barong.io",
+      "uid": "IDABE33F71F5",
+      "role": "superadmin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T13:38:33Z"
+  },
+  {
+    "user_ip": "195.214.197.210,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:67.0) Gecko/20100101 Firefox/67.0",
+    "topic": "general",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"path\":\"api/v2/peatio/account/balances\"}",
+    "admin": {
+      "email": "admin@barong.io",
+      "uid": "ID3CE1FB4559",
+      "role": "admin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T13:37:00Z"
+  },
+  {
+    "user_ip": "195.214.197.210,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:67.0) Gecko/20100101 Firefox/67.0",
+    "topic": "general",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"path\":\"api/v2/peatio/account/balances\"}",
+    "admin": {
+      "email": "admin@barong.io",
+      "uid": "ID3CE1FB4559",
+      "role": "admin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T13:36:57Z"
+  },
+  {
+    "user_ip": "195.214.197.210,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:67.0) Gecko/20100101 Firefox/67.0",
+    "topic": "general",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"path\":\"api/v2/peatio/account/deposit_address/btc\"}",
+    "admin": {
+      "email": "admin@barong.io",
+      "uid": "ID3CE1FB4559",
+      "role": "admin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T13:36:57Z"
+  },
+  {
+    "user_ip": "195.214.197.210,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:67.0) Gecko/20100101 Firefox/67.0",
+    "topic": "general",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"page\":\"1\",\"currency\":\"btc\",\"limit\":\"6\",\"path\":\"api/v2/peatio/account/deposits\"}",
+    "admin": {
+      "email": "admin@barong.io",
+      "uid": "ID3CE1FB4559",
+      "role": "admin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T13:36:57Z"
+  },
+  {
+    "user_ip": "195.214.197.210,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
+    "topic": "wallets",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"path\":\"admin/wallets\"}",
+    "admin": {
+      "email": "admin@barong.io",
+      "uid": "ID3CE1FB4559",
+      "role": "admin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T12:01:01Z"
+  },
+  {
+    "user_ip": "195.214.197.210,172.24.0.29",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
+    "topic": "markets",
+    "action": "read",
+    "result": "succeed",
+    "data": "{\"path\":\"admin/markets/new\"}",
+    "admin": {
+      "email": "admin@barong.io",
+      "uid": "ID3CE1FB4559",
+      "role": "admin",
+      "level": 3,
+      "otp": false,
+      "state": "active"
+    },
+    "target": null,
+    "created_at": "2019-07-02T11:37:12Z"
+  }
+]

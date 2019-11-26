@@ -1,0 +1,125 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 60
+
+[
+  {
+    "id": "usd",
+    "name": "US Dollar",
+    "symbol": "$",
+    "type": "fiat",
+    "deposit_fee": "0.0",
+    "min_deposit_amount": "0.0",
+    "withdraw_fee": "0.0",
+    "min_withdraw_amount": "0.0",
+    "withdraw_limit_24h": "100.0",
+    "withdraw_limit_72h": "200.0",
+    "base_factor": 1,
+    "precision": 2,
+    "status": "active"
+  },
+  {
+    "id": "btc",
+    "name": "Bitcoin",
+    "symbol": "฿",
+    "explorer_transaction": "https://live.blockcypher.com/btc-testnet/tx/#{txid}",
+    "explorer_address": "https://live.blockcypher.com/btc-testnet/addres/#{address}",
+    "type": "coin",
+    "deposit_fee": "0.0",
+    "min_deposit_amount": "0.001",
+    "withdraw_fee": "0.0001",
+    "min_withdraw_amount": "0.001",
+    "withdraw_limit_24h": "1.0",
+    "withdraw_limit_72h": "2.0",
+    "base_factor": 100000000,
+    "precision": 8,
+    "status": "active"
+  },
+  {
+    "id": "fth",
+    "name": "Fiat Ethereum",
+    "symbol": "F",
+    "type": "fiat",
+    "deposit_fee": "0.0",
+    "min_deposit_amount": "0.0",
+    "withdraw_fee": "0.0",
+    "min_withdraw_amount": "0.0",
+    "withdraw_limit_24h": "100.0",
+    "withdraw_limit_72h": "200.0",
+    "base_factor": 1,
+    "precision": 2,
+    "status": "disabled"
+  },
+  {
+    "id": "kyn",
+    "name": "Kayen",
+    "symbol": "K",
+    "explorer_transaction": "https://rinkeby.etherscan.io/tx/#{txid}",
+    "explorer_address": "https://rinkeby.etherscan.io/address/#{address}",
+    "type": "coin",
+    "deposit_fee": "0.0",
+    "min_deposit_amount": "0.0",
+    "withdraw_fee": "0.0",
+    "min_withdraw_amount": "0.0",
+    "withdraw_limit_24h": "0.0",
+    "withdraw_limit_72h": "0.0",
+    "base_factor": 1000000000000000000,
+    "precision": 8,
+    "status": "disabled"
+  },
+  {
+    "id": "eth",
+    "name": "Ethereum",
+    "symbol": "Ξ",
+    "explorer_transaction": "https://rinkeby.etherscan.io/tx/#{txid}",
+    "explorer_address": "https://rinkeby.etherscan.io/address/#{address}",
+    "type": "coin",
+    "deposit_fee": "0.0",
+    "min_deposit_amount": "0.00021",
+    "withdraw_fee": "0.0",
+    "min_withdraw_amount": "0.0",
+    "withdraw_limit_24h": "0.2",
+    "withdraw_limit_72h": "0.5000000000000001",
+    "base_factor": 1000000000000000000,
+    "precision": 8,
+    "status": "active"
+  },
+  {
+    "id": "trst",
+    "name": "WeTrust",
+    "symbol": "Ξ",
+    "explorer_transaction": "https://rinkeby.etherscan.io/tx/#{txid}",
+    "explorer_address": "https://rinkeby.etherscan.io/address/#{address}",
+    "type": "coin",
+    "deposit_fee": "0.0",
+    "min_deposit_amount": "0.00021",
+    "withdraw_fee": "0.0",
+    "min_withdraw_amount": "0.0",
+    "withdraw_limit_24h": "300.0",
+    "withdraw_limit_72h": "600.0",
+    "base_factor": 1000000,
+    "precision": 8,
+    "status": "active"
+  },
+  {
+    "id": "zntx",
+    "name": "Zantix",
+    "symbol": "Z",
+    "explorer_transaction": "https://live.blockcypher.com/btc-testnet/tx/#{txid}",
+    "explorer_address": "https://live.blockcypher.com/btc-testnet/addres/#{address}",
+    "type": "coin",
+    "deposit_fee": "0.0",
+    "min_deposit_amount": "0.0",
+    "withdraw_fee": "0.0",
+    "min_withdraw_amount": "0.0",
+    "withdraw_limit_24h": "0.0",
+    "withdraw_limit_72h": "0.0",
+    "base_factor": 100000000,
+    "precision": 8,
+    "icon_url": "http://zantixcoin.network/assets/images/favicon.png",
+    "status": "active"
+  }
+]

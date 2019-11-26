@@ -1,0 +1,13 @@
+HTTP/2 201
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+{
+    "maker":"0.1",
+    "taker":"0.1",
+    "group":"vip-3",
+    "market_id":"ethusd"
+}

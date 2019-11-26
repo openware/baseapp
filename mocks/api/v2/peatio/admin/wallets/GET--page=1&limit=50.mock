@@ -1,0 +1,693 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 36
+
+[
+    {
+        "id": 1,
+        "name": "Test Bitcoin Deposit Wallet",
+        "kind": "deposit",
+        "currency": "tbtc",
+        "address": "05C657d06f07aDF3e4c33e46cf0ad",
+        "gateway": "bitcoind",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "btc-testnet",
+        "status": "disabled",
+        "settings": {
+            "uri": "http://user:password@127.0.0.1:18332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T15:13:36+02:00",
+        "updated_at": "2019-07-12T15:47:41+02:00"
+    },
+    {
+        "id": 2,
+        "name": "Bitcoin deposit wallet",
+        "kind": "deposit",
+        "currency": "btc",
+        "address": "3QkriPJ4S6xBfZNA8DnKJCWRTikKGUZXhq",
+        "gateway": "bitcoind",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "btc-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://Gae6shePhei8liiSheK1eiwaekai3aeG:EiJai2aubeisheeXi2shoqueivoo3jip@34.90.210.219:8332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:01:38+02:00",
+        "updated_at": "2019-07-15T12:06:17+02:00"
+    },
+    {
+        "id": 3,
+        "name": "Bitcoin hot wallet",
+        "kind": "hot",
+        "currency": "btc",
+        "address": "3QkriPJ4S6xBfZNA8DnKJCWRTikKGUZXhq",
+        "gateway": "bitcoind",
+        "nsig": 1,
+        "max_balance": "1.0",
+        "parent": null,
+        "blockchain_key": "btc-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://Gae6shePhei8liiSheK1eiwaekai3aeG:EiJai2aubeisheeXi2shoqueivoo3jip@34.90.210.219:8332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:02:58+02:00",
+        "updated_at": "2019-07-12T13:06:38+02:00"
+    },
+    {
+        "id": 4,
+        "name": "Bitcoin warm wallet",
+        "kind": "warm",
+        "currency": "btc",
+        "address": "3Kj3UwHrxGamW8pU4skW7xQ5cDuk7kkJHn",
+        "gateway": "bitcoind",
+        "nsig": 1,
+        "max_balance": "100.0",
+        "parent": null,
+        "blockchain_key": "btc-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://Gae6shePhei8liiSheK1eiwaekai3aeG:EiJai2aubeisheeXi2shoqueivoo3jip@34.90.210.219:8332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:04:17+02:00",
+        "updated_at": "2019-07-12T13:10:14+02:00"
+    },
+    {
+        "id": 5,
+        "name": "Bitcoin cold wallet",
+        "kind": "cold",
+        "currency": "btc",
+        "address": "322zYyMJPtUd9swLK9qRmNxcx51Fy9kB24",
+        "gateway": "bitcoind",
+        "nsig": 1,
+        "max_balance": "100000.0",
+        "parent": null,
+        "blockchain_key": "btc-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://Gae6shePhei8liiSheK1eiwaekai3aeG:EiJai2aubeisheeXi2shoqueivoo3jip@34.90.210.219:8332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:07:13+02:00",
+        "updated_at": "2019-07-12T13:10:22+02:00"
+    },
+    {
+        "id": 6,
+        "name": "Bitcoin Cash deposit wallet",
+        "kind": "deposit",
+        "currency": "bch",
+        "address": "bitcoincash:qr992vcmrc4qufqxwdvxjxnnp7zh0mfa75rfx93xdw",
+        "gateway": "bitcoincashd",
+        "nsig": 1,
+        "max_balance": "10.0",
+        "parent": null,
+        "blockchain_key": "bch-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://euhungaixahr0axei9oyeKeihahpahPh:ieyoo1zoh0Xoo1oe6voh2ahree8feeng@34.90.223.254:18332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:13:53+02:00",
+        "updated_at": "2019-05-31T18:13:53+02:00"
+    },
+    {
+        "id": 7,
+        "name": "Bitcoin Cash hot wallet",
+        "kind": "hot",
+        "currency": "bch",
+        "address": "bitcoincash:qzcklukufandq2pjylfvucehh80ttlfcu5fr5ljc8s",
+        "gateway": "bitcoincashd",
+        "nsig": 1,
+        "max_balance": "10.0",
+        "parent": null,
+        "blockchain_key": "bch-mainnet",
+        "status": "disabled",
+        "settings": {
+            "uri": "http://euhungaixahr0axei9oyeKeihahpahPh:ieyoo1zoh0Xoo1oe6voh2ahree8feeng@34.90.223.254:18332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:15:05+02:00",
+        "updated_at": "2019-06-03T18:32:33+02:00"
+    },
+    {
+        "id": 8,
+        "name": "Litecoin deposit wallet",
+        "kind": "deposit",
+        "currency": "ltc",
+        "address": "deposit",
+        "gateway": "litecoind",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "ltc-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://haleir2uch2Ahdeabierubeesoht5iec:aikiexi2ooqu2iet0ath8vahGh4thah5@34.90.255.192:9332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:18:10+02:00",
+        "updated_at": "2019-07-15T12:31:11+02:00"
+    },
+    {
+        "id": 9,
+        "name": "Litecoin hot wallet",
+        "kind": "hot",
+        "currency": "ltc",
+        "address": "ME3thG31Af5Z8dKDA6Vstk44vMmEmuDHXC",
+        "gateway": "litecoind",
+        "nsig": 1,
+        "max_balance": "100.0",
+        "parent": null,
+        "blockchain_key": "ltc-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://haleir2uch2Ahdeabierubeesoht5iec:aikiexi2ooqu2iet0ath8vahGh4thah5@34.90.255.192:9332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:20:50+02:00",
+        "updated_at": "2019-07-15T12:32:41+02:00"
+    },
+    {
+        "id": 10,
+        "name": "Litecoin warm wallet",
+        "kind": "warm",
+        "currency": "ltc",
+        "address": "MJJyMKKvtQttWWBzKB7Mjbh83ySYuXUNk6",
+        "gateway": "litecoind",
+        "nsig": 1,
+        "max_balance": "1000.0",
+        "parent": null,
+        "blockchain_key": "ltc-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://haleir2uch2Ahdeabierubeesoht5iec:aikiexi2ooqu2iet0ath8vahGh4thah5@34.90.255.192:9332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:22:04+02:00",
+        "updated_at": "2019-07-15T12:33:17+02:00"
+    },
+    {
+        "id": 11,
+        "name": "Litecoin cold wallet",
+        "kind": "cold",
+        "currency": "ltc",
+        "address": "MG3kujjQ6gQQ65z4PWfZ8e38vjJgsU6F4b",
+        "gateway": "litecoind",
+        "nsig": 1,
+        "max_balance": "1000000.0",
+        "parent": null,
+        "blockchain_key": "ltc-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://haleir2uch2Ahdeabierubeesoht5iec:aikiexi2ooqu2iet0ath8vahGh4thah5@34.90.255.192:9332",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:23:04+02:00",
+        "updated_at": "2019-07-15T12:33:36+02:00"
+    },
+    {
+        "id": 12,
+        "name": "Dash deposit wallet",
+        "kind": "deposit",
+        "currency": "dash",
+        "address": "deposit",
+        "gateway": "dashd",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "dash-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://phar9ahpheeThainaighoh2phuo2Ohqu:io3go1eex4neeg6aeSeaGh5dooW5Ooco@34.90.161.211:19998",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:23:59+02:00",
+        "updated_at": "2019-06-03T16:33:37+02:00"
+    },
+    {
+        "id": 13,
+        "name": "Dash hot wallet",
+        "kind": "hot",
+        "currency": "dash",
+        "address": "Xfx2yMbcEQQgyRSQ6oZHKjp8CioTj3h848",
+        "gateway": "dashd",
+        "nsig": 1,
+        "max_balance": "10.0",
+        "parent": null,
+        "blockchain_key": "dash-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://phar9ahpheeThainaighoh2phuo2Ohqu:io3go1eex4neeg6aeSeaGh5dooW5Ooco@34.90.161.211:19998",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:30:53+02:00",
+        "updated_at": "2019-05-31T18:30:53+02:00"
+    },
+    {
+        "id": 14,
+        "name": "Dash cold wallet",
+        "kind": "cold",
+        "currency": "dash",
+        "address": "XjryLG9DwATDg5L1HjQdhmz9QJJ5Amaf8c",
+        "gateway": "dashd",
+        "nsig": 1,
+        "max_balance": "10000000.0",
+        "parent": null,
+        "blockchain_key": "dash-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://phar9ahpheeThainaighoh2phuo2Ohqu:io3go1eex4neeg6aeSeaGh5dooW5Ooco@34.90.161.211:19998",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:32:39+02:00",
+        "updated_at": "2019-06-03T15:52:58+02:00"
+    },
+    {
+        "id": 15,
+        "name": "Ethereum deposit wallet",
+        "kind": "deposit",
+        "currency": "eth",
+        "address": "deposit",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "zohla6zohgh3ahMeeTh8eacheeloo5ei"
+        },
+        "created_at": "2019-05-31T18:34:28+02:00",
+        "updated_at": "2019-07-11T09:48:40+02:00"
+    },
+    {
+        "id": 16,
+        "name": "Ethereum hot wallet",
+        "kind": "hot",
+        "currency": "eth",
+        "address": "0xa2612f9b7ba95dfc4d5ca3b09ff3f7fafe802abf",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "10.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "krg&dmfvgumXzCQ7f2b3#PvcV^66ycB&!Unw3&Wv"
+        },
+        "created_at": "2019-05-31T18:37:52+02:00",
+        "updated_at": "2019-07-11T10:01:42+02:00"
+    },
+    {
+        "id": 17,
+        "name": "Ethereum warm wallet",
+        "kind": "warm",
+        "currency": "eth",
+        "address": "0x8d7b1E77608ba6856476fea50c6A217329de77c1",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "100.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "",
+            "secret": "yoh2Huadah8kai5lohr2iek9ooquig2u"
+        },
+        "created_at": "2019-05-31T18:39:20+02:00",
+        "updated_at": "2019-07-12T13:24:12+02:00"
+    },
+    {
+        "id": 18,
+        "name": "Ethereum cold wallet",
+        "kind": "cold",
+        "currency": "eth",
+        "address": "0x16e6668321529ae53A6e875D5AbcC70B4e3402b7",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "1000000.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "",
+            "secret": "phooch2piishie7ahlo9Nachaeweid1f"
+        },
+        "created_at": "2019-05-31T18:40:35+02:00",
+        "updated_at": "2019-07-12T13:24:20+02:00"
+    },
+    {
+        "id": 19,
+        "name": "Dash warm wallet",
+        "kind": "warm",
+        "currency": "dash",
+        "address": "XrKVENXzvJtn1H6oxeMgVVbp8TGEjNyPrA",
+        "gateway": "dashd",
+        "nsig": 1,
+        "max_balance": "1000.0",
+        "parent": null,
+        "blockchain_key": "dash-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://phar9ahpheeThainaighoh2phuo2Ohqu:io3go1eex4neeg6aeSeaGh5dooW5Ooco@34.90.161.211:19998",
+            "secret": ""
+        },
+        "created_at": "2019-05-31T18:43:21+02:00",
+        "updated_at": "2019-06-03T15:55:19+02:00"
+    },
+    {
+        "id": 20,
+        "name": "Ethereum fee wallet",
+        "kind": "fee",
+        "currency": "eth",
+        "address": "0xa2612f9b7ba95dfc4d5ca3b09ff3f7fafe802abf",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "10.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "krg&dmfvgumXzCQ7f2b3#PvcV^66ycB&!Unw3&Wv"
+        },
+        "created_at": "2019-06-03T08:42:13+02:00",
+        "updated_at": "2019-07-11T10:02:19+02:00"
+    },
+    {
+        "id": 21,
+        "name": "Streamex deposit wallet",
+        "kind": "deposit",
+        "currency": "ste",
+        "address": "deposit",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "zohla6zohgh3ahMeeTh8eacheeloo5ei"
+        },
+        "created_at": "2019-06-03T08:49:16+02:00",
+        "updated_at": "2019-07-11T10:02:27+02:00"
+    },
+    {
+        "id": 22,
+        "name": "Streamex hot wallet",
+        "kind": "hot",
+        "currency": "ste",
+        "address": "0xa2612f9b7ba95dfc4d5ca3b09ff3f7fafe802abf",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "1000000.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "krg&dmfvgumXzCQ7f2b3#PvcV^66ycB&!Unw3&Wv"
+        },
+        "created_at": "2019-06-03T08:52:59+02:00",
+        "updated_at": "2019-07-11T10:02:41+02:00"
+    },
+    {
+        "id": 23,
+        "name": "Tether deposit wallet",
+        "kind": "deposit",
+        "currency": "usdt",
+        "address": "deposit",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "zohla6zohgh3ahMeeTh8eacheeloo5ei"
+        },
+        "created_at": "2019-06-03T09:41:13+02:00",
+        "updated_at": "2019-07-11T10:02:49+02:00"
+    },
+    {
+        "id": 24,
+        "name": "Tether hot wallet",
+        "kind": "hot",
+        "currency": "usdt",
+        "address": "0xa2612f9b7ba95dfc4d5ca3b09ff3f7fafe802abf",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "10000.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "krg&dmfvgumXzCQ7f2b3#PvcV^66ycB&!Unw3&Wv"
+        },
+        "created_at": "2019-06-03T09:44:12+02:00",
+        "updated_at": "2019-07-11T10:03:19+02:00"
+    },
+    {
+        "id": 25,
+        "name": "Bitcoin Cash warm wallet",
+        "kind": "warm",
+        "currency": "bch",
+        "address": "bitcoincash:149GuF7pvbbPuUucgpjU4SSwp96S56toeP",
+        "gateway": "bitcoincashd",
+        "nsig": 1,
+        "max_balance": "100.0",
+        "parent": null,
+        "blockchain_key": "bch-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://euhungaixahr0axei9oyeKeihahpahPh:ieyoo1zoh0Xoo1oe6voh2ahree8feeng@34.90.223.254:18332",
+            "secret": ""
+        },
+        "created_at": "2019-06-03T15:59:17+02:00",
+        "updated_at": "2019-06-03T15:59:17+02:00"
+    },
+    {
+        "id": 26,
+        "name": "Bitcoin Cash cold wallet",
+        "kind": "cold",
+        "currency": "bch",
+        "address": "bitcoincash:1GdH6XyBFTmYugwWtxV4KKgdkGcAFH3nTw",
+        "gateway": "bitcoincashd",
+        "nsig": 1,
+        "max_balance": "1000000.0",
+        "parent": null,
+        "blockchain_key": "bch-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://euhungaixahr0axei9oyeKeihahpahPh:ieyoo1zoh0Xoo1oe6voh2ahree8feeng@34.90.223.254:18332",
+            "secret": ""
+        },
+        "created_at": "2019-06-03T16:01:14+02:00",
+        "updated_at": "2019-06-03T16:01:14+02:00"
+    },
+    {
+        "id": 27,
+        "name": " Basic Attention Token deposit wallet",
+        "kind": "deposit",
+        "currency": "bat",
+        "address": "deposit wallet",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "zohla6zohgh3ahMeeTh8eacheeloo5ei"
+        },
+        "created_at": "2019-06-03T19:44:19+02:00",
+        "updated_at": "2019-07-11T10:03:25+02:00"
+    },
+    {
+        "id": 28,
+        "name": " Basic Attention Token hot wallet",
+        "kind": "hot",
+        "currency": "bat",
+        "address": "0xa2612f9b7ba95dfc4d5ca3b09ff3f7fafe802abf",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "10000.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "krg&dmfvgumXzCQ7f2b3#PvcV^66ycB&!Unw3&Wv"
+        },
+        "created_at": "2019-06-03T19:46:10+02:00",
+        "updated_at": "2019-07-11T10:03:39+02:00"
+    },
+    {
+        "id": 29,
+        "name": "Holo deposit wallet",
+        "kind": "deposit",
+        "currency": "hot",
+        "address": "deposit wallet",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "zohla6zohgh3ahMeeTh8eacheeloo5ei"
+        },
+        "created_at": "2019-06-03T19:50:29+02:00",
+        "updated_at": "2019-07-11T10:03:46+02:00"
+    },
+    {
+        "id": 30,
+        "name": "Holo hot wallet",
+        "kind": "hot",
+        "currency": "hot",
+        "address": "0xa2612f9b7ba95dfc4d5ca3b09ff3f7fafe802abf",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "100000.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "krg&dmfvgumXzCQ7f2b3#PvcV^66ycB&!Unw3&Wv"
+        },
+        "created_at": "2019-06-03T19:54:15+02:00",
+        "updated_at": "2019-07-11T10:03:59+02:00"
+    },
+    {
+        "id": 31,
+        "name": "Streamex warm wallet",
+        "kind": "warm",
+        "currency": "ste",
+        "address": "0x8d7b1E77608ba6856476fea50c6A217329de77c1",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "50000000.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "yoh2Huadah8kai5lohr2iek9ooquig2u"
+        },
+        "created_at": "2019-06-03T20:04:04+02:00",
+        "updated_at": "2019-07-12T17:31:20+02:00"
+    },
+    {
+        "id": 32,
+        "name": "Streamex cold wallet",
+        "kind": "cold",
+        "currency": "ste",
+        "address": "0x16e6668321529ae53A6e875D5AbcC70B4e3402b7",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "500000000.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "phooch2piishie7ahlo9Nachaeweid1f"
+        },
+        "created_at": "2019-06-03T20:05:44+02:00",
+        "updated_at": "2019-07-12T17:31:29+02:00"
+    },
+    {
+        "id": 33,
+        "name": "Chainlink deposit wallet",
+        "kind": "deposit",
+        "currency": "link",
+        "address": "deposit wallet",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "zohla6zohgh3ahMeeTh8eacheeloo5ei"
+        },
+        "created_at": "2019-06-03T20:07:24+02:00",
+        "updated_at": "2019-07-11T10:04:15+02:00"
+    },
+    {
+        "id": 34,
+        "name": "Chainlink hot wallet",
+        "kind": "hot",
+        "currency": "link",
+        "address": "0xa2612f9b7ba95dfc4d5ca3b09ff3f7fafe802abf",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "100000.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "krg&dmfvgumXzCQ7f2b3#PvcV^66ycB&!Unw3&Wv"
+        },
+        "created_at": "2019-06-03T20:09:13+02:00",
+        "updated_at": "2019-07-11T10:04:25+02:00"
+    },
+    {
+        "id": 35,
+        "name": "OmiseGO deposit wallet",
+        "kind": "deposit",
+        "currency": "omg",
+        "address": "OmiseGO deposit wallet",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "0.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "zohla6zohgh3ahMeeTh8eacheeloo5ei"
+        },
+        "created_at": "2019-06-03T20:11:57+02:00",
+        "updated_at": "2019-07-11T10:04:31+02:00"
+    },
+    {
+        "id": 36,
+        "name": "OmiseGO hot wallet",
+        "kind": "hot",
+        "currency": "omg",
+        "address": "0xa2612f9b7ba95dfc4d5ca3b09ff3f7fafe802abf",
+        "gateway": "peth",
+        "nsig": 1,
+        "max_balance": "10000.0",
+        "parent": null,
+        "blockchain_key": "eth-mainnet",
+        "status": "active",
+        "settings": {
+            "uri": "http://35.204.11.17:8545",
+            "secret": "krg&dmfvgumXzCQ7f2b3#PvcV^66ycB&!Unw3&Wv"
+        },
+        "created_at": "2019-06-03T20:13:27+02:00",
+        "updated_at": "2019-07-11T10:04:45+02:00"
+    }
+]
