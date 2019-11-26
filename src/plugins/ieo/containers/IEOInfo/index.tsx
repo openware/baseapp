@@ -1,22 +1,25 @@
 import { Decimal } from '@openware/components';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { RouterProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { OrderIEO } from '../';
 import { getCountdownDate, localeDate } from '../../../../helpers';
 import { Currency } from '../../../../modules';
-import { Blur } from '../../components';
+import { Blur, LoginBlur } from '../../components';
 import { DataIEOInterface } from '../../modules';
 
 interface OwnProps {
     currency: Currency;
     ieo: DataIEOInterface;
+    isLoggedIn: boolean;
 }
 
 interface State {
     countdownValue: string;
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps & InjectedIntlProps & RouterProps;
 
 class IEOInfoComponent extends React.Component<Props, State> {
     public countdownInterval;
@@ -129,12 +132,46 @@ class IEOInfoComponent extends React.Component<Props, State> {
                 </div>
                 <div className="ieo-profile-info__order">
                     <OrderIEO currentIEO={ieo} />
-                    {ieo.state === 'preparing' ? <Blur title={this.props.intl.formatMessage({ id: 'page.body.ieo.details.order.content.blur.title' })} ieo={ieo}/> : null}
-                    {ieo.state === 'finished' ? <Blur title={this.props.intl.formatMessage({ id: 'page.body.ieo.details.order.content.blur.titleFinished' })} ieo={ieo}/> : null}
+                    {this.renderBlur()}
                 </div>
             </div>
         );
     }
+
+    private renderBlur = () => {
+        const { isLoggedIn, ieo } = this.props;
+
+        if (!isLoggedIn) {
+            return (
+                <LoginBlur
+                    title={this.translate('page.body.ieo.details.order.blur.login')}
+                    btnLabel={this.translate('page.body.ieo.details.order.blur.btnLogin')}
+                    createAccountLabel={this.translate('page.body.ieo.details.order.blur.createAccount')}
+                    onSignInClick={this.onSignInClick}
+                    onSignUpClick={this.onSignUpClick}
+                />
+            );
+        } else {
+            switch (ieo.state) {
+                case 'preparing':
+                    return (
+                        <Blur
+                            title={this.props.intl.formatMessage({ id: 'page.body.ieo.details.order.content.blur.title' })}
+                            ieo={ieo}
+                        />
+                    );
+                case 'finished':
+                    return (
+                        <Blur
+                            title={this.props.intl.formatMessage({ id: 'page.body.ieo.details.order.content.blur.titleFinished' })}
+                            ieo={ieo}
+                        />
+                    );
+                default:
+                    return null;
+            }
+        }
+    };
 
     private renderContent = (state: string) => {
         switch (state) {
@@ -285,6 +322,14 @@ class IEOInfoComponent extends React.Component<Props, State> {
             </div>
         );
     }
+
+    private onSignInClick = () => {
+        this.props.history.push('/signin');
+    };
+
+    private onSignUpClick = () => {
+        this.props.history.push('/signup');
+    };
 }
 
-export const IEOInfo = injectIntl(IEOInfoComponent);
+export const IEOInfo = injectIntl(withRouter(IEOInfoComponent));
