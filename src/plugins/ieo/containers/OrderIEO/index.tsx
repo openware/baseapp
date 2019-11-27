@@ -89,16 +89,6 @@ class OrderIEOContainer extends React.PureComponent<Props> {
                                     <span className="pg-order-ieo__info-row-text">{currentIEO && localeDate(currentIEO.finishes_at, 'fullDate')}</span>
                                 </div>
                             </div>
-                            <div className="pg-order-ieo__info">
-                                <div className="pg-order-ieo__info-row">
-                                    <span className="pg-order-ieo__info-row-text">
-                                        {this.props.intl.formatMessage({ id: 'page.body.ieo.profile.info.price' })}
-                                    </span>
-                                    <span className="pg-order-ieo__info-row-text">
-                                        {currentIEO && `${currentIEO.pairs[0].price} ${currentIEO.pairs[0].quote_currency_id && currentIEO.pairs[0].quote_currency_id.toUpperCase()}`}
-                                    </span>
-                                </div>
-                            </div>
                             {this.getOrder()}
                         </div>
                     </div>
