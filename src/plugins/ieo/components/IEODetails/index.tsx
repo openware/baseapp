@@ -26,20 +26,20 @@ class IEODetailsComponent extends React.Component<Props> {
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.name')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{ieoDetails.name || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.name || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.full.name')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{ieoDetails.full_name || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.full_name || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.session.supply')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {ieoDetails.session_supply}&nbsp;{ieoDetails.name && ieoDetails.name.toUpperCase() || '-'}
+                                {currentIEO.supply}&nbsp;{currentIEO.name && currentIEO.name.toUpperCase() || '-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
@@ -47,40 +47,40 @@ class IEODetailsComponent extends React.Component<Props> {
                                 {this.translate('page.body.ieo.profile.details.total.supply')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {ieoDetails.total_supply}&nbsp;{ieoDetails.name && ieoDetails.name.toUpperCase() || '-'}
+                                {'-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details..ieo.ratio')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{ieoDetails.ratio || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.ratio || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.pre.sale.price')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {ieoDetails.price}&nbsp;{currentIEO.pairs[0].quote_currency_id && currentIEO.pairs[0].quote_currency_id.toUpperCase() || '-'}
+                                {currentIEO.pairs[0].price}&nbsp;{currentIEO.pairs[0].quote_currency_id && currentIEO.pairs[0].quote_currency_id.toUpperCase() || '-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.minimum.contribution')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{ieoDetails.min_contribution || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.min_amount || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.ieo.start')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{ieoDetails.start_time || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.starts_at || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.ieo.end')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{ieoDetails.end_time || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.finishes_at || '-'}</div>
                         </div>
                     </div>
                     <div className="ieo-profile-details__body__right">

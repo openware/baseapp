@@ -32,15 +32,6 @@ export interface DataIEOInterface {
 
 
 export interface DetailsIEOInterface {
-    name?: string;
-    full_name?: string;
-    session_supply?: string;
-    total_supply?: string;
-    ratio?: string;
-    price?: string;
-    min_contribution?: string;
-    start_time?: string;
-    end_time?: string;
     technological_foundation?: string;
     twitter?: string;
     website?: string;
