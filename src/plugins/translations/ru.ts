@@ -32,8 +32,8 @@ export const ru = {
     'page.body.ieo.card.supply': 'Supply',
     'page.body.ieo.card.end': 'End',
 
-    'page.body.ieo.details.order.youWillGet': 'You will get',
-    'page.body.ieo.details.order.youWillPay': 'You will pay',
+    'page.body.ieo.details.order.youWillGet': 'Price per unit',
+    'page.body.ieo.details.order.youWillPay': 'Tokens ordered',
     'page.body.ieo.details.order.content.blur.title': 'Sales will be start after',
     'page.body.ieo.details.order.content.blur.titleFinished': 'Sales have been finished',
     'page.body.ieo.details.info.startsAt': 'Starts at',
