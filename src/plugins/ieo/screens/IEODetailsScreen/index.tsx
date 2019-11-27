@@ -22,10 +22,8 @@ import { IEODetails, IEOProjectIntroduction } from '../../components';
 import { IEOInfo } from '../../containers';
 import {
     DataIEOInterface,
-    DetailsIEOInterface,
     fetchItemIEO,
     selectCurrentIEO,
-    selectCurrentIEODetails,
     selectIEOLoading,
     setCurrentIEO,
 } from '../../modules';
@@ -36,7 +34,6 @@ interface ReduxProps {
     loading: boolean;
     userLoggedIn: boolean;
     rangerState: RangerState;
-    ieoDetails?: DetailsIEOInterface;
 }
 
 interface DispatchProps {
@@ -102,7 +99,7 @@ class IEODetailsContainer extends React.Component<Props> {
     }
 
     private renderContent = () => {
-        const { currencies, currentIEO, userLoggedIn, ieoDetails } = this.props;
+        const { currencies, currentIEO, userLoggedIn } = this.props;
         const currencyItem = currencies.length && currentIEO && currencies.find(cur => cur.id === currentIEO.currency_id);
 
         return (
@@ -121,10 +118,10 @@ class IEODetailsContainer extends React.Component<Props> {
                     />
                 </div>
                 <div className="pg-currentIEO-page__details">
-                    {ieoDetails ? <IEODetails currentIEO={currentIEO} ieoDetails={ieoDetails} /> : null}
+                    <IEODetails currentIEO={currentIEO} />
                 </div>
                 <div className="pg-currentIEO-page__product-intiduction">
-                    {ieoDetails && ieoDetails.introduction ? <IEOProjectIntroduction introduction={ieoDetails.introduction}/> : null}
+                    <IEOProjectIntroduction introduction={currentIEO.metadata && currentIEO.metadata.introduction} />
                 </div>
             </React.Fragment>
         );
@@ -141,7 +138,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     loading: selectIEOLoading(state),
     rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
-    ieoDetails: selectCurrentIEODetails(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({

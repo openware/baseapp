@@ -17,7 +17,7 @@ export const ru: LangType = {
     'page.sidebar.group.value': 'Base',
 
     'page.body.trade.header.upcoming': 'Upcoming',
-    'page.body.trade.header.inProgress': 'inProgress',
+    'page.body.trade.header.inProgress': 'In progress',
     'page.body.trade.header.past': 'Past',
 
     'page.body.trade.header.markets': 'Рынки',

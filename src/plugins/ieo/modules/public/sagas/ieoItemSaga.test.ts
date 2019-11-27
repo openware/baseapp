@@ -73,7 +73,7 @@ describe('Get IEO item', () => {
 
         const expectedActionsFetch = [
             fetchItemIEO(fakeId),
-            ieoItemData({ ieo: payload }),
+            ieoItemData(payload),
         ];
 
         const expectedActionsError = [

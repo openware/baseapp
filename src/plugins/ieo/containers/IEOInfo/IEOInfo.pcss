@@ -123,6 +123,49 @@
         }
 
         .curent-progress-block {
+          .progress-bar {
+            margin-top: calc(var(--gap) * 1.5);
+            margin-bottom: calc(var(--gap) * 1.33);
+            height: calc(var(--gap) * 1.66);
+            width: 100%;
+            border-radius: calc(var(--gap) * 0.75);
+            background: var(--progress-bar);
+
+            .filler {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              vertical-align: middle;
+              font-weight: bold;
+              text-align: center;
+              font-size: calc(var(--gap) * 3);
+              background: var(--progress-green);
+              height: 100%;
+              border-radius: calc(var(--gap) * 0.75);
+              transition: width .2s ease-in;
+
+              &--zero {
+                color: var(--text);
+              }
+            }
+
+            &__value {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              font-size: calc(var(--gap) * 1.7);
+              padding: calc(var(--gap) * 1.5) 0;
+
+              &__label {
+                color: var(--color-white);
+                opacity: 0.6;
+              }
+
+              &__current {
+                color: var(--progress-green);
+              }
+            }
+          }
           &__progress-bar {
             height: calc(var(--gap) * 2);
             width: 100%;
@@ -163,12 +206,14 @@
 
     &__description {
       margin-top: calc(var(--big-gap) * 0.4);
-      padding: calc(var(--big-gap) * 0.4) 0;
+      padding: calc(var(--big-gap) * 0.34) 0;
       font-size: var(--font-size);
       line-height: calc(var(--gap) * 2.5);
       border-top: calc(var(--gap) * 0.25) solid var(--border-top);
       letter-spacing: 0.02em;
       font-weight: 300;
+      white-space: pre-line;
+      font-weight: normal;
     }
   }
 

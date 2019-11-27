@@ -1,4 +1,5 @@
 import { Decimal } from '@openware/components';
+import classnames from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { RouterProps } from 'react-router';
@@ -42,7 +43,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
             }
 
             this.countdownInterval = setInterval(() => {
-                if (ieo.state === 'distributing') {
+                if (ieo.state === 'distributing' && ieo.type === 'proportional') {
                     countdownDate = ieo.finishes_at;
                     this.setState({ countdownValue: getCountdownDate(countdownDate, '5m')});
                 } else {
@@ -63,7 +64,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
             }
 
             this.countdownInterval = setInterval(() => {
-                if (nextProps.ieo.state === 'distributing') {
+                if (nextProps.ieo.state === 'distributing' && ieo.type === 'proportional') {
                     countdownDate = nextProps.ieo.finishes_at;
                     this.setState({ countdownValue: getCountdownDate(countdownDate, '5m')});
                 } else {
@@ -92,7 +93,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
             }
 
             this.countdownInterval = setInterval(() => {
-                if (ieo.state === 'distributing') {
+                if (ieo.state === 'distributing' && ieo.type === 'proportional') {
                     countdownDate = ieo.finishes_at;
                     this.setState({ countdownValue: getCountdownDate(countdownDate, '5m')});
                 } else {
@@ -107,7 +108,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
     };
 
     public render() {
-        const { currency, ieo } = this.props;
+        const { ieo } = this.props;
 
         return (
             <div className="ieo-profile-info">
@@ -115,7 +116,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
                     <div className="ieo-profile-info__main__info">
                         <div className="ieo-profile-info__main__info__coin-area">
                             <div className="ieo-profile-info__main__info__coin-area__coin-logo">
-                                {currency && <img src={currency.icon_url} alt="coin logo" />}
+                                {ieo.metadata && ieo.metadata.icon_url && <img src={ieo.metadata.icon_url} alt="coin logo" />}
                             </div>
                             <div className="ieo-profile-info__main__info__coin-area__coin-currency">
                                 {ieo.currency_id && ieo.currency_id.toUpperCase()}
@@ -127,7 +128,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
                         {this.renderContent(ieo.state)}
                     </div>
                     <div className="ieo-profile-info__main__description">
-                        {this.translate('page.body.ieo.profile.info.description')}
+                        {ieo.description}
                     </div>
                 </div>
                 <div className="ieo-profile-info__order">
@@ -188,7 +189,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
     }
 
     private renderPreparing = () => {
-        const { ieo, currency} = this.props;
+        const { ieo, currency } = this.props;
 
         return (
             <div className="ieo-profile-info__main__info__value">
@@ -233,7 +234,6 @@ class IEOInfoComponent extends React.Component<Props, State> {
     private renderInProgress = () => {
         const { countdownValue } = this.state;
         const { ieo, currency } = this.props;
-        const percentage = +ieo.supply ? +Decimal.format((+ieo.tokens_ordered * 100) / +ieo.supply, 2) : 0;
 
         return (
             <div className="ieo-profile-info__main__info__value">
@@ -255,28 +255,14 @@ class IEOInfoComponent extends React.Component<Props, State> {
                         {ieo.currency_id && ieo.currency_id.toUpperCase()}
                     </div>
                 </div>
-                <div className="curent-progress-block">
-                    <div className="curent-progress-block__price">
-                        {ieo.tokens_ordered}&nbsp;/&nbsp;{ieo.supply}&nbsp;{ieo.currency_id && ieo.currency_id.toUpperCase()}
-                    </div>
-                    <div className="curent-progress-block__progress-bar">
-                        <div className="curent-progress-block__progress-bar__current" style={{ width: `${percentage}%` }} />
-                    </div>
-                    <div className="curent-progress-block__value">
-                        <div className="curent-progress-block__value__label">
-                            {this.translate('page.body.ieo.profile.info.progress')}
-                        </div>
-                        <div className="curent-progress-block__value__current-value">{`${percentage}%`}</div>
-                    </div>
-                </div>
+                {this.renderProgressBar()}
             </div>
         );
     }
 
     private renderFinished = () => {
-        const { ieo, currency } = this.props;
-        const amountOfQuote = ieo.tokens_ordered && currency && Decimal.format(+ieo.tokens_ordered * +ieo.pairs[0].price, currency.precision);
-        const percentage = +ieo.supply ? +Decimal.format((+ieo.tokens_ordered * 100) / +ieo.supply, 2) : 0;
+        const { ieo } = this.props;
+        const amountOfQuote = ieo.tokens_ordered && ieo.metadata && ieo.metadata.precision && Decimal.format(+ieo.tokens_ordered * +ieo.pairs[0].price, +ieo.metadata.precision);
 
         return (
             <div className="ieo-profile-info__main__info__value">
@@ -296,22 +282,39 @@ class IEOInfoComponent extends React.Component<Props, State> {
                         {amountOfQuote} {amountOfQuote && ieo.pairs[0].quote_currency_id && ieo.pairs[0].quote_currency_id.toUpperCase()}
                     </div>
                 </div>
-                <div className="curent-progress-block">
-                    <div className="curent-progress-block__progress-bar">
-                        <div className="curent-progress-block__progress-bar__current" />
-                    </div>
-                    <div className="curent-progress-block__value">
-                        <div className="curent-progress-block__value__label">
-                            {this.translate('page.body.ieo.profile.info.progress')}
-                        </div>
-                        <div className="curent-progress-block__value__current-value">
-                            {`${percentage}%`}
-                        </div>
+                {this.renderProgressBar()}
+            </div>
+        );
+    }
+
+    private renderProgressBar = () => {
+        const { ieo } = this.props;
+        const percentage = +ieo.supply ? +Decimal.format((+ieo.tokens_ordered * 100) / +ieo.supply, 2) : 0;
+
+        const percentageClass = classnames('filler', {
+            'filler--zero': percentage < 5,
+            'back-yellow': ieo.state === 'finished',
+        });
+
+        const currentProgressClass = classnames('progress-bar__value__current', {
+            'font-yellow': ieo.state === 'finished',
+        });
+
+        return (
+            <div className="curent-progress-block">
+                <div className="curent-progress-block__price">
+                    {ieo.tokens_ordered}&nbsp;/&nbsp;{ieo.supply}&nbsp;{ieo.currency_id && ieo.currency_id.toUpperCase()}
+                </div>
+                <div className="progress-bar">
+                    <div className={percentageClass} style={{ width: `${percentage}%` }} />
+                    <div className="progress-bar__value">
+                        <div className="progress-bar__value__label">{this.translate('page.body.ieo.profile.info.progress')}</div>
+                        <div className={currentProgressClass}>{`${percentage}%`}</div>
                     </div>
                 </div>
             </div>
         );
-    }
+    };
 
     private onSignInClick = () => {
         this.props.history.push('/signin');

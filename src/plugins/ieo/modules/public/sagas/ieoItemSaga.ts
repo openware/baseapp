@@ -24,9 +24,9 @@ export function* ieoItemSaga(action: FetchIEOItem) {
                 `/public/metadata/search?key=IEO-${data.currency_id}-${data.id}`,
             );
 
-            yield put(ieoItemData({ ieo: data, details: details.value }));
+            yield put(ieoItemData({ ...data, metadata: details.value }));
         } else {
-            yield put(ieoItemData({ ieo: data }));
+            yield put(ieoItemData(data));
         }
     } catch (error) {
         yield put(ieoItemError(error));

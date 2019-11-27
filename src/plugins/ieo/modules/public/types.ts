@@ -28,10 +28,14 @@ export interface DataIEOInterface {
     pairs: PairIEOInterface[];
     type: string;
     tokens_ordered?: string;
+    description?: string;
+    metadata?: DetailsIEOInterface;
 }
 
 
 export interface DetailsIEOInterface {
+    full_name?: string;
+    total_supply?: string;
     technological_foundation?: string;
     twitter?: string;
     website?: string;
@@ -39,4 +43,6 @@ export interface DetailsIEOInterface {
     telegram?: string;
     bitcointalk?: string;
     introduction?: string;
+    icon_url?: string;
+    precision?: string;
 }

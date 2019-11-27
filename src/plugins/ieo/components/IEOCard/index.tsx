@@ -3,12 +3,10 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { getCountdownDate, localeDate } from '../../../../helpers';
-import { Currency } from '../../../../modules';
 import { DataIEOInterface } from '../../modules';
 
 interface CardIEOProps {
     ieo: DataIEOInterface;
-    currency?: Currency;
     onIEOSelect: (ieo: DataIEOInterface) => void;
     handleFetchIEO: () => void;
     onClick: (ieo: DataIEOInterface) => void;
@@ -17,6 +15,8 @@ interface CardIEOProps {
 interface State {
     countdownValue: string;
 }
+
+const limitDescription = 80;
 
 type Props = CardIEOProps & InjectedIntlProps;
 class IEOCardComponent extends React.Component<Props, State> {
@@ -44,7 +44,7 @@ class IEOCardComponent extends React.Component<Props, State> {
             }
 
             this.countdownInterval = setInterval(() => {
-                if (ieo.state === 'distributing') {
+                if (ieo.state === 'distributing' && ieo.type === 'proportional') {
                     countdownDate = ieo.finishes_at;
                     this.setState({ countdownValue: getCountdownDate(countdownDate, '5m') });
                 } else {
@@ -65,7 +65,7 @@ class IEOCardComponent extends React.Component<Props, State> {
             }
 
             this.countdownInterval = setInterval(() => {
-                if (nextProps.ieo.state === 'distributing') {
+                if (nextProps.ieo.state === 'distributing' && ieo.type === 'proportional') {
                     countdownDate = nextProps.ieo.finishes_at;
                     this.setState({ countdownValue: getCountdownDate(countdownDate, '5m') });
                 } else {
@@ -96,7 +96,9 @@ class IEOCardComponent extends React.Component<Props, State> {
             }
 
             this.countdownInterval = setInterval(() => {
-                if (ieo.state === 'distributing') {
+                this.setState({ countdownValue: getCountdownDate(countdownDate) });
+
+                if (ieo.state === 'distributing' && ieo.type === 'proportional') {
                     countdownDate = ieo.finishes_at;
                     this.setState({ countdownValue: getCountdownDate(countdownDate, '5m') });
                 } else {
@@ -111,18 +113,18 @@ class IEOCardComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const { currency_id, name, state } = this.props.ieo;
-        const { currency } = this.props;
+        const { currency_id, name, state, description, metadata } = this.props.ieo;
+        const cuttedDescription = description && description.length >= limitDescription ? `${description.slice(0, limitDescription)} ...` : description;
 
         return (
             <div className="pg-ieo__card" onClick={this.handleClick}>
                 <div className="pg-ieo__card-header">
-                    {currency && <img className="pg-ieo__card-header__icon" src={currency.icon_url} />}
+                    {metadata && metadata.icon_url && <img className="pg-ieo__card-header__icon" src={metadata.icon_url} />}
                     <span className="pg-ieo__card-header__text">{currency_id && currency_id.toUpperCase()}</span>
                 </div>
                 <div className="pg-ieo__card-content">
                     <span className="pg-ieo__card-content__title">{name}</span>
-                    <span className="pg-ieo__card-content__text">info</span>
+                    <span className="pg-ieo__card-content__text">{cuttedDescription}</span>
                     {this.getContent(state)}
                 </div>
             </div>
@@ -194,9 +196,8 @@ class IEOCardComponent extends React.Component<Props, State> {
     };
 
     private renderFinished = () => {
-        const { tokens_ordered, pairs } = this.props.ieo;
-        const { currency } = this.props;
-        const amountOfQuote = tokens_ordered && currency && Decimal.format(+tokens_ordered * +pairs[0].price, currency.precision);
+        const { tokens_ordered, pairs, metadata } = this.props.ieo;
+        const amountOfQuote = tokens_ordered && metadata && metadata.precision && Decimal.format(+tokens_ordered * +pairs[0].price, +metadata.precision);
 
         return (
             <div className="pg-ieo__card-content-block">
@@ -213,22 +214,22 @@ class IEOCardComponent extends React.Component<Props, State> {
 
     private renderProgressBar = () => {
         const { countdownValue } = this.state;
-        const { supply, tokens_ordered } = this.props.ieo;
+        const { supply, tokens_ordered, state } = this.props.ieo;
 
         const percentage = +supply ? +Decimal.format((+tokens_ordered * 100) / +supply, 2) : 0;
 
         const countDownColorClass = classnames('content__ieo-countdown', {
             'content__ieo-countdown--red': countdownValue && Number(countdownValue.split(':').pop()) % 2 === 0,
-            'font-yellow': percentage === 100,
+            'font-yellow': state === 'finished',
         });
 
         const percentageClass = classnames('filler', {
             'filler--zero': percentage < 5,
-            'back-yellow': percentage === 100,
+            'back-yellow': state === 'finished',
         });
 
         const currentProgressClass = classnames('progress-bar__value__current', {
-            'font-yellow': percentage === 100,
+            'font-yellow': state === 'finished',
         });
 
         return (

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
-import { DataIEOInterface, DetailsIEOInterface } from '../../modules';
+import { localeDate } from '../../../../helpers';
+import { DataIEOInterface } from '../../modules';
 
 interface OwnProps {
-    ieoDetails: DetailsIEOInterface;
     currentIEO: DataIEOInterface;
 }
 
@@ -15,7 +15,7 @@ class IEODetailsComponent extends React.Component<Props> {
     };
 
     public render() {
-        const { ieoDetails, currentIEO } = this.props;
+        const { currentIEO } = this.props;
 
         return (
             <div className="ieo-profile-details">
@@ -24,22 +24,16 @@ class IEODetailsComponent extends React.Component<Props> {
                     <div className="ieo-profile-details__body__left">
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
-                                {this.translate('page.body.ieo.profile.details.name')}
-                            </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.name || '-'}</div>
-                        </div>
-                        <div className="ieo-profile-details__body__left__row">
-                            <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.full.name')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.full_name || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.metadata.full_name || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.session.supply')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {currentIEO.supply}&nbsp;{currentIEO.name && currentIEO.name.toUpperCase() || '-'}
+                                {currentIEO.supply}&nbsp;{currentIEO.currency_id && currentIEO.currency_id.toUpperCase() || '-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
@@ -47,7 +41,7 @@ class IEODetailsComponent extends React.Component<Props> {
                                 {this.translate('page.body.ieo.profile.details.total.supply')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {'-'}
+                                {currentIEO.metadata.total_supply}&nbsp;{currentIEO.currency_id && currentIEO.currency_id.toUpperCase() || '-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
@@ -68,19 +62,21 @@ class IEODetailsComponent extends React.Component<Props> {
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.minimum.contribution')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.min_amount || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">
+                                {currentIEO.min_amount}&nbsp;{currentIEO.currency_id && currentIEO.currency_id.toUpperCase() || '-'}
+                            </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.ieo.start')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.starts_at || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{localeDate(currentIEO.starts_at, 'fullDate') || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.ieo.end')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.finishes_at || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{localeDate(currentIEO.finishes_at, 'fullDate') || '-'}</div>
                         </div>
                     </div>
                     <div className="ieo-profile-details__body__right">
@@ -88,43 +84,48 @@ class IEODetailsComponent extends React.Component<Props> {
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.technological.foundation')}
                             </div>
-                            <div className="ieo-profile-details__body__right__row__second-column">{ieoDetails.technological_foundation || '-'}</div>
+                            <div className="ieo-profile-details__body__right__row__second-column">{currentIEO.metadata.technological_foundation || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.website')}
                             </div>
-                            <div className="ieo-profile-details__body__right__row__second-column">{ieoDetails.website || '-'}</div>
+                            {this.getLinkIfExist(currentIEO.metadata.website)}
                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.whitepaper')}
                             </div>
-                            <div className="ieo-profile-details__body__right__row__second-column">{ieoDetails.whitepaper || '-'}</div>
+                            {this.getLinkIfExist(currentIEO.metadata.whitepaper)}
                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.telegram')}
                             </div>
-                            <div className="ieo-profile-details__body__right__row__second-column">{ieoDetails.telegram || '-'}</div>
+                            {this.getLinkIfExist(currentIEO.metadata.telegram)}
                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.twitter')}
                             </div>
-                            <div className="ieo-profile-details__body__right__row__second-column">{ieoDetails.twitter || '-'}</div>
+                            {this.getLinkIfExist(currentIEO.metadata.twitter)}
                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.bicointalk')}
                             </div>
-                            <div className="ieo-profile-details__body__right__row__second-column">{ieoDetails.bitcointalk || '-'}</div>
+                            {this.getLinkIfExist(currentIEO.metadata.bitcointalk)}
                         </div>
                     </div>
                 </div>
             </div>
         );
     }
+
+    private getLinkIfExist = link => (
+        link ? <a className="ieo-profile-details__body__right__row__second-column-link" href={link}>{link}</a> :
+            <div className="ieo-profile-details__body__right__row__second-column">-</div>
+    );
 }
 
 export const IEODetails = injectIntl(IEODetailsComponent);

@@ -64,6 +64,7 @@ class OrderIEOContainer extends React.PureComponent<Props> {
 
         if (next.ieoOrderExecuteSuccess && !ieoOrderExecuteSuccess && next.ieoOrderExecuteData) {
             this.props.ieoOrdersPush(next.ieoOrderExecuteData);
+            this.props.accountWallets();
         }
     }
 
@@ -99,7 +100,6 @@ class OrderIEOContainer extends React.PureComponent<Props> {
 
     private getOrder = () => {
         const { currentIEO, wallets } = this.props;
-        const walletBase = this.getWallet(currentIEO.currency_id, wallets);
         const walletQuote = this.getWallet(currentIEO.pairs[0] && currentIEO.pairs[0].quote_currency_id, wallets);
         const to = currentIEO.currency_id;
         let from = '';
@@ -122,7 +122,7 @@ class OrderIEOContainer extends React.PureComponent<Props> {
                 available={this.getAvailableValue(walletQuote)}
                 priceMarket={price}
                 onSubmit={this.handleSubmit}
-                currentMarketAskPrecision={walletBase ? walletBase.fixed : 0}
+                currentMarketAskPrecision={currentIEO.metadata && currentIEO.metadata.precision ? currentIEO.metadata.precision : 0}
                 currentMarketBidPrecision={walletQuote ? walletQuote.fixed : 0}
                 amountText={this.props.intl.formatMessage({ id: 'page.body.ieo.details.order.youWillPay' })}
                 availableText={this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.available' })}

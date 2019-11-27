@@ -26,13 +26,15 @@
     p {
       padding: var(--gap) 0;
       font-size: calc(var(--gap) * 2);
-      line-height: calc(var(--gap) * 2.5);
+      line-height: calc(var(--gap) * 2.83);
+      white-space: pre-line;
+      font-weight: normal;
     }
 
     @media( max-width: 576px) {
       padding: calc(var(--gap) * 1.5);
 
-      p {
+      pre {
         padding: 0 calc(var(--gap) * 2.5);
       }
     }
