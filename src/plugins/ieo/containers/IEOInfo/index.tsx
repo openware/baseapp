@@ -238,26 +238,18 @@ class IEOInfoComponent extends React.Component<Props, State> {
         return (
             <div className="ieo-profile-info__main__info__value">
                 <div className="expiration-time">
-                    <div className="expiration-time__label">
-                        {this.translate('page.body.ieo.profile.info.price.close.in')}
-                    </div>
-                    <div className="expiration-time__value">
-                        {countdownValue === '00:00:00' ? 'End' : countdownValue}
-                    </div>
+                    <div className="expiration-time__label">{this.translate('page.body.ieo.profile.info.price.close.in')}</div>
+                    <div className="expiration-time__value">{countdownValue === '00:00:00' ? 'End' : countdownValue}</div>
                 </div>
                 <div className="ieo-price">
-                    <div className="ieo-price__label">
-                        {this.translate('page.body.ieo.profile.info.price')}
-                    </div>
+                    <div className="ieo-price__label">{this.translate('page.body.ieo.profile.info.price')}</div>
                     <div className="ieo-price__value">
                         {currency && Decimal.format(ieo.pairs[0].price, currency.precision)}&nbsp;
                         {ieo.pairs[0].quote_currency_id && ieo.pairs[0].quote_currency_id.toUpperCase()}
                     </div>
                 </div>
                 <div className="ieo-goal">
-                    <div className="ieo-goal__label">
-                        {this.translate('page.body.ieo.profile.info.goal')}
-                    </div>
+                    <div className="ieo-goal__label">{this.translate('page.body.ieo.profile.info.goal')}</div>
                     <div className="ieo-goal__value">
                         {ieo.supply}&nbsp;
                         {ieo.currency_id && ieo.currency_id.toUpperCase()}
@@ -268,15 +260,13 @@ class IEOInfoComponent extends React.Component<Props, State> {
                         {ieo.tokens_ordered}&nbsp;/&nbsp;{ieo.supply}&nbsp;{ieo.currency_id && ieo.currency_id.toUpperCase()}
                     </div>
                     <div className="curent-progress-block__progress-bar">
-                        <div className="curent-progress-block__progress-bar__current" />
+                        <div className="curent-progress-block__progress-bar__current" style={{ width: `${percentage}%` }} />
                     </div>
                     <div className="curent-progress-block__value">
                         <div className="curent-progress-block__value__label">
                             {this.translate('page.body.ieo.profile.info.progress')}
                         </div>
-                        <div className="curent-progress-block__value__current-value">
-                            {`${percentage}%`}
-                        </div>
+                        <div className="curent-progress-block__value__current-value">{`${percentage}%`}</div>
                     </div>
                 </div>
             </div>
