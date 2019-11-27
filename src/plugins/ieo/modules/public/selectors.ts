@@ -1,6 +1,6 @@
 import { RootState } from '../../../../modules';
 import { CommonError } from '../../../../modules/types';
-import { DataIEOInterface } from './types';
+import { DataIEOInterface, DetailsIEOInterface } from './types';
 
 export const selectIEO = (state: RootState): DataIEOInterface[] =>
     state.public.ieo.list;
@@ -17,5 +17,5 @@ export const selectIEOError = (state: RootState): CommonError | undefined =>
 export const selectCurrentIEO = (state: RootState): DataIEOInterface | undefined =>
     state.public.ieo.currentIEO;
 
-export const selectCurrentIEODetails = (state: RootState): string | undefined =>
+export const selectCurrentIEODetails = (state: RootState): DetailsIEOInterface | undefined =>
     state.public.ieo.ieoDetails;

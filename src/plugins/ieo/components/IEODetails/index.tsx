@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
-import { DataIEOInterface } from '../../modules';
-import { DetailsIEOInterface } from '../../screens';
+import { DataIEOInterface, DetailsIEOInterface } from '../../modules';
 
 interface OwnProps {
     ieoDetails: DetailsIEOInterface;

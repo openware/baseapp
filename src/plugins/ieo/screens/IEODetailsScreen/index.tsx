@@ -22,6 +22,7 @@ import { IEODetails, IEOProjectIntroduction } from '../../components';
 import { IEOInfo } from '../../containers';
 import {
     DataIEOInterface,
+    DetailsIEOInterface,
     fetchItemIEO,
     selectCurrentIEO,
     selectCurrentIEODetails,
@@ -35,7 +36,7 @@ interface ReduxProps {
     loading: boolean;
     userLoggedIn: boolean;
     rangerState: RangerState;
-    ieoDetails?: string;
+    ieoDetails?: DetailsIEOInterface;
 }
 
 interface DispatchProps {
@@ -43,25 +44,6 @@ interface DispatchProps {
     fetchCurrencies: typeof currenciesFetch;
     setCurrentIEO: typeof setCurrentIEO;
     rangerConnect: typeof rangerConnectFetch;
-}
-
-export interface DetailsIEOInterface {
-    name?: string;
-    full_name?: string;
-    session_supply?: string;
-    total_supply?: string;
-    ratio?: string;
-    price?: string;
-    min_contribution?: string;
-    start_time?: string;
-    end_time?: string;
-    technological_foundation?: string;
-    twitter?: string;
-    website?: string;
-    whitepaper?: string;
-    telegram?: string;
-    bitcointalk?: string;
-    introduction?: string;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
@@ -120,9 +102,8 @@ class IEODetailsContainer extends React.Component<Props> {
     }
 
     private renderContent = () => {
-        const { currencies, currentIEO, userLoggedIn } = this.props;
+        const { currencies, currentIEO, userLoggedIn, ieoDetails } = this.props;
         const currencyItem = currencies.length && currentIEO && currencies.find(cur => cur.id === currentIEO.currency_id);
-        const ieoDetails = this.formatIEODetails();
 
         return (
             <React.Fragment>
@@ -143,7 +124,7 @@ class IEODetailsContainer extends React.Component<Props> {
                     {ieoDetails ? <IEODetails currentIEO={currentIEO} ieoDetails={ieoDetails} /> : null}
                 </div>
                 <div className="pg-currentIEO-page__product-intiduction">
-                    {ieoDetails ? <IEOProjectIntroduction introduction={ieoDetails.introduction}/> : null}
+                    {ieoDetails && ieoDetails.introduction ? <IEOProjectIntroduction introduction={ieoDetails.introduction}/> : null}
                 </div>
             </React.Fragment>
         );
@@ -151,13 +132,6 @@ class IEODetailsContainer extends React.Component<Props> {
 
     private handleClickBack = () => {
         this.props.history.push('/ieo');
-    };
-
-    private formatIEODetails = () => {
-        const { ieoDetails } = this.props;
-
-        const parsedDetails: DetailsIEOInterface = ieoDetails && ieoDetails.length && JSON.parse(ieoDetails);
-        return parsedDetails;
     };
 }
 
