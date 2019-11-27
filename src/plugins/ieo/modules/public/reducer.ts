@@ -11,7 +11,7 @@ import {
     IEO_SET_CURRENT_IEO,
     IEO_UPDATE,
 } from './constants';
-import { DataIEOInterface, DetailsIEOInterface } from './types';
+import { DataIEOInterface } from './types';
 
 export interface PublicIEOState {
     currentIEO?: DataIEOInterface;
@@ -19,7 +19,6 @@ export interface PublicIEOState {
     list: DataIEOInterface[];
     success: boolean;
     error?: CommonError;
-    ieoDetails?: DetailsIEOInterface;
 }
 
 export const initialPublicIEOState: PublicIEOState = {
@@ -72,8 +71,7 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
         case IEO_ITEM_DATA:
             return {
                 ...state,
-                currentIEO: action.payload.ieo,
-                ieoDetails: action.payload.details,
+                currentIEO: action.payload,
                 loading: false,
                 success: true,
             };
@@ -88,13 +86,19 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
             const index = state.list.findIndex(el => String(el.id) === String(action.payload.id));
             const list = state.list.slice();
             let currentIEO = state.currentIEO;
+
+            // update list
             if (index !== -1){
                 list[index] = action.payload;
             } else {
-                list.push(action.payload);
-                if (currentIEO && currentIEO.id === action.payload.id) {
-                    currentIEO = action.payload;
-                }
+                const metadata = list[index] && list[index].metadata;
+                list.push({...action.payload, metadata });
+            }
+
+            // update current IEO
+            if (currentIEO && currentIEO.id === action.payload.id) {
+                const curMetadata = currentIEO.metadata;
+                currentIEO = { ...action.payload, metadata: curMetadata };
             }
 
             return {

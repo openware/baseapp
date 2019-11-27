@@ -101,7 +101,7 @@ describe('IEO reducer', () => {
             success: true,
         };
 
-        expect(publicIEOReducer(initialPublicIEOState, actions.ieoItemData({ ieo: payloadIEOItem }))).toEqual(expectedState);
+        expect(publicIEOReducer(initialPublicIEOState, actions.ieoItemData(payloadIEOItem))).toEqual(expectedState);
     });
 
     it('should handle IEO_ITEM_ERROR', () => {

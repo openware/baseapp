@@ -69,6 +69,7 @@ describe('IEO', () => {
 
         const mockIEOFetch = () => {
             mockAxios.onGet('/public/ieo/sales').reply(200, payload);
+            mockAxios.onGet('/public/metadata/search?key=IEO-eth-331').reply(200, {});
         };
 
         const expectedActionsFetch = [

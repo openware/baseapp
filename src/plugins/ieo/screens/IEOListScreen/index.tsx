@@ -8,10 +8,7 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { setDocumentTitle } from '../../../../helpers';
 import {
-    currenciesFetch,
-    Currency,
     RootState,
-    selectCurrencies,
     selectUserLoggedIn,
 } from '../../../../modules';
 import { rangerConnectFetch } from '../../../../modules/public/ranger';
@@ -29,7 +26,6 @@ import {
 interface ReduxProps {
     ieo: DataIEOInterface[];
     ieoSuccess?: boolean;
-    currencies: Currency[];
     rangerState: RangerState;
     userLoggedIn: boolean;
     loading: boolean;
@@ -37,7 +33,6 @@ interface ReduxProps {
 
 interface DispatchProps {
     ieoFetch: typeof fetchIEO;
-    fetchCurrencies: typeof currenciesFetch;
     rangerConnect: typeof rangerConnectFetch;
 }
 
@@ -46,13 +41,9 @@ type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 class IEOListContainer extends React.Component<Props> {
     public componentDidMount() {
         setDocumentTitle('IEO');
-        const { currencies, userLoggedIn, rangerState: { connected, withAuth } } = this.props;
+        const { userLoggedIn, rangerState: { connected, withAuth } } = this.props;
 
         this.handleFetchIEO();
-
-        if (!currencies.length) {
-            this.props.fetchCurrencies();
-        }
 
         if (!connected) {
             this.props.rangerConnect({ withAuth: userLoggedIn });
@@ -64,14 +55,10 @@ class IEOListContainer extends React.Component<Props> {
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { currencies, ieo, userLoggedIn } = this.props;
+        const { ieo, userLoggedIn } = this.props;
 
         if (userLoggedIn !== nextProps.userLoggedIn) {
             this.props.rangerConnect({ withAuth: nextProps.userLoggedIn });
-        }
-
-        if (nextProps.currencies.length && JSON.stringify(nextProps.currencies) !== JSON.stringify(currencies)) {
-            this.props.fetchCurrencies();
         }
 
         if (!nextProps.ieo.length && JSON.stringify(nextProps.ieo) !== JSON.stringify(ieo)) {
@@ -95,27 +82,25 @@ class IEOListContainer extends React.Component<Props> {
     }
 
     private renderContent = () =>  {
-        const { currencies } = this.props;
         const listPreparing = this.handleFilterIEO(['preparing']);
         const listInProgress = this.handleFilterIEO(['ongoing', 'distributing']);
         const listPast = this.handleFilterIEO(['finished']);
 
         return (
             <React.Fragment>
-                {this.renderPreparing(listPreparing, currencies)}
-                {this.renderInProgress(listInProgress, currencies)}
-                {this.renderFinished(listPast, currencies)}
+                {this.renderPreparing(listPreparing)}
+                {this.renderInProgress(listInProgress)}
+                {this.renderFinished(listPast)}
             </React.Fragment>
         );
     }
 
-    private renderPreparing = (listPreparing, currencies) => (
+    private renderPreparing = listPreparing => (
         listPreparing.length ? (
             <React.Fragment>
                 <span className="pg-ieo-page__header">{this.translate('page.body.trade.header.upcoming')}</span>
                 <IEOListElement
                     state={[ 'preparing' ]}
-                    currencies={currencies}
                     ieo={listPreparing}
                     handleFetchIEO={this.handleFetchIEO}
                 />
@@ -123,13 +108,12 @@ class IEOListContainer extends React.Component<Props> {
         ) : null
     );
 
-    private renderInProgress = (listInProgress, currencies) => (
+    private renderInProgress = listInProgress => (
         listInProgress.length ? (
             <React.Fragment>
                 <span className="pg-ieo-page__header">{this.translate('page.body.trade.header.inProgress')}</span>
                 <IEOListElement
                     state={['ongoing', 'distributing']}
-                    currencies={currencies}
                     ieo={listInProgress}
                     handleFetchIEO={this.handleFetchIEO}
                 />
@@ -137,13 +121,12 @@ class IEOListContainer extends React.Component<Props> {
         ) : null
     );
 
-    private renderFinished = (listPast, currencies) => (
+    private renderFinished = listPast => (
         listPast.length ? (
             <React.Fragment>
                 <span className="pg-ieo-page__header">{this.translate('page.body.trade.header.past')}</span>
                 <IEOListElement
                     state={[ 'finished' ]}
-                    currencies={currencies}
                     ieo={listPast}
                     handleFetchIEO={this.handleFetchIEO}
                 />
@@ -167,7 +150,6 @@ class IEOListContainer extends React.Component<Props> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     ieo: selectIEO(state),
     ieoSuccess: selectIEOSuccess(state),
-    currencies: selectCurrencies(state),
     rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
     loading: selectIEOLoading(state),
@@ -175,7 +157,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     ieoFetch: payload => dispatch(fetchIEO(payload)),
-    fetchCurrencies: () => dispatch(currenciesFetch()),
     rangerConnect: payload => dispatch(rangerConnectFetch(payload)),
 });
 

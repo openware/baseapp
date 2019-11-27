@@ -72,6 +72,11 @@ interface OrderFormProps {
      */
     availableText?: string;
     /**
+     * @default 'Fee'
+     * Text for Available field Text.
+     */
+    feeText?: string;
+    /**
      * @default type.toUpperCase()
      * Text for submit Button.
      */
@@ -156,6 +161,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             availableText,
             submitButtonText,
             proposals,
+            feeText,
         } = this.props;
         const {
             amount,
@@ -166,6 +172,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
         } = this.state;
         const safeAmount = Number(amount) || 0;
         const totalPrice = getTotalPrice(amount, proposals);
+        const fee = +Decimal.format(+amount * 0.1, currentMarketAskPrecision);
         const safePrice = totalPrice / Number(amount) || priceMarket;
 
         const amountPercentageArray = [0.25, 0.5, 0.75, 1];
@@ -249,6 +256,21 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                             </span>
                             <span className="cr-order-item__available__content__currency">
                                 {available ? from.toUpperCase() : ''}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div className="cr-order-item">
+                    <div className="cr-order-item__fee">
+                        <label className="cr-order-item__fee__label">
+                            {handleSetValue(feeText, 'Fee')}
+                        </label>
+                        <div className="cr-order-item__fee__content">
+                            <span className="cr-order-item__fee__content__amount">
+                                {Decimal.format(fee || 0, currentMarketAskPrecision, ',')}
+                            </span>
+                            <span className="cr-order-item__fee__content__currency">
+                                {to.toUpperCase()}
                             </span>
                         </div>
                     </div>

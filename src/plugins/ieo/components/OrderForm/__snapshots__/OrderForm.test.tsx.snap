@@ -131,6 +131,33 @@ exports[`OrderForm should match snapshot 1`] = `
   <div
     className="cr-order-item"
   >
+    <div
+      className="cr-order-item__fee"
+    >
+      <label
+        className="cr-order-item__fee__label"
+      >
+        Fee
+      </label>
+      <div
+        className="cr-order-item__fee__content"
+      >
+        <span
+          className="cr-order-item__fee__content__amount"
+        >
+          0.0000
+        </span>
+        <span
+          className="cr-order-item__fee__content__currency"
+        >
+          ETH
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    className="cr-order-item"
+  >
     <Component
       disabled={true}
       label="buy"

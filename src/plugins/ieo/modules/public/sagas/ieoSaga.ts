@@ -7,6 +7,7 @@ import {
     ieoData,
     ieoError,
 } from '../actions';
+import { DataIEOInterface } from '../types';
 
 const ieoOptions: RequestOptions = {
     apiVersion: 'applogic',
@@ -22,7 +23,20 @@ export function* ieoSaga(action: FetchIEO) {
         }
 
         const payload = yield call(API.get(ieoOptions), endPoint);
-        yield put(ieoData(payload));
+        const list: DataIEOInterface[] = [];
+
+        if (payload && payload.length) {
+            for (const i of payload) {
+                const metadata = yield call(
+                    API.get(ieoOptions),
+                    `/public/metadata/search?key=IEO-${i.currency_id}-${i.id}`,
+                );
+
+                list.push({ ...i, metadata: metadata.value });
+            }
+        }
+
+        yield put(ieoData(list));
     } catch (error) {
         yield put(ieoError(error));
     }
