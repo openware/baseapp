@@ -10,7 +10,7 @@ import {
     IEO_SET_CURRENT_IEO,
     IEO_UPDATE,
 } from './constants';
-import { DataIEOInterface } from './types';
+import { DataIEOInterface, DetailsIEOInterface } from './types';
 
 export interface FetchIEO {
     type: typeof IEO_FETCH;
@@ -40,7 +40,7 @@ export interface DataIEOItem {
     type: typeof IEO_ITEM_DATA;
     payload: {
         ieo: DataIEOInterface;
-        details?: string;
+        details?: DetailsIEOInterface;
     };
 }
 

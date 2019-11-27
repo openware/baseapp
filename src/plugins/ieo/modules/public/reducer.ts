@@ -11,7 +11,7 @@ import {
     IEO_SET_CURRENT_IEO,
     IEO_UPDATE,
 } from './constants';
-import { DataIEOInterface } from './types';
+import { DataIEOInterface, DetailsIEOInterface } from './types';
 
 export interface PublicIEOState {
     currentIEO?: DataIEOInterface;
@@ -19,7 +19,7 @@ export interface PublicIEOState {
     list: DataIEOInterface[];
     success: boolean;
     error?: CommonError;
-    ieoDetails?: string;
+    ieoDetails?: DetailsIEOInterface;
 }
 
 export const initialPublicIEOState: PublicIEOState = {
