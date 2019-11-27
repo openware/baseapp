@@ -17,6 +17,7 @@ import {
 import { rangerConnectFetch, RangerConnectFetch } from '../../../../modules/public/ranger';
 import { RangerState } from '../../../../modules/public/ranger/reducer';
 import { selectRanger } from '../../../../modules/public/ranger/selectors';
+import backIcon = require('../../assets/images/back-icon.svg');
 import { IEODetails, IEOProjectIntroduction } from '../../components';
 import { IEOInfo } from '../../containers';
 import {
@@ -34,8 +35,7 @@ interface ReduxProps {
     loading: boolean;
     userLoggedIn: boolean;
     rangerState: RangerState;
-    // tslint:disable-next-line: no-any
-    ieoDetails: any;
+    ieoDetails?: string;
 }
 
 interface DispatchProps {
@@ -43,6 +43,25 @@ interface DispatchProps {
     fetchCurrencies: typeof currenciesFetch;
     setCurrentIEO: typeof setCurrentIEO;
     rangerConnect: typeof rangerConnectFetch;
+}
+
+export interface DetailsIEOInterface {
+    name?: string;
+    full_name?: string;
+    session_supply?: string;
+    total_supply?: string;
+    ratio?: string;
+    price?: string;
+    min_contribution?: string;
+    start_time?: string;
+    end_time?: string;
+    technological_foundation?: string;
+    twitter?: string;
+    website?: string;
+    whitepaper?: string;
+    telegram?: string;
+    bitcointalk?: string;
+    introduction?: string;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
@@ -101,13 +120,14 @@ class IEODetailsContainer extends React.Component<Props> {
     }
 
     private renderContent = () => {
-        const { currencies, currentIEO, ieoDetails, userLoggedIn } = this.props;
+        const { currencies, currentIEO, userLoggedIn } = this.props;
         const currencyItem = currencies.length && currentIEO && currencies.find(cur => cur.id === currentIEO.currency_id);
+        const ieoDetails = this.formatIEODetails();
 
         return (
             <React.Fragment>
                 <div className="pg-currentIEO-page__back" onClick={this.handleClickBack}>
-                    <img src={require('../../assets/images/back-icon.svg')} className="back-icon" />&nbsp;&nbsp;
+                    <img src={backIcon} className="back-icon" />&nbsp;&nbsp;
                     <span className="pg-currentIEO-page__back-text">
                         {this.props.intl.formatMessage({ id: 'page.body.ieo.details.header.backToList'})}
                     </span>
@@ -131,6 +151,13 @@ class IEODetailsContainer extends React.Component<Props> {
 
     private handleClickBack = () => {
         this.props.history.push('/ieo');
+    };
+
+    private formatIEODetails = () => {
+        const { ieoDetails } = this.props;
+
+        const parsedDetails: DetailsIEOInterface = ieoDetails && ieoDetails.length && JSON.parse(ieoDetails);
+        return parsedDetails;
     };
 }
 

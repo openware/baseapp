@@ -233,7 +233,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
     private renderInProgress = () => {
         const { countdownValue } = this.state;
         const { ieo, currency } = this.props;
-        const percentage = +Decimal.format((+ieo.tokens_ordered * 100) / +ieo.supply, 2);
+        const percentage = +ieo.supply ? +Decimal.format((+ieo.tokens_ordered * 100) / +ieo.supply, 2) : 0;
 
         return (
             <div className="ieo-profile-info__main__info__value">
@@ -286,7 +286,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
     private renderFinished = () => {
         const { ieo, currency } = this.props;
         const amountOfQuote = ieo.tokens_ordered && currency && Decimal.format(+ieo.tokens_ordered * +ieo.pairs[0].price, currency.precision);
-        const percentage = +Decimal.format((+ieo.tokens_ordered * 100) / +ieo.supply, 2);
+        const percentage = +ieo.supply ? +Decimal.format((+ieo.tokens_ordered * 100) / +ieo.supply, 2) : 0;
 
         return (
             <div className="ieo-profile-info__main__info__value">

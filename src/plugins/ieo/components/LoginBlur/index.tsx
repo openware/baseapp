@@ -30,7 +30,7 @@ export class LoginBlur extends React.Component<Props> {
                                 className="cr-sign-in-form__bottom-section-password"
                                 onClick={this.props.onSignUpClick}
                             >
-                                {createAccountLabel || 'Create account'}
+                            {createAccountLabel || 'Create account'}
                             </div>
                         </div>
                 </div>
