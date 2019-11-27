@@ -46,12 +46,6 @@ interface OwnProps {
 
 type Props = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
 
-type DropdownElem = number | string | React.ReactNode;
-
-const defaultOrderTypes: DropdownElem[] = [
-    'Market',
-];
-
 class OrderIEOContainer extends React.PureComponent<Props> {
     public componentDidMount() {
         this.props.fetchCurrencies();
@@ -133,15 +127,11 @@ class OrderIEOContainer extends React.PureComponent<Props> {
         return (
             <OrderForm
                 proposals={currentProposals}
-                type="buy"
                 from={from}
                 to={to}
                 available={this.getAvailableValue(walletQuote)}
                 priceMarket={price}
                 onSubmit={this.handleSubmit}
-                orderType={0}
-                orderTypes={defaultOrderTypes}
-                orderTypesIndex={defaultOrderTypes}
                 currentMarketAskPrecision={walletBase ? walletBase.fixed : 0}
                 currentMarketBidPrecision={walletQuote ? walletQuote.fixed : 0}
                 amountText={this.props.intl.formatMessage({ id: 'page.body.ieo.details.order.youWillPay' })}

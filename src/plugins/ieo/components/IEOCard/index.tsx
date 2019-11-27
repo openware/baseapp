@@ -215,7 +215,7 @@ class IEOCardComponent extends React.Component<Props, State> {
         const { countdownValue } = this.state;
         const { supply, tokens_ordered } = this.props.ieo;
 
-        const percentage = +Decimal.format((+tokens_ordered * 100) / +supply, 2);
+        const percentage = +supply ? +Decimal.format((+tokens_ordered * 100) / +supply, 2) : 0;
 
         const countDownColorClass = classnames('content__ieo-countdown', {
             'content__ieo-countdown--red': countdownValue && Number(countdownValue.split(':').pop()) % 2 === 0,

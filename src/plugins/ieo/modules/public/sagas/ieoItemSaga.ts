@@ -23,9 +23,8 @@ export function* ieoItemSaga(action: FetchIEOItem) {
                 API.get(requestOptions),
                 `/public/metadata/search?key=IEO-${data.currency_id}-${data.id}`,
             );
-            const detailsData = JSON.parse(details.value);
 
-            yield put(ieoItemData({ ieo: data, details: detailsData }));
+            yield put(ieoItemData({ ieo: data, details: details.value }));
         } else {
             yield put(ieoItemData({ ieo: data }));
         }

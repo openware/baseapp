@@ -6,7 +6,6 @@ import { getAmount, getTotalPrice } from '../../../../helpers/getTotalPrice';
 
 // tslint:disable:no-magic-numbers jsx-no-lambda jsx-no-multiline-js
 type OnSubmitCallback = (order: OrderProps) => void;
-type DropdownElem = number | string | React.ReactNode;
 type FormType = 'buy' | 'sell';
 
 interface OrderFormProps {
@@ -14,26 +13,6 @@ interface OrderFormProps {
      * Price that is applied during total order amount calculation when type is Market
      */
     priceMarket: number;
-    /**
-     * Price that is applied during total order amount calculation when type is Market
-     */
-    priceLimit?: number;
-    /**
-     * Type of form, can be 'buy' or 'cell'
-     */
-    type: FormType;
-    /**
-     * Default order type
-     */
-    orderType?: number;
-    /**
-     * Available types of order
-     */
-    orderTypes: DropdownElem[];
-    /**
-     * Available types of order without translations
-     */
-    orderTypesIndex: DropdownElem[];
     /**
      * Additional class name. By default element receives `cr-order` class
      * @default empty
@@ -110,7 +89,6 @@ interface OrderFormProps {
 interface OrderFormState {
     orderType: string | React.ReactNode;
     amount: string;
-    price: string;
     priceMarket: number;
     currentMarketAskPrecision: number;
     currentMarketBidPrecision: number;
@@ -136,20 +114,20 @@ const cleanPositiveFloatInput = (text: string) => {
     return cleanInput;
 };
 
-const checkButtonIsDisabled = (safeAmount: number, safePrice: number, price: string, props: OrderFormProps, state: OrderFormState) => {
+const checkButtonIsDisabled = (safeAmount: number, safePrice: number, props: OrderFormProps) => {
     const invalidAmount = safeAmount <= 0;
-    const invalidLimitPrice = Number(price) <= 0 && state.orderType === 'Limit';
-    const invalidMarketPrice = safePrice <= 0 && state.orderType === 'Market';
-    return props.disabled || !props.available || invalidAmount || invalidLimitPrice || invalidMarketPrice;
+    const invalidMarketPrice = safePrice <= 0;
+    return props.disabled || !props.available || invalidAmount || invalidMarketPrice;
 };
+
+const type: FormType = 'buy';
 
 class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
     constructor(props: OrderFormProps) {
         super(props);
         this.state = {
-            orderType: 'Limit',
+            orderType: 'Market',
             amount: '',
-            price: '',
             priceMarket: this.props.priceMarket,
             currentMarketAskPrecision: this.props.currentMarketAskPrecision || 6,
             currentMarketBidPrecision: this.props.currentMarketBidPrecision || 6,
@@ -158,22 +136,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
         };
     }
 
-    public componentDidMount() {
-        const { orderType } = this.props;
-
-        if (orderType !== undefined) {
-            this.handleOrderTypeChange(orderType);
-        }
-    }
-
     public componentWillReceiveProps(next: OrderFormProps) {
-        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.state.currentMarketBidPrecision);
-        if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
-            this.setState({
-                price: nextPriceLimitTruncated,
-            });
-        }
-
         this.setState({
             priceMarket: next.priceMarket,
             currentMarketAskPrecision: next.currentMarketAskPrecision,
@@ -183,7 +146,6 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
 
     public render() {
         const {
-            type,
             className,
             from,
             to,
@@ -196,59 +158,38 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             proposals,
         } = this.props;
         const {
-            orderType,
             amount,
-            price,
             priceMarket,
             currentMarketAskPrecision,
             currentMarketBidPrecision,
-            priceFocused,
             amountFocused,
         } = this.state;
         const safeAmount = Number(amount) || 0;
         const totalPrice = getTotalPrice(amount, proposals);
         const safePrice = totalPrice / Number(amount) || priceMarket;
 
-        const total = orderType === 'Market'
-            ? totalPrice : safeAmount * (Number(price) || 0);
         const amountPercentageArray = [0.25, 0.5, 0.75, 1];
 
         const cx = classnames('cr-order-form', className);
         const currencyCodeFrom = `${from.toUpperCase()}-alt`;
-        const availablePrecision = type === 'buy' ? currentMarketBidPrecision : currentMarketAskPrecision;
-        const availableCurrency = type === 'buy' ? from : to;
 
         return (
             <div className={cx}>
-                {orderType === 'Limit' ? (
-                    <div className="cr-order-item">
-                        <OrderInput
-                            currency={from}
-                            label={priceText}
-                            placeholder={priceText}
-                            value={handleSetValue(price,'')}
-                            isFocused={priceFocused}
-                            handleChangeValue={this.handlePriceChange}
-                            handleFocusInput={() => this.handleFieldFocus(priceText)}
-                        />
-                    </div>
-                ) : (
-                    <div className="cr-order-item">
-                        <div className="cr-order-input">
-                            <fieldset className="cr-order-input__fieldset">
-                                <legend className={'cr-order-input__fieldset__label'}>
-                                    {handleSetValue(priceText, '')}
-                                </legend>
-                                <div className="cr-order-input__fieldset__input">
-                                    &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision), '0')}</span>
-                                </div>
-                            </fieldset>
-                            <div className="cr-order-input__crypto-icon">
-                                <CryptoIcon code={currencyCodeFrom}>{from.toUpperCase()}</CryptoIcon>
+                <div className="cr-order-item">
+                    <div className="cr-order-input">
+                        <fieldset className="cr-order-input__fieldset">
+                            <legend className={'cr-order-input__fieldset__label'}>
+                                {handleSetValue(priceText, '')}
+                            </legend>
+                            <div className="cr-order-input__fieldset__input">
+                                &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision), '0')}</span>
                             </div>
+                        </fieldset>
+                        <div className="cr-order-input__crypto-icon">
+                            <CryptoIcon code={currencyCodeFrom}>{from.toUpperCase()}</CryptoIcon>
                         </div>
                     </div>
-                )}
+                </div>
                 <div className="cr-order-item">
                     <OrderInput
                         currency={to}
@@ -265,19 +206,19 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                     <div className="cr-order-item__percentage-buttons">
                         <PercentageButton
                             label={`${amountPercentageArray[0] * 100}%`}
-                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[0], type)}
+                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[0])}
                         />
                         <PercentageButton
                             label={`${amountPercentageArray[1] * 100}%`}
-                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[1], type)}
+                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[1])}
                         />
                         <PercentageButton
                             label={`${amountPercentageArray[2] * 100}%`}
-                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[2], type)}
+                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[2])}
                         />
                         <PercentageButton
                             label={`${amountPercentageArray[3] * 100}%`}
-                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[3], type)}
+                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[3])}
                         />
                     </div>
                 </div>
@@ -288,15 +229,9 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                             {handleSetValue(totalText, 'Total')}
                         </label>
                         <div className="cr-order-item__total__content">
-                            {orderType === 'Limit' ? (
-                                <span className="cr-order-item__total__content__amount">
-                                    {Decimal.format(total, currentMarketAskPrecision, ',')}
-                                </span>
-                            ) : (
-                                <span className="cr-order-item__total__content__amount">
-                                    &asymp;{Decimal.format(total, currentMarketAskPrecision, ',')}
-                                </span>
-                            )}
+                            <span className="cr-order-item__total__content__amount">
+                                &asymp;{Decimal.format(totalPrice, currentMarketAskPrecision, ',')}
+                            </span>
                             <span className="cr-order-item__total__content__currency">
                                 {from.toUpperCase()}
                             </span>
@@ -310,17 +245,17 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                         </label>
                         <div className="cr-order-item__available__content">
                             <span className="cr-order-item__available__content__amount">
-                                {available ? Decimal.format(available, availablePrecision, ',') : ''}
+                                {available ? Decimal.format(available, currentMarketBidPrecision, ',') : ''}
                             </span>
                             <span className="cr-order-item__available__content__currency">
-                                {available ? availableCurrency.toUpperCase() : ''}
+                                {available ? from.toUpperCase() : ''}
                             </span>
                         </div>
                     </div>
                 </div>
                 <div className="cr-order-item">
                     <Button
-                        disabled={checkButtonIsDisabled(safeAmount, safePrice, price, this.props, this.state)}
+                        disabled={checkButtonIsDisabled(safeAmount, safePrice, this.props)}
                         label={submitButtonText || type}
                         noMargin={true}
                         onClick={this.handleSubmit}
@@ -329,13 +264,6 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             </div>
         );
     }
-
-    private handleOrderTypeChange = (index: number) => {
-        const { orderTypesIndex } = this.props;
-        this.setState({
-            orderType: orderTypesIndex[index],
-        });
-    };
 
     private handleFieldFocus = (field: string | undefined) => {
         switch (field) {
@@ -355,17 +283,6 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
         }
     };
 
-    private handlePriceChange = (value: string) => {
-        const convertedValue = cleanPositiveFloatInput(String(value));
-        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.state.currentMarketBidPrecision}}|[\\d-]*\\.[\\d-])$`);
-        if (convertedValue.match(condition)) {
-            this.setState({
-                price: convertedValue,
-            });
-        }
-        this.props.listenInputPrice && this.props.listenInputPrice();
-    };
-
     private handleAmountChange = (value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
         const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.state.currentMarketAskPrecision}}|[\\d-]*\\.[\\d-])$`);
@@ -376,56 +293,29 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
         }
     };
 
-    private handleChangeAmountByButton = (value: number, type: string) => {
-        switch (type) {
-            case 'buy':
-                switch (this.state.orderType) {
-                    case 'Limit':
-                        this.setState({
-                            amount: this.props.available && + this.state.price ? (
-                                Decimal.format(this.props.available / +this.state.price * value, this.state.currentMarketAskPrecision)
-                            ) : '',
-                        });
-                        break;
-                    case 'Market':
-                        this.setState({
-                            amount: this.props.available ? (
-                                Decimal.format(getAmount(Number(this.props.available), this.props.proposals, value), this.state.currentMarketAskPrecision)
-                            ) : '',
-                        });
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 'sell':
-                this.setState({
-                    amount: this.props.available ? (
-                        Decimal.format(this.props.available * value, this.state.currentMarketAskPrecision)
-                    ) : '',
-                });
-                break;
-            default:
-                break;
-        }
+    private handleChangeAmountByButton = (value: number) => {
+        this.setState({
+            amount: this.props.available ? (
+                Decimal.format(getAmount(Number(this.props.available), this.props.proposals, value), this.state.currentMarketAskPrecision)
+            ) : '',
+        });
     };
 
     private handleSubmit = () => {
-        const { available, type } = this.props;
-        const { amount, price, priceMarket, orderType } = this.state;
+        const { available } = this.props;
+        const { amount, priceMarket, orderType } = this.state;
 
         const order = {
             type,
             orderType,
             amount,
-            price: orderType === 'Market' ? priceMarket : price,
+            price: priceMarket,
             available: available || 0,
         };
 
         this.props.onSubmit(order);
         this.setState({
             amount: '',
-            price: '',
         });
     };
 }

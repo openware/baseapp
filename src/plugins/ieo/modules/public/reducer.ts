@@ -19,7 +19,7 @@ export interface PublicIEOState {
     list: DataIEOInterface[];
     success: boolean;
     error?: CommonError;
-    ieoDetails?: any; // tslint:disable-line
+    ieoDetails?: string;
 }
 
 export const initialPublicIEOState: PublicIEOState = {
