@@ -17,6 +17,5 @@ export const selectIEOError = (state: RootState): CommonError | undefined =>
 export const selectCurrentIEO = (state: RootState): DataIEOInterface | undefined =>
     state.public.ieo.currentIEO;
 
-// tslint:disable-next-line: no-any
-export const selectCurrentIEODetails = (state: RootState): any =>
+export const selectCurrentIEODetails = (state: RootState): string | undefined =>
     state.public.ieo.ieoDetails;

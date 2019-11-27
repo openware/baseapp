@@ -8,5 +8,5 @@ export const pluginsConstants = (isLight?: boolean) => {
     return pluginsList().map(item => availablePlugins[item.name]);
 };
 
-export const ieoTypesList = (): string[] => pluginsList().map(item => item.name === 'ieo' && item.config.types)[0];
-export const metadataSettings = (): boolean => pluginsList().map(item => item.name === 'ieo' && item.config.metadata)[0];
+export const ieoTypesList = (): string[] => pluginsList().find(item => item.name === 'ieo' && item.config.types);
+export const metadataSettings = (): boolean => pluginsList().find(item => item.name === 'ieo' && item.config.metadata);
