@@ -25,7 +25,6 @@ import {
     fetchItemIEO,
     selectCurrentIEO,
     selectIEOLoading,
-    setCurrentIEO,
 } from '../../modules';
 
 interface ReduxProps {
@@ -39,7 +38,6 @@ interface ReduxProps {
 interface DispatchProps {
     fetchItemIEO: typeof fetchItemIEO;
     fetchCurrencies: typeof currenciesFetch;
-    setCurrentIEO: typeof setCurrentIEO;
     rangerConnect: typeof rangerConnectFetch;
 }
 
@@ -82,10 +80,6 @@ class IEODetailsContainer extends React.Component<Props> {
         if (!nextProps.currencies.length && JSON.stringify(nextProps.currencies) !== JSON.stringify(currencies)) {
             this.props.fetchCurrencies();
         }
-    }
-
-    public componentWillUnmount() {
-        this.props.setCurrentIEO(undefined);
     }
 
     public render() {
@@ -143,7 +137,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchItemIEO: payload => dispatch(fetchItemIEO(payload)),
     fetchCurrencies: () => dispatch(currenciesFetch()),
-    setCurrentIEO: payload => dispatch(setCurrentIEO(payload)),
     rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
 });
 
