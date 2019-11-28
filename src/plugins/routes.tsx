@@ -1,12 +1,11 @@
-import * as React from 'react';
 import { pluginsList } from '../api';
-import { IEORoutes } from './ieo';
+import { ieoRoutes } from './ieo';
 
 export const renderPluginsRoutes = () => {
     const getRoutes = (plugin, index) => {
         switch (plugin) {
             case 'ieo':
-                return <IEORoutes key={index} />;
+                return ieoRoutes(index);
             default:
                 return;
         }
