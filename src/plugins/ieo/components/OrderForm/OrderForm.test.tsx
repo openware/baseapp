@@ -192,7 +192,7 @@ describe('OrderForm', () => {
         const available = wrapper.find('.cr-order-item__available').find('.cr-order-item__available__content').find('.cr-order-item__available__content__amount').props().children;
         const fee = wrapper.find('.cr-order-item__fee').find('.cr-order-item__fee__content').find('.cr-order-item__fee__content__amount').props().children;
 
-        expect(total).toEqual(['≈', '220.0000']);
+        expect(total).toEqual('220.0000');
         expect(available).toEqual('50.00000');
         expect(fee).toEqual('11.0000');
     });
@@ -214,7 +214,7 @@ describe('OrderForm', () => {
         const total = wrapper.find('.cr-order-item__total').find('.cr-order-item__total__content').find('.cr-order-item__total__content__amount').props().children;
         const available = wrapper.find('.cr-order-item__available').find('.cr-order-item__available__content').find('.cr-order-item__available__content__amount').props().children;
 
-        expect(total).toEqual(['≈', '0.200']);
+        expect(total).toEqual('0.200');
         expect(available).toEqual('50.00');
     });
 });

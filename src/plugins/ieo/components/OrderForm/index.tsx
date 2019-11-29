@@ -173,7 +173,6 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
         const safeAmount = Number(amount) || 0;
         const totalPrice = getTotalPrice(amount, proposals);
         const fee = +Decimal.format(+amount * 0.1, currentMarketAskPrecision);
-        const safePrice = totalPrice / Number(amount) || priceMarket;
 
         const amountPercentageArray = [0.25, 0.5, 0.75, 1];
 
@@ -189,7 +188,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                                 {handleSetValue(priceText, '')}
                             </legend>
                             <div className="cr-order-input__fieldset__input">
-                                &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision), '0')}</span>
+                                <span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(priceMarket, currentMarketBidPrecision), '0')}</span>
                             </div>
                         </fieldset>
                         <div className="cr-order-input__crypto-icon">
@@ -237,7 +236,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                         </label>
                         <div className="cr-order-item__total__content">
                             <span className="cr-order-item__total__content__amount">
-                                &asymp;{Decimal.format(totalPrice, currentMarketAskPrecision, ',')}
+                                {Decimal.format(totalPrice, currentMarketAskPrecision, ',')}
                             </span>
                             <span className="cr-order-item__total__content__currency">
                                 {from.toUpperCase()}
@@ -277,7 +276,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                 </div>
                 <div className="cr-order-item">
                     <Button
-                        disabled={checkButtonIsDisabled(safeAmount, safePrice, this.props)}
+                        disabled={checkButtonIsDisabled(safeAmount, priceMarket, this.props)}
                         label={submitButtonText || type}
                         noMargin={true}
                         onClick={this.handleSubmit}
