@@ -376,7 +376,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             currency,
             fee,
             onClick: this.toggleConfirmModal,
-            borderItem: 'empty-circle',
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,
             type,
