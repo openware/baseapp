@@ -1,5 +1,5 @@
 .cr-sign-up-form {
-  background: #1e2841;
+  background: var(--main-bg);
   max-width: 424px;
   min-height: 620px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
@@ -9,11 +9,11 @@
   &__options-group {
     width: 100%;
     height: 58px;
-    border-bottom: 2px solid #657395;
+    border-bottom: 2px solid var(--text);
   }
 
   &__option {
-    background: #28334e;
+    background: var(--placeholder-text);
     display: inline-block;
     width: 50%;
     height: 58px;
@@ -25,7 +25,7 @@
   }
 
   &__option-inner {
-    background: var(--transparent);
+    background: transparent;
     width: 75%;
     height: 58px;
     margin: 0 auto;
@@ -49,17 +49,17 @@
   }
 
   & > * {
-    background: var(--transparent);
+    background: transparent;
   }
 
   &__group {
-    background: var(--transparent);
+    background: transparent;
     margin-bottom: 20px;
     position: relative;
   }
 
   &__error {
-    background: var(--transparent);
+    background: transparent;
     margin-top: 5px;
     color: var(--color-red);
   }
@@ -70,7 +70,7 @@
     left: 10px;
     padding: 2px 6px;
     border-radius: 2px;
-    background: #1e2841;
+    background: var(--main-bg);
     color: var(--sign-in-label-color);
   }
 
@@ -103,14 +103,14 @@
     font-size: calc(var(--gap) * 2.5);
     flex: 1;
     display: flex;
-    background: var(--transparent);
+    background: transparent;
     justify-content: center;
     align-items: center;
     min-height: calc(var(--gap) * 6);
   }
 
   &__button-wrapper {
-    background: var(--transparent);
+    background: transparent;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -118,7 +118,7 @@
   }
 
   &__button-wrapper--empty {
-    background: var(--transparent);
+    background: transparent;
     position: absolute;
     right: 0;
     bottom: 0 !important;
@@ -128,7 +128,7 @@
   &__button {
     margin-left: 0;
     height: 40px;
-    background: #2e4c80 !important;
+    background: var(--button-normal) !important;
     border-radius: 3px;
     font-style: normal;
     font-weight: normal;
@@ -140,7 +140,7 @@
   }
 
   &__loader {
-    background: var(--transparent);
+    background: transparent;
     min-height: calc(var(--gap) * 6);
   }
 
@@ -153,7 +153,7 @@
       height: 50px;
       padding: 0 10px;
       font-size: 12px;
-      border: 1px solid #737f92;
+      border: 1px solid var(--placeholder-text);
       box-sizing: border-box;
       border-radius: 4px;
     }
@@ -165,7 +165,7 @@
     align-items: center;
 
     & > * {
-      background: var(--transparent);
+      background: transparent;
     }
 
     &-create {
@@ -180,13 +180,13 @@
 
   &__checkbox {
     word-wrap: break-word;
-    background: var(--transparent);
+    background: transparent;
     margin-left: 10px;
 
     .cr-checkbox__checkitem {
-      border: 1px solid #737f92;
+      border: 1px solid var(--placeholder-text);
       border-radius: 4px;
-      background: var(--transparent);
+      background: transparent;
 
       &::after {
         border-color: var(--sign-up-checkbox-mark-color);
@@ -194,12 +194,12 @@
     }
 
     input:checked ~ .cr-checkbox__checkitem {
-      background-color: var(--transparent);
+      background-color: transparent;
       vertical-align: middle;
     }
 
     .cr-checkbox__label {
-      background: var(--transparent);
+      background: transparent;
       white-space: normal;
       padding-top: 0;
       position: relative;
@@ -209,7 +209,7 @@
       font-weight: normal;
       line-height: normal;
       font-size: 12px;
-      color: #737f92;
+      color: var(--placeholder-text);;
     }
   }
 
