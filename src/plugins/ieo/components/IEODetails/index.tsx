@@ -60,6 +60,14 @@ class IEODetailsComponent extends React.Component<Props> {
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
+                                {this.translate('page.body.ieo.profile.details.maximum.contribution')}
+                            </div>
+                            <div className="ieo-profile-details__body__left__row__second-column">
+                                {currentIEO.max_amount}&nbsp;{currentIEO.currency_id && currentIEO.currency_id.toUpperCase() || '-'}
+                            </div>
+                        </div>
+                        <div className="ieo-profile-details__body__left__row">
+                            <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.minimum.contribution')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">

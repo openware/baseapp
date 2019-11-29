@@ -19,7 +19,6 @@ exports[`OrderForm should match snapshot 1`] = `
         <div
           className="cr-order-input__fieldset__input"
         >
-          ≈
           <span
             className="cr-order-input__fieldset__input__price"
           >
@@ -90,7 +89,6 @@ exports[`OrderForm should match snapshot 1`] = `
         <span
           className="cr-order-item__total__content__amount"
         >
-          ≈
           0.0000
         </span>
         <span
