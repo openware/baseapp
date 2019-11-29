@@ -17,7 +17,6 @@ import { apiKeysReducer } from './user/apiKeys';
 import { authReducer  } from './user/auth';
 import { beneficiariesReducer } from './user/beneficiaries';
 import { sendEmailVerificationReducer } from './user/emailVerification';
-import { guardReducer } from './user/guard';
 import { historyReducer  } from './user/history';
 import {
     documentsReducer,
@@ -69,5 +68,4 @@ export const userReducer = combineReducers({
     openOrders: openOrdersReducer,
     sendEmailVerification: sendEmailVerificationReducer,
     withdrawLimit: withdrawLimitReducer,
-    guard: guardReducer,
 });

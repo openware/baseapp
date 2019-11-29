@@ -7,7 +7,6 @@ export const defaultConfig: Config = {
         tradeUrl: '',
         applogicUrl: '',
         rangerUrl: '',
-        tenkoUrl: '',
     },
     minutesUntilAutoLogout: '5',
     rangerReconnectPeriod: '1',
@@ -19,7 +18,6 @@ export const defaultConfig: Config = {
     storage: {},
     gaTrackerKey: '',
     msAlertDisplayTime: '5000',
-    licenseKey: '',
     incrementalOrderBook: false,
 };
 
@@ -41,7 +39,6 @@ Cryptobase.config.captcha = Cryptobase.config.captcha || defaultConfig.captcha;
 export const authUrl = () => Cryptobase.config.api.authUrl;
 export const tradeUrl = () => Cryptobase.config.api.tradeUrl;
 export const applogicUrl = () => Cryptobase.config.api.applogicUrl;
-export const tenkoUrl = () => Cryptobase.config.api.tenkoUrl;
 export const rangerUrl = () => Cryptobase.config.api.rangerUrl;
 export const minutesUntilAutoLogout = (): string => Cryptobase.config.minutesUntilAutoLogout || '5';
 export const withCredentials = () => Cryptobase.config.withCredentials;

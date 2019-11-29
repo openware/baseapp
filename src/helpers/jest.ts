@@ -11,7 +11,6 @@ const mockConfig: Config = {
         tradeUrl: '/api/v2/peatio',
         applogicUrl: '/api/v2/applogic',
         rangerUrl: '/api/v2/ranger',
-        tenkoUrl: '/api/v2/tenko',
     },
     minutesUntilAutoLogout: '5',
     rangerReconnectPeriod: '1',
@@ -22,7 +21,6 @@ const mockConfig: Config = {
         siteKey: '',
     },
     gaTrackerKey: '',
-    licenseKey: '',
     incrementalOrderBook: false,
 };
 
