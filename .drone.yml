@@ -9,7 +9,6 @@ steps:
   - name: "Test & Build"
     image: node:10.11
     environment:
-      REACT_APP_BUILD_VERSION: Enterprise
       NPM_AUTH_TOKEN:
         from_secret: drone_npm_auth_token
     commands:
@@ -18,25 +17,22 @@ steps:
       - echo $REACT_APP_GIT_SHA > .tags
       - export BUILD_DOMAIN=$(cat .domains)
       - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
-      - cd src/containers/ && unlink index.ts && ln -s index$REACT_APP_BUILD_VERSION.ts index.ts
       - npm -g install yarn
       - yarn install
       - yarn lint
       - yarn test:ci --collectCoverage=true
       - yarn build
 
-  - name: "Build enterprise image"
+  - name: "Build image"
     image: plugins/gcr
     environment:
       BUILD_EXPIRE: "3 month"
       NPM_AUTH_TOKEN:
         from_secret: drone_npm_auth_token
-      REACT_APP_BUILD_VERSION: Enterprise
     settings:
       repo: gcr.io/openware-production/baseapp
       build_args_from_env:
         - BUILD_EXPIRE
-        - REACT_APP_BUILD_VERSION
         - NPM_AUTH_TOKEN
       json_key:
         from_secret: openware_gcp_creds_base64
@@ -131,41 +127,19 @@ steps:
       - git remote add gitolite git@git.openware.com:baseapp
       - GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push -f --no-verify gitolite HEAD:master
 
-  - name: "Build enterprise image"
+  - name: "Build image"
     image: plugins/gcr
     environment:
       NPM_AUTH_TOKEN:
         from_secret: drone_npm_auth_token
       BUILD_EXPIRE: "3 month"
-      REACT_APP_BUILD_VERSION: Enterprise
     settings:
       repo: gcr.io/openware-production/baseapp
       build_args_from_env:
         - BUILD_EXPIRE
-        - REACT_APP_BUILD_VERSION
         - NPM_AUTH_TOKEN
       json_key:
         from_secret: openware_gcp_creds_base64
-
-  - name: "Build lite image"
-    image: plugins/docker
-    environment:
-      NPM_AUTH_TOKEN:
-        from_secret: drone_npm_auth_token
-      REACT_APP_BUILD_VERSION: Lite
-      REACT_APP_TENKO_PUBLIC_KEY:
-        from_secret: tenko_public_key
-    settings:
-      username:
-        from_secret: quay_username
-      password:
-        from_secret: quay_password
-      repo: quay.io/openware/baseapp-lite
-      build_args_from_env:
-        - REACT_APP_BUILD_VERSION
-        - REACT_APP_TENKO_PUBLIC_KEY
-        - NPM_AUTH_TOKEN
-      registry: quay.io
 
   - name: "Redeploy on devkube"
     image: rubykube/microkube:0.2.0

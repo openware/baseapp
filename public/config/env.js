@@ -2,9 +2,8 @@ window.env = {
     api: {
         authUrl: 'http://localhost:9002/api/v2/barong',
         tradeUrl: 'http://localhost:9002/api/v2/peatio',
-        applogicUrl: 'http://www.app.local/api/v2/applogic',
+        applogicUrl: 'http://localhost:9002/api/v2/applogic',
         rangerUrl: 'ws://localhost:9011/api/v2/ranger',
-        tenkoUrl: 'http://localhost:9002/api/v2/tenko',
     },
     minutesUntilAutoLogout: '5',
     withCredentials: false,
@@ -15,6 +14,5 @@ window.env = {
     gaTrackerKey: '',
     rangerReconnectPeriod: '1',
     msAlertDisplayTime: '5000',
-    licenseKey: '',
     incrementalOrderBook: true,
 };

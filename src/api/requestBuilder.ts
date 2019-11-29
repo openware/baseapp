@@ -7,7 +7,6 @@ import axios, {
 import {
     applogicUrl,
     authUrl,
-    tenkoUrl,
     tradeUrl,
     withCredentials,
 } from './config';
@@ -25,7 +24,7 @@ export interface JsonBody {
 }
 
 export interface RequestOptions {
-    apiVersion: 'applogic' | 'peatio' | 'barong' | 'tenko';
+    apiVersion: 'applogic' | 'peatio' | 'barong';
     withHeaders?: boolean;
 }
 
@@ -45,7 +44,6 @@ const getAPI = () => ({
     barong: `${authUrl()}`,
     applogic: `${applogicUrl()}`,
     peatio: `${tradeUrl()}`,
-    tenko: `${tenkoUrl()}`,
 });
 
 const buildRequest = (request: Request, configData: RequestOptions) => {
