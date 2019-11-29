@@ -96,7 +96,6 @@ export interface RootState {
         openOrders: OpenOrdersState;
         sendEmailVerification: EmailVerificationState;
         withdrawLimit: WithdrawLimitState;
-        guard: GuardState;
         ieo: OrderIEOState,
     };
 }
@@ -132,7 +131,6 @@ export function* rootSaga() {
         call(rootEmailVerificationSaga),
         call(rootKlineFetchSaga),
         call(rootWithdrawLimitSaga),
-        call(rootGuardSaga),
         call(rootIEOOrderSaga),
         call(rootPublicIEOSaga),
     ]);

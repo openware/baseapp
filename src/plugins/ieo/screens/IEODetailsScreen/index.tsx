@@ -109,6 +109,7 @@ class IEODetailsContainer extends React.Component<Props> {
                         currency={currencyItem}
                         ieo={currentIEO}
                         isLoggedIn={userLoggedIn}
+                        handleFetchIEO={this.props.fetchItemIEO}
                     />
                 </div>
                 <div className="pg-currentIEO-page__details">

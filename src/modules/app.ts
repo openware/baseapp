@@ -70,6 +70,5 @@ export const userReducer = combineReducers({
     openOrders: openOrdersReducer,
     sendEmailVerification: sendEmailVerificationReducer,
     withdrawLimit: withdrawLimitReducer,
-    guard: guardReducer,
     ieo: ieoOrderReducer,
 });
