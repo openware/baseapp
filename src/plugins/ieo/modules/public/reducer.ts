@@ -89,7 +89,8 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
 
             // update list
             if (index !== -1){
-                list[index] = action.payload;
+                const metadata = state.list[index].metadata;
+                list[index] = { ...action.payload, metadata };
             } else {
                 const metadata = list[index] && list[index].metadata;
                 list.push({...action.payload, metadata });

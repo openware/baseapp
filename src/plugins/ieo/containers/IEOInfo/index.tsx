@@ -14,6 +14,7 @@ interface OwnProps {
     currency: Currency;
     ieo: DataIEOInterface;
     isLoggedIn: boolean;
+    handleFetchIEO: () => void;
 }
 
 interface State {
