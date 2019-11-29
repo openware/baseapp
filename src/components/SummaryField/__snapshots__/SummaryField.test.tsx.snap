@@ -4,9 +4,6 @@ exports[`SummaryField should render 1`] = `
 <div
   className="cr-summary-field"
 >
-  <div
-    className="cr-summary-field-border-item-undefined"
-  />
   <span
     className="cr-summary-field-message"
   >
