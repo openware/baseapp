@@ -196,4 +196,13 @@ describe('IEO reducer', () => {
         });
     });
 
+    it('should handle IEO_FETCH_METADATA', () => {
+        const expectedState = {
+            ...initialPublicIEOState,
+            loading: true,
+            success: false,
+        };
+        const payloadMetadata = { id: payloadIEOItem.id, currency_id: payloadIEOItem.currency_id };
+        expect(publicIEOReducer(initialPublicIEOState, actions.ieoFetchMetadata(payloadMetadata))).toEqual(expectedState);
+    });
 });
