@@ -4,6 +4,7 @@ import {
 } from '@openware/components';
 import cr from 'classnames';
 import countries = require('i18n-iso-countries');
+import * as moment from 'moment';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
@@ -133,6 +134,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
         const dateOfBirthGroupClass = cr('pg-confirm__content-identity-col-row-content', {
             'pg-confirm__content-identity-col-row-content--focused': dateOfBirthFocused,
+            'pg-confirm__content-identity-col-row-content--wrong': dateOfBirth && !this.handleValidateInput('dateOfBirth', dateOfBirth),
         });
 
         const firstNameGroupClass = cr('pg-confirm__content-identity-col-row-content', {
@@ -369,13 +371,13 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             event.preventDefault();
             this.sendData();
         }
-    }
+    };
 
     private handleChangeDate = (e: OnChangeEvent) => {
         this.setState({
             dateOfBirth: formatDate(e.target.value),
         });
-    }
+    };
 
     private selectNationality = (value: string) => {
         this.setState({
@@ -406,6 +408,12 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             case 'postcode':
                 const postcodeRegex = new RegExp(`^[0-9\-]{1,12}$`);
                 return value.match(postcodeRegex) ? true : false;
+            case 'dateOfBirth':
+                if (value.length === 10) {
+                    return moment(value, 'DD/MM/YYYY').unix() < (Date.now() / 1000);
+                }
+
+                return false;
             default:
                 return true;
         }
@@ -428,16 +436,17 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         const residentialAddressValid = this.handleValidateInput('residentialAddress', residentialAddress);
         const cityValid = this.handleValidateInput('city', city);
         const postcodeValid = this.handleValidateInput('postcode', postcode);
+        const dateOfBirthValid = this.handleValidateInput('dateOfBirth', dateOfBirth);
 
         return (
             !firstNameValid
             || !lastNameValid
-            || !dateOfBirth
             || !metadata.nationality
             || !residentialAddressValid
             || !countryOfBirth
             || !cityValid
             || !postcodeValid
+            || !dateOfBirthValid
         );
     }
 
