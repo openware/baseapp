@@ -14,6 +14,7 @@ class IEODetailsComponent extends React.Component<Props> {
         return this.props.intl.formatMessage({ id: e });
     };
 
+    // tslint:disable-next-line: cyclomatic-complexity
     public render() {
         const { currentIEO } = this.props;
 
@@ -26,7 +27,7 @@ class IEODetailsComponent extends React.Component<Props> {
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.full.name')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.metadata.full_name || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.metadata && currentIEO.metadata.full_name || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
@@ -41,7 +42,7 @@ class IEODetailsComponent extends React.Component<Props> {
                                 {this.translate('page.body.ieo.profile.details.total.supply')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {currentIEO.metadata.total_supply}&nbsp;{currentIEO.currency_id && currentIEO.currency_id.toUpperCase() || '-'}
+                                {currentIEO.metadata ? `${currentIEO.metadata.total_supply} ${currentIEO.currency_id && currentIEO.currency_id.toUpperCase()}` : '-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
@@ -92,37 +93,37 @@ class IEODetailsComponent extends React.Component<Props> {
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.technological.foundation')}
                             </div>
-                            <div className="ieo-profile-details__body__right__row__second-column">{currentIEO.metadata.technological_foundation || '-'}</div>
+                            <div className="ieo-profile-details__body__right__row__second-column">{currentIEO.metadata && currentIEO.metadata.technological_foundation || '-'}</div>
                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.website')}
                             </div>
-                            {this.getLinkIfExist(currentIEO.metadata.website)}
+                            {this.getLinkIfExist(currentIEO.metadata && currentIEO.metadata.website)}
                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.whitepaper')}
                             </div>
-                            {this.getLinkIfExist(currentIEO.metadata.whitepaper)}
+                            {this.getLinkIfExist(currentIEO.metadata && currentIEO.metadata.whitepaper)}
                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.telegram')}
                             </div>
-                            {this.getLinkIfExist(currentIEO.metadata.telegram)}
-                        </div>
+                            {this.getLinkIfExist(currentIEO.metadata && currentIEO.metadata.telegram)}
+                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.twitter')}
                             </div>
-                            {this.getLinkIfExist(currentIEO.metadata.twitter)}
-                        </div>
+                            {this.getLinkIfExist(currentIEO.metadata && currentIEO.metadata.twitter)}
+                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.bicointalk')}
                             </div>
-                            {this.getLinkIfExist(currentIEO.metadata.bitcointalk)}
+                            {this.getLinkIfExist(currentIEO.metadata && currentIEO.metadata.bitcointalk)}
                         </div>
                     </div>
                 </div>

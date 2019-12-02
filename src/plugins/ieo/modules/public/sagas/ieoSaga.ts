@@ -27,12 +27,15 @@ export function* ieoSaga(action: FetchIEO) {
 
         if (payload && payload.length) {
             for (const i of payload) {
-                const metadata = yield call(
-                    API.get(ieoOptions),
-                    `/public/metadata/search?key=IEO-${i.currency_id}-${i.id}`,
-                );
-
-                list.push({ ...i, metadata: metadata.value });
+                try {
+                    const metadata = yield call(
+                        API.get(ieoOptions),
+                        `/public/metadata/search?key=IEO-${i.currency_id}-${i.id}`,
+                    );
+                    list.push({ ...i, metadata: metadata.value });
+                } catch (error) {
+                    list.push(i);
+                }
             }
         }
 
