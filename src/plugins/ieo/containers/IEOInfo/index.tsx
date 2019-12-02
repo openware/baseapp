@@ -215,7 +215,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
                         {this.translate('page.body.ieo.profile.info.price')}
                     </div>
                     <div className="ieo-price__value">
-                        {currency && Decimal.format(ieo.pairs[0].price, currency.precision)}&nbsp;
+                        {currency && Decimal.format(ieo.pairs[0].price, +currency.precision)}&nbsp;
                         {ieo.pairs[0].quote_currency_id && ieo.pairs[0].quote_currency_id.toUpperCase()}
                     </div>
                 </div>
@@ -224,7 +224,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
                         {this.translate('page.body.ieo.profile.info.goal')}
                     </div>
                     <div className="ieo-goal__value">
-                        {ieo.supply}&nbsp;
+                        {ieo.metadata && Decimal.format(ieo.supply, +ieo.metadata.precision)}&nbsp;
                         {ieo.currency_id && ieo.currency_id.toUpperCase()}
                     </div>
                 </div>
@@ -245,7 +245,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
                 <div className="ieo-price">
                     <div className="ieo-price__label">{this.translate('page.body.ieo.profile.info.price')}</div>
                     <div className="ieo-price__value">
-                        {currency && Decimal.format(ieo.pairs[0].price, currency.precision)}&nbsp;
+                        {currency && Decimal.format(ieo.pairs[0].price, +currency.precision)}&nbsp;
                         {ieo.pairs[0].quote_currency_id && ieo.pairs[0].quote_currency_id.toUpperCase()}
                     </div>
                 </div>
@@ -262,8 +262,8 @@ class IEOInfoComponent extends React.Component<Props, State> {
     }
 
     private renderFinished = () => {
-        const { ieo } = this.props;
-        const amountOfQuote = ieo.tokens_ordered && ieo.metadata && ieo.metadata.precision && Decimal.format(+ieo.tokens_ordered * +ieo.pairs[0].price, +ieo.metadata.precision);
+        const { ieo, currency } = this.props;
+        const amountOfQuote = ieo.tokens_ordered && Decimal.format(+ieo.tokens_ordered * +ieo.pairs[0].price, +currency.precision);
 
         return (
             <div className="ieo-profile-info__main__info__value">
@@ -304,7 +304,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
         return (
             <div className="curent-progress-block">
                 <div className="curent-progress-block__price">
-                    {Decimal.format(ieo.tokens_ordered, ieo.metadata.precision)}&nbsp;/&nbsp;{Decimal.format(ieo.supply, ieo.metadata.precision)}&nbsp;{ieo.currency_id && ieo.currency_id.toUpperCase()}
+                    {ieo.metadata && Decimal.format(ieo.tokens_ordered, +ieo.metadata.precision)}&nbsp;/&nbsp;{Decimal.format(ieo.supply, +ieo.metadata.precision)}&nbsp;{ieo.currency_id && ieo.currency_id.toUpperCase()}
                 </div>
                 <div className="progress-bar">
                     <div className={percentageClass} style={{ width: `${percentage}%` }} />
