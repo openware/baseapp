@@ -32,7 +32,7 @@ const copy = (id: string) => {
         copyText.select();
 
         document.execCommand('copy');
-        window.getSelection().removeAllRanges();
+        (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
     }
 };
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { WalletItem, WalletItemProps } from '../WalletItem';
 
-interface WalletListProps {
+export interface WalletListProps {
     walletItems: WalletItemProps[];
     activeIndex: number;
     /**
@@ -66,7 +66,3 @@ export class WalletList
         );
     }
 }
-
-export {
-    WalletListProps,
-};

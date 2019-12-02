@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { WalletItemProps } from '../WalletItem';
 
 
-interface CurrencyInfoProps {
+export interface CurrencyInfoProps {
     wallet: WalletItemProps;
 }
 
@@ -57,5 +57,4 @@ const CurrencyInfo: React.FunctionComponent<CurrencyInfoProps> = (props: Currenc
 
 export {
     CurrencyInfo,
-    CurrencyInfoProps,
 };

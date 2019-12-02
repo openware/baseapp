@@ -1,17 +1,10 @@
-import {
-    Button,
-    Dropdown,
-} from '@openware/components';
+import { Button, Dropdown } from '@openware/components';
 import cr from 'classnames';
-import countries = require('i18n-iso-countries');
 import * as moment from 'moment';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
-import {
-  connect,
-  MapDispatchToPropsFunction,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { formatDate, isDateInFuture } from '../../../helpers';
 import {
     editIdentity,
@@ -27,6 +20,8 @@ import {
     User,
 } from '../../../modules';
 import { nationalities } from '../../../translations/nationalities';
+
+import * as countries from 'i18n-iso-countries';
 
 interface ReduxProps {
     editSuccess?: string;

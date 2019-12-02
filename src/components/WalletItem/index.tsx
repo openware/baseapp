@@ -1,7 +1,7 @@
 import { CryptoIcon, Decimal } from '@openware/components';
 import * as React from 'react';
 
-interface WalletItemProps {
+export interface WalletItemProps {
     /**
      * Wallet address
      */
@@ -72,7 +72,7 @@ const renderLocked = (fixed: number, lockedAmount?: number) => {
 /**
  * Component for displaying information about wallet, including address and amount of currency.
  */
-const WalletItem: React.FunctionComponent<WalletItemProps> = (props: WalletItemProps) => {
+export const WalletItem: React.FunctionComponent<WalletItemProps> = (props: WalletItemProps) => {
     const {
         currency,
         name,
@@ -103,9 +103,4 @@ const WalletItem: React.FunctionComponent<WalletItemProps> = (props: WalletItemP
             </span>
         </div>
     );
-};
-
-export {
-    WalletItem,
-    WalletItemProps,
 };
