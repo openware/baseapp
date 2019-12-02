@@ -1,10 +1,13 @@
+import { Decimal } from '@openware/components';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { localeDate } from '../../../../helpers';
+import { Currency } from '../../../../modules';
 import { DataIEOInterface } from '../../modules';
 
 interface OwnProps {
     currentIEO: DataIEOInterface;
+    currencies: Currency[];
 }
 
 type Props = OwnProps & InjectedIntlProps;
@@ -16,7 +19,8 @@ class IEODetailsComponent extends React.Component<Props> {
 
     // tslint:disable-next-line: cyclomatic-complexity
     public render() {
-        const { currentIEO } = this.props;
+        const { currentIEO, currencies } = this.props;
+        const quoteCurrency = currencies.length && currencies.find(currency => currency.id && currency.id.toLowerCase() === currentIEO.pairs[0].quote_currency_id && currentIEO.pairs[0].quote_currency_id.toLowerCase());
 
         return (
             <div className="ieo-profile-details">
@@ -34,7 +38,8 @@ class IEODetailsComponent extends React.Component<Props> {
                                 {this.translate('page.body.ieo.profile.details.session.supply')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {currentIEO.supply}&nbsp;{currentIEO.currency_id && currentIEO.currency_id.toUpperCase() || '-'}
+                                {Decimal.format(currentIEO.supply, currentIEO.metadata.precision)}&nbsp;
+                                {(currentIEO.currency_id && currentIEO.currency_id.toUpperCase()) || '-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
@@ -42,7 +47,7 @@ class IEODetailsComponent extends React.Component<Props> {
                                 {this.translate('page.body.ieo.profile.details.total.supply')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {currentIEO.metadata ? `${currentIEO.metadata.total_supply} ${currentIEO.currency_id && currentIEO.currency_id.toUpperCase()}` : '-'}
+                                {currentIEO.metadata ? `${Decimal.format(currentIEO.metadata.total_supply, currentIEO.metadata.precision)} ${currentIEO.currency_id && currentIEO.currency_id.toUpperCase()}` : '-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
@@ -56,7 +61,8 @@ class IEODetailsComponent extends React.Component<Props> {
                                 {this.translate('page.body.ieo.profile.details.pre.sale.price')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {currentIEO.pairs[0].price}&nbsp;{currentIEO.pairs[0].quote_currency_id && currentIEO.pairs[0].quote_currency_id.toUpperCase() || '-'}
+                                {Decimal.format(currentIEO.pairs[0].price,quoteCurrency && quoteCurrency.precision)}&nbsp;
+                                {(currentIEO.pairs[0].quote_currency_id && currentIEO.pairs[0].quote_currency_id.toUpperCase()) || '-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
@@ -72,20 +78,25 @@ class IEODetailsComponent extends React.Component<Props> {
                                 {this.translate('page.body.ieo.profile.details.minimum.contribution')}
                             </div>
                             <div className="ieo-profile-details__body__left__row__second-column">
-                                {currentIEO.min_amount}&nbsp;{currentIEO.currency_id && currentIEO.currency_id.toUpperCase() || '-'}
+                                {Decimal.format(currentIEO.min_amount, currentIEO.metadata.precision)}&nbsp;
+                                {(currentIEO.currency_id && currentIEO.currency_id.toUpperCase()) || '-'}
                             </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.ieo.start')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{localeDate(currentIEO.starts_at, 'fullDate') || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">
+                                {localeDate(currentIEO.starts_at, 'fullDate') || '-'}
+                            </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.ieo.end')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{localeDate(currentIEO.finishes_at, 'fullDate') || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">
+                                {localeDate(currentIEO.finishes_at, 'fullDate') || '-'}
+                            </div>
                         </div>
                     </div>
                     <div className="ieo-profile-details__body__right">
