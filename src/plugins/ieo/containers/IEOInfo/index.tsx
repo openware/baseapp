@@ -304,7 +304,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
         return (
             <div className="curent-progress-block">
                 <div className="curent-progress-block__price">
-                    {ieo.tokens_ordered}&nbsp;/&nbsp;{ieo.supply}&nbsp;{ieo.currency_id && ieo.currency_id.toUpperCase()}
+                    {Decimal.format(ieo.tokens_ordered, ieo.metadata.precision)}&nbsp;/&nbsp;{Decimal.format(ieo.supply, ieo.metadata.precision)}&nbsp;{ieo.currency_id && ieo.currency_id.toUpperCase()}
                 </div>
                 <div className="progress-bar">
                     <div className={percentageClass} style={{ width: `${percentage}%` }} />

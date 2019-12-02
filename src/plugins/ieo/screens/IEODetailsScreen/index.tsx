@@ -113,7 +113,7 @@ class IEODetailsContainer extends React.Component<Props> {
                     />
                 </div>
                 <div className="pg-currentIEO-page__details">
-                    <IEODetails currentIEO={currentIEO} />
+                    <IEODetails currentIEO={currentIEO} currencies={currencies} />
                 </div>
                 <div className="pg-currentIEO-page__product-intiduction">
                     <IEOProjectIntroduction introduction={currentIEO.metadata && currentIEO.metadata.introduction} />
