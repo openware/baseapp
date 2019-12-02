@@ -34,6 +34,7 @@ export interface DataIEOInterface {
 
 
 export interface DetailsIEOInterface {
+    id: string | number;
     full_name?: string;
     total_supply?: string;
     technological_foundation?: string;
