@@ -9,3 +9,7 @@ export const IEO_ITEM_ERROR = 'ieo/ITEM_ERROR';
 
 export const IEO_SET_CURRENT_IEO = 'ieo/SET_CURRENT_IEO';
 export const IEO_UPDATE = 'ieo/UPDATE';
+
+export const IEO_FETCH_METADATA = 'ieo/FETCH_METADATA';
+export const IEO_DATA_METADATA = 'ieo/DATA_METADATA';
+export const IEO_ERROR_METADATA = 'ieo/ERROR_METADATA';

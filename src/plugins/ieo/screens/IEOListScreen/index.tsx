@@ -18,7 +18,9 @@ import { IEOListElement } from '../../containers';
 import {
     DataIEOInterface,
     fetchIEO,
+    ieoFetchMetadata,
     selectIEO,
+    selectIEOListNewId,
     selectIEOLoading,
     selectIEOSuccess,
 } from '../../modules';
@@ -29,11 +31,13 @@ interface ReduxProps {
     rangerState: RangerState;
     userLoggedIn: boolean;
     loading: boolean;
+    newId?: string | number;
 }
 
 interface DispatchProps {
     ieoFetch: typeof fetchIEO;
     rangerConnect: typeof rangerConnectFetch;
+    ieoFetchMetadata: typeof ieoFetchMetadata;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
@@ -55,7 +59,7 @@ class IEOListContainer extends React.Component<Props> {
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { ieo, userLoggedIn } = this.props;
+        const { ieo, userLoggedIn, newId } = this.props;
 
         if (userLoggedIn !== nextProps.userLoggedIn) {
             this.props.rangerConnect({ withAuth: nextProps.userLoggedIn });
@@ -63,6 +67,13 @@ class IEOListContainer extends React.Component<Props> {
 
         if (!nextProps.ieo.length && JSON.stringify(nextProps.ieo) !== JSON.stringify(ieo)) {
             this.handleFetchIEO();
+        }
+
+        if (nextProps.newId && nextProps.newId !== newId) {
+            const index = nextProps.ieo.findIndex(el => String(el.id) === String(newId));
+            if (index !== -1) {
+                this.props.ieoFetchMetadata({ id: nextProps.ieo[index].id, currency_id: nextProps[index].currency_id });
+            }
         }
     }
 
@@ -153,11 +164,13 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
     loading: selectIEOLoading(state),
+    newId: selectIEOListNewId(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     ieoFetch: payload => dispatch(fetchIEO(payload)),
     rangerConnect: payload => dispatch(rangerConnectFetch(payload)),
+    ieoFetchMetadata: payload => dispatch(ieoFetchMetadata(payload)),
 });
 
 // tslint:disable-next-line:no-any

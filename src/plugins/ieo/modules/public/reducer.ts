@@ -2,8 +2,10 @@ import { CommonError } from '../../../../modules/types';
 import { IEOAction } from './actions';
 import {
     IEO_DATA,
+    IEO_DATA_METADATA,
     IEO_ERROR,
     IEO_FETCH,
+    IEO_FETCH_METADATA,
     IEO_ITEM_DATA,
     IEO_ITEM_ERROR,
     IEO_ITEM_FETCH,
@@ -19,6 +21,7 @@ export interface PublicIEOState {
     list: DataIEOInterface[];
     success: boolean;
     error?: CommonError;
+    newId?: number | string;
 }
 
 export const initialPublicIEOState: PublicIEOState = {
@@ -86,14 +89,15 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
             const index = state.list.findIndex(el => String(el.id) === String(action.payload.id));
             const list = state.list.slice();
             let currentIEO = state.currentIEO;
+            let newId;
 
             // update list
             if (index !== -1){
                 const metadata = state.list[index].metadata;
                 list[index] = { ...action.payload, metadata };
             } else {
-                const metadata = list[index] && list[index].metadata;
-                list.push({...action.payload, metadata });
+                list.push(action.payload);
+                newId = action.payload.id;
             }
 
             // update current IEO
@@ -106,6 +110,32 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
                 ...state,
                 list,
                 currentIEO,
+                newId,
+            };
+        case IEO_FETCH_METADATA:
+            return {
+                ...state,
+                loading: true,
+                success: false,
+            };
+        case IEO_DATA_METADATA:
+            const ieoIndex = state.list.findIndex(el => String(el.id) === String(action.payload.id));
+            const ieoList = state.list.slice();
+
+            if (ieoIndex !== -1) {
+                const element = ieoList[ieoIndex];
+
+                if (!element.metadata) {
+                    ieoList[ieoIndex] = { ...element, metadata: action.payload };
+                }
+            }
+
+            return {
+                ...state,
+                list: ieoList,
+                loading: false,
+                success: true,
+                newId: undefined,
             };
         default:
             return state;

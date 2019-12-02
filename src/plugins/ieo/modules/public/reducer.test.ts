@@ -130,6 +130,8 @@ describe('IEO reducer', () => {
             const expectedState = {
                 ...initialPublicIEOState,
                 list: payload,
+                currentIEO: undefined,
+                newId: payloadId,
             };
 
             expect(publicIEOReducer(initialPublicIEOState, actions.ieoUpdate(payload[0]))).toEqual(expectedState);
