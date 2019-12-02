@@ -69,7 +69,10 @@ export interface FetchIEOMetadata {
 
 export interface DataIEOMetadata {
     type: typeof IEO_DATA_METADATA;
-    payload: DetailsIEOInterface;
+    payload: {
+        metadata: DetailsIEOInterface;
+        id: string | number;
+    };
 }
 
 export interface ErrorIEOMetadata {

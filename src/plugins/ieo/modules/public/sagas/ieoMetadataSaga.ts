@@ -23,7 +23,7 @@ export function* ieoMetadataSaga(action: FetchIEOMetadata) {
                 API.get(requestOptions),
                 `/public/metadata/search?key=IEO-${currency_id}-${id}`,
             );
-            yield put(ieoDataMetadata(details.value));
+            yield put(ieoDataMetadata({ metadata: details.value, id: action.payload.id }));
         }
     } catch (error) {
         yield put(ieoMetadataError(error));

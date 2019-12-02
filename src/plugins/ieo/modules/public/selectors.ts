@@ -17,5 +17,5 @@ export const selectIEOError = (state: RootState): CommonError | undefined =>
 export const selectCurrentIEO = (state: RootState): DataIEOInterface | undefined =>
     state.public.ieo.currentIEO;
 
-export const selectIEOListNewId = (state: RootState): number | string | undefined =>
-    state.public.ieo.newId;
+export const selectNewIEO = (state: RootState): DataIEOInterface | undefined =>
+    state.public.ieo.newIEO;
