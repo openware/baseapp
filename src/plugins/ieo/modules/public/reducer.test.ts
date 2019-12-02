@@ -131,7 +131,7 @@ describe('IEO reducer', () => {
                 ...initialPublicIEOState,
                 list: payload,
                 currentIEO: undefined,
-                newId: payloadId,
+                newIEO: payload[0],
             };
 
             expect(publicIEOReducer(initialPublicIEOState, actions.ieoUpdate(payload[0]))).toEqual(expectedState);

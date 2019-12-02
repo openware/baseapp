@@ -21,7 +21,7 @@ export interface PublicIEOState {
     list: DataIEOInterface[];
     success: boolean;
     error?: CommonError;
-    newId?: number | string;
+    newIEO?: DataIEOInterface;
 }
 
 export const initialPublicIEOState: PublicIEOState = {
@@ -89,7 +89,7 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
             const index = state.list.findIndex(el => String(el.id) === String(action.payload.id));
             const list = state.list.slice();
             let currentIEO = state.currentIEO;
-            let newId;
+            let newIEO;
 
             // update list
             if (index !== -1){
@@ -97,7 +97,7 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
                 list[index] = { ...action.payload, metadata };
             } else {
                 list.push(action.payload);
-                newId = action.payload.id;
+                newIEO = action.payload;
             }
 
             // update current IEO
@@ -110,7 +110,7 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
                 ...state,
                 list,
                 currentIEO,
-                newId,
+                newIEO,
             };
         case IEO_FETCH_METADATA:
             return {
@@ -126,7 +126,7 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
                 const element = ieoList[ieoIndex];
 
                 if (!element.metadata) {
-                    ieoList[ieoIndex] = { ...element, metadata: action.payload };
+                    ieoList[ieoIndex] = { ...element, metadata: action.payload.metadata };
                 }
             }
 
@@ -135,7 +135,7 @@ export const publicIEOReducer = (state = initialPublicIEOState, action: IEOActio
                 list: ieoList,
                 loading: false,
                 success: true,
-                newId: undefined,
+                newIEO: undefined,
             };
         default:
             return state;

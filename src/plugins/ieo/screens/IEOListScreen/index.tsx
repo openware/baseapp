@@ -20,9 +20,9 @@ import {
     fetchIEO,
     ieoFetchMetadata,
     selectIEO,
-    selectIEOListNewId,
     selectIEOLoading,
     selectIEOSuccess,
+    selectNewIEO,
 } from '../../modules';
 
 interface ReduxProps {
@@ -31,7 +31,7 @@ interface ReduxProps {
     rangerState: RangerState;
     userLoggedIn: boolean;
     loading: boolean;
-    newId?: string | number;
+    newIEO?: DataIEOInterface;
 }
 
 interface DispatchProps {
@@ -59,7 +59,7 @@ class IEOListContainer extends React.Component<Props> {
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { ieo, userLoggedIn, newId } = this.props;
+        const { ieo, userLoggedIn, newIEO } = this.props;
 
         if (userLoggedIn !== nextProps.userLoggedIn) {
             this.props.rangerConnect({ withAuth: nextProps.userLoggedIn });
@@ -69,11 +69,8 @@ class IEOListContainer extends React.Component<Props> {
             this.handleFetchIEO();
         }
 
-        if (nextProps.newId && nextProps.newId !== newId) {
-            const index = nextProps.ieo.findIndex(el => String(el.id) === String(newId));
-            if (index !== -1) {
-                this.props.ieoFetchMetadata({ id: nextProps.ieo[index].id, currency_id: nextProps[index].currency_id });
-            }
+        if (nextProps.newIEO && nextProps.newIEO !== newIEO) {
+            this.props.ieoFetchMetadata({ id: nextProps.newIEO.id, currency_id: nextProps.newIEO.currency_id });
         }
     }
 
@@ -164,7 +161,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
     loading: selectIEOLoading(state),
-    newId: selectIEOListNewId(state),
+    newIEO: selectNewIEO(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
