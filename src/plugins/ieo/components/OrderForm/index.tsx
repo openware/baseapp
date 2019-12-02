@@ -236,7 +236,7 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                         </label>
                         <div className="cr-order-item__total__content">
                             <span className="cr-order-item__total__content__amount">
-                                {Decimal.format(totalPrice, currentMarketAskPrecision, ',')}
+                                {Decimal.format(totalPrice, currentMarketBidPrecision, ',')}
                             </span>
                             <span className="cr-order-item__total__content__currency">
                                 {from.toUpperCase()}
