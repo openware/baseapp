@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 
-interface SummaryFieldProps {
+export interface SummaryFieldProps {
     /**
      * Additional class name for styling. By default element receives `cr-input` class
      * @default empty
@@ -20,7 +20,7 @@ interface SummaryFieldProps {
 /**
  * Component to display currency amount with specific label.
  */
-const SummaryField: React.FunctionComponent<SummaryFieldProps> = props => {
+export const SummaryField: React.FunctionComponent<SummaryFieldProps> = props => {
     const { message, className, content } = props;
     const cx = classnames('cr-summary-field', className);
     return (
@@ -33,9 +33,4 @@ const SummaryField: React.FunctionComponent<SummaryFieldProps> = props => {
           </span>
         </div>
     );
-};
-
-export {
-    SummaryField,
-    SummaryFieldProps,
 };

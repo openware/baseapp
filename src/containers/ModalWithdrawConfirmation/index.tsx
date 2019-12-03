@@ -1,5 +1,5 @@
-import { Button } from '@openware/components';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import {
     InjectedIntlProps,
     injectIntl,
@@ -59,15 +59,23 @@ class ModalWithdraw extends React.Component<Props> {
         return (
             <div className="pg-exchange-modal-submit-footer modal-footer__withdraw-confirm">
                 <Button
-                    className="pg-exchange-modal-submit-footer__button-inverse"
-                    label={this.translate('page.body.wallets.tabs.withdraw.modal.button.cancel')}
+                    block={true}
+                    className="btn-block mr-1 mt-1 btn-lg"
                     onClick={this.props.onDismiss}
-                />
+                    size="lg"
+                    variant="primary"
+                >
+                    {this.translate('page.body.wallets.tabs.withdraw.modal.button.cancel')}
+                </Button>
                 <Button
-                    className="pg-exchange-modal-submit-footer__button-inverse"
-                    label={this.translate('page.body.wallets.tabs.withdraw.modal.button.withdraw')}
+                    block={true}
+                    className="btn-block mr-1 mt-1 btn-lg"
                     onClick={this.props.onSubmit}
-                />
+                    size="lg"
+                    variant="primary"
+                >
+                    {this.translate('page.body.wallets.tabs.withdraw.modal.button.withdraw')}
+                </Button>
             </div>
         );
     };

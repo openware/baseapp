@@ -1,6 +1,6 @@
-import { Button } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CustomInput } from '../../components';
@@ -183,11 +183,13 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
                 {this.renderAddAddressModalBodyItem('coinDescription', true)}
                 <div className="cr-email-form__button-wrapper">
                     <Button
-                        label={this.translate('page.body.wallets.beneficiaries.addAddressModal.body.button')}
-                        className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                         disabled={isDisabled}
                         onClick={this.handleSubmitAddAddressCoinModal}
-                    />
+                        size="lg"
+                        variant="primary"
+                    >
+                        {this.translate('page.body.wallets.beneficiaries.addAddressModal.body.button')}
+                    </Button>
                 </div>
             </div>
         );
@@ -214,11 +216,13 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
                 {this.renderAddAddressModalBodyItem('fiatIntermediaryBankSwiftCode', true)}
                 <div className="cr-email-form__button-wrapper">
                     <Button
-                        label={this.translate('page.body.wallets.beneficiaries.addAddressModal.body.button')}
-                        className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                         disabled={isDisabled}
                         onClick={this.handleSubmitAddAddressFiatModal}
-                    />
+                        size="lg"
+                        variant="primary"
+                    >
+                        {this.translate('page.body.wallets.beneficiaries.addAddressModal.body.button')}
+                    </Button>
                 </div>
             </div>
         );

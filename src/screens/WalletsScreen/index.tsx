@@ -1,5 +1,6 @@
-import { Button, Loader } from '@openware/components';
+import { Loader } from '@openware/components';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -309,7 +310,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { addressDepositError, wallets, user, selectedWalletAddress, currencies } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-        const currencyItem = currencies && currencies.find(item => item.id === currency) || { min_confirmations: 6 };
+        const currencyItem = (currencies && currencies.find(item => item.id === currency)) || { min_confirmations: 6 };
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
                                                    { confirmations: currencyItem.min_confirmations });
         const error = addressDepositError ?
@@ -397,10 +398,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                     {this.translate('page.body.wallets.tabs.withdraw.content.enable2fa')}
                 </p>
                 <Button
-                    className="pg-wallet__button-2fa"
-                    label={this.translate('page.body.wallets.tabs.withdraw.content.enable2faButton')}
+                    block={true}
                     onClick={this.redirectToEnable2fa}
-                />
+                    size="lg"
+                    variant="primary"
+                >
+                    {this.translate('page.body.wallets.tabs.withdraw.content.enable2faButton')}
+                </Button>
             </React.Fragment>
         );
     };
@@ -410,7 +414,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
 
     private isTwoFactorAuthRequired(level: number, is2faEnabled: boolean) {
-        return level > 1 || level === 1 && is2faEnabled;
+        return level > 1 || (level === 1 && is2faEnabled);
     }
 
     private onWalletSelectionChange = (value: WalletItemProps) => {

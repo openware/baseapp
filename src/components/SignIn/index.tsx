@@ -1,16 +1,10 @@
-import {
-    Button,
-} from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
-import {
-    CustomInput,
-} from '../';
-import {
-    EMAIL_REGEX,
-} from '../../helpers';
+import { Button } from 'react-bootstrap';
+import { CustomInput } from '../';
+import { EMAIL_REGEX } from '../../helpers';
 
-interface SignInProps {
+export interface SignInProps {
     labelSignIn?: string;
     labelSignUp?: string;
     emailLabel?: string;
@@ -40,7 +34,7 @@ interface SignInProps {
     changeEmail: (value: string) => void;
 }
 
-class SignInComponent extends React.Component<SignInProps> {
+export class SignInComponent extends React.Component<SignInProps> {
     public render() {
         const {
             email,
@@ -123,12 +117,15 @@ class SignInComponent extends React.Component<SignInProps> {
                         </div>
                         <div className="cr-sign-in-form__button-wrapper">
                             <Button
-                                label={isLoading ? 'Loading...' : (labelSignIn ? labelSignIn : 'Sign in')}
+                                block={true}
                                 type="submit"
-                                className={'cr-sign-in-form__button'}
                                 disabled={isLoading || !email.match(EMAIL_REGEX) || !password}
-                                onClick={this.handleClick}
-                            />
+                                onClick={e => this.handleClick(e)}
+                                size="lg"
+                                variant="primary"
+                            >
+                                {isLoading ? 'Loading...' : (labelSignIn ? labelSignIn : 'Sign in')}
+                            </Button>
                         </div>
                         <div className="cr-sign-in-form__bottom-section">
                             <div
@@ -184,8 +181,3 @@ class SignInComponent extends React.Component<SignInProps> {
         }
     };
 }
-
-export {
-    SignInComponent,
-    SignInProps,
-};

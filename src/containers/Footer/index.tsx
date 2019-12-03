@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 
-class FooterComponent extends React.Component {
+class FooterComponent extends React.Component<RouterProps> {
     public render() {
-        if (location.pathname.startsWith('/confirm')) {
+        if (this.props.history.location.pathname.startsWith('/confirm')) {
             return <React.Fragment />;
         }
 

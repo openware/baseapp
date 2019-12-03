@@ -1,9 +1,13 @@
 import { AxiosResponse } from 'axios';
-import { JsonBody, makeRequest, RequestOptions } from './requestBuilder';
+import { JsonBody, makeRequest } from './requestBuilder';
 
 export * from './types';
 export * from './config';
-export { RequestOptions } from './requestBuilder';
+
+export interface RequestOptions {
+    apiVersion: 'applogic' | 'peatio' | 'barong';
+    withHeaders?: boolean;
+}
 
 export type RequestBody = JsonBody | FormData;
 

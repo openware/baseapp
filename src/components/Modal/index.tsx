@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 
-interface ModalProps {
+export interface ModalProps {
     /**
      * Property for
      */
@@ -24,7 +24,7 @@ interface ModalProps {
     className?: string;
 }
 
-const Modal: React.FunctionComponent<ModalProps> = props => {
+export const Modal: React.FunctionComponent<ModalProps> = props => {
     const { className } = props;
     const cx = classnames('cr-modal', className);
 
@@ -47,9 +47,4 @@ const Modal: React.FunctionComponent<ModalProps> = props => {
             </div>
         </div>
     );
-};
-
-export {
-    Modal,
-    ModalProps,
 };

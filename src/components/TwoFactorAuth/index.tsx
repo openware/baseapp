@@ -1,10 +1,7 @@
-import { Button } from '@openware/components';
 import cr from 'classnames';
-import {
-    CustomInput,
-} from '../';
-
+import { CustomInput } from '../';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 
 export interface TwoFactorAuthProps {
     errorMessage?: string;
@@ -52,7 +49,7 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                                 <div className="cr-email-form__option-inner">
                                     {title || '2FA verification'}
                                     <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
-                                        <img src={require('../EmailForm/close.svg')}/>
+                                        <img alt="" src={require('../EmailForm/close.svg')}/>
                                     </div>
                                 </div>
                             </div>
@@ -79,11 +76,13 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                             </div>
                             <div className={buttonWrapperClass}>
                                 <Button
-                                    label={isLoading ? 'Loading...' : (buttonLabel ? buttonLabel : 'Sign in')}
-                                    className={otpCode ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                                     disabled={isLoading || !otpCode.match(/.{6}/g)}
                                     onClick={this.handleSubmit}
-                                />
+                                    size="lg"
+                                    variant="primary"
+                                >
+                                    {isLoading ? 'Loading...' : (buttonLabel ? buttonLabel : 'Sign in')}
+                                </Button>
                             </div>
                         </div>
                     </div>

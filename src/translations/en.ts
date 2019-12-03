@@ -387,7 +387,7 @@ export const en = {
                                       'email in your inbox with further ' +
                                       'instruction. If you cannot find the email, ' +
                                       'please check your spam folder',
-
+    'page.header.signUp.modal.footer': 'OK',
     'page.resendConfirmation': 'Resend Confirmation',
     'page.forgotPassword': 'Forgot Password',
     'page.forgotPassword.message': 'Enter email to reset password',

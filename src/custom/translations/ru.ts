@@ -283,8 +283,8 @@ export const ru: LangType = {
     'page.body.profile.apiKeys.modal.secret_key_info': 'Эта информация видна только один раз и не сможет быть восстановлена',
     'page.body.profile.apiKeys.modal.secret_key_store': 'Пожалуйста, сохраните это надежно',
     'page.body.profile.apiKeys.modal.note': 'Внимание',
-    'page.body.profile.apiKeys.modal.note_content': 'Для сохранности средств, не сообщайте свой Секретный и ключ Доступа другим.\
- Если Вы забыли свой Секретный ключ, удалите его и создайте новую пару ключей.',
+    'page.body.profile.apiKeys.modal.note_content': `Для сохранности средств, не сообщайте свой Секретный и ключ Доступа другим.
+    Если Вы забыли свой Секретный ключ, удалите его и создайте новую пару ключей.`,
     'page.body.profile.apiKeys.modal.title': 'Введите 2FA код с приложения',
     'page.body.profile.apiKeys.modal.label': '6-ти значный Google Authenticator код',
     'page.body.profile.apiKeys.modal.placeholder': 'Введите код',
@@ -389,7 +389,7 @@ export const ru: LangType = {
                                      ' почтовом ящике электронное письмо с дальнейшими инструкциями. ' +
                                      'Если вы не можете найти адрес электронной почты, проверьте свою' +
                                      ' электронную почту со спамом.',
-
+    'page.header.signUp.modal.footer': 'OK',
     'page.resendConfirmation': 'Отправить подтверждение снова',
     'page.forgotPassword': 'Забыли пароль',
     'page.forgotPassword.message': 'Введите адрес электронной почты, чтобы сбросить пароль',

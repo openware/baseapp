@@ -1,22 +1,11 @@
-import {
-  Button,
-  Dropdown,
-  Loader,
-} from '@openware/components';
+import { Button, Dropdown, Loader } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
-import {
-    InjectedIntlProps,
-    injectIntl,
-} from 'react-intl';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
-import {
-  connect,
-  MapDispatchToPropsFunction,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import close = require('../../../assets/images/close.svg');
 import { formatDate } from '../../../helpers';
 import { isDateInFuture } from '../../../helpers/checkDate';
 import { alertPush, RootState } from '../../../modules';
@@ -25,6 +14,8 @@ import {
     selectSendDocumentsSuccess,
     sendDocuments,
 } from '../../../modules/user/kyc/documents';
+
+import close from '../../../assets/images/close.svg';
 
 interface ReduxProps {
     success?: string;
@@ -228,7 +219,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                 onClick={this.handleFileDelete(index)}
             >
                 {scan.name.slice(0, 27)}...&nbsp;
-                <img src={close}/>
+                <img alt="close" src={close}/>
             </div>
         );
     }

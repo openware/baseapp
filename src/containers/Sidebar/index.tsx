@@ -55,7 +55,7 @@ class SidebarContainer extends React.Component<Props, State> {
         const { isLoggedIn, colorTheme, isActive, lang } = this.props;
         const { isOpenLanguage } = this.state;
 
-        const address = location ? location.pathname : '';
+        const address = this.props.history.location ? this.props.history.location.pathname : '';
         const isLight = colorTheme === 'light';
         const lightBox = isLight ? 'light-box' : '';
         const languageName = lang.toUpperCase();

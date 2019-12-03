@@ -2,9 +2,7 @@ import { CellData, CloseButton, Table } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 
-type OnCancelCallback = (index: number) => void;
-
-interface OpenOrdersProps {
+export interface OpenOrdersProps {
     /**
      * List of open orders, takes order side ('buy' | 'sell') as last element of a row
      */
@@ -12,7 +10,7 @@ interface OpenOrdersProps {
     /**
      * Callback that is called when cancel button of order row is clicked
      */
-    onCancel: OnCancelCallback;
+    onCancel: (index: number) => void;
     /**
      * List of headers for open orders table
      */
@@ -28,7 +26,7 @@ interface OpenOrdersProps {
 }
 
 
-class OpenOrders extends React.Component<OpenOrdersProps> {
+export class OpenOrders extends React.Component<OpenOrdersProps> {
     private defaultHeaders = ['Date', 'Action', 'Price', 'Amount', ''];
     private defaultHeadersKeys = ['Date', 'Action', 'Price', 'Amount', ''];
 
@@ -79,6 +77,7 @@ class OpenOrders extends React.Component<OpenOrdersProps> {
             'cr-open-orders__price--buy': action === 'buy',
             'cr-open-orders__price--sell': action === 'sell',
         });
+
         return <span className={classNames}>{actionName}</span>;
     }
 
@@ -89,6 +88,7 @@ class OpenOrders extends React.Component<OpenOrdersProps> {
             'cr-open-orders__order--buy': type === 'buy',
             'cr-open-orders__order--sell': type === 'sel',
         });
+
         return <span className={classNames}>{orderType}</span>;
     }
 
@@ -100,9 +100,3 @@ class OpenOrders extends React.Component<OpenOrdersProps> {
         this.props.onCancel(index);
     }
 }
-
-export {
-    OnCancelCallback,
-    OpenOrders,
-    OpenOrdersProps,
-};

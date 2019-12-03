@@ -1,6 +1,7 @@
-import { Button, Dropdown, PercentageButton } from '@openware/components';
+import { Dropdown, PercentageButton } from '@openware/components';
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { SinonSpy, spy } from 'sinon';
 import { OrderForm, OrderFormProps } from './';
 
@@ -68,11 +69,11 @@ describe('OrderForm', () => {
     it('should render submit button', () => {
         let wrapper = setup();
         let submitButton = wrapper.find(Button);
-        expect(submitButton.props().label.toLowerCase()).toBe('buy');
+        expect(submitButton.props().children).toBe('buy');
 
         wrapper = setup({ type: 'sell' });
         submitButton = wrapper.find(Button);
-        expect(submitButton.props().label.toLowerCase()).toBe('sell');
+        expect(submitButton.props().children).toBe('sell');
     });
 
     it('should call onSubmit callback', () => {

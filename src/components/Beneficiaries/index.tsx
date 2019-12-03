@@ -126,7 +126,11 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         return (
             <div className="pg-beneficiaries__add" onClick={this.handleClickToggleAddAddressModal()}>
                 <span className="pg-beneficiaries__add__label">{this.translate('page.body.wallets.beneficiaries.addAddress')}</span>
-                <img src={require('../../assets/images/PlusIcon.svg')} className="pg-beneficiaries__add__icon"/>
+                <img
+                    alt="plus-icon"
+                    src={require('../../assets/images/PlusIcon.svg')}
+                    className="pg-beneficiaries__add__icon"
+                />
             </div>
         );
     }
@@ -173,7 +177,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 {beneficiaries && beneficiaries.map((item, index) => this.renderDropdownItem(item, index, type))}
                 <div className="pg-beneficiaries__dropdown__body__add add" onClick={this.handleClickToggleAddAddressModal()}>
                     <span className="add__label">{this.translate('page.body.wallets.beneficiaries.addAddress')}</span>
-                    <img className="add__icon" src={require('../../assets/images/PlusIcon.svg')}/>
+                    <img alt="add-icon" className="add__icon" src={require('../../assets/images/PlusIcon.svg')}/>
                 </div>
             </div>
         );
@@ -265,7 +269,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                         <div className="select__right">
                         <span className="select__right__tip" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
                         <span className="select__right__select">{this.translate('page.body.wallets.beneficiaries.dropdown.select')}</span>
-                        <span className="select__right__chevron"><img src={require('../../assets/images/ChevronIcon.svg')}/></span>
+                        <span className="select__right__chevron"><img alt="right-chevron" src={require('../../assets/images/ChevronIcon.svg')}/></span>
                         </div>
                     </div>
                     {isOpenDropdown && this.renderDropdownBody(beneficiaries, type)}
@@ -284,7 +288,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                     <div className="select__right">
                     <span className="select__right__tip" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
                     <span className="select__right__select">{this.translate('page.body.wallets.beneficiaries.dropdown.select')}</span>
-                    <span className="select__right__chevron"><img src={require('../../assets/images/ChevronIcon.svg')}/></span>
+                    <span className="select__right__chevron"><img alt="right-chevron" src={require('../../assets/images/ChevronIcon.svg')}/></span>
                     </div>
                 </div>
                 {isOpenDropdown && this.renderDropdownBody(beneficiaries, type)}

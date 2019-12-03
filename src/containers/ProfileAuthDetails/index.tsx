@@ -1,7 +1,7 @@
-import { Button } from '@openware/components';
 import cr from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import {
     FormattedMessage,
     InjectedIntlProps,
@@ -217,10 +217,13 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         </div>
                     </div>
                     <Button
-                        className="pg-profile-page__btn-secondary-change"
+                        className="btn-block mt-3 mb-3 btn-lg btn btn-primary w-25"
                         onClick={this.showChangeModal}
-                        label={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change'})}
-                    />
+                        size="lg"
+                        variant="primary"
+                    >
+                        {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change'})}
+                    </Button>
                     {modal}
                 </div>
                 {this.renderProfileTwoFactor()}
@@ -252,7 +255,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                     <div className="cr-email-form__option-inner">
                         <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalHeader"/>
                         <div className="cr-email-form__cros-icon" onClick={this.closeModal}>
-                            <img src={require('./close.svg')}/>
+                            <img alt="close" src={require('./close.svg')}/>
                         </div>
                     </div>
                 </div>
@@ -291,18 +294,17 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         const { code2FA } = this.state;
         const isValid2FA = code2FA.match('^[0-9]{6}$');
 
-        const code2FAButtonClass = cr('pg-exchange-modal-submit-footer__button-inverse', {
-            'pg-exchange-modal-submit-footer__button-inverse--disabled': !isValid2FA,
-        });
-
         return (
             <div className="pg-exchange-modal-submit-footer">
                 <Button
-                    className={code2FAButtonClass}
+                    block={true}
                     disabled={!isValid2FA}
-                    label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.twoFactorAuthentication.disable'})}
                     onClick={this.handleDisable2FA}
-                />
+                    size="lg"
+                    variant="primary"
+                >
+                    {this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.twoFactorAuthentication.disable'})}
+                </Button>
             </div>
         );
     };
@@ -313,7 +315,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
               <div className="cr-email-form__option-inner">
                   <FormattedMessage id="page.body.profile.header.account.content.password.change"/>
                   <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
-                      <img src={require('./close.svg')}/>
+                      <img alt="close" src={require('./close.svg')}/>
                   </div>
               </div>
             </div>

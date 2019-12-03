@@ -1,20 +1,12 @@
-import {
-    Button,
-    Checkbox,
-} from '@openware/components';
+import { Checkbox } from '@openware/components';
 import cr from 'classnames';
-import {
-    CustomInput,
-} from '../';
-
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import ReCAPTCHA from 'react-google-recaptcha';
-import {
-    EMAIL_REGEX,
-    PASSWORD_REGEX,
-} from '../../helpers';
+import { CustomInput } from '../';
+import { EMAIL_REGEX, PASSWORD_REGEX } from '../../helpers';
 
-interface SignUpFormProps {
+export interface SignUpFormProps {
     siteKey?: string;
     isLoading?: boolean;
     title?: string;
@@ -57,7 +49,7 @@ interface SignUpFormProps {
     passwordFocused: boolean;
 }
 
-class SignUpForm extends React.Component<SignUpFormProps> {
+export class SignUpForm extends React.Component<SignUpFormProps> {
     public render() {
         const {
             email,
@@ -200,12 +192,15 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                         {captcha}
                         <div className="cr-sign-up-form__button-wrapper">
                             <Button
+                                block={true}
                                 type="submit"
-                                className="cr-sign-up-form__button"
-                                label={isLoading ? 'Loading...' : (labelSignUp ? labelSignUp : 'Sign up')}
                                 disabled={this.disableButton()}
-                                onClick={this.handleClick}
-                            />
+                                onClick={e => this.handleClick(e)}
+                                size="lg"
+                                variant="primary"
+                            >
+                                {isLoading ? 'Loading...' : (labelSignUp ? labelSignUp : 'Sign up')}
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -259,8 +254,3 @@ class SignUpForm extends React.Component<SignUpFormProps> {
         }
     };
 }
-
-export {
-    SignUpForm,
-    SignUpFormProps,
-};
