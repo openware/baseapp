@@ -8,7 +8,10 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { setDocumentTitle } from '../../../../helpers';
 import {
+    currenciesFetch,
+    Currency,
     RootState,
+    selectCurrencies,
     selectUserLoggedIn,
 } from '../../../../modules';
 import { rangerConnectFetch } from '../../../../modules/public/ranger';
@@ -32,12 +35,14 @@ interface ReduxProps {
     userLoggedIn: boolean;
     loading: boolean;
     newIEO?: DataIEOInterface;
+    currencies: Currency[];
 }
 
 interface DispatchProps {
     ieoFetch: typeof fetchIEO;
     rangerConnect: typeof rangerConnectFetch;
     ieoFetchMetadata: typeof ieoFetchMetadata;
+    fetchCurrencies: typeof currenciesFetch;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
@@ -45,7 +50,7 @@ type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 class IEOListContainer extends React.Component<Props> {
     public componentDidMount() {
         setDocumentTitle('IEO');
-        const { userLoggedIn, rangerState: { connected, withAuth } } = this.props;
+        const { userLoggedIn, rangerState: { connected, withAuth }, currencies } = this.props;
 
         this.handleFetchIEO();
 
@@ -56,10 +61,14 @@ class IEOListContainer extends React.Component<Props> {
         if (userLoggedIn && !withAuth) {
             this.props.rangerConnect({ withAuth: userLoggedIn });
         }
+
+        if (!currencies.length) {
+            this.props.fetchCurrencies();
+        }
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { ieo, userLoggedIn, newIEO } = this.props;
+        const { ieo, userLoggedIn, newIEO, currencies } = this.props;
 
         if (userLoggedIn !== nextProps.userLoggedIn) {
             this.props.rangerConnect({ withAuth: nextProps.userLoggedIn });
@@ -71,6 +80,10 @@ class IEOListContainer extends React.Component<Props> {
 
         if (nextProps.newIEO && nextProps.newIEO !== newIEO) {
             this.props.ieoFetchMetadata({ id: nextProps.newIEO.id, currency_id: nextProps.newIEO.currency_id });
+        }
+
+        if (!nextProps.currencies.length && JSON.stringify(nextProps.currencies) !== JSON.stringify(currencies)) {
+            this.props.fetchCurrencies();
         }
     }
 
@@ -111,6 +124,7 @@ class IEOListContainer extends React.Component<Props> {
                     state={[ 'preparing' ]}
                     ieo={listPreparing}
                     handleFetchIEO={this.handleFetchIEO}
+                    currencies={this.props.currencies}
                 />
             </React.Fragment>
         ) : null
@@ -124,6 +138,7 @@ class IEOListContainer extends React.Component<Props> {
                     state={['ongoing', 'distributing']}
                     ieo={listInProgress}
                     handleFetchIEO={this.handleFetchIEO}
+                    currencies={this.props.currencies}
                 />
             </React.Fragment>
         ) : null
@@ -137,6 +152,7 @@ class IEOListContainer extends React.Component<Props> {
                     state={[ 'finished' ]}
                     ieo={listPast}
                     handleFetchIEO={this.handleFetchIEO}
+                    currencies={this.props.currencies}
                 />
             </React.Fragment>
         ) : null
@@ -162,12 +178,14 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     userLoggedIn: selectUserLoggedIn(state),
     loading: selectIEOLoading(state),
     newIEO: selectNewIEO(state),
+    currencies: selectCurrencies(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     ieoFetch: payload => dispatch(fetchIEO(payload)),
     rangerConnect: payload => dispatch(rangerConnectFetch(payload)),
     ieoFetchMetadata: payload => dispatch(ieoFetchMetadata(payload)),
+    fetchCurrencies: () => dispatch(currenciesFetch()),
 });
 
 // tslint:disable-next-line:no-any

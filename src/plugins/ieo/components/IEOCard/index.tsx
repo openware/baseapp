@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { getCountdownDate, localeDate } from '../../../../helpers';
+import { Currency } from '../../../../modules';
 import { DataIEOInterface } from '../../modules';
 
 interface CardIEOProps {
@@ -10,6 +11,7 @@ interface CardIEOProps {
     onIEOSelect: (ieo: DataIEOInterface) => void;
     handleFetchIEO: () => void;
     onClick: (ieo: DataIEOInterface) => void;
+    currencies: Currency[];
 }
 
 interface State {
@@ -157,6 +159,7 @@ class IEOCardComponent extends React.Component<Props, State> {
             finishes_at,
             supply,
             currency_id,
+            metadata,
         } = this.props.ieo;
 
         return (
@@ -164,7 +167,8 @@ class IEOCardComponent extends React.Component<Props, State> {
                 <div className="pg-ieo__card-content-block__row">
                     <span className="pg-ieo__card-content-block__text">{this.translate('page.body.ieo.profile.info.goal')}</span>
                     <span className="pg-ieo__card-content-block__text text-bold">
-                        {supply} {currency_id && currency_id.toUpperCase()}
+                        {metadata && Decimal.format(supply, +metadata.precision)}&nbsp;
+                        {currency_id && currency_id.toUpperCase()}
                     </span>
                 </div>
                 <div className="pg-ieo__card-content-block__row">
@@ -180,14 +184,15 @@ class IEOCardComponent extends React.Component<Props, State> {
     };
 
     private renderInProgress = () => {
-        const { supply, currency_id } = this.props.ieo;
+        const { supply, currency_id, metadata } = this.props.ieo;
 
         return (
             <div className="pg-ieo__card-content-block">
                 <div className="pg-ieo__card-content-block__row">
                     <span className="pg-ieo__card-content-block__text">{this.translate('page.body.ieo.profile.info.goal')}</span>
                     <span className="pg-ieo__card-content-block__text text-bold">
-                        {supply} {currency_id && currency_id.toUpperCase()}
+                        {metadata && Decimal.format(supply, +metadata.precision)}&nbsp;
+                        {currency_id && currency_id.toUpperCase()}
                     </span>
                 </div>
                 {this.renderProgressBar()}
@@ -196,15 +201,17 @@ class IEOCardComponent extends React.Component<Props, State> {
     };
 
     private renderFinished = () => {
-        const { tokens_ordered, pairs, metadata } = this.props.ieo;
-        const amountOfQuote = tokens_ordered && metadata && metadata.precision && Decimal.format(+tokens_ordered * +pairs[0].price, +metadata.precision);
+        const { tokens_ordered, pairs } = this.props.ieo;
+        const { currencies } = this.props;
+        const quoteCurrency = currencies.length ? currencies.find(currency => currency.id && currency.id.toLowerCase() === pairs[0].quote_currency_id && pairs[0].quote_currency_id.toLowerCase()) : null;
+        const amountOfQuote = tokens_ordered && quoteCurrency ? Decimal.format(+tokens_ordered * +pairs[0].price, +quoteCurrency.precision) : null;
 
         return (
             <div className="pg-ieo__card-content-block">
                 <div className="pg-ieo__card-content-block__row">
                     <span className="pg-ieo__card-content-block__text">{this.translate('page.body.ieo.card.raised')}</span>
                     <span className="pg-ieo__card-content-block__text text-bold">
-                        {amountOfQuote} {amountOfQuote && pairs[0].quote_currency_id && pairs[0].quote_currency_id.toUpperCase()}
+                        {amountOfQuote} {pairs[0].quote_currency_id && pairs[0].quote_currency_id.toUpperCase()}
                     </span>
                 </div>
                 {this.renderProgressBar()}

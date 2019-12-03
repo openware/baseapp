@@ -6,6 +6,7 @@ import {
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { Currency } from '../../../../modules';
 import { IEOCard } from '../../components';
 import {
     DataIEOInterface,
@@ -16,6 +17,7 @@ interface OwnProps {
     state: string[];
     ieo: DataIEOInterface[];
     handleFetchIEO: () => void;
+    currencies: Currency[];
 }
 
 interface DispatchProps {
@@ -34,7 +36,7 @@ class IEOListContainer extends React.Component<Props> {
     }
 
     private getIEOList = () => {
-        const { ieo } = this.props;
+        const { ieo, currencies } = this.props;
 
         return ieo.length ? ieo.map((item, index) => (
             <IEOCard
@@ -43,6 +45,7 @@ class IEOListContainer extends React.Component<Props> {
                 key={index}
                 handleFetchIEO={this.props.handleFetchIEO}
                 onClick={this.handleSelectIEO}
+                currencies={currencies}
             />)) : null;
     }
 
