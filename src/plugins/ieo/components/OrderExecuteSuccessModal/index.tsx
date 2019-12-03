@@ -23,7 +23,7 @@ export const OrderExecuteSuccessModal: React.FunctionComponent<Props> = (props: 
                         <div className="pg-ieo-order-success-modal__body__content__message">
                             {props.translate('page.body.ieo.modal.orderSuccess.message')}&nbsp;
                             {props.data.tokens_ordered || '0'}&nbsp;
-                            {props.data.base_currency.toUpperCase() || ''}
+                            {props.data.base_currency ? props.data.base_currency.toUpperCase() : ''}
                         </div>
                         <div className="pg-ieo-order-success-modal__body__content__button" onClick={handleClick}>
                             {props.translate('page.body.ieo.modal.orderSuccess.button')}
