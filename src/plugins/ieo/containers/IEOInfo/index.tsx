@@ -252,7 +252,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
                 <div className="ieo-goal">
                     <div className="ieo-goal__label">{this.translate('page.body.ieo.profile.info.goal')}</div>
                     <div className="ieo-goal__value">
-                        {ieo.supply}&nbsp;
+                        {ieo.metadata && Decimal.format(ieo.supply, +ieo.metadata.precision)}&nbsp;
                         {ieo.currency_id && ieo.currency_id.toUpperCase()}
                     </div>
                 </div>

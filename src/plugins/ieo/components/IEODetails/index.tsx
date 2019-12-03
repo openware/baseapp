@@ -22,7 +22,6 @@ class IEODetailsComponent extends React.Component<Props> {
         const { currentIEO, currencies } = this.props;
         const quoteCurrency = currencies.length && currencies.find(currency => currency.id && currency.id.toLowerCase() === currentIEO.pairs[0].quote_currency_id && currentIEO.pairs[0].quote_currency_id.toLowerCase());
 
-        window.console.log(quoteCurrency);
         return (
             <div className="ieo-profile-details">
                 <div className="ieo-profile-details__header">{this.translate('page.body.ieo.profile.details.header')}</div>
