@@ -18,11 +18,12 @@ import { rangerConnectFetch, RangerConnectFetch } from '../../../../modules/publ
 import { RangerState } from '../../../../modules/public/ranger/reducer';
 import { selectRanger } from '../../../../modules/public/ranger/selectors';
 import backIcon = require('../../assets/images/back-icon.svg');
-import { IEODetails, IEOProjectIntroduction } from '../../components';
+import { IEODetails, IEOProjectIntroduction, OrderExecuteSuccessModal } from '../../components';
 import { IEOInfo } from '../../containers';
 import {
     DataIEOInterface,
     fetchItemIEO,
+    OrderIEOData,
     selectCurrentIEO,
     selectIEOLoading,
 } from '../../modules';
@@ -41,9 +42,21 @@ interface DispatchProps {
     rangerConnect: typeof rangerConnectFetch;
 }
 
+interface State {
+    showOrderExecuteModal: boolean;
+    orderExecuteModalData?: OrderIEOData;
+}
+
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
 
-class IEODetailsContainer extends React.Component<Props> {
+class IEODetailsContainer extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            showOrderExecuteModal: false,
+        };
+    }
+
     public componentDidMount() {
         setDocumentTitle('IEO Details');
         const { history, currencies, rangerState: { connected, withAuth }, userLoggedIn } = this.props;
@@ -94,15 +107,15 @@ class IEODetailsContainer extends React.Component<Props> {
 
     private renderContent = () => {
         const { currencies, currentIEO, userLoggedIn } = this.props;
+        const { orderExecuteModalData, showOrderExecuteModal } = this.state;
         const quoteCurrency = currencies.length && currentIEO && currencies.find(currency => currency.id && currency.id.toLowerCase() === currentIEO.pairs[0].quote_currency_id && currentIEO.pairs[0].quote_currency_id.toLowerCase());
-
 
         return (
             <React.Fragment>
                 <div className="pg-currentIEO-page__back" onClick={this.handleClickBack}>
                     <img src={backIcon} className="back-icon" />&nbsp;&nbsp;
                     <span className="pg-currentIEO-page__back-text">
-                        {this.props.intl.formatMessage({ id: 'page.body.ieo.details.header.backToList'})}
+                        {this.translate('page.body.ieo.details.header.backToList')}
                     </span>
                 </div>
                 <div className="pg-currentIEO-page__info">
@@ -111,6 +124,7 @@ class IEODetailsContainer extends React.Component<Props> {
                         ieo={currentIEO}
                         isLoggedIn={userLoggedIn}
                         handleFetchIEO={this.props.fetchItemIEO}
+                        toggleOrderExecuteModal={this.handleToggleOrderExecuteModal}
                     />
                 </div>
                 <div className="pg-currentIEO-page__details">
@@ -119,12 +133,32 @@ class IEODetailsContainer extends React.Component<Props> {
                 <div className="pg-currentIEO-page__product-intiduction">
                     <IEOProjectIntroduction introduction={currentIEO.metadata && currentIEO.metadata.introduction} />
                 </div>
+                {showOrderExecuteModal && orderExecuteModalData ? this.renderOrderExecuteSuccessModal(orderExecuteModalData) : null}
             </React.Fragment>
         );
     };
 
+    private renderOrderExecuteSuccessModal = (orderExecuteModalData: OrderIEOData) => {
+        return (
+            <OrderExecuteSuccessModal
+                data={orderExecuteModalData}
+                translate={this.translate}
+                toggleModal={() => this.handleToggleOrderExecuteModal()}
+            />
+        );
+    }
+
     private handleClickBack = () => {
         this.props.history.push('/ieo');
+    };
+
+    private handleToggleOrderExecuteModal = (data?: OrderIEOData) => {
+        this.setState({ orderExecuteModalData: data });
+        this.setState(prevState => ({ showOrderExecuteModal: !prevState.showOrderExecuteModal }));
+    }
+
+    private translate = (e: string) => {
+        return this.props.intl.formatMessage({ id: e });
     };
 }
 

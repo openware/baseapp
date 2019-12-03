@@ -8,13 +8,14 @@ import { OrderIEO } from '../';
 import { getCountdownDate, localeDate } from '../../../../helpers';
 import { Currency } from '../../../../modules';
 import { Blur, LoginBlur } from '../../components';
-import { DataIEOInterface } from '../../modules';
+import { DataIEOInterface, OrderIEOData } from '../../modules';
 
 interface OwnProps {
     currency: Currency;
     ieo: DataIEOInterface;
     isLoggedIn: boolean;
     handleFetchIEO: () => void;
+    toggleOrderExecuteModal: (data: OrderIEOData) => void;
 }
 
 interface State {
@@ -133,7 +134,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
                     </div>
                 </div>
                 <div className="ieo-profile-info__order">
-                    <OrderIEO currentIEO={ieo} />
+                    <OrderIEO currentIEO={ieo} toggleOrderExecuteModal={this.props.toggleOrderExecuteModal}/>
                     {this.renderBlur()}
                 </div>
             </div>
