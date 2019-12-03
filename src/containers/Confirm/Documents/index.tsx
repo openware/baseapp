@@ -219,7 +219,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                 onClick={this.handleFileDelete(index)}
             >
                 {scan.name.slice(0, 27)}...&nbsp;
-                <img src={close}/>
+                <img alt="close" src={close}/>
             </div>
         );
     }

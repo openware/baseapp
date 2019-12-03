@@ -24,15 +24,11 @@ const style: React.CSSProperties = {
 /**
  * Component to display list of user wallets. It is scrollable and reacts on WalletItem click.
  */
-export class WalletList
-    extends React.Component<WalletListProps> {
-
-    constructor(props: WalletListProps) {
-        super(props);
-    }
+export class WalletList extends React.Component<WalletListProps> {
     public itemState = (i: number) => {
         return this.props.activeIndex === i;
     };
+
     public makeWalletItem = (props: WalletItemProps, i: number) => (
         <li
             key={i}

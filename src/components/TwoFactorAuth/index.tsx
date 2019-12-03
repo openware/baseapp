@@ -1,8 +1,6 @@
 import { Button } from '@openware/components';
 import cr from 'classnames';
-import {
-    CustomInput,
-} from '../';
+import { CustomInput } from '../';
 
 import * as React from 'react';
 
@@ -52,7 +50,7 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                                 <div className="cr-email-form__option-inner">
                                     {title || '2FA verification'}
                                     <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
-                                        <img src={require('../EmailForm/close.svg')}/>
+                                        <img alt="" src={require('../EmailForm/close.svg')}/>
                                     </div>
                                 </div>
                             </div>

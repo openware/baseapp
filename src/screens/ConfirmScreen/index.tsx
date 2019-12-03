@@ -99,8 +99,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                 </div>
                 <div className="pg-confirm">
                     <div className="pg-confirm-box">
-                        <a
-                            href="#"
+                        <div
                             onClick={this.goBack}
                             className="pg-confirm-box-close"
                         />

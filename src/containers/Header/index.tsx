@@ -87,7 +87,7 @@ class Head extends React.Component<any> {
 
         return mobileWallet && (
             <div onClick={this.backWallets} className="pg-header__toggler">
-                <img src={require(`./back${isLight}.svg`)} />
+                <img alt="" src={require(`./back${isLight}.svg`)} />
             </div>
         );
     };
