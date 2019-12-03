@@ -1,4 +1,7 @@
 Base react application to build a trading platform application
+
+You can see an example of running application here: https://demo.openware.com/
+
 ---
 
 ## Install dependencies
@@ -23,20 +26,9 @@ $ yarn test
 
 For more options for `jest` run `yarn test --help`.
 
-## Available Docker build args
+## Configuration documentation
 
-While building a Docker image you can pass build-dependant arguments using `--build-arg`: 
-`docker build -t baseapp:latest
-  --build-arg BUILD_DOMAIN="example.com" .`
-
-| Argument                 | Description                                                  |
-| --------------------- | ------------------------------------------------------------ |
-| `BUILD_EXPIRE`               |  Unix Timestamp of the build expiration date in seconds |
-| `BUILD_DOMAIN`               |  Domain which you'd like to use during the deployment |
-
-## env.js configuration documentation
-
-In `public/config` open `env.js`
+Configuration file is located in  `public/config/env.js`
 
 
 | Argument                 | Description                                                  |
@@ -49,3 +41,16 @@ In `public/config` open `env.js`
 | `gaTrackerKey` |  Google Analytics tracker key  |
 | `rangerReconnectPeriod` |  Reconnection time for the Ranger WS service in minutes    |
 | `msAlertDisplayTime` |  Alert message display duration in milliseconds    |
+
+## Available Docker build args
+
+While building a Docker image you can pass build-dependant arguments using `--build-arg`: 
+`docker build -t baseapp:latest
+  --build-arg BUILD_DOMAIN="example.com" .`
+
+| Argument       | Description                                            |
+| -------------- | ------------------------------------------------------ |
+| `BUILD_EXPIRE` | Unix Timestamp of the build expiration date in seconds |
+| `BUILD_DOMAIN` | Domain which you'd like to use during the deployment   |
+
+## 
