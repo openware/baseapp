@@ -1,17 +1,10 @@
-import {
-    Button,
-    Dropdown,
-} from '@openware/components';
+import { Button, Dropdown } from '@openware/components';
 import cr from 'classnames';
-import countries = require('i18n-iso-countries');
 import * as moment from 'moment';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
-import {
-  connect,
-  MapDispatchToPropsFunction,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { formatDate, isDateInFuture } from '../../../helpers';
 import {
     editIdentity,
@@ -27,6 +20,8 @@ import {
     User,
 } from '../../../modules';
 import { nationalities } from '../../../translations/nationalities';
+
+import * as countries from 'i18n-iso-countries';
 
 interface ReduxProps {
     editSuccess?: string;
@@ -400,13 +395,13 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 const lastNameRegex = new RegExp(`^[a-zA-Z]{1,100}$`);
                 return value.match(lastNameRegex) ? true : false;
             case 'residentialAddress':
-                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9\-,.;/\\s]+$`);
+                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9,.;/\\s]+$`);
                 return value.match(residentialAddressRegex) ? true : false;
             case 'city':
                 const cityRegex = new RegExp(`^[a-zA-Z]+$`);
                 return value.match(cityRegex) ? true : false;
             case 'postcode':
-                const postcodeRegex = new RegExp(`^[0-9\-]{1,12}$`);
+                const postcodeRegex = new RegExp(`^[0-9]{1,12}$`);
                 return value.match(postcodeRegex) ? true : false;
             case 'dateOfBirth':
                 if (value.length === 10) {

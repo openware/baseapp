@@ -50,8 +50,7 @@ interface ProfileApiKeysState {
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
-// tslint:disable jsx-no-multiline-js
-// tslint:disable jsx-no-lambda
+// tslint:disable jsx-no-multiline-js jsx-no-lambda
 class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState> {
     public state = {
         otpCode: '',
@@ -69,7 +68,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
             copyText.select();
 
             document.execCommand('copy');
-            window.getSelection().removeAllRanges();
+            (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
         }
     };
 

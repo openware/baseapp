@@ -96,7 +96,7 @@ class ProfileVerificationComponent extends React.Component<Props> {
         return (
             <div className="pg-profile-page__level-verification__pending">
                 <p><FormattedMessage id="page.body.wallets.table.pending" /></p>
-                <img src={require('../../assets/images/pending.svg')} />
+                <img alt="pending" src={require('../../assets/images/pending.svg')} />
             </div>
         );
     }

@@ -202,10 +202,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     });
 
-const OrderBook = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer));
-type OrderBookProps = ReduxProps;
-
-export {
-    OrderBook,
-    OrderBookProps,
-};
+export const OrderBook = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer));
+export type OrderBookProps = ReduxProps;

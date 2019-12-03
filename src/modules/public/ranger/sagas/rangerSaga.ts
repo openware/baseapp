@@ -243,7 +243,7 @@ function* getSubscriptions() {
 export function* rangerSagas() {
     let initialized = false;
     let connectFetchPayload: RangerConnectFetch['payload'] | undefined;
-    const buffer: RangerBuffer = { messages: new Array() };
+    const buffer: RangerBuffer = { messages: [] };
     let pipes;
     yield takeEvery(MARKETS_SET_CURRENT_MARKET, switchMarket(false));
     yield takeEvery(MARKETS_SET_CURRENT_MARKET_IFUNSET, switchMarket(true));

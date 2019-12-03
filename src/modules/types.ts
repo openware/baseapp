@@ -1,8 +1,6 @@
 import { MarketsState, TickerEvent } from './public/markets';
 import { OrderBookState } from './public/orderBook';
-import {
-    OrdersState,
-} from './user/orders';
+import { OrdersState } from './user/orders';
 
 export interface CommonState {
     error?: CommonError;
@@ -51,7 +49,7 @@ export interface OrderAPI {
 /*
 ** example: {"order":{"id":10666,"at":1550220381,"market":"kyneth","kind":"bid","price":"0.003","state":"wait","volume":"9.9","origin_volume":"10.0"}}
 */
-interface OrderEvent {
+export interface OrderEvent {
     id: number;
     at: number;
     market: string;
@@ -65,15 +63,10 @@ interface OrderEvent {
 }
 
 
-interface MarketUpdateEvent {
+export interface MarketUpdateEvent {
     asks: Array<[number, number]>;
     bids: Array<[number, number]>;
 }
-
-export {
-    OrderEvent,
-    MarketUpdateEvent,
-};
 
 export type RangerEvent = TickerEvent | OrderEvent | MarketUpdateEvent;
 
