@@ -68,14 +68,10 @@ class IEOListContainer extends React.Component<Props> {
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { ieo, userLoggedIn, newIEO, currencies } = this.props;
+        const { userLoggedIn, newIEO, currencies } = this.props;
 
         if (userLoggedIn !== nextProps.userLoggedIn) {
             this.props.rangerConnect({ withAuth: nextProps.userLoggedIn });
-        }
-
-        if (!nextProps.ieo.length && JSON.stringify(nextProps.ieo) !== JSON.stringify(ieo)) {
-            this.handleFetchIEO();
         }
 
         if (nextProps.newIEO && nextProps.newIEO !== newIEO) {

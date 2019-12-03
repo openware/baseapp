@@ -78,13 +78,6 @@ class IEOInfoComponent extends React.Component<Props, State> {
 
     public componentDidUpdate(prevProps: Props, prevState: State) {
         const { ieo } = this.props;
-        const { countdownValue } = this.state;
-
-        if (prevState.countdownValue !== countdownValue &&
-            countdownValue === '00:00:00' &&
-            prevState.countdownValue === '00:00:01') {
-            this.props.handleFetchIEO();
-        }
 
         if (prevProps.ieo && ieo && prevProps.ieo.state !== ieo.state) {
             clearInterval(this.countdownInterval);
