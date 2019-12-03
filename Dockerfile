@@ -5,15 +5,11 @@ COPY --chown=node:node . .
 
 ARG BUILD_EXPIRE
 ARG BUILD_DOMAIN
-ARG NPM_AUTH_TOKEN
 
 RUN npm i -g yarn
 
 USER node
 
-ENV NPM_AUTH_TOKEN=${NPM_AUTH_TOKEN}
-
-RUN echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
 RUN yarn install
 RUN ./scripts/build.sh
 

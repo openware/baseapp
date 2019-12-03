@@ -8,11 +8,7 @@ concurrency:
 steps:
   - name: "Test & Build"
     image: node:10.11
-    environment:
-      NPM_AUTH_TOKEN:
-        from_secret: drone_npm_auth_token
     commands:
-      - echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > .npmrc
       - export REACT_APP_GIT_SHA=$(git rev-parse --short HEAD)
       - echo $REACT_APP_GIT_SHA > .tags
       - export BUILD_DOMAIN=$(cat .domains)
@@ -27,13 +23,10 @@ steps:
     image: plugins/gcr
     environment:
       BUILD_EXPIRE: "3 month"
-      NPM_AUTH_TOKEN:
-        from_secret: drone_npm_auth_token
     settings:
       repo: gcr.io/openware-production/baseapp
       build_args_from_env:
         - BUILD_EXPIRE
-        - NPM_AUTH_TOKEN
       json_key:
         from_secret: openware_gcp_creds_base64
     when:
@@ -94,11 +87,7 @@ concurrency:
 steps:
   - name: "Test"
     image: node:10.11
-    environment:
-      NPM_AUTH_TOKEN:
-        from_secret: drone_npm_auth_token
     commands:
-      - echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > .npmrc
       - npm -g install yarn
       - yarn install
       - yarn lint
@@ -130,14 +119,11 @@ steps:
   - name: "Build image"
     image: plugins/gcr
     environment:
-      NPM_AUTH_TOKEN:
-        from_secret: drone_npm_auth_token
       BUILD_EXPIRE: "3 month"
     settings:
       repo: gcr.io/openware-production/baseapp
       build_args_from_env:
         - BUILD_EXPIRE
-        - NPM_AUTH_TOKEN
       json_key:
         from_secret: openware_gcp_creds_base64
 

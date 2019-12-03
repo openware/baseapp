@@ -1,30 +1,22 @@
-[![Build Status](https://ci.microkube.com/api/badges/openware/baseapp/status.svg)](https://ci.microkube.com/openware/baseapp)
+Base react application to build a trading platform application
 
-Base Crypto Application
+You can see an example of running application here: https://demo.openware.com/
+
 ---
 
-## Add an npm auth token for install components library
-
-```bash
-$ echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
-```
-
-## Install
+## Install dependencies
 
 ```bash
 $ yarn install
-$ yarn build
 ```
 
-## Run
-
-In `<rootDir>`
+## Run in developement mode
 
 ```bash
 $ yarn start
 ```
 
-## Test
+## Execute tests
 
 In `<rootDir>`
 
@@ -34,35 +26,9 @@ $ yarn test
 
 For more options for `jest` run `yarn test --help`.
 
-## Obfuscate
+## Configuration documentation
 
-To prepare an obfuscated build, run:
-
-```
-docker build -t baseapp:obfuscated
-  --build-arg BUILD_EXPIRE=1560761577000(unix epoch seconds)
-  --build-arg BUILD_DOMAIN="example.com"
-  -f Dockerfile-obfuscator .
-```
-You can find all the available build args in the `available Docker build args` section
-
-The resulting image would be accessible by the `baseapp:obfuscated` tag.
-
-## Available Docker build args
-
-While building a Docker image you can pass build-dependant arguments using `--build-arg`: 
-`docker build -t baseapp:latest
-  --build-arg BUILD_DOMAIN="example.com" .`
-
-| Argument                 | Description                                                  |
-| --------------------- | ------------------------------------------------------------ |
-| `BUILD_EXPIRE`               |  Unix Timestamp of the build expiration date in seconds |
-| `BUILD_DOMAIN`               |  Domain which you'd like to use during the deployment |
-| `NPM_AUTH_TOKEN` |  The authentication token of npmjs.com used to fetch private packages |
-
-## env.js configuration explanation
-
-In `public/config` open `env.js`
+Configuration file is located in  `public/config/env.js`
 
 
 | Argument                 | Description                                                  |
@@ -75,3 +41,16 @@ In `public/config` open `env.js`
 | `gaTrackerKey` |  Google Analytics tracker key  |
 | `rangerReconnectPeriod` |  Reconnection time for the Ranger WS service in minutes    |
 | `msAlertDisplayTime` |  Alert message display duration in milliseconds    |
+
+## Available Docker build args
+
+While building a Docker image you can pass build-dependant arguments using `--build-arg`: 
+`docker build -t baseapp:latest
+  --build-arg BUILD_DOMAIN="example.com" .`
+
+| Argument       | Description                                            |
+| -------------- | ------------------------------------------------------ |
+| `BUILD_EXPIRE` | Unix Timestamp of the build expiration date in seconds |
+| `BUILD_DOMAIN` | Domain which you'd like to use during the deployment   |
+
+## 

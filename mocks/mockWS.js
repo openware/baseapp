@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 const http = require('http');
 const mockserver = require('mockserver');
-
+const markets = require('./markets.js')
+const RangerMock = require('./ranger.js')
 const argv = require('yargs').argv;
-const port = argv.port;
-const directory = argv.dir;
+const portWS = argv.portWS || 9003;
 
 process.on('SIGINT', () => { console.log("Bye bye!"); process.exit(); });
 
@@ -24,4 +24,4 @@ class Mock {
     }
 }
 
-new Mock(directory, port, true)
+new RangerMock(portWS, markets);
