@@ -46,62 +46,60 @@ describe('Orders', () => {
         sagaMiddleware.run(rootSaga);
     });
 
-    describe('execute order', async () => {
-        const order: OrderExecution = {
-            market: 'bchbtc',
-            side: 'buy',
-            volume: '0.001',
-            price: '0.002',
-            ord_type: 'limit',
-        };
+    const order: OrderExecution = {
+        market: 'bchbtc',
+        side: 'buy',
+        volume: '0.001',
+        price: '0.002',
+        ord_type: 'limit',
+    };
 
-        const expectedOrderExecuteFetch = {
-            type: ORDER_EXECUTE_FETCH,
-            payload: order,
-        };
+    const expectedOrderExecuteFetch = {
+        type: ORDER_EXECUTE_FETCH,
+        payload: order,
+    };
 
-        const expectedOrderExecuteData = {
-            type: ORDER_EXECUTE_DATA,
-        };
+    const expectedOrderExecuteData = {
+        type: ORDER_EXECUTE_DATA,
+    };
 
-        const expectedOrderExecuteError = {
-            type: ORDER_EXECUTE_ERROR,
-            payload: {
-                code: 500,
-                message: ['Server error'],
-            },
-        };
+    const expectedOrderExecuteError = {
+        type: ORDER_EXECUTE_ERROR,
+        payload: {
+            code: 500,
+            message: ['Server error'],
+        },
+    };
 
-        it('should execute order', async () => {
-            mockOrderExecute();
-            const promise = new Promise(resolve => {
-                store.subscribe(() => {
-                    const actions = store.getActions();
-                    if (actions.length === 2) {
-                        expect(actions[0]).toEqual(expectedOrderExecuteFetch);
-                        expect(actions[1]).toEqual(expectedOrderExecuteData);
-                        resolve();
-                    }
-                });
+    it('should execute order', async () => {
+        mockOrderExecute();
+        const promise = new Promise(resolve => {
+            store.subscribe(() => {
+                const actions = store.getActions();
+                if (actions.length === 2) {
+                    expect(actions[0]).toEqual(expectedOrderExecuteFetch);
+                    expect(actions[1]).toEqual(expectedOrderExecuteData);
+                    resolve();
+                }
             });
-            store.dispatch(orderExecuteFetch(order));
-            return promise;
         });
+        store.dispatch(orderExecuteFetch(order));
+        return promise;
+    });
 
-        it('should handle order execute error', async () => {
-            mockNetworkError(mockAxios);
-            const promise = new Promise(resolve => {
-                store.subscribe(() => {
-                    const actions = store.getActions();
-                    if (actions.length === 2) {
-                        expect(actions[0]).toEqual(expectedOrderExecuteFetch);
-                        expect(actions[1]).toEqual(expectedOrderExecuteError);
-                        resolve();
-                    }
-                });
+    it('should handle order execute error', async () => {
+        mockNetworkError(mockAxios);
+        const promise = new Promise(resolve => {
+            store.subscribe(() => {
+                const actions = store.getActions();
+                if (actions.length === 2) {
+                    expect(actions[0]).toEqual(expectedOrderExecuteFetch);
+                    expect(actions[1]).toEqual(expectedOrderExecuteError);
+                    resolve();
+                }
             });
-            store.dispatch(orderExecuteFetch(order));
-            return promise;
         });
+        store.dispatch(orderExecuteFetch(order));
+        return promise;
     });
 });

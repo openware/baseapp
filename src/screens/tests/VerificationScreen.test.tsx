@@ -29,10 +29,6 @@ describe('VerificationScreen test', () => {
             search: 'confirmation_token=123123',
         },
     };
-    it('should fetch token correctly', () => {
-        const wrapper = setup(tokenProps);
-        expect(wrapper.props().location.search).toEqual(tokenProps.location.search);
-    });
 
     it('extract the token from search url', () => {
         expect(extractToken(tokenProps)).toEqual('123123');

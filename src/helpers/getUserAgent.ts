@@ -1,4 +1,4 @@
-import * as UAParser from 'ua-parser-js';
+import UAParser from 'ua-parser-js';
 
 interface AgentContext {
     name: string;

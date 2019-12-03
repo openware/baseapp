@@ -1,11 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VerificationScreen test should render 1`] = `
-<Connect(InjectIntl(Connect(Verification)))
-  location={
-    Object {
-      "search": "",
-    }
-  }
-/>
-`;
+exports[`VerificationScreen test should render 1`] = `ShallowWrapper {}`;

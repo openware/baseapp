@@ -51,9 +51,4 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
     });
 
 // tslint:disable-next-line:no-any
-const App = connect(mapStateToProps, null)(AppLayout) as any;
-
-export {
-    AppProps,
-    App,
-};
+export const App = connect(mapStateToProps)(AppLayout) as any;

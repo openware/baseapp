@@ -1,17 +1,10 @@
-import {
-    Button,
-} from '@openware/components';
+import { Button } from '@openware/components';
 import cr from 'classnames';
-import {
-    CustomInput,
-} from '../';
-
 import * as React from 'react';
-import {
-    EMAIL_REGEX,
-} from '../../helpers';
+import { CustomInput } from '../';
+import { EMAIL_REGEX } from '../../helpers';
 
-interface EmailFormProps {
+export interface EmailFormProps {
     title?: string;
     buttonLabel?: string;
     errorMessage?: string;
@@ -30,7 +23,7 @@ interface EmailFormProps {
     handleReturnBack: () => void;
 }
 
-class EmailForm extends React.Component<EmailFormProps> {
+export class EmailForm extends React.Component<EmailFormProps> {
     public render() {
         const {
             title,
@@ -53,7 +46,7 @@ class EmailForm extends React.Component<EmailFormProps> {
                             <div className="cr-email-form__option-inner">
                                 {title ? title : 'Forgot password'}
                                 <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
-                                    <img src={require('./close.svg')}/>
+                                    <img alt="close" src={require('./close.svg')}/>
                                 </div>
                             </div>
                         </div>
@@ -118,9 +111,3 @@ class EmailForm extends React.Component<EmailFormProps> {
         }
     };
 }
-
-
-export {
-    EmailForm,
-    EmailFormProps,
-};

@@ -1,28 +1,47 @@
 {
-  "extends": "./node_modules/@openware/coding-standards/tsconfig.json",
   "compilerOptions": {
     "sourceMap": false,
     "sourceRoot": null,
-    "baseUrl": "/",
-    "jsx": "react",
     "rootDir": "src",
+    "allowJs": false,
+    "strict": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    "suppressImplicitAnyIndexErrors": false,
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": false,
+    "experimentalDecorators": true,
+    "types": [
+      "node",
+      "jest"
+    ],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "target": "es5",
-    "module": "commonjs",
-    "noImplicitAny": false,
+    "module": "esnext",
     "lib": [
       "es2015",
       "dom",
       "es2017"
     ],
-    "types": [
-      "node",
-      "jest"
-    ]
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "noImplicitAny": false,
+    "isolatedModules": true
   },
   "include": [
     "./src/assets",
     "./src",
-    "./images.d.ts",
-    "./charting_library.min.d.ts"
+    "./images.d.ts"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./src/*.test.*",
+    "./src/charting_library"
   ]
 }

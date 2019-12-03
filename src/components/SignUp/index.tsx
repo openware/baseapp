@@ -3,18 +3,12 @@ import {
     Checkbox,
 } from '@openware/components';
 import cr from 'classnames';
-import {
-    CustomInput,
-} from '../';
-
+import { CustomInput } from '../';
 import * as React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import {
-    EMAIL_REGEX,
-    PASSWORD_REGEX,
-} from '../../helpers';
+import { EMAIL_REGEX, PASSWORD_REGEX } from '../../helpers';
 
-interface SignUpFormProps {
+export interface SignUpFormProps {
     siteKey?: string;
     isLoading?: boolean;
     title?: string;
@@ -57,7 +51,7 @@ interface SignUpFormProps {
     passwordFocused: boolean;
 }
 
-class SignUpForm extends React.Component<SignUpFormProps> {
+export class SignUpForm extends React.Component<SignUpFormProps> {
     public render() {
         const {
             email,
@@ -259,8 +253,3 @@ class SignUpForm extends React.Component<SignUpFormProps> {
         }
     };
 }
-
-export {
-    SignUpForm,
-    SignUpFormProps,
-};
