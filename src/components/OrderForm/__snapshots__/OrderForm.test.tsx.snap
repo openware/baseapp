@@ -7,7 +7,7 @@ exports[`OrderForm should match snapshot 1`] = `
   <div
     className="cr-order-item"
   >
-    <e
+    <Dropdown
       list={
         Array [
           "Limit",
@@ -20,7 +20,7 @@ exports[`OrderForm should match snapshot 1`] = `
   <div
     className="cr-order-item"
   >
-    <Component
+    <OrderInput
       currency="btc"
       handleChangeValue={[Function]}
       handleFocusInput={[Function]}
@@ -31,7 +31,7 @@ exports[`OrderForm should match snapshot 1`] = `
   <div
     className="cr-order-item"
   >
-    <Component
+    <OrderInput
       currency="eth"
       handleChangeValue={[Function]}
       handleFocusInput={[Function]}
@@ -45,19 +45,19 @@ exports[`OrderForm should match snapshot 1`] = `
     <div
       className="cr-order-item__percentage-buttons"
     >
-      <Component
+      <PercentageButton
         label="25%"
         onClick={[Function]}
       />
-      <Component
+      <PercentageButton
         label="50%"
         onClick={[Function]}
       />
-      <Component
+      <PercentageButton
         label="75%"
         onClick={[Function]}
       />
-      <Component
+      <PercentageButton
         label="100%"
         onClick={[Function]}
       />
@@ -120,7 +120,7 @@ exports[`OrderForm should match snapshot 1`] = `
   <div
     className="cr-order-item"
   >
-    <Component
+    <Button
       disabled={true}
       label="buy"
       noMargin={true}

@@ -7,7 +7,7 @@ exports[`Order should match snapshot 1`] = `
   <div
     className="cr-order--extended__buy"
   >
-    <e
+    <TabPanel
       fixed={true}
       hideMode="hide"
       onTabChange={[Function]}
@@ -53,7 +53,7 @@ exports[`Order should match snapshot 1`] = `
   <div
     className="cr-order--extended__sell"
   >
-    <e
+    <TabPanel
       fixed={true}
       hideMode="hide"
       onTabChange={[Function]}

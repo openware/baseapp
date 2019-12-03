@@ -51,7 +51,7 @@ exports[`EmailForm component should render 1`] = `
       <div
         className="cr-email-form__button-wrapper"
       >
-        <Component
+        <Button
           className="cr-email-form__button cr-email-form__button--disabled"
           disabled={true}
           label="Send"

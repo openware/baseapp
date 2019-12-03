@@ -4,7 +4,7 @@ exports[`OpenOrders should render 1`] = `
 <div
   className="cr-open-orders"
 >
-  <e
+  <Table
     data={
       Array [
         Array [
@@ -16,7 +16,7 @@ exports[`OpenOrders should render 1`] = `
           </span>,
           "1,442.43",
           "4,323.04",
-          <Unknown
+          <CloseButton
             onClick={[Function]}
           />,
         ],
@@ -29,7 +29,7 @@ exports[`OpenOrders should render 1`] = `
           </span>,
           "1,442.43",
           "44,323.12",
-          <Unknown
+          <CloseButton
             onClick={[Function]}
           />,
         ],
@@ -42,7 +42,7 @@ exports[`OpenOrders should render 1`] = `
           </span>,
           "1,442.43",
           "4,323.23",
-          <Unknown
+          <CloseButton
             onClick={[Function]}
           />,
         ],
@@ -55,7 +55,7 @@ exports[`OpenOrders should render 1`] = `
           </span>,
           "1,442.43",
           "543.33",
-          <Unknown
+          <CloseButton
             onClick={[Function]}
           />,
         ],

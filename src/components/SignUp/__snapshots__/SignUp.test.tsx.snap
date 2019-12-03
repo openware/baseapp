@@ -94,7 +94,7 @@ exports[`SignUp component should render 1`] = `
           type="text"
         />
       </div>
-      <Component
+      <Checkbox
         checked={false}
         className="cr-sign-up-form__checkbox"
         label="I  agree all statements in terms of service"
@@ -103,7 +103,7 @@ exports[`SignUp component should render 1`] = `
       <div
         className="cr-sign-up-form__button-wrapper"
       >
-        <Component
+        <Button
           className="cr-sign-up-form__button"
           disabled={true}
           label="Sign up"

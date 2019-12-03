@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`History should render 1`] = `
-<e
+<Table
   data={
     Array [
       Array [

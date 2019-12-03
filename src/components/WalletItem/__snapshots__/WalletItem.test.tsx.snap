@@ -24,7 +24,7 @@ exports[`WalletItem #render should match snapshot 1`] = `
     <div
       className="cr-wallet-item__info"
     >
-      <Component
+      <CryptoIcon
         className="cr-wallet-item__icon"
         code="BTC"
       >
@@ -37,7 +37,7 @@ exports[`WalletItem #render should match snapshot 1`] = `
              
           </span>
         </span>
-      </Component>
+      </CryptoIcon>
       <div
         className="cr-wallet-item__description"
       >
@@ -52,7 +52,7 @@ exports[`WalletItem #render should match snapshot 1`] = `
     <span
       className="cr-wallet-item__balance"
     >
-      <e
+      <Decimal
         fixed={8}
       >
         <span>
@@ -63,7 +63,7 @@ exports[`WalletItem #render should match snapshot 1`] = `
         >
           .00000000
         </span>
-      </e>
+      </Decimal>
        
       <span
         className="cr-wallet-item__currency"
@@ -93,7 +93,7 @@ exports[`WalletItem #render should match snapshot 1`] = `
             </svg>
           </LockIcon>
            
-          <e
+          <Decimal
             fixed={8}
           >
             <span>
@@ -104,7 +104,7 @@ exports[`WalletItem #render should match snapshot 1`] = `
             >
               .00000000
             </span>
-          </e>
+          </Decimal>
         </div>
       </span>
     </span>

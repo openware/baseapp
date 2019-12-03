@@ -134,30 +134,30 @@ exports[`Grid should render 1`] = `
       <div
         key="0"
       >
-        <Component>
+        <GridItem>
           Child Body 0
-        </Component>
+        </GridItem>
       </div>
       <div
         key="1"
       >
-        <Component>
+        <GridItem>
           Child Body 1
-        </Component>
+        </GridItem>
       </div>
       <div
         key="2"
       >
-        <Component>
+        <GridItem>
           Child Body 2
-        </Component>
+        </GridItem>
       </div>
       <div
         key="3"
       >
-        <Component>
+        <GridItem>
           Child Body 3
-        </Component>
+        </GridItem>
       </div>
     </WidthProvider>
   </div>

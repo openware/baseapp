@@ -14,7 +14,7 @@ exports[`CopyableTextField should render 1`] = `
       type="text"
       value="1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4dfE"
     />
-    <Component
+    <Button
       className="cr-copyable-text-field__button"
       label="Copy"
       noMargin={true}

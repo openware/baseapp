@@ -16,7 +16,7 @@ exports[`DepositCrypto should match snapshot 1`] = `
       <div
         className="d-none d-md-block qr-code-wrapper"
       >
-        <Component
+        <QRCode
           data="123123"
           dimensions={118}
         />

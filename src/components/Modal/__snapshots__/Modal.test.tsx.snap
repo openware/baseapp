@@ -24,7 +24,7 @@ exports[`Basic Modal should render 1`] = `
     <div
       className="cr-modal__container-footer"
     >
-      <Component
+      <Button
         label="Ok"
         onClick={[MockFunction]}
       />

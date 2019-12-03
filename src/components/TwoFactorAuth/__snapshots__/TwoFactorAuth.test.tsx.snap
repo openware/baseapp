@@ -55,7 +55,7 @@ exports[`TwoFactorAuth component should render 1`] = `
         <div
           className="cr-email-form__button-wrapper cr-email-form__button-wrapper--empty"
         >
-          <Component
+          <Button
             className="cr-email-form__button cr-email-form__button--disabled"
             disabled={true}
             label="Sign in"
