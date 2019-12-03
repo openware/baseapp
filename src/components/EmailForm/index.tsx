@@ -1,6 +1,6 @@
-import { Button } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { CustomInput } from '../';
 import { EMAIL_REGEX } from '../../helpers';
 
@@ -72,12 +72,15 @@ export class EmailForm extends React.Component<EmailFormProps> {
                         </div>
                         <div className="cr-email-form__button-wrapper">
                             <Button
-                                label={isLoading ? 'Loading...' : buttonLabel ? buttonLabel : 'Send'}
+                                block={true}
                                 type="submit"
-                                className={email ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                                 disabled={isLoading || !email.match(EMAIL_REGEX)}
-                                onClick={this.handleClick}
-                            />
+                                onClick={e => this.handleClick(e)}
+                                size="lg"
+                                variant="primary"
+                            >
+                                {isLoading ? 'Loading...' : buttonLabel ? buttonLabel : 'Send'}
+                            </Button>
                         </div>
                     </div>
                 </div>

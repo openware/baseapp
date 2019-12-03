@@ -1,6 +1,7 @@
-import { Button, Checkbox, Table } from '@openware/components';
+import { Checkbox, Table } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -210,21 +211,28 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                 button =
                     (
                         <Button
-                            label={this.t('page.body.profile.apiKeys.modal.btn.create')}
+                            block={true}
                             onClick={this.handleCreateKey}
-                            className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                             disabled={isDisabled}
-                        />
+                            size="lg"
+                            variant="primary"
+                        >
+                            {this.t('page.body.profile.apiKeys.modal.btn.create')}
+                        </Button>
                     );
                 break;
             case 'createSuccess':
                 button =
                     (
                         <Button
-                            label={this.t('page.body.profile.apiKeys.modal.btn.create')}
+                            block={true}
                             onClick={this.handleCreateSuccess}
                             className={'cr-email-form__button'}
-                        />
+                            size="lg"
+                            variant="primary"
+                        >
+                            {this.t('page.body.profile.apiKeys.modal.btn.create')}
+                        </Button>
                     );
                 body = (
                     <div className="cr-success-create">
@@ -271,35 +279,32 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                 );
                 break;
             case 'updateKey':
-                button =
-                    this.props.modal.apiKey.state === 'active' ?
-                        (
-                            <Button
-                                label={this.t('page.body.profile.apiKeys.modal.btn.disabled')}
-                                onClick={this.handleUpdateKey}
-                                className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
-                                disabled={isDisabled}
-                            />
-                        )
-                        :
-                        (
-                            <Button
-                                label={this.t('page.body.profile.apiKeys.modal.btn.activate')}
-                                onClick={this.handleUpdateKey}
-                                className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
-                                disabled={isDisabled}
-                            />
-                        );
+                button = (
+                    <Button
+                        block={true}
+                        onClick={this.handleUpdateKey}
+                        disabled={isDisabled}
+                        size="lg"
+                        variant="primary"
+                    >
+                        {this.props.modal.apiKey.state === 'active' ?
+                            this.t('page.body.profile.apiKeys.modal.btn.disabled') :
+                            this.t('page.body.profile.apiKeys.modal.btn.activate')}
+                    </Button>
+                );
                 break;
             case 'deleteKey':
                 button =
                     (
                         <Button
-                            label={this.t('page.body.profile.apiKeys.modal.btn.delete')}
+                            block={true}
                             onClick={this.handleDeleteKey}
-                            className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                             disabled={isDisabled}
-                        />
+                            size="lg"
+                            variant="primary"
+                        >
+                            {this.t('page.body.profile.apiKeys.modal.btn.delete')}
+                        </Button>
                     );
                 break;
             default:

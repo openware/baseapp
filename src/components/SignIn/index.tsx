@@ -1,8 +1,6 @@
-import {
-    Button,
-} from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { CustomInput } from '../';
 import { EMAIL_REGEX } from '../../helpers';
 
@@ -119,12 +117,15 @@ export class SignInComponent extends React.Component<SignInProps> {
                         </div>
                         <div className="cr-sign-in-form__button-wrapper">
                             <Button
-                                label={isLoading ? 'Loading...' : (labelSignIn ? labelSignIn : 'Sign in')}
+                                block={true}
                                 type="submit"
-                                className={'cr-sign-in-form__button'}
                                 disabled={isLoading || !email.match(EMAIL_REGEX) || !password}
-                                onClick={this.handleClick}
-                            />
+                                onClick={e => this.handleClick(e)}
+                                size="lg"
+                                variant="primary"
+                            >
+                                {isLoading ? 'Loading...' : (labelSignIn ? labelSignIn : 'Sign in')}
+                            </Button>
                         </div>
                         <div className="cr-sign-in-form__bottom-section">
                             <div

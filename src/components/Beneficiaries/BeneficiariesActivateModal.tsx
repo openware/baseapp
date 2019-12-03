@@ -1,6 +1,6 @@
-import { Button } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CustomInput } from '../../components';
@@ -127,11 +127,13 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
                 {this.renderConfirmationModalBodyItem('confirmationModalCode')}
                 <div className="cr-email-form__button-wrapper">
                     <Button
-                        label={this.translate('page.body.wallets.beneficiaries.confirmationModal.body.button')}
-                        className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                         disabled={isDisabled}
                         onClick={this.handleSubmitConfirmationModal}
-                    />
+                        size="lg"
+                        variant="primary"
+                    >
+                        {this.translate('page.body.wallets.beneficiaries.confirmationModal.body.button')}
+                    </Button>
                 </div>
             </div>
         );
