@@ -1,4 +1,3 @@
-import { Alert } from '@openware/components';
 import * as React from 'react';
 import FadeIn from 'react-fade-in';
 import {
@@ -6,6 +5,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { Alert } from '../../components/atoms';
 import {
     alertDelete,
     alertDeleteByIndex,

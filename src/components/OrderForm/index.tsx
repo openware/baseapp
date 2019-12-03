@@ -1,7 +1,11 @@
-import { Button, CryptoIcon, Decimal, Dropdown, OrderInput, PercentageButton } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from '../../components/atoms/Button/Button';
 import { getAmount, getTotalPrice } from '../../helpers/getTotalPrice';
+import { CryptoIcon, PercentageButton } from '../atoms';
+import { Decimal } from '../format';
+import { Dropdown} from '../molecules/Dropdown/Dropdown';
+import { OrderInput } from '../molecules/OrderInput/OrderInput';
 import { OrderProps } from '../Order';
 
 // tslint:disable:no-magic-numbers jsx-no-lambda jsx-no-multiline-js

@@ -1,8 +1,8 @@
-import { Decimal } from '@openware/components';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Decimal } from '../../components/format';
 import {
     Market,
     RootState,

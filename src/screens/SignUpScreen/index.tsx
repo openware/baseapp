@@ -1,4 +1,3 @@
-import { Button } from '@openware/components';
 import cx from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
@@ -14,6 +13,7 @@ import {
 import { withRouter } from 'react-router-dom';
 import { captchaType, siteKey } from '../../api';
 import { Modal, SignUpForm } from '../../components';
+import { Button } from '../../components/atoms/Button/Button';
 import {
     EMAIL_REGEX,
     ERROR_INVALID_EMAIL,

@@ -1,8 +1,10 @@
-import { CombinedOrderBook, Decimal, Loader } from '@openware/components';
 import classNames from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { Loader } from '../../components/atoms';
+import { Decimal } from '../../components/format';
+import { CombinedOrderBook } from '../../components/molecules/CombinedOrderBook/CombinedOrderBook';
 import { accumulateVolume, calcMaxVolume, sortAsks, sortBids } from '../../helpers';
 import {
     Market,

@@ -1,4 +1,3 @@
-import { Loader } from '@openware/components';
 import * as React from 'react';
 import {
     FormattedMessage,
@@ -7,6 +6,7 @@ import {
 } from 'react-intl';
 import { connect } from 'react-redux';
 import { Order, OrderProps, WalletItemProps } from '../../components';
+import { Loader } from '../../components/atoms';
 import {
     alertPush,
     RootState,

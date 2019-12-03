@@ -1,5 +1,4 @@
 // tslint:disable:jsx-no-lambda
-import { Button, Decimal, Input } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -7,6 +6,8 @@ import {
     CustomInput,
     SummaryField,
 } from '../../components';
+import { Button } from '../../components/atoms/Button/Button';
+import { Decimal } from '../../components/format';
 import { Beneficiary } from '../../modules';
 
 interface WithdrawProps {
@@ -24,6 +25,7 @@ interface WithdrawProps {
     withdrawButtonLabel?: string;
     withdrawDone: boolean;
 }
+import { Input } from '../../components/atoms';
 
 const defaultBeneficiary: Beneficiary = {
     id: 0,

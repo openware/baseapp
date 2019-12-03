@@ -1,7 +1,9 @@
-import { Button, Dropdown, PercentageButton } from '@openware/components';
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { SinonSpy, spy } from 'sinon';
+import { Button } from '../../components/atoms/Button/Button';
+import { PercentageButton } from '../atoms';
+import { Dropdown} from '../molecules/Dropdown/Dropdown';
 import { OrderForm, OrderFormProps } from './';
 
 // tslint:disable:no-magic-numbers

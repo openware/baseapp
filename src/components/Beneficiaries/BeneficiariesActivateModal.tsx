@@ -1,9 +1,9 @@
-import { Button } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CustomInput } from '../../components';
+import { Button } from '../../components/atoms/Button/Button';
 import {
     beneficiariesActivate,
     Beneficiary,

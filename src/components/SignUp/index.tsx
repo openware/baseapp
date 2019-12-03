@@ -1,11 +1,11 @@
-import {
-    Button,
-    Checkbox,
-} from '@openware/components';
 import cr from 'classnames';
 import {
     CustomInput,
 } from '../';
+import {
+    Button,
+    Checkbox,
+} from '../atoms';
 
 import * as React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';

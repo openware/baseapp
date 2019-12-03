@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkbox should render 1`] = `
+<label
+  className="cr-checkbox"
+>
+  <input
+    className="cr-checkbox__input"
+    type="checkbox"
+  />
+  <span
+    className="cr-checkbox__checkitem"
+  />
+  <span
+    className="cr-checkbox__label"
+  >
+    text
+  </span>
+</label>
+`;

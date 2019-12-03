@@ -1,6 +1,3 @@
-import {
-    Button,
-} from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
 import {
@@ -9,6 +6,9 @@ import {
 import {
     EMAIL_REGEX,
 } from '../../helpers';
+import {
+    Button,
+} from '../atoms';
 
 interface SignInProps {
     labelSignIn?: string;

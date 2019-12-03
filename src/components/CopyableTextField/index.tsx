@@ -1,7 +1,7 @@
-import { Button } from '@openware/components';
 import '@openware/cryptofont';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from '../../components/atoms/Button/Button';
 
 
 interface CopyableTextFieldProps {

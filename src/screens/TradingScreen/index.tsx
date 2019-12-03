@@ -1,9 +1,9 @@
-import { Decimal } from '@openware/components';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { incrementalOrderBook } from '../../api';
+import { Decimal } from '../../components/format';
 import { Grid } from '../../components/Grid';
 import {
     MarketDepthsComponent,

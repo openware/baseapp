@@ -1,0 +1,24 @@
+.cr-percentage-button {
+  background: var(--button-primary);
+  border: none;
+  color: var(--base);
+  cursor: pointer;
+  font-weight: normal;
+  margin: 0 calc(var(--gap) * 0.5);
+  padding: var(--gap);
+  text-align: center;
+  outline: none;
+  width: 100%;
+
+  &:active {
+    background: var(--button-active);
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}

@@ -1,4 +1,3 @@
-import { Button } from '@openware/components';
 import * as React from 'react';
 import {
     FormattedMessage,
@@ -6,6 +5,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { Modal } from '../../components';
+import { Button } from '../../components/atoms/Button/Button';
 
 interface ModalWithdrawSubmitProps {
     currency: string;

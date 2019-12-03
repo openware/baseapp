@@ -1,4 +1,3 @@
-import { Button } from '@openware/components';
 import cr from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
@@ -11,6 +10,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileTwoFactorAuth } from '../';
 import { CustomInput, Modal } from '../../components';
+import { Button } from '../../components/atoms/Button/Button';
 import { PASSWORD_REGEX } from '../../helpers';
 import {
     RootState,

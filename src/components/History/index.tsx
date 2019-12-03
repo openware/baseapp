@@ -1,6 +1,6 @@
-import { CellData, Table } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { CellData, Table } from '../molecules/Table/Table';
 
 interface HistoryProps {
     /**

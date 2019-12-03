@@ -1,5 +1,6 @@
-import { CryptoIcon, Decimal } from '@openware/components';
 import * as React from 'react';
+import { CryptoIcon } from '../atoms';
+import { Decimal } from '../format';
 
 interface WalletItemProps {
     /**

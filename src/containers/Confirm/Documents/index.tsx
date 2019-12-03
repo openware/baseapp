@@ -1,8 +1,3 @@
-import {
-  Button,
-  Dropdown,
-  Loader,
-} from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
 import {
@@ -17,6 +12,10 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import close = require('../../../assets/images/close.svg');
+import { Button, Loader } from '../../../components/atoms';
+import {
+  Dropdown,
+} from '../../../components/molecules/Dropdown/Dropdown';
 import { formatDate } from '../../../helpers';
 import { isDateInFuture } from '../../../helpers/checkDate';
 import { alertPush, RootState } from '../../../modules';

@@ -1,0 +1,26 @@
+.cr-button {
+  border: none;
+  width: 100%;
+  color: var(--base-bright);
+  background: var(--button-primary);
+  padding: var(--gap);
+  margin: var(--gap);
+  font-weight: bolder;
+  text-align: center;
+  cursor: pointer;
+
+  &:active {
+    background: var(--button-active);
+  }
+
+  &:disabled,
+  &-disabled {
+    background: var(--button-disabled);
+    color: var(--button-dark-gray);
+    cursor: not-allowed;
+  }
+
+  &--no-margin {
+    margin: 0;
+  }
+}

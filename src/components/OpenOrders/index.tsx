@@ -1,6 +1,7 @@
-import { CellData, CloseButton, Table } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { CloseButton } from '../atoms';
+import { CellData, Table } from '../molecules/Table/Table';
 
 type OnCancelCallback = (index: number) => void;
 

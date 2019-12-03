@@ -1,4 +1,4 @@
-import { Decimal } from '@openware/components';
+import { Decimal } from '../components/format';
 import { WalletItemProps } from '../components/WalletItem';
 import { DEFAULT_CCY_PRECISION } from '../constants';
 import { Currency } from '../modules/public/currencies';

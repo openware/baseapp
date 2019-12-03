@@ -1,7 +1,8 @@
-import { Decimal, MarketDepths } from '@openware/components';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { Decimal} from '../../components/format';
+import { MarketDepths } from '../../components/organisms/MarketDepths/MarketDepths';
 import {
     Market,
     RootState,

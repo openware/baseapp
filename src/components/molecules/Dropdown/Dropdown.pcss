@@ -1,0 +1,95 @@
+.cr-dropdown {
+  outline: none;
+  background-color: var(--background);
+  position: relative;
+
+  &__input {
+    width: 100%;
+    height: calc(var(--gap) * 5);
+    border: solid 1px var(--base-2);
+    background-color: inherit;
+    color: var(--base);
+    display: flex;
+
+    &:active {
+      background-color: var(--background-dropdown-hover);
+      color: var(--background-dropdown-hover-text);
+    }
+
+    &--open {
+      border: solid 1px var(--base-3);
+      background-color: inherit;
+      width: 100%;
+      height: calc(var(--gap) * 5);
+    }
+
+    &-label {
+      margin-left: calc(var(--gap) * 3);
+      font-size: 16px;
+      font-weight: 100;
+      line-height: calc(var(--gap) * 4.4);
+      vertical-align: middle;
+      background: transparent;
+      width: 100%;
+      color: transparent;
+      text-shadow: 0 0 0 var(--base-1);
+      cursor: default;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &-icon {
+      float: right;
+      margin-right: calc(var(--gap) * 4);
+      line-height: calc(var(--gap) * 4.4);
+      padding-top: calc(var(--gap) * 0.5);
+      vertical-align: middle;
+      background: transparent;
+      position: absolute;
+      right: 0;
+      pointer-events: none;
+    }
+  }
+
+  &__list {
+    background-color: inherit;
+    color: var(--base);
+    list-style: none;
+    border: solid 1px var(--base-3);
+    border-top: none;
+    padding-left: 0;
+    position: absolute;
+    margin: 0;
+    z-index: 999;
+    width: 100%;
+    overflow-y: hidden;
+
+    &-item {
+      color: var(--base-3);
+      display: flex;
+      align-items: center;
+      font-weight: 100;
+      background-color: inherit;
+      position: relative;
+
+      &-label {
+        background: transparent;
+        font-size: 16px;
+        margin-left: calc(var(--gap) * 3);
+      }
+
+      &-selected {
+        background-color: var(--background-dropdown-hover);
+        color: var(--base);
+      }
+
+      &:hover {
+        background-color: var(--background-dropdown-hover);
+        color: var(--base);
+        opacity: 0.4;
+      }
+    }
+  }
+}

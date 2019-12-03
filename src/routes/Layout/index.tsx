@@ -1,10 +1,10 @@
-import { Loader } from '@openware/components';
 import { History } from 'history';
 import * as React from 'react';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { minutesUntilAutoLogout } from '../../api';
+import { Loader } from '../../components/atoms';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import {

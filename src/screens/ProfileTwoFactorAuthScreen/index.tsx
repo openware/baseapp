@@ -1,8 +1,4 @@
 // tslint:disable
-import {
-    Button,
-    Input,
-} from '@openware/components';
 import { History } from 'history';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
@@ -13,6 +9,10 @@ import {
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { CopyableTextField } from '../../components';
+import {
+    Button,
+    Input,
+} from '../../components/atoms';
 import { setDocumentTitle } from '../../helpers';
 import { alertPush, RootState } from '../../modules';
 import {

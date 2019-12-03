@@ -1,5 +1,5 @@
-import { Input } from '@openware/components';
 import * as React from 'react';
+import { Input } from '../atoms';
 
 interface CustomInputProps {
     type: string;

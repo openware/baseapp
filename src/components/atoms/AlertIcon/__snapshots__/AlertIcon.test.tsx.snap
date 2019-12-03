@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlertIcon should render error icon 1`] = `
+<AlertIcon
+  type="error"
+>
+  <Component>
+    <div
+      className="cr-alert-icon cr-alert-icon--error"
+    >
+      <svg
+        fill="none"
+        height="28"
+        viewBox="0 0 28 28"
+        width="28"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M21 7L7.00002 21"
+          stroke="white"
+        />
+        <path
+          d="M7 7L21 21"
+          stroke="white"
+        />
+      </svg>
+    </div>
+  </Component>
+</AlertIcon>
+`;
+
+exports[`AlertIcon should render success icon 1`] = `
+<AlertIcon
+  type="success"
+>
+  <Component>
+    <div
+      className="cr-alert-icon cr-alert-icon--success"
+    >
+      <svg
+        fill="none"
+        height="28"
+        viewBox="0 0 28 28"
+        width="28"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clipRule="evenodd"
+          d="M3.64648 12.98L4.35359 12.2729L11.6174 19.5367L22.8904 8.26373L23.5975 8.97083L11.6174 20.9509L3.64648 12.98Z"
+          fill="white"
+          fillRule="evenodd"
+        />
+      </svg>
+    </div>
+  </Component>
+</AlertIcon>
+`;

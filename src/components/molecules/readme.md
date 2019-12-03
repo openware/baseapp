@@ -1,0 +1,1 @@
+Relatively simple components that represents group of UI elements(atoms) functioning together as a unit.

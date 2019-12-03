@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert should render 1`] = `
+<div
+  className="cr-alert cr-alert--success"
+>
+  <AlertIcon
+    type="success"
+  />
+  <div
+    className="cr-alert-text"
+  >
+    <p
+      className="cr-alert__title"
+    >
+      Successful deposit
+    </p>
+    <p
+      className="cr-alert__description"
+    >
+      34.233 BTC
+    </p>
+  </div>
+</div>
+`;

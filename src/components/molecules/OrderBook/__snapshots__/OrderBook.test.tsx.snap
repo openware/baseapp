@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`History should render 1`] = `
+<div
+  className="cr-order-book"
+>
+  <Table
+    data={
+      Array [
+        Array [
+          "12349",
+          "14",
+          "12",
+        ],
+        Array [
+          "12349",
+          "14",
+          "1211",
+        ],
+        Array [
+          "12349",
+          "14",
+          "124",
+        ],
+        Array [
+          "12349",
+          "14",
+          "121",
+        ],
+        Array [
+          "12349",
+          "14",
+          "1991",
+        ],
+      ]
+    }
+    header={
+      Array [
+        "Total",
+        "Amount",
+        "Price",
+      ]
+    }
+    onSelect={[Function]}
+    rowBackground={[Function]}
+    titleComponent="Bids"
+  />
+</div>
+`;

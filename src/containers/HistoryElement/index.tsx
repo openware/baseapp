@@ -1,4 +1,3 @@
-import { Decimal, Loader, Pagination } from '@openware/components';
 import * as React from 'react';
 import {
     InjectedIntlProps,
@@ -6,6 +5,8 @@ import {
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
 import { History } from '../../components';
+import { Loader, Pagination } from '../../components/atoms';
+import { Decimal } from '../../components/format';
 import {
     localeDate,
     preciseData,

@@ -1,4 +1,3 @@
-import { Decimal, Loader, Markets } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -7,6 +6,9 @@ import {
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { incrementalOrderBook } from '../../api';
+import { Loader } from '../../components/atoms';
+import { Decimal } from '../../components/format';
+import { Markets } from '../../components/molecules/Markets/Markets';
 import { RootState, selectUserInfo, setCurrentPrice, User } from '../../modules';
 import {
     Market,

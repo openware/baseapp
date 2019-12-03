@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputBlock should render 1`] = `
+<div
+  className="cr-order-input"
+>
+  <fieldset
+    className="cr-order-input__fieldset"
+  >
+    <Input
+      className="cr-order-input__fieldset__input"
+      onBlur={[Function]}
+      onChangeValue={[Function]}
+      onFocus={[Function]}
+      onKeyPress={[MockFunction]}
+      placeholder="0"
+      type="text"
+      value=""
+    />
+  </fieldset>
+  <div
+    className="cr-order-input__crypto-icon"
+  >
+    <CryptoIcon
+      code="ETH-alt"
+    >
+      ETH
+    </CryptoIcon>
+  </div>
+</div>
+`;

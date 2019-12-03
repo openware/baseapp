@@ -1,7 +1,3 @@
-import {
-    Button,
-    Dropdown,
-} from '@openware/components';
 import cr from 'classnames';
 import countries = require('i18n-iso-countries');
 import * as moment from 'moment';
@@ -12,6 +8,8 @@ import {
   connect,
   MapDispatchToPropsFunction,
 } from 'react-redux';
+import { Button } from '../../../components/atoms';
+import { Dropdown } from '../../../components/molecules/Dropdown/Dropdown';
 import { formatDate, isDateInFuture } from '../../../helpers';
 import {
     editIdentity,

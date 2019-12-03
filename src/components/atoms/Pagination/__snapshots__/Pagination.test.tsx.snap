@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination should matches snapshot 1`] = `
+<div
+  className="pg-history-elem__pagination"
+>
+  <p>
+    1
+     - 
+    6
+     of 
+    30
+  </p>
+  <button
+    className="pg-history__pagination-prev"
+    disabled={true}
+    onClick={[Function]}
+  >
+    <PreviousIcon
+      disabled={true}
+    />
+  </button>
+  <button
+    className="pg-history__pagination-next"
+    disabled={false}
+    onClick={[Function]}
+  >
+    <NextPageIcon
+      disabled={false}
+    />
+  </button>
+</div>
+`;

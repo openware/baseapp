@@ -1,4 +1,3 @@
-import { Loader } from '@openware/components';
 import { History } from 'history';
 import * as React from 'react';
 import {
@@ -7,6 +6,7 @@ import {
 } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Loader } from '../../components/atoms';
 import { setDocumentTitle } from '../../helpers';
 import {
     emailVerificationFetch,

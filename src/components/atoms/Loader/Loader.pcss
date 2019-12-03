@@ -1,0 +1,88 @@
+.cr-loader {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 3.4em;
+  height: 3.4em;
+  margin-left: -1.7em;
+  margin-top: -0.1em;
+
+  .loader-block {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    opacity: 0;
+    width: 1em;
+    height: 1em;
+    background: #28334e;
+    animation: show 0.9s step-end infinite alternate, pulse 0.9s linear infinite alternate;
+  }
+
+  .loader-block:nth-child(1) {
+    transform: translate(0, 0);
+    animation-delay: 0.1s;
+  }
+
+  .loader-block:nth-child(2) {
+    transform: translate(1.2em, 0);
+    animation-delay: 0.2s;
+  }
+
+  .loader-block:nth-child(3) {
+    transform: translate(2.4em, 0);
+    animation-delay: 0.3s;
+  }
+
+  .loader-block:nth-child(4) {
+    transform: translate(0, 1.2em);
+    animation-delay: 0.5s;
+  }
+
+  .loader-block:nth-child(5) {
+    transform: translate(1.2em, 1.2em);
+    animation-delay: 0.2s;
+  }
+
+  .loader-block:nth-child(6) {
+    transform: translate(2.4em, 1.2em);
+    animation-delay: 0.7s;
+  }
+
+  .loader-block:nth-child(7) {
+    transform: translate(0, 2.4em);
+    animation-delay: 0.6s;
+  }
+
+  .loader-block:nth-child(8) {
+    transform: translate(1.2em, 2.4em);
+    animation-delay: 0.4s;
+  }
+
+  .loader-block:nth-child(9) {
+    transform: translate(2.4em, 2.4em);
+  }
+}
+
+@keyframes pulse {
+  from,
+  40% {
+    background: #28334e;
+  }
+
+  to {
+    background: #2e4c80;
+  }
+}
+
+@keyframes show {
+  from,
+  40% {
+    opacity: 0;
+  }
+
+  41%,
+  to {
+    opacity: 1;
+  }
+}

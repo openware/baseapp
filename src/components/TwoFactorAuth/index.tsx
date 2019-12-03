@@ -1,8 +1,8 @@
-import { Button } from '@openware/components';
 import cr from 'classnames';
 import {
     CustomInput,
 } from '../';
+import { Button } from '../../components/atoms/Button/Button';
 
 import * as React from 'react';
 

@@ -1,10 +1,11 @@
-import { Button, Checkbox, Table } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
 import { CopyableTextField, CustomInput } from '../../components';
+import { Button, Checkbox } from '../../components/atoms';
+import { Table } from '../../components/molecules/Table/Table';
 import { localeDate } from '../../helpers/localeDate';
 
 import {

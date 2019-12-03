@@ -1,0 +1,54 @@
+.cr-summary-field {
+  font-style: normal;
+  font-weight: normal;
+  max-height: calc(var(--gap) * 5);
+  line-height: 100%;
+  margin: 0;
+  padding: 0;
+
+  &-border-item {
+    &-rectangle {
+      display: inline-block;
+      margin-left: calc(var(--gap) * 0.3);
+
+      &::before {
+        display: inline-block;
+        width: 4px;
+        line-height: calc(var(--gap) * 2.3);
+        content: '.';
+        color: var(--summary-field-border-color);
+        background-color: var(--summary-field-border-color);
+      }
+    }
+
+    &-circle {
+      display: inline-block;
+      position: absolute;
+      box-sizing: border-box;
+      height: calc(var(--gap) * 1.3);
+      width: calc(var(--gap) * 1.3);
+      background-color: var(--summary-field-border-color);
+      border-radius: 50%;
+      margin-right: calc(var(--gap) * 3.2);
+      margin-top: calc(var(--gap) * 0.3);
+    }
+
+    &-empty-circle {
+      display: inline-block;
+      position: absolute;
+      box-sizing: border-box;
+      height: calc(var(--gap) * 1.3);
+      width: calc(var(--gap) * 1.3);
+      background-color: inherit;
+      border: 2px solid var(--summary-field-border-color);
+      border-radius: 50%;
+      margin-right: calc(var(--gap) * 3.2);
+      margin-top: calc(var(--gap) * 0.3);
+    }
+  }
+
+  &-message {
+    padding-left: calc(var(--gap) * 3.2);
+    padding-right: calc(var(--gap) * 2.1);
+  }
+}

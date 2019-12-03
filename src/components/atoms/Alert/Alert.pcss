@@ -1,0 +1,49 @@
+.cr-alert {
+  align-items: center;
+  background: var(--alert-background-color);
+  border-radius: calc(var(--gap) * 0.5);
+  box-sizing: border-box;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+  display: flex;
+  min-height: calc(var(--gap) * 9.3);
+  justify-content: space-between;
+  padding: 0 calc(var(--gap) * 3.16) 0 calc(var(--gap) * 10);
+  position: relative;
+  text-align: right;
+  width: calc(var(--gap) * 50);
+  margin-top: calc(var(--gap) * 0.6);
+
+  &__title,
+  &__description {
+    background: transparent;
+    line-height: 1em;
+    margin: 0;
+    color: var(--alert-description-color);
+  }
+
+  &-text {
+    background: transparent;
+    width: 100%;
+  }
+
+  &__title {
+    line-height: calc(var(--gap) * 2.33);
+    margin-bottom: 5px;
+  }
+
+  &--success {
+    border: 1px solid var(--open-orders-order-buy);
+
+    .cr-alert__title {
+      color: var(--open-orders-order-buy);
+    }
+  }
+
+  &--error {
+    border: 1px solid var(--open-orders-order-sell);
+
+    .cr-alert__title {
+      color: var(--open-orders-order-sell);
+    }
+  }
+}

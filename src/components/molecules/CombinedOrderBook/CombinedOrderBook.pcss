@@ -1,0 +1,128 @@
+.cr-combined-order-book {
+  position: relative;
+  height: 100%;
+
+  .cr-table {
+    table-layout: fixed;
+
+    td,
+    th {
+      width: 33%;
+    }
+
+    &-background {
+      &__row {
+        padding: 22px;
+      }
+    }
+  }
+
+  &--loading {
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+  }
+
+  &__market {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    color: var(--placeholder-text);
+
+    span {
+      font-weight: normal;
+      line-height: 12px;
+      font-size: 12px;
+      text-align: center;
+
+      &:first-child {
+        font-weight: bold;
+        line-height: normal;
+        font-size: 28px;
+      }
+    }
+
+    &-negative {
+      color: var(--red);
+    }
+
+    &-positive {
+      color: var(--color-green);
+    }
+  }
+
+  .cr-order-book {
+    td {
+      color: var(--color-white);
+    }
+  }
+
+  &__large {
+    display: flex;
+    overflow: unset;
+
+    &-market {
+      border-top: 1px solid var(--title-component-color);
+      position: sticky;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      z-index: 25;
+      background: var(--base-bright);
+    }
+
+    .cr-order-book {
+      width: 50%;
+      padding-right: 1px;
+    }
+
+    .cr-table-background {
+      top: 60px;
+
+      &__row {
+        padding-bottom: calc(var(--gap) * 2.5);
+        margin-bottom: 1px;
+      }
+    }
+  }
+
+  &__small {
+    .cr-table-background {
+      &__row {
+        padding-bottom: calc(var(--gap) * 2.5);
+        margin-bottom: 1px;
+      }
+    }
+
+    .cr-order-book {
+      overflow-y: scroll;
+      height: 154px;
+
+      &:first-child {
+        border-bottom: 1px solid var(--title-component-color);
+        height: 208px;
+
+        .cr-table-background {
+          top: 60px;
+        }
+      }
+
+      &:last-child {
+        border-top: 1px solid var(--title-component-color);
+
+        .cr-table-background {
+          top: 0;
+        }
+      }
+
+      th {
+        top: 0;
+        position: sticky;
+        z-index: 2222;
+      }
+    }
+  }
+}

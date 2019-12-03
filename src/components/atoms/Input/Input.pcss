@@ -1,0 +1,20 @@
+.cr-input {
+  display: inline-block;
+  background-color: inherit;
+
+  input {
+    border: none;
+    outline: none;
+    text-align: left;
+    background-color: transparent;
+    color: var(--base-1);
+  }
+
+  &__number {
+    input {
+      &:focus {
+        margin: 0;
+      }
+    }
+  }
+}

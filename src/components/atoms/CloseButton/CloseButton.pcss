@@ -1,0 +1,28 @@
+.cr-close-button {
+  position: relative;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: calc(var(--gap) * 2);
+  background: transparent;
+
+  &::before,
+  &::after {
+    background: var(--base-2);
+    content: '';
+    display: block;
+    height: calc(var(--gap) * 2.5);
+    left: var(--gap);
+    position: absolute;
+    top: var(--gap);
+    width: 1px;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}

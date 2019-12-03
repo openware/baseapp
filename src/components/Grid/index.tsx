@@ -1,6 +1,6 @@
-import { GridItem, GridItemProps } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { GridItem, GridItemProps } from '../molecules/GridItem/GridItem';
 
 /* tslint:disable-next-line */
 const { WidthProvider, Responsive } = require('react-grid-layout');

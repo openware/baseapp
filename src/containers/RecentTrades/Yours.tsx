@@ -1,4 +1,3 @@
-import { Decimal, Loader, Table } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -6,6 +5,9 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { Loader } from '../../components/atoms';
+import { Decimal } from '../../components/format';
+import { Table } from '../../components/molecules/Table/Table';
 import { localeDate, setTradesType } from '../../helpers';
 import {
     fetchHistory,

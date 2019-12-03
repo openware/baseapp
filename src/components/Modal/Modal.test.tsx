@@ -1,6 +1,6 @@
-import { Button } from '@openware/components';
 import {shallow, ShallowWrapper} from 'enzyme';
 import * as React from 'react';
+import { Button } from '../../components/atoms/Button/Button';
 import { Modal, ModalProps } from './';
 
 const defaults: ModalProps = {

@@ -1,6 +1,3 @@
-import {
-  Button,
-} from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
@@ -12,6 +9,9 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { CustomInput } from '../../components';
+import {
+  Button,
+} from '../../components/atoms';
 import { PASSWORD_REGEX, setDocumentTitle } from '../../helpers';
 import {
     changeForgotPasswordFetch,

@@ -1,6 +1,6 @@
-import { TabPanel } from '@openware/components';
 import * as React from 'react';
 import { OrderForm } from '../';
+import { TabPanel } from '../molecules/TabPanel/TabPanel';
 
 export type FormType = 'buy' | 'sell';
 

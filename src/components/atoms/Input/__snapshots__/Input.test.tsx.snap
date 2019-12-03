@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input should render 1`] = `
+<div
+  className="cr-input"
+>
+  <input
+    autoComplete=""
+    min="0"
+    onChange={[Function]}
+    type="text"
+    value="value"
+  />
+</div>
+`;

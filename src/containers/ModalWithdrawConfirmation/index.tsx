@@ -1,10 +1,10 @@
-import { Button } from '@openware/components';
 import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { Modal } from '../../components';
+import { Button } from '../../components/atoms/Button/Button';
 
 interface ModalWithdrawConfirmationProps {
     amount: number;

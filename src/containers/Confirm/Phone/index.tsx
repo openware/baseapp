@@ -1,4 +1,3 @@
-import { Button } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
@@ -6,6 +5,7 @@ import {
     connect,
     MapDispatchToPropsFunction,
 } from 'react-redux';
+import { Button } from '../../../components/atoms/Button/Button';
 import { RootState } from '../../../modules';
 import {
     resendCode,

@@ -1,8 +1,9 @@
-import { CloseButton, Decimal, Loader, Pagination } from '@openware/components';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { History } from '../../components';
+import { CloseButton, Loader, Pagination } from '../../components/atoms';
+import { Decimal } from '../../components/format';
 import { localeDate, setTradeColor } from '../../helpers';
 import {
     Market,

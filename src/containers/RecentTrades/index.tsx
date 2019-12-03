@@ -1,4 +1,3 @@
-import {TabPanel } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -6,6 +5,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import {TabPanel } from '../../components/molecules/TabPanel/TabPanel';
 import {
     Market,
     PublicTrade,

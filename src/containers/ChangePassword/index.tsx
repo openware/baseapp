@@ -1,10 +1,11 @@
-import { Button, Input } from '@openware/components';
 import * as React from 'react';
 import {
     FormattedMessage,
     InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
+import {  Input } from '../../components/atoms';
+import { Button } from '../../components/atoms/Button/Button';
 
 type OnClearError = () => void;
 type OnSubmitChangePassword = (oldPassword: string, newPassword: string, confirmPassword: string) => void;
