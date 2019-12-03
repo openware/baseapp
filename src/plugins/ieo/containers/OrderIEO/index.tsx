@@ -42,6 +42,7 @@ interface DispatchProps {
 
 interface OwnProps {
     currentIEO: DataIEOInterface;
+    toggleOrderExecuteModal: (data: OrderIEOData) => void;
 }
 
 type Props = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
@@ -64,6 +65,7 @@ class OrderIEOContainer extends React.PureComponent<Props> {
 
         if (next.ieoOrderExecuteSuccess && !ieoOrderExecuteSuccess && next.ieoOrderExecuteData) {
             this.props.ieoOrdersPush(next.ieoOrderExecuteData);
+            this.handleToggleOrderExecuteModal(next.ieoOrderExecuteData);
             this.props.accountWallets();
         }
     }
@@ -156,6 +158,10 @@ class OrderIEOContainer extends React.PureComponent<Props> {
 
     private getAvailableValue(wallet: Wallet | undefined) {
         return wallet ? wallet.balance : 0;
+    }
+
+    private handleToggleOrderExecuteModal = (data: OrderIEOData) => {
+        this.props.toggleOrderExecuteModal(data);
     }
 }
 

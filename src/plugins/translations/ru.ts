@@ -44,4 +44,8 @@ export const ru = {
     'page.body.ieo.details.order.blur.btnLogin': 'Login',
     'page.body.ieo.details.order.blur.createAccount': 'Create account',
     'page.body.ieo.details.header.backToList': 'Back to list',
+
+    'page.body.ieo.modal.orderSuccess.title': 'Congratulations!',
+    'page.body.ieo.modal.orderSuccess.message': 'You successfully ordered',
+    'page.body.ieo.modal.orderSuccess.button': 'Confirm',
 };
