@@ -19,6 +19,7 @@
       height: 49px;
       margin-top: 16px;
       padding-top: 4px;
+      padding-left: 16px;
       padding-right: 4px;
       width: 100%;
     }
@@ -34,25 +35,6 @@
       display: inline-block;
       position: relative;
 
-      &-send {
-        color: var(--white);
-        background: var(--button-primary);
-
-        &--disabled {
-          color: var(--button-dark-gray);
-          background: var(--button-disabled) !important;
-          pointer-events: none;
-        }
-
-        &:active {
-          background: var(--button-active) !important;
-        }
-
-        &:hover {
-          background: var(--button-hover) !important;
-        }
-      }
-
       &--focused {
         color: var(--accent) !important;
         border: 1px solid var(--accent) !important;
@@ -60,8 +42,11 @@
 
       legend {
         background-color: var(--base-bright);
-        position:absolute;
-        top: calc(var(--gap) * -1.14);
+        font-size: calc(var(--gap) * 2);
+        margin-top: calc(var(--gap) * -2.2);
+        padding: calc(var(--gap) * 0.2);
+        position: absolute;
+        width: max-content;
       }
 
       input {

@@ -1,7 +1,7 @@
-import { Button } from '@openware/components';
 import cx from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import {
     InjectedIntlProps,
     injectIntl,
@@ -302,10 +302,13 @@ class SignUp extends React.Component<Props> {
         return (
             <div className="pg-exchange-modal-submit-footer">
                 <Button
-                    className="pg-exchange-modal-submit-footer__button-inverse"
-                    label="OK"
+                    block={true}
                     onClick={this.closeModal}
-                />
+                    size="lg"
+                    variant="primary"
+                >
+                    {this.props.intl.formatMessage({id: 'page.header.signUp.modal.footer'})}
+                </Button>
             </div>
         );
     };

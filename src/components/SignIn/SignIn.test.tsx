@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { SignInComponent, SignInProps } from './';
 
 import { shallow } from 'enzyme';
@@ -73,7 +74,7 @@ describe('SignIn component', () => {
             refreshError: spyOnRefreshError,
             onSignIn: spyOnSignIn,
         });
-        const button = wrapper.find('.cr-sign-in-form__button').last();
+        const button = wrapper.find(Button);
         button.simulate('click');
         expect(spyOnValidateForm).toHaveBeenCalledTimes(0);
         expect(spyOnRefreshError).toHaveBeenCalled();
@@ -93,7 +94,7 @@ describe('SignIn component', () => {
             onSignIn: spyOnSignIn,
             isFormValid: spyOnValidateForm,
         });
-        const button = wrapper.find('.cr-sign-in-form__button').last();
+        const button = wrapper.find(Button);
         button.simulate('click');
         expect(spyOnValidateForm).toHaveBeenCalled();
         expect(spyOnValidateForm).toHaveBeenCalledTimes(1);

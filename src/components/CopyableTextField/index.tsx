@@ -1,7 +1,7 @@
-import { Button } from '@openware/components';
 import '@openware/cryptofont';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 
 
 export interface CopyableTextFieldProps {
@@ -76,13 +76,13 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                         disabled={disabled}
                     />
                     <Button
-                        className="cr-copyable-text-field__button"
-                        label={copyButtonText ? copyButtonText : 'Copy'}
-                        type={'text'}
                         onClick={doCopy}
                         disabled={disabled}
-                        noMargin={true}
-                    />
+                        size="lg"
+                        variant="primary"
+                    >
+                        {copyButtonText ? copyButtonText : 'Copy'}
+                    </Button>
                 </div>
             </div>
         );

@@ -1,7 +1,8 @@
 // tslint:disable:jsx-no-lambda
-import { Button, Decimal, Input } from '@openware/components';
+import { Decimal, Input } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import {
     Beneficiaries,
     CustomInput,
@@ -138,11 +139,13 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                     </div>
                     <div className="cr-withdraw__deep">
                         <Button
-                            className="cr-withdraw__button"
-                            label={withdrawButtonLabel ? withdrawButtonLabel : 'WITHDRAW'}
+                            variant="primary"
+                            size="lg"
                             onClick={this.handleClick}
                             disabled={Number(total) <= 0 || !Boolean(beneficiary.id) || !Boolean(otpCode)}
-                        />
+                        >
+                            {withdrawButtonLabel ? withdrawButtonLabel : 'Withdraw'}
+                        </Button>
                     </div>
                 </div>
             </div>

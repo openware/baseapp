@@ -1,5 +1,6 @@
-import { Button, Loader } from '@openware/components';
+import { Loader } from '@openware/components';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -397,10 +398,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                     {this.translate('page.body.wallets.tabs.withdraw.content.enable2fa')}
                 </p>
                 <Button
-                    className="pg-wallet__button-2fa"
-                    label={this.translate('page.body.wallets.tabs.withdraw.content.enable2faButton')}
+                    block={true}
                     onClick={this.redirectToEnable2fa}
-                />
+                    size="lg"
+                    variant="primary"
+                >
+                    {this.translate('page.body.wallets.tabs.withdraw.content.enable2faButton')}
+                </Button>
             </React.Fragment>
         );
     };
