@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const Helpers = require('./helpers')
 
-function isSubscribed(streams, routingKey) {
+const isSubscribed = (streams, routingKey) => {
   for (const i in streams) {
     const stream = streams[i];
     if (routingKey.startsWith(stream) || routingKey.endsWith(stream)) {
@@ -32,6 +32,25 @@ const tickersMock = (ws, markets) => () => {
 */
 const orderBookUpdateMock = (ws, marketId) => () => {
   sendEvent(ws, `${marketId}.update`, Helpers.getDepth());
+};
+
+// Inremental orderbook support
+const orderBookSnapshotMock = (ws, marketId) => () => {
+  console.log(`orderBookSnapshotMock called: ${marketId}`);
+  try {
+    if (isSubscribed(ws.streams, `${marketId}.ob-inc`)) {
+      console.log(`orderBookSnapshotMock sending: ${marketId}`);
+      const payload = {};
+      payload[`${marketId}.ob-snap`] = Helpers.getDepth();
+      ws.send(JSON.stringify(payload));
+    }
+  } catch (error) {
+    console.log(`failed to send ranger message: ${error}`);
+  }
+};
+
+const orderBookIncrementMock = (ws, marketId) => () => {
+  sendEvent(ws, `${marketId}.ob-inc`, Helpers.getDepthIncrement());
 };
 
 /*
@@ -123,16 +142,22 @@ const klinesMock = (ws, marketId) => () => {
 class RangerMock {
   constructor(port, markets) {
     this.markets = markets;
-    const wss = new WebSocket.Server({ port: port });
-    const url = `ws://0.0.0.0:${port}`.green
+    this.port = port;
+    this.start();
+  }
+  start() {
+    this.wss = new WebSocket.Server({ port: this.port });
+    const url = `ws://0.0.0.0:${this.port}`.green
     console.log(`Ranger: listening on ${url}`);
     const ranger = this;
-    wss.on('connection', function connection(ws, request) {
+    this.wss.on('connection', function connection(ws, request) {
       ranger.initConnection(ws, request);
       ws.on('message', (message) => ranger.onMessage(ws, message));
       ws.on('close', () => ranger.closeConnection(ws));
     });
-
+  }
+  close() {
+    this.wss.close();
   }
   initConnection(ws, request) {
     ws.authenticated = true;
@@ -144,24 +169,20 @@ class RangerMock {
     ws.timers.push(setInterval(tickersMock(ws, this.markets), 3000));
     this.markets.forEach((name) => {
       let { baseUnit, quoteUnit, marketId } = Helpers.getMarketInfos(name);
+      ws.timers.push(setInterval(orderBookIncrementMock(ws, marketId), 5000));
       ws.timers.push(setInterval(orderBookUpdateMock(ws, marketId), 3000));
       ws.timers.push(setInterval(matchedTradesMock(ws, marketId), 1000))
       ws.timers.push(setInterval(klinesMock(ws, marketId), 2500))
     });
   }
-  closeConnection(ws) {
+  closeConnection() {
     console.log('Ranger: connection closed');
-    if (ws.timers) {
-      ws.timers.forEach((t) => {
-        clearInterval(t);
-      })
-    }
   }
   onMessage(ws, message) {
     if (message.length === 0)
       return;
     try {
-      console.log('Ranger: received: %s', message);
+      console.log('Ranger: received message: %s', message);
       var payload = JSON.parse(message);
 
       if ("jwt" in payload) {
@@ -188,6 +209,11 @@ class RangerMock {
   }
   subscribe(ws, streams) {
     ws.streams = Helpers.unique(ws.streams.concat(streams));
+    console.log(`subcribed to : ${ws.streams}`)
+    this.markets.forEach((name) => {
+      let { marketId } = Helpers.getMarketInfos(name);
+      orderBookSnapshotMock(ws, marketId)();
+    });
     ws.send(JSON.stringify({ "success": { "message": "subscribed", "streams": ws.streams } }))
   }
   unsubscribe(ws, streams) {
