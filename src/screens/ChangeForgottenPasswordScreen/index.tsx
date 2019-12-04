@@ -1,6 +1,4 @@
-import {
-  Button,
-} from '@openware/components';
+import { Button } from 'react-bootstrap';
 import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
@@ -146,10 +144,11 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                                 {error && <div className="cr-email-form__error">{this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.error'})}</div>}
                                 <div className="cr-email-form__button-wrapper">
                                     <Button
-                                        label={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.button'})}
-                                        className={!this.disableButton() ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                                         disabled={this.disableButton()}
                                         onClick={this.handleSendNewPassword}
+                                        size="lg"
+                                        variant="primary"
+                                        type="submit"
                                     />
                                 </div>
                             </div>

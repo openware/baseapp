@@ -1,4 +1,5 @@
-import { Button, Dropdown, Loader } from '@openware/components';
+import { Dropdown, Loader } from '@openware/components';
+import { Button } from 'react-bootstrap';
 import cr from 'classnames';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
@@ -187,11 +188,15 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                 </div>
                 <div className="pg-confirm__content-deep">
                     <Button
-                        className="pg-confirm__content-phone-deep-button"
-                        label={this.translate('page.body.kyc.submit')}
                         onClick={this.sendDocuments}
                         disabled={this.handleCheckButtonDisabled()}
-                    />
+                        size="lg"
+                        variant="primary"
+                        type="submit"
+                        block={true}
+                    >
+                        {this.translate('page.body.kyc.submit')}
+                    </Button>
                 </div>
             </React.Fragment>
         );
