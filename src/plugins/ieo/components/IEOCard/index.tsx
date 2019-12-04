@@ -112,7 +112,7 @@ class IEOCardComponent extends React.Component<Props, State> {
         return (
             <div className="pg-ieo__card" onClick={this.handleClick}>
                 <div className="pg-ieo__card-header">
-                    {metadata && metadata.icon_url && <img className="pg-ieo__card-header__icon" src={metadata.icon_url} />}
+                    {metadata && metadata.icon_url && <img className="pg-ieo__card-header__icon" src={metadata.icon_url} alt="ieo-icon" />}
                     <span className="pg-ieo__card-header__text">{currency_id && currency_id.toUpperCase()}</span>
                 </div>
                 <div className="pg-ieo__card-content">
@@ -226,7 +226,7 @@ class IEOCardComponent extends React.Component<Props, State> {
             'back-yellow': state === 'finished',
         });
 
-        const currentProgressClass = classnames('progress-bar__value__current', {
+        const currentProgressClass = classnames('ieo-progress-bar__value__current', {
             'font-yellow': state === 'finished',
         });
 
@@ -236,10 +236,10 @@ class IEOCardComponent extends React.Component<Props, State> {
                     <span className="pg-ieo__card-content-block__text">{this.translate('page.body.ieo.card.countdown')}</span>
                     <div className={countDownColorClass}>{countdownValue === '00:00:00' ? this.translate('page.body.ieo.card.end') : countdownValue}</div>
                 </div>
-                <div className="progress-bar">
+                <div className="ieo-progress-bar">
                     <div className={percentageClass} style={{ width: `${percentage}%` }} />
-                    <div className="progress-bar__value">
-                        <div className="progress-bar__value__label">{this.translate('page.body.ieo.profile.info.progress')}</div>
+                    <div className="ieo-progress-bar__value">
+                        <div className="ieo-progress-bar__value__label">{this.translate('page.body.ieo.profile.info.progress')}</div>
                         <div className={currentProgressClass}>{`${percentage}%`}</div>
                     </div>
                 </div>

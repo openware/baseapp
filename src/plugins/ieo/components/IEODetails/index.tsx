@@ -31,7 +31,9 @@ class IEODetailsComponent extends React.Component<Props> {
                             <div className="ieo-profile-details__body__left__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.full.name')}
                             </div>
-                            <div className="ieo-profile-details__body__left__row__second-column">{currentIEO.metadata && currentIEO.metadata.full_name || '-'}</div>
+                            <div className="ieo-profile-details__body__left__row__second-column">
+                                {(currentIEO.metadata && currentIEO.metadata.full_name) || '-'}
+                            </div>
                         </div>
                         <div className="ieo-profile-details__body__left__row">
                             <div className="ieo-profile-details__body__left__row__first-column">
@@ -102,7 +104,9 @@ class IEODetailsComponent extends React.Component<Props> {
                             <div className="ieo-profile-details__body__right__row__first-column">
                                 {this.translate('page.body.ieo.profile.details.technological.foundation')}
                             </div>
-                            <div className="ieo-profile-details__body__right__row__second-column">{currentIEO.metadata && currentIEO.metadata.technological_foundation || '-'}</div>
+                            <div className="ieo-profile-details__body__right__row__second-column">
+                                {(currentIEO.metadata && currentIEO.metadata.technological_foundation) || '-'}
+                            </div>
                         </div>
                         <div className="ieo-profile-details__body__right__row">
                             <div className="ieo-profile-details__body__right__row__first-column">

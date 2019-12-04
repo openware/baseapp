@@ -121,6 +121,7 @@ class OrderIEOContainer extends React.PureComponent<Props> {
                 proposals={currentProposals}
                 from={from}
                 to={to}
+                fee={currentIEO && +currentIEO.commission}
                 available={this.getAvailableValue(walletQuote)}
                 priceMarket={price}
                 onSubmit={this.handleSubmit}

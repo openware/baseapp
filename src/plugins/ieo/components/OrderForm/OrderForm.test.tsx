@@ -15,6 +15,7 @@ const defaultProps = {
     onSubmit: spy(),
     proposals: [['5', '5']],
     listenInputPrice: spy(),
+    fee: 0.1,
 };
 
 const setup = (props: Partial<OrderFormProps> = {}) =>

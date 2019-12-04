@@ -291,7 +291,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
             'back-yellow': ieo.state === 'finished',
         });
 
-        const currentProgressClass = classnames('progress-bar__value__current', {
+        const currentProgressClass = classnames('ieo-progress-bar__value__current', {
             'font-yellow': ieo.state === 'finished',
         });
 
@@ -300,10 +300,10 @@ class IEOInfoComponent extends React.Component<Props, State> {
                 <div className="curent-progress-block__price">
                     {ieo.metadata && Decimal.format(ieo.tokens_ordered, +ieo.metadata.precision)}&nbsp;/&nbsp;{Decimal.format(ieo.supply, +ieo.metadata.precision)}&nbsp;{ieo.currency_id && ieo.currency_id.toUpperCase()}
                 </div>
-                <div className="progress-bar">
+                <div className="ieo-progress-bar">
                     <div className={percentageClass} style={{ width: `${percentage}%` }} />
-                    <div className="progress-bar__value">
-                        <div className="progress-bar__value__label">{this.translate('page.body.ieo.profile.info.progress')}</div>
+                    <div className="ieo-progress-bar__value">
+                        <div className="ieo-progress-bar__value__label">{this.translate('page.body.ieo.profile.info.progress')}</div>
                         <div className={currentProgressClass}>{`${percentage}%`}</div>
                     </div>
                 </div>
