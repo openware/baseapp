@@ -4,8 +4,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
-import { CloseIcon, OpenIcon } from '../../assets/images/NavBarIcons';
-import { colors, pgRoutes } from '../../constants';
+import {  pgRoutes } from '../../constants';
 import {
     changeLanguage,
     logoutFetch,
@@ -18,6 +17,7 @@ import {
     selectUserLoggedIn,
     toggleSidebar,
 } from '../../modules';
+import { Dropdown } from 'react-bootstrap';
 
 
 interface State {
@@ -71,13 +71,33 @@ class SidebarContainer extends React.Component<Props, State> {
                     {pgRoutes(isLoggedIn, isLight).map(this.renderNavItems(address))}
                 </div>
                 <div className="pg-sidebar-wrapper-lng">
-                    <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-toggle dropdown-menu-language-container">
-                        <div onClick={this.toggleLanguageMenu} className={languageClassName}>
-                            <img src={require(`../../assets/images/sidebar/${lang}.svg`)} alt="flag"/>
-                            <span className="dropdown-menu-language-selected">{languageName}</span>
-                            {this.getLanguageMenuIcon()}
-                        </div>
-                        {isOpenLanguage ? this.getLanguageMenu() : null}
+                    <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-menu-language-container">
+                        <Dropdown>
+                            <Dropdown.Toggle variant="primary" id={languageClassName}>
+                                <img src={require(`../../assets/images/sidebar/${lang}.svg`)} alt="flag"/>
+                                <span className="dropdown-menu-language-selected">{languageName}</span>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={e => this.handleChangeLanguage('en')}>
+                                    <div className="dropdown-row">
+                                        <img
+                                            src={require('../../assets/images/sidebar/en.svg')}
+                                            alt="usa"
+                                        />
+                                        <span>EN</span>
+                                    </div>
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={e => this.handleChangeLanguage('ru')}>
+                                    <div className="dropdown-row">
+                                        <img
+                                            src={require('../../assets/images/sidebar/ru.svg')}
+                                            alt="rus"
+                                        />
+                                        <span>RU</span>
+                                    </div>
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </div>
                 </div>
                 {this.renderLogout()}
@@ -158,69 +178,7 @@ class SidebarContainer extends React.Component<Props, State> {
         );
     };
 
-    private toggleLanguageMenu = () => {
-        this.setState({
-            isOpenLanguage: !this.state.isOpenLanguage,
-        }, () => {
-            if (this.state.isOpenLanguage) {
-                document.addEventListener('click', this.closeLanguageMenu);
-            } else {
-                document.removeEventListener('click', this.closeLanguageMenu);
-            }
-        });
-    };
-
-    private closeLanguageMenu = () => {
-        this.setState({
-            isOpenLanguage: false,
-        }, () => {
-            document.removeEventListener('click', this.closeLanguageMenu);
-        });
-    };
-
-    private getLanguageMenuIcon = () => {
-        const { colorTheme } = this.props;
-        const { isOpenLanguage } = this.state;
-
-        if (colorTheme === 'light') {
-            return (
-                isOpenLanguage ? (
-                    <span className="icon"><OpenIcon fillColor={colors.light.navbar.language} /></span>
-                ) : (
-                    <span className="icon"><CloseIcon fillColor={colors.light.navbar.language} /></span>
-                )
-            );
-        }
-
-        return (
-            isOpenLanguage ? (
-                <span className="icon"><OpenIcon fillColor={colors.basic.navbar.language} /></span>
-            ) : (
-                <span className="icon"><CloseIcon fillColor={colors.basic.navbar.language} /></span>
-            )
-        );
-    };
     // tslint:disable:jsx-no-lambda
-    private getLanguageMenu = () => {
-        return (
-            <div className="dropdown-menu dropdown-menu-language" role="menu">
-                <div className="dropdown-menu-item-lang" onClick={e => this.handleChangeLanguage('en')}>
-                    <img
-                        src={require('../../assets/images/sidebar/en.svg')}
-                        alt="usa"
-                    />
-                    <span>EN</span>
-                </div>
-                <div className="dropdown-menu-item-lang" onClick={e => this.handleChangeLanguage('ru')}>
-                    <img
-                        src={require('../../assets/images/sidebar/ru.svg')}
-                        alt="rus"
-                    />
-                    <span>RU</span>
-                </div>
-            </div>
-        );
-    };
 
     private handleChangeLanguage = (language: string) => {
         this.props.changeLanguage(language);

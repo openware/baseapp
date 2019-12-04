@@ -1,4 +1,5 @@
-import { Button, Dropdown } from '@openware/components';
+import { Dropdown } from '@openware/components';
+import { Button } from 'react-bootstrap';
 import cr from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
@@ -290,12 +291,16 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
               {sendSuccess && !editSuccess && <p className="pg-confirm__success">{this.translate(sendSuccess)}</p>}
               {editSuccess && !sendSuccess && <p className="pg-confirm__success">{this.translate(editSuccess)}</p>}
               <div className="pg-confirm__content-deep">
-                  <Button
-                      className="pg-confirm__content-phone-deep-button"
-                      label={this.translate('page.body.kyc.next')}
-                      onClick={this.sendData}
-                      disabled={this.handleCheckButtonDisabled()}
-                  />
+                    <Button
+                        onClick={this.sendData}
+                        disabled={this.handleCheckButtonDisabled()}
+                        size="lg"
+                        variant="primary"
+                        type="submit"
+                        block={true}
+                    >
+                        {this.translate('page.body.kyc.next')}
+                    </Button>
               </div>
           </div>
         );
