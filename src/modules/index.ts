@@ -21,6 +21,7 @@ import { ApiKeysState } from './user/apiKeys';
 import { rootApiKeysSaga } from './user/apiKeys/sagas';
 import { AuthState, rootAuthSaga } from './user/auth';
 import { BeneficiariesState, rootBeneficiariesSaga } from './user/beneficiaries';
+import { GeetestCaptchaState, rootGeetestCaptchaSaga } from './user/captcha';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
 import { HistoryState, rootHistorySaga } from './user/history';
 import { DocumentsState, rootSendDocumentsSaga } from './user/kyc/documents';
@@ -48,6 +49,7 @@ export * from './public/alert';
 export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';
+export * from './user/captcha';
 export * from './user/wallets';
 export * from './user/profile';
 export * from './user/openOrders';
@@ -96,6 +98,7 @@ export interface RootState {
         ordersHistory: OrdersHistoryState;
         openOrders: OpenOrdersState;
         sendEmailVerification: EmailVerificationState;
+        captchaKeys: GeetestCaptchaState;
         withdrawLimit: WithdrawLimitState;
     };
 }
@@ -107,30 +110,31 @@ export const rootReducer = combineReducers({
 
 export function* rootSaga() {
     yield all([
+        call(rootApiKeysSaga),
         call(rootAuthSaga),
         call(rootBeneficiariesSaga),
         call(rootCurrenciesSaga),
-        call(rootMarketsSaga),
-        call(rootOrdersSaga),
-        call(rootProfileSaga),
-        call(rootWalletsSaga),
-        call(rootPasswordSaga),
-        call(rootSendCodeSaga),
-        call(rootSendIdentitySaga),
-        call(rootSendDocumentsSaga),
-        call(rootRecentTradesSaga),
-        call(rootOrderBookSaga),
+        call(rootEmailVerificationSaga),
+        call(rootGeetestCaptchaSaga),
         call(rootHandleAlertSaga),
         call(rootHistorySaga),
-        call(rootNewHistorySaga),
-        call(rootUserActivitySaga),
-        call(rootApiKeysSaga),
-        call(rootLabelSaga),
-        call(rootOrdersHistorySaga),
-        call(rootOpenOrdersSaga),
-        call(rootEmailVerificationSaga),
         call(rootKlineFetchSaga),
-        call(rootWithdrawLimitSaga),
+        call(rootLabelSaga),
+        call(rootMarketsSaga),
         call(rootMemberLevelsSaga),
+        call(rootNewHistorySaga),
+        call(rootOpenOrdersSaga),
+        call(rootOrderBookSaga),
+        call(rootOrdersHistorySaga),
+        call(rootOrdersSaga),
+        call(rootPasswordSaga),
+        call(rootProfileSaga),
+        call(rootRecentTradesSaga),
+        call(rootSendCodeSaga),
+        call(rootSendDocumentsSaga),
+        call(rootSendIdentitySaga),
+        call(rootUserActivitySaga),
+        call(rootWalletsSaga),
+        call(rootWithdrawLimitSaga),
     ]);
 }
