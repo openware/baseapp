@@ -109,31 +109,16 @@ steps:
         from_secret: kite_bot_key
     commands:
       - BUNDLE_GEMFILE=/sdk/Gemfile bundle exec rake --rakefile=/sdk/Rakefile ci:prebuild
-
-  - name: "Publish to Gitolite"
-    image: alpine/git
-    environment:
-      GITOLITE_KEY:
-        from_secret: gitolite_rsa_key_b64
-    commands:
-      - mkdir -p ~/.ssh
-      - echo $GITOLITE_KEY | base64 -d > ~/.ssh/id_rsa
-      - chmod 0600 ~/.ssh/id_rsa
-      - git remote add gitolite git@git.openware.com:baseapp
-      - GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push -f --no-verify gitolite HEAD:master
-
-  - name: "Build image"
-    image: plugins/gcr
-    environment:
-      NPM_AUTH_TOKEN:
-        from_secret: drone_npm_auth_token
-      BUILD_EXPIRE: "3 month"
+  - name: "Build Docker image"
+    image: plugins/docker
     settings:
-      build_args_from_env:
-        - BUILD_EXPIRE
-        - NPM_AUTH_TOKEN
-      json_key:
-        from_secret: openware_gcp_creds_base64
+      username:
+        from_secret: quay_username
+      password:
+        from_secret: quay_password
+      repo:
+        from_secret: quay_repo
+      registry: quay.io
 
   - name: "Redeploy on devkube"
     image: rubykube/microkube:0.2.0
