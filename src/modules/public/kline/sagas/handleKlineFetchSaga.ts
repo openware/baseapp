@@ -5,7 +5,7 @@ import { alertPush } from '../../alert';
 import { klineData, KlineFetch } from '../actions';
 
 const klineRequestOptions: RequestOptions = {
-    apiVersion: 'peatio',
+    apiVersion: 'arke',
 };
 
 export function* handleKlineFetchSaga(action: KlineFetch) {

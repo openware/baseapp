@@ -1,10 +1,10 @@
-import { Button } from '@openware/components';
 import '@openware/cryptofont';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 
 
-interface CopyableTextFieldProps {
+export interface CopyableTextFieldProps {
     /**
      * Text value that will be copied to the clipboard
      */
@@ -32,6 +32,7 @@ interface CopyableTextFieldProps {
 
 type CopyTypes = HTMLInputElement | null;
 
+
 const copy = (id: string) => {
     const copyText: CopyTypes = document.querySelector(`#${id}`);
 
@@ -39,7 +40,7 @@ const copy = (id: string) => {
         copyText.select();
 
         document.execCommand('copy');
-        window.getSelection().removeAllRanges();
+        (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
     }
 };
 
@@ -75,13 +76,13 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                         disabled={disabled}
                     />
                     <Button
-                        className="cr-copyable-text-field__button"
-                        label={copyButtonText ? copyButtonText : 'Copy'}
-                        type={'text'}
                         onClick={doCopy}
                         disabled={disabled}
-                        noMargin={true}
-                    />
+                        size="lg"
+                        variant="primary"
+                    >
+                        {copyButtonText ? copyButtonText : 'Copy'}
+                    </Button>
                 </div>
             </div>
         );
@@ -90,5 +91,4 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
 
 export {
     CopyableTextField,
-    CopyableTextFieldProps,
 };

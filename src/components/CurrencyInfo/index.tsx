@@ -3,8 +3,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { WalletItemProps } from '../WalletItem';
 
-
-interface CurrencyInfoProps {
+export interface CurrencyInfoProps {
     wallet: WalletItemProps;
 }
 
@@ -15,7 +14,7 @@ interface CurrencyIconProps {
 
 const CurrencyIcon: React.FunctionComponent<CurrencyIconProps> = (props: CurrencyIconProps) => {
     return props.icon ?
-        <img className="cr-wallet-item__single__image-icon" src={props.icon} /> :
+        <img alt="" className="cr-wallet-item__single__image-icon" src={props.icon} /> :
         <span className={`cr-wallet-item__icon-code cr-crypto-font-${props.currency}`} />;
 };
 
@@ -57,5 +56,4 @@ const CurrencyInfo: React.FunctionComponent<CurrencyInfoProps> = (props: Currenc
 
 export {
     CurrencyInfo,
-    CurrencyInfoProps,
 };

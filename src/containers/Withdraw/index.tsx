@@ -1,7 +1,8 @@
 // tslint:disable:jsx-no-lambda
-import { Button, Decimal, Input } from '@openware/components';
+import { Decimal, Input } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import {
     Beneficiaries,
     CustomInput,
@@ -9,7 +10,7 @@ import {
 } from '../../components';
 import { Beneficiary } from '../../modules';
 
-interface WithdrawProps {
+export interface WithdrawProps {
     currency: string;
     fee: number;
     onClick: (amount: number, total: number, beneficiary: Beneficiary, otpCode: string) => void;
@@ -44,7 +45,7 @@ interface WithdrawState {
     total: number;
 }
 
-class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
+export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     public state = {
         amount: '',
         beneficiary: defaultBeneficiary,
@@ -57,7 +58,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     public componentWillReceiveProps(nextProps) {
         const { currency, withdrawDone } = this.props;
 
-        if (nextProps && (JSON.stringify(nextProps.currency) !== JSON.stringify(currency)) || (nextProps.withdrawDone && !withdrawDone)) {
+        if ((nextProps && (JSON.stringify(nextProps.currency) !== JSON.stringify(currency))) || (nextProps.withdrawDone && !withdrawDone)) {
             this.setState({
                 amount: '',
                 otpCode: '',
@@ -138,11 +139,13 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                     </div>
                     <div className="cr-withdraw__deep">
                         <Button
-                            className="cr-withdraw__button"
-                            label={withdrawButtonLabel ? withdrawButtonLabel : 'WITHDRAW'}
+                            variant="primary"
+                            size="lg"
                             onClick={this.handleClick}
                             disabled={Number(total) <= 0 || !Boolean(beneficiary.id) || !Boolean(otpCode)}
-                        />
+                        >
+                            {withdrawButtonLabel ? withdrawButtonLabel : 'Withdraw'}
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -245,9 +248,3 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         this.setState({ otpCode });
     };
 }
-
-export {
-    Withdraw,
-    WithdrawProps,
-    WithdrawState,
-};

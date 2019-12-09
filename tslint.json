@@ -1,12 +1,10 @@
 {
-  "extends": [
-    "@openware/coding-standards/tslint"
-  ],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts",
-      "coverage/lcov-report/*.js"
+      "coverage/lcov-report/*.js",
+      "src/charting_library/*"
     ]
   },
   "rules": {
@@ -16,6 +14,256 @@
       "jsx-double"
     ],
     "no-magic-numbers": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "no-submodule-imports": false,
+    "no-object-literal-type-assertion": false,
+    "cyclomatic-complexity": false,
+    "no-mixed-operators": false,
+    "no-unexpected-multiline": false,
+    "arrow-parens": [
+      true,
+      "ban-single-arg-parens"
+    ],
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double"
+    ],
+    "indent": [
+      true,
+      "spaces",
+      4
+    ],
+    "react/jsx-indent": [
+      4,
+      4
+    ],
+    "semicolon": [
+      true,
+      "always",
+      "ignore-bound-class-methods"
+    ],
+    "no-console": true,
+    "ban": [
+      true,
+      "eval",
+      {
+        "name": "$",
+        "message": "please don't"
+      },
+      [
+        "describe",
+        "only"
+      ],
+      {
+        "name": [
+          "it",
+          "only"
+        ],
+        "message": "don't focus tests"
+      },
+      {
+        "name": [
+          "chai",
+          "assert",
+          "equal"
+        ],
+        "message": "Use 'strictEqual' instead."
+      },
+      {
+        "name": [
+          "*",
+          "forEach"
+        ],
+        "message": "Use a regular for loop instead."
+      }
+    ],
+    "adjacent-overload-signatures": true,
+    "member-access": true,
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "public-static-field",
+          "public-instance-field",
+          "public-constructor",
+          "private-static-field",
+          "private-instance-field",
+          "private-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
+        ]
+      }
+    ],
+    "no-empty-interface": true,
+    "no-inferrable-types": true,
+    "no-internal-module": true,
+    "no-namespace": [
+      true,
+      "allow-declarations"
+    ],
+    "no-parameter-reassignment": true,
+    "only-arrow-functions": true,
+    "prefer-for-of": true,
+    "promise-function-async": true,
+    "await-promise": true,
+    "ban-comma-operator": true,
+    "curly": true,
+    "import-blacklist": [
+      true,
+      "lodash"
+    ],
+    "label-position": true,
+    "no-arg": true,
+    "no-construct": true,
+    "no-duplicate-super": true,
+    "no-duplicate-switch-case": true,
+    "no-duplicate-variable": [
+      true,
+      "check-parameters"
+    ],
+    "no-dynamic-delete": true,
+    "no-empty": true,
+    "no-floating-promises": true,
+    "no-invalid-this": [
+      true,
+      "check-function-in-method"
+    ],
+    "no-misused-new": true,
+    "no-return-await": true,
+    "no-shadowed-variable": true,
+    "no-sparse-arrays": true,
+    "no-string-literal": true,
+    "no-string-throw": true,
+    "no-switch-case-fall-through": true,
+    "no-this-assignment": true,
+    "no-unnecessary-class": true,
+    "no-unsafe-finally": true,
+    "no-unused-expression": [
+      true,
+      "allow-fast-null-checks"
+    ],
+    "no-var-keyword": true,
+    "no-void-expression": [
+      true,
+      "ignore-arrow-function-shorthand"
+    ],
+    "prefer-conditional-expression": [
+      true,
+      "check-else-if"
+    ],
+    "prefer-object-spread": true,
+    "radix": true,
+    "restrict-plus-operands": true,
+    "strict-type-predicates": true,
+    "switch-default": true,
+    "triple-equals": true,
+    "use-default-type-parameter": true,
+    "use-isnan": true,
+    "deprecation": true,
+    "eofline": true,
+    "linebreak-style": [
+      true,
+      "LF"
+    ],
+    "max-classes-per-file": [
+      true,
+      1
+    ],
+    "max-line-length": [
+      true,
+      {
+        "limit": 80,
+        "ignore-pattern": "/*|//"
+      }
+    ],
+    "no-default-export": true,
+    "no-duplicate-imports": true,
+    "no-mergeable-namespace": true,
+    "prefer-const": true,
+    "object-literal-sort-keys": false,
+    "trailing-comma": [
+      true,
+      {
+       "multiline": "always",
+       "singleline": "never"
+      }
+    ],
+    "array-type": [
+      true,
+      "array-simple"
+    ],
+    "arrow-return-shorthand": true,
+    "binary-expression-operand-order": true,
+    "callable-types": true,
+    "class-name": true,
+    "comment-format": [
+      true,
+      "check-lowercase",
+      {
+        "ignore-words": [
+         "TODO",
+         "HACK"
+        ]
+      }
+    ],
+    "encoding": true,
+    "import-spacing": true,
+    "interface-over-type-literal": true,
+    "new-parens": true,
+    "no-angle-bracket-type-assertion": true,
+    "no-boolean-literal-compare": true,
+    "no-consecutive-blank-lines": [
+      true,
+      2
+    ],
+    "no-irregular-whitespace": true,
+    "no-trailing-whitespace": true,
+    "no-unnecessary-callback-wrapper": true,
+    "no-unnecessary-initializer": true,
+    "no-unnecessary-qualifier": true,
+    "number-literal-format": true,
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
+    "object-literal-shorthand": false,
+    "one-line": [
+      true,
+      "check-catch",
+      "check-finally",
+      "check-else"
+    ],
+    "one-variable-per-declaration": [
+      true,
+      "ignore-for-loop"
+    ],
+    "prefer-switch": [
+      true,
+      {
+        "min-cases": 2
+      }
+    ],
+    "prefer-template": true,
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore",
+      "allow-pascal-case"
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-operator",
+      "check-typecast"
+    ],
+    "no-any": false,
+    "no-var-requires": false
   }
 }

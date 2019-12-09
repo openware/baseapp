@@ -1,5 +1,6 @@
-import { Button, Input } from '@openware/components';
+import { Input } from '@openware/components';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import {
     FormattedMessage,
     InjectedIntlProps,
@@ -61,8 +62,11 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
                 <Button
                     className="pg-profile-page__btn-secondary"
                     onClick={this.toggleShowForm}
-                    label={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change'})}
-                />
+                    size="lg"
+                    variant="primary"
+                >
+                    {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change'})}
+                </Button>
             </React.Fragment>
         );
     };
@@ -89,15 +93,19 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
                         />
                     </div>
                     <Button
-                        className="pg-profile-page__btn-secondary"
-                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.save'})}
                         onClick={this.handleSubmit}
-                    />
+                        size="lg"
+                        variant="primary"
+                    >
+                        {this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.save'})}
+                    </Button>
                     <Button
-                        className="pg-profile-page__btn-secondary"
-                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.cancel'})}
                         onClick={this.handleCancel}
-                    />
+                        size="lg"
+                        variant="primary"
+                    >
+                        {this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.cancel'})}
+                    </Button>
                 </div>
             </div>
         );

@@ -2,8 +2,6 @@ import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import logo = require('../../assets/images/logo.svg');
-import logoLight = require('../../assets/images/logoLight.svg');
 import {
     Market,
     RootState,
@@ -19,6 +17,8 @@ import {
 import { HeaderToolbar } from '../HeaderToolbar';
 import { NavBar } from '../NavBar';
 
+import logo from '../../assets/images/logo.svg';
+import logoLight from '../../assets/images/logoLight.svg';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
@@ -87,7 +87,7 @@ class Head extends React.Component<any> {
 
         return mobileWallet && (
             <div onClick={this.backWallets} className="pg-header__toggler">
-                <img src={require(`./back${isLight}.svg`)} />
+                <img alt="" src={require(`./back${isLight}.svg`)} />
             </div>
         );
     };

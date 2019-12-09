@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 
-interface DepositFiatProps {
+export interface DepositFiatProps {
     /**
      * Sets helper description
      */
@@ -69,5 +69,4 @@ const DepositFiat: React.FunctionComponent<DepositFiatProps> = (props: DepositFi
 
 export {
     DepositFiat,
-    DepositFiatProps,
 };

@@ -22,11 +22,6 @@ describe('CopyableTextField', () => {
         expect(wrapper.find('.cr-copyable-text-field')).toHaveLength(1);
     });
 
-    it('should contain cr-copyable-text-field__button className', () => {
-        const wrapper = setup();
-        expect(wrapper.find('.cr-copyable-text-field__button')).toHaveLength(1);
-    });
-
     it('should render 1 input tag', () => {
         const wrapper = setup();
         const input = wrapper.find('input');

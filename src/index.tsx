@@ -1,10 +1,14 @@
 // tslint:disable:no-submodule-imports
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactGA from 'react-ga';
 import { addLocaleData } from 'react-intl';
+
+import en from 'react-intl/locale-data/en';
+
 import { Provider } from 'react-redux';
 
 import { gaTrackerKey } from './api';
@@ -31,10 +35,6 @@ if (gaKey) {
         trackPageToGA(location.pathname);
     });
 }
-
-// tslint:disable-next-line:no-submodule-imports
-import en = require('react-intl/locale-data/en');
-
 
 addLocaleData([...en, ...customLocaleData]);
 sagaMiddleware.run(rootSaga);

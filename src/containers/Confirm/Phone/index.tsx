@@ -1,6 +1,6 @@
-import { Button } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import {
     connect,
@@ -99,13 +99,15 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             onKeyPress={this.handleSendEnterPress}
                             autoFocus={true}
                         />
-                        <button
-                            className={phoneNumber ? 'pg-confirm__content-phone-col-content-send' : 'pg-confirm__content-phone-col-content-send--disabled'}
-                            type="button"
+                        <Button
+                            block={true}
                             onClick={this.handleSendCode}
+                            size="lg"
+                            variant="primary"
+                            disabled={!phoneNumber}
                         >
                             {this.state.resendCode ? this.translate('page.body.kyc.phone.resend') : this.translate('page.body.kyc.phone.send')}
-                        </button>
+                        </Button>
                     </fieldset>
                 </div>
                 <div className="pg-confirm__content-phone-col">
@@ -129,10 +131,14 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                 {verifyPhoneSuccess && <p className="pg-confirm__success">{this.translate(verifyPhoneSuccess)}</p>}
                 <div className="pg-confirm__content-deep">
                     <Button
-                        className="pg-confirm__content-phone-deep-button"
-                        label={this.translate('page.body.kyc.next')}
+                        block={true}
                         onClick={this.confirmPhone}
-                    />
+                        size="lg"
+                        variant="primary"
+                        disabled={!confirmationCode}
+                    >
+                        {this.translate('page.body.kyc.next')}
+                    </Button>
                 </div>
             </div>
         );

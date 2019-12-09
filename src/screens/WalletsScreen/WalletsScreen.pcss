@@ -272,29 +272,6 @@
 
         &__deep {
             width: calc(var(--gap) * 29);
-            .cr-button {
-                color: var(--white);
-                background: var(--profile-btn);
-                font-size: calc(var(--gap) * 2.66);
-                border-radius: calc(var(--gap) * 0.5);
-                height: calc(var(--gap) * 5.5);
-                font-weight: normal;
-                width: 90%;
-                margin-bottom: 0;
-                margin-right: 0;
-                &--disabled {
-                  color: var(--button-dark-gray) !important;
-                  background: var(--button-disabled) !important;
-                }
-
-                &:hover {
-                  background: var(--button-hover);
-                }
-
-                &:active {
-                  background: var(--button-active);
-                }
-            }
         }
     }
 
@@ -467,19 +444,6 @@
     &__enable-2fa-message {
         font-size: calc(var(--gap) * 3);
         text-align: center;
-    }
-
-    &__button-2fa {
-        &.cr-button {
-            background: var(--button-primary);
-            color: var(--white) ;
-            font-size: calc(var(--gap) * 2);
-            padding: calc(var(--gap) * 2);
-            width: auto;
-            &:hover {
-                background: var(--button-hover);
-            }
-        }
     }
 }
 

@@ -1,6 +1,7 @@
-import { Button, CryptoIcon, Decimal, Dropdown, OrderInput, PercentageButton } from '@openware/components';
+import { CryptoIcon, Decimal, Dropdown, OrderInput, PercentageButton } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { getAmount, getTotalPrice } from '../../helpers/getTotalPrice';
 import { OrderProps } from '../Order';
 
@@ -9,7 +10,7 @@ type OnSubmitCallback = (order: OrderProps) => void;
 type DropdownElem = number | string | React.ReactNode;
 type FormType = 'buy' | 'sell';
 
-interface OrderFormProps {
+export interface OrderFormProps {
     /**
      * Price that is applied during total order amount calculation when type is Market
      */
@@ -139,7 +140,7 @@ const checkButtonIsDisabled = (safeAmount: number, safePrice: number, price: str
     return props.disabled || !props.available || invalidAmount || invalidLimitPrice || invalidMarketPrice;
 };
 
-class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
+export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
     constructor(props: OrderFormProps) {
         super(props);
         this.state = {
@@ -314,11 +315,15 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                 </div>
                 <div className="cr-order-item">
                     <Button
+                        block={true}
+                        className="btn-block mr-1 mt-1 btn-lg"
                         disabled={checkButtonIsDisabled(safeAmount, safePrice, price, this.props, this.state)}
-                        label={submitButtonText || type}
-                        noMargin={true}
                         onClick={this.handleSubmit}
-                    />
+                        size="lg"
+                        variant={type === 'buy' ? 'success' : 'danger'}
+                    >
+                        {submitButtonText || type}
+                    </Button>
                 </div>
             </div>
         );
@@ -423,10 +428,3 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
         });
     };
 }
-
-
-export {
-    OrderForm,
-    OrderFormProps,
-    OrderFormState,
-};

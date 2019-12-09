@@ -1,16 +1,9 @@
-// tslint:disable
-import {
-    Button,
-    Input,
-} from '@openware/components';
+import { Input } from '@openware/components';
+import { Button } from 'react-bootstrap';
 import { History } from 'history';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
-import {
-    connect,
-    MapDispatchToProps,
-    MapStateToProps,
-} from 'react-redux';
+import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { CopyableTextField } from '../../components';
 import { setDocumentTitle } from '../../helpers';
@@ -56,7 +49,7 @@ const copy = (id: string) => {
         copyText.select();
 
         document.execCommand('copy');
-        window.getSelection().removeAllRanges();
+        (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
     }
 };
 
@@ -72,15 +65,22 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
             this.props.generateQR();
         }
     }
-    public translate = (e: string) => {
-        return this.props.intl.formatMessage({ id: e });
-    };
 
     public componentWillReceiveProps(next: Props) {
         if (!this.props.success && next.success) {
             this.handleNavigateToProfile();
         }
     }
+
+    public componentDidUpdate(prev: Props) {
+        if (!prev.success && this.props.success) {
+            this.props.toggleUser2fa();
+        }
+    }
+
+    public translate = (e: string) => {
+        return this.props.intl.formatMessage({ id: e });
+    };
 
     public doCopy = () => {
         copy('referral-id');
@@ -94,12 +94,6 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                 {this.renderToggle2fa(enable2fa)}
             </div>
         );
-    }
-
-    public componentDidUpdate(prev: Props) {
-        if (!prev.success && this.props.success) {
-            this.props.toggleUser2fa();
-        }
     }
 
     private renderToggle2fa = (enable2fa: boolean) => {
@@ -121,7 +115,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                         {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.header')}
                     </div>
                     <div className="col-1 mx-0 p-0 px-1" onClick={this.goBack}>
-                        <img src={require('./close.svg')} />
+                        <img alt="" src={require('./close.svg')} />
                     </div>
                 </div>
 
@@ -131,9 +125,9 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                             <div className="d-inline">
                                 <span>1   </span>
                                 {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.1')}
-                                <a target="_blank" href="https://itunes.apple.com/ru/app/google-authenticator/id388497605?mt=8">AppStore </a>
+                                <a target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/ru/app/google-authenticator/id388497605?mt=8">AppStore </a>
                                 {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.or')}
-                                <a target="_blank" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl">Google play</a>
+                                <a target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl">Google play</a>
                             </div>
                         </div>
                         <div className="row col-12 pg-profile-two-factor-auth__body--text--group">
@@ -176,22 +170,26 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                 <div className="row p-5">
                     <div className="col-12 m-0">
                         <Button
-                            className="p-3 m-0"
-                            label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.enable')}
                             onClick={submitHandler}
-                        />
+                            size="lg"
+                            variant="primary"
+                            type="submit"
+                            block={true}
+                        >
+                            {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.enable')}
+                        </Button>
                     </div>
                 </div>
             </div>
         );
-    }
+    };
 
-    private renderTwoFactorAuthQR(barcode: string) {
+    private renderTwoFactorAuthQR = (barcode: string) => {
         const src = `data:image/png;base64,${barcode}`;
-        return barcode.length > 0 && <img className="pg-profile-two-factor-auth__qr" src={src} />;
-    }
+        return barcode.length > 0 && <img alt="" className="pg-profile-two-factor-auth__qr" src={src} />;
+    };
 
-    private renderSecret(secret: string) {
+    private renderSecret = (secret: string) => {
         return (
             <fieldset onClick={this.doCopy}>
                 <legend>
@@ -200,7 +198,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                 {secret && <CopyableTextField value={secret} fieldId="secret-2fa" />}
             </fieldset>
         );
-    }
+    };
 
     private handleOtpCodeChange = (value: string) => {
         this.setState({
@@ -222,27 +220,27 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
             code: this.state.otpCode,
             enable: true,
         });
-    }
+    };
 
     private handleDisable2fa = () => {
         this.props.toggle2fa({
             code: this.state.otpCode,
             enable: false,
         });
-    }
+    };
 
     private handleNavigateToProfile = () => {
         this.props.history.push('/profile');
-    }
+    };
 
     private get2faAction = () => {
         const routingState = this.props.history.location.state;
         return routingState ? routingState.enable2fa : false;
-    }
+    };
 
-    private goBack() {
+    private goBack = () => {
         window.history.back();
-    }
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, Props, RootState> = state => ({

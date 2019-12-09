@@ -1,23 +1,23 @@
 import classnames from 'classnames';
 import * as React from 'react';
 
-enum HideMode {
+export enum HideMode {
     hide = 'hide',
     unmount = 'unmount',
 }
 
-type OnTabChangeCallback = (index: number, label?: string) => void;
+export type OnTabChangeCallback = (index: number, label?: string) => void;
 
 type OnCurrentTabChange = (index: number) => void;
 
-interface Tab {
+export interface Tab {
     content: React.ReactNode;
     disabled?: boolean;
     hidden?: boolean;
     label: string;
 }
 
-interface TabPanelProps {
+export interface TabPanelProps {
     /**
      * List of tabs to be rendered
      */
@@ -61,7 +61,7 @@ interface TabPanelProps {
 /**
  * Component for switching between different tabs on one page.
  */
-class TabPanel extends React.Component<TabPanelProps> {
+export class TabPanel extends React.Component<TabPanelProps> {
     public static defaultProps = {
         hideMode: HideMode.hide,
     };
@@ -149,11 +149,3 @@ class TabPanel extends React.Component<TabPanelProps> {
         }
     };
 }
-
-export {
-    HideMode,
-    OnTabChangeCallback,
-    Tab,
-    TabPanel,
-    TabPanelProps,
-};

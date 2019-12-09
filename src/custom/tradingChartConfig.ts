@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ThemeName } from '../charting_library/charting_library.min';
 import { colors } from '../constants';
 

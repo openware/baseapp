@@ -7,6 +7,7 @@ export const defaultConfig: Config = {
         tradeUrl: '',
         applogicUrl: '',
         rangerUrl: '',
+        arkeUrl: '',
     },
     minutesUntilAutoLogout: '5',
     rangerReconnectPeriod: '1',
@@ -36,8 +37,9 @@ Cryptobase.config = { ...window.env };
 Cryptobase.config.storage = Cryptobase.config.storage || {};
 Cryptobase.config.captcha = Cryptobase.config.captcha || defaultConfig.captcha;
 
-export const authUrl = () => Cryptobase.config.api.authUrl;
 export const tradeUrl = () => Cryptobase.config.api.tradeUrl;
+export const arkeUrl = () => Cryptobase.config.api.arkeUrl || tradeUrl();
+export const authUrl = () => Cryptobase.config.api.authUrl;
 export const applogicUrl = () => Cryptobase.config.api.applogicUrl;
 export const rangerUrl = () => Cryptobase.config.api.rangerUrl;
 export const minutesUntilAutoLogout = (): string => Cryptobase.config.minutesUntilAutoLogout || '5';

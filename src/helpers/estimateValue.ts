@@ -1,3 +1,4 @@
+// eslint-disable
 import { Decimal } from '@openware/components';
 import { WalletItemProps } from '../components/WalletItem';
 import { DEFAULT_CCY_PRECISION } from '../constants';
@@ -11,8 +12,8 @@ export interface MarketTicker {
 
 const findMarket = (askUnit: string, bidUnit: string, markets: Market[]): Market | null => {
     for (const market of markets) {
-        if (market.base_unit === askUnit && market.quote_unit === bidUnit ||
-            market.base_unit === bidUnit && market.quote_unit === askUnit) {
+        if ((market.base_unit === askUnit && market.quote_unit === bidUnit) ||
+            (market.base_unit === bidUnit && market.quote_unit === askUnit)) {
             return market;
         }
     }
@@ -36,7 +37,7 @@ export const estimateWithMarket = (targetCurrency: string, walletCurrency: strin
     const formattedTargetCurrency = targetCurrency.toLowerCase();
     const formattedWalletCurrency = walletCurrency.toLowerCase();
     const market = findMarket(formattedTargetCurrency, formattedWalletCurrency, markets);
-    const marketTicker = findMarketTicker(market && market.id || '', marketTickers);
+    const marketTicker = findMarketTicker((market && market.id) || '', marketTickers);
     const targetCurrencyPrecision = handleCCYPrecision(currencies, formattedTargetCurrency, DEFAULT_CCY_PRECISION);
 
     if (formattedTargetCurrency === formattedWalletCurrency) {
@@ -74,8 +75,8 @@ const estimateWithoutMarket = (targetCurrency: string, walletCurrency: string, w
     outer:
         for (const secondaryCurrency of secondaryCurrencies) {
             for (const market of markets) {
-                if (market.base_unit === secondaryCurrency && market.quote_unit === formattedWalletCurrency ||
-                    market.quote_unit === secondaryCurrency && market.base_unit === formattedWalletCurrency) {
+                if ((market.base_unit === secondaryCurrency && market.quote_unit === formattedWalletCurrency) ||
+                    (market.quote_unit === secondaryCurrency && market.base_unit === formattedWalletCurrency)) {
                     selectedSecondaryCurrency = secondaryCurrency;
                     break outer;
                 }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { EmailForm, EmailFormProps } from './';
 
 import { shallow } from 'enzyme';
@@ -42,7 +43,7 @@ describe('EmailForm component', () => {
             validateForm: spyOnValidateForm,
             OnSubmit: spyOnSubmit,
         });
-        const button = wrapper.find('.cr-email-form__button').last();
+        const button = wrapper.find(Button);
         button.simulate('click');
         expect(spyOnValidateForm).toHaveBeenCalledTimes(0);
         expect(spyOnSubmit).toHaveBeenCalled();
@@ -57,7 +58,7 @@ describe('EmailForm component', () => {
             validateForm: spyOnValidateForm,
             OnSubmit: spyOnSubmit,
         });
-        const button = wrapper.find('.cr-email-form__button').last();
+        const button = wrapper.find(Button);
         button.simulate('click');
         expect(spyOnValidateForm).toHaveBeenCalled();
         expect(spyOnValidateForm).toHaveBeenCalledTimes(1);

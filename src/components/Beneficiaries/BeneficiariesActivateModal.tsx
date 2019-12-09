@@ -1,6 +1,6 @@
-import { Button } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CustomInput } from '../../components';
@@ -121,17 +121,19 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         return (
             <div className="cr-email-form__form-content">
                 <div className="confirmation-modal__content">
-                    <img className="confirmation-modal__content__icon" src={require('../../assets/images/LetterIcon.svg')}/>
+                    <img alt="content-icon" className="confirmation-modal__content__icon" src={require('../../assets/images/LetterIcon.svg')}/>
                     <span className="confirmation-modal__content__text">{this.translate('page.body.wallets.beneficiaries.confirmationModal.body.text')}</span>
                 </div>
                 {this.renderConfirmationModalBodyItem('confirmationModalCode')}
                 <div className="cr-email-form__button-wrapper">
                     <Button
-                        label={this.translate('page.body.wallets.beneficiaries.confirmationModal.body.button')}
-                        className={!isDisabled ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
                         disabled={isDisabled}
                         onClick={this.handleSubmitConfirmationModal}
-                    />
+                        size="lg"
+                        variant="primary"
+                    >
+                        {this.translate('page.body.wallets.beneficiaries.confirmationModal.body.button')}
+                    </Button>
                 </div>
             </div>
         );
