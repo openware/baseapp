@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { TradingChartComponent } from '.';
-import { tradeUrl } from '../../api/config';
+import { arkeUrl } from '../../api/config';
 import { LibrarySymbolInfo } from '../../charting_library/datafeed-api';
 import {
     klineArrayToObject,
@@ -19,7 +19,7 @@ export interface CurrentKlineSubscription {
 }
 
 const makeHistoryUrl = (market: string, resolution: number, from: number, to: number) =>
-    `${tradeUrl()}/public/markets/${market}/k-line?period=${resolution}&time_from=${from}&time_to=${to}`;
+    `${arkeUrl()}/public/markets/${market}/k-line?period=${resolution}&time_from=${from}&time_to=${to}`;
 
 const resolutionToSeconds = (r: string): number => {
     const minutes = parseInt(r, 10);

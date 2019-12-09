@@ -8,7 +8,7 @@ import {
 } from '../actions';
 
 const tradesOptions: RequestOptions = {
-    apiVersion: 'peatio',
+    apiVersion: 'arke',
 };
 
 export function* recentTradesFetchSaga(action: RecentTradesFetch) {
