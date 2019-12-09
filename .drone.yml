@@ -103,24 +103,27 @@ steps:
     commands:
       - BUNDLE_GEMFILE=/sdk/Gemfile bundle exec rake --rakefile=/sdk/Rakefile ci:prebuild
 
-  - name: "Build image"
-    image: plugins/gcr
-    environment:
-      BUILD_EXPIRE: "3 month"
+
+  - name: "Build Docker image"
+    image: plugins/docker
     settings:
-      repo: gcr.io/openware-production/baseapp
-      build_args_from_env:
-        - BUILD_EXPIRE
-      json_key:
-        from_secret: openware_gcp_creds_base64
+      username:
+        from_secret: quay_username
+      password:
+        from_secret: quay_password
+      repo:
+        from_secret: quay_repo
+      registry: quay.io
 
   - name: "Redeploy on devkube"
     image: rubykube/microkube:0.2.0
     environment:
-        WEBHOOK_JWT_SECRET:
-            from_secret: devkube_webhook_secret
+      WEBHOOK_JWT_SECRET:
+        from_secret: devkube_webhook_secret
+      DOCKER_REPO:
+        from_secret: quay_repo
     commands:
-      - export latest_image=gcr.io/openware-production/baseapp:$(cat .tags)
+      - export latest_image=$DOCKER_REPO:$(cat .tags)
       - cd /home/app
       - bundle exec rake payload:send[frontend,$latest_image,http://www.devkube.com:1337]
 
