@@ -1,4 +1,4 @@
-import { Input } from '@openware/components';
+import { InputGroup, FormControl } from 'react-bootstrap';
 import * as React from 'react';
 
 export interface CustomInputProps {
@@ -34,8 +34,14 @@ class CustomInput extends React.Component<CustomInputProps> {
                 <label className={classNameLabel}>
                     {inputValue && (label || defaultLabel)}
                 </label>
-                <Input
-                    type={type}
+                <InputGroup>
+                    <FormControl
+                        value={inputValue}
+                        placeholder={placeholder}
+                        className={classNameInput}
+                    />
+                </InputGroup>
+                {/* type={type}
                     value={inputValue}
                     placeholder={placeholder}
                     className={classNameInput}
@@ -43,8 +49,7 @@ class CustomInput extends React.Component<CustomInputProps> {
                     onBlur={this.props.handleFocusInput}
                     onChangeValue={this.props.handleChangeInput}
                     autoFocus={autoFocus}
-                    onKeyPress={onKeyPress}
-                />
+                    onKeyPress={onKeyPress} */}
             </React.Fragment>
         );
     }
