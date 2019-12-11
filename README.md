@@ -1,8 +1,10 @@
-Base react application to build a trading platform application
+# OpenDAX BaseApp UI
+## FREE Open-Source UI for Trading and Wallets Management
 
-You can see an example of running application here: https://demo.openware.com/
+Base React application to build a trading platform interface for use with OpenDAX: https://github.com/openware/opendax
+Why React? Well - it's fresh, fast, flexible, and you can do a lot of UI magic with it without reloading the pages.
 
----
+You can see an example of a live application running at: https://demo.openware.com/
 
 ## Install dependencies
 
@@ -53,4 +55,8 @@ While building a Docker image you can pass build-dependant arguments using `--bu
 | `BUILD_EXPIRE` | Unix Timestamp of the build expiration date in seconds |
 | `BUILD_DOMAIN` | Domain which you'd like to use during the deployment   |
 
-## 
+## Happy trading with OpenDAX BaseApp UI
+
+If you have designed something beautiful with it, we would love to see it!
+
+And if you have any comments, feedback and suggestions - we are happy to hear from you here at GitHub or at https://openware.com
