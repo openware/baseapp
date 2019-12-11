@@ -296,7 +296,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                         disabled={this.handleCheckButtonDisabled()}
                         size="lg"
                         variant="primary"
-                        type="submit"
+                        type="button"
                         block={true}
                     >
                         {this.translate('page.body.kyc.next')}

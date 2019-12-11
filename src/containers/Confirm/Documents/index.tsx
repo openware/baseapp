@@ -192,7 +192,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         disabled={this.handleCheckButtonDisabled()}
                         size="lg"
                         variant="primary"
-                        type="submit"
+                        type="button"
                         block={true}
                     >
                         {this.translate('page.body.kyc.submit')}

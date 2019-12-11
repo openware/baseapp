@@ -73,7 +73,7 @@ export class EmailForm extends React.Component<EmailFormProps> {
                         <div className="cr-email-form__button-wrapper">
                             <Button
                                 block={true}
-                                type="submit"
+                                type="button"
                                 disabled={isLoading || !email.match(EMAIL_REGEX)}
                                 onClick={e => this.handleClick(e)}
                                 size="lg"

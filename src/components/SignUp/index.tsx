@@ -193,7 +193,7 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
                         <div className="cr-sign-up-form__button-wrapper">
                             <Button
                                 block={true}
-                                type="submit"
+                                type="button"
                                 disabled={this.disableButton()}
                                 onClick={e => this.handleClick(e)}
                                 size="lg"

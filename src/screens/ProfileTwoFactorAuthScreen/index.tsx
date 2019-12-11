@@ -173,7 +173,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                             onClick={submitHandler}
                             size="lg"
                             variant="primary"
-                            type="submit"
+                            type="button"
                             block={true}
                         >
                             {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.enable')}

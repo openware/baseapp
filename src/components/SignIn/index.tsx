@@ -118,7 +118,7 @@ export class SignInComponent extends React.Component<SignInProps> {
                         <div className="cr-sign-in-form__button-wrapper">
                             <Button
                                 block={true}
-                                type="submit"
+                                type="button"
                                 disabled={isLoading || !email.match(EMAIL_REGEX) || !password}
                                 onClick={e => this.handleClick(e)}
                                 size="lg"
