@@ -3628,7 +3628,11 @@ cryptocoins-icons@^2.8.0:
 cryptocurrency-icons@^0.16.1:
   version "0.16.1"
 <<<<<<< HEAD
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/cryptocurrency-icons/-/cryptocurrency-icons-0.16.1.tgz#33ec0b828c666f773b53866b4b803b2a06c28efc"
+=======
+  resolved "https://registry.npmjs.org/cryptocurrency-icons/-/cryptocurrency-icons-0.16.1.tgz#33ec0b828c666f773b53866b4b803b2a06c28efc"
+>>>>>>> Feature: replace use bootstrap input instead of openware input
 =======
   resolved "https://registry.npmjs.org/cryptocurrency-icons/-/cryptocurrency-icons-0.16.1.tgz#33ec0b828c666f773b53866b4b803b2a06c28efc"
 >>>>>>> Feature: replace use bootstrap input instead of openware input
@@ -10083,7 +10087,11 @@ qrcode.react@^0.9.2:
 
 qrcode.react@^1.0.0:
   version "1.0.0"
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-1.0.0.tgz#7e8889db3b769e555e8eb463d4c6de221c36d5de"
+=======
+  resolved "https://registry.npmjs.org/qrcode.react/-/qrcode.react-1.0.0.tgz#7e8889db3b769e555e8eb463d4c6de221c36d5de"
+>>>>>>> Feature: replace use bootstrap input instead of openware input
   integrity sha512-jBXleohRTwvGBe1ngV+62QvEZ/9IZqQivdwzo9pJM4LQMoCM2VnvNBnKdjvGnKyDZ/l0nCDgsPod19RzlPvm/Q==
   dependencies:
     loose-envify "^1.4.0"
