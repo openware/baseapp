@@ -167,6 +167,7 @@
       }
     }
   }
+
   .pg-wallet__tabs {
     background: var(--base-bright);
     border-left: 1px solid var(--wallets-item-border);
@@ -216,47 +217,34 @@
       margin-bottom: calc(var(--gap) * 1.83);
       position: relative;
       width: 100%;
+
       .cr-withdraw__label {
-      position: absolute;
-      top: 0px;
-      left: calc(var(--gap) * 1.66);
-      padding: calc(var(--gap) * 0.33) var(--gap);
-      border-radius: calc(var(--gap) * 0.33);
-      background: var(--estimated-value-background);
+        position: absolute;
+        top: 0px;
+        left: calc(var(--gap) * 1.66);
+        padding: calc(var(--gap) * 0.33) var(--gap);
+        border-radius: calc(var(--gap) * 0.33);
+        background: var(--estimated-value-background);
       }
-      .cr-withdraw__input {
-      width: 100%;
-      margin-top: calc(var(--gap) * 1.33);
-      input {
-        color: var(--color-white);
-        width: 100%;
-        height: calc(var(--gap) * 8.33);
-        padding: 0 calc(var(--gap) * 1.66);
-        font-size: calc(var(--gap) * 2);
-        text-align: left;
-        border: 1px solid var(--placeholder-text);
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        border-radius: calc(var(--gap) * 0.66)
-      }
-      input[type=number]::-webkit-inner-spin-button,
-      input[type=number]::-webkit-outer-spin-button {
-        cursor: pointer;
-      }
+
+      .custom-input {
+        margin-top: 10px;
       }
     }
 
     &__group__amount {
       width: 50%;
     }
+
     &__group__code {
       width: 45%;
+
       .cr-withdraw__input {
-      input[type=number]::-webkit-inner-spin-button,
-      input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
       }
     }
 
@@ -315,30 +303,21 @@
             }
           }
         }
+
         .cr-deposit-crypto__copyable-area {
-          .cr-copyable-text-field__button {
-            background: var(--button-disabled);
-            color: var(--button-dark-gray);
-            cursor: not-allowed;
-            &:hover {
-              background: var(--button-disabled);
-              color: var(--button-dark-gray);
+
+          border: 1px solid var(--base);
+          .custom-input {
+            width: 85%;
+            .input-group {
+              border: none;
             }
-          }
-          .cr-copyable-text-field__input {
-            input {
-              &:focus,
-              &:hover {
-                outline: none;
-                cursor: not-allowed;
-              }
-            }
-            &:focus {
-              outline: none;
+
+            label {
+              margin-top: -10px;
             }
           }
         }
-
       }
     }
   }

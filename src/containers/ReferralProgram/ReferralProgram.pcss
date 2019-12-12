@@ -28,23 +28,26 @@
 
     .pg-copyable-text-field {
       &__input {
-        padding: 0 calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
+        padding: var(--gap) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
         border: none;
 
-        input {
-          box-sizing: border-box;
-          color: var(--placeholder-text);
-          background: transparent;
+        .input-group {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+
+          .custom-input {
+            width: 70%;
+
+            label {
+              margin-top: -13px;
+              z-index: 10;
+            }
+          }
         }
 
-        .cr-copyable-text-field__button {
-          background: var(--button-normal);
-          color: var(--white);
-          padding: 0;
-
-          &:hover {
-            background: var(--button-hover);
-          }
+        .btn-primary {
+          border-radius: .3rem;
         }
       }
     }

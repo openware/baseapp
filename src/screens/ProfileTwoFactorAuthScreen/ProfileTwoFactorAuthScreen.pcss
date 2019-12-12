@@ -34,6 +34,24 @@
 
       .cr-copyable-text-field {
         padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+
+        .input-group {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+
+          .custom-input {
+            width: 70%;
+
+            label {
+              margin-top: -18px;
+            }
+          }
+
+          .btn-primary {
+            border-radius: .3rem;
+          }
+        }
       }
 
       &:focus-within {

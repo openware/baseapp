@@ -5,17 +5,28 @@ export interface CustomInputProps {
     type: string;
     label: string;
     defaultLabel: string;
-    handleChangeInput: (value: string) => void;
+    handleChangeInput?: (value: string) => void;
     inputValue: string;
-    handleFocusInput: () => void;
-    classNameLabel: string;
-    classNameInput: string;
+    handleFocusInput?: () => void;
+    classNameLabel?: string;
+    classNameInput?: string;
     placeholder: string;
     autoFocus?: boolean;
     onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    readOnly?: boolean;
+    id?: string;
+    handleClick?: ((event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void) | undefined;
+    isDisabled?: boolean | undefined;
 }
 
-class CustomInput extends React.Component<CustomInputProps> {
+interface OnChangeEvent {
+    target: {
+        value: string;
+    };
+}
+type Props = CustomInputProps;
+
+class CustomInput extends React.Component<Props> {
     public render() {
         const {
             label,
@@ -23,35 +34,43 @@ class CustomInput extends React.Component<CustomInputProps> {
             defaultLabel,
             inputValue,
             classNameLabel,
-            classNameInput,
             type,
             autoFocus,
-            onKeyPress,
+            readOnly,
+            id,
+            handleClick,
+            isDisabled,
         } = this.props;
 
         return (
             <React.Fragment>
-                <label className={classNameLabel}>
-                    {inputValue && (label || defaultLabel)}
-                </label>
-                <InputGroup>
-                    <FormControl
-                        value={inputValue}
-                        placeholder={placeholder}
-                        className={classNameInput}
-                    />
-                </InputGroup>
-                {/* type={type}
-                    value={inputValue}
-                    placeholder={placeholder}
-                    className={classNameInput}
-                    onFocus={this.props.handleFocusInput}
-                    onBlur={this.props.handleFocusInput}
-                    onChangeValue={this.props.handleChangeInput}
-                    autoFocus={autoFocus}
-                    onKeyPress={onKeyPress} */}
+                <div className="custom-input">
+                    <label className={classNameLabel}>
+                        {inputValue && (label || defaultLabel)}
+                    </label>
+                    <InputGroup size="lg">
+                        <FormControl
+                            size="lg"
+                            type={type}
+                            value={inputValue}
+                            placeholder={placeholder}
+                            autoFocus={autoFocus}
+                            onFocus={this.props.handleFocusInput}
+                            onBlur={this.props.handleFocusInput}
+                            onChange={e => this.handleChangeValue(e)}
+                            readOnly={readOnly}
+                            id={id}
+                            onClick={handleClick}
+                            disabled={isDisabled}
+                        />
+                    </InputGroup>
+                </div>
             </React.Fragment>
         );
+    }
+
+    private handleChangeValue = (e: OnChangeEvent) => {
+        this.props.handleChangeInput && this.props.handleChangeInput(e.target.value);
     }
 }
 

@@ -19,6 +19,7 @@
       &__option {
         background: var(--header);
       }
+
       &__options-group {
         width: 100%;
         height: calc(var(--big-gap) * 0.97);
@@ -26,10 +27,9 @@
       }
 
       &__label {
-        background: var(--email-form-bg);
-        position: absolute;
-        top: 0px;
+        margin-top: -9px;
       }
+
       &__input {
         input {
           color: var(--color-white);
@@ -37,12 +37,8 @@
           border: 1px solid var(--input-block-border-color);
           border-radius: calc(var(--gap) * 0.66);
         }
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
       }
+
       &__header {
         width: calc(var(--big-gap) * 6.3);
         height: calc(var(--gap) * 4.33);
@@ -54,6 +50,7 @@
         color: var(--placeholder-text);
         margin: calc(var(--gap) * 0.83);
       }
+
       &__cros-icon {
         position: absolute;
         display: inline-block;
@@ -63,6 +60,7 @@
         width: calc(var(--gap) * 2.5);
         cursor: pointer;
       }
+
       &__group--focused {
         .cr-email-form__label {
           color: var(--sign-in-accent);
@@ -71,9 +69,11 @@
           border-color: var(--sign-in-accent) !important;
         }
       }
+
       &__button-wrapper {
         min-height: calc(var(--gap) * 10);
       }
+
       &__button {
         color: var(--white);
         background: var(--button-primary);

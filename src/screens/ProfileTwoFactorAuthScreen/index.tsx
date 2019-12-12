@@ -192,10 +192,12 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
     private renderSecret = (secret: string) => {
         return (
             <fieldset onClick={this.doCopy}>
-                <legend>
-                    {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.mfa')}
-                </legend>
-                {secret && <CopyableTextField value={secret} fieldId="secret-2fa" />}
+                {secret && <CopyableTextField
+                                value={secret}
+                                fieldId="secret-2fa"
+                                label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.mfa')}
+                            />
+                }
             </fieldset>
         );
     };

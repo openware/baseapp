@@ -38,11 +38,6 @@ describe('DepositCrypto', () => {
         expect(text).toContain('text123');
     });
 
-    it('should contains right legend', () => {
-        const text = wrapper.find('.cr-deposit-crypto__copyable-title').text();
-        expect(text).toContain('Deposit by Wallet Address');
-    });
-
     it('should contains QRCode', () => {
         expect(wrapper.find('.qr-code-wrapper')).toBeTruthy();
     });
