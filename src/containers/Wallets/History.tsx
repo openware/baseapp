@@ -1,12 +1,11 @@
-import { Pagination } from '@openware/components';
 import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { History, WalletItemProps } from '../../components';
 import { Decimal } from '../../components/Decimal';
+import { History, WalletItemProps, Pagination } from '../../components';
 import { localeDate } from '../../helpers';
 import {
     currenciesFetch,
