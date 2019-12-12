@@ -1,4 +1,5 @@
-import { CryptoIcon, Decimal } from '@openware/components';
+import { CryptoIcon } from '@openware/components';
+import { Decimal } from '../Decimal';
 import * as React from 'react';
 
 export interface WalletItemProps {

@@ -1,4 +1,4 @@
-import { Decimal, Table } from '@openware/components';
+import { Table } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { incrementalOrderBook } from '../../../../api';
 import { SortAsc, SortDefault, SortDesc } from '../../../../assets/images/SortIcons';
+import { Decimal } from '../../../../components/Decimal';
 import {
     depthFetch,
     Market,

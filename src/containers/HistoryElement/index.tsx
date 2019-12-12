@@ -1,10 +1,11 @@
-import { Decimal, Loader, Pagination } from '@openware/components';
+import {  Loader, Pagination } from '@openware/components';
 import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
+import { Decimal } from '../../components/Decimal';
 import { History } from '../../components';
 import {
     localeDate,
