@@ -1,4 +1,4 @@
-import { TabPanel } from '@openware/components';
+import { TabPanel } from '../../components';
 import * as React from 'react';
 import { OrderForm } from '../';
 
