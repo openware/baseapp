@@ -66,7 +66,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
         const cx = classnames('cr-copyable-text-field', className);
         return (
             <div className={cx}>
-                <InputGroup className="cr-copyable-text-field__input">
+                <InputGroup>
                     <FormControl
                         id={String(fieldId)}
                         readOnly={true}

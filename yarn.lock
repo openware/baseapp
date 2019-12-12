@@ -3627,7 +3627,11 @@ cryptocoins-icons@^2.8.0:
 
 cryptocurrency-icons@^0.16.1:
   version "0.16.1"
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/cryptocurrency-icons/-/cryptocurrency-icons-0.16.1.tgz#33ec0b828c666f773b53866b4b803b2a06c28efc"
+=======
+  resolved "https://registry.npmjs.org/cryptocurrency-icons/-/cryptocurrency-icons-0.16.1.tgz#33ec0b828c666f773b53866b4b803b2a06c28efc"
+>>>>>>> Feature: replace use bootstrap input instead of openware input
   integrity sha512-C6y+r56g0ZJzZ9kCbeKa/WXb/oz1elilsaSGjv86T93P0oZWr4v5pxnbtZrEnvHn63qbTxo/Pz3NvzLbKrnQVQ==
 
 css-blank-pseudo@^0.1.4:

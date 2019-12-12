@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
+import { FormControl } from 'react-bootstrap';
 import { CopyableTextField, CopyableTextFieldProps } from './';
 
 
@@ -24,20 +25,8 @@ describe('CopyableTextField', () => {
 
     it('should render 1 input tag', () => {
         const wrapper = setup();
-        const input = wrapper.find('input');
+        const input = wrapper.find(FormControl);
         expect(input.length).toBe(1);
     });
 
-    it('should render 2 divs', () => {
-        const wrapper = setup();
-        const divs = wrapper.find('div');
-        // tslint:disable-next-line:no-magic-numbers
-        expect(divs.length).toBe(2);
-    });
-
-    it('should render correct className for input field', () => {
-        const wrapper = setup();
-        expect(wrapper.find('div').get(1).props.className)
-            .toContain('cr-copyable-text-field__input');
-    });
 });
