@@ -1,4 +1,4 @@
-import { QRCode } from '@openware/components';
+import { QRCode } from '../QRCode';
 import classnames from 'classnames';
 import * as React from 'react';
 import { CopyableTextField } from '../CopyableTextField';
