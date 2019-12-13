@@ -213,7 +213,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if (+available < (+amount * +price)) {
+        if ((+available < (+amount * +price) && order.side === 'buy') ||
+            (+available < +amount && order.side === 'sell')) {
             this.props.pushAlert({
                 message: [this.props.intl.formatMessage(
                     { id: 'error.order.create.available' },
