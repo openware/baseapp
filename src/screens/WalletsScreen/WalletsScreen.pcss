@@ -28,7 +28,12 @@
 
     .cr-crypto-icon {
       color: var(--white-color);
-      opacity: 0.5;
+      opacity: 1;
+
+      img {
+        width: 64px;
+        margin-right: calc(var(--gap) * 2);
+      }
     }
 
     .cr-wallet-list {
@@ -377,6 +382,11 @@
         &__icon-code {
             flex-grow: 1;
             margin-left: calc(var(--gap) * .6);
+            img {
+                width: 32px;
+                opacity: 0.5;
+                background: transparent;
+            }
         }
 
         &__amount-locked {
@@ -395,6 +405,12 @@
             .cr-wallet-item__icon-code {
                 background: transparent;
                 color: var(--wallet-item-active-color);
+
+                img {
+                    width: 32px;
+                    opacity: 1;
+                    background: transparent;
+                }
             }
         }
     }
