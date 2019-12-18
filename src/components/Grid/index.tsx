@@ -1,4 +1,4 @@
-import { GridItem, GridItemProps } from '@openware/components';
+import { GridItem, GridItemProps } from '../';
 import classnames from 'classnames';
 import * as React from 'react';
 
