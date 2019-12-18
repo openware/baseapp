@@ -1,4 +1,3 @@
-import { Input } from '@openware/components';
 import { Button } from 'react-bootstrap';
 import { History } from 'history';
 import * as React from 'react';
@@ -6,6 +5,7 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { CopyableTextField } from '../../components';
+import { CustomInput } from '../../components/CustomInput';
 import { setDocumentTitle } from '../../helpers';
 import { alertPush, RootState } from '../../modules';
 import {
@@ -154,15 +154,14 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                                 {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.4')}
                             </div>
                             <div className="col-12 col-md-4 col-sm-5">
-                                <fieldset className="pg-profile-two-factor-auth__body--input">
-                                    <Input
-                                        onChangeValue={this.handleOtpCodeChange}
-                                        type="tel"
-                                        value={otpCode}
-                                        placeholder={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
-                                        onKeyPress={this.handleEnterPress}
-                                    />
-                                </fieldset>
+                                <CustomInput
+                                    handleChangeInput={this.handleOtpCodeChange}
+                                    type="number"
+                                    label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
+                                    inputValue={otpCode}
+                                    placeholder={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
+                                    onKeyPress={this.handleEnterPress}
+                                />
                             </div>
                         </div>
                     </div>

@@ -24,28 +24,14 @@
       padding: calc(var(--gap) * 0.2);
       position: absolute;
       width: max-content;
+      z-index: 2;
+      padding: 0 calc(var(--gap) * 0.5);
     }
 
     .pg-copyable-text-field {
       &__input {
-        padding: 0 calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
+        padding: 0 calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
         border: none;
-
-        input {
-          box-sizing: border-box;
-          color: var(--placeholder-text);
-          background: transparent;
-        }
-
-        .cr-copyable-text-field__button {
-          background: var(--button-normal);
-          color: var(--white);
-          padding: 0;
-
-          &:hover {
-            background: var(--button-hover);
-          }
-        }
       }
     }
   }

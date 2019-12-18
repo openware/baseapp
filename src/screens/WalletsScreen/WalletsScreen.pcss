@@ -209,33 +209,16 @@
           margin-bottom: calc(var(--gap) * 1.83);
           position: relative;
           width: 100%;
+          margin-bottom: calc(var(--gap) * 3);
           .cr-withdraw__label {
             position: absolute;
-            top: 0px;
+            top: 0;
             left: calc(var(--gap) * 1.66);
             padding: calc(var(--gap) * 0.33) var(--gap);
             border-radius: calc(var(--gap) * 0.33);
             background: var(--estimated-value-background);
-          }
-          .cr-withdraw__input {
-            width: 100%;
-            margin-top: calc(var(--gap) * 1.33);
-            input {
-              color: var(--color-white);
-              width: 100%;
-              height: calc(var(--gap) * 8.33);
-              padding: 0 calc(var(--gap) * 1.66);
-              font-size: calc(var(--gap) * 2);
-              text-align: left;
-              border: 1px solid var(--placeholder-text);
-              -webkit-box-sizing: border-box;
-              box-sizing: border-box;
-              border-radius: calc(var(--gap) * 0.66)
-            }
-            input[type=number]::-webkit-inner-spin-button,
-            input[type=number]::-webkit-outer-spin-button {
-              cursor: pointer;
-            }
+            z-index: 5;
+            margin-top: calc(var(--gap) * (-2));
           }
         }
 
@@ -308,30 +291,27 @@
                         }
                     }
                 }
-                .cr-deposit-crypto__copyable-area {
-                    .cr-copyable-text-field__button {
-                        background: var(--button-disabled);
-                        color: var(--button-dark-gray);
-                        cursor: not-allowed;
-                        &:hover {
-                            background: var(--button-disabled);
-                            color: var(--button-dark-gray);
-                        }
-                    }
-                    .cr-copyable-text-field__input {
-                        input {
-                            &:focus,
-                            &:hover {
-                                outline: none;
-                                cursor: not-allowed;
-                            }
-                        }
-                        &:focus {
-                            outline: none;
-                        }
-                    }
-                }
+            }
+        }
+    }
+    .cr-copyable-text-field {
+        position: relative;
 
+        legend {
+            top: 0;
+            z-index: 1;
+            margin-top: -15px;
+            padding: 0 3px 0 3px;
+        }
+    }
+
+    .cr-deposit-crypto__copyable-area {
+        .input-group input {
+            height: 36px;
+            border-radius: 3px 0 0 3px;
+
+            &:hover {
+                cursor: not-allowed;
             }
         }
     }

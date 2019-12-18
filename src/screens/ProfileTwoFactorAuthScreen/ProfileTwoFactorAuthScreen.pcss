@@ -27,13 +27,20 @@
     fieldset {
       background: inherit;
       border-radius: calc(var(--gap) * 0.66);
-      border: 1px solid var(--copyable-field-border);
+      border: none;
       flex-grow: 1;
       width: 100%;
       overflow: hidden;
 
-      .cr-copyable-text-field {
-        padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+      legend {
+        position: absolute;
+        top: calc(var(--gap) * 4.5);
+        left: calc(var(--gap) * 8);
+        width: auto;
+        background: var(--main-bg);
+        padding: 0 var(--gap);
+        font-size: calc(var(--gap) * 2);
+        z-index: 2;
       }
 
       &:focus-within {
@@ -42,35 +49,6 @@
         border-radius: calc(var(--gap) * 0.66);
         legend {
           color: var(--color-blue) !important;
-        }
-      }
-
-      .cr-deposit-crypto__copyable-title {
-        background: var(--base-bright);
-        margin-top: calc(var(--gap) * -1.5);
-        position: absolute;
-        width: max-content;
-      }
-
-      .pg-copyable-text-field {
-        &__input {
-          padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
-          border: none;
-
-          input {
-            box-sizing: border-box;
-            color: var(--placeholder-text);
-            background: transparent;
-          }
-
-          .cr-copyable-text-field__button {
-            background: var(--button-normal);
-            color: var(--white);
-
-            &:hover {
-              background: var(--button-hover);
-            }
-          }
         }
       }
     }
@@ -164,6 +142,15 @@
         width: 100%;
       }
     }
+  }
+
+  label {
+    position: absolute;
+    top: 0;
+    left: calc(var(--gap) * 10);
+    margin-top: calc(var(--gap) * (-1.5));
+    z-index: 51;
+    background: var(--main-bg);
   }
 
   &__form {

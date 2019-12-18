@@ -1,4 +1,3 @@
-import { Input } from '@openware/components';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import {
@@ -6,6 +5,7 @@ import {
     InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
+import { CustomInput } from '../../components/CustomInput';
 
 type OnClearError = () => void;
 type OnSubmitChangePassword = (oldPassword: string, newPassword: string, confirmPassword: string) => void;
@@ -77,19 +77,21 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
             <div>
                 <div className="pg-change-password-form">
                     <div className="pg-change-password-form__group">
-                        <label className="pg-change-password-form__label">
-                            <FormattedMessage id="page.body.profile.header.account.content.password.old" />
-                        </label>
-                        <Input type="password" value={oldPassword} onChangeValue={this.handleOldPasswordChange} />
+                        <CustomInput
+                            type="password"
+                            label={this.translate('page.body.profile.header.account.content.password.old"')}
+                            placeholder={this.translate('page.body.profile.header.account.content.password.old"')}
+                            inputValue={oldPassword}
+                            handleChangeInput={this.handleOldPasswordChange}
+                        />
                     </div>
                     <div className="pg-change-password-form__group">
-                        <label className="pg-change-password-form__label">
-                            <FormattedMessage id="page.body.profile.header.account.content.password.new" />
-                        </label>
-                        <Input
+                        <CustomInput
                             type="password"
-                            value={newPassword}
-                            onChangeValue={this.handleNewPasswordChange}
+                            label={this.translate('page.body.profile.header.account.content.password.new')}
+                            placeholder={this.translate('page.body.profile.header.account.content.password.new')}
+                            inputValue={newPassword}
+                            handleChangeInput={this.handleNewPasswordChange}
                         />
                     </div>
                     <Button
@@ -109,6 +111,10 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
                 </div>
             </div>
         );
+    };
+
+    private translate = (id: string) => {
+        return id ? this.props.intl.formatMessage({ id }) : '';
     };
 
     private toggleShowForm = () => {

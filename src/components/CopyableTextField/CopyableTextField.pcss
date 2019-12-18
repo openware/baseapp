@@ -7,7 +7,7 @@
     background: inherit;
     border-radius: calc(var(--gap) * 0.66);
     flex-grow: 1;
-    padding: 0;
+    padding: 0 !important;
 
     legend {
         background: var(--background-dark);
@@ -17,25 +17,6 @@
         width: max-content;
     }
 
-    &__input {
-        display: flex;
-        flex-direction: row;
-        flex: 1;
-        color: var(--base-3);
-        background: var(--background-dark);
-        background: inherit;
-        padding: calc(var(--gap) * 1.67) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
-
-        input {
-            background: unset;
-            color: var(--table-text-color);
-        }
-    }
-
-    .cr-copyable-text-field {
-        padding: 0;
-    }
-
     input {
         width: 100%;
         border-radius: 0;
@@ -43,5 +24,6 @@
         color: var(--base-3);
         background: var(--background-dark);
         outline: none;
+        height: calc(var(--gap) * 6);
     }
 }

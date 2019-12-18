@@ -4,10 +4,10 @@ import * as React from 'react';
 export interface CustomInputProps {
     type: string;
     label: string;
-    defaultLabel: string;
+    defaultLabel?: string;
     handleChangeInput: (value: string) => void;
     inputValue: string;
-    handleFocusInput: () => void;
+    handleFocusInput?: () => void;
     classNameLabel?: string;
     classNameInput?: string;
     placeholder: string;
