@@ -1,7 +1,8 @@
-import { CryptoIcon, Decimal, Dropdown, OrderInput, PercentageButton } from '@openware/components';
+import { CryptoIcon,  Dropdown, OrderInput, PercentageButton } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
+import { Decimal } from '../Decimal';
 import { getAmount, getTotalPrice } from '../../helpers/getTotalPrice';
 import { OrderProps } from '../Order';
 

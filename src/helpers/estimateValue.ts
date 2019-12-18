@@ -1,5 +1,5 @@
 // eslint-disable
-import { Decimal } from '@openware/components';
+import { Decimal } from '../components/Decimal';
 import { WalletItemProps } from '../components/WalletItem';
 import { DEFAULT_CCY_PRECISION } from '../constants';
 import { Currency } from '../modules/public/currencies';

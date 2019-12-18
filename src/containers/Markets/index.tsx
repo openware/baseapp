@@ -1,4 +1,4 @@
-import { Decimal, Loader, Markets } from '@openware/components';
+import { Loader, Markets } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -20,6 +20,7 @@ import {
 } from '../../modules/public/markets';
 import { depthFetch } from '../../modules/public/orderBook';
 import { walletsFetch } from '../../modules/user/wallets';
+import { Decimal } from '../../components/Decimal';
 
 interface ReduxProps {
     userData: User;

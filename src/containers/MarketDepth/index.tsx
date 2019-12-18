@@ -1,4 +1,4 @@
-import { Decimal, MarketDepths } from '@openware/components';
+import { MarketDepths } from '@openware/components';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -9,6 +9,7 @@ import {
     selectDepthAsks,
     selectDepthBids,
 } from '../../modules';
+import { Decimal } from '../../components/Decimal';
 
 interface ReduxProps {
     asksItems: string[][];

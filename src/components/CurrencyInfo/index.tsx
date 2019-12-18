@@ -1,6 +1,6 @@
-import { Decimal } from '@openware/components';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Decimal } from '../Decimal';
 import { WalletItemProps } from '../WalletItem';
 
 export interface CurrencyInfoProps {

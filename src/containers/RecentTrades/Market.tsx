@@ -1,10 +1,11 @@
-import { Decimal, Table } from '@openware/components';
+import { Table } from '@openware/components';
 import * as React from 'react';
 import {
     InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { Decimal } from '../../components/Decimal';
 import { localeDate, setTradeColor } from '../../helpers';
 import {
     Market,
