@@ -1,5 +1,5 @@
-import { Alert } from '@openware/components';
 import * as React from 'react';
+import { Alert } from 'react-bootstrap';
 import FadeIn from 'react-fade-in';
 import {
     InjectedIntlProps,
@@ -38,7 +38,18 @@ class AlertComponent extends React.Component<Props> {
     public render() {
         return (
             <div className="pg-alerts">
-                {this.props.alerts.alerts.map(w => w.message.map((msg, index) => <FadeIn key={index}><div onClick={() => this.deleteAlertByIndex(index)}><Alert description={w.code && w.code.toString(10)} title={this.translate(msg)} type={w.type} /></div></FadeIn>))}
+                {this.props.alerts.alerts.map(w => w.message.map((msg, index) => (
+                    <FadeIn key={index}>
+                        <div onClick={() => this.deleteAlertByIndex(index)}>
+                            <Alert
+                                variant={w.type === 'error' ? 'danger' : w.type}
+                            >
+                                {this.translate(msg)}
+                                {w.code && ` ${w.code.toString(10)}`}
+                            </Alert>
+                        </div>
+                    </FadeIn>
+                )))}
             </div>
         );
     }
