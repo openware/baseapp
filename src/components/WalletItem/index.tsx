@@ -1,4 +1,4 @@
-import { CryptoIcon } from '@openware/components';
+import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
 import * as React from 'react';
 
