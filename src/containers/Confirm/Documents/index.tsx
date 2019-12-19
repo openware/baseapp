@@ -1,4 +1,4 @@
-import { Dropdown, Loader } from '@openware/components';
+import { Loader } from '@openware/components';
 import { Button } from 'react-bootstrap';
 import cr from 'classnames';
 import * as React from 'react';
@@ -7,6 +7,7 @@ import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { DropdownComponent } from '../../../components/Dropdown';
 import { formatDate } from '../../../helpers';
 import { isDateInFuture } from '../../../helpers/checkDate';
 import { alertPush, RootState } from '../../../modules';
@@ -105,13 +106,11 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                     <div className="pg-confirm__content-documents-col-row-content-label">
                                         {documentsType && this.translate('page.body.kyc.documentsType')}
                                     </div>
-                                    <Dropdown
+                                    <DropdownComponent
                                         className="pg-confirm__content-documents-col-row-content-number"
                                         list={this.data}
                                         placeholder={this.translate('page.body.kyc.documentsType')}
                                         onSelect={onSelect}
-                                        elemHeight={40}
-                                        listHeight={160}
                                     />
                                 </div>
                                 <fieldset className={idNumberFocusedClass}>

@@ -1,9 +1,10 @@
-import { Dropdown, PercentageButton } from '@openware/components';
+import { PercentageButton } from '@openware/components';
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { SinonSpy, spy } from 'sinon';
 import { OrderForm, OrderFormProps } from './';
+import { DropdownComponent } from '../Dropdown';
 
 // tslint:disable:no-magic-numbers
 type DropdownElem = number | string | React.ReactNode;
@@ -53,7 +54,7 @@ describe('OrderForm', () => {
 
     it('should render dropdown', () => {
         const wrapper = setup();
-        const dropdown = wrapper.find(Dropdown);
+        const dropdown = wrapper.find(DropdownComponent);
         expect(dropdown.at(0).props().list).toEqual(['Limit', 'Market']);
     });
 
