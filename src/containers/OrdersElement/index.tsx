@@ -61,7 +61,6 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
 
     public render() {
         const { type, list, fetching } = this.props;
-        // const fetching = true;
         let updateList = list;
 
         if (type === 'open') {

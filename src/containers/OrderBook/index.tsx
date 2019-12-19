@@ -78,7 +78,7 @@ class OrderBookContainer extends React.Component<Props, State> {
                 <div className={'cr-table-header__content'}>
                     {this.props.intl.formatMessage({id: 'page.body.trade.orderbook'})}
                 </div>
-                {orderBookLoading ? <div className="pg-combined-order-book-loading"><Spinner animation="border" variant="primary" /></div> : this.orderBook(sortBids(bids), sortAsks(asks))}
+                {orderBookLoading ? <div className="pg-combined-order-book-loader"><Spinner animation="border" variant="primary" /></div> : this.orderBook(sortBids(bids), sortAsks(asks))}
             </div>
         );
     }
