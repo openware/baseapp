@@ -1,4 +1,4 @@
-import { Loader } from '@openware/components';
+import { Spinner } from 'react-bootstrap';
 import classnames from 'classnames';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
@@ -60,6 +60,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
             'pg-open-orders--empty': !list.length,
             'pg-open-orders--loading': fetching,
         });
+
         return (
             <div className={classNames}>
                 <div className="cr-table-header__content">
@@ -72,7 +73,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
                         </span>
                     </div>
                 </div>
-                {fetching ? <div className="open-order-loading"><Loader /></div> : this.openOrders()}
+                {fetching ? <div className="open-order-loading"><Spinner animation="border" variant="primary" /></div> : this.openOrders()}
             </div>
         );
     }

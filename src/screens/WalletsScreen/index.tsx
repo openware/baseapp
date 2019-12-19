@@ -1,6 +1,5 @@
-import { Loader } from '@openware/components';
+import { Button, Spinner } from 'react-bootstrap';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -204,7 +203,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 <EstimatedValue wallets={wallets}/>
                 <div className="pg-container pg-wallet">
                     <div className="text-center">
-                        {walletsLoading && <Loader />}
+                        {walletsLoading && <Spinner animation="border" variant="primary" />}
                     </div>
                     <div className={`row no-gutters pg-wallet__tabs-content ${!historyList.length && 'pg-wallet__tabs-content-height'}`}>
                         <div className={`col-md-5 col-sm-12 col-12 ${mobileWalletChosen && 'd-none d-md-block'}`}>

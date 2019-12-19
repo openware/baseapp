@@ -1,4 +1,5 @@
-import { Loader, Markets } from '@openware/components';
+import { Markets } from '@openware/components';
+import { Spinner } from 'react-bootstrap';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -63,7 +64,7 @@ class MarketsContainer extends React.Component<Props> {
         });
         return (
             <div className={className}>
-                {marketsLoading ? <div><Loader /></div> : this.markets()}
+                {marketsLoading ? <div><Spinner animation="border" variant="primary" /></div> : this.markets()}
             </div>
         );
     }

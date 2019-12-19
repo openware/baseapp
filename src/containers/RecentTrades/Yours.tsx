@@ -1,4 +1,4 @@
-import { Loader } from '@openware/components';
+import { Spinner } from 'react-bootstrap';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -64,7 +64,7 @@ class YoursComponent extends React.Component<Props> {
 
         return (
             <div className={className}>
-                {fetching ? <Loader /> : this.renderContent()}
+                {fetching ? <div className="cr-tab-content-loading"><Spinner animation="border" variant="primary" /></div> : this.renderContent()}
             </div>
         );
     }

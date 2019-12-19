@@ -1,4 +1,4 @@
-import { Loader } from '@openware/components';
+import { Spinner } from 'react-bootstrap';
 import { History } from 'history';
 import * as React from 'react';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
@@ -58,7 +58,7 @@ export type LayoutProps = ReduxProps & DispatchProps & OwnProps;
 
 const renderLoader = () => (
     <div className="pg-loader-container">
-        <Loader />
+        <Spinner animation="border" variant="primary" />
     </div>
 );
 
@@ -158,7 +158,7 @@ class LayoutComponent extends React.Component<LayoutProps> {
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
-                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationScreen} />
                     <Route exact={true} path="/trading/:market?" component={TradingScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={HistoryScreen} />

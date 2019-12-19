@@ -1,4 +1,5 @@
-import { CloseButton, Loader } from '@openware/components';
+import { CloseButton } from '@openware/components';
+import { Spinner } from 'react-bootstrap';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
@@ -59,7 +60,8 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     }
 
     public render() {
-        const { fetching, type, list } = this.props;
+        const { type, list, fetching } = this.props;
+        // const fetching = true;
         let updateList = list;
 
         if (type === 'open') {
@@ -69,7 +71,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         const emptyMsg = this.props.intl.formatMessage({id: 'page.noDataToShow'});
         return (
             <div className={`pg-history-elem ${updateList.length ? '' : 'pg-history-elem-empty'}`}>
-                {fetching && <Loader />}
+                {fetching && <div className="text-center"><Spinner animation="border" variant="primary" /></div>}
                 {updateList.length ? this.renderContent(updateList) : null}
                 {!updateList.length && !fetching ? <p className="pg-history-elem__empty">{emptyMsg}</p> : null}
             </div>
