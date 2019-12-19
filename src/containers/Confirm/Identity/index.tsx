@@ -1,4 +1,3 @@
-import { Dropdown } from '@openware/components';
 import { Button } from 'react-bootstrap';
 import cr from 'classnames';
 import * as moment from 'moment';
@@ -6,6 +5,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { DropdownComponent } from '../../../components';
 import { formatDate, isDateInFuture } from '../../../helpers';
 import {
     editIdentity,
@@ -172,19 +172,19 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             <div className="pg-confirm__content-identity-forms">
                 <div className="pg-confirm__content-identity-col">
                     <div className="pg-confirm__content-identity-col-row">
-                      <fieldset className={firstNameGroupClass}>
-                          {firstName && <legend>{this.translate('page.body.kyc.identity.firstName')}</legend>}
-                              <input
-                                  className="pg-confirm__content-identity-col-row-content-number"
-                                  type="string"
-                                  placeholder={this.translate('page.body.kyc.identity.firstName')}
-                                  value={firstName}
-                                  onChange={this.handleChange('firstName')}
-                                  onFocus={this.handleFieldFocus('firstName')}
-                                  onBlur={this.handleFieldFocus('firstName')}
-                                  autoFocus={true}
-                              />
-                      </fieldset>
+                        <fieldset className={firstNameGroupClass}>
+                            {firstName && <legend>{this.translate('page.body.kyc.identity.firstName')}</legend>}
+                                <input
+                                    className="pg-confirm__content-identity-col-row-content-number"
+                                    type="string"
+                                    placeholder={this.translate('page.body.kyc.identity.firstName')}
+                                    value={firstName}
+                                    onChange={this.handleChange('firstName')}
+                                    onFocus={this.handleFieldFocus('firstName')}
+                                    onBlur={this.handleFieldFocus('firstName')}
+                                    autoFocus={true}
+                                />
+                        </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
                         <fieldset className={lastNameGroupClass}>
@@ -220,7 +220,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                             <div className="pg-confirm__content-identity-col-row-content-label">
                                 {metadata.nationality && this.translate('page.body.kyc.identity.nationality')}
                             </div>
-                            <Dropdown
+                            <DropdownComponent
                                 className="pg-confirm__content-documents-col-row-content-number"
                                 list={dataNationalities}
                                 onSelect={onSelectNationality}
@@ -249,7 +249,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                             <div className="pg-confirm__content-identity-col-row-content-label">
                                 {countryOfBirth && this.translate('page.body.kyc.identity.CoR')}
                             </div>
-                            <Dropdown
+                            <DropdownComponent
                                 className="pg-confirm__content-documents-col-row-content-number"
                                 list={dataCountries}
                                 onSelect={onSelectCountry}
