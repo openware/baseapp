@@ -1,4 +1,4 @@
-import { Dropdown, Loader } from '@openware/components';
+import { Loader } from '@openware/components';
 import { Button } from 'react-bootstrap';
 import cr from 'classnames';
 import * as React from 'react';
@@ -7,6 +7,7 @@ import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { Dropdown } from '../../../components/Dropdown';
 import { formatDate } from '../../../helpers';
 import { isDateInFuture } from '../../../helpers/checkDate';
 import { alertPush, RootState } from '../../../modules';

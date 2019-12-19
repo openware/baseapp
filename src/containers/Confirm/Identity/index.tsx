@@ -1,4 +1,3 @@
-import { Dropdown } from '@openware/components';
 import { Button } from 'react-bootstrap';
 import cr from 'classnames';
 import * as moment from 'moment';
@@ -6,6 +5,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { Dropdown } from '../../../components';
 import { formatDate, isDateInFuture } from '../../../helpers';
 import {
     editIdentity,
