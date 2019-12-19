@@ -36,28 +36,6 @@
             margin-top: calc(var(--gap) * -1.1);
         }
 
-        .cr-copyable-text-field {
-            &__input {
-                background: inherit;
-                padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
-
-                input {
-                    background: unset;
-                    color: var(--table-text-color);
-                }
-
-                .cr-copyable-text-field__button {
-                    background: var(--button-normal);
-                    color: var(--white);
-                    width: 28%;
-
-                    &:hover {
-                        background: var(--button-hover);
-                    }
-                }
-            }
-        }
-
         fieldset {
             border: 1px solid var(--copyable-field-border);
 
@@ -68,9 +46,14 @@
                 }
             }
 
-            .cr-copyable-text-field {
-                border: none;
+            .cr-copyable-text-field > .input-group {
+                border: 1px solid var(--copyable-field-border);
+                border-radius: 5px;
             }
+        }
+
+        .cr-copyable-text-field {
+            border: none;
         }
     }
 

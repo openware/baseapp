@@ -71,7 +71,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                         id={String(fieldId)}
                         readOnly={true}
                         value={value}
-                        type="textarea"
+                        type="text"
                         onClick={doCopy}
                         disabled={disabled}
                     />
