@@ -1,0 +1,25 @@
+td {
+  form {
+    .custom-control {
+      .custom-switch {
+        input {
+          top: 25px;
+        }
+      }
+
+      &-label {
+        &:before {
+          width: 2.75rem !important;
+          height: 1.5rem;
+          border-radius: 1rem !important;
+        }
+
+        &:after {
+          left: calc(-1.75rem + 2px);
+          width: calc(1.5rem - 4px) !important;
+          height: calc(1.5rem - 4px) !important;
+        }
+      }
+    }
+  }
+}

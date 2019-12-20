@@ -46,6 +46,27 @@
     bottom: 23px;
     left: 23px;
     box-sizing: border-box;
+
+    .custom-control {
+      &-label {
+        width: 100%;
+        font-size: calc(var(--gap) * 2.35);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        &:before {
+          width: 1.5rem;
+          height: 1.5rem;
+          margin-right: calc(var(--gap) * 3);
+        }
+
+        &:after {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+    }
   }
 
   & > * {
@@ -175,41 +196,6 @@
     &-signin {
       cursor: pointer;
       padding-left: 10px;
-    }
-  }
-
-  &__checkbox {
-    word-wrap: break-word;
-    background: transparent;
-    margin-left: 10px;
-
-    .cr-checkbox__checkitem {
-      border: 1px solid var(--placeholder-text);
-      border-radius: 4px;
-      background: transparent;
-
-      &::after {
-        border-color: var(--sign-up-checkbox-mark-color);
-      }
-    }
-
-    input:checked ~ .cr-checkbox__checkitem {
-      background-color: transparent;
-      vertical-align: middle;
-    }
-
-    .cr-checkbox__label {
-      background: transparent;
-      white-space: normal;
-      padding-top: 0;
-      position: relative;
-      left: 25px;
-      top: 5px;
-      font-style: normal;
-      font-weight: normal;
-      line-height: normal;
-      font-size: 12px;
-      color: var(--placeholder-text);;
     }
   }
 
