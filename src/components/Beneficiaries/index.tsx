@@ -11,17 +11,26 @@ import {
     RootState,
     selectBeneficiaries,
     selectBeneficiariesCreate,
+    selectMemberLevels,
+    selectUserInfo,
+    memberLevelsFetch,
+    MemberLevels,
+    User,
 } from '../../modules';
 import { BeneficiariesActivateModal } from './BeneficiariesActivateModal';
 import { BeneficiariesAddModal } from './BeneficiariesAddModal';
+import { BeneficiariesFailAddModal } from './BeneficiariesFailAddModal';
 
 interface ReduxProps {
     beneficiaries: Beneficiary[];
     beneficiariesAddData: Beneficiary;
+    memberLevels?: MemberLevels;
+    userData: User;
 }
 
 interface DispatchProps {
     deleteAddress: typeof beneficiariesDelete;
+    memberLevelsFetch: typeof memberLevelsFetch;
 }
 
 interface OwnProps {
@@ -36,6 +45,7 @@ interface State {
     isOpenConfirmationModal: boolean;
     isOpenDropdown: boolean;
     isOpenTip: boolean;
+    isOpenFailModal: boolean;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -60,16 +70,21 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             isOpenConfirmationModal: false,
             isOpenDropdown: false,
             isOpenTip: false,
+            isOpenFailModal: false,
         };
     }
 
     public componentDidMount() {
-        const { currency, beneficiaries } = this.props;
+        const { currency, beneficiaries, memberLevels } = this.props;
         if (currency && beneficiaries.length) {
             const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(beneficiaries, currency));
             if (filtredBeneficiaries.length) {
                 this.handleSetCurrentAddress(filtredBeneficiaries[0]);
             }
+        }
+
+        if (!memberLevels) {
+            this.props.memberLevelsFetch();
         }
     }
 
@@ -97,6 +112,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             currentWithdrawalBeneficiary,
             isOpenAddressModal,
             isOpenConfirmationModal,
+            isOpenFailModal,
         } = this.state;
         const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(beneficiaries, currency));
 
@@ -117,6 +133,9 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                         beneficiariesAddData={beneficiariesAddData}
                         handleToggleConfirmationModal={this.handleToggleConfirmationModal}
                     />
+                )}
+                {isOpenFailModal && (
+                    <BeneficiariesFailAddModal handleToggleFailModal={this.handleToggleFailModal} />
                 )}
             </div>
         );
@@ -306,7 +325,13 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     }
 
     private handleClickToggleAddAddressModal = () => () => {
-        this.handleToggleAddAddressModal();
+        const { memberLevels, userData } = this.props;
+
+        if (userData.level < memberLevels.withdraw.minimum_level) {
+            this.handleToggleFailModal();
+        } else {
+            this.handleToggleAddAddressModal();
+        }
     }
 
     private handleDeleteAddress = (item: Beneficiary) => {
@@ -354,6 +379,12 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         }));
     }
 
+    private handleToggleFailModal = () => {
+        this.setState(prevState => ({
+            isOpenFailModal: !prevState.isOpenFailModal,
+        }));
+    }
+
     private handleToggleDropdown = () => {
         this.setState(prevState => ({
             isOpenDropdown: !prevState.isOpenDropdown,
@@ -372,10 +403,13 @@ class BeneficiariesComponent extends React.Component<Props, State> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiaries: selectBeneficiaries(state),
     beneficiariesAddData: selectBeneficiariesCreate(state),
+    memberLevels: selectMemberLevels(state),
+    userData: selectUserInfo(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     deleteAddress: payload => dispatch(beneficiariesDelete(payload)),
+    memberLevelsFetch: () => dispatch(memberLevelsFetch()),
 });
 
 // tslint:disable-next-line:no-any

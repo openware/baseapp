@@ -47,6 +47,10 @@
     min-height: calc(var(--big-gap) * 12);
   }
 
+  .beneficiaries-fail-modal .cr-email-form {
+    min-height: calc(var(--big-gap) * 4);
+  }
+
   .beneficiaries-confirmation-modal .cr-email-form {
     min-height: calc(var(--big-gap) * 5.65);
   }
@@ -446,6 +450,23 @@
         .cr-email-form__input {
           background: var(--beneficiaries-primary-0-04);
         }
+      }
+    }
+  }
+
+  .beneficiaries-fail-modal {
+    .cr-email-form__form-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &__info {
+        align-items: center;
+        color: var(--color-white);
+        font-weight: normal;
+        font-size: 14px;
+        position: absolute;
+        top: 12px;
       }
     }
   }

@@ -156,6 +156,10 @@ export const en = {
     'page.body.wallets.beneficiaries.tipName': 'Name',
     'page.body.wallets.beneficiaries.tipDescription': 'Note',
 
+    'page.body.wallets.beneficiaries.failAddModal.header': 'Warning',
+    'page.body.wallets.beneficiaries.failAddModal.content': 'You need to confirm your account to add a beneficiary',
+    'page.body.wallets.beneficiaries.failAddModal.button': 'Confirm an account',
+
     'page.body.openOrders.tab.all': 'All',
     'page.body.openOrders.tab.open': 'Open',
     'page.body.openOrders.header.orderType': 'Order Type',

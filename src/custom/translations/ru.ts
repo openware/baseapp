@@ -155,6 +155,10 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.tipName': 'Name',
     'page.body.wallets.beneficiaries.tipDescription': 'Note',
 
+    'page.body.wallets.beneficiaries.failAddModal.header': 'Warning',
+    'page.body.wallets.beneficiaries.failAddModal.content': 'You need to confirm your account to add a beneficiary',
+    'page.body.wallets.beneficiaries.failAddModal.button': 'Confirm phone',
+
     'page.body.openOrders.tab.all': 'Все',
     'page.body.openOrders.tab.open': 'Открытые',
     'page.body.openOrders.header.orderType': 'Тип ордера',
