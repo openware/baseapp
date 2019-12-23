@@ -34,7 +34,7 @@ export interface DropdownComponentProps {
 
 interface DropdownComponentState {
     selected: string;
-    searchValue: string;
+    selectedIndex: string;
 }
 
 /**
@@ -47,7 +47,7 @@ class DropdownComponent extends React.Component<DropdownComponentProps & {}, Dro
         const selectedValue = this.props.placeholder || this.convertToString(this.props.list[0]);
         this.state = {
             selected: selectedValue,
-            searchValue:  '',
+            selectedIndex: '0',
         };
     }
 
@@ -63,25 +63,28 @@ class DropdownComponent extends React.Component<DropdownComponentProps & {}, Dro
                         {selected}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        {list.map(elem => this.renderElem(elem))}
+                        {list.map((elem, index) => this.renderElem(elem, index))}
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
         );
     }
 
-    private renderElem = (elem: DropdownElem) => {
+    private renderElem = (elem: DropdownElem, index: number) => {
         return  (<Dropdown.Item
-                    onSelect={ (eventKey: any, e?: React.SyntheticEvent<unknown>) => this.handleSelect(elem)}
+                    onSelect={ (eventKey: any, e?: React.SyntheticEvent<unknown>) => this.handleSelect(elem, index)}
                 >
                     {elem}
                 </Dropdown.Item>);
     }
 
-    private handleSelect = (elem: DropdownElem) => {
+    private handleSelect = (elem: DropdownElem, index: number) => {
+        this.props.onSelect && this.props.onSelect(index);
         this.setState({
             selected: this.convertToString(elem),
+            selectedIndex: index.toString(),
         });
+        window.console.log(this.state.selectedIndex);
     };
 
     private convertToString = (elem: DropdownElem) => {
