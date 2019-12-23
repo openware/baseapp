@@ -34,34 +34,35 @@ const getLayouts = () => {
     const margin = 6;
 
     const orderHeight = 21;
-    const minOrderBookHeight = 11;
+    const minOrderBookHeight = 21;
     const minRecentTradesHeight = 10;
-    const minTradingChartHeight = 12;
-    const minOpenOrdersHeight = 10;
-    const minMarketDepthsHeight = 10;
+    const minTradingChartHeight = 21;
+    const minOpenOrdersHeight = 7;
+    const minMarketDepthsHeight = 9;
     const minMarketsHeight = 10;
     const staticHeight = getStaticHeight() || 96;
 
-    const minGridHeight = gridUnitsToPixels(orderHeight, rowHeight, margin) +
-        gridUnitsToPixels(minOrderBookHeight, rowHeight, margin) + margin * 3;
+    const minGridHeight = gridUnitsToPixels(minTradingChartHeight, rowHeight, margin) +
+        gridUnitsToPixels(minMarketDepthsHeight, rowHeight, margin) +
+        gridUnitsToPixels(minOpenOrdersHeight, rowHeight, margin) + margin * 3;
     const gridHeight = Math.max(minGridHeight, window.innerHeight - staticHeight - margin * 3);
 
     const currentTradingChartHeight = pixelsToGridUnits(gridHeight - margin * 2 - gridUnitsToPixels(orderHeight, rowHeight, margin), rowHeight, margin);
-    const tradingChartHeight = gridHeight > minGridHeight ?
+    const tradingChartHeight = gridHeight >= minGridHeight ?
         currentTradingChartHeight + margin * 0.6 : Math.floor(Math.max(currentTradingChartHeight, minTradingChartHeight));
-    const openOrdersHeight = gridHeight > minGridHeight ?
+    const openOrdersHeight = gridHeight >= minGridHeight ?
         pixelsToGridUnits(gridHeight - gridUnitsToPixels(tradingChartHeight, rowHeight, margin) - gridUnitsToPixels(minMarketDepthsHeight, rowHeight, margin), rowHeight, margin) + 3 :
         minOpenOrdersHeight;
 
-    const orderBookHeight = gridHeight > minGridHeight ?
+    const orderBookHeight = gridHeight >= minGridHeight ?
         pixelsToGridUnits(gridHeight - margin, rowHeight, margin) + margin - 2 :
         minOrderBookHeight;
 
-    const recentTradesHeight = gridHeight > minGridHeight ?
+    const recentTradesHeight = gridHeight >= minGridHeight ?
         pixelsToGridUnits(gridHeight - margin, rowHeight, margin) + margin - 2 :
         minRecentTradesHeight;
 
-    const marketsHeight = gridHeight > minGridHeight ?
+    const marketsHeight = gridHeight >= minGridHeight ?
         pixelsToGridUnits(gridHeight - margin, rowHeight, margin) - orderHeight + margin - 2 :
         minMarketsHeight;
 
@@ -81,7 +82,7 @@ const getLayouts = () => {
             { x: 16, y: 0, w: 8, h: orderBookHeight, i: '3', minH: minOrderBookHeight, minW: 4, isDraggable: true },
             { x: 0, y: 40, w: 16, h: minMarketDepthsHeight, i: '4', minH: minMarketDepthsHeight, minW: 5, isDraggable: true },
             { x: 0, y: 60, w: 16, h: openOrdersHeight, i: '5', minH: minOpenOrdersHeight, minW: 5, isDraggable: true },
-            { x: 20, y: 36, w: 8, h: recentTradesHeight, i: '6', minH: minRecentTradesHeight, minW: 4, isDraggable: true },
+            { x: 0, y: 60, w: 16, h: recentTradesHeight, i: '6', minH: minRecentTradesHeight, minW: 4, isDraggable: true },
             { x: 20, y: 36, w: 8, h: marketsHeight, i: '7', minH: minMarketsHeight, minW: 4, isDraggable: true },
         ],
         sm: [
