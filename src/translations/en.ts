@@ -405,6 +405,9 @@ export const en = {
     'page.modal.withdraw.success.message.content': 'Your withdrawal request has been received',
     'page.modal.withdraw.success.button': 'OK',
 
+    'page.modal.expired.title': 'Your session has expired',
+    'page.modal.expired.submit': 'Log in again',
+
     // success messages
     'success.documents.accepted': 'Documents upload was successful',
     'success.identity.accepted': 'Identity upload was successful',

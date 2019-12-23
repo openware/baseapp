@@ -1,6 +1,8 @@
 import { shallow } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import * as React from 'react';
+import { IntlProvider } from 'react-intl';
+import * as messages from '../../translations/en';
 import { Layout, LayoutProps } from './';
 
 jest.mock('react-ga');
@@ -23,8 +25,18 @@ const defaults: LayoutProps = {
     history: createBrowserHistory(),
 };
 
+// tslint:disable: no-shadowed-variable
+const nodeWithIntlProp = ((node, { intl }) => {
+    return React.cloneElement(node, { intl });
+});
+
+const intlProvider = new IntlProvider({ locale: 'en', messages }, {});
+const { intl } = intlProvider.getChildContext();
+
 const setup = (props: Partial<LayoutProps> = {}) =>
-    shallow(<Layout {...{...defaults, ...props }} />);
+    shallow(nodeWithIntlProp(<Layout {...{ ...defaults, ...props }} />, { intl }), {
+    context: { intl },
+});
 
 describe('Layout component', () => {
     it('should render', () => {

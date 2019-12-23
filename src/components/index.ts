@@ -24,3 +24,4 @@ export * from './Table';
 export * from './OrderBook';
 export * from './CombinedOrderBook';
 export * from './Decimal';
+export * from './ExpiredSessionModal';
