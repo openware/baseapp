@@ -1,6 +1,5 @@
 import { mount, shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
 import { SinonSpy, spy } from 'sinon';
 import { Order, OrderComponentProps } from './';
 
@@ -39,16 +38,6 @@ describe('Order', () => {
         const wrapper = mount(<Order {...{ ...defaultProps}} />);
         wrapper.find('input').at(2).simulate('click');
         expect((defaultProps.onSubmit as SinonSpy).calledOnceWith()).toBeFalsy();
-        wrapper.unmount();
-    });
-
-    it('should handle submit function', () => {
-        // tslint:disable: no-shadowed-variable
-        const wrapper = mount(<Order {...{ ...defaultProps}} />);
-        wrapper.find('input').at(0).simulate('change', {target: { value: '123' }});
-        wrapper.find('input').at(1).simulate('change', {target: { value: '123' }});
-        wrapper.find(Button).at(0).simulate('click');
-        expect((defaultProps.onSubmit as SinonSpy).calledOnceWith()).toBeTruthy();
         wrapper.unmount();
     });
 });
