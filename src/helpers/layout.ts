@@ -39,6 +39,7 @@ const getLayouts = () => {
     const minTradingChartHeight = 12;
     const minOpenOrdersHeight = 10;
     const minMarketDepthsHeight = 10;
+    const minMarketsHeight = 10;
     const staticHeight = getStaticHeight() || 96;
 
     const minGridHeight = gridUnitsToPixels(orderHeight, rowHeight, margin) +
@@ -60,14 +61,19 @@ const getLayouts = () => {
         pixelsToGridUnits(gridHeight - margin, rowHeight, margin) + margin - 2 :
         minRecentTradesHeight;
 
+    const marketsHeight = gridHeight > minGridHeight ?
+        pixelsToGridUnits(gridHeight - margin, rowHeight, margin) - orderHeight + margin - 2 :
+        minMarketsHeight;
+
     return {
         lg: [
-            { x: 0, y: 0, w: 4, h: recentTradesHeight, i: '6', minH: minRecentTradesHeight, minW: 4, isDraggable: true },
+            { x: 20, y: 0, w: 4, h: orderHeight, i: '1', minH: orderHeight, maxH: orderHeight, minW: 4, isDraggable: true },
             { x: 4, y: 0, w: 12, h: tradingChartHeight, i: '2', minH: minTradingChartHeight, minW: 5, isDraggable: true },
             { x: 16, y: 0, w: 4, h: orderBookHeight, i: '3', minH: minOrderBookHeight, minW: 4, isDraggable: true },
-            { x: 20, y: 0, w: 4, h: orderHeight, i: '1', minH: orderHeight, maxH: orderHeight, minW: 4, isDraggable: true },
             { x: 4, y: 40, w: 12, h: minMarketDepthsHeight, i: '4', minH: minMarketDepthsHeight, minW: 5, isDraggable: true },
             { x: 4, y: 60, w: 12, h: openOrdersHeight, i: '5', minH: minOpenOrdersHeight, minW: 5, isDraggable: true },
+            { x: 0, y: 0, w: 4, h: recentTradesHeight, i: '6', minH: minRecentTradesHeight, minW: 4, isDraggable: true },
+            { x: 20, y: 40, w: 4, h: marketsHeight, i: '7', minH: minMarketsHeight, minW: 4, isDraggable: true },
         ],
         md: [
             { x: 16, y: 18, w: 8, h: orderHeight, i: '1', minH: orderHeight, maxH: orderHeight, minW: 4, isDraggable: true },
@@ -76,6 +82,7 @@ const getLayouts = () => {
             { x: 0, y: 40, w: 16, h: minMarketDepthsHeight, i: '4', minH: minMarketDepthsHeight, minW: 5, isDraggable: true },
             { x: 0, y: 60, w: 16, h: openOrdersHeight, i: '5', minH: minOpenOrdersHeight, minW: 5, isDraggable: true },
             { x: 20, y: 36, w: 8, h: recentTradesHeight, i: '6', minH: minRecentTradesHeight, minW: 4, isDraggable: true },
+            { x: 20, y: 36, w: 8, h: marketsHeight, i: '7', minH: minMarketsHeight, minW: 4, isDraggable: true },
         ],
         sm: [
             { x: 0, y: 12, w: 12, h: 22, i: '1', minH: 22, maxH: 22, minW: 5, isDraggable: false },
@@ -84,6 +91,7 @@ const getLayouts = () => {
             { x: 0, y: 94, w: 12, h: 12, i: '4', minH: 12, minW: 7, isDraggable: false },
             { x: 0, y: 82, w: 12, h: 20, i: '5', minH: 12, minW: 7, isDraggable: false },
             { x: 0, y: 106, w: 12, h: 20, i: '6', minH: 12, minW: 7, isDraggable: false },
+            { x: 0, y: 126, w: 12, h: 20, i: '7', minH: 12, minW: 7, isDraggable: false },
         ],
         ...customLayouts,
     };
