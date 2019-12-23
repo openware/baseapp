@@ -37,22 +37,24 @@ class CustomInput extends React.Component<Props> {
 
         return (
             <React.Fragment>
-                <label className={classNameLabel}>
-                    {inputValue && (label || defaultLabel)}
-                </label>
-                <InputGroup size="lg">
-                    <FormControl
-                        size="lg"
-                        type={type}
-                        value={inputValue}
-                        placeholder={placeholder}
-                        className={classNameInput}
-                        autoFocus={autoFocus}
-                        onFocus={this.props.handleFocusInput}
-                        onBlur={this.props.handleFocusInput}
-                        onChange={e => this.handleChangeValue(e)}
-                    />
-                </InputGroup>
+                <div className="custom-input-block">
+                    <label className={classNameLabel}>
+                        {inputValue && (label || defaultLabel)}
+                    </label>
+                    <InputGroup size="lg">
+                        <FormControl
+                            size="lg"
+                            type={type}
+                            value={inputValue}
+                            placeholder={placeholder}
+                            className={classNameInput}
+                            autoFocus={autoFocus}
+                            onFocus={this.props.handleFocusInput}
+                            onBlur={this.props.handleFocusInput}
+                            onChange={e => this.handleChangeValue(e)}
+                        />
+                    </InputGroup>
+                </div>
             </React.Fragment>
         );
     }
