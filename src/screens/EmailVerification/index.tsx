@@ -1,4 +1,4 @@
-import { Loader } from '@openware/components';
+import { Spinner } from 'react-bootstrap';
 import { History } from 'history';
 import * as React from 'react';
 import {
@@ -55,7 +55,7 @@ class EmailVerificationComponent extends React.Component<Props> {
                     <div className="pg-emailverification-body">
                         <div className="pg-emailverification-body-text">{text}</div>
                         <div className="pg-emailverification-body-container">
-                            {emailVerificationLoading ? <Loader /> : <button className="pg-emailverification-body-container-button" onClick={this.handleClick}>{button}</button>}
+                            {emailVerificationLoading ? <Spinner animation="border" variant="primary" /> : <button className="pg-emailverification-body-container-button" onClick={this.handleClick}>{button}</button>}
                         </div>
                     </div>
                 </div>

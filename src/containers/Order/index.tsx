@@ -1,4 +1,4 @@
-import { Loader } from '@openware/components';
+import { Spinner } from 'react-bootstrap';
 import * as React from 'react';
 import {
     FormattedMessage,
@@ -145,7 +145,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     width={this.state.width}
                     listenInputPrice={this.listenInputPrice}
                 />
-                {executeLoading && <Loader />}
+                {executeLoading && <div className="pg-order--loading"><Spinner animation="border" variant="primary" /></div>}
             </div>
         );
     }

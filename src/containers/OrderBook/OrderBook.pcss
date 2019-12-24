@@ -2,6 +2,14 @@
   height: 100%;
   overflow: hidden;
 
+  &-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-bottom: calc(var(--gap) * 4.5);
+  }
+
   &--no-data-first {
     .cr-order-book {
       &:first-child {
