@@ -1,7 +1,7 @@
-import { CellData } from '@openware/components';
 import { mount, shallow } from 'enzyme';
 import * as React from 'react';
 import { OpenOrders, OpenOrdersProps } from '.';
+import { CellData } from '../';
 
 const defaultProps: OpenOrdersProps = {
     data: [

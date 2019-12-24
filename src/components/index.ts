@@ -20,3 +20,5 @@ export * from './Grid';
 export * from './Beneficiaries';
 export * from './GridItem';
 export * from './Pagination';
+export * from './Table';
+export * from './Decimal';
