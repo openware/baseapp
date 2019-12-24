@@ -130,6 +130,9 @@ export interface OrderComponentProps {
      */
     listenInputPrice?: () => void;
 }
+interface State {
+    index: number;
+}
 
 const defaultOrderTypes: DropdownElem[] = [
     'Limit',
@@ -139,7 +142,12 @@ const defaultOrderTypes: DropdownElem[] = [
 const splitBorder = 449;
 const defaultWidth = 635;
 
-class Order extends React.PureComponent<OrderComponentProps> {
+
+class Order extends React.PureComponent<OrderComponentProps, State> {
+    public state = {
+        index: 0,
+    };
+
     public render() {
         const {
             width = defaultWidth,
@@ -153,6 +161,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         panels={this.getPanels()}
                         onTabChange={this.handleChangeTab}
                         tabIndex={this.props.tabIndex}
+                        currentTabIndex={this.state.index}
                     />
                 </div>
             );
@@ -372,6 +381,10 @@ class Order extends React.PureComponent<OrderComponentProps> {
         if (this.props.handleSendType && label) {
           this.props.handleSendType(index, label);
         }
+
+        this.setState({
+            index: index,
+        });
     }
 }
 
