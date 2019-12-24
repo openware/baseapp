@@ -222,7 +222,10 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         const diff = timeleft - now;
         const isTimeout = diff < 0;
         if (isTimeout && user.email) {
-            this.handleChangeExpSessionModalState();
+            if (user.state === 'active') {
+                this.handleChangeExpSessionModalState();
+            }
+
             this.props.logout();
         }
     };
