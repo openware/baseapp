@@ -47,19 +47,19 @@ class BeneficiariesFailAddModalComponent extends React.Component<Props> {
                     {this.translate('page.body.wallets.beneficiaries.failAddModal.content')}
                 </span>
                 <div className="cr-email-form__button-wrapper">
-                    <Button
-                        onClick={this.handleRedirectToKYC}
-                        size="lg"
-                        variant="primary"
-                    >
-                        {this.translate('page.body.wallets.beneficiaries.failAddModal.button')}
-                    </Button>
+                    <a href="/confirm">
+                        <Button
+                            size="lg"
+                            variant="primary"
+                            className="cr-email-form__button-wrapper__btn"
+                        >
+                            {this.translate('page.body.wallets.beneficiaries.failAddModal.button')}
+                        </Button>
+                    </a>
                 </div>
             </div>
         );
     };
-
-    private handleRedirectToKYC = () => this.props.history.push('/confirm');
 
     private translate = (id: string) => this.props.intl.formatMessage({ id });
 }
