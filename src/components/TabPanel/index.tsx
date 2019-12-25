@@ -46,7 +46,6 @@ export interface TabPanelProps {
     /**
      * Index of tab to switch on
      */
-    tabIndex?: number;
     /**
      * Current index of tab
      */
@@ -93,10 +92,9 @@ export class TabPanel extends React.Component<TabPanelProps> {
 
     private renderTabPanel = (tab: Tab, index: number) => {
         const { disabled, hidden, label } = tab;
-        const { tabIndex, currentTabIndex } = this.props;
-        const newCurrentTabIndex = tabIndex ? tabIndex : currentTabIndex;
+        const { currentTabIndex } = this.props;
 
-        const active = newCurrentTabIndex === index;
+        const active = currentTabIndex === index;
         const className = classnames('cr-tab', {
             'cr-tab__active': active,
             'cr-tab__disabled': disabled,
@@ -118,14 +116,13 @@ export class TabPanel extends React.Component<TabPanelProps> {
     };
 
     private renderTabContent = (tab: Tab, index: number) => {
-        const { hideMode, tabIndex, currentTabIndex } = this.props;
-        const newCurrentTabIndex = tabIndex ? tabIndex : currentTabIndex;
+        const { hideMode, currentTabIndex } = this.props;
 
         const className: string = classnames('cr-tab-content',
             {
                 'cr-tab-content__active':
                     hideMode === HideMode.hide ?
-                        newCurrentTabIndex === index : false,
+                        currentTabIndex === index : false,
             },
         );
 
