@@ -50,28 +50,19 @@ export interface TabPanelProps {
     /**
      * Current index of tab
      */
-    currentTabIndex?: number;
+    currentTabIndex: number;
     /**
      * Optinal JSX element to head
      */
     optionalHead?: React.ReactNode;
 }
 
-
-interface TabPanelState {
-    currentTab: number;
-}
-
 /**
  * Component for switching between different tabs on one page.
  */
-export class TabPanel extends React.Component<TabPanelProps, TabPanelState> {
+export class TabPanel extends React.Component<TabPanelProps> {
     public static defaultProps = {
         hideMode: HideMode.hide,
-    };
-
-    public state = {
-        currentTab: 0,
     };
 
     public render() {
@@ -103,7 +94,7 @@ export class TabPanel extends React.Component<TabPanelProps, TabPanelState> {
     private renderTabPanel = (tab: Tab, index: number) => {
         const { disabled, hidden, label } = tab;
         const { tabIndex, currentTabIndex } = this.props;
-        const newCurrentTabIndex = tabIndex ? tabIndex : currentTabIndex ? currentTabIndex : this.state.currentTab;
+        const newCurrentTabIndex = tabIndex ? tabIndex : currentTabIndex;
 
         const active = newCurrentTabIndex === index;
         const className = classnames('cr-tab', {
@@ -128,7 +119,7 @@ export class TabPanel extends React.Component<TabPanelProps, TabPanelState> {
 
     private renderTabContent = (tab: Tab, index: number) => {
         const { hideMode, tabIndex, currentTabIndex } = this.props;
-        const newCurrentTabIndex = tabIndex ? tabIndex : currentTabIndex ? currentTabIndex : this.state.currentTab;
+        const newCurrentTabIndex = tabIndex ? tabIndex : currentTabIndex;
 
         const className: string = classnames('cr-tab-content',
             {
