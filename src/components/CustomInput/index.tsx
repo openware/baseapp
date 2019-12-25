@@ -15,8 +15,8 @@ export interface CustomInputProps {
     onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
     readOnly?: boolean;
     id?: string;
-    handleClick?: ((event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void) | undefined;
-    isDisabled?: boolean | undefined;
+    handleClick?: ((event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void);
+    isDisabled?: boolean;
 }
 
 interface OnChangeEvent {
