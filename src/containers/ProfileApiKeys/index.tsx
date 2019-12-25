@@ -155,15 +155,17 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                     </div>
                 ),
                 (
-                    <Form>
-                        <Form.Check
-                            type="switch"
-                            id="apiKeyCheck"
-                            label=""
-                            onChange={() => this.handleToggleStateKeyClick(item)}
-                            checked={item.state === 'active'}
-                        />
-                    </Form>
+                    <div className="pg-profile-page__api-keys__status">
+                        <Form>
+                            <Form.Check
+                                type="switch"
+                                id="apiKeyCheck"
+                                label=""
+                                onChange={() => this.handleToggleStateKeyClick(item)}
+                                checked={item.state === 'active'}
+                            />
+                        </Form>
+                    </div>
                 )
                 ,
                 localeDate(item.created_at, 'fullDate'),
