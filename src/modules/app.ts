@@ -6,6 +6,7 @@ import { gridLayoutReducer } from './public/gridLayout/reducer';
 import { changeLanguageReducer  } from './public/i18n';
 import { klineReducer  } from './public/kline';
 import { marketsReducer } from './public/markets';
+import { memberLevelsReducer } from './public/memberLevels';
 import {
     depthReducer,
     incrementDepthReducer,
@@ -47,6 +48,7 @@ export const publicReducer = combineReducers({
     kline: klineReducer,
     alerts: alertReducer,
     rgl: gridLayoutReducer,
+    memberLevels: memberLevelsReducer,
 });
 
 export const userReducer = combineReducers({

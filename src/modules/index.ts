@@ -36,6 +36,7 @@ import { ProfileState, rootProfileSaga } from './user/profile';
 import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
+import { MemberLevelsState, rootMemberLevelsSaga } from './public/memberLevels';
 
 export * from './public/markets';
 export * from './public/orderBook';
@@ -59,6 +60,7 @@ export * from './user/newHistory';
 export * from './user/kyc';
 export * from './user/emailVerification';
 export * from './user/withdrawLimit';
+export * from './public/memberLevels';
 
 export interface RootState {
     public: {
@@ -74,6 +76,7 @@ export interface RootState {
         alerts: AlertState;
         kline: KlineState;
         rgl: GridLayoutState;
+        memberLevels: MemberLevelsState;
     };
     user: {
         auth: AuthState;
@@ -128,5 +131,6 @@ export function* rootSaga() {
         call(rootEmailVerificationSaga),
         call(rootKlineFetchSaga),
         call(rootWithdrawLimitSaga),
+        call(rootMemberLevelsSaga),
     ]);
 }
