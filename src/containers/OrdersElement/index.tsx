@@ -1,5 +1,4 @@
-import { CloseButton } from '@openware/components';
-import { Spinner } from 'react-bootstrap';
+import { CloseButton, Spinner } from 'react-bootstrap';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';

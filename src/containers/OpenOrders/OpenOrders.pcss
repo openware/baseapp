@@ -14,7 +14,6 @@
 
   .cr-table td:last-child {
     width: 3.5%;
-    padding: 0 !important;
   }
 
   .cr-table-header {
@@ -62,6 +61,13 @@
   width: auto !important;
   &:not(:first-child) {
     text-align: right;
+  }
+
+  &:last-child {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 }
 

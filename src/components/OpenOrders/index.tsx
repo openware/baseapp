@@ -1,6 +1,6 @@
-import { CloseButton } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
+import { CloseButton } from 'react-bootstrap';
 import { CellData, Table } from '../';
 
 export interface OpenOrdersProps {
