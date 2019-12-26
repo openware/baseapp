@@ -10,15 +10,17 @@
     margin-top: -8px;
   }
 
-  input {
+  input,
+  input:focus {
     background: var(--main-bg) !important;
+    color: var(--color-white);
   }
 
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
     border: 1px solid var(--base);
-    -webkit-text-fill-color: var(--base);
+    -webkit-text-fill-color: var(--color-white);
     -webkit-box-shadow: 0 0 0px 1000px var(--main-bg) inset;
     transition: background-color 5000s ease-in-out 0s;
   }

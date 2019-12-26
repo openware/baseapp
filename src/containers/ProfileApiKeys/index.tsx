@@ -264,7 +264,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                                   fieldId={'secret_key-id'}
                                   value={this.props.modal.apiKey.secret.data.value}
                                   copyButtonText={this.t('page.body.profile.content.copyLink')}
-                                    label={this.t('page.body.profile.apiKeys.modal.secret_key')}
+                                  label={this.t('page.body.profile.apiKeys.modal.secret_key')}
                                 />
                             </fieldset>
                         </div>

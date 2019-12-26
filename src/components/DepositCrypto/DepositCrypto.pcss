@@ -20,10 +20,14 @@
     }
 
     &__copyable {
-        margin-top: calc(var(--gap) * 2.5);
+        margin-top: calc(var(--gap) * 6);
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        .custom-input {
+            width: 80%;
+        }
 
         &-title {
             background-color: inherit;
@@ -69,7 +73,7 @@
             }
 
             .cr-copyable-text-field {
-                border: none;
+                border: 1px solid var(--base);
             }
         }
     }
