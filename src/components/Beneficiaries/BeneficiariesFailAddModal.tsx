@@ -16,50 +16,45 @@ class BeneficiariesFailAddModalComponent extends React.Component<Props> {
         return (
             <div className="cr-modal beneficiaries-fail-modal">
                 <div className="cr-email-form">
-                    {this.renderModalHeader()}
-                    {this.renderModalBody()}
+                    <this.ModalHeader/>
+                    <this.ModalBody/>
                 </div>
             </div>
         );
     }
 
-    private renderModalHeader = () => {
-        return (
-            <div className="cr-email-form__options-group">
-                <div className="cr-email-form__option">
-                    <div className="cr-email-form__option-inner">
-                        {this.translate('page.body.wallets.beneficiaries.failAddModal.header')}
-                        <span
-                            className="pg-profile-page__close pg-profile-page__pull-right"
-                            onClick={this.props.handleToggleFailModal}
-                        />
-                    </div>
+    public ModalHeader = () => (
+        <div className="cr-email-form__options-group">
+            <div className="cr-email-form__option">
+                <div className="cr-email-form__option-inner">
+                    {this.translate('page.body.wallets.beneficiaries.failAddModal.header')}
+                    <span
+                        className="pg-profile-page__close pg-profile-page__pull-right"
+                        onClick={this.props.handleToggleFailModal}
+                    />
                 </div>
             </div>
-        );
-    };
+        </div>
+    );
 
-
-    private renderModalBody = () => {
-        return (
-            <div className="cr-email-form__form-content">
-                <span className="cr-email-form__form-content__info">
-                    {this.translate('page.body.wallets.beneficiaries.failAddModal.content')}
-                </span>
-                <div className="cr-email-form__button-wrapper">
-                    <a href="/confirm">
-                        <Button
-                            size="lg"
-                            variant="primary"
-                            className="cr-email-form__button-wrapper__btn"
-                        >
-                            {this.translate('page.body.wallets.beneficiaries.failAddModal.button')}
-                        </Button>
-                    </a>
-                </div>
+    public ModalBody = () => (
+        <div className="cr-email-form__form-content">
+            <span className="cr-email-form__form-content__info">
+                {this.translate('page.body.wallets.beneficiaries.failAddModal.content')}
+            </span>
+            <div className="cr-email-form__button-wrapper">
+                <a href="/confirm">
+                    <Button
+                        size="lg"
+                        variant="primary"
+                        className="cr-email-form__button-wrapper__btn"
+                    >
+                        {this.translate('page.body.wallets.beneficiaries.failAddModal.button')}
+                    </Button>
+                </a>
             </div>
-        );
-    };
+        </div>
+    );
 
     private translate = (id: string) => this.props.intl.formatMessage({ id });
 }
