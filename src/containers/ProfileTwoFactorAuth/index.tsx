@@ -1,7 +1,7 @@
 /* tslint:disable jsx-no-multiline-js */
-import { Checkbox } from '@openware/components';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Form } from 'react-bootstrap';
 
 interface ProfileTwoFactorAuthProps {
     is2faEnabled?: boolean;
@@ -48,13 +48,15 @@ class ProfileTwoFactorAuthComponent extends React.Component<Props, ProfileTwoFac
                                   : <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.message.disable" />}
                     </span>
                 </label>
-                <Checkbox
-                    checked={is2faEnabled}
-                    className={'pg-profile-page__switch'}
-                    onChange={() => this.handleToggle2fa()}
-                    label={''}
-                    slider={true}
-                />
+                <Form>
+                    <Form.Check
+                        type="switch"
+                        id="2fa-switch"
+                        label=""
+                        onChange={this.handleToggle2fa}
+                        checked={is2faEnabled}
+                    />
+                </Form>
             </React.Fragment>
         );
     }

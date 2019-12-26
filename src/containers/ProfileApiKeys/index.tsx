@@ -1,7 +1,6 @@
-import { Checkbox } from '@openware/components';
 import cr from 'classnames';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -156,14 +155,16 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                     </div>
                 ),
                 (
-                    <div className="pg-profile-page__api-keys__state-checkbox">
-                        <Checkbox
-                            checked={item.state === 'active'}
-                            className={'pg-profile-page__switch'}
-                            onChange={() => this.handleToggleStateKeyClick(item)}
-                            label={''}
-                            slider={true}
-                        />
+                    <div className="pg-profile-page__api-keys__status">
+                        <Form>
+                            <Form.Check
+                                type="switch"
+                                id="apiKeyCheck"
+                                label=""
+                                onChange={this.handleToggleStateKeyClick(item)}
+                                checked={item.state === 'active'}
+                            />
+                        </Form>
                     </div>
                 )
                 ,
@@ -402,7 +403,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         this.props.toggleApiKeys2FAModal(payload);
     };
 
-    private handleToggleStateKeyClick = apiKey => {
+    private handleToggleStateKeyClick = apiKey => () => {
         const payload: ApiKeys2FAModal['payload'] = {active: true, action: 'updateKey', apiKey};
         this.props.toggleApiKeys2FAModal(payload);
     };
