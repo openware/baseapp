@@ -1,6 +1,7 @@
 import { Loader } from '@openware/components';
 import { History } from 'history';
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
@@ -35,6 +36,7 @@ import {
     VerificationScreen,
     WalletsScreen,
 } from '../../screens';
+import { ExpiredSessionModal } from '../../components';
 
 interface ReduxProps {
     colorTheme: string;
@@ -54,7 +56,11 @@ interface OwnProps {
     history: History;
 }
 
-export type LayoutProps = ReduxProps & DispatchProps & OwnProps;
+interface LayoutState {
+    isShownExpSessionModal: boolean;
+}
+
+export type LayoutProps = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
 
 const renderLoader = () => (
     <div className="pg-loader-container">
@@ -97,7 +103,7 @@ const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent,
     return <Route {...rest} render={renderCustomerComponent} />;
 };
 
-class LayoutComponent extends React.Component<LayoutProps> {
+class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     public static eventsListen = [
         'click',
         'keydown',
@@ -114,6 +120,10 @@ class LayoutComponent extends React.Component<LayoutProps> {
     constructor(props: LayoutProps) {
         super(props);
         this.initListener();
+
+        this.state = {
+            isShownExpSessionModal: false,
+        };
     }
 
     public componentDidMount() {
@@ -140,12 +150,15 @@ class LayoutComponent extends React.Component<LayoutProps> {
         clearInterval(this.walletsFetchInterval);
     }
 
+    public translate = (key: string) => this.props.intl.formatMessage({id: key});
+
     public render() {
         const {
             colorTheme,
             isLoggedIn,
             userLoading,
         } = this.props;
+        const { isShownExpSessionModal } = this.state;
 
         const tradingCls = window.location.pathname.includes('/trading') ? 'trading-layout' : '';
         toggleColorTheme(colorTheme);
@@ -169,6 +182,7 @@ class LayoutComponent extends React.Component<LayoutProps> {
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}
+                {isShownExpSessionModal && this.handleRenderExpiredSessionModal()}
             </div>
         );
     }
@@ -182,24 +196,24 @@ class LayoutComponent extends React.Component<LayoutProps> {
 
     private setLastAction = (lastAction: number) => {
         localStorage.setItem(STORE_KEY, lastAction.toString());
-    }
+    };
 
     private initListener = () => {
         this.reset();
         for (const type of LayoutComponent.eventsListen) {
             document.body.addEventListener(type, this.reset);
         }
-    }
+    };
 
     private reset = () => {
         this.setLastAction(Date.now());
-    }
+    };
 
     private initInterval = () => {
         this.timer = setInterval(() => {
             this.check();
         }, CHECK_INTERVAL);
-    }
+    };
 
     private check = () => {
         const { user } = this.props;
@@ -208,9 +222,34 @@ class LayoutComponent extends React.Component<LayoutProps> {
         const diff = timeleft - now;
         const isTimeout = diff < 0;
         if (isTimeout && user.email) {
+            if (user.state === 'active') {
+                this.handleChangeExpSessionModalState();
+            }
+
             this.props.logout();
         }
-    }
+    };
+
+    private handleSubmitExpSessionModal = () => {
+        const { history } = this.props;
+        this.handleChangeExpSessionModalState();
+        history.push('/signin');
+    };
+
+    private handleRenderExpiredSessionModal = () => (
+        <ExpiredSessionModal
+            title={this.translate('page.modal.expired.title')}
+            buttonLabel={this.translate('page.modal.expired.submit')}
+            handleChangeExpSessionModalState={this.handleChangeExpSessionModalState}
+            handleSubmitExpSessionModal={this.handleSubmitExpSessionModal}
+        />
+    );
+
+    private handleChangeExpSessionModalState = () => {
+        this.setState({
+            isShownExpSessionModal: !this.state.isShownExpSessionModal,
+        });
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
@@ -228,7 +267,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line no-any
-const Layout = withRouter(connect(mapStateToProps, mapDispatchToProps)(LayoutComponent) as any) as any;
+const Layout = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(LayoutComponent) as any) as any);
 
 export {
     Layout,
