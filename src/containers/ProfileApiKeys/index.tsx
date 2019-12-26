@@ -161,7 +161,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                                 type="switch"
                                 id="apiKeyCheck"
                                 label=""
-                                onChange={() => this.handleToggleStateKeyClick(item)}
+                                onChange={this.handleToggleStateKeyClick(item)}
                                 checked={item.state === 'active'}
                             />
                         </Form>
@@ -403,7 +403,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         this.props.toggleApiKeys2FAModal(payload);
     };
 
-    private handleToggleStateKeyClick = apiKey => {
+    private handleToggleStateKeyClick = apiKey => () => {
         const payload: ApiKeys2FAModal['payload'] = {active: true, action: 'updateKey', apiKey};
         this.props.toggleApiKeys2FAModal(payload);
     };
