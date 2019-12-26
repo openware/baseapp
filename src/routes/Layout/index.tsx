@@ -250,7 +250,6 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             isShownExpSessionModal: !this.state.isShownExpSessionModal,
         });
     };
-
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

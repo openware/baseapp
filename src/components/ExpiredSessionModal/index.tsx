@@ -10,10 +10,7 @@ export interface ExpiredSessionModalProps {
 
 export class ExpiredSessionModal extends React.Component<ExpiredSessionModalProps> {
     public render() {
-        const {
-            title,
-            buttonLabel,
-        } = this.props;
+        const { title, buttonLabel } = this.props;
 
         return (
             <div className="expired-session-modal">
