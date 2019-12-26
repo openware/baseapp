@@ -1,4 +1,4 @@
-import {TabPanel } from '@openware/components';
+import {TabPanel } from '../../components';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -75,6 +75,7 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
                 panels={this.renderTabs()}
                 onTabChange={this.handleMakeRequest}
                 optionalHead={this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades' })}
+                currentTabIndex={this.state.index}
             />
         ) :
         (
@@ -108,7 +109,10 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
         }
 
         this.props.resetHistory();
-        this.setState({ tab: this.tabMapping[index] });
+        this.setState({
+            tab: this.tabMapping[index],
+            index: index,
+        });
     };
 }
 

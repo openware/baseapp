@@ -1,4 +1,4 @@
-import { TabPanel } from '@openware/components';
+import { TabPanel } from '../../components';
 import * as React from 'react';
 import { OrderForm } from '../';
 
@@ -57,7 +57,6 @@ export interface OrderComponentProps {
     /**
      * Index of tab to switch on
      */
-    tabIndex?: number;
     /**
      * Precision of amount, total, available, fee value
      */
@@ -130,6 +129,9 @@ export interface OrderComponentProps {
      */
     listenInputPrice?: () => void;
 }
+interface State {
+    index: number;
+}
 
 const defaultOrderTypes: DropdownElem[] = [
     'Limit',
@@ -139,7 +141,12 @@ const defaultOrderTypes: DropdownElem[] = [
 const splitBorder = 449;
 const defaultWidth = 635;
 
-class Order extends React.PureComponent<OrderComponentProps> {
+
+class Order extends React.PureComponent<OrderComponentProps, State> {
+    public state = {
+        index: 0,
+    };
+
     public render() {
         const {
             width = defaultWidth,
@@ -152,7 +159,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         fixed={true}
                         panels={this.getPanels()}
                         onTabChange={this.handleChangeTab}
-                        tabIndex={this.props.tabIndex}
+                        currentTabIndex={this.state.index}
                     />
                 </div>
             );
@@ -165,7 +172,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         fixed={true}
                         panels={this.getPanelsBuy()}
                         onTabChange={this.handleChangeTab}
-                        tabIndex={this.props.tabIndex}
+                        currentTabIndex={this.state.index}
                     />
                 </div>
                 <div className="cr-order--extended__sell">
@@ -173,7 +180,7 @@ class Order extends React.PureComponent<OrderComponentProps> {
                         fixed={true}
                         panels={this.getPanelsSell()}
                         onTabChange={this.handleChangeTab}
-                        tabIndex={this.props.tabIndex}
+                        currentTabIndex={this.state.index}
                     />
                 </div>
             </div>
@@ -372,6 +379,10 @@ class Order extends React.PureComponent<OrderComponentProps> {
         if (this.props.handleSendType && label) {
           this.props.handleSendType(index, label);
         }
+
+        this.setState({
+            index: index,
+        });
     }
 }
 
