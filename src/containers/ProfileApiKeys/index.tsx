@@ -239,12 +239,12 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                     <div className="cr-success-create">
                         <div className="pg-copyable-text__section">
                             <fieldset onClick={() => this.handleCopy('access-key-id', 'access')}>
-                                <legend><span>{this.t('page.body.profile.apiKeys.modal.access_key')}</span></legend>
                                 <CopyableTextField
                                   className="pg-copyable-text-field__input"
                                   fieldId={'access-key-id'}
                                   value={this.props.modal.apiKey.kid}
                                   copyButtonText={this.t('page.body.profile.content.copyLink')}
+                                  label={this.t('page.body.profile.apiKeys.modal.access_key')}
                                 />
                             </fieldset>
                         </div>
@@ -259,12 +259,12 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         </div>
                         <div className="pg-copyable-text__section">
                             <fieldset onClick={() => this.handleCopy('secret-key-id', 'secret')}>
-                                <legend><span>{this.t('page.body.profile.apiKeys.modal.secret_key')}</span></legend>
                                 <CopyableTextField
                                   className="pg-copyable-text-field__input"
                                   fieldId={'secret_key-id'}
                                   value={this.props.modal.apiKey.secret.data.value}
                                   copyButtonText={this.t('page.body.profile.content.copyLink')}
+                                  label={this.t('page.body.profile.apiKeys.modal.secret_key')}
                                 />
                             </fieldset>
                         </div>

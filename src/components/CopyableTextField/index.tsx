@@ -1,7 +1,8 @@
 import '@openware/cryptofont';
 import classnames from 'classnames';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, InputGroup } from 'react-bootstrap';
+import { CustomInput } from '../';
 
 
 export interface CopyableTextFieldProps {
@@ -28,6 +29,7 @@ export interface CopyableTextFieldProps {
      * If true, Button will be disabled.
      */
     disabled?: boolean;
+    label?: string;
 }
 
 type CopyTypes = HTMLInputElement | null;
@@ -61,29 +63,35 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
             disabled,
             fieldId,
             copyButtonText,
+            label,
         } = this.props;
         const doCopy = () => copy(fieldId);
         const cx = classnames('cr-copyable-text-field', className);
         return (
             <div className={cx}>
-                <div className="cr-copyable-text-field__input">
-                    <input
+                <InputGroup>
+                    <CustomInput
                         id={String(fieldId)}
                         readOnly={true}
+                        inputValue={value}
+                        handleClick={doCopy}
                         type="text"
-                        value={value}
-                        onClick={doCopy}
-                        disabled={disabled}
+                        isDisabled={disabled}
+                        label={label || ''}
+                        defaultLabel={label || ''}
+                        placeholder={label || ''}
                     />
-                    <Button
-                        onClick={doCopy}
-                        disabled={disabled}
-                        size="lg"
-                        variant="primary"
-                    >
-                        {copyButtonText ? copyButtonText : 'Copy'}
-                    </Button>
-                </div>
+                    <InputGroup.Append>
+                        <Button
+                            onClick={doCopy}
+                            disabled={disabled}
+                            size="lg"
+                            variant="primary"
+                        >
+                            {copyButtonText ? copyButtonText : 'Copy'}
+                        </Button>
+                    </InputGroup.Append>
+                </InputGroup>
             </div>
         );
     }

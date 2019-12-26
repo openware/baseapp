@@ -81,46 +81,18 @@
     background: transparent;
     margin-bottom: 20px;
     position: relative;
+
+    .custom-input {
+      label {
+        margin-top: -1px;
+      }
+    }
   }
 
   &__error {
     background: transparent;
     margin-top: 5px;
     color: var(--color-red);
-  }
-
-  &__label {
-    position: relative;
-    top: 7px;
-    left: 10px;
-    padding: 2px 6px;
-    border-radius: 2px;
-    background: var(--main-bg);
-    color: var(--sign-in-label-color);
-  }
-
-  &__group--focused {
-    .cr-sign-up-form__label {
-      color: var(--accent);
-    }
-
-    input {
-      border: 1px solid var(--accent) !important;
-    }
-  }
-
-  &__image {
-    display: block;
-    width: 50%;
-    height: 100px;
-    margin: 0 auto 20px auto;
-  }
-
-  &__title {
-    color: var(--sign-in-label-color);
-    margin: 119px 0 60px 0;
-    font-size: 18px;
-    text-align: center;
   }
 
   &__error-message {

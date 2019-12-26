@@ -536,23 +536,24 @@
           }
 
           .cr-copyable-text-field {
-            padding: 0 0 9px 2px;
+            padding: 9px 2px;
             border: none;
 
-            &__input {
-              border: none;
-              input {
-                color: var(--color-white);
+            .input-group {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+
+              .custom-input {
+                width: 70%;
+
+                label {
+                  margin-top: -18px;
+                }
               }
 
-              .cr-copyable-text-field__button {
-                background: var(--button-normal);
-                color: var(--white);
-                width: calc(var(--gap) * 10);
-
-                &:hover {
-                  background: var(--button-hover);
-                }
+              .btn-primary {
+                border-radius: .3rem;
               }
             }
           }

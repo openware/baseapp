@@ -1,5 +1,4 @@
 // tslint:disable:jsx-no-lambda
-import { Input } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
@@ -109,17 +108,14 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                     </div>
                     <div className="cr-withdraw__divider cr-withdraw__divider-one" />
                     <div className={withdrawAmountClass}>
-                        <label className="cr-withdraw__label">
-                            {(Number(amount) !== 0 && amount) && (withdrawAmountLabel || 'Withdrawal Amount')}
-                        </label>
-                        <Input
+                        <CustomInput
                             type="number"
-                            value={amount}
+                            label={withdrawAmountLabel || 'Withdrawal Amount'}
+                            defaultLabel="Withdrawal Amount"
+                            inputValue={amount}
                             placeholder={withdrawAmountLabel || 'Amount'}
-                            className="cr-withdraw__input"
-                            onFocus={() => this.handleFieldFocus('amount')}
-                            onBlur={() => this.handleFieldFocus('amount')}
-                            onChangeValue={this.handleChangeInputAmount}
+                            classNameInput="cr-withdraw__input"
+                            handleChangeInput={this.handleChangeInputAmount}
                         />
                     </div>
                     <div className={lastDividerClassName} />
