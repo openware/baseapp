@@ -1,11 +1,10 @@
-import { Input } from '@openware/components';
 import { Button } from 'react-bootstrap';
 import { History } from 'history';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { CopyableTextField } from '../../components';
+import { CustomInput, CopyableTextField } from '../../components';
 import { setDocumentTitle } from '../../helpers';
 import { alertPush, RootState } from '../../modules';
 import {
@@ -155,12 +154,14 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                             </div>
                             <div className="col-12 col-md-4 col-sm-5">
                                 <fieldset className="pg-profile-two-factor-auth__body--input">
-                                    <Input
-                                        onChangeValue={this.handleOtpCodeChange}
+                                    <CustomInput
+                                        handleChangeInput={this.handleOtpCodeChange}
                                         type="tel"
-                                        value={otpCode}
+                                        inputValue={otpCode}
                                         placeholder={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
                                         onKeyPress={this.handleEnterPress}
+                                        label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
+                                        defaultLabel=""
                                     />
                                 </fieldset>
                             </div>

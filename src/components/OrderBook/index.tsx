@@ -1,5 +1,5 @@
-import { CellData, Table } from '@openware/components';
 import * as React from 'react';
+import { CellData, Table } from '../Table';
 
 export interface OrderBookProps {
     /**

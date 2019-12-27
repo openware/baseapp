@@ -1,4 +1,3 @@
-// import { Decimal, Markets } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import { connect } from 'react-redux';
