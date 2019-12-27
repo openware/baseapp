@@ -16,6 +16,12 @@
         width: 100%;
     }
 
+    .dropdown-toggle {
+        text-align: left;
+        font-size: calc(var(--gap) * 2);
+        padding-left: calc(var(--gap) * 2);
+    }
+
     &__dropdown__label {
         background-color: inherit;
         margin-left: calc(var(--gap) * 2);
@@ -23,17 +29,6 @@
         position: absolute;
         top: calc(var(--gap) * -1.3);
         z-index: 1;
-    }
-
-    .cr-dropdown {
-        &__input-label {
-            margin-left: calc(var(--gap) * 2);
-        }
-
-        &__list {
-            margin-top: calc(var(--gap) * 5.2);
-            width: calc(100% - 2px);
-        }
     }
 
     &--compact {

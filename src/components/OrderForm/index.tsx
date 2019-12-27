@@ -1,9 +1,10 @@
-import { CryptoIcon,  Dropdown, OrderInput, PercentageButton } from '@openware/components';
+import { CryptoIcon, OrderInput, PercentageButton } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { Decimal } from '../Decimal';
 import { getAmount, getTotalPrice } from '../../helpers/getTotalPrice';
+import { DropdownComponent } from '../Dropdown';
 import { OrderProps } from '../Order';
 
 // tslint:disable:no-magic-numbers jsx-no-lambda jsx-no-multiline-js
@@ -214,7 +215,7 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             <div className={cx}>
                 <div className="cr-order-item">
                     {orderTypeText ? <div className="cr-order-item__dropdown__label">{orderTypeText}</div> : null}
-                    <Dropdown list={orderTypes} onSelect={this.handleOrderTypeChange}/>
+                    <DropdownComponent list={orderTypes} onSelect={this.handleOrderTypeChange} placeholder=""/>
                 </div>
                 {orderType === 'Limit' ? (
                     <div className="cr-order-item">
