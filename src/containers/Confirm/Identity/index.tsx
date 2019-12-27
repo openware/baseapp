@@ -221,7 +221,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 {metadata.nationality && this.translate('page.body.kyc.identity.nationality')}
                             </div>
                             <DropdownComponent
-                                className="pg-confirm__content-documents-col-row-content-number"
+                                className="pg-confirm__content-identity-col-row-content-number-dropdown"
                                 list={dataNationalities}
                                 onSelect={onSelectNationality}
                                 placeholder={this.translate('page.body.kyc.identity.nationality')}
@@ -250,7 +250,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 {countryOfBirth && this.translate('page.body.kyc.identity.CoR')}
                             </div>
                             <DropdownComponent
-                                className="pg-confirm__content-documents-col-row-content-number"
+                                className="pg-confirm__content-identity-col-row-content-number-dropdown"
                                 list={dataCountries}
                                 onSelect={onSelectCountry}
                                 placeholder={this.translate('page.body.kyc.identity.CoR')}
