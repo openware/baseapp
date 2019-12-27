@@ -1,6 +1,8 @@
 const JavaScriptObfuscator = require('webpack-obfuscator');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
+const UglifyPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = function override(config, env) {
     if (!config.plugins) {
@@ -34,6 +36,14 @@ module.exports = function override(config, env) {
                 threshold: 10240,
                 minRatio: 0.8
             })
+        );
+
+        config.plugins.push(
+            new UglifyPlugin()
+        );
+
+        config.plugins.push(
+            new OptimizeCSSAssetsPlugin({})
         );
     }
 
