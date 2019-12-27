@@ -1,4 +1,4 @@
-import { PercentageButton } from '@openware/components';
+import { PercentageButton } from '../PercentageButton';
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';

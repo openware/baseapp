@@ -1,4 +1,6 @@
-import { CryptoIcon, OrderInput, PercentageButton } from '@openware/components';
+import { CryptoIcon } from '../CryptoIcon';
+import { OrderInput } from '../OrderInput';
+import { PercentageButton } from '../PercentageButton';
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
