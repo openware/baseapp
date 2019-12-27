@@ -109,7 +109,7 @@
           left: 5%;
           width: auto;
           padding: 0 calc(var(--gap) * 0.5);
-          font-size: calc(var(--gap) * 2.5);
+          font-size: calc(var(--gap) * 2);
         }
 
         input {
@@ -120,9 +120,19 @@
           bottom: 0;
           font-size: calc(var(--gap) * 2);
           margin-top: calc(var(--gap) * 2);
+          margin-left: calc(var(--gap) * 1.2);
 
           &::placeholder {
             color: var(--text-muted);
+          }
+        }
+
+        .custom-input {
+          height: 100%;
+          padding-left: calc(var(--gap) * 1.2);
+
+          input {
+            margin-left: 0;
           }
         }
 
