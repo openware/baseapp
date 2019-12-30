@@ -70,11 +70,14 @@ class DropdownComponent extends React.Component<DropdownComponentProps & {}, Dro
     }
 
     private renderElem = (elem: DropdownElem, index: number) => {
-        return  (<Dropdown.Item
-                    onSelect={ (eventKey: any, e?: React.SyntheticEvent<unknown>) => this.handleSelect(elem, index)}
-                >
-                    {elem}
-                </Dropdown.Item>);
+        return  (
+            <Dropdown.Item
+                key={index}
+                onSelect={ (eventKey: any, e?: React.SyntheticEvent<unknown>) => this.handleSelect(elem, index)}
+            >
+                {elem}
+            </Dropdown.Item>
+        );
     }
 
     private handleSelect = (elem: DropdownElem, index: number) => {

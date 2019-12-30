@@ -177,7 +177,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 type="string"
                                 inputValue={firstName}
                                 placeholder={this.translate('page.body.kyc.identity.firstName')}
-                                handleChangeInput={this.handleChange}
+                                handleChangeInput={e => this.handleChange(e, 'firstName')}
                                 autoFocus={true}
                                 label={firstName ? this.translate('page.body.kyc.identity.firstName') : ''}
                                 defaultLabel={firstName ? this.translate('page.body.kyc.identity.firstName') : ''}
@@ -189,7 +189,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                             <CustomInput
                                 type="string"
                                 inputValue={lastName}
-                                handleChangeInput={this.handleChange}
+                                handleChangeInput={e => this.handleChange(e, 'lastName')}
                                 placeholder={this.translate('page.body.kyc.identity.lastName')}
                                 label={lastName ? this.translate('page.body.kyc.identity.lastName') : ''}
                                 defaultLabel={lastName ? this.translate('page.body.kyc.identity.lastName') : ''}
@@ -234,7 +234,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 placeholder={this.translate('page.body.kyc.identity.residentialAddress')}
                                 label={residentialAddress ? this.translate('page.body.kyc.identity.residentialAddress') : ''}
                                 defaultLabel={residentialAddress ? this.translate('page.body.kyc.identity.residentialAddress') : ''}
-                                handleChangeInput={this.handleChange}
+                                handleChangeInput={e => this.handleChange(e, 'residentialAddress')}
                             />
                         </fieldset>
                     </div>
@@ -256,7 +256,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                             <CustomInput
                                 type="string"
                                 inputValue={city}
-                                handleChangeInput={this.handleChange}
+                                handleChangeInput={e => this.handleChange(e, 'city')}
                                 placeholder={this.translate('page.body.kyc.identity.city')}
                                 label={city ? this.translate('page.body.kyc.identity.city') : ''}
                                 defaultLabel={city ? this.translate('page.body.kyc.identity.city') : ''}
@@ -270,7 +270,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 defaultLabel={postcode ? this.translate('page.body.kyc.identity.postcode') : ''}
                                 type="string"
                                 inputValue={postcode}
-                                handleChangeInput={this.handleChange}
+                                handleChangeInput={e => this.handleChange(e, 'postcode')}
                                 onKeyPress={this.handleConfirmEnterPress}
                                 placeholder={this.translate('page.body.kyc.identity.postcode')}
                             />
@@ -347,13 +347,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         };
     }
 
-    private handleChange = (key: string) => {
-        return (e: OnChangeEvent) => {
+    private handleChange = (value: string, key: string) => {
             // @ts-ignore
             this.setState({
-                [key]: e,
+                [key]: value,
             });
-        };
     };
 
     private handleConfirmEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
