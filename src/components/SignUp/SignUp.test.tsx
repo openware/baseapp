@@ -11,7 +11,7 @@ const defaults: SignUpFormProps = {
     password: '',
     email: '',
     confirmPassword: '',
-    recaptcha_response: '',
+    captcha_response: '',
     recaptchaConfirmed: false,
     recaptchaOnChange: jest.fn(),
     handleChangeEmail: jest.fn(),

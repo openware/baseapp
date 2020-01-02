@@ -40,8 +40,8 @@ export interface SignUpFetch {
     payload: {
         email: string;
         password: string;
-        recaptcha_response?: string;
-        refId?: string;
+        captcha_response?: string;
+        refid?: string;
     };
 }
 

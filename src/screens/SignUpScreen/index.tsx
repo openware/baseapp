@@ -56,7 +56,7 @@ class SignUp extends React.Component<Props> {
         email: '',
         password: '',
         confirmPassword: '',
-        recaptcha_response: '',
+        captcha_response: '',
         recaptchaConfirmed: false,
         refId: '',
         hasConfirmed: false,
@@ -102,7 +102,7 @@ class SignUp extends React.Component<Props> {
             password,
             confirmPassword,
             refId,
-            recaptcha_response,
+            captcha_response,
             recaptchaConfirmed,
             hasConfirmed,
             emailError,
@@ -143,7 +143,7 @@ class SignUp extends React.Component<Props> {
                         confirmPassword={confirmPassword}
                         handleChangeConfirmPassword={this.handleChangeConfirmPassword}
                         recaptchaConfirmed={recaptchaConfirmed}
-                        recaptcha_response={recaptcha_response}
+                        captcha_response={captcha_response}
                         recaptchaOnChange={this.onChange}
                         hasConfirmed={hasConfirmed}
                         clickCheckBox={this.handleCheckboxClick}
@@ -182,7 +182,7 @@ class SignUp extends React.Component<Props> {
     private onChange = (value: string) => {
         this.setState({
             recaptchaConfirmed: true,
-            recaptcha_response: value,
+            captcha_response: value,
         });
     };
 
@@ -248,7 +248,7 @@ class SignUp extends React.Component<Props> {
         const {
             email,
             password,
-            recaptcha_response,
+            captcha_response,
             refId,
         } = this.state;
 
@@ -270,7 +270,7 @@ class SignUp extends React.Component<Props> {
                     this.props.signUp({
                         email,
                         password,
-                        recaptcha_response,
+                        captcha_response,
                         refid: refId,
                     });
                     this.clearFields();
@@ -279,7 +279,7 @@ class SignUp extends React.Component<Props> {
                     this.props.signUp({
                         email,
                         password,
-                        recaptcha_response,
+                        captcha_response,
                         refid: refId,
                         lang: i18n.toUpperCase(),
                     });
@@ -301,7 +301,7 @@ class SignUp extends React.Component<Props> {
                     this.props.signUp({
                         email,
                         password,
-                        recaptcha_response,
+                        captcha_response,
                         lang: i18n.toUpperCase(),
                     });
                     this.clearFields();
