@@ -1,4 +1,4 @@
-import { Markets } from '@openware/components';
+import { Markets } from '../../components/Markets';
 import { Spinner } from 'react-bootstrap';
 import classnames from 'classnames';
 import * as React from 'react';

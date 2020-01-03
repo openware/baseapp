@@ -6,11 +6,11 @@ export interface CustomInputProps {
     label: string;
     defaultLabel: string;
     handleChangeInput?: (value: string) => void;
-    inputValue: string;
+    inputValue: string | number;
     handleFocusInput?: () => void;
+    placeholder: string;
     classNameLabel?: string;
     classNameInput?: string;
-    placeholder: string;
     autoFocus?: boolean;
     onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
     readOnly?: boolean;
@@ -52,7 +52,7 @@ class CustomInput extends React.Component<Props> {
                         <FormControl
                             size="lg"
                             type={type}
-                            value={inputValue}
+                            value={inputValue.toString()}
                             placeholder={placeholder}
                             autoFocus={autoFocus}
                             onFocus={this.props.handleFocusInput}

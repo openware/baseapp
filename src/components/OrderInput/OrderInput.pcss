@@ -1,0 +1,60 @@
+.cr-order-input {
+  display: flex;
+  justify-content: space-between;
+
+  &__fieldset {
+    background-color: var(--order-input-input-bg);
+    border: 1px solid var(--order-input-border-color);
+    color: var(--order-input-input-color);
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    margin-top: calc(var(--gap) * 2);
+    width: 100%;
+
+    .custom-input {
+      label {
+        left: calc(var(--gap) * 1.55);
+      }
+
+      .form-control {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+    }
+  }
+
+  &__crypto-icon {
+    background-color: var(--order-input-input-bg);
+    border: 1px solid var(--order-input-border-color);
+    border-left: none;
+    display: inline-block;
+    margin-top: calc(var(--gap) * 2);
+    padding: calc(var(--gap) * 2);
+    text-align: center;
+    width: 26%;
+
+    span {
+      background-color: inherit;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .cr-order-input {
+    &__fieldset {
+      label {
+        font-size: calc(var(--gap) * 1.5);
+        color: var(--order-input-border-color);
+      }
+    }
+
+    &__crypto-icon {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

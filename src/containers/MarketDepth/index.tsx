@@ -1,4 +1,4 @@
-import { MarketDepths } from '@openware/components';
+import { MarketDepths } from '../../components/MarketDepths';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
