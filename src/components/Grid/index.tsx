@@ -103,6 +103,7 @@ export const Grid: React.FunctionComponent<GridProps> = props => {
     } = props;
     const cx = classnames('cr-grid', className);
     const margin = 5;
+
     return (
         <div data-react-toolbox="grid" className={cx}>
             <div className="cr-grid__grid-wrapper">

@@ -1,10 +1,9 @@
 import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { spy } from 'sinon';
-import { CellData } from '@openware/components';
 import { Markets, MarketsProps, MarketsState } from '.';
 
-const data: CellData[][] = [
+const data = [
     ['ETH/BTC', '0.223100', '+50.00%'],
     ['ETH/LTC', '0.223100', '+25.00%'],
     ['LTC/BTC', '0.223100', '-5.00%'],
@@ -45,7 +44,7 @@ describe('Markets', () => {
           <Markets data={data} onSelect={onSelect} />,
       );
 
-      const filteredData: CellData = [
+      const filteredData = [
           ['ETH/BTC', '0.123', '+50.00%'],
       ];
 
@@ -72,7 +71,7 @@ describe('Markets', () => {
            <Markets data={data} onSelect={onSelect} />,
        );
 
-       const filteredData: CellData = [
+       const filteredData = [
            ['ETH/BTC', '0.123', '+50.00%'],
        ];
 
