@@ -1,6 +1,6 @@
-import { CellData } from '@openware/components';
 import * as React from 'react';
 import { OrderBook } from '../';
+import { CellData } from '../Table';
 
 export interface CombinedOrderBookProps {
   /**

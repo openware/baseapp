@@ -5,7 +5,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { DropdownComponent } from '../../../components';
+import { DropdownComponent, CustomInput } from '../../../components';
 import { formatDate, isDateInFuture } from '../../../helpers';
 import {
     editIdentity,
@@ -173,31 +173,27 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 <div className="pg-confirm__content-identity-col">
                     <div className="pg-confirm__content-identity-col-row">
                         <fieldset className={firstNameGroupClass}>
-                            {firstName && <legend>{this.translate('page.body.kyc.identity.firstName')}</legend>}
-                                <input
-                                    className="pg-confirm__content-identity-col-row-content-number"
-                                    type="string"
-                                    placeholder={this.translate('page.body.kyc.identity.firstName')}
-                                    value={firstName}
-                                    onChange={this.handleChange('firstName')}
-                                    onFocus={this.handleFieldFocus('firstName')}
-                                    onBlur={this.handleFieldFocus('firstName')}
-                                    autoFocus={true}
-                                />
+                            <CustomInput
+                                type="string"
+                                inputValue={firstName}
+                                placeholder={this.translate('page.body.kyc.identity.firstName')}
+                                handleChangeInput={e => this.handleChange(e, 'firstName')}
+                                autoFocus={true}
+                                label={firstName ? this.translate('page.body.kyc.identity.firstName') : ''}
+                                defaultLabel={firstName ? this.translate('page.body.kyc.identity.firstName') : ''}
+                            />
                         </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
                         <fieldset className={lastNameGroupClass}>
-                            {lastName && <legend>{this.translate('page.body.kyc.identity.lastName')}</legend>}
-                                <input
-                                    className="pg-confirm__content-identity-col-row-content-number"
-                                    type="string"
-                                    placeholder={this.translate('page.body.kyc.identity.lastName')}
-                                    value={lastName}
-                                    onChange={this.handleChange('lastName')}
-                                    onFocus={this.handleFieldFocus('lastName')}
-                                    onBlur={this.handleFieldFocus('lastName')}
-                                />
+                            <CustomInput
+                                type="string"
+                                inputValue={lastName}
+                                handleChangeInput={e => this.handleChange(e, 'lastName')}
+                                placeholder={this.translate('page.body.kyc.identity.lastName')}
+                                label={lastName ? this.translate('page.body.kyc.identity.lastName') : ''}
+                                defaultLabel={lastName ? this.translate('page.body.kyc.identity.lastName') : ''}
+                            />
                         </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
@@ -232,15 +228,13 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 <div className="pg-confirm__content-identity-col pg-confirm__content-identity-col-right">
                     <div className="pg-confirm__content-identity-col-row">
                         <fieldset className={residentialAddressGroupClass}>
-                            {residentialAddress && <legend>{this.translate('page.body.kyc.identity.residentialAddress')}</legend>}
-                            <input
-                                className="pg-confirm__content-identity-col-row-content-number"
+                            <CustomInput
                                 type="string"
+                                inputValue={residentialAddress}
                                 placeholder={this.translate('page.body.kyc.identity.residentialAddress')}
-                                value={residentialAddress}
-                                onChange={this.handleChange('residentialAddress')}
-                                onFocus={this.handleFieldFocus('residentialAddress')}
-                                onBlur={this.handleFieldFocus('residentialAddress')}
+                                label={residentialAddress ? this.translate('page.body.kyc.identity.residentialAddress') : ''}
+                                defaultLabel={residentialAddress ? this.translate('page.body.kyc.identity.residentialAddress') : ''}
+                                handleChangeInput={e => this.handleChange(e, 'residentialAddress')}
                             />
                         </fieldset>
                     </div>
@@ -259,30 +253,26 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
                         <fieldset className={cityGroupClass}>
-                            {city && <legend>{this.translate('page.body.kyc.identity.city')}</legend>}
-                            <input
-                                className="pg-confirm__content-identity-col-row-content-number"
+                            <CustomInput
                                 type="string"
+                                inputValue={city}
+                                handleChangeInput={e => this.handleChange(e, 'city')}
                                 placeholder={this.translate('page.body.kyc.identity.city')}
-                                value={city}
-                                onChange={this.handleChange('city')}
-                                onFocus={this.handleFieldFocus('city')}
-                                onBlur={this.handleFieldFocus('city')}
+                                label={city ? this.translate('page.body.kyc.identity.city') : ''}
+                                defaultLabel={city ? this.translate('page.body.kyc.identity.city') : ''}
                             />
                         </fieldset>
                     </div>
                     <div className="pg-confirm__content-identity-col-row">
                         <fieldset className={postcodeGroupClass}>
-                            {postcode && <legend>{this.translate('page.body.kyc.identity.postcode')}</legend>}
-                            <input
-                                className="pg-confirm__content-identity-col-row-content-number"
+                            <CustomInput
+                                label={postcode ? this.translate('page.body.kyc.identity.postcode') : ''}
+                                defaultLabel={postcode ? this.translate('page.body.kyc.identity.postcode') : ''}
                                 type="string"
-                                placeholder={this.translate('page.body.kyc.identity.postcode')}
-                                value={postcode}
-                                onChange={this.handleChange('postcode')}
-                                onFocus={this.handleFieldFocus('postcode')}
-                                onBlur={this.handleFieldFocus('postcode')}
+                                inputValue={postcode}
+                                handleChangeInput={e => this.handleChange(e, 'postcode')}
                                 onKeyPress={this.handleConfirmEnterPress}
+                                placeholder={this.translate('page.body.kyc.identity.postcode')}
                             />
                         </fieldset>
                     </div>
@@ -357,13 +347,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         };
     }
 
-    private handleChange = (key: string) => {
-        return (e: OnChangeEvent) => {
+    private handleChange = (value: string, key: string) => {
             // @ts-ignore
             this.setState({
-                [key]: e.target.value,
+                [key]: value,
             });
-        };
     };
 
     private handleConfirmEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {

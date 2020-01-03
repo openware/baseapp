@@ -41,7 +41,7 @@
         border: 1px solid var(--kyc-grey);
         box-sizing: border-box;
         height: 49px;
-        padding-left: calc(var(--gap) * 2);
+        padding-left: calc(var(--gap) * 1.5);
         margin-bottom: calc(var(--gap) * 3);
         width: 230px;
       }
@@ -69,6 +69,9 @@
           background-color: var(--base-bright);
           position:absolute;
           top: -8px;
+          font-size: calc(var(--gap) * 2);
+          width: auto;
+          padding: 0 calc(var(--gap) * 0.5);
         }
 
         input {
@@ -81,6 +84,14 @@
           width: 100%;
           &::placeholder {
             color: var(--text-muted);
+          }
+        }
+
+        .custom-input {
+          height: 100%;
+
+          label {
+            margin-top: -11px;
           }
         }
       }
@@ -110,6 +121,7 @@
           margin-top: calc(var(--gap) * 1.2);
           margin-bottom: calc(var(--gap) * 1.2);
           height: 162px;
+
           &-input {
             height: 0.1px;
             opacity: 0;
@@ -161,23 +173,25 @@
       }
 
       &-content-3 {
-        margin-left: 2px;
-        width: calc(var(--big-gap) * 3.81);
+        width: calc(var(--big-gap) * 3.84);
         position: relative;
 
         .pg-confirm__content-documents-col-row-content-label {
           position: absolute;
           margin-left: calc(var(--gap) * 1.42);
           margin-top: calc(var(--gap) * (-1.33));
-          padding: 0 calc(var(--gap) * 0.33);
+          padding: 0 var(--gap);
           background-color: var(--base-bright);
           z-index: 1;
         }
-        &:focus-within {
-          color: var(--color-blue);
-        }
+
         .cr-dropdown {
+          margin-top: 7px;
           margin-bottom: 22px;
+
+          .dropdown-toggle {
+            height: calc(var(--gap) * 6.73);
+          }
         }
       }
     }
@@ -193,6 +207,44 @@
     &__inputGroup {
       &__year {
         width: calc(var(--gap) * 10) !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .pg-confirm {
+    &__content-documents-col {
+      max-width: 100%;
+
+      &-row {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        &-content-3 {
+          width: 100%;
+
+          .dropdown-toggle {
+            height: calc(var(--gap) * 5.05) !important;
+          }
+        }
+
+        &-content-label {
+          margin-top: calc(var(--gap) * (-0.8)) !important;
+        }
+
+        &-content-2 {
+          width: 100%;
+          text-align: center;
+        }
+
+        fieldset {
+         width: 100%;
+         legend {
+           top: -14px;
+         }
+        }
       }
     }
   }
