@@ -1,4 +1,3 @@
-import { CryptoIcon } from '../CryptoIcon';
 import { OrderInput } from '../OrderInput';
 import { PercentageButton } from '../PercentageButton';
 import classnames from 'classnames';
@@ -209,7 +208,6 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
         const amountPercentageArray = [0.25, 0.5, 0.75, 1];
 
         const cx = classnames('cr-order-form', className);
-        const currencyCodeFrom = `${from.toUpperCase()}-alt`;
         const availablePrecision = type === 'buy' ? currentMarketBidPrecision : currentMarketAskPrecision;
         const availableCurrency = type === 'buy' ? from : to;
 
@@ -243,7 +241,7 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                                 </div>
                             </fieldset>
                             <div className="cr-order-input__crypto-icon">
-                                <CryptoIcon code={currencyCodeFrom}>{from.toUpperCase()}</CryptoIcon>
+                                {from.toUpperCase()}
                             </div>
                         </div>
                     </div>
