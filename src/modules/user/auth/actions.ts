@@ -13,6 +13,12 @@ import {
     AUTH_VERIFICATION_SUCCESS,
 } from './constants';
 
+export interface GeetestCaptchaResponse {
+    geetest_challenge: string;
+    geetest_validate: string;
+    geetest_seccode: string;
+}
+
 export interface SignInFetch {
     type: typeof AUTH_SIGN_IN_FETCH;
     payload: {
@@ -40,7 +46,7 @@ export interface SignUpFetch {
     payload: {
         email: string;
         password: string;
-        captcha_response?: string;
+        captcha_response?: string | GeetestCaptchaResponse;
         refid?: string;
     };
 }

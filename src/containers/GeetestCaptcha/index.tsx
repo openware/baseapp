@@ -7,13 +7,14 @@ import { initGeetest } from '../../helpers/geetest';
 import {
     geetestCaptchaFetch,
     GeetestCaptchaKeys,
+    GeetestCaptchaResponse,
     RootState,
     selectCaptchaKeys,
     selectCurrentLanguage,
 } from '../../modules';
 
 interface OwnProps {
-    onSuccess?: () => void;
+    onSuccess?: (value?: GeetestCaptchaResponse) => void;
 }
 
 interface ReduxProps {
@@ -76,7 +77,7 @@ class GeetestCaptchaComponent extends React.Component<Props> {
 
     private captchaSuccessHandler = () => {
         if (this.props.onSuccess) {
-            this.props.onSuccess();
+            this.props.onSuccess(this.validate());
         }
     }
 }
