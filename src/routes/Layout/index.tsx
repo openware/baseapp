@@ -1,5 +1,5 @@
-import { Loader } from '@openware/components';
 import { History } from 'history';
+import { Spinner } from 'react-bootstrap';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
@@ -64,7 +64,7 @@ export type LayoutProps = ReduxProps & DispatchProps & OwnProps & InjectedIntlPr
 
 const renderLoader = () => (
     <div className="pg-loader-container">
-        <Loader />
+        <Spinner animation="border" variant="primary" />
     </div>
 );
 
