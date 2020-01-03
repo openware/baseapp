@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { CellData, Table, FilterInput } from '@openware/components';
+import { CellData, Table, FilterInput } from '../';
 
 export interface MarketsProps {
     /**

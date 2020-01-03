@@ -1,6 +1,5 @@
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import * as React from 'react';
-import { Input } from '@openware/components';
 import { OrderInput, OrderInputProps } from '.';
 
 const defaultProps: OrderInputProps = {
@@ -30,22 +29,5 @@ describe('InputBlock', () => {
         const className = 'some-class';
         const wrapper = setup({ className });
         expect(wrapper.hasClass(className)).toBeTruthy();
-    });
-
-    it('inner Input component should render with correct type', () => {
-        defaultProps.value = '0.02';
-        const change = defaultProps.handleChangeValue;
-        const keyPress = defaultProps.onKeyPress;
-        const { value } = mount(
-            (
-                <Input
-                    className="cr-input-block__input"
-                    type="text"
-                    value="0.02"
-                    onChangeValue={change}
-                    onKeyPress={keyPress}
-                />
-            )).props();
-        expect(value).toContain(defaultProps.value);
     });
 });

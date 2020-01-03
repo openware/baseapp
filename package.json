@@ -3,7 +3,6 @@
   "version": "2.3.25",
   "private": true,
   "dependencies": {
-    "@openware/components": "2.3.0",
     "@openware/cryptofont": "2.3.0",
     "@types/compression-webpack-plugin": "^2.0.1",
     "@types/ws": "^6.0.4",

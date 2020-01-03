@@ -1,0 +1,29 @@
+.cr-search {
+  margin: var(--gap);
+  padding: var(--gap);
+  width: calc(100% - var(--gap));
+
+  &__icon {
+    padding: var(--gap);
+
+    img {
+      height: 17px;
+      width: 17px;
+    }
+  }
+
+  &__input {
+    border: none;
+    border-bottom: 1px solid var(--base-2);
+    color: var(--base-2);
+    padding: var(--gap);
+
+    &::placeholder {
+      color: var(--base-2);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
