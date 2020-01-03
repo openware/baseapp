@@ -32,12 +32,6 @@ describe('InputBlock', () => {
         expect(wrapper.hasClass(className)).toBeTruthy();
     });
 
-    it('should set correct currency code to the child components', () => {
-        const wrapper = setup();
-        const { children } = wrapper.find('CryptoIcon').props();
-        expect(children).toContain('ETH');
-    });
-
     it('inner Input component should render with correct type', () => {
         defaultProps.value = '0.02';
         const change = defaultProps.handleChangeValue;

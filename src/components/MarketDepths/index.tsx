@@ -12,7 +12,6 @@ import {
     YAxis,
 } from 'recharts';
 
-// tslint:disable
 export interface KeyValuePairMarketDepths {
     x: string | number;
     amt?: number;

@@ -1,7 +1,6 @@
 import cr from 'classnames';
 import * as React from 'react';
-import { CryptoIcon} from '../CryptoIcon';
-import { Input } from '@openware/components';
+import { CustomInput } from '../../components';
 
 export interface OrderInputProps {
     /**
@@ -49,9 +48,8 @@ export interface OrderInputProps {
  * Input with cryptocurrency icon and label.
  */
 export const OrderInput: React.FunctionComponent<OrderInputProps> = (props: OrderInputProps) => {
-    const { currency, className, isFocused, label, placeholder, value, handleChangeValue, handleFocusInput, onKeyPress } = props;
+    const { currency, className, isFocused, label, placeholder, value, handleChangeValue, onKeyPress } = props;
     const cx = cr('cr-order-input', className);
-    const currencyCode = `${currency.toUpperCase()}-alt`;
 
     const fieldsetFocusedClass = cr('cr-order-input__fieldset', {
         'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
@@ -60,25 +58,18 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = (props: Orde
     return (
         <div className={cx}>
             <fieldset className={fieldsetFocusedClass}>
-                {value && label ? (
-                        <legend className={'cr-order-input__fieldset__label'}>
-                            {label}
-                        </legend>
-                    ) :
-                null}
-                <Input
+                <CustomInput
                     type="text"
-                    value={value}
+                    inputValue={value}
                     placeholder={placeholder ? placeholder : '0'}
-                    className="cr-order-input__fieldset__input"
-                    onChangeValue={handleChangeValue}
-                    onFocus={handleFocusInput}
-                    onBlur={handleFocusInput}
+                    handleChangeInput={handleChangeValue}
+                    label={value && label ? label : ''}
+                    defaultLabel={value && label ? label : ''}
                     onKeyPress={onKeyPress}
                 />
             </fieldset>
             <div className="cr-order-input__crypto-icon">
-                <CryptoIcon code={currencyCode}>{currency.toUpperCase()}</CryptoIcon>
+                {currency.toUpperCase()}
             </div>
         </div>
     );
