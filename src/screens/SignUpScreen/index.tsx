@@ -309,6 +309,11 @@ class SignUp extends React.Component<Props> {
                     break;
             }
         }
+
+        this.setState({
+            geetestCaptchaSuccess: false,
+            captcha_response: '',
+        });
     };
 
     private clearFields = () => {
