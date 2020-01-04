@@ -1,3 +1,4 @@
+/* eslint-disable */
 var document = window.document;
 var Math = window.Math;
 var head = document.getElementsByTagName("head")[0];

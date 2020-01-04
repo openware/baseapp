@@ -173,7 +173,7 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
                                 autoFocus={false}
                             />
                         </div>
-                        <Form>
+                        <Form className="cr-sign-up-form__group">
                             <Form.Check
                                 type="checkbox"
                                 custom
