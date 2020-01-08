@@ -57,6 +57,10 @@
 
     &__pagination {
       padding: var(--gap) calc(var(--gap) * 2);
+
+      p {
+        margin-bottom: 0;
+      }
     }
 
     .text-center {
@@ -72,16 +76,20 @@
 
     .cr-table-container {
       padding: 0 calc(var(--gap) * 2);
+
       .cr-table-header__content {
         display: none;
       }
       .cr-table {
         background: transparent;
         border-collapse: collapse;
+
         &__head {
           margin: 10px;
+
           &-row {
             border-bottom: 1px solid var(--header-border);
+
             th {
               background-color: var(--background-dark);
               color: var(--table-text-color);
@@ -106,9 +114,11 @@
         }
         &__body {
           background-color: var(--background-dark);
+
           tr {
             background-color: var(--background-dark);
             border-bottom: 1px solid var(--header-border);
+
             td {
               background-color: var(--background-dark);
               color: var(--table-text-color);
@@ -122,11 +132,13 @@
               &:first-child {
                 text-align: left;
               }
+
               &:last-child {
                 &:first-letter {
                   text-transform: uppercase;
                 }
               }
+
               a {
                 color: var(--table-text-color);
                 text-decoration: none;
@@ -172,6 +184,7 @@
     }
   }
 }
+
 @media screen and (max-width: 768px) {
   .pg-history-elem {
     &__hide {

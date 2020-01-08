@@ -43,7 +43,7 @@ interface PreviousIconProps {
  */
 const PreviousIcon: React.FunctionComponent<PreviousIconProps> = ({ disabled }) => {
     return (
-        <svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="22" height="24" viewBox="0 0 22 24" fill="#878D9A" xmlns="http://www.w3.org/2000/svg">
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -66,7 +66,7 @@ interface NextPageIconProps {
  */
 const NextPageIcon: React.FunctionComponent<NextPageIconProps> = ({ disabled }) => {
     return (
-        <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="23" height="24" viewBox="0 0 23 24" fill="#878D9A" xmlns="http://www.w3.org/2000/svg">
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"
