@@ -1,16 +1,20 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../public/alert';
+import { alertPush, getCsrfToken } from '../../../index';
 import { apiKeyCreate, ApiKeyCreateFetch, apiKeys2FAModal } from '../actions';
 
-const createOptions: RequestOptions = {
-    apiVersion: 'barong',
+const createOptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'barong',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* apiKeyCreateSaga(action: ApiKeyCreateFetch) {
     try {
-        const apiKey = yield call(API.post(createOptions), '/resource/api_keys', action.payload);
+        const currentCsrfToken = yield getCsrfToken();
+        const apiKey = yield call(API.post(createOptions(currentCsrfToken)), '/resource/api_keys', action.payload);
         yield put(apiKeyCreate(apiKey));
         yield put(alertPush({message: ['success.api_keys.created'], type: 'success'}));
         yield put(apiKeys2FAModal({active: true, action: 'createSuccess', apiKey}));

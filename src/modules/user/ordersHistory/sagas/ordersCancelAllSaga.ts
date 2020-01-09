@@ -1,19 +1,23 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../index';
+import { alertPush, getCsrfToken } from '../../../index';
 import {
     ordersCancelAllError,
     OrdersCancelAllFetch,
 } from '../actions';
 
-const ordersCancelAllOptions: RequestOptions = {
-    apiVersion: 'peatio',
+const ordersCancelAllOptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'peatio',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* ordersCancelAllSaga(action: OrdersCancelAllFetch) {
     try {
-        yield call(API.post(ordersCancelAllOptions), '/market/orders/cancel', action.payload);
+        const currentCsrfToken = yield getCsrfToken();
+        yield call(API.post(ordersCancelAllOptions(currentCsrfToken)), '/market/orders/cancel', action.payload);
         yield put(alertPush({ message: ['success.order.cancelling.all'], type: 'success'}));
     } catch (error) {
         yield put(ordersCancelAllError());

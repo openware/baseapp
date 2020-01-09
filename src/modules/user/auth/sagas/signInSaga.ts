@@ -14,7 +14,7 @@ export function* signInSaga(action: SignInFetch) {
     try {
         const user = yield call(API.post(sessionsConfig), '/identity/sessions', action.payload);
         yield put(userData({ user }));
-
+        document.getElementsByName('csrf-token')[0].setAttribute('content', user.csrf_token);
         yield put(signUpRequireVerification({ requireVerification: user.state === 'pending' }));
         yield put(signInRequire2FA({ require2fa: user.otp }));
     } catch (error) {

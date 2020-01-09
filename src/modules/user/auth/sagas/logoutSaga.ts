@@ -16,6 +16,7 @@ export function* logoutSaga(action: LogoutFetch) {
     try {
         yield call(API.delete(requestOptions), '/identity/sessions');
         yield put(userReset());
+        document.getElementsByName('csrf-token')[0].removeAttribute('content');
         yield put(userOpenOrdersReset());
         yield put(signInRequire2FA({ require2fa: false }));
         yield put(resetHistory());

@@ -9,5 +9,6 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
     "otp": false,
     "role": "member",
     "state": "active",
-    "uid": "ID787E383938"
+    "uid": "ID787E383938",
+    "csrf_token": "woehfwoeifw123"
 }

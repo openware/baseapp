@@ -1,20 +1,24 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../../modules/public/alert';
+import { alertPush, getCsrfToken } from '../../../index';
 import {
     BeneficiariesCreate,
     beneficiariesCreateData,
     beneficiariesCreateError,
 } from '../actions';
 
-const config: RequestOptions = {
-    apiVersion: 'peatio',
+const config = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'peatio',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* beneficiariesCreateSaga(action: BeneficiariesCreate) {
     try {
-        const payload = yield call(API.post(config), '/account/beneficiaries', action.payload);
+        const currentCsrfToken = yield getCsrfToken();
+        const payload = yield call(API.post(config(currentCsrfToken)), '/account/beneficiaries', action.payload);
         yield put(beneficiariesCreateData(payload));
         yield put(alertPush({message: ['success.beneficiaries.created'], type: 'success'}));
     } catch (error) {
