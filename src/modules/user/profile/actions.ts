@@ -39,6 +39,7 @@ export interface User {
     role: string;
     state: string;
     uid: string;
+    csrf_token?: string;
 }
 
 export interface ProfileIdentity {

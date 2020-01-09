@@ -3,7 +3,7 @@ import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import { alertPush } from '../../../index';
 import { generate2faQRData, generate2faQRError } from '../actions';
-import { getCsrfToken } from '../index';
+import { getCsrfToken } from '../../../../helpers';
 
 const generate2faQROptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -21,8 +21,7 @@ interface GenerateQRResponse {
 
 export function* generate2faQRSaga() {
     try {
-        const currentCsrfToken = yield getCsrfToken();
-        const qrData: GenerateQRResponse = yield call(API.post(generate2faQROptions(currentCsrfToken)), '/resource/otp/generate_qrcode');
+        const qrData: GenerateQRResponse = yield call(API.post(generate2faQROptions(getCsrfToken())), '/resource/otp/generate_qrcode');
         const { barcode, url } = qrData.data;
         yield put(generate2faQRData({ barcode, url }));
     } catch (error) {

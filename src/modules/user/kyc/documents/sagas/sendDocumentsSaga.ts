@@ -1,8 +1,9 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
-import { alertPush, getCsrfToken } from '../../../../index';
+import { alertPush } from '../../../../index';
 import { sendDocumentsData, sendDocumentsError, SendDocumentsFetch } from '../actions';
+import { getCsrfToken } from '../../../../../helpers';
 
 const sessionsConfig = (csrfToken?: string): RequestOptions => {
     return {
@@ -13,8 +14,7 @@ const sessionsConfig = (csrfToken?: string): RequestOptions => {
 
 export function* sendDocumentsSaga(action: SendDocumentsFetch) {
     try {
-        const currentCsrfToken = yield getCsrfToken();
-        const response = yield call(API.post(sessionsConfig(currentCsrfToken)), '/resource/documents', action.payload);
+        const response = yield call(API.post(sessionsConfig(getCsrfToken())), '/resource/documents', action.payload);
         const defaultMessage = 'success.documents.accepted';
         const { message = defaultMessage } = response;
         yield put(sendDocumentsData({ message }));

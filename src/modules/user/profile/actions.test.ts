@@ -22,6 +22,7 @@ describe('Profile actions', () => {
                     level: 3,
                     otp: false,
                     state: 'active',
+                    csrf_token: '31415926535897932384626433832795028841971',
                 },
             };
             const expectedAction = { type: 'profile/GET_USER_DATA', payload };
