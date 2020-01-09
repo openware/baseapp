@@ -98,7 +98,7 @@ class MarketsListComponent extends React.Component<Props, State> {
     private getHeaders = () => [
         {id: 'id', translationKey: 'market'},
         {id: 'last', translationKey: 'last_price'},
-        {id: 'vol', translationKey: 'volume'},
+        {id: 'volume', translationKey: 'volume'},
         {id: 'price_change_percent_num', translationKey: 'change'},
     ].map(obj => {
         const {sortBy, reverseOrder} = this.state;
@@ -177,7 +177,7 @@ class MarketsListComponent extends React.Component<Props, State> {
             return [
                 market.name,
                 (<span className={classname}>{Decimal.format(Number(market.last), market.price_precision)}</span>),
-                (<span className={classname}>{Decimal.format(Number(market.volume), market.amount_precision)}</span>),
+                (<span className={classname}>{Decimal.format(Number(market.volume), market.price_precision)}</span>),
                 (<span className={classname}>{market.price_change_percent}</span>),
             ];
         });
