@@ -51,19 +51,20 @@ const getLayouts = () => {
     const tradingChartHeight = gridHeight >= minGridHeight ?
         currentTradingChartHeight + margin * 0.6 : Math.floor(Math.max(currentTradingChartHeight, minTradingChartHeight));
     const openOrdersHeight = gridHeight >= minGridHeight ?
-        pixelsToGridUnits(gridHeight - gridUnitsToPixels(tradingChartHeight, rowHeight, margin) - gridUnitsToPixels(minMarketDepthsHeight, rowHeight, margin), rowHeight, margin) + 3 :
+        pixelsToGridUnits(gridHeight - gridUnitsToPixels(tradingChartHeight, rowHeight, margin) - gridUnitsToPixels(minMarketDepthsHeight, rowHeight, margin), rowHeight, margin) + 1.8 :
         minOpenOrdersHeight;
 
     const orderBookHeight = gridHeight >= minGridHeight ?
-        pixelsToGridUnits(gridHeight - margin, rowHeight, margin) + margin - 2 :
+        pixelsToGridUnits(gridHeight - margin, rowHeight, margin) + margin - 3.3 :
         minOrderBookHeight;
 
     const recentTradesHeight = gridHeight >= minGridHeight ?
-        pixelsToGridUnits(gridHeight - margin, rowHeight, margin) + margin - 2 :
+        pixelsToGridUnits(gridHeight - margin, rowHeight, margin) + margin - 3.3 :
         minRecentTradesHeight;
+    window.console.log(gridHeight >= minGridHeight);
 
     const marketsHeight = gridHeight >= minGridHeight ?
-        pixelsToGridUnits(gridHeight - margin, rowHeight, margin) - orderHeight + margin - 2 :
+        pixelsToGridUnits(gridHeight - margin, rowHeight, margin) - orderHeight + margin - 3.3 :
         minMarketsHeight;
 
     return {
