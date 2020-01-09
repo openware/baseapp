@@ -105,7 +105,7 @@ class MarketDepthContainer extends React.Component<Props> {
             return {
                 [type]: Decimal.format(cumulativeVolumeData, currentMarket.amount_precision),
                 cumulativePrice: Decimal.format(cumulativePriceData, currentMarket.price_precision),
-                cumulativeVolume: Decimal.format(cumulativeVolumeData, currentMarket.amount_precision),
+                cumulativeVolume: +Decimal.format(cumulativeVolumeData, currentMarket.amount_precision),
                 volume: Decimal.format(+volume, currentMarket.amount_precision),
                 price: Decimal.format(+numberPrice, currentMarket.price_precision),
                 name: tipLayout({ volume, price, cumulativeVolume: cumulativeVolumeData, cumulativePrice: cumulativePriceData }),
