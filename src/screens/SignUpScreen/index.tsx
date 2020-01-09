@@ -264,7 +264,6 @@ class SignUp extends React.Component<Props> {
                         refid: refId,
                         lang: i18n.toUpperCase(),
                     });
-                    this.clearFields();
                     break;
                 case 'recaptcha':
                 case 'geetest':
@@ -274,7 +273,6 @@ class SignUp extends React.Component<Props> {
                         captcha_response,
                         refid: refId,
                     });
-                    this.clearFields();
                     break;
                 default:
                     this.props.signUp({
@@ -284,7 +282,6 @@ class SignUp extends React.Component<Props> {
                         refid: refId,
                         lang: i18n.toUpperCase(),
                     });
-                    this.clearFields();
                     break;
             }
         } else {
@@ -305,7 +302,6 @@ class SignUp extends React.Component<Props> {
                         captcha_response,
                         lang: i18n.toUpperCase(),
                     });
-                    this.clearFields();
                     break;
             }
         }
@@ -315,17 +311,6 @@ class SignUp extends React.Component<Props> {
             captcha_response: '',
         });
     };
-
-    private clearFields = () => {
-        this.setState({
-            email: '',
-            password: '',
-            confirmPassword: '',
-            hasConfirmed: false,
-            geetestCaptchaSuccess: false,
-            refId: '',
-        });
-    }
 
     private renderModalHeader = () => {
         return (
