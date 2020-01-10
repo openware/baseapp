@@ -122,7 +122,6 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             inputValue={confirmationCode}
                             placeholder={this.translate('page.body.kyc.phone.code')}
                             handleFocusInput={this.handleFieldFocus('confirmationCode')}
-
                         />
                     </fieldset>
                 </div>
