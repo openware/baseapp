@@ -181,6 +181,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 autoFocus={true}
                                 label={firstName ? this.translate('page.body.kyc.identity.firstName') : ''}
                                 defaultLabel={firstName ? this.translate('page.body.kyc.identity.firstName') : ''}
+                                handleFocusInput={this.handleFieldFocus('firstName')}
                             />
                         </fieldset>
                     </div>
@@ -193,6 +194,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 placeholder={this.translate('page.body.kyc.identity.lastName')}
                                 label={lastName ? this.translate('page.body.kyc.identity.lastName') : ''}
                                 defaultLabel={lastName ? this.translate('page.body.kyc.identity.lastName') : ''}
+                                handleFocusInput={this.handleFieldFocus('lastName')}
                             />
                         </fieldset>
                     </div>
@@ -235,6 +237,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 label={residentialAddress ? this.translate('page.body.kyc.identity.residentialAddress') : ''}
                                 defaultLabel={residentialAddress ? this.translate('page.body.kyc.identity.residentialAddress') : ''}
                                 handleChangeInput={e => this.handleChange(e, 'residentialAddress')}
+                                handleFocusInput={this.handleFieldFocus('residentialAddress')}
                             />
                         </fieldset>
                     </div>
@@ -260,6 +263,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 placeholder={this.translate('page.body.kyc.identity.city')}
                                 label={city ? this.translate('page.body.kyc.identity.city') : ''}
                                 defaultLabel={city ? this.translate('page.body.kyc.identity.city') : ''}
+                                handleFocusInput={this.handleFieldFocus('city')}
                             />
                         </fieldset>
                     </div>
@@ -273,6 +277,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 handleChangeInput={e => this.handleChange(e, 'postcode')}
                                 onKeyPress={this.handleConfirmEnterPress}
                                 placeholder={this.translate('page.body.kyc.identity.postcode')}
+                                handleFocusInput={this.handleFieldFocus('postcode')}
                             />
                         </fieldset>
                     </div>
@@ -343,7 +348,6 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 default:
                     break;
             }
-
         };
     }
 

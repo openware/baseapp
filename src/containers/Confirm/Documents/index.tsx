@@ -121,6 +121,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                         placeholder={numberType}
                                         inputValue={idNumber}
                                         handleChangeInput={this.handleChangeIdNumber}
+                                        handleFocusInput={this.handleFieldFocus('idNumber')}
                                     />
                                 </fieldset>
                                 <fieldset className={expirationFocusedClass}>
