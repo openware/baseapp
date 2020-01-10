@@ -248,6 +248,7 @@ class SignUp extends React.Component<Props> {
     private handleSignUp = () => {
         const {
             email,
+            geetestCaptchaSuccess,
             password,
             captcha_response,
             refId,
@@ -306,10 +307,12 @@ class SignUp extends React.Component<Props> {
             }
         }
 
-        this.setState({
-            geetestCaptchaSuccess: false,
-            captcha_response: '',
-        });
+        if (geetestCaptchaSuccess) {
+            this.setState({
+                geetestCaptchaSuccess: false,
+                captcha_response: '',
+            });
+        }
     };
 
     private renderModalHeader = () => {
