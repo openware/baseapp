@@ -1,12 +1,12 @@
 import { CommonError } from '../../types';
 import {
-    AUTH_ERROR,
     AUTH_LOGOUT_FAILURE,
     AUTH_LOGOUT_FETCH,
     AUTH_SIGN_IN_ERROR,
     AUTH_SIGN_IN_FETCH,
     AUTH_SIGN_IN_REQUIRE_2FA,
     AUTH_SIGN_UP_FETCH,
+    AUTH_SIGN_UP_ERROR,
     AUTH_SIGN_UP_REQUIRE_VERIFICATION,
     AUTH_TEST_STATE,
     AUTH_VERIFICATION_FETCH,
@@ -52,7 +52,7 @@ export interface SignUpFetch {
 }
 
 export interface SignUpError {
-    type: typeof AUTH_ERROR;
+    type: typeof AUTH_SIGN_UP_ERROR;
     payload: CommonError;
 }
 
@@ -121,7 +121,7 @@ export const signUp = (payload: SignUpFetch['payload']): SignUpFetch => ({
 });
 
 export const signUpError = (payload: SignUpError['payload']): SignUpError => ({
-    type: AUTH_ERROR,
+    type: AUTH_SIGN_UP_ERROR,
     payload,
 });
 

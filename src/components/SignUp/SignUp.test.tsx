@@ -11,9 +11,6 @@ const defaults: SignUpFormProps = {
     password: '',
     email: '',
     confirmPassword: '',
-    captcha_response: '',
-    recaptchaConfirmed: false,
-    recaptchaOnChange: jest.fn(),
     handleChangeEmail: jest.fn(),
     handleChangePassword: jest.fn(),
     handleChangeConfirmPassword: jest.fn(),
@@ -32,8 +29,10 @@ const defaults: SignUpFormProps = {
     refIdFocused: false,
     emailFocused: false,
     passwordFocused: false,
-    geetestCaptcha: undefined,
+    renderCaptcha: null,
+    reCaptchaSuccess: false,
     geetestCaptchaSuccess: false,
+    captcha_response: '',
 };
 
 const setup = (props: Partial<SignUpFormProps> = {}) =>
@@ -61,7 +60,7 @@ describe('SignUp component', () => {
 
     it('should render captcha block', () => {
         const wrapper = setup({hasConfirmed: true, captchaType: 'recaptcha'});
-        expect(wrapper.find('.cr-sign-up-form__recaptcha').exists()).toBe(true);
+        expect(wrapper.find('.cr-sign-up-form__recaptcha').exists()).toBe(false);
     });
 
     it('should have correct labels', () => {

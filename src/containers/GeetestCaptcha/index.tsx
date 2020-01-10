@@ -14,6 +14,7 @@ import {
 } from '../../modules';
 
 interface OwnProps {
+    shouldCaptchaReset?: boolean;
     onSuccess?: (value?: GeetestCaptchaResponse) => void;
 }
 
@@ -59,10 +60,18 @@ class GeetestCaptchaComponent extends React.Component<Props> {
                 https: true,
             }, this.captchaComingHandler);
         }
+
+        if (next.shouldCaptchaReset && !this.props.shouldCaptchaReset) {
+            this.reset();
+        }
     }
 
     public validate = () => {
         return this.captcha && this.captcha.getValidate();
+    }
+
+    public reset = () => {
+        return this.captcha && this.captcha.reset();
     }
 
     public render() {

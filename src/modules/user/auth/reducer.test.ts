@@ -37,12 +37,12 @@ describe('Auth reducer', () => {
         expect(authReducer(initialStateAuth, actions.signInRequire2FA(payload))).toEqual(expectedState);
     });
 
-    it('should handle AUTH_ERROR', () => {
+    it('should handle SIGN_UP_ERROR', () => {
         const payload = {
             code: 500,
             message: ['Server error'],
         };
-        const expectedState = { ...initialStateAuth, authError: payload };
+        const expectedState = { ...initialStateAuth, signUpError: payload };
         expect(authReducer(initialStateAuth, actions.signUpError(payload))).toEqual(expectedState);
     });
 
