@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { alertReducer  } from './public/alert';
 import { changeColorThemeReducer  } from './public/colorTheme';
+import { configsReducer } from './public/configs';
 import { currenciesReducer } from './public/currencies';
 import { gridLayoutReducer } from './public/gridLayout/reducer';
 import { changeLanguageReducer  } from './public/i18n';
@@ -37,6 +38,7 @@ import { withdrawLimitReducer  } from './user/withdrawLimit';
 
 export const publicReducer = combineReducers({
     colorTheme: changeColorThemeReducer,
+    configs: configsReducer,
     currencies: currenciesReducer,
     recentTrades: recentTradesReducer,
     markets: marketsReducer,

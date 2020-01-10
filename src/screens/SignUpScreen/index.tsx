@@ -12,7 +12,6 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { captchaType, siteKey } from '../../api';
 import { Modal, SignUpForm } from '../../components';
 import {
     EMAIL_REGEX,
@@ -23,13 +22,16 @@ import {
     setDocumentTitle,
 } from '../../helpers';
 import {
+    Configs,
     RootState,
+    selectConfigs,
     selectCurrentLanguage,
     selectSignUpRequireVerification,
     signUp,
 } from '../../modules';
 
 interface ReduxProps {
+    configs: Configs;
     requireVerification?: boolean;
     loading?: boolean;
 }
@@ -88,6 +90,7 @@ class SignUp extends React.Component<Props> {
     }
 
     public render() {
+        const { configs, loading } = this.props;
         const {
             email,
             password,
@@ -104,7 +107,6 @@ class SignUp extends React.Component<Props> {
             confirmPasswordFocused,
             refIdFocused,
         } = this.state;
-        const { loading } = this.props;
 
         const className = cx('pg-sign-up-screen__container', { loading });
         return (
@@ -123,8 +125,8 @@ class SignUp extends React.Component<Props> {
                         isLoading={loading}
                         onSignIn={this.handleSignIn}
                         onSignUp={this.handleSignUp}
-                        siteKey={siteKey()}
-                        captchaType={captchaType()}
+                        siteKey={configs.captcha_id}
+                        captchaType={configs.captcha_type}
                         email={email}
                         handleChangeEmail={this.handleChangeEmail}
                         password={password}
@@ -226,6 +228,7 @@ class SignUp extends React.Component<Props> {
     };
 
     private handleSignUp = () => {
+        const { configs, i18n } = this.props;
         const {
             email,
             password,
@@ -233,10 +236,8 @@ class SignUp extends React.Component<Props> {
             refId,
         } = this.state;
 
-        const { i18n } = this.props;
-
         if (refId) {
-            switch (captchaType()) {
+            switch (configs.captcha_type) {
                 case 'none':
                     this.props.signUp({
                         email,
@@ -258,7 +259,7 @@ class SignUp extends React.Component<Props> {
                     break;
             }
         } else {
-            switch (captchaType()) {
+            switch (configs.captcha_type) {
                 case 'none':
                     this.props.signUp({
                         email,
@@ -369,8 +370,9 @@ class SignUp extends React.Component<Props> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
-    requireVerification: selectSignUpRequireVerification(state),
+    configs: selectConfigs(state),
     i18n: selectCurrentLanguage(state),
+    requireVerification: selectSignUpRequireVerification(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

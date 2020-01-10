@@ -38,8 +38,6 @@ Configuration file is located in  `public/config/env.js`
 | `api`    | URLs of `barong`, `peatio`, `applogic` and `ranger` API endpoints. You can use mockserver (<https://github.com/openware/mockserver>) with default `env.js` values |
 | `minutesUntilAutoLogout`                |  Autologout time in minutes  |
 | `withCredentials`               |  `false` or `true` if you want to include cookies as part of the request(https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials)   |
-| `captcha - captchaType`         |  `'recaptcha'`, `'geetest'` or `'none'`   |
-| `captcha - siteKey`         |  Recaptha site key   |
 | `gaTrackerKey` |  Google Analytics tracker key  |
 | `rangerReconnectPeriod` |  Reconnection time for the Ranger WS service in minutes    |
 | `msAlertDisplayTime` |  Alert message display duration in milliseconds    |
