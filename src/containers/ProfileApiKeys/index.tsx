@@ -228,7 +228,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Button
                             block={true}
                             onClick={this.handleCreateSuccess}
-                            className={'cr-email-form__button'}
                             size="lg"
                             variant="primary"
                         >

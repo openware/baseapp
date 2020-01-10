@@ -48,11 +48,15 @@ export interface OrderInputProps {
  * Input with cryptocurrency icon and label.
  */
 export const OrderInput: React.FunctionComponent<OrderInputProps> = (props: OrderInputProps) => {
-    const { currency, className, isFocused, label, placeholder, value, handleChangeValue, onKeyPress } = props;
+    const { currency, className, isFocused, label, placeholder, value, handleChangeValue, onKeyPress, handleFocusInput } = props;
     const cx = cr('cr-order-input', className);
 
     const fieldsetFocusedClass = cr('cr-order-input__fieldset', {
         'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
+    });
+
+    const cryptoIconClass = cr('cr-order-input__crypto-icon',{
+        'cr-order-input__fieldset--focused': isFocused,
     });
 
     return (
@@ -66,9 +70,10 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = (props: Orde
                     label={value && label ? label : ''}
                     defaultLabel={value && label ? label : ''}
                     onKeyPress={onKeyPress}
+                    handleFocusInput={handleFocusInput}
                 />
             </fieldset>
-            <div className="cr-order-input__crypto-icon">
+            <div className={cryptoIconClass}>
                 {currency.toUpperCase()}
             </div>
         </div>

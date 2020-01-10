@@ -174,12 +174,14 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                     />
                 </div>
                 <div className="cr-email-form__button-wrapper">
-                    <input
-                        type={'submit'}
-                        value={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.change'})}
-                        className={this.isValidForm() ? 'cr-email-form__button' : 'cr-email-form__button cr-email-form__button--disabled'}
+                    <Button
                         disabled={!this.isValidForm()}
-                    />
+                        type="button"
+                        variant="primary"
+                        size="lg"
+                    >
+                        {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change' })}
+                    </Button>
                 </div>
             </div>
         );
