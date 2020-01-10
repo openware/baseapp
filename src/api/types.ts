@@ -12,10 +12,6 @@ export interface Config {
     storage: {
         defaultStorageLimit?: number;
     };
-    captcha: {
-        captchaType: 'recaptcha' | 'geetest' | 'none';
-        siteKey: string;
-    };
     gaTrackerKey?: string;
     msAlertDisplayTime?: string;
     incrementalOrderBook: boolean;

@@ -19,10 +19,6 @@ const mockConfig: Config = {
     rangerReconnectPeriod: '1',
     withCredentials: true,
     storage: {},
-    captcha: {
-        captchaType: 'none',
-        siteKey: '',
-    },
     gaTrackerKey: '',
     incrementalOrderBook: false,
     isResizable: false,

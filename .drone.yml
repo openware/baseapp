@@ -42,7 +42,7 @@ steps:
       - echo "$PRIVATE_KEY" | base64 -d > id_rsa
       - chmod 0600 id_rsa
       - cd build/config/
-      - echo "window.env={api:{authUrl:'http://api-v2.mock.openware.work/api/v2/barong',tradeUrl:'http://api-v2.mock.openware.work/api/v2/peatio',applogicUrl:'http://api-v2.mock.openware.work/api/v2/applogic',rangerUrl:'ws://ranger.mock.openware.work/api/v2/ranger'},captcha:{captchaType:'none',siteKey:''}};" > env.js
+      - echo "window.env={api:{authUrl:'http://api-v2.mock.openware.work/api/v2/barong',tradeUrl:'http://api-v2.mock.openware.work/api/v2/peatio',applogicUrl:'http://api-v2.mock.openware.work/api/v2/applogic',rangerUrl:'ws://ranger.mock.openware.work/api/v2/ranger'}};" > env.js
       - cat env.js
       - cd /drone/src
       - rsync -avzhre "ssh -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" build/ mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}
