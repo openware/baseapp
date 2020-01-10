@@ -7,10 +7,6 @@ window.env = {
     },
     minutesUntilAutoLogout: '5',
     withCredentials: false,
-    captcha: {
-        captchaType: 'none',
-        siteKey: '',
-    },
     gaTrackerKey: '',
     rangerReconnectPeriod: '1',
     msAlertDisplayTime: '5000',

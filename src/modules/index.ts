@@ -4,6 +4,7 @@ import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { ColorThemeState } from './public/colorTheme';
+import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
 import { GridLayoutState } from './public/gridLayout';
 import { LanguageState } from './public/i18n';
@@ -42,6 +43,7 @@ import { MemberLevelsState, rootMemberLevelsSaga } from './public/memberLevels';
 export * from './public/markets';
 export * from './public/orderBook';
 export * from './public/colorTheme';
+export * from './public/configs';
 export * from './public/currencies';
 export * from './public/i18n';
 export * from './public/kline';
@@ -67,6 +69,7 @@ export * from './public/memberLevels';
 export interface RootState {
     public: {
         colorTheme: ColorThemeState;
+        configs: ConfigsState;
         currencies: CurrenciesState;
         recentTrades: RecentTradesState;
         markets: MarketsState;
@@ -113,6 +116,7 @@ export function* rootSaga() {
         call(rootApiKeysSaga),
         call(rootAuthSaga),
         call(rootBeneficiariesSaga),
+        call(rootConfigsSaga),
         call(rootCurrenciesSaga),
         call(rootEmailVerificationSaga),
         call(rootGeetestCaptchaSaga),
