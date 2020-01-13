@@ -16,6 +16,7 @@ import { recentTradesReducer  } from './public/recentTrades';
 import { apiKeysReducer } from './user/apiKeys';
 import { authReducer  } from './user/auth';
 import { beneficiariesReducer } from './user/beneficiaries';
+import { getGeetestCaptchaReducer } from './user/captcha';
 import { sendEmailVerificationReducer } from './user/emailVerification';
 import { historyReducer  } from './user/history';
 import {
@@ -67,5 +68,6 @@ export const userReducer = combineReducers({
     ordersHistory: ordersHistoryReducer,
     openOrders: openOrdersReducer,
     sendEmailVerification: sendEmailVerificationReducer,
+    captchaKeys: getGeetestCaptchaReducer,
     withdrawLimit: withdrawLimitReducer,
 });

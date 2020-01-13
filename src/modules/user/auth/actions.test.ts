@@ -35,6 +35,15 @@ describe('Auth actions', () => {
         expect(actions.signInError(payload)).toEqual(expectedAction);
     });
 
+    it('should check signUpError action creator', () => {
+        const payload = {
+            code: 500,
+            message: ['Server error'],
+        };
+        const expectedAction = { type: 'auth/SIGN_UP_ERROR', payload };
+        expect(actions.signUpError(payload)).toEqual(expectedAction);
+    });
+
     it('should check signInRequire2FA action creator', () => {
         const payload = { require2fa: true };
         const expectedAction = { type: 'auth/SIGN_IN_REQUIRE_2FA', payload };
