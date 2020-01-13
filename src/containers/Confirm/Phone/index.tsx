@@ -92,6 +92,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                                 handleChangeInput={this.handleChangePhoneNumber}
                                 onKeyPress={this.handleSendEnterPress}
                                 autoFocus={true}
+                                handleFocusInput={this.handleFieldFocus('phoneNumber')}
                             />
                             <InputGroup.Append>
                                 <Button
@@ -120,6 +121,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             onKeyPress={this.handleConfirmEnterPress}
                             inputValue={confirmationCode}
                             placeholder={this.translate('page.body.kyc.phone.code')}
+                            handleFocusInput={this.handleFieldFocus('confirmationCode')}
                         />
                     </fieldset>
                 </div>
@@ -137,6 +139,26 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                 </div>
             </div>
         );
+    }
+
+    private handleFieldFocus = (field: string) => {
+        return() => {
+            switch (field) {
+                case 'phoneNumber':
+                    this.addPlusSignToPhoneNumber();
+                    this.setState(prev => ({
+                        phoneNumberFocused: !prev.phoneNumberFocused,
+                    }));
+                    break;
+                case 'confirmationCode':
+                    this.setState({
+                        confirmationCodeFocused: !this.state.confirmationCodeFocused,
+                    });
+                    break;
+                default:
+                    break;
+            }
+        };
     }
 
     private handleConfirmEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {

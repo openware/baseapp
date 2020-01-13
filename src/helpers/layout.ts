@@ -61,7 +61,6 @@ const getLayouts = () => {
     const recentTradesHeight = gridHeight >= minGridHeight ?
         pixelsToGridUnits(gridHeight - margin, rowHeight, margin) + margin - 3.3 :
         minRecentTradesHeight;
-    window.console.log(gridHeight >= minGridHeight);
 
     const marketsHeight = gridHeight >= minGridHeight ?
         pixelsToGridUnits(gridHeight - margin, rowHeight, margin) - orderHeight + margin - 3.3 :
