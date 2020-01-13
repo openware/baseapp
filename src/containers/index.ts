@@ -5,6 +5,7 @@ export * from './Confirm/Identity';
 export * from './Confirm/Phone';
 export * from './Errors';
 export * from './Footer';
+export * from './GeetestCaptcha';
 export * from './Header';
 export * from './HistoryElement';
 export * from './LegalDocuments';
@@ -29,4 +30,4 @@ export * from './ToolBar';
 export * from './TradingChart';
 export * from './WalletsFetch';
 export * from './Withdraw';
-export * from './Withdraw';
+

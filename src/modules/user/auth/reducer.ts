@@ -1,11 +1,11 @@
 import { CommonError } from '../../types';
 import { AuthAction } from './actions';
 import {
-    AUTH_ERROR,
     AUTH_LOGOUT_FAILURE,
     AUTH_LOGOUT_FETCH,
     AUTH_SIGN_IN_ERROR,
     AUTH_SIGN_IN_REQUIRE_2FA,
+    AUTH_SIGN_UP_ERROR,
     AUTH_SIGN_UP_REQUIRE_VERIFICATION,
     AUTH_VERIFICATION_FETCH,
     AUTH_VERIFICATION_SUCCESS,
@@ -17,6 +17,7 @@ export interface AuthState {
     emailVerified?: boolean;
     logoutError?: CommonError;
     authError?: CommonError;
+    signUpError?: CommonError;
 }
 
 export const initialStateAuth: AuthState = {
@@ -41,10 +42,10 @@ export const authReducer = (state = initialStateAuth, action: AuthAction) => {
             return { ...state, emailVerified: false };
         case AUTH_VERIFICATION_SUCCESS:
             return { ...state, emailVerified: true };
-        case AUTH_ERROR:
-            return { ...state, authError: action.payload };
         case AUTH_SIGN_IN_ERROR:
             return { ...state, authError: action.payload };
+        case AUTH_SIGN_UP_ERROR:
+            return { ...state, signUpError: action.payload };
         case AUTH_LOGOUT_FETCH:
             return { ...state };
         case AUTH_LOGOUT_FAILURE:

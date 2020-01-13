@@ -1,19 +1,16 @@
 import cr from 'classnames';
 import * as React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { CustomInput } from '../';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../../helpers';
 
 export interface SignUpFormProps {
-    siteKey?: string;
     isLoading?: boolean;
     title?: string;
     onSignUp: () => void;
     onSignIn?: () => void;
     className?: string;
     image?: string;
-    captchaType: 'recaptcha' | 'geetest' | 'none';
     labelSignIn?: string;
     labelSignUp?: string;
     emailLabel?: string;
@@ -25,9 +22,6 @@ export interface SignUpFormProps {
     password: string;
     email: string;
     confirmPassword: string;
-    recaptcha_response: string;
-    recaptchaConfirmed: boolean;
-    recaptchaOnChange: (value: string) => void;
     handleChangeEmail: (value: string) => void;
     handleChangePassword: (value: string) => void;
     handleChangeConfirmPassword: (value: string) => void;
@@ -46,6 +40,11 @@ export interface SignUpFormProps {
     refIdFocused: boolean;
     emailFocused: boolean;
     passwordFocused: boolean;
+    captchaType: 'recaptcha' | 'geetest' | 'none';
+    renderCaptcha: JSX.Element | null;
+    reCaptchaSuccess: boolean;
+    geetestCaptchaSuccess: boolean;
+    captcha_response: string;
 }
 
 export class SignUpForm extends React.Component<SignUpFormProps> {
@@ -58,8 +57,6 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
             onSignIn,
             image,
             isLoading,
-            siteKey,
-            captchaType,
             labelSignIn,
             labelSignUp,
             emailLabel,
@@ -96,15 +93,6 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
                 <img className="cr-sign-up-form__image" src={image} alt="logo" />
             </h1>
         ) : null;
-        const captcha = hasConfirmed && captchaType !== 'none' ?
-            (
-                <div className="cr-sign-up-form__recaptcha">
-                    <ReCAPTCHA
-                        sitekey={siteKey}
-                        onChange={this.props.recaptchaOnChange}
-                    />
-                </div>
-            ) : null;
 
         return (
             <form>
@@ -182,17 +170,17 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
                                 autoFocus={false}
                             />
                         </div>
-                        <Form>
+                        <Form className="cr-sign-up-form__group">
                             <Form.Check
                                 type="checkbox"
                                 custom
                                 id="agreeWithTerms"
-                                label={termsMessage ? termsMessage : 'I  agree all statements in terms of service'}
                                 checked={hasConfirmed}
                                 onChange={this.props.clickCheckBox}
+                                label={termsMessage ? termsMessage : 'I  agree all statements in terms of service'}
                             />
                         </Form>
-                        {captcha}
+                        {this.props.renderCaptcha}
                         <div className="cr-sign-up-form__button-wrapper">
                             <Button
                                 block={true}
@@ -217,15 +205,19 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
             password,
             confirmPassword,
             hasConfirmed,
-            recaptchaConfirmed,
+            reCaptchaSuccess,
             isLoading,
             captchaType,
+            geetestCaptchaSuccess,
         } = this.props;
 
         if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {
             return true;
         }
-        if (captchaType !== 'none' && !recaptchaConfirmed) {
+        if (captchaType === 'recaptcha' && !reCaptchaSuccess) {
+            return true;
+        }
+        if (captchaType === 'geetest' && !geetestCaptchaSuccess) {
             return true;
         }
         return false;
