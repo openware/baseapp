@@ -176,7 +176,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                 <div className="cr-email-form__button-wrapper">
                     <Button
                         disabled={!this.isValidForm()}
-                        type="button"
+                        type="submit"
                         variant="primary"
                         size="lg"
                     >
