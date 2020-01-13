@@ -59,8 +59,8 @@ describe('SignUp component', () => {
     });
 
     it('should render captcha block', () => {
-        const wrapper = setup({hasConfirmed: true, captchaType: 'recaptcha'});
-        expect(wrapper.find('.cr-sign-up-form__recaptcha').exists()).toBe(false);
+        const wrapper = setup({hasConfirmed: true, captchaType: 'recaptcha', renderCaptcha: <div className="cr-sign-up-form__recaptcha">Content</div>});
+        expect(wrapper.find('.cr-sign-up-form__recaptcha').exists()).toBe(true);
     });
 
     it('should have correct labels', () => {
