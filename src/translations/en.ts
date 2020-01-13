@@ -145,12 +145,12 @@ export const en = {
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode': 'Intermediary Bank Swift Code (optional)',
 
 
-    'page.body.wallets.beneficiaries.addAddressModal.body.button': 'submit for confirmation',
+    'page.body.wallets.beneficiaries.addAddressModal.body.button': 'Submit for confirmation',
 
     'page.body.wallets.beneficiaries.confirmationModal.header': 'Confirm new address',
     'page.body.wallets.beneficiaries.confirmationModal.body.text': 'We have sent you an email containing a confirmation code pin, please enter it below to save the new address:',
     'page.body.wallets.beneficiaries.confirmationModal.body.confirmationModalCode': 'Pin code',
-    'page.body.wallets.beneficiaries.confirmationModal.body.button': 'confirm',
+    'page.body.wallets.beneficiaries.confirmationModal.body.button': 'Confirm',
 
     'page.body.wallets.beneficiaries.tipAddress': 'Address',
     'page.body.wallets.beneficiaries.tipName': 'Name',
