@@ -109,7 +109,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                     <div className="pg-confirm__content-documents-col-row">
                         <div className="pg-confirm__content-documents-col">
                             <div className="pg-confirm__content-documents-col-row">
-                                <div className={dropdownFocusedClass} onClick={this.handleFieldFocus('document')} onBlur={this.handleFieldFocus('document')}>
+                                <div className={dropdownFocusedClass} onClick={this.handleFieldFocus('document')} onBlur={this.handleBlur('document')}>
                                     <div className="pg-confirm__content-documents-col-row-content-label">
                                         {documentsType && this.translate('page.body.kyc.documentsType')}
                                     </div>
@@ -243,6 +243,11 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     private handleFieldFocus = (field: string) => {
         return () => {
             switch (field) {
+                case 'document':
+                    this.setState({
+                        documentsFocused: !this.state.documentsFocused,
+                    });
+                    break;
                 case 'expiration':
                     this.setState({
                         expirationFocused: !this.state.expirationFocused,
@@ -253,14 +258,17 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         idNumberFocused: !this.state.idNumberFocused,
                     });
                     break;
-                case 'document':
-                    this.setState({
-                        documentsFocused: !this.state.documentsFocused,
-                    });
-                    break;
                 default:
                     break;
             }
+        };
+    }
+
+    private handleBlur = (field: string) => {
+        return () => {
+            this.setState({
+                documentsFocused: false,
+            });
         };
     }
 

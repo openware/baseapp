@@ -68,7 +68,7 @@
           }
 
           &__dropdown__label {
-            color: var(--orders-placeholder-color);
+            color: var(--order-input-input-color);
             background-color: var(--base-bright);
             font-size: calc(var(--gap) * 1.5);
             margin-left: calc(var(--gap) * 1.75);
@@ -150,11 +150,13 @@
 
               &__label {
                 background-color: var(--base-bright);
-                color: var(--orders-placeholder-color);
                 font-size: calc(var(--gap) * 1.5);
                 margin-left: calc(var(--gap) * -0.35);
                 padding: 0 calc(var(--gap) * 0.75);
                 width: max-content;
+                position: absolute;
+                top: -10px;
+                color: var(--order-input-input-color);
               }
 
               &__input {
@@ -428,9 +430,11 @@
 
             &__input {
               margin-left: calc(var(--gap) * 0.34);
+              margin-top: calc(var(--gap) * 1.5);
 
               input, &__price {
                 font-size: calc(var(--gap) * 2.34);
+                color: var(--order-input-input-color);
               }
             }
           }
