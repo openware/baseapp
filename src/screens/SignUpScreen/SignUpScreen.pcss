@@ -10,7 +10,7 @@
     width: calc(var(--gap) * 70.66);
   }
   .cr-sign-up-form {
-    background: var(--base-bright);
+    background: var(--body-background-color);
     margin: 0 auto;
     border-radius: calc(var(--gap) * 0.66);
     min-height: calc(var(--big-gap) * 10);
@@ -30,33 +30,33 @@
     }
 
     &__option {
-      background: var(--header);
+      background: var(--header-background-color);
       .__selected {
-        border-bottom: 2px solid var(--sign-in-accent);
-        color: var(--color-white);
+        border-bottom: 2px solid var(--primary-cta-color);
+        color: var(--primary-text-color);
       }
     }
 
     &__group--focused {
       .cr-sign-up-form__label {
-        color: var(--sign-in-accent);
+        color: var(--primary-cta-color);
       }
 
       input {
-        border-color: var(--sign-in-accent) !important;
+        border-color: var(--primary-cta-color) !important;
       }
     }
 
     .cr-button {
-      color: var(--color-white);
-      background: var(--button-primary) !important;
+      color: var(--primary-text-color);
+      background: var(--primary-cta-color) !important;
       border-radius: calc(var(--gap) * 0.5);
       font-size: calc(var(--gap) * 2.66);
       margin-top: calc(var(--gap) * 1.55);
 
       &--disabled {
         color: var(--button-dark-gray);
-        background: var(--button-disabled) !important;
+        background: var(--cta-color-opacity-48) !important;
       }
 
       &:hover {
@@ -70,12 +70,12 @@
 
     &__title {
       background: transparent;
-      color: var(--active-color);
+      color: var(--primary-cta-color);
       font-size: calc(var(--gap) * 4);
       margin: calc(var(--gap) * 6.66) !important;
     }
     &__label {
-      background: var(--base-bright);
+      background: var(--body-background-color);
       color: var(--text-muted);
       font-size: calc(var(--gap) * 2);
       top: calc(var(--gap) * (-1.33));
@@ -83,9 +83,9 @@
     }
     &__input {
       input {
-        color: var(--color-white);
+        color: var(--primary-text-color);
         font-size: calc(var(--gap) * 2.33);
-        border: 1px solid var(--input-block-border-color);
+        border: 1px solid var(--input-border);
         border-radius: calc(var(--gap) * 0.66);
       }
     }
@@ -95,7 +95,7 @@
         font-weight: bolder;
       }
       &-signin {
-        color: var(--active-color);
+        color: var(--primary-cta-color);
         font-size: calc(var(--gap) * 2.33);
         font-weight: bold;
       }
@@ -104,18 +104,18 @@
     .cr-checkbox {
       padding-left: calc(2.6 * var(--checkbox-general-intent));
       &__checkitem {
-        border-color: var(--checkbox-border-color);
+        border-color: var(--icon);
         &::after {
-          border-color: var(--color-white);
+          border-color: var(--primary-text-color);
         }
       }
       &__label {
-        color: var(--c--base-9);
+        color: var(--secondary-text-color);
         font-size: calc(var(--gap) * 2.33);
       }
     }
     &__error {
-      color: var(--color-red);
+      color: var(--system-red);
     }
     &__recaptcha {
       position: relative;
@@ -136,10 +136,10 @@
     border-radius: calc(var(--gap) * 0.66);
     min-width: 30% !important;
     width: calc(var(--big-gap) * 10);
-    background-color: var(--background-dark);
+    background-color: var(--body-background-color);
     .cr-modal__container-header {
       border-bottom: 2px solid var(--sign-up-modal-border);
-      color: var(--bright-1);
+      color: var(--primary-text-color);
       border-top-left-radius: calc(var(--gap) * 0.66);
       border-top-right-radius: calc(var(--gap) * 0.66);
       text-align: center;

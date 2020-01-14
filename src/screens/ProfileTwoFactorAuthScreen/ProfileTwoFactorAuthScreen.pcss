@@ -5,13 +5,13 @@
 
   &__header {
     border-bottom: 2px solid var(--email-form-border);
-    background: var(--header);
+    background: var(--header-background-color);
     height: calc(var(--gap) * 9.66);
     text-transform: uppercase;
     line-height: calc(var(--gap) * 9.66);
     font-style: normal;
     font-size: calc(var(--gap) * 2.33);
-    color: var(--bright-1);
+    color: var(--primary-text-color);
 
     img {
       cursor: pointer;
@@ -36,12 +36,12 @@
         left: 5%;
         z-index: 5;
         top: -10px;
-        background: var(--base-bright)
+        background: var(--body-background-color)
       }
 
       &:focus-within {
         legend {
-          color: var(--accent);
+          color: var(--primary-cta-color);
         }
       }
     }
@@ -49,7 +49,7 @@
     fieldset {
       background: inherit;
       border-radius: calc(var(--gap) * 0.66);
-      border: 1px solid var(--copyable-field-border);
+      border: 1px solid var(--input-border);
       flex-grow: 1;
       width: 100%;
       overflow: hidden;
@@ -79,15 +79,15 @@
 
       &:focus-within {
         overflow: hidden;
-        border: 1px solid var(--color-blue) !important;
+        border: 1px solid var(--primary-cta-color) !important;
         border-radius: calc(var(--gap) * 0.66);
         legend {
-          color: var(--color-blue) !important;
+          color: var(--primary-cta-color) !important;
         }
       }
 
       .cr-deposit-crypto__copyable-title {
-        background: var(--base-bright);
+        background: var(--body-background-color);
         margin-top: calc(var(--gap) * -1.5);
         position: absolute;
         width: max-content;
@@ -100,17 +100,8 @@
 
           input {
             box-sizing: border-box;
-            color: var(--placeholder-text);
+            color: var(--secondary-text-color);
             background: transparent;
-          }
-
-          .cr-copyable-text-field__button {
-            background: var(--button-normal);
-            color: var(--white);
-
-            &:hover {
-              background: var(--button-hover);
-            }
           }
         }
       }
@@ -130,12 +121,12 @@
       margin: calc(var(--gap) * 2) 0;
 
       &:focus-within {
-        color: var(--accent);
-        border-color: var(--accent);
+        color: var(--primary-cta-color);
+        border-color: var(--primary-cta-color);
       }
 
       input {
-        color: var(--color-white);
+        color: var(--primary-text-color);
         background: transparent;
         border: unset;
         bottom: 0;
@@ -191,7 +182,7 @@
         margin: calc(var(--gap) * 2) 0;
 
         a {
-          color: var(--accent);
+          color: var(--primary-cta-color);
         }
 
         div {
@@ -209,7 +200,7 @@
 
       input {
         font-size: var(--font-size);
-        color: var(--base-3);
+        color: var(--secondary-text-color);
         text-align: left;
         width: 100%;
       }
@@ -217,14 +208,14 @@
   }
 
   &__form {
-    background: var(--base-bright);
+    background: var(--body-background-color);
     box-shadow: 1px 1px 5px rgba(46, 76, 128, 0.2);
 
     .cr-copyable-text-field {
       border: none;
 
       .cr-button {
-        color: var(--bright-1);
+        color: var(--primary-text-color);
         width: 55%;
       }
 
@@ -243,13 +234,13 @@
   }
 
   .cr-button {
-    background: var(--button-primary);
-    color: var(--white);
+    background: var(--primary-cta-color);
+    color: var(--primary-text-color);
     font-size: calc(var(--gap) * 2.66);
   }
 
   .cr-copyable-text-field {
-    border-color: var(--sign-in-input-border-color);
+    border-color: var(--input-border);
 
     input {
       font-size: var(--font-size);

@@ -3,9 +3,8 @@
   justify-content: space-between;
 
   &__fieldset {
-    background-color: var(--order-input-input-bg);
-    border: 1px solid var(--order-input-border-color);
-    color: var(--order-input-input-color);
+    border: 1px solid var(--input-border);
+    color: var(--primary-text-color);
     display: inline-block;
     position: relative;
     margin: 0;
@@ -25,17 +24,16 @@
     }
 
     &--focused {
-      border: 1px solid var(--accent) !important;
+      border: 1px solid var(--primary-cta-color) !important;
 
       label {
-        color: var(--accent);
+        color: var(--primary-cta-color);
       }
     }
   }
 
   &__crypto-icon {
-    background-color: var(--order-input-input-bg);
-    border: 1px solid var(--order-input-border-color);
+    border: 1px solid var(--input-border);
     border-left: none;
     display: inline-block;
     margin-top: calc(var(--gap) * 2);
@@ -54,7 +52,7 @@
     &__fieldset {
       label {
         font-size: calc(var(--gap) * 1.5);
-        color: var(--order-input-border-color);
+        color: var(--input-border);
       }
     }
 

@@ -1,6 +1,6 @@
 .pg-orders-tab {
   align-items: flex-start !important;
-  background: var(--base-bright);
+  background: var(--body-background-color);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -20,8 +20,8 @@
 
     .cr-tab-panel__navigation-container {
       position: relative;
-      background: var(--table-dark-header-color);
-      border-bottom: 1px solid var(--header-border);
+      background: var(--header-background-color);
+      border-bottom: 1px solid var(--divider-color);
       border-top-left-radius: calc(var(--gap) * 0.66);
       border-top-right-radius: calc(var(--gap) * 0.66);
       margin-bottom: 0;
@@ -79,10 +79,10 @@
           margin: 10px;
 
           &-row {
-            border-bottom: 1px solid var(--header-border);
+            border-bottom: 1px solid var(--divider-color);
 
             th {
-              background-color: var(--background-dark);
+              background-color: var(--body-background-color);
               color: var(--table-text-color);
               font-size: 12px !important;
               font-weight: 500;
@@ -105,14 +105,14 @@
         }
 
         &__body {
-          background-color: var(--background-dark);
+          background-color: var(--body-background-color);
 
           tr {
-            background-color: var(--background-dark);
-            border-bottom: 1px solid var(--header-border);
+            background-color: var(--body-background-color);
+            border-bottom: 1px solid var(--divider-color);
 
             td {
-              background-color: var(--background-dark);
+              background-color: var(--body-background-color);
               color: var(--table-text-color);
               font-size: 13px !important;
               font-weight: 400;
@@ -156,11 +156,11 @@
     }
 
     &-canceled {
-      color: var(--color-red);
+      color: var(--system-red);
     }
 
     &-opened {
-      color: var(--color-green);
+      color: var(--system-green);
     }
   }
 
@@ -170,13 +170,13 @@
     margin-top: 1%;
     cursor: pointer;
     text-align: right;
-    color: var(--base-new);
+    color: var(--secondary-text-color);
     font-size: 12px !important;
     font-weight: 500;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
     &:hover {
-      color: var(--color-white);
+      color: var(--primary-text-color);
     }
   }
 
@@ -189,7 +189,7 @@
 
     &::before,
     &::after {
-      background: var(--text-table-grey);
+      background: var(--secondary-text-color);
       content: '';
       position: absolute;
       top: 65%;
@@ -213,13 +213,13 @@
     margin-top: 1%;
     cursor: pointer;
     text-align: right;
-    color: var(--base-new);
+    color: var(--secondary-text-color);
     font-size: 12px !important;
     font-weight: 500;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
     &:hover {
-      color: var(--color-white);
+      color: var(--primary-text-color);
     }
   }
 

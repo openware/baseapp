@@ -10,7 +10,7 @@
     width: calc(var(--gap) * 70.66);
   }
   .cr-sign-in-form {
-    background: var(--base-bright);
+    background: var(--body-background-color);
     margin: 0 auto;
     border-radius: calc(var(--gap) * 0.66);
     display: flex;
@@ -29,23 +29,23 @@
     }
 
     &__option {
-      background: var(--header);
+      background: var(--header-background-color);
       .__selected {
-        border-bottom: 2px solid var(--sign-in-accent);
-        color: var(--color-white);
+        border-bottom: 2px solid var(--primary-cta-color);
+        color: var(--primary-text-color);
       }
     }
 
     .cr-button {
-      color: var(--white);
-      background: var(--button-primary);
+      color: var(--primary-text-color);
+      background: var(--primary-cta-color);
       border-radius: calc(var(--gap) * 0.5);
       font-size: calc(var(--gap) * 2.66);
       margin-top: calc(var(--gap) * 1.55);
 
       &--disabled {
-        color: var(--button-dark-gray);
-        background: var(--button-disabled) !important;
+        color: var(--cta-contrast-opacity-48);
+        background: var(--cta-color-opacity-48) !important;
       }
 
       &:hover {
@@ -63,14 +63,14 @@
     }
 
     &__forgot {
-      color: var(--base-new);
+      color: var(--secondary-text-color);
       padding-top: calc(var(--gap) * 1.33);
     }
     &__input {
       input {
-        color: var(--color-white);
+        color: var(--primary-text-color);
         font-size: calc(var(--gap) * 2.33);
-        border: 1px solid var(--input-block-border-color);
+        border: 1px solid var(--input-border);
         border-radius: calc(var(--gap) * 0.66);
       }
     }
@@ -88,18 +88,18 @@
         font-weight: bolder;
       }
       &-signup {
-        color: var(--active-color);
+        color: var(--primary-cta-color);
         font-size: calc(var(--gap) * 2.33);
         font-weight: bold;
       }
     }
     &__group--focused {
       .cr-sign-in-form__label {
-        color: var(--sign-in-accent);
+        color: var(--primary-cta-color);
       }
 
       input {
-        border-color: var(--sign-in-accent) !important;
+        border-color: var(--primary-cta-color) !important;
       }
     }
   }

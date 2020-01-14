@@ -1,71 +1,66 @@
 :root {
-  --main-bg: #1E2841;
-  --back-bg: #171C29;
-  --second-bg: #222B41;
-  --text: #657395;
-  --placeholder-text: #737F92;
-  --header: #27324F;
-  --header-text: #919EBA;
-  --button-normal: #2E4C80;
-  --white: #FFFFFF;
-  --bright: #FFFFFF;
-  --accent: #3C78E0;
-  --green: #54B489;
-  --red: #E85E59;
-  --selected-item: #3A4663;
-  --gamboge: #E0A300;
+  /* Primary UI colors */
+  --primary-cta-color: #3C78E0;
+  --contrast-cta-color: #FFFFFF;
 
-  /* linear-gradients */
-  --background-dropdown: var(--button-normal);
-  --background-dropdown-hover: var(--header-text);
-  --button-dark-gray: linear-gradient(0deg, rgba(#fff, 0.5), rgba(#fff, 0.5)), var(--color-white);
-  --copyable-field-border: var(--base-2);
-  --header-border: var(--placeholder-text);
-  --input-block-border-color: var(--placeholder-text);
-  --sign-in-accent: var(--accent);
-  --table-header-color: var(--placeholder-text);
-  --table-header-text: var(--placeholder-text);
-  --text-muted: var(--placeholder-text);
-  --trading-header-background: var(--back-bg);
-  --trading-header-btn-open: var(--table-dark-header-color);
-  --trading-grid-background: #182034;
-  --trading-screen-background: var(--back-bg);
+  /* Background UI colors */
+  --main-background-color: #171C29;
+  --header-background-color: #28334E;
+  --body-background-color: #1E2841;
+  --dropdown-background-color: #3D4462;
 
-  /* KYC */
-  --kyc-circle-color: var(--main-bg);
+  /* System UI colors */
+  --system-green: #54B489;
+  --system-red: #E85E59;
+  --system-yellow: #E8AF59;
+
+  /* Trading UI colors */
+  --bids: #54B489;
+  --asks: #E85E59;
+
+  /* Text, Icons, Divider colors */
+  --primary-text-color: #fff;
+  --text-contrast-color: #171C29;
+  --secondary-text-color: #737F92;
+  --icons: #737F92;
+  --divider-color: rgba(#FFFFFF, 0.1);
+  --text-muted: var(--secondary-text-color);
+  --input-border: rgba(#737F92, 0.5);
+
+  /* Call to action (CTA) color opacity */  
+  --cta-color-opacity-48: rgba(#3C78E0, 0.48);
+
+  /* Call to action (CTA) contrast opacity */  
+  --cta-contrast-opacity-48: rgba(#FFFFFF, 0.48);
+  --cta-contrast-opacity-0-1: rgba(#FFFFFF, 0.1);
+
+  /* Call to action (CTA) elements opacity */
+  --cta-icons-opacity-48: rgba(#737F92, 0.48);
+
+  --markets-selected-color: #3A4663;
+  --background-dropdown-hover: rgba(#3C78E0, 0.48);
+
+  --table-header-color: var(--secondary-text-color);
+  --table-header-text: var(--secondary-text-color);
+  --trading-header-background: var(--body-background-color);
+  --trading-header-btn-open: var(--header-background-color);
+  --trading-screen-background: var(--main-background-color);
 
   /* orders */
-  --orders-button-percentage-text: var(--header-text);
-  --orders-border-color: var(--text);
-  --orders-button-percentage-normal: linear-gradient(0deg, rgba(#000, 0.11), rgba(#000, 0.11)), var(--selected-item);
+  --orders-button-percentage-text: var(--primary-text-color);
+  --orders-button-percentage-normal: linear-gradient(0deg, rgba(#000, 0.11), rgba(#000, 0.11)), var(--dropdown-background-color);
   --orders-button-percentage-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--orders-button-percentage-normal);
   --orders-button-percentage-active: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--orders-button-percentage-normal);
-  --orders-button-green-normal: var(--green);
-  --orders-button-green-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--orders-button-green-normal);
-  --orders-button-green-active: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--orders-button-green-normal);
-  --orders-button-red-normal: var(--red);
-  --orders-button-red-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--orders-button-red-normal);
-  --orders-button-red-active: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--orders-button-red-normal);
-
-  /* NavBar languages */
-  --navbar-language-selector-background: var(--button-normal);
-  --navbar-language-selector-color: var(--placeholder-text);
-  --navbar-language-selector-current-color: var(--text);
-  --navbar-language-selector-current-background: var(--header);
-  --navbar-language-selector-color-hover: var(--white);
-  --navbar-language-selector-background-hover: var(--header-text);
+  --orders-button-green-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--system-green);
+  --orders-button-green-active: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--system-green);
+  --orders-button-red-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--system-red);
+  --orders-button-red-active: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--system-red);
 
   /* wallets */
-  --estimated-value-background: var(--base-bright);
-  --estimated-value-label-text: var(--placeholder-text);
-  --estimated-value-label-background: var(--header);
-
-  --beneficiaries-primary-0-8: rgba(255, 255, 255, 0.8);
-  --beneficiaries-primary-0-1: rgba(255, 255, 255, 0.1);
-  --beneficiaries-primary-0-06: rgba(255, 255, 255, 0.06);
-  --beneficiaries-primary-0-04: rgba(255, 255, 255, 0.04);
+  --estimated-value-label-text: var(--secondary-text-color);
+  --estimated-value-label-background: var(--header-background-color);
 
   /* sidebar */
-  --nav-item-selected: #324167;
-  --nav-item-hover: #3a4c79;
+  --nav-item-selected: var(--dropdown-background-color);
+  --nav-item-hover: var(--markets-selected-color);
 }

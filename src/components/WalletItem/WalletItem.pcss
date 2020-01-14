@@ -1,5 +1,5 @@
 .cr-wallet-item {
-  background-color: var(--background-wallet-item);
+  background-color: var(--header-background-color);
   height: calc(var(--gap) * 8);
   justify-content: space-between;
   display: flex;
@@ -10,7 +10,7 @@
   }
 
   & > * {
-    background: var(--background-wallet-item);
+    background: var(--header-background-color);
   }
 
   &__info {
@@ -22,7 +22,7 @@
   &__description {
     display: flex;
     flex-direction: column;
-    background: var(--background-wallet-item);
+    background: var(--header-background-color);
     margin-left: 10px;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -37,29 +37,29 @@
   &__icon {
     margin-left: calc(var(--gap) * 4);
     text-transform: uppercase;
-    background: var(--background-wallet-item);
+    background: var(--header-background-color);
     font-size: 1.5em !important;
 
     & > * {
-      background: var(--background-wallet-item);
+      background: var(--header-background-color);
     }
   }
 
   &__balance {
     text-align: right;
     margin-right: calc(var(--gap) * 10);
-    background: var(--background-wallet-item);
+    background: var(--header-background-color);
 
     &-locked {
       font-size: 0.9em;
       padding-top: var(--gap);
       font-weight: 200;
-      color: var(--placeholder-text);
-      background: var(--background-wallet-item);
+      color: var(--secondary-text-color);
+      background: var(--header-background-color);
     }
   }
 
   &__amount-locked {
-    background: var(--background-wallet-item);
+    background: var(--header-background-color);
   }
 }

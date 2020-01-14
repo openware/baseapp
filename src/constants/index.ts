@@ -34,6 +34,7 @@ export const colors = {
             sun: '#959EAB',
             moon: '#fff',
         },
+        icons: '#737F92',
     },
     basic: {
         chart: {
@@ -48,5 +49,6 @@ export const colors = {
             sun: '#fff',
             moon: '#28334E',
         },
+        icons: '#737F92',
     },
 };

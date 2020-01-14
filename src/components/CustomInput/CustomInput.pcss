@@ -3,7 +3,7 @@
     position: absolute;
     top: 0;
     z-index: 5;
-    background: var(--base-bright);
+    background: var(--body-background-color);
     left: 5%;
     font-size: calc(var(--gap) * 2);
     padding: 0 calc(var(--gap) * 0.7);
@@ -12,25 +12,25 @@
 
   input,
   input:focus {
-    background: var(--main-bg) !important;
-    color: var(--color-white);
+    background: var(--body-background-color) !important;
+    color: var(--primary-text-color);
     box-shadow: none;
   }
 
   input:focus-within {
-    border-color: var(--sign-in-accent);
+    border-color: var(--primary-cta-color);
 
     label {
-      color: var(--accent);
+      color: var(--primary-cta-color);
     }
   }
 
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
-    border: 1px solid var(--base);
-    -webkit-text-fill-color: var(--color-white);
-    -webkit-box-shadow: 0 0 0px 1000px var(--main-bg) inset;
+    border: 1px solid var(--input-border);
+    -webkit-text-fill-color: var(--primary-text-color);
+    -webkit-box-shadow: 0 0 0px 1000px var(--body-background-color) inset;
     transition: background-color 5000s ease-in-out 0s;
   }
 }

@@ -1,11 +1,11 @@
 .pg-markets {
-  background-color: var(--base-bright);
+  background-color: var(--body-background-color);
   padding-bottom: calc(var(--gap) * 6.67);
   text-align: left;
   width: 100%;
 
   .cr-markets .cr-table__row--selected td {
-    color: var(--title-component-color);
+    color: var(--primary-text-color);
   }
 
   &--loading {
@@ -21,7 +21,7 @@
       display: flex;
       position: fixed;
       bottom: 0;
-      background: var(--base-bright);
+      background: var(--body-background-color);
       z-index: 9999;
       padding: calc(var(--gap) * 0.83) var(--gap) calc(var(--gap) * 0.83) 0;
 
@@ -45,7 +45,7 @@
   }
 
   .cr-table-header__content {
-    background: var(--table-dark-header-color);
+    background: var(--header-background-color);
     .cr-title-component {
       font-weight: normal;
     }
@@ -74,15 +74,15 @@
     &__row {
       &--selected {
         td {
-          color: var(--base);
+          color: var(--secondary-text-color);
         }
       }
     }
     .__positive {
-      color: var(--color-green) !important;
+      color: var(--system-green) !important;
     }
     .__negative {
-      color: var(--color-red) !important;
+      color: var(--system-red) !important;
     }
   }
 }

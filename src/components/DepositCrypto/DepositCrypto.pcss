@@ -1,109 +1,95 @@
 .cr-deposit-crypto {
-  background: transparent;
-  color: var(--table-text-color);
-  display: flex;
-  font-size: var(--font-size);
-  padding: calc(var(--gap) * 3);
-  flex-direction: column;
+	background: transparent;
+	color: var(--table-text-color);
+	display: flex;
+	font-size: var(--font-size);
+	padding: calc(var(--gap) * 3);
+	flex-direction: column;
 
-  div:nth-child(1) {
-    display: flex;
-    justify-content: space-between;
-  }
+	div:nth-child(1) {
+		display: flex;
+		justify-content: space-between;
+	}
 
-  .cr-deposit-info {
-    background-color: inherit;
-    font-size: calc(var(--gap) * 2.3);
-    width: 56%;
-    line-height: 25px;
-    margin-bottom: calc(var(--gap) * 3);
-  }
+	.cr-deposit-info {
+		background-color: inherit;
+		font-size: calc(var(--gap) * 2.3);
+		width: 56%;
+		line-height: 25px;
+		margin-bottom: calc(var(--gap) * 3);
+	}
 
-  &__copyable {
-    margin-top: calc(var(--gap) * 6);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	&__copyable {
+		margin-top: calc(var(--gap) * 6);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
-    .custom-input {
-      width: 80%;
-    }
+		.custom-input {
+			width: 80%;
+		}
 
-    &-title {
-      background-color: inherit;
-      color: var(--table-text-color);
-      font-size: calc(var(--gap) * 2);
-      margin-left: var(--gap);
-    }
+		&-title {
+			background-color: inherit;
+			color: var(--table-text-color);
+			font-size: calc(var(--gap) * 2);
+			margin-left: var(--gap);
+		}
 
-    &-area {
-      margin-top: calc(var(--gap) * -1.1);
+		&-area {
+			margin-top: calc(var(--gap) * -1.1);
 
-      .input-group {
-        &:first-child {
-          &:focus-within {
-            border: 1px solid var(--color-blue);
-          }
-        }
-      }
-    }
+			.custom-input input {
+				color: var(--secondary-text-color);
+			}
+		}
 
-    .cr-copyable-text-field {
-      &__input {
-        background: inherit;
-        padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+		.cr-copyable-text-field {
+			&__input {
+				background: inherit;
+				padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
 
-        input {
-          background: unset;
-          color: var(--table-text-color);
-        }
+				input {
+					background: unset;
+					color: var(--table-text-color);
+				}
+			}
+		}
 
-        .cr-copyable-text-field__button {
-          background: var(--button-normal);
-          color: var(--white);
-          width: 28%;
+		fieldset {
+			border: none;
 
-          &:hover {
-            background: var(--button-hover);
-          }
-        }
-      }
-    }
+			.cr-copyable-text-field {
+				border: 1px solid var(--input-border);
+				&:focus-within {
+					border: 1px solid var(--primary-cta-color);
+					label {
+						color: var(--primary-cta-color);
+					}
+				}
+			}
+		}
+	}
 
-    fieldset {
-      border: none;
+	.qr-code {
+		margin-top: calc(var(--gap) * 3);
+		margin-left: calc(var(--gap) * 3);
 
-      &:focus-within {
-        legend {
-          color: var(--color-blue);
-        }
-      }
-
-      .cr-copyable-text-field {
-        border: 1px solid var(--base);
-      }
-    }
-  }
-
-  .qr-code {
-    margin-top: calc(var(--gap) * 3);
-    margin-left: calc(var(--gap) * 3);
-
-    svg {
-      border: 1px solid var(--white);
-    }
-  }
+		svg {
+			border: 1px solid var(--primary-text-color);
+		}
+	}
 }
 
 @media screen and (max-width: 768px) {
-  .cr-deposit-crypto {
-    padding: 0;
-    .cr-deposit-info {
-      text-align: center;
-      width: 100%;
-    }
-    .cr-deposit-crypto__copyable-area {
-      height: calc(var(--gap) * 5);
-    }
-  }
+	.cr-deposit-crypto {
+		padding: 0;
+		.cr-deposit-info {
+			text-align: center;
+			width: 100%;
+		}
+		.cr-deposit-crypto__copyable-area {
+			height: calc(var(--gap) * 5);
+		}
+	}
 }

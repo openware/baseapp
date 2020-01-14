@@ -14,25 +14,25 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        background-color: var(--email-confirmation-screen-background);
+        background-color: var(--body-background-color);
         box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.25);
         border-radius: calc(var(--big-gap) * 0.05);
 
         &-title {
-            background-color: var(--email-confirmation-screen-title-background);
+            background-color: var(--header-background-color);
             display: flex;
             justify-content: center;
             align-items: center;
             text-transform: uppercase;
-            color: var(--bright-1);
+            color: var(--primary-text-color);
             font-size: calc(var(--big-gap) * 0.23);
             width: 100%;
             height: var(--big-gap);
-            border-bottom: 2px solid var(--text);
+            border-bottom: 2px solid var(--secondary-text-color);
         }
 
         &-body {
-            background: var(--email-confirmation-screen-background);
+            background: var(--body-background-color);
             display: flex;
             flex-direction: column;
             justify-content: space-around;
@@ -45,7 +45,7 @@
                 align-items: center;
                 padding: 0 calc(var(--big-gap) * 0.9);
                 text-align: center;
-                color: var(--email-confirmation-screen-text-color);
+                color: var(--secondary-text-color);
                 font-size: calc(var(--big-gap) * 0.27);
             }
 
@@ -57,7 +57,7 @@
                 &-button {
                     background: none;
                     text-decoration: underline;
-                    color: var(--email-confirmation-screen-text-color);
+                    color: var(--secondary-text-color);
                     font-size: calc(var(--big-gap) * 0.23);
                     border: none;
                     outline: none;

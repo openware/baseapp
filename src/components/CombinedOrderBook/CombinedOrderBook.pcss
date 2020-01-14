@@ -27,7 +27,7 @@
     flex-direction: column;
     margin-top: 5px;
     padding-bottom: 5px;
-    color: var(--placeholder-text);
+    color: var(--secondary-text-color);
 
     span {
       font-weight: normal;
@@ -43,17 +43,17 @@
     }
 
     &-negative {
-      color: var(--red);
+      color: var(--system-red);
     }
 
     &-positive {
-      color: var(--color-green);
+      color: var(--system-green);
     }
   }
 
   .cr-order-book {
     td {
-      color: var(--color-white);
+      color: var(--primary-text-color);
     }
   }
 
@@ -62,13 +62,13 @@
     overflow: unset;
 
     &-market {
-      border-top: 1px solid var(--title-component-color);
+      border-top: 1px solid var(--divider-color);
       position: sticky;
       bottom: 0;
       right: 0;
       left: 0;
       z-index: 25;
-      background: var(--base-bright);
+      background: var(--body-background-color);
     }
 
     .cr-order-book {
@@ -99,7 +99,7 @@
       height: 154px;
 
       &:first-child {
-        border-bottom: 1px solid var(--title-component-color);
+        border-bottom: 1px solid var(--divider-color);
         height: 208px;
 
         .cr-table-background {
@@ -108,7 +108,7 @@
       }
 
       &:last-child {
-        border-top: 1px solid var(--title-component-color);
+        border-top: 1px solid var(--divider-color);
 
         .cr-table-background {
           top: 0;

@@ -34,7 +34,7 @@
   }
 
   .cr-crypto-icon {
-    color: var(--white-color);
+    color: var(--primary-text-color);
     opacity: 1;
 
     img {
@@ -82,7 +82,7 @@
         background: transparent;
 
         span {
-          color: var(--color-white);
+          color: var(--primary-text-color);
           &:nth-child(1) {
             opacity: 0.5
           }
@@ -103,7 +103,7 @@
         opacity: 0.60;
 
         path {
-          fill: var(--color-white);
+          fill: var(--primary-text-color);
         }
       }
 
@@ -129,7 +129,7 @@
         }
 
         .cr-crypto-icon {
-          color: var(--white-color);
+          color: var(--primary-text-color);
           opacity: 1;
         }
 
@@ -138,7 +138,7 @@
           opacity: 1;
 
           path {
-            fill: var(--color-white);
+            fill: var(--primary-text-color);
           }
         }
 
@@ -159,7 +159,7 @@
         &::before {
           content: '';
           width: 4px;
-          background-color: var(--color-blue);
+          background-color: var(--primary-cta-color);
           height: calc(var(--gap) * 9);
           border-top-left-radius: calc(var(--gap) * 0.66);
           border-bottom-left-radius: calc(var(--gap) * 0.66);
@@ -169,7 +169,7 @@
   }
 
   .pg-wallet__tabs {
-    background: var(--base-bright);
+    background: var(--body-background-color);
     border-left: 1px solid var(--wallets-item-border);
   }
 
@@ -225,7 +225,7 @@
         left: calc(var(--gap) * 1.66);
         padding: calc(var(--gap) * 0.33) var(--gap);
         border-radius: calc(var(--gap) * 0.33);
-        background: var(--estimated-value-background);
+        background: var(--body-background-color);
       }
 
       .custom-input {
@@ -244,7 +244,7 @@
 
         &:focus-within {
           label {
-            color: var(--accent) !important;
+            color: var(--primary-cta-color) !important;
           }
         }
       }
@@ -274,11 +274,11 @@
     &__group__amount--focused,
     &__group__code--focused {
       .cr-withdraw__label {
-      color: var(--sign-in-accent) !important;
+      color: var(--primary-cta-color) !important;
       }
 
       input {
-        border-color: var(--sign-in-accent) !important;
+        border-color: var(--primary-cta-color) !important;
       }
     }
 
@@ -309,7 +309,7 @@
     font-size: calc(var(--gap) * 2.6);
 
     &__active {
-      border-bottom: 1px solid var(--active-tab-color);
+      border-bottom: 1px solid var(--primary-cta-color);
       background: transparent;
     }
   }
@@ -319,7 +319,7 @@
       &__copyable {
         fieldset {
           &:focus-within {
-            border-color: var(--base-2);
+            border-color: var(--input-border);
             legend {
               color: var(--table-text-color);
             }
@@ -327,8 +327,7 @@
         }
 
         .cr-deposit-crypto__copyable-area {
-
-          border: 1px solid var(--base);
+          border: 1px solid var(--input-border);
           .custom-input {
             width: 85%;
             .input-group {
@@ -345,8 +344,8 @@
   }
 
   .cr-tab-panel__navigation-container {
-    background: var(--table-dark-header-color);
-    border-bottom: 1px solid var(--header-border);
+    background: var(--header-background-color);
+    border-bottom: 1px solid var(--divider-color);
     border-radius: 0;
     margin-bottom: 0;
     &-navigation {
@@ -356,7 +355,7 @@
   }
 
   .cr-tab-content {
-    background: var(--base-bright);
+    background: var(--body-background-color);
     display: none;
     border-bottom-right-radius: calc(var(--gap) * .5);
     border-bottom-left-radius: calc(var(--gap) * .5);
@@ -368,8 +367,8 @@
 
   .cr-wallet-item {
     cursor: pointer;
-    background: var(--background-wallet-item);
-    color: var(--bright-1);
+    background: var(--header-background-color);
+    color: var(--primary-text-color);
     height: calc(var(--gap) * 9);
     box-sizing: border-box;
     border-bottom: 1px solid var(--wallets-item-border);
@@ -406,7 +405,7 @@
 
     &--active {
       border-radius: calc(var(--gap) * 0.66);
-      background: var(--active-color);
+      background: var(--primary-cta-color);
       outline: none;
 
       .cr-wallet-item__icon,
@@ -425,7 +424,7 @@
 
   .pg-wallet__tabs-content {
     display: flex;
-    background: var(--background);
+    background: var(--main-background-color);
   }
 
   .cr-search {
@@ -502,9 +501,9 @@
       &__head {
         margin: 10px;
         &-row {
-          border-bottom: 1px solid var(--header-border);
+          border-bottom: 1px solid var(--divider-color);
           th {
-            background-color: var(--background-dark);
+            background-color: var(--body-background-color);
             color: var(--table-text-color);
             font-size: 12px !important;
             font-weight: 500;
@@ -526,12 +525,12 @@
         }
       }
       &__body {
-        background-color: var(--background-dark);
+        background-color: var(--body-background-color);
         tr {
-          background-color: var(--background-dark);
-          border-bottom: 1px solid var(--header-border);
+          background-color: var(--body-background-color);
+          border-bottom: 1px solid var(--divider-color);
           td {
-            background-color: var(--background-dark);
+            background-color: var(--body-background-color);
             color: var(--table-text-color);
             font-size: 13px !important;
             font-weight: 400;

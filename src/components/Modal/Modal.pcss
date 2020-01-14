@@ -15,15 +15,15 @@
   &__container {
     display: flex;
     flex-direction: column;
-    background-color: var(--background);
-    outline: 1px solid var(--base-3);
+    background-color: var(--main-background-color);
+    outline: 1px solid var(--secondary-text-color);
     margin: 0 auto;
     min-width: 50% !important;
 
     &-header {
-      outline: 1px solid var(--base-3);
+      outline: 1px solid var(--secondary-text-color);
       margin-bottom: calc(var(--gap) * 3);
-      color: var(--base);
+      color: var(--primary-text-color);
       font-size: var(--font-size-bigger);
       padding: calc(var(--gap) * 3);
     }
@@ -31,16 +31,16 @@
     &-content {
       flex: 1;
       margin-bottom: calc(var(--gap) * 3);
-      color: var(--base-2);
+      color: var(--secondary-text-color);
       padding: calc(var(--gap) * 3);
 
       input {
-        color: var(--base-2);
+        color: var(--secondary-text-color);
       }
     }
 
     &-footer {
-      outline: 1px solid var(--base-3);
+      outline: 1px solid var(--secondary-text-color);
       padding: calc(var(--gap) * 3);
     }
   }

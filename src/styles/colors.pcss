@@ -1,144 +1,68 @@
 :root, .light-mode {
-  --active-tab-color: var(--accent);
-  --base: var(--text);
-  --base-1: #FA00FF;
-  --base-2: var(--text);
-  --base-3: var(--placeholder-text);
-  --base-8: #FA00FF;
-  --base-bright: var(--main-bg);
-  --background: var(--back-bg);
-  --color-red: var(--red);
-  --background-dark: var(--main-bg);
-  --background-wallet-item: var(--header);
-  --background-dropdown-hover-text: var(--color-white);
-  --button-primary: var(--button-normal);
-  --button-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--button-normal);
-  --button-active: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--button-normal);
-  --button-disabled: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--button-normal);
-  --header-background-cover: var(--back-bg);
-  --text-table-grey: var(--placeholder-text);
-  --order-input-border-color: var(--placeholder-text);
-  --order-input-input-bg: transparent;
-  --order-input-input-color: var(--color-white);
-  --table-background: var(--main-bg);
-  --table-dark-header-color: var(--header);
-  --title-component-color: var(--header-text);
-  --table-even-row-background: var(--main-bg);
-  --checkbox-border-color: var(--placeholder-text);
-  --sign-in-background-color: var(--main-bg);
-  --sign-in-label-color: #FA00FF;
-  --sign-in-input-color: #FA00FF;
-  --sign-in-input-border-color: var(--placeholder-text);
-  --sign-up-checkbox-color: #FA00FF;
-  --sign-up-checkbox-mark-color: #FA00FF;
-  --history-action-buy: #FA00FF;
-  --history-action-sell: #FA00FF;
-  --open-orders-action-buy: var(--green);
-  --open-orders-action-sell: var(--red);
-  --open-orders-order-buy: var(--green);
-  --open-orders-order-sell: var(--red);
-  --open-orders-background: var(--button-normal);
-  --order-dropdown-background-color: transparent;
-  --order-crypto-icon-background-color: transparent;
-  --order-crypto-font-color: var(--placeholder-text);
-  --order-input-color: var(--color-white);
-  --markets-filter-color: var(--text);
-  --markets-filter-active-color: var(--color-white);
-  --markets-title-color: var(--header-text);
-  --markets-search-border-color: var(--placeholder-text);
-  --markets-selected-color: var(--text);
-  --grid-item-bg: #FA00FF;
-  --grid-placeholder-bg: #FA00FF;
-  --grid-placeholder-border-color: #FA00FF;
-  --grid-resizable-border-color: var(--placeholder-text);
-  --pending: #e8af59;
+  --button-active: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--primary-cta-color);
+  --navbar-text-color: var(--primary-text-color);
+  --table-text-color: var(--secondary-text-color);
+
+  --open-orders-action-buy: var(--system-green);
+  --open-orders-action-sell: var(--system-red);
+  --open-orders-order-buy: var(--system-green);
+  --open-orders-order-sell: var(--system-red);
 
   /* orders */
-  --orders-execute-color: #b18d4f;
-  --orders-placeholder-color: var(--placeholder-text);
-  --orders-text-secondary-color: var(--header-text);
-  --orders-text-primary-color: var(--bright-1);
+  --orders-execute-color: var(--system-yellow);
+  --orders-placeholder-color: var(--secondary-text-color);
+  --orders-text-secondary-color: var(--primary-text-color);
+  --orders-text-primary-color: var(--primary-text-color);
 
   /* BASEAPP COLORS */
 
-  --dropdown-border: var(--placeholder-text);
-  --background-dropdown-text: var(--placeholder-text);
-  --background-dropdown-open-text: var(--header);
-  --sign-in-text: var(--text);
-  --email-form-bg: var(--main-bg);
-  --email-form-border: var(--text);
-  --email-form-accent: var(--accent);
-  --create-order-text: var(--text);
-  --sign-up-modal-border: var(--header);
-  --sign-up--modal-text: var(--placeholder-text);
-
-  --color-green: var(--green);
-  --base-9: var(--placeholder-text);
-  --base-new: var(--placeholder-text);
-  --color-white: var(--bright-1);
-  --muted-text: var(--placeholder-text);
-  --bright-1: var(--bright);
-  --color-blue: var(--accent);
-
-  --navbar-text-color: var(--text);
-
-  --active-color: #FA00FF;
-  --table-text-color: var(--placeholder-text);
+  --dropdown-border: var(--secondary-text-color);
+  --background-dropdown-text: var(--secondary-text-color);
+  --background-dropdown-open-text: var(--header-background-color);
+  --sign-in-text: var(--primary-text-color);
+  --email-form-bg: var(--body-background-color);
+  --email-form-border: var(--secondary-text-color);
+  --create-order-text: var(--primary-text-color);
+  --sign-up-modal-border: var(--header-background-color);
+  --sign-up--modal-text: var(--secondary-text-color);
 
     /* wallets */
-  --wallets-locked-amount: var(--color-white);
-  --wallets-locked-amount-active: var(--color-white);
-  --wallets-item-font: var(--color-white);
-  --wallets-item-font-active: var(--color-white);
-  --wallets-item-bg: var(--main-bg);
-  --wallets-item-bg-active: var(--selected-item);
-  --wallets-item-bg-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--selected-item);
-  --wallets-item-border: var(--selected-item);
-  --wallets-balance: var(--color-white);
-  --wallets-table-divider: var(--text);
+  --wallets-locked-amount: var(--primary-text-color);
+  --wallets-locked-amount-active: var(--primary-text-color);
+  --wallets-item-font: var(--primary-text-color);
+  --wallets-item-font-active: var(--primary-text-color);
+  --wallets-item-bg: var(--body-background-color);
+  --wallets-item-bg-active: var(--dropdown-background-color);
+  --wallets-item-bg-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--dropdown-background-color);
+  --wallets-item-border: var(--dropdown-background-color);
+  --wallets-balance: var(--primary-text-color);
+  --wallets-table-divider: var(--secondary-text-color);
 
-    /* profile */
-  --profile-btn: var(--button-normal);
-  --profile-box: var(--main-bg);
-  --profile-grey: var(--placeholder-text);
-  --profile-slider-round: var(--accent);
-  --profile-slider: var(--button-normal);
-  --profile-activity-header: var(--header);
-  --profile-activity-header-font: var(--header-text);
-  --profile-activity-border: var(--header-border);
-  --profile-url: var(--accent);
+  /* profile */
+  --profile-box: var(--body-background-color);
+  --profile-grey: var(--secondary-text-color);
+  --profile-activity-header: var(--header-background-color);
+  --profile-activity-header-font: var(--primary-text-color);
+  --profile-activity-border: var(--divider-color);
 
   /* KYC */
-  --kyc-title-color: var(--placeholder-text);
-  --kyc-header-color: var(--header);
-  --kyc-header-border: var(--text);
-  --kyc-progress-line: var(--placeholder-text);
-  --kyc-active-color: var(--accent);
-  --kyc-grey: var(--placeholder-text);
-  --kyc-button: var(--button-normal);
-
-  /* Resend email confirmation screen */
-  --email-confirmation-screen-background: var(--main-bg);
-  --email-confirmation-screen-title-background: var(--header);
-  --email-confirmation-screen-title-color: var(--header-text);
-  --email-confirmation-screen-text-color: var(--placeholder-text);
-
-  /* Email verification screen */
-  --email-verification-screen-background: var(--main-bg);
+  --kyc-title-color: var(--secondary-text-color);
+  --kyc-header-color: var(--header-background-color);
+  --kyc-header-border: var(--secondary-text-color);
+  --kyc-progress-line: var(--secondary-text-color);
+  --kyc-grey: var(--secondary-text-color);
 
   /* ToolBar */
-  --trading-header-white: var(--bright);
-  --trading-header-btn-close: var(--table-dark-header-color);
-  --trading-header-selector-background: var(--background-dark);
-  --trading-header-selector-border: var(--header-border);
-  --trading-header-selector-title: var(--placeholder-text);
+  --trading-header-white: var(--primary-text-color);
+  --trading-header-btn-close: var(--header-background-color);
+  --trading-header-selector-border: var(--divider-color);
+  --trading-header-selector-title: var(--secondary-text-color);
   --trading-header-list-background: var(--trading-header-background);
-  --trading-header-fastsearch-button-color-active: var(--bright-1);
-  --trading-header-fastsearch-button-border-active: var(--accent);
-  --trading-header-positive: var(--green);
-  --trading-header-negative: var(--red);
-  --trading-header-search-border: var(--header-border);
+  --trading-header-fastsearch-button-color-active: var(--primary-text-color);
+  --trading-header-positive: var(--system-green);
+  --trading-header-negative: var(--system-red);
+  --trading-header-search-border: var(--divider-color);
 
   /* Tradingview */
-  --trading-view-background: var(--main-bg);
+  --trading-view-background: var(--body-background-color);
 }

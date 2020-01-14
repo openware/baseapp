@@ -1,6 +1,6 @@
 .pg-beneficiaries {
   &__title {
-    color: var(--color-white);
+    color: var(--primary-text-color);
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -9,7 +9,7 @@
 
   &__add {
     align-items: center;
-    background-color: var(--beneficiaries-primary-0-06);
+    background-color: var(--header-background-color);
     border-radius: 4px;
     cursor: pointer;
     display: flex;
@@ -19,7 +19,7 @@
     transition: .2s;
 
     &__label {
-      color: var(--color-white);
+      color: var(--primary-text-color);
       font-style: normal;
       font-weight: 500;
       font-size: 12px;
@@ -33,7 +33,7 @@
     }
 
     &:hover {
-      background-color: var(--beneficiaries-primary-0-1);
+      background-color: var(--cta-contrast-opacity-0-1);
     }
   }
 
@@ -68,7 +68,7 @@
 
       &__text {
         align-items: center;
-        color: var(--placeholder-text);
+        color: var(--secondary-text-color);
         display: flex;
         font-size: 14px;
         font-style: normal;
@@ -81,7 +81,7 @@
 
   &__dropdown {
     align-items: center;
-    background-color: var(--beneficiaries-primary-0-06);
+    background-color: var(--header-background-color);
     border-radius: 4px;
     cursor: pointer;
     display: flex;
@@ -107,7 +107,7 @@
         width: 75%;
 
         &__title {
-          color: var(--placeholder-text);
+          color: var(--secondary-text-color);
           font-style: normal;
           font-weight: 500;
           font-size: 10px;
@@ -115,7 +115,7 @@
         }
 
         &__address {
-          color: var(--color-white);
+          color: var(--primary-text-color);
           font-size: 13px;
           font-style: normal;
           font-weight: 500;
@@ -144,14 +144,14 @@
           &:hover {
             svg {
               path {
-                fill: var(--accent);
+                fill: var(--primary-cta-color);
               }
             }
           }
         }
 
         &__select {
-          color: var(--placeholder-text);
+          color: var(--secondary-text-color);
           font-style: normal;
           font-weight: normal;
           font-size: 12px;
@@ -167,7 +167,7 @@
       }
 
       &:hover {
-        background-color: var(--beneficiaries-primary-0-1);
+        background-color: var(--cta-contrast-opacity-0-1);
       }
     }
 
@@ -211,7 +211,7 @@
           }
 
           &__label {
-            color: var(--placeholder-text);
+            color: var(--secondary-text-color);
             font-size: 10px;
             font-style: normal;
             font-weight: 500;
@@ -219,7 +219,7 @@
           }
 
           &__value {
-            color: var(--color-white);
+            color: var(--primary-text-color);
             font-size: 12px;
             font-style: normal;
             font-weight: 500;
@@ -248,7 +248,7 @@
 
     &__body {
       align-items: center;
-      background-color: var(--background-wallet-item);
+      background-color: var(--header-background-color);
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
       display: flex;
@@ -277,7 +277,7 @@
           width: 75%;
 
           &__title {
-            color: var(--placeholder-text);
+            color: var(--secondary-text-color);
             font-style: normal;
             font-weight: 500;
             font-size: 10px;
@@ -285,7 +285,7 @@
           }
 
           &__address {
-            color: var(--color-white);
+            color: var(--primary-text-color);
             font-size: 13px;
             font-style: normal;
             font-weight: 500;
@@ -315,7 +315,7 @@
             &:hover {
               svg {
                 path {
-                  fill: var(--accent);
+                  fill: var(--primary-cta-color);
                 }
               }
             }
@@ -323,13 +323,13 @@
         }
 
         &:hover {
-          background-color: var(--beneficiaries-primary-0-1);
+          background-color: var(--cta-contrast-opacity-0-1);
         }
       }
 
       &__add, .add {
         align-items: center;
-        background-color: var(--background-wallet-item);
+        background-color: var(--header-background-color);
         border-top: 1px solid var(--wallets-item-border);
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
@@ -342,7 +342,7 @@
         width: 100%;
 
         &__label {
-          color: var(--color-white);
+          color: var(--primary-text-color);
           font-style: normal;
           font-weight: 500;
           font-size: 12px;
@@ -356,7 +356,7 @@
         }
 
         &:hover {
-          background-color: var(--beneficiaries-primary-0-1);
+          background-color: var(--cta-contrast-opacity-0-1);
         }
       }
     }
@@ -381,12 +381,12 @@
     border-bottom-right-radius: 3px;
 
     &__option {
-      background: var(--header);
+      background: var(--header-background-color);
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
 
       &-inner {
-        color: var(--color-white);
+        color: var(--primary-text-color);
         font-size: 16px;
         font-style: normal;
         font-weight: normal;
@@ -408,31 +408,19 @@
       border-radius: 4px;
 
       input {
-        border: 1px solid var(--input-block-border-color) !important;
-        color: var(--color-white);
+        border: 1px solid var(--input-border) !important;
+        color: var(--primary-text-color);
       }
     }
 
     &__group--focused {
       .cr-email-form__label {
-        color: var(--accent);
+        color: var(--primary-cta-color);
       }
 
       input {
         background: var(--email-form-bg);
-        border: 1px solid var(--accent) !important;
-      }
-    }
-
-    &__button {
-      align-items: center;
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-      outline: none;
-
-      &--disabled {
-        color: var(--beneficiaries-primary-0-8) !important;
+        border: 1px solid var(--primary-cta-color) !important;
       }
     }
   }
@@ -441,7 +429,7 @@
     .cr-email-form__form-content {
       .cr-email-form__group--optional {
         .cr-email-form__input {
-          background: var(--beneficiaries-primary-0-04);
+          background: var(--secondary-text-color);
         }
       }
     }
@@ -456,7 +444,7 @@
 
         &__info {
           align-items: center;
-          color: var(--color-white);
+          color: var(--primary-text-color);
           font-weight: normal;
           font-size: 14px;
           position: absolute;

@@ -15,12 +15,6 @@
     &-footer {
       outline: none;
       padding-top: 0;
-
-      .cr-button {
-        width: 20%;
-        height: calc(var(--gap) * 7);
-        background: var(--base-8);
-      }
     }
 
     .cr-tab-panel__navigation-container {
@@ -44,7 +38,7 @@
         }
 
         &__active {
-          border-bottom: 1px solid var(--active-color);
+          border-bottom: 1px solid var(--primary-cta-color);
           color: var(--tab-panel-active);
         }
 
@@ -57,7 +51,7 @@
 
   .tabs-content {
     text-align: left;
-    color: var(--base-8);
+    color: var(--secondary-text-color);
     font-size: calc(var(--font-size) * 1.16);
     max-height: 480px;
     overflow-y: auto;

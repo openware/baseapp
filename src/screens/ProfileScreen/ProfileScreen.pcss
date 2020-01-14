@@ -16,7 +16,7 @@
 
   .cr-button {
     margin-right: 0;
-    color: var(--white);
+    color: var(--primary-text-color);
 
     &:hover {
       background: var(--button-hover);
@@ -33,7 +33,7 @@
 
     &__url {
       font-size: calc(var(--font-size) * 1.335);
-      color: var(--profile-url) !important;
+      color: var(--primary-cta-color) !important;
     }
 
     &__pending {
@@ -42,7 +42,7 @@
       margin-bottom: calc(var(--gap) * 2);
 
       p {
-        color: var(--pending);
+        color: var(--system-yellow);
         margin-right: calc(var(--gap) * 2);
       }
     }
@@ -129,13 +129,13 @@
       &__enabled {
         margin-top: calc(var(--gap) * 2);
         font-size: var(--font-size);
-        color: var(--color-green);
+        color: var(--system-green);
       }
 
       &__disabled {
         margin-top: calc(var(--gap) * 2);
         font-size: var(--font-size);
-        color: var(--color-red);
+        color: var(--system-red);
       }
     }
   }
@@ -152,7 +152,7 @@
       height: 25%;
 
       &__info-row {
-        color: var(--bright-1);
+        color: var(--primary-text-color);
         display: flex;
         margin-bottom: calc(var(--gap) * 2);
 
@@ -220,8 +220,8 @@
 
         .pg-exchange-modal-submit-footer__button-inverse {
           &--disabled {
-            color: var(--button-dark-gray) !important;
-            background: var(--button-disabled) !important;
+            color: var(--cta-contrast-opacity-48) !important;
+            background: var(--cta-color-opacity-48) !important;
           }
         }
       }
@@ -229,7 +229,7 @@
 
     &__verification {
       .pg-profile-page__box-header {
-        color: var(--bright-1);
+        color: var(--primary-text-color);
 
         .pg-profile-page__row > .pg-profile-page__col:last-child {
           display: flex;
@@ -327,7 +327,7 @@
 
       tr, td {
         background: var(--profile-box);
-        border-top: 1px solid var(--header-border);
+        border-top: 1px solid var(--divider-color);
       }
 
       th, td {
@@ -388,7 +388,7 @@
 
       &__body {
           tr {
-              border-top: 1px solid var(--header-border);
+              border-top: 1px solid var(--divider-color);
           }
       }
     }
@@ -424,11 +424,11 @@
       text-transform: capitalize;
 
       &__active {
-        color: var(--color-green);
+        color: var(--system-green);
       }
 
       &__disabled {
-        color: var(--color-red)
+        color: var(--system-red)
       }
     }
 
@@ -440,7 +440,7 @@
     }
 
     .secret-section {
-      color: var(--gamboge);
+      color: var(--system-yellow);
       margin: calc(var(--gap) * 3);
       font-style: normal;
       font-weight: bold;
@@ -483,7 +483,7 @@
 
     .cr-button {
       margin-right: 0;
-      color: var(--white);
+      color: var(--primary-text-color);
       width: calc(var(--gap) * 20);
       height: calc(var(--gap) * 4);
       display: inline-block;
@@ -518,7 +518,7 @@
         position: relative;
 
         fieldset {
-          border: 1px solid var(--input-block-border-color);
+          border: 1px solid var(--input-border);
           padding: 0 8px 0 9px;
           border-radius: var(--gap);
 
@@ -527,11 +527,11 @@
           }
 
           &:focus-within {
-            border: 1px solid var(--sign-in-accent) !important;
+            border: 1px solid var(--primary-cta-color) !important;
 
             legend,
             label {
-              color: var(--accent) !important;
+              color: var(--primary-cta-color) !important;
             }
           }
 
@@ -573,7 +573,7 @@
 
     &::before,
     &::after {
-      background: var(--text-table-grey);
+      background: var(--secondary-text-color);
       content: '';
       position: absolute;
       top: 55%;
@@ -605,13 +605,13 @@
   }
 
   &__text-success {
-    color: var(--color-white);
+    color: var(--primary-text-color);
     width: 100%;
     position: relative;
 
     &::after {
       display: inline;
-      color: var(--white-color);
+      color: var(--primary-text-color);
       content: ' ✓';
       font-size: calc(var(--font-size) * 2.5);
       position: absolute;
@@ -625,7 +625,7 @@
     width: calc(var(--gap) * 69.3);
 
     &-header {
-      background-color: var(--email-confirmation-screen-title-background);
+      background-color:var(--header-background-color);
       margin-bottom: 0;
     }
 
@@ -671,7 +671,7 @@
   }
 
   &__btn-secondary {
-    color: var(--color-white);
+    color: var(--primary-text-color);
     max-width: calc(var(--gap) * 25);
 
     &:visited {
@@ -680,17 +680,17 @@
 
     &__active {
       &:visited {
-        color: var(--color-white);
+        color: var(--primary-text-color);
       }
     }
 
     &:active {
-      color: var(--color-white);
+      color: var(--primary-text-color);
     }
 
     &:hover {
-      color: var(--white);
-      background: var(--profile-btn);
+      color: var(--primary-text-color);
+      background: var(--primary-cta-color);
     }
 
     &:focus {
@@ -760,7 +760,7 @@
     width: calc(var(--big-gap) * 7.06);
 
     &__option {
-      background: var(--header);
+      background: var(--header-background-color);
     }
 
     &__options-group {
@@ -777,9 +777,9 @@
 
     &__input {
       input {
-        color: var(--color-white);
+        color: var(--primary-text-color);
         font-size: calc(var(--gap) * 2.33);
-        border: 1px solid var(--input-block-border-color);
+        border: 1px solid var(--input-border);
         border-radius: calc(var(--gap) * 0.66);
       }
 
@@ -797,17 +797,17 @@
       font-weight: normal;
       line-height: calc(var(--gap) * 2.66);
       font-size: calc(var(--gap) * 2.33);
-      color: var(--placeholder-text);
+      color: var(--secondary-text-color);
       margin: calc(var(--gap) * 0.83);
     }
 
     &__group--focused {
       .cr-sign-in-form__label {
-        color: var(--sign-in-accent);
+        color: var(--primary-cta-color);
       }
 
       input {
-        border-color: var(--sign-in-accent) !important;
+        border-color: var(--primary-cta-color) !important;
       }
     }
 
@@ -816,8 +816,8 @@
     }
 
     &__button {
-      color: var(--white);
-      background: var(--button-primary);
+      color: var(--primary-text-color);
+      background: var(--primary-cta-color);
       border-radius: calc(var(--gap) * 0.5);
       font-size: calc(var(--gap) * 2.66);
       width: calc(var(--big-gap) * 6.3);
@@ -833,8 +833,8 @@
       cursor: pointer;
 
       &--disabled {
-        color: var(--button-dark-gray) !important;
-        background: var(--button-disabled) !important;
+        color: var(--cta-contrast-opacity-48) !important;
+        background: var(--cta-color-opacity-48) !important;
       }
 
       &:hover {

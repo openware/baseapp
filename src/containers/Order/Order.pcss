@@ -68,8 +68,8 @@
           }
 
           &__dropdown__label {
-            color: var(--order-input-input-color);
-            background-color: var(--base-bright);
+            color: var(--primary-text-color);
+            background-color: var(--body-background-color);
             font-size: calc(var(--gap) * 1.5);
             margin-left: calc(var(--gap) * 1.75);
             padding: 0 calc(var(--gap) * 0.75);
@@ -78,26 +78,26 @@
 
           .cr-dropdown {
             &__input {
-              background-color: var(--base-bright);
+              background-color: var(--body-background-color);
               border-radius: calc(var(--gap) * 0.5);
-              border: solid 1px var(--orders-border-color);
+              border: solid 1px var(--input-border);
               height: calc(var(--gap) * 5.875);
   
               &--open {
-                background-color: var(--base-bright);
-                border: solid 1px var(--orders-border-color);
+                background-color: var(--body-background-color);
+                border: solid 1px var(--input-border);
                 border-radius: calc(var(--gap) * 0.5);
                 color: var(--background-dropdown-text);
                 height: calc(var(--gap) * 5.875);
               }
   
               &-label {
-                color: var(--bright-1);
+                color: var(--primary-text-color);
                 font-size: calc(var(--gap) * 1.75);
                 font-weight: var(--font-weight);
                 line-height: calc(var(--gap) * 6.98);
                 margin-left: calc(var(--gap) * 2);
-                text-shadow: 0 0 0 var(--base-3);
+                text-shadow: 0 0 0 var(--secondary-text-color);
               }
   
               &-icon {
@@ -112,10 +112,10 @@
             }
       
             &__list {
-              color: var(--base-3);
+              color: var(--secondary-text-color);
               border: 0px;
               border-radius: calc(var(--gap) * 0.5);
-              background: var(--background-dropdown);
+              background: var(--dropdown-background-color);
               margin-top: calc(var(--gap) * 6.5);
               line-height: calc(var(--gap) * 4.875);
               height: calc(var(--gap) * 4.875 * 2) !important;
@@ -125,7 +125,7 @@
                 height: calc(var(--gap) * 4.875) !important;
 
                 &:hover {
-                  color: var(--color-white);
+                  color: var(--primary-text-color);
                   background: var(--background-dropdown-hover);
                 }
                 &-label {
@@ -139,7 +139,7 @@
 
           .cr-order-input {
             &__fieldset, &__crypto-icon {
-              border-color: var(--orders-border-color);
+              border-color: var(--input-border);
               margin-top: var(--gap);
             }
 
@@ -149,14 +149,14 @@
               padding: calc(var(--gap) * 0.75) calc(var(--gap) * 1.5);
 
               &__label {
-                background-color: var(--base-bright);
+                background-color: var(--body-background-color);
                 font-size: calc(var(--gap) * 1.5);
                 margin-left: calc(var(--gap) * -0.35);
                 padding: 0 calc(var(--gap) * 0.75);
                 width: max-content;
                 position: absolute;
                 top: -10px;
-                color: var(--order-input-input-color);
+                color: var(--primary-text-color);
               }
 
               &__input {
@@ -239,7 +239,7 @@
         }
 
         .cr-button {
-          color: var(--white);
+          color: var(--primary-text-color);
           font-size: calc(var(--gap) * 2);
           font-weight: normal;
           outline: none;
@@ -252,7 +252,7 @@
 
         &:nth-child(2) {
           .cr-button {
-            background: var(--orders-button-green-normal);
+            background: var(--system-green);
             
             &:hover  {
               background: var(--orders-button-green-hover);
@@ -265,7 +265,7 @@
         
         &:last-child {
           .cr-button {
-            background: var(--orders-button-red-normal);
+            background: var(--system-red);
             
             &:hover  {
               background: var(--orders-button-red-hover);
@@ -296,7 +296,7 @@
 
         .cr-tab-content .cr-order-form .cr-order-item:last-child {
           .cr-button {
-            background: var(--orders-button-green-normal);
+            background: var(--system-green);
 
             &:hover  {
               background: var(--orders-button-green-hover);
@@ -323,7 +323,7 @@
           padding-left: calc(var(--gap) * 2);
 
           &__active {
-            color: var(--title-component-color);
+            color: var(--primary-text-color);
             font-weight: var(--font-weight);
           }
 
@@ -434,7 +434,7 @@
 
               input, &__price {
                 font-size: calc(var(--gap) * 2.34);
-                color: var(--order-input-input-color);
+                color: var(--primary-text-color);
               }
             }
           }

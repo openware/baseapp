@@ -1,69 +1,65 @@
 .light-mode {
-  --main-bg: #fff;
-  --back-bg: #fff;
-  --second-bg: #222B41;
-  --text: #9290a5;
-  --placeholder-text: #28334E;
-  --header: #fff;
-  --header-text: #050505;
-  --button-normal: #2E4C80;
-  --white: #fff;
-  --bright: #050505;
-  --accent: #2E4C80;
-  --green: #54B489;
-  --red: #BD3039;
-  --selected-item: #F0F1FF;
-  --gamboge: #E0A300;
+  /* Primary UI colors */
+  --primary-cta-color: #3C78E0;
+  --contrast-cta-color: #FFF;
+
+  /* Background UI colors */
+  --main-background-color: #fff;
+  --header-background-color: #fff;
+  --body-background-color: #fff;
+  --dropdown-background-color: #F0F1FF;
+
+  /* System UI colors */
+  --system-green: #54B489;
+  --system-red: #BD3039;
+  --system-yellow: #E0A300;
+
+  /* Trading UI colors */
+  --bids: #54B489;
+  --asks: #E85E59;
+
+  /* Text, Icons, Divider colors */
+  --primary-text-color: #171C29;
+  --text-contrast-color: #FFFFFF;
+  --secondary-text-color: #28334E;
+  --icons: #737F92;
+  --divider-color: rgba(#000, 0.1);
+  --text-muted: rgba(#28334E, 0.5);
+  --input-border: rgba(#28334E, 0.3);
+
+  /* Call to action (CTA) color opacity */ 
+  --cta-color-opacity-48: rgba(#3C78E0, 0.48);
+
+  /* Call to action (CTA) contrast opacity */  
+  --cta-contrast-opacity-48: rgba(#FFF, 0.48);
+  --cta-contrast-opacity-0-1: rgba(#FFFFFF, 0.1);
+
+  /* Call to action (CTA) elements opacity */
+  --cta-icons-opacity-48: rgba(#737F92, 0.48);
 
   /* linear-gradients */
-  --background-dropdown: var(--selected-item);
-  --background-dropdown-hover: #f5f5ff;
-  --button-dark-gray: rgba(#fff, 0.5);
-  --copyable-field-border: rgba(#28334E, 0.3);
-  --header-border: rgba(#28334E, 0.1);
-  --input-block-border-color: rgba(#28334E, 0.5);
-  --text-muted: rgba(#28334E, 0.5);
-  --table-header-color: var(--bright);
+  --markets-selected-color: #f0f0f0;
+  --background-dropdown-hover: var(--cta-color-opacity-48);
+
+  --table-header-color: var(--primary-text-color);
   --table-header-text: rgba(#28334E, 0.7);
-  --trading-header-background: var(--header);
-  --sign-in-accent: var(--placeholder-text);
+  --trading-header-background: var(--header-background-color);
   --trading-header-btn-open: #2E4C80;
-  --trading-grid-background:#182034;
   --trading-screen-background: #F0F1F5;
 
-  /* KYC */
-  --kyc-circle-color: var(--selected-item);
-
   /* orders */
-  --orders-border-color: #C9CCD2;
   --orders-button-percentage-text: #6D7075;
   --orders-button-percentage-normal: #D5DBE6;
   --orders-button-percentage-hover: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--orders-button-percentage-normal);
   --orders-button-percentage-active: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--orders-button-percentage-normal);
-  --orders-button-green-normal: var(--green);
-  --orders-button-green-hover: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--orders-button-green-normal);
-  --orders-button-green-active: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--orders-button-green-normal);
-  --orders-button-red-normal: var(--red);
-  --orders-button-red-hover: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--orders-button-red-normal);
-  --orders-button-red-active: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--orders-button-red-normal);
-
-  /* NavBar languages */
-  --navbar-language-selector-background: var(--selected-item);
-  --navbar-language-selector-color: var(--placeholder-text);
-  --navbar-language-selector-current-color: var(--text);
-  --navbar-language-selector-current-background: var(--header);
-  --navbar-language-selector-color-hover: var(--header-text);
-  --navbar-language-selector-background-hover: var(--background-dropdown-hover);
+  --orders-button-green-hover: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--system-green);
+  --orders-button-green-active: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--system-green);
+  --orders-button-red-hover: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--system-red);
+  --orders-button-red-active: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--system-red);
 
   /* wallets */
-  --estimated-value-background: var(--main-bg);
-  --estimated-value-label-text: var(--white);
-  --estimated-value-label-background: var(--button-normal);
-
-  --beneficiaries-primary-0-8: rgba(0, 0, 0, 0.8);
-  --beneficiaries-primary-0-1: rgba(0, 0, 0, 0.1);
-  --beneficiaries-primary-0-06: rgba(0, 0, 0, 0.06);
-  --beneficiaries-primary-0-04: rgba(0, 0, 0, 0.04);
+  --estimated-value-label-text: var(--primary-text-color);
+  --estimated-value-label-background: var(--primary-cta-color);
 
   /* sidebar */
   --nav-item-selected: #e6e6e6;

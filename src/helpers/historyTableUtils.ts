@@ -1,31 +1,31 @@
 export const depositColorMapping = {
-    accepted: 'var(--color-green)',
-    collected: 'var(--color-green)',
+    accepted: 'var(--system-green)',
+    collected: 'var(--system-green)',
     submitted: '',
-    canceled: 'var(--color-red)',
-    rejected: 'var(--color-red)',
+    canceled: 'var(--system-red)',
+    rejected: 'var(--system-red)',
 };
 
 export const withdrawColorMapping = {
-    prepared: '',
+    prepared: 'var(--system-yellow)',
     submitted: '',
-    canceled: 'var(--color-red)',
-    accepted: 'var(--color-green)',
+    canceled: 'var(--system-red)',
+    accepted: 'var(--system-green)',
     suspected: '',
-    rejected: 'var(--color-red)',
-    processing: '',
-    succeed: 'var(--color-green)',
-    failed: 'var(--color-red)',
+    rejected: 'var(--system-red)',
+    processing: 'var(--system-yellow)',
+    succeed: 'var(--system-green)',
+    failed: 'var(--system-red)',
     confirming: '',
 };
 
 export const tradesColorMapping = {
     sell: {
-        color: 'var(--color-red)',
+        color: 'var(--system-red)',
         text: 'Sell',
     },
     buy: {
-        color: 'var(--color-green)',
+        color: 'var(--system-green)',
         text: 'Buy',
     },
 };

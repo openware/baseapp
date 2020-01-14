@@ -17,7 +17,7 @@
       min-height: calc(var(--big-gap) * 5);
 
       &__option {
-        background: var(--header);
+        background: var(--header-background-color);
       }
 
       &__options-group {
@@ -32,9 +32,9 @@
 
       &__input {
         input {
-          color: var(--color-white);
+          color: var(--primary-text-color);
           font-size: calc(var(--gap) * 2.33);
-          border: 1px solid var(--input-block-border-color);
+          border: 1px solid var(--input-border);
           border-radius: calc(var(--gap) * 0.66);
         }
       }
@@ -46,7 +46,7 @@
         font-weight: normal;
         line-height: calc(var(--gap) * 2.66);
         font-size: calc(var(--gap) * 2.33);
-        color: var(--placeholder-text);
+        color: var(--secondary-text-color);
         margin: calc(var(--gap) * 0.83);
       }
 
@@ -62,10 +62,10 @@
 
       &__group--focused {
         .cr-email-form__label {
-          color: var(--sign-in-accent);
+          color: var(--primary-cta-color);
         }
         input {
-          border-color: var(--sign-in-accent) !important;
+          border-color: var(--primary-cta-color) !important;
         }
       }
 
@@ -74,8 +74,8 @@
       }
 
       &__button {
-        color: var(--white);
-        background: var(--button-primary);
+        color: var(--primary-text-color);
+        background: var(--primary-cta-color);
         border-radius: calc(var(--gap) * 0.5);
         font-size: calc(var(--gap) * 2.66);
         line-height: normal;
@@ -86,8 +86,8 @@
         text-transform: uppercase;
 
         &--disabled {
-          color: var(--button-dark-gray) !important;
-          background: var(--button-disabled) !important;
+          color: var(--cta-contrast-opacity-48) !important;
+          background: var(--cta-color-opacity-48) !important;
         }
 
         &:hover {

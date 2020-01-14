@@ -1,18 +1,18 @@
 .cr-markets {
-  background: var(--base-bright);
+  background: var(--body-background-color);
   padding-bottom: 0;
 
   .cr-title-component {
-    color: var(--markets-title-color);
+    color: var(--primary-text-color);
     font-size: 1em;
     font-weight: lighter;
   }
 
   .cr-table {
-    background: var(--base-bright);
+    background: var(--body-background-color);
 
     th {
-      color: var(--markets-filter-color);
+      color: var(--secondary-text-color);
       font-size: 0.83em;
       font-weight: lighter;
       padding-top: 2px;
@@ -20,7 +20,7 @@
     }
 
     td {
-      color: var(--markets-filter-color);
+      color: var(--secondary-text-color);
       font-size: 0.83em;
     }
 
@@ -47,7 +47,7 @@
     }
 
     tr:nth-child(even) {
-      background: var(--base-bright);
+      background: var(--body-background-color);
     }
 
     &__filters {
@@ -56,14 +56,14 @@
     }
 
     &__filter {
-      color: var(--markets-filter-color);
+      color: var(--secondary-text-color);
       font-size: 0.83em;
       font-weight: lighter;
       padding-left: 3px;
       padding-right: 3px;
 
       &--active {
-        color: var(--markets-filter-active-color);
+        color: var(--primary-text-color);
       }
     }
 
@@ -75,24 +75,24 @@
   }
 
   .cr-search {
-    background: var(--base-bright);
+    background: var(--body-background-color);
     margin: 0;
     margin-top: var(--gap);
     padding: 0;
 
     &__icon {
-      background: var(--base-bright);
+      background: var(--body-background-color);
     }
 
     input {
-      background: var(--base-bright);
-      color: var(--markets-filter-color);
+      background: var(--body-background-color);
+      color: var(--secondary-text-color);
       font-weight: lighter;
       width: calc(100% - var(--gap) * 9);
-      border-bottom-color: var(--markets-search-border-color);
+      border-bottom-color: var(--input-border);
 
       &::placeholder {
-        color: var(--markets-title-color);
+        color: var(--secondary-text-color);
       }
     }
   }
