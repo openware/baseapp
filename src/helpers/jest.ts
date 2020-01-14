@@ -25,6 +25,8 @@ const mockConfig: Config = {
     },
     gaTrackerKey: '',
     incrementalOrderBook: false,
+    isResizable: false,
+    isDraggable: false,
 };
 
 // tslint:disable no-any no-console
