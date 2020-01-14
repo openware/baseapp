@@ -40,13 +40,13 @@
   }
 
   .react-resizable-handle {
-    border: 2.81px solid var(--grid-resizable-border-color);
+    border: 5px solid var(--grid-resizable-border-color);
     border-left-color: transparent;
     border-top-color: transparent;
     bottom: 0;
     cursor: se-resize;
     height: 0;
-    opacity: 0.8;
+    opacity: 0.5;
     position: absolute;
     right: 0;
     width: 0;
@@ -58,8 +58,8 @@
       position: absolute;
       transform: rotate(-45deg);
       bottom: calc(var(--gap) * 0.7);
-      right: calc(var(--gap) * (-1));
-      width: calc(var(--gap) * 3.9);
+      right: calc(var(--gap) * (-2));
+      width: calc(var(--gap) * 8);
     }
 
     &::before {
@@ -68,9 +68,9 @@
       opacity: 0.8;
       position: absolute;
       transform: rotate(-45deg);
-      bottom: calc(var(--gap) * 0.3);
-      right: calc(var(--gap) * (-0.6));
-      width: calc(var(--gap) * 2.2);
+      bottom: calc(var(--gap) * 1);
+      right: calc(var(--gap) * (-2.3));
+      width: calc(var(--gap) * 5);
     }
   }
 }
