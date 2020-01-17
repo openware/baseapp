@@ -27,6 +27,7 @@ export interface JsonBody {
 export interface RequestOptions {
     apiVersion: 'applogic' | 'peatio' | 'barong' | 'arke';
     withHeaders?: boolean;
+    headers?: Object;
 }
 
 export interface Request {
@@ -50,14 +51,14 @@ const getAPI = () => ({
 
 const buildRequest = (request: Request, configData: RequestOptions) => {
     const { body, method, url } = request;
-    const { apiVersion } = configData;
+    const { apiVersion, headers } = configData;
     const api = getAPI();
 
     const contentType = body instanceof FormData
         ? 'multipart/form-data'
         : 'application/json';
 
-    const headers = {
+    const defaultHeaders = {
         'content-type': contentType,
     };
 
@@ -66,7 +67,7 @@ const buildRequest = (request: Request, configData: RequestOptions) => {
     const requestConfig: AxiosRequestConfig = {
         baseURL: apiUrl,
         data: body,
-        headers,
+        headers: { ...headers, ...defaultHeaders },
         method,
         url,
         withCredentials: withCredentials(),

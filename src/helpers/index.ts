@@ -26,3 +26,4 @@ export * from './timeConvert';
 export * from './timezone';
 export * from './toggleColorTheme';
 export * from './uppercase';
+export * from './getCsrfToken';

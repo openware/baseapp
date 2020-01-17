@@ -1,11 +1,15 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../public/alert';
+import { alertPush } from '../../../index';
 import { generate2faQRData, generate2faQRError } from '../actions';
+import { getCsrfToken } from '../../../../helpers';
 
-const generate2faQROptions: RequestOptions = {
-    apiVersion: 'barong',
+const generate2faQROptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'barong',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 interface GenerateQRResponse {
@@ -17,7 +21,7 @@ interface GenerateQRResponse {
 
 export function* generate2faQRSaga() {
     try {
-        const qrData: GenerateQRResponse = yield call(API.post(generate2faQROptions), '/resource/otp/generate_qrcode');
+        const qrData: GenerateQRResponse = yield call(API.post(generate2faQROptions(getCsrfToken())), '/resource/otp/generate_qrcode');
         const { barcode, url } = qrData.data;
         yield put(generate2faQRData({ barcode, url }));
     } catch (error) {

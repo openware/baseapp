@@ -497,6 +497,8 @@ export const en = {
     'authz.invalid_api_key_headers': 'Blank or missing API Key headers',
     'authz.permission_denied': 'Path is blacklisted',
     'authz.unexistent_apikey': 'X-Auth-Apikey header is invalid',
+    'authz.client_session_mismatch': 'Session mismatch',
+    'authz.csrf_token_mismatch': 'CSRF token mismatch',
 
     // validation errors
     // identity module

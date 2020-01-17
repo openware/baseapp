@@ -1,16 +1,20 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
-import { alertPush } from '../../../../public/alert';
+import { alertPush } from '../../../../index';
 import { sendDocumentsData, sendDocumentsError, SendDocumentsFetch } from '../actions';
+import { getCsrfToken } from '../../../../../helpers';
 
-const sessionsConfig: RequestOptions = {
-    apiVersion: 'barong',
+const sessionsConfig = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'barong',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* sendDocumentsSaga(action: SendDocumentsFetch) {
     try {
-        const response = yield call(API.post(sessionsConfig), '/resource/documents', action.payload);
+        const response = yield call(API.post(sessionsConfig(getCsrfToken())), '/resource/documents', action.payload);
         const defaultMessage = 'success.documents.accepted';
         const { message = defaultMessage } = response;
         yield put(sendDocumentsData({ message }));

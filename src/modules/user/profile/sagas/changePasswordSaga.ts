@@ -1,20 +1,24 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../public/alert';
+import { alertPush } from '../../../index';
 import {
     changePasswordData,
     changePasswordError,
     ChangePasswordFetch,
 } from '../actions';
+import { getCsrfToken } from '../../../../helpers';
 
-const changePasswordOptions: RequestOptions = {
-    apiVersion: 'barong',
+const changePasswordOptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'barong',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* changePasswordSaga(action: ChangePasswordFetch) {
     try {
-        yield call(API.put(changePasswordOptions), '/resource/users/password', action.payload);
+        yield call(API.put(changePasswordOptions(getCsrfToken())), '/resource/users/password', action.payload);
         yield put(changePasswordData());
         yield put(alertPush({message: ['success.password.changed'], type: 'success'}));
     } catch (error) {

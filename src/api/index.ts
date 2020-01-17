@@ -7,6 +7,7 @@ export * from './config';
 export interface RequestOptions {
     apiVersion: 'applogic' | 'peatio' | 'barong' | 'arke';
     withHeaders?: boolean;
+    headers?: Object;
 }
 
 export type RequestBody = JsonBody | FormData;
