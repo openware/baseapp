@@ -26,12 +26,16 @@ const defaults: SignUpFormProps = {
     confirmationError: '',
     handleFocusEmail: jest.fn(),
     handleFocusPassword: jest.fn(),
+    handleBlurPassword: jest.fn(),
     handleFocusConfirmPassword: jest.fn(),
     handleFocusRefId: jest.fn(),
     confirmPasswordFocused: false,
     refIdFocused: false,
     emailFocused: false,
     passwordFocused: false,
+    isValidPassword: false,
+    minPasswordLength: 5,
+    minPasswordScore: 2,
 };
 
 const setup = (props: Partial<SignUpFormProps> = {}) =>

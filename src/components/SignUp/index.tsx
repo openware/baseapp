@@ -1,5 +1,6 @@
 import cr from 'classnames';
 import * as React from 'react';
+import ReactPasswordStrength from 'react-password-strength';
 import { Button, Form } from 'react-bootstrap';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { CustomInput } from '../';
@@ -40,19 +41,22 @@ export interface SignUpFormProps {
     confirmationError: string;
     handleFocusEmail: () => void;
     handleFocusPassword: () => void;
+    handleBlurPassword: () => void;
     handleFocusConfirmPassword: () => void;
     handleFocusRefId: () => void;
     confirmPasswordFocused: boolean;
     refIdFocused: boolean;
     emailFocused: boolean;
     passwordFocused: boolean;
+    isValidPassword: boolean;
+    minPasswordLength: number;
+    minPasswordScore: number;
 }
 
 export class SignUpForm extends React.Component<SignUpFormProps> {
     public render() {
         const {
             email,
-            password,
             confirmPassword,
             refId,
             onSignIn,
@@ -75,6 +79,9 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
             passwordFocused,
             confirmPasswordFocused,
             refIdFocused,
+            isValidPassword,
+            minPasswordLength,
+            minPasswordScore,
         } = this.props;
 
         const emailGroupClass = cr('cr-sign-up-form__group', {
@@ -83,6 +90,7 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
 
         const passwordGroupClass = cr('cr-sign-up-form__group', {
             'cr-sign-up-form__group--focused': passwordFocused,
+            'cr-sign-up-form__group--error': !isValidPassword && !passwordFocused,
         });
 
         const confirmPasswordGroupClass = cr('cr-sign-up-form__group', {
@@ -91,11 +99,13 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
         const refIdGroupClass = cr('cr-sign-up-form__group', {
             'cr-sign-up-form__group--focused': refIdFocused,
         });
+
         const logo = image ? (
             <h1 className="cr-sign-up-form__title">
                 <img className="cr-sign-up-form__image" src={image} alt="logo" />
             </h1>
         ) : null;
+
         const captcha = hasConfirmed && captchaType !== 'none' ?
             (
                 <div className="cr-sign-up-form__recaptcha">
@@ -105,6 +115,15 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
                     />
                 </div>
             ) : null;
+
+        const passwordInputProps = {
+            type: 'password',
+            autoFocus: false,
+            onFocus: this.props.handleFocusPassword,
+            onBlur: this.props.handleBlurPassword,
+            className: 'cr-sign-up-form__input',
+            placeholder: passwordLabel || 'Password',
+        };
 
         return (
             <form>
@@ -139,18 +158,19 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
                             {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
                         </div>
                         <div className={passwordGroupClass}>
-                            <CustomInput
-                                type="password"
-                                label={passwordLabel || 'Password'}
-                                placeholder={passwordLabel || 'Password'}
-                                defaultLabel="Password"
-                                handleChangeInput={this.props.handleChangePassword}
-                                inputValue={password}
-                                handleFocusInput={this.props.handleFocusPassword}
-                                classNameLabel="cr-sign-up-form__label"
-                                classNameInput="cr-sign-up-form__input"
-                                autoFocus={false}
-                            />
+                            <div className="custom-input">
+                                <label className="cr-sign-up-form__label">
+                                    {passwordLabel ? passwordLabel : 'Password'}
+                                </label>
+                                <ReactPasswordStrength
+                                    className="cr-sign-up-form__input-password"
+                                    minLength={minPasswordLength}
+                                    minScore={minPasswordScore}
+                                    scoreWords={['weak', 'ok', 'good', 'strong', 'stronger']}
+                                    inputProps={{ ...passwordInputProps }}
+                                    changeCallback={this.props.handleChangePassword}
+                                />
+                            </div>
                             {passwordError && <div className={'cr-sign-up-form__error'}>{passwordError}</div>}
                         </div>
                         <div className={confirmPasswordGroupClass}>
@@ -220,9 +240,10 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
             recaptchaConfirmed,
             isLoading,
             captchaType,
+            isValidPassword,
         } = this.props;
 
-        if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {
+        if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword || !isValidPassword) {
             return true;
         }
         if (captchaType !== 'none' && !recaptchaConfirmed) {

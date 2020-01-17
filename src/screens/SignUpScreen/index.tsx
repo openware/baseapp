@@ -68,6 +68,7 @@ class SignUp extends React.Component<Props> {
         passwordFocused: false,
         confirmPasswordFocused: false,
         refIdFocused: false,
+        isValidPassword: false,
     };
 
     public componentDidMount() {
@@ -106,9 +107,11 @@ class SignUp extends React.Component<Props> {
             passwordFocused,
             confirmPasswordFocused,
             refIdFocused,
+            isValidPassword,
         } = this.state;
 
         const className = cx('pg-sign-up-screen__container', { loading });
+
         return (
             <div className="pg-sign-up-screen">
                 <div className={className}>
@@ -127,6 +130,8 @@ class SignUp extends React.Component<Props> {
                         onSignUp={this.handleSignUp}
                         siteKey={configs.captcha_id}
                         captchaType={configs.captcha_type}
+                        minPasswordLength={configs.min_password_length}
+                        minPasswordScore={configs.min_password_score}
                         email={email}
                         handleChangeEmail={this.handleChangeEmail}
                         password={password}
@@ -148,8 +153,10 @@ class SignUp extends React.Component<Props> {
                         passwordFocused={passwordFocused}
                         handleFocusEmail={this.handleFocusEmail}
                         handleFocusPassword={this.handleFocusPassword}
+                        handleBlurPassword={this.handleBlurPassword}
                         handleFocusConfirmPassword={this.handleFocusConfirmPassword}
                         handleFocusRefId={this.handleFocusRefId}
+                        isValidPassword={isValidPassword}
                     />
                     <Modal
                         show={this.state.showModal}
@@ -181,9 +188,10 @@ class SignUp extends React.Component<Props> {
         });
     };
 
-    private handleChangePassword = (value: string) => {
+    private handleChangePassword = (value: any) => {
         this.setState({
-            password: value,
+            password: value.password,
+            isValidPassword: value.isValid,
         });
     };
 
@@ -207,7 +215,13 @@ class SignUp extends React.Component<Props> {
 
     private handleFocusPassword = () => {
         this.setState({
-            passwordFocused: !this.state.passwordFocused,
+            passwordFocused: true,
+        });
+    };
+
+    private handleBlurPassword = () => {
+        this.setState({
+            passwordFocused: false,
         });
     };
 
@@ -234,49 +248,54 @@ class SignUp extends React.Component<Props> {
             password,
             recaptcha_response,
             refId,
+            isValidPassword,
         } = this.state;
 
         if (refId) {
-            switch (configs.captcha_type) {
-                case 'none':
-                    this.props.signUp({
-                        email,
-                        password,
-                        refid: refId,
-                        lang: i18n.toUpperCase(),
-                    });
-                    break;
-                case 'recaptcha':
-                case 'geetest':
-                default:
-                    this.props.signUp({
-                        email,
-                        password,
-                        recaptcha_response,
-                        refid: refId,
-                        lang: i18n.toUpperCase(),
-                    });
-                    break;
+            if (isValidPassword) {
+                switch (configs.captcha_type) {
+                    case 'none':
+                        this.props.signUp({
+                            email,
+                            password,
+                            refid: refId,
+                            lang: i18n.toUpperCase(),
+                        });
+                        break;
+                    case 'recaptcha':
+                    case 'geetest':
+                    default:
+                        this.props.signUp({
+                            email,
+                            password,
+                            recaptcha_response,
+                            refid: refId,
+                            lang: i18n.toUpperCase(),
+                        });
+                        break;
+                }
             }
         } else {
-            switch (configs.captcha_type) {
-                case 'none':
-                    this.props.signUp({
-                        email,
-                        password,
-                        lang: i18n.toUpperCase(),
-                    });
-                    break;
-                case 'recaptcha':
-                case 'geetest':
-                default:
-                    this.props.signUp({
-                        email,
-                        password,
-                        recaptcha_response,
-                        lang: i18n.toUpperCase(),
-                    });
-                    break;
+            if (isValidPassword) {
+                switch (configs.captcha_type) {
+                    case 'none':
+                        this.props.signUp({
+                            email,
+                            password,
+                            lang: i18n.toUpperCase(),
+                        });
+                        break;
+                    case 'recaptcha':
+                    case 'geetest':
+                    default:
+                        this.props.signUp({
+                            email,
+                            password,
+                            recaptcha_response,
+                            lang: i18n.toUpperCase(),
+                        });
+                        break;
+                }
             }
         }
     };

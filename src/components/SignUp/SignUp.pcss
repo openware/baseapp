@@ -87,6 +87,24 @@
         margin-top: -1px;
       }
     }
+
+    &--error {
+      .cr-sign-up-form__label {
+        color: var(--color-red);
+      }
+
+      .custom-input {
+        .cr-sign-up-form__input-password {
+          input {
+            border-color: var(--color-red);
+
+            &:hover {
+              border-color: var(--color-red);
+            }
+          }
+        }
+      }
+    }
   }
 
   &__error {
@@ -143,6 +161,30 @@
 
   &__input {
     width: 100%;
+
+    &-password {
+      border: none !important;
+
+      input {
+        border-radius: .3rem;
+        border: 1px solid;
+        height: calc(1.5em + 1rem + 2px);
+        padding: .5rem 1rem;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        width: 100%;
+      }
+
+      .ReactPasswordStrength-strength-desc {
+        padding: 10px 0px;
+        right: 20px;
+        top: 0;
+        width: 20%;
+        height: calc(1.5em + 1rem + 2px);
+        font-style: normal;
+        font-size: 16px;
+      }
+    }
 
     input {
       color: var(--sign-in-input-color);
