@@ -19,4 +19,6 @@ export interface Config {
     gaTrackerKey?: string;
     msAlertDisplayTime?: string;
     incrementalOrderBook: boolean;
+    isResizable: boolean;
+    isDraggable: boolean;
 }
