@@ -692,14 +692,12 @@ describe('Ranger module', () => {
         describe('trade', () => {
             const privateTradeEvent: PrivateTradeEvent = {
                 id: 312,
-                kind: 'bid',
-                at: 1546605232,
                 price: '1.17',
                 total: '0.117',
                 amount: '0.1',
-                ask_id: 651,
-                bid_id: 758,
                 market: 'eurbtc',
+                created_at: '5292292012',
+                taker_type: 'buy',
             };
             const mockTrade = { trade: privateTradeEvent };
             const expectedTradeAction = {

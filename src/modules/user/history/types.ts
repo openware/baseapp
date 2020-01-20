@@ -17,14 +17,14 @@ export interface PrivateTrade extends PublicTrade {
 
 export interface PrivateTradeEvent {
     id: number;
-    at: number;
-    market: string;
-    kind: string;
     price: string;
-    ask_id: number;
-    bid_id: number;
     total: string;
     amount: string;
+    market: string;
+    created_at: string;
+    taker_type: string;
+    side?: string;
+    order_id?: number;
 }
 
 export interface PrivateTradesState extends CommonState {
