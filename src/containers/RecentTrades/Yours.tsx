@@ -98,16 +98,16 @@ class YoursComponent extends React.Component<Props> {
 
     private renderRow = (item, i) => {
         const { currentMarket, list } = this.props;
-        const { id, created_at, price, amount, taker_type } = item;
+        const { id, created_at, price, amount, side } = item;
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
-        const takerSide = taker_type === 'sell' ?  'sell' : 'buy';
+        const orderSide = side === 'sell' ?  'sell' : 'buy';
         const higlightedDate = handleHighlightValue(String(localeDate([...list][i - 1] ? [...list][i - 1].created_at : '', 'time')), String(localeDate(created_at, 'time')));
 
         return [
-            <span style={{ color: setTradesType(takerSide).color }} key={id}>{higlightedDate}</span>,
-            <span style={{ color: setTradesType(takerSide).color }} key={id}><Decimal key={id} fixed={amountFixed}>{amount}</Decimal></span>,
-            <span style={{ color: setTradesType(takerSide).color }} key={id}><Decimal key={id} fixed={priceFixed} prevValue={[...list][i - 1] ? [...list][i - 1].price : 0}>{price}</Decimal></span>,
+            <span style={{ color: setTradesType(orderSide).color }} key={id}>{higlightedDate}</span>,
+            <span style={{ color: setTradesType(orderSide).color }} key={id}><Decimal key={id} fixed={amountFixed}>{amount}</Decimal></span>,
+            <span style={{ color: setTradesType(orderSide).color }} key={id}><Decimal key={id} fixed={priceFixed} prevValue={[...list][i - 1] ? [...list][i - 1].price : 0}>{price}</Decimal></span>,
         ];
     };
 
