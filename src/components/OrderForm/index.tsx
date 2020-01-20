@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { Decimal } from '../Decimal';
-import { getAmount, getTotalPrice } from '../../helpers/getTotalPrice';
+import { cleanPositiveFloatInput, getAmount, getTotalPrice } from '../../helpers';
 import { DropdownComponent } from '../Dropdown';
 import { OrderProps } from '../Order';
 
@@ -121,20 +121,6 @@ interface OrderFormState {
 const handleSetValue = (value: string | number | undefined, defaultValue: string) => (
     value || defaultValue
 );
-
-const cleanPositiveFloatInput = (text: string) => {
-    let cleanInput = text
-        .replace(',', '.')
-        .replace(/-+/, '')
-        .replace(/^0+/, '0')
-        .replace(/\.+/, '.')
-        .replace(/^0+([1-9])/, '$1');
-
-    if (cleanInput[0] === '.') {
-        cleanInput = `0${cleanInput}`;
-    }
-    return cleanInput;
-};
 
 const checkButtonIsDisabled = (safeAmount: number, safePrice: number, price: string, props: OrderFormProps, state: OrderFormState) => {
     const invalidAmount = safeAmount <= 0;

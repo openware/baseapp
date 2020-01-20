@@ -9,6 +9,7 @@ import {
 } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { Beneficiary } from '../../modules';
+import { cleanPositiveFloatInput } from '../../helpers';
 
 export interface WithdrawProps {
     currency: string;
@@ -219,16 +220,25 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         }
     };
 
-    private handleChangeInputAmount = (text: string) => {
+    private handleChangeInputAmount = (value: string) => {
         const { fixed } = this.props;
-        const value = (text !== '') ? Number(parseFloat(text).toFixed(fixed)) : '';
-        const total = (value !== '') ? value - this.props.fee : 0;
-        if (total < 0) {
-            this.setTotal(0);
-        } else {
-            this.setTotal(total);
+
+        const convertedValue = cleanPositiveFloatInput(String(value));
+        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${fixed}}|[\\d-]*\\.[\\d-])$`);
+        if (convertedValue.match(condition)) {
+            const amount = (convertedValue !== '') ? Number(parseFloat(convertedValue).toFixed(fixed)) : '';
+            const total = (amount !== '') ? amount - this.props.fee : 0;
+
+            if (total < 0) {
+                this.setTotal(0);
+            } else {
+                this.setTotal(total);
+            }
+
+            this.setState({
+                amount: convertedValue,
+            });
         }
-        this.setState({ amount: value });
     };
 
     private setTotal = (value: number) => {

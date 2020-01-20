@@ -384,4 +384,16 @@ describe('Helpers', () => {
             expect(helpers.monthNameToNumber('December')).toBe('12');
         });
     });
+
+    // cleanPositiveFloatInput.ts
+    describe('cleanPositiveFloatInput', () => {
+        it('return a positive float number', () => {
+            expect(helpers.cleanPositiveFloatInput('.0')).toBe('0.0');
+            expect(helpers.cleanPositiveFloatInput(',0')).toBe('0.0');
+            expect(helpers.cleanPositiveFloatInput('+')).toBe('+');
+            expect(helpers.cleanPositiveFloatInput('-')).toBe('');
+            expect(helpers.cleanPositiveFloatInput('000')).toBe('0');
+            expect(helpers.cleanPositiveFloatInput('00.0')).toBe('0.0');
+        });
+    });
 });
