@@ -1,16 +1,16 @@
 export const PG_TITLE_PREFIX = 'Cryptobase';
 
-export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
+export const pgRoutes = (isLoggedIn: boolean): string[][] => {
     const routes = [
-        ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.wallets', '/wallets', `wallets${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.trade', '/trading/', 'trade'],
+        ['page.header.navbar.wallets', '/wallets', 'wallets'],
+        ['page.header.navbar.openOrders', '/orders', 'orders'],
+        ['page.header.navbar.history', '/history', 'history'],
     ];
     const routesUnloggedIn = [
-        ['page.header.navbar.signIn', '/signin', `signin${isLight ? 'Light' : ''}`],
-        ['page.header.signUp', '/signup', `signup${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.signIn', '/signin', 'signin'],
+        ['page.header.signUp', '/signup', 'signup'],
+        ['page.header.navbar.trade', '/trading/', 'trade'],
     ];
     return isLoggedIn ? routes : routesUnloggedIn;
 };
@@ -38,7 +38,6 @@ export const colors = {
             asks: 'rgba(232, 94, 89, 0.4)',
             bids: 'rgba(84, 180, 137, 0.4)',
         },
-        icons: '#737F92',
     },
     basic: {
         chart: {
@@ -57,6 +56,5 @@ export const colors = {
             asks: 'rgba(232, 94, 89, 0.4)',
             bids: 'rgba(84, 180, 137, 0.4)',
         },
-        icons: '#737F92',
     },
 };
