@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import * as React from 'react';
 import { OpenOrders, OpenOrdersProps } from '.';
 import { CellData } from '../';
@@ -75,11 +75,5 @@ describe('OpenOrders', () => {
         ];
 
         expect(JSON.stringify(instance.renderRow(row, rowIndex))).toBe(JSON.stringify(renderedRow));
-    });
-
-    it('should handle cancel function', () => {
-        const wrapp = mount(<OpenOrders {...{ ...defaultProps}} />);
-        wrapp.find('button').first().simulate('click');
-        expect(defaultProps.onCancel).toHaveBeenCalledTimes(1);
     });
 });

@@ -4,6 +4,7 @@ import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { CloseIcon } from '../../assets/images/CloseIcon';
 import { Phone } from '../../containers';
 import { Documents } from '../../containers/Confirm/Documents';
 import { Identity } from '../../containers/Confirm/Identity';
@@ -99,10 +100,9 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                 </div>
                 <div className="pg-confirm">
                     <div className="pg-confirm-box">
-                        <div
-                            onClick={this.goBack}
-                            className="pg-confirm-box-close"
-                        />
+                        <div onClick={this.goBack} className="pg-confirm-box-close">
+                            <CloseIcon alt="close" className="close-icon" />
+                        </div>
                         <div className="pg-confirm__progress">
                             <div className={cx}>
                                 <div className="pg-confirm__progress-circle-1">

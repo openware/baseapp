@@ -2,6 +2,7 @@ import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { CustomInput } from '../';
+import { CloseIcon } from '../../assets/images/CloseIcon';
 import { EMAIL_REGEX } from '../../helpers';
 
 export interface EmailFormProps {
@@ -46,7 +47,7 @@ export class EmailForm extends React.Component<EmailFormProps> {
                             <div className="cr-email-form__option-inner">
                                 {title ? title : 'Forgot password'}
                                 <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
-                                    <img alt="close" src={require('./close.svg')}/>
+                                    <CloseIcon alt="close" className="close-icon" />
                                 </div>
                             </div>
                         </div>

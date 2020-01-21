@@ -1,7 +1,8 @@
-import { CloseButton, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { CloseIcon } from '../../assets/images/CloseIcon';
 import { Decimal } from '../../components/Decimal';
 import { History, Pagination } from '../../components';
 import { localeDate, setTradeColor } from '../../helpers';
@@ -158,7 +159,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             <Decimal key={id} fixed={currentMarket.amount_precision}>{remaining_volume}</Decimal>,
             <Decimal key={id} fixed={currentMarket.amount_precision}>{costRemaining.toString()}</Decimal>,
             status,
-            state === 'wait' && <CloseButton key={id} onClick={this.handleCancel(id)} />,
+            state === 'wait' && <CloseIcon key={id} onClick={this.handleCancel(id)} />,
         ];
     };
 

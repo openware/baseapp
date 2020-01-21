@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { CloseButton } from 'react-bootstrap';
+import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CellData, Table } from '../';
 
 export interface OpenOrdersProps {
@@ -94,7 +94,7 @@ export class OpenOrders extends React.Component<OpenOrdersProps> {
     }
 
     public renderCancelButton = (index: number) => {
-        return <CloseButton onClick={this.handleCancel(index)} />;
+        return <CloseIcon onClick={this.handleCancel(index)} />;
     };
 
     private handleCancel = (index: number) => () => {

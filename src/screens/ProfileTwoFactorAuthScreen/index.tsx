@@ -4,6 +4,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CustomInput, CopyableTextField } from '../../components';
 import { setDocumentTitle } from '../../helpers';
 import { alertPush, RootState } from '../../modules';
@@ -114,7 +115,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                         {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.header')}
                     </div>
                     <div className="col-1 mx-0 p-0 px-1" onClick={this.goBack}>
-                        <img alt="" src={require('./close.svg')} />
+                        <CloseIcon alt="close" className="close-icon" />
                     </div>
                 </div>
 
