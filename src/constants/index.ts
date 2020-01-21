@@ -34,6 +34,10 @@ export const colors = {
             sun: '#959EAB',
             moon: '#fff',
         },
+        orderBook: {
+            asks: 'rgba(232, 94, 89, 0.4)',
+            bids: 'rgba(84, 180, 137, 0.4)',
+        },
         icons: '#737F92',
     },
     basic: {
@@ -48,6 +52,10 @@ export const colors = {
             logout: '#fff',
             sun: '#fff',
             moon: '#28334E',
+        },
+        orderBook: {
+            asks: 'rgba(232, 94, 89, 0.4)',
+            bids: 'rgba(84, 180, 137, 0.4)',
         },
         icons: '#737F92',
     },
