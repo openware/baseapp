@@ -16,6 +16,7 @@ export const withdrawColorMapping = {
     processing: '',
     succeed: 'var(--color-green)',
     failed: 'var(--color-red)',
+    errored: 'var(--color-red)',
     confirming: '',
 };
 
