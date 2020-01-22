@@ -17,4 +17,5 @@ export interface Config {
     incrementalOrderBook: boolean;
     isResizable: boolean;
     isDraggable: boolean;
+    languages: string[];
 }

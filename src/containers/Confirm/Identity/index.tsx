@@ -21,6 +21,7 @@ import {
     User,
 } from '../../../modules';
 import { nationalities } from '../../../translations/nationalities';
+import { languages } from '../../../api/config';
 
 import * as countries from 'i18n-iso-countries';
 
@@ -159,9 +160,8 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         const onSelectNationality = value => this.selectNationality(dataNationalities[value]);
 
         /* tslint:disable */
-        countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
-        countries.registerLocale(require("i18n-iso-countries/langs/ru.json"));
-        countries.registerLocale(require("i18n-iso-countries/langs/zh.json"));
+        languages.map((l: string) => countries.registerLocale(require(`i18n-iso-countries/langs/${l}.json`)));
+
         /* tslint:enable */
 
         const dataCountries = Object.values(countries.getNames(lang));

@@ -13,4 +13,5 @@ window.env = {
     incrementalOrderBook: true,
     isResizable: false,
     isDraggable: false,
+    languages: ['en', 'ru'],
 };

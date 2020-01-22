@@ -116,7 +116,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     }
 
     private setChart = (markets: Market[], currentMarket: Market, colorTheme: string) => {
-        const { kline } = this.props;
+        const { kline, lang } = this.props;
         this.datafeed = dataFeedObject(this, markets);
         const currentTimeOffset = new Date().getTimezoneOffset();
         const clockPeriod = currentTimeOffset === stdTimezoneOffset(new Date()) ? 'STD' : 'DST';
@@ -129,7 +129,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             datafeed: this.datafeed,
             interval: widgetParams.interval,
             container_id: widgetParams.containerId,
-            locale: this.props.lang as LanguageCode,
+            locale: this.languageIncluded(lang) ? lang as LanguageCode : 'en' as LanguageCode,
             timezone: getTradingChartTimezone(currentTimeOffset, clockPeriod),
         };
 
@@ -172,6 +172,10 @@ export class TradingChartComponent extends React.PureComponent<Props> {
                 });
             });
         }
+    }
+
+    private languageIncluded (lang: string ) {
+        return ['ar', 'zh', 'cs', 'da_DK', 'nl_NL', 'en', 'et_EE', 'fr', 'de', 'el', 'he_IL', 'hu_HU', 'id_ID', 'it', 'ja', 'ko', 'fa', 'pl', 'pt', 'ro', 'ru', 'sk_SK', 'es', 'sv', 'th', 'tr', 'vi'].includes(lang)
     }
 }
 
