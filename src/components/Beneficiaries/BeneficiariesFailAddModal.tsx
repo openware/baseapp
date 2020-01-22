@@ -1,7 +1,7 @@
+import { Button } from '@openware/components';
 import * as React from 'react';
 import { History } from 'history';
 import { RouteProps, withRouter } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 
 interface OwnProps {
@@ -49,11 +49,8 @@ class BeneficiariesFailAddModalComponent extends React.Component<Props> {
                 <div className="cr-email-form__button-wrapper">
                     <Button
                         onClick={this.handleRedirectToKYC}
-                        size="lg"
-                        variant="primary"
-                    >
-                        {this.translate('page.body.wallets.beneficiaries.failAddModal.button')}
-                    </Button>
+                        label={this.translate('page.body.wallets.beneficiaries.failAddModal.button')}
+                    />
                 </div>
             </div>
         );
