@@ -1,11 +1,13 @@
-import { History } from 'history';
+import { createBrowserHistory, History } from 'history';
 import * as React from 'react';
+import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { Router } from 'react-router';
 import { Alerts, ErrorWrapper, Footer, Header, Sidebar } from './containers';
 import { RootState } from './modules';
 import { Layout } from './routes';
+import { gaTrackerKey } from '../src/api';
 
 interface Locale {
     lang: string;
@@ -20,13 +22,27 @@ interface ReduxProps {
     locale: Locale;
 }
 
+const gaKey = gaTrackerKey();
+const history = createBrowserHistory();
+
+if (gaKey) {
+    ReactGA.initialize(gaKey);
+    history.listen(location => {
+        ReactGA.set({ page: location.pathname });
+        ReactGA.pageview(location.pathname);
+    });
+}
+
 type Props = AppProps & ReduxProps;
 
 class AppLayout extends React.Component<Props, {}, {}> {
+    public componentDidMount() {
+        ReactGA.pageview(history.location.pathname);
+    }
+
     public render() {
         const {
             locale,
-            history,
         } = this.props;
         const { lang, messages } = locale;
         return (
