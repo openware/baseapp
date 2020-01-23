@@ -20,7 +20,7 @@
 }
 
 .pg-sidebar-wrapper {
-  background-color: var(--profile-box);
+  background-color: var(--body-background-color);
   width: 320px;
   z-index: 99990;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
@@ -41,7 +41,7 @@
   }
   a {
     text-decoration: none;
-    color: var(--profile-grey);
+    color: var(--secondary-text-color);
   }
 
   &-profile {
@@ -50,7 +50,7 @@
     align-items: center;
     padding: 7px 0;
     margin-bottom: 7px;
-    border-bottom: 1px solid var(--profile-activity-border);
+    border-bottom: 1px solid var(--divider-color);
 
     a {
       width: 100%;
@@ -92,13 +92,13 @@
       align-items: center;
       &-text {
         margin: 0 6px 0 0;
-        color: var(--profile-grey);
+        color: var(--secondary-text-color);
       }
       &-value {
         font-weight: 600;
         margin: 0 6px 0 0;
         font-size: calc(var(--font-size) * 1.16);
-        color: var(--profile-grey);
+        color: var(--secondary-text-color);
       }
     }
   }
@@ -114,7 +114,7 @@
 
   &-nav {
     padding: 0 0 11px;
-    border-bottom: 1px solid var(--profile-activity-border);
+    border-bottom: 1px solid var(--divider-color);
     &-item {
       display: flex;
       justify-content: flex-start;
@@ -200,7 +200,7 @@
       }
 
       &-text {
-        color: var(--profile-grey);
+        color: var(--secondary-text-color);
         margin: 0;
         font-weight: 600;
         font-size: calc(var(--font-size) * 1.16);

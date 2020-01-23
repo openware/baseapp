@@ -53,7 +53,7 @@
       padding: 0 !important;
       &:last-child {
         .cr-wallet-item {
-          border-bottom: 0.5px solid var(--wallets-item-border);
+          border-bottom: 0.5px solid var(--divider-color);
         }
       }
 
@@ -61,9 +61,9 @@
     }
 
     .cr-wallet-item {
-      border-color: var(--wallets-item-border);
+      border-color: var(--divider-color);
       border-radius: 0;
-      color: var(--wallets-item-font);
+      color: var(--primary-text-color);
 
       &:hover {
         background: var(--wallets-item-bg-hover);
@@ -89,7 +89,7 @@
           &:nth-child(2) {
             font-weight: normal;
             margin-top: calc(var(--gap) * .6);
-            color: var(--wallets-locked-amount);
+            color: var(--primary-text-color);
             font-size: calc(var(--gap) * 1.9);
             opacity: 0.3
           }
@@ -97,7 +97,7 @@
       }
 
       &__amount-locked {
-        color: var(--wallets-locked-amount);
+        color: var(--primary-text-color);
         padding-top: calc(var(--gap) * .6);
         font-size: calc(var(--gap) * 1.9);
         opacity: 0.60;
@@ -122,7 +122,7 @@
         background-color: var(--wallets-item-bg-active);
         outline: none;
         border: none;
-        color: var(--wallets-item-font-active);
+        color: var(--primary-text-color);
 
         &:hover {
           background: var(--wallets-item-bg-active);
@@ -170,7 +170,7 @@
 
   .pg-wallet__tabs {
     background: var(--body-background-color);
-    border-left: 1px solid var(--wallets-item-border);
+    border-left: 1px solid var(--divider-color);
   }
 
   .cr-withdraw {
@@ -371,7 +371,7 @@
     color: var(--primary-text-color);
     height: calc(var(--gap) * 9);
     box-sizing: border-box;
-    border-bottom: 1px solid var(--wallets-item-border);
+    border-bottom: 1px solid var(--divider-color);
     border-radius: calc(var(--gap) * 0.5);
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12);
     font-size: calc(var(--gap) * 2.66);
@@ -474,7 +474,7 @@
   padding: calc(var(--gap) * 3);
 
   .pg-history-elem__label {
-    color: var(--wallets-balance);
+    color: var(--primary-text-color);
     font-size: calc(var(--gap) * 5);
     font-weight: 300;
   }

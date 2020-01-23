@@ -2,7 +2,7 @@
   flex-wrap: wrap;
   height: 100%;
   align-items: flex-start !important;
-  color: var(--profile-grey);
+  color: var(--secondary-text-color);
   margin-bottom: 24px !important;
 
   h1, h2, h3, h4, h5, h6 {
@@ -54,7 +54,7 @@
 
   &__details {
     box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
-    background-color: var(--profile-box);
+    background-color: var(--body-background-color);
     width: 100%;
     margin-top: calc(var(--gap) * 2);
     border-radius: calc(var(--gap) * 0.66);
@@ -77,22 +77,21 @@
   &-header {
     display: flex;
     padding: 0 calc(var(--gap) * 3) 0 calc(var(--gap) * 3.4);
-    background: var(--profile-activity-header);
-    border-bottom: 1px solid var(--profile-activity-border);
-    color: var(--profile-activity-header-font);
+    background: var(--header-background-color);
+    border-bottom: 1px solid var(--divider-color);
+    color: var(--primary-text-color);
     border-radius: calc(var(--gap) * 0.66) calc(var(--gap) * 0.66) 0 0;
     margin-right: 0;
     margin-left: 0;
   }
 
   &__box {
-    box-shadow: var(--profile-box-shadow);
     padding: calc(var(--gap) * 4) calc(var(--gap) * 4) calc(var(--gap) * 4) calc(var(--gap) * 1);
     width: 100%;
 
     &-header {
       display: flex;
-      border-bottom: 1px solid var(--profile-box-header-line);
+      border-bottom: 1px solid var(--divider-color);
 
       h1 {
         margin: 0;
@@ -118,7 +117,7 @@
   &__label {
     padding-top: calc(var(--gap) * 2);
     font-size: calc(var(--font-size) * 1.33);
-    color: var(--profile-grey);
+    color: var(--secondary-text-color);
     padding-bottom: var(--gap);
 
     &-value {
@@ -161,7 +160,7 @@
 
           &__image {
             border: none;
-            background-color: var(--profile-box-bg);
+            background-color: var(--body-background-color);
             color: var(--profile-accent-color);
           }
         }
@@ -257,7 +256,7 @@
       }
 
       .pg-profile-page__row:last-child {
-        border-top: 1px solid var(--profile-box-header-line);
+        border-top: 1px solid var(--divider-color);
         padding-top: calc(var(--gap) * 3);
       }
     }
@@ -295,7 +294,7 @@
     width: 100%;
     box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
     margin-top: calc(var(--gap) * 2);
-    background: var(--profile-box);
+    background: var(--body-background-color);
     border-radius: calc(var(--gap) * 0.66);
 
     .cr-table {
@@ -326,7 +325,7 @@
       }
 
       tr, td {
-        background: var(--profile-box);
+        background: var(--body-background-color);
         border-top: 1px solid var(--divider-color);
       }
 
@@ -356,7 +355,7 @@
     width: 100%;
     box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
     margin-top: calc(var(--gap) * 2);
-    background: var(--profile-box);
+    background: var(--body-background-color);
     border-radius: calc(var(--gap) * 0.66);
 
     .cr-table {
@@ -633,9 +632,9 @@
       padding: 0 calc(var(--gap) * 2.23) !important;
 
       fieldset {
-        color: var(--kyc-grey);
+        color: var(--secondary-text-color);
         border-radius: calc(var(--gap) * 0.66);
-        border: 1px solid var(--kyc-grey);
+        border: 1px solid var(--input-border);
         box-sizing: border-box;
         height: calc(var(--gap) * 8.16);
         margin-top: calc(var(--gap) * 3.6);
@@ -660,7 +659,7 @@
   &__vertical-line {
     min-height: calc(var(--gap) * 3.2);
     height: calc(var(--gap) * 6.4);
-    background: var(--profile-box-header-line);
+    background: var(--divider-color);
     width: calc(var(--gap) * 0.5);
   }
 
@@ -766,7 +765,7 @@
     &__options-group {
       width: 100%;
       height: calc(var(--big-gap) * 0.97);
-      border-bottom: 2px solid var(--email-form-border);
+      border-bottom: 2px solid var(--divider-color);
     }
 
     &__label {
