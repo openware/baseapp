@@ -48,7 +48,7 @@
   }
 
   .beneficiaries-fail-modal .cr-email-form {
-    min-height: calc(var(--big-gap) * 4);
+    min-height: calc(var(--big-gap) * 3);
   }
 
   .beneficiaries-confirmation-modal .cr-email-form {
@@ -455,18 +455,28 @@
   }
 
   .beneficiaries-fail-modal {
-    .cr-email-form__form-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      &__info {
+    .cr-email-form {
+      &__form-content {
+        display: flex;
         align-items: center;
-        color: var(--color-white);
-        font-weight: normal;
-        font-size: 14px;
-        position: absolute;
-        top: 12px;
+        justify-content: center;
+
+        &__info {
+          align-items: center;
+          color: var(--color-white);
+          font-weight: normal;
+          font-size: 14px;
+          position: absolute;
+          top: 0;
+        }
+      }
+
+      &__button-wrapper {
+        min-height: calc(var(--gap) * 0.5);
+
+        input {
+          color: var(--white);
+        }
       }
     }
   }
