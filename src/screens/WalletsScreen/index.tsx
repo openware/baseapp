@@ -33,7 +33,6 @@ import {
     User,
     WalletHistoryList,
     walletsAddressFetch,
-    walletsData,
     walletsFetch,
     walletsWithdrawCcyFetch,
 } from '../../modules';
@@ -58,7 +57,6 @@ interface DispatchProps {
     fetchBeneficiaries: typeof beneficiariesFetch;
     fetchWallets: typeof walletsFetch;
     fetchAddress: typeof walletsAddressFetch;
-    clearWallets: () => void;
     walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
     fetchSuccess: typeof alertPush;
     setMobileWalletUi: typeof setMobileWalletUi;
@@ -139,10 +137,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         if (!this.props.currencies.length) {
             this.props.currenciesFetch();
         }
-    }
-
-    public componentWillUnmount() {
-        this.props.clearWallets();
     }
 
     public componentWillReceiveProps(next: Props) {
@@ -445,7 +439,6 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchWallets: () => dispatch(walletsFetch()),
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
-    clearWallets: () => dispatch(walletsData([])),
     fetchSuccess: payload => dispatch(alertPush(payload)),
     setMobileWalletUi: payload => dispatch(setMobileWalletUi(payload)),
     currenciesFetch: () => dispatch(currenciesFetch()),
