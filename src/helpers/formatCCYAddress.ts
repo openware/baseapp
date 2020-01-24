@@ -1,4 +1,4 @@
-import bch = require('bitcoincashjs');
+import bch from 'bitcoincashjs';
 
 export const formatCCYAddress = (currency: string, address: string): string => {
     if (address) {

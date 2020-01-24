@@ -1,0 +1,41 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: total
+Total: 28
+
+[
+  {"id":566,
+   "currency":"btc",
+   "amount":"0.99",
+   "fee":"0.0",
+   "txid":"4516e174e7f04fafd14026c22d2bc288695aaa96f4b44518aa86ac7e27fc2458",
+   "created_at":"2018-12-03T17:13:58+01:00",
+   "confirmations":1,
+   "completed_at":"2018-12-03T17:14:56+01:00",
+   "state":"accepted"
+  },
+  {"id":393,
+   "currency":"btc",
+   "amount":"0.001",
+   "fee":"0.0",
+   "txid":"dd5024e99c92aaa8787ed8273c8a6b635388eb4624d9cc1f8e04313dce843180",
+   "created_at":"2018-11-16T09:56:38+01:00",
+   "confirmations":0,
+   "completed_at":"2018-11-16T09:56:56+01:00",
+   "state":"canceled"
+  },
+  {"id":320,
+   "currency":"btc",
+   "amount":"0.0099",
+   "fee":"0.0",
+   "txid":"5613f03267d352d6cd19be282424b8a55d0f1d4f15c4598da66e68117c352821",
+   "created_at":"2018-11-12T11:41:22+01:00",
+   "confirmations":1,
+   "completed_at":"2018-11-12T11:58:58+01:00",
+   "state":"submitted"
+  }
+]

@@ -7,8 +7,8 @@ import {
     sendCode,
     sendCodeData,
     sendCodeError,
+    resendCode,
 } from '../actions';
-
 
 describe('Module: label', () => {
     let store: MockStoreEnhanced;
@@ -69,6 +69,28 @@ describe('Module: label', () => {
                 }
             });
         });
+        store.dispatch(sendCode(data));
+        return promise;
+    });
+
+    const mockPhoneExist = () => {
+        mockAxios.onPost('/resource/phones').reply(400, { errors: ['resource.phone.exists']});
+    };
+
+    const expectedPhoneExistFetch = [sendCode(data), resendCode(data)];
+
+    it('should fetch label if phone already exist in success flow', async () => {
+        mockPhoneExist();
+        const promise = new Promise(resolve => {
+            store.subscribe(() => {
+                const actions = store.getActions();
+                if (actions.length === expectedPhoneExistFetch.length) {
+                    expect(actions).toEqual(expectedPhoneExistFetch);
+                    resolve();
+                }
+            });
+        });
+
         store.dispatch(sendCode(data));
         return promise;
     });

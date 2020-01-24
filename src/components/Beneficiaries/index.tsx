@@ -11,17 +11,26 @@ import {
     RootState,
     selectBeneficiaries,
     selectBeneficiariesCreate,
+    selectMemberLevels,
+    selectUserInfo,
+    memberLevelsFetch,
+    MemberLevels,
+    User,
 } from '../../modules';
 import { BeneficiariesActivateModal } from './BeneficiariesActivateModal';
 import { BeneficiariesAddModal } from './BeneficiariesAddModal';
+import { BeneficiariesFailAddModal } from './BeneficiariesFailAddModal';
 
 interface ReduxProps {
     beneficiaries: Beneficiary[];
     beneficiariesAddData: Beneficiary;
+    memberLevels?: MemberLevels;
+    userData: User;
 }
 
 interface DispatchProps {
     deleteAddress: typeof beneficiariesDelete;
+    memberLevelsFetch: typeof memberLevelsFetch;
 }
 
 interface OwnProps {
@@ -36,6 +45,7 @@ interface State {
     isOpenConfirmationModal: boolean;
     isOpenDropdown: boolean;
     isOpenTip: boolean;
+    isOpenFailModal: boolean;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -60,16 +70,21 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             isOpenConfirmationModal: false,
             isOpenDropdown: false,
             isOpenTip: false,
+            isOpenFailModal: false,
         };
     }
 
     public componentDidMount() {
-        const { currency, beneficiaries } = this.props;
+        const { currency, beneficiaries, memberLevels } = this.props;
         if (currency && beneficiaries.length) {
             const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(beneficiaries, currency));
             if (filtredBeneficiaries.length) {
                 this.handleSetCurrentAddress(filtredBeneficiaries[0]);
             }
+        }
+
+        if (!memberLevels) {
+            this.props.memberLevelsFetch();
         }
     }
 
@@ -97,6 +112,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             currentWithdrawalBeneficiary,
             isOpenAddressModal,
             isOpenConfirmationModal,
+            isOpenFailModal,
         } = this.state;
         const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(beneficiaries, currency));
 
@@ -118,6 +134,9 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                         handleToggleConfirmationModal={this.handleToggleConfirmationModal}
                     />
                 )}
+                {isOpenFailModal && (
+                    <BeneficiariesFailAddModal handleToggleFailModal={this.handleToggleFailModal} />
+                )}
             </div>
         );
     }
@@ -126,7 +145,11 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         return (
             <div className="pg-beneficiaries__add" onClick={this.handleClickToggleAddAddressModal()}>
                 <span className="pg-beneficiaries__add__label">{this.translate('page.body.wallets.beneficiaries.addAddress')}</span>
-                <img src={require('../../assets/images/PlusIcon.svg')} className="pg-beneficiaries__add__icon"/>
+                <img
+                    alt="plus-icon"
+                    src={require('../../assets/images/PlusIcon.svg')}
+                    className="pg-beneficiaries__add__icon"
+                />
             </div>
         );
     }
@@ -173,7 +196,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 {beneficiaries && beneficiaries.map((item, index) => this.renderDropdownItem(item, index, type))}
                 <div className="pg-beneficiaries__dropdown__body__add add" onClick={this.handleClickToggleAddAddressModal()}>
                     <span className="add__label">{this.translate('page.body.wallets.beneficiaries.addAddress')}</span>
-                    <img className="add__icon" src={require('../../assets/images/PlusIcon.svg')}/>
+                    <img alt="add-icon" className="add__icon" src={require('../../assets/images/PlusIcon.svg')}/>
                 </div>
             </div>
         );
@@ -265,7 +288,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                         <div className="select__right">
                         <span className="select__right__tip" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
                         <span className="select__right__select">{this.translate('page.body.wallets.beneficiaries.dropdown.select')}</span>
-                        <span className="select__right__chevron"><img src={require('../../assets/images/ChevronIcon.svg')}/></span>
+                        <span className="select__right__chevron"><img alt="right-chevron" src={require('../../assets/images/ChevronIcon.svg')}/></span>
                         </div>
                     </div>
                     {isOpenDropdown && this.renderDropdownBody(beneficiaries, type)}
@@ -284,7 +307,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                     <div className="select__right">
                     <span className="select__right__tip" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
                     <span className="select__right__select">{this.translate('page.body.wallets.beneficiaries.dropdown.select')}</span>
-                    <span className="select__right__chevron"><img src={require('../../assets/images/ChevronIcon.svg')}/></span>
+                    <span className="select__right__chevron"><img alt="right-chevron" src={require('../../assets/images/ChevronIcon.svg')}/></span>
                     </div>
                 </div>
                 {isOpenDropdown && this.renderDropdownBody(beneficiaries, type)}
@@ -302,7 +325,13 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     }
 
     private handleClickToggleAddAddressModal = () => () => {
-        this.handleToggleAddAddressModal();
+        const { memberLevels, userData } = this.props;
+
+        if (userData.level < memberLevels.withdraw.minimum_level) {
+            this.handleToggleFailModal();
+        } else {
+            this.handleToggleAddAddressModal();
+        }
     }
 
     private handleDeleteAddress = (item: Beneficiary) => {
@@ -350,6 +379,12 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         }));
     }
 
+    private handleToggleFailModal = () => {
+        this.setState(prevState => ({
+            isOpenFailModal: !prevState.isOpenFailModal,
+        }));
+    }
+
     private handleToggleDropdown = () => {
         this.setState(prevState => ({
             isOpenDropdown: !prevState.isOpenDropdown,
@@ -368,10 +403,13 @@ class BeneficiariesComponent extends React.Component<Props, State> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiaries: selectBeneficiaries(state),
     beneficiariesAddData: selectBeneficiariesCreate(state),
+    memberLevels: selectMemberLevels(state),
+    userData: selectUserInfo(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     deleteAddress: payload => dispatch(beneficiariesDelete(payload)),
+    memberLevelsFetch: () => dispatch(memberLevelsFetch()),
 });
 
 // tslint:disable-next-line:no-any

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 
 
-interface CopyableTextFieldProps {
+export interface CopyableTextFieldProps {
     /**
      * Text value that will be copied to the clipboard
      */
@@ -32,6 +32,7 @@ interface CopyableTextFieldProps {
 
 type CopyTypes = HTMLInputElement | null;
 
+
 const copy = (id: string) => {
     const copyText: CopyTypes = document.querySelector(`#${id}`);
 
@@ -39,7 +40,7 @@ const copy = (id: string) => {
         copyText.select();
 
         document.execCommand('copy');
-        window.getSelection().removeAllRanges();
+        (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
     }
 };
 
@@ -90,5 +91,4 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
 
 export {
     CopyableTextField,
-    CopyableTextFieldProps,
 };

@@ -1,7 +1,7 @@
 import { Input } from '@openware/components';
 import * as React from 'react';
 
-interface CustomInputProps {
+export interface CustomInputProps {
     type: string;
     label: string;
     defaultLabel: string;
@@ -52,5 +52,4 @@ class CustomInput extends React.Component<CustomInputProps> {
 
 export {
     CustomInput,
-    CustomInputProps,
 };

@@ -6,8 +6,8 @@ import axios, {
 } from 'axios';
 import {
     applogicUrl,
+    arkeUrl,
     authUrl,
-    tenkoUrl,
     tradeUrl,
     withCredentials,
 } from './config';
@@ -25,7 +25,7 @@ export interface JsonBody {
 }
 
 export interface RequestOptions {
-    apiVersion: 'applogic' | 'peatio' | 'barong' | 'tenko';
+    apiVersion: 'applogic' | 'peatio' | 'barong' | 'arke';
     withHeaders?: boolean;
 }
 
@@ -45,7 +45,7 @@ const getAPI = () => ({
     barong: `${authUrl()}`,
     applogic: `${applogicUrl()}`,
     peatio: `${tradeUrl()}`,
-    tenko: `${tenkoUrl()}`,
+    arke: `${arkeUrl()}`,
 });
 
 const buildRequest = (request: Request, configData: RequestOptions) => {
@@ -84,7 +84,7 @@ export const defaultResponse: Partial<AxiosError['response']> = {
 
 export const formatError = (responseError: AxiosError) => {
     const response = responseError.response || defaultResponse;
-    const errors = response.data && (response.data.errors || [response.data.error]) || [];
+    const errors = (response.data && (response.data.errors || [response.data.error])) || [];
     return {
         code: response.status,
         message: errors,

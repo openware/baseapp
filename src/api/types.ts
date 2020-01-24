@@ -4,7 +4,7 @@ export interface Config {
         tradeUrl: string;
         applogicUrl: string;
         rangerUrl: string;
-        tenkoUrl: string;
+        arkeUrl: string;
     };
     minutesUntilAutoLogout?: string;
     rangerReconnectPeriod?: string;
@@ -18,6 +18,5 @@ export interface Config {
     };
     gaTrackerKey?: string;
     msAlertDisplayTime?: string;
-    licenseKey?: string;
     incrementalOrderBook: boolean;
 }

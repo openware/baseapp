@@ -6,6 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { incrementalOrderBook } from '../../api';
 import { Grid } from '../../components/Grid';
 import {
+    MarketsComponent,
     MarketDepthsComponent,
     OpenOrdersComponent,
     OrderBook,
@@ -110,6 +111,10 @@ class Trading extends React.Component<Props, StateProps> {
         {
             i: 6,
             render: () => <RecentTrades/>,
+        },
+        {
+            i: 7,
+            render: () => <MarketsComponent/>,
         },
     ];
 

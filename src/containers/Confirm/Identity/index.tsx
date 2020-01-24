@@ -1,16 +1,10 @@
-import {
-    Button,
-    Dropdown,
-} from '@openware/components';
+import { Button, Dropdown } from '@openware/components';
 import cr from 'classnames';
-import countries = require('i18n-iso-countries');
+import * as moment from 'moment';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
-import {
-  connect,
-  MapDispatchToPropsFunction,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { formatDate, isDateInFuture } from '../../../helpers';
 import {
     editIdentity,
@@ -26,6 +20,8 @@ import {
     User,
 } from '../../../modules';
 import { nationalities } from '../../../translations/nationalities';
+
+import * as countries from 'i18n-iso-countries';
 
 interface ReduxProps {
     editSuccess?: string;
@@ -133,6 +129,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
         const dateOfBirthGroupClass = cr('pg-confirm__content-identity-col-row-content', {
             'pg-confirm__content-identity-col-row-content--focused': dateOfBirthFocused,
+            'pg-confirm__content-identity-col-row-content--wrong': dateOfBirth && !this.handleValidateInput('dateOfBirth', dateOfBirth),
         });
 
         const firstNameGroupClass = cr('pg-confirm__content-identity-col-row-content', {
@@ -369,13 +366,13 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             event.preventDefault();
             this.sendData();
         }
-    }
+    };
 
     private handleChangeDate = (e: OnChangeEvent) => {
         this.setState({
             dateOfBirth: formatDate(e.target.value),
         });
-    }
+    };
 
     private selectNationality = (value: string) => {
         this.setState({
@@ -398,14 +395,20 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 const lastNameRegex = new RegExp(`^[a-zA-Z]{1,100}$`);
                 return value.match(lastNameRegex) ? true : false;
             case 'residentialAddress':
-                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9\-,.;/\\s]+$`);
+                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9,.;/\\s]+$`);
                 return value.match(residentialAddressRegex) ? true : false;
             case 'city':
                 const cityRegex = new RegExp(`^[a-zA-Z]+$`);
                 return value.match(cityRegex) ? true : false;
             case 'postcode':
-                const postcodeRegex = new RegExp(`^[0-9\-]{1,12}$`);
+                const postcodeRegex = new RegExp(`^[0-9]{1,12}$`);
                 return value.match(postcodeRegex) ? true : false;
+            case 'dateOfBirth':
+                if (value.length === 10) {
+                    return moment(value, 'DD/MM/YYYY').unix() < (Date.now() / 1000);
+                }
+
+                return false;
             default:
                 return true;
         }
@@ -428,16 +431,17 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         const residentialAddressValid = this.handleValidateInput('residentialAddress', residentialAddress);
         const cityValid = this.handleValidateInput('city', city);
         const postcodeValid = this.handleValidateInput('postcode', postcode);
+        const dateOfBirthValid = this.handleValidateInput('dateOfBirth', dateOfBirth);
 
         return (
             !firstNameValid
             || !lastNameValid
-            || !dateOfBirth
             || !metadata.nationality
             || !residentialAddressValid
             || !countryOfBirth
             || !cityValid
             || !postcodeValid
+            || !dateOfBirthValid
         );
     }
 

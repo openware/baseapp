@@ -155,6 +155,10 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.tipName': 'Name',
     'page.body.wallets.beneficiaries.tipDescription': 'Note',
 
+    'page.body.wallets.beneficiaries.failAddModal.header': 'Warning',
+    'page.body.wallets.beneficiaries.failAddModal.content': 'You need to confirm your account to add a beneficiary',
+    'page.body.wallets.beneficiaries.failAddModal.button': 'Confirm phone',
+
     'page.body.openOrders.tab.all': 'Все',
     'page.body.openOrders.tab.open': 'Открытые',
     'page.body.openOrders.header.orderType': 'Тип ордера',
@@ -206,6 +210,7 @@ export const ru: LangType = {
     'page.body.history.withdraw.content.status.succeed': 'Выполнен',
     'page.body.history.withdraw.content.status.failed': 'Неудачный',
     'page.body.history.withdraw.content.status.confirming': 'Подтверждается',
+    'page.body.history.withdraw.content.status.errored': 'Ошибка',
 
     'page.body.history.trade': 'История ордеров',
     'page.body.history.trade.header.id': 'ID',
@@ -283,8 +288,8 @@ export const ru: LangType = {
     'page.body.profile.apiKeys.modal.secret_key_info': 'Эта информация видна только один раз и не сможет быть восстановлена',
     'page.body.profile.apiKeys.modal.secret_key_store': 'Пожалуйста, сохраните это надежно',
     'page.body.profile.apiKeys.modal.note': 'Внимание',
-    'page.body.profile.apiKeys.modal.note_content': 'Для сохранности средств, не сообщайте свой Секретный и ключ Доступа другим.\
- Если Вы забыли свой Секретный ключ, удалите его и создайте новую пару ключей.',
+    'page.body.profile.apiKeys.modal.note_content': `Для сохранности средств, не сообщайте свой Секретный и ключ Доступа другим.
+    Если Вы забыли свой Секретный ключ, удалите его и создайте новую пару ключей.`,
     'page.body.profile.apiKeys.modal.title': 'Введите 2FA код с приложения',
     'page.body.profile.apiKeys.modal.label': '6-ти значный Google Authenticator код',
     'page.body.profile.apiKeys.modal.placeholder': 'Введите код',

@@ -9,7 +9,7 @@ type OnSubmitCallback = (order: OrderProps) => void;
 type DropdownElem = number | string | React.ReactNode;
 type FormType = 'buy' | 'sell';
 
-interface OrderFormProps {
+export interface OrderFormProps {
     /**
      * Price that is applied during total order amount calculation when type is Market
      */
@@ -139,7 +139,7 @@ const checkButtonIsDisabled = (safeAmount: number, safePrice: number, price: str
     return props.disabled || !props.available || invalidAmount || invalidLimitPrice || invalidMarketPrice;
 };
 
-class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
+export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
     constructor(props: OrderFormProps) {
         super(props);
         this.state = {
@@ -423,10 +423,3 @@ class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
         });
     };
 }
-
-
-export {
-    OrderForm,
-    OrderFormProps,
-    OrderFormState,
-};

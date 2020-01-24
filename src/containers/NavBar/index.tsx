@@ -14,9 +14,7 @@ import {
     changeLanguage,
     logoutFetch,
     Market,
-    openGuardModal,
     RootState,
-    selectAppVersion,
     selectCurrentColorTheme,
     selectCurrentLanguage,
     selectCurrentMarket,
@@ -34,7 +32,6 @@ export interface ReduxProps {
     lang: string;
     success?: boolean;
     user: User;
-    version: string;
 }
 
 interface DispatchProps {
@@ -42,7 +39,6 @@ interface DispatchProps {
     changeLanguage: typeof changeLanguage;
     logout: typeof logoutFetch;
     walletsReset: typeof walletsReset;
-    openGuardModal: typeof openGuardModal;
 }
 
 export interface OwnProps {
@@ -122,11 +118,7 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
     };
 
     private handleChangeCurrentStyleMode = (value: string) => {
-        if (this.props.version === 'Lite') {
-            this.props.openGuardModal();
-        } else {
-            this.props.changeColorTheme(value);
-        }
+        this.props.changeColorTheme(value);
     };
 }
 
@@ -138,7 +130,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
         lang: selectCurrentLanguage(state),
         user: selectUserInfo(state),
         isLoggedIn: selectUserLoggedIn(state),
-        version: selectAppVersion(state),
     });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
@@ -147,7 +138,6 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         changeLanguage: payload => dispatch(changeLanguage(payload)),
         logout: () => dispatch(logoutFetch()),
         walletsReset: () => dispatch(walletsReset()),
-        openGuardModal: () => dispatch(openGuardModal()),
     });
 
 // tslint:disable-next-line:no-any

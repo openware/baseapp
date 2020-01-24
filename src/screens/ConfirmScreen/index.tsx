@@ -4,8 +4,6 @@ import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import logo = require('../../assets/images/logo.svg');
-import logoLight = require('../../assets/images/logoLight.svg');
 import { Phone } from '../../containers';
 import { Documents } from '../../containers/Confirm/Documents';
 import { Identity } from '../../containers/Confirm/Identity';
@@ -19,6 +17,9 @@ import {
     selectUserInfo,
     User,
 } from '../../modules';
+
+import logo from '../../assets/images/logo.svg';
+import logoLight from '../../assets/images/logoLight.svg';
 
 interface ReduxProps {
     colorTheme: string;
@@ -98,8 +99,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                 </div>
                 <div className="pg-confirm">
                     <div className="pg-confirm-box">
-                        <a
-                            href="#"
+                        <div
                             onClick={this.goBack}
                             className="pg-confirm-box-close"
                         />

@@ -13,7 +13,6 @@ import { ProfileTwoFactorAuth } from '../';
 import { CustomInput, Modal } from '../../components';
 import { PASSWORD_REGEX } from '../../helpers';
 import {
-    openGuardModal,
     RootState,
     selectUserInfo,
     User,
@@ -46,7 +45,6 @@ interface OnChangeEvent {
 interface DispatchProps {
     changePassword: typeof changePasswordFetch;
     clearPasswordChangeError: () => void;
-    openGuardModal: typeof openGuardModal;
     toggle2fa: typeof toggle2faFetch;
     toggleUser2fa: typeof toggleUser2fa;
 }
@@ -254,7 +252,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                     <div className="cr-email-form__option-inner">
                         <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalHeader"/>
                         <div className="cr-email-form__cros-icon" onClick={this.closeModal}>
-                            <img src={require('./close.svg')}/>
+                            <img alt="close" src={require('./close.svg')}/>
                         </div>
                     </div>
                 </div>
@@ -315,7 +313,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
               <div className="cr-email-form__option-inner">
                   <FormattedMessage id="page.body.profile.header.account.content.password.change"/>
                   <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
-                      <img src={require('./close.svg')}/>
+                      <img alt="close" src={require('./close.svg')}/>
                   </div>
               </div>
             </div>
@@ -430,7 +428,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps = dispatch => ({
     changePassword: ({ old_password, new_password, confirm_password }) =>
         dispatch(changePasswordFetch({ old_password, new_password, confirm_password })),
-    openGuardModal: () => dispatch(openGuardModal()),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
     toggleUser2fa: () => dispatch(toggleUser2fa()),
 });

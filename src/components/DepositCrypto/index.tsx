@@ -4,7 +4,7 @@ import * as React from 'react';
 import { CopyableTextField } from '../CopyableTextField';
 
 
-interface DepositCryptoProps {
+export interface DepositCryptoProps {
     /**
      * Data which is used to generate QR code
      */
@@ -84,5 +84,4 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
 
 export {
     DepositCrypto,
-    DepositCryptoProps,
 };

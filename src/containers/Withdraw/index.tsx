@@ -9,8 +9,7 @@ import {
 } from '../../components';
 import { Beneficiary } from '../../modules';
 
-interface WithdrawProps {
-    borderItem?: string;
+export interface WithdrawProps {
     currency: string;
     fee: number;
     onClick: (amount: number, total: number, beneficiary: Beneficiary, otpCode: string) => void;
@@ -24,7 +23,6 @@ interface WithdrawProps {
     withdrawTotalLabel?: string;
     withdrawButtonLabel?: string;
     withdrawDone: boolean;
-    openModal?: () => void;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -46,7 +44,7 @@ interface WithdrawState {
     total: number;
 }
 
-class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
+export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     public state = {
         amount: '',
         beneficiary: defaultBeneficiary,
@@ -59,7 +57,7 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     public componentWillReceiveProps(nextProps) {
         const { currency, withdrawDone } = this.props;
 
-        if (nextProps && (JSON.stringify(nextProps.currency) !== JSON.stringify(currency)) || (nextProps.withdrawDone && !withdrawDone)) {
+        if ((nextProps && (JSON.stringify(nextProps.currency) !== JSON.stringify(currency))) || (nextProps.withdrawDone && !withdrawDone)) {
             this.setState({
                 amount: '',
                 otpCode: '',
@@ -77,7 +75,6 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             otpCode,
         } = this.state;
         const {
-            borderItem,
             className,
             currency,
             type,
@@ -132,13 +129,11 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             className="cr-withdraw__summary-field"
                             message={withdrawFeeLabel ? withdrawFeeLabel : 'Fee'}
                             content={this.renderFee()}
-                            borderItem={borderItem}
                         />
                         <SummaryField
                             className="cr-withdraw__summary-field"
                             message={withdrawTotalLabel ? withdrawTotalLabel : 'Total Withdraw Amount'}
                             content={this.renderTotal()}
-                            borderItem={borderItem}
                         />
                     </div>
                     <div className="cr-withdraw__deep">
@@ -250,9 +245,3 @@ class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         this.setState({ otpCode });
     };
 }
-
-export {
-    Withdraw,
-    WithdrawProps,
-    WithdrawState,
-};

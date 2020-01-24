@@ -21,8 +21,8 @@ import { ApiKeysState } from './user/apiKeys';
 import { rootApiKeysSaga } from './user/apiKeys/sagas';
 import { AuthState, rootAuthSaga } from './user/auth';
 import { BeneficiariesState, rootBeneficiariesSaga } from './user/beneficiaries';
+import { GeetestCaptchaState, rootGeetestCaptchaSaga } from './user/captcha';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
-import { GuardState, rootGuardSaga } from './user/guard';
 import { HistoryState, rootHistorySaga } from './user/history';
 import { DocumentsState, rootSendDocumentsSaga } from './user/kyc/documents';
 import { IdentityState, rootSendIdentitySaga } from './user/kyc/identity';
@@ -37,6 +37,8 @@ import { ProfileState, rootProfileSaga } from './user/profile';
 import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
+import { MemberLevelsState, rootMemberLevelsSaga } from './public/memberLevels';
+
 
 export * from './public/markets';
 export * from './public/orderBook';
@@ -48,6 +50,7 @@ export * from './public/alert';
 export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';
+export * from './user/captcha';
 export * from './user/wallets';
 export * from './user/profile';
 export * from './user/openOrders';
@@ -60,7 +63,7 @@ export * from './user/newHistory';
 export * from './user/kyc';
 export * from './user/emailVerification';
 export * from './user/withdrawLimit';
-export * from './user/guard';
+export * from './public/memberLevels';
 
 export interface RootState {
     public: {
@@ -76,6 +79,7 @@ export interface RootState {
         alerts: AlertState;
         kline: KlineState;
         rgl: GridLayoutState;
+        memberLevels: MemberLevelsState;
     };
     user: {
         auth: AuthState;
@@ -95,8 +99,8 @@ export interface RootState {
         ordersHistory: OrdersHistoryState;
         openOrders: OpenOrdersState;
         sendEmailVerification: EmailVerificationState;
+        captchaKeys: GeetestCaptchaState;
         withdrawLimit: WithdrawLimitState;
-        guard: GuardState;
     };
 }
 
@@ -107,30 +111,31 @@ export const rootReducer = combineReducers({
 
 export function* rootSaga() {
     yield all([
+        call(rootApiKeysSaga),
         call(rootAuthSaga),
         call(rootBeneficiariesSaga),
         call(rootCurrenciesSaga),
-        call(rootMarketsSaga),
-        call(rootOrdersSaga),
-        call(rootProfileSaga),
-        call(rootWalletsSaga),
-        call(rootPasswordSaga),
-        call(rootSendCodeSaga),
-        call(rootSendIdentitySaga),
-        call(rootSendDocumentsSaga),
-        call(rootRecentTradesSaga),
-        call(rootOrderBookSaga),
+        call(rootEmailVerificationSaga),
+        call(rootGeetestCaptchaSaga),
         call(rootHandleAlertSaga),
         call(rootHistorySaga),
-        call(rootNewHistorySaga),
-        call(rootUserActivitySaga),
-        call(rootApiKeysSaga),
-        call(rootLabelSaga),
-        call(rootOrdersHistorySaga),
-        call(rootOpenOrdersSaga),
-        call(rootEmailVerificationSaga),
         call(rootKlineFetchSaga),
+        call(rootLabelSaga),
+        call(rootMarketsSaga),
+        call(rootNewHistorySaga),
+        call(rootOpenOrdersSaga),
+        call(rootOrderBookSaga),
+        call(rootOrdersHistorySaga),
+        call(rootOrdersSaga),
+        call(rootPasswordSaga),
+        call(rootProfileSaga),
+        call(rootRecentTradesSaga),
+        call(rootSendCodeSaga),
+        call(rootSendDocumentsSaga),
+        call(rootSendIdentitySaga),
+        call(rootUserActivitySaga),
+        call(rootWalletsSaga),
         call(rootWithdrawLimitSaga),
-        call(rootGuardSaga),
+        call(rootMemberLevelsSaga),
     ]);
 }

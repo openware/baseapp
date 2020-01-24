@@ -2,7 +2,7 @@ import { CellData, Table } from '@openware/components';
 import classnames from 'classnames';
 import * as React from 'react';
 
-interface HistoryProps {
+export interface HistoryProps {
     /**
      * List of history data
      */
@@ -13,7 +13,7 @@ interface HistoryProps {
     headers?: string[];
 }
 
-class History extends React.PureComponent<HistoryProps> {
+export class History extends React.PureComponent<HistoryProps> {
     private defaultHeaders = ['Time', 'Action', 'Price', 'Amount', 'Total'];
     private title = 'Trades History';
 
@@ -45,8 +45,3 @@ class History extends React.PureComponent<HistoryProps> {
         return index === actionIndex ? this.renderAction(cell as string) : cell;
     }
 }
-
-export {
-    History,
-    HistoryProps,
-};

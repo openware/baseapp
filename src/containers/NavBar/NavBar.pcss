@@ -17,7 +17,7 @@
     }
 
     &-logout {
-      background: var(--transparent);
+      background: transparent;
       color: var(--navbar-text-color);
       font-size: 14px;
       height: calc(var(--gap) * 4);
@@ -25,7 +25,7 @@
       text-decoration: none;
 
       &:hover, &:active {
-        background: var(--transparent);
+        background: transparent;
         text-decoration: underline;
       }
     }
@@ -323,7 +323,7 @@
   .pg-navbar {
     flex-direction: column;
     margin-top: calc(var(--gap) * 2);
-    justify-content: end;
+    justify-content: flex-end;
     display: flex;
     height: 100vh;
     width: 100%;
@@ -420,129 +420,6 @@
           }
         }
       }
-    }
-  }
-}
-
-.pg-contact-modal {
-  .cr-modal__container {
-    background-color: var(--base-bright);
-    height: 80%;
-    overflow-y: auto;
-
-    &-content {
-      padding-top: calc(var(--gap) * 1.5);
-      padding-bottom: calc(var(--gap) * 1.5);
-      margin-bottom: 0;
-    }
-  }
-
-  &-header {
-    display: flex;
-    justify-content: space-between;
-
-    &__title {
-      color: var(--active-color);
-      font-weight: bolder;
-      font-size: calc(var(--gap) * 4);
-      margin-left: 40%;
-    }
-  }
-  &-body {
-    &__input {
-      display: flex;
-      justify-content: space-between;
-      padding-bottom: calc(var(--gap) * 1.5);
-
-      .cr-input {
-        width: 100%;
-        padding-left: calc(var(--big-gap) * 0.2);
-        padding-right: calc(var(--big-gap) * 0.2);
-
-        input {
-          background-color: #efefef;
-          font-size: calc(var(--gap) * 1.33);
-          color: var(--base-9);
-          padding: calc(var(--big-gap) * 0.17);
-          text-align: left;
-          width: 100%;
-
-          &::placeholder {
-            color: #ccc;
-            font-size: 14px;
-          }
-        }
-      }
-    }
-    &__text {
-      display: flex;
-      font-size: calc(var(--gap) * 2);
-      padding-left: calc(var(--big-gap) * 0.2);
-      padding-right: calc(var(--big-gap) * 0.2);
-      margin-bottom: calc(var(--gap) * 2);
-      width: 100%;
-
-      textarea {
-        background-color: #efefef;
-        border: none;
-        color: var(--base-9);
-        height: 150px;
-        padding: calc(var(--big-gap) * 0.17);
-        font-size: calc(var(--gap) * 1.33);
-        width: 100%;
-        &:focus {
-          outline: none;
-        }
-      }
-    }
-    &__recaptcha  {
-      display: flex;
-      justify-content: center;
-    }
-    &__error {
-      color: red;
-      font-size: calc(var(--gap) * 1.33);
-    }
-  }
-  &-footer {
-    margin-bottom: calc(var(--gap) * 1.5) !important;
-    display: flex;
-
-    &__button {
-      background: var(--dark-color) !important;
-      font-size: calc(var(--gap) * 1.33);
-      margin: 0 auto;
-      width: 30%;
-    }
-  }
-}
-
-@media (max-height: 475px) {
-  .pg-contact-modal {
-    &-body {
-      &__text {
-        textarea {
-          height: 120px;
-        }
-      }
-    }
-    .cr-modal__container-footer {
-      padding: calc(var(--gap) * 2);
-    }
-  }
-}
-
-@media (max-height: 440px) {
-  .pg-contact-modal {
-    &-body {
-      &__text {
-        textarea {
-          height: 100px;
-        }
-      }
-    }
-    .cr-modal__container-footer {
-      padding: calc(var(--gap) * 1);
     }
   }
 }

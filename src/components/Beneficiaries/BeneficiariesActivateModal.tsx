@@ -121,7 +121,7 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         return (
             <div className="cr-email-form__form-content">
                 <div className="confirmation-modal__content">
-                    <img className="confirmation-modal__content__icon" src={require('../../assets/images/LetterIcon.svg')}/>
+                    <img alt="content-icon" className="confirmation-modal__content__icon" src={require('../../assets/images/LetterIcon.svg')}/>
                     <span className="confirmation-modal__content__text">{this.translate('page.body.wallets.beneficiaries.confirmationModal.body.text')}</span>
                 </div>
                 {this.renderConfirmationModalBodyItem('confirmationModalCode')}

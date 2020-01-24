@@ -33,7 +33,7 @@
   position: relative;
 }
 
-input[type=text], input[type=button] {   
+input[type=text], input[type=button] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -154,7 +154,7 @@ body {
     }
 
     td {
-      background: var(--transparent);
+      background: transparent;
       font-size: 1em !important;
       padding-top: calc(var(--gap) * 1.38) !important;
       padding-bottom: calc(var(--gap) * 1.38) !important;
@@ -189,7 +189,7 @@ body {
   -webkit-appearance: none;
 }
 
-:global .cr-grid {
+.cr-grid {
   &-item {
     height: 100%;
 
@@ -202,7 +202,7 @@ body {
   }
 }
 
-:global .react-grid-item {
+.react-grid-item {
   background: var(--trading-screen-background) !important;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border: none !important;
@@ -224,8 +224,8 @@ body {
 
 .react-resizable-handle {
   border: 5px solid var(--grid-resizable-border-color) !important;
-  border-left-color: var(--transparent) !important;
-  border-top-color: var(--transparent) !important;
+  border-left-color: transparent !important;
+  border-top-color: transparent !important;
   cursor: nwse-resize !important;
   opacity: 0.5 !important;
   z-index: 9999;
@@ -254,7 +254,7 @@ body {
 
 input:-webkit-autofill {
   width: 100%;
-  background: var(--transparent) !important;
+  background: transparent !important;
 }
 
 ::-webkit-scrollbar {

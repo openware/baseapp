@@ -9,33 +9,32 @@ steps:
   - name: "Test & Build"
     image: node:10.11
     environment:
-      REACT_APP_BUILD_VERSION: Enterprise
+      NPM_AUTH_TOKEN:
+        from_secret: drone_npm_auth_token
     commands:
       - export REACT_APP_GIT_SHA=$(git rev-parse --short HEAD)
       - echo $REACT_APP_GIT_SHA > .tags
       - export BUILD_DOMAIN=$(cat .domains)
       - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
-      - cd src/containers/ && unlink index.ts && ln -s index$REACT_APP_BUILD_VERSION.ts index.ts
       - npm -g install yarn
       - yarn install
       - yarn lint
       - yarn test:ci --collectCoverage=true
       - yarn build
 
-  - name: "Build Docker image"
-    image: plugins/docker
+  - name: "Build image"
+    image: plugins/gcr
     environment:
-      REACT_APP_BUILD_VERSION: Enterprise
+      BUILD_EXPIRE: "3 month"
+      NPM_AUTH_TOKEN:
+        from_secret: drone_npm_auth_token
     settings:
       build_args_from_env:
-        - REACT_APP_BUILD_VERSION
-      username:
-        from_secret: quay_username
-      password:
-        from_secret: quay_password
-      repo:
-        from_secret: quay_repo
-      registry: quay.io
+
+        - BUILD_EXPIRE
+        - NPM_AUTH_TOKEN
+      json_key:
+        from_secret: openware_gcp_creds_base64
     when:
       branch:
         - rc/**
@@ -51,9 +50,9 @@ steps:
       - cd build/config/
       - echo "window.env={api:{authUrl:'http://api-v2.mock.openware.work/api/v2/barong',tradeUrl:'http://api-v2.mock.openware.work/api/v2/peatio',applogicUrl:'http://api-v2.mock.openware.work/api/v2/applogic',rangerUrl:'ws://ranger.mock.openware.work/api/v2/ranger'},captcha:{captchaType:'none',siteKey:''}};" > env.js
       - cat env.js
-      - cd /drone/src/
+      - cd /drone/src
       - rsync -avzhre "ssh -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" build/ mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}
-      - rsync -avzhre "ssh -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" coverage/lcov-report/ mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}-coverage
+      - rsync -avzhre "ssh -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" coverage/ mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}-coverage
       - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work"
       - echo "http://${DRONE_COMMIT_SHA:0:7}-coverage.mock.openware.work"
 
@@ -102,22 +101,17 @@ steps:
       - yarn test:ci --collectCoverage=true
 
   - name: "Bump & Tag"
-    image: quay.io/openware/sdk-tools:0.0.3
+    image: quay.io/openware/sdk-citools:2.3.0
     environment:
       BRANCH_NAME: ${DRONE_BRANCH}
       REPO_NAME: ${DRONE_REPO}
       GITHUB_API_KEY:
         from_secret: kite_bot_key
     commands:
-      - BUNDLE_GEMFILE=/sdk/Gemfile bundle exec rake --rakefile=/sdk/Rakefile release:push
-
+      - BUNDLE_GEMFILE=/sdk/Gemfile bundle exec rake --rakefile=/sdk/Rakefile ci:prebuild
   - name: "Build Docker image"
     image: plugins/docker
-    environment:
-      REACT_APP_BUILD_VERSION: Enterprise
     settings:
-      build_args_from_env:
-        - REACT_APP_BUILD_VERSION
       username:
         from_secret: quay_username
       password:
@@ -156,6 +150,31 @@ steps:
         Check the build info here: {{ build.link }}
     when:
       status: [success, failure]
+
+  - name: "Push and Notify"
+    image: quay.io/openware/sdk-citools:2.3.0
+    environment:
+      BOT_USERNAME: kite-bot
+      BOT_NAME: Kite Bot
+      BOT_EMAIL: kite-bot@heliostech.fr
+      BRANCH_NAME: ${DRONE_BRANCH}
+      SDK_BRANCH: ${DRONE_BRANCH}
+      REPO_NAME: ${DRONE_REPO}
+      TELEGRAM_BOT_TOKEN:
+        from_secret: baseapp_telegram_bot_token
+      TELEGRAM_CHAT_ID:
+        from_secret: baseapp_telegram_chat_id
+      SLACK_TOKEN:
+        from_secret: baseapp_slack_token
+      SLACK_CHANNEL:
+        from_secret: baseapp_slack_channel
+      GITHUB_API_KEY:
+        from_secret: kite_bot_key
+    commands:
+      - BUNDLE_GEMFILE=/sdk/Gemfile bundle exec rake --rakefile=/sdk/Rakefile ci:postbuild[/drone/src]
+    when:
+      branch:
+        - master
 
 trigger:
   branch:

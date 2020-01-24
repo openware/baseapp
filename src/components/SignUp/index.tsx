@@ -3,26 +3,17 @@ import {
     Checkbox,
 } from '@openware/components';
 import cr from 'classnames';
-import {
-    CustomInput,
-} from '../';
-
+import { CustomInput } from '../';
 import * as React from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
-import {
-    EMAIL_REGEX,
-    PASSWORD_REGEX,
-} from '../../helpers';
+import { EMAIL_REGEX, PASSWORD_REGEX } from '../../helpers';
 
-interface SignUpFormProps {
-    siteKey?: string;
+export interface SignUpFormProps {
     isLoading?: boolean;
     title?: string;
     onSignUp: () => void;
     onSignIn?: () => void;
     className?: string;
     image?: string;
-    captchaType: 'recaptcha' | 'geetest' | 'none';
     labelSignIn?: string;
     labelSignUp?: string;
     emailLabel?: string;
@@ -34,9 +25,6 @@ interface SignUpFormProps {
     password: string;
     email: string;
     confirmPassword: string;
-    recaptcha_response: string;
-    recaptchaConfirmed: boolean;
-    recaptchaOnChange: (value: string) => void;
     handleChangeEmail: (value: string) => void;
     handleChangePassword: (value: string) => void;
     handleChangeConfirmPassword: (value: string) => void;
@@ -55,9 +43,14 @@ interface SignUpFormProps {
     refIdFocused: boolean;
     emailFocused: boolean;
     passwordFocused: boolean;
+    captchaType: 'recaptcha' | 'geetest' | 'none';
+    renderCaptcha: JSX.Element | null;
+    reCaptchaSuccess: boolean;
+    geetestCaptchaSuccess: boolean;
+    captcha_response: string;
 }
 
-class SignUpForm extends React.Component<SignUpFormProps> {
+export class SignUpForm extends React.Component<SignUpFormProps> {
     public render() {
         const {
             email,
@@ -67,8 +60,6 @@ class SignUpForm extends React.Component<SignUpFormProps> {
             onSignIn,
             image,
             isLoading,
-            siteKey,
-            captchaType,
             labelSignIn,
             labelSignUp,
             emailLabel,
@@ -105,15 +96,6 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                 <img className="cr-sign-up-form__image" src={image} alt="logo" />
             </h1>
         ) : null;
-        const captcha = hasConfirmed && captchaType !== 'none' ?
-            (
-                <div className="cr-sign-up-form__recaptcha">
-                    <ReCAPTCHA
-                        sitekey={siteKey}
-                        onChange={this.props.recaptchaOnChange}
-                    />
-                </div>
-            ) : null;
 
         return (
             <form>
@@ -197,7 +179,7 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                             onChange={this.props.clickCheckBox}
                             label={termsMessage ? termsMessage : 'I  agree all statements in terms of service'}
                         />
-                        {captcha}
+                        {this.props.renderCaptcha}
                         <div className="cr-sign-up-form__button-wrapper">
                             <Button
                                 type="submit"
@@ -219,15 +201,19 @@ class SignUpForm extends React.Component<SignUpFormProps> {
             password,
             confirmPassword,
             hasConfirmed,
-            recaptchaConfirmed,
+            reCaptchaSuccess,
             isLoading,
             captchaType,
+            geetestCaptchaSuccess,
         } = this.props;
 
         if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {
             return true;
         }
-        if (captchaType !== 'none' && !recaptchaConfirmed) {
+        if (captchaType === 'recaptcha' && !reCaptchaSuccess) {
+            return true;
+        }
+        if (captchaType === 'geetest' && !geetestCaptchaSuccess) {
             return true;
         }
         return false;
@@ -259,8 +245,3 @@ class SignUpForm extends React.Component<SignUpFormProps> {
         }
     };
 }
-
-export {
-    SignUpForm,
-    SignUpFormProps,
-};
