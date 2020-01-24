@@ -20,6 +20,7 @@ import {
 import { BeneficiariesActivateModal } from './BeneficiariesActivateModal';
 import { BeneficiariesAddModal } from './BeneficiariesAddModal';
 import { BeneficiariesFailAddModal } from './BeneficiariesFailAddModal';
+import { PlusIcon } from '../../assets/images/PlusIcon';
 
 interface ReduxProps {
     beneficiaries: Beneficiary[];
@@ -145,11 +146,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         return (
             <div className="pg-beneficiaries__add" onClick={this.handleClickToggleAddAddressModal()}>
                 <span className="pg-beneficiaries__add__label">{this.translate('page.body.wallets.beneficiaries.addAddress')}</span>
-                <img
-                    alt="plus-icon"
-                    src={require('../../assets/images/PlusIcon.svg')}
-                    className="pg-beneficiaries__add__icon"
-                />
+                <PlusIcon className="pg-beneficiaries__add__icon" alt="plus-icon" />
             </div>
         );
     }
@@ -196,7 +193,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 {beneficiaries && beneficiaries.map((item, index) => this.renderDropdownItem(item, index, type))}
                 <div className="pg-beneficiaries__dropdown__body__add add" onClick={this.handleClickToggleAddAddressModal()}>
                     <span className="add__label">{this.translate('page.body.wallets.beneficiaries.addAddress')}</span>
-                    <img alt="add-icon" className="add__icon" src={require('../../assets/images/PlusIcon.svg')}/>
+                    <PlusIcon className="add__icon" alt="add-icon" />
                 </div>
             </div>
         );
