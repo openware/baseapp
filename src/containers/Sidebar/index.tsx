@@ -17,8 +17,8 @@ import {
     selectUserLoggedIn,
     toggleSidebar,
 } from '../../modules';
+import { languages } from '../../api/config';
 import { Dropdown } from 'react-bootstrap';
-
 
 interface State {
     isOpenLanguage: boolean;
@@ -44,7 +44,6 @@ interface OwnProps {
 }
 
 type Props = OwnProps & ReduxProps & RouteProps & DispatchProps;
-
 
 class SidebarContainer extends React.Component<Props, State> {
     public state = {
@@ -74,28 +73,14 @@ class SidebarContainer extends React.Component<Props, State> {
                     <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-menu-language-container">
                         <Dropdown>
                             <Dropdown.Toggle variant="primary" id={languageClassName}>
-                                <img src={require(`../../assets/images/sidebar/${lang}.svg`)} alt="flag"/>
+                                <img
+                                    src={this.tryRequire(lang) && require(`../../assets/images/sidebar/${lang}.svg`)}
+                                    alt={`${lang}-flag-icon`}
+                                />
                                 <span className="dropdown-menu-language-selected">{languageName}</span>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item onClick={e => this.handleChangeLanguage('en')}>
-                                    <div className="dropdown-row">
-                                        <img
-                                            src={require('../../assets/images/sidebar/en.svg')}
-                                            alt="usa"
-                                        />
-                                        <span>EN</span>
-                                    </div>
-                                </Dropdown.Item>
-                                <Dropdown.Item onClick={e => this.handleChangeLanguage('ru')}>
-                                    <div className="dropdown-row">
-                                        <img
-                                            src={require('../../assets/images/sidebar/ru.svg')}
-                                            alt="rus"
-                                        />
-                                        <span>RU</span>
-                                    </div>
-                                </Dropdown.Item>
+                                {this.getLanguageDropdownItems()}
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
@@ -178,7 +163,29 @@ class SidebarContainer extends React.Component<Props, State> {
         );
     };
 
-    // tslint:disable:jsx-no-lambda
+    public getLanguageDropdownItems = () => {
+        return languages.map((l: string) =>
+            <Dropdown.Item onClick={e => this.handleChangeLanguage(l)}>
+                <div className="dropdown-row">
+                    <img
+                        src={this.tryRequire(l) && require(`../../assets/images/sidebar/${l}.svg`)}
+                        alt={`${l}-flag-icon`}
+                    />
+                    <span>{l.toUpperCase()}</span>
+                </div>
+            </Dropdown.Item>,
+        );
+    };
+
+    private tryRequire = (name: string) => {
+        try {
+            require(`../../assets/images/sidebar/${name}.svg`);
+            return true;
+        } catch (err) {
+            return false;
+        }
+    };
+
 
     private handleChangeLanguage = (language: string) => {
         this.props.changeLanguage(language);

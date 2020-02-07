@@ -23,6 +23,7 @@ const mockConfig: Config = {
     incrementalOrderBook: false,
     isResizable: false,
     isDraggable: false,
+    languages: ['en', 'ru'],
 };
 
 // tslint:disable no-any no-console
