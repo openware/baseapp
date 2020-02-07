@@ -9,6 +9,9 @@ import {
     AUTH_SIGN_UP_REQUIRE_VERIFICATION,
     AUTH_VERIFICATION_FETCH,
     AUTH_VERIFICATION_SUCCESS,
+    AUTH_ENTROPY_PASSWORD_DATA,
+    AUTH_ENTROPY_PASSWORD_FETCH,
+    AUTH_ENTROPY_PASSWORD_ERROR,
 } from './constants';
 
 export interface AuthState {
@@ -18,12 +21,14 @@ export interface AuthState {
     logoutError?: CommonError;
     authError?: CommonError;
     signUpError?: CommonError;
+    current_password_entropy: number;
 }
 
 export const initialStateAuth: AuthState = {
     require2FA: false,
     requireVerification: false,
     emailVerified: false,
+    current_password_entropy: 0,
 };
 
 export const authReducer = (state = initialStateAuth, action: AuthAction) => {
@@ -50,6 +55,12 @@ export const authReducer = (state = initialStateAuth, action: AuthAction) => {
             return { ...state };
         case AUTH_LOGOUT_FAILURE:
             return { ...state, logoutError: action.payload };
+        case AUTH_ENTROPY_PASSWORD_FETCH:
+            return { ...state };
+        case AUTH_ENTROPY_PASSWORD_DATA:
+            return { ...state, current_password_entropy: action.payload.entropy };
+        case AUTH_ENTROPY_PASSWORD_ERROR:
+            return { ...state };
         default:
             return state;
     }

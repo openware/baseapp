@@ -5,6 +5,7 @@ import { Configs } from './types';
 describe('configsReducer', () => {
     const fakeConfigs: Configs = {
         captcha_type: 'none',
+        password_min_entropy: 0,
     };
 
     const error = {

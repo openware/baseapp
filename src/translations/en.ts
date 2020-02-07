@@ -464,6 +464,12 @@ export const en = {
                                       'instruction. If you cannot find the email, ' +
                                       'please check your spam folder',
     'page.header.signUp.modal.footer': 'OK',
+    'page.header.signUp.strength.password': 'Password Strength',
+    'page.header.signUp.password.too.weak': 'TOO WEAK',
+    'page.header.signUp.password.weak': 'WEAK',
+    'page.header.signUp.password.good': 'GOOD',
+    'page.header.signUp.password.strong': 'STRONG',
+    'page.header.signUp.password.very.strong': 'VERY STRONG',
     'page.resendConfirmation': 'Resend Confirmation',
     'page.forgotPassword': 'Forgot Password',
     'page.forgotPassword.message': 'Enter email to reset password',
@@ -720,6 +726,11 @@ export const en = {
     'public.k_line.invalid_limit': 'Invalid limit',
 
     'server.internal_error': 'Internal Server Error',
+
+    'password.strength.tip.influence': 'What influence on password strength',
+    'password.strength.tip.number.characters': 'At least 8 characters',
+    'password.strength.tip.letter': 'At least One upper case and lower case letter',
+    'password.strength.tip.digit': 'At least One digit',
 
     ...nationalitiesNames,
     ...customTranslations,

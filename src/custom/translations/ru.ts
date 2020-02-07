@@ -465,6 +465,12 @@ export const ru: LangType = {
                                      'Если вы не можете найти адрес электронной почты, проверьте свою' +
                                      ' электронную почту со спамом.',
     'page.header.signUp.modal.footer': 'OK',
+    'page.header.signUp.strength.password': 'Password Strength',
+    'page.header.signUp.password.too.weak': 'Too weak',
+    'page.header.signUp.password.weak': 'Weak',
+    'page.header.signUp.password.good': 'Good',
+    'page.header.signUp.password.strong': 'Strong',
+    'page.header.signUp.password.very.strong': 'Very strong',
     'page.resendConfirmation': 'Отправить подтверждение снова',
     'page.forgotPassword': 'Забыли пароль',
     'page.forgotPassword.message': 'Введите адрес электронной почты, чтобы сбросить пароль',
@@ -722,6 +728,11 @@ export const ru: LangType = {
     'public.k_line.invalid_limit': 'Неверный лимит',
 
     'server.internal_error': 'Внутренняя ошибка сервера',
+
+    'password.strength.tip.influence': 'What influence on password strength',
+    'password.strength.tip.number.characters': 'At least 8 characters',
+    'password.strength.tip.letter': 'At least One upper case and lower case letter',
+    'password.strength.tip.digit': 'At least One digit',
 
     ...nationalitiesNames,
 };

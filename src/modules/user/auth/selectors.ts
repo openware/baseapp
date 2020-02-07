@@ -13,3 +13,6 @@ export const selectSignUpError = (state: RootState): CommonError | undefined =>
 
 export const selectEmailVerified = (state: RootState): AuthState['emailVerified'] =>
     state.user.auth.emailVerified;
+
+export const selectCurrentPasswordEntropy = (state: RootState): AuthState['current_password_entropy'] =>
+    state.user.auth.current_password_entropy;
