@@ -29,3 +29,4 @@ export * from './uppercase';
 export * from './getCsrfToken';
 export * from './cleanPositiveFloatInput';
 export * from './getOrderAPI';
+export * from './passwordValidation';

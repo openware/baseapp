@@ -11,6 +11,9 @@ import {
     AUTH_TEST_STATE,
     AUTH_VERIFICATION_FETCH,
     AUTH_VERIFICATION_SUCCESS,
+    AUTH_ENTROPY_PASSWORD_FETCH,
+    AUTH_ENTROPY_PASSWORD_DATA,
+    AUTH_ENTROPY_PASSWORD_ERROR,
 } from './constants';
 
 export interface GeetestCaptchaResponse {
@@ -19,6 +22,24 @@ export interface GeetestCaptchaResponse {
     geetest_seccode: string;
 }
 
+export interface EntropyPasswordFetch {
+    type: typeof AUTH_ENTROPY_PASSWORD_FETCH;
+    payload: {
+        password: string,
+    };
+}
+
+export interface EntropyPasswordError {
+    type: typeof AUTH_ENTROPY_PASSWORD_ERROR;
+    payload: CommonError;
+}
+
+export interface EntropyPasswordData {
+    type: typeof AUTH_ENTROPY_PASSWORD_DATA;
+    payload: {
+        entropy: number;
+    };
+}
 export interface SignInFetch {
     type: typeof AUTH_SIGN_IN_FETCH;
     payload: {
@@ -98,7 +119,25 @@ export type AuthAction =
     | VerificationSuccess
     | LogoutFailed
     | LogoutFetch
-    | TestAuthState;
+    | TestAuthState
+    | EntropyPasswordFetch
+    | EntropyPasswordData
+    | EntropyPasswordError;
+
+export const entropyPasswordFetch = (payload: EntropyPasswordFetch['payload']): EntropyPasswordFetch => ({
+    type: AUTH_ENTROPY_PASSWORD_FETCH,
+    payload,
+});
+
+export const entropyPasswordData = (payload: EntropyPasswordData['payload']): EntropyPasswordData => ({
+    type: AUTH_ENTROPY_PASSWORD_DATA,
+    payload,
+});
+
+export const entropyPasswordError = (payload: EntropyPasswordError['payload']): EntropyPasswordError => ({
+    type: AUTH_ENTROPY_PASSWORD_ERROR,
+    payload,
+});
 
 export const signIn = (payload: SignInFetch['payload']): SignInFetch => ({
     type: AUTH_SIGN_IN_FETCH,

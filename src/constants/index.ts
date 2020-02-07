@@ -21,6 +21,8 @@ export const DEFAULT_TRADING_VIEW_INTERVAL = '15';
 export const VALUATION_PRIMARY_CURRENCY = 'USD';
 export const VALUATION_SECONDARY_CURRENCY = 'ETH';
 
+export const PASSWORD_ENTROPY_STEP = 6;
+
 export const colors = {
     light: {
         chart: {

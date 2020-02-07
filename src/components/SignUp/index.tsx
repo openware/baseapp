@@ -1,7 +1,7 @@
 import cr from 'classnames';
 import * as React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { CustomInput } from '../';
+import { CustomInput, PasswordStrengthMeter } from '../';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../../helpers';
 
 export interface SignUpFormProps {
@@ -45,13 +45,21 @@ export interface SignUpFormProps {
     reCaptchaSuccess: boolean;
     geetestCaptchaSuccess: boolean;
     captcha_response: string;
+    currentPasswordEntropy: number;
+    minPasswordEntropy: number;
+    passwordErrorFirstSolved: boolean;
+    passwordErrorSecondSolved: boolean;
+    passwordErrorThirdSolved: boolean;
+    passwordPopUp: boolean;
+    myRef: any;
+    passwordWrapper: any;
+    translate: (id: string) => string;
 }
 
 export class SignUpForm extends React.Component<SignUpFormProps> {
     public render() {
         const {
             email,
-            password,
             confirmPassword,
             refId,
             onSignIn,
@@ -60,26 +68,19 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
             labelSignIn,
             labelSignUp,
             emailLabel,
-            passwordLabel,
             confirmPasswordLabel,
             referalCodeLabel,
             termsMessage,
             hasConfirmed,
             emailError,
-            passwordError,
             confirmationError,
             emailFocused,
-            passwordFocused,
             confirmPasswordFocused,
             refIdFocused,
         } = this.props;
 
         const emailGroupClass = cr('cr-sign-up-form__group', {
             'cr-sign-up-form__group--focused': emailFocused,
-        });
-
-        const passwordGroupClass = cr('cr-sign-up-form__group', {
-            'cr-sign-up-form__group--focused': passwordFocused,
         });
 
         const confirmPasswordGroupClass = cr('cr-sign-up-form__group', {
@@ -126,21 +127,7 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
                             />
                             {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
                         </div>
-                        <div className={passwordGroupClass}>
-                            <CustomInput
-                                type="password"
-                                label={passwordLabel || 'Password'}
-                                placeholder={passwordLabel || 'Password'}
-                                defaultLabel="Password"
-                                handleChangeInput={this.props.handleChangePassword}
-                                inputValue={password}
-                                handleFocusInput={this.props.handleFocusPassword}
-                                classNameLabel="cr-sign-up-form__label"
-                                classNameInput="cr-sign-up-form__input"
-                                autoFocus={false}
-                            />
-                            {passwordError && <div className={'cr-sign-up-form__error'}>{passwordError}</div>}
-                        </div>
+                        {this.renderPasswordInput()}
                         <div className={confirmPasswordGroupClass}>
                             <CustomInput
                                 type="password"
@@ -196,6 +183,49 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
                     </div>
                 </div>
             </form>
+        );
+    }
+
+    private renderPasswordInput = () => {
+        const {
+            password,
+            passwordLabel,
+            passwordFocused,
+            currentPasswordEntropy,
+            passwordPopUp,
+            translate,
+        } = this.props;
+
+        const passwordGroupClass = cr('cr-sign-up-form__group', {
+            'cr-sign-up-form__group--focused': passwordFocused,
+        });
+
+        return (
+            <div className={passwordGroupClass}>
+                <CustomInput
+                    type="password"
+                    label={passwordLabel || 'Password'}
+                    placeholder={passwordLabel || 'Password'}
+                    defaultLabel="Password"
+                    handleChangeInput={this.props.handleChangePassword}
+                    inputValue={password}
+                    handleFocusInput={this.props.handleFocusPassword}
+                    classNameLabel="cr-sign-up-form__label"
+                    classNameInput="cr-sign-up-form__input"
+                    autoFocus={false}
+                />
+                {password ?
+                    <PasswordStrengthMeter
+                        minPasswordEntropy={this.props.minPasswordEntropy}
+                        currentPasswordEntropy={currentPasswordEntropy}
+                        passwordExist={password !== ''}
+                        passwordErrorFirstSolved={this.props.passwordErrorFirstSolved}
+                        passwordErrorSecondSolved={this.props.passwordErrorSecondSolved}
+                        passwordErrorThirdSolved={this.props.passwordErrorThirdSolved}
+                        passwordPopUp={passwordPopUp}
+                        translate={translate}
+                    /> : null}
+            </div>
         );
     }
 

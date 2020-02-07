@@ -7,5 +7,6 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
 {
     "session_expire_time": 5000,
     "captcha_type": "recaptcha",
-    "captcha_id": "123abc456xyz789"
+    "captcha_id": "123abc456xyz789",
+    "password_min_entropy": 14
 }

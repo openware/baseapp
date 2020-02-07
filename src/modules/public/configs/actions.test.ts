@@ -9,6 +9,7 @@ import { Configs } from './types';
 describe('Configs actions', () => {
     const fakeConfigs: Configs = {
         captcha_type: 'none',
+        password_min_entropy: 0,
     };
 
     const error = {

@@ -23,6 +23,7 @@ export const defaultConfig: Config = {
     languages: ['en'],
     sessionCheckInterval: '15000',
     balancesFetchInterval: '3000',
+    passwordEntropyStep: 0,
 };
 
 export const Cryptobase = {
@@ -58,3 +59,4 @@ export const languages = Cryptobase.config.languages && Cryptobase.config.langua
 export const sessionCheckInterval = (): string => Cryptobase.config.sessionCheckInterval || '15000';
 export const balancesFetchInterval = (): string => Cryptobase.config.balancesFetchInterval || '3000';
 export const isFinexEnabled = (): boolean => Cryptobase.config.finex || false;
+export const passwordEntropyStep = ():number => Cryptobase.config.passwordEntropyStep;
