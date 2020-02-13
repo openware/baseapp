@@ -133,7 +133,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         if (selectedWalletIndex === -1 && wallets.length) {
             this.setState({ selectedWalletIndex: 0 });
-            wallets[0].type === 'coin' && fetchAddress({ currency: wallets[0].currency });
+            wallets[0].type === 'coin' && wallets[0].balance !== undefined && fetchAddress({ currency: wallets[0].currency });
         }
 
         if (!this.props.currencies.length) {
@@ -158,7 +158,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 selectedWalletIndex: 0,
             });
             this.props.fetchBeneficiaries();
-            next.wallets[0].type === 'coin' && this.props.fetchAddress({ currency: next.wallets[0].currency });
+            next.wallets[0].type === 'coin' && next.wallets[0].balance !== undefined && this.props.fetchAddress({ currency: next.wallets[0].currency });
         }
 
         if (!withdrawSuccess && next.withdrawSuccess) {
@@ -305,6 +305,15 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         this.props.fetchSuccess({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
     };
 
+    private handleGenerateAddress = () => {
+        const { selectedWalletIndex } = this.state;
+        const { wallets } = this.props;
+
+        if (!wallets[selectedWalletIndex].address && wallets.length && wallets[selectedWalletIndex].type !== 'fiat') {
+            this.props.fetchAddress({ currency: wallets[selectedWalletIndex].currency });
+        }
+    }
+
     private renderDeposit = () => {
         const { addressDepositError, wallets, user, selectedWalletAddress, currencies } = this.props;
         const { selectedWalletIndex } = this.state;
@@ -318,6 +327,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         const walletAddress = formatCCYAddress(currency, selectedWalletAddress);
 
+        const buttonLabel = `
+            ${this.translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${currency.toUpperCase()} ${this.translate('page.body.wallets.tabs.deposit.ccy.button.address')}
+        `;
+
         if (wallets[selectedWalletIndex].type === 'coin') {
             return (
                 <React.Fragment>
@@ -330,6 +343,9 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         disabled={walletAddress === ''}
                         copiableTextFieldText={this.translate('page.body.wallets.tabs.deposit.ccy.message.address')}
                         copyButtonText={this.translate('page.body.wallets.tabs.deposit.ccy.message.button')}
+                        handleGenerateAddress={this.handleGenerateAddress}
+                        buttonLabel={buttonLabel}
+                        isAccountActivated={wallets[selectedWalletIndex].balance !== undefined}
                     />
                     {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
                 </React.Fragment>
@@ -418,12 +434,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     private onWalletSelectionChange = (value: WalletItemProps) => {
         const { wallets } = this.props;
-        if (!value.address && wallets.length && value.type !== 'fiat') {
+        if (!value.address && wallets.length && value.balance !== undefined && value.type !== 'fiat') {
             this.props.fetchAddress({ currency: value.currency });
         }
         const nextWalletIndex = this.props.wallets.findIndex(
             wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase(),
         );
+
         this.setState({ selectedWalletIndex: nextWalletIndex, withdrawDone: false });
         this.props.setMobileWalletUi(wallets[nextWalletIndex].name);
     };

@@ -1,5 +1,5 @@
 export interface Wallet {
-    balance: number;
+    balance?: number;
     currency: string;
     name: string;
     type: 'fiat' | 'coin';
@@ -30,4 +30,10 @@ export interface WalletWithdrawFiat {
     currency_type: string;
     otp: string;
     beneficiary_id: string;
+}
+
+export interface AccountInterface {
+    currency: string;
+    balance?: number;
+    locked?: number;
 }

@@ -18,7 +18,7 @@ export interface WalletItemProps {
     /**
      * Amount of currency
      */
-    balance: number;
+    balance?: number;
     /**
      * Locked amount of currency
      */
@@ -94,7 +94,7 @@ export const WalletItem: React.FunctionComponent<WalletItemProps> = (props: Wall
                 </div>
             </div>
             <span className="cr-wallet-item__balance">
-                <Decimal fixed={fixed}>{balance.toString()}</Decimal>&nbsp;
+                <Decimal fixed={fixed}>{balance ? balance.toString() : '0'}</Decimal>&nbsp;
                 <span className="cr-wallet-item__currency">
                     {currency}
                 </span>

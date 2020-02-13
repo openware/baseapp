@@ -246,7 +246,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     private getAvailableValue(wallet: Wallet | undefined) {
-        return wallet ? wallet.balance : 0;
+        return wallet && wallet.balance !== undefined ? wallet.balance : 0;
     }
 
     private listenInputPrice = () => {

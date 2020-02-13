@@ -20,7 +20,7 @@ const CurrencyIcon: React.FunctionComponent<CurrencyIconProps> = (props: Currenc
 };
 
 const CurrencyInfo: React.FunctionComponent<CurrencyInfoProps> = (props: CurrencyInfoProps) => {
-    const balance = (props.wallet || { balance: 0 }).balance.toString();
+    const balance = props.wallet && props.wallet.balance ? props.wallet.balance.toString() : '0';
     const lockedAmount = (props.wallet || { locked: 0 }).locked;
     const currency = (props.wallet || { currency: '' }).currency.toUpperCase();
     const selectedFixed = (props.wallet || { fixed: 0 }).fixed;

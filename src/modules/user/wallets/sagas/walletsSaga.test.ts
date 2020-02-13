@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga, Wallet } from '../../..';
+import { rootSaga, Wallet, AccountInterface } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import {
     walletsData,
@@ -30,7 +30,7 @@ describe('Module: Wallets', () => {
         message: ['Server error'],
     };
 
-    const fakeAccounts = [
+    const fakeAccounts: AccountInterface[] = [
         {
             currency: 'eth',
             balance:0,
@@ -184,9 +184,7 @@ describe('Module: Wallets', () => {
 
         if (!walletInfo) {
             walletInfo = {
-                balance: 0,
                 currency: currencyInfo.id,
-                locked: 0,
             };
         }
 

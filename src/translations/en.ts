@@ -86,6 +86,8 @@ export const en = {
     'page.body.wallets.tabs.deposit.ccy.message.button': 'COPY',
     'page.body.wallets.tabs.deposit.ccy.message.success': 'Address copied',
     'page.body.wallets.tabs.deposit.ccy.message.error': 'Generating deposit address',
+    'page.body.wallets.tabs.deposit.ccy.button.generate': 'Generate',
+    'page.body.wallets.tabs.deposit.ccy.button.address': 'address',
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Deposit using bank transfer',
     'page.body.wallets.tabs.deposit.fiat.message2': 'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account within 2 business days.',
