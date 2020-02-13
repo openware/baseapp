@@ -6,11 +6,11 @@ import {
     ordersCancelAllError,
     OrdersCancelAllFetch,
 } from '../actions';
-import { getCsrfToken } from '../../../../helpers';
+import { getCsrfToken, getOrderAPI } from '../../../../helpers';
 
 const ordersCancelAllOptions = (csrfToken?: string): RequestOptions => {
     return {
-        apiVersion: 'peatio',
+        apiVersion: getOrderAPI(),
         headers: { 'X-CSRF-Token': csrfToken },
     };
 };

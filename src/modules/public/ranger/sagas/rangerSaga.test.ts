@@ -49,6 +49,7 @@ describe('Ranger module', () => {
                 applogicUrl: '',
                 rangerUrl: `ws://localhost:${echoServerPort}`,
                 arkeUrl: '',
+                finexUrl: '',
             },
             rangerReconnectPeriod: '0.1',
         };

@@ -18,6 +18,7 @@ import {
     userOpenOrdersFetch,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
+import { isFinexEnabled } from '../../api';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
@@ -66,11 +67,14 @@ export class OpenOrdersContainer extends React.Component<Props> {
                 <div className="cr-table-header__content">
                     <div className="cr-title-component">
                         <FormattedMessage id="page.body.trade.header.openOrders" />
-
-                        <span className="cr-table-header__cancel" onClick={this.handleCancelAll}>
-                            <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
-                            <span className="cr-table-header__close" />
-                        </span>
+                        {
+                            isFinexEnabled() ?
+                                '' :
+                                <span className="cr-table-header__cancel" onClick={this.handleCancelAll}>
+                                    <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
+                                    <span className="cr-table-header__close" />
+                                </span>
+                        }
                     </div>
                 </div>
                 {fetching ? <div className="open-order-loading"><Spinner animation="border" variant="primary" /></div> : this.openOrders()}
@@ -117,7 +121,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
         const { list, currentMarket } = this.props;
 
         if (list.length === 0) {
-            return [[[''],[''], this.translate('page.noDataToShow')]];
+            return [[[''], [''], this.translate('page.noDataToShow')]];
         }
 
         return list.map((item: OrderCommon) => {
@@ -150,7 +154,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
 
     private handleCancelAll = () => {
         const { currentMarket } = this.props;
-        this.props.ordersCancelAll({market: currentMarket.id});
+        this.props.ordersCancelAll({ market: currentMarket.id });
     }
 }
 

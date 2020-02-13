@@ -5,6 +5,7 @@ export interface Config {
         applogicUrl: string;
         rangerUrl: string;
         arkeUrl: string;
+        finexUrl: string;
     };
     minutesUntilAutoLogout?: string;
     rangerReconnectPeriod?: string;
@@ -15,6 +16,7 @@ export interface Config {
     gaTrackerKey?: string;
     msAlertDisplayTime?: string;
     incrementalOrderBook: boolean;
+    finex: boolean;
     isResizable: boolean;
     isDraggable: boolean;
     languages: string[];

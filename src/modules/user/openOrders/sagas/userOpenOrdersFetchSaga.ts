@@ -8,7 +8,6 @@ import {
     UserOpenOrdersFetch,
 } from '../actions';
 
-
 const ordersOptions: RequestOptions = {
     apiVersion: 'peatio',
 };

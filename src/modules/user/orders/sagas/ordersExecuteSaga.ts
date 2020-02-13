@@ -1,6 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
-import { API, RequestOptions } from '../../../../api';
+import { API, RequestOptions, isFinexEnabled } from '../../../../api';
 import { alertPush } from '../../../index';
 import { userOpenOrdersAppend } from '../../openOrders';
 import {
@@ -8,18 +8,25 @@ import {
     orderExecuteError,
     OrderExecuteFetch,
 } from '../actions';
-import { getCsrfToken } from '../../../../helpers';
+import { getCsrfToken, getOrderAPI } from '../../../../helpers';
 
 const executeOptions = (csrfToken?: string): RequestOptions => {
     return {
-        apiVersion: 'peatio',
+        apiVersion: getOrderAPI(),
         headers: { 'X-CSRF-Token': csrfToken },
     };
 };
 
 export function* ordersExecuteSaga(action: OrderExecuteFetch) {
     try {
-        const order = yield call(API.post(executeOptions(getCsrfToken())), '/market/orders', action.payload);
+        const params = isFinexEnabled() ? {
+                market: action.payload.market,
+                side: action.payload.side,
+                amount: action.payload.volume,
+                price: action.payload.price,
+                type: action.payload.ord_type,
+            } : action.payload;
+        const order = yield call(API.post(executeOptions(getCsrfToken())), '/market/orders', params);
 
         yield put(orderExecuteData());
         if (order.ord_type !== 'market') {
