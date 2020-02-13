@@ -267,19 +267,23 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     private renderTabs() {
         const { tab, selectedWalletIndex } = this.state;
+        const { wallets } = this.props;
 
         if (selectedWalletIndex === -1) {
             return [{ content: null, label: '' }];
         }
 
+        const isAccountActivated = wallets[selectedWalletIndex].balance !== undefined;
+
         return [
             {
-                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit() : null,
+                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit(isAccountActivated) : null,
                 label: this.translate('page.body.wallets.tabs.deposit'),
             },
             {
                 content: tab === this.translate('page.body.wallets.tabs.withdraw') ? this.renderWithdraw() : null,
                 label: this.translate('page.body.wallets.tabs.withdraw'),
+                disabled: !isAccountActivated,
             },
         ];
     }
@@ -314,7 +318,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }
     }
 
-    private renderDeposit = () => {
+    private renderDeposit = (isAccountActivated: boolean) => {
         const { addressDepositError, wallets, user, selectedWalletAddress, currencies } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
@@ -345,7 +349,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         copyButtonText={this.translate('page.body.wallets.tabs.deposit.ccy.message.button')}
                         handleGenerateAddress={this.handleGenerateAddress}
                         buttonLabel={buttonLabel}
-                        isAccountActivated={wallets[selectedWalletIndex].balance !== undefined}
+                        isAccountActivated={isAccountActivated}
                     />
                     {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
                 </React.Fragment>
