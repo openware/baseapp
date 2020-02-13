@@ -28,3 +28,4 @@ export * from './toggleColorTheme';
 export * from './uppercase';
 export * from './getCsrfToken';
 export * from './cleanPositiveFloatInput';
+export * from './getOrderAPI';

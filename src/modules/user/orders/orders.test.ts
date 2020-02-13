@@ -6,6 +6,7 @@ import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpe
 import { orderExecuteFetch } from './';
 import { OrderExecution } from './actions';
 import { ORDER_EXECUTE_DATA, ORDER_EXECUTE_ERROR, ORDER_EXECUTE_FETCH } from './constants';
+import { getOrderAPI } from '../../../helpers';
 
 
 // tslint:disable no-any no-magic-numbers no-console
@@ -32,7 +33,7 @@ describe('Orders', () => {
     };
 
     const mockOrderExecute = () => {
-        mockAxios.onPost('/api/v2/peatio/market/orders').reply(200, executedOrder);
+        mockAxios.onPost(`/api/v2/${getOrderAPI()}/market/orders`).reply(200, executedOrder);
     };
 
     afterEach(() => {
