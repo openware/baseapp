@@ -273,17 +273,17 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             return [{ content: null, label: '' }];
         }
 
-        const isAccountActivated = wallets[selectedWalletIndex].balance !== undefined;
+        const showWithdraw = wallets[selectedWalletIndex].type === 'fiat' || wallets[selectedWalletIndex].balance !== undefined;
 
         return [
             {
-                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit(isAccountActivated) : null,
+                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit(showWithdraw) : null,
                 label: this.translate('page.body.wallets.tabs.deposit'),
             },
             {
                 content: tab === this.translate('page.body.wallets.tabs.withdraw') ? this.renderWithdraw() : null,
                 label: this.translate('page.body.wallets.tabs.withdraw'),
-                disabled: !isAccountActivated,
+                disabled: !showWithdraw,
             },
         ];
     }
@@ -438,9 +438,16 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     private onWalletSelectionChange = (value: WalletItemProps) => {
         const { wallets } = this.props;
+        const { tab } = this.state;
+        const depositTab = { label: this.renderTabs()[0].label, index: 0 };
+
         if (!value.address && wallets.length && value.balance !== undefined && value.type !== 'fiat') {
             this.props.fetchAddress({ currency: value.currency });
+        } else if (tab !== depositTab.label && value.type !== 'fiat') {
+            this.onTabChange(depositTab.index, depositTab.label);
+            this.onCurrentTabChange(depositTab.index);
         }
+
         const nextWalletIndex = this.props.wallets.findIndex(
             wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase(),
         );
