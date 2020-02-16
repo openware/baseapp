@@ -40,10 +40,10 @@ import { SymbolsStorage } from './symbols-storage';
 import { Requester } from './requester';
 
 export interface UdfCompatibleConfiguration extends DatafeedConfiguration {
-	// tslint:disable
+	// tslint:disable:tv-variable-name
 	supports_search?: boolean;
 	supports_group_request?: boolean;
-	// tslint:enable
+	// tslint:enable:tv-variable-name
 }
 
 export interface ResolveSymbolResponse extends LibrarySymbolInfo {
