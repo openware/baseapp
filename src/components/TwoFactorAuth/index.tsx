@@ -42,7 +42,7 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
         });
         return (
             <div className="pg-2fa___form">
-                <form>
+                <form onSubmit={e => this.handleSubmit(e)}>
                     <div className="cr-email-form">
                         <div className="cr-email-form__options-group">
                             <div className="cr-email-form__option">
@@ -69,7 +69,6 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                                     handleFocusInput={this.props.handleChangeFocusField}
                                     classNameLabel="cr-email-form__label"
                                     classNameInput="cr-email-form__input"
-                                    onKeyPress={this.handleEnterPress}
                                     autoFocus={true}
                                 />
                                 {errorMessage && <div className="cr-email-form__error">{errorMessage}</div>}
@@ -77,7 +76,7 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                             <div className={buttonWrapperClass}>
                                 <Button
                                     disabled={isLoading || !otpCode.match(/.{6}/g)}
-                                    onClick={this.handleSubmit}
+                                    type="submit"
                                     size="lg"
                                     variant="primary"
                                 >
@@ -93,18 +92,12 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
 
     private handleCancel = () => {
         this.props.handleClose2fa();
-    }
-
-    private handleSubmit = () => {
-        this.props.onSubmit();
     };
 
-    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            this.handleSubmit();
-        }
-    }
+    private handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        this.props.onSubmit();
+    };
 }
 
 export const TwoFactorAuth = TwoFactorAuthComponent;
