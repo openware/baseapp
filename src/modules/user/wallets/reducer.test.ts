@@ -8,7 +8,7 @@ import { Wallet } from './types';
 describe('walletsList reducer', () => {
     const wallets: Wallet[] = [
         {
-            balance: 0,
+            balance: '0',
             currency: 'btc',
             name: 'Bitcoin',
             explorerAddress: 'https://testnet.blockchain.info/address/#{address}',
@@ -18,7 +18,7 @@ describe('walletsList reducer', () => {
             fixed: 8,
         },
         {
-            balance: 0,
+            balance: '0',
             currency: 'bch',
             name: 'Bitcoin Cash',
             explorerAddress: 'https://www.blocktrail.com/tBCC/address/#{address}',
@@ -28,7 +28,7 @@ describe('walletsList reducer', () => {
             fixed: 8,
         },
         {
-            balance: 0,
+            balance: '0',
             currency: 'eth',
             name: 'Ethereum',
             explorerAddress: 'https://rinkeby.etherscan.io/address/#{address}',

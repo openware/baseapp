@@ -18,11 +18,11 @@ export interface WalletItemProps {
     /**
      * Amount of currency
      */
-    balance?: number;
+    balance?: string;
     /**
      * Locked amount of currency
      */
-    locked?: number;
+    locked?: string;
     /**
      * type of a currency (fiat or coin)
      */
@@ -63,7 +63,7 @@ const LockIcon = () => {
     );
 };
 
-const renderLocked = (fixed: number, lockedAmount?: number) => {
+const renderLocked = (fixed: number, lockedAmount?: string) => {
     return lockedAmount ? (
         <div className="cr-wallet-item__amount-locked">
             <LockIcon/> <Decimal fixed={fixed}>{lockedAmount.toString()}</Decimal>

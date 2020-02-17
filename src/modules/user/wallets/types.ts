@@ -1,11 +1,11 @@
 export interface Wallet {
-    balance?: number;
+    balance?: string;
     currency: string;
     name: string;
     type: 'fiat' | 'coin';
     fee: number;
     address?: string;
-    locked?: number;
+    locked?: string;
     explorerTransaction: string;
     explorerAddress: string;
     fixed: number;
@@ -34,6 +34,6 @@ export interface WalletWithdrawFiat {
 
 export interface AccountInterface {
     currency: string;
-    balance?: number;
-    locked?: number;
+    balance?: string;
+    locked?: string;
 }

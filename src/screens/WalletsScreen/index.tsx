@@ -133,7 +133,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         if (selectedWalletIndex === -1 && wallets.length) {
             this.setState({ selectedWalletIndex: 0 });
-            wallets[0].type === 'coin' && wallets[0].balance !== undefined && fetchAddress({ currency: wallets[0].currency });
+            wallets[0].type === 'coin' && wallets[0].balance && fetchAddress({ currency: wallets[0].currency });
         }
 
         if (!this.props.currencies.length) {
@@ -158,7 +158,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 selectedWalletIndex: 0,
             });
             this.props.fetchBeneficiaries();
-            next.wallets[0].type === 'coin' && next.wallets[0].balance !== undefined && this.props.fetchAddress({ currency: next.wallets[0].currency });
+            next.wallets[0].type === 'coin' && next.wallets[0].balance && this.props.fetchAddress({ currency: next.wallets[0].currency });
         }
 
         if (!withdrawSuccess && next.withdrawSuccess) {
@@ -273,7 +273,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             return [{ content: null, label: '' }];
         }
 
-        const showWithdraw = wallets[selectedWalletIndex].type === 'fiat' || wallets[selectedWalletIndex].balance !== undefined;
+        const showWithdraw = wallets[selectedWalletIndex].type === 'fiat' || wallets[selectedWalletIndex].balance;
 
         return [
             {
@@ -316,7 +316,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         if (!wallets[selectedWalletIndex].address && wallets.length && wallets[selectedWalletIndex].type !== 'fiat') {
             this.props.fetchAddress({ currency: wallets[selectedWalletIndex].currency });
         }
-    }
+    };
 
     private renderDeposit = (isAccountActivated: boolean) => {
         const { addressDepositError, wallets, user, selectedWalletAddress, currencies } = this.props;
@@ -441,7 +441,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { tab } = this.state;
         const depositTab = { label: this.renderTabs()[0].label, index: 0 };
 
-        if (!value.address && wallets.length && value.balance !== undefined && value.type !== 'fiat') {
+        if (!value.address && wallets.length && value.balance && value.type !== 'fiat') {
             this.props.fetchAddress({ currency: value.currency });
         } else if (tab !== depositTab.label && value.type !== 'fiat') {
             this.onTabChange(depositTab.index, depositTab.label);

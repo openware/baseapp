@@ -78,47 +78,52 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
     const onCopy = !disabled ? handleOnCopy : undefined;
     const className = classnames({'cr-copyable-text-field__disabled': data === ''});
 
-    const createDepositButton = (
-        <div className="cr-deposit-crypto__create">
-            <div className="cr-deposit-crypto__create-btn">
-                <Button
-                    block={true}
-                    type="button"
-                    onClick={handleGenerateAddress}
-                    size="lg"
-                    variant="primary"
-                >
-                    {buttonLabel ? buttonLabel : 'Generate deposit address'}
-                </Button>
+    const getContent = () => {
+        if (isAccountActivated) {
+            return (
+                <>
+                    <div>
+                        <p className={'cr-deposit-info'}>{text}</p>
+                        {data ? <div className="d-none d-md-block qr-code-wrapper"><QRCode dimensions={size} data={data}/></div> : null}
+                    </div>
+                    <div>
+                        <form className={'cr-deposit-crypto__copyable'}>
+                            <fieldset className={'cr-copyable-text-field'} onClick={onCopy}>
+                                <CopyableTextField
+                                    className={'cr-deposit-crypto__copyable-area'}
+                                    value={data ? data : error}
+                                    fieldId={data ? 'copy_deposit_1' : 'copy_deposit_2'}
+                                    copyButtonText={copyButtonText}
+                                    disabled={disabled}
+                                    label={copiableTextFieldText ? copiableTextFieldText : 'Deposit by Wallet Address'}
+                                />
+                            </fieldset>
+                        </form>
+                    </div>
+                </>
+            );
+        }
+        return (
+            <div className="cr-deposit-crypto__create">
+                <div className="cr-deposit-crypto__create-btn">
+                    <Button
+                        block={true}
+                        type="button"
+                        onClick={handleGenerateAddress}
+                        size="lg"
+                        variant="primary"
+                    >
+                        {buttonLabel ? buttonLabel : 'Generate deposit address'}
+                    </Button>
+                </div>
             </div>
-        </div>
-    );
+        );
+    };
 
     return (
         <div className={className}>
             <div className={'cr-deposit-crypto'}>
-                {isAccountActivated ? (
-                    <>
-                        <div>
-                            <p className={'cr-deposit-info'}>{text}</p>
-                            {data ? <div className="d-none d-md-block qr-code-wrapper"><QRCode dimensions={size} data={data}/></div> : null}
-                        </div>
-                        <div>
-                            <form className={'cr-deposit-crypto__copyable'}>
-                                <fieldset className={'cr-copyable-text-field'} onClick={onCopy}>
-                                    <CopyableTextField
-                                        className={'cr-deposit-crypto__copyable-area'}
-                                        value={data ? data : error}
-                                        fieldId={data ? 'copy_deposit_1' : 'copy_deposit_2'}
-                                        copyButtonText={copyButtonText}
-                                        disabled={disabled}
-                                        label={copiableTextFieldText ? copiableTextFieldText : 'Deposit by Wallet Address'}
-                                    />
-                                </fieldset>
-                            </form>
-                        </div>
-                    </>
-                ) : createDepositButton}
+                {getContent()}
             </div>
         </div>
     );

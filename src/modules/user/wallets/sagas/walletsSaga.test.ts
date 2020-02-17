@@ -33,33 +33,33 @@ describe('Module: Wallets', () => {
     const fakeAccounts: AccountInterface[] = [
         {
             currency: 'eth',
-            balance:0,
-            locked:0,
+            balance: '0',
+            locked: '0',
         },
         {
             currency: 'fth',
-            balance:0,
-            locked:0,
+            balance:'0',
+            locked:'0',
         },
         {
             currency: 'gmt',
-            balance:0,
-            locked:0,
+            balance:'0',
+            locked:'0',
         },
         {
             currency: 'ksys',
-            balance:0,
-            locked:0,
+            balance:'0',
+            locked:'0',
         },
         {
             currency: 'kyn',
-            balance:0,
-            locked:0,
+            balance:'0',
+            locked:'0',
         },
         {
             currency: 'usd',
-            balance:0,
-            locked:0,
+            balance:'0',
+            locked:'0',
         },
     ];
 
