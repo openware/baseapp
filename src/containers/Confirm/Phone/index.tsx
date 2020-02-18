@@ -226,6 +226,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         const requestProps = {
             phone_number: String(this.state.phoneNumber),
         };
+
         if (!this.state.resendCode) {
             this.props.sendCode(requestProps);
             this.setState({

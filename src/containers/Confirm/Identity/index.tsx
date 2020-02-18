@@ -344,7 +344,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     private handleConfirmEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter' && !this.handleCheckButtonDisabled()) {
             event.preventDefault();
-            this.sendData();
+            this.sendData(event);
         }
     };
 
@@ -371,7 +371,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
                 return value.match(lastNameRegex) ? true : false;
             case 'residentialAddress':
-                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9,.;/\\s]+$`);
+                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\s]+$`);
 
                 return value.match(residentialAddressRegex) ? true : false;
             case 'city':
@@ -422,7 +422,8 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         );
     };
 
-    private sendData = () => {
+    private sendData = event => {
+        event.preventDefault();
         const { labels, user } = this.props;
         const dob = !isDateInFuture(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
         const profileInfo: IdentityData = {
