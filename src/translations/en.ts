@@ -76,6 +76,32 @@ export const en = {
     'page.body.trade.header.openOrders.content.total': 'Value',
     'page.body.trade.header.openOrders.content.filled': 'Filled',
 
+
+    /* Markets Table */
+    'page.body.marketsTable.header.pair': 'Market',
+    'page.body.marketsTable.header.lastPrice': 'Last Price',
+    'page.body.marketsTable.header.change': '24 Change',
+    'page.body.marketsTable.header.high': '24  high',
+    'page.body.marketsTable.header.low': '24 low',
+    'page.body.marketsTable.header.volume': '24 Volume',
+
+
+    /* Landing */
+    'page.body.landing.first.title.text1': 'Welcome to Baseapp.',
+    'page.body.landing.first.title.text2': 'Buy, sell and trade digital currency.',
+    'page.body.landing.first.title.button': 'start trading',
+    'page.body.landing.second.item.first.value': '30M+',
+    'page.body.landing.second.item.first.title': 'Customers served',
+    'page.body.landing.second.item.second.value': '$3M+',
+    'page.body.landing.second.item.second.title': '30 days volume',
+    'page.body.landing.second.item.third.value': '101',
+    'page.body.landing.second.item.third.title': 'Countries supported',
+    'page.body.landing.third.item.title': 'No matter your experience level',
+    'page.body.landing.third.item.text': 'Baseapp offers an intuitive interface with real time orderbooks, charting tools, trade history, and a simple order process so you can trade from day one.',
+    'page.body.landing.third.item.button': 'register',
+
+
+    /* Wallets */
     'page.body.wallets.estimated_value': 'Estimated Value',
 
     'page.body.wallets.locked': 'Locked',

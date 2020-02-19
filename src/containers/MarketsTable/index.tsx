@@ -101,23 +101,21 @@ class MarketsTableContainer extends React.Component<MarketsTableContainerProps> 
 
         return (
             <div className="pg-markets-table">
-                <div className="pg-markets-table__wrap">
-                    <table className="pg-markets-table__wrap__table">
-                        <thead>
-                            <tr>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.pair')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.lastPrice')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.change')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.high')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.low')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.volume')}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {formattedMarkets[0] && formattedMarkets.map(this.renderItem)}
-                        </tbody>
-                    </table>
-                </div>
+                <table className="pg-markets-table__table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{this.translate('page.body.marketsTable.header.pair')}</th>
+                            <th scope="col">{this.translate('page.body.marketsTable.header.lastPrice')}</th>
+                            <th scope="col">{this.translate('page.body.marketsTable.header.change')}</th>
+                            <th scope="col">{this.translate('page.body.marketsTable.header.high')}</th>
+                            <th scope="col">{this.translate('page.body.marketsTable.header.low')}</th>
+                            <th scope="col">{this.translate('page.body.marketsTable.header.volume')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {formattedMarkets[0] && formattedMarkets.map(this.renderItem)}
+                    </tbody>
+                </table>
             </div>
         );
     }
