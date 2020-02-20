@@ -87,6 +87,10 @@ export const en = {
 
 
     /* Landing */
+    'page.body.landing.first.button1': 'profile',
+    'page.body.landing.first.button2': 'log in',
+    'page.body.landing.first.button3': 'register',
+
     'page.body.landing.first.title.text1': 'Welcome to Baseapp.',
     'page.body.landing.first.title.text2': 'Buy, sell and trade digital currency.',
     'page.body.landing.first.title.button': 'start trading',

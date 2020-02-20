@@ -1,8 +1,14 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { MarketsTable } from '../../containers';
+import {
+    RootState,
+    selectUserLoggedIn,
+} from '../../modules';
 
+const LogoImage = require('../../assets/images/logo.svg');
 const FourthFeaturesIcon1 = require('../../assets/images/landing/features/Icon1.svg');
 const FourthFeaturesIcon2 = require('../../assets/images/landing/features/Icon2.svg');
 const FourthFeaturesIcon3 = require('../../assets/images/landing/features/Icon3.svg');
@@ -10,9 +16,50 @@ const FourthFeaturesIcon4 = require('../../assets/images/landing/features/Icon4.
 const FourthFeaturesIcon5 = require('../../assets/images/landing/features/Icon5.svg');
 const FourthFeaturesIcon6 = require('../../assets/images/landing/features/Icon6.svg');
 
-type Props = InjectedIntlProps;
+interface ReduxProps {
+    isLoggedIn: boolean;
+}
 
-class LandingScreenClass extends React.Component<Props> {
+type Props = ReduxProps & RouteProps & InjectedIntlProps;
+
+class Landing extends React.Component<Props> {
+    public renderHeader() {
+        if (this.props.isLoggedIn) {
+            return (
+                <div className="pg-landing-screen__header">
+                    <div className="pg-landing-screen__header__wrap">
+                        <div className="pg-landing-screen__header__wrap__left">
+                            <img src={LogoImage} alt="BaseApp Logo"/>
+                        </div>
+                        <div className="pg-landing-screen__header__wrap__right">
+                            <Link to="/profile" className="landing-button">
+                                {this.translate('page.body.landing.first.button1')}
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        return (
+            <div className="pg-landing-screen__header">
+                <div className="pg-landing-screen__header__wrap">
+                    <div className="pg-landing-screen__header__wrap__left">
+                        <img src={LogoImage} alt="BaseApp Logo"/>
+                    </div>
+                    <div className="pg-landing-screen__header__wrap__right">
+                        <Link to="/signin" className="landing-button landing-button--simple">
+                            {this.translate('page.body.landing.first.button2')}
+                        </Link>
+                        <Link to="/signup" className="landing-button">
+                            {this.translate('page.body.landing.first.button3')}
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     public renderFirstBlock() {
         return (
             <div className="pg-landing-screen__first">
@@ -173,6 +220,7 @@ class LandingScreenClass extends React.Component<Props> {
     public render() {
         return (
             <div className="pg-landing-screen">
+                {this.renderHeader()}
                 {this.renderFirstBlock()}
                 {this.renderSecondBlock()}
                 {this.renderThirdBlock()}
@@ -186,4 +234,9 @@ class LandingScreenClass extends React.Component<Props> {
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 }
 
-export const LandingScreen = withRouter(injectIntl(LandingScreenClass));
+const mapStateToProps = (state: RootState): ReduxProps => ({
+    isLoggedIn: selectUserLoggedIn(state),
+});
+
+// tslint:disable no-any
+export const LandingScreen = withRouter(injectIntl(connect(mapStateToProps, null)(Landing) as any));
