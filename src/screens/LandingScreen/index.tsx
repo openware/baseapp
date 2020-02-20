@@ -133,6 +133,43 @@ class LandingScreenClass extends React.Component<Props> {
         );
     }
 
+    public renderFifthBlock() {
+        return (
+            <div className="pg-landing-screen__fifth">
+                <div className="pg-landing-screen__fifth__wrap">
+                    <div className="pg-landing-screen__fifth__wrap__image"/>
+                    <div className="pg-landing-screen__fifth__wrap__content">
+                        <h1>{this.translate('page.body.landing.fifth.item.title')}</h1>
+                        <h2>{this.translate('page.body.landing.fifth.item.text1')}</h2>
+                        <h2>{this.translate('page.body.landing.fifth.item.text2')}</h2>
+                        <h2>{this.translate('page.body.landing.fifth.item.text3')}</h2>
+                        <Link to="/trading/" className="landing-button">
+                            {this.translate('page.body.landing.fifth.item.button')}
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    public renderSixthBlock() {
+        return (
+            <div className="pg-landing-screen__sixth">
+                <div className="pg-landing-screen__sixth__wrap">
+                    <h1>{this.translate('page.body.landing.sixth.title')}</h1>
+                    <div className="pg-landing-screen__sixth__wrap__content">
+                        <Link to="/signup" className="landing-button">
+                            {this.translate('page.body.landing.sixth.button1')}
+                        </Link>
+                        <Link to="/trading/" className="landing-button landing-button--secondary">
+                            {this.translate('page.body.landing.sixth.button2')}
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     public render() {
         return (
             <div className="pg-landing-screen">
@@ -140,6 +177,8 @@ class LandingScreenClass extends React.Component<Props> {
                 {this.renderSecondBlock()}
                 {this.renderThirdBlock()}
                 {this.renderFourthBlock()}
+                {this.renderFifthBlock()}
+                {this.renderSixthBlock()}
             </div>
         );
     }

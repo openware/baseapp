@@ -90,15 +90,18 @@ export const en = {
     'page.body.landing.first.title.text1': 'Welcome to Baseapp.',
     'page.body.landing.first.title.text2': 'Buy, sell and trade digital currency.',
     'page.body.landing.first.title.button': 'start trading',
+
     'page.body.landing.second.item.first.value': '30M+',
     'page.body.landing.second.item.first.title': 'Customers served',
     'page.body.landing.second.item.second.value': '$3M+',
     'page.body.landing.second.item.second.title': '30 days volume',
     'page.body.landing.second.item.third.value': '101',
     'page.body.landing.second.item.third.title': 'Countries supported',
+
     'page.body.landing.third.item.title': 'No matter your experience level',
     'page.body.landing.third.item.text': 'Baseapp offers an intuitive interface with real time orderbooks, charting tools, trade history, and a simple order process so you can trade from day one.',
     'page.body.landing.third.item.button': 'register',
+
     'page.body.landing.fourth.title': 'Baseapp platform features',
     'page.body.landing.fourth.features.item1.title': 'Exchange',
     'page.body.landing.fourth.features.item2.title': 'Order Types',
@@ -112,6 +115,16 @@ export const en = {
     'page.body.landing.fourth.features.item4.text': 'Security of user information and funds is our first priority. Contact us to learn more about our security features and integrations.',
     'page.body.landing.fourth.features.item5.text': 'Join a global community that believes in the power of crypto.',
     'page.body.landing.fourth.features.item6.text': 'Our Websocket feed lets you easily gain access to real-time market data, while our trading API lets you develop secure, programmatic trading bots.',
+
+    'page.body.landing.fifth.item.title': 'Trade on the go',
+    'page.body.landing.fifth.item.text1': 'Our platform is optimized for trading on any device.',
+    'page.body.landing.fifth.item.text2': 'And you don’t need to download any additional applications.',
+    'page.body.landing.fifth.item.text3': 'All the power of Baseapp cryptocurrency exchange, in the palm of your hand.',
+    'page.body.landing.fifth.item.button': 'let’s try',
+
+    'page.body.landing.sixth.title': 'Start trading now',
+    'page.body.landing.sixth.button1': 'register',
+    'page.body.landing.sixth.button2': 'Start trading',
 
 
     /* Wallets */
