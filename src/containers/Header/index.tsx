@@ -57,7 +57,7 @@ class Head extends React.Component<any> {
                             <span className="pg-sidebar__toggler-item"/>
                             <span className="pg-sidebar__toggler-item"/>
                         </div>
-                        <Link to={'/wallets'} className="pg-header__logo">
+                        <Link to={'/'} className="pg-header__logo">
                             <div className="pg-logo">
                                 {colorTheme === 'light' ? (
                                     <img src={logoLight} className="pg-logo__img" alt="Logo" />

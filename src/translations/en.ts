@@ -99,6 +99,19 @@ export const en = {
     'page.body.landing.third.item.title': 'No matter your experience level',
     'page.body.landing.third.item.text': 'Baseapp offers an intuitive interface with real time orderbooks, charting tools, trade history, and a simple order process so you can trade from day one.',
     'page.body.landing.third.item.button': 'register',
+    'page.body.landing.fourth.title': 'Baseapp platform features',
+    'page.body.landing.fourth.features.item1.title': 'Exchange',
+    'page.body.landing.fourth.features.item2.title': 'Order Types',
+    'page.body.landing.fourth.features.item3.title': 'Customizable Interface',
+    'page.body.landing.fourth.features.item4.title': 'Security',
+    'page.body.landing.fourth.features.item5.title': 'Community',
+    'page.body.landing.fourth.features.item6.title': 'Industry leading API',
+    'page.body.landing.fourth.features.item1.text': 'Baseapp offers the most liquid order book in the world, allowing users to easily exchange Bitcoin, Ethereum, EOS, Litecoin, Ripple, NEO and many other digital assets with minimal slippage.',
+    'page.body.landing.fourth.features.item2.text': 'Baseapp offers a suite of order types to give traders the tools they need for every scenario. Discover more about our most advanced Algorithmic orders types.',
+    'page.body.landing.fourth.features.item3.text': 'Organize your workspace according to your needs: compose your layout, choose between themes, set up notifications and data preferences.',
+    'page.body.landing.fourth.features.item4.text': 'Security of user information and funds is our first priority. Contact us to learn more about our security features and integrations.',
+    'page.body.landing.fourth.features.item5.text': 'Join a global community that believes in the power of crypto.',
+    'page.body.landing.fourth.features.item6.text': 'Our Websocket feed lets you easily gain access to real-time market data, while our trading API lets you develop secure, programmatic trading bots.',
 
 
     /* Wallets */
