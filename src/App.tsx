@@ -45,6 +45,8 @@ class AppLayout extends React.Component<Props, {}, {}> {
             locale,
         } = this.props;
         const { lang, messages } = locale;
+        const shouldRenderFooter = window.location.pathname !== '/';
+
         return (
             <IntlProvider locale={lang} messages={messages} key={lang}>
                 <Router history={history}>
@@ -53,7 +55,7 @@ class AppLayout extends React.Component<Props, {}, {}> {
                         <Sidebar/>
                         <Alerts/>
                         <Layout/>
-                        <Footer/>
+                        {shouldRenderFooter ? <Footer/> : null}
                     </ErrorWrapper>
                 </Router>
             </IntlProvider>

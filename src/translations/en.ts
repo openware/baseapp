@@ -87,9 +87,9 @@ export const en = {
 
 
     /* Landing */
-    'page.body.landing.first.button1': 'profile',
-    'page.body.landing.first.button2': 'log in',
-    'page.body.landing.first.button3': 'register',
+    'page.body.landing.header.button1': 'profile',
+    'page.body.landing.header.button2': 'log in',
+    'page.body.landing.header.button3': 'register',
 
     'page.body.landing.first.title.text1': 'Welcome to Baseapp.',
     'page.body.landing.first.title.text2': 'Buy, sell and trade digital currency.',
@@ -129,6 +129,17 @@ export const en = {
     'page.body.landing.sixth.title': 'Start trading now',
     'page.body.landing.sixth.button1': 'register',
     'page.body.landing.sixth.button2': 'Start trading',
+
+    'page.body.landing.footer.link1': 'Exchange',
+    'page.body.landing.footer.link2': 'Wallets',
+    'page.body.landing.footer.link3': 'Fees',
+    'page.body.landing.footer.link4': 'FAQ',
+    'page.body.landing.footer.link5': 'Support',
+    'page.body.landing.footer.link6': 'Privacy',
+    'page.body.landing.footer.link7': 'About us',
+    'page.body.landing.footer.link8': 'Community',
+    'page.body.landing.footer.link9': 'Info',
+    'page.body.landing.footer.rights': 'Baseapp © All rights reserved.',
 
 
     /* Wallets */

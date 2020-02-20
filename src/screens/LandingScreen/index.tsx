@@ -16,6 +16,16 @@ const FourthFeaturesIcon4 = require('../../assets/images/landing/features/Icon4.
 const FourthFeaturesIcon5 = require('../../assets/images/landing/features/Icon5.svg');
 const FourthFeaturesIcon6 = require('../../assets/images/landing/features/Icon6.svg');
 
+const SocialIcon1 = require('../../assets/images/landing/social/Icon1.svg');
+const SocialIcon2 = require('../../assets/images/landing/social/Icon2.svg');
+const SocialIcon3 = require('../../assets/images/landing/social/Icon3.svg');
+const SocialIcon4 = require('../../assets/images/landing/social/Icon4.svg');
+const SocialIcon5 = require('../../assets/images/landing/social/Icon5.svg');
+const SocialIcon6 = require('../../assets/images/landing/social/Icon6.svg');
+const SocialIcon7 = require('../../assets/images/landing/social/Icon7.svg');
+const SocialIcon8 = require('../../assets/images/landing/social/Icon8.svg');
+
+
 interface ReduxProps {
     isLoggedIn: boolean;
 }
@@ -33,7 +43,7 @@ class Landing extends React.Component<Props> {
                         </div>
                         <div className="pg-landing-screen__header__wrap__right">
                             <Link to="/profile" className="landing-button">
-                                {this.translate('page.body.landing.first.button1')}
+                                {this.translate('page.body.landing.header.button1')}
                             </Link>
                         </div>
                     </div>
@@ -49,10 +59,10 @@ class Landing extends React.Component<Props> {
                     </div>
                     <div className="pg-landing-screen__header__wrap__right">
                         <Link to="/signin" className="landing-button landing-button--simple">
-                            {this.translate('page.body.landing.first.button2')}
+                            {this.translate('page.body.landing.header.button2')}
                         </Link>
                         <Link to="/signup" className="landing-button">
-                            {this.translate('page.body.landing.first.button3')}
+                            {this.translate('page.body.landing.header.button3')}
                         </Link>
                     </div>
                 </div>
@@ -217,6 +227,50 @@ class Landing extends React.Component<Props> {
         );
     }
 
+    public renderFooter() {
+        return (
+            <div className="pg-landing-screen__footer">
+                <div className="pg-landing-screen__footer__wrap">
+                    <div className="pg-landing-screen__footer__wrap__left" onClick={e => this.handleScrollTop()}>
+                        <img src={LogoImage} alt="BaseApp Logo"/>
+                    </div>
+                    <div className="pg-landing-screen__footer__wrap__navigation">
+                        <div className="pg-landing-screen__footer__wrap__navigation__col">
+                            <Link to="/trading/">{this.translate('page.body.landing.footer.link1')}</Link>
+                            <Link to="/wallets">{this.translate('page.body.landing.footer.link2')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.link3')}</Link>
+                        </div>
+                        <div className="pg-landing-screen__footer__wrap__navigation__col">
+                            <Link to="/">{this.translate('page.body.landing.footer.link4')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.link5')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.link6')}</Link>
+                        </div>
+                        <div className="pg-landing-screen__footer__wrap__navigation__col">
+                            <Link to="/">{this.translate('page.body.landing.footer.link7')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.link8')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.link9')}</Link>
+                        </div>
+                    </div>
+                    <div className="pg-landing-screen__footer__wrap__social">
+                        <div className="pg-landing-screen__footer__wrap__social__row">
+                            <img src={SocialIcon1}/>
+                            <img src={SocialIcon2}/>
+                            <img src={SocialIcon3}/>
+                            <img src={SocialIcon4}/>
+                        </div>
+                        <div className="pg-landing-screen__footer__wrap__social__row">
+                            <img src={SocialIcon5}/>
+                            <img src={SocialIcon6}/>
+                            <img src={SocialIcon7}/>
+                            <img src={SocialIcon8}/>
+                        </div>
+                    </div>
+                </div>
+                <span className="pg-landing-screen__footer__rights">{this.translate('page.body.landing.footer.rights')}</span>
+            </div>
+        );
+    }
+
     public render() {
         return (
             <div className="pg-landing-screen">
@@ -227,6 +281,7 @@ class Landing extends React.Component<Props> {
                 {this.renderFourthBlock()}
                 {this.renderFifthBlock()}
                 {this.renderSixthBlock()}
+                {this.renderFooter()}
             </div>
         );
     }
