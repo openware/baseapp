@@ -28,7 +28,7 @@ class Landing extends React.Component<Props> {
             return (
                 <div className="pg-landing-screen__header">
                     <div className="pg-landing-screen__header__wrap">
-                        <div className="pg-landing-screen__header__wrap__left">
+                        <div className="pg-landing-screen__header__wrap__left" onClick={e => this.handleScrollTop()}>
                             <img src={LogoImage} alt="BaseApp Logo"/>
                         </div>
                         <div className="pg-landing-screen__header__wrap__right">
@@ -44,7 +44,7 @@ class Landing extends React.Component<Props> {
         return (
             <div className="pg-landing-screen__header">
                 <div className="pg-landing-screen__header__wrap">
-                    <div className="pg-landing-screen__header__wrap__left">
+                    <div className="pg-landing-screen__header__wrap__left" onClick={e => this.handleScrollTop()}>
                         <img src={LogoImage} alt="BaseApp Logo"/>
                     </div>
                     <div className="pg-landing-screen__header__wrap__right">
@@ -229,6 +229,10 @@ class Landing extends React.Component<Props> {
                 {this.renderSixthBlock()}
             </div>
         );
+    }
+
+    private handleScrollTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
