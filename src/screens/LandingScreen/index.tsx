@@ -253,16 +253,16 @@ class Landing extends React.Component<Props> {
                     </div>
                     <div className="pg-landing-screen__footer__wrap__social">
                         <div className="pg-landing-screen__footer__wrap__social__row">
-                            <img src={SocialIcon1}/>
-                            <img src={SocialIcon2}/>
-                            <img src={SocialIcon3}/>
-                            <img src={SocialIcon4}/>
+                            <img src={SocialIcon1} alt="" />
+                            <img src={SocialIcon2} alt="" />
+                            <img src={SocialIcon3} alt="" />
+                            <img src={SocialIcon4} alt="" />
                         </div>
                         <div className="pg-landing-screen__footer__wrap__social__row">
-                            <img src={SocialIcon5}/>
-                            <img src={SocialIcon6}/>
-                            <img src={SocialIcon7}/>
-                            <img src={SocialIcon8}/>
+                            <img src={SocialIcon5} alt="" />
+                            <img src={SocialIcon6} alt="" />
+                            <img src={SocialIcon7} alt="" />
+                            <img src={SocialIcon8} alt="" />
                         </div>
                     </div>
                 </div>

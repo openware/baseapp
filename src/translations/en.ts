@@ -78,6 +78,7 @@ export const en = {
 
 
     /* Markets Table */
+    'page.body.marketsTable.filter.all': 'All',
     'page.body.marketsTable.header.pair': 'Market',
     'page.body.marketsTable.header.lastPrice': 'Last Price',
     'page.body.marketsTable.header.change': '24 Change',

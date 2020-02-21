@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
@@ -36,9 +35,21 @@ interface DispatchProps {
     tickers: typeof marketsTickersFetch;
 }
 
-export type MarketsTableContainerProps = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+interface State {
+    currentBidUnit: string;
+}
 
-class MarketsTableContainer extends React.Component<MarketsTableContainerProps> {
+export type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+
+class MarketsTableContainer extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            currentBidUnit: '',
+        };
+    }
+
     public componentDidMount(): void {
         const {rangerState: { connected }} = this.props;
 
@@ -56,7 +67,7 @@ class MarketsTableContainer extends React.Component<MarketsTableContainerProps> 
         }
     }
 
-    public UNSAFE_componentWillReceiveProps(next: MarketsTableContainerProps) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         const {
             markets,
             tickers,
@@ -67,11 +78,37 @@ class MarketsTableContainer extends React.Component<MarketsTableContainerProps> 
         }
     }
 
+    public renderHeader(currentBidUnit: string) {
+        const { markets } = this.props;
+        let currentBidUnitsList: string[] = [''];
+
+        if (markets.length > 0) {
+            currentBidUnitsList = markets.reduce(this.formatFilteredMarkets, currentBidUnitsList);
+        }
+
+        return (
+            <ul className="navigation" role="tablist">
+                {currentBidUnitsList.map((item, i) => (
+                    <li
+                        key={i}
+                        className={`navigation__item ${item === currentBidUnit && 'navigation__item--active'}`}
+                        onClick={() => this.handleSetCurrentBidUnit(item)}
+                    >
+                        <span className="navigation__item__link">
+                            {item ? item.toUpperCase() : this.translate('page.body.marketsTable.filter.all')}
+                        </span>
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+
     public render() {
         const {
             markets,
             marketTickers,
         } = this.props;
+        const { currentBidUnit } = this.state;
         const defaultTicker = {
             last: '0.0',
             high: '0.0',
@@ -81,7 +118,13 @@ class MarketsTableContainer extends React.Component<MarketsTableContainerProps> 
             vol: '0.0',
         };
 
-        const formattedMarkets = markets.map(market =>
+        let currentBidUnitMarkets = markets;
+
+        if (currentBidUnit) {
+            currentBidUnitMarkets = markets.length ? markets.filter(market => market.quote_unit === currentBidUnit) : [];
+        }
+
+        const formattedMarkets = currentBidUnitMarkets.length && currentBidUnitMarkets.map(market =>
             ({
                 ...market,
                 last: Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision),
@@ -101,21 +144,26 @@ class MarketsTableContainer extends React.Component<MarketsTableContainerProps> 
 
         return (
             <div className="pg-markets-table">
-                <table className="pg-markets-table__table">
-                    <thead>
-                        <tr>
-                            <th scope="col">{this.translate('page.body.marketsTable.header.pair')}</th>
-                            <th scope="col">{this.translate('page.body.marketsTable.header.lastPrice')}</th>
-                            <th scope="col">{this.translate('page.body.marketsTable.header.change')}</th>
-                            <th scope="col">{this.translate('page.body.marketsTable.header.high')}</th>
-                            <th scope="col">{this.translate('page.body.marketsTable.header.low')}</th>
-                            <th scope="col">{this.translate('page.body.marketsTable.header.volume')}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {formattedMarkets[0] && formattedMarkets.map(this.renderItem)}
-                    </tbody>
-                </table>
+                <div className="pg-markets-table__filter">
+                    {this.renderHeader(currentBidUnit)}
+                </div>
+                <div className="pg-markets-table__table-wrap">
+                    <table className="pg-markets-table__table">
+                        <thead>
+                            <tr>
+                                <th scope="col">{this.translate('page.body.marketsTable.header.pair')}</th>
+                                <th scope="col">{this.translate('page.body.marketsTable.header.lastPrice')}</th>
+                                <th scope="col">{this.translate('page.body.marketsTable.header.change')}</th>
+                                <th scope="col">{this.translate('page.body.marketsTable.header.high')}</th>
+                                <th scope="col">{this.translate('page.body.marketsTable.header.low')}</th>
+                                <th scope="col">{this.translate('page.body.marketsTable.header.volume')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {formattedMarkets[0] && formattedMarkets.map(this.renderItem)}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
@@ -174,6 +222,19 @@ class MarketsTableContainer extends React.Component<MarketsTableContainerProps> 
             this.props.history.push(`/trading/${currentMarket.id}`);
         }
     }
+
+    private formatFilteredMarkets = (list: string[], market: Market) => {
+        if (list.indexOf(market.quote_unit) === -1) {
+            list.push(market.quote_unit);
+        }
+        return list;
+    }
+
+    private handleSetCurrentBidUnit = (currentBidUnit?: string) => {
+        this.setState({
+            currentBidUnit: currentBidUnit || '',
+        });
+    };
 
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 }
