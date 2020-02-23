@@ -9,21 +9,21 @@ import {
 } from '../../modules';
 
 const LogoImage = require('../../assets/images/logo.svg');
-const FourthFeaturesIcon1 = require('../../assets/images/landing/features/Icon1.svg');
-const FourthFeaturesIcon2 = require('../../assets/images/landing/features/Icon2.svg');
-const FourthFeaturesIcon3 = require('../../assets/images/landing/features/Icon3.svg');
-const FourthFeaturesIcon4 = require('../../assets/images/landing/features/Icon4.svg');
-const FourthFeaturesIcon5 = require('../../assets/images/landing/features/Icon5.svg');
-const FourthFeaturesIcon6 = require('../../assets/images/landing/features/Icon6.svg');
+const FeaturesExchangeIcon = require('../../assets/images/landing/features/Exchange.svg');
+const FeaturesTypesIcon = require('../../assets/images/landing/features/Types.svg');
+const FeaturesCustomizeIcon = require('../../assets/images/landing/features/Customize.svg');
+const FeaturesSecurityIcon = require('../../assets/images/landing/features/Security.svg');
+const FeaturesCommunityIcon = require('../../assets/images/landing/features/Community.svg');
+const FeaturesAPIIcon = require('../../assets/images/landing/features/API.svg');
 
-const SocialIcon1 = require('../../assets/images/landing/social/Icon1.svg');
-const SocialIcon2 = require('../../assets/images/landing/social/Icon2.svg');
-const SocialIcon3 = require('../../assets/images/landing/social/Icon3.svg');
-const SocialIcon4 = require('../../assets/images/landing/social/Icon4.svg');
-const SocialIcon5 = require('../../assets/images/landing/social/Icon5.svg');
-const SocialIcon6 = require('../../assets/images/landing/social/Icon6.svg');
-const SocialIcon7 = require('../../assets/images/landing/social/Icon7.svg');
-const SocialIcon8 = require('../../assets/images/landing/social/Icon8.svg');
+const TelegramIcon = require('../../assets/images/landing/social/Telegram.svg');
+const LinkedInIcon = require('../../assets/images/landing/social/LinkedIn.svg');
+const TwitterIcon = require('../../assets/images/landing/social/Twitter.svg');
+const YouTubeIcon = require('../../assets/images/landing/social/YouTube.svg');
+const RedditIcon = require('../../assets/images/landing/social/Reddit.svg');
+const FacebookIcon = require('../../assets/images/landing/social/Facebook.svg');
+const MediumIcon = require('../../assets/images/landing/social/Medium.svg');
+const CoinMarketIcon = require('../../assets/images/landing/social/CoinMarket.svg');
 
 
 interface ReduxProps {
@@ -70,15 +70,15 @@ class Landing extends React.Component<Props> {
         );
     }
 
-    public renderFirstBlock() {
+    public renderMarketInfoBlock() {
         return (
-            <div className="pg-landing-screen__first">
-                <div className="pg-landing-screen__first__wrap">
-                    <div className="pg-landing-screen__first__wrap__title">
-                        <h1>{this.translate('page.body.landing.first.title.text1')}</h1>
-                        <h1>{this.translate('page.body.landing.first.title.text2')}</h1>
+            <div className="pg-landing-screen__market-info">
+                <div className="pg-landing-screen__market-info__wrap">
+                    <div className="pg-landing-screen__market-info__wrap__title">
+                        <h1>{this.translate('page.body.landing.marketInfo.title.text1')}</h1>
+                        <h1>{this.translate('page.body.landing.marketInfo.title.text2')}</h1>
                         <Link to="/trading" className="landing-button">
-                            {this.translate('page.body.landing.first.title.button')}
+                            {this.translate('page.body.landing.marketInfo.title.button')}
                         </Link>
                     </div>
                     <MarketsTable />
@@ -87,36 +87,36 @@ class Landing extends React.Component<Props> {
         );
     }
 
-    public renderSecondBlock() {
+    public renderPlatformInfoBlock() {
         return (
-            <div className="pg-landing-screen__second">
-                <div className="pg-landing-screen__second__wrap">
-                    <div className="pg-landing-screen__second__wrap__item">
-                        <span>{this.translate('page.body.landing.second.item.first.value')}</span>
-                        <span>{this.translate('page.body.landing.second.item.first.title')}</span>
+            <div className="pg-landing-screen__platform-info">
+                <div className="pg-landing-screen__platform-info__wrap">
+                    <div className="pg-landing-screen__platform-info__wrap__item">
+                        <span>{this.translate('page.body.landing.platformInfo.item.first.value')}</span>
+                        <span>{this.translate('page.body.landing.platformInfo.item.first.title')}</span>
                     </div>
-                    <div className="pg-landing-screen__second__wrap__item">
-                        <span>{this.translate('page.body.landing.second.item.second.value')}</span>
-                        <span>{this.translate('page.body.landing.second.item.second.title')}</span>
+                    <div className="pg-landing-screen__platform-info__wrap__item">
+                        <span>{this.translate('page.body.landing.platformInfo.item.second.value')}</span>
+                        <span>{this.translate('page.body.landing.platformInfo.item.second.title')}</span>
                     </div>
-                    <div className="pg-landing-screen__second__wrap__item">
-                        <span>{this.translate('page.body.landing.second.item.third.value')}</span>
-                        <span>{this.translate('page.body.landing.second.item.third.title')}</span>
+                    <div className="pg-landing-screen__platform-info__wrap__item">
+                        <span>{this.translate('page.body.landing.platformInfo.item.third.value')}</span>
+                        <span>{this.translate('page.body.landing.platformInfo.item.third.title')}</span>
                     </div>
                 </div>
             </div>
         );
     }
 
-    public renderThirdBlock() {
+    public renderRegisterBlock() {
         return (
-            <div className="pg-landing-screen__third">
-                <div className="pg-landing-screen__third__wrap">
-                    <div className="pg-landing-screen__third__wrap__item">
-                        <h1>{this.translate('page.body.landing.third.item.title')}</h1>
-                        <h2>{this.translate('page.body.landing.third.item.text')}</h2>
+            <div className="pg-landing-screen__register">
+                <div className="pg-landing-screen__register__wrap">
+                    <div className="pg-landing-screen__register__wrap__item">
+                        <h1>{this.translate('page.body.landing.register.item.title')}</h1>
+                        <h2>{this.translate('page.body.landing.register.item.text')}</h2>
                         <Link to="/signup" className="landing-button">
-                            {this.translate('page.body.landing.third.item.button')}
+                            {this.translate('page.body.landing.register.item.button')}
                         </Link>
                     </div>
                 </div>
@@ -124,64 +124,64 @@ class Landing extends React.Component<Props> {
         );
     }
 
-    public renderFourthBlock() {
+    public renderFeaturesBlock() {
         return (
-            <div className="pg-landing-screen__fourth">
-                <div className="pg-landing-screen__fourth__wrap">
-                    <h1>{this.translate('page.body.landing.fourth.title')}</h1>
-                    <div className="pg-landing-screen__fourth__features">
-                        <div className="pg-landing-screen__fourth__features__row">
-                            <div className="pg-landing-screen__fourth__features__row__item">
+            <div className="pg-landing-screen__features">
+                <div className="pg-landing-screen__features__wrap">
+                    <h1>{this.translate('page.body.landing.features.title')}</h1>
+                    <div className="pg-landing-screen__features__content">
+                        <div className="pg-landing-screen__features__content__row">
+                            <div className="pg-landing-screen__features__content__row__item">
                                 <img
-                                    src={FourthFeaturesIcon1}
-                                    alt={this.translate('page.body.landing.fourth.features.item1.title')}
+                                    src={FeaturesExchangeIcon}
+                                    alt={this.translate('page.body.landing.features.features.item1.title')}
                                 />
-                                <h2>{this.translate('page.body.landing.fourth.features.item1.title')}</h2>
-                                <span>{this.translate('page.body.landing.fourth.features.item1.text')}</span>
+                                <h2>{this.translate('page.body.landing.features.features.item1.title')}</h2>
+                                <span>{this.translate('page.body.landing.features.features.item1.text')}</span>
                             </div>
-                            <div className="pg-landing-screen__fourth__features__row__item">
+                            <div className="pg-landing-screen__features__content__row__item">
                                 <img
-                                    src={FourthFeaturesIcon2}
-                                    alt={this.translate('page.body.landing.fourth.features.item2.title')}
+                                    src={FeaturesTypesIcon}
+                                    alt={this.translate('page.body.landing.features.features.item2.title')}
                                 />
-                                <h2>{this.translate('page.body.landing.fourth.features.item2.title')}</h2>
-                                <span>{this.translate('page.body.landing.fourth.features.item2.text')}</span>
-                            </div>
-                        </div>
-                        <div className="pg-landing-screen__fourth__features__row">
-                            <div className="pg-landing-screen__fourth__features__row__item">
-                                <img
-                                    src={FourthFeaturesIcon3}
-                                    alt={this.translate('page.body.landing.fourth.features.item3.title')}
-                                />
-                                <h2>{this.translate('page.body.landing.fourth.features.item3.title')}</h2>
-                                <span>{this.translate('page.body.landing.fourth.features.item3.text')}</span>
-                            </div>
-                            <div className="pg-landing-screen__fourth__features__row__item">
-                                <img
-                                    src={FourthFeaturesIcon4}
-                                    alt={this.translate('page.body.landing.fourth.features.item4.title')}
-                                />
-                                <h2>{this.translate('page.body.landing.fourth.features.item4.title')}</h2>
-                                <span>{this.translate('page.body.landing.fourth.features.item4.text')}</span>
+                                <h2>{this.translate('page.body.landing.features.features.item2.title')}</h2>
+                                <span>{this.translate('page.body.landing.features.features.item2.text')}</span>
                             </div>
                         </div>
-                        <div className="pg-landing-screen__fourth__features__row">
-                            <div className="pg-landing-screen__fourth__features__row__item">
+                        <div className="pg-landing-screen__features__content__row">
+                            <div className="pg-landing-screen__features__content__row__item">
                                 <img
-                                    src={FourthFeaturesIcon5}
-                                    alt={this.translate('page.body.landing.fourth.features.item5.title')}
+                                    src={FeaturesCustomizeIcon}
+                                    alt={this.translate('page.body.landing.features.features.item3.title')}
                                 />
-                                <h2>{this.translate('page.body.landing.fourth.features.item5.title')}</h2>
-                                <span>{this.translate('page.body.landing.fourth.features.item5.text')}</span>
+                                <h2>{this.translate('page.body.landing.features.features.item3.title')}</h2>
+                                <span>{this.translate('page.body.landing.features.features.item3.text')}</span>
                             </div>
-                            <div className="pg-landing-screen__fourth__features__row__item">
+                            <div className="pg-landing-screen__features__content__row__item">
                                 <img
-                                    src={FourthFeaturesIcon6}
-                                    alt={this.translate('page.body.landing.fourth.features.item6.title')}
+                                    src={FeaturesSecurityIcon}
+                                    alt={this.translate('page.body.landing.features.features.item4.title')}
                                 />
-                                <h2>{this.translate('page.body.landing.fourth.features.item6.title')}</h2>
-                                <span>{this.translate('page.body.landing.fourth.features.item6.text')}</span>
+                                <h2>{this.translate('page.body.landing.features.features.item4.title')}</h2>
+                                <span>{this.translate('page.body.landing.features.features.item4.text')}</span>
+                            </div>
+                        </div>
+                        <div className="pg-landing-screen__features__content__row">
+                            <div className="pg-landing-screen__features__content__row__item">
+                                <img
+                                    src={FeaturesCommunityIcon}
+                                    alt={this.translate('page.body.landing.features.features.item5.title')}
+                                />
+                                <h2>{this.translate('page.body.landing.features.features.item5.title')}</h2>
+                                <span>{this.translate('page.body.landing.features.features.item5.text')}</span>
+                            </div>
+                            <div className="pg-landing-screen__features__content__row__item">
+                                <img
+                                    src={FeaturesAPIIcon}
+                                    alt={this.translate('page.body.landing.features.features.item6.title')}
+                                />
+                                <h2>{this.translate('page.body.landing.features.features.item6.title')}</h2>
+                                <span>{this.translate('page.body.landing.features.features.item6.text')}</span>
                             </div>
                         </div>
                     </div>
@@ -190,18 +190,18 @@ class Landing extends React.Component<Props> {
         );
     }
 
-    public renderFifthBlock() {
+    public renderTradeOnTheGoBlock() {
         return (
-            <div className="pg-landing-screen__fifth">
-                <div className="pg-landing-screen__fifth__wrap">
-                    <div className="pg-landing-screen__fifth__wrap__image"/>
-                    <div className="pg-landing-screen__fifth__wrap__content">
-                        <h1>{this.translate('page.body.landing.fifth.item.title')}</h1>
-                        <h2>{this.translate('page.body.landing.fifth.item.text1')}</h2>
-                        <h2>{this.translate('page.body.landing.fifth.item.text2')}</h2>
-                        <h2>{this.translate('page.body.landing.fifth.item.text3')}</h2>
+            <div className="pg-landing-screen__trade-on-the-go">
+                <div className="pg-landing-screen__trade-on-the-go__wrap">
+                    <div className="pg-landing-screen__trade-on-the-go__wrap__image"/>
+                    <div className="pg-landing-screen__trade-on-the-go__wrap__content">
+                        <h1>{this.translate('page.body.landing.tradeOnTheGo.item.title')}</h1>
+                        <h2>{this.translate('page.body.landing.tradeOnTheGo.item.text1')}</h2>
+                        <h2>{this.translate('page.body.landing.tradeOnTheGo.item.text2')}</h2>
+                        <h2>{this.translate('page.body.landing.tradeOnTheGo.item.text3')}</h2>
                         <Link to="/trading/" className="landing-button">
-                            {this.translate('page.body.landing.fifth.item.button')}
+                            {this.translate('page.body.landing.tradeOnTheGo.item.button')}
                         </Link>
                     </div>
                 </div>
@@ -209,17 +209,17 @@ class Landing extends React.Component<Props> {
         );
     }
 
-    public renderSixthBlock() {
+    public renderStartTradingBlock() {
         return (
-            <div className="pg-landing-screen__sixth">
-                <div className="pg-landing-screen__sixth__wrap">
-                    <h1>{this.translate('page.body.landing.sixth.title')}</h1>
-                    <div className="pg-landing-screen__sixth__wrap__content">
+            <div className="pg-landing-screen__start-trading">
+                <div className="pg-landing-screen__start-trading__wrap">
+                    <h1>{this.translate('page.body.landing.startTrading.title')}</h1>
+                    <div className="pg-landing-screen__start-trading__wrap__content">
                         <Link to="/signup" className="landing-button">
-                            {this.translate('page.body.landing.sixth.button1')}
+                            {this.translate('page.body.landing.startTrading.button1')}
                         </Link>
                         <Link to="/trading/" className="landing-button landing-button--secondary">
-                            {this.translate('page.body.landing.sixth.button2')}
+                            {this.translate('page.body.landing.startTrading.button2')}
                         </Link>
                     </div>
                 </div>
@@ -236,33 +236,33 @@ class Landing extends React.Component<Props> {
                     </div>
                     <div className="pg-landing-screen__footer__wrap__navigation">
                         <div className="pg-landing-screen__footer__wrap__navigation__col">
-                            <Link to="/trading/">{this.translate('page.body.landing.footer.link1')}</Link>
-                            <Link to="/wallets">{this.translate('page.body.landing.footer.link2')}</Link>
-                            <Link to="/">{this.translate('page.body.landing.footer.link3')}</Link>
+                            <Link to="/trading/">{this.translate('page.body.landing.footer.exchange')}</Link>
+                            <Link to="/wallets">{this.translate('page.body.landing.footer.wallets')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.fees')}</Link>
                         </div>
                         <div className="pg-landing-screen__footer__wrap__navigation__col">
-                            <Link to="/">{this.translate('page.body.landing.footer.link4')}</Link>
-                            <Link to="/">{this.translate('page.body.landing.footer.link5')}</Link>
-                            <Link to="/">{this.translate('page.body.landing.footer.link6')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.faq')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.support')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.privacy')}</Link>
                         </div>
                         <div className="pg-landing-screen__footer__wrap__navigation__col">
-                            <Link to="/">{this.translate('page.body.landing.footer.link7')}</Link>
-                            <Link to="/">{this.translate('page.body.landing.footer.link8')}</Link>
-                            <Link to="/">{this.translate('page.body.landing.footer.link9')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.about')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.community')}</Link>
+                            <Link to="/">{this.translate('page.body.landing.footer.info')}</Link>
                         </div>
                     </div>
                     <div className="pg-landing-screen__footer__wrap__social">
                         <div className="pg-landing-screen__footer__wrap__social__row">
-                            <img src={SocialIcon1} alt="" />
-                            <img src={SocialIcon2} alt="" />
-                            <img src={SocialIcon3} alt="" />
-                            <img src={SocialIcon4} alt="" />
+                            <img src={TelegramIcon} alt="Telegram" />
+                            <img src={LinkedInIcon} alt="LinkedIn" />
+                            <img src={TwitterIcon} alt="Twitter" />
+                            <img src={YouTubeIcon} alt="YouTube" />
                         </div>
                         <div className="pg-landing-screen__footer__wrap__social__row">
-                            <img src={SocialIcon5} alt="" />
-                            <img src={SocialIcon6} alt="" />
-                            <img src={SocialIcon7} alt="" />
-                            <img src={SocialIcon8} alt="" />
+                            <img src={RedditIcon} alt="Reddit" />
+                            <img src={FacebookIcon} alt="Facebook" />
+                            <img src={MediumIcon} alt="MediumIcon" />
+                            <img src={CoinMarketIcon} alt="CoinMarket" />
                         </div>
                     </div>
                 </div>
@@ -275,12 +275,12 @@ class Landing extends React.Component<Props> {
         return (
             <div className="pg-landing-screen">
                 {this.renderHeader()}
-                {this.renderFirstBlock()}
-                {this.renderSecondBlock()}
-                {this.renderThirdBlock()}
-                {this.renderFourthBlock()}
-                {this.renderFifthBlock()}
-                {this.renderSixthBlock()}
+                {this.renderMarketInfoBlock()}
+                {this.renderPlatformInfoBlock()}
+                {this.renderRegisterBlock()}
+                {this.renderFeaturesBlock()}
+                {this.renderTradeOnTheGoBlock()}
+                {this.renderStartTradingBlock()}
                 {this.renderFooter()}
             </div>
         );
