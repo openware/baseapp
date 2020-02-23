@@ -3,7 +3,7 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { Decimal } from '../../components';
+import { Decimal, TickerTable } from '../../components';
 import {
     Market,
     marketsFetch,
@@ -78,31 +78,6 @@ class MarketsTableContainer extends React.Component<Props, State> {
         }
     }
 
-    public renderHeader(currentBidUnit: string) {
-        const { markets } = this.props;
-        let currentBidUnitsList: string[] = [''];
-
-        if (markets.length > 0) {
-            currentBidUnitsList = markets.reduce(this.formatFilteredMarkets, currentBidUnitsList);
-        }
-
-        return (
-            <ul className="navigation" role="tablist">
-                {currentBidUnitsList.map((item, i) => (
-                    <li
-                        key={i}
-                        className={`navigation__item ${item === currentBidUnit && 'navigation__item--active'}`}
-                        onClick={() => this.handleSetCurrentBidUnit(item)}
-                    >
-                        <span className="navigation__item__link">
-                            {item ? item.toUpperCase() : this.translate('page.body.marketsTable.filter.all')}
-                        </span>
-                    </li>
-                ))}
-            </ul>
-        );
-    }
-
     public render() {
         const {
             markets,
@@ -117,6 +92,12 @@ class MarketsTableContainer extends React.Component<Props, State> {
             price_change_percent: '+0.00%',
             vol: '0.0',
         };
+
+        let currentBidUnitsList: string[] = [''];
+
+        if (markets.length > 0) {
+            currentBidUnitsList = markets.reduce(this.formatFilteredMarkets, currentBidUnitsList);
+        }
 
         let currentBidUnitMarkets = markets;
 
@@ -143,75 +124,16 @@ class MarketsTableContainer extends React.Component<Props, State> {
         );
 
         return (
-            <div className="pg-markets-table">
-                <div className="pg-markets-table__filter">
-                    {this.renderHeader(currentBidUnit)}
-                </div>
-                <div className="pg-markets-table__table-wrap">
-                    <table className="pg-markets-table__table">
-                        <thead>
-                            <tr>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.pair')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.lastPrice')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.change')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.high')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.low')}</th>
-                                <th scope="col">{this.translate('page.body.marketsTable.header.volume')}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {formattedMarkets[0] && formattedMarkets.map(this.renderItem)}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <TickerTable
+                currentBidUnit={currentBidUnit}
+                currentBidUnitsList={currentBidUnitsList}
+                markets={formattedMarkets}
+                redirectToTrading={this.handleRedirectToTrading}
+                setCurrentBidUnit={this.handleSetCurrentBidUnit}
+                translate={this.translate}
+            />
         );
     }
-
-    private renderItem = (market, index: number) => {
-        const marketChangeColor = +(market.change || 0) < 0 ? 'negative' : 'positive';
-
-        return (
-            <tr key={index} onClick={() => this.handleRedirectToTrading(market.id)}>
-                <td>
-                    <div>
-                        {market && market.name}
-                    </div>
-                </td>
-                <td>
-                    <span>
-                        <Decimal fixed={market.amount_precision} thousSep=",">
-                            {market.last}
-                        </Decimal>
-                    </span>
-                </td>
-                <td>
-                    <span className={marketChangeColor}>{market.price_change_percent}</span>
-                </td>
-                <td>
-                    <span>
-                        <Decimal fixed={market.amount_precision} thousSep=",">
-                            {market.high}
-                        </Decimal>
-                    </span>
-                </td>
-                <td>
-                    <span>
-                        <Decimal fixed={market.amount_precision} thousSep=",">
-                            {market.low}
-                        </Decimal>
-                    </span>
-                </td>
-                <td>
-                    <span>
-                        <Decimal fixed={market.amount_precision} thousSep=",">
-                            {market.volume}
-                        </Decimal>
-                    </span>
-                </td>
-            </tr>
-        );
-    };
 
     private handleRedirectToTrading = (id: string) => {
         const { markets } = this.props;
@@ -223,18 +145,18 @@ class MarketsTableContainer extends React.Component<Props, State> {
         }
     }
 
+    private handleSetCurrentBidUnit = (currentBidUnit?: string) => {
+        this.setState({
+            currentBidUnit: currentBidUnit || '',
+        });
+    };
+
     private formatFilteredMarkets = (list: string[], market: Market) => {
         if (list.indexOf(market.quote_unit) === -1) {
             list.push(market.quote_unit);
         }
         return list;
     }
-
-    private handleSetCurrentBidUnit = (currentBidUnit?: string) => {
-        this.setState({
-            currentBidUnit: currentBidUnit || '',
-        });
-    };
 
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 }
