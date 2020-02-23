@@ -45,6 +45,7 @@ class AppLayout extends React.Component<Props, {}, {}> {
             locale,
         } = this.props;
         const { lang, messages } = locale;
+
         return (
             <IntlProvider locale={lang} messages={messages} key={lang}>
                 <Router history={history}>
