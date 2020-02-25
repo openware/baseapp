@@ -14,31 +14,7 @@ interface SymbolInfoMap {
 	[symbol: string]: LibrarySymbolInfo | undefined;
 }
 
-interface ExchangeDataResponseOptionalValues {
-	'ticker': string;
-
-	'minmov2': number;
-	'minmove2': number;
-
-	'minmov': number;
-	'minmovement': number;
-
-	'supported-resolutions': string[];
-
-	'force-session-rebuild': boolean;
-
-	'has-intraday': boolean;
-	'has-daily': boolean;
-	'has-weekly-and-monthly': boolean;
-	'has-empty-bars': boolean;
-	'has-no-volume': boolean;
-
-	'intraday-multipliers': string[];
-
-	'volume-precision': number;
-}
-
-interface ExchangeDataResponseMandatoryValues {
+interface ExchangeDataResponseSymbolData {
 	'type': string;
 	'timezone': LibrarySymbolInfo['timezone'];
 	'description': string;
@@ -51,26 +27,56 @@ interface ExchangeDataResponseMandatoryValues {
 	'fractional': boolean;
 
 	'pricescale': number;
+
+	'ticker'?: string;
+
+	'minmov2'?: number;
+	'minmove2'?: number;
+
+	'minmov'?: number;
+	'minmovement'?: number;
+
+	'force-session-rebuild'?: boolean;
+
+	'supported-resolutions'?: string[];
+	'intraday-multipliers'?: string[];
+
+	'has-intraday'?: boolean;
+	'has-daily'?: boolean;
+	'has-weekly-and-monthly'?: boolean;
+	'has-empty-bars'?: boolean;
+	'has-no-volume'?: boolean;
+
+	'volume-precision'?: number;
 }
 
 // Here is some black magic with types to get compile-time checks of names and types
-type ValueOrArray<T> = T | T[];
+type PickArrayedObjectFields<T> = Pick<T, {
+	// tslint:disable-next-line:no-any
+	[K in keyof T]-?: NonNullable<T[K]> extends any[] ? K : never;
+}[keyof T]>;
+
+type ExchangeDataResponseArrayedSymbolData = PickArrayedObjectFields<ExchangeDataResponseSymbolData>;
+type ExchangeDataResponseNonArrayedSymbolData = Pick<ExchangeDataResponseSymbolData, Exclude<keyof ExchangeDataResponseSymbolData, keyof ExchangeDataResponseArrayedSymbolData>>;
+
 type ExchangeDataResponse =
 	{
 		symbol: string[];
 	} &
 	{
-		[K in keyof ExchangeDataResponseMandatoryValues]: ValueOrArray<ExchangeDataResponseMandatoryValues[K]>;
-	} &
-	{
-		[K in keyof ExchangeDataResponseOptionalValues]?: ValueOrArray<ExchangeDataResponseOptionalValues[K]>;
+		[K in keyof ExchangeDataResponseSymbolData]: ExchangeDataResponseSymbolData[K] | NonNullable<ExchangeDataResponseSymbolData[K]>[];
 	};
 
-function extractField<Field extends keyof ExchangeDataResponseMandatoryValues>(data: ExchangeDataResponse, field: Field, arrayIndex: number): ExchangeDataResponseMandatoryValues[Field];
-function extractField<Field extends keyof ExchangeDataResponseOptionalValues>(data: ExchangeDataResponse, field: Field, arrayIndex: number): ExchangeDataResponseOptionalValues[Field] | undefined;
-function extractField<Field extends keyof ExchangeDataResponseMandatoryValues>(data: ExchangeDataResponse, field: Field, arrayIndex: number): (ExchangeDataResponseMandatoryValues & ExchangeDataResponseOptionalValues)[Field] | undefined {
-	const value = data[field];
-	return Array.isArray(value) ? value[arrayIndex] : value;
+function extractField<Field extends keyof ExchangeDataResponseNonArrayedSymbolData>(data: ExchangeDataResponse, field: Field, arrayIndex: number): ExchangeDataResponseNonArrayedSymbolData[Field];
+function extractField<Field extends keyof ExchangeDataResponseArrayedSymbolData>(data: ExchangeDataResponse, field: Field, arrayIndex: number, valueIsArray: true): ExchangeDataResponseArrayedSymbolData[Field];
+function extractField<Field extends keyof ExchangeDataResponseSymbolData>(data: ExchangeDataResponse, field: Field, arrayIndex: number, valueIsArray?: boolean): ExchangeDataResponseSymbolData[Field] {
+	const value: ExchangeDataResponse[keyof ExchangeDataResponseSymbolData] = data[field];
+
+	if (Array.isArray(value) && (!valueIsArray || Array.isArray(value[0]))) {
+		return value[arrayIndex];
+	}
+
+	return value as ExchangeDataResponseSymbolData[Field];
 }
 
 export class SymbolsStorage {
@@ -89,6 +95,7 @@ export class SymbolsStorage {
 		this._readyPromise = this._init();
 		this._readyPromise.catch((error: Error) => {
 			// seems it is impossible
+			// tslint:disable-next-line:no-console
 			console.error(`SymbolsStorage: Cannot init, error=${error.toString()}`);
 		});
 	}
@@ -240,13 +247,14 @@ export class SymbolsStorage {
 					type: extractField(data, 'type', symbolIndex),
 					session: extractField(data, 'session-regular', symbolIndex),
 					timezone: extractField(data, 'timezone', symbolIndex),
-					supported_resolutions: definedValueOrDefault(extractField(data, 'supported-resolutions', symbolIndex), this._datafeedSupportedResolutions),
+					supported_resolutions: definedValueOrDefault(extractField(data, 'supported-resolutions', symbolIndex, true), this._datafeedSupportedResolutions),
 					force_session_rebuild: extractField(data, 'force-session-rebuild', symbolIndex),
 					has_daily: definedValueOrDefault(extractField(data, 'has-daily', symbolIndex), true),
-					intraday_multipliers: definedValueOrDefault(extractField(data, 'intraday-multipliers', symbolIndex), ['1', '5', '15', '30', '60']),
+					intraday_multipliers: definedValueOrDefault(extractField(data, 'intraday-multipliers', symbolIndex, true), ['1', '5', '15', '30', '60']),
 					has_weekly_and_monthly: extractField(data, 'has-weekly-and-monthly', symbolIndex),
 					has_empty_bars: extractField(data, 'has-empty-bars', symbolIndex),
 					volume_precision: definedValueOrDefault(extractField(data, 'volume-precision', symbolIndex), 0),
+					format: 'price',
 				};
 
 				this._symbolsInfo[ticker] = symbolInfo;

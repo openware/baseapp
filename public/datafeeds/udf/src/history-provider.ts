@@ -111,6 +111,7 @@ export class HistoryProvider {
 				})
 				.catch((reason?: string | Error) => {
 					const reasonString = getErrorMessage(reason);
+					// tslint:disable-next-line:no-console
 					console.warn(`HistoryProvider: getBars() failed, error=${reasonString}`);
 					reject(reasonString);
 				});

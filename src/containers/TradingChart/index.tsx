@@ -151,9 +151,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             });
 
             if (previousRange.from !== 0 && previousRange.to !== 0) {
-                this.tvWidget!.activeChart().setVisibleRange(previousRange, () => {
-                    print('Range set', previousRange);
-                });
+                this.tvWidget!.activeChart().setVisibleRange(previousRange);
             }
 
             if (previousResolution) {

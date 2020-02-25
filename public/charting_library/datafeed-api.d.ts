@@ -1,12 +1,35 @@
+export declare type DomeCallback = (data: DOMData) => void;
+export declare type ErrorCallback = (reason: string) => void;
+export declare type GetMarksCallback<T> = (marks: T[]) => void;
+export declare type HistoryCallback = (bars: Bar[], meta: HistoryMetadata) => void;
+export declare type MarkConstColors = 'red' | 'green' | 'blue' | 'yellow';
+export declare type OnReadyCallback = (configuration: DatafeedConfiguration) => void;
+export declare type QuoteData = QuoteOkData | QuoteErrorData;
+export declare type QuotesCallback = (data: QuoteData[]) => void;
+export declare type ResolutionBackValues = 'D' | 'M';
 export declare type ResolutionString = string;
-export interface Exchange {
-	value: string;
-	name: string;
-	desc: string;
+export declare type ResolveCallback = (symbolInfo: LibrarySymbolInfo) => void;
+export declare type SearchSymbolsCallback = (items: SearchSymbolResultItem[]) => void;
+export declare type SeriesFormat = 'price' | 'volume';
+export declare type ServerTimeCallback = (serverTime: number) => void;
+export declare type SubscribeBarsCallback = (bar: Bar) => void;
+export declare type Timezone = 'Etc/UTC' | CustomTimezones;
+export interface Bar {
+	time: number;
+	open: number;
+	high: number;
+	low: number;
+	close: number;
+	volume?: number;
 }
-export interface DatafeedSymbolType {
-	name: string;
-	value: string;
+export interface DOMData {
+	snapshot: boolean;
+	asks: DOMLevel[];
+	bids: DOMLevel[];
+}
+export interface DOMLevel {
+	price: number;
+	volume: number;
 }
 export interface DatafeedConfiguration {
 	exchanges?: Exchange[];
@@ -15,10 +38,6 @@ export interface DatafeedConfiguration {
 	supports_time?: boolean;
 	supports_timescale_marks?: boolean;
 	symbols_types?: DatafeedSymbolType[];
-}
-export declare type OnReadyCallback = (configuration: DatafeedConfiguration) => void;
-export interface IExternalDatafeed {
-	onReady(callback: OnReadyCallback): void;
 }
 export interface DatafeedQuoteValues {
 	ch?: number;
@@ -38,25 +57,49 @@ export interface DatafeedQuoteValues {
 	original_name?: string;
 	[valueName: string]: string | number | undefined;
 }
-export interface QuoteOkData {
-	s: 'ok';
-	n: string;
-	v: DatafeedQuoteValues;
+export interface DatafeedSymbolType {
+	name: string;
+	value: string;
 }
-export interface QuoteErrorData {
-	s: 'error';
-	n: string;
-	v: object;
+export interface Exchange {
+	value: string;
+	name: string;
+	desc: string;
 }
-export declare type QuoteData = QuoteOkData | QuoteErrorData;
-export declare type QuotesCallback = (data: QuoteData[]) => void;
+export interface HistoryDepth {
+	resolutionBack: ResolutionBackValues;
+	intervalBack: number;
+}
+export interface HistoryMetadata {
+	noData: boolean;
+	nextTime?: number | null;
+}
+export interface IDatafeedChartApi {
+	calculateHistoryDepth?(resolution: ResolutionString, resolutionBack: ResolutionBackValues, intervalBack: number): HistoryDepth | undefined;
+	getMarks?(symbolInfo: LibrarySymbolInfo, from: number, to: number, onDataCallback: GetMarksCallback<Mark>, resolution: ResolutionString): void;
+	getTimescaleMarks?(symbolInfo: LibrarySymbolInfo, from: number, to: number, onDataCallback: GetMarksCallback<TimescaleMark>, resolution: ResolutionString): void;
+	/**
+	 * This function is called if configuration flag supports_time is set to true when chart needs to know the server time.
+	 * The charting library expects callback to be called once.
+	 * The time is provided without milliseconds. Example: 1445324591. It is used to display Countdown on the price scale.
+	 */
+	getServerTime?(callback: ServerTimeCallback): void;
+	searchSymbols(userInput: string, exchange: string, symbolType: string, onResult: SearchSymbolsCallback): void;
+	resolveSymbol(symbolName: string, onResolve: ResolveCallback, onError: ErrorCallback): void;
+	getBars(symbolInfo: LibrarySymbolInfo, resolution: ResolutionString, rangeStartDate: number, rangeEndDate: number, onResult: HistoryCallback, onError: ErrorCallback, isFirstCall: boolean): void;
+	subscribeBars(symbolInfo: LibrarySymbolInfo, resolution: ResolutionString, onTick: SubscribeBarsCallback, listenerGuid: string, onResetCacheNeededCallback: () => void): void;
+	unsubscribeBars(listenerGuid: string): void;
+	subscribeDepth?(symbol: string, callback: DomeCallback): string;
+	unsubscribeDepth?(subscriberUID: string): void;
+}
 export interface IDatafeedQuotesApi {
 	getQuotes(symbols: string[], onDataCallback: QuotesCallback, onErrorCallback: (msg: string) => void): void;
 	subscribeQuotes(symbols: string[], fastSymbols: string[], onRealtimeCallback: QuotesCallback, listenerGUID: string): void;
 	unsubscribeQuotes(listenerGUID: string): void;
 }
-export declare type CustomTimezones = 'America/New_York' | 'America/Los_Angeles' | 'America/Chicago' | 'America/Phoenix' | 'America/Toronto' | 'America/Vancouver' | 'America/Argentina/Buenos_Aires' | 'America/El_Salvador' | 'America/Sao_Paulo' | 'America/Bogota' | 'America/Caracas' | 'Europe/Moscow' | 'Europe/Athens' | 'Europe/Belgrade' | 'Europe/Berlin' | 'Europe/London' | 'Europe/Luxembourg' | 'Europe/Madrid' | 'Europe/Paris' | 'Europe/Rome' | 'Europe/Warsaw' | 'Europe/Istanbul' | 'Europe/Zurich' | 'Australia/Sydney' | 'Australia/Brisbane' | 'Australia/Adelaide' | 'Australia/ACT' | 'Asia/Almaty' | 'Asia/Ashkhabad' | 'Asia/Tokyo' | 'Asia/Taipei' | 'Asia/Singapore' | 'Asia/Shanghai' | 'Asia/Seoul' | 'Asia/Tehran' | 'Asia/Dubai' | 'Asia/Kolkata' | 'Asia/Hong_Kong' | 'Asia/Bangkok' | 'Asia/Chongqing' | 'Asia/Jerusalem' | 'Asia/Kuwait' | 'Asia/Muscat' | 'Asia/Qatar' | 'Asia/Riyadh' | 'Pacific/Auckland' | 'Pacific/Chatham' | 'Pacific/Fakaofo' | 'Pacific/Honolulu' | 'America/Mexico_City' | 'Africa/Cairo' | 'Africa/Johannesburg' | 'Asia/Kathmandu' | 'US/Mountain';
-export declare type Timezone = 'Etc/UTC' | CustomTimezones;
+export interface IExternalDatafeed {
+	onReady(callback: OnReadyCallback): void;
+}
 export interface LibrarySymbolInfo {
 	/**
 	 * Symbol Name
@@ -81,6 +124,10 @@ export interface LibrarySymbolInfo {
 	exchange: string;
 	listed_exchange: string;
 	timezone: Timezone;
+	/**
+	 * Prices format: "price" or "volume"
+	 */
+	format: SeriesFormat;
 	/**
 	 * Code (Tick)
 	 * @example 8/16/.../256 (1/8/100 1/16/100 ... 1/256/100) or 1/10/.../10000000 (1 0.1 ... 0.0000001)
@@ -135,40 +182,6 @@ export interface LibrarySymbolInfo {
 	industry?: string;
 	currency_code?: string;
 }
-export interface DOMLevel {
-	price: number;
-	volume: number;
-}
-export interface DOMData {
-	snapshot: boolean;
-	asks: DOMLevel[];
-	bids: DOMLevel[];
-}
-export interface Bar {
-	time: number;
-	open: number;
-	high: number;
-	low: number;
-	close: number;
-	volume?: number;
-}
-export interface SearchSymbolResultItem {
-	symbol: string;
-	full_name: string;
-	description: string;
-	exchange: string;
-	ticker: string;
-	type: string;
-}
-export interface HistoryMetadata {
-	noData: boolean;
-	nextTime?: number | null;
-}
-export interface MarkCustomColor {
-	color: string;
-	background: string;
-}
-export declare type MarkConstColors = 'red' | 'green' | 'blue' | 'yellow';
 export interface Mark {
 	id: string | number;
 	time: number;
@@ -178,6 +191,28 @@ export interface Mark {
 	labelFontColor: string;
 	minSize: number;
 }
+export interface MarkCustomColor {
+	color: string;
+	background: string;
+}
+export interface QuoteErrorData {
+	s: 'error';
+	n: string;
+	v: object;
+}
+export interface QuoteOkData {
+	s: 'ok';
+	n: string;
+	v: DatafeedQuoteValues;
+}
+export interface SearchSymbolResultItem {
+	symbol: string;
+	full_name: string;
+	description: string;
+	exchange: string;
+	ticker: string;
+	type: string;
+}
 export interface TimescaleMark {
 	id: string | number;
 	time: number;
@@ -185,36 +220,6 @@ export interface TimescaleMark {
 	label: string;
 	tooltip: string[];
 }
-export declare type ResolutionBackValues = 'D' | 'M';
-export interface HistoryDepth {
-	resolutionBack: ResolutionBackValues;
-	intervalBack: number;
-}
-export declare type SearchSymbolsCallback = (items: SearchSymbolResultItem[]) => void;
-export declare type ResolveCallback = (symbolInfo: LibrarySymbolInfo) => void;
-export declare type HistoryCallback = (bars: Bar[], meta: HistoryMetadata) => void;
-export declare type SubscribeBarsCallback = (bar: Bar) => void;
-export declare type GetMarksCallback<T> = (marks: T[]) => void;
-export declare type ServerTimeCallback = (serverTime: number) => void;
-export declare type DomeCallback = (data: DOMData) => void;
-export declare type ErrorCallback = (reason: string) => void;
-export interface IDatafeedChartApi {
-	calculateHistoryDepth?(resolution: ResolutionString, resolutionBack: ResolutionBackValues, intervalBack: number): HistoryDepth | undefined;
-	getMarks?(symbolInfo: LibrarySymbolInfo, from: number, to: number, onDataCallback: GetMarksCallback<Mark>, resolution: ResolutionString): void;
-	getTimescaleMarks?(symbolInfo: LibrarySymbolInfo, from: number, to: number, onDataCallback: GetMarksCallback<TimescaleMark>, resolution: ResolutionString): void;
-	/**
-	 * This function is called if configuration flag supports_time is set to true when chart needs to know the server time.
-	 * The charting library expects callback to be called once.
-	 * The time is provided without milliseconds. Example: 1445324591. It is used to display Countdown on the price scale.
-	 */
-	getServerTime?(callback: ServerTimeCallback): void;
-	searchSymbols(userInput: string, exchange: string, symbolType: string, onResult: SearchSymbolsCallback): void;
-	resolveSymbol(symbolName: string, onResolve: ResolveCallback, onError: ErrorCallback): void;
-	getBars(symbolInfo: LibrarySymbolInfo, resolution: ResolutionString, rangeStartDate: number, rangeEndDate: number, onResult: HistoryCallback, onError: ErrorCallback, isFirstCall: boolean): void;
-	subscribeBars(symbolInfo: LibrarySymbolInfo, resolution: ResolutionString, onTick: SubscribeBarsCallback, listenerGuid: string, onResetCacheNeededCallback: () => void): void;
-	unsubscribeBars(listenerGuid: string): void;
-	subscribeDepth?(symbolInfo: LibrarySymbolInfo, callback: DomeCallback): string;
-	unsubscribeDepth?(subscriberUID: string): void;
-}
+export type CustomTimezones = 'Africa/Cairo' | 'Africa/Johannesburg' | 'Africa/Lagos' | 'America/Argentina/Buenos_Aires' | 'America/Bogota' | 'America/Caracas' | 'America/Chicago' | 'America/El_Salvador' | 'America/Juneau' | 'America/Lima' | 'America/Los_Angeles' | 'America/Mexico_City' | 'America/New_York' | 'America/Phoenix' | 'America/Santiago' | 'America/Sao_Paulo' | 'America/Toronto' | 'America/Vancouver' | 'Asia/Almaty' | 'Asia/Ashkhabad' | 'Asia/Bahrain' | 'Asia/Bangkok' | 'Asia/Chongqing' | 'Asia/Dubai' | 'Asia/Ho_Chi_Minh' | 'Asia/Hong_Kong' | 'Asia/Jakarta' | 'Asia/Jerusalem' | 'Asia/Kathmandu' | 'Asia/Kolkata' | 'Asia/Kuwait' | 'Asia/Muscat' | 'Asia/Qatar' | 'Asia/Riyadh' | 'Asia/Seoul' | 'Asia/Shanghai' | 'Asia/Singapore' | 'Asia/Taipei' | 'Asia/Tehran' | 'Asia/Tokyo' | 'Atlantic/Reykjavik' | 'Australia/ACT' | 'Australia/Adelaide' | 'Australia/Brisbane' | 'Australia/Perth' | 'Australia/Sydney' | 'Europe/Athens' | 'Europe/Belgrade' | 'Europe/Berlin' | 'Europe/Copenhagen' | 'Europe/Helsinki' | 'Europe/Istanbul' | 'Europe/London' | 'Europe/Luxembourg' | 'Europe/Madrid' | 'Europe/Moscow' | 'Europe/Oslo' | 'Europe/Paris' | 'Europe/Riga' | 'Europe/Rome' | 'Europe/Stockholm' | 'Europe/Tallinn' | 'Europe/Vilnius' | 'Europe/Warsaw' | 'Europe/Zurich' | 'Pacific/Auckland' | 'Pacific/Chatham' | 'Pacific/Fakaofo' | 'Pacific/Honolulu' | 'Pacific/Norfolk' | 'US/Mountain';
 
 export as namespace TradingView;
