@@ -30,7 +30,7 @@ const findMarketTicker = (marketPair: string, marketTickers: MarketTicker) => {
 };
 
 const getWalletTotal = (wallet: WalletItemProps): number => {
-    return Number(wallet.balance) + (Number(wallet.locked) || 0);
+    return (Number(wallet.balance) || 0) + (Number(wallet.locked) || 0);
 };
 
 export const estimateWithMarket = (targetCurrency: string, walletCurrency: string, walletTotal: number, currencies: Currency[], markets: Market[], marketTickers: MarketTicker): number => {
@@ -101,7 +101,7 @@ export const estimateValue = (targetCurrency: string, currencies: Currency[], wa
         const formattedWalletCurrency = wallet.currency.toLowerCase();
 
         if (formattedWalletCurrency === formattedTargetCurrency) {
-            const walletTotal = Number(wallet.balance) + (Number(wallet.locked) || 0);
+            const walletTotal = (Number(wallet.balance) || 0) + (Number(wallet.locked) || 0);
             estimatedValue += walletTotal;
         } else if (isMarketPresent(formattedTargetCurrency, formattedWalletCurrency, markets)) {
             estimatedValue += estimateWithMarket(formattedTargetCurrency, formattedWalletCurrency, getWalletTotal(wallet), currencies, markets, marketTickers);

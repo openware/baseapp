@@ -11,9 +11,9 @@ describe('WalletItem', () => {
                     currency={'BTC'}
                     name={'Bitcoin'}
                     // tslint:disable-next-line:no-magic-numbers
-                    balance={45}
+                    balance={'45'}
                     // tslint:disable-next-line:no-magic-numbers
-                    locked={3}
+                    locked={'3'}
                     // tslint:disable-next-line:no-magic-numbers
                     fee={0.3}
                     type={'fiat'}
@@ -32,10 +32,8 @@ describe('WalletItem', () => {
                     address={'aevrv'}
                     currency={'BTC'}
                     name={'Bitcoin'}
-                    // tslint:disable-next-line:no-magic-numbers
-                    balance={45}
-                    // tslint:disable-next-line:no-magic-numbers
-                    locked={3}
+                    balance={'45'}
+                    locked={'3'}
                     // tslint:disable-next-line:no-magic-numbers
                     fee={0.3}
                     type={'fiat'}
@@ -53,8 +51,7 @@ describe('WalletItem', () => {
                     address={'aevrv'}
                     currency={'BTC'}
                     name={'Bitcoin'}
-                    // tslint:disable-next-line:no-magic-numbers
-                    balance={45}
+                    balance={'45'}
                     // tslint:disable-next-line:no-magic-numbers
                     fee={0.3}
                     type={'fiat'}
@@ -74,10 +71,8 @@ describe('WalletItem', () => {
                     address={'aevrv'}
                     currency={'BTC'}
                     name={'Bitcoin'}
-                    // tslint:disable-next-line:no-magic-numbers
-                    balance={45}
-                    // tslint:disable-next-line:no-magic-numbers
-                    locked={3}
+                    balance={'45'}
+                    locked={'3'}
                     // tslint:disable-next-line:no-magic-numbers
                     fee={0.3}
                     type={'fiat'}
@@ -97,13 +92,12 @@ describe('WalletItem', () => {
                     name={'Bitcoin'}
                     address={'aevrv'}
                     currency={'BTC'}
-                    locked={0}
+                    balance={'45'}
+                    locked={''}
                     // tslint:disable-next-line:no-magic-numbers
                     fee={0.3}
                     type={'fiat'}
                     active={true}
-                    // tslint:disable-next-line:no-magic-numbers
-                    balance={45}
                     // tslint:disable-next-line:no-magic-numbers
                     fixed={8}
                 />,
@@ -117,10 +111,8 @@ describe('WalletItem', () => {
                     address={'aevrv'}
                     currency={'BTC'}
                     name={'Bitcoin'}
-                    // tslint:disable-next-line:no-magic-numbers
-                    balance={45}
-                    // tslint:disable-next-line:no-magic-numbers
-                    locked={3}
+                    balance={'45'}
+                    locked={'3'}
                     // tslint:disable-next-line:no-magic-numbers
                     fee={0.3}
                     type={'fiat'}
