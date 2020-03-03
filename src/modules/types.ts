@@ -26,7 +26,7 @@ export interface OrderCommon {
     volume?: number;
     updated_at?: string;
     confirmed?: boolean;
-    uuid?: string | number;
+    uuid?: string;
     id?: number;
 }
 
@@ -46,7 +46,7 @@ export interface OrderAPI {
     avg_price: string;
     updated_at?: string;
     confirmed?: boolean;
-    uuid?: string | number;
+    uuid?: string;
     id?: number;
 }
 
@@ -64,7 +64,7 @@ export interface OrderEvent {
     ord_type?: OrderType;
     updated_at?: string;
     confirmed?: boolean;
-    uuid?: string | number;
+    uuid?: string;
     id?: number;
 }
 
