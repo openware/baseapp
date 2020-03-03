@@ -56,6 +56,7 @@ describe('Open Orders reducer', () => {
     describe('USER_OPEN_ORDERS_APPEND', () => {
         const newOrder: OrderAPI = {
             id: 162,
+            confirmed: true,
             side: 'buy',
             price: '0.3',
             ord_type: 'limit',
@@ -81,6 +82,37 @@ describe('Open Orders reducer', () => {
             ).toEqual(expectedState);
         });
     });
+
+    describe('USER_OPEN_ORDERS_APPEND Finex', () => {
+        const newOrder: OrderAPI = {
+            uuid: '3ea3e2e4-5d29-11ea-a122-0242ac140008',
+            confirmed: false,
+            side: 'buy',
+            price: '0.3',
+            ord_type: 'limit',
+            state:'wait',
+            created_at: '2018-11-29T16:54:46+01:00',
+            remaining_volume: '123.1234',
+            origin_volume: '123.1234',
+            executed_volume: '0',
+            market: 'ethusd',
+            avg_price: '0.0',
+        };
+
+        it('inserts order', () => {
+            const expectedState = {
+                ...initialOpenOrdersState,
+                list: [convertOrderAPI(newOrder)],
+            };
+            expect(
+                openOrdersReducer(
+                    initialOpenOrdersState,
+                    actions.userOpenOrdersAppend(newOrder),
+                ),
+            ).toEqual(expectedState);
+        });
+    });
+
 
     describe('USER_OPEN_ORDERS_UPDATE', () => {
         const newOrderEvent: OrderEvent = {
@@ -184,8 +216,20 @@ describe('Open Orders reducer', () => {
     });
 
     it('should handle OPEN_ORDERS_CANCEL_FETCH', () => {
+        const orderToCancel: OrderCommon = {
+            id: 162,
+            side: 'buy',
+            price: 0.3,
+            state:'wait',
+            created_at: '2018-11-29T16:54:46+01:00',
+            remaining_volume: 123.1234,
+            origin_volume: 123.1234,
+            executed_volume: 0,
+            market: 'ethusd',
+        };
+
         const initialState = { ...initialOpenOrdersState };
-        const payload = { id: 2, list: [] };
+        const payload = { order: orderToCancel, list: [] };
         const expectedState = {
             ...initialState,
             list: [],

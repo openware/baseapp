@@ -46,7 +46,7 @@ export interface UserOpenOrdersReset {
 export interface OpenOrdersCancelFetch {
     type: typeof OPEN_ORDERS_CANCEL_FETCH;
     payload: {
-        id: string | number;
+        order: OrderCommon;
         list: OrderCommon[];
     };
 }

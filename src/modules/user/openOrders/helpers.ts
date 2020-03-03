@@ -4,6 +4,7 @@ import { OrderAPI, OrderCommon, OrderEvent } from '../../types';
 export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
     const {
         id,
+        uuid,
         side,
         price,
         state,
@@ -15,9 +16,11 @@ export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
         ord_type,
         avg_price,
         updated_at,
+        confirmed,
     } = order;
     return {
         id,
+        uuid,
         side,
         price: Number(price),
         state,
@@ -29,12 +32,14 @@ export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
         ord_type,
         avg_price: Number(avg_price),
         updated_at,
+        confirmed,
     };
 };
 
 export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
     const {
         id,
+        uuid,
         at,
         kind,
         price,
@@ -43,9 +48,11 @@ export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
         origin_volume,
         market, ord_type,
         updated_at,
+        confirmed,
     } = orderEvent;
     return {
         id,
+        uuid,
         side: kindToMakerType(kind),
         price: Number(price),
         state,
@@ -56,6 +63,7 @@ export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
         market,
         ord_type,
         updated_at,
+        confirmed,
     };
 };
 
@@ -83,7 +91,33 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
     }
 };
 
+export const insertOrUpdateFinex = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
+    const { state, uuid } = order;
+    switch (state) {
+        case 'wait':
+            const index = list.findIndex((value: OrderCommon) => value.uuid === uuid);
+            if (index === -1) {
+                return list.concat({...order});
+            }
+            return list.map(item => {
+                if (item.uuid === order.uuid) {
+                    return {...order};
+                }
+                return item;
+            });
+        default:
+            return list.reduce((memo: OrderCommon[], item: OrderCommon): OrderCommon[] => {
+                if (uuid !== item.uuid) {
+                    memo.push(item);
+                }
+                return memo;
+            }, []);
+    }
+};
+
 export const insertIfNotExisted = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
-    const index = list.findIndex((value: OrderCommon) => value.id === order.id);
+    const index = list.findIndex((value: OrderCommon) =>
+        order.confirmed ? value.id === order.id : value.uuid === order.uuid);
+
     return (index === -1) ? list.concat({...order}) : [...list];
 };

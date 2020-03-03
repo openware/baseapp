@@ -1,11 +1,12 @@
 import { Channel, delay, eventChannel } from 'redux-saga';
 // tslint:disable-next-line no-submodule-imports
 import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
-import { rangerUrl } from '../../../../api';
+import { rangerUrl, isFinexEnabled } from '../../../../api';
 import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
-import { userOpenOrdersUpdate } from '../../../user/openOrders';
+import { selectOpenOrdersList, userOpenOrdersUpdate } from '../../../user/openOrders';
 import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';
+import { alertPush } from '../../alert';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
 import { MARKETS_SET_CURRENT_MARKET, MARKETS_SET_CURRENT_MARKET_IFUNSET } from '../../markets/constants';
@@ -148,6 +149,27 @@ const initRanger = (
 
                         // private
                         case 'order':
+                            const orders = selectOpenOrdersList(store.getState());
+
+                            if (isFinexEnabled()) {
+                                const updatedOrder = orders.length && orders.find(order => event.uuid && order.uuid === event.uuid);
+
+                                switch (updatedOrder && updatedOrder.state) {
+                                    case 'wait':
+                                    case 'pending':
+                                        alertPush({ message: ['success.order.created'], type: 'success'});
+                                        break;
+                                    case 'done':
+                                        alertPush({ message: ['success.order.done'], type: 'success'});
+                                        break;
+                                    case 'reject':
+                                        alertPush({ message: ['error.order.reject'], type: 'error'});
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
                             emitter(rangerUserOrderUpdate(event));
                             return;
 
