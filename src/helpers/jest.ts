@@ -26,6 +26,8 @@ const mockConfig: Config = {
     isResizable: false,
     isDraggable: false,
     languages: ['en', 'ru'],
+    sessionCheckInterval: '15000',
+    balancesFetchInterval: '3000',
 };
 
 // tslint:disable no-any no-console

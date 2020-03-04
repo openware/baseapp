@@ -16,4 +16,6 @@ window.env = {
     isResizable: false,
     isDraggable: false,
     languages: ['en', 'ru'],
+    sessionCheckInterval: '15000',
+    balancesFetchInterval: '3000',
 };

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { withRouter } from 'react-router';
+import { balancesFetchInterval } from '../../api';
 import { walletsFetch } from '../../modules/user/wallets';
-
-const WALLETS_FETCH_INTERVAL = 3000;
 
 interface DispatchProps {
     walletsFetch: typeof walletsFetch;
@@ -17,7 +16,7 @@ export class WalletsFetchComponent extends React.Component<WalletsFetchProps> {
     public componentDidMount(): void {
         this.walletsFetchInterval = setInterval(() => {
             this.props.walletsFetch();
-        }, WALLETS_FETCH_INTERVAL);
+        }, parseFloat(balancesFetchInterval()));
     }
 
     public componentWillUnmount(): void {
