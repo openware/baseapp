@@ -52,5 +52,5 @@ export const rangerReconnectPeriod = (): number => Cryptobase.config.rangerRecon
 export const incrementalOrderBook = (): boolean => Cryptobase.config.incrementalOrderBook || false;
 export const isResizableGrid = ():boolean => Cryptobase.config.isResizable || false;
 export const isDraggableGrid = ():boolean => Cryptobase.config.isDraggable || false;
-export const languages = Cryptobase.config.languages.length > 0 ? Cryptobase.config.languages : ['en'];
+export const languages = Cryptobase.config.languages && Cryptobase.config.languages.length > 0 ? Cryptobase.config.languages : ['en'];
 export const isFinexEnabled = (): boolean => Cryptobase.config.finex || false;
