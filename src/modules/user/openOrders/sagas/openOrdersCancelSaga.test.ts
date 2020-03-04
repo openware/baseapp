@@ -124,7 +124,7 @@ describe('Open Orders Cancel', () => {
         return promise;
     });
 
-    it('should cancel finex order', async () => {
+    it('should cancel order with UUID', async () => {
         mockOrderCancel(fakeFinexOrder.uuid);
         const promise = new Promise(resolve => {
             store.subscribe(() => {

@@ -67,7 +67,7 @@ export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
     };
 };
 
-export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
+export const insertOrUpdateByID = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
     const { state, id } = order;
     switch (state) {
         case 'wait':
@@ -91,7 +91,7 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
     }
 };
 
-export const insertOrUpdateFinex = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
+export const insertOrUpdateByUUID = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
     const { state, uuid } = order;
     switch (state) {
         case 'wait':

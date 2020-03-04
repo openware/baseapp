@@ -51,7 +51,7 @@ describe('Open Orders actions', () => {
         expect(actions.userOpenOrdersAppend(payload)).toEqual(expectedAction);
     });
 
-    it('should check userOpenOrdersAppend Finex action creator', () => {
+    it('should check userOpenOrdersAppend UUID action creator', () => {
         const payload: OrderAPI = {
             uuid: '3ea3e2e4-5d29-11ea-a122-0242ac140008',
             confirmed: false,
