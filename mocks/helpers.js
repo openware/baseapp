@@ -39,6 +39,18 @@ const Helpers = {
         });
         return tickers;
     },
+    getBalances: () => {
+      const getBalanceValue = (value, precision) => ((Math.random() > 0.5 ? 1 : -1) * Math.random() / 10 + +value).toFixed(precision);
+      const getLockedValue = (value, precision) => (Math.random() / 10 + +value).toFixed(precision);
+
+      return {
+        "bch":  [getBalanceValue("10.12", 8), getLockedValue("0.001", 8)],
+        "btc": [getBalanceValue("0.21026373", 8), getLockedValue("0.0001", 8)],
+        "dash": [getBalanceValue("5", 6), getLockedValue("0.0005", 6)],
+        "eth": [getBalanceValue("5", 6), getLockedValue("0.0002", 6)],
+        "usd":  [getBalanceValue("1000", 2), getLockedValue("100", 2)]
+      }
+    },
     getDepth: () => {
       const delta = 2 * (1 + Math.cos(2 * Math.PI * Date.now() / 1000 / 3600))
       const fV = (volume) => String(parseFloat(volume) + delta * 10);

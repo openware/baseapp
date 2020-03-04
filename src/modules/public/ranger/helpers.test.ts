@@ -1,3 +1,4 @@
+import { Cryptobase, defaultConfig } from '../../../api';
 import { Market, Ticker, TickerEvent } from '../markets';
 import { formatTicker, generateSocketURI, marketKlineStreams, periodMinutesToString, periodStringToMinutes, streamsBuilder } from './helpers';
 
@@ -166,6 +167,20 @@ describe('ranger helpers', () => {
                 'trade',
                 'abcdefg.trades',
                 'abcdefg.update',
+            ]);
+        });
+
+        it('finex enabled private streams', () => {
+            Cryptobase.config = {
+                ...defaultConfig,
+                finex: true,
+            };
+
+            expect(streamsBuilder(true, [], undefined)).toEqual([
+                'global.tickers',
+                'order',
+                'trade',
+                'balances',
             ]);
         });
     });

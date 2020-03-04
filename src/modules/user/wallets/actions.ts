@@ -5,6 +5,7 @@ import {
     WALLETS_ADDRESS_ERROR,
     WALLETS_ADDRESS_FETCH,
     WALLETS_DATA,
+    WALLETS_DATA_WS,
     WALLETS_ERROR,
     WALLETS_FETCH,
     WALLETS_RESET,
@@ -25,6 +26,14 @@ export interface WalletsFetch {
 export interface WalletsData {
     type: typeof WALLETS_DATA;
     payload: Wallet[];
+}
+
+export interface WalletsDataByRanger {
+    type: typeof WALLETS_DATA_WS;
+    payload: {
+        ws: boolean;
+        balances;
+    };
 }
 
 export interface WalletsError {
@@ -74,6 +83,7 @@ export interface SetMobileWalletUi {
 
 export type WalletsAction = WalletsFetch
     | WalletsData
+    | WalletsDataByRanger
     | WalletsError
     | WalletsAddressFetch
     | WalletsAddressData
@@ -90,6 +100,11 @@ export const walletsFetch = (): WalletsFetch => ({
 
 export const walletsData = (payload: WalletsData['payload']): WalletsData => ({
     type: WALLETS_DATA,
+    payload,
+});
+
+export const updateWalletsDataByRanger = (payload: WalletsDataByRanger['payload']): WalletsDataByRanger => ({
+    type: WALLETS_DATA_WS,
     payload,
 });
 

@@ -6,6 +6,7 @@ import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
 import { selectOpenOrdersList, userOpenOrdersUpdate } from '../../../user/openOrders';
 import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';
+import { updateWalletsDataByRanger } from '../../../user/wallets';
 import { alertPush } from '../../alert';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
@@ -176,6 +177,11 @@ const initRanger = (
                         // private
                         case 'trade':
                             emitter(pushHistoryEmit(event));
+                            return;
+
+                        // private
+                        case 'balances':
+                            emitter(updateWalletsDataByRanger({ ws: true, balances: event }));
                             return;
 
                         default:
