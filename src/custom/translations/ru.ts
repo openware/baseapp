@@ -505,6 +505,9 @@ export const ru: LangType = {
 
     // error messages
     'error.order.rejected': 'Запрос отвергнут',
+    'error.invalid_request': 'Запрос - неверный запрос',
+    'error.bad_request': 'Запрос - неправильный запрос',
+    'error.request_entity_too_large': 'Запрос - слишком большой объект запроса',
 
     // error messages
     // barong

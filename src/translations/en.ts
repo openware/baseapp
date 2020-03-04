@@ -503,6 +503,9 @@ export const en = {
 
     // error messages
     'error.order.rejected': 'Order rejected',
+    'error.invalid_request': 'Order - invalid request',
+    'error.bad_request': 'Order - bad request',
+    'error.request_entity_too_large': 'Order - request entity too large',
 
     // barong
     'resource.labels.private': 'Can\'t update label',
