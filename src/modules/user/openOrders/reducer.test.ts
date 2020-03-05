@@ -3,8 +3,7 @@ import * as actions from './actions';
 import {
     convertOrderAPI,
     convertOrderEvent,
-    insertOrUpdateByID,
-    insertOrUpdateByUUID,
+    insertOrUpdate,
 } from './helpers';
 import {
     initialOpenOrdersState,
@@ -154,8 +153,8 @@ describe('Open Orders reducer', () => {
             market: 'ethusd',
         };
 
-        it('insert new order', () => {
-            const list = insertOrUpdateByID([], convertOrderEvent(newOrderEvent));
+        it('insert new order by ID', () => {
+            const list = insertOrUpdate([], convertOrderEvent(newOrderEvent));
             const expectedState: OpenOrdersState = { ...initialOpenOrdersState, list };
             expect(
                 openOrdersReducer(
@@ -165,8 +164,8 @@ describe('Open Orders reducer', () => {
             ).toEqual(expectedState);
         });
 
-        it('insert new order with UUID', () => {
-            const list = insertOrUpdateByUUID([], convertOrderEvent(newOrderWithUUIDEvent));
+        it('insert new order by UUID', () => {
+            const list = insertOrUpdate([], convertOrderEvent(newOrderWithUUIDEvent));
             const expectedState: OpenOrdersState = { ...initialOpenOrdersState, list };
             expect(
                 openOrdersReducer(
@@ -196,13 +195,13 @@ describe('Open Orders reducer', () => {
             ).toEqual(expectedState);
         });
 
-        it('update order in the list', () => {
+        it('update order in the list by ID', () => {
             const updatedOrderEvent: OrderEvent = {
                 ...newOrderEvent,
                 origin_volume: '123.1234',
                 remaining_volume: '100.1234',
             };
-            const list = insertOrUpdateByID([newOrderCommon], convertOrderEvent(updatedOrderEvent));
+            const list = insertOrUpdate([newOrderCommon], convertOrderEvent(updatedOrderEvent));
             const expectedState: OpenOrdersState = {
                 ...initialOpenOrdersState,
                 list,
@@ -216,13 +215,13 @@ describe('Open Orders reducer', () => {
             ).toEqual(expectedState);
         });
 
-        it('update order with UUID in the list', () => {
+        it('update order in the list by UUID', () => {
             const updatedOrderEvent: OrderEvent = {
                 ...newOrderWithUUIDEvent,
                 origin_volume: '123.1234',
                 remaining_volume: '100.1234',
             };
-            const list = insertOrUpdateByUUID([newOrderCommon], convertOrderEvent(updatedOrderEvent));
+            const list = insertOrUpdate([newOrderCommon], convertOrderEvent(updatedOrderEvent));
             const expectedState: OpenOrdersState = {
                 ...initialOpenOrdersState,
                 list,

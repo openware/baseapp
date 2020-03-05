@@ -1,4 +1,3 @@
-import { isFinexEnabled } from '../../../api';
 import { OrderCommon } from '../../types';
 import { OpenOrdersAction } from './actions';
 import {
@@ -16,8 +15,7 @@ import {
     convertOrderAPI,
     convertOrderEvent,
     insertIfNotExisted,
-    insertOrUpdateByID,
-    insertOrUpdateByUUID,
+    insertOrUpdate,
 } from './helpers';
 
 export interface OpenOrdersState {
@@ -46,11 +44,7 @@ export const openOrdersReducer = (
         case OPEN_ORDERS_UPDATE:
             return {
                 ...state,
-                list: isFinexEnabled() ? (
-                    insertOrUpdateByUUID(state.list, convertOrderEvent(action.payload))
-                ) : (
-                    insertOrUpdateByID(state.list, convertOrderEvent(action.payload))
-                ),
+                list: insertOrUpdate(state.list, convertOrderEvent(action.payload)),
             };
         case OPEN_ORDERS_ERROR:
             return { ...state, fetching: false, list: [] };
