@@ -11,7 +11,7 @@ import { alertPush } from '../../alert';
 import { klinePush } from '../../kline';
 import { Market, marketsTickersData, selectCurrentMarket, SetCurrentMarket } from '../../markets';
 import { MARKETS_SET_CURRENT_MARKET, MARKETS_SET_CURRENT_MARKET_IFUNSET } from '../../markets/constants';
-import { depthData, depthDataIncrement, depthDataSnapshot } from '../../orderBook';
+import { depthData, depthDataIncrement, depthDataSnapshot, selectOrderBookSequence } from '../../orderBook';
 import { recentTradesPush } from '../../recentTrades';
 import {
     RangerConnectFetch,
@@ -43,7 +43,7 @@ const initRanger = (
     market: Market | undefined,
     prevSubs: string[],
     buffer: RangerBuffer,
-): [Channel<{}>, WebSocket] => {
+): [Channel<any>, WebSocket] => {
     const baseUrl = `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
     const streams = streamsBuilder(withAuth, prevSubs, market);
 
@@ -101,6 +101,16 @@ const initRanger = (
                     // public
                     if (orderBookMatchInc) {
                         if (currentMarket && orderBookMatchInc[1] === currentMarket.id) {
+                            const previousSequence = selectOrderBookSequence(store.getState());
+                            if (previousSequence === null) {
+                                window.console.log('OrderBook increment received before snapshot');
+                                return;
+                            }
+                            if (previousSequence + 1 !== event.sequence) {
+                                window.console.log(`Bad sequence detected in incremental orderbook previous: ${previousSequence}, event: ${event.sequence}`);
+                                emitter(rangerDisconnectFetch());
+                                return;
+                            }
                             emitter(depthDataIncrement(event));
                         }
                         return;

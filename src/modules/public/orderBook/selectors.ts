@@ -16,3 +16,5 @@ export const selectDepthBids = incrementalOrderBook() ?
 export const selectDepthLoading = incrementalOrderBook() ?
   (state: RootState): boolean => state.public.incrementDepth.loading :
   (state: RootState): boolean => state.public.depth.loading;
+
+export const selectOrderBookSequence = (state: RootState): number | null => state.public.incrementDepth.sequence;

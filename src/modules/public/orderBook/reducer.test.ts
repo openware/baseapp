@@ -102,10 +102,12 @@ describe('orderBook reducer', () => {
     const fakeInitialState: DepthIncrementState = {
       asks: [],
       bids: [],
+      sequence: null,
       loading: false,
     };
 
     const fakeUpdatedDepth: DepthIncrementState = {
+      sequence: 12,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -126,6 +128,7 @@ describe('orderBook reducer', () => {
 
   it('creates bids price level by DEPTH_DATA_INCREMENT', () => {
     const fakeInitialState: DepthIncrementState = {
+      sequence: 12,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -141,11 +144,13 @@ describe('orderBook reducer', () => {
     };
 
     const fakeOrder: DepthIncrementUpdateData = {
+      sequence: 13,
       asks: null,
       bids: ['0.21', '1.2'],
     };
 
     const fakeUpdatedDepth: DepthIncrementState = {
+      sequence: 13,
       asks: fakeInitialState.asks,
       bids: [
         ['0.50', '0.041'],
@@ -162,6 +167,7 @@ describe('orderBook reducer', () => {
 
   it('creates asks price level by DEPTH_DATA_INCREMENT', () => {
     const fakeInitialState: DepthIncrementState = {
+      sequence: 12,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -177,11 +183,13 @@ describe('orderBook reducer', () => {
     };
 
     const fakeOrder: DepthIncrementUpdateData = {
+      sequence: 13,
       asks: ['0.76', '1.2'],
       bids: null,
     };
 
     const fakeUpdatedDepth: DepthIncrementState = {
+      sequence: 13,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -199,6 +207,7 @@ describe('orderBook reducer', () => {
 
   it('updates asks price level by DEPTH_DATA_INCREMENT', () => {
     const fakeInitialState: DepthIncrementState = {
+      sequence: 12,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -214,11 +223,13 @@ describe('orderBook reducer', () => {
     };
 
     const fakeOrder: DepthIncrementUpdateData = {
+      sequence: 13,
       asks: ['0.75', '1.2'],
       bids: null,
     };
 
     const fakeUpdatedDepth: DepthIncrementState = {
+      sequence: 13,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -235,6 +246,7 @@ describe('orderBook reducer', () => {
 
   it('updates bids price level by DEPTH_DATA_INCREMENT', () => {
     const fakeInitialState: DepthIncrementState = {
+      sequence: 12,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -250,11 +262,13 @@ describe('orderBook reducer', () => {
     };
 
     const fakeOrder: DepthIncrementUpdateData = {
+      sequence: 13,
       asks: null,
       bids: ['0.26', '12'],
     };
 
     const fakeUpdatedDepth: DepthIncrementState = {
+      sequence: 13,
       asks: fakeInitialState.asks,
       bids: [
         ['0.50', '0.041'],
@@ -270,6 +284,7 @@ describe('orderBook reducer', () => {
 
   it('deletes asks price level by DEPTH_DATA_INCREMENT', () => {
     const fakeInitialState: DepthIncrementState = {
+      sequence: 12,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -285,11 +300,13 @@ describe('orderBook reducer', () => {
     };
 
     const fakeOrder: DepthIncrementUpdateData = {
+      sequence: 13,
       asks: ['0.75', ''],
       bids: null,
     };
 
     const fakeUpdatedDepth: DepthIncrementState = {
+      sequence: 13,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -305,6 +322,7 @@ describe('orderBook reducer', () => {
 
   it('deletes bids price level by DEPTH_DATA_INCREMENT', () => {
     const fakeInitialState: DepthIncrementState = {
+      sequence: 12,
       asks: [
         ['0.60', '0.1'],
         ['0.70', '1'],
@@ -320,11 +338,13 @@ describe('orderBook reducer', () => {
     };
 
     const fakeOrder: DepthIncrementUpdateData = {
+      sequence: 13,
       asks: null,
       bids: ['0.49', ''],
     };
 
     const fakeUpdatedDepth: DepthIncrementState = {
+      sequence: 13,
       asks: fakeInitialState.asks,
       bids: [
         ['0.50', '0.041'],
@@ -340,12 +360,14 @@ describe('orderBook reducer', () => {
   it('should handle DEPTH_INCREMENT_SUBSCRIBE', () => {
     const marketId: MarketId = 'BTCUSD';
     const fakeInitialState: DepthIncrementState = {
+      sequence: null,
       asks: [],
       bids: [],
       loading: false,
     };
 
     const expectedState: DepthIncrementState = {
+      sequence: null,
       marketId: 'BTCUSD',
       asks: [],
       bids: [],
@@ -358,6 +380,7 @@ describe('orderBook reducer', () => {
   it('does not set loading true on DEPTH_INCREMENT_SUBSCRIBE from the same market', () => {
     const marketId: MarketId = 'BTCUSD';
     const fakeInitialState: DepthIncrementState = {
+      sequence: null,
       marketId: 'BTCUSD',
       asks: [],
       bids: [],
@@ -365,6 +388,7 @@ describe('orderBook reducer', () => {
     };
 
     const expectedState: DepthIncrementState = {
+      sequence: null,
       marketId: 'BTCUSD',
       asks: [],
       bids: [],
