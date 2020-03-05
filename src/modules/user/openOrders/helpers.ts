@@ -67,47 +67,23 @@ export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
     };
 };
 
-export const insertOrUpdateByID = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
-    const { state, id } = order;
+export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
+    const { state, id, uuid } = order;
     switch (state) {
         case 'wait':
-            const index = list.findIndex((value: OrderCommon) => value.id === id);
+            const index = list.findIndex((value: OrderCommon) => (value.uuid && value.uuid === uuid) || value.id === id);
             if (index === -1) {
                 return list.concat({...order});
             }
             return list.map(item => {
-                if (item.id === order.id) {
+                if ((item.uuid && item.uuid === order.uuid) || (item.id === order.id)) {
                     return {...order};
                 }
                 return item;
             });
         default:
             return list.reduce((memo: OrderCommon[], item: OrderCommon): OrderCommon[] => {
-                if (id !== item.id) {
-                    memo.push(item);
-                }
-                return memo;
-            }, []);
-    }
-};
-
-export const insertOrUpdateByUUID = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
-    const { state, uuid } = order;
-    switch (state) {
-        case 'wait':
-            const index = list.findIndex((value: OrderCommon) => value.uuid === uuid);
-            if (index === -1) {
-                return list.concat({...order});
-            }
-            return list.map(item => {
-                if (item.uuid === order.uuid) {
-                    return {...order};
-                }
-                return item;
-            });
-        default:
-            return list.reduce((memo: OrderCommon[], item: OrderCommon): OrderCommon[] => {
-                if (uuid !== item.uuid) {
+                if ((item.uuid && item.uuid !== uuid) || item.id !== id) {
                     memo.push(item);
                 }
                 return memo;
