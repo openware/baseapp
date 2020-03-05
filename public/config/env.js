@@ -3,7 +3,7 @@ window.env = {
         authUrl: 'http://localhost:9002/api/v2/barong',
         tradeUrl: 'http://localhost:9002/api/v2/peatio',
         applogicUrl: 'http://localhost:9002/api/v2/applogic',
-        rangerUrl: '',
+        rangerUrl: 'ws://localhost:9003/api/v2/ranger',
         finexUrl: '',
     },
     minutesUntilAutoLogout: '5',
@@ -16,4 +16,6 @@ window.env = {
     isResizable: false,
     isDraggable: false,
     languages: ['en', 'ru'],
+    sessionCheckInterval: '15000',
+    balancesFetchInterval: '3000',
 };

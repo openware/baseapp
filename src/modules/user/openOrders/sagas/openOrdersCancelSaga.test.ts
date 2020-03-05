@@ -29,6 +29,31 @@ describe('Open Orders Cancel', () => {
         type: 'error',
     };
 
+    const fakeOrder: OrderCommon = {
+        id: 16,
+        side: 'sell',
+        price: 0.3,
+        state: 'wait',
+        created_at: '2018-11-29T16:54:46+01:00',
+        remaining_volume: 123.1234,
+        origin_volume: 123.1234,
+        executed_volume: 0,
+        market: 'ethusd',
+    };
+
+    const fakeFinexOrder: OrderCommon = {
+        id: 16,
+        uuid: '6a7deb5e-5d29-11ea-a122-0242ac140008',
+        side: 'sell',
+        price: 0.3,
+        state: 'wait',
+        created_at: '2018-11-29T16:54:46+01:00',
+        remaining_volume: 123.1234,
+        origin_volume: 123.1234,
+        executed_volume: 0,
+        market: 'ethusd',
+    };
+
     const fakeHistory: OrderCommon[] = [
         {
             id: 162,
@@ -54,7 +79,15 @@ describe('Open Orders Cancel', () => {
         },
     ];
 
-    const fakeFetchPayload = { id: 16, list: fakeHistory };
+    const fakeFetchPayload = {
+        order: fakeOrder,
+        list: fakeHistory,
+    };
+
+    const fakeFetchFinexPayload = {
+        order: fakeFinexOrder,
+        list: fakeHistory,
+    };
 
     const mockOrderCancel = id => {
         mockAxios.onPost(`/market/orders/${id}/cancel`).reply(200);
@@ -64,14 +97,20 @@ describe('Open Orders Cancel', () => {
         openOrdersCancelFetch(fakeFetchPayload),
         alertPush({ message: ['success.order.cancelling'], type: 'success'}),
     ];
+
     const expectedActionsError = [
         openOrdersCancelFetch(fakeFetchPayload),
         openOrdersCancelError(),
         alertPush(fakeError),
     ];
 
+    const expectedActionsFinexFetch = [
+        openOrdersCancelFetch(fakeFetchFinexPayload),
+        alertPush({ message: ['success.order.cancelling'], type: 'success'}),
+    ];
+
     it('should cancel order', async () => {
-        mockOrderCancel(fakeFetchPayload.id);
+        mockOrderCancel(fakeOrder.id);
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
@@ -82,6 +121,21 @@ describe('Open Orders Cancel', () => {
             });
         });
         store.dispatch(openOrdersCancelFetch(fakeFetchPayload));
+        return promise;
+    });
+
+    it('should cancel order with UUID', async () => {
+        mockOrderCancel(fakeFinexOrder.uuid);
+        const promise = new Promise(resolve => {
+            store.subscribe(() => {
+                const actions = store.getActions();
+                if (actions.length === expectedActionsFinexFetch.length) {
+                    expect(actions).toEqual(expectedActionsFinexFetch);
+                    resolve();
+                }
+            });
+        });
+        store.dispatch(openOrdersCancelFetch(fakeFetchFinexPayload));
         return promise;
     });
 

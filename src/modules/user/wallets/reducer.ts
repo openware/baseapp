@@ -6,6 +6,7 @@ import {
     WALLETS_ADDRESS_ERROR,
     WALLETS_ADDRESS_FETCH,
     WALLETS_DATA,
+    WALLETS_DATA_WS,
     WALLETS_ERROR,
     WALLETS_FETCH,
     WALLETS_RESET,
@@ -51,17 +52,46 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 withdrawSuccess: false,
             };
         case WALLETS_DATA: {
-            const list = [ ...action.payload ];
-            const btcIndex = list.findIndex(wallet => wallet.currency.toLowerCase() === 'btc');
-            if (btcIndex >= 0) {
-                const temp = list[btcIndex];
-                list[btcIndex] = list[0];
-                list[0] = temp;
-            }
             return {
                 ...state,
                 loading: false,
-                list,
+                list: action.payload,
+            };
+        }
+        case WALLETS_DATA_WS: {
+            let updatedList = state.list;
+
+            if (state.list.length) {
+                updatedList = state.list.map(wallet => {
+                    let updatedWallet = wallet;
+                    const payloadCurrencies = Object.keys(action.payload.balances);
+
+                    if (payloadCurrencies.length) {
+                        payloadCurrencies.some(value => {
+                            const targetWallet = action.payload.balances[value];
+
+                            if (value === wallet.currency) {
+                                updatedWallet = {
+                                    ...updatedWallet,
+                                    balance: targetWallet && targetWallet[0] ? targetWallet[0] : updatedWallet.balance,
+                                    locked: targetWallet && targetWallet[1] ? targetWallet[1] : updatedWallet.locked,
+                                };
+
+                                return true;
+                            }
+
+                            return false;
+                        });
+                    }
+
+                    return updatedWallet;
+                });
+            }
+
+            return {
+                ...state,
+                loading: false,
+                list: updatedList,
             };
         }
         case WALLETS_ADDRESS_DATA: {
@@ -114,6 +144,7 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
     switch (action.type) {
         case WALLETS_FETCH:
         case WALLETS_DATA:
+        case WALLETS_DATA_WS:
         case WALLETS_ERROR:
         case WALLETS_ADDRESS_FETCH:
         case WALLETS_ADDRESS_DATA:

@@ -20,4 +20,6 @@ export interface Config {
     isResizable: boolean;
     isDraggable: boolean;
     languages: string[];
+    sessionCheckInterval: string;
+    balancesFetchInterval: string;
 }

@@ -495,12 +495,19 @@ export const ru: LangType = {
     'success.order.canceled': 'Запрос отменен',
     'success.order.canceled.all': 'Все запросы были отменены',
     'success.order.cancelling.all': 'Все запросы отменяются',
-    'success.order.created': 'Запрос успешно создан',
     'success.phone.verification.send': 'Код верификации был отправлен на ваш телефон',
     'success.phone.confirmed': 'Ваш телефон подтвержден',
     'success.phone.confirmation.message': 'Успех!',
     'success.message.sent': 'Письмо было успешно отправлено',
     'success.email.confirmed': 'Email был успешно подтвержден',
+    'success.order.created': 'Запрос успешно создан',
+    'success.order.done': 'Запрос успешно завершён',
+
+    // error messages
+    'error.order.rejected': 'Запрос отвергнут',
+    'error.invalid_request': 'Запрос - неверный запрос',
+    'error.bad_request': 'Запрос - неправильный запрос',
+    'error.request_entity_too_large': 'Запрос - слишком большой объект запроса',
 
     // error messages
     // barong

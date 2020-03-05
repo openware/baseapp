@@ -493,14 +493,20 @@ export const en = {
     'success.order.canceled': 'Order was cancelled',
     'success.order.canceled.all': 'All orders were cancelled',
     'success.order.cancelling.all': 'All orders are being canceled',
-    'success.order.created': 'Order was created',
     'success.phone.verification.send': 'Verification code was sent to your phone',
     'success.phone.confirmed': 'Your phone was confirmed',
     'success.phone.confirmation.message': 'Success!',
     'success.message.sent': 'Message was sent',
     'success.email.confirmed': 'Your email address has been successfully confirmed',
+    'success.order.created': 'Order was created',
+    'success.order.done': 'Order successfully completed',
 
     // error messages
+    'error.order.rejected': 'Order rejected',
+    'error.invalid_request': 'Order - invalid request',
+    'error.bad_request': 'Order - bad request',
+    'error.request_entity_too_large': 'Order - request entity too large',
+
     // barong
     'resource.labels.private': 'Can\'t update label',
     'resource.user.no_activity': 'No activity recorded or wrong topic',

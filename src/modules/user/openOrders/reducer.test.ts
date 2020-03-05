@@ -1,6 +1,11 @@
 import { OrderAPI, OrderCommon, OrderEvent } from '../../types';
 import * as actions from './actions';
-import { convertOrderAPI, convertOrderEvent, insertOrUpdate } from './helpers';
+import {
+    convertOrderAPI,
+    convertOrderEvent,
+    insertOrUpdateByID,
+    insertOrUpdateByUUID,
+} from './helpers';
 import {
     initialOpenOrdersState,
     openOrdersReducer,
@@ -56,6 +61,7 @@ describe('Open Orders reducer', () => {
     describe('USER_OPEN_ORDERS_APPEND', () => {
         const newOrder: OrderAPI = {
             id: 162,
+            confirmed: true,
             side: 'buy',
             price: '0.3',
             ord_type: 'limit',
@@ -82,6 +88,37 @@ describe('Open Orders reducer', () => {
         });
     });
 
+    describe('USER_OPEN_ORDERS_APPEND UUID', () => {
+        const newOrder: OrderAPI = {
+            uuid: '3ea3e2e4-5d29-11ea-a122-0242ac140008',
+            confirmed: false,
+            side: 'buy',
+            price: '0.3',
+            ord_type: 'limit',
+            state:'wait',
+            created_at: '2018-11-29T16:54:46+01:00',
+            remaining_volume: '123.1234',
+            origin_volume: '123.1234',
+            executed_volume: '0',
+            market: 'ethusd',
+            avg_price: '0.0',
+        };
+
+        it('inserts order', () => {
+            const expectedState = {
+                ...initialOpenOrdersState,
+                list: [convertOrderAPI(newOrder)],
+            };
+            expect(
+                openOrdersReducer(
+                    initialOpenOrdersState,
+                    actions.userOpenOrdersAppend(newOrder),
+                ),
+            ).toEqual(expectedState);
+        });
+    });
+
+
     describe('USER_OPEN_ORDERS_UPDATE', () => {
         const newOrderEvent: OrderEvent = {
             id: 162,
@@ -93,6 +130,18 @@ describe('Open Orders reducer', () => {
             remaining_volume: '123.1234',
             origin_volume: '123.1234',
         };
+
+        const newOrderWithUUIDEvent: OrderEvent = {
+            uuid: '3ea3e2e4-5d29-11ea-a122-0242ac140008',
+            at: 1550180631,
+            market: 'ethusd',
+            kind: 'bid',
+            price: '0.3',
+            state: 'wait',
+            remaining_volume: '123.1234',
+            origin_volume: '123.1234',
+        };
+
         const newOrderCommon: OrderCommon = {
             id: 162,
             side: 'buy',
@@ -106,12 +155,23 @@ describe('Open Orders reducer', () => {
         };
 
         it('insert new order', () => {
-            const list = insertOrUpdate([], convertOrderEvent(newOrderEvent));
+            const list = insertOrUpdateByID([], convertOrderEvent(newOrderEvent));
             const expectedState: OpenOrdersState = { ...initialOpenOrdersState, list };
             expect(
                 openOrdersReducer(
                     initialOpenOrdersState,
                     actions.userOpenOrdersUpdate(newOrderEvent),
+                ),
+            ).toEqual(expectedState);
+        });
+
+        it('insert new order with UUID', () => {
+            const list = insertOrUpdateByUUID([], convertOrderEvent(newOrderWithUUIDEvent));
+            const expectedState: OpenOrdersState = { ...initialOpenOrdersState, list };
+            expect(
+                openOrdersReducer(
+                    initialOpenOrdersState,
+                    actions.userOpenOrdersUpdate(newOrderWithUUIDEvent),
                 ),
             ).toEqual(expectedState);
         });
@@ -142,7 +202,27 @@ describe('Open Orders reducer', () => {
                 origin_volume: '123.1234',
                 remaining_volume: '100.1234',
             };
-            const list = insertOrUpdate([newOrderCommon], convertOrderEvent(updatedOrderEvent));
+            const list = insertOrUpdateByID([newOrderCommon], convertOrderEvent(updatedOrderEvent));
+            const expectedState: OpenOrdersState = {
+                ...initialOpenOrdersState,
+                list,
+            };
+
+            expect(
+                openOrdersReducer(
+                    { ...initialOpenOrdersState, list: [newOrderCommon] },
+                    actions.userOpenOrdersUpdate(updatedOrderEvent),
+                ),
+            ).toEqual(expectedState);
+        });
+
+        it('update order with UUID in the list', () => {
+            const updatedOrderEvent: OrderEvent = {
+                ...newOrderWithUUIDEvent,
+                origin_volume: '123.1234',
+                remaining_volume: '100.1234',
+            };
+            const list = insertOrUpdateByUUID([newOrderCommon], convertOrderEvent(updatedOrderEvent));
             const expectedState: OpenOrdersState = {
                 ...initialOpenOrdersState,
                 list,
@@ -184,8 +264,20 @@ describe('Open Orders reducer', () => {
     });
 
     it('should handle OPEN_ORDERS_CANCEL_FETCH', () => {
+        const orderToCancel: OrderCommon = {
+            id: 162,
+            side: 'buy',
+            price: 0.3,
+            state:'wait',
+            created_at: '2018-11-29T16:54:46+01:00',
+            remaining_volume: 123.1234,
+            origin_volume: 123.1234,
+            executed_volume: 0,
+            market: 'ethusd',
+        };
+
         const initialState = { ...initialOpenOrdersState };
-        const payload = { id: 2, list: [] };
+        const payload = { order: orderToCancel, list: [] };
         const expectedState = {
             ...initialState,
             list: [],

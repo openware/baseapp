@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { withRouter } from 'react-router';
+import { balancesFetchInterval, isFinexEnabled } from '../../api';
 import { walletsFetch } from '../../modules/user/wallets';
-
-const WALLETS_FETCH_INTERVAL = 3000;
 
 interface DispatchProps {
     walletsFetch: typeof walletsFetch;
@@ -15,13 +14,17 @@ export class WalletsFetchComponent extends React.Component<WalletsFetchProps> {
     private walletsFetchInterval;
 
     public componentDidMount(): void {
-        this.walletsFetchInterval = setInterval(() => {
-            this.props.walletsFetch();
-        }, WALLETS_FETCH_INTERVAL);
+        if (!isFinexEnabled()) {
+            this.walletsFetchInterval = setInterval(() => {
+                this.props.walletsFetch();
+            }, parseFloat(balancesFetchInterval()));
+        }
     }
 
     public componentWillUnmount(): void {
-        clearInterval(this.walletsFetchInterval);
+        if (!isFinexEnabled()) {
+            clearInterval(this.walletsFetchInterval);
+        }
     }
 
     public render() {
