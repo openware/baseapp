@@ -1,5 +1,6 @@
 export const WALLETS_FETCH = 'wallets/FETCH';
 export const WALLETS_DATA = 'wallets/DATA';
+export const WALLETS_DATA_WS = 'wallets/DATA_WS';
 export const WALLETS_ERROR = 'wallets/ERROR';
 export const WALLETS_RESET = 'wallets/RESET';
 

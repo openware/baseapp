@@ -14,8 +14,13 @@ const ordersCancelOptions = (csrfToken?: string): RequestOptions => {
 
 export function* openOrdersCancelSaga(action: OpenOrdersCancelFetch) {
     try {
-        const { id } = action.payload;
-        yield call(API.post(ordersCancelOptions(getCsrfToken())), `/market/orders/${id}/cancel`, { id });
+        const { order: { id, uuid } } = action.payload;
+        if (uuid) {
+            yield call(API.post(ordersCancelOptions(getCsrfToken())), `/market/orders/${uuid}/cancel`, { uuid });
+        } else {
+            yield call(API.post(ordersCancelOptions(getCsrfToken())), `/market/orders/${id}/cancel`, { id });
+        }
+
         yield put(alertPush({ message: ['success.order.cancelling'], type: 'success'}));
     } catch (error) {
         yield put(openOrdersCancelError());

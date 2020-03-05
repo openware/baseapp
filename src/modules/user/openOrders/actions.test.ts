@@ -1,4 +1,4 @@
-import { OrderAPI, OrderEvent } from '../../types';
+import { OrderAPI, OrderCommon, OrderEvent } from '../../types';
 import * as actions from './actions';
 import { OPEN_ORDERS_APPEND, OPEN_ORDERS_CANCEL_DATA, OPEN_ORDERS_CANCEL_ERROR, OPEN_ORDERS_CANCEL_FETCH, OPEN_ORDERS_DATA, OPEN_ORDERS_ERROR, OPEN_ORDERS_FETCH, OPEN_ORDERS_RESET, OPEN_ORDERS_UPDATE } from './constants';
 
@@ -35,6 +35,26 @@ describe('Open Orders actions', () => {
     it('should check userOpenOrdersAppend action creator', () => {
         const payload: OrderAPI = {
             id: 162,
+            confirmed: true,
+            side: 'buy',
+            price: '0.3',
+            ord_type: 'limit',
+            state: 'wait',
+            created_at: '2018-11-29T16:54:46+01:00',
+            remaining_volume: '123.1234',
+            origin_volume: '123.1234',
+            executed_volume: '0',
+            market: 'ethusd',
+            avg_price: '0.0',
+        };
+        const expectedAction = { type: OPEN_ORDERS_APPEND, payload };
+        expect(actions.userOpenOrdersAppend(payload)).toEqual(expectedAction);
+    });
+
+    it('should check userOpenOrdersAppend UUID action creator', () => {
+        const payload: OrderAPI = {
+            uuid: '3ea3e2e4-5d29-11ea-a122-0242ac140008',
+            confirmed: false,
             side: 'buy',
             price: '0.3',
             ord_type: 'limit',
@@ -71,7 +91,22 @@ describe('Open Orders actions', () => {
     });
 
     it('should check openOrdersCancelFetch action creator', () => {
-        const payload = { id: 2, list: [] };
+        const orderToCancel: OrderCommon = {
+            id: 162,
+            side: 'buy',
+            price: 0.3,
+            state:'wait',
+            created_at: '2018-11-29T16:54:46+01:00',
+            remaining_volume: 123.1234,
+            origin_volume: 123.1234,
+            executed_volume: 0,
+            market: 'ethusd',
+        };
+
+        const payload = {
+            order: orderToCancel,
+            list: [],
+        };
         const expectedAction = { type: OPEN_ORDERS_CANCEL_FETCH, payload };
         expect(actions.openOrdersCancelFetch(payload)).toEqual(expectedAction);
     });

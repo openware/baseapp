@@ -7,6 +7,5 @@ export const selectOpenOrdersList = (state: RootState): OrderCommon[] =>
 export const selectOpenOrdersFetching = (state: RootState): boolean =>
     state.user.openOrders.fetching;
 
-
 export const selectCancelOpenOrdersFetching = (state: RootState): boolean =>
     state.user.openOrders.cancelFetching;
