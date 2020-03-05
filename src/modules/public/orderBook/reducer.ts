@@ -35,6 +35,7 @@ export const initialIncrementDepth: DepthIncrementState = {
   marketId: undefined,
   asks: [],
   bids: [],
+  sequence: null,
   loading: false,
 };
 
@@ -106,6 +107,7 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
       if (action.payload.asks) {
         return {
           ...state,
+          sequence: action.payload.sequence,
           asks: handleIncrementalUpdate(state.asks, action.payload.asks, 'asks'),
         };
       }
@@ -113,16 +115,19 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
       if (action.payload.bids) {
         return {
           ...state,
+          sequence: action.payload.sequence,
           bids: handleIncrementalUpdate(state.bids, action.payload.bids, 'bids'),
         };
       }
 
       return state;
     case DEPTH_DATA_SNAPSHOT:
+      const {asks, bids, sequence} = action.payload;
       return {
         ...state,
-        asks: action.payload.asks,
-        bids: action.payload.bids,
+        asks,
+        bids,
+        sequence,
         loading: false,
       };
     default:

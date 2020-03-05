@@ -51,7 +51,7 @@ const Helpers = {
         "usd":  [getBalanceValue("1000", 2), getLockedValue("100", 2)]
       }
     },
-    getDepth: () => {
+    getDepth: (sequence) => {
       const delta = 2 * (1 + Math.cos(2 * Math.PI * Date.now() / 1000 / 3600))
       const fV = (volume) => String(parseFloat(volume) + delta * 10);
       return {
@@ -66,20 +66,23 @@ const Helpers = {
               ["10.90", fV("45")],
               ["10.85", fV("35")],
               ["10.70", fV("10")],
-          ]
+          ],
+          "sequence": sequence,
       }
     },
-    getDepthIncrement: () => {
+    getDepthIncrement: (sequence) => {
       const delta = 2 * (1 + Math.cos(2 * Math.PI * Date.now() / 1000 / 3600))
       const fV = (volume) => String(parseFloat(volume) + delta * 10);
 
       if (Math.random() < 0.5) {
         return {
           "asks": ["15.0", fV("1.5")],
+          "sequence": sequence,
         }
       }
       return {
         "bids": ["10.95", fV("1.5")],
+        "sequence": sequence,
       }
     },
     getStreamsFromUrl: (url) => url.replace("/", "").split(/[&?]stream=/).filter(stream => stream.length > 0),

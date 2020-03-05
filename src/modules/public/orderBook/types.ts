@@ -37,10 +37,12 @@ export interface DepthIncrementState {
     marketId?: MarketId;
     asks: string[][];
     bids: string[][];
+    sequence: number | null;
     loading: boolean;
 }
 
 export interface DepthIncrementUpdateData {
     asks: string[] | null;
     bids: string[] | null;
+    sequence: number;
 }

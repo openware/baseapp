@@ -35,17 +35,18 @@ const balancesMock = (ws) => () => {
   Example: ["btcusd.update",{"asks":[["1000.0","0.1"]],"bids":[]}]
 */
 const orderBookUpdateMock = (ws, marketId) => () => {
-  sendEvent(ws, `${marketId}.update`, Helpers.getDepth());
+  sendEvent(ws, `${marketId}.update`, Helpers.getDepth(0));
 };
 
 // Inremental orderbook support
 const orderBookSnapshotMock = (ws, marketId) => () => {
+  ws.sequences[marketId] = 1;
   console.log(`orderBookSnapshotMock called: ${marketId}`);
   try {
     if (isSubscribed(ws.streams, `${marketId}.ob-inc`)) {
       console.log(`orderBookSnapshotMock sending: ${marketId}`);
       const payload = {};
-      payload[`${marketId}.ob-snap`] = Helpers.getDepth();
+      payload[`${marketId}.ob-snap`] = Helpers.getDepth(ws.sequences[marketId]);
       ws.send(JSON.stringify(payload));
     }
   } catch (error) {
@@ -54,7 +55,9 @@ const orderBookSnapshotMock = (ws, marketId) => () => {
 };
 
 const orderBookIncrementMock = (ws, marketId) => () => {
-  sendEvent(ws, `${marketId}.ob-inc`, Helpers.getDepthIncrement());
+  var event = Helpers.getDepthIncrement();
+  event.sequence = ++ws.sequences[marketId];
+  sendEvent(ws, `${marketId}.ob-inc`, event);
 };
 
 /*
@@ -167,6 +170,7 @@ class RangerMock {
     ws.authenticated = true;
     ws.timers = [];
     ws.streams = [];
+    ws.sequences = {};
 
     console.log(`Ranger: connection accepted, url: ${request.url}`);
     this.subscribe(ws, Helpers.getStreamsFromUrl(request.url));

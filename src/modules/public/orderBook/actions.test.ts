@@ -103,6 +103,7 @@ describe('Orderbook/MarketDepth actions', () => {
 
     it('should check depthDataSnapshot action creator', () => {
         const fakeDepth = {
+            sequence: 13,
             asks: [['0.99', '1'], ['0.98', '20']],
             bids: [['0.50', '0.041'], ['0.49', '0.5'], ['0.26', '25']],
             loading: false,
@@ -113,11 +114,13 @@ describe('Orderbook/MarketDepth actions', () => {
 
     it('should check depthDataIncrement action creator', () => {
         const fakeOrder = {
+            sequence: 12,
             asks: ['0.99', '0.5'],
             bids: null,
         };
 
         const fakeDepth = {
+            sequence: 12,
             asks: ['0.99', '0.5'],
             bids: null,
         };
