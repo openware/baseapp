@@ -19,20 +19,6 @@ steps:
       - yarn test:ci --collectCoverage=true
       - yarn build
 
-  - name: "Build image"
-    image: plugins/gcr
-    environment:
-      BUILD_EXPIRE: "3 month"
-    settings:
-      repo: gcr.io/openware-production/baseapp
-      build_args_from_env:
-        - BUILD_EXPIRE
-      json_key:
-        from_secret: openware_gcp_creds_base64
-    when:
-      branch:
-        - rc/**
-
   - name: "Stage with mock server"
     image: instrumentisto/rsync-ssh
     environment:
