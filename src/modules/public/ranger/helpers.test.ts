@@ -1,4 +1,5 @@
 import { Cryptobase, defaultConfig } from '../../../api';
+import { DEFAULT_TRADING_VIEW_INTERVAL } from '../../../constants';
 import { Market, Ticker, TickerEvent } from '../markets';
 import { formatTicker, generateSocketURI, marketKlineStreams, periodMinutesToString, periodStringToMinutes, streamsBuilder } from './helpers';
 
@@ -185,7 +186,7 @@ describe('ranger helpers', () => {
         });
     });
 
-    describe('periodStringToMinutes and periodMinutesToString', () => {
+    describe('periodMinutesToString', () => {
         const periods = [
             1,
             5,
@@ -199,13 +200,79 @@ describe('ranger helpers', () => {
             1440,
             4320,
             10080,
+            666,
+            0,
+            100500,
         ];
 
-        for (const period of periods) {
+        const expectedResult = [
+            '1m',
+            '5m',
+            '15m',
+            '30m',
+            '1h',
+            '2h',
+            '4h',
+            '6h',
+            '12h',
+            '1d',
+            '3d',
+            '1w',
+            periodMinutesToString(+DEFAULT_TRADING_VIEW_INTERVAL),
+            periodMinutesToString(+DEFAULT_TRADING_VIEW_INTERVAL),
+            periodMinutesToString(+DEFAULT_TRADING_VIEW_INTERVAL),
+        ];
+
+        periods.map((period, index) => {
             it(`map period ${period} minute(s)`, () => {
-                expect(periodStringToMinutes(periodMinutesToString(period))).toEqual(period);
+                expect(periodMinutesToString(period)).toEqual(expectedResult[index]);
             });
-        }
+        });
+    });
+
+    describe('periodStringToMinutes', () => {
+        const periods = [
+            '1m',
+            '5m',
+            '15m',
+            '30m',
+            '1h',
+            '2h',
+            '4h',
+            '6h',
+            '12h',
+            '1d',
+            '3d',
+            '1w',
+            '',
+            'hello',
+            'D',
+        ];
+
+        const expectedResult = [
+            1,
+            5,
+            15,
+            30,
+            60,
+            120,
+            240,
+            360,
+            720,
+            1440,
+            4320,
+            10080,
+            +DEFAULT_TRADING_VIEW_INTERVAL,
+            +DEFAULT_TRADING_VIEW_INTERVAL,
+            +DEFAULT_TRADING_VIEW_INTERVAL,
+
+        ];
+
+        periods.map((period, index) => {
+            it(`map period ${period} minute(s)`, () => {
+                expect(periodStringToMinutes(period)).toEqual(expectedResult[index]);
+            });
+        });
     });
 
     describe('marketKlineStreams', () => {
