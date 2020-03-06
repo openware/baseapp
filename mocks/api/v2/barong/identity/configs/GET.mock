@@ -1,5 +1,11 @@
-HTTP/2 204
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
 access-control-allow-origin: *
 access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
 access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
-Access-Control-Allow-Headers: *
+
+{
+    "session_expire_time": 5000,
+    "captcha_type": "recaptcha",
+    "captcha_id": "123abc456xyz789"
+}
