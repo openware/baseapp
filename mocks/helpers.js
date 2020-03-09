@@ -10,8 +10,6 @@ const Helpers = {
             marketId,
         }
     },
-
-
     getTickers: (markets) => {
         let tickers = {}
         markets.forEach(name => {
@@ -42,23 +40,35 @@ const Helpers = {
         return tickers;
     },
     getDepth: () => {
-        const delta = 2 * (1 + Math.cos(2 * Math.PI * Date.now() / 1000 / 3600))
-        const fP = (price) => parseFloat(price) + delta;
-        const fV = (volume) => parseFloat(volume) + delta * 10;
+      const delta = 2 * (1 + Math.cos(2 * Math.PI * Date.now() / 1000 / 3600))
+      const fV = (volume) => String(parseFloat(volume) + delta * 10);
+      return {
+          "asks": [
+              ["15.0", fV("1.5")],
+              ["20.0", fV("80")],
+              ["20.5", fV("10.0")],
+              ["30.0", fV("1.0")]
+          ],
+          "bids": [
+              ["10.95", fV("1.5")],
+              ["10.90", fV("45")],
+              ["10.85", fV("35")],
+              ["10.70", fV("10")],
+          ]
+      }
+    },
+    getDepthIncrement: () => {
+      const delta = 2 * (1 + Math.cos(2 * Math.PI * Date.now() / 1000 / 3600))
+      const fV = (volume) => String(parseFloat(volume) + delta * 10);
+
+      if (Math.random() < 0.5) {
         return {
-            "asks": [
-                [fP("15.0"), fV("1.5")],
-                [fP("20.0"), fV("80")],
-                [fP("20.5"), fV("10.0")],
-                [fP("30.0"), fV("1.0")]
-            ],
-            "bids": [
-                [fP("10.95"), fV("1.5")],
-                [fP("10.90"), fV("45")],
-                [fP("10.85"), fV("35")],
-                [fP("10.70"), fV("10")],
-            ]
+          "asks": ["15.0", fV("1.5")],
         }
+      }
+      return {
+        "bids": ["10.95", fV("1.5")],
+      }
     },
     getStreamsFromUrl: (url) => url.replace("/", "").split(/[&?]stream=/).filter(stream => stream.length > 0),
     unique: (list) => list.filter((value, index, self) => self.indexOf(value) === index)
