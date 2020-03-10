@@ -198,7 +198,7 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
         const availableCurrency = type === 'buy' ? from : to;
 
         return (
-            <div className={cx}>
+            <div className={cx} onKeyPress={this.handleEnterPress}>
                 <div className="cr-order-item">
                     {orderTypeText ? <div className="cr-order-item__dropdown__label">{orderTypeText}</div> : null}
                     <DropdownComponent list={orderTypes} onSelect={this.handleOrderTypeChange} placeholder=""/>
@@ -415,4 +415,12 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             price: '',
         });
     };
+
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            this.handleSubmit();
+        }
+    }
 }
