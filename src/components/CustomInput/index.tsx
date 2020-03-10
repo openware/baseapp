@@ -40,6 +40,7 @@ class CustomInput extends React.Component<Props> {
             id,
             handleClick,
             isDisabled,
+            onKeyPress,
         } = this.props;
 
         return (
@@ -62,6 +63,7 @@ class CustomInput extends React.Component<Props> {
                             id={id}
                             onClick={handleClick}
                             disabled={isDisabled}
+                            onKeyPress={onKeyPress}
                         />
                     </InputGroup>
                 </div>

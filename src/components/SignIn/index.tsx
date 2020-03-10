@@ -70,7 +70,7 @@ export class SignInComponent extends React.Component<SignInProps> {
         // tslint:disable:jsx-no-lambda
         return (
             <form>
-                <div className="cr-sign-in-form">
+                <div className="cr-sign-in-form" onKeyPress={this.handleEnterPress}>
                     <div className="cr-sign-in-form__options-group">
                         <div className="cr-sign-in-form__option">
                             <div className="cr-sign-in-form__option-inner __selected">
@@ -178,4 +178,12 @@ export class SignInComponent extends React.Component<SignInProps> {
             this.handleSubmitForm();
         }
     };
+
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            this.handleClick();
+        }
+    }
 }
