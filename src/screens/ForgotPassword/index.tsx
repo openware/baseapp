@@ -62,7 +62,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
         } = this.state;
 
         return (
-            <div className="pg-forgot-password-screen">
+            <div className="pg-forgot-password-screen" onKeyPress={this.handleEnterPress}>
                 <div className="pg-forgot-password-screen__container">
                     <div className="pg-forgot-password___form">
                         <EmailForm
@@ -122,6 +122,14 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
     private handleComeBack = () => {
         this.props.history.goBack();
     };
+
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            this.handleChangeEmail();
+        }
+    }
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

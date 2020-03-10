@@ -101,7 +101,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
         const updatePassword = e => this.handleChange('password', e);
         const updateConfirmPassword = e => this.handleChange('confirmPassword', e);
         return (
-            <div className="pg-change-forgotten-password-screen">
+            <div className="pg-change-forgotten-password-screen" onKeyPress={this.handleEnterPress}>
                 <div className="pg-change-forgotten-password-screen__container">
                     <form>
                         <div className="cr-email-form">
@@ -213,6 +213,16 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
         [key]: value,
       });
     };
+
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            if (!this.disableButton()) {
+                this.handleSendNewPassword();
+            }
+        }
+    }
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
