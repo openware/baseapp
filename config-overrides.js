@@ -12,13 +12,19 @@ module.exports = function override(config, env) {
     const commonJSFilename = `commons.${version}.js`;
 
     if (process.env.NODE_ENV === 'production') {
-        config.plugins.push(
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'commons',
-                filename: commonJSFilename,
-                minChunks: module => /node_modules/.test(module.resource)
-            })
-        );
+        config.optimization = {
+            splitChunks: {
+                cacheGroups: {
+                    commons: {
+                        chunks: "initial",
+                        minChunks: 1,
+                        name: "commons",
+                        filename: commonJSFilename,
+                        enforce: true
+                    }
+                }
+            }
+        }
 
         const domain = process.env.BUILD_DOMAIN ? process.env.BUILD_DOMAIN.split(',') : [];
 
@@ -28,7 +34,7 @@ module.exports = function override(config, env) {
 
         config.plugins.push(
             new CompressionPlugin({
-                asset: "[path].gz[query]",
+                filename: "[path].gz[query]",
                 algorithm: "gzip",
                 test: /\.js$|\.css$|\.html$/,
                 threshold: 10240,
