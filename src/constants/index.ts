@@ -38,6 +38,10 @@ export const colors = {
             sun: '#959EAB',
             moon: '#fff',
         },
+        orderBook: {
+            asks: 'var(--asks-level-4)',
+            bids: 'var(--bids-level-4)',
+        },
     },
     basic: {
         chart: {
@@ -51,6 +55,10 @@ export const colors = {
             logout: '#fff',
             sun: '#fff',
             moon: '#28334E',
+        },
+        orderBook: {
+            asks: 'var(--asks-level-4)',
+            bids: 'var(--bids-level-4)',
         },
     },
 };

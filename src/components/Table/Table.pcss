@@ -4,19 +4,19 @@
 
 .cr-table {
   border-collapse: collapse;
-  background: var(--table-background);
+  background: var(--table-background-color);
   text-align: center;
   position: relative;
   width: 100%;
 
   &__head {
-    background: var(--transparent);
+    background: var(--table-background-color);
 
     tr {
-      background: var(--transparent);
+      background: var(--table-background-color);
 
       th {
-        color: var(--table-header-color);
+        color: var(--table-text-color);
         font-weight: lighter;
         padding: 15px 8px;
         font-size: calc(var(--gap) * 4);
@@ -25,13 +25,13 @@
   }
 
   &__body {
-    background: var(--transparent);
+    background: var(--table-background-color);
 
     tr {
-      background: var(--transparent);
+      background: var(--table-background-color);
 
       td {
-        color: var(--table-header-color);
+        color: var(--table-text-color);
         position: relative;
         z-index: 10;
         padding: 12px 8px;
@@ -39,19 +39,19 @@
     }
 
     tr:nth-child(even) {
-      background-color: var(--table-even-row-background);
+      background-color: var(--table-background-color);
     }
   }
 
   &__row {
     &--selected {
-      background: var(--base-3);
+      background: var(--table-row-selector-color);
     }
   }
 }
 
 .cr-table-background {
-  background: transparent;
+  background: var(--table-background-color);
   display: flex;
   flex-direction: column;
   left: 0;
@@ -81,21 +81,21 @@
   cursor: pointer;
   font-size: 15px;
   padding: 10px 8px;
-  background: var(--transparent);
+  background: var(--table-background-color);
 
   &--active {
-    color: var(--base-bright);
+    color: var(--rgb-primary-cta-color);
   }
 }
 
 .cr-table__filters {
   display: flex;
-  background: var(--transparent);
+  background: var(--table-background-color);
 }
 
 .cr-table-header__content {
   height: calc(var(--gap) * 6);
-  background: var(--table-dark-header-color);
+  background: var(--table-background-color);
   padding: 10px 0 0 10px;
   align-items: center;
   display: flex;
@@ -107,7 +107,7 @@
 }
 
 .cr-title-component {
-  background: var(--transparent);
-  color: var(--title-component-color);
+  background: var(--rgb-subheader-background-color);
+  color: var(--rgb-primary-text-color);
   font-size: calc(var(--gap) * 4);
 }

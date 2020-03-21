@@ -14,11 +14,11 @@
     max-width: 95%;
 
     input {
-      color: var(--orders-text-primary-color);
+      color: var(--input-text-color);
       text-align: left;
 
       &:placeholder-shown {
-        color: var(--orders-placeholder-color) !important;
+        color: var(--input-placeholder-color) !important;
       }
     }
   }
@@ -44,9 +44,17 @@
           justify-content: center;
           padding: var(--gap) 0;
           width: 100%;
+          color: var(--tab-panel-text-color);
+          transition: 0.2s;
+
+          &:hover {
+            color: var(--tab-panel-text-color-hover);
+            transition: 0.2s;
+          }
+
 
           &__active {
-            color: var(--orders-text-primary-color);
+            color: var(--tab-panel-text-color-active);
             font-weight: 600;
           }
 
@@ -68,78 +76,17 @@
           }
 
           &__dropdown__label {
-            color: var(--order-input-input-color);
-            background-color: var(--base-bright);
+            color: var(--input-legend-color);
+            background-color: var(--rgb-input-background-color);
             font-size: calc(var(--gap) * 1.5);
             margin-left: calc(var(--gap) * 1.75);
             padding: 0 calc(var(--gap) * 0.75);
             top: calc(var(--gap) * 1.6);
           }
 
-          .cr-dropdown {
-            &__input {
-              background-color: var(--base-bright);
-              border-radius: calc(var(--gap) * 0.5);
-              border: solid 1px var(--orders-border-color);
-              height: calc(var(--gap) * 5.875);
-  
-              &--open {
-                background-color: var(--base-bright);
-                border: solid 1px var(--orders-border-color);
-                border-radius: calc(var(--gap) * 0.5);
-                color: var(--background-dropdown-text);
-                height: calc(var(--gap) * 5.875);
-              }
-  
-              &-label {
-                color: var(--bright-1);
-                font-size: calc(var(--gap) * 1.75);
-                font-weight: var(--font-weight);
-                line-height: calc(var(--gap) * 6.98);
-                margin-left: calc(var(--gap) * 2);
-                text-shadow: 0 0 0 var(--base-3);
-              }
-  
-              &-icon {
-                line-height: calc(var(--gap) * 5.875);
-                margin-right: 9.3%;
-                padding: 0;
-  
-                img {
-                  width: calc(var(--gap) * 1.75);
-                }
-              }
-            }
-      
-            &__list {
-              color: var(--base-3);
-              border: 0px;
-              border-radius: calc(var(--gap) * 0.5);
-              background: var(--background-dropdown);
-              margin-top: calc(var(--gap) * 6.5);
-              line-height: calc(var(--gap) * 4.875);
-              height: calc(var(--gap) * 4.875 * 2) !important;
-              width: 100%;
-
-              &-item {
-                height: calc(var(--gap) * 4.875) !important;
-
-                &:hover {
-                  color: var(--color-white);
-                  background: var(--background-dropdown-hover);
-                }
-                &-label {
-                  background: transparent;
-                  font-size: calc(var(--gap) * 1.75);
-                  margin-left: calc(var(--gap) * 2);
-                }
-              }
-            }
-          }
-
           .cr-order-input {
             &__fieldset, &__crypto-icon {
-              border-color: var(--orders-border-color);
+              border-color: var(--input-border-color);
               margin-top: var(--gap);
             }
 
@@ -149,26 +96,26 @@
               padding: calc(var(--gap) * 0.75) calc(var(--gap) * 1.5);
 
               &__label {
-                background-color: var(--base-bright);
+                background-color: var(--rgb-input-background-color);
                 font-size: calc(var(--gap) * 1.5);
                 margin-left: calc(var(--gap) * -0.35);
                 padding: 0 calc(var(--gap) * 0.75);
                 width: max-content;
                 position: absolute;
                 top: -10px;
-                color: var(--order-input-input-color);
+                color: var(--input-legend-color);
               }
 
               &__input {
                 margin-left: calc(var(--gap) * 0.25);
 
                 input {
-                  color: var(--orders-text-primary-color);
+                  color: var(--input-text-color);
                   font-size: calc(var(--gap) * 1.75);
                 }
 
                 input::placeholder {
-                  color: var(--orders-placeholder-color);
+                  color: var(--input-placeholder-color);
                 }
               }
             }
@@ -180,7 +127,7 @@
               margin-top: calc(var(--gap) * 1.15);
 
               span {
-                color: var(--orders-placeholder-color);
+                color: var(--input-placeholder-color);
                 vertical-align: bottom;
 
                 &::before {
@@ -194,17 +141,21 @@
             margin-bottom: var(--gap);
 
             .cr-percentage-button {
-              background: var(--orders-button-percentage-normal);
+              background: var(--button-percentage-background-color);
               border-radius: calc(var(--gap) * 0.5);
-              color: var(--orders-button-percentage-text);
+              color: var(--button-percentage-text-color);
               font-size: calc(var(--gap) * 1.5);
+              transition: 0.2s;
             
               &:hover {
-                background: var(--orders-button-percentage-hover);
+                background: var(--button-percentage-background-color-hover);
+                color: var(--button-percentage-text-color-hover);
+                transition: 0.2s;
               }
 
               &:active  {
-                background: var(--orders-button-percentage-active);
+                background: var(--button-percentage-background-color-active);
+                color: var(--button-percentage-text-color-active);
               }
             }
           }
@@ -225,11 +176,11 @@
             }
 
             &__label {
-              color: var(--orders-text-secondary-color);
+              color: var(--secondary-contrast-cta-color);
             }
 
             &__content {
-              color: var(--orders-text-primary-color);
+              color: var(--rgb-primary-text-color);
             }
           }
 
@@ -292,6 +243,7 @@
       .cr-tab-panel {
         &__navigation-container {
           border-top-right-radius: 0;
+          border-right: 1px solid var(--divider-color-level-2);
         }
 
         .cr-tab-content .cr-order-form .cr-order-item:last-child {
@@ -321,9 +273,10 @@
           cursor: default;
           justify-content: start;
           padding-left: calc(var(--gap) * 2);
+          color: var(--tab-panel-text-color);
 
           &__active {
-            color: var(--title-component-color);
+            color: var(--tab-panel-text-color-active);
             font-weight: var(--font-weight);
           }
 
@@ -374,47 +327,6 @@
           top: calc(var(--gap) * 1.6);
         }
 
-        .cr-dropdown {
-          &__input {
-            border-radius: calc(var(--gap) * 0.67);
-            height: calc(var(--gap) * 7.84);
-
-            &--open {
-              border-radius: calc(var(--gap) * 0.67);
-              height: calc(var(--gap) * 7.84);
-            }
-
-            &-label {
-              font-size: calc(var(--gap) * 2.34);
-              line-height: calc(var(--gap) * 6.98);
-            }
-
-            &-icon {
-              line-height: calc(var(--gap) * 7.84);
-
-              img {
-                width: calc(var(--gap) * 2.34);
-              }
-            }
-          }
-
-          &__list {
-            border-radius: calc(var(--gap) * 0.67);
-            margin-top: calc(var(--gap) * 8.67);
-            line-height: calc(var(--gap) * 6.5);
-            height: calc(var(--gap) * 6.5 * 2) !important;
-  
-            &-item {
-              height: calc(var(--gap) * 6.5) !important;
-  
-              &-label {
-                font-size: calc(var(--gap) * 2.34);
-                margin-left: calc(var(--gap) * 2.67);
-              }
-            }
-          }
-        }
-
         .cr-order-input {
           &__fieldset {
             border-top-left-radius: calc(var(--gap) * 0.761);
@@ -434,7 +346,7 @@
 
               input, &__price {
                 font-size: calc(var(--gap) * 2.34);
-                color: var(--order-input-input-color);
+                color: var(--input-text-color);
               }
             }
           }

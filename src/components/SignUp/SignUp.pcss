@@ -1,26 +1,25 @@
 .cr-sign-up-form {
-  background: var(--main-bg);
   max-width: 424px;
   min-height: 620px;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 15px var(--shadow-color-level-2);
   border-radius: 3px;
   position: relative;
 
   &__options-group {
     width: 100%;
     height: 58px;
-    border-bottom: 2px solid var(--text);
+    border-bottom: 2px solid var(--divider-color-level-2);
   }
 
   &__option {
-    background: var(--placeholder-text);
+    background: var(--rgb-subheader-background-color);
     display: inline-block;
     width: 50%;
     height: 58px;
 
     .__selected {
-      border-bottom: 2px solid var(--input-block-border-color);
-      color: var(--bright-1);
+      border-bottom: 2px solid var(--rgb-primary-cta-color);
+      color: var(--rgb-primary-text-color);
     }
   }
 
@@ -48,6 +47,23 @@
     box-sizing: border-box;
 
     .custom-control {
+      &-input {
+        &:checked~.custom-control-label {
+          &::before {
+            border-color: var(--input-border-color-active);
+            background-color: var(--input-checkbox-background-color-active);
+            transition: 0.2s;
+          }
+        }
+
+        &:focus~.custom-control-label {
+          &::before {
+            border-color: var(--input-border-color-active);
+            box-shadow: 0 0 0 0.2rem var(--input-checkbox-shadow-color-active);
+          }
+        }
+      }
+
       &-label {
         width: 83%;
         font-size: calc(var(--gap) * 2.35);
@@ -60,6 +76,9 @@
           height: 18px;
           margin-right: calc(var(--gap) * 3);
           top: 0;
+          border-color: var(--input-border-color);
+          background-color: var(--rgb-input-background-color);
+          transition: 0.2s;
         }
 
         &:after {
@@ -94,11 +113,11 @@
   &__error {
     background: transparent;
     margin-top: 5px;
-    color: var(--color-red);
+    color: var(--rgb-system-red);
   }
 
   &__error-message {
-    color: var(--color-red);
+    color: var(--rgb-system-red);
     font-size: calc(var(--gap) * 2.5);
     flex: 1;
     display: flex;
@@ -124,20 +143,6 @@
     left: 0;
   }
 
-  &__button {
-    margin-left: 0;
-    height: 40px;
-    background: var(--button-normal) !important;
-    border-radius: 3px;
-    font-style: normal;
-    font-weight: normal;
-    line-height: normal;
-    font-size: 16px;
-    text-align: center;
-    text-transform: uppercase;
-    color: var(--bright-1);
-  }
-
   &__loader {
     background: transparent;
     min-height: calc(var(--gap) * 6);
@@ -147,12 +152,12 @@
     width: 100%;
 
     input {
-      color: var(--sign-in-input-color);
+      color: var(--input-text-color);
       width: 100%;
       height: 50px;
       padding: 0 10px;
       font-size: 12px;
-      border: 1px solid var(--placeholder-text);
+      border: 1px solid var(--input-border-color);
       box-sizing: border-box;
       border-radius: 4px;
     }

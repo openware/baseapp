@@ -36,34 +36,34 @@ describe('Helpers', () => {
     };
 
     const depositColors = {
-        accepted: 'var(--color-green)',
-        collected: 'var(--color-green)',
+        accepted: 'var(--rgb-system-green)',
+        collected: 'var(--rgb-system-green)',
         submitted: '',
-        canceled: 'var(--color-red)',
-        rejected: 'var(--color-red)',
+        canceled: 'var(--rgb-system-red)',
+        rejected: 'var(--rgb-system-red)',
     };
 
     const withdrawColors = {
         prepared: '',
         submitted: '',
-        canceled: 'var(--color-red)',
-        accepted: 'var(--color-green)',
+        canceled: 'var(--rgb-system-red)',
+        accepted: 'var(--rgb-system-green)',
         suspected: '',
-        rejected: 'var(--color-red)',
+        rejected: 'var(--rgb-system-red)',
         processing: '',
-        succeed: 'var(--color-green)',
-        failed: 'var(--color-red)',
-        errored: 'var(--color-red)',
+        succeed: 'var(--rgb-system-green)',
+        failed: 'var(--rgb-system-red)',
+        errored: 'var(--rgb-system-red)',
         confirming: '',
     };
 
     const tradesColors = {
         sell: {
-            color: 'var(--color-red)',
+            color: 'var(--rgb-asks)',
             text: 'Sell',
         },
         buy: {
-            color: 'var(--color-green)',
+            color: 'var(--rgb-bids)',
             text: 'Buy',
         },
     };
@@ -75,10 +75,10 @@ describe('Helpers', () => {
 
     const tradesColorsMapping = {
         sell: {
-            color: 'var(--color-red)',
+            color: 'var(--rgb-asks)',
         },
         buy: {
-            color: 'var(--color-green)',
+            color: 'var(--rgb-bids)',
         },
     };
 
@@ -145,11 +145,11 @@ describe('Helpers', () => {
     });
 
     it('Should return correct deposit status color', () => {
-        expect(helpers.setDepositStatusColor('accepted')).toEqual('var(--color-green)');
-        expect(helpers.setDepositStatusColor('collected')).toEqual('var(--color-green)');
+        expect(helpers.setDepositStatusColor('accepted')).toEqual('var(--rgb-system-green)');
+        expect(helpers.setDepositStatusColor('collected')).toEqual('var(--rgb-system-green)');
         expect(helpers.setDepositStatusColor('submitted')).toEqual('');
-        expect(helpers.setDepositStatusColor('canceled')).toEqual('var(--color-red)');
-        expect(helpers.setDepositStatusColor('rejected')).toEqual('var(--color-red)');
+        expect(helpers.setDepositStatusColor('canceled')).toEqual('var(--rgb-system-red)');
+        expect(helpers.setDepositStatusColor('rejected')).toEqual('var(--rgb-system-red)');
     });
 
     it('Should return correct date', () => {
@@ -161,13 +161,13 @@ describe('Helpers', () => {
     it('Should return correct withdraw status color', () => {
         expect(helpers.setWithdrawStatusColor('prepared')).toEqual('');
         expect(helpers.setWithdrawStatusColor('submitted')).toEqual('');
-        expect(helpers.setWithdrawStatusColor('canceled')).toEqual('var(--color-red)');
-        expect(helpers.setWithdrawStatusColor('accepted')).toEqual('var(--color-green)');
+        expect(helpers.setWithdrawStatusColor('canceled')).toEqual('var(--rgb-system-red)');
+        expect(helpers.setWithdrawStatusColor('accepted')).toEqual('var(--rgb-system-green)');
         expect(helpers.setWithdrawStatusColor('suspected')).toEqual('');
-        expect(helpers.setWithdrawStatusColor('rejected')).toEqual('var(--color-red)');
+        expect(helpers.setWithdrawStatusColor('rejected')).toEqual('var(--rgb-system-red)');
         expect(helpers.setWithdrawStatusColor('processing')).toEqual('');
-        expect(helpers.setWithdrawStatusColor('succeed')).toEqual('var(--color-green)');
-        expect(helpers.setWithdrawStatusColor('failed')).toEqual('var(--color-red)');
+        expect(helpers.setWithdrawStatusColor('succeed')).toEqual('var(--rgb-system-green)');
+        expect(helpers.setWithdrawStatusColor('failed')).toEqual('var(--rgb-system-red)');
         expect(helpers.setWithdrawStatusColor('confirming')).toEqual('');
     });
 

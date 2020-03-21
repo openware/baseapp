@@ -1,9 +1,13 @@
 .custom-input {
+  input {
+    border-color: var(--input-border-color);
+  }
+
   label {
     position: absolute;
     top: 0;
     z-index: 5;
-    background: var(--base-bright);
+    background: var(--rgb-input-background-color);
     left: 5%;
     font-size: calc(var(--gap) * 2);
     padding: 0 calc(var(--gap) * 0.7);
@@ -12,25 +16,25 @@
 
   input,
   input:focus {
-    background: var(--main-bg) !important;
-    color: var(--color-white);
+    background: var(--rgb-input-background-color) !important;
+    color: var(--input-text-color);
     box-shadow: none;
   }
 
   input:focus-within {
-    border-color: var(--sign-in-accent);
+    border-color: var(--input-border-color-active);
 
     label {
-      color: var(--accent);
+      color: var(--input-label-color-active);
     }
   }
 
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
-    border: 1px solid var(--base);
-    -webkit-text-fill-color: var(--color-white);
-    -webkit-box-shadow: 0 0 0px 1000px var(--main-bg) inset;
+    border: 1px solid var(--input-border-color);
+    -webkit-text-fill-color: var(--input-text-color);
+    -webkit-box-shadow: 0 0 0px 1000px var(--rgb-input-background-color) inset;
     transition: background-color 5000s ease-in-out 0s;
   }
 }

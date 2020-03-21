@@ -18,7 +18,7 @@
   }
 
   &--data-loading {
-    background: rgba(0, 0, 0, 0.2);
+    background: transparent;
     display: block;
   }
 
@@ -27,7 +27,6 @@
     flex-direction: column;
     margin-top: 5px;
     padding-bottom: 5px;
-    color: var(--placeholder-text);
 
     span {
       font-weight: normal;
@@ -43,17 +42,17 @@
     }
 
     &-negative {
-      color: var(--red);
+      color: var(--rgb-asks);
     }
 
     &-positive {
-      color: var(--color-green);
+      color: var(--rgb-bids);
     }
   }
 
   .cr-order-book {
     td {
-      color: var(--color-white);
+      color: var(--order-book-table-text-color);
     }
   }
 
@@ -62,13 +61,12 @@
     overflow: unset;
 
     &-market {
-      border-top: 1px solid var(--title-component-color);
+      border-top: 1px solid var(--order-book-last-market-price-border-color);
       position: sticky;
       bottom: 0;
       right: 0;
       left: 0;
       z-index: 25;
-      background: var(--base-bright);
     }
 
     .cr-order-book {
@@ -99,7 +97,7 @@
       height: 154px;
 
       &:first-child {
-        border-bottom: 1px solid var(--title-component-color);
+        border-bottom: 1px solid var(--order-book-last-market-price-border-color);
         height: 208px;
 
         .cr-table-background {
@@ -108,7 +106,7 @@
       }
 
       &:last-child {
-        border-top: 1px solid var(--title-component-color);
+        border-top: 1px solid var(--order-book-last-market-price-border-color);
 
         .cr-table-background {
           top: 0;

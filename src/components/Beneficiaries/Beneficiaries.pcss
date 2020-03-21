@@ -1,6 +1,6 @@
 .pg-beneficiaries {
   &__title {
-    color: var(--color-white);
+    color: var(--rgb-primary-text-color);
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -19,7 +19,7 @@
     transition: .2s;
 
     &__label {
-      color: var(--color-white);
+      color: var(--rgb-primary-text-color);
       font-style: normal;
       font-weight: 500;
       font-size: 12px;
@@ -68,7 +68,7 @@
 
       &__text {
         align-items: center;
-        color: var(--placeholder-text);
+        color: var(--rgb-secondary-contrast-cta-color);
         display: flex;
         font-size: 14px;
         font-style: normal;
@@ -107,7 +107,7 @@
         width: 75%;
 
         &__title {
-          color: var(--placeholder-text);
+          color: var(--rgb-secondary-contrast-cta-color);
           font-style: normal;
           font-weight: 500;
           font-size: 10px;
@@ -115,7 +115,7 @@
         }
 
         &__address {
-          color: var(--color-white);
+          color: var(--rgb-primary-text-color);
           font-size: 13px;
           font-style: normal;
           font-weight: 500;
@@ -144,14 +144,14 @@
           &:hover {
             svg {
               path {
-                fill: var(--accent);
+                fill: var(--rgb-primary-cta-color);
               }
             }
           }
         }
 
         &__select {
-          color: var(--placeholder-text);
+          color: var(--rgb-secondary-contrast-cta-color);
           font-style: normal;
           font-weight: normal;
           font-size: 12px;
@@ -184,9 +184,9 @@
     }
 
     &__tip, .tip {
-      background: var(--profile-box);
+      background: var(--rgb-body-background-color);
       border-radius: 4px;
-      box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.35);
+      box-shadow: 0px 8px 25px var(--shadow-color-level-3);
       display: flex;
       padding: 24px;
       position: absolute;
@@ -211,7 +211,7 @@
           }
 
           &__label {
-            color: var(--placeholder-text);
+            color: var(--rgb-secondary-contrast-cta-color);
             font-size: 10px;
             font-style: normal;
             font-weight: 500;
@@ -219,7 +219,7 @@
           }
 
           &__value {
-            color: var(--color-white);
+            color: var(--rgb-primary-text-color);
             font-size: 12px;
             font-style: normal;
             font-weight: 500;
@@ -240,15 +240,34 @@
     &--open {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
+      background: var(--rgb-primary-cta-color);
 
-      .select__right__chevron {
-        transform: rotate(-180deg);
+      .select__left {
+        &__title {
+          color: var(--rgb-cta-layer-color);
+        }
+      }
+
+      .select__right {
+        &__tip {
+          svg path {
+            fill: var(--rgb-cta-layer-color);
+          }
+        }
+
+        &__select {
+          color: var(--rgb-cta-layer-color);
+        }
+
+        &__chevron {
+          transform: rotate(-180deg);
+        }
       }
     }
 
     &__body {
       align-items: center;
-      background-color: var(--background-wallet-item);
+      background-color: var(--rgb-dropdown-background-color);
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
       display: flex;
@@ -277,7 +296,7 @@
           width: 75%;
 
           &__title {
-            color: var(--placeholder-text);
+            color: var(--rgb-secondary-contrast-cta-color);
             font-style: normal;
             font-weight: 500;
             font-size: 10px;
@@ -285,7 +304,7 @@
           }
 
           &__address {
-            color: var(--color-white);
+            color: var(--rgb-primary-text-color);
             font-size: 13px;
             font-style: normal;
             font-weight: 500;
@@ -315,7 +334,7 @@
             &:hover {
               svg {
                 path {
-                  fill: var(--accent);
+                  fill: var(--rgb-primary-cta-color);
                 }
               }
             }
@@ -329,7 +348,7 @@
 
       &__add, .add {
         align-items: center;
-        background-color: var(--background-wallet-item);
+        background-color: var(--rgb-dropdown-background-color);
         border-top: 1px solid var(--wallets-item-border);
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
@@ -342,7 +361,7 @@
         width: 100%;
 
         &__label {
-          color: var(--color-white);
+          color: var(--rgb-primary-text-color);
           font-style: normal;
           font-weight: 500;
           font-size: 12px;
@@ -375,18 +394,18 @@
   }
 
   .cr-email-form {
-    background: var(--email-form-bg);
-    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.35);
+    background: var(--rgb-body-background-color);
+    box-shadow: 0px 8px 25px var(--shadow-color-level-3);
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 
     &__option {
-      background: var(--header);
+      background: var(--rgb-subheader-background-color);
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
 
       &-inner {
-        color: var(--color-white);
+        color: var(--rgb-primary-text-color);
         font-size: 16px;
         font-style: normal;
         font-weight: normal;
@@ -400,7 +419,7 @@
     }
 
     &__label {
-      background: var(--email-form-bg);
+      background: var(--rgb-input-background-color);
     }
 
     &__input {
@@ -408,19 +427,19 @@
       border-radius: 4px;
 
       input {
-        border: 1px solid var(--input-block-border-color) !important;
-        color: var(--color-white);
+        border: 1px solid var(--input-border-color) !important;
+        color: var(--input-text-color);
       }
     }
 
     &__group--focused {
       .cr-email-form__label {
-        color: var(--accent);
+        color: var(--input-legend-color-active);
       }
 
       input {
-        background: var(--email-form-bg);
-        border: 1px solid var(--accent) !important;
+        background: var(--rgb-input-background-color);
+        border: 1px solid var(--input-border-color-active) !important;
       }
     }
 
@@ -456,7 +475,7 @@
 
         &__info {
           align-items: center;
-          color: var(--color-white);
+          color: var(--rgb-primary-text-color);
           font-weight: normal;
           font-size: 14px;
           position: absolute;

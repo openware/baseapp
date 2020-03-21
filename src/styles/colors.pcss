@@ -1,144 +1,444 @@
+/*  ==================================
+*   Table of Contents
+*   ==================================
+* 1. General area
+* 2. Body background color opacity area
+* 3. Subheader background color opacity area
+* 4. Dropdown background color opacity area
+* 5. Icons background color opacity area
+* 6. Primary call to action(CTA) color opacity area
+* 7. Contrast call to action(CTA) color opacity area
+* 8. Secondary text color opacity area
+* 9. Call to action layer color opacity area
+* 10. System green color opacity area
+* 11. System red color opacity area
+* 12. System yellow color opacity area
+* 13. Bids color opacity area
+* 14. Asks color opacity area
+* 15. Primary text color opacity area
+* 16. Text contrast color opacity area
+* 17. Input background color area
+*	18. Divider color area
+* 19. Shadow color area
+* 20. Button area
+* 21. Header area
+* 22. Sidebar area
+* 23. Dropdown area
+* 24. Input area
+* 25. Password strength area
+* 26. Footer area
+* 27. Table area
+* 28. Tab panel area
+* 29. Wallets area
+* 30. Beneficiaries area
+* 31. Landing page area
+* 32. Market selector area
+* 33. Order book area
+*	================================== */
+
 :root, .light-mode {
-  --active-tab-color: var(--accent);
-  --base: var(--text);
-  --base-1: #FA00FF;
-  --base-2: var(--text);
-  --base-3: var(--placeholder-text);
-  --base-8: #FA00FF;
-  --base-bright: var(--main-bg);
-  --background: var(--back-bg);
-  --color-red: var(--red);
-  --background-dark: var(--main-bg);
-  --background-wallet-item: var(--header);
-  --background-dropdown-hover-text: var(--color-white);
-  --button-primary: var(--button-normal);
-  --button-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--button-normal);
-  --button-active: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--button-normal);
-  --button-disabled: linear-gradient(0deg, rgba(#000, 0.1), rgba(#000, 0.1)), var(--button-normal);
-  --header-background-cover: var(--back-bg);
-  --text-table-grey: var(--placeholder-text);
-  --order-input-border-color: var(--placeholder-text);
-  --order-input-input-bg: transparent;
-  --order-input-input-color: var(--color-white);
-  --table-background: var(--main-bg);
-  --table-dark-header-color: var(--header);
-  --title-component-color: var(--header-text);
-  --table-even-row-background: var(--main-bg);
-  --checkbox-border-color: var(--placeholder-text);
-  --sign-in-background-color: var(--main-bg);
-  --sign-in-label-color: #FA00FF;
-  --sign-in-input-color: #FA00FF;
-  --sign-in-input-border-color: var(--placeholder-text);
-  --sign-up-checkbox-color: #FA00FF;
-  --sign-up-checkbox-mark-color: #FA00FF;
-  --history-action-buy: #FA00FF;
-  --history-action-sell: #FA00FF;
-  --open-orders-action-buy: var(--green);
-  --open-orders-action-sell: var(--red);
-  --open-orders-order-buy: var(--green);
-  --open-orders-order-sell: var(--red);
-  --open-orders-background: var(--button-normal);
-  --order-dropdown-background-color: transparent;
-  --order-crypto-icon-background-color: transparent;
-  --order-crypto-font-color: var(--placeholder-text);
-  --order-input-color: var(--color-white);
-  --markets-filter-color: var(--text);
-  --markets-filter-active-color: var(--color-white);
-  --markets-title-color: var(--header-text);
-  --markets-search-border-color: var(--placeholder-text);
-  --markets-selected-color: var(--text);
-  --grid-item-bg: #FA00FF;
-  --grid-placeholder-bg: #FA00FF;
-  --grid-placeholder-border-color: #FA00FF;
-  --grid-resizable-border-color: var(--placeholder-text);
-  --pending: #e8af59;
+  /*  ================================
+      1. General area
+    ================================ */
+  --rgb-main-background-color: rgb(var(--main-background-color));
+  --rgb-body-background-color: rgb(var(--body-background-color));
+  --rgb-header-background-color: rgb(var(--header-background-color));
+  --rgb-subheader-background-color: rgb(var(--subheader-background-color));
+  --rgb-dropdown-background-color: rgb(var(--dropdown-background-color));
+  --rgb-primary-cta-color: rgb(var(--primary-cta-color));
+  --rgb-secondary-contrast-cta-color: rgb(var(--secondary-contrast-cta-color));
+  --rgb-cta-layer-color: rgb(var(--cta-layer-color));
+  --rgb-primary-text-color: rgb(var(--primary-text-color));
+  --rgb-text-contrast-color: rgb(var(--text-contrast-color));
+  --rgb-asks: rgb(var(--asks));
+  --rgb-bids: rgb(var(--bids));
+  --rgb-system-yellow: rgb(var(--system-yellow));
+  --rgb-system-red: rgb(var(--system-red));
+  --rgb-system-green: rgb(var(--system-green));
+  --rgb-input-background-color: rgb(var(--body-background-color));
 
-  /* orders */
-  --orders-execute-color: #b18d4f;
-  --orders-placeholder-color: var(--placeholder-text);
-  --orders-text-secondary-color: var(--header-text);
-  --orders-text-primary-color: var(--bright-1);
+  --rgb-landing-background-color: rgb(var(--landing-background-color));
 
-  /* BASEAPP COLORS */
+  /* =================================
+      2. Body background color opacity area
+    ================================ */
+  --body-background-color-level-1: rgba(var(--body-background-color), var(--alpha-level-1));
+  --body-background-color-level-2: rgba(var(--body-background-color), var(--alpha-level-2));
+  --body-background-color-level-3: rgba(var(--body-background-color), var(--alpha-level-3));
+  --body-background-color-level-4: rgba(var(--body-background-color), var(--alpha-level-4));
+  --body-background-color-level-5: rgba(var(--body-background-color), var(--alpha-level-5));
+  --body-background-color-level-6: rgba(var(--body-background-color), var(--alpha-level-6));
+  --body-background-color-level-7: rgba(var(--body-background-color), var(--alpha-level-7));
+  --body-background-color-level-8: rgba(var(--body-background-color), var(--alpha-level-8));
 
-  --dropdown-border: var(--placeholder-text);
-  --background-dropdown-text: var(--placeholder-text);
-  --background-dropdown-open-text: var(--header);
-  --sign-in-text: var(--text);
-  --email-form-bg: var(--main-bg);
-  --email-form-border: var(--text);
-  --email-form-accent: var(--accent);
-  --create-order-text: var(--text);
-  --sign-up-modal-border: var(--header);
-  --sign-up--modal-text: var(--placeholder-text);
+    /* =================================
+      3. Subheader background color opacity area
+    ================================ */
+  --subheader-background-color-level-1: rgba(var(--subheader-background-color), var(--alpha-level-1));
+  --subheader-background-color-level-2: rgba(var(--subheader-background-color), var(--alpha-level-2));
+  --subheader-background-color-level-3: rgba(var(--subheader-background-color), var(--alpha-level-3));
+  --subheader-background-color-level-4: rgba(var(--subheader-background-color), var(--alpha-level-4));
+  --subheader-background-color-level-5: rgba(var(--subheader-background-color), var(--alpha-level-5));
+  --subheader-background-color-level-6: rgba(var(--subheader-background-color), var(--alpha-level-6));
+  --subheader-background-color-level-7: rgba(var(--subheader-background-color), var(--alpha-level-7));
+  --subheader-background-color-level-8: rgba(var(--subheader-background-color), var(--alpha-level-8));
 
-  --color-green: var(--green);
-  --base-9: var(--placeholder-text);
-  --base-new: var(--placeholder-text);
-  --color-white: var(--bright-1);
-  --muted-text: var(--placeholder-text);
-  --bright-1: var(--bright);
-  --color-blue: var(--accent);
+    /* =================================
+      4. Dropdown background color opacity area
+    ================================ */
+  --dropdown-background-color-level-1: rgba(var(--dropdown-background-color), var(--alpha-level-1));
+  --dropdown-background-color-level-2: rgba(var(--dropdown-background-color), var(--alpha-level-2));
+  --dropdown-background-color-level-3: rgba(var(--dropdown-background-color), var(--alpha-level-3));
+  --dropdown-background-color-level-4: rgba(var(--dropdown-background-color), var(--alpha-level-4));
+  --dropdown-background-color-level-5: rgba(var(--dropdown-background-color), var(--alpha-level-5));
+  --dropdown-background-color-level-6: rgba(var(--dropdown-background-color), var(--alpha-level-6));
+  --dropdown-background-color-level-7: rgba(var(--dropdown-background-color), var(--alpha-level-7));
+  --dropdown-background-color-level-8: rgba(var(--dropdown-background-color), var(--alpha-level-8));
 
-  --navbar-text-color: var(--text);
+  /* =================================
+      5. Icons background color opacity area
+    ================================ */
+  --icons-level-1: rgba(var(--icons), var(--alpha-level-1));
+  --icons-level-2: rgba(var(--icons), var(--alpha-level-2));
+  --icons-level-3: rgba(var(--icons), var(--alpha-level-3));
+  --icons-level-4: rgba(var(--icons), var(--alpha-level-4));
+  --icons-level-5: rgba(var(--icons), var(--alpha-level-5));
+  --icons-level-6: rgba(var(--icons), var(--alpha-level-6));
+  --icons-level-7: rgba(var(--icons), var(--alpha-level-7));
+  --icons-level-8: rgba(var(--icons), var(--alpha-level-8));
 
-  --active-color: #FA00FF;
-  --table-text-color: var(--placeholder-text);
+  /*  ================================
+      6. Primary call to action(CTA) color opacity area
+    ================================ */
+  --primary-cta-color-level-1: rgba(var(--primary-cta-color), var(--alpha-level-1));
+  --primary-cta-color-level-2: rgba(var(--primary-cta-color), var(--alpha-level-2));
+  --primary-cta-color-level-3: rgba(var(--primary-cta-color), var(--alpha-level-3));
+  --primary-cta-color-level-4: rgba(var(--primary-cta-color), var(--alpha-level-4));
+  --primary-cta-color-level-5: rgba(var(--primary-cta-color), var(--alpha-level-5));
+  --primary-cta-color-level-6: rgba(var(--primary-cta-color), var(--alpha-level-6));
+  --primary-cta-color-level-7: rgba(var(--primary-cta-color), var(--alpha-level-7));
+  --primary-cta-color-level-8: rgba(var(--primary-cta-color), var(--alpha-level-8));
 
-    /* wallets */
-  --wallets-locked-amount: var(--color-white);
-  --wallets-locked-amount-active: var(--color-white);
-  --wallets-item-font: var(--color-white);
-  --wallets-item-font-active: var(--color-white);
-  --wallets-item-bg: var(--main-bg);
-  --wallets-item-bg-active: var(--selected-item);
-  --wallets-item-bg-hover: linear-gradient(0deg, rgba(#fff, 0.1), rgba(#fff, 0.1)), var(--selected-item);
-  --wallets-item-border: var(--selected-item);
-  --wallets-balance: var(--color-white);
-  --wallets-table-divider: var(--text);
+  /*  ================================
+      7. Contrast call to action(CTA) color opacity area
+    ================================ */
+  --contrast-cta-color-level-1: rgba(var(--contrast-cta-color), var(--alpha-level-1));
+  --contrast-cta-color-level-2: rgba(var(--contrast-cta-color), var(--alpha-level-2));
+  --contrast-cta-color-level-3: rgba(var(--contrast-cta-color), var(--alpha-level-3));
+  --contrast-cta-color-level-4: rgba(var(--contrast-cta-color), var(--alpha-level-4));
+  --contrast-cta-color-level-5: rgba(var(--contrast-cta-color), var(--alpha-level-5));
+  --contrast-cta-color-level-6: rgba(var(--contrast-cta-color), var(--alpha-level-6));
+  --contrast-cta-color-level-7: rgba(var(--contrast-cta-color), var(--alpha-level-7));
+  --contrast-cta-color-level-8: rgba(var(--contrast-cta-color), var(--alpha-level-8));
 
-    /* profile */
-  --profile-btn: var(--button-normal);
-  --profile-box: var(--main-bg);
-  --profile-grey: var(--placeholder-text);
-  --profile-slider-round: var(--accent);
-  --profile-slider: var(--button-normal);
-  --profile-activity-header: var(--header);
-  --profile-activity-header-font: var(--header-text);
-  --profile-activity-border: var(--header-border);
-  --profile-url: var(--accent);
+    /*  ================================
+      8. Secondary text color opacity area
+    ================================ */
+  --secondary-contrast-cta-color-level-1: rgba(var(--secondary-contrast-cta-color), var(--alpha-level-1));
+  --secondary-contrast-cta-color-level-2: rgba(var(--secondary-contrast-cta-color), var(--alpha-level-2));
+  --secondary-contrast-cta-color-level-3: rgba(var(--secondary-contrast-cta-color), var(--alpha-level-3));
+  --secondary-contrast-cta-color-level-4: rgba(var(--secondary-contrast-cta-color), var(--alpha-level-4));
+  --secondary-contrast-cta-color-level-5: rgba(var(--secondary-contrast-cta-color), var(--alpha-level-5));
+  --secondary-contrast-cta-color-level-6: rgba(var(--secondary-contrast-cta-color), var(--alpha-level-6));
+  --secondary-contrast-cta-color-level-7: rgba(var(--secondary-contrast-cta-color), var(--alpha-level-7));
+  --secondary-contrast-cta-color-level-8: rgba(var(--secondary-contrast-cta-color), var(--alpha-level-8));
 
-  /* KYC */
-  --kyc-title-color: var(--placeholder-text);
-  --kyc-header-color: var(--header);
-  --kyc-header-border: var(--text);
-  --kyc-progress-line: var(--placeholder-text);
-  --kyc-active-color: var(--accent);
-  --kyc-grey: var(--placeholder-text);
-  --kyc-button: var(--button-normal);
+    /*  ================================
+      9. Call to action layer color opacity area
+    ================================ */
+  --cta-layer-color-level-1: rgba(var(--cta-layer-color), var(--alpha-level-1));
+  --cta-layer-color-level-2: rgba(var(--cta-layer-color), var(--alpha-level-2));
+  --cta-layer-color-level-3: rgba(var(--cta-layer-color), var(--alpha-level-3));
+  --cta-layer-color-level-4: rgba(var(--cta-layer-color), var(--alpha-level-4));
+  --cta-layer-color-level-5: rgba(var(--cta-layer-color), var(--alpha-level-5));
+  --cta-layer-color-level-6: rgba(var(--cta-layer-color), var(--alpha-level-6));
+  --cta-layer-color-level-7: rgba(var(--cta-layer-color), var(--alpha-level-7));
+  --cta-layer-color-level-8: rgba(var(--cta-layer-color), var(--alpha-level-8));
 
-  /* Resend email confirmation screen */
-  --email-confirmation-screen-background: var(--main-bg);
-  --email-confirmation-screen-title-background: var(--header);
-  --email-confirmation-screen-title-color: var(--header-text);
-  --email-confirmation-screen-text-color: var(--placeholder-text);
+  /*  ================================
+      10. System green color opacity area
+    ================================ */
+  --system-green-level-1: rgba(var(--system-green), var(--alpha-level-1));
+  --system-green-level-2: rgba(var(--system-green), var(--alpha-level-2));
+  --system-green-level-3: rgba(var(--system-green), var(--alpha-level-3));
+  --system-green-level-4: rgba(var(--system-green), var(--alpha-level-4));
+  --system-green-level-5: rgba(var(--system-green), var(--alpha-level-5));
+  --system-green-level-6: rgba(var(--system-green), var(--alpha-level-6));
+  --system-green-level-7: rgba(var(--system-green), var(--alpha-level-7));
+  --system-green-level-8: rgba(var(--system-green), var(--alpha-level-8));
 
-  /* Email verification screen */
-  --email-verification-screen-background: var(--main-bg);
+  /*  ================================
+      11. System red color opacity area
+    ================================ */
+  --system-red-level-1: rgba(var(--system-red), var(--alpha-level-1));
+  --system-red-level-2: rgba(var(--system-red), var(--alpha-level-2));
+  --system-red-level-3: rgba(var(--system-red), var(--alpha-level-3));
+  --system-red-level-4: rgba(var(--system-red), var(--alpha-level-4));
+  --system-red-level-5: rgba(var(--system-red), var(--alpha-level-5));
+  --system-red-level-6: rgba(var(--system-red), var(--alpha-level-6));
+  --system-red-level-7: rgba(var(--system-red), var(--alpha-level-7));
+  --system-red-level-8: rgba(var(--system-red), var(--alpha-level-8));
 
-  /* ToolBar */
-  --trading-header-white: var(--bright);
-  --trading-header-btn-close: var(--table-dark-header-color);
-  --trading-header-selector-background: var(--background-dark);
-  --trading-header-selector-border: var(--header-border);
-  --trading-header-selector-title: var(--placeholder-text);
-  --trading-header-list-background: var(--trading-header-background);
-  --trading-header-fastsearch-button-color-active: var(--bright-1);
-  --trading-header-fastsearch-button-border-active: var(--accent);
-  --trading-header-positive: var(--green);
-  --trading-header-negative: var(--red);
-  --trading-header-search-border: var(--header-border);
+  /*  ================================
+      12. System yellow color opacity area
+    ================================ */
+  --system-yellow-level-1: rgba(var(--system-yellow), var(--alpha-level-1));
+  --system-yellow-level-2: rgba(var(--system-yellow), var(--alpha-level-2));
+  --system-yellow-level-3: rgba(var(--system-yellow), var(--alpha-level-3));
+  --system-yellow-level-4: rgba(var(--system-yellow), var(--alpha-level-4));
+  --system-yellow-level-5: rgba(var(--system-yellow), var(--alpha-level-5));
+  --system-yellow-level-6: rgba(var(--system-yellow), var(--alpha-level-6));
+  --system-yellow-level-7: rgba(var(--system-yellow), var(--alpha-level-7));
+  --system-yellow-level-8: rgba(var(--system-yellow), var(--alpha-level-8));
 
-  /* Tradingview */
-  --trading-view-background: var(--main-bg);
+    /*  ================================
+      13. Bids color opacity area
+    ================================ */
+  --bids-level-1: rgba(var(--bids), var(--alpha-level-1));
+  --bids-level-2: rgba(var(--bids), var(--alpha-level-2));
+  --bids-level-3: rgba(var(--bids), var(--alpha-level-3));
+  --bids-level-4: rgba(var(--bids), var(--alpha-level-4));
+  --bids-level-5: rgba(var(--bids), var(--alpha-level-5));
+  --bids-level-6: rgba(var(--bids), var(--alpha-level-6));
+  --bids-level-7: rgba(var(--bids), var(--alpha-level-7));
+  --bids-level-8: rgba(var(--bids), var(--alpha-level-8));
+
+    /*  ================================
+      14. Asks color opacity area
+    ================================ */
+  --asks-level-1: rgba(var(--asks), var(--alpha-level-1));
+  --asks-level-2: rgba(var(--asks), var(--alpha-level-2));
+  --asks-level-3: rgba(var(--asks), var(--alpha-level-3));
+  --asks-level-4: rgba(var(--asks), var(--alpha-level-4));
+  --asks-level-5: rgba(var(--asks), var(--alpha-level-5));
+  --asks-level-6: rgba(var(--asks), var(--alpha-level-6));
+  --asks-level-7: rgba(var(--asks), var(--alpha-level-7));
+  --asks-level-8: rgba(var(--asks), var(--alpha-level-8));
+
+  /*  ================================
+      15. Primary text color opacity area
+    ================================ */
+  --primary-text-color-level-1: rgba(var(--primary-text-color), var(--alpha-level-1));
+  --primary-text-color-level-2: rgba(var(--primary-text-color), var(--alpha-level-2));
+  --primary-text-color-level-3: rgba(var(--primary-text-color), var(--alpha-level-3));
+  --primary-text-color-level-4: rgba(var(--primary-text-color), var(--alpha-level-4));
+  --primary-text-color-level-5: rgba(var(--primary-text-color), var(--alpha-level-5));
+  --primary-text-color-level-6: rgba(var(--primary-text-color), var(--alpha-level-6));
+  --primary-text-color-level-7: rgba(var(--primary-text-color), var(--alpha-level-7));
+  --primary-text-color-level-8: rgba(var(--primary-text-color), var(--alpha-level-8));
+
+  /*  ================================
+      16. Text contrast color opacity area
+    ================================ */
+  --text-contrast-color-level-1: rgba(var(--text-contrast-color), var(--alpha-level-1));
+  --text-contrast-color-level-2: rgba(var(--text-contrast-color), var(--alpha-level-2));
+  --text-contrast-color-level-3: rgba(var(--text-contrast-color), var(--alpha-level-3));
+  --text-contrast-color-level-4: rgba(var(--text-contrast-color), var(--alpha-level-4));
+  --text-contrast-color-level-5: rgba(var(--text-contrast-color), var(--alpha-level-5));
+  --text-contrast-color-level-6: rgba(var(--text-contrast-color), var(--alpha-level-6));
+  --text-contrast-color-level-7: rgba(var(--text-contrast-color), var(--alpha-level-7));
+  --text-contrast-color-level-8: rgba(var(--text-contrast-color), var(--alpha-level-8));
+
+  /*  ================================
+      18. Divider color area
+    ================================ */
+  --divider-color-level-1: rgba(var(--divider-color), var(--alpha-level-1));
+  --divider-color-level-2: rgba(var(--divider-color), var(--alpha-level-2));
+  --divider-color-level-3: rgba(var(--divider-color), var(--alpha-level-3));
+  --divider-color-level-4: rgba(var(--divider-color), var(--alpha-level-4));
+  --divider-color-level-5: rgba(var(--divider-color), var(--alpha-level-5));
+  --divider-color-level-6: rgba(var(--divider-color), var(--alpha-level-6));
+  --divider-color-level-7: rgba(var(--divider-color), var(--alpha-level-7));
+  --divider-color-level-8: rgba(var(--divider-color), var(--alpha-level-8));
+
+  /*  ================================
+      19. Shadow color area
+    ================================ */
+  --shadow-color-level-1: rgba(var(--shadow-color), var(--alpha-level-1));
+  --shadow-color-level-2: rgba(var(--shadow-color), var(--alpha-level-2));
+  --shadow-color-level-3: rgba(var(--shadow-color), var(--alpha-level-3));
+  --shadow-color-level-4: rgba(var(--shadow-color), var(--alpha-level-4));
+  --shadow-color-level-5: rgba(var(--shadow-color), var(--alpha-level-5));
+  --shadow-color-level-6: rgba(var(--shadow-color), var(--alpha-level-6));
+  --shadow-color-level-7: rgba(var(--shadow-color), var(--alpha-level-7));
+  --shadow-color-level-8: rgba(var(--shadow-color), var(--alpha-level-8));
+
+  /*  ================================
+      20. Button area
+    ================================ */
+    /* bids button */
+  --button-bids-background-color: var(--bids-level-7);
+  --button-bids-text-color: var(--primary-text-color-level-7);
+  --button-bids-background-color-hover: rgb(var(--bids));
+  --button-bids-text-color-hover: rgb(var(--primary-text-color));
+  --button-bids-background-color-active: rgb(var(--bids));
+  --button-bids-text-color-active: rgb(var(--primary-text-color));
+  --button-bids-background-color-disabled: var(--bids-level-3);
+  --button-bids-text-color-disabled: var(--primary-text-color-level-7);
+
+    /* asks button */
+  --button-asks-background-color: var(--asks-level-7);
+  --button-asks-text-color: var(--primary-text-color-level-7);
+  --button-asks-background-color-hover: rgb(var(--asks));
+  --button-asks-text-color-hover: rgb(var(--primary-text-color));
+  --button-asks-background-color-active: rgb(var(--asks));
+  --button-asks-text-color-active: rgb(var(--primary-text-color));
+  --button-asks-background-color-disabled: var(--asks-level-3);
+  --button-asks-text-color-disabled: var(--primary-text-color-level-7);
+
+    /* percentage button */
+  --button-percentage-background-color: var(--dropdown-background-color-level-3);
+  --button-percentage-text-color: var(--primary-text-color-level-5);
+  --button-percentage-background-color-hover: rgb(var(--dropdown-background-color));
+  --button-percentage-text-color-hover: rgb(var(--primary-text-color));
+  --button-percentage-background-color-active: rgb(var(--dropdown-background-color));
+  --button-percentage-text-color-active: rgb(var(--primary-text-color));
+
+    /* primary cta color (blue) button  */
+  --button-primary-cta-background-color: var(--primary-cta-color-level-7);
+  --button-primary-cta-text-color: var(--cta-layer-color-level-7);
+  --button-primary-cta-background-color-hover: rgb(var(--primary-cta-color));
+  --button-primary-cta-text-color-hover: rgb(var(--cta-layer-color));
+  --button-primary-cta-background-color-active: rgb(var(--primary-cta-color));
+  --button-primary-cta-text-color-active: rgb(var(--cta-layer-color));
+  --button-primary-cta-background-color-disabled: var(--primary-cta-color-level-3);
+  --button-primary-cta-text-color-disabled: var(--cta-layer-color-level-7);
+
+  /*  ================================
+      21. Header area
+    ================================ */
+  --header-market-selector-border-color: var(--secondary-contrast-cta-color-level-3);
+  --header-market-selector-text-color: rgb(var(--primary-text-color));
+  --header-toolbar-item-text-color: rgb(var(--secondary-contrast-cta-color));
+  --header-switcher-border-color-theme: rgb(var(--secondary-contrast-cta-color));
+  --header-switcher-background-color-theme-active: rgb(var(--secondary-contrast-cta-color));
+  --header-positive-text-color: rgb(var(--bids));
+  --header-negative-text-color: rgb(var(--asks));
+  --header-toggle-menu-icon: rgb(var(--primary-text-color));
+
+  /*  ================================
+      22. Sidebar area
+    ================================ */
+  --sidebar-background-color: rgb(var(--body-background-color));
+  --sidebar-text-color: rgb(var(--secondary-contrast-cta-color));
+  --sidebar-border-color: var(--divider-color-level-1);
+  --sidebar-item-background-color-hover: var(--dropdown-background-color-level-5);
+  --sidebar-item-text-color-hover: rgb(var(--primary-text-color));
+  --sidebar-item-background-color-active: var(--dropdown-background-color-level-5);
+  --sidebar-item-text-color-active: rgb(var(--primary-text-color));
+
+  /*  ================================
+      23. Dropdown area 
+    ================================== */
+  --dropdown-text-color: var(--primary-text-color-level-6);
+  --dropdown-background-color-hover: var(--secondary-contrast-cta-color-level-1);
+  --dropdown-text-color-hover: rgb(var(--primary-text-color));
+  --dropdown-background-color-active: rgb(var(--primary-cta-color));
+  --dropdown-text-color-active: rgb(var(--primary-text-color));
+  --dropdown-scrollbar-button-color: rgb(var(--primary-cta-color));
+  --dropdown-scrollbar-track-color: var(--secondary-contrast-cta-color-level-1);
+
+  /*  ================================
+      24. Input area
+    ================================ */
+  --input-text-color: rgb(var(--primary-text-color));
+  --input-text-color-active: rgb(var(--primary-cta-color));
+  --input-placeholder-color: rgb(var(--secondary-contrast-cta-color));
+  --input-legend-color: rgb(var(--secondary-contrast-cta-color));
+  --input-legend-color-active: rgb(var(--primary-cta-color));
+  --input-border-color: rgb(var(--secondary-contrast-cta-color));
+  --input-border-color-active: rgb(var(--primary-cta-color));
+  --input-checkbox-background-color-active: rgb(var(--primary-cta-color));
+  --input-checkbox-shadow-color-active: var(--primary-cta-color-level-1);
+
+    /*  ================================
+      25. Password strength area
+  ================================ */
+  --password-strength-meter-background: var(--body-background-color-level-1);
+  --password-strength-meter-too-weak: rgb(var(--system-red));
+  --password-strength-meter-weak: rgb(var(--system-yellow));
+  --password-strength-meter-good: rgb(var(--system-green));
+  --password-strength-meter-strong: rgb(var(--bids));
+  --password-strength-meter-very-strong: rgb(var(--strength-meter-very-strong));
+
+    /*  ================================
+      26. Footer area
+    ================================== */
+  --footer-background-color: rgb(var(--body-background-color));
+  --footer-text-color: rgb(var(--secondary-contrast-cta-color));
+  --footer-highlight-text-color: rgb(var(--primary-text-color));
+
+    /*  ================================
+      27. Table area
+    ================================ */
+  --table-background-color: rgb(var(--body-background-color));
+  --table-text-color: rgb(var(--secondary-contrast-cta-color));
+  --table-row-selector-color: var(--dropdown-background-color-level-3);
+  --table-header-text-color: rgb(var(--secondary-contrast-cta-color));
+  --table-border-color: var(--divider-color-level-2);
+
+    /*  ================================
+      28. Tab panel area
+    ================================ */
+  --tab-panel-background-color: rgb(var(--subheader-background-color));
+  --tab-panel-text-color: rgb(var(--secondary-contrast-cta-color));
+  --tab-panel-text-color-hover: rgb(var(--primary-text-color));
+  --tab-panel-text-color-active: rgb(var(--primary-text-color));
+  --tab-panel-border-color-active: rgb(var(--primary-cta-color));
+  --tab-panel-border-line-color: var(--divider-color-level-2);
+
+    /*  ================================
+      29. Wallets area
+    ================================ */
+  --wallets-locked-amount: rgb(var(--primary-text-color));
+  --wallets-locked-amount-active: rgb(var(--primary-text-color));
+  --wallets-item-font: rgb(var(--primary-text-color));
+  --wallets-item-font-active: rgb(var(--primary-text-color));
+  --wallets-item-background-color: rgb(var(--body-background-color));
+  --wallets-item-background-color-active: var(--dropdown-background-color-level-7);
+  --wallets-item-background-color-hover: var(--dropdown-background-color-level-7);
+  --wallets-item-border-color: var(--divider-color-level-2);
+  --wallets-balance-color: rgb(var(--primary-text-color));
+
+    /*  ================================
+      30. Beneficiaries area
+    ================================ */
+  --beneficiaries-primary-0-8: var(--primary-text-color-level-8);
+  --beneficiaries-primary-0-1: var(--primary-text-color-level-1);
+  --beneficiaries-primary-0-06: rgba(var(--primary-text-color), calc(var(--alpha) / 2));
+  --beneficiaries-primary-0-04: rgba(var(--primary-text-color), calc(var(--alpha) / 3));
+
+
+    /*  ================================
+      31. Landing page area
+    ================================ */
+  --light-item-border: rgba(var(--shadow-color), calc(var(--alpha) / 2));
+
+  /*  ================================
+      32. Market selector area
+    ================================ */
+  --market-selector-background-color: rgb(var(--body-background-color));
+  --market-selector-header-background-color: rgb(var(--subheader-background-color));
+  --market-selector-header-text-color: rgb(var(--secondary-contrast-cta-color));
+  --market-selector-header-text-color-hover: rgb(var(--primary-text-color));
+  --market-selector-header-text-color-active: rgb(var(--primary-text-color));
+  --market-selector-header-text-border-active: rgb(var(--primary-cta-color));
+  --market-selector-table-header-text-color: rgb(var(--secondary-contrast-cta-color));
+  --market-selector-table-header-text-color-hover: rgb(var(--primary-text-color));
+  --market-selector-table-text-color: rgb(var(--secondary-contrast-cta-color));
+  --market-selector-table-text-color-hover: rgb(var(--primary-text-color));
+  --market-selector-table-text-color-active: rgb(var(--primary-text-color));
+  --market-selector-table-background-color: rgb(var(--body-background-color));
+  --market-selector-table-row-selector: var(--secondary-contrast-cta-color-level-1);
+  --market-selector-table-row-selector-hover: var(--secondary-contrast-cta-color-level-1);
+  --market-selector-input: rgb(var(--primary-text-color));
+  --market-selector-background-color-input: rgb(var(--body-background-color));
+  --market-selector-input-border: none;
+
+  /*  ================================
+      33. Order book area
+    ================================== */
+  --order-book-table-text-color: rgb(var(--primary-text-color));
+  --order-book-last-market-price-subtitle: var(--cta-contrast-level-4);
+  --order-book-last-market-price-border-color: var(--divider-color-level-2);
 }

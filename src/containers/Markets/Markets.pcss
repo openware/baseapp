@@ -1,16 +1,16 @@
 .pg-markets {
-  background-color: var(--base-bright);
+  background-color: var(--rgb-body-background-color);
   padding-bottom: calc(var(--gap) * 6.67);
   text-align: left;
   width: 100%;
 
   .cr-markets .cr-table__row--selected td {
-    color: var(--title-component-color);
+    color: var(--table-text-color);
   }
 
   &--loading {
     height: 100%;
-    background: rgba(0, 0, 0, 0.2);
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,8 +21,9 @@
       display: flex;
       position: fixed;
       bottom: 0;
-      background: var(--base-bright);
+      background: var(--rgb-body-background-color);
       z-index: 9999;
+      width: 100%;
       padding: calc(var(--gap) * 0.83) var(--gap) calc(var(--gap) * 0.83) 0;
 
       &__icon {
@@ -45,7 +46,7 @@
   }
 
   .cr-table-header__content {
-    background: var(--table-dark-header-color);
+    background: var(--rgb-subheader-background-color);
     .cr-title-component {
       font-weight: normal;
     }
@@ -74,15 +75,15 @@
     &__row {
       &--selected {
         td {
-          color: var(--base);
+          color: var(--table-text-color);
         }
       }
     }
     .__positive {
-      color: var(--color-green) !important;
+      color: var(--rgb-bids) !important;
     }
     .__negative {
-      color: var(--color-red) !important;
+      color: var(--rgb-asks) !important;
     }
   }
 }

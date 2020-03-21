@@ -1,6 +1,6 @@
 .cr-copyable-text-field {
     border: none;
-    background: var(--background-dark);
+    background: var(--rgb-input-background-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,7 +10,7 @@
     padding: 0;
 
     legend {
-        background: var(--background-dark);
+        background: var(--input-legend-color);
         margin-bottom: auto;
         margin-top: calc(var(--gap) * -1.5);
         position: absolute;
@@ -21,14 +21,14 @@
         display: flex;
         flex-direction: row;
         flex: 1;
-        color: var(--base-3);
-        background: var(--background-dark);
+        color: var(--input-text-color);
+        background: var(--rgb-input-background-color);
         background: inherit;
         padding: calc(var(--gap) * 1.67) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
 
         input {
             background: unset;
-            color: var(--table-text-color);
+            color: var(--input-text-color);
         }
     }
 
@@ -40,8 +40,8 @@
         width: 100%;
         border-radius: 0;
         border-style: none;
-        color: var(--base-3);
-        background: var(--background-dark);
+        color: var(--input-text-color);
+        background: var(--rgb-input-background-color);
         outline: none;
     }
 }

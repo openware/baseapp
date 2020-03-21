@@ -1,5 +1,5 @@
 .pg-confirm__content-documents {
-  color: var(--base-10);
+  color: var(--rgb-secondary-contrast-cta-color);
   font-size: calc(var(--gap) * 2.33);
   margin: var(--gap) calc(var(--gap) * 3.4) calc(var(--gap) * 2.5) calc(var(--gap) * 3.4);
   display: flex;
@@ -15,9 +15,9 @@
     text-decoration: none;
     margin-bottom: calc(var(--gap) * 1.2);
       &:hover {
-        color: var(--text-muted);
+        color: var(--rgb-secondary-contrast-cta-color);
         text-decoration: underline;
-        text-decoration-color: var(--base-3);
+        text-decoration-color: var(--rgb-secondary-contrast-cta-color);
       }
       img {
         margin: 2px;
@@ -33,12 +33,12 @@
     &-row {
       display: inline-block;
       margin-top: calc(var(--gap) * 2);
-      color: var(--kyc-grey);
+      color: var(--input-text-color);
 
       fieldset {
-        color: var(--kyc-grey);
+        color: var(--input-text-color);
         border-radius: 4px;
-        border: 1px solid var(--kyc-grey);
+        border: 1px solid var(--input-border-color);
         box-sizing: border-box;
         height: 49px;
         padding-left: calc(var(--gap) * 1.5);
@@ -55,19 +55,23 @@
       }
 
       &-content {
-        border-bottom: 1px solid var(--confirm-border-color);
+        border-bottom: 1px solid var(--input-border-color);
         font-weight: normal;
         display: inline-block;
         position: relative;
 
         &--focused {
-          color: var(--accent) !important;
-          border: 1px solid var(--accent) !important;
+          border: 1px solid var(--input-border-color-active) !important;
+
+          label,
+          legend {
+            color: var(--input-legend-color-active) !important;
+          }
         }
 
         legend {
-          background-color: var(--base-bright);
-          position:absolute;
+          background-color: var(--rgb-input-background-color);
+          position: absolute;
           top: -8px;
           font-size: calc(var(--gap) * 2);
           width: auto;
@@ -75,7 +79,7 @@
         }
 
         input {
-          color: var(--color-white);
+          color: var(--input-text-color);
           background: transparent;
           border: unset;
           bottom: 0;
@@ -83,7 +87,7 @@
           margin-top: 10px;
           width: 100%;
           &::placeholder {
-            color: var(--text-muted);
+            color: var(--input-placeholder-color);
           }
         }
 
@@ -105,18 +109,18 @@
 
         input {
           border: none;
-          color: var(--dark-color);
+          color: var(--input-text-color);
           font-size: calc(var(--gap) * 2.33);
           outline: none;
           padding-bottom: calc(var(--gap) * 0.33);
 
           &::placeholder {
-            color: var(--text-muted);
+            color: var(--input-placeholder-color);
           }
         }
 
         &-documents {
-          border: 1px dashed var(--kyc-grey);
+          border: 1px dashed var(--rgb-secondary-contrast-cta-color);
           box-sizing: border-box;
           margin-top: calc(var(--gap) * 1.2);
           margin-bottom: calc(var(--gap) * 1.2);
@@ -155,11 +159,11 @@
               text-align: center;
 
               .active {
-                color: var(--color-white);
+                color: var(--input-background-color);
               }
 
               .muted {
-                color: var(--text-muted);
+                color: var(--input-placeholder-color);
               }
 
               div {
@@ -181,7 +185,7 @@
           margin-left: calc(var(--gap) * 1.42);
           margin-top: calc(var(--gap) * (-1.33));
           padding: 0 var(--gap);
-          background-color: var(--base-bright);
+          background-color: var(--rgb-input-background-color);
           z-index: 1;
         }
 
@@ -195,7 +199,7 @@
         }
 
         &--focused {
-          color: var(--accent) !important;
+          color: var(--input-legend-color-active) !important;
         }
       }
     }

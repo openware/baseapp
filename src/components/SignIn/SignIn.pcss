@@ -1,26 +1,25 @@
 .cr-sign-in-form {
-  background: var(--main-bg);
   max-width: 424px;
   height: 500px;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 15px var(--shadow-color-level-2);
   border-radius: 3px;
   position: relative;
 
   &__options-group {
     width: 100%;
     height: 58px;
-    border-bottom: 2px solid var(--text);
+    border-bottom: 2px solid var(--divider-color-level-2);
   }
 
   &__option {
-    background: var(--placeholder-text);
+    background: var(--rgb-subheader-background-color);
     display: inline-block;
     width: 50%;
     height: 58px;
 
     .__selected {
-      border-bottom: 2px solid var(--input-block-border-color);
-      color: var(--bright-1);
+      border-bottom: 2px solid var(--rgb-primary-cta-color);
+      color: var(--rgb-primary-text-color);
     }
   }
 
@@ -53,7 +52,7 @@
   }
 
   &__error-message {
-    color: var(--color-red);
+    color: var(--rgb-system-red);
     font-size: calc(var(--gap) * 2.5);
     flex: 1;
     display: flex;
@@ -72,12 +71,12 @@
   &__error {
     background: transparent;
     margin-top: 5px;
-    color: var(--color-red);
+    color: var(--rgb-system-red);
   }
 
   &__group--focused {
     .cr-sign-in-form__label {
-      color: var(--accent);
+      color: var(--input-legend-color-active);
     }
   }
 
@@ -89,7 +88,6 @@
   }
 
   &__title {
-    color: var(--sign-in-label-color);
     margin: calc(var(--gap) * 3) 0 calc(var(--gap) * 8) 0;
     font-size: 18px;
     text-align: center;
@@ -123,13 +121,13 @@
       font-weight: normal;
       line-height: 30px;
       font-size: 14px;
-      color: var(--placeholder-text);
+      color: var(--rgb-secondary-contrast-cta-color);
       cursor: pointer;
-      opacity: 0.8;
       text-align: center;
+      transition: 0.2s;
 
       &:hover {
-        opacity: 1;
+        color: var(--rgb-primary-text-color)
       }
     }
   }

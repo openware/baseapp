@@ -9,18 +9,35 @@
         }
       }
 
+      .custom-control-input:checked~.custom-control-label {
+        &::before {
+          background-color: var(--primary-cta-color-level-3);
+          border: none;
+        }
+
+        &::after {
+          left: 27px;
+          background-color: var(--rgb-primary-cta-color);
+        }
+      }
+
       &-label {
-        &:before {
+        &::before {
           left: 21px;
           width: 33px !important;
           height: 18px;
           border-radius: 1rem !important;
+          background-color: var(--primary-cta-color-level-3);
+          border: none;
         }
 
-        &:after {
-          left: 27px;
-          width: 14px !important;
-          height: 14px !important;
+        &::after {
+          left: 20px;
+          top: calc(.25rem - 1px);
+          border-radius: 100%;
+          width: 20px !important;
+          height: 20px !important;
+          background-color: var(--primary-cta-color-level-3);
         }
 
         &:hover {
