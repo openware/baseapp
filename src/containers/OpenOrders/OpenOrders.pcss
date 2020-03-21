@@ -24,6 +24,8 @@
     &__cancel {
       float: right;
       cursor: pointer;
+      color: var(--rgb-secondary-contrast-cta-color);
+      transition: 0.2s;
     }
 
     &__close {
@@ -36,13 +38,14 @@
 
       &::before,
       &::after {
-        background: var(--text-table-grey);
+        background: var(--rgb-secondary-contrast-cta-color);
         content: '';
         position: absolute;
         top: 55%;
         left: 0;
         height: 2px;
         width: 100%;
+        transition: 0.2s;
       }
 
       &::before {
@@ -51,6 +54,21 @@
 
       &::after {
         transform: rotate(-45deg);
+      }
+    }
+
+    &__cancel {
+      &:hover {
+        color: var(--rgb-primary-text-color);
+        transition: 0.2s;
+
+        .cr-table-header__close {
+          &::before,
+          &::after {
+            background: var(--rgb-primary-text-color);
+            transition: 0.2s;
+          }
+        }
       }
     }
   }
@@ -72,7 +90,7 @@
 }
 
 .pg-open-orders--loading {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--rgb-body-background-color);
   max-width: 100%;
   .open-order-loading {
     position: absolute;

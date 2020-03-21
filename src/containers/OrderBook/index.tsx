@@ -4,10 +4,12 @@ import { Spinner } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { CombinedOrderBook, Decimal } from '../../components';
+import { colors } from '../../constants';
 import { accumulateVolume, calcMaxVolume, sortAsks, sortBids } from '../../helpers';
 import {
     Market,
     RootState,
+    selectCurrentColorTheme,
     selectCurrentMarket,
     selectCurrentPrice,
     selectDepthAsks,
@@ -20,6 +22,7 @@ import {
 interface ReduxProps {
     asks: string[][];
     bids: string[][];
+    colorTheme: string;
     currentMarket: Market | undefined;
     currentPrice: number | undefined;
     orderBookLoading: boolean;
@@ -84,6 +87,8 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     private orderBook = (bids, asks) => {
+        const { colorTheme, currentMarket } = this.props;
+
         const isLarge = this.state.width > breakpoint;
         const asksData = isLarge ? asks : asks.slice(0).reverse();
 
@@ -92,10 +97,10 @@ class OrderBookContainer extends React.Component<Props, State> {
                 maxVolume={calcMaxVolume(bids, asks)}
                 orderBookEntryAsks={accumulateVolume(asks)}
                 orderBookEntryBids={accumulateVolume(bids)}
-                rowBackgroundColorAsks={'rgba(232, 94, 89, 0.4)'}
-                rowBackgroundColorBids={'rgba(84, 180, 137, 0.4)'}
-                dataAsks={this.renderOrderBook(asksData, 'asks', this.props.intl.formatMessage({id: 'page.noDataToShow'}), this.props.currentMarket)}
-                dataBids={this.renderOrderBook(bids, 'bids', this.props.intl.formatMessage({id: 'page.noDataToShow'}), this.props.currentMarket)}
+                rowBackgroundColorAsks={colors[colorTheme].orderBook.asks}
+                rowBackgroundColorBids={colors[colorTheme].orderBook.bids}
+                dataAsks={this.renderOrderBook(asksData, 'asks', this.props.intl.formatMessage({id: 'page.noDataToShow'}), currentMarket)}
+                dataBids={this.renderOrderBook(bids, 'bids', this.props.intl.formatMessage({id: 'page.noDataToShow'}), currentMarket)}
                 headers={this.renderHeaders()}
                 lastPrice={this.lastPrice()}
                 onSelectAsks={this.handleOnSelectAsks}
@@ -196,6 +201,7 @@ class OrderBookContainer extends React.Component<Props, State> {
 const mapStateToProps = (state: RootState) => ({
     bids: selectDepthBids(state),
     asks: selectDepthAsks(state),
+    colorTheme: selectCurrentColorTheme(state),
     orderBookLoading: selectDepthLoading(state),
     currentMarket: selectCurrentMarket(state),
     currentPrice: selectCurrentPrice(state),

@@ -3,7 +3,7 @@ header {
 }
 
 .pg-header {
-  background-color: var(--header-background-cover);
+  background-color: var(--rgb-header-background-color);
   margin: 0 auto;
 
   .pg-logo__img {
@@ -16,11 +16,11 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 5px 14px;
-    border: 1px solid var(--trading-header-selector-title);
+    border: 1px solid var(--header-market-selector-border-color);
     border-radius: 3px;
     margin-left: 26px;
     &-value {
-      color: var(--trading-header-selector-title);
+      color: var(--header-market-selector-text-color);
       margin: 0 14px 0 0;
     }
   }
@@ -41,7 +41,6 @@ header {
   }
 
   &__navbar {
-    background: var(--background-dark);
     padding-top: 3px;
     margin-left: 30px;
     display: flex;
@@ -61,7 +60,7 @@ header {
         margin-right: 20px;
       }
       &-text {
-        color: var(--profile-grey);
+        color: var(--header-toolbar-item-text-color);
         text-align: right;
         margin: 5px 0 0;
         font-size: calc(var(--font-size) * 0.85);
@@ -72,10 +71,10 @@ header {
         text-align: right;
         margin: 0;
         &-positive {
-          color: var(--trading-header-positive);
+          color: var(--header-positive-text-color);
         }
         &-negative {
-          color: var(--trading-header-negative);
+          color: var(--header-negative-text-color);
         }
       }
     }
@@ -97,7 +96,6 @@ header {
   }
 
   .pg-container {
-    background: var(--background-dark);
     justify-content: flex-start;
     padding: 0 2%;
     width: 100%;
@@ -128,7 +126,6 @@ header {
         display: block;
         position: fixed;
         left: 0;
-        background: var(--background-dark);
         -webkit-animation: slide-right .3s ease-out;
         -moz-animation: slide-right .3s ease-out;
       }

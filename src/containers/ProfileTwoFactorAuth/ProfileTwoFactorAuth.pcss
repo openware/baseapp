@@ -7,20 +7,36 @@
         }
       }
 
+      .custom-control-input:checked~.custom-control-label {
+        &::before {
+          background-color: var(--primary-cta-color-level-3);
+          border: none;
+        }
+
+        &::after {
+          left: -29px;
+          background-color: var(--rgb-primary-cta-color);
+        }
+      }
+
       &-label {
-        &:before {
-          top: 27px;
+        &::before {
+          top: 21px;
           left: -39px;
           width: 33px;
           height: 18px;
           border-radius: 12px;
+          background-color: var(--primary-cta-color-level-3);
+          border: none;
         }
 
         &:after {
-          top: 29px;
-          left: -34px;
-          width: 14px;
-          height: 14px;
+          top: 20px;
+          left: -40px;
+          border-radius: 100%;
+          width: 20px !important;
+          height: 20px !important;
+          background-color: var(--primary-cta-color-level-3);
         }
 
         &:hover {

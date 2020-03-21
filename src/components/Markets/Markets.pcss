@@ -1,18 +1,30 @@
 .cr-markets {
-  background: var(--base-bright);
+  background: var(--rgb-body-background-color);
   padding-bottom: 0;
 
   .cr-title-component {
-    color: var(--markets-title-color);
+    color: var(--rgb-primary-text-color);
     font-size: 1em;
     font-weight: lighter;
   }
 
   .cr-table {
-    background: var(--base-bright);
+    background: var(--rgb-body-background-color);
+
+    tbody{
+      tr {
+        &:hover {
+          background: var(--market-selector-table-row-selector) !important;
+
+          td {
+            color: var(--market-selector-table-text-color-hover);
+          }
+        }
+      }
+    }
 
     th {
-      color: var(--markets-filter-color);
+      color: var(--table-text-color);
       font-size: 0.83em;
       font-weight: lighter;
       padding-top: 2px;
@@ -20,7 +32,7 @@
     }
 
     td {
-      color: var(--markets-filter-color);
+      color: var(--table-text-color);
       font-size: 0.83em;
     }
 
@@ -47,7 +59,7 @@
     }
 
     tr:nth-child(even) {
-      background: var(--base-bright);
+      background: var(--rgb-body-background-color);
     }
 
     &__filters {
@@ -56,43 +68,48 @@
     }
 
     &__filter {
-      color: var(--markets-filter-color);
+      color: var(--table-text-color);
       font-size: 0.83em;
       font-weight: lighter;
       padding-left: 3px;
       padding-right: 3px;
 
       &--active {
-        color: var(--markets-filter-active-color);
+        color: var(--rgb-primary-cta-color);
       }
     }
 
     &__row {
       &--selected {
-        background: var(--markets-selected-color) !important;
+        background: var(--market-selector-table-row-selector) !important;
+
+        td {
+          color: var(--market-selector-table-text-color-active) !important;
+        }
       }
     }
   }
 
   .cr-search {
-    background: var(--base-bright);
+    background: var(--rgb-body-background-color);
     margin: 0;
     margin-top: var(--gap);
     padding: 0;
+    width: 100%;
 
     &__icon {
-      background: var(--base-bright);
+      background: var(--rgb-body-background-color);
     }
 
     input {
-      background: var(--base-bright);
-      color: var(--markets-filter-color);
+      background: var(--rgb-input-background-color);
+      color: var(--input-text-color);
       font-weight: lighter;
       width: calc(100% - var(--gap) * 9);
-      border-bottom-color: var(--markets-search-border-color);
+      border-bottom: 1px solid var(--divider-color-level-3);
 
       &::placeholder {
-        color: var(--markets-title-color);
+        color: var(--input-placeholder-color);
       }
     }
   }

@@ -47,8 +47,15 @@
 
       .input-group {
         &:first-child {
+          border-radius: .3rem;
+
           &:focus-within {
-            border: 1px solid var(--color-blue);
+            label,
+            legend {
+              color: var(--input-legend-color-active);
+            }
+
+            border-color: var(--input-border-color-active);
           }
         }
       }
@@ -61,33 +68,13 @@
 
         input {
           background: unset;
-          color: var(--table-text-color);
-        }
-
-        .cr-copyable-text-field__button {
-          background: var(--button-normal);
-          color: var(--white);
-          width: 28%;
-
-          &:hover {
-            background: var(--button-hover);
-          }
+          color: var(--rgb-input-background-color);
         }
       }
     }
 
     fieldset {
       border: none;
-
-      &:focus-within {
-        legend {
-          color: var(--color-blue);
-        }
-      }
-
-      .cr-copyable-text-field {
-        border: 1px solid var(--base);
-      }
     }
   }
 
@@ -96,7 +83,7 @@
     margin-left: calc(var(--gap) * 3);
 
     svg {
-      border: 1px solid var(--white);
+      border: 1px solid var(--rgb-primary-text-color);
     }
   }
 }

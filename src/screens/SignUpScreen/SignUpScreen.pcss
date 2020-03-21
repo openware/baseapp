@@ -10,7 +10,7 @@
     width: calc(var(--gap) * 70.66);
   }
   .cr-sign-up-form {
-    background: var(--base-bright);
+    background: var(--rgb-body-background-color);
     margin: 0 auto;
     border-radius: calc(var(--gap) * 0.66);
     min-height: calc(var(--big-gap) * 10);
@@ -18,7 +18,7 @@
     &__options-group {
       width: 100%;
       height: calc(var(--big-gap) * 0.97);
-      border-bottom: 2px solid var(--sign-in-text);
+      border-bottom: 2px solid var(--divider-color-level-2);
     }
 
     &__form-content {
@@ -30,92 +30,50 @@
     }
 
     &__option {
-      background: var(--header);
+      background: var(--rgb-subheader-background-color);
       .__selected {
-        border-bottom: 2px solid var(--sign-in-accent);
-        color: var(--color-white);
+        border-bottom: 2px solid var(--rgb-primary-cta-color);
+        color: var(--rgb-primary-text-color);
       }
     }
 
     &__group--focused {
       .cr-sign-up-form__label {
-        color: var(--sign-in-accent);
+        color: var(--input-legend-color-active);
       }
 
       input {
-        border-color: var(--sign-in-accent) !important;
-      }
-    }
-
-    .cr-button {
-      color: var(--color-white);
-      background: var(--button-primary) !important;
-      border-radius: calc(var(--gap) * 0.5);
-      font-size: calc(var(--gap) * 2.66);
-      margin-top: calc(var(--gap) * 1.55);
-
-      &--disabled {
-        color: var(--button-dark-gray);
-        background: var(--button-disabled) !important;
-      }
-
-      &:hover {
-        background: var(--button-hover) !important;
-      }
-
-      &:active {
-        background: var(--button-active) !important;
+        border-color: var(--input-border-color-active) !important;
       }
     }
 
     &__title {
       background: transparent;
-      color: var(--active-color);
       font-size: calc(var(--gap) * 4);
       margin: calc(var(--gap) * 6.66) !important;
     }
     &__label {
-      background: var(--base-bright);
-      color: var(--text-muted);
+      background: var(--rgb-input-background-color);
+      color: var(--inout-legend-color);
       font-size: calc(var(--gap) * 2);
       top: calc(var(--gap) * (-1.33));
       position: absolute;
-    }
-    &__input {
-      input {
-        color: var(--color-white);
-        font-size: calc(var(--gap) * 2.33);
-        border: 1px solid var(--input-block-border-color);
-        border-radius: calc(var(--gap) * 0.66);
-      }
-    }
-    &__footer {
-      &-create {
-        font-size: calc(var(--gap) * 2.33);
-        font-weight: bolder;
-      }
-      &-signin {
-        color: var(--active-color);
-        font-size: calc(var(--gap) * 2.33);
-        font-weight: bold;
-      }
     }
 
     .cr-checkbox {
       padding-left: calc(2.6 * var(--checkbox-general-intent));
       &__checkitem {
-        border-color: var(--checkbox-border-color);
+        border-color: var(--rgb-secondary-contrast-cta-color);
         &::after {
-          border-color: var(--color-white);
+          border-color: var(--rgb-primary-text-color);
         }
       }
       &__label {
-        color: var(--c--base-9);
         font-size: calc(var(--gap) * 2.33);
       }
     }
     &__error {
-      color: var(--color-red);
+      color: var(--rgb-system-red);
     }
     &__recaptcha {
       position: relative;
@@ -125,7 +83,7 @@
 
   .cr-sign-in-form {
     &__error-message {
-      color: var(--order-error-color);
+      color: var(--rgb-system-red);
     }
   }
 }
@@ -136,10 +94,9 @@
     border-radius: calc(var(--gap) * 0.66);
     min-width: 30% !important;
     width: calc(var(--big-gap) * 10);
-    background-color: var(--background-dark);
+    background: var(--rgb-body-background-color);
     .cr-modal__container-header {
-      border-bottom: 2px solid var(--sign-up-modal-border);
-      color: var(--bright-1);
+      border-bottom: 2px solid var(--divider-color-level-2);
       border-top-left-radius: calc(var(--gap) * 0.66);
       border-top-right-radius: calc(var(--gap) * 0.66);
       text-align: center;
@@ -150,7 +107,7 @@
       }
     }
     .cr-modal__container-content {
-      color: var(--sign-up--modal-text);
+      color: var(--secondary-contrast-color);
       padding: 0 calc(var(--gap) * 8.33);
       margin-bottom: 0;
     }

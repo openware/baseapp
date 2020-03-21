@@ -1,5 +1,5 @@
 .pg-confirm__content-identity {
-  color: var(--base-10);
+  color: var(--rgb-secondary-contrast-cta-color);
   margin: 0 auto;
 
   &-forms {
@@ -15,11 +15,11 @@
     }
 
     &::-webkit-scrollbar-track {
-      background-color: var(--kyc-grey);
+      background-color: var(--dropdown-scrollbar-track-color);
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: var(--color-blue);
+      background-color: var(--dropdown-scrollbar-button-color);
     }
   }
 
@@ -43,13 +43,13 @@
         margin-top: 0 !important;
         height: calc(var(--gap) * 10.5)!important;
         margin-bottom: calc(var(--gap) * 0.5);
-        border: 1px solid var(--kyc-active-color) !important;
+        border: 1px solid var(--input-border-color-active) !important;
       }
 
       fieldset {
-        color: var(--kyc-grey);
+        color: var(--input-text-color);
         border-radius: calc(var(--gap) * 0.6);
-        border: 1px solid var(--kyc-grey);
+        border: 1px solid var(--input-border-color);
         box-sizing: border-box;
         height: calc(var(--gap) * 8.16);
         width: 95%;
@@ -74,7 +74,7 @@
           position: absolute;
           margin-left: calc(var(--gap) * 1.42);
           padding: 0 calc(var(--gap) * 0.33);
-          background-color: var(--base-bright);
+          background-color: var(--rgb-input-background-color);
           margin-top: calc(var(--gap) * -1.5);
           z-index: 1;
         }
@@ -92,17 +92,17 @@
         }
 
         &--focused {
-          color: var(--accent) !important;
-          border: 1px solid var(--accent) !important;
+          color: var(--input-legend-color-active) !important;
+          border: 1px solid var(--input-border-color-active) !important;
         }
 
         &--wrong {
-          color: var(--red) !important;
-          border: 1px solid var(--red) !important;
+          color: var(--rgb-system-red) !important;
+          border: 1px solid var(--rgb-system-red) !important;
         }
 
         legend {
-          background-color: var(--base-bright);
+          background-color: var(--rgb-input-background-color);
           position:absolute;
           top: calc(var(--gap) * -1.5);
           left: 5%;
@@ -113,7 +113,7 @@
 
         input {
           width: 100%;
-          color: var(--color-white);
+          color: var(--input-text-color);
           background: transparent;
           border: unset;
           bottom: 0;
@@ -122,7 +122,7 @@
           margin-left: calc(var(--gap) * 1.2);
 
           &::placeholder {
-            color: var(--text-muted);
+            color: var(--input-placeholder-color);
           }
         }
 
@@ -141,7 +141,7 @@
         }
 
         &:focus-within {
-          color: var(--color-blue);
+          color: var(--input-legend-color-active);
         }
       }
     }

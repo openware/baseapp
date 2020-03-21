@@ -1,6 +1,6 @@
 .pg-history-tab {
   align-items: flex-start !important;
-  background: var(--base-bright);
+  background: var(--rgb-body-background-color);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -19,8 +19,8 @@
     width: 100%;
 
     .cr-tab-panel__navigation-container {
-      background: var(--table-dark-header-color);
-      border-bottom: 1px solid var(--header-border);
+      background: var(--tab-panel-background-color);
+      border-bottom: 1px solid var(--tab-panel-border-line-color);
       border-top-left-radius: calc(var(--gap) * 0.66);
       border-top-right-radius: calc(var(--gap) * 0.66);
       margin-bottom: 0;
@@ -52,7 +52,7 @@
 
     &__empty {
       text-align: center;
-      color: var(--table-text-color);
+      color: var(--rgb-secondary-contrast-cta-color);
     }
 
     &__pagination {
@@ -88,10 +88,10 @@
           margin: 10px;
 
           &-row {
-            border-bottom: 1px solid var(--header-border);
+            border-bottom: 1px solid var(--table-border-color);
 
             th {
-              background-color: var(--background-dark);
+              background-color: var(--table-background-color);
               color: var(--table-text-color);
               font-size: 12px !important;
               font-weight: 500;
@@ -113,14 +113,14 @@
           }
         }
         &__body {
-          background-color: var(--background-dark);
+          background-color: var(--table-background-color);
 
           tr {
-            background-color: var(--background-dark);
-            border-bottom: 1px solid var(--header-border);
+            background-color: var(--table-background-color);
+            border-bottom: 1px solid var(--table-border-color);
 
             td {
-              background-color: var(--background-dark);
+              background-color: var(--table-background-color);
               color: var(--table-text-color);
               font-size: 13px !important;
               font-weight: 400;

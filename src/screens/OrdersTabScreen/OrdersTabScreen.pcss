@@ -1,6 +1,6 @@
 .pg-orders-tab {
   align-items: flex-start !important;
-  background: var(--base-bright);
+  background: var(--rgb-body-background-color);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -20,8 +20,8 @@
 
     .cr-tab-panel__navigation-container {
       position: relative;
-      background: var(--table-dark-header-color);
-      border-bottom: 1px solid var(--header-border);
+      background: var(--tab-panel-background-color);
+      border-bottom: 1px solid var(--tab-panel-border-line-color);
       border-top-left-radius: calc(var(--gap) * 0.66);
       border-top-right-radius: calc(var(--gap) * 0.66);
       margin-bottom: 0;
@@ -42,7 +42,7 @@
   .pg-history-elem {
     &__empty {
       text-align: center;
-      color: var(--table-text-color);
+      color: var(--rgb-secondary-contrast-cta-color);
     }
 
     &__pagination {
@@ -79,10 +79,10 @@
           margin: 10px;
 
           &-row {
-            border-bottom: 1px solid var(--header-border);
+            border-bottom: 1px solid var(--table-border-color);
 
             th {
-              background-color: var(--background-dark);
+              background-color: var(--table-background-color);
               color: var(--table-text-color);
               font-size: 12px !important;
               font-weight: 500;
@@ -105,14 +105,14 @@
         }
 
         &__body {
-          background-color: var(--background-dark);
+          background-color: var(--table-background-color);
 
           tr {
-            background-color: var(--background-dark);
-            border-bottom: 1px solid var(--header-border);
+            background-color: var(--table-background-color);
+            border-bottom: 1px solid var(--table-border-color);
 
             td {
-              background-color: var(--background-dark);
+              background-color: var(--table-background-color);
               color: var(--table-text-color);
               font-size: 13px !important;
               font-weight: 400;
@@ -143,7 +143,13 @@
               }
 
               .close {
-                color: var(--table-text-color);
+                color: var(--rgb-secondary-contrast-cta-color);
+                transition: 0.2s;
+
+                &:hover {
+                  color: var(--rgb-primary-text-color);
+                  transition: 0.2s;
+                }
               }
             }
           }
@@ -152,15 +158,15 @@
     }
 
     &-executed {
-      color: var(--orders-execute-color);
+      color: var(--rgb-system-yellow);
     }
 
     &-canceled {
-      color: var(--color-red);
+      color: var(--rgb-system-red);
     }
 
     &-opened {
-      color: var(--color-green);
+      color: var(--rgb-system-green);
     }
   }
 
@@ -170,13 +176,15 @@
     margin-top: 1%;
     cursor: pointer;
     text-align: right;
-    color: var(--base-new);
+    color: var(--tab-panel-text-color);
     font-size: 12px !important;
     font-weight: 500;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    transition: 0.2s;
 
     &:hover {
-      color: var(--color-white);
+      color: var(--tab-panel-text-color-hover);
+      transition: 0.2s;
     }
   }
 
@@ -187,15 +195,24 @@
     height: 15px;
     width: 15px;
 
+    &:hover {
+      &::before,
+      &::after {
+        background: var(--rgb-primary-text-color);
+        transition: 0.2s;
+      }
+    }
+
     &::before,
     &::after {
-      background: var(--text-table-grey);
+      background: var(--rgb-secondary-contrast-cta-color);
       content: '';
       position: absolute;
       top: 65%;
       left: 0;
       height: 2px;
       width: 100%;
+      transition: 0.2s;
     }
 
     &::before {
@@ -213,13 +230,15 @@
     margin-top: 1%;
     cursor: pointer;
     text-align: right;
-    color: var(--base-new);
+    color: var(--tab-panel-text-color);
     font-size: 12px !important;
     font-weight: 500;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    transition: 0.2s;
 
     &:hover {
-      color: var(--color-white);
+      color: var(--tab-panel-text-color-hover);
+      transition: 0.2s;
     }
   }
 

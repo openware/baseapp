@@ -25,6 +25,7 @@
                 padding-right: 0 !important;
                 text-align: center !important;
                 width: 100% !important;
+                color: var(--rgb-secondary-contrast-cta-color);
               }
             }
           }
@@ -47,6 +48,7 @@
                 padding-right: 0 !important;
                 text-align: center !important;
                 width: 100% !important;
+                color: var(--rgb-secondary-contrast-cta-color);
               }
             }
           }
@@ -64,7 +66,7 @@
 
     &__body {
       td {
-        color: var(--bright-1);
+        color: var(--table-text-color);
         width: 33% !important;
 
         span:first-child.cr-decimal__opacity {
@@ -121,7 +123,7 @@
       }
 
       .cr-order-book {
-        border-bottom: 1px solid var(--header-border);
+        border-bottom: 1px solid var(--order-book-last-market-price-border-color);
         display: flex;
         height: calc(50% - 25px) !important;
         position: absolute;
@@ -177,7 +179,7 @@
         }
 
         &:last-child {
-          border-top: 1px solid var(--header-border);
+          border-top: 1px solid var(--order-book-last-market-price-border-color);
           left: 0;
           right: 0;
           top: calc(50% + 35px);
@@ -235,7 +237,7 @@
       }
 
       &-market {
-        border-top: 1px solid var(--header-border);
+        border-top: 1px solid var(--order-book-last-market-price-border-color);
         position: fixed;
       }
 

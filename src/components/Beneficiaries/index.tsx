@@ -282,7 +282,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                         <div className="select__left">
                             <span className="select__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.name')}</span>
                             <span className="select__left__address">{currentWithdrawalBeneficiary.name}</span>
-                            <span className="select_left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.fullName')}</span>
+                            <span className="select__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.fullName')}</span>
                             <span className="select__left__address">{currentWithdrawalBeneficiary.data ? (currentWithdrawalBeneficiary.data as BeneficiaryBank).full_name : ''}</span>
                         </div>
                         <div className="select__right">

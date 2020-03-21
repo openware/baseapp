@@ -4,8 +4,8 @@
     display: flex;
     overflow: hidden;
     flex-direction: row;
-    background-color: var(--trading-header-selector-background);
-    border-bottom: 1px solid var(--trading-header-selector-border);
+    background-color: var(--market-selector-header-background-color);
+    border-bottom: 1px solid var(--tab-panel-border-line-color);
     z-index: 9999;
     position: sticky;
     top: 0;
@@ -17,15 +17,20 @@
     justify-content: center;
     height: calc(var(--big-gap) * 0.84);
     padding: 0 calc(var(--big-gap) * 0.3);
-    color: var(--trading-header-fastsearch-button-color);
+    color: var(--market-selector-header-text-color);
     font-size: var(--trading-header-font-size);
-    background-color: var(--trading-header-selector-background);
-    border-bottom: 2px solid var(--trading-header-selector-background);
+    background-color: var(--market-selector-header-background-color);
     cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      color: var(--market-selector-header-text-color-hover);
+      transition: 0.2s;
+    }
 
     &-active {
-      color: var(--trading-header-fastsearch-button-color-active);
-      border-bottom: 2px solid var(--trading-header-fastsearch-button-border-active);
+      color: var(--market-selector-header-text-color-active);
+      border-bottom: 2px solid var(--market-selector-header-text-border-active);
     }
   }
 }

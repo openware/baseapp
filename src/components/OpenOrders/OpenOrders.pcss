@@ -23,6 +23,10 @@
   }
 
   .cr-table {
+    td:first-child {
+      color: var(--rgb-primary-text-color);
+    }
+
     th,
     td {
       &:first-child {
@@ -43,7 +47,12 @@
       }
 
       .close {
-        color: var(--table-text-color);
+        color: var(--rgb-secondary-contrast-cta-color);
+        transition: 0.2s;
+
+        &:hover {
+          color: var(--rgb-primary-text-color);
+        }
       }
     }
   }

@@ -6,7 +6,7 @@
 }
 
 .pg-trading-header-selector {
-  background-color: var(--trading-header-selector-background);
+  background-color: var(--market-selector-header-background-color);
   border-radius: 4px;
   height: 100%;
   display: flex;
@@ -21,13 +21,13 @@
     z-index: 20;
     animation-name: pg-trading-header-selector-search;
     animation-duration: var(--market-selector-animation-duration);
-    background: var(--trading-header-background);
+    background: var(--market-selector-background-color);
   }
 
   &-search {
     height: calc(var(--big-gap) * 0.7);
     margin: 0 6px 6px 6px;
-    border: solid 1px var(--trading-header-search-border);
+    border: solid 1px var(--input-border-color);
     border-radius: 4px;
     display: flex;
     overflow: hidden;
@@ -38,7 +38,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border-right: solid 1px var(--trading-header-search-border);
+      border-right: solid 1px var(--input-border-color);
     }
 
     &-field {
@@ -46,7 +46,7 @@
       border: none;
       outline: none;
       background: none;
-      color: var(--bright-1);
+      color: var(--input-text-color);
       padding: 0 calc(var(--big-gap) * 0.1);
       font-size: calc(var(--big-gap) * 0.25);
       line-height: calc(var(--big-gap) * 0.25);
@@ -61,7 +61,6 @@
 
   &-title {
     font-size: var(--trading-header-font-size);
-    color: var(--trading-header-selector-title);
     padding-left: calc(var(--big-gap) * 0.95);
     white-space: nowrap;
   }
@@ -109,8 +108,8 @@
   }
 
   &-list-container-open {
-    background: var(--trading-header-background);
-    box-shadow: 4px 4px 10px rgba(46, 76, 128, 0.2);
+    background: var(--market-selector-background-color);
+    box-shadow: 4px 4px 10px var(--shadow-color-level-2);
     display: block;
     height: 100vh;
     left: calc(var(--big-gap) * -0.23);

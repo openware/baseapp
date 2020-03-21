@@ -1,6 +1,6 @@
 .pg-ticker-table {
   align-items: center;
-  background: var(--main-bg);
+  background: var(--table-background-color);
   border-radius: 3px;
   display: block;
   flex-direction: column;
@@ -11,8 +11,8 @@
 
   &__filter {
     align-items: center;
-    background: var(--header-bg);
-    border-bottom: 0.5px solid rgba(255, 255, 255, 0.25);
+    background: var(--rgb-subheader-background-color);
+    border-bottom: 0.5px solid var(--table-border-color);
     display: flex;
     flex-direction: row;
     height: 57px;
@@ -51,7 +51,7 @@
         width: 54px;
 
         &__link {
-          color: var(--placeholder-text);
+          color: var(--rgb-secondary-contrast-cta-color);
           text-decoration: none;
           font-size: 12px;
           line-height: 12px;
@@ -59,15 +59,16 @@
         }
 
         &:hover > .navigation__item__link {
-          color: var(--white);
+          transition: .2s;
+          color: var(--rgb-primary-text-color);
         }
 
         &--active {
-          border-bottom: 2px solid var(--accent);
+          border-bottom: 2px solid var(--rgb-primary-cta-color);
           padding-top: 2px;
 
           .navigation__item__link {
-            color: var(--white);
+            color: var(--rgb-primary-text-color);
           }
         }
       }
@@ -113,7 +114,7 @@
 
         th, td {
           align-items: center;
-          color: var(--placeholder-text);
+          color: var(--table-text-color);
           display: flex;
           flex-direction: row;
           font-weight: normal;
@@ -147,10 +148,10 @@
     tbody tr {
       &:hover {
         cursor: pointer;
-        background: var(--table-hover-bg);
+        background: var(--table-row-selector-color);
 
         td {
-          color: var(--bright);
+          color: var(--rgb-primary-text-color);
         }
       }
     }

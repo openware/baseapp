@@ -10,7 +10,7 @@
     width: calc(var(--gap) * 70.66);
   }
   .cr-sign-in-form {
-    background: var(--base-bright);
+    background: var(--rgb-body-background-color);
     margin: 0 auto;
     border-radius: calc(var(--gap) * 0.66);
     display: flex;
@@ -20,7 +20,7 @@
     &__options-group {
       width: 100%;
       height: calc(var(--big-gap) * 0.97);
-      border-bottom: 2px solid var(--sign-in-text);
+      border-bottom: 2px solid var(--divider-color-level-2);
     }
 
     &__button-wrapper {
@@ -29,33 +29,13 @@
     }
 
     &__option {
-      background: var(--header);
+      background: var(--rgb-subheader-background-color);
       .__selected {
-        border-bottom: 2px solid var(--sign-in-accent);
-        color: var(--color-white);
+        border-bottom: 2px solid var(--rgb-primary-cta-color);
+        color: var(--rgb-primary-text-color);
       }
     }
 
-    .cr-button {
-      color: var(--white);
-      background: var(--button-primary);
-      border-radius: calc(var(--gap) * 0.5);
-      font-size: calc(var(--gap) * 2.66);
-      margin-top: calc(var(--gap) * 1.55);
-
-      &--disabled {
-        color: var(--button-dark-gray);
-        background: var(--button-disabled) !important;
-      }
-
-      &:hover {
-        background: var(--button-hover) !important;
-      }
-
-      &:active {
-        background: var(--button-active) !important;
-      }
-    }
     &__title {
       background: transparent;
       font-size: calc(var(--gap) * 4);
@@ -63,20 +43,12 @@
     }
 
     &__forgot {
-      color: var(--base-new);
+      color: var(--rgb-secondary-contrast-cta-color);
       padding-top: calc(var(--gap) * 1.33);
-    }
-    &__input {
-      input {
-        color: var(--color-white);
-        font-size: calc(var(--gap) * 2.33);
-        border: 1px solid var(--input-block-border-color);
-        border-radius: calc(var(--gap) * 0.66);
-      }
     }
     &__error,
     &__error-message {
-      color: var(--order-error-color);
+      color: var(--rgb-system-red);
     }
     &__footer {
       position: absolute;
@@ -88,18 +60,17 @@
         font-weight: bolder;
       }
       &-signup {
-        color: var(--active-color);
         font-size: calc(var(--gap) * 2.33);
         font-weight: bold;
       }
     }
     &__group--focused {
       .cr-sign-in-form__label {
-        color: var(--sign-in-accent);
+        color: var(--input-legend-color-active);
       }
 
       input {
-        border-color: var(--sign-in-accent) !important;
+        border-color: var(--input-border-color-active) !important;
       }
     }
   }

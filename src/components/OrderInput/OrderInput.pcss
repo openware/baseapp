@@ -3,14 +3,18 @@
   justify-content: space-between;
 
   &__fieldset {
-    background-color: var(--order-input-input-bg);
-    border: 1px solid var(--order-input-border-color);
-    color: var(--order-input-input-color);
+    background-color: var(--rgb-input-background-color);
+    border: 1px solid var(--input-border-color);
+    color: var(--input-text-color);
     display: inline-block;
     position: relative;
     margin: 0;
     margin-top: calc(var(--gap) * 2);
     width: 100%;
+
+    label {
+      color: var(--input-legend-color);
+    }
 
     .custom-input {
       label {
@@ -25,17 +29,17 @@
     }
 
     &--focused {
-      border: 1px solid var(--accent) !important;
+      border: 1px solid var(--input-border-color-active) !important;
 
       label {
-        color: var(--accent);
+        color: var(--input-legend-color-active);
       }
     }
   }
 
   &__crypto-icon {
-    background-color: var(--order-input-input-bg);
-    border: 1px solid var(--order-input-border-color);
+    background-color: var(--rgb-input-background-color);
+    border: 1px solid var(--input-border-color);
     border-left: none;
     display: inline-block;
     margin-top: calc(var(--gap) * 2);
@@ -54,7 +58,7 @@
     &__fieldset {
       label {
         font-size: calc(var(--gap) * 1.5);
-        color: var(--order-input-border-color);
+        color: var(--input-border-color);
       }
     }
 
