@@ -54,7 +54,7 @@ describe('CurrencyHistory', () => {
 
     const fakeHeaders = { total: 2 };
 
-    const fakeSuccessPayloadFirstPage = { list: fakeHistory, page: 0, fullHistory: fakeHeaders.total };
+    const fakeSuccessPayloadFirstPage = { list: fakeHistory, page: 0, total: fakeHeaders.total };
     const fakeFetchPayloadFirstPage = { page: 0, currency: 'btc', type: 'deposits', limit: 6 };
 
     const mockHistory = () => {

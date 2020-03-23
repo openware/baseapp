@@ -12,14 +12,14 @@ import { WalletHistoryList } from './types';
 export interface HistoryState {
     list: WalletHistoryList;
     fetching: boolean;
-    fullHistory: number;
+    total: number;
     page: number;
 }
 
 const initialState: HistoryState = {
     list: [],
     fetching: false,
-    fullHistory: 0,
+    total: 0,
     page: 0,
 };
 
@@ -34,13 +34,13 @@ export const historyReducer = (state = initialState, action: HistoryActions) => 
                 list: action.payload.list,
                 fetching: false,
                 page: action.payload.page,
-                fullHistory: action.payload.fullHistory,
+                total: action.payload.total,
             };
         case HISTORY_ERROR: {
-            return { ...state, list: [], fetching: false, fullHistory: 0, page: 0 };
+            return { ...state, list: [], fetching: false, total: 0, page: 0 };
         }
         case HISTORY_RESET: {
-            return { ...state, list: [], fullHistory: 0, page: 0 };
+            return { ...state, list: [], total: 0, page: 0 };
         }
         case HISTORY_PUSH_FINISH: {
             let list = [...action.payload];

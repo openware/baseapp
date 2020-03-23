@@ -24,8 +24,8 @@ import {
     selectCurrencies,
     selectCurrentPage,
     selectFirstElemIndex,
-    selectFullHistory,
     selectHistory,
+    selectHistoryTotal,
     selectHistoryLoading,
     selectLastElemIndex,
     selectMarkets,
@@ -46,7 +46,7 @@ interface ReduxProps {
     wallets: Wallet[];
     list: WalletHistoryList;
     fetching: boolean;
-    fullHistory: number;
+    total: number;
     page: number;
     pageCount: number;
     firstElemIndex: number;
@@ -91,14 +91,15 @@ class HistoryComponent extends React.Component<Props> {
     }
 
     public renderContent = () => {
-        const { type, firstElemIndex, lastElemIndex, fullHistory, page, nextPageExists } = this.props;
+        const { type, firstElemIndex, lastElemIndex, total, page, nextPageExists } = this.props;
+
         return (
             <React.Fragment>
                 <History headers={this.renderHeaders(type)} data={this.retrieveData()}/>
                 <Pagination
                     firstElemIndex={firstElemIndex}
                     lastElemIndex={lastElemIndex}
-                    total={fullHistory}
+                    total={total}
                     page={page}
                     nextPageExists={nextPageExists}
                     onClickPrevPage={this.onClickPrevPage}
@@ -243,7 +244,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     wallets: selectWallets(state),
     list: selectHistory(state),
     fetching: selectHistoryLoading(state),
-    fullHistory: selectFullHistory(state),
+    total: selectHistoryTotal(state),
     page: selectCurrentPage(state),
     pageCount: selectPageCount(state, 25),
     firstElemIndex: selectFirstElemIndex(state, 25),
