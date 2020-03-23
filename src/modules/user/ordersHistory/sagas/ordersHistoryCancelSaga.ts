@@ -1,6 +1,6 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
-import { API, RequestOptions } from '../../../../api';
+import { API, isFinexEnabled, RequestOptions } from '../../../../api';
 import { alertPush } from '../../../index';
 import {
     ordersHistoryCancelError,
@@ -18,7 +18,13 @@ const ordersCancelOptions = (csrfToken?: string): RequestOptions => {
 export function* ordersHistoryCancelSaga(action: OrdersHistoryCancelFetch) {
     try {
         const { id } = action.payload;
-        yield call(API.post(ordersCancelOptions(getCsrfToken())), `/market/orders/${id}/cancel`, { id });
+
+        if (isFinexEnabled()) {
+            yield call(API.post(ordersCancelOptions(getCsrfToken())), `/market/orders/cancel/${id}`, { id });
+        } else {
+            yield call(API.post(ordersCancelOptions(getCsrfToken())), `/market/orders/${id}/cancel`, { id });
+        }
+
         yield put(alertPush({ message: ['success.order.cancelling'], type: 'success'}));
     } catch (error) {
         yield put(ordersHistoryCancelError());
