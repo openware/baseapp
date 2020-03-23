@@ -49,7 +49,6 @@ describe('Orders History reducer', () => {
         const payload: actions.UserOrdersHistoryDataPayload = {
             list: apiList.map(convertOrderAPI),
             pageIndex: 1,
-            total: 2,
         };
         const expectedState = { ...initialState, ...payload, fetching: false };
         expect(ordersHistoryReducer(initialState, actions.userOrdersHistoryData(payload))).toEqual(expectedState);
@@ -57,7 +56,7 @@ describe('Orders History reducer', () => {
 
     it('should handle USER_ORDERS_HISTORY_ERROR', () => {
         const initialState = { ...initialOrdersHistoryState, fetching: true };
-        const expectedState = { ...initialOrdersHistoryState, list: [], total: 0, pageIndex: 0, fetching: false };
+        const expectedState = { ...initialOrdersHistoryState, list: [], pageIndex: 0, fetching: false };
         expect(ordersHistoryReducer(initialState, actions.userOrdersHistoryError())).toEqual(expectedState);
     });
 
@@ -101,7 +100,7 @@ describe('Orders History reducer', () => {
 
     it('should handle ORDERS_HISTORY_RESET', () => {
         const initialState = { ...initialOrdersHistoryState, fetching: true };
-        const expectedState = { ...initialOrdersHistoryState, list: [], total: 0, pageIndex: 0, fetching: false };
+        const expectedState = { ...initialOrdersHistoryState, list: [], pageIndex: 0, fetching: false };
         expect(ordersHistoryReducer(initialState, actions.resetOrdersHistory())).toEqual(expectedState);
     });
 

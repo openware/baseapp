@@ -4,28 +4,17 @@ import { OrderCommon } from '../../types';
 export const selectOrdersHistory = (state: RootState): OrderCommon[] =>
     state.user.ordersHistory.list;
 
-export const selectTotalOrdersHistory = (state: RootState): number =>
-    state.user.ordersHistory.total;
-
 export const selectCurrentPageIndex = (state: RootState): number =>
     state.user.ordersHistory.pageIndex;
-
-export const selectOrdersPageCount = (state: RootState, limit: number): number =>
-    Math.ceil(state.user.ordersHistory.total / limit);
 
 export const selectOrdersFirstElemIndex = (state: RootState, limit: number): number =>
     (state.user.ordersHistory.pageIndex * limit) + 1;
 
-export const selectOrdersLastElemIndex = (state: RootState, limit: number): number => {
-    if ((state.user.ordersHistory.pageIndex * limit) + limit > selectTotalOrdersHistory(state)) {
-        return selectTotalOrdersHistory(state);
-    } else {
-        return (state.user.ordersHistory.pageIndex * limit) + limit;
-    }
-};
+export const selectOrdersLastElemIndex = (state: RootState, limit: number): number =>
+    (state.user.ordersHistory.pageIndex * limit) + state.user.ordersHistory.list.length;
 
 export const selectOrdersNextPageExists = (state: RootState, limit: number): boolean =>
-    (state.user.ordersHistory.pageIndex + 1) < selectOrdersPageCount(state, limit);
+    state.user.ordersHistory.list.length === limit;
 
 export const selectOrdersHistoryLoading = (state: RootState): boolean =>
     state.user.ordersHistory.fetching;

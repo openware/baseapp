@@ -57,16 +57,15 @@ describe('Orders History', () => {
             avg_price: '0.2',
         },
     ];
-    const fakeHeaders = { total: 2 };
+
     const fakeFetchPayloadFirstPage = { pageIndex: 0, type: 'all', limit: 25 };
     const fakeSuccessPayloadFirstPage = {
         list: fakeHistory.map(convertOrderAPI),
         pageIndex: 0,
-        total: fakeHeaders.total,
     };
 
     const mockOrdersHistory = () => {
-        mockAxios.onGet(`/market/orders?limit=25&page=1`).reply(200, fakeHistory, fakeHeaders);
+        mockAxios.onGet(`/market/orders?limit=25&page=1`).reply(200, fakeHistory);
     };
 
     const expectedActionsFetchWithFirstPage = [

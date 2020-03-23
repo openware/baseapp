@@ -22,7 +22,7 @@ describe('Orders History actions', () => {
     });
 
     it('should check userOrdersHistoryData action creator', () => {
-        const payload = { list: [], pageIndex: 2, total: 0 };
+        const payload = { list: [], pageIndex: 2 };
         const expectedAction = { type: ORDERS_HISTORY_DATA, payload };
         expect(actions.userOrdersHistoryData(payload)).toEqual(expectedAction);
     });

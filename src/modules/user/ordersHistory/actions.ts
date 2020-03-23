@@ -24,7 +24,6 @@ interface UserOrdersHistoryFetchPayload {
 export interface UserOrdersHistoryDataPayload {
     list: OrderCommon[];
     pageIndex: number;
-    total: number;
 }
 
 export interface UserOrdersHistoryFetch {
