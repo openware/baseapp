@@ -10,10 +10,6 @@ interface PaginationProps {
      */
     lastElemIndex: number;
     /**
-     * Number shows total amount of elements
-     */
-    total: number;
-    /**
      * Previous page click handler
      */
     onClickPrevPage: () => void;
@@ -29,6 +25,18 @@ interface PaginationProps {
      * Value for defining if next page exist or not
      */
     nextPageExists: boolean;
+    /**
+     * Number shows total amount of elements
+     */
+    total?: number;
+    /**
+     * Separator between first and last values
+     */
+    separator?: string;
+    /**
+     * Text before total value
+     */
+    totalText?: string;
 }
 
 
@@ -82,13 +90,44 @@ const NextPageIcon: React.FunctionComponent<NextPageIconProps> = ({ disabled }) 
  * Pagination component helper for tables
  */
 class Pagination extends React.Component<PaginationProps> {
+    public renderInfoElement = () => {
+        const {
+            firstElemIndex,
+            lastElemIndex,
+            separator,
+            total,
+            totalText,
+        } = this.props;
+
+        if (total) {
+            return (
+                <p>
+                    <span>{firstElemIndex}</span>
+                    <span>{separator || ' - '}</span>
+                    <span>{lastElemIndex}</span>
+                    <span>{totalText || ' of '}</span>
+                    <span>{total}</span>
+                </p>
+            );
+        }
+
+        return (
+            <p>
+                <span>{firstElemIndex}</span>
+                <span>{separator || ' - '}</span>
+                <span>{lastElemIndex}</span>
+            </p>
+        );
+    }
+
     public render() {
-        const { firstElemIndex, lastElemIndex, total, page, nextPageExists } = this.props;
+        const {page, nextPageExists } = this.props;
         const prevDisabled = page === 0;
         const nextDisabled = !nextPageExists;
+
         return (
             <div className="pg-history-elem__pagination">
-                <p>{firstElemIndex} - {lastElemIndex} of {total}</p>
+                {this.renderInfoElement()}
                 <button
                     className="pg-history__pagination-prev"
                     onClick={this.onClickPrevPage}
