@@ -21,11 +21,12 @@ export function* historySaga(action: HistoryFetch) {
         const params = getHistorySagaParam(action.payload);
         const { data, headers } = yield call(API.get(config), `${coreEndpoint[type]}?${params}`);
         let updatedData = data;
+
         if (type === 'trades') {
             updatedData = data.slice(0, defaultStorageLimit());
         }
 
-        yield put(successHistory({ list: updatedData, page, fullHistory: headers.total }));
+        yield put(successHistory({ list: updatedData, page, total: headers.total }));
     } catch (error) {
         yield put(failHistory([]));
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

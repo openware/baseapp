@@ -15,7 +15,7 @@ describe('Currency History actions', () => {
     });
 
     it('should check successHistory action creator', () => {
-        const payload = { list: [], page: 2, fullHistory: 0 };
+        const payload = { list: [], page: 2 };
         const expectedAction = { type: NEW_HISTORY_DATA, payload };
         expect(actions.successNewHistory(payload)).toEqual(expectedAction);
     });

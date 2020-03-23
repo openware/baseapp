@@ -14,7 +14,6 @@ import {
     RootState,
     selectCurrentMarket,
     selectCurrentPrice,
-    selectFullHistory,
     selectHistory,
     selectHistoryLoading,
     selectMarkets,
@@ -27,7 +26,6 @@ interface ReduxProps {
     marketsData: Market[];
     list: WalletHistoryList;
     fetching: boolean;
-    fullHistory: number;
     currentMarket: Market | undefined;
     currentPrice: number | undefined;
 }
@@ -125,7 +123,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     marketsData: selectMarkets(state),
     list: selectHistory(state),
     fetching: selectHistoryLoading(state),
-    fullHistory: selectFullHistory(state),
     currentMarket: selectCurrentMarket(state),
     currentPrice: selectCurrentPrice(state),
 });
