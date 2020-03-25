@@ -94,6 +94,7 @@ describe('Saga: currenciesFetchSaga', () => {
             });
         });
         store.dispatch(currenciesFetch());
+
         return promise;
     });
 
@@ -113,6 +114,7 @@ describe('Saga: currenciesFetchSaga', () => {
             });
         });
         store.dispatch(currenciesFetch());
+
         return promise;
     });
 });

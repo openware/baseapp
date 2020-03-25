@@ -65,6 +65,7 @@ describe('Change Forgot Password Saga', () => {
         });
 
         store.dispatch(changeForgotPasswordFetch(fakeNewPassword));
+
         return promise;
     });
 
@@ -81,6 +82,7 @@ describe('Change Forgot Password Saga', () => {
         });
 
         store.dispatch(changeForgotPasswordFetch(fakeNewPassword));
+
         return promise;
     });
 
@@ -96,6 +98,7 @@ describe('Change Forgot Password Saga', () => {
             });
         });
         store.dispatch(changeForgotPasswordFetch(fakeNewPassword));
+
         return promise;
     });
 });

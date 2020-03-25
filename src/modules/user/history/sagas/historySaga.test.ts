@@ -82,6 +82,7 @@ describe('CurrencyHistory', () => {
             });
         });
         store.dispatch(fetchHistory(fakeFetchPayloadFirstPage));
+
         return promise;
     });
 
@@ -97,6 +98,7 @@ describe('CurrencyHistory', () => {
             });
         });
         store.dispatch(fetchHistory(fakeFetchPayloadFirstPage));
+
         return promise;
     });
 });

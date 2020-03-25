@@ -48,6 +48,7 @@ describe('Email Verification Saga', () => {
         });
 
         store.dispatch(emailVerificationFetch(fakePayload));
+
         return promise;
     });
 
@@ -63,6 +64,7 @@ describe('Email Verification Saga', () => {
             });
         });
         store.dispatch(emailVerificationFetch(fakePayload));
+
         return promise;
     });
 });

@@ -5,8 +5,10 @@ const ListReduceHelper = (list, order) => {
         if (order.id !== item.id) {
             memo.push(item);
         }
+
         return memo;
     }, []);
+
     return [{...order}].concat(listReduce);
 };
 
@@ -20,15 +22,18 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
             if (index !== -1) {
                 return ListReduceHelper(list, order);
             }
+
             return list;
         case 'done':
             if (index === -1) {
                 return [{...order}].concat(list);
             }
+
             return list.map(item => {
                 if (order.id === item.id) {
                     return {...order};
                 }
+
                 return item;
             });
         case 'cancel':
@@ -38,6 +43,7 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
                 if (order.id !== item.id) {
                     memo.push(item);
                 }
+
                 return memo;
             }, []);
     }

@@ -77,6 +77,7 @@ export class TabPanel extends React.Component<TabPanelProps> {
                 .map(this.renderTabContent);
 
         const navCx = 'cr-tab-panel__navigation-container-navigation';
+
         return (
             <div className={className}>
                 <div className="cr-tab-panel__navigation-container draggable-container">

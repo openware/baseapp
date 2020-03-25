@@ -1,5 +1,5 @@
-import { InputGroup, FormControl } from 'react-bootstrap';
 import * as React from 'react';
+import { FormControl, InputGroup } from 'react-bootstrap';
 
 export interface CustomInputProps {
     type: string;
@@ -73,7 +73,7 @@ class CustomInput extends React.Component<Props> {
 
     private handleChangeValue = (e: OnChangeEvent) => {
         this.props.handleChangeInput && this.props.handleChangeInput(e.target.value);
-    }
+    };
 }
 
 export {

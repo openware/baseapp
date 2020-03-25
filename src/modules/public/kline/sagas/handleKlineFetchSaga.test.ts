@@ -88,6 +88,7 @@ describe('Kline', () => {
             });
         });
         store.dispatch(klineFetch(fakePayload));
+
         return promise;
     });
 
@@ -103,6 +104,7 @@ describe('Kline', () => {
             });
         });
         store.dispatch(klineFetch(fakePayload));
+
         return promise;
     });
 });

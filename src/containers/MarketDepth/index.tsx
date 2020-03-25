@@ -1,7 +1,8 @@
-import { MarketDepths } from '../../components/MarketDepths';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { Decimal } from '../../components/Decimal';
+import { MarketDepths } from '../../components/MarketDepths';
 import {
     Market,
     RootState,
@@ -9,7 +10,6 @@ import {
     selectDepthAsks,
     selectDepthBids,
 } from '../../modules';
-import { Decimal } from '../../components/Decimal';
 
 interface ReduxProps {
     asksItems: string[][];
@@ -54,6 +54,7 @@ class MarketDepthContainer extends React.Component<Props> {
             strokeGrid: ' #B8E9F5',
             strokeAxis: '#cccccc',
         };
+
         return (
             <div className="cr-market-depth">
                 <div className="cr-table-header__content">
@@ -102,6 +103,7 @@ class MarketDepthContainer extends React.Component<Props> {
             const numberPrice = Decimal.format(price, currentMarket.price_precision);
             cumulativeVolumeData = +numberVolume + cumulativeVolumeData;
             cumulativePriceData = cumulativePriceData + (+numberPrice * +numberVolume);
+
             return {
                 [type]: Decimal.format(cumulativeVolumeData, currentMarket.amount_precision),
                 cumulativePrice: Decimal.format(cumulativePriceData, currentMarket.price_precision),

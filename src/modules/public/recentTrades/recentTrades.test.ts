@@ -134,6 +134,7 @@ describe('Trades module', () => {
             });
 
             store.dispatch(recentTradesFetch(currentMarket));
+
             return promise;
         });
 
@@ -150,6 +151,7 @@ describe('Trades module', () => {
                 });
             });
             store.dispatch(recentTradesFetch(currentMarket));
+
             return promise;
         });
     });

@@ -1,6 +1,6 @@
-import { Button } from 'react-bootstrap';
 import cr from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import {
   connect,
@@ -100,6 +100,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 
         const updatePassword = e => this.handleChange('password', e);
         const updateConfirmPassword = e => this.handleChange('confirmPassword', e);
+
         return (
             <div className="pg-change-forgotten-password-screen" onKeyPress={this.handleEnterPress}>
                 <div className="pg-change-forgotten-password-screen__container">
@@ -187,7 +188,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                     break;
             }
         };
-    }
+    };
 
     private handleSendNewPassword = () => {
         const { password, confirmPassword, confirmToken } = this.state;
@@ -222,7 +223,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                 this.handleSendNewPassword();
             }
         }
-    }
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

@@ -10,6 +10,7 @@ const randomAddress = () => Math.random().toString(36).substring(7);
 
 const randomCode = () => {
     const codes = currencyCodes();
+
     return codes[randomInteger(0, codes.length)];
 };
 

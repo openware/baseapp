@@ -71,6 +71,7 @@ describe('Alert success handler', () => {
             });
         });
         store.dispatch(alertPush(successActionPayload));
+
         return promise;
     });
 });

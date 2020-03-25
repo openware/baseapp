@@ -4,10 +4,10 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../../helpers/jest';
 import {
+    resendCode,
     sendCode,
     sendCodeData,
     sendCodeError,
-    resendCode,
 } from '../actions';
 
 describe('Module: label', () => {
@@ -55,6 +55,7 @@ describe('Module: label', () => {
         });
 
         store.dispatch(sendCode(data));
+
         return promise;
     });
 
@@ -70,6 +71,7 @@ describe('Module: label', () => {
             });
         });
         store.dispatch(sendCode(data));
+
         return promise;
     });
 
@@ -92,6 +94,7 @@ describe('Module: label', () => {
         });
 
         store.dispatch(sendCode(data));
+
         return promise;
     });
 });

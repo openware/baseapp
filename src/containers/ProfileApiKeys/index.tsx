@@ -184,6 +184,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
     private renderModalHeader = () => {
         const headerText = this.props.modal.action === 'createSuccess' ? this.t('page.body.profile.apiKeys.modal.created_header')
             : this.t('page.body.profile.apiKeys.modal.header');
+
         return (
             <div className="cr-email-form__options-group">
                 <div className="cr-email-form__option">
@@ -335,6 +336,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                 </div>
             </div>
         ) : body;
+
         return (
             <React.Fragment>
                 {body}
@@ -429,7 +431,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         const payload: ApiKeyDeleteFetch['payload'] = {kid: this.props.modal.apiKey.kid, totp_code: this.state.otpCode};
         this.props.deleteApiKey(payload);
         this.setState({otpCode: ''});
-    }
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({

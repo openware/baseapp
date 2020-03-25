@@ -1,12 +1,12 @@
-import { OrderInput } from '../OrderInput';
-import { PercentageButton } from '../PercentageButton';
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { Decimal } from '../Decimal';
 import { cleanPositiveFloatInput, getAmount, getTotalPrice } from '../../helpers';
+import { Decimal } from '../Decimal';
 import { DropdownComponent } from '../Dropdown';
 import { OrderProps } from '../Order';
+import { OrderInput } from '../OrderInput';
+import { PercentageButton } from '../PercentageButton';
 
 // tslint:disable:no-magic-numbers jsx-no-lambda jsx-no-multiline-js
 type OnSubmitCallback = (order: OrderProps) => void;
@@ -126,6 +126,7 @@ const checkButtonIsDisabled = (safeAmount: number, safePrice: number, price: str
     const invalidAmount = safeAmount <= 0;
     const invalidLimitPrice = Number(price) <= 0 && state.orderType === 'Limit';
     const invalidMarketPrice = safePrice <= 0 && state.orderType === 'Market';
+
     return props.disabled || !props.available || invalidAmount || invalidLimitPrice || invalidMarketPrice;
 };
 
@@ -422,5 +423,5 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
 
             this.handleSubmit();
         }
-    }
+    };
 }

@@ -55,6 +55,7 @@ describe('Orders Cancel All', () => {
             });
         });
         store.dispatch(ordersCancelAllFetch(fakeFetchPayload));
+
         return promise;
     });
 
@@ -70,6 +71,7 @@ describe('Orders Cancel All', () => {
             });
         });
         store.dispatch(ordersCancelAllFetch(fakeFetchPayload));
+
         return promise;
     });
 });

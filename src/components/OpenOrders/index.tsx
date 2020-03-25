@@ -99,5 +99,5 @@ export class OpenOrders extends React.Component<OpenOrdersProps> {
 
     private handleCancel = (index: number) => () => {
         this.props.onCancel(index);
-    }
+    };
 }

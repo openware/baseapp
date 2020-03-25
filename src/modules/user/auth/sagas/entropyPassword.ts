@@ -2,7 +2,7 @@
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import { alertPush } from '../../../public/alert';
-import { entropyPasswordError, EntropyPasswordFetch, entropyPasswordData } from '../actions';
+import { entropyPasswordData, entropyPasswordError, EntropyPasswordFetch } from '../actions';
 
 const config: RequestOptions = {
     apiVersion: 'barong',

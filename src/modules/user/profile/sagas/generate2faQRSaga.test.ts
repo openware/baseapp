@@ -54,6 +54,7 @@ describe('Module: Generate 2fa QR', () => {
         });
 
         store.dispatch(generate2faQRFetch());
+
         return promise;
     });
 
@@ -69,6 +70,7 @@ describe('Module: Generate 2fa QR', () => {
             });
         });
         store.dispatch(generate2faQRFetch());
+
         return promise;
     });
 });

@@ -56,6 +56,7 @@ class ReferralProgramClass extends React.Component<Props> {
     public render() {
         const { user } = this.props;
         const referralLink = `${window.document.location.origin}/signup?refid=${user.uid}`;
+
         return (
             <div className="pg-profile-page__referral mb-3">
                 <fieldset className="pg-copyable-text__section" onClick={this.doCopy}>

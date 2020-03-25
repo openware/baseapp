@@ -77,6 +77,7 @@ describe('api keys saga', () => {
             });
         });
         store.dispatch(apiKeyCreateFetch(fakePayload));
+
         return promise;
     });
 
@@ -92,6 +93,7 @@ describe('api keys saga', () => {
             });
         });
         store.dispatch(apiKeyCreateFetch(fakePayload));
+
         return promise;
     });
 });

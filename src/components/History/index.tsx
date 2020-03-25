@@ -20,6 +20,7 @@ export class History extends React.PureComponent<HistoryProps> {
     public render() {
         const { headers = this.defaultHeaders } = this.props;
         const tableData = this.props.data.map(row => row.map(this.mapRows));
+
         return (
             <Table
                 data={tableData}
@@ -42,6 +43,7 @@ export class History extends React.PureComponent<HistoryProps> {
     private mapRows = (cell: CellData, index: number) => {
         const { headers = this.defaultHeaders } = this.props;
         const actionIndex = headers.findIndex(header => header === 'Action');
+
         return index === actionIndex ? this.renderAction(cell as string) : cell;
-    }
+    };
 }

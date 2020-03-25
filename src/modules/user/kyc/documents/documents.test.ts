@@ -74,6 +74,7 @@ describe('KYC - Documents', () => {
                 });
             });
             store.dispatch(sendDocuments(payloadFormData));
+
             return promise;
         });
 
@@ -91,6 +92,7 @@ describe('KYC - Documents', () => {
                 });
             });
             store.dispatch(sendDocuments(payloadFormData));
+
             return promise;
         });
     });

@@ -45,7 +45,7 @@
     "semicolon": [
       true,
       "always",
-      "ignore-bound-class-methods"
+      "strict-bound-class-methods"
     ],
     "no-console": true,
     "ban": [
@@ -264,6 +264,8 @@
       "check-typecast"
     ],
     "no-any": false,
-    "no-var-requires": false
+    "no-var-requires": false,
+    "ordered-imports": true,
+    "newline-before-return": true
   }
 }

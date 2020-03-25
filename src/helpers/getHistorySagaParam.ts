@@ -4,6 +4,7 @@ export const getHistorySagaParam = (action: HistoryFetchPayload) => (Object.entr
     .filter(w => w[1] !== undefined && w[0] !== 'type')
     .map(k => {
         const param = k[0] === 'page' ? Number(k[1]) + 1 : k[1];
+
         return `${k[0]}=${encodeURIComponent(param)}`;
     })
     .join('&'));

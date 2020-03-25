@@ -45,6 +45,7 @@ export function* tickersSaga(action: MarketsTickersFetch) {
 
             const convertedTickers = pairs.reduce((result, pair) => {
                 result[pair] = tickers[pair].ticker;
+
                 return result;
             }, {});
             yield put(marketsTickersData(convertedTickers));

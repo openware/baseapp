@@ -66,6 +66,7 @@ describe('Send Identity Saga', () => {
         });
 
         store.dispatch(sendIdentity(confirmIdentityPayload));
+
         return promise;
     });
 
@@ -81,6 +82,7 @@ describe('Send Identity Saga', () => {
             });
         });
         store.dispatch(sendIdentity(confirmIdentityPayload));
+
         return promise;
     });
 });

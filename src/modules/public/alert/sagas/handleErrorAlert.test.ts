@@ -85,6 +85,7 @@ describe('Alert error handler', () => {
             });
         });
         store.dispatch(alertPush(payloadAlertErrorAccountNotActive));
+
         return promise;
     });
 
@@ -112,6 +113,7 @@ describe('Alert error handler', () => {
             });
         });
         store.dispatch(alertPush(errorCodeAccount2faNeeded));
+
         return promise;
     });
 
@@ -158,6 +160,7 @@ describe('Alert error handler', () => {
             });
         });
         store.dispatch(alertPush(errorCodeAccount));
+
         return promise;
     });
 });

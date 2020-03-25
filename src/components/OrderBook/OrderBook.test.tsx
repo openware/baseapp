@@ -1,8 +1,8 @@
 import { mount, shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { SinonSpy, spy } from 'sinon';
-import {  mapValues, OrderBook, OrderBookProps } from './';
 import { CellData } from '../../components/Table';
+import {  mapValues, OrderBook, OrderBookProps } from './';
 
 const data: CellData[][] = [
     ['12349', '14', '12'],

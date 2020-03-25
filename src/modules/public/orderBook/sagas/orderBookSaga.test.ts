@@ -97,6 +97,7 @@ describe('Saga: OrderBook', () => {
             });
         });
         store.dispatch(orderBookFetch(fakeMarket));
+
         return promise;
     });
 
@@ -112,6 +113,7 @@ describe('Saga: OrderBook', () => {
             });
         });
         store.dispatch(orderBookFetch(fakeMarket));
+
         return promise;
     });
 });

@@ -64,6 +64,7 @@ describe('FORGOT PASSWORD SAGA', () => {
         });
 
         store.dispatch(forgotPassword(fakeRequest));
+
         return promise;
     });
 
@@ -80,6 +81,7 @@ describe('FORGOT PASSWORD SAGA', () => {
         });
 
         store.dispatch(forgotPassword(fakeRequest));
+
         return promise;
     });
 
@@ -95,6 +97,7 @@ describe('FORGOT PASSWORD SAGA', () => {
             });
         });
         store.dispatch(forgotPassword(fakeRequest));
+
         return promise;
     });
 });

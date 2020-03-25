@@ -22,6 +22,7 @@ export const changeColorThemeReducer = (state = initialChangeColorThemeState, ac
     switch (action.type) {
         case CHANGE_COLOR_THEME:
             localStorage.setItem('colorTheme', action.payload);
+
             return {
                 ...state,
                 color: action.payload,

@@ -79,6 +79,7 @@ describe('History saga', () => {
             });
         });
         store.dispatch(fetchNewHistory(fakeRequest));
+
         return promise;
     });
 
@@ -94,6 +95,7 @@ describe('History saga', () => {
             });
         });
         store.dispatch(fetchNewHistory(fakeRequest));
+
         return promise;
     });
 });

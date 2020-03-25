@@ -1,9 +1,11 @@
 import classnames from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
+import { Dropdown } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
+import { languages } from '../../api/config';
 import {  pgRoutes } from '../../constants';
 import {
     changeLanguage,
@@ -17,8 +19,6 @@ import {
     selectUserLoggedIn,
     toggleSidebar,
 } from '../../modules';
-import { languages } from '../../api/config';
-import { Dropdown } from 'react-bootstrap';
 
 interface State {
     isOpenLanguage: boolean;
@@ -97,6 +97,7 @@ class SidebarContainer extends React.Component<Props, State> {
         const handleLinkChange = () => this.props.toggleSidebar(false);
         const path = url.includes('/trading') && currentMarket ? `/trading/${currentMarket.id}` : url;
         const isActive = (url === '/trading/' && address.includes('/trading')) || address === url;
+
         return (
             <Link to={path} key={index} onClick={handleLinkChange} className={`${isActive && 'route-selected'}`}>
                 <div className="pg-sidebar-wrapper-nav-item">
@@ -180,6 +181,7 @@ class SidebarContainer extends React.Component<Props, State> {
     private tryRequire = (name: string) => {
         try {
             require(`../../assets/images/sidebar/${name}.svg`);
+
             return true;
         } catch (err) {
             return false;
@@ -189,7 +191,7 @@ class SidebarContainer extends React.Component<Props, State> {
 
     private handleChangeLanguage = (language: string) => {
         this.props.changeLanguage(language);
-    }
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({

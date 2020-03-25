@@ -59,6 +59,7 @@ describe('Module: User', () => {
         });
 
         store.dispatch(userFetch());
+
         return promise;
     });
 
@@ -74,6 +75,7 @@ describe('Module: User', () => {
             });
         });
         store.dispatch(userFetch());
+
         return promise;
     });
 });

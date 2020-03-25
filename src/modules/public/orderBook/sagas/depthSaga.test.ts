@@ -83,6 +83,7 @@ describe('Saga: depth', () => {
     });
 
     store.dispatch(depthFetch(fakeMarket));
+
     return promise;
   });
 
@@ -98,6 +99,7 @@ describe('Saga: depth', () => {
       });
     });
     store.dispatch(depthFetch(fakeMarket));
+
     return promise;
   });
 });

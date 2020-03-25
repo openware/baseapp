@@ -4,10 +4,10 @@ import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { Router } from 'react-router';
+import { gaTrackerKey } from '../src/api';
 import { Alerts, ErrorWrapper, Footer, Header, Sidebar } from './containers';
 import { RootState } from './modules';
 import { Layout } from './routes';
-import { gaTrackerKey } from '../src/api';
 
 interface Locale {
     lang: string;

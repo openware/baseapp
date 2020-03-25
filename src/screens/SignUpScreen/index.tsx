@@ -21,21 +21,21 @@ import {
     ERROR_INVALID_PASSWORD,
     ERROR_PASSWORD_CONFIRMATION,
     PASSWORD_REGEX,
-    setDocumentTitle,
     passwordErrorFirstSolution,
     passwordErrorSecondSolution,
     passwordErrorThirdSolution,
+    setDocumentTitle,
 } from '../../helpers';
 import {
     Configs,
+    entropyPasswordFetch,
     RootState,
     selectConfigs,
     selectCurrentLanguage,
+    selectCurrentPasswordEntropy,
     selectSignUpError,
     selectSignUpRequireVerification,
     signUp,
-    entropyPasswordFetch,
-    selectCurrentPasswordEntropy,
 } from '../../modules';
 
 interface ReduxProps {
@@ -252,7 +252,7 @@ class SignUp extends React.Component<Props> {
                 return null;
 
         }
-    }
+    };
 
     private handleOutsideClick = event => {
         const wrapperElement = this.passwordWrapper.current;
@@ -262,13 +262,13 @@ class SignUp extends React.Component<Props> {
                 passwordPopUp: false,
             });
         }
-    }
+    };
 
     private handleCheckboxClick = () => {
         this.setState({
             hasConfirmed: !this.state.hasConfirmed,
         });
-    }
+    };
 
     private handleChangeEmail = (value: string) => {
         this.setState({
@@ -375,7 +375,7 @@ class SignUp extends React.Component<Props> {
             captcha_response: value,
             shouldGeetestReset: false,
         });
-    }
+    };
 
     private handleSignUp = () => {
         const { configs, i18n } = this.props;
@@ -497,6 +497,7 @@ class SignUp extends React.Component<Props> {
                 passwordError: this.props.intl.formatMessage({ id: ERROR_INVALID_PASSWORD }),
                 hasConfirmed: false,
             });
+
             return;
         }
 
@@ -507,6 +508,7 @@ class SignUp extends React.Component<Props> {
                 passwordError: '',
                 hasConfirmed: false,
             });
+
             return;
         }
 
@@ -517,6 +519,7 @@ class SignUp extends React.Component<Props> {
                 passwordError: this.props.intl.formatMessage({ id: ERROR_INVALID_PASSWORD }),
                 hasConfirmed: false,
             });
+
             return;
         }
 
@@ -527,9 +530,10 @@ class SignUp extends React.Component<Props> {
                 passwordError: '',
                 hasConfirmed: false,
             });
+
             return;
         }
-    }
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

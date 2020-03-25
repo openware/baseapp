@@ -145,6 +145,7 @@ const CustomTooltip = (props: CustomToolTipProps) => {
         }
 
         const { name, value } = payload[0];
+
         return <p>{`${name} : `}<em>{value}</em></p>;
     };
 

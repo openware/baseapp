@@ -52,6 +52,7 @@ describe('Module: Toggle 2fa', () => {
         });
 
         store.dispatch(toggle2faFetch(fakeCredentials));
+
         return promise;
     });
 
@@ -67,6 +68,7 @@ describe('Module: Toggle 2fa', () => {
             });
         });
         store.dispatch(toggle2faFetch(fakeCredentials));
+
         return promise;
     });
 });

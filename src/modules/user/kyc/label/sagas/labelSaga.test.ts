@@ -61,6 +61,7 @@ describe('Module: label', () => {
         });
 
         store.dispatch(labelFetch());
+
         return promise;
     });
 
@@ -76,6 +77,7 @@ describe('Module: label', () => {
             });
         });
         store.dispatch(labelFetch());
+
         return promise;
     });
 });

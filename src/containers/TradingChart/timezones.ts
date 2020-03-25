@@ -57,5 +57,6 @@ const zonesSTD: { [key: string]: Timezone } = {
 
 export const getTradingChartTimezone = (offset: number | string, period: 'DST' | 'STD'): Timezone => {
     const zone: Timezone = period === 'DST' ? zonesDST[offset] : zonesSTD[offset];
+
     return zone ? zone : 'Etc/UTC';
 };

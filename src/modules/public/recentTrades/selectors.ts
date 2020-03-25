@@ -7,6 +7,7 @@ export const selectRecentTrades = (state: RootState): PublicTrade[] =>
 
 export const selectRecentTradesOfCurrentMarket = (state: RootState): PublicTrade[] => {
     const currentMarket = selectCurrentMarket(state);
+
     return currentMarket ? state.public.recentTrades.list.filter((trade: PublicTrade) => trade.market === currentMarket.id) : [];
 };
 

@@ -1,9 +1,9 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
+import { getCsrfToken } from '../../../../helpers';
 import { alertPush } from '../../../index';
 import { apiKeyDelete, ApiKeyDeleteFetch, apiKeys2FAModal } from '../actions';
-import { getCsrfToken } from '../../../../helpers';
 
 const deleteOptions = (csrfToken?: string): RequestOptions => {
     return {

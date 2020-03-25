@@ -1,6 +1,6 @@
-import { Button } from 'react-bootstrap';
 import {shallow, ShallowWrapper} from 'enzyme';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { Modal, ModalProps } from './';
 
 const defaults: ModalProps = {

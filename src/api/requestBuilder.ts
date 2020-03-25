@@ -8,8 +8,8 @@ import {
     applogicUrl,
     arkeUrl,
     authUrl,
-    tradeUrl,
     finexUrl,
+    tradeUrl,
     withCredentials,
 } from './config';
 
@@ -88,6 +88,7 @@ export const defaultResponse: Partial<AxiosError['response']> = {
 export const formatError = (responseError: AxiosError) => {
     const response = responseError.response || defaultResponse;
     const errors = (response.data && (response.data.errors || [response.data.error])) || [];
+
     return {
         code: response.status,
         message: errors,

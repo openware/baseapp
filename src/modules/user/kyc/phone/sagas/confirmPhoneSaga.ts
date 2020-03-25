@@ -1,6 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../../api';
+import { getCsrfToken } from '../../../../../helpers';
 import { alertPush } from '../../../../index';
 import { changeUserLevel } from '../../../profile';
 import {
@@ -8,7 +9,6 @@ import {
     verifyPhoneData,
     verifyPhoneError,
 } from '../actions';
-import { getCsrfToken } from '../../../../../helpers';
 
 const sessionsConfig = (csrfToken?: string): RequestOptions => {
     return {

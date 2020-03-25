@@ -360,7 +360,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         this.setState({
             showChangeModal: true,
         });
-    }
+    };
 
     private handleNavigateTo2fa = (enable2fa: boolean) => {
         if (enable2fa) {
@@ -370,25 +370,25 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                 showModal: !this.state.showModal,
             });
         }
-    }
+    };
 
     private handleOldPassword = (value: string) => {
         this.setState({
             oldPassword: value,
         });
-    }
+    };
 
     private handleConfPassword = (value: string) => {
         this.setState({
             confirmationPassword: value,
         });
-    }
+    };
 
     private handleNewPassword = (value: string) => {
         this.setState({
             newPassword: value,
         });
-    }
+    };
 
     private handleCancel = () => {
         this.setState({
@@ -397,11 +397,11 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             newPassword: '',
             confirmationPassword: '',
         });
-    }
+    };
 
     private handleClickFieldFocus = (field: string) => () => {
         this.handleFieldFocus(field);
-    }
+    };
 
     private handleFieldFocus = (field: string) => {
         // @ts-ignore

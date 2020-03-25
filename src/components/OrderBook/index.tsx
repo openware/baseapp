@@ -65,10 +65,12 @@ export class OrderBook extends React.PureComponent<OrderBookProps> {
                     width: `${resultData[index].value}%`,
                 };
             }
+
             return {
                 display: 'none',
             };
         };
+
         return (
             <div className="cr-order-book" >
                 <Table

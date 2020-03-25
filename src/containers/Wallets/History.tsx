@@ -4,8 +4,8 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { History, Pagination, WalletItemProps } from '../../components';
 import { Decimal } from '../../components/Decimal';
-import { History, WalletItemProps, Pagination } from '../../components';
 import { localeDate } from '../../helpers';
 import {
     currenciesFetch,
@@ -95,6 +95,7 @@ export class WalletTable extends React.Component<Props> {
         if (!list.length) {
             return null;
         }
+
         return (
             <div className="pg-history-elem__wallet">
                 <div className="pg-history-elem__label">
@@ -142,6 +143,7 @@ export class WalletTable extends React.Component<Props> {
         if (list.length === 0) {
             return [[intl.formatMessage({ id: 'page.noDataToShow' }), '', '']];
         }
+
         return list.sort((a, b) => {
             return localeDate(a.created_at, 'fullDate') > localeDate(b.created_at, 'fullDate') ? -1 : 1;
         }).map((item, index) => {
@@ -150,6 +152,7 @@ export class WalletTable extends React.Component<Props> {
             const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
             const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
             const state = 'state' in item ? this.formatTxState(item.state, confirmations, minConfirmations) : '';
+
             return [
                 localeDate(item.created_at, 'fullDate'),
                 state,
@@ -175,6 +178,7 @@ export class WalletTable extends React.Component<Props> {
             ),
             skipped: <SucceedIcon />,
         };
+
         return statusMapping[tx];
     };
 }

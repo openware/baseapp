@@ -102,6 +102,7 @@ class Orders extends React.PureComponent<Props, State> {
 
     private renderTabs = () => {
         const { tab } = this.state;
+
         return [
             {
                 content: tab === 'open' ? <OrdersElement type="open"/> : null,

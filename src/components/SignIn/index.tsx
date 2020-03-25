@@ -185,5 +185,5 @@ export class SignInComponent extends React.Component<SignInProps> {
 
             this.handleClick();
         }
-    }
+    };
 }

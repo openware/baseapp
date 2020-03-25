@@ -22,6 +22,7 @@ class ModalWithdrawSubmitComponent extends React.Component<Props> {
 
     public render() {
         const { show } = this.props;
+
         return (
             <Modal
                 show={show}

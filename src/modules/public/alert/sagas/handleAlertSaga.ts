@@ -13,6 +13,7 @@ export function* handleAlertSaga(action: AlertPush) {
                     yield put(userReset());
                     localStorage.removeItem('csrfToken');
                     yield put(alertData(action.payload));
+
                     return;
                 } else {
                     if (action.payload.message.indexOf('authz.invalid_session') > -1) {
@@ -38,6 +39,7 @@ export function* handleAlertSaga(action: AlertPush) {
                 if (action.payload.message.indexOf('jwt.decode_and_verify') > -1) {
                     yield call(callAlertData, action);
                 }
+
                 return;
             default:
                 yield call(callAlertData, action);

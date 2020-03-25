@@ -11,6 +11,7 @@ const setup = (props: Partial<DecimalProps> = {}) => {
     if (props.children) {
         return shallow(<Decimal {...{ ...defaultProps, ...props }} />);
     }
+
     return shallow(<Decimal {...{ ...defaultProps, ...props }}>123.3203020023</Decimal>);
 };
 

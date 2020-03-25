@@ -1,9 +1,9 @@
-import { Spinner } from 'react-bootstrap';
 import classNames from 'classnames';
 import * as React from 'react';
+import { Spinner } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { Decimal, CombinedOrderBook } from '../../components';
+import { CombinedOrderBook, Decimal } from '../../components';
 import { accumulateVolume, calcMaxVolume, sortAsks, sortBids } from '../../helpers';
 import {
     Market,
@@ -86,6 +86,7 @@ class OrderBookContainer extends React.Component<Props, State> {
     private orderBook = (bids, asks) => {
         const isLarge = this.state.width > breakpoint;
         const asksData = isLarge ? asks : asks.slice(0).reverse();
+
         return (
             <CombinedOrderBook
                 maxVolume={calcMaxVolume(bids, asks)}
@@ -115,6 +116,7 @@ class OrderBookContainer extends React.Component<Props, State> {
             'cr-combined-order-book__market-negative': (marketTickers[currentMarket.id] || defaultTicker).price_change_percent.includes('-'),
             'cr-combined-order-book__market-positive': (marketTickers[currentMarket.id] || defaultTicker).price_change_percent.includes('+'),
           });
+
           return (
               <React.Fragment>
                   <span className={cn}>
@@ -130,6 +132,7 @@ class OrderBookContainer extends React.Component<Props, State> {
 
     private renderHeaders = () => {
         const { intl, currentMarket } = this.props;
+
         return [
             `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n(${currentMarket && currentMarket.quote_unit.toUpperCase()})`,
             `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n(${currentMarket && currentMarket.base_unit.toUpperCase()})`,
@@ -142,11 +145,13 @@ class OrderBookContainer extends React.Component<Props, State> {
         const isLarge = this.state.width > breakpoint;
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
+
         return (array.length > 0) ? array.map((item, i) => {
             const [price, volume] = item;
             switch (side) {
                 case 'asks':
                     total = isLarge ? accumulateVolume(array) : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
+
                     return [
                         <span key={i}><Decimal fixed={priceFixed} prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal></span>,
                         <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
@@ -168,7 +173,7 @@ class OrderBookContainer extends React.Component<Props, State> {
                     }
             }
         }) : [[[''], message]];
-    }
+    };
 
     private handleOnSelectBids = (index: string) => {
         const { currentPrice, bids } = this.props;

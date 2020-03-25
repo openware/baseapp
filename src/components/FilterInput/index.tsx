@@ -63,6 +63,7 @@ export class FilterInput extends React.Component<FilterInputProps, SearchInputSt
         const { key } = this.state;
         const { className, placeholder } = this.props;
         const cx = classnames('cr-search__input', className);
+
         return (
             <div className="cr-search">
                 <span className="cr-search__icon">

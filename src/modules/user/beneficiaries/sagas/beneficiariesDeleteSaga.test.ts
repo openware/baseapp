@@ -63,6 +63,7 @@ describe('Beneficiaries Delete', () => {
                 });
             });
             store.dispatch(beneficiariesDelete(fakePayload));
+
             return promise;
         });
 
@@ -78,6 +79,7 @@ describe('Beneficiaries Delete', () => {
                 });
             });
             store.dispatch(beneficiariesDelete(fakePayload));
+
             return promise;
         });
     });

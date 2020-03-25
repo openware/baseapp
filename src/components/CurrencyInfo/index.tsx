@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
 import { WalletItemProps } from '../WalletItem';
-import { CryptoIcon } from '../CryptoIcon';
 
 export interface CurrencyInfoProps {
     wallet: WalletItemProps;

@@ -20,6 +20,7 @@ export class ProgressLabel extends React.Component<Props>{
             'pg-trading-header-progress-label-progress-positive': isPositive,
             'pg-trading-header-progress-label-progress-negative': !isPositive,
         });
+
         return (
             <div className="pg-trading-header-progress-label">
                 <div className={className}>{progress} {bidUnit}</div>

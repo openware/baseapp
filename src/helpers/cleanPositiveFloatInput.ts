@@ -9,5 +9,6 @@ export const cleanPositiveFloatInput = (text: string) => {
     if (cleanInput[0] === '.') {
         cleanInput = `0${cleanInput}`;
     }
+
     return cleanInput;
 };

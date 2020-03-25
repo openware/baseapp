@@ -81,6 +81,7 @@ describe('Beneficiaries Fetch', () => {
             });
         });
         store.dispatch(beneficiariesFetch());
+
         return promise;
     });
 
@@ -96,6 +97,7 @@ describe('Beneficiaries Fetch', () => {
             });
         });
         store.dispatch(beneficiariesFetch());
+
         return promise;
     });
 });

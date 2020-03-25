@@ -72,6 +72,7 @@ describe('Beneficiaries Create', () => {
                 });
             });
             store.dispatch(beneficiariesCreate(fakePayload));
+
             return promise;
         });
 
@@ -87,6 +88,7 @@ describe('Beneficiaries Create', () => {
                 });
             });
             store.dispatch(beneficiariesCreate(fakePayload));
+
             return promise;
         });
     });

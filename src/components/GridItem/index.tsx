@@ -21,6 +21,7 @@ export interface GridItemProps {
 const GridItem: React.FunctionComponent<GridItemProps> = (props: GridItemProps) => {
   const { className, children, title } = props;
   const cx = classnames('cr-grid-item', className);
+
   return (
     <div className={cx}>
       {title ? <div className="cr-grid-item__header">

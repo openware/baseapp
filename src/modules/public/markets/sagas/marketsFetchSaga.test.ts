@@ -127,6 +127,7 @@ describe('Saga: marketsFetchSaga', () => {
             });
         });
         store.dispatch(marketsFetch());
+
         return promise;
     });
 
@@ -146,6 +147,7 @@ describe('Saga: marketsFetchSaga', () => {
             });
         });
         store.dispatch(marketsFetch());
+
         return promise;
     });
 
@@ -165,6 +167,7 @@ describe('Saga: marketsFetchSaga', () => {
             });
         });
         store.dispatch(marketsTickersFetch());
+
         return promise;
     });
 
@@ -184,6 +187,7 @@ describe('Saga: marketsFetchSaga', () => {
             });
         });
         store.dispatch(marketsTickersFetch());
+
         return promise;
     });
 });
