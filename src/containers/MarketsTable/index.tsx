@@ -143,7 +143,7 @@ class MarketsTableContainer extends React.Component<Props, State> {
             this.props.setCurrentMarket(currentMarket);
             this.props.history.push(`/trading/${currentMarket.id}`);
         }
-    }
+    };
 
     private handleSetCurrentBidUnit = (currentBidUnit?: string) => {
         this.setState({
@@ -155,8 +155,9 @@ class MarketsTableContainer extends React.Component<Props, State> {
         if (list.indexOf(market.quote_unit) === -1) {
             list.push(market.quote_unit);
         }
+
         return list;
-    }
+    };
 
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 }

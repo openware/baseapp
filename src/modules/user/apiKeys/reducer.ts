@@ -66,6 +66,7 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
                     updated_at: {$set: action.payload.updated_at},
                 },
             });
+
             return {
                 ...state,
                 apiKeys,

@@ -59,6 +59,7 @@ describe('Saga: memberLevelsFetchSaga', () => {
             });
         });
         store.dispatch(memberLevelsFetch());
+
         return promise;
     });
 
@@ -74,6 +75,7 @@ describe('Saga: memberLevelsFetchSaga', () => {
             });
         });
         store.dispatch(memberLevelsFetch());
+
         return promise;
     });
 });

@@ -21,6 +21,7 @@ export const selectTiersDisabled = (state: RootState): boolean =>
 
 export const selectUserLoggedIn = (state: RootState): boolean => {
     const { user: { profile } } = state;
+
     return !profile.userData.isFetching && profile.userData.user.state === 'active';
 };
 

@@ -23,6 +23,7 @@ export interface SummaryFieldProps {
 export const SummaryField: React.FunctionComponent<SummaryFieldProps> = props => {
     const { message, className, content } = props;
     const cx = classnames('cr-summary-field', className);
+
     return (
         <div className={cx}>
             <span className="cr-summary-field-message">

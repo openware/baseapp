@@ -2,11 +2,11 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../..';
+import { getOrderAPI } from '../../../helpers';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
 import { orderExecuteFetch } from './';
 import { OrderExecution } from './actions';
 import { ORDER_EXECUTE_DATA, ORDER_EXECUTE_ERROR, ORDER_EXECUTE_FETCH } from './constants';
-import { getOrderAPI } from '../../../helpers';
 
 
 // tslint:disable no-any no-magic-numbers no-console
@@ -85,6 +85,7 @@ describe('Orders', () => {
             });
         });
         store.dispatch(orderExecuteFetch(order));
+
         return promise;
     });
 
@@ -101,6 +102,7 @@ describe('Orders', () => {
             });
         });
         store.dispatch(orderExecuteFetch(order));
+
         return promise;
     });
 });

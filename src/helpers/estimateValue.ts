@@ -47,9 +47,11 @@ export const estimateWithMarket = (targetCurrency: string, walletCurrency: strin
     if (market && marketTicker) {
         if (formattedTargetCurrency === market.base_unit) {
             const precisedValue = Number(Decimal.format(walletTotal * (Number(marketTicker.last) !== 0 ? 1 / Number(marketTicker.last) : 0), targetCurrencyPrecision));
+
             return precisedValue;
         } else {
             const precisedValue = Number(Decimal.format(walletTotal * Number(marketTicker.last), targetCurrencyPrecision));
+
             return precisedValue;
         }
     }
@@ -85,6 +87,7 @@ const estimateWithoutMarket = (targetCurrency: string, walletCurrency: string, w
 
     if (selectedSecondaryCurrency) {
         const secondaryCurrencyValue = estimateWithMarket(selectedSecondaryCurrency, formattedWalletCurrency, walletTotal, currencies, markets, marketTickers);
+
         return estimateWithMarket(targetCurrency, selectedSecondaryCurrency, secondaryCurrencyValue, currencies, markets, marketTickers);
     } else {
         // 'No secondary currency found for', wallet.currency
@@ -120,6 +123,7 @@ export const estimateUnitValue = (targetCurrency: string, currentCurrency: strin
     const estimated = estimateWithMarket(targetCurrency, currentCurrency, total, currencies, markets, marketTickers) || estimateWithoutMarket(targetCurrency, currentCurrency, total, currencies, markets, marketTickers);
     const formattedTargetCurrency = targetCurrency.toLowerCase();
     const targetCurrencyPrecision = handleCCYPrecision(currencies, formattedTargetCurrency, DEFAULT_CCY_PRECISION);
+
     return Decimal.format(estimated, targetCurrencyPrecision);
 };
 

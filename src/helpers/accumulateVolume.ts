@@ -4,7 +4,9 @@ export const accumulateVolume = array => {
         return item[1];
     }).reduce((accumulator, currentValue, currentIndex) => {
         total[currentIndex] = Number(accumulator) + Number(currentValue);
+
         return (Number(accumulator) + Number(currentValue));
     }, 0);
+
     return total;
 };

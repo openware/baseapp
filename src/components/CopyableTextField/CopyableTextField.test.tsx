@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { CopyableTextField, CopyableTextFieldProps } from './';
 import { CustomInput } from '../CustomInput';
+import { CopyableTextField, CopyableTextFieldProps } from './';
 
 
 const defaultProps: CopyableTextFieldProps = {

@@ -59,6 +59,7 @@ describe('Saga: configsFetchSaga', () => {
         });
 
         store.dispatch(configsFetch());
+
         return promise;
     });
 
@@ -80,6 +81,7 @@ describe('Saga: configsFetchSaga', () => {
             });
         });
         store.dispatch(configsFetch());
+
         return promise;
     });
 });

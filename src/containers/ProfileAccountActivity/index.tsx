@@ -65,6 +65,7 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
 
     public renderContent = () => {
         const { total, firstElemIndex, lastElemIndex, page, nextPageExists, userActivity } = this.props;
+
         return (
             <React.Fragment>
                 <Table
@@ -112,6 +113,7 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
             'pg-profile-page__activity-result-failed':  result === this.props.intl.formatMessage({id: 'page.body.profile.content.result.failed'}) ||
                                                         result === this.props.intl.formatMessage({id: 'page.body.profile.content.result.denied'}),
         });
+
         return <span className={className}>{result}</span>;
     }
 
@@ -134,7 +136,7 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
             default:
                 return value;
         }
-    }
+    };
 
     private onClickPrevPage = () => {
         const { page } = this.props;

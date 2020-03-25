@@ -34,16 +34,19 @@ const mockConfig: Config = {
 // tslint:disable no-any no-console
 export const loggerMiddleware: Middleware = (store: {}) => (next: any) => (action: Action) => {
     console.log(`dispatching: ${JSON.stringify(action)}`);
+
     return next(action);
 };
 
 export const setupMockStore = (appMiddleware: Middleware, log = false) => {
     const middlewares = log ? [loggerMiddleware, appMiddleware] : [appMiddleware];
+
     return configureMockStore(middlewares);
 };
 
 export const setupMockAxios = () => {
     Cryptobase.config = mockConfig;
+
     return new MockAdapter(Axios);
 };
 
@@ -66,5 +69,6 @@ export const createEchoServer = (port: number, debug: boolean) => {
             ws.send(message);
         });
     });
+
     return server;
 };

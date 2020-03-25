@@ -1,6 +1,9 @@
 import { CommonError } from '../../types';
 import { AuthAction } from './actions';
 import {
+    AUTH_ENTROPY_PASSWORD_DATA,
+    AUTH_ENTROPY_PASSWORD_ERROR,
+    AUTH_ENTROPY_PASSWORD_FETCH,
     AUTH_LOGOUT_FAILURE,
     AUTH_LOGOUT_FETCH,
     AUTH_SIGN_IN_ERROR,
@@ -9,9 +12,6 @@ import {
     AUTH_SIGN_UP_REQUIRE_VERIFICATION,
     AUTH_VERIFICATION_FETCH,
     AUTH_VERIFICATION_SUCCESS,
-    AUTH_ENTROPY_PASSWORD_DATA,
-    AUTH_ENTROPY_PASSWORD_FETCH,
-    AUTH_ENTROPY_PASSWORD_ERROR,
 } from './constants';
 
 export interface AuthState {

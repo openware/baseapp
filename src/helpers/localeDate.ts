@@ -12,5 +12,6 @@ export const localeDate = (date, format, timezone = getTimezone()) => {
     const formatDisplay = getFormat(format);
     const isUnix = typeof date === 'number';
     const momentObj = isUnix ? moment.unix(date) : moment(date);
+
     return momentObj.tz(timezone).format(formatDisplay);
 };

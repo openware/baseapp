@@ -1,8 +1,8 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { spy } from 'sinon';
-import {  CombinedOrderBook, CombinedOrderBookProps } from './';
 import { CellData } from '../Table';
+import {  CombinedOrderBook, CombinedOrderBookProps } from './';
 
 const dataAsks: CellData[][] = [
     ['123', '14', '121'],

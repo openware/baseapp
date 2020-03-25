@@ -78,6 +78,7 @@ describe('Module: ProfileIdentity', () => {
         });
 
         store.dispatch(profileIdentityFetch());
+
         return promise;
     });
 
@@ -93,6 +94,7 @@ describe('Module: ProfileIdentity', () => {
             });
         });
         store.dispatch(profileIdentityFetch());
+
         return promise;
     });
 });

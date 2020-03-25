@@ -1,6 +1,6 @@
+import * as React from 'react';
 import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
-import * as React from 'react';
 
 export interface WalletItemProps {
     /**
@@ -84,6 +84,7 @@ export const WalletItem: React.FunctionComponent<WalletItemProps> = (props: Wall
         iconUrl,
     } = props;
     const cName = `cr-wallet-item ${active ? 'cr-wallet-item--active' : ''}`;
+
     return (
         <div style={style} className={cName}>
             <div className="cr-wallet-item__info">

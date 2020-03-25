@@ -1,8 +1,8 @@
-import * as React from 'react';
 import { History } from 'history';
-import { RouteProps, withRouter } from 'react-router-dom';
+import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { RouteProps, withRouter } from 'react-router-dom';
 
 interface OwnProps {
     handleToggleFailModal: () => void;

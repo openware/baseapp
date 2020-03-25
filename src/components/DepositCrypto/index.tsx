@@ -1,8 +1,8 @@
-import { QRCode } from '../QRCode';
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { CopyableTextField } from '../CopyableTextField';
+import { QRCode } from '../QRCode';
 
 export interface DepositCryptoProps {
     /**
@@ -103,6 +103,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
                 </>
             );
         }
+
         return (
             <div className="cr-deposit-crypto__create">
                 <div className="cr-deposit-crypto__create-btn">

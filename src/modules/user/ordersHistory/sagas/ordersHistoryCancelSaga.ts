@@ -1,12 +1,12 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, isFinexEnabled, RequestOptions } from '../../../../api';
+import { getCsrfToken } from '../../../../helpers';
 import { alertPush } from '../../../index';
 import {
     ordersHistoryCancelError,
     OrdersHistoryCancelFetch,
 } from '../actions';
-import { getCsrfToken } from '../../../../helpers';
 
 const ordersCancelOptions = (csrfToken?: string): RequestOptions => {
     return {

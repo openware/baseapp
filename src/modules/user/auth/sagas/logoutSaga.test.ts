@@ -48,6 +48,7 @@ describe('Logout saga', () => {
         });
 
         store.dispatch(logoutFetch());
+
         return promise;
     });
 
@@ -63,6 +64,7 @@ describe('Logout saga', () => {
             });
         });
         store.dispatch(logoutFetch());
+
         return promise;
     });
 });

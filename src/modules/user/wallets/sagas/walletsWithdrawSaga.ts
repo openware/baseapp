@@ -1,13 +1,13 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
+import { getCsrfToken } from '../../../../helpers';
 import { alertPush } from '../../../index';
 import {
     walletsWithdrawCcyData,
     walletsWithdrawCcyError,
     WalletsWithdrawCcyFetch,
 } from '../actions';
-import { getCsrfToken } from '../../../../helpers';
 
 const walletsWithdrawCcyOptions = (csrfToken?: string): RequestOptions => {
     return {

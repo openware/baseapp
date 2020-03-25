@@ -1,6 +1,6 @@
-import { Spinner } from 'react-bootstrap';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Spinner } from 'react-bootstrap';
 import {
     InjectedIntlProps,
     injectIntl,
@@ -89,6 +89,7 @@ class YoursComponent extends React.Component<Props> {
 
     private retrieveData = () => {
         const { list } = this.props;
+
         return [...list].length > 0
             ? [...list].map(this.renderRow)
             : [[[''], this.props.intl.formatMessage({ id: 'page.noDataToShow' })]];

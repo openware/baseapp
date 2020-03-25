@@ -1,6 +1,6 @@
-import { GridItem, GridItemProps } from '../';
 import classnames from 'classnames';
 import * as React from 'react';
+import { GridItem, GridItemProps } from '../';
 
 /* tslint:disable-next-line */
 const { WidthProvider, Responsive } = require('react-grid-layout');

@@ -1,7 +1,7 @@
 /* tslint:disable jsx-no-multiline-js */
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Form } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 
 interface ProfileTwoFactorAuthProps {
     is2faEnabled?: boolean;

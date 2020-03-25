@@ -122,6 +122,7 @@ class Table extends React.Component<TableProps, TableState> {
         const cn = classNames('cr-table-header__content', {
             'cr-table-header__content-empty': !titleComponent && filters.length === 0,
         });
+
         return (
             <div className="cr-table-container">
                 <div className={cn}>
@@ -142,6 +143,7 @@ class Table extends React.Component<TableProps, TableState> {
 
     private renderTitleComponent() {
         const { titleComponent } = this.props;
+
         return <div className={'cr-title-component'}>{titleComponent}</div>;
     }
 
@@ -159,6 +161,7 @@ class Table extends React.Component<TableProps, TableState> {
             this.setState({
                 resultData: data,
             });
+
             return;
         }
         const resultData: CellData[][] = [...data].filter(item.filter);
@@ -189,6 +192,7 @@ class Table extends React.Component<TableProps, TableState> {
         const cn = (filterName: string) => classNames('cr-table__filter', {
             'cr-table__filter--active': activeFilter === filterName,
         });
+
         return filters.map((item: Filter) => {
             const handleFilterClick = () => {
                 this.handleFilter(item);
@@ -257,6 +261,7 @@ class Table extends React.Component<TableProps, TableState> {
         const dataToBeMapped = resultData || rows;
         const rowElements = dataToBeMapped.map((r, i) => {
             const rowKey = String((rowKeyIndex !== undefined) ? r[rowKeyIndex] : i);
+
             return (
                 <tr
                     className={rowClassName(rowKey)}

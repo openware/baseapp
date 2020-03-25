@@ -118,7 +118,7 @@ class Pagination extends React.Component<PaginationProps> {
                 <span>{lastElemIndex}</span>
             </p>
         );
-    }
+    };
 
     public render() {
         const {page, nextPageExists } = this.props;

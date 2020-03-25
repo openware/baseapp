@@ -6,8 +6,8 @@ import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { Grid } from '../../components/Grid';
 import {
-    MarketsComponent,
     MarketDepthsComponent,
+    MarketsComponent,
     OpenOrdersComponent,
     OrderBook,
     OrderComponent,

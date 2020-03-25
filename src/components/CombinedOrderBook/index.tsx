@@ -74,6 +74,7 @@ export class CombinedOrderBook extends React.PureComponent<CombinedOrderBookProp
         const {
             isLarge,
         } = this.props;
+
         return (
             <div className="cr-combined-order-book" >
               {isLarge ? this.orderBookLarge() : this.orderBookSmall()}
@@ -125,7 +126,7 @@ export class CombinedOrderBook extends React.PureComponent<CombinedOrderBookProp
               </div>
           </React.Fragment>
       );
-    }
+    };
 
     private orderBookSmall = () => {
       const {
@@ -141,6 +142,7 @@ export class CombinedOrderBook extends React.PureComponent<CombinedOrderBookProp
           onSelectBids,
           lastPrice,
       } = this.props;
+
       return (
           <React.Fragment>
               <div className="cr-combined-order-book__small">
@@ -167,5 +169,5 @@ export class CombinedOrderBook extends React.PureComponent<CombinedOrderBookProp
                 </div>
             </React.Fragment>
       );
-    }
+    };
 }

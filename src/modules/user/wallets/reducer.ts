@@ -154,6 +154,7 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
         case SET_MOBILE_WALLET_UI:
         case WALLETS_WITHDRAW_CCY_ERROR:
             const walletsListState = { ...state.wallets };
+
             return {
                 ...state,
                 wallets: walletsListReducer(walletsListState, action),

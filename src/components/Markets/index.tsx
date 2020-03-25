@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { CellData, Table, FilterInput } from '../';
+import { CellData, FilterInput, Table } from '../';
 
 export interface MarketsProps {
     /**
@@ -76,6 +76,7 @@ export class Markets extends React.Component<MarketsProps, MarketsState> {
             ? filteredData
             : [['', '', '']];
         tableData = tableData.map(row => row.map(this.mapRows));
+
         return (
             <div className="cr-markets">
                 <Table
@@ -101,14 +102,15 @@ export class Markets extends React.Component<MarketsProps, MarketsState> {
         this.setState({
             searchKey: searchKey,
         });
+
         return (row[0] as string).toLowerCase().includes(searchKey.toLowerCase());
-    }
+    };
 
     public handleFilter = (result: object[]) => {
         this.setState({
             filteredData: [...result] as CellData[][],
         });
-    }
+    };
 
     private renderChange(cell: string) {
         const isItChangeValue = (c: string) => {
@@ -125,11 +127,13 @@ export class Markets extends React.Component<MarketsProps, MarketsState> {
 
     private mapRows = (cell: CellData) => {
         const isChangeValue = typeof(cell) === 'string' && (cell.charAt(0) === '-' || cell.charAt(0) === '+');
+
         return isChangeValue ? this.renderChange(cell as string) : cell;
-    }
+    };
 
     private filterType = (headerKey: string, searchKey: string) => (item: CellData[]) => {
         const typeIndex = this.props.headers ? this.props.headers.indexOf(headerKey) : this.defaultHeaders.indexOf(headerKey);
+
         return (item[typeIndex] as string).includes(searchKey);
     };
 
@@ -142,6 +146,7 @@ export class Markets extends React.Component<MarketsProps, MarketsState> {
                 .reduce(this.createUniqueCurrencies, [])
                 .map(this.transformCurrencyToFilter)
             : [];
+
         return [
             {
                 name: 'All',

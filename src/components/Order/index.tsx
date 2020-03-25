@@ -1,6 +1,6 @@
-import { TabPanel } from '../../components';
 import * as React from 'react';
 import { OrderForm } from '../';
+import { TabPanel } from '../../components';
 
 export type FormType = 'buy' | 'sell';
 
@@ -214,6 +214,7 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
             bids,
             listenInputPrice,
         } = this.props;
+
         return [
             {
                 content: (
@@ -293,6 +294,7 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
             asks,
             listenInputPrice,
         } = this.props;
+
         return [
             {
                 content: (
@@ -345,6 +347,7 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
             bids,
             listenInputPrice,
         } = this.props;
+
         return [
             {
                 content: (
@@ -383,7 +386,7 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
         this.setState({
             index: index,
         });
-    }
+    };
 }
 
 export {

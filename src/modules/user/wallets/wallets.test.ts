@@ -205,6 +205,7 @@ describe('Wallets', () => {
                 });
             });
             store.dispatch(walletsFetch());
+
             return promise;
         });
 
@@ -220,6 +221,7 @@ describe('Wallets', () => {
                 });
             });
             store.dispatch(walletsFetch());
+
             return promise;
         });
     });
@@ -270,6 +272,7 @@ describe('Wallets', () => {
                 });
             });
             store.dispatch(walletsAddressFetch(payload));
+
             return promise;
         });
 
@@ -321,6 +324,7 @@ describe('Wallets', () => {
                 });
             });
             store.dispatch(walletsAddressFetch(payload));
+
             return promise;
         });
     });
@@ -391,6 +395,7 @@ describe('Wallets', () => {
                 });
             });
             store.dispatch(walletsWithdrawCcyFetch(payload));
+
             return promise;
         });
 
@@ -448,6 +453,7 @@ describe('Wallets', () => {
                 });
             });
             store.dispatch(walletsWithdrawCcyFetch(payload));
+
             return promise;
         });
     });

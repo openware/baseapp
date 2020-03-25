@@ -1,8 +1,9 @@
-import { Spinner } from 'react-bootstrap';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { isFinexEnabled } from '../../api';
 import { OpenOrders } from '../../components';
 import { localeDate, preciseData, setTradeColor } from '../../helpers';
 import {
@@ -18,7 +19,6 @@ import {
     userOpenOrdersFetch,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
-import { isFinexEnabled } from '../../api';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
@@ -96,6 +96,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
     private renderHeaders = () => {
         const currentAskUnit = this.props.currentMarket ? ` (${this.props.currentMarket.base_unit.toUpperCase()})` : null;
         const currentBidUnit = this.props.currentMarket ? ` (${this.props.currentMarket.quote_unit.toUpperCase()})` : null;
+
         return [
             this.translate('page.body.trade.header.openOrders.content.date'),
             this.translate('page.body.trade.header.openOrders.content.price').concat(currentBidUnit),
@@ -155,7 +156,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
     private handleCancelAll = () => {
         const { currentMarket } = this.props;
         this.props.ordersCancelAll({ market: currentMarket.id });
-    }
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({

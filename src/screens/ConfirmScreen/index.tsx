@@ -88,6 +88,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
             'pg-confirm__progress-second': currentProfileLevel === 2 && !isIdentity,
             'pg-confirm__progress-third': currentProfileLevel === 3 || isIdentity,
         });
+
         return (
             <div className="pg-wrapper">
                 <div className="pg-logo">

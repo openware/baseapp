@@ -96,6 +96,7 @@ class MarketComponent extends React.Component<Props> {
                 <span style={{ color: setTradeColor(taker_type).color }} key={i}><Decimal fixed={priceFixed} prevValue={trades[i - 1] ? trades[i - 1].price : 0}>{price}</Decimal></span>,
             ];
         };
+
         return (trades.length > 0)
             ? trades.map(renderRow)
             : [[[''], this.props.intl.formatMessage({ id: 'page.noDataToShow' })]];

@@ -59,6 +59,7 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
             if (state.currentMarket) {
                 return state;
             }
+
             return {
                 ...state,
                 currentMarket: action.payload,

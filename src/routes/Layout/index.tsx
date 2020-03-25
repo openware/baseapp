@@ -1,11 +1,12 @@
 import { History } from 'history';
-import { Spinner } from 'react-bootstrap';
 import * as React from 'react';
+import { Spinner } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { minutesUntilAutoLogout, sessionCheckInterval } from '../../api';
+import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import {
@@ -38,7 +39,6 @@ import {
     VerificationScreen,
     WalletsScreen,
 } from '../../screens';
-import { ExpiredSessionModal } from '../../components';
 
 interface ReduxProps {
     colorTheme: string;
@@ -102,6 +102,7 @@ const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent,
     }
 
     const renderCustomerComponent = props => <CustomComponent {...props} />;
+
     return <Route {...rest} render={renderCustomerComponent} />;
 };
 
@@ -195,6 +196,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         if (localStorage.getItem(STORE_KEY) !== null) {
             return parseInt(localStorage.getItem(STORE_KEY) || '0', 10);
         }
+
         return 0;
     };
 

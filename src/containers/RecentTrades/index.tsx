@@ -1,4 +1,3 @@
-import {TabPanel } from '../../components';
 import classnames from 'classnames';
 import * as React from 'react';
 import {
@@ -6,6 +5,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import {TabPanel } from '../../components';
 import {
     Market,
     PublicTrade,
@@ -87,10 +87,11 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
             </div>
         );
 
-    }
+    };
 
     private renderTabs = () => {
         const { tab, index } = this.state;
+
         return [
             {
                 content: tab === 'market' && index === 0 ? <MarketTab /> : null,

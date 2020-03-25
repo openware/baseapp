@@ -1,8 +1,8 @@
 import * as actions from './actions';
 import {
     initialMemberLevelsState,
-    MemberLevelsState,
     memberLevelsReducer,
+    MemberLevelsState,
 } from './reducer';
 import { MemberLevels } from './types';
 

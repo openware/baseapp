@@ -1,5 +1,5 @@
-import * as React from 'react';
 import cx from 'classnames';
+import * as React from 'react';
 
 export interface CryptoIconProps {
     code: string;
@@ -17,6 +17,7 @@ const findIcon = (code: string): string => {
 
 export const CryptoIcon: React.FunctionComponent<CryptoIconProps> = props => {
     const { code, className = '', children } = props;
+
     return (
         <span className={cx('cr-crypto-icon', className)}>
           <img src={findIcon(code)} alt="crypto-icon"/> {children}

@@ -1,11 +1,12 @@
-import { Button } from 'react-bootstrap';
 import cr from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { DropdownComponent, CustomInput } from '../../../components';
+import { languages } from '../../../api/config';
+import { CustomInput, DropdownComponent } from '../../../components';
 import { formatDate, isDateInFuture } from '../../../helpers';
 import {
     editIdentity,
@@ -21,7 +22,6 @@ import {
     User,
 } from '../../../modules';
 import { nationalities } from '../../../translations/nationalities';
-import { languages } from '../../../api/config';
 
 import * as countries from 'i18n-iso-countries';
 
@@ -304,7 +304,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     private scrollToElement = (displayedElem: number) => {
             const element: HTMLElement = document.getElementsByClassName('pg-confirm__content-identity-col-row')[displayedElem] as HTMLElement;
             element && element.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
-    }
+    };
 
     private handleFieldFocus = (field: string) => {
         return () => {
@@ -349,7 +349,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     break;
             }
         };
-    }
+    };
 
     private handleChange = (value: string, key: string) => {
             // @ts-ignore
@@ -387,18 +387,23 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         switch (field) {
             case 'firstName':
                 const firstNameRegex = new RegExp(`^[a-zA-Z]{1,100}$`);
+
                 return value.match(firstNameRegex) ? true : false;
             case 'lastName':
                 const lastNameRegex = new RegExp(`^[a-zA-Z]{1,100}$`);
+
                 return value.match(lastNameRegex) ? true : false;
             case 'residentialAddress':
                 const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9,.;/\\s]+$`);
+
                 return value.match(residentialAddressRegex) ? true : false;
             case 'city':
                 const cityRegex = new RegExp(`^[a-zA-Z]+$`);
+
                 return value.match(cityRegex) ? true : false;
             case 'postcode':
                 const postcodeRegex = new RegExp(`^[0-9]{1,12}$`);
+
                 return value.match(postcodeRegex) ? true : false;
             case 'dateOfBirth':
                 if (value.length === 10) {
@@ -409,7 +414,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             default:
                 return true;
         }
-    }
+    };
 
     private handleCheckButtonDisabled = () => {
         const {
@@ -440,7 +445,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             || !postcodeValid
             || !dateOfBirthValid
         );
-    }
+    };
 
     private sendData = () => {
         const { labels, user } = this.props;
@@ -464,7 +469,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         } else {
             this.props.sendIdentity(profileInfo);
         }
-    }
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({

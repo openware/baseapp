@@ -8,8 +8,8 @@ import {
     SummaryField,
 } from '../../components';
 import { Decimal } from '../../components/Decimal';
-import { Beneficiary } from '../../modules';
 import { cleanPositiveFloatInput } from '../../helpers';
+import { Beneficiary } from '../../modules';
 
 export interface WithdrawProps {
     currency: string;
@@ -152,6 +152,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
 
     private renderFee = () => {
         const { fee, fixed, currency } = this.props;
+
         return (
             <span>
                 <Decimal fixed={fixed}>{fee.toString()}</Decimal> {currency.toUpperCase()}
@@ -162,6 +163,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     private renderTotal = () => {
         const total = this.state.total;
         const { fixed, currency } = this.props;
+
         return total ? (
             <span>
                 <Decimal fixed={fixed}>{total.toString()}</Decimal> {currency.toUpperCase()}
@@ -175,6 +177,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         const withdrawCodeClass = classnames('cr-withdraw__group__code', {
           'cr-withdraw__group__code--focused': withdrawCodeFocused,
         });
+
         return (
             <React.Fragment>
               <div className={withdrawCodeClass}>

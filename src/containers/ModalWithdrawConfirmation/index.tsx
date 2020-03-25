@@ -23,6 +23,7 @@ class ModalWithdraw extends React.Component<Props> {
     };
     public render() {
         const { show } = this.props;
+
         return (
             <Modal
                 show={show}
@@ -44,6 +45,7 @@ class ModalWithdraw extends React.Component<Props> {
     private renderBody = () => {
         const { amount, currency, rid } = this.props;
         const formattedCurrency = currency.toUpperCase();
+
         return (
             <div className="pg-exchange-modal-submit-body modal-body__withdraw-confirm">
                 <p>

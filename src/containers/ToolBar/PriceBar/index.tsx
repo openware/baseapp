@@ -16,6 +16,7 @@ export class PriceBar extends React.Component<Props> {
         positionValue = position === 'left' ? percentage < gap ? '0' : `${percentage - gap}%` : percentage + gap > 100 ? '0' : `${100 - percentage - gap}%`;
         const style = {};
         style[position] = positionValue;
+
         return (
             <div className="pg-trading-header-price-bar">
                 <div className="pg-trading-header-price-bar-filler">

@@ -69,6 +69,7 @@ describe('User activity', () => {
                 });
             });
             store.dispatch(getUserActivity(fakeFetchPayloadFirstPage));
+
             return promise;
         });
 
@@ -84,6 +85,7 @@ describe('User activity', () => {
                 });
             });
             store.dispatch(getUserActivity(fakeFetchPayloadFirstPage));
+
             return promise;
         });
     });

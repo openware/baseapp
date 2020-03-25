@@ -97,6 +97,7 @@ describe('Ranger module', () => {
                     switch (actions.length) {
                         case 1:
                             expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+
                             return;
 
                         case 2:
@@ -143,6 +144,7 @@ describe('Ranger module', () => {
                     switch (actions.length) {
                         case 1:
                             expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+
                             return;
 
                         case 2:
@@ -234,20 +236,24 @@ describe('Ranger module', () => {
                     switch (actions.length) {
                         case 1:
                             expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: false } });
+
                             return;
 
                         case 2:
                             expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                             store.dispatch(rangerDisconnectFetch());
+
                             return;
 
                         case 3:
                             expect(lastAction).toEqual({ type: RANGER_DISCONNECT_FETCH });
+
                             return;
 
                         case 4:
                             expect(lastAction).toEqual({ type: RANGER_DISCONNECT_DATA });
                             setTimeout(resolve, 30);
+
                             return;
 
                         default:
@@ -267,6 +273,7 @@ describe('Ranger module', () => {
                 const klinNumber = [1549744200, 0.007, 0.007, 0.0069, 0.007, 0.011];
                 const klineEventString: { [pair: string]: string[] } = { 'kyneth.kline-5m': klineString };
                 const klineEventNumber: { [pair: string]: number[] } = { 'dasheth.kline-15m': klinNumber };
+
                 return [
                     {
                         description: 'string klines',
@@ -306,20 +313,24 @@ describe('Ranger module', () => {
                                         type: RANGER_CONNECT_FETCH,
                                         payload: { withAuth: false },
                                     });
+
                                     return;
 
                                 case 2:
                                     expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                     store.dispatch(rangerDirectMessage(event));
+
                                     return;
 
                                 case 3:
                                     expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: event });
+
                                     return;
 
                                 case 4:
                                     expect(lastAction).toEqual(expectedAction);
                                     setTimeout(resolve, 30);
+
                                     return;
 
                                 default:
@@ -434,20 +445,24 @@ describe('Ranger module', () => {
                                     type: RANGER_CONNECT_FETCH,
                                     payload: { withAuth: false },
                                 });
+
                                 return;
 
                             case 2:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockGlobalTickers));
+
                                 return;
 
                             case 3:
                                 expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockGlobalTickers });
+
                                 return;
 
                             case 4:
                                 expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
+
                                 return;
 
                             default:
@@ -478,16 +493,19 @@ describe('Ranger module', () => {
                                     type: RANGER_CONNECT_FETCH,
                                     payload: { withAuth: false },
                                 });
+
                                 return;
 
                            case 2:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockOrderBookUpdate));
+
                                 return;
 
                             case 3:
                                 expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrderBookUpdate });
                                 setTimeout(resolve, 30);
+
                                 return;
 
                             default:
@@ -529,11 +547,13 @@ describe('Ranger module', () => {
                                     type: RANGER_CONNECT_FETCH,
                                     payload: { withAuth: false },
                                 });
+
                                 return;
 
                             case 2:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage({ 'eurbtc.trades': mockTrades }));
+
                                 return;
 
                             case 3:
@@ -541,11 +561,13 @@ describe('Ranger module', () => {
                                     type: RANGER_DIRECT_WRITE,
                                     payload: { 'eurbtc.trades': mockTrades },
                                 });
+
                                 return;
 
                             case 4:
                                 expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
+
                                 return;
 
                             default:
@@ -584,20 +606,24 @@ describe('Ranger module', () => {
                         switch (actions.length) {
                             case 1:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
+
                                 return;
 
                             case 2:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockOrder));
+
                                 return;
 
                             case 3:
                                 expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
+
                                 return;
 
                             case 4:
                                 expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
+
                                 return;
                             case 5:
                                 expect(lastAction).toEqual({
@@ -614,6 +640,7 @@ describe('Ranger module', () => {
                                             origin_volume: '0.1',
                                         },
                                 });
+
                                 return;
                             default:
                                 fail(`Unexpected action ${actions.length}`);
@@ -649,20 +676,24 @@ describe('Ranger module', () => {
                         switch (actions.length) {
                             case 1:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
+
                                 return;
 
                             case 2:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockOrder));
+
                                 return;
 
                             case 3:
                                 expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockOrder });
+
                                 return;
 
                             case 4:
                                 expect(lastAction).toEqual(expectedAction);
                                 setTimeout(resolve, 30);
+
                                 return;
                             case 5:
                                 expect(lastAction).toEqual({
@@ -679,6 +710,7 @@ describe('Ranger module', () => {
                                             origin_volume: '0.1',
                                         },
                                 });
+
                                 return;
                             default:
                                 fail(`Unexpected action ${actions.length}`);
@@ -713,21 +745,25 @@ describe('Ranger module', () => {
                         switch (actions.length) {
                             case 1:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_FETCH, payload: { withAuth: true } });
+
                                 return;
 
                             case 2:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockTrade));
+
                                 return;
 
                             case 3:
                                 expect(lastAction).toEqual({ type: RANGER_DIRECT_WRITE, payload: mockTrade });
                                 setTimeout(resolve, 30);
+
                                 return;
 
                             case 4:
                                 expect(lastAction).toEqual(expectedTradeAction);
                                 setTimeout(resolve, 30);
+
                                 return;
 
                             default:

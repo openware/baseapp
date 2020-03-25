@@ -42,6 +42,7 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
             'pg-trading-header-selector-search': isOpen,
             'pg-trading-header-selector-search-closed': !isOpen,
         });
+
         return (
             <div className="pg-trading-header-selector-container">
                 <div className={listClassName}>
@@ -68,13 +69,13 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
         this.setState({
             searchFieldValue: e.target.value,
         });
-    }
+    };
 
     private marketsTabsSelectHandler = value => {
         this.setState({
             marketsTabsSelectedValue: value,
         });
-    }
+    };
 }
 
 const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

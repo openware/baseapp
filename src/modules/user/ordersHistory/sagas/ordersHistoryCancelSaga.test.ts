@@ -80,6 +80,7 @@ describe('Orders History Cancel', () => {
             });
         });
         store.dispatch(ordersHistoryCancelFetch(fakeFetchPayload));
+
         return promise;
     });
 
@@ -95,6 +96,7 @@ describe('Orders History Cancel', () => {
             });
         });
         store.dispatch(ordersHistoryCancelFetch(fakeFetchPayload));
+
         return promise;
     });
 });

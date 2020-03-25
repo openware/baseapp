@@ -1,5 +1,5 @@
-import { Spinner } from 'react-bootstrap';
 import * as React from 'react';
+import { Spinner } from 'react-bootstrap';
 import {
     FormattedMessage,
     InjectedIntlProps,
@@ -113,6 +113,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                 <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.newOrder" /></div>
             </div>
         );
+
         return (
 
             <div className={'pg-order'} ref={this.orderRef}>
@@ -236,6 +237,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
     private getWallet(currency: string, wallets: WalletItemProps[]) {
         const currencyLower = currency.toLowerCase();
+
         return wallets.find(w => w.currency === currencyLower) as Wallet;
     }
 
@@ -243,7 +245,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.setState({
             orderSide: label.toLowerCase(),
         });
-    }
+    };
 
     private getAvailableValue(wallet: Wallet | undefined) {
         return wallet && wallet.balance ? Number(wallet.balance) : 0;
@@ -254,7 +256,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             priceLimit: undefined,
         });
         this.props.setCurrentPrice();
-    }
+    };
 }
 
 const mapStateToProps = (state: RootState) => ({

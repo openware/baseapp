@@ -43,6 +43,7 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
 
     public render() {
         const { showForm } = this.state;
+
         return (
             <React.Fragment>
                 <label className="pg-profile-page__label">
@@ -73,6 +74,7 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
 
     private renderForm = () => {
         const { oldPassword, newPassword } = this.state;
+
         return (
             <div>
                 <div className="pg-change-password-form">

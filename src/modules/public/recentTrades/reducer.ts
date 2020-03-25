@@ -58,6 +58,7 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
         }
         case RECENT_TRADES_PUSH: {
             const lastTrades = convertTradeEventList(action.payload.market, action.payload.trades);
+
             return {
                 ...state,
                 list: [

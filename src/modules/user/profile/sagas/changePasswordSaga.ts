@@ -1,13 +1,13 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
+import { getCsrfToken } from '../../../../helpers';
 import { alertPush } from '../../../index';
 import {
     changePasswordData,
     changePasswordError,
     ChangePasswordFetch,
 } from '../actions';
-import { getCsrfToken } from '../../../../helpers';
 
 const changePasswordOptions = (csrfToken?: string): RequestOptions => {
     return {

@@ -203,6 +203,7 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
         case BENEFICIARIES_ACTIVATE_DATA:
         case BENEFICIARIES_ACTIVATE_ERROR:
             const beneficiariesActivateState = { ...state.activate };
+
             return {
                 ...state,
                 activate: beneficiariesActivateReducer(beneficiariesActivateState, action),
@@ -211,6 +212,7 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
         case BENEFICIARIES_DATA:
         case BENEFICIARIES_ERROR:
             const beneficiariesFetchState = { ...state.fetch };
+
             return {
                 ...state,
                 fetch: beneficiariesFetchReducer(beneficiariesFetchState, action),
@@ -219,6 +221,7 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
         case BENEFICIARIES_CREATE_DATA:
         case BENEFICIARIES_CREATE_ERROR:
             const beneficiariesCreateState = { ...state.create };
+
             return {
                 ...state,
                 create: beneficiariesCreateReducer(beneficiariesCreateState, action),
@@ -227,6 +230,7 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
         case BENEFICIARIES_DELETE_DATA:
         case BENEFICIARIES_DELETE_ERROR:
             const beneficiariesDeleteState = { ...state.delete };
+
             return {
                 ...state,
                 delete: beneficiariesDeleteReducer(beneficiariesDeleteState, action),

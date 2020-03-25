@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { MarketsTable } from '../../containers';
 import {
@@ -288,7 +288,7 @@ class Landing extends React.Component<Props> {
 
     private handleScrollTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    };
 
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 }

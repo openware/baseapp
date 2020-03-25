@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import { initialConfigsState, configsReducer } from './reducer';
+import { configsReducer, initialConfigsState } from './reducer';
 import { Configs } from './types';
 
 describe('configsReducer', () => {

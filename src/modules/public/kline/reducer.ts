@@ -60,6 +60,7 @@ export const klineReducer = (state = initialKlineState, action: KlineActions): K
     switch (action.type) {
         case KLINE_PUSH:
             const { kline, marketId, period } = action.payload;
+
             return {
                 ...state,
                 marketId,

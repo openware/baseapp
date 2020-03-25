@@ -90,6 +90,7 @@ describe('Orders History', () => {
             });
         });
         store.dispatch(userOrdersHistoryFetch(fakeFetchPayloadFirstPage));
+
         return promise;
     });
 
@@ -105,6 +106,7 @@ describe('Orders History', () => {
             });
         });
         store.dispatch(userOrdersHistoryFetch(fakeFetchPayloadFirstPage));
+
         return promise;
     });
 });

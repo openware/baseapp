@@ -57,6 +57,7 @@ describe('Module: WithdrawLimit', () => {
         });
 
         store.dispatch(withdrawLimitFetch());
+
         return promise;
     });
 
@@ -72,6 +73,7 @@ describe('Module: WithdrawLimit', () => {
             });
         });
         store.dispatch(withdrawLimitFetch());
+
         return promise;
     });
 });

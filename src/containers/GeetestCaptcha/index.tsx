@@ -68,11 +68,11 @@ class GeetestCaptchaComponent extends React.Component<Props> {
 
     public validate = () => {
         return this.captcha && this.captcha.getValidate();
-    }
+    };
 
     public reset = () => {
         return this.captcha && this.captcha.reset();
-    }
+    };
 
     public render() {
         return <div ref={this.captchaContainerRef} />;
@@ -82,13 +82,13 @@ class GeetestCaptchaComponent extends React.Component<Props> {
         this.captcha = captcha;
         this.captcha.appendTo(this.captchaContainerRef.current);
         this.captcha.onSuccess(this.captchaSuccessHandler);
-    }
+    };
 
     private captchaSuccessHandler = () => {
         if (this.props.onSuccess) {
             this.props.onSuccess(this.validate());
         }
-    }
+    };
 }
 
 const mapDispatchProps = {

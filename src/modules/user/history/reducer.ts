@@ -45,6 +45,7 @@ export const historyReducer = (state = initialState, action: HistoryActions) => 
         case HISTORY_PUSH_FINISH: {
             let list = [...action.payload];
             list = getUnique(list, 'id');
+
             return { ...state, list: list };
         }
         default:

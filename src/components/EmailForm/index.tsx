@@ -38,6 +38,7 @@ export class EmailForm extends React.Component<EmailFormProps> {
         const emailGroupClass = cr('cr-email-form__group', {
             'cr-email-form__group--focused': emailFocused,
         });
+
         return (
             <form>
                 <div className="cr-email-form">
@@ -90,7 +91,7 @@ export class EmailForm extends React.Component<EmailFormProps> {
 
     private handleCancel = () => {
         this.props.handleReturnBack();
-    }
+    };
 
     private handleSubmitForm() {
         this.props.OnSubmit();

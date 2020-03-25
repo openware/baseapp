@@ -79,6 +79,7 @@ class SignIn extends React.Component<Props, SignInState> {
         const { loading, require2FA } = this.props;
 
         const className = cx('pg-sign-in-screen__container', { loading });
+
         return (
             <div className="pg-sign-in-screen">
                 <div className={className}>{require2FA ? this.render2FA() : this.renderSignInForm()}</div>
@@ -122,6 +123,7 @@ class SignIn extends React.Component<Props, SignInState> {
     private render2FA = () => {
         const { loading } = this.props;
         const { otpCode, error2fa, codeFocused } = this.state;
+
         return (
             <TwoFactorAuth
                 isLoading={loading}
@@ -217,6 +219,7 @@ class SignIn extends React.Component<Props, SignInState> {
                 emailError: this.props.intl.formatMessage({ id: ERROR_INVALID_EMAIL }),
                 passwordError: '',
             });
+
             return;
         }
         if (!password) {
@@ -224,6 +227,7 @@ class SignIn extends React.Component<Props, SignInState> {
                 emailError: '',
                 passwordError: this.props.intl.formatMessage({ id: ERROR_EMPTY_PASSWORD }),
             });
+
             return;
         }
     };

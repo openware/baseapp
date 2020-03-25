@@ -46,5 +46,6 @@ export const rangerReducer = (state = initialRangerState, action: RangerAction):
 
         default:
     }
+
     return state;
 };

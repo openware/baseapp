@@ -49,6 +49,7 @@ export const orderBookReducer = (state = initialOrderBook, action: OrderBookActi
       };
     case ORDER_BOOK_DATA:
       const { asks, bids } = action.payload;
+
       return {
         ...state,
         asks,
@@ -77,6 +78,7 @@ export const depthReducer = (state = initialDepth, action: DepthActions): DepthS
       };
     case DEPTH_DATA:
       const { asks, bids } = action.payload;
+
       return {
         ...state,
         asks,
@@ -123,6 +125,7 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
       return state;
     case DEPTH_DATA_SNAPSHOT:
       const {asks, bids, sequence} = action.payload;
+
       return {
         ...state,
         asks,

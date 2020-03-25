@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga, Wallet, AccountInterface } from '../../..';
+import { AccountInterface, rootSaga, Wallet } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import {
     walletsData,
@@ -221,6 +221,7 @@ describe('Module: Wallets', () => {
         });
 
         store.dispatch(walletsFetch());
+
         return promise;
     });
 
@@ -236,6 +237,7 @@ describe('Module: Wallets', () => {
             });
         });
         store.dispatch(walletsFetch());
+
         return promise;
     });
 });

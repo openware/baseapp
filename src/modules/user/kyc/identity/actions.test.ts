@@ -83,6 +83,7 @@ describe('KYC - Identity', () => {
                 });
             });
             store.dispatch(sendIdentity(confirmIdentityPayload));
+
             return promise;
         });
 
@@ -100,6 +101,7 @@ describe('KYC - Identity', () => {
                 });
             });
             store.dispatch(sendIdentity(confirmIdentityPayload));
+
             return promise;
         });
 
@@ -138,6 +140,7 @@ describe('KYC - Identity', () => {
                 });
             });
             store.dispatch(editIdentity(confirmIdentityPayload));
+
             return promise;
         });
 
@@ -155,6 +158,7 @@ describe('KYC - Identity', () => {
                 });
             });
             store.dispatch(editIdentity(confirmIdentityPayload));
+
             return promise;
         });
     });

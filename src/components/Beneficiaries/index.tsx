@@ -8,13 +8,13 @@ import {
     beneficiariesDelete,
     Beneficiary,
     BeneficiaryBank,
+    MemberLevels,
+    memberLevelsFetch,
     RootState,
     selectBeneficiaries,
     selectBeneficiariesCreate,
     selectMemberLevels,
     selectUserInfo,
-    memberLevelsFetch,
-    MemberLevels,
     User,
 } from '../../modules';
 import { BeneficiariesActivateModal } from './BeneficiariesActivateModal';
@@ -152,7 +152,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 />
             </div>
         );
-    }
+    };
 
     private renderDropdownItem = (item: Beneficiary, index: number, type: 'fiat' | 'coin') => {
         if (type === 'fiat') {
@@ -184,7 +184,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 </div>
             </div>
         );
-    }
+    };
 
     private renderDropdownBody = (beneficiaries: Beneficiary[], type: 'fiat' | 'coin') => {
         const dropdownBodyClassName = classnames('pg-beneficiaries__dropdown__body', {
@@ -200,7 +200,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 </div>
             </div>
         );
-    }
+    };
 
     private renderDropdownTipCryptoNote = (note: string) => {
         return (
@@ -209,7 +209,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 <span className="tip__content__block__value">{note}</span>
             </div>
         );
-    }
+    };
 
     private renderDropdownTipCrypto = (currentWithdrawalBeneficiary: Beneficiary) => {
         if (currentWithdrawalBeneficiary) {
@@ -231,7 +231,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         }
 
         return;
-    }
+    };
 
     private renderDropdownTipFiatDescription = (description: string) => {
         return (
@@ -240,7 +240,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 <span className="tip__content__block__value">{description}</span>
             </div>
         );
-    }
+    };
 
     private renderDropdownTipFiat = (currentWithdrawalBeneficiary: Beneficiary) => {
         if (currentWithdrawalBeneficiary) {
@@ -266,7 +266,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         }
 
         return;
-    }
+    };
 
     private renderAddressDropdown = (beneficiaries: Beneficiary[], currentWithdrawalBeneficiary: Beneficiary, type: 'fiat' | 'coin') => {
         const { isOpenDropdown, isOpenTip } = this.state;
@@ -314,15 +314,15 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 {isOpenTip && this.renderDropdownTipCrypto(currentWithdrawalBeneficiary)}
             </div>
         );
-    }
+    };
 
     private handleClickDeleteAddress = (item: Beneficiary) => () => {
         this.handleDeleteAddress(item);
-    }
+    };
 
     private handleClickSelectAddress = (item: Beneficiary) => () => {
         this.handleSetCurrentAddress(item);
-    }
+    };
 
     private handleClickToggleAddAddressModal = () => () => {
         const { memberLevels, userData } = this.props;
@@ -332,7 +332,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         } else {
             this.handleToggleAddAddressModal();
         }
-    }
+    };
 
     private handleDeleteAddress = (item: Beneficiary) => {
         const payload = {
@@ -340,7 +340,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         };
 
         this.props.deleteAddress(payload);
-    }
+    };
 
     private handleFilterByCurrency = (beneficiaries: Beneficiary[], currency: string) => {
         if (beneficiaries.length && currency) {
@@ -348,14 +348,15 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         }
 
         return [];
-    }
+    };
 
     private handleFilterByState = (beneficiaries: Beneficiary[]) => {
         if (beneficiaries.length) {
             return beneficiaries.filter(item => item.state.toLowerCase() === 'active');
         }
+
         return [];
-    }
+    };
 
     private handleSetCurrentAddress = (item: Beneficiary) => {
         if (item.data) {
@@ -365,37 +366,37 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             });
             this.props.onChangeValue(item);
         }
-    }
+    };
 
     private handleToggleAddAddressModal = () => {
         this.setState(prevState => ({
             isOpenAddressModal: !prevState.isOpenAddressModal,
         }));
-    }
+    };
 
     private handleToggleConfirmationModal = () => {
         this.setState(prevState => ({
             isOpenConfirmationModal: !prevState.isOpenConfirmationModal,
         }));
-    }
+    };
 
     private handleToggleFailModal = () => {
         this.setState(prevState => ({
             isOpenFailModal: !prevState.isOpenFailModal,
         }));
-    }
+    };
 
     private handleToggleDropdown = () => {
         this.setState(prevState => ({
             isOpenDropdown: !prevState.isOpenDropdown,
         }));
-    }
+    };
 
     private handleToggleTip = () => {
         this.setState(prevState => ({
             isOpenTip: !prevState.isOpenTip,
         }));
-    }
+    };
 
     private translate = (id: string) => this.props.intl.formatMessage({ id });
 }

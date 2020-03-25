@@ -18,6 +18,7 @@ export const convertOrderAPI = (order: OrderAPI): OrderCommon => {
         updated_at,
         confirmed,
     } = order;
+
     return {
         id,
         uuid,
@@ -50,6 +51,7 @@ export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
         updated_at,
         confirmed,
     } = orderEvent;
+
     return {
         id,
         uuid,
@@ -75,10 +77,12 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
             if (index === -1) {
                 return list.concat({...order});
             }
+
             return list.map(item => {
                 if ((item.uuid && item.uuid === order.uuid) || (item.id === order.id)) {
                     return {...order};
                 }
+
                 return item;
             });
         default:
@@ -86,6 +90,7 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
                 if ((item.uuid && item.uuid !== uuid) || item.id !== id) {
                     memo.push(item);
                 }
+
                 return memo;
             }, []);
     }

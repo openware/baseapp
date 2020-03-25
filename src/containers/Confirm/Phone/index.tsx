@@ -159,21 +159,21 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                     break;
             }
         };
-    }
+    };
 
     private handleConfirmEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
             this.confirmPhone();
         }
-    }
+    };
 
     private handleSendEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
             this.handleSendCode();
         }
-    }
+    };
 
     private confirmPhone = () => {
         const requestProps = {
@@ -181,7 +181,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
             verification_code: String(this.state.confirmationCode),
         };
         this.props.verifyPhone(requestProps);
-    }
+    };
 
     private addPlusSignToPhoneNumber = () => {
         if (this.state.phoneNumber.length === 0) {
@@ -189,7 +189,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                 phoneNumber: '+',
             });
         }
-    }
+    };
 
     private handleChangePhoneNumber = (value: string) => {
         if (this.inputPhoneNumber(value)) {
@@ -198,7 +198,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                 resendCode: false,
             });
         }
-    }
+    };
 
     private handleChangeConfirmationCode = (value: string) => {
         if (this.inputConfirmationCode(value)) {
@@ -211,14 +211,16 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     private inputPhoneNumber = (value: string) => {
         const convertedText = value.trim();
         const condition = new RegExp('^\\+\\d*?$');
+
         return condition.test(convertedText);
-    }
+    };
 
     private inputConfirmationCode = (value: string) => {
         const convertedText = value.trim();
         const condition = new RegExp('^\\d*?$');
+
         return condition.test(convertedText);
-    }
+    };
 
     private handleSendCode = () => {
         const requestProps = {

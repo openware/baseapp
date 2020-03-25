@@ -27,6 +27,7 @@ export const changeLanguageReducer = (state = initialChangeLanguageState, action
     switch (action.type) {
         case CHANGE_LANGUAGE:
             localStorage.setItem('lang_code', action.payload);
+
             return {
                 lang: action.payload,
                 messages: languageMap[action.payload],

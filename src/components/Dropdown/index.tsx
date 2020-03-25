@@ -78,7 +78,7 @@ class DropdownComponent extends React.Component<DropdownComponentProps & {}, Dro
                 {elem}
             </Dropdown.Item>
         );
-    }
+    };
 
     private handleSelect = (elem: DropdownElem, index: number) => {
         this.props.onSelect && this.props.onSelect(index);
@@ -92,6 +92,7 @@ class DropdownComponent extends React.Component<DropdownComponentProps & {}, Dro
         if (elem !== undefined && elem !== null) {
             return elem.toString();
         }
+
         return '';
     };
 }

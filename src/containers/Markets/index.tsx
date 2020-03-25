@@ -1,13 +1,14 @@
-import { Markets } from '../../components/Markets';
-import { Spinner } from 'react-bootstrap';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Spinner } from 'react-bootstrap';
 import {
     InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { incrementalOrderBook } from '../../api';
+import { Decimal } from '../../components/Decimal';
+import { Markets } from '../../components/Markets';
 import { RootState, selectUserInfo, setCurrentPrice, User } from '../../modules';
 import {
     Market,
@@ -21,7 +22,6 @@ import {
 } from '../../modules/public/markets';
 import { depthFetch } from '../../modules/public/orderBook';
 import { walletsFetch } from '../../modules/user/wallets';
-import { Decimal } from '../../components/Decimal';
 
 interface ReduxProps {
     userData: User;
@@ -62,6 +62,7 @@ class MarketsContainer extends React.Component<Props> {
         const className = classnames('pg-markets', {
             'pg-markets--loading': marketsLoading,
         });
+
         return (
             <div className={className}>
                 {marketsLoading ? <div><Spinner animation="border" variant="primary" /></div> : this.markets()}
@@ -72,6 +73,7 @@ class MarketsContainer extends React.Component<Props> {
     private markets = () => {
         const { currentMarket } = this.props;
         const key = currentMarket && currentMarket.name;
+
         return (
             <Markets
                 filters={false}

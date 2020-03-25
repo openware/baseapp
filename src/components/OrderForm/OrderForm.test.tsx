@@ -1,10 +1,10 @@
-import { PercentageButton } from '../PercentageButton';
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { SinonSpy, spy } from 'sinon';
-import { OrderForm, OrderFormProps } from './';
 import { DropdownComponent } from '../Dropdown';
+import { PercentageButton } from '../PercentageButton';
+import { OrderForm, OrderFormProps } from './';
 
 // tslint:disable:no-magic-numbers
 type DropdownElem = number | string | React.ReactNode;

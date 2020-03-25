@@ -53,6 +53,7 @@ describe('Module: Change password', () => {
         });
 
         store.dispatch(changePasswordFetch(fakePassword));
+
         return promise;
     });
 
@@ -68,6 +69,7 @@ describe('Module: Change password', () => {
             });
         });
         store.dispatch(changePasswordFetch(fakePassword));
+
         return promise;
     });
 });

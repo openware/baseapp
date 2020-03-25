@@ -19,11 +19,13 @@ export const gridLayoutReducer = (state = initialLayoutState, action) => {
     switch (action.type) {
         case SAVE_LAYOUTS:
             saveLayoutToLS(action.payload.key, action.payload.layouts);
+
             return {
                 layouts: action.payload.layouts,
             };
         case RESET_LAYOUTS:
             resetLayout(action.payload.key);
+
             return {
                 layouts: layouts,
             };

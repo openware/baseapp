@@ -1,7 +1,7 @@
 import { Channel, delay, eventChannel } from 'redux-saga';
 // tslint:disable-next-line no-submodule-imports
 import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
-import { rangerUrl, isFinexEnabled } from '../../../../api';
+import { isFinexEnabled, rangerUrl } from '../../../../api';
 import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
 import { selectOpenOrdersList, userOpenOrdersUpdate } from '../../../user/openOrders';
@@ -87,6 +87,7 @@ const initRanger = (
                         if (currentMarket && orderBookMatch[1] === currentMarket.id) {
                             emitter(depthData(event));
                         }
+
                         return;
                     }
 
@@ -95,6 +96,7 @@ const initRanger = (
                         if (currentMarket && orderBookMatchSnap[1] === currentMarket.id) {
                             emitter(depthDataSnapshot(event));
                         }
+
                         return;
                     }
 
@@ -104,15 +106,18 @@ const initRanger = (
                             const previousSequence = selectOrderBookSequence(store.getState());
                             if (previousSequence === null) {
                                 window.console.log('OrderBook increment received before snapshot');
+
                                 return;
                             }
                             if (previousSequence + 1 !== event.sequence) {
                                 window.console.log(`Bad sequence detected in incremental orderbook previous: ${previousSequence}, event: ${event.sequence}`);
                                 emitter(rangerDisconnectFetch());
+
                                 return;
                             }
                             emitter(depthDataIncrement(event));
                         }
+
                         return;
                     }
 
@@ -126,6 +131,7 @@ const initRanger = (
                                 period: klineMatch[2],
                             }),
                         );
+
                         return;
                     }
 
@@ -138,6 +144,7 @@ const initRanger = (
                                 market: tradesMatch[1],
                             }),
                         );
+
                         return;
                     }
 
@@ -145,6 +152,7 @@ const initRanger = (
                         // public
                         case 'global.tickers':
                             emitter(marketsTickersData(formatTicker(event)));
+
                             return;
 
                         // public
@@ -153,9 +161,11 @@ const initRanger = (
                                 case 'subscribed':
                                 case 'unsubscribed':
                                     emitter(subscriptionsUpdate({ subscriptions: event.streams }));
+
                                     return;
                                 default:
                             }
+
                             return;
 
                         // private
@@ -182,16 +192,19 @@ const initRanger = (
                             }
 
                             emitter(rangerUserOrderUpdate(event));
+
                             return;
 
                         // private
                         case 'trade':
                             emitter(pushHistoryEmit(event));
+
                             return;
 
                         // private
                         case 'balances':
                             emitter(updateWalletsDataByRanger({ ws: true, balances: event }));
+
                             return;
 
                         default:
@@ -200,11 +213,13 @@ const initRanger = (
                 }
             }
         };
+
         // unsubscribe function
         return () => {
             emitter(rangerDisconnectData());
         };
     });
+
     return [channel, ws];
 };
 

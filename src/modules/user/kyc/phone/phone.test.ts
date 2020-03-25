@@ -71,6 +71,7 @@ describe('KYC - Phone', () => {
                 });
             });
             store.dispatch(sendCode(sendCodePayload));
+
             return promise;
         });
 
@@ -88,6 +89,7 @@ describe('KYC - Phone', () => {
                 });
             });
             store.dispatch(sendCode(sendCodePayload));
+
             return promise;
         });
     });
@@ -146,6 +148,7 @@ describe('KYC - Phone', () => {
                 });
             });
             store.dispatch(verifyPhone(verifyCodeFetchPayload));
+
             return promise;
         });
 
@@ -163,6 +166,7 @@ describe('KYC - Phone', () => {
                 });
             });
             store.dispatch(verifyPhone(verifyCodeFetchPayload));
+
             return promise;
         });
     });
@@ -215,6 +219,7 @@ describe('KYC - Phone', () => {
                 });
             });
             store.dispatch(resendCode(resendCodePayload));
+
             return promise;
         });
 
@@ -232,6 +237,7 @@ describe('KYC - Phone', () => {
                 });
             });
             store.dispatch(resendCode(resendCodePayload));
+
             return promise;
         });
     });

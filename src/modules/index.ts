@@ -10,6 +10,7 @@ import { GridLayoutState } from './public/gridLayout';
 import { LanguageState } from './public/i18n';
 import { KlineState, rootKlineFetchSaga } from './public/kline';
 import { MarketsState, rootMarketsSaga } from './public/markets';
+import { MemberLevelsState, rootMemberLevelsSaga } from './public/memberLevels';
 import {
     DepthIncrementState,
     DepthState,
@@ -38,7 +39,6 @@ import { ProfileState, rootProfileSaga } from './user/profile';
 import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
-import { MemberLevelsState, rootMemberLevelsSaga } from './public/memberLevels';
 
 export * from './public/markets';
 export * from './public/orderBook';

@@ -121,6 +121,7 @@ describe('Open Orders Cancel', () => {
             });
         });
         store.dispatch(openOrdersCancelFetch(fakeFetchPayload));
+
         return promise;
     });
 
@@ -136,6 +137,7 @@ describe('Open Orders Cancel', () => {
             });
         });
         store.dispatch(openOrdersCancelFetch(fakeFetchFinexPayload));
+
         return promise;
     });
 
@@ -151,6 +153,7 @@ describe('Open Orders Cancel', () => {
             });
         });
         store.dispatch(openOrdersCancelFetch(fakeFetchPayload));
+
         return promise;
     });
 });

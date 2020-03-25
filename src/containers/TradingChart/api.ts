@@ -110,6 +110,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
                 from,
                 to,
             );
+
             return axios
                 .get(url)
                 .then(({ data }) => {
@@ -117,6 +118,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
                         return onHistoryCallback([], { noData: true });
                     }
                     const bars = data.map(klineArrayToObject);
+
                     return onHistoryCallback(bars, { noData: false });
                 })
                 .catch(e => {
@@ -159,5 +161,6 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             // window.console.log(`default onRealtimeCallback called with ${JSON.stringify(bar)}`);
         },
     };
+
     return dataFeed;
 };

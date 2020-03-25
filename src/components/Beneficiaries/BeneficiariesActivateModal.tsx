@@ -111,7 +111,7 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
                 />
             </div>
         );
-    }
+    };
 
     private renderConfirmationModalBody = () => {
         const { confirmationModalCode } = this.state;
@@ -144,7 +144,7 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         this.setState({
             [key]: value,
         });
-    }
+    };
 
     private handleChangeFieldFocus = (key: string) => {
         // @ts-ignore
@@ -157,7 +157,7 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         this.setState({
             ...defaultState,
         });
-    }
+    };
 
     private handleSubmitConfirmationModal = () => {
         const { beneficiariesAddData } = this.props;
@@ -171,7 +171,7 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
 
             this.props.activateAddress(payload);
         }
-    }
+    };
 
     private handleClickToggleConfirmationModal = (clear?: boolean) => () => {
         this.props.handleToggleConfirmationModal();
@@ -179,7 +179,7 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         if (clear) {
             this.handleClearModalsInputs();
         }
-    }
+    };
 
     private translate = (id: string) => this.props.intl.formatMessage({ id });
 }
