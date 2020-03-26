@@ -4,6 +4,8 @@ import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { CloseIcon } from '../../assets/images/CloseIcon';
+import { LogoIcon } from '../../assets/images/LogoIcon';
 import { Phone } from '../../containers';
 import { Documents } from '../../containers/Confirm/Documents';
 import { Identity } from '../../containers/Confirm/Identity';
@@ -17,9 +19,6 @@ import {
     selectUserInfo,
     User,
 } from '../../modules';
-
-import logo from '../../assets/images/logo.svg';
-import logoLight from '../../assets/images/logoLight.svg';
 
 interface ReduxProps {
     colorTheme: string;
@@ -74,10 +73,8 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
       this.props.history.goBack();
     };
 
-    // tslint:disable:jsx-no-multiline-js
     public render() {
         const {
-            colorTheme,
             userData,
             labels,
         } = this.props;
@@ -92,18 +89,13 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
         return (
             <div className="pg-wrapper">
                 <div className="pg-logo">
-                    {colorTheme === 'light' ? (
-                        <img src={logoLight} className="pg-logo__img" alt="Logo" />
-                    ) : (
-                        <img src={logo} className="pg-logo__img" alt="Logo" />
-                    )}
+                    <LogoIcon className="pg-logo__img" />
                 </div>
                 <div className="pg-confirm">
                     <div className="pg-confirm-box">
-                        <div
-                            onClick={this.goBack}
-                            className="pg-confirm-box-close"
-                        />
+                        <div onClick={this.goBack} className="pg-confirm-box-close">
+                            <CloseIcon className="close-icon" />
+                        </div>
                         <div className="pg-confirm__progress">
                             <div className={cx}>
                                 <div className="pg-confirm__progress-circle-1">

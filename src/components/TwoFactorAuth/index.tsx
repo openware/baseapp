@@ -2,6 +2,7 @@ import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { CustomInput } from '../';
+import { CloseIcon } from '../../assets/images/CloseIcon';
 
 export interface TwoFactorAuthProps {
     errorMessage?: string;
@@ -50,7 +51,7 @@ class TwoFactorAuthComponent extends React.Component<TwoFactorAuthProps> {
                                 <div className="cr-email-form__option-inner">
                                     {title || '2FA verification'}
                                     <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
-                                        <img alt="" src={require('../EmailForm/close.svg')}/>
+                                        <CloseIcon className="close-icon" />
                                     </div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { LogoIcon } from '../../assets/images/LogoIcon';
 import {
     Market,
     RootState,
@@ -17,9 +18,6 @@ import {
 } from '../../modules';
 import { HeaderToolbar } from '../HeaderToolbar';
 import { NavBar } from '../NavBar';
-
-import logo from '../../assets/images/logo.svg';
-import logoLight from '../../assets/images/logoLight.svg';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
@@ -41,10 +39,9 @@ interface HistoryProps {
 
 type Props = ReduxProps & HistoryProps & DispatchProps & InjectedIntlProps;
 
-// tslint:disable jsx-no-multiline-js
 class Head extends React.Component<Props> {
     public render() {
-        const { colorTheme, mobileWallet } = this.props;
+        const {mobileWallet } = this.props;
         const tradingCls = window.location.pathname.includes('/trading') ? 'pg-container-trading' : '';
         const shouldRenderHeader = !['/confirm'].some(r => window.location.pathname.includes(r)) && window.location.pathname !== '/';
 
@@ -63,11 +60,7 @@ class Head extends React.Component<Props> {
                         </div>
                         <div onClick={e => this.redirectToLanding()} className="pg-header__logo">
                             <div className="pg-logo">
-                                {colorTheme === 'light' ? (
-                                    <img src={logoLight} className="pg-logo__img" alt="Logo" />
-                                ) : (
-                                    <img src={logo} className="pg-logo__img" alt="Logo" />
-                               )}
+                                <LogoIcon className="pg-logo__img" />
                             </div>
                         </div>
                         {this.renderMarketToggler()}

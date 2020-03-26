@@ -1,6 +1,12 @@
 import * as React from 'react';
 
-export const LogoutIcon = props => {
+interface LogoutIconProps {
+    className?: string;
+    onClick?: () => void;
+    fillColor: string;
+}
+
+export const LogoutIcon: React.FC<LogoutIconProps> = (props: LogoutIconProps) => {
     return (
         <div className={props.className} onClick={props.onClick}>
             <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">

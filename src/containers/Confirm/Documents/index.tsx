@@ -6,6 +6,7 @@ import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { CloseIcon } from '../../../assets/images/CloseIcon';
 import { CustomInput } from '../../../components';
 import { DropdownComponent } from '../../../components/Dropdown';
 import { formatDate } from '../../../helpers';
@@ -16,8 +17,6 @@ import {
     selectSendDocumentsSuccess,
     sendDocuments,
 } from '../../../modules/user/kyc/documents';
-
-import close from '../../../assets/images/close.svg';
 
 interface ReduxProps {
     success?: string;
@@ -230,7 +229,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                 onClick={this.handleFileDelete(index)}
             >
                 {scan.name.slice(0, 27)}...&nbsp;
-                <img alt="close" src={close}/>
+                <CloseIcon className="close-icon" />
             </div>
         );
     };

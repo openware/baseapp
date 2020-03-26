@@ -184,13 +184,15 @@
         position: relative;
         width: calc(var(--big-gap) * 3.84);
 
-        .pg-confirm__content-documents-col-row-content-label {
-          background-color: var(--input-background-color);
-          margin-left: calc(var(--gap) * 1.42);
-          margin-top: calc(var(--gap) * (-1.33));
-          padding: 0 var(--gap);
-          position: absolute;
-          z-index: 1;
+        .pg-confirm__content-documents-col-row-content {
+          &-label {
+            background-color: var(--input-background-color);
+            margin-left: calc(var(--gap) * 1.42);
+            margin-top: calc(var(--gap) * (-1.33));
+            padding: 0 var(--gap);
+            position: absolute;
+            z-index: 1;
+          }
         }
 
         .cr-dropdown {
@@ -199,6 +201,11 @@
 
           .dropdown-toggle {
             height: calc(var(--gap) * 6.73);
+
+            &::after {
+              left: 205px;
+              top: 21px;
+            }
           }
         }
 

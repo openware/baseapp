@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { LetterIcon } from '../../assets/images/LetterIcon';
 import { CustomInput } from '../../components';
 import {
     beneficiariesActivate,
@@ -121,7 +122,7 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         return (
             <div className="cr-email-form__form-content">
                 <div className="confirmation-modal__content">
-                    <img alt="content-icon" className="confirmation-modal__content__icon" src={require('../../assets/images/LetterIcon.svg')}/>
+                    <LetterIcon className="confirmation-modal__content__icon" />
                     <span className="confirmation-modal__content__text">{this.translate('page.body.wallets.beneficiaries.confirmationModal.body.text')}</span>
                 </div>
                 {this.renderConfirmationModalBodyItem('confirmationModalCode')}

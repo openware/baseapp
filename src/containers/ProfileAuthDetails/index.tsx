@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileTwoFactorAuth } from '../';
+import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CustomInput, Modal } from '../../components';
 import { PASSWORD_REGEX } from '../../helpers';
 import {
@@ -257,7 +258,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                     <div className="cr-email-form__option-inner">
                         <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalHeader"/>
                         <div className="cr-email-form__cros-icon" onClick={this.closeModal}>
-                            <img alt="close" src={require('./close.svg')}/>
+                            <CloseIcon className="close-icon" />
                         </div>
                     </div>
                 </div>
@@ -314,12 +315,12 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
     private renderChangeModalHeader = () => (
         <div className="cr-email-form__options-group">
             <div className="cr-email-form__option">
-              <div className="cr-email-form__option-inner">
-                  <FormattedMessage id="page.body.profile.header.account.content.password.change"/>
-                  <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
-                      <img alt="close" src={require('./close.svg')}/>
-                  </div>
-              </div>
+                <div className="cr-email-form__option-inner">
+                    <FormattedMessage id="page.body.profile.header.account.content.password.change"/>
+                    <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
+                        <CloseIcon className="close-icon" />
+                    </div>
+                </div>
             </div>
         </div>
     );

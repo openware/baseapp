@@ -4,6 +4,7 @@ import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { isFinexEnabled } from '../../api';
+import { CloseIcon } from '../../assets/images/CloseIcon';
 import { OpenOrders } from '../../components';
 import { localeDate, preciseData, setTradeColor } from '../../helpers';
 import {
@@ -72,7 +73,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
                                 '' :
                                 <span className="cr-table-header__cancel" onClick={this.handleCancelAll}>
                                     <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
-                                    <span className="cr-table-header__close" />
+                                    <CloseIcon className="cr-table-header__close" />
                                 </span>
                         }
                     </div>

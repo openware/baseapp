@@ -2,6 +2,7 @@ import cn from 'classnames';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { PendingIcon } from '../../assets/images/PendingIcon';
 import { Label, labelFetch, selectLabelData, selectUserInfo, User } from '../../modules';
 
 interface ReduxProps {
@@ -99,7 +100,7 @@ class ProfileVerificationComponent extends React.Component<Props> {
         return (
             <div className="pg-profile-page__level-verification__pending">
                 <p><FormattedMessage id="page.body.wallets.table.pending" /></p>
-                <img alt="pending" src={require('../../assets/images/pending.svg')} />
+                <PendingIcon />
             </div>
         );
     }
