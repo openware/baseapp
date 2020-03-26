@@ -3,16 +3,16 @@
 
   fieldset {
     background: inherit;
-    border-radius: calc(var(--gap) * 0.66);
     border: 1px solid var(--input-border-color);
+    border-radius: calc(var(--gap) * 0.66);
     flex-grow: 1;
-    padding: 0;
     overflow: hidden;
+    padding: 0;
 
     &:focus-within {
-      overflow: hidden;
       border: 1px solid var(--input-border-color-active) !important;
       border-radius: calc(var(--gap) * 0.66);
+      overflow: hidden;
 
       legend {
         color: var(--input-legend-color-active) !important;
@@ -29,8 +29,8 @@
 
     .pg-copyable-text-field {
       &__input {
-        padding: var(--gap) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
         border: none;
+        padding: var(--gap) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
 
         .input-group {
           display: flex;
@@ -48,7 +48,7 @@
         }
 
         .btn-primary {
-          border-radius: .3rem;
+          border-radius: 0.3rem;
         }
       }
     }

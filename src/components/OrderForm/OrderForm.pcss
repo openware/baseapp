@@ -17,10 +17,10 @@
   }
 
   .dropdown-toggle {
-    text-align: left;
     font-size: calc(var(--gap) * 2);
-    padding-left: calc(var(--gap) * 2);
     height: calc(var(--gap) * 7);
+    padding-left: calc(var(--gap) * 2);
+    text-align: left;
   }
 
   &__dropdown__label {
@@ -38,9 +38,9 @@
   }
 
   &__label {
+    color: var(--input-legend-color);
     font-size: var(--font-size);
     font-weight: 200;
-    color: var(--input-legend-color);
     line-height: calc(var(--font-size) * 2);
   }
 
@@ -60,22 +60,23 @@
     }
   }
 
-    .cr-order-input {
-        &__fieldset__input {
-            color: var(--input-text-color);
-            &__price {
-                font-size: calc(var(--gap) * 1.75);
-            }
-        }
+  .cr-order-input {
+    &__fieldset__input {
+      color: var(--input-text-color);
 
-        &__input {
-            .cr-order-input__price {
-                display: inline-block;
-                background: transparent !important;
-                margin-bottom: 5px;
-                margin-top: 5px;
-                margin-right: 20px;
-            }
-        }
+      &__price {
+        font-size: calc(var(--gap) * 1.75);
+      }
     }
+
+    &__input {
+      .cr-order-input__price {
+        background: transparent !important;
+        display: inline-block;
+        margin-bottom: 5px;
+        margin-right: 20px;
+        margin-top: 5px;
+      }
+    }
+  }
 }

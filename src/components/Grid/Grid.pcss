@@ -53,23 +53,23 @@
 
     &::after {
       border-bottom: 1px solid var(--grid-resizable-border-color);
+      bottom: calc(var(--gap) * 0.7);
       content: '';
       opacity: 0.8;
       position: absolute;
-      transform: rotate(-45deg);
-      bottom: calc(var(--gap) * 0.7);
       right: calc(var(--gap) * (-2.7));
+      transform: rotate(-45deg);
       width: calc(var(--gap) * 8);
     }
 
     &::before {
       border-bottom: 1px solid var(--grid-resizable-border-color);
+      bottom: calc(var(--gap) * 1);
       content: '';
       opacity: 0.8;
       position: absolute;
-      transform: rotate(-45deg);
-      bottom: calc(var(--gap) * 1);
       right: calc(var(--gap) * (-2.7));
+      transform: rotate(-45deg);
       width: calc(var(--gap) * 5);
     }
   }

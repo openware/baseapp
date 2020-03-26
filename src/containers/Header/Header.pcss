@@ -11,14 +11,15 @@ header {
   }
 
   &__market-selector-toggle {
+    align-items: center;
+    border: 1px solid var(--header-market-selector-border-color);
+    border-radius: 3px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 5px 14px;
-    border: 1px solid var(--header-market-selector-border-color);
-    border-radius: 3px;
     margin-left: 26px;
+    padding: 5px 14px;
+
     &-value {
       color: var(--header-market-selector-text-color);
       margin: 0 14px 0 0;
@@ -29,10 +30,10 @@ header {
     cursor: pointer;
 
     img {
-      width: calc(var(--gap) * 19.67);
+      border-style: none;
       height: calc(var(--gap) * 3.5);
       vertical-align: middle;
-      border-style: none;
+      width: calc(var(--gap) * 19.67);
     }
   }
 
@@ -41,38 +42,44 @@ header {
   }
 
   &__navbar {
-    padding-top: 3px;
-    margin-left: 30px;
+    align-items: center;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    margin-left: 30px;
+    padding-top: 3px;
     width: 100%;
   }
 
   &__toolbar {
     display: flex;
+
     &-item {
-      margin-left: 40px;
       display: flex;
       flex-flow: column;
       justify-content: flex-end;
+      margin-left: 40px;
+
       &:last-child {
         margin-right: 20px;
       }
+
       &-text {
         color: var(--header-toolbar-item-text-color);
-        text-align: right;
-        margin: 5px 0 0;
         font-size: calc(var(--font-size) * 0.85);
+        margin: 5px 0 0;
+        text-align: right;
       }
+
       &-value {
         font-size: calc(var(--font-size) * 1.16);
         font-weight: 600;
-        text-align: right;
         margin: 0;
+        text-align: right;
+
         &-positive {
           color: var(--header-positive-text-color);
         }
+
         &-negative {
           color: var(--header-negative-text-color);
         }
@@ -89,10 +96,10 @@ header {
 
   &__toggler {
     display: none;
+    left: 25px;
     position: absolute;
     top: 15px;
     z-index: 11;
-    left: 25px;
   }
 
   .pg-container {
@@ -104,75 +111,80 @@ header {
 
 @media screen and (max-width: 768px) {
   .pg-header {
-    position: relative;
     justify-content: none;
+    position: relative;
 
     &__logo {
       display: none;
     }
 
     &__location {
+      color: var(--color-white);
       display: block;
       font-size: 18px;
       text-align: center;
-      text-transform: uppercase;
-      color: var(--color-white);
       text-decoration: none;
+      text-transform: uppercase;
     }
 
     &--active {
       position: static;
+
       .pg-header__navbar {
+        -webkit-animation: slide-right 0.3s ease-out;
+        -moz-animation: slide-right 0.3s ease-out;
         display: block;
-        position: fixed;
         left: 0;
-        -webkit-animation: slide-right .3s ease-out;
-        -moz-animation: slide-right .3s ease-out;
+        position: fixed;
       }
     }
+
     &__market-selector-toggle {
       margin-left: 0;
       margin-right: 26px;
       padding: 3px 8px;
+
       &-value {
         margin-right: 7px;
       }
     }
 
     &__navbar {
-      margin-left: 0;
-      min-height: calc(100vh - 56px);
-      top: 0;
-      z-index: 666;
-      max-width: calc(var(--gap) * 33);
-      position: absolute;
-      width: 100%;
       display: none;
+      margin-left: 0;
+      max-width: calc(var(--gap) * 33);
+      min-height: calc(100vh - 56px);
+      position: absolute;
+      top: 0;
       transition: all 1s ease;
+      width: 100%;
+      z-index: 666;
+
       &::after {
         background: rgba(0, 0, 0, 0.8);
-        width: 100vw;
+        bottom: 0;
         content: '';
+        left: 264px;
         position: absolute;
         top: 0;
-        bottom: 0;
-        left: 264px;
+        width: 100vw;
       }
     }
 
     &__toggler {
       cursor: pointer;
-      width: 30px;
-      height: 30px;
       display: block;
+      height: 30px;
+      width: 30px;
+
       &-item {
         background: var(--navbar-text-color);
-        display: block;
-        width: 30px;
-        height: 3px;
         border-radius: 5px;
+        display: block;
+        height: 3px;
         margin-bottom: 5px;
         transition: all 0.2s linear;
+        width: 30px;
       }
     }
   }
@@ -187,16 +199,32 @@ header {
   .pg-container-trading {
     justify-content: flex-start !important;
   }
+
   .pg-header__market-selector-toggle {
     margin-left: 26px;
   }
 }
 
 @-webkit-keyframes slide-right {
-      0% { opacity: 0; -webkit-transform: translateX(-100%); }
-    100% { opacity: 1; -webkit-transform: translateX(0); }
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
 }
+
 @-moz-keyframes slide-right {
-      0% { opacity: 0; -moz-transform: translateX(-100%); }
-    100% { opacity: 1; -moz-transform: translateX(0); }
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    -moz-transform: translateX(0);
+  }
 }

@@ -4,21 +4,21 @@
   }
 
   label {
+    background: var(--input-background-color);
+    font-size: calc(var(--gap) * 2);
+    left: 5%;
+    margin-top: -8px;
+    padding: 0 calc(var(--gap) * 0.7);
     position: absolute;
     top: 0;
     z-index: 5;
-    background: var(--input-background-color);
-    left: 5%;
-    font-size: calc(var(--gap) * 2);
-    padding: 0 calc(var(--gap) * 0.7);
-    margin-top: -8px;
   }
 
   input,
   input:focus {
     background: var(--input-background-color) !important;
-    color: var(--input-text-color);
     box-shadow: none;
+    color: var(--input-text-color);
   }
 
   input:focus-within {
@@ -33,8 +33,8 @@
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
     border: 1px solid var(--input-border-color);
+    -webkit-box-shadow: 0 0 0 1000px var(--input-background-color) inset;
     -webkit-text-fill-color: var(--input-text-color);
-    -webkit-box-shadow: 0 0 0px 1000px var(--input-background-color) inset;
     transition: background-color 5000s ease-in-out 0s;
   }
 }

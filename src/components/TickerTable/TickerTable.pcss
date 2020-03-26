@@ -6,8 +6,8 @@
   flex-direction: column;
   height: 100%;
   justify-content: center;
-  width: 100%;
   overflow: hidden;
+  width: 100%;
 
   &__filter {
     align-items: center;
@@ -22,14 +22,14 @@
     width: 100%;
 
     ul {
-      margin: 0;
       list-style-type: none;
-      margin-block-start: 0;
+      margin: 0;
       margin-block-end: 0;
-      margin-inline-start: 0;
+      margin-block-start: 0;
       margin-inline-end: 0;
-      padding-inline-start: 0;
+      margin-inline-start: 0;
       overflow: auto;
+      padding-inline-start: 0;
     }
 
     .navigation {
@@ -52,15 +52,15 @@
 
         &__link {
           color: var(--secondary-contrast-cta-color);
-          text-decoration: none;
           font-size: 12px;
           line-height: 12px;
-          transition: .2s linear;
+          text-decoration: none;
+          transition: 0.2s linear;
         }
 
         &:hover > .navigation__item__link {
-          transition: .2s;
           color: var(--primary-text-color);
+          transition: 0.2s;
         }
 
         &--active {
@@ -95,7 +95,8 @@
     overflow: auto;
     width: 100%;
 
-    thead, tbody {
+    thead,
+    tbody {
       align-items: flex-start;
       display: flex;
       flex-direction: column;
@@ -112,7 +113,8 @@
         padding: 0 24px;
         width: 100%;
 
-        th, td {
+        th,
+        td {
           align-items: center;
           color: var(--table-text-color);
           display: flex;
@@ -120,12 +122,12 @@
           font-weight: normal;
           height: 38px;
           justify-content: flex-end;
-          width: 100%;
           min-width: 110px;
+          width: 100%;
 
           &:first-child {
-            justify-content: flex-start;
             color: var(--bright);
+            justify-content: flex-start;
           }
         }
 
@@ -147,8 +149,8 @@
 
     tbody tr {
       &:hover {
-        cursor: pointer;
         background: var(--table-row-selector-color);
+        cursor: pointer;
 
         td {
           color: var(--primary-text-color);

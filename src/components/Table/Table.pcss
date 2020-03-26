@@ -3,10 +3,10 @@
 }
 
 .cr-table {
-  border-collapse: collapse;
   background: var(--table-background-color);
-  text-align: center;
+  border-collapse: collapse;
   position: relative;
+  text-align: center;
   width: 100%;
 
   &__head {
@@ -17,9 +17,9 @@
 
       th {
         color: var(--table-text-color);
+        font-size: calc(var(--gap) * 4);
         font-weight: lighter;
         padding: 15px 8px;
-        font-size: calc(var(--gap) * 4);
       }
     }
   }
@@ -32,9 +32,9 @@
 
       td {
         color: var(--table-text-color);
+        padding: 12px 8px;
         position: relative;
         z-index: 10;
-        padding: 12px 8px;
       }
     }
 
@@ -77,11 +77,11 @@
 }
 
 .cr-table__filter {
-  margin: 0 5px;
+  background: var(--table-background-color);
   cursor: pointer;
   font-size: 15px;
+  margin: 0 5px;
   padding: 10px 8px;
-  background: var(--table-background-color);
 
   &--active {
     color: var(--primary-cta-color);
@@ -89,17 +89,17 @@
 }
 
 .cr-table__filters {
-  display: flex;
   background: var(--table-background-color);
+  display: flex;
 }
 
 .cr-table-header__content {
-  height: calc(var(--gap) * 6);
-  background: var(--table-background-color);
-  padding: 10px 0 0 10px;
   align-items: center;
+  background: var(--table-background-color);
   display: flex;
+  height: calc(var(--gap) * 6);
   justify-content: space-between;
+  padding: 10px 0 0 10px;
 }
 
 .cr-table-header__content-empty {

@@ -9,22 +9,22 @@
   }
 
   &--loading {
-    height: 100%;
+    align-items: center;
     background: transparent;
     display: flex;
+    height: 100%;
     justify-content: center;
-    align-items: center;
   }
 
   .cr-markets {
     .cr-search {
-      display: flex;
-      position: fixed;
-      bottom: 0;
       background: var(--body-background-color);
-      z-index: 9999;
-      width: 100%;
+      bottom: 0;
+      display: flex;
       padding: calc(var(--gap) * 0.83) var(--gap) calc(var(--gap) * 0.83) 0;
+      position: fixed;
+      width: 100%;
+      z-index: 9999;
 
       &__icon {
         background: transparent;
@@ -47,6 +47,7 @@
 
   .cr-table-header__content {
     background: var(--subheader-background-color);
+
     .cr-title-component {
       font-weight: normal;
     }
@@ -67,11 +68,13 @@
     td {
       cursor: pointer;
     }
+
     &__head {
       th:last-child {
         width: calc(var(--big-gap) * 1.3);
       }
     }
+
     &__row {
       &--selected {
         td {
@@ -79,9 +82,11 @@
         }
       }
     }
+
     .__positive {
       color: var(--bids) !important;
     }
+
     .__negative {
       color: var(--asks) !important;
     }

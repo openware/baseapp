@@ -3,7 +3,7 @@
 
 :root {
   /* typography */
-  --font-family: Roboto, Helvetica, sans-serif;
+  --font-family: roboto, helvetica, sans-serif;
   --font-weight: normal;
   --font-size: 12px !important;
   --font-size-smaller: calc(var(--font-size) * 0.9);
@@ -32,7 +32,8 @@
   position: relative;
 }
 
-input[type=text], input[type=button] {
+input[type=text],
+input[type=button] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -48,15 +49,15 @@ input[type=text], input[type=button] {
   overflow-y: scroll;
 
   &-header__content {
-    height: auto;
-    padding: 9px 12px 9px;
-    cursor: move;
     background: var(--subheader-background-color);
     box-shadow: inset 0 -1px 0 var(--divider-color-level-1);
+    color: var(--primary-text-color);
+    cursor: move;
+    height: auto;
+    padding: 9px 12px 9px;
     position: sticky;
     top: 0;
     z-index: 9999;
-    color: var(--primary-text-color);
   }
 
   &-background {
@@ -79,10 +80,10 @@ input[type=text], input[type=button] {
   }
 
   thead th {
+    background: var(--table-background-color);
     position: sticky;
     top: calc(var(--gap) * 6);
     z-index: 9999;
-    background: var(--table-background-color);
   }
 
   td {
@@ -92,45 +93,15 @@ input[type=text], input[type=button] {
 
   td,
   th {
-    padding: 6px 12px !important;
     font-size: 0.8em !important;
+    padding: 6px 12px !important;
   }
 
   td:first-child,
   th:first-child {
     text-align: left;
   }
-}
 
-body, html {
-  height: 100% !important;
-  font-family: var(--font-family);
-  font-size: var(--font-size);
-  font-weight: var(--font-weight);
-  color: var(--secondary-contrast-cta-color);
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  background: var(--main-background-color);
-}
-
-.pg-container {
-  width: 95%;
-  box-shadow: 1px 1px 5px var(--shadow-color-level-2);
-  box-sizing: border-box;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.cr-button {
-  border-radius: 4px;
-}
-
-.cr-table {
   &__head {
     th {
       font-size: 1em !important;
@@ -154,8 +125,8 @@ body {
     td {
       background: transparent;
       font-size: 1em !important;
-      padding-top: calc(var(--gap) * 1.38) !important;
       padding-bottom: calc(var(--gap) * 1.38) !important;
+      padding-top: calc(var(--gap) * 1.38) !important;
     }
   }
 }
@@ -163,14 +134,45 @@ body {
 .cr-dropdown {
   &__list-item {
     cursor: default;
-    font-weight: var(--font-weight)
+    font-weight: var(--font-weight);
   }
+}
+
+body,
+html {
+  color: var(--secondary-contrast-cta-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  height: 100% !important;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--main-background-color);
+}
+
+.pg-container {
+  align-items: center;
+  box-shadow: 1px 1px 5px var(--shadow-color-level-2);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.cr-button {
+  -webkit-appearance: none;
+  border-radius: 4px;
 }
 
 @media (max-width: 768px) {
   .pg-container {
     max-width: 720px;
   }
+
   :root {
     --font-size: 16px !important;
   }
@@ -182,19 +184,14 @@ body {
   }
 }
 
-// fix weird input[type=button] appearance in mobile browsers
-.cr-button {
-  -webkit-appearance: none;
-}
-
 .cr-grid {
   &-item {
     height: 100%;
 
     &__body {
       height: 100%;
-      padding: 0 !important;
       overflow-y: scroll;
+      padding: 0 !important;
       scrollbar-width: none;
     }
   }
@@ -202,13 +199,15 @@ body {
 
 .react-grid-item {
   background: transparent !important;
-  box-shadow: 0 0 5px var(--shadow-color-level-1);
   border: none !important;
   border-radius: 3px;
+  box-shadow: 0 0 5px var(--shadow-color-level-1);
   overflow: hidden;
+
   &.resizing {
     z-index: 100;
   }
+
   .cr-grid-item__body {
     background: var(--body-background-color);
     border-radius: 3px;
@@ -225,6 +224,7 @@ body {
   border-left-color: var(--transparent) !important;
   border-top-color: var(--transparent) !important;
   cursor: nwse-resize !important;
+
   /* opacity: 0.5 !important; */
   z-index: 9999;
 
@@ -236,13 +236,13 @@ body {
 
   &::after {
     right: calc(var(--gap) * (-1.4)) !important;
-    width: calc(var( --gap) * 4.6) !important;
+    width: calc(var(--gap) * 4.6) !important;
   }
 }
 
 .pg-loader-container {
-  margin-top: calc(var(--gap) * 2);
   filter: brightness(0.2);
+  margin-top: calc(var(--gap) * 2);
 }
 
 .cr-loader {
@@ -251,8 +251,8 @@ body {
 }
 
 input:-webkit-autofill {
-  width: 100%;
   background: transparent !important;
+  width: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -260,9 +260,9 @@ input:-webkit-autofill {
 }
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px var(--shadow-color-level-3);
   background: rgb(var(--secondary-contrast-cta-color-level-1));
   border-radius: var(--gap);
+  -webkit-box-shadow: inset 0 0 6px var(--shadow-color-level-3);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -283,13 +283,13 @@ input:-webkit-autofill {
   }
 
   .cr-tab {
-    color: var(--tab-panel-text-color);
-    font-size: 1rem;
-    text-transform: none;
     box-shadow: none;
+    color: var(--tab-panel-text-color);
     cursor: pointer;
-    padding-top: 14px;
+    font-size: 1rem;
     padding-bottom: calc(var(--border-radius) * 2);
+    padding-top: 14px;
+    text-transform: none;
     transition: 0.2s;
 
     &__pointer {
@@ -306,23 +306,23 @@ input:-webkit-autofill {
     }
   }
 }
+
 .cr-decimal__opacity {
   opacity: 1;
 }
 
-
 @media screen and (min-width: 768px) and (max-width: 992px) {
   .cr-table {
-      &__head tr th {
-          top: calc(var(--gap) * 4.8);
-      }
+    &__head tr th {
+      top: calc(var(--gap) * 4.8);
+    }
   }
 }
 
 @media screen and (min-width: 360px) and (max-width: 767px) {
   .cr-table {
-      &__head tr th {
-          top: calc(var(--gap) * 7.3);
-      }
+    &__head tr th {
+      top: calc(var(--gap) * 7.3);
+    }
   }
 }

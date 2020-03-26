@@ -24,10 +24,9 @@
   }
 
   &-col {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
-    display: flex;
     justify-content: space-around;
     width: 100%;
 
@@ -36,24 +35,24 @@
     }
 
     &-row {
-      width: 50%;
       margin-top: calc(var(--gap) * 2);
+      width: 50%;
 
       &-is-active {
-        margin-top: 0 !important;
-        height: calc(var(--gap) * 10.5)!important;
-        margin-bottom: calc(var(--gap) * 0.5);
         border: 1px solid var(--input-border-color-active) !important;
+        height: calc(var(--gap) * 10.5) !important;
+        margin-bottom: calc(var(--gap) * 0.5);
+        margin-top: 0 !important;
       }
 
       fieldset {
-        color: var(--input-text-color);
-        border-radius: calc(var(--gap) * 0.6);
         border: 1px solid var(--input-border-color);
+        border-radius: calc(var(--gap) * 0.6);
         box-sizing: border-box;
+        color: var(--input-text-color);
         height: calc(var(--gap) * 8.16);
-        width: 95%;
         margin-right: 10px;
+        width: 95%;
       }
 
       &-text {
@@ -71,55 +70,55 @@
         width: 95%;
 
         &-label {
-          position: absolute;
-          margin-left: calc(var(--gap) * 1.42);
-          padding: 0 calc(var(--gap) * 0.33);
           background-color: var(--input-background-color);
+          margin-left: calc(var(--gap) * 1.42);
           margin-top: calc(var(--gap) * -1.5);
+          padding: 0 calc(var(--gap) * 0.33);
+          position: absolute;
           z-index: 1;
         }
 
         &-number-dropdown {
           .dropdown {
             &-menu {
-              transform: none !important;
-              top: auto !important;
               height: 75px;
-              overflow-y: scroll;
               overflow-x: hidden;
+              overflow-y: scroll;
+              top: auto !important;
+              transform: none !important;
             }
           }
         }
 
         &--focused {
-          color: var(--input-legend-color-active) !important;
           border: 1px solid var(--input-border-color-active) !important;
+          color: var(--input-legend-color-active) !important;
         }
 
         &--wrong {
-          color: var(--system-red) !important;
           border: 1px solid var(--system-red) !important;
+          color: var(--system-red) !important;
         }
 
         legend {
           background-color: var(--input-background-color);
-          position:absolute;
-          top: calc(var(--gap) * -1.5);
-          left: 5%;
-          width: auto;
-          padding: 0 calc(var(--gap) * 0.5);
           font-size: calc(var(--gap) * 2);
+          left: 5%;
+          padding: 0 calc(var(--gap) * 0.5);
+          position: absolute;
+          top: calc(var(--gap) * -1.5);
+          width: auto;
         }
 
         input {
-          width: 100%;
-          color: var(--input-text-color);
           background: transparent;
           border: unset;
           bottom: 0;
+          color: var(--input-text-color);
           font-size: calc(var(--gap) * 2);
-          margin-top: calc(var(--gap) * 2);
           margin-left: calc(var(--gap) * 1.2);
+          margin-top: calc(var(--gap) * 2);
+          width: 100%;
 
           &::placeholder {
             color: var(--input-placeholder-color);

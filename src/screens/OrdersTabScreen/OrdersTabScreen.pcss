@@ -1,14 +1,14 @@
 .pg-orders-tab {
   align-items: flex-start !important;
   background: var(--body-background-color);
+  border-radius: var(--gap);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0 !important;
-  margin-top: calc(var(--gap) * 2) !important;
-  border-radius: var(--gap);
-  max-width: 920px !important;
   margin-bottom: 24px !important;
+  margin-top: calc(var(--gap) * 2) !important;
+  max-width: 920px !important;
+  padding: 0 !important;
 
   .cr-pagination {
     text-align: center;
@@ -19,12 +19,12 @@
     width: 100%;
 
     .cr-tab-panel__navigation-container {
-      position: relative;
       background: var(--tab-panel-background-color);
       border-bottom: 1px solid var(--tab-panel-border-line-color);
       border-top-left-radius: calc(var(--gap) * 0.66);
       border-top-right-radius: calc(var(--gap) * 0.66);
       margin-bottom: 0;
+      position: relative;
 
       &-navigation {
         .cr-tab {
@@ -41,8 +41,8 @@
 
   .pg-history-elem {
     &__empty {
-      text-align: center;
       color: var(--secondary-contrast-cta-color);
+      text-align: center;
     }
 
     &__pagination {
@@ -54,14 +54,14 @@
     }
 
     .text-center {
+      align-items: center;
+      bottom: 0;
       display: flex;
       justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
       left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
     }
 
     .cr-table-container {
@@ -84,17 +84,17 @@
             th {
               background-color: var(--table-background-color);
               color: var(--table-text-color);
+              font-family: "Roboto", "Helvetica", "Arial", sans-serif;
               font-size: 12px !important;
               font-weight: 500;
-              font-family: "Roboto", "Helvetica", "Arial", sans-serif;
               padding: calc(var(--gap) * 2.7) 0 calc(var(--gap) * 2.7) !important;
-              text-align: right;
               position: static;
+              text-align: right;
               width: calc(var(--big-gap) * 2);
 
               &:first-child {
-                text-align: left;
                 margin-left: 10px;
+                text-align: left;
               }
 
               &:nth-child(7) {
@@ -116,9 +116,9 @@
               color: var(--table-text-color);
               font-size: 13px !important;
               font-weight: 400;
-              padding: calc(var(--gap) * 2.7) 0 calc(var(--gap) * 2.7) !important;
-              margin-top: calc(var(--gap) * 1.66) !important;
               margin-bottom: calc(var(--gap) * 1.66) !important;
+              margin-top: calc(var(--gap) * 1.66) !important;
+              padding: calc(var(--gap) * 2.7) 0 calc(var(--gap) * 2.7) !important;
               text-align: right;
 
               &:first-child {
@@ -126,13 +126,13 @@
               }
 
               &:last-child {
+                align-items: center;
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-end;
-                align-items: center;
                 width: 80%;
 
-                &:first-letter {
+                &::first-letter {
                   text-transform: uppercase;
                 }
               }
@@ -170,29 +170,11 @@
     }
   }
 
-  .cr-tab-panel__optinal-head {
-    position: absolute;
-    right: calc(var(--big-gap) * 0.4);
-    margin-top: 1%;
-    cursor: pointer;
-    text-align: right;
-    color: var(--tab-panel-text-color);
-    font-size: 12px !important;
-    font-weight: 500;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    transition: 0.2s;
-
-    &:hover {
-      color: var(--tab-panel-text-color-hover);
-      transition: 0.2s;
-    }
-  }
-
   &__close {
-    position: relative;
     display: inline-block;
-    margin-left: calc(var(--gap) / 1.2);
     height: 15px;
+    margin-left: calc(var(--gap) / 1.2);
+    position: relative;
     width: 15px;
 
     &:hover {
@@ -207,12 +189,12 @@
     &::after {
       background: var(--secondary-contrast-cta-color);
       content: '';
+      height: 2px;
+      left: 0;
       position: absolute;
       top: 65%;
-      left: 0;
-      height: 2px;
-      width: 100%;
       transition: 0.2s;
+      width: 100%;
     }
 
     &::before {
@@ -225,15 +207,15 @@
   }
 
   .cr-tab-panel__optinal-head {
-    position: absolute;
-    right: calc(var(--big-gap) * 0.4);
-    margin-top: 1%;
-    cursor: pointer;
-    text-align: right;
     color: var(--tab-panel-text-color);
+    cursor: pointer;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-size: 12px !important;
     font-weight: 500;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    margin-top: 1%;
+    position: absolute;
+    right: calc(var(--big-gap) * 0.4);
+    text-align: right;
     transition: 0.2s;
 
     &:hover {

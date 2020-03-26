@@ -1,6 +1,6 @@
 .cr-combined-order-book {
-  position: relative;
   height: 100%;
+  position: relative;
 
   .cr-table {
     table-layout: fixed;
@@ -29,15 +29,15 @@
     padding-bottom: 5px;
 
     span {
+      font-size: 12px;
       font-weight: normal;
       line-height: 12px;
-      font-size: 12px;
       text-align: center;
 
       &:first-child {
+        font-size: 28px;
         font-weight: bold;
         line-height: normal;
-        font-size: 28px;
       }
     }
 
@@ -62,24 +62,24 @@
 
     &-market {
       border-top: 1px solid var(--order-book-last-market-price-border-color);
-      position: sticky;
       bottom: 0;
-      right: 0;
       left: 0;
+      position: sticky;
+      right: 0;
       z-index: 25;
     }
 
     .cr-order-book {
-      width: 50%;
       padding-right: 1px;
+      width: 50%;
     }
 
     .cr-table-background {
       top: 60px;
 
       &__row {
-        padding-bottom: calc(var(--gap) * 2.5);
         margin-bottom: 1px;
+        padding-bottom: calc(var(--gap) * 2.5);
       }
     }
   }
@@ -87,14 +87,14 @@
   &__small {
     .cr-table-background {
       &__row {
-        padding-bottom: calc(var(--gap) * 2.5);
         margin-bottom: 1px;
+        padding-bottom: calc(var(--gap) * 2.5);
       }
     }
 
     .cr-order-book {
-      overflow-y: scroll;
       height: 154px;
+      overflow-y: scroll;
 
       &:first-child {
         border-bottom: 1px solid var(--order-book-last-market-price-border-color);
@@ -114,8 +114,8 @@
       }
 
       th {
-        top: 0;
         position: sticky;
+        top: 0;
         z-index: 2222;
       }
     }

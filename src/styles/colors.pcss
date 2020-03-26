@@ -35,7 +35,8 @@
 * 32. Order book area
 *	================================== */
 
-:root, .light-mode {
+:root,
+.light-mode {
   /*  ================================
       1. General area
     ================================ */
@@ -55,7 +56,6 @@
   --system-red: rgb(var(--rgb-system-red));
   --system-green: rgb(var(--rgb-system-green));
   --input-background-color: rgb(var(--rgb-body-background-color));
-
   --landing-background-color: rgb(var(--rgb-landing-background-color));
 
   /* =================================
@@ -70,7 +70,7 @@
   --body-background-color-level-7: rgba(var(--rgb-body-background-color), var(--alpha-level-7));
   --body-background-color-level-8: rgba(var(--rgb-body-background-color), var(--alpha-level-8));
 
-    /* =================================
+  /* =================================
       3. Subheader background color opacity area
     ================================ */
   --subheader-background-color-level-1: rgba(var(--rgb-subheader-background-color), var(--alpha-level-1));
@@ -82,7 +82,7 @@
   --subheader-background-color-level-7: rgba(var(--rgb-subheader-background-color), var(--alpha-level-7));
   --subheader-background-color-level-8: rgba(var(--rgb-subheader-background-color), var(--alpha-level-8));
 
-    /* =================================
+  /* =================================
       4. Dropdown background color opacity area
     ================================ */
   --dropdown-background-color-level-1: rgba(var(--rgb-dropdown-background-color), var(--alpha-level-1));
@@ -130,7 +130,7 @@
   --contrast-cta-color-level-7: rgba(var(--rgb-contrast-cta-color), var(--alpha-level-7));
   --contrast-cta-color-level-8: rgba(var(--rgb-contrast-cta-color), var(--alpha-level-8));
 
-    /*  ================================
+  /*  ================================
       8. Secondary text color opacity area
     ================================ */
   --secondary-contrast-cta-color-level-1: rgba(var(--rgb-secondary-contrast-cta-color), var(--alpha-level-1));
@@ -142,7 +142,7 @@
   --secondary-contrast-cta-color-level-7: rgba(var(--rgb-secondary-contrast-cta-color), var(--alpha-level-7));
   --secondary-contrast-cta-color-level-8: rgba(var(--rgb-secondary-contrast-cta-color), var(--alpha-level-8));
 
-    /*  ================================
+  /*  ================================
       9. Call to action layer color opacity area
     ================================ */
   --cta-layer-color-level-1: rgba(var(--rgb-cta-layer-color), var(--alpha-level-1));
@@ -190,7 +190,7 @@
   --system-yellow-level-7: rgba(var(--rgb-system-yellow), var(--alpha-level-7));
   --system-yellow-level-8: rgba(var(--rgb-system-yellow), var(--alpha-level-8));
 
-    /*  ================================
+  /*  ================================
       13. Bids color opacity area
     ================================ */
   --bids-level-1: rgba(var(--rgb-bids), var(--alpha-level-1));
@@ -202,7 +202,7 @@
   --bids-level-7: rgba(var(--rgb-bids), var(--alpha-level-7));
   --bids-level-8: rgba(var(--rgb-bids), var(--alpha-level-8));
 
-    /*  ================================
+  /*  ================================
       14. Asks color opacity area
     ================================ */
   --asks-level-1: rgba(var(--rgb-asks), var(--alpha-level-1));
@@ -265,7 +265,8 @@
   /*  ================================
       19. Button area
     ================================ */
-    /* bids button */
+
+  /* bids button */
   --button-bids-background-color: var(--bids-level-7);
   --button-bids-text-color: var(--primary-text-color-level-7);
   --button-bids-background-color-hover: var(--bids);
@@ -275,7 +276,7 @@
   --button-bids-background-color-disabled: var(--bids-level-3);
   --button-bids-text-color-disabled: var(--primary-text-color-level-7);
 
-    /* asks button */
+  /* asks button */
   --button-asks-background-color: var(--asks-level-7);
   --button-asks-text-color: var(--primary-text-color-level-7);
   --button-asks-background-color-hover: var(--asks);
@@ -285,7 +286,7 @@
   --button-asks-background-color-disabled: var(--asks-level-3);
   --button-asks-text-color-disabled: var(--primary-text-color-level-7);
 
-    /* percentage button */
+  /* percentage button */
   --button-percentage-background-color: var(--dropdown-background-color-level-3);
   --button-percentage-text-color: var(--primary-text-color-level-5);
   --button-percentage-background-color-hover: var(--dropdown-background-color);
@@ -293,7 +294,7 @@
   --button-percentage-background-color-active: var(--dropdown-background-color);
   --button-percentage-text-color-active: var(--primary-text-color);
 
-    /* primary cta color (blue) button  */
+  /* primary cta color (blue) button  */
   --button-primary-cta-background-color: var(--primary-cta-color-level-7);
   --button-primary-cta-text-color: var(--cta-layer-color-level-7);
   --button-primary-cta-background-color-hover: var(--primary-cta-color);
@@ -327,7 +328,7 @@
   --sidebar-item-text-color-active: var(--primary-text-color);
 
   /*  ================================
-      22. Dropdown area 
+      22. Dropdown area
     ================================== */
   --dropdown-text-color: var(--primary-text-color-level-6);
   --dropdown-background-color-hover: var(--secondary-contrast-cta-color-level-1);
@@ -350,7 +351,7 @@
   --input-checkbox-background-color-active: var(--primary-cta-color);
   --input-checkbox-shadow-color-active: var(--primary-cta-color-level-1);
 
-    /*  ================================
+  /*  ================================
       24. Password strength area
   ================================ */
   --password-strength-meter-background: var(--body-background-color-level-1);
@@ -360,14 +361,14 @@
   --password-strength-meter-strong: var(--bids);
   --password-strength-meter-very-strong: var(--strength-meter-very-strong);
 
-    /*  ================================
+  /*  ================================
       25. Footer area
     ================================== */
   --footer-background-color: var(--body-background-color);
   --footer-text-color: var(--secondary-contrast-cta-color);
   --footer-highlight-text-color: var(--primary-text-color);
 
-    /*  ================================
+  /*  ================================
       26. Table area
     ================================ */
   --table-background-color: var(--body-background-color);
@@ -376,7 +377,7 @@
   --table-header-text-color: var(--secondary-contrast-cta-color);
   --table-border-color: var(--divider-color-level-2);
 
-    /*  ================================
+  /*  ================================
       27. Tab panel area
     ================================ */
   --tab-panel-background-color: var(--subheader-background-color);
@@ -386,7 +387,7 @@
   --tab-panel-border-color-active: var(--primary-cta-color);
   --tab-panel-border-line-color: var(--divider-color-level-2);
 
-    /*  ================================
+  /*  ================================
       28. Wallets area
     ================================ */
   --wallets-locked-amount: var(--primary-text-color);
@@ -399,7 +400,7 @@
   --wallets-item-border-color: var(--divider-color-level-2);
   --wallets-balance-color: var(--primary-text-color);
 
-    /*  ================================
+  /*  ================================
       29. Beneficiaries area
     ================================ */
   --beneficiaries-primary-0-8: var(--primary-text-color-level-8);
@@ -407,8 +408,7 @@
   --beneficiaries-primary-0-06: rgba(var(--primary-text-color), calc(var(--alpha) / 2));
   --beneficiaries-primary-0-04: rgba(var(--primary-text-color), calc(var(--alpha) / 3));
 
-
-    /*  ================================
+  /*  ================================
       30. Landing page area
     ================================ */
   --light-item-border: rgba(var(--rgb-shadow-color), calc(var(--alpha) / 2));

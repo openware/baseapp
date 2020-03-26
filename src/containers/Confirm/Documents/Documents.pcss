@@ -1,9 +1,9 @@
 .pg-confirm__content-documents {
   color: var(--secondary-contrast-cta-color);
-  font-size: calc(var(--gap) * 2.33);
-  margin: var(--gap) calc(var(--gap) * 3.4) calc(var(--gap) * 2.5) calc(var(--gap) * 3.4);
   display: flex;
   flex-direction: column;
+  font-size: calc(var(--gap) * 2.33);
+  margin: var(--gap) calc(var(--gap) * 3.4) calc(var(--gap) * 2.5) calc(var(--gap) * 3.4);
 
   &-drag {
     float: right;
@@ -12,52 +12,54 @@
 
   &-filename {
     cursor: pointer;
-    text-decoration: none;
     margin-bottom: calc(var(--gap) * 1.2);
-      &:hover {
-        color: var(--secondary-contrast-cta-color);
-        text-decoration: underline;
-        text-decoration-color: var(--secondary-contrast-cta-color);
-      }
-      img {
-        margin: 2px;
-        position: absolute;
-      }
+    text-decoration: none;
+
+    &:hover {
+      color: var(--secondary-contrast-cta-color);
+      text-decoration: underline;
+      text-decoration-color: var(--secondary-contrast-cta-color);
+    }
+
+    img {
+      margin: 2px;
+      position: absolute;
+    }
   }
 
   &-col {
     display: inline-flex;
-    max-width: 50%;
     flex: 0 0 50%;
+    max-width: 50%;
 
     &-row {
+      color: var(--input-text-color);
       display: inline-block;
       margin-top: calc(var(--gap) * 2);
-      color: var(--input-text-color);
 
       fieldset {
-        color: var(--input-text-color);
-        border-radius: 4px;
         border: 1px solid var(--input-border-color);
+        border-radius: 4px;
         box-sizing: border-box;
+        color: var(--input-text-color);
         height: 49px;
-        padding-left: calc(var(--gap) * 1.5);
         margin-bottom: calc(var(--gap) * 3);
+        padding-left: calc(var(--gap) * 1.5);
         width: 230px;
       }
 
       &-text {
         display: inline-block;
         font-size: calc(var(--gap) * 2.33);
+        font-weight: normal;
         padding-bottom: calc(var(--gap) * 1.2);
         width: 100%;
-        font-weight: normal;
       }
 
       &-content {
         border-bottom: 1px solid var(--input-border-color);
-        font-weight: normal;
         display: inline-block;
+        font-weight: normal;
         position: relative;
 
         &--focused {
@@ -71,21 +73,22 @@
 
         legend {
           background-color: var(--input-background-color);
+          font-size: calc(var(--gap) * 2);
+          padding: 0 calc(var(--gap) * 0.5);
           position: absolute;
           top: -8px;
-          font-size: calc(var(--gap) * 2);
           width: auto;
-          padding: 0 calc(var(--gap) * 0.5);
         }
 
         input {
-          color: var(--input-text-color);
           background: transparent;
           border: unset;
           bottom: 0;
+          color: var(--input-text-color);
           font-size: calc(var(--gap) * 2);
           margin-top: 10px;
           width: 100%;
+
           &::placeholder {
             color: var(--input-placeholder-color);
           }
@@ -103,8 +106,8 @@
       &-content-2 {
         display: inline-block;
         font-size: calc(var(--gap) * 2.33);
-        margin: 0 auto;
         height: 100%;
+        margin: 0 auto;
         width: 242px;
 
         input {
@@ -122,24 +125,24 @@
         &-documents {
           border: 1px dashed var(--secondary-contrast-cta-color);
           box-sizing: border-box;
-          margin-top: calc(var(--gap) * 1.2);
-          margin-bottom: calc(var(--gap) * 1.2);
           height: 162px;
+          margin-bottom: calc(var(--gap) * 1.2);
+          margin-top: calc(var(--gap) * 1.2);
 
           &-input {
             height: 0.1px;
             opacity: 0;
-          	overflow: hidden;
-          	position: absolute;
+            overflow: hidden;
+            position: absolute;
             width: 0.1px;
-          	z-index: -1;
+            z-index: -1;
 
             input {
               width: auto;
             }
 
             &:focus {
-              opacity: 0.8
+              opacity: 0.8;
             }
           }
 
@@ -149,7 +152,8 @@
             justify-content: space-around;
             margin: 0 auto;
 
-            &:hover, label {
+            &:hover,
+            label {
               cursor: pointer;
             }
 
@@ -167,8 +171,8 @@
               }
 
               div {
-                font-size: calc(var(--gap) * 1.7);
                 display: flex;
+                font-size: calc(var(--gap) * 1.7);
                 justify-content: center;
               }
             }
@@ -177,21 +181,21 @@
       }
 
       &-content-3 {
-        width: calc(var(--big-gap) * 3.84);
         position: relative;
+        width: calc(var(--big-gap) * 3.84);
 
         .pg-confirm__content-documents-col-row-content-label {
-          position: absolute;
+          background-color: var(--input-background-color);
           margin-left: calc(var(--gap) * 1.42);
           margin-top: calc(var(--gap) * (-1.33));
           padding: 0 var(--gap);
-          background-color: var(--input-background-color);
+          position: absolute;
           z-index: 1;
         }
 
         .cr-dropdown {
-          margin-top: 7px;
           margin-bottom: 22px;
+          margin-top: 7px;
 
           .dropdown-toggle {
             height: calc(var(--gap) * 6.73);
@@ -243,15 +247,16 @@
         }
 
         &-content-2 {
-          width: 100%;
           text-align: center;
+          width: 100%;
         }
 
         fieldset {
-         width: 100%;
-         legend {
-           top: -14px;
-         }
+          width: 100%;
+
+          legend {
+            top: -14px;
+          }
         }
       }
     }

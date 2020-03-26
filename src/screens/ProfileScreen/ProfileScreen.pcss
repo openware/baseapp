@@ -1,11 +1,16 @@
 .pg-profile-page {
-  flex-wrap: wrap;
-  height: 100%;
   align-items: flex-start !important;
   color: var(--secondary-contrast-cta-color);
+  flex-wrap: wrap;
+  height: 100%;
   margin-bottom: 24px !important;
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 400;
   }
 
@@ -23,13 +28,13 @@
     }
 
     &__url {
-      font-size: calc(var(--font-size) * 1.335);
       color: var(--primary-cta-color) !important;
+      font-size: calc(var(--font-size) * 1.335);
     }
 
     &__pending {
-      display: flex;
       align-items: center;
+      display: flex;
       margin-bottom: calc(var(--gap) * 2);
 
       p {
@@ -44,18 +49,18 @@
   }
 
   &__details {
-    box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
     background-color: var(--body-background-color);
-    width: 100%;
-    margin-top: calc(var(--gap) * 2);
     border-radius: calc(var(--gap) * 0.66);
+    box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
+    margin-top: calc(var(--gap) * 2);
+    width: 100%;
 
     &-user {
       p {
-        word-break: break-all;
         font-size: calc(var(--font-size) * 2.33);
         line-height: calc(var(--big-gap) * 0.66);
         margin: 0;
+        word-break: break-all;
       }
     }
 
@@ -66,14 +71,14 @@
   }
 
   &-header {
-    display: flex;
-    padding: 0 calc(var(--gap) * 3) 0 calc(var(--gap) * 3.4);
     background: var(--subheader-background-color);
     border-bottom: 1px solid var(--divider-color-level-2);
-    color: var(--primary-text-color);
     border-radius: calc(var(--gap) * 0.66) calc(var(--gap) * 0.66) 0 0;
-    margin-right: 0;
+    color: var(--primary-text-color);
+    display: flex;
     margin-left: 0;
+    margin-right: 0;
+    padding: 0 calc(var(--gap) * 3) 0 calc(var(--gap) * 3.4);
   }
 
   &__box {
@@ -91,9 +96,9 @@
 
   &__row {
     display: flex;
+    justify-content: space-between;
     margin-top: calc(var(--gap) * 2);
     width: 100%;
-    justify-content: space-between;
 
     .pg-profile-page__btn-secondary-change {
       margin: calc(var(--big-gap) / 3) 0 0 calc(var(--big-gap) / 3);
@@ -105,34 +110,34 @@
   }
 
   &__label {
-    padding-top: calc(var(--gap) * 2);
-    font-size: calc(var(--font-size) * 1.33);
     color: var(--secondary-contast-cta-color));
+    font-size: calc(var(--font-size) * 1.33);
     padding-bottom: var(--gap);
+    padding-top: calc(var(--gap) * 2);
 
     &-value {
-      padding-top: calc(var(--gap) * 2);
       font-size: var(--font-size);
+      padding-top: calc(var(--gap) * 2);
 
       &__enabled {
-        margin-top: calc(var(--gap) * 2);
-        font-size: var(--font-size);
         color: var(--system-green);
+        font-size: var(--font-size);
+        margin-top: calc(var(--gap) * 2);
       }
 
       &__disabled {
-        margin-top: calc(var(--gap) * 2);
-        font-size: var(--font-size);
         color: var(--system-red);
+        font-size: var(--font-size);
+        margin-top: calc(var(--gap) * 2);
       }
     }
   }
 
   &__col {
-    width: 45%;
+    align-items: center;
     display: flex;
     float: right;
-    align-items: center;
+    width: 45%;
   }
 
   &__left-col {
@@ -151,14 +156,9 @@
           margin-top: 0;
         }
 
-        .pg-profile-page__row {
-          margin-top: 0;
-        }
-
-
         &__block {
-          display: block;
           color: var(--primary-text-color);
+          display: block;
 
           .row {
             margin-top: 0;
@@ -166,11 +166,13 @@
         }
 
         .pg-profile-page__row {
+          margin-top: 0;
+
           h3 {
+            display: flex;
             font-size: calc(var(--font-size) * 1.5);
             margin-bottom: calc(var(--gap) / 2);
             margin-top: var(--gap);
-            display: flex;
           }
 
           p.text-muted {
@@ -182,15 +184,15 @@
 
       .pg-profile-page__disable-2fa-modal {
         .cr-modal__container-header {
-          padding: 0;
           height: 58px;
+          padding: 0;
 
           .cr-email-form__cros-icon {
             cursor: pointer;
             display: inline-block;
             height: calc(var(--gap) * 2.5);
-            margin-top: calc(var(--gap) * 0.2);
             margin-left: calc(var(--gap) * 3.6);
+            margin-top: calc(var(--gap) * 0.2);
             position: absolute;
             width: calc(var(--gap) * 2.5);
           }
@@ -211,7 +213,8 @@
           justify-content: flex-end;
           width: 70%;
 
-          p, h3 {
+          p,
+          h3 {
             align-self: center;
           }
         }
@@ -267,11 +270,11 @@
   }
 
   &__activity {
-    width: 100%;
-    box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
-    margin-top: calc(var(--gap) * 2);
     background: var(--body-background-color);
     border-radius: calc(var(--gap) * 0.66);
+    box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
+    margin-top: calc(var(--gap) * 2);
+    width: 100%;
 
     .cr-table {
       thead {
@@ -300,14 +303,16 @@
         }
       }
 
-      tr, td {
+      tr,
+      td {
         background: var(--table-background-color);
         border-top: 1px solid var(--table-border-color);
       }
 
-      th, td {
-        text-align: right;
+      th,
+      td {
         padding: calc(var(--gap) * 3) 0 calc(var(--gap) * 3) 0 !important;
+        text-align: right;
 
         &:first-child {
           padding-left: 24px !important;
@@ -320,19 +325,19 @@
 
       th {
         background: inherit;
-        top: 0 !important;
         color: var(--table-header-text-color);
         font-weight: 500;
+        top: 0 !important;
       }
     }
   }
 
   &__api-keys {
-    width: 100%;
-    box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
-    margin-top: calc(var(--gap) * 2);
     background: var(--body-background-color);
     border-radius: calc(var(--gap) * 0.66);
+    box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
+    margin-top: calc(var(--gap) * 2);
+    width: 100%;
 
     .cr-table {
       th {
@@ -340,9 +345,10 @@
         top: 0;
       }
 
-      th, td {
-        text-align: right;
+      th,
+      td {
         padding: calc(var(--gap) * 3) 0 calc(var(--gap) * 3) 0 !important;
+        text-align: right;
 
         &:nth-child(4n-1) {
           text-align: right;
@@ -362,9 +368,9 @@
       }
 
       &__body {
-          tr {
-              border-top: 1px solid var(--table-border-color);
-          }
+        tr {
+          border-top: 1px solid var(--table-border-color);
+        }
       }
     }
 
@@ -380,15 +386,15 @@
       }
 
       span {
-        margin: calc(var(--gap) * 1.37) 0;
-        font-size: 1.17em;
         cursor: pointer;
+        font-size: 1.17em;
+        margin: calc(var(--gap) * 1.37) 0;
       }
     }
 
     &__modal-header {
-      text-transform: uppercase;
       text-align: center;
+      text-transform: uppercase;
     }
 
     .cr-modal__container-footer {
@@ -403,24 +409,24 @@
       }
 
       &__disabled {
-        color: var(--system-red)
+        color: var(--system-red);
       }
     }
 
     &__state-checkbox {
+      height: 0;
       position: absolute;
       text-align: left;
       top: -14px;
-      height: 0;
     }
 
     .secret-section {
       color: var(--system-yellow);
-      margin: calc(var(--gap) * 3);
+      font-size: calc(var(--gap) * 2.33);
       font-style: normal;
       font-weight: bold;
       line-height: calc(var(--gap) * 3);
-      font-size: calc(var(--gap) * 2.33);
+      margin: calc(var(--gap) * 3);
 
       .secret-sign {
         float: left;
@@ -446,14 +452,15 @@
         font-weight: bolder;
       }
     }
-    .button-confirmation {
-        margin: calc(var(--gap) * 3);
-        bottom: calc(var(--gap) * 4.33);
-        padding-left: calc(var(--gap) * 0.66);
 
-        input {
-          margin: auto;
-        }
+    .button-confirmation {
+      bottom: calc(var(--gap) * 4.33);
+      margin: calc(var(--gap) * 3);
+      padding-left: calc(var(--gap) * 0.66);
+
+      input {
+        margin: auto;
+      }
     }
 
     .modal-button {
@@ -469,15 +476,15 @@
 
       .pg-copyable-text__section {
         margin: auto;
-        overflow: hidden;
         max-width: calc(var(--big-gap) * 6.33);
+        overflow: hidden;
         padding: calc(var(--gap) * 4) 0 calc(var(--gap) * 2) 0;
         position: relative;
 
         fieldset {
           border: 1px solid var(--input-border-color);
-          padding: 0 8px 0 9px;
           border-radius: var(--gap);
+          padding: 0 8px 0 9px;
 
           legend {
             color: var(--input-legend-color);
@@ -493,8 +500,8 @@
           }
 
           .cr-copyable-text-field {
-            padding: 9px 2px;
             border: none;
+            padding: 9px 2px;
 
             .input-group {
               display: flex;
@@ -510,7 +517,7 @@
               }
 
               .btn-primary {
-                border-radius: .3rem;
+                border-radius: 0.3rem;
               }
             }
           }
@@ -520,13 +527,13 @@
   }
 
   &__close {
-    position: relative;
-    display: inline-block;
-    margin-left: calc(var(--gap) / 1.33);
-    height: calc(var(--gap) * 2.5);
-    width: calc(var(--gap) * 2.5);
-    overflow: hidden;
     cursor: pointer;
+    display: inline-block;
+    height: calc(var(--gap) * 2.5);
+    margin-left: calc(var(--gap) / 1.33);
+    overflow: hidden;
+    position: relative;
+    width: calc(var(--gap) * 2.5);
 
     &:hover {
       &::before,
@@ -540,12 +547,12 @@
     &::after {
       background: var(--secondary-contrast-cta-color);
       content: '';
+      height: 2px;
+      left: 0;
       position: absolute;
       top: 55%;
-      left: 0;
-      height: 2px;
-      width: 100%;
       transition: background 0.2s;
+      width: 100%;
     }
 
     &::before {
@@ -558,8 +565,8 @@
   }
 
   &__pull-right {
-    float: right;
     color: var(--secondary-contrast-cta-color);
+    float: right;
     transition: 0.2s;
 
     &:hover {
@@ -569,8 +576,8 @@
   }
 
   &__text-center {
-    text-align: center;
     padding: 10px;
+    text-align: center;
 
     .cr-button {
       padding: 0;
@@ -579,13 +586,13 @@
 
   &__text-success {
     color: var(--primary-text-color);
-    width: 100%;
     position: relative;
+    width: 100%;
 
     &::after {
-      display: inline;
       color: var(--primary-text-color);
       content: ' ✓';
+      display: inline;
       font-size: calc(var(--font-size) * 2.5);
       position: absolute;
       right: 10px;
@@ -606,10 +613,10 @@
       padding: 0 calc(var(--gap) * 2.23) !important;
 
       fieldset {
-        color: var(--kyc-grey);
-        border-radius: calc(var(--gap) * 0.66);
         border: 1px solid var(--kyc-grey);
+        border-radius: calc(var(--gap) * 0.66);
         box-sizing: border-box;
+        color: var(--kyc-grey);
         height: calc(var(--gap) * 8.16);
         margin-top: calc(var(--gap) * 3.6);
         width: 100%;
@@ -631,16 +638,16 @@
   }
 
   &__vertical-line {
-    min-height: calc(var(--gap) * 3.2);
-    height: calc(var(--gap) * 6.4);
     background: var(--profile-box-header-line);
+    height: calc(var(--gap) * 6.4);
+    min-height: calc(var(--gap) * 3.2);
     width: calc(var(--gap) * 0.5);
   }
 
   &__verification {
-    width: 100% !important;
-    margin-top: calc(var(--gap) * 5);
     height: calc(var(--gap) * 5);
+    margin-top: calc(var(--gap) * 5);
+    width: 100% !important;
   }
 
   &__btn-secondary {
@@ -662,8 +669,8 @@
     }
 
     &:hover {
-      color: var(--white);
       background: var(--profile-btn);
+      color: var(--white);
     }
 
     &:focus {
@@ -671,10 +678,10 @@
     }
 
     &-change {
+      font-size: var(--font-size);
+      font-weight: bolder;
       height: calc(var(--gap) * 5);
       width: calc(var(--gap) * 20) !important;
-      font-weight: bolder;
-      font-size: var(--font-size);
     }
   }
 
@@ -683,21 +690,24 @@
   }
 
   &-tiers {
-    width: 100%;
     display: flex;
     justify-content: space-between;
+    width: 100%;
 
     &__detail {
       max-width: 35%;
+
       &-title,
       &-data {
         display: block;
       }
+
       &-data {
         color: var(--profile-accent-color);
         font-size: 2rem;
         font-weight: normal;
       }
+
       &-title {
         line-height: 1.1rem;
         margin-top: calc(var(--gap) * 2);
@@ -738,22 +748,22 @@
     }
 
     &__options-group {
-      width: 100%;
       height: calc(var(--big-gap) * 0.97);
+      width: 100%;
     }
 
     &__label {
       background: var(--input-background-color);
       position: absolute;
-      top: 0px;
+      top: 0;
     }
 
     &__input {
       input {
-        color: var(--input-text-color);
-        font-size: calc(var(--gap) * 2.33);
         border: 1px solid var(--input-border-color);
         border-radius: calc(var(--gap) * 0.66);
+        color: var(--input-text-color);
+        font-size: calc(var(--gap) * 2.33);
       }
 
       input[type=number]::-webkit-inner-spin-button,
@@ -764,14 +774,14 @@
     }
 
     &__header {
-      width: calc(var(--big-gap) * 6.3);
-      height: calc(var(--gap) * 4.33);
+      color: var(--secondary-contrast-cta-color);
+      font-size: calc(var(--gap) * 2.33);
       font-style: normal;
       font-weight: normal;
+      height: calc(var(--gap) * 4.33);
       line-height: calc(var(--gap) * 2.66);
-      font-size: calc(var(--gap) * 2.33);
-      color: var(--secondary-contrast-cta-color);
       margin: calc(var(--gap) * 0.83);
+      width: calc(var(--big-gap) * 6.3);
     }
 
     &__group--focused {
@@ -789,14 +799,14 @@
     }
 
     .pg-profile-page__close {
-        position: absolute;
-        display: inline-block;
-        right: calc(var(--gap) * 3.33);
-        margin-top: calc(var(--gap) * 2.6);
-        height: calc(var(--gap) * 2.5);
-        width: calc(var(--gap) * 2.5);
-        overflow: hidden;
-        cursor: pointer;
+      cursor: pointer;
+      display: inline-block;
+      height: calc(var(--gap) * 2.5);
+      margin-top: calc(var(--gap) * 2.6);
+      overflow: hidden;
+      position: absolute;
+      right: calc(var(--gap) * 3.33);
+      width: calc(var(--gap) * 2.5);
     }
   }
 }
@@ -814,7 +824,9 @@
 
   .pg-profile-page__api-keys {
     .cr-table {
-      tr, td, th {
+      tr,
+      td,
+      th {
         padding-left: 5px !important;
         padding-right: 5px !important;
       }
@@ -843,7 +855,8 @@
     display: none;
   }
 
-  tr, td {
+  tr,
+  td {
     font-size: 0.5em;
   }
 }

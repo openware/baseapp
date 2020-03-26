@@ -12,27 +12,27 @@
     margin: 0 calc(var(--gap) * 3.4) calc(var(--gap) * 3.2) calc(var(--gap) * 3.4);
 
     fieldset {
-      color: var(--input-text-color);
       border: 1px solid var(--input-border-color);
       border-radius: 4px;
       box-sizing: border-box;
+      color: var(--input-text-color);
       height: 49px;
       margin-top: 16px;
-      padding-top: 4px;
       padding-left: 16px;
       padding-right: 4px;
+      padding-top: 4px;
       width: 100%;
     }
 
     &-content {
       border-bottom: 1px solid var(--input-border-color);
-      font-weight: normal;
       display: inline-block;
+      font-weight: normal;
       position: relative;
 
       &--focused {
-        color: var(--input-legend-color-active) !important;
         border: 1px solid var(--input-border-color-active) !important;
+        color: var(--input-legend-color-active) !important;
       }
 
       .input-group {
@@ -50,7 +50,6 @@
   }
 }
 
-
 @media (max-width: 576px) {
   .pg-confirm__content-phone {
     &-head {
@@ -62,10 +61,10 @@
       margin: 0 calc(var(--gap) * 3.4) calc(var(--gap) * 3.2) calc(var(--gap) * 3.4);
 
       &-content {
-
         .btn {
           font-size: calc(var(--gap) * 1.5);
         }
+
         .input-group {
           .custom-input {
             width: 50%;

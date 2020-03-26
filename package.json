@@ -38,6 +38,9 @@
     "redux": "^4.0.1",
     "redux-saga": "^0.16.2",
     "sinon": "^7.2.3",
+    "stylelint": "^13.2.1",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.0.0",
     "tslint": "^5.13.1",
     "ua-parser-js": "^0.7.19",
     "ws": "^7.2.0"
@@ -45,8 +48,9 @@
   "scripts": {
     "build:css": "postcss src/index.pcss -o src/index.css",
     "watch:css": "postcss src/index.pcss -o src/index.css -w",
-    "lint": "tsc --noEmit && tslint --project .",
+    "lint": "yarn style:lint && tsc --noEmit && tslint --project .",
     "lint:fix": "tslint --project . --fix",
+    "style:lint": "npx stylelint '**/*.pcss'",
     "mockAPI": "node mocks/mockAPI.js",
     "mockWS": "node mocks/mockWS.js",
     "start": "npm-run-all -p watch:css start-js",
