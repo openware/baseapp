@@ -1,11 +1,10 @@
 .pg-open-orders {
-  width: 100%;
   background: transparent;
-
+  width: 100%;
 
   @media (max-width: 640px) {
-    width: 100%;
     margin-left: 0;
+    width: 100%;
   }
 
   @media (min-width: 768px) and (max-width: 992px) {
@@ -22,42 +21,11 @@
     }
 
     &__cancel {
-      float: right;
-      cursor: pointer;
       color: var(--secondary-contrast-cta-color);
-      transition: 0.2s;
-    }
-
-    &__close {
-      position: relative;
-      display: inline-block;
-      margin-left: calc(var(--gap) / 1.33);
-      height: calc(var(--gap) * 2);
-      width: calc(var(--gap) * 2);
       cursor: pointer;
+      float: right;
+      transition: 0.2s;
 
-      &::before,
-      &::after {
-        background: var(--secondary-contrast-cta-color);
-        content: '';
-        position: absolute;
-        top: 55%;
-        left: 0;
-        height: 2px;
-        width: 100%;
-        transition: 0.2s;
-      }
-
-      &::before {
-        transform: rotate(45deg);
-      }
-
-      &::after {
-        transform: rotate(-45deg);
-      }
-    }
-
-    &__cancel {
       &:hover {
         color: var(--primary-text-color);
         transition: 0.2s;
@@ -71,36 +39,67 @@
         }
       }
     }
+
+    &__close {
+      cursor: pointer;
+      display: inline-block;
+      height: calc(var(--gap) * 2);
+      margin-left: calc(var(--gap) / 1.33);
+      position: relative;
+      width: calc(var(--gap) * 2);
+
+      &::before,
+      &::after {
+        background: var(--secondary-contrast-cta-color);
+        content: '';
+        height: 2px;
+        left: 0;
+        position: absolute;
+        top: 55%;
+        transition: 0.2s;
+        width: 100%;
+      }
+
+      &::before {
+        transform: rotate(45deg);
+      }
+
+      &::after {
+        transform: rotate(-45deg);
+      }
+    }
   }
 }
 
 .cr-open-orders .cr-table th,
 .cr-open-orders .cr-table td {
   width: auto !important;
+
   &:not(:first-child) {
     text-align: right;
   }
 
   &:last-child {
+    align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
   }
 }
 
 .pg-open-orders--loading {
   background: var(--body-background-color);
   max-width: 100%;
+
   .open-order-loading {
-    position: absolute;
-    padding-top: calc(var(--gap) * 4.5);
+    align-items: center;
+    bottom: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    right: 0;
     left: 0;
-    bottom: 0;
+    padding-top: calc(var(--gap) * 4.5);
+    position: absolute;
+    right: 0;
     top: 0;
   }
 }
@@ -111,13 +110,14 @@
       td:nth-child(3) {
         text-align: center;
       }
+
       td:last-child {
         display: block;
-        width: 100%;
         font-size: 11px !important;
         font-weight: bold;
         margin-left: 10px;
         padding: 20px 0 20px 0 !important;
+        width: 100%;
       }
     }
   }

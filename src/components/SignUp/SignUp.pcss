@@ -1,21 +1,21 @@
 .cr-sign-up-form {
+  border-radius: 3px;
+  box-shadow: 0 10px 15px var(--shadow-color-level-2);
   max-width: 424px;
   min-height: 620px;
-  box-shadow: 0 10px 15px var(--shadow-color-level-2);
-  border-radius: 3px;
   position: relative;
 
   &__options-group {
-    width: 100%;
-    height: 58px;
     border-bottom: 2px solid var(--divider-color-level-2);
+    height: 58px;
+    width: 100%;
   }
 
   &__option {
     background: var(--subheader-background-color);
     display: inline-block;
-    width: 50%;
     height: 58px;
+    width: 50%;
 
     .__selected {
       border-bottom: 2px solid var(--primary-cta-color);
@@ -25,38 +25,38 @@
 
   &__option-inner {
     background: transparent;
-    width: 75%;
+    cursor: pointer;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
     height: 58px;
+    letter-spacing: 0.0357143em;
+    line-height: 58px;
     margin: 0 auto;
     text-align: center;
     text-transform: uppercase;
-    line-height: 58px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 0.0357143em;
-    cursor: pointer;
+    width: 75%;
   }
 
   &__form-content {
-    position: absolute;
-    top: 90px;
-    right: 23px;
     bottom: 23px;
-    left: 23px;
     box-sizing: border-box;
+    left: 23px;
+    position: absolute;
+    right: 23px;
+    top: 90px;
 
     .custom-control {
       &-input {
-        &:checked~.custom-control-label {
+        &:checked ~ .custom-control-label {
           &::before {
-            border-color: var(--input-border-color-active);
             background-color: var(--input-checkbox-background-color-active);
+            border-color: var(--input-border-color-active);
             transition: 0.2s;
           }
         }
 
-        &:focus~.custom-control-label {
+        &:focus ~ .custom-control-label {
           &::before {
             border-color: var(--input-border-color-active);
             box-shadow: 0 0 0 0.2rem var(--input-checkbox-shadow-color-active);
@@ -65,26 +65,26 @@
       }
 
       &-label {
-        width: 83%;
-        font-size: calc(var(--gap) * 2.35);
         display: flex;
         flex-direction: row;
+        font-size: calc(var(--gap) * 2.35);
         justify-content: space-around;
+        width: 83%;
 
-        &:before {
-          width: 18px;
+        &::before {
+          background-color: var(--input-background-color);
+          border-color: var(--input-border-color);
           height: 18px;
           margin-right: calc(var(--gap) * 3);
           top: 0;
-          border-color: var(--input-border-color);
-          background-color: var(--input-background-color);
           transition: 0.2s;
+          width: 18px;
         }
 
-        &:after {
-          width: 18px;
+        &::after {
           height: 18px;
           top: 0;
+          width: 18px;
         }
 
         &:hover {
@@ -112,35 +112,35 @@
 
   &__error {
     background: transparent;
-    margin-top: 5px;
     color: var(--system-red);
+    margin-top: 5px;
   }
 
   &__error-message {
-    color: var(--system-red);
-    font-size: calc(var(--gap) * 2.5);
-    flex: 1;
-    display: flex;
-    background: transparent;
-    justify-content: center;
     align-items: center;
+    background: transparent;
+    color: var(--system-red);
+    display: flex;
+    flex: 1;
+    font-size: calc(var(--gap) * 2.5);
+    justify-content: center;
     min-height: calc(var(--gap) * 6);
   }
 
   &__button-wrapper {
     background: transparent;
-    position: absolute;
-    right: 0;
     bottom: 0;
     left: 0;
+    position: absolute;
+    right: 0;
   }
 
   &__button-wrapper--empty {
     background: transparent;
-    position: absolute;
-    right: 0;
     bottom: 0 !important;
     left: 0;
+    position: absolute;
+    right: 0;
   }
 
   &__loader {
@@ -152,21 +152,21 @@
     width: 100%;
 
     input {
+      border: 1px solid var(--input-border-color);
+      border-radius: 4px;
+      box-sizing: border-box;
       color: var(--input-text-color);
-      width: 100%;
+      font-size: 12px;
       height: 50px;
       padding: 0 10px;
-      font-size: 12px;
-      border: 1px solid var(--input-border-color);
-      box-sizing: border-box;
-      border-radius: 4px;
+      width: 100%;
     }
   }
 
   &__footer {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
 
     & > * {
       background: transparent;
@@ -185,10 +185,10 @@
   &__recaptcha {
     display: flex;
     justify-content: center;
-    position: absolute;
-    z-index: 2;
-    right: 0;
     left: 0;
+    position: absolute;
+    right: 0;
     top: 10px;
+    z-index: 2;
   }
 }

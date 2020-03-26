@@ -2,9 +2,9 @@
   background: transparent;
   color: var(--table-text-color);
   display: flex;
+  flex-direction: column;
   font-size: var(--font-size);
   padding: calc(var(--gap) * 3);
-  flex-direction: column;
 
   div:nth-child(1) {
     display: flex;
@@ -12,24 +12,24 @@
   }
 
   &__create {
+    align-items: center;
     justify-content: center !important;
     padding-top: calc(var(--gap) * 2);
-    align-items: center;
   }
 
   .cr-deposit-info {
     background-color: inherit;
     font-size: calc(var(--gap) * 2.3);
-    width: 56%;
     line-height: 25px;
     margin-bottom: calc(var(--gap) * 3);
+    width: 56%;
   }
 
   &__copyable {
-    margin-top: calc(var(--gap) * 6);
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    margin-top: calc(var(--gap) * 6);
 
     .custom-input {
       width: 80%;
@@ -47,7 +47,7 @@
 
       .input-group {
         &:first-child {
-          border-radius: .3rem;
+          border-radius: 0.3rem;
 
           &:focus-within {
             label,
@@ -79,8 +79,8 @@
   }
 
   .qr-code {
-    margin-top: calc(var(--gap) * 3);
     margin-left: calc(var(--gap) * 3);
+    margin-top: calc(var(--gap) * 3);
 
     svg {
       border: 1px solid var(--primary-text-color);
@@ -91,10 +91,12 @@
 @media screen and (max-width: 768px) {
   .cr-deposit-crypto {
     padding: 0;
+
     .cr-deposit-info {
       text-align: center;
       width: 100%;
     }
+
     .cr-deposit-crypto__copyable-area {
       height: calc(var(--gap) * 5);
     }

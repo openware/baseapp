@@ -1,25 +1,25 @@
 .pg-profile-page__activity-result-succeed {
-    color: var(--system-green);
+  color: var(--system-green);
 }
 
 .pg-profile-page__activity-result-failed {
-    color: var(--system-red);
+  color: var(--system-red);
 }
 
 .pg-history-elem {
+  max-width: 100%;
+  width: 100%;
+
+  &__empty {
+    color: var(--table-text-color);
+    text-align: center;
+  }
+
+  &__pagination {
+    padding: var(--gap) calc(var(--gap) * 2) !important;
+  }
+
+  .cr-table {
     max-width: 100%;
-    width: 100%;
-
-    &__empty {
-        text-align: center;
-        color: var(--table-text-color);
-    }
-
-    &__pagination {
-        padding: var(--gap) calc(var(--gap) * 2) !important;
-    }
-
-    .cr-table {
-      max-width: 100%;
-    }
+  }
 }

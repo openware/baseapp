@@ -1,8 +1,10 @@
 .cr-table__noData {
   .pg-recent-trades {
-    .cr-table td, .cr-table th {
+    .cr-table td,
+    .cr-table th {
       text-align: right;
-      &:nth-child(2){
+
+      &:nth-child(2) {
         text-align: center;
         width: 100%;
       }
@@ -10,8 +12,8 @@
 
     .cr-table td {
       &:nth-child(1) {
-        width: 1%;
         text-align: right;
+        width: 1%;
       }
     }
   }
@@ -21,24 +23,30 @@
   .cr-table__body {
     cursor: pointer;
   }
-  .cr-table td, .cr-table th {
+
+  .cr-table td,
+  .cr-table th {
     text-align: right;
+
     &:first-child {
-      width: 50%;
       text-align: left;
+      width: 50%;
     }
-    &:nth-child(2){
+
+    &:nth-child(2) {
       width: auto;
     }
+
     &:nth-child(3) {
       width: 50%;
     }
   }
+
   .cr-table thead th {
     top: calc(var(--gap) * 6);
   }
 
-  .cr-table td {           
+  .cr-table td {
     span > span:first-child.cr-decimal__opacity {
       opacity: 0.6;
     }
@@ -46,48 +54,54 @@
 
   .cr-tab-panel {
     &__navigation-container {
-      flex-direction: row-reverse;
       border-top-left-radius: calc(var(--gap) * 0.5);
       border-top-right-radius: calc(var(--gap) * 0.5);
+      flex-direction: row-reverse;
       margin-bottom: 0;
       position: relative;
       position: sticky;
       top: 0;
       z-index: 9999;
     }
+
     &__optinal-head {
-      display: flex;
       align-items: center;
-      width: 100%;
       color: var(--primary-text-color);
+      display: flex;
       padding: calc(var(--gap) * 1.5) calc(var(--gap) * 1.5) calc(var(--gap) * 1.33);
+      width: 100%;
     }
+
     .cr-tab {
       padding: calc(var(--gap) * 1.5) calc(var(--gap) * 2) 0;
+
       &__active {
         font-weight: bold;
       }
     }
+
     .cr-tab-content {
       &__noData {
-        .cr-table td, .cr-table th {
+        .cr-table td,
+        .cr-table th {
           text-align: right;
-          &:nth-child(2){
-            width: 100%;
+
+          &:nth-child(2) {
             text-align: center;
+            width: 100%;
           }
         }
       }
 
       &-loading {
+        align-items: center;
+        bottom: 0;
         display: flex;
         justify-content: center;
-        align-items: center;
-        position: fixed;
-        top: calc(var(--gap) * 4.5);
-        bottom: 0;
-        right: 0;
         left: 0;
+        position: fixed;
+        right: 0;
+        top: calc(var(--gap) * 4.5);
       }
     }
   }
@@ -102,15 +116,14 @@
 @media (max-width: 1280px) {
   .pg-recent-trades {
     .cr-tab-panel {
-      .cr-tab {
-        padding-right: calc(var(--gap) * 1.5);
-        padding-left: calc(var(--gap) * 1.5);
-      }
-    }
-    .cr-tab-panel {
       &__optinal-head {
-        padding-right: calc(var(--gap) * 1);
         padding-left: calc(var(--gap) * 1.5);
+        padding-right: calc(var(--gap) * 1);
+      }
+
+      .cr-tab {
+        padding-left: calc(var(--gap) * 1.5);
+        padding-right: calc(var(--gap) * 1.5);
       }
     }
   }

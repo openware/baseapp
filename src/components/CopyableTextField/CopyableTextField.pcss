@@ -1,47 +1,47 @@
 .cr-copyable-text-field {
-    border: none;
+  align-items: center;
+  background: var(--input-background-color);
+  background: inherit;
+  border: none;
+  border-radius: calc(var(--gap) * 0.66);
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  padding: 0;
+
+  legend {
+    background: var(--input-legend-color);
+    margin-bottom: auto;
+    margin-top: calc(var(--gap) * -1.5);
+    position: absolute;
+    width: max-content;
+  }
+
+  &__input {
     background: var(--input-background-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background: inherit;
-    border-radius: calc(var(--gap) * 0.66);
-    flex-grow: 1;
-    padding: 0;
-
-    legend {
-        background: var(--input-legend-color);
-        margin-bottom: auto;
-        margin-top: calc(var(--gap) * -1.5);
-        position: absolute;
-        width: max-content;
-    }
-
-    &__input {
-        display: flex;
-        flex-direction: row;
-        flex: 1;
-        color: var(--input-text-color);
-        background: var(--input-background-color);
-        background: inherit;
-        padding: calc(var(--gap) * 1.67) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
-
-        input {
-            background: unset;
-            color: var(--input-text-color);
-        }
-    }
-
-    .cr-copyable-text-field {
-        padding: 0;
-    }
+    color: var(--input-text-color);
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    padding: calc(var(--gap) * 1.67) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
 
     input {
-        width: 100%;
-        border-radius: 0;
-        border-style: none;
-        color: var(--input-text-color);
-        background: var(--input-background-color);
-        outline: none;
+      background: unset;
+      color: var(--input-text-color);
     }
+  }
+
+  .cr-copyable-text-field {
+    padding: 0;
+  }
+
+  input {
+    background: var(--input-background-color);
+    border-radius: 0;
+    border-style: none;
+    color: var(--input-text-color);
+    outline: none;
+    width: 100%;
+  }
 }

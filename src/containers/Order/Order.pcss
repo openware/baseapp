@@ -1,6 +1,6 @@
 .pg-order {
-  text-align: left;
   margin: 0;
+  text-align: left;
 
   .cr-table-header__content {
     display: none;
@@ -32,26 +32,25 @@
       &__navigation-container {
         font-size: calc(var(--gap) * 2);
         height: auto;
-        position: sticky;
         margin: 0;
+        position: sticky;
         top: 0;
         z-index: 9999;
 
         .cr-tab {
           align-items: center;
+          color: var(--tab-panel-text-color);
           cursor: pointer;
           display: flex;
           justify-content: center;
           padding: var(--gap) 0;
-          width: 100%;
-          color: var(--tab-panel-text-color);
           transition: 0.2s;
+          width: 100%;
 
           &:hover {
             color: var(--tab-panel-text-color-hover);
             transition: 0.2s;
           }
-
 
           &__active {
             color: var(--tab-panel-text-color-active);
@@ -59,8 +58,8 @@
           }
 
           &__pointer {
-            position: absolute;
             height: calc(var(--gap) * 0.25);
+            position: absolute;
           }
         }
       }
@@ -76,8 +75,8 @@
           }
 
           &__dropdown__label {
-            color: var(--input-legend-color);
             background-color: var(--input-background-color);
+            color: var(--input-legend-color);
             font-size: calc(var(--gap) * 1.5);
             margin-left: calc(var(--gap) * 1.75);
             padding: 0 calc(var(--gap) * 0.75);
@@ -85,25 +84,26 @@
           }
 
           .cr-order-input {
-            &__fieldset, &__crypto-icon {
+            &__fieldset,
+            &__crypto-icon {
               border-color: var(--input-border-color);
               margin-top: var(--gap);
             }
 
             &__fieldset {
-              border-top-left-radius: calc(var(--gap) * 0.571);
               border-bottom-left-radius: calc(var(--gap) * 0.571);
+              border-top-left-radius: calc(var(--gap) * 0.571);
               padding: calc(var(--gap) * 0.75) calc(var(--gap) * 1.5);
 
               &__label {
                 background-color: var(--input-background-color);
+                color: var(--input-legend-color);
                 font-size: calc(var(--gap) * 1.5);
                 margin-left: calc(var(--gap) * -0.35);
                 padding: 0 calc(var(--gap) * 0.75);
-                width: max-content;
                 position: absolute;
                 top: -10px;
-                color: var(--input-legend-color);
+                width: max-content;
               }
 
               &__input {
@@ -121,8 +121,8 @@
             }
 
             &__crypto-icon {
-              border-top-right-radius: calc(var(--gap) * 0.571);
               border-bottom-right-radius: calc(var(--gap) * 0.571);
+              border-top-right-radius: calc(var(--gap) * 0.571);
               font-size: calc(var(--gap) * 1.75);
               margin-top: calc(var(--gap) * 1.15);
 
@@ -146,32 +146,36 @@
               color: var(--button-percentage-text-color);
               font-size: calc(var(--gap) * 1.5);
               transition: 0.2s;
-            
+
               &:hover {
                 background: var(--button-percentage-background-color-hover);
                 color: var(--button-percentage-text-color-hover);
                 transition: 0.2s;
               }
 
-              &:active  {
+              &:active {
                 background: var(--button-percentage-background-color-active);
                 color: var(--button-percentage-text-color-active);
               }
             }
           }
 
-          &__total, &__available {
+          &__total,
+          &__available {
             margin-bottom: calc(var(--gap) * -0.5);
           }
-    
-          &__available, &__fee {
-            &__label, &__content {
+
+          &__available,
+          &__fee {
+            &__label,
+            &__content {
               font-size: calc(var(--gap) * 1.5);
             }
           }
 
           &__total {
-            &__label, &__content {
+            &__label,
+            &__content {
               font-size: calc(var(--gap) * 1.75);
             }
 
@@ -204,24 +208,26 @@
         &:nth-child(2) {
           .cr-button {
             background: var(--orders-button-green-normal);
-            
-            &:hover  {
+
+            &:hover {
               background: var(--orders-button-green-hover);
             }
-            &:active  {
+
+            &:active {
               background: var(--orders-button-green-active);
             }
           }
         }
-        
+
         &:last-child {
           .cr-button {
             background: var(--orders-button-red-normal);
-            
-            &:hover  {
+
+            &:hover {
               background: var(--orders-button-red-hover);
             }
-            &:active  {
+
+            &:active {
               background: var(--orders-button-red-active);
             }
           }
@@ -235,25 +241,27 @@
     justify-content: space-around;
     width: 100%;
 
-    &__buy, &__sell {
+    &__buy,
+    &__sell {
       width: 100%;
     }
 
     &__buy {
       .cr-tab-panel {
         &__navigation-container {
-          border-top-right-radius: 0;
           border-right: 1px solid var(--divider-color-level-2);
+          border-top-right-radius: 0;
         }
 
         .cr-tab-content .cr-order-form .cr-order-item:last-child {
           .cr-button {
             background: var(--orders-button-green-normal);
 
-            &:hover  {
+            &:hover {
               background: var(--orders-button-green-hover);
             }
-            &:active  {
+
+            &:active {
               background: var(--orders-button-green-active);
             }
           }
@@ -270,10 +278,10 @@
     .cr-tab-panel {
       &__navigation-container {
         .cr-tab {
+          color: var(--tab-panel-text-color);
           cursor: default;
           justify-content: start;
           padding-left: calc(var(--gap) * 2);
-          color: var(--tab-panel-text-color);
 
           &__active {
             color: var(--tab-panel-text-color-active);
@@ -289,22 +297,21 @@
   }
 
   &--loading {
-    display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100%;
-    position: absolute;
-    top: 0;
     bottom: 0;
-    right: 0;
+    display: flex;
+    height: 100%;
+    justify-content: center;
     left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 }
 
 @media (min-width: 769px) {
   .pg-order .cr-order .cr-tab-panel {
     &__navigation-container-navigation {
-
       .cr-tab {
         padding: calc(var(--gap) * 1.34) calc(var(--gap) * 2);
 
@@ -329,8 +336,8 @@
 
         .cr-order-input {
           &__fieldset {
-            border-top-left-radius: calc(var(--gap) * 0.761);
             border-bottom-left-radius: calc(var(--gap) * 0.761);
+            border-top-left-radius: calc(var(--gap) * 0.761);
             margin-top: calc(var(--gap) * 1.3);
             padding: calc(var(--gap) * 1) calc(var(--gap) * 2);
 
@@ -344,16 +351,17 @@
               margin-left: calc(var(--gap) * 0.34);
               margin-top: calc(var(--gap) * 1.5);
 
-              input, &__price {
-                font-size: calc(var(--gap) * 2.34);
+              input,
+              &__price {
                 color: var(--input-text-color);
+                font-size: calc(var(--gap) * 2.34);
               }
             }
           }
 
           &__crypto-icon {
-            border-top-right-radius: calc(var(--gap) * 0.761);
             border-bottom-right-radius: calc(var(--gap) * 0.761);
+            border-top-right-radius: calc(var(--gap) * 0.761);
             font-size: calc(var(--gap) * 2.34);
             margin-top: calc(var(--gap) * 1.11);
           }
@@ -369,18 +377,22 @@
           }
         }
 
-        &__total, &__available {
+        &__total,
+        &__available {
           margin-bottom: calc(var(--gap) * -0.67);
         }
-  
-        &__available, &__fee {
-          &__label, &__content {
+
+        &__available,
+        &__fee {
+          &__label,
+          &__content {
             font-size: calc(var(--gap) * 2);
           }
         }
 
         &__total {
-          &__label, &__content {
+          &__label,
+          &__content {
             font-size: calc(var(--gap) * 2.34);
           }
         }

@@ -1,45 +1,45 @@
 .cr-dropdown {
-  outline: none;
   background-color: var(--input-background-color);
+  outline: none;
   position: relative;
 
-  .show>.btn-primary.dropdown-toggle {
-    color: var(--dropdown-text-color-active) !important;
-    box-shadow: none !important;
+  .show > .btn-primary.dropdown-toggle {
     border: 1px solid var(--input-border-color-active) !important;
+    box-shadow: none !important;
+    color: var(--dropdown-text-color-active) !important;
   }
 
   .dropdown {
     width: 100%;
 
     &-toggle {
-      width: 100%;
       background: var(--input-background-color) !important;
       border: 1px solid var(--input-border-color);
+      color: var(--input-placeholder-color);
+      font-size: calc(var(--gap) * 2);
+      font-weight: normal;
       height: calc(var(--gap) * 8.3);
       text-align: left;
-      font-size: calc(var(--gap) * 2);
-      color: var(--input-placeholder-color);
-      font-weight: normal;
+      width: 100%;
 
       &:focus,
       &:active {
-        box-shadow: none !important;
         border: 1px solid var(--input-border-color-active) !important;
+        box-shadow: none !important;
         color: var(--dropdown-text-color-active) !important;
       }
     }
 
     &-menu {
-      width: 100%;
       background: var(--dropdown-background-color);
       padding: 0;
+      width: 100%;
     }
 
     &-item {
       color: var(--dropdown-text-color);
-      padding-top: 10px;
       padding-bottom: 10px;
+      padding-top: 10px;
       transition: 0.2s;
 
       &:hover,

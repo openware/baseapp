@@ -4,14 +4,14 @@
   width: 535px;
 
   &__header {
-    border-bottom: 2px solid var(--divider-color-level-2);
     background: var(--subheader-background-color);
-    height: calc(var(--gap) * 9.66);
-    text-transform: uppercase;
-    line-height: calc(var(--gap) * 9.66);
-    font-style: normal;
-    font-size: calc(var(--gap) * 2.33);
+    border-bottom: 2px solid var(--divider-color-level-2);
     color: var(--primary-text-color);
+    font-size: calc(var(--gap) * 2.33);
+    font-style: normal;
+    height: calc(var(--gap) * 9.66);
+    line-height: calc(var(--gap) * 9.66);
+    text-transform: uppercase;
 
     img {
       cursor: pointer;
@@ -21,22 +21,22 @@
   &__copyablefield {
     display: flex;
     justify-content: space-between;
-    position: relative;
     padding-left: calc(var(--gap) * 11.5);
+    position: relative;
 
     &__container {
-      width: 100%;
       position: relative;
+      width: 100%;
 
       legend {
-        width: auto;
-        padding: 0 3px;
-        font-size: calc(var(--gap) * 2.33);
-        position: absolute;
-        left: 5%;
-        z-index: 5;
-        top: -10px;
         background: var(--input-background-color);
+        font-size: calc(var(--gap) * 2.33);
+        left: 5%;
+        padding: 0 3px;
+        position: absolute;
+        top: -10px;
+        width: auto;
+        z-index: 5;
       }
 
       &:focus-within {
@@ -48,12 +48,12 @@
 
     fieldset {
       background: inherit;
-      border-radius: calc(var(--gap) * 0.66);
       border: 1px solid var(--input-border-color);
+      border-radius: calc(var(--gap) * 0.66);
       flex-grow: 1;
-      width: 100%;
       overflow: hidden;
       position: relative;
+      width: 100%;
 
       .cr-copyable-text-field {
         padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
@@ -72,15 +72,16 @@
           }
 
           .btn-primary {
-            border-radius: .3rem;
+            border-radius: 0.3rem;
           }
         }
       }
 
       &:focus-within {
-        overflow: hidden;
         border: 1px solid var(--input-border-color-active) !important;
         border-radius: calc(var(--gap) * 0.66);
+        overflow: hidden;
+
         legend {
           color: var(--input-legend-color-active) !important;
         }
@@ -94,13 +95,13 @@
 
       .pg-copyable-text-field {
         &__input {
-          padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
           border: none;
+          padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
 
           input {
+            background: transparent;
             box-sizing: border-box;
             color: var(--input-text-color);
-            background: transparent;
           }
         }
       }
@@ -109,26 +110,26 @@
 
   &__body {
     fieldset {
-      color: var(--input-text-color);
-      border-radius: calc(var(--gap) * 0.6);
       border: 1px solid var(--input-border-color);
+      border-radius: calc(var(--gap) * 0.6);
       box-sizing: border-box;
-      padding-left: 0;
+      color: var(--input-text-color);
       height: calc(var(--gap) * 6.56);
-      width: 100%;
-      max-width: 100%;
       margin: calc(var(--gap) * 2) 0;
+      max-width: 100%;
+      padding-left: 0;
+      width: 100%;
 
       &:focus-within {
-        color: var(--input-text-color-active);
         border-color: var(--input-border-color-active);
+        color: var(--input-text-color-active);
       }
 
       input {
-        color: var(--input-text-color);
         background: transparent;
         border: unset;
         bottom: 0;
+        color: var(--input-text-color);
         font-size: calc(var(--gap) * 2);
         margin-top: calc(var(--gap) * 1.16);
 
@@ -139,9 +140,9 @@
     }
 
     &--input {
+      padding: 0;
       position: relative;
       width: 100%;
-      padding: 0;
 
       .custom-input {
         padding: 0;
@@ -150,9 +151,9 @@
           padding: 0;
 
           input {
+            margin-top: 0;
             padding: 0;
             padding-left: 10px;
-            margin-top: 0;
           }
         }
       }
@@ -176,8 +177,8 @@
       }
 
       &--group {
-        display: flex;
         align-items: center;
+        display: flex;
         margin: calc(var(--gap) * 2) 0;
 
         a {
@@ -191,15 +192,15 @@
     }
 
     .pg-profile-two-factor-auth__qr {
-        height: calc(var(--big-gap) * 2.66);
+      height: calc(var(--big-gap) * 2.66);
     }
 
     .cr-input {
       width: 100%;
 
       input {
-        font-size: var(--font-size);
         color: var(--input-text-color);
+        font-size: var(--font-size);
         text-align: left;
         width: 100%;
       }
@@ -231,16 +232,16 @@
     border-color: var(--input-border-color);
 
     input {
-      font-size: var(--font-size);
       color: var(--input-text-color);
+      font-size: var(--font-size);
     }
   }
 }
 
 @media (min-width: 992px) {
   .pg-profile-two-factor-auth__qr {
-      height: calc(var(--big-gap) * 2) !important;
-      padding-left: 0 !important;
+    height: calc(var(--big-gap) * 2) !important;
+    padding-left: 0 !important;
   }
 }
 
@@ -250,7 +251,7 @@
   }
 
   .pg-profile-two-factor-auth__qr {
-      height: calc(var(--big-gap) * 1.8) !important;
+    height: calc(var(--big-gap) * 1.8) !important;
   }
 }
 
@@ -260,16 +261,16 @@
   }
 
   .pg-profile-two-factor-auth__qr {
-      height: calc(var(--big-gap) * 5) !important;
-      display: block;
-      margin: 0 auto;
+    display: block;
+    height: calc(var(--big-gap) * 5) !important;
+    margin: 0 auto;
   }
 }
 
 @media (max-width: 576px) {
   .pg-profile-two-factor-auth__qr {
-      height: calc(var(--big-gap) * 4) !important;
-      display: block;
-      margin: 0 auto;
+    display: block;
+    height: calc(var(--big-gap) * 4) !important;
+    margin: 0 auto;
   }
 }

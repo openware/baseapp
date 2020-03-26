@@ -1,37 +1,37 @@
 .cr-modal {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.3);
-  padding: var(--gap);
-  z-index: 99999;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  left: 0;
+  padding: var(--gap);
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 99999;
 
   &__container {
+    background-color: var(--background);
     display: flex;
     flex-direction: column;
-    background-color: var(--background);
-    outline: 1px solid var(--base-3);
     margin: 0 auto;
     min-width: 50% !important;
+    outline: 1px solid var(--base-3);
 
     &-header {
-      outline: 1px solid var(--base-3);
-      margin-bottom: calc(var(--gap) * 3);
       color: var(--base);
       font-size: var(--font-size-bigger);
+      margin-bottom: calc(var(--gap) * 3);
+      outline: 1px solid var(--base-3);
       padding: calc(var(--gap) * 3);
     }
 
     &-content {
+      color: var(--base-2);
       flex: 1;
       margin-bottom: calc(var(--gap) * 3);
-      color: var(--base-2);
       padding: calc(var(--gap) * 3);
 
       input {
@@ -47,6 +47,7 @@
 
   .cr-email-form {
     width: 100% !important;
+
     &__button {
       max-width: 100%;
     }

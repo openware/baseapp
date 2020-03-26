@@ -23,12 +23,13 @@
   }
 
   th {
-    white-space: nowrap;
     font-weight: 500 !important;
     user-select: none;
+    white-space: nowrap;
   }
 
-  th, td {
+  th,
+  td {
     text-align: right;
   }
 
@@ -37,6 +38,7 @@
 
     &:hover {
       background: transparent;
+
       td {
         background-color: var(--market-selector-table-row-selector-hover);
         color: var(--market-selector-table-text-color-hover);
@@ -55,10 +57,10 @@
   .sort-icon {
     svg {
       height: calc(var(--gap) * 1.67);
-      padding-left: calc(var(--gap) * 0.5);
-      width: calc(var(--gap) * 2);
-      vertical-align: middle;
       opacity: 1;
+      padding-left: calc(var(--gap) * 0.5);
+      vertical-align: middle;
+      width: calc(var(--gap) * 2);
 
       path {
         fill: var(--primary-text-color);

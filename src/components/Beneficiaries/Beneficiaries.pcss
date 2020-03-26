@@ -1,9 +1,9 @@
 .pg-beneficiaries {
   &__title {
     color: var(--primary-text-color);
+    font-size: 16px;
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
     line-height: 40px;
   }
 
@@ -16,13 +16,13 @@
     height: 50px;
     justify-content: space-between;
     padding: 13px;
-    transition: .2s;
+    transition: 0.2s;
 
     &__label {
       color: var(--primary-text-color);
+      font-size: 12px;
       font-style: normal;
       font-weight: 500;
-      font-size: 12px;
       line-height: 12px;
     }
 
@@ -45,21 +45,17 @@
     min-height: calc(var(--big-gap) * 12);
   }
 
-  .beneficiaries-fail-modal .cr-email-form {
-    min-height: calc(var(--big-gap) * 4);
-  }
-
   .beneficiaries-confirmation-modal .cr-email-form {
     min-height: calc(var(--big-gap) * 5.65);
   }
 
   .beneficiaries-confirmation-modal {
     .confirmation-modal__content {
-      display: flex;
       align-items: center;
-      width: 100%;
+      display: flex;
       height: 60px;
       margin: 10px 0 20px;
+      width: 100%;
 
       &__icon {
         margin: 0 19px 0 10px;
@@ -85,32 +81,33 @@
     border-radius: 4px;
     cursor: pointer;
     display: flex;
-    transition: .2s;
+    transition: 0.2s;
     width: 100%;
 
-    &__select, .select {
+    &__select,
+    .select {
       align-items: center;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
       height: 70px;
+      justify-content: space-between;
       padding: 0 22px 0 13px;
-      transition: .2s;
+      transition: 0.2s;
       user-select: none;
       width: 100%;
 
       &__left {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         height: 70px;
+        justify-content: center;
         width: 75%;
 
         &__title {
           color: var(--secondary-contrast-cta-color);
+          font-size: 10px;
           font-style: normal;
           font-weight: 500;
-          font-size: 10px;
           line-height: 12px;
         }
 
@@ -152,16 +149,16 @@
 
         &__select {
           color: var(--secondary-contrast-cta-color);
+          font-size: 12px;
           font-style: normal;
           font-weight: normal;
-          font-size: 12px;
           line-height: 12px;
           margin-right: 12px;
         }
 
         &__chevron {
           display: flex;
-          transition: transform .3s;
+          transition: transform 0.3s;
           width: 12px;
         }
       }
@@ -183,10 +180,11 @@
       }
     }
 
-    &__tip, .tip {
+    &__tip,
+    .tip {
       background: var(--body-background-color);
       border-radius: 4px;
-      box-shadow: 0px 8px 25px var(--shadow-color-level-3);
+      box-shadow: 0 8px 25px var(--shadow-color-level-3);
       display: flex;
       padding: 24px;
       position: absolute;
@@ -238,9 +236,9 @@
     }
 
     &--open {
+      background: var(--primary-cta-color);
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      background: var(--primary-cta-color);
 
       .select__left {
         &__title {
@@ -275,11 +273,12 @@
       justify-content: space-between;
       position: absolute;
       top: 110px;
-      transition: .2s;
+      transition: 0.2s;
       width: 100%;
       z-index: 10;
 
-      &__item, .item {
+      &__item,
+      .item {
         align-items: center;
         border-top: 1px solid var(--wallets-item-border);
         display: flex;
@@ -291,15 +290,15 @@
         &__left {
           display: flex;
           flex-direction: column;
-          justify-content: center;
           height: 70px;
+          justify-content: center;
           width: 75%;
 
           &__title {
             color: var(--secondary-contrast-cta-color);
+            font-size: 10px;
             font-style: normal;
             font-weight: 500;
-            font-size: 10px;
             line-height: 12px;
           }
 
@@ -346,25 +345,26 @@
         }
       }
 
-      &__add, .add {
+      &__add,
+      .add {
         align-items: center;
         background-color: var(--dropdown-background-color);
-        border-top: 1px solid var(--wallets-item-border);
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
+        border-top: 1px solid var(--wallets-item-border);
         cursor: pointer;
         display: flex;
         height: 50px;
         justify-content: space-between;
         padding: 13px;
-        transition: .2s;
+        transition: 0.2s;
         width: 100%;
 
         &__label {
           color: var(--primary-text-color);
+          font-size: 12px;
           font-style: normal;
           font-weight: 500;
-          font-size: 12px;
           line-height: 12px;
         }
 
@@ -395,9 +395,9 @@
 
   .cr-email-form {
     background: var(--body-background-color);
-    box-shadow: 0px 8px 25px var(--shadow-color-level-3);
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+    box-shadow: 0 8px 25px var(--shadow-color-level-3);
 
     &__option {
       background: var(--subheader-background-color);
@@ -412,7 +412,7 @@
         line-height: 60px;
         text-transform: lowercase;
 
-        &:first-letter {
+        &::first-letter {
           text-transform: uppercase;
         }
       }
@@ -468,20 +468,23 @@
 
   .beneficiaries-fail-modal {
     .cr-email-form {
+      min-height: calc(var(--big-gap) * 4);
+
       &__form-content {
-        display: flex;
         align-items: center;
+        display: flex;
         justify-content: center;
 
         &__info {
           align-items: center;
           color: var(--primary-text-color);
-          font-weight: normal;
           font-size: 14px;
+          font-weight: normal;
           position: absolute;
           top: 12px;
         }
       }
+
       &__button-wrapper {
         a {
           width: 100%;
@@ -496,13 +499,15 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .pg-beneficiaries__dropdown__tip, .tip {
+  .pg-beneficiaries__dropdown__tip,
+  .tip {
     right: 0 !important;
   }
 }
 
 @media screen and (max-width: 400px) {
-  .pg-beneficiaries__dropdown__select, .select {
+  .pg-beneficiaries__dropdown__select,
+  .select {
     &__left {
       width: 55% !important;
     }

@@ -1,9 +1,9 @@
 .cr-wallet-item {
+  align-items: center;
   background-color: var(--background-wallet-item);
+  display: flex;
   height: calc(var(--gap) * 8);
   justify-content: space-between;
-  display: flex;
-  align-items: center;
 
   span {
     background: transparent;
@@ -20,12 +20,12 @@
   }
 
   &__description {
+    background: var(--background-wallet-item);
     display: flex;
     flex-direction: column;
-    background: var(--background-wallet-item);
     margin-left: 10px;
-    padding-top: 15px;
     padding-bottom: 15px;
+    padding-top: 15px;
   }
 
   &__image-icon {
@@ -35,10 +35,10 @@
   }
 
   &__icon {
-    margin-left: calc(var(--gap) * 4);
-    text-transform: uppercase;
     background: var(--background-wallet-item);
     font-size: 1.5em !important;
+    margin-left: calc(var(--gap) * 4);
+    text-transform: uppercase;
 
     & > * {
       background: var(--background-wallet-item);
@@ -46,16 +46,16 @@
   }
 
   &__balance {
-    text-align: right;
-    margin-right: calc(var(--gap) * 10);
     background: var(--background-wallet-item);
+    margin-right: calc(var(--gap) * 10);
+    text-align: right;
 
     &-locked {
-      font-size: 0.9em;
-      padding-top: var(--gap);
-      font-weight: 200;
-      color: var(--placeholder-text);
       background: var(--background-wallet-item);
+      color: var(--placeholder-text);
+      font-size: 0.9em;
+      font-weight: 200;
+      padding-top: var(--gap);
     }
   }
 

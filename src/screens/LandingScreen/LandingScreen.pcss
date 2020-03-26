@@ -8,7 +8,7 @@
   width: 100vw;
 
   .positive {
-    color: var(--system-green)
+    color: var(--system-green);
   }
 
   .negative {
@@ -24,11 +24,11 @@
     font-weight: 500;
     letter-spacing: 0.02em;
     line-height: 56px;
+    margin: 0;
     margin-block-end: 0;
     margin-block-start: 0;
     margin-inline-end: 0;
     margin-inline-start: 0;
-    margin: 0;
     text-align: center;
   }
 
@@ -41,11 +41,11 @@
     font-weight: normal;
     letter-spacing: 0.25px;
     line-height: 28px;
+    margin: 0;
     margin-block-end: 0;
     margin-block-start: 0;
     margin-inline-end: 0;
     margin-inline-start: 0;
-    margin: 0;
     text-align: center;
   }
 
@@ -115,20 +115,20 @@
       padding: 0 20px;
 
       &__right {
-        display: flex;
-        justify-content: flex-end;
         align-items: center;
+        display: flex;
         flex-direction: row;
+        justify-content: flex-end;
 
         .landing-button {
-          width: 170px;
           height: 34px;
+          width: 170px;
 
           &--simple {
-            height: 32px;
             background: transparent;
-            width: 76px;
+            height: 32px;
             margin-right: 21px;
+            width: 76px;
           }
         }
       }
@@ -137,10 +137,10 @@
 
   &__market-info {
     align-items: center;
+    background: url(assets/images/landing/GridMainBG.svg);
     background-position: right center;
     background-repeat: no-repeat;
     background-size: unset;
-    background: url(assets/images/landing/GridMainBG.svg);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -169,8 +169,8 @@
         .landing-button {
           margin: 60px 0;
         }
-      }  
-      
+      }
+
       .pg-ticker-table {
         height: 100%;
         margin-bottom: 70px;
@@ -186,19 +186,19 @@
 
     &__wrap {
       flex-direction: row;
-      justify-content: space-evenly;;
+      justify-content: space-evenly;
 
       &__item {
         display: flex;
-        height: 100%;
         flex-direction: column;
+        height: 100%;
         justify-content: center;
 
         span {
           color: var(--primary-text-color);
           font-style: normal;
           text-align: center;
-  
+
           &:first-child {
             font-size: 60px;
             font-weight: 500;
@@ -220,10 +220,10 @@
 
   &__register {
     align-items: center;
+    background-image: url(assets/images/landing/TradingUIFullBG.png);
     background-position: right center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url(assets/images/landing/TradingUIFullBG.png);
 
     &__wrap {
       flex-direction: row;
@@ -233,14 +233,15 @@
       &__item {
         align-items: flex-start;
         display: flex;
+        flex-direction: column;
         height: max-content;
         justify-content: flex-start;
-        flex-direction: column;
-        max-width: 464px;
         margin: 105px 0 159px 58px;
+        max-width: 464px;
         width: 100%;
 
-        h1, h2 {
+        h1,
+        h2 {
           text-align: left;
         }
 
@@ -286,9 +287,9 @@
 
         &__item {
           align-items: flex-start;
-          border-radius: 4px;
           background: var(--landing-background-color);
           border: 1px solid var(--light-item-border);
+          border-radius: 4px;
           display: flex;
           flex-direction: column;
           height: 298px;
@@ -314,8 +315,8 @@
           span {
             color: var(--text-contrast-color);
             font-size: 16px;
-            line-height: 28px;
             letter-spacing: 0.25px;
+            line-height: 28px;
           }
         }
       }
@@ -324,10 +325,10 @@
 
   &__trade-on-the-go {
     align-items: center;
+    background-image: url(assets/images/landing/GridSecondBG.svg);
     background-position: left center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url(assets/images/landing/GridSecondBG.svg);
 
     &__wrap {
       flex-direction: row;
@@ -354,14 +355,15 @@
       &__content {
         align-items: flex-start;
         display: flex;
+        flex-direction: column;
         height: max-content;
         justify-content: flex-start;
-        flex-direction: column;
-        max-width: 464px;
         margin: 93px 58px 112px 0;
+        max-width: 464px;
         width: 100%;
 
-        h1, h2 {
+        h1,
+        h2 {
           text-align: left;
         }
 
@@ -386,13 +388,13 @@
         color: var(--text-contrast-color);
         margin-bottom: 70px;
       }
-  
+
       &__content {
         align-items: flex-start;
         display: flex;
+        flex-direction: row;
         height: max-content;
         justify-content: center;
-        flex-direction: row;
         width: 100%;
 
         .landing-button {
@@ -406,12 +408,12 @@
     height: 262px;
 
     &__wrap {
+      align-items: center;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
       height: 211px;
+      justify-content: space-between;
+      width: 100%;
 
       &__left,
       &__navigation,
@@ -444,13 +446,13 @@
           justify-content: flex-start;
 
           a {
-            font-weight: normal;
-            font-size: 12px;
-            line-height: 15px;
-            cursor: pointer;
-            text-decoration: none;
             color: var(--primary-text-color);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: normal;
+            line-height: 15px;
             margin-bottom: 10px;
+            text-decoration: none;
 
             &:last-child {
               margin: 0;
@@ -474,13 +476,13 @@
             cursor: pointer;
             height: 25px;
             margin: 12px;
-            width: 25px;
             opacity: 0.5;
-            transition: .2s linear;
+            transition: 0.2s linear;
+            width: 25px;
 
             &:hover {
               opacity: 1;
-              transition: .2s linear;
+              transition: 0.2s linear;
             }
           }
         }
@@ -534,13 +536,13 @@
         width: 90px;
       }
 
-      &__right {  
+      &__right {
         .landing-button {
           width: 110px;
 
           &--simple {
-            width: 60px;
             margin-right: 10%;
+            width: 60px;
           }
         }
       }
@@ -582,33 +584,33 @@
     }
 
     &__footer {
-      flex-direction: column;
-      justify-content: flex-start;
       align-items: flex-start;
+      flex-direction: column;
       height: max-content;
+      justify-content: flex-start;
       padding: 0 50px;
 
       &__wrap {
-        flex-direction: column;
-        justify-content: flex-start;
         align-items: flex-start;
+        flex-direction: column;
         height: max-content;
-
+        justify-content: flex-start;
 
         &__left {
-          justify-content: center;
           height: 111px;
+          justify-content: center;
         }
 
-        &__navigation, &__social {
+        &__navigation,
+        &__social {
           align-items: center;
           height: 111px;
         }
       }
 
       &__rights {
-        height: 60px;
         align-items: center;
+        height: 60px;
       }
     }
   }

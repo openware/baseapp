@@ -1,40 +1,40 @@
 .pg-trading-header-price-bar {
-  position: relative;
   height: 5px;
-  width: calc(var(--big-gap) * 6);
   margin: 0 calc(var(--gap)) 0 calc(var(--gap));
+  position: relative;
+  width: calc(var(--big-gap) * 6);
 
   &-filler {
     display: flex;
     height: 12px;
 
     &-left {
+      background-color: rgba(84, 180, 137, 0.3);
+      border: 1px solid rgba(84, 180, 137, 0.7);
+      border-radius: 20px 0 0 20px;
       height: 3px;
       margin-top: 3px;
-      background-color: rgba(84, 180, 137, .3);;
-      border: 1px solid rgba(84, 180, 137, .7);
-      border-radius: 20px 0 0 20px;
     }
 
     &-cursor {
-      width: 2px;
+      background-color: var(--base);
       height: 100%;
       margin: 0 -1px 0 -1px;
-      background-color: var(--base);
+      width: 2px;
     }
 
     &-right {
+      background-color: rgba(232, 94, 89, 0.3);
+      border: 1px solid rgba(232, 94, 89, 0.7);
+      border-radius: 0 20px 20px 0;
       height: 3px;
       margin-top: 3px;
-      background-color: rgba(232, 94, 89, .3);
-      border: 1px solid rgba(232, 94, 89, .7);
-      border-radius: 0 20px 20px 0;
     }
   }
 
   &-text {
-    position: absolute;
     margin-top: 14px;
+    position: absolute;
   }
 
   @media screen and (max-width: 996px) {
