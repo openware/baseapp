@@ -24,7 +24,7 @@
     &__cancel {
       float: right;
       cursor: pointer;
-      color: var(--rgb-secondary-contrast-cta-color);
+      color: var(--secondary-contrast-cta-color);
       transition: 0.2s;
     }
 
@@ -38,7 +38,7 @@
 
       &::before,
       &::after {
-        background: var(--rgb-secondary-contrast-cta-color);
+        background: var(--secondary-contrast-cta-color);
         content: '';
         position: absolute;
         top: 55%;
@@ -59,13 +59,13 @@
 
     &__cancel {
       &:hover {
-        color: var(--rgb-primary-text-color);
+        color: var(--primary-text-color);
         transition: 0.2s;
 
         .cr-table-header__close {
           &::before,
           &::after {
-            background: var(--rgb-primary-text-color);
+            background: var(--primary-text-color);
             transition: 0.2s;
           }
         }
@@ -90,7 +90,7 @@
 }
 
 .pg-open-orders--loading {
-  background: var(--rgb-body-background-color);
+  background: var(--body-background-color);
   max-width: 100%;
   .open-order-loading {
     position: absolute;

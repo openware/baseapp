@@ -1,6 +1,6 @@
 .pg-orders-tab {
   align-items: flex-start !important;
-  background: var(--rgb-body-background-color);
+  background: var(--body-background-color);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -42,7 +42,7 @@
   .pg-history-elem {
     &__empty {
       text-align: center;
-      color: var(--rgb-secondary-contrast-cta-color);
+      color: var(--secondary-contrast-cta-color);
     }
 
     &__pagination {
@@ -143,11 +143,11 @@
               }
 
               .close {
-                color: var(--rgb-secondary-contrast-cta-color);
+                color: var(--secondary-contrast-cta-color);
                 transition: 0.2s;
 
                 &:hover {
-                  color: var(--rgb-primary-text-color);
+                  color: var(--primary-text-color);
                   transition: 0.2s;
                 }
               }
@@ -158,15 +158,15 @@
     }
 
     &-executed {
-      color: var(--rgb-system-yellow);
+      color: var(--system-yellow);
     }
 
     &-canceled {
-      color: var(--rgb-system-red);
+      color: var(--system-red);
     }
 
     &-opened {
-      color: var(--rgb-system-green);
+      color: var(--system-green);
     }
   }
 
@@ -198,14 +198,14 @@
     &:hover {
       &::before,
       &::after {
-        background: var(--rgb-primary-text-color);
+        background: var(--primary-text-color);
         transition: 0.2s;
       }
     }
 
     &::before,
     &::after {
-      background: var(--rgb-secondary-contrast-cta-color);
+      background: var(--secondary-contrast-cta-color);
       content: '';
       position: absolute;
       top: 65%;

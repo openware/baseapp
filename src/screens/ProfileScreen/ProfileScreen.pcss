@@ -2,7 +2,7 @@
   flex-wrap: wrap;
   height: 100%;
   align-items: flex-start !important;
-  color: var(--rgb-secondary-contrast-cta-color);
+  color: var(--secondary-contrast-cta-color);
   margin-bottom: 24px !important;
 
   h1, h2, h3, h4, h5, h6 {
@@ -24,7 +24,7 @@
 
     &__url {
       font-size: calc(var(--font-size) * 1.335);
-      color: var(--rgb-primary-cta-color) !important;
+      color: var(--primary-cta-color) !important;
     }
 
     &__pending {
@@ -33,7 +33,7 @@
       margin-bottom: calc(var(--gap) * 2);
 
       p {
-        color: var(--rgb-system-yellow);
+        color: var(--system-yellow);
         margin-right: calc(var(--gap) * 2);
       }
     }
@@ -45,7 +45,7 @@
 
   &__details {
     box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
-    background-color: var(--rgb-body-background-color);
+    background-color: var(--body-background-color);
     width: 100%;
     margin-top: calc(var(--gap) * 2);
     border-radius: calc(var(--gap) * 0.66);
@@ -68,9 +68,9 @@
   &-header {
     display: flex;
     padding: 0 calc(var(--gap) * 3) 0 calc(var(--gap) * 3.4);
-    background: var(--rgb-subheader-background-color);
+    background: var(--subheader-background-color);
     border-bottom: 1px solid var(--divider-color-level-2);
-    color: var(--rgb-primary-text-color);
+    color: var(--primary-text-color);
     border-radius: calc(var(--gap) * 0.66) calc(var(--gap) * 0.66) 0 0;
     margin-right: 0;
     margin-left: 0;
@@ -107,7 +107,7 @@
   &__label {
     padding-top: calc(var(--gap) * 2);
     font-size: calc(var(--font-size) * 1.33);
-    color: var(--rgb-secondary-contast-cta-color));
+    color: var(--secondary-contast-cta-color));
     padding-bottom: var(--gap);
 
     &-value {
@@ -117,13 +117,13 @@
       &__enabled {
         margin-top: calc(var(--gap) * 2);
         font-size: var(--font-size);
-        color: var(--rgb-system-green);
+        color: var(--system-green);
       }
 
       &__disabled {
         margin-top: calc(var(--gap) * 2);
         font-size: var(--font-size);
-        color: var(--rgb-system-red);
+        color: var(--system-red);
       }
     }
   }
@@ -158,7 +158,7 @@
 
         &__block {
           display: block;
-          color: var(--rgb-primary-text-color);
+          color: var(--primary-text-color);
 
           .row {
             margin-top: 0;
@@ -204,7 +204,7 @@
 
     &__verification {
       .pg-profile-page__box-header {
-        color: var(--rgb-primary-text-color);
+        color: var(--primary-text-color);
 
         .pg-profile-page__row > .pg-profile-page__col:last-child {
           display: flex;
@@ -241,7 +241,7 @@
       min-height: 20%;
 
       .cr-copyable-text-field {
-        background: var(--rgb-input-background-color);
+        background: var(--input-background-color);
         border: none;
         width: 70%;
 
@@ -270,7 +270,7 @@
     width: 100%;
     box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
     margin-top: calc(var(--gap) * 2);
-    background: var(--rgb-body-background-color);
+    background: var(--body-background-color);
     border-radius: calc(var(--gap) * 0.66);
 
     .cr-table {
@@ -331,7 +331,7 @@
     width: 100%;
     box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
     margin-top: calc(var(--gap) * 2);
-    background: var(--rgb-body-background-color);
+    background: var(--body-background-color);
     border-radius: calc(var(--gap) * 0.66);
 
     .cr-table {
@@ -399,11 +399,11 @@
       text-transform: capitalize;
 
       &__active {
-        color: var(--rgb-system-green);
+        color: var(--system-green);
       }
 
       &__disabled {
-        color: var(--rgb-system-red)
+        color: var(--system-red)
       }
     }
 
@@ -415,7 +415,7 @@
     }
 
     .secret-section {
-      color: var(--rgb-system-yellow);
+      color: var(--system-yellow);
       margin: calc(var(--gap) * 3);
       font-style: normal;
       font-weight: bold;
@@ -531,14 +531,14 @@
     &:hover {
       &::before,
       &::after {
-        background: var(--rgb-primary-text-color);
+        background: var(--primary-text-color);
         transition: background 0.2s;
       }
     }
 
     &::before,
     &::after {
-      background: var(--rgb-secondary-contrast-cta-color);
+      background: var(--secondary-contrast-cta-color);
       content: '';
       position: absolute;
       top: 55%;
@@ -559,11 +559,11 @@
 
   &__pull-right {
     float: right;
-    color: var(--rgb-secondary-contrast-cta-color);
+    color: var(--secondary-contrast-cta-color);
     transition: 0.2s;
 
     &:hover {
-      color: var(--rgb-primary-text-color);
+      color: var(--primary-text-color);
       transition: 0.2s;
     }
   }
@@ -578,13 +578,13 @@
   }
 
   &__text-success {
-    color: var(--rgb-primary-text-color);
+    color: var(--primary-text-color);
     width: 100%;
     position: relative;
 
     &::after {
       display: inline;
-      color: var(--rgb-primary-text-color);
+      color: var(--primary-text-color);
       content: ' ✓';
       font-size: calc(var(--font-size) * 2.5);
       position: absolute;
@@ -644,7 +644,7 @@
   }
 
   &__btn-secondary {
-    color: var(--rgb-primary-text-color);
+    color: var(--primary-text-color);
     max-width: calc(var(--gap) * 25);
 
     &:visited {
@@ -653,12 +653,12 @@
 
     &__active {
       &:visited {
-        color: var(--rgb-primary-text-color);
+        color: var(--primary-text-color);
       }
     }
 
     &:active {
-      color: var(--rgb-primary-text-color);
+      color: var(--primary-text-color);
     }
 
     &:hover {
@@ -728,12 +728,12 @@
 
 .cr-modal {
   .cr-email-form {
-    background: var(--rgb-body-background-color);
+    background: var(--body-background-color);
     min-height: calc(var(--big-gap) * 5);
     width: calc(var(--big-gap) * 7.06);
 
     &__option {
-      background: var(--rgb-subheader-background-color);
+      background: var(--subheader-background-color);
       border-bottom: 2px solid var(--divider-color-level-2);
     }
 
@@ -743,7 +743,7 @@
     }
 
     &__label {
-      background: var(--rgb-input-background-color);
+      background: var(--input-background-color);
       position: absolute;
       top: 0px;
     }
@@ -770,7 +770,7 @@
       font-weight: normal;
       line-height: calc(var(--gap) * 2.66);
       font-size: calc(var(--gap) * 2.33);
-      color: var(--rgb-secondary-contrast-cta-color);
+      color: var(--secondary-contrast-cta-color);
       margin: calc(var(--gap) * 0.83);
     }
 
