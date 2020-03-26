@@ -7,6 +7,11 @@
     border: 1px solid var(--input-border-color-active) !important;
     box-shadow: none !important;
     color: var(--dropdown-text-color-active) !important;
+
+    &::after {
+      transform: rotate(-180deg);
+      transition: transform 0.2s;
+    }
   }
 
   .dropdown {
@@ -20,6 +25,7 @@
       font-weight: normal;
       height: calc(var(--gap) * 8.3);
       text-align: left;
+      transition: transform 0.2s;
       width: 100%;
 
       &:focus,
@@ -27,6 +33,12 @@
         border: 1px solid var(--input-border-color-active) !important;
         box-shadow: none !important;
         color: var(--dropdown-text-color-active) !important;
+      }
+
+      &::after {
+        left: 237px;
+        position: absolute;
+        top: 21px;
       }
     }
 

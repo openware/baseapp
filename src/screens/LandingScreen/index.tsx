@@ -2,13 +2,13 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
+import { LogoIcon } from '../../assets/images/LogoIcon';
 import { MarketsTable } from '../../containers';
 import {
     RootState,
     selectUserLoggedIn,
 } from '../../modules';
 
-const LogoImage = require('../../assets/images/logo.svg');
 const FeaturesExchangeIcon = require('../../assets/images/landing/features/Exchange.svg');
 const FeaturesTypesIcon = require('../../assets/images/landing/features/Types.svg');
 const FeaturesCustomizeIcon = require('../../assets/images/landing/features/Customize.svg');
@@ -39,7 +39,7 @@ class Landing extends React.Component<Props> {
                 <div className="pg-landing-screen__header">
                     <div className="pg-landing-screen__header__wrap">
                         <div className="pg-landing-screen__header__wrap__left" onClick={e => this.handleScrollTop()}>
-                            <img src={LogoImage} alt="BaseApp Logo"/>
+                            <LogoIcon />
                         </div>
                         <div className="pg-landing-screen__header__wrap__right">
                             <Link to="/profile" className="landing-button">
@@ -55,7 +55,7 @@ class Landing extends React.Component<Props> {
             <div className="pg-landing-screen__header">
                 <div className="pg-landing-screen__header__wrap">
                     <div className="pg-landing-screen__header__wrap__left" onClick={e => this.handleScrollTop()}>
-                        <img src={LogoImage} alt="BaseApp Logo"/>
+                        <LogoIcon />
                     </div>
                     <div className="pg-landing-screen__header__wrap__right">
                         <Link to="/signin" className="landing-button landing-button--simple">
@@ -232,7 +232,7 @@ class Landing extends React.Component<Props> {
             <div className="pg-landing-screen__footer">
                 <div className="pg-landing-screen__footer__wrap">
                     <div className="pg-landing-screen__footer__wrap__left" onClick={e => this.handleScrollTop()}>
-                        <img src={LogoImage} alt="BaseApp Logo"/>
+                        <LogoIcon />
                     </div>
                     <div className="pg-landing-screen__footer__wrap__navigation">
                         <div className="pg-landing-screen__footer__wrap__navigation__col">

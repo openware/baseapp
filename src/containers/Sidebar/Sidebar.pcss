@@ -39,6 +39,11 @@
     &:active {
       color: var(--cta-layer-color);
     }
+
+    &::after {
+      position: relative;
+      right: 0;
+    }
   }
 
   &--active {
@@ -81,9 +86,17 @@
       padding: 9px 23px;
       width: 100%;
 
+      svg {
+        margin-right: 14px;
+      }
+
       &:hover {
         background-color: var(--sidebar-item-background-color-hover) !important;
         color: var(--sidebar-item-text-color-hover);
+
+        path {
+          fill: var(--sidebar-item-text-color-hover);
+        }
       }
 
       &-img {
@@ -137,11 +150,29 @@
       &:hover {
         background-color: var(--sidebar-item-background-color-hover) !important;
         color: var(--sidebar-item-text-color-hover);
+
+        .pg-sidebar-wrapper-nav-item-img {
+          path {
+            fill: var(--sidebar-item-text-color-hover);
+          }
+        }
       }
 
-      &-img-wrapper {
-        margin-right: 14px;
-        width: 24px;
+      &-img {
+        path {
+          fill: var(--icons);
+        }
+
+        &-wrapper {
+          margin-right: 14px;
+          width: 24px;
+        }
+
+        &--active {
+          path {
+            fill: var(--sidebar-item-text-color-hover);
+          }
+        }
       }
 
       &-text {
@@ -168,6 +199,10 @@
 
       &:hover {
         background-color: var(--sidebar-item-background-color-hover) !important;
+
+        path {
+          fill: var(--sidebar-item-text-color-hover);
+        }
 
         p {
           color: var(--sidebar-item-text-color-hover);

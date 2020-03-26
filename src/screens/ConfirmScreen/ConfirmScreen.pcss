@@ -20,6 +20,13 @@
   justify-content: center;
   margin-top: calc(var(--big-gap) * 1);
 
+  .cr-dropdown .dropdown-toggle {
+    &::after {
+      left: 224px;
+      top: 26px;
+    }
+  }
+
   &__loader {
     align-items: center;
     display: flex;
@@ -33,7 +40,7 @@
   &-box {
     background-color: var(--body-background-color);
     border-radius: 4px;
-    box-shadow: 1px 1px 5px rgba(46, 76, 128, 0.2);
+    box-shadow: 1px 1px 5px var(--shadow-color-level-2);
     display: block;
     margin: 0 auto;
     max-height: calc(var(--big-gap) * 10);
@@ -42,8 +49,6 @@
     width: 100%;
 
     &-close {
-      background: url(assets/images/close.svg);
-      background-size: cover;
       cursor: pointer;
       height: 14px;
       margin: 15px 10px;
