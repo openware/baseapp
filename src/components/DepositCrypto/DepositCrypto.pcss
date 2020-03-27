@@ -31,6 +31,15 @@
     justify-content: space-between;
     margin-top: calc(var(--gap) * 6);
 
+    fieldset {
+      &:focus,
+      &:focus-within {
+        .cr-deposit-crypto__copyable-area {
+          border-color: var(--input-border-color-active);
+        }
+      }
+    }
+
     .custom-input {
       width: 80%;
     }
@@ -43,6 +52,7 @@
     }
 
     &-area {
+      border: 1px solid var(--input-border-color);
       margin-top: calc(var(--gap) * -1.1);
 
       .input-group {
@@ -71,10 +81,6 @@
           color: var(--input-background-color);
         }
       }
-    }
-
-    fieldset {
-      border: none;
     }
   }
 
