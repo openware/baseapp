@@ -19,10 +19,16 @@ import {
     selectUserFetching,
     selectUserInfo,
     selectUserLoggedIn,
+    toggleChartRebuild,
     User,
     userFetch,
     walletsReset,
 } from '../../modules';
+import {
+    CustomizationDataInterface,
+    customizationFetch,
+    selectCustomizationData,
+} from '../../modules/public/customization';
 import {
     ChangeForgottenPasswordScreen,
     ConfirmScreen,
@@ -42,7 +48,8 @@ import {
 
 interface ReduxProps {
     colorTheme: string;
-    currentMarket: Market | undefined;
+    currentMarket?: Market;
+    customization?: CustomizationDataInterface;
     user: User;
     isLoggedIn: boolean;
     userLoading?: boolean;
@@ -50,6 +57,7 @@ interface ReduxProps {
 
 interface DispatchProps {
     fetchConfigs: typeof configsFetch;
+    fetchCustomization: typeof customizationFetch;
     logout: typeof logoutFetch;
     userFetch: typeof userFetch;
     walletsReset: typeof walletsReset;
@@ -131,21 +139,27 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 
     public componentDidMount() {
         this.props.fetchConfigs();
+        this.props.fetchCustomization();
         this.props.userFetch();
         this.initInterval();
         this.check();
     }
 
-    public componentDidUpdate(next: LayoutProps) {
-        const { isLoggedIn, history } = this.props;
+    public componentDidUpdate(prevProps: LayoutProps) {
+        const { customization, isLoggedIn, history } = this.props;
 
-        if (!isLoggedIn && next.isLoggedIn) {
+        if (!isLoggedIn && prevProps.isLoggedIn) {
             this.props.walletsReset();
             if (!history.location.pathname.includes('/trading')) {
                 history.push('/trading/');
             }
         }
+
+        if (customization && customization !== prevProps.customization) {
+            this.handleApplyCustomization(customization);
+        }
     }
+
     public componentWillUnmount() {
         for (const type of LayoutComponent.eventsListen) {
             document.body.removeEventListener(type, this.reset);
@@ -256,11 +270,31 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             isShownExpSessionModal: !this.state.isShownExpSessionModal,
         });
     };
+
+    private handleApplyCustomization = (customization: CustomizationDataInterface) => {
+        const rootElement = document.documentElement;
+        const parsedSettings = customization && customization.settings ? JSON.parse(customization.settings) : null;
+
+        if (rootElement && parsedSettings && parsedSettings.theme_colors) {
+            parsedSettings.theme_colors.reduce((result, item) => {
+                const newItemColor = item.value;
+
+                if (newItemColor) {
+                    rootElement.style.setProperty(item.key, item.value);
+                }
+
+                return result;
+            }, {});
+
+            this.props.toggleChartRebuild();
+        }
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
+    customization: selectCustomizationData(state),
     user: selectUserInfo(state),
     isLoggedIn: selectUserLoggedIn(state),
     userLoading: selectUserFetching(state),
@@ -268,7 +302,9 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchConfigs: () => dispatch(configsFetch()),
+    fetchCustomization: () => dispatch(customizationFetch()),
     logout: () => dispatch(logoutFetch()),
+    toggleChartRebuild: () => dispatch(toggleChartRebuild()),
     userFetch: () => dispatch(userFetch()),
     walletsReset: () => dispatch(walletsReset()),
 });

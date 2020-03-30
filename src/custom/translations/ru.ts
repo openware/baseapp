@@ -489,6 +489,47 @@ export const ru: LangType = {
     'page.modal.expired.title': 'Ваша сессия истекла',
     'page.modal.expired.submit': 'Обновить сессию',
 
+
+    /* Customization */
+    'page.body.customization.tabs.themes': 'Colors',
+    'page.body.customization.tabs.fonts': 'Fonts',
+    'page.body.customization.tabs.spacing': 'Spacing',
+    'page.body.customization.tabs.images': 'Images',
+    'page.body.customization.comingSoon': 'Coming Soon',
+    'page.body.customization.actionButtons.reset': 'Reset',
+    'page.body.customization.actionButtons.save': 'Save',
+
+    'page.body.customization.themes.selector.label': 'Theme Presets',
+
+    'page.body.customization.themes.color.mainBackgroundColor': 'Main background',
+    'page.body.customization.themes.color.bodyBackgroundColor': 'Body background',
+    'page.body.customization.themes.color.headerBackgroundColor': 'Header background',
+    'page.body.customization.themes.color.subheaderBackgroundColor': 'Subheader background',
+    'page.body.customization.themes.color.dropdownBackgroundColor': 'Dropdown background',
+    'page.body.customization.themes.color.icon': 'Icons',
+    'page.body.customization.themes.color.primaryCtaColor': 'Primary Call to action',
+    'page.body.customization.themes.color.contrastCtaColor': 'Contrast Call to action',
+    'page.body.customization.themes.color.secondaryContrastCtaColor': 'Secondary Contrast CTA',
+    'page.body.customization.themes.color.ctaLayerColor': 'CTA Layer',
+    'page.body.customization.themes.color.systemGreen': 'System Green',
+    'page.body.customization.themes.color.systemRed': 'System Red',
+    'page.body.customization.themes.color.systemYellow': 'System Yellow',
+    'page.body.customization.themes.color.asks': 'Asks color',
+    'page.body.customization.themes.color.bids': 'Bids color',
+    'page.body.customization.themes.color.primaryTextColor': 'Primary text',
+    'page.body.customization.themes.color.textContrastColor': 'Text contrast',
+    'page.body.customization.themes.color.inputBackgroundColor': 'Input background',
+    'page.body.customization.themes.color.dividerColor': 'Divider color',
+    'page.body.customization.themes.color.shadowColor': 'Shadow color',
+    'page.body.customization.themes.color.landingBackgroundColor': 'Landing background',
+    'page.body.customization.themes.color.strengthMeterVeryStrong': 'Password very strong',
+
+    'page.body.customization.themes.theme.darkBlue.title': 'Dark blue',
+    'page.body.customization.themes.theme.darkRed.title': 'Dark red',
+    'page.body.customization.themes.theme.purple.title': 'Purple',
+    'page.body.customization.themes.theme.green.title': 'Green',
+
+
     // success messages
     'success.documents.accepted': 'Ваши документы успешно приняты',
     'success.identity.accepted': 'Данные профиля успешно приняты',

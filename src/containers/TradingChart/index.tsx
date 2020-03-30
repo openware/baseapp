@@ -18,6 +18,7 @@ import {
     Market,
     MarketsState,
     RootState,
+    selectChartRebuildState,
     selectCurrentColorTheme,
     selectCurrentLanguage,
     selectCurrentMarket,
@@ -44,6 +45,7 @@ import { getTradingChartTimezone } from './timezones';
 interface ReduxProps {
     markets: Market[];
     colorTheme: string;
+    chartRebuild: boolean;
     currentMarket?: Market;
     tickers: MarketsState['tickers'];
     kline: KlineState;
@@ -80,6 +82,10 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
         if (next.kline && next.kline !== this.props.kline) {
             this.datafeed.onRealtimeCallback(next.kline);
+        }
+
+        if (next.chartRebuild !== this.props.chartRebuild) {
+            this.handleRebuildChart();
         }
     }
 
@@ -172,16 +178,35 @@ export class TradingChartComponent extends React.PureComponent<Props> {
                 });
             });
         }
-    }
+    };
 
-    private languageIncluded (lang: string ) {
+    private handleRebuildChart = () => {
+        const {
+            colorTheme,
+            currentMarket,
+            markets,
+        } = this.props;
+
+        if (this.tvWidget && currentMarket) {
+            try {
+                this.tvWidget.remove();
+            } catch (error) {
+                window.console.log(`TradingChart unmount failed (Rebuild chart): ${error}`);
+            }
+
+            this.setChart(markets, currentMarket, colorTheme);
+        }
+    };
+
+    private languageIncluded = (lang: string) => {
         return ['ar', 'zh', 'cs', 'da_DK', 'nl_NL', 'en', 'et_EE', 'fr', 'de', 'el', 'he_IL', 'hu_HU', 'id_ID', 'it', 'ja', 'ko', 'fa', 'pl', 'pt', 'ro', 'ru', 'sk_SK', 'es', 'sv', 'th', 'tr', 'vi'].includes(lang)
-    }
+    };
 }
 
 const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     markets: selectMarkets(state),
     colorTheme: selectCurrentColorTheme(state),
+    chartRebuild: selectChartRebuildState(state),
     currentMarket: selectCurrentMarket(state),
     tickers: selectMarketTickers(state),
     kline: selectKline(state),
