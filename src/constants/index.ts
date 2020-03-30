@@ -39,12 +39,22 @@ export const colors = {
             asks: 'var(--asks-level-4)',
             bids: 'var(--bids-level-4)',
         },
+        depth: {
+            fillAreaAsk: '#fa5252',
+            fillAreaBid: '#12b886',
+            gridBackgroundStart: '#1a243b',
+            gridBackgroundEnd: '#1a243b',
+            strokeAreaAsk: '#fa5252',
+            strokeAreaBid: '#12b886',
+            strokeGrid: '#B8E9F5',
+            strokeAxis: '#cccccc',
+        },
     },
     basic: {
         chart: {
-            primary: '#1E2841',
-            up: '#54B489',
-            down: '#E85E59',
+            primary: 'var(--rgb-body-background-color)',
+            up: 'var(--rgb-bids)',
+            down: 'var(--rgb-asks)',
         },
         navbar: {
             sun: 'var(--primary-text-color)',
@@ -53,6 +63,16 @@ export const colors = {
         orderBook: {
             asks: 'var(--asks-level-4)',
             bids: 'var(--bids-level-4)',
+        },
+        depth: {
+            fillAreaAsk: 'var(--rgb-asks)',
+            fillAreaBid: 'var(--rgb-bids)',
+            gridBackgroundStart: 'var(--rgb-asks)',
+            gridBackgroundEnd: 'var(--rgb-asks)',
+            strokeAreaAsk: 'var(--rgb-asks)',
+            strokeAreaBid: 'var(--rgb-bids)',
+            strokeGrid: 'var(--rgb-secondary-contrast-cta-color)',
+            strokeAxis: 'var(--rgb-primary-text-color)',
         },
     },
 };

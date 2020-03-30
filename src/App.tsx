@@ -5,7 +5,14 @@ import { IntlProvider } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { Router } from 'react-router';
 import { gaTrackerKey } from '../src/api';
-import { Alerts, ErrorWrapper, Footer, Header, Sidebar } from './containers';
+import {
+    Alerts,
+    Customization,
+    ErrorWrapper,
+    Footer,
+    Header,
+    Sidebar,
+} from './containers';
 import { RootState } from './modules';
 import { Layout } from './routes';
 
@@ -52,6 +59,7 @@ class AppLayout extends React.Component<Props, {}, {}> {
                     <ErrorWrapper>
                         <Header/>
                         <Sidebar/>
+                        <Customization/>
                         <Alerts/>
                         <Layout/>
                         <Footer/>

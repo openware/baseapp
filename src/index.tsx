@@ -5,6 +5,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
 import { App } from './App';
 import { customLocaleData } from './custom/translations';

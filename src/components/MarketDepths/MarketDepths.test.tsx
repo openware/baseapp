@@ -3,16 +3,6 @@ import * as React from 'react';
 import { MarketDepths, MarketDepthsProps } from '.';
 
 const defaultProps: MarketDepthsProps = {
-  colors: {
-      fillAreaAsk: 'rgba(233,91,91,1)',
-      fillAreaBid: 'rgba(91,165,132,1)',
-      gridBackgroundEnd: 'rgba(31,42,52,1)',
-      gridBackgroundStart: 'rgba(15,20,37,1)',
-      strokeAreaAsk: 'rgba(233,91,91,1)',
-      strokeAreaBid: 'rgba(91,165,132,1)',
-      strokeAxis: 'rgba(122,150,166,1)',
-      strokeGrid: 'rgba(98, 113, 139, 0.2)',
-  },
   data: [
     { x: '', bid: 4500, amt: 1 },
     { x: '', bid: 3500, amt: 2 },

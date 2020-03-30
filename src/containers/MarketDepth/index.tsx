@@ -6,6 +6,8 @@ import { MarketDepths } from '../../components/MarketDepths';
 import {
     Market,
     RootState,
+    selectChartRebuildState,
+    selectCurrentColorTheme,
     selectCurrentMarket,
     selectDepthAsks,
     selectDepthBids,
@@ -14,6 +16,8 @@ import {
 interface ReduxProps {
     asksItems: string[][];
     bidsItems: string[][];
+    chartRebuild: boolean;
+    colorTheme: string;
     currentMarket: Market | undefined;
 }
 
@@ -26,34 +30,24 @@ const settings = {
 };
 
 class MarketDepthContainer extends React.Component<Props> {
-    public componentWillReceiveProps(next: Props) {
-        const { currentMarket } = next;
-        const { currentMarket: prevCurrentMarket} = this.props;
+    public shouldComponentUpdate(nextProps: Props) {
+        const {
+            asksItems,
+            bidsItems,
+            chartRebuild,
+            colorTheme,
+            currentMarket,
+        } = this.props;
+        const colorThemeChanged = nextProps.colorTheme !== colorTheme;
+        const currentMarketChanged = nextProps.currentMarket ? nextProps.currentMarket !== currentMarket : false;
+        const ordersLengthChanged = (nextProps.asksItems.length + nextProps.bidsItems.length) !== (asksItems.length + bidsItems.length);
+        const chartRebuildTriggered = nextProps.chartRebuild !== chartRebuild;
 
-        if (currentMarket && currentMarket !== prevCurrentMarket) {
-            this.forceUpdate();
-        }
-    }
-
-    public shouldComponentUpdate(prev, next) {
-        const { asksItems, bidsItems } = prev;
-        const ordersLength = Number(asksItems.length) + Number(bidsItems.length);
-
-        return ordersLength !== (this.props.asksItems.length + this.props.bidsItems.length);
+        return ordersLengthChanged || currentMarketChanged || chartRebuildTriggered || colorThemeChanged;
     }
 
     public render() {
         const { asksItems, bidsItems } = this.props;
-        const colors = {
-            fillAreaAsk: '#fa5252',
-            fillAreaBid: '#12b886',
-            gridBackgroundStart: '#1a243b',
-            gridBackgroundEnd: '#1a243b',
-            strokeAreaAsk: '#fa5252',
-            strokeAreaBid: '#12b886',
-            strokeGrid: ' #B8E9F5',
-            strokeAxis: '#cccccc',
-        };
 
         return (
             <div className="cr-market-depth">
@@ -62,18 +56,20 @@ class MarketDepthContainer extends React.Component<Props> {
                         <FormattedMessage id="page.body.trade.header.marketDepths" />
                     </div>
                 </div>
-                {(asksItems.length || bidsItems.length) ? this.renderMarketDepth(colors) : null}
+                {(asksItems.length || bidsItems.length) ? this.renderMarketDepth() : null}
             </div>
         );
     }
 
-    private renderMarketDepth(colors) {
+    private renderMarketDepth() {
+        const { colorTheme } = this.props;
+
         return (
             <MarketDepths
                 settings={settings}
                 className={'pg-market-depth'}
-                colors={colors}
                 data={this.convertToDepthFormat()}
+                colorTheme={colorTheme}
             />);
     }
 
@@ -139,6 +135,8 @@ class MarketDepthContainer extends React.Component<Props> {
 const mapStateToProps = (state: RootState) => ({
     asksItems: selectDepthAsks(state),
     bidsItems: selectDepthBids(state),
+    chartRebuild: selectChartRebuildState(state),
+    colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
 });
 

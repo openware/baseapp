@@ -11,6 +11,8 @@ import {
     XAxis,
     YAxis,
 } from 'recharts';
+import { colors } from '../../constants';
+import { convertRgbToHex, getStylesValueByKey } from '../../helpers';
 
 export interface KeyValuePairMarketDepths {
     x: string | number;
@@ -18,17 +20,6 @@ export interface KeyValuePairMarketDepths {
     ask?: number;
     bid?: number;
     name?: string | number;
-}
-
-export interface ChartStyles {
-    fillAreaAsk: string;
-    fillAreaBid: string;
-    gridBackgroundStart: string;
-    gridBackgroundEnd: string;
-    strokeAreaAsk: string;
-    strokeAreaBid: string;
-    strokeGrid: string;
-    strokeAxis: string;
 }
 
 export interface TooltipColors {
@@ -60,10 +51,6 @@ export interface MarketDepthsProps {
      * @default empty
      */
     className?: string;
-    /**
-     * MarketDepths colors for chart
-     */
-    colors: ChartStyles;
     /**
      * MarketDepths details data for building the plot
      */
@@ -104,6 +91,11 @@ export interface MarketDepthsProps {
      * @default false
      */
     gradientHide?: boolean;
+    /**
+     * Current color theme mode
+     *  @default 'basic'
+     */
+    colorTheme?: string;
 }
 
 export interface MarketDepthsSettings {
@@ -130,6 +122,32 @@ export interface MarketDepthsSettings {
      */
     activeDot?: CustomActiveDotProps;
 }
+
+const getColorSettings = (colorTheme?: string) => {
+    if (colorTheme === 'light') {
+        return {
+            strokeAreaAskColor: colors.light.depth.strokeAreaAsk,
+            strokeAreaBidColor: colors.light.depth.strokeAreaBid,
+            strokeAxisColor: colors.light.depth.strokeAxis,
+            strokeGridColor: colors.light.depth.strokeGrid,
+            fillAreaAskColor: colors.light.depth.fillAreaAsk,
+            fillAreaBidColor: colors.light.depth.fillAreaBid,
+            gridBackgroundStartColor: colors.light.depth.gridBackgroundStart,
+            gridBackgroundEndColor: colors.light.depth.gridBackgroundEnd,
+        };
+    }
+
+    return {
+        strokeAreaAskColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.strokeAreaAsk)),
+        strokeAreaBidColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.strokeAreaBid)),
+        strokeAxisColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.strokeAxis)),
+        strokeGridColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.strokeGrid)),
+        fillAreaAskColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.fillAreaAsk)),
+        fillAreaBidColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.fillAreaBid)),
+        gridBackgroundStartColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.gridBackgroundStart)),
+        gridBackgroundEndColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.gridBackgroundEnd)),
+    };
+};
 
 const CustomTooltip = (props: CustomToolTipProps) => {
     const defaultToolTipColors = {
@@ -195,8 +213,8 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
     public render() {
         const {
             chartType,
+            colorTheme,
             className,
-            colors,
             data,
             hideCartesianGrid,
             intervalX,
@@ -207,6 +225,7 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
             gradientHide,
         } = this.props;
         const cx = classnames('cr-market-depths', className);
+        const colorSettings = getColorSettings(colorTheme);
 
         return (
             <div className={cx}>
@@ -218,18 +237,18 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
                         data={data}
                         margin={{ top: 20, right: 30, left: 0, bottom: 20 }}
                     >
-                        {this.defineGradient(gradientHide)}
-                        {hideCartesianGrid ? null : (<CartesianGrid stroke={colors.strokeGrid} strokeDasharray="1 1" fill="url(#fillGrid)" />)}
+                        {this.defineGradient(colorSettings, gradientHide)}
+                        {hideCartesianGrid ? null : (<CartesianGrid stroke={colorSettings.strokeGridColor} strokeDasharray="1 1" fill="url(#fillGrid)" />)}
                         <XAxis
                             dataKey={settings.dataKeyX || 'ask'}
                             interval={intervalX || 'preserveStartEnd'}
-                            stroke={colors.strokeAxis}
+                            stroke={colorSettings.strokeAxisColor}
                         />
                         <YAxis
                             orientation={orientation ? orientation : 'left'}
                             dataKey={settings.dataKeyY || 'bid'}
                             interval={intervalY || 'preserveStartEnd'}
-                            stroke={colors.strokeAxis}
+                            stroke={colorSettings.strokeAxisColor}
                         />
                         {settings.tooltip ?
                             <Tooltip
@@ -238,14 +257,14 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
                         <Area
                             type={chartType ? chartType : 'step'}
                             dataKey="bid"
-                            stroke={colors.strokeAreaBid}
+                            stroke={colorSettings.strokeAreaBidColor}
                             fill="url(#bidChartColor)"
                             activeDot={settings.activeDot}
                         />
                         <Area
                             type={chartType ? chartType : 'step'}
                             dataKey="ask"
-                            stroke={colors.strokeAreaAsk}
+                            stroke={colorSettings.strokeAreaAskColor}
                             fill="url(#askChartColor)"
                             activeDot={settings.activeDot}
                         />
@@ -255,23 +274,19 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
         );
     }
 
-    public defineGradient = (value?: boolean) => {
-        const {
-            colors,
-        } = this.props;
-
+    public defineGradient = (colorSettings, value?: boolean) => {
         if (value) {
             return (
                 <defs>
                     <linearGradient id="bidChartColor" x1="0" y1="0" x2="0" y2="1">
-                        <stop stopColor={colors.fillAreaBid} />
+                        <stop stopColor={colorSettings.fillAreaBidColor} />
                     </linearGradient>
                     <linearGradient id="askChartColor" x1="0" y1="0" x2="0" y2="1">
-                        <stop stopColor={colors.fillAreaAsk} />
+                        <stop stopColor={colorSettings.fillAreaAskColor} />
                     </linearGradient>
                     <linearGradient id="fillGrid" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor={colors.gridBackgroundStart} stopOpacity={0} />
-                        <stop offset="95%" stopColor={colors.gridBackgroundEnd} stopOpacity={1} />
+                        <stop offset="5%" stopColor={colorSettings.gridBackgroundStartColor} stopOpacity={0} />
+                        <stop offset="95%" stopColor={colorSettings.gridBackgroundEndColor} stopOpacity={1} />
                     </linearGradient>
                 </defs>
             );
@@ -280,16 +295,16 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
         return (
             <defs>
                 <linearGradient id="bidChartColor" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={colors.fillAreaBid} stopOpacity={1} />
-                    <stop offset="95%" stopColor={colors.fillAreaBid} stopOpacity={0} />
+                    <stop offset="5%" stopColor={colorSettings.fillAreaBidColor} stopOpacity={1} />
+                    <stop offset="95%" stopColor={colorSettings.fillAreaBidColor} stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="askChartColor" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={colors.fillAreaAsk} stopOpacity={1} />
-                    <stop offset="95%" stopColor={colors.fillAreaAsk} stopOpacity={0} />
+                    <stop offset="5%" stopColor={colorSettings.fillAreaAskColor} stopOpacity={1} />
+                    <stop offset="95%" stopColor={colorSettings.fillAreaAskColor} stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="fillGrid" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={colors.gridBackgroundStart} stopOpacity={0} />
-                    <stop offset="95%" stopColor={colors.gridBackgroundEnd} stopOpacity={1} />
+                    <stop offset="5%" stopColor={colorSettings.gridBackgroundStartColor} stopOpacity={0} />
+                    <stop offset="95%" stopColor={colorSettings.gridBackgroundEndColor} stopOpacity={1} />
                 </linearGradient>
             </defs>
         );

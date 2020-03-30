@@ -3,6 +3,7 @@ import { alertReducer  } from './public/alert';
 import { changeColorThemeReducer  } from './public/colorTheme';
 import { configsReducer } from './public/configs';
 import { currenciesReducer } from './public/currencies';
+import { customizationReducer } from './public/customization';
 import { gridLayoutReducer } from './public/gridLayout/reducer';
 import { changeLanguageReducer  } from './public/i18n';
 import { klineReducer  } from './public/kline';
@@ -19,6 +20,7 @@ import { apiKeysReducer } from './user/apiKeys';
 import { authReducer  } from './user/auth';
 import { beneficiariesReducer } from './user/beneficiaries';
 import { getGeetestCaptchaReducer } from './user/captcha';
+import { customizationUpdateReducer } from './user/customization';
 import { sendEmailVerificationReducer } from './user/emailVerification';
 import { historyReducer  } from './user/history';
 import {
@@ -41,6 +43,7 @@ export const publicReducer = combineReducers({
     colorTheme: changeColorThemeReducer,
     configs: configsReducer,
     currencies: currenciesReducer,
+    customization: customizationReducer,
     recentTrades: recentTradesReducer,
     markets: marketsReducer,
     orderBook: orderBookReducer,
@@ -57,6 +60,7 @@ export const publicReducer = combineReducers({
 export const userReducer = combineReducers({
     auth: authReducer,
     beneficiaries: beneficiariesReducer,
+    customizationUpdate: customizationUpdateReducer,
     label: labelReducer,
     orders: ordersReducer,
     password: passwordReducer,

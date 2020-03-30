@@ -1,0 +1,61 @@
+.pg-customization-color-settings {
+  align-items: flex-start;
+  background: var(--customization-background-color);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: flex-start;
+  margin-left: 340px;
+  position: fixed;
+  top: 0;
+  transition: 0.4s;
+  width: 340px;
+  z-index: 1;
+
+  &--open {
+    margin-left: 0;
+  }
+
+  &__header {
+    align-items: center;
+    border-bottom: 1px solid var(--customization-divider-color);
+    display: flex;
+    flex-direction: row;
+    height: 48px;
+    justify-content: center;
+    width: 100%;
+
+    &__chevron {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      height: 48px;
+      justify-content: center;
+      position: absolute;
+      right: 284px;
+      width: 56px;
+    }
+
+    &__title {
+      color: var(--customization-primary-text-color);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 15px;
+    }
+  }
+
+  &__body {
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+    width: 100%;
+
+    .sketch-picker {
+      border: none;
+      box-shadow: none !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+  }
+}

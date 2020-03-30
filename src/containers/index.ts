@@ -3,6 +3,7 @@ export * from './ChangePassword';
 export * from './Confirm/Documents';
 export * from './Confirm/Identity';
 export * from './Confirm/Phone';
+export * from './Customization';
 export * from './Errors';
 export * from './Footer';
 export * from './GeetestCaptcha';
