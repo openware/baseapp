@@ -115,7 +115,7 @@ class Orders extends React.PureComponent<Props, State> {
         ];
     };
 
-    private handleCancelAll = () => this.props.ordersCancelAll(this.state);
+    private handleCancelAll = () => this.props.ordersCancelAll();
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -127,7 +127,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         marketsFetch: () => dispatch(marketsFetch()),
-        ordersCancelAll: payload => dispatch(ordersCancelAllFetch(payload)),
+        ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
         resetOrdersHistory: () => dispatch(resetOrdersHistory()),
         rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
     });

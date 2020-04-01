@@ -27,18 +27,16 @@ describe('Orders Cancel All', () => {
         message: ['Server error'],
     };
 
-    const fakeFetchPayload = { tab: 'open' };
-
     const mockCancelAllOrders = () => {
         mockAxios.onPost('/market/orders/cancel').reply(200);
     };
 
     const expectedActionsSuccess = [
-        ordersCancelAllFetch(fakeFetchPayload),
+        ordersCancelAllFetch(),
         alertPush({ message: ['success.order.cancelling.all'], type: 'success'}),
     ];
     const expectedActionsError = [
-        ordersCancelAllFetch(fakeFetchPayload),
+        ordersCancelAllFetch(),
         ordersCancelAllError(),
         alertPush(fakeError),
     ];
@@ -54,7 +52,7 @@ describe('Orders Cancel All', () => {
                 }
             });
         });
-        store.dispatch(ordersCancelAllFetch(fakeFetchPayload));
+        store.dispatch(ordersCancelAllFetch());
 
         return promise;
     });
@@ -70,7 +68,7 @@ describe('Orders Cancel All', () => {
                 }
             });
         });
-        store.dispatch(ordersCancelAllFetch(fakeFetchPayload));
+        store.dispatch(ordersCancelAllFetch());
 
         return promise;
     });

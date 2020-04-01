@@ -63,7 +63,7 @@ describe('Orders History reducer', () => {
 
     it('should handle ORDERS_CANCEL_ALL_FETCH', () => {
         const expectedState = { ...initialOrdersHistoryState, cancelAllFetching: true };
-        const payload = { tab: 'open' };
+        const payload = { market: 'btcusdt' };
         expect(ordersHistoryReducer(initialOrdersHistoryState, actions.ordersCancelAllFetch(payload))).toEqual(expectedState);
     });
 
