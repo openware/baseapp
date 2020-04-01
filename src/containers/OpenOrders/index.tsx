@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { isFinexEnabled } from '../../api';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { OpenOrders } from '../../components';
 import { localeDate, preciseData, setTradeColor } from '../../helpers';
@@ -68,14 +67,10 @@ export class OpenOrdersContainer extends React.Component<Props> {
                 <div className="cr-table-header__content">
                     <div className="cr-title-component">
                         <FormattedMessage id="page.body.trade.header.openOrders" />
-                        {
-                            isFinexEnabled() ?
-                                '' :
-                                <span className="cr-table-header__cancel" onClick={this.handleCancelAll}>
-                                    <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
-                                    <CloseIcon className="cr-table-header__close" />
-                                </span>
-                        }
+                        <span className="cr-table-header__cancel" onClick={this.handleCancelAll}>
+                            <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
+                            <CloseIcon className="cr-table-header__close" />
+                        </span>
                     </div>
                 </div>
                 {fetching ? <div className="open-order-loading"><Spinner animation="border" variant="primary" /></div> : this.openOrders()}

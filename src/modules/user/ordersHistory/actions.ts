@@ -52,8 +52,8 @@ export interface TestOrdersHistoryState {
 
 export interface OrdersCancelAllFetch {
     type: typeof ORDERS_CANCEL_ALL_FETCH;
-    payload: {
-        tab: string;
+    payload?: {
+        market: string;
     };
 }
 
@@ -122,7 +122,7 @@ export const userOrdersHistoryError = (): UserOrdersHistoryError => ({
     type: ORDERS_HISTORY_ERROR,
 });
 
-export const ordersCancelAllFetch = (payload: OrdersCancelAllFetch['payload']): OrdersCancelAllFetch => ({
+export const ordersCancelAllFetch = (payload?: OrdersCancelAllFetch['payload']): OrdersCancelAllFetch => ({
     type: ORDERS_CANCEL_ALL_FETCH,
     payload,
 });

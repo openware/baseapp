@@ -33,7 +33,7 @@ describe('Orders History actions', () => {
     });
 
     it('should check ordersCancelAllFetch action creator', () => {
-        const payload = { tab: 'all' };
+        const payload = { market: 'btcusdt' };
         const expectedAction = { type: ORDERS_CANCEL_ALL_FETCH, payload };
         expect(actions.ordersCancelAllFetch(payload)).toEqual(expectedAction);
     });
