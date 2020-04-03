@@ -18,10 +18,8 @@ import {
     selectFirstElemIndex,
     selectHistory,
     selectHistoryLoading,
-    selectHistoryTotal,
     selectLastElemIndex,
     selectNextPageExists,
-    selectPageCount,
     selectWallets,
     WalletHistoryList,
 } from '../../modules';
@@ -39,9 +37,7 @@ export interface ReduxProps {
     list: WalletHistoryList;
     wallets: WalletItemProps[];
     fetching: boolean;
-    total: number;
     page: number;
-    pageCount: number;
     firstElemIndex: number;
     lastElemIndex: number;
     nextPageExists: boolean;
@@ -90,7 +86,7 @@ export class WalletTable extends React.Component<Props> {
     }
 
     public render() {
-        const { label, list, total, firstElemIndex, lastElemIndex, page, nextPageExists } = this.props;
+        const { label, list, firstElemIndex, lastElemIndex, page, nextPageExists } = this.props;
 
         if (!list.length) {
             return null;
@@ -105,7 +101,6 @@ export class WalletTable extends React.Component<Props> {
                 <Pagination
                     firstElemIndex={firstElemIndex}
                     lastElemIndex={lastElemIndex}
-                    total={total}
                     page={page}
                     nextPageExists={nextPageExists}
                     onClickPrevPage={this.onClickPrevPage}
@@ -189,9 +184,7 @@ export const mapStateToProps = (state: RootState): ReduxProps => ({
     list: selectHistory(state),
     wallets: selectWallets(state),
     fetching: selectHistoryLoading(state),
-    total: selectHistoryTotal(state),
     page: selectCurrentPage(state),
-    pageCount: selectPageCount(state, 6),
     firstElemIndex: selectFirstElemIndex(state, 6),
     lastElemIndex: selectLastElemIndex(state, 6),
     nextPageExists: selectNextPageExists(state, 6),

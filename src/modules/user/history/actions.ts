@@ -21,7 +21,7 @@ export interface HistoryFetchPayload {
 interface HistorySuccessPayload {
     list: WalletHistoryList;
     page: number;
-    total: number;
+    nextPageExists: boolean;
 }
 
 export interface HistoryFetch {

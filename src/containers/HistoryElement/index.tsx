@@ -5,6 +5,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
+import { compose } from 'redux';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import {
@@ -26,11 +27,9 @@ import {
     selectFirstElemIndex,
     selectHistory,
     selectHistoryLoading,
-    selectHistoryTotal,
     selectLastElemIndex,
     selectMarkets,
     selectNextPageExists,
-    selectPageCount,
     selectWallets,
     Wallet,
     WalletHistoryList,
@@ -46,9 +45,7 @@ interface ReduxProps {
     wallets: Wallet[];
     list: WalletHistoryList;
     fetching: boolean;
-    total: number;
     page: number;
-    pageCount: number;
     firstElemIndex: number;
     lastElemIndex: number;
     nextPageExists: boolean;
@@ -92,7 +89,7 @@ class HistoryComponent extends React.Component<Props> {
     }
 
     public renderContent = () => {
-        const { type, firstElemIndex, lastElemIndex, total, page, nextPageExists } = this.props;
+        const { type, firstElemIndex, lastElemIndex, page, nextPageExists } = this.props;
 
         return (
             <React.Fragment>
@@ -100,7 +97,6 @@ class HistoryComponent extends React.Component<Props> {
                 <Pagination
                     firstElemIndex={firstElemIndex}
                     lastElemIndex={lastElemIndex}
-                    total={total}
                     page={page}
                     nextPageExists={nextPageExists}
                     onClickPrevPage={this.onClickPrevPage}
@@ -249,9 +245,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     wallets: selectWallets(state),
     list: selectHistory(state),
     fetching: selectHistoryLoading(state),
-    total: selectHistoryTotal(state),
     page: selectCurrentPage(state),
-    pageCount: selectPageCount(state, 25),
     firstElemIndex: selectFirstElemIndex(state, 25),
     lastElemIndex: selectLastElemIndex(state, 25),
     nextPageExists: selectNextPageExists(state, 25),
@@ -264,8 +258,7 @@ export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         fetchHistory: params => dispatch(fetchHistory(params)),
     });
 
-const HistoryElement = injectIntl(connect(mapStateToProps, mapDispatchToProps)(HistoryComponent));
-
-export {
-    HistoryElement,
-};
+export const HistoryElement = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(HistoryComponent) as any; // tslint:disable-line
