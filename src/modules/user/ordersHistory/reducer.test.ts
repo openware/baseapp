@@ -49,8 +49,9 @@ describe('Orders History reducer', () => {
         const payload: actions.UserOrdersHistoryDataPayload = {
             list: apiList.map(convertOrderAPI),
             pageIndex: 1,
+            nextPageExists: false,
         };
-        const expectedState = { ...initialState, ...payload, fetching: false };
+        const expectedState = { ...initialState, ...payload, nextPageExists: false, fetching: false };
         expect(ordersHistoryReducer(initialState, actions.userOrdersHistoryData(payload))).toEqual(expectedState);
     });
 

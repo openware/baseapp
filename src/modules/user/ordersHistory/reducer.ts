@@ -24,6 +24,7 @@ export interface OrdersHistoryState {
     cancelAllError: boolean;
     cancelError: boolean;
     cancelFetching: boolean;
+    nextPageExists: boolean;
 }
 
 export const initialOrdersHistoryState: OrdersHistoryState = {
@@ -34,6 +35,7 @@ export const initialOrdersHistoryState: OrdersHistoryState = {
     cancelAllError: false,
     cancelError: false,
     cancelFetching: false,
+    nextPageExists: false,
 };
 
 
@@ -50,6 +52,7 @@ export const ordersHistoryReducer = (
                 list: action.payload.list,
                 fetching: false,
                 pageIndex: action.payload.pageIndex,
+                nextPageExists: action.payload.nextPageExists,
             };
         case ORDERS_HISTORY_RANGER_DATA:
             return { ...state, cancelFetching: false, list: insertOrUpdate(state.list, convertOrderEvent(action.payload)) };

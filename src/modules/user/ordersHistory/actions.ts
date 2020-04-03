@@ -24,6 +24,7 @@ interface UserOrdersHistoryFetchPayload {
 export interface UserOrdersHistoryDataPayload {
     list: OrderCommon[];
     pageIndex: number;
+    nextPageExists: boolean;
 }
 
 export interface UserOrdersHistoryFetch {

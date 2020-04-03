@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { compose } from 'redux';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
@@ -211,7 +212,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     list: selectOrdersHistory(state),
     fetching: selectOrdersHistoryLoading(state),
     lastElemIndex: selectOrdersLastElemIndex(state, 25),
-    nextPageExists: selectOrdersNextPageExists(state, 25),
+    nextPageExists: selectOrdersNextPageExists(state),
     cancelAllFetching: selectCancelAllFetching(state),
     cancelFetching: selectCancelFetching(state),
 });
@@ -222,4 +223,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         userOrdersHistoryFetch: payload => dispatch(userOrdersHistoryFetch(payload)),
     });
 
-export const OrdersElement = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrdersComponent));
+export const OrdersElement = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(OrdersComponent) as any; // tslint:disable-line

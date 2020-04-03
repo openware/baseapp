@@ -58,14 +58,19 @@ describe('Orders History', () => {
         },
     ];
 
-    const fakeFetchPayloadFirstPage = { pageIndex: 0, type: 'all', limit: 25 };
+    const fakeFetchPayloadFirstPage = {
+        pageIndex: 0,
+        type: 'all',
+        limit: 25,
+    };
     const fakeSuccessPayloadFirstPage = {
         list: fakeHistory.map(convertOrderAPI),
         pageIndex: 0,
+        nextPageExists: false,
     };
 
     const mockOrdersHistory = () => {
-        mockAxios.onGet(`/market/orders?limit=25&page=1`).reply(200, fakeHistory);
+        mockAxios.onGet(`/market/orders?page=1&limit=25`).reply(200, fakeHistory);
     };
 
     const expectedActionsFetchWithFirstPage = [
