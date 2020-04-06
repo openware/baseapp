@@ -7,4 +7,5 @@ export interface IdentityData {
     city: string;
     country: string;
     metadata: string;
+    confirm?: boolean;
 }

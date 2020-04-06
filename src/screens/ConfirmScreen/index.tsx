@@ -52,19 +52,28 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
     }
 
     public componentDidMount() {
+        const { labels, userData } = this.props;
+
         setDocumentTitle('Confirm');
         this.props.labelFetch();
-        const { userData } = this.props;
         this.setState({
             level: userData.level,
         });
+
+        this.handleCheckPendingLabel(labels);
     }
 
     public componentWillReceiveProps(next: Props) {
+        const { labels } = this.props;
+
         if (next.userData.level !== this.state.level) {
             this.setState({
                 level: next.userData.level,
             });
+        }
+
+        if (next.labels && JSON.stringify(next.labels) !== JSON.stringify(labels)) {
+            this.handleCheckPendingLabel(next.labels);
         }
     }
 
@@ -78,13 +87,17 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
             userData,
             labels,
         } = this.props;
-        const isIdentity = labels.find(w => w.key === 'profile' && w.value === 'verified');
+        const isProfileVerified = labels.length && labels.find(l => l.key === 'profile' && l.value === 'verified' && l.scope === 'private');
         const currentProfileLevel = userData.level;
         const cx = classnames('pg-confirm__progress-items', {
             'pg-confirm__progress-first': currentProfileLevel === 1,
-            'pg-confirm__progress-second': currentProfileLevel === 2 && !isIdentity,
-            'pg-confirm__progress-third': currentProfileLevel === 3 || isIdentity,
+            'pg-confirm__progress-second': currentProfileLevel === 2 && !isProfileVerified,
+            'pg-confirm__progress-third': currentProfileLevel === 2 && isProfileVerified,
         });
+
+        if (currentProfileLevel === 3) {
+            this.handleRedirectToProfile();
+        }
 
         return (
             <div className="pg-wrapper">
@@ -118,7 +131,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                             </div>
                         </div>
                         <div className="pg-confirm__content">
-                            {this.renderContent()}
+                            {this.renderContent(isProfileVerified)}
                         </div>
                     </div>
                 </div>
@@ -127,16 +140,27 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
     }
     //tslint:enable:jsx-no-multiline-js
 
-    private renderContent = () => {
-        const { labels } = this.props;
+    private renderContent = (isProfileVerified: boolean) => {
         const { level } = this.state;
-        const isIdentity = labels.find(w => w.key === 'profile' && w.value === 'verified');
 
         switch (level) {
             case 1: return <Phone />;
-            case 2: return isIdentity ? <Documents /> : <Identity />;
+            case 2: return isProfileVerified ? <Documents /> : <Identity />;
             case 3: return <Documents />;
             default: return 'Something went wrong';
+        }
+    };
+
+    private handleRedirectToProfile = () => {
+        this.props.history.push('/profile');
+    };
+
+    private handleCheckPendingLabel = (labels: Label[]) => {
+        const isProfileSubmitted = labels.length && labels.find(l => l.key === 'profile' && l.value === 'submitted' && l.scope === 'private');
+        const isDocumentPending = labels.length && labels.find(l => l.key === 'document' && l.value === 'pending' && l.scope === 'private');
+
+        if (isProfileSubmitted || isDocumentPending) {
+            this.handleRedirectToProfile();
         }
     };
 }
