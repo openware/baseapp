@@ -9,12 +9,10 @@ import { languages } from '../../../api/config';
 import { CustomInput, DropdownComponent } from '../../../components';
 import { formatDate, isDateInFuture } from '../../../helpers';
 import {
-    editIdentity,
     Label,
     labelFetch,
     RootState,
     selectCurrentLanguage,
-    selectEditIdentitySuccess,
     selectLabelData,
     selectSendIdentitySuccess,
     selectUserInfo,
@@ -26,7 +24,6 @@ import { nationalities } from '../../../translations/nationalities';
 import * as countries from 'i18n-iso-countries';
 
 interface ReduxProps {
-    editSuccess?: string;
     sendSuccess?: string;
     lang: string;
     labels: Label[];
@@ -34,7 +31,6 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    editIdentity: typeof editIdentity;
     sendIdentity: typeof sendIdentity;
     labelFetch: typeof labelFetch;
 }
@@ -91,22 +87,15 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     };
 
     public componentDidUpdate(prev: Props) {
-        const {
-            editSuccess,
-            sendSuccess,
-        } = this.props;
+        const { sendSuccess } = this.props;
 
-        if ((!prev.editSuccess && editSuccess) || (!prev.sendSuccess && sendSuccess)) {
+        if (!prev.sendSuccess && sendSuccess) {
             this.props.labelFetch();
         }
     }
 
     public render() {
-        const {
-            editSuccess,
-            sendSuccess,
-            lang,
-        } = this.props;
+        const { sendSuccess, lang } = this.props;
         const {
             city,
             dateOfBirth,
@@ -283,8 +272,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     </div>
                 </div>
               </div>
-              {sendSuccess && !editSuccess && <p className="pg-confirm__success">{this.translate(sendSuccess)}</p>}
-              {editSuccess && !sendSuccess && <p className="pg-confirm__success">{this.translate(editSuccess)}</p>}
+              {sendSuccess && <p className="pg-confirm__success">{this.translate(sendSuccess)}</p>}
               <div className="pg-confirm__content-deep">
                     <Button
                         onClick={this.sendData}
@@ -448,7 +436,6 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     };
 
     private sendData = () => {
-        const { labels, user } = this.props;
         const dob = !isDateInFuture(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
         const profileInfo = {
             first_name: this.state.firstName,
@@ -461,19 +448,14 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             metadata: JSON.stringify({
                 nationality: this.state.metadata.nationality,
             }),
+            confirm: true,
         };
-        const isIdentity = labels.length && labels.find(w => w.key === 'profile' && w.value === 'verified' && w.scope === 'private');
 
-        if (!isIdentity && user.profile && user.profile.address) {
-            this.props.editIdentity(profileInfo);
-        } else {
-            this.props.sendIdentity(profileInfo);
-        }
+        this.props.sendIdentity(profileInfo);
     };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    editSuccess: selectEditIdentitySuccess(state),
     sendSuccess: selectSendIdentitySuccess(state),
     lang: selectCurrentLanguage(state),
     labels: selectLabelData(state),
@@ -482,7 +464,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        editIdentity: payload => dispatch(editIdentity(payload)),
         sendIdentity: payload => dispatch(sendIdentity(payload)),
         labelFetch: () => dispatch(labelFetch()),
     });
