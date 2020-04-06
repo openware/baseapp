@@ -7,15 +7,7 @@ import {
     PROFILE_GENERATE_2FA_QRCODE_DATA,
     PROFILE_GENERATE_2FA_QRCODE_ERROR,
     PROFILE_GENERATE_2FA_QRCODE_FETCH,
-    PROFILE_IDENTITY_DATA,
-    PROFILE_IDENTITY_ERROR,
-    PROFILE_IDENTITY_FETCH,
     PROFILE_RESET_USER,
-    PROFILE_TEST_STATE,
-    PROFILE_TIERS_DATA,
-    PROFILE_TIERS_DISABLE,
-    PROFILE_TIERS_ERROR,
-    PROFILE_TIERS_FETCH,
     PROFILE_TOGGLE_2FA_DATA,
     PROFILE_TOGGLE_2FA_ERROR,
     PROFILE_TOGGLE_2FA_FETCH,
@@ -24,34 +16,7 @@ import {
     PROFILE_USER_ERROR,
     PROFILE_USER_FETCH,
 } from './constants';
-
-export interface Tier {
-    color: string;
-    name: string;
-    min_holding: number;
-    fee_discount: number;
-}
-
-export interface User {
-    email: string;
-    level: number;
-    otp: boolean;
-    role: string;
-    state: string;
-    uid: string;
-    csrf_token?: string;
-}
-
-export interface ProfileIdentity {
-  first_name: string;
-  last_name: string;
-  dob: string;
-  address: string;
-  postcode: string;
-  city: string;
-  country: string;
-  number: string;
-}
+import { User } from './types';
 
 export interface ChangePasswordFetch {
     type: typeof PROFILE_CHANGE_PASSWORD_FETCH;
@@ -105,28 +70,6 @@ export interface Generate2faQRError {
     payload: CommonError;
 }
 
-export interface TiersFetch {
-    type: typeof PROFILE_TIERS_FETCH;
-    payload: {
-        uid: string;
-        currency: string;
-    };
-}
-
-export interface TiersData {
-    type: typeof PROFILE_TIERS_DATA;
-    payload: Tier;
-}
-
-export interface TiersError {
-    type: typeof PROFILE_TIERS_ERROR;
-    payload: CommonError;
-}
-
-export interface TiersDisable {
-    type: typeof PROFILE_TIERS_DISABLE;
-}
-
 export interface UserFetch {
     type: typeof PROFILE_USER_FETCH;
 }
@@ -147,29 +90,11 @@ export interface UserReset {
     type: typeof PROFILE_RESET_USER;
 }
 
-export interface TestProfileState {
-    type: typeof PROFILE_TEST_STATE;
-}
-
 export interface ChangeUserLevel {
     type: typeof PROFILE_CHANGE_USER_LEVEL;
     payload: {
         level: number;
     };
-}
-
-export interface ProfileIdentityFetch {
-    type: typeof PROFILE_IDENTITY_FETCH;
-}
-
-export interface ProfileIdentityInfo {
-    type: typeof PROFILE_IDENTITY_DATA;
-    payload: ProfileIdentity;
-}
-
-export interface ProfileIdentityError {
-    type: typeof PROFILE_IDENTITY_ERROR;
-    payload: CommonError;
 }
 
 export interface ToggleUser2fa {
@@ -186,20 +111,12 @@ export type ProfileAction =
     | Generate2faQRFetch
     | Generate2faQRData
     | Generate2faQRError
-    | TiersFetch
-    | TiersData
-    | TiersError
-    | TiersDisable
     | UserFetch
     | UserInfo
     | UserError
     | UserReset
-    | TestProfileState
     | ChangeUserLevel
-    | ToggleUser2fa
-    | ProfileIdentityFetch
-    | ProfileIdentityInfo
-    | ProfileIdentityError;
+    | ToggleUser2fa;
 
 export const changePasswordFetch = (payload: ChangePasswordFetch['payload']): ChangePasswordFetch => ({
     type: PROFILE_CHANGE_PASSWORD_FETCH,
@@ -243,25 +160,6 @@ export const generate2faQRError = (payload: Generate2faQRError['payload']): Gene
     payload,
 });
 
-export const tiersFetch = (payload: TiersFetch['payload']): TiersFetch => ({
-    type: PROFILE_TIERS_FETCH,
-    payload,
-});
-
-export const tiersData = (payload: TiersData['payload']): TiersData => ({
-    type: PROFILE_TIERS_DATA,
-    payload,
-});
-
-export const tiersError = (payload: TiersError['payload']): TiersError => ({
-    type: PROFILE_TIERS_ERROR,
-    payload,
-});
-
-export const tiersDisable = (): TiersDisable => ({
-    type: PROFILE_TIERS_DISABLE,
-});
-
 export const userFetch = (): UserFetch => ({
     type: PROFILE_USER_FETCH,
 });
@@ -289,17 +187,3 @@ export const changeUserLevel =
 export const toggleUser2fa = (): ToggleUser2fa => ({
         type: PROFILE_TOGGLE_USER_2FA,
     });
-
-export const profileIdentityFetch = (): ProfileIdentityFetch => ({
-    type: PROFILE_IDENTITY_FETCH,
-});
-
-export const profileIdentityData = (payload: ProfileIdentityInfo['payload']): ProfileIdentityInfo => ({
-    type: PROFILE_IDENTITY_DATA,
-    payload,
-});
-
-export const profileIdentityError = (payload: ProfileIdentityError['payload']): ProfileIdentityError => ({
-    type: PROFILE_IDENTITY_ERROR,
-    payload,
-});

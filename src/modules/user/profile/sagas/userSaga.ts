@@ -13,10 +13,7 @@ const userOptions: RequestOptions = {
 export function* userSaga() {
     try {
         const user = yield call(API.get(userOptions), '/resource/users/me');
-        const payload = {
-            user: user,
-        };
-        yield put(userData(payload));
+        yield put(userData({ user }));
     } catch (error) {
         yield put(userError(error));
     }
