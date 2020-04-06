@@ -11,34 +11,16 @@ import { Sun } from '../../assets/images/Sun';
 import { colors } from '../../constants';
 import {
     changeColorTheme,
-    changeLanguage,
-    logoutFetch,
-    Market,
     RootState,
     selectCurrentColorTheme,
-    selectCurrentLanguage,
-    selectCurrentMarket,
-    selectUserInfo,
-    selectUserLoggedIn,
-    User,
-    walletsReset,
 } from '../../modules';
 
 export interface ReduxProps {
     colorTheme: string;
-    currentMarket: Market | undefined;
-    address: string;
-    isLoggedIn: boolean;
-    lang: string;
-    success?: boolean;
-    user: User;
 }
 
 interface DispatchProps {
     changeColorTheme: typeof changeColorTheme;
-    changeLanguage: typeof changeLanguage;
-    logout: typeof logoutFetch;
-    walletsReset: typeof walletsReset;
 }
 
 export interface OwnProps {
@@ -46,30 +28,10 @@ export interface OwnProps {
     history: History;
 }
 
-type NavbarProps = OwnProps & ReduxProps & RouteProps & DispatchProps;
-
-interface NavbarState {
-    isOpen: boolean;
-    isOpenLanguage: boolean;
-    email: string;
-    message: string;
-    name: string;
-    recaptchaResponse: string;
-    errorModal: boolean;
-}
+type Props = OwnProps & ReduxProps & RouteProps & DispatchProps;
 
 // tslint:disable:jsx-no-lambda
-class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
-    public readonly state = {
-        isOpen: false,
-        isOpenLanguage: false,
-        email: '',
-        name: '',
-        message: '',
-        recaptchaResponse: '',
-        errorModal: false,
-    };
-
+class NavBarComponent extends React.Component<Props> {
     public render() {
         const { colorTheme } = this.props;
 
@@ -125,24 +87,12 @@ class NavBarComponent extends React.Component<NavbarProps, NavbarState> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
     (state: RootState): ReduxProps => ({
         colorTheme: selectCurrentColorTheme(state),
-        currentMarket: selectCurrentMarket(state),
-        address: '',
-        lang: selectCurrentLanguage(state),
-        user: selectUserInfo(state),
-        isLoggedIn: selectUserLoggedIn(state),
     });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         changeColorTheme: payload => dispatch(changeColorTheme(payload)),
-        changeLanguage: payload => dispatch(changeLanguage(payload)),
-        logout: () => dispatch(logoutFetch()),
-        walletsReset: () => dispatch(walletsReset()),
     });
 
 // tslint:disable-next-line:no-any
-const NavBar = withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBarComponent) as any) as any;
-
-export {
-    NavBar,
-};
+export const NavBar = withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBarComponent) as any) as any;

@@ -34,6 +34,8 @@ describe('SignIn saga', () => {
         level: 3,
         otp: false,
         state: 'active',
+        profiles: [],
+        documents: [],
     };
 
     const mockSignIn = () => {

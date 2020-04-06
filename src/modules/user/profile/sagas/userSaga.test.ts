@@ -37,6 +37,8 @@ describe('Module: User', () => {
         level: 3,
         otp: false,
         state: 'active',
+        profiles: [],
+        documents: [],
     };
 
     const mockUser = () => {

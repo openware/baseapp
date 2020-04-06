@@ -10,23 +10,12 @@ export const PROFILE_GENERATE_2FA_QRCODE_FETCH = 'profile/GENERATE_2FA_QRCODE_FE
 export const PROFILE_GENERATE_2FA_QRCODE_DATA = 'profile/GENERATE_2FA_QRCODE_DATA';
 export const PROFILE_GENERATE_2FA_QRCODE_ERROR = 'profile/GENERATE_2FA_QRCODE_ERROR';
 
-export const PROFILE_TIERS_FETCH = 'profile/TIERS_FETCH';
-export const PROFILE_TIERS_DATA = 'profile/TIERS_DATA';
-export const PROFILE_TIERS_ERROR = 'profile/TIERS_ERROR';
-export const PROFILE_TIERS_DISABLE = 'profile/TIERS_DISABLE';
-
 export const PROFILE_USER_FETCH = 'profile/GET_USER_FETCH';
 export const PROFILE_USER_DATA = 'profile/GET_USER_DATA';
 export const PROFILE_USER_ERROR = 'profile/GET_USER_ERROR';
 export const PROFILE_USER_ACTIVITY = 'profile/GET_USER_ACTIVITY';
 export const PROFILE_RESET_USER = 'profile/RESET_USER';
 
-export const PROFILE_TEST_STATE = 'profile/TEST_PROFILE_STATE';
-
 export const PROFILE_CHANGE_USER_LEVEL = 'profile/CHANGE_USER_LEVEL';
 
 export const PROFILE_TOGGLE_USER_2FA = 'profile/TOGGLE_USER_2FA';
-
-export const PROFILE_IDENTITY_FETCH = 'profile/GET_IDENTITY_FETCH';
-export const PROFILE_IDENTITY_DATA = 'profile/GET_IDENTITY_DATA';
-export const PROFILE_IDENTITY_ERROR = 'profile/GET_IDENTITY_ERROR';
