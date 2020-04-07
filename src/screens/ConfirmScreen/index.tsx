@@ -4,6 +4,7 @@ import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { Phone } from '../../containers';
@@ -138,7 +139,6 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
             </div>
         );
     }
-    //tslint:enable:jsx-no-multiline-js
 
     private renderContent = (isProfileVerified: boolean) => {
         const { level } = this.state;
@@ -175,5 +175,8 @@ const mapDispatchToProps = dispatch => ({
     labelFetch: () => dispatch(labelFetch()),
 });
 
-// tslint:disable-next-line
-export const ConfirmScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(ConfirmComponent) as any));
+export const ConfirmScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(ConfirmComponent) as any; // tslint:disable-line

@@ -45,7 +45,6 @@ const defaultUser = {
     state: '',
     uid: '',
     profiles: [],
-    documents: [],
 };
 
 export const initialStateProfile: ProfileState = {

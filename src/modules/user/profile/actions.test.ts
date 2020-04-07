@@ -23,7 +23,6 @@ describe('Profile actions', () => {
                     otp: false,
                     state: 'active',
                     profiles: [],
-                    documents: [],
                     csrf_token: '31415926535897932384626433832795028841971',
                 },
             };

@@ -6,6 +6,7 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { RouteProps, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { Moon } from '../../assets/images/Moon';
 import { Sun } from '../../assets/images/Sun';
 import { colors } from '../../constants';
@@ -30,7 +31,6 @@ export interface OwnProps {
 
 type Props = OwnProps & ReduxProps & RouteProps & DispatchProps;
 
-// tslint:disable:jsx-no-lambda
 class NavBarComponent extends React.Component<Props> {
     public render() {
         const { colorTheme } = this.props;
@@ -94,5 +94,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         changeColorTheme: payload => dispatch(changeColorTheme(payload)),
     });
 
-// tslint:disable-next-line:no-any
-export const NavBar = withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBarComponent) as any) as any;
+export const NavBar = compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(NavBarComponent) as any; // tslint:disable-line

@@ -67,7 +67,6 @@ export class SignInComponent extends React.Component<SignInProps> {
             </h1>
         ) : null;
 
-        // tslint:disable:jsx-no-lambda
         return (
             <form>
                 <div className="cr-sign-in-form" onKeyPress={this.handleEnterPress}>
@@ -137,7 +136,6 @@ export class SignInComponent extends React.Component<SignInProps> {
                 </div>
             </form>
         );
-        // tslint:enable:jsx-no-lambda
     }
 
     private handleChangeEmail = (value: string) => {
