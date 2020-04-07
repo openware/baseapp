@@ -74,29 +74,5 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
             "updated_at": "2019-05-16T14:01:49Z"
         }
     ],
-    "phones": "+380501823918",
-    "documents":[
-        {
-            "upload": {
-                "url": "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzEwNC84MTkvb3JpZ2luYWwvY3V0ZS1raXR0ZW4uanBn"
-            },
-            "doc_type": "Driver license",
-            "doc_number": "343434",
-            "doc_expire":"3030-12-30",
-            "metadata":null,
-            "created_at":"2019-03-14T10:17:50Z",
-            "updated_at":"2019-03-14T10:17:50Z"
-        },
-        {
-            "upload":{
-                "url": "https://cdn1us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/2019/02/captain-marvel-cat-goose.jpg?itok=adx00vhf"
-            },
-            "doc_type":"Identity card",
-            "doc_number":"123",
-            "doc_expire":"2020-12-22",
-            "metadata":null,
-            "created_at":"2019-03-30T23:43:47Z",
-            "updated_at":"2019-03-30T23:43:47Z"
-        }
-    ]
+    "phones": "+380501823918"
 }
