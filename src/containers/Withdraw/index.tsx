@@ -1,4 +1,3 @@
-// tslint:disable:jsx-no-lambda
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';

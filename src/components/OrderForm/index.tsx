@@ -8,7 +8,6 @@ import { OrderProps } from '../Order';
 import { OrderInput } from '../OrderInput';
 import { PercentageButton } from '../PercentageButton';
 
-// tslint:disable:no-magic-numbers jsx-no-lambda jsx-no-multiline-js
 type OnSubmitCallback = (order: OrderProps) => void;
 type DropdownElem = number | string | React.ReactNode;
 type FormType = 'buy' | 'sell';

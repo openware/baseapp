@@ -34,7 +34,6 @@ class AlertComponent extends React.Component<Props> {
         return id ? this.props.intl.formatMessage({ id }) : '';
     };
 
-    // tslint:disable:jsx-no-lambda
     public render() {
         return (
             <div className="pg-alerts">

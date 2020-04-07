@@ -38,7 +38,6 @@ describe('Module: User', () => {
         otp: false,
         state: 'active',
         profiles: [],
-        documents: [],
     };
 
     const mockUser = () => {

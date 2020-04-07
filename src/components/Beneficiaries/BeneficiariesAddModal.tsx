@@ -84,7 +84,6 @@ const defaultState = {
     fiatIntermediaryBankSwiftCodeFocused: false,
 };
 
-// tslint:disable:jsx-no-lambda
 class BeneficiariesAddModalComponent extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);

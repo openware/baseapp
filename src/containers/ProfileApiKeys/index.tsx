@@ -50,7 +50,6 @@ interface ProfileApiKeysState {
 
 type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
-// tslint:disable jsx-no-multiline-js jsx-no-lambda
 class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState> {
     public state = {
         otpCode: '',
