@@ -39,7 +39,28 @@
 
       p {
         color: var(--system-yellow);
+        margin-block-end: 0;
+        margin-block-start: 0;
         margin-right: calc(var(--gap) * 2);
+      }
+    }
+
+    &__rejected {
+      align-items: center;
+      display: flex;
+      margin-bottom: calc(var(--gap) * 2);
+
+      p {
+        color: var(--system-red);
+        margin-block-end: 0;
+        margin-block-start: 0;
+        margin-right: calc(var(--gap) * 2);
+      }
+
+      svg {
+        height: 16px;
+        margin-right: 12px;
+        width: 16px;
       }
     }
   }
@@ -596,7 +617,7 @@
       font-size: calc(var(--font-size) * 2.5);
       position: absolute;
       right: 10px;
-      top: calc(var(--gap) * 0.83);
+      top: 0;
     }
   }
 
