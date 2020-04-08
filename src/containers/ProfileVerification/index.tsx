@@ -130,37 +130,41 @@ class ProfileVerificationComponent extends React.Component<Props> {
 
         if (labels.length) {
             switch (userLevel) {
-            case targetLevel - 1: {
-                if (isPendingLabel) {
+                case targetLevel - 1: {
+                    if (isPendingLabel) {
+                        return (
+                            <p className="pg-profile-page__level-verification__name">
+                                <FormattedMessage id={`${text}.unverified.title`}/>
+                            </p>
+                        );
+                    } else {
+                        return (
+                            <a href="/confirm" className="pg-profile-page__level-verification__url">
+                                <FormattedMessage id={`${text}.unverified.title`}/>
+                            </a>
+                        );
+                    }
+                }
+                case targetLevel: {
+                    return (
+                        <p className="pg-profile-page__level-verification__name">
+                            <FormattedMessage id={`${text}.title`}/>
+                        </p>
+                    );
+                }
+                default: {
                     return (
                         <p className="pg-profile-page__level-verification__name">
                             <FormattedMessage id={`${text}.unverified.title`}/>
                         </p>
                     );
-                } else {
-                    return (
-                        <a href="/confirm" className="pg-profile-page__level-verification__url">
-                            <FormattedMessage id={`${text}.unverified.title`}/>
-                        </a>
-                    );
                 }
-            }
-            case targetLevel: return (
-                <p className="pg-profile-page__level-verification__name">
-                <FormattedMessage id={`${text}.title`}/>
-                </p>
-            );
-            default: return(
-                <p className="pg-profile-page__level-verification__name">
-                <FormattedMessage id={`${text}.unverified.title`}/>
-                </p>
-            );
             }
         } else {
             return (
-            <p className="pg-profile-page__level-verification__name">
-                <FormattedMessage id={`${text}.unverified.title`}/>
-            </p>
+                <p className="pg-profile-page__level-verification__name">
+                    <FormattedMessage id={`${text}.unverified.title`}/>
+                </p>
             );
         }
     }
