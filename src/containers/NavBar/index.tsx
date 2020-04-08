@@ -1,11 +1,9 @@
-import { History } from 'history';
 import * as React from 'react';
 import {
     connect,
     MapDispatchToPropsFunction,
     MapStateToProps,
 } from 'react-redux';
-import { RouteProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { Moon } from '../../assets/images/Moon';
 import { Sun } from '../../assets/images/Sun';
@@ -26,10 +24,9 @@ interface DispatchProps {
 
 export interface OwnProps {
     onLinkChange?: () => void;
-    history: History;
 }
 
-type Props = OwnProps & ReduxProps & RouteProps & DispatchProps;
+type Props = OwnProps & ReduxProps & DispatchProps;
 
 class NavBarComponent extends React.Component<Props> {
     public render() {
@@ -95,6 +92,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 export const NavBar = compose(
-    withRouter,
     connect(mapStateToProps, mapDispatchToProps),
 )(NavBarComponent) as any; // tslint:disable-line
