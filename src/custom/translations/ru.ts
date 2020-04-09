@@ -491,15 +491,15 @@ export const ru: LangType = {
 
 
     /* Customization */
-    'page.body.customization.tabs.themes': 'Colors',
-    'page.body.customization.tabs.fonts': 'Fonts',
-    'page.body.customization.tabs.spacing': 'Spacing',
-    'page.body.customization.tabs.images': 'Images',
-    'page.body.customization.comingSoon': 'Coming Soon',
-    'page.body.customization.actionButtons.reset': 'Reset',
-    'page.body.customization.actionButtons.save': 'Save',
+    'page.body.customization.tabs.themes': 'Цвета',
+    'page.body.customization.tabs.fonts': 'Шрифты',
+    'page.body.customization.tabs.spacing': 'Отступы',
+    'page.body.customization.tabs.images': 'Изображения',
+    'page.body.customization.comingSoon': 'В разработке',
+    'page.body.customization.actionButtons.reset': 'Сбросить',
+    'page.body.customization.actionButtons.save': 'Сохранить',
 
-    'page.body.customization.themes.selector.label': 'Theme Presets',
+    'page.body.customization.themes.selector.label': 'Готовые темы',
 
     'page.body.customization.themes.color.mainBackgroundColor': 'Main background',
     'page.body.customization.themes.color.bodyBackgroundColor': 'Body background',
@@ -524,10 +524,10 @@ export const ru: LangType = {
     'page.body.customization.themes.color.landingBackgroundColor': 'Landing background',
     'page.body.customization.themes.color.strengthMeterVeryStrong': 'Password very strong',
 
-    'page.body.customization.themes.theme.darkBlue.title': 'Dark blue',
-    'page.body.customization.themes.theme.darkRed.title': 'Dark red',
-    'page.body.customization.themes.theme.purple.title': 'Purple',
-    'page.body.customization.themes.theme.green.title': 'Green',
+    'page.body.customization.themes.theme.darkBlue.title': 'Тёмно-синяя',
+    'page.body.customization.themes.theme.darkRed.title': 'Тёмно-красная',
+    'page.body.customization.themes.theme.purple.title': 'Фиолетовая',
+    'page.body.customization.themes.theme.green.title': 'Зелёная',
 
 
     // success messages
