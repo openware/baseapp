@@ -527,6 +527,14 @@ export const en = {
     'page.body.customization.themes.theme.purple.title': 'Purple',
     'page.body.customization.themes.theme.green.title': 'Green',
 
+    'page.body.customization.images.field.width.label': 'Image width',
+    'page.body.customization.images.field.width.placeholder': 'Only number (px)',
+    'page.body.customization.images.field.url.label': 'Image url',
+    'page.body.customization.images.field.url.placeholder': 'https://yourimage',
+
+    'page.body.customization.images.header_logo.title': 'Header logo',
+    'page.body.customization.images.footer_logo.title': 'Footer logo',
+
 
     // success messages
     'success.documents.accepted': 'Documents upload was successful',

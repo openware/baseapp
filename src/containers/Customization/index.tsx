@@ -81,7 +81,15 @@ class CustomizationContainer extends React.Component<Props, State> {
                 label: this.translate('page.body.customization.tabs.spacing'),
             },
             {
-                content: currentTabIndex === 3 ? <CustomizationImages translate={this.translate} /> : null,
+                content: currentTabIndex === 3 ? (
+                    <CustomizationImages
+                        translate={this.translate}
+                        customization={customization}
+                        resetToDefault={resetToDefault}
+                        handleSetCurrentCustomization={this.handleSetCurrentCustomization}
+                        currentCustomization={currentCustomization}
+                    />
+                ) : null,
                 label: this.translate('page.body.customization.tabs.images'),
             },
         ];

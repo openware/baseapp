@@ -5,10 +5,14 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import {
+    CustomizationCurrentDataInterface,
+    CustomizationDataInterface,
     Market,
     RootState,
     selectCurrentColorTheme,
     selectCurrentMarket,
+    selectCustomizationCurrent,
+    selectCustomizationData,
     selectMarketSelectorState,
     selectMobileWalletUi,
     selectSidebarState,
@@ -25,6 +29,8 @@ interface ReduxProps {
     mobileWallet: string;
     sidebarOpened: boolean;
     marketSelectorOpened: boolean;
+    currentCustomization?: CustomizationCurrentDataInterface;
+    customization?: CustomizationDataInterface;
 }
 
 interface DispatchProps {
@@ -41,9 +47,11 @@ type Props = ReduxProps & HistoryProps & DispatchProps & InjectedIntlProps;
 
 class Head extends React.Component<Props> {
     public render() {
-        const {mobileWallet } = this.props;
+        const { currentCustomization, mobileWallet } = this.props;
         const tradingCls = window.location.pathname.includes('/trading') ? 'pg-container-trading' : '';
         const shouldRenderHeader = !['/confirm'].some(r => window.location.pathname.includes(r)) && window.location.pathname !== '/';
+        const inputUrl = this.getCustomizationPropertyByKey('header_logo_url', currentCustomization);
+        const imageWidth = this.getCustomizationPropertyByKey('header_logo_width', currentCustomization);
 
         return (
             <React.Fragment>
@@ -59,8 +67,16 @@ class Head extends React.Component<Props> {
                             <span className="pg-sidebar__toggler-item"/>
                         </div>
                         <div onClick={e => this.redirectToLanding()} className="pg-header__logo">
-                            <div className="pg-logo">
-                                <LogoIcon className="pg-logo__img" />
+                            <div className="pg-logo" style={{ maxWidth: imageWidth ? `${imageWidth}px` : 'auto'}}>
+                                {inputUrl ? (
+                                    <img
+                                        src={inputUrl}
+                                        alt="Header logo"
+                                        className="pg-logo__img"
+                                    />
+                                ) : (
+                                    <LogoIcon className="pg-logo__img" />
+                                )}
                             </div>
                         </div>
                         {this.renderMarketToggler()}
@@ -127,6 +143,14 @@ class Head extends React.Component<Props> {
         this.props.history.push('/');
     };
 
+    private getCustomizationPropertyByKey = (targetElement: string, currentCustomization?: CustomizationCurrentDataInterface) => {
+        if (currentCustomization && currentCustomization[targetElement]) {
+            return currentCustomization[targetElement];
+        }
+
+        return '';
+    };
+
     private openSidebar = () => this.props.toggleSidebar(!this.props.sidebarOpened);
 
     private backWallets = () => this.props.setMobileWalletUi('');
@@ -140,6 +164,8 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     mobileWallet: selectMobileWalletUi(state),
     sidebarOpened: selectSidebarState(state),
     marketSelectorOpened: selectMarketSelectorState(state),
+    currentCustomization: selectCustomizationCurrent(state),
+    customization: selectCustomizationData(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
