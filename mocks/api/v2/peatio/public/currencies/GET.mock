@@ -18,6 +18,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.01",
     "withdraw_limit_24h": "0.1",
     "withdraw_limit_72h": "0.2",
+    "deposit_enabled": true,
+    "withdrawal_enabled": true,
     "base_factor": 100000000,
     "precision": 8
   },
@@ -33,6 +35,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.005",
     "withdraw_limit_24h": "0.1",
     "withdraw_limit_72h": "0.2",
+    "deposit_enabled": true,
+    "withdrawal_enabled": true,
     "base_factor": 100000000,
     "precision": 8
   },
@@ -48,6 +52,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.01",
     "withdraw_limit_24h": "0.2",
     "withdraw_limit_72h": "0.5000000000000001",
+    "deposit_enabled": false,
+    "withdrawal_enabled": false,
     "base_factor": 100000000,
     "precision": 8
   },
@@ -63,6 +69,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.02",
     "withdraw_limit_24h": "0.2",
     "withdraw_limit_72h": "0.5000000000000001",
+    "deposit_enabled": true,
+    "withdrawal_enabled": true,
     "base_factor": 1e+18,
     "precision": 8
   },
@@ -78,6 +86,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.01",
     "withdraw_limit_24h": "0.5000000000000001",
     "withdraw_limit_72h": "1.2",
+    "deposit_enabled": true,
+    "withdrawal_enabled": true,
     "base_factor": 100000000,
     "precision": 8
   },
@@ -93,6 +103,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.02",
     "withdraw_limit_24h": "300.0",
     "withdraw_limit_72h": "600.0",
+    "deposit_enabled": false,
+    "withdrawal_enabled": true,
     "base_factor": 1000000,
     "precision": 8
   },
@@ -106,6 +118,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.01",
     "withdraw_limit_24h": "100.0",
     "withdraw_limit_72h": "200.0",
+    "deposit_enabled": true,
+    "withdrawal_enabled": true,
     "base_factor": 1,
     "precision": 2
   },
@@ -121,6 +135,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.02",
     "withdraw_limit_24h": "100.0",
     "withdraw_limit_72h": "200.0",
+    "deposit_enabled": true,
+    "withdrawal_enabled": false,
     "base_factor": 1000000,
     "precision": 8
   },
@@ -134,6 +150,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.02",
     "withdraw_limit_24h": "100.0",
     "withdraw_limit_72h": "200.0",
+    "deposit_enabled": true,
+    "withdrawal_enabled": false,
     "base_factor": 1,
     "precision": 2
    },
@@ -147,6 +165,8 @@ Access-Control-Allow-Credentials: true
     "withdraw_fee": "0.02",
     "withdraw_limit_24h": "2000.0",
     "withdraw_limit_72h": "1000000.0",
+    "deposit_enabled": false,
+    "withdrawal_enabled": false,
     "base_factor": 1,
     "precision": 2
   }

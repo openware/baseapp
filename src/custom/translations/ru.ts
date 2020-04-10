@@ -148,6 +148,7 @@ export const ru: LangType = {
     'page.body.wallets.locked': 'В ордерах',
     'page.body.wallets.balance': 'Баланс',
     'page.body.wallets.tabs.deposit': 'Пополнить',
+    'page.body.wallets.tabs.deposit.disabled.message': 'Депозит был отключен администрацией',
     'page.body.wallets.tabs.deposit.ccy.message.submit': 'Пожалуйста, внесите депозитный платеж. Ваш депозит будет доступен после 6 подтверждений',
     'page.body.wallets.tabs.deposit.ccy.message.address': 'Пополнить кошелек',
     'page.body.wallets.tabs.deposit.ccy.message.button': 'Копировать',
@@ -174,6 +175,8 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.content.fee': 'Комиссия',
     'page.body.wallets.tabs.withdraw.content.total': 'Сумма вывода',
     'page.body.wallets.tabs.withdraw.content.button': 'ВЫВЕСТИ',
+
+    'page.body.wallets.tabs.withdraw.disabled.message': 'Вывод средств был отключен администрацией',
 
     'page.body.wallets.tabs.withdraw.modal.confirmation': 'Подтверждение',
     'page.body.wallets.tabs.withdraw.modal.message1': 'Вы получите ',

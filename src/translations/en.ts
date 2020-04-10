@@ -149,6 +149,7 @@ export const en = {
     'page.body.wallets.locked': 'Locked',
     'page.body.wallets.balance': 'Balance',
     'page.body.wallets.tabs.deposit': 'Deposit',
+    'page.body.wallets.tabs.deposit.disabled.message': 'Deposit was disabled by administration',
     'page.body.wallets.tabs.deposit.ccy.message.submit': 'Submit a deposit using the following address or QR code. Your deposit will be reflected in your account after {confirmations} confirmations',
     'page.body.wallets.tabs.deposit.ccy.message.address': 'Deposit Address',
     'page.body.wallets.tabs.deposit.ccy.message.button': 'COPY',
@@ -174,6 +175,7 @@ export const en = {
     'page.body.wallets.tabs.withdraw.content.fee': 'Fee',
     'page.body.wallets.tabs.withdraw.content.total': 'Total Withdrawal Amount',
     'page.body.wallets.tabs.withdraw.content.button': 'WITHDRAW',
+    'page.body.wallets.tabs.withdraw.disabled.message': 'Withdraw was disabled by administration',
 
     'page.body.wallets.tabs.withdraw.modal.confirmation': 'Confirmation',
     'page.body.wallets.tabs.withdraw.modal.message1': 'You will receive ',
