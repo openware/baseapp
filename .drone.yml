@@ -62,6 +62,7 @@ trigger:
   branch:
     exclude:
     - master
+    - "2-*-stable"
 
 ---
 kind: pipeline
@@ -80,7 +81,7 @@ steps:
       - yarn test:ci --collectCoverage=true
 
   - name: "Bump & Tag"
-    image: quay.io/openware/sdk-citools:2.3.1
+    image: quay.io/openware/sdk-citools:2.4.5
     environment:
       BRANCH_NAME: ${DRONE_BRANCH}
       REPO_NAME: ${DRONE_REPO}
@@ -111,10 +112,13 @@ steps:
     commands:
       - export latest_image=$DOCKER_REPO:$(cat .tags)
       - cd /home/app
-      - bundle exec rake payload:send[frontend,$latest_image,http://master.devkube.com:1337]
+      - bundle exec rake payload:send[frontend,$latest_image,http://$DRONE_BRANCH.devkube.com:1337]
+    when:
+      branch:
+        - master
 
   - name: "Push and Notify"
-    image: quay.io/openware/sdk-citools:2.3.1
+    image: quay.io/openware/sdk-citools:2.4.5
     environment:
       BOT_USERNAME: kite-bot
       BOT_NAME: Kite Bot
@@ -137,10 +141,12 @@ steps:
     when:
       branch:
         - master
+        - "2-*-stable"
 
 trigger:
   branch:
   - master
+  - "2-*-stable"
   event:
   - push
 
