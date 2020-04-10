@@ -69,6 +69,8 @@ describe('Wallets', () => {
                 withdraw_fee: '0.0',
                 withdraw_limit_24h: '0.1',
                 withdraw_limit_72h: '0.2',
+                deposit_enabled: true,
+                withdrawal_enabled: true,
             },
             {
                 base_factor: 100000000,
@@ -84,6 +86,8 @@ describe('Wallets', () => {
                 withdraw_fee: '0.0',
                 withdraw_limit_24h: '0.1',
                 withdraw_limit_72h: '0.2',
+                deposit_enabled: true,
+                withdrawal_enabled: true,
             },
             {
                 base_factor: 1000000000000000000,
@@ -99,6 +103,8 @@ describe('Wallets', () => {
                 withdraw_fee: '0.0',
                 withdraw_limit_24h: '0.2',
                 withdraw_limit_72h: '0.5000000000000001',
+                deposit_enabled: true,
+                withdrawal_enabled: true,
             },
         ];
 
