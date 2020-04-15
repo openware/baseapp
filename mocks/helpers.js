@@ -76,12 +76,12 @@ const Helpers = {
 
       if (Math.random() < 0.5) {
         return {
-          "asks": ["15.0", fV("1.5")],
+          "asks": [Math.random() * 13, fV(Math.random() * 5)],
           "sequence": sequence,
         }
       }
       return {
-        "bids": ["10.95", fV("1.5")],
+        "bids": [Math.random() * 13, fV(Math.random() * 5)],
         "sequence": sequence,
       }
     },

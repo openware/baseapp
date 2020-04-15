@@ -178,8 +178,8 @@ class RangerMock {
     ws.timers.push(setInterval(balancesMock(ws), 3000));
     this.markets.forEach((name) => {
       let { baseUnit, quoteUnit, marketId } = Helpers.getMarketInfos(name);
-      ws.timers.push(setInterval(orderBookIncrementMock(ws, marketId), 5000));
-      ws.timers.push(setInterval(orderBookUpdateMock(ws, marketId), 3000));
+      ws.timers.push(setInterval(orderBookIncrementMock(ws, marketId), 200));
+      ws.timers.push(setInterval(orderBookUpdateMock(ws, marketId), 2000));
       ws.timers.push(setInterval(matchedTradesMock(ws, marketId), 1000))
       ws.timers.push(setInterval(klinesMock(ws, marketId), 2500))
     });
