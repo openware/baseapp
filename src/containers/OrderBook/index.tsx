@@ -62,6 +62,15 @@ class OrderBookContainer extends React.Component<Props, State> {
         }
     }
 
+    public shouldComponentUpdate(nextProps: Props) {
+        const { asks, bids } = this.props;
+
+        return (
+            JSON.stringify(nextProps.asks) !== JSON.stringify(asks) ||
+            JSON.stringify(nextProps.bids) !== JSON.stringify(bids)
+        );
+    }
+
     public render() {
         const {
             asks,
