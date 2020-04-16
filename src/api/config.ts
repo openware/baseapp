@@ -1,4 +1,4 @@
-import { STORAGE_DEFAULT_LIMIT } from '../constants';
+import { ORDER_BOOK_DEFAULT_SIDE_LIMIT, STORAGE_DEFAULT_LIMIT } from '../constants';
 import { Config } from './types';
 
 export const defaultConfig: Config = {
@@ -49,6 +49,7 @@ export const finexUrl = () => Cryptobase.config.api.finexUrl || tradeUrl();
 export const minutesUntilAutoLogout = (): string => Cryptobase.config.minutesUntilAutoLogout || '5';
 export const withCredentials = () => Cryptobase.config.withCredentials;
 export const defaultStorageLimit = () => Cryptobase.config.storage.defaultStorageLimit || STORAGE_DEFAULT_LIMIT;
+export const orderBookSideLimit = () => Cryptobase.config.storage.orderBookSideLimit || ORDER_BOOK_DEFAULT_SIDE_LIMIT;
 export const gaTrackerKey = (): string => Cryptobase.config.gaTrackerKey || '';
 export const msAlertDisplayTime = (): string => Cryptobase.config.msAlertDisplayTime || '5000';
 export const rangerReconnectPeriod = (): number => Cryptobase.config.rangerReconnectPeriod ? Number(Cryptobase.config.rangerReconnectPeriod) : 1;

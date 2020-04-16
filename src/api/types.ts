@@ -12,6 +12,7 @@ export interface Config {
     withCredentials: boolean;
     storage: {
         defaultStorageLimit?: number;
+        orderBookSideLimit?: number;
     };
     gaTrackerKey?: string;
     msAlertDisplayTime?: string;
