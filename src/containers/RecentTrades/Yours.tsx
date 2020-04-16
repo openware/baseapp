@@ -6,6 +6,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { compose } from 'redux';
 import { Decimal, Table } from '../../components';
 import { localeDate, setTradesType } from '../../helpers';
 import {
@@ -16,14 +17,12 @@ import {
     selectCurrentPrice,
     selectHistory,
     selectHistoryLoading,
-    selectMarkets,
     setCurrentPrice,
     WalletHistoryList,
 } from '../../modules';
 import { handleHighlightValue } from './Market';
 
 interface ReduxProps {
-    marketsData: Market[];
     list: WalletHistoryList;
     fetching: boolean;
     currentMarket: Market | undefined;
@@ -39,7 +38,7 @@ type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
 const timeFrom = Math.floor((Date.now() - 1000 * 60 * 60 * 24) / 1000);
 
-class YoursComponent extends React.Component<Props> {
+class RecentTradesYoursContainer extends React.Component<Props> {
 
     public componentDidMount() {
         const { currentMarket } = this.props;
@@ -52,6 +51,10 @@ class YoursComponent extends React.Component<Props> {
         if (next.currentMarket && this.props.currentMarket !== next.currentMarket) {
             this.props.fetchHistory({ type: 'trades', page: 0, time_from: timeFrom, market: next.currentMarket.id });
         }
+    }
+
+    public shouldComponentUpdate(nextProps: Props) {
+        return JSON.stringify(nextProps.list) !== JSON.stringify(this.props.list);
     }
 
     public render() {
@@ -121,7 +124,6 @@ class YoursComponent extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    marketsData: selectMarkets(state),
     list: selectHistory(state),
     fetching: selectHistoryLoading(state),
     currentMarket: selectCurrentMarket(state),
@@ -134,8 +136,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     });
 
-const YoursTab = injectIntl(connect(mapStateToProps, mapDispatchToProps)(YoursComponent));
-
-export {
-    YoursTab,
-};
+export const RecentTradesYours = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(RecentTradesYoursContainer) as any; // tslint:disable-line

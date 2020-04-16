@@ -5,7 +5,8 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import {TabPanel } from '../../components';
+import { compose } from 'redux';
+import { TabPanel } from '../../components';
 import {
     Market,
     PublicTrade,
@@ -17,8 +18,8 @@ import {
     setCurrentPrice,
 } from '../../modules';
 import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modules/public/recentTrades';
-import { MarketTab } from './Market';
-import { YoursTab } from './Yours';
+import { RecentTradesMarket } from './Market';
+import { RecentTradesYours } from './Yours';
 
 interface ReduxProps {
     recentTrades: PublicTrade[];
@@ -83,7 +84,7 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
                 <div className="cr-table-header__content">
                     <div className="cr-title-component">{this.props.intl.formatMessage({id: 'page.body.trade.header.recentTrades'})}</div>
                 </div>
-                <MarketTab />
+                <RecentTradesMarket />
             </div>
         );
 
@@ -94,11 +95,11 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
 
         return [
             {
-                content: tab === 'market' && index === 0 ? <MarketTab /> : null,
+                content: tab === 'market' && index === 0 ? <RecentTradesMarket /> : null,
                 label: this.props.intl.formatMessage({ id: 'page.body.trade.header.market' }),
             },
             {
-                content: tab === 'yours' ? <YoursTab /> : null,
+                content: tab === 'yours' ? <RecentTradesYours /> : null,
                 label: this.props.intl.formatMessage({ id: 'page.body.trade.header.yours' }),
             },
         ];
@@ -130,5 +131,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     resetHistory: () => dispatch(resetHistory()),
 });
 
-
-export const RecentTrades = injectIntl(connect(mapStateToProps, mapDispatchToProps)(RecentTradesComponent));
+export const RecentTrades = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(RecentTradesComponent) as any; // tslint:disable-line
