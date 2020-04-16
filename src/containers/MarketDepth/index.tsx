@@ -38,7 +38,10 @@ class MarketDepthContainer extends React.Component<Props> {
     public shouldComponentUpdate(nextProps: Props) {
         const { asksItems, bidsItems } = this.props;
 
-        return JSON.stringify(nextProps.asksItems) !== JSON.stringify(asksItems) || JSON.stringify(nextProps.bidsItems) !== JSON.stringify(bidsItems);
+        return (
+            JSON.stringify(nextProps.asksItems) !== JSON.stringify(asksItems) ||
+            JSON.stringify(nextProps.bidsItems) !== JSON.stringify(bidsItems)
+        );
     }
 
     public render() {
