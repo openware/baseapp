@@ -35,11 +35,10 @@ class MarketDepthContainer extends React.Component<Props> {
         }
     }
 
-    public shouldComponentUpdate(prev, next) {
-        const { asksItems, bidsItems } = prev;
-        const ordersLength = Number(asksItems.length) + Number(bidsItems.length);
+    public shouldComponentUpdate(nextProps: Props) {
+        const { asksItems, bidsItems } = this.props;
 
-        return ordersLength !== (this.props.asksItems.length + this.props.bidsItems.length);
+        return JSON.stringify(nextProps.asksItems) !== JSON.stringify(asksItems) || JSON.stringify(nextProps.bidsItems) !== JSON.stringify(bidsItems);
     }
 
     public render() {

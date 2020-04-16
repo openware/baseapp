@@ -1,4 +1,5 @@
 import {
+    ORDER_BOOK_DEFAULT_SIDE_LIMIT,
     PG_TITLE_PREFIX,
     pgRoutes,
     STORAGE_DEFAULT_LIMIT,
@@ -24,6 +25,10 @@ describe('Constants', () => {
 
     it('Rendering correct storage default limit', () => {
         expect(STORAGE_DEFAULT_LIMIT).toBe(50);
+    });
+
+    it('Rendering correct order book default limit by side', () => {
+        expect(ORDER_BOOK_DEFAULT_SIDE_LIMIT).toBe(25);
     });
 
     it('Rendering correct correct routes if user is not logged in', () => {
