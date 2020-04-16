@@ -5,9 +5,8 @@ import { IntlProvider } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { Router } from 'react-router';
 import { gaTrackerKey } from '../src/api';
-import { Alerts, ErrorWrapper, Footer, Header, Sidebar } from './containers';
+import { ErrorWrapper } from './containers';
 import { RootState } from './modules';
-import { Layout } from './routes';
 
 interface Locale {
     lang: string;
@@ -35,6 +34,12 @@ if (gaKey) {
 
 type Props = AppProps & ReduxProps;
 
+const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ Alerts }) => ({ default: Alerts })));
+const FooterContainer = React.lazy(() => import('./containers/Footer').then(({ Footer }) => ({ default: Footer })));
+const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ Header }) => ({ default: Header })));
+const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
+const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
+
 class AppLayout extends React.Component<Props, {}, {}> {
     public componentDidMount() {
         ReactGA.pageview(history.location.pathname);
@@ -50,11 +55,13 @@ class AppLayout extends React.Component<Props, {}, {}> {
             <IntlProvider locale={lang} messages={messages} key={lang}>
                 <Router history={history}>
                     <ErrorWrapper>
-                        <Header/>
-                        <Sidebar/>
-                        <Alerts/>
-                        <Layout/>
-                        <Footer/>
+                        <React.Suspense fallback={null}>
+                            <HeaderContainer/>
+                            <SidebarContainer/>
+                            <AlertsContainer/>
+                            <LayoutContainer/>
+                            <FooterContainer/>
+                        </React.Suspense>
                     </ErrorWrapper>
                 </Router>
             </IntlProvider>
