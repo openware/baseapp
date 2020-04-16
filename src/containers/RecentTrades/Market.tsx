@@ -4,6 +4,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { compose } from 'redux';
 import { Decimal, Table } from '../../components';
 import { localeDate, setTradeColor } from '../../helpers';
 import {
@@ -49,17 +50,21 @@ const handleHighlightValue = (prevValue: string, curValue: string) => {
 };
 
 
-class MarketComponent extends React.Component<Props> {
+class RecentTradesMarketContainer extends React.Component<Props> {
+    public componentDidMount() {
+        if (this.props.currentMarket) {
+            this.props.tradesFetch(this.props.currentMarket);
+        }
+    }
+
     public componentWillReceiveProps(next: Props) {
         if (next.currentMarket && this.props.currentMarket !== next.currentMarket) {
             this.props.tradesFetch(next.currentMarket);
         }
     }
 
-    public componentDidMount() {
-        if (this.props.currentMarket) {
-            this.props.tradesFetch(this.props.currentMarket);
-        }
+    public shouldComponentUpdate(nextProps: Props) {
+        return JSON.stringify(nextProps.recentTrades) !== JSON.stringify(this.props.recentTrades);
     }
 
     public render() {
@@ -123,9 +128,12 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
 });
 
-const MarketTab = injectIntl(connect(mapStateToProps, mapDispatchToProps)(MarketComponent));
+const RecentTradesMarket = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(RecentTradesMarketContainer) as any; // tslint:disable-line
 
 export {
     handleHighlightValue,
-    MarketTab,
+    RecentTradesMarket,
 };
