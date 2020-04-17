@@ -73,15 +73,37 @@ const Helpers = {
     getDepthIncrement: (sequence) => {
       const delta = 2 * (1 + Math.cos(2 * Math.PI * Date.now() / 1000 / 3600))
       const fV = (volume) => String(parseFloat(volume) + delta * 10);
+      const countOfAsks = Math.floor(Math.random() * 5) + 1;
+      const countOfBids = Math.floor(Math.random() * 5) + 1;
+      const sideProbability = Math.random();
+      const asks = [];
+      const bids = [];
+    
+      for (var i = 0; i < countOfAsks; i++) {
+        asks.push([Math.random() * 13, fV(Math.random() * 5)]);
+      }
+  
+      for (var i = 0; i < countOfBids; i++) {
+        bids.push([Math.random() * 13, fV(Math.random() * 5)]);
+      }
 
-      if (Math.random() < 0.5) {
+      if (sideProbability < 0.25) {
         return {
-          "asks": [Math.random() * 13, fV(Math.random() * 5)],
+          "asks": asks,
           "sequence": sequence,
         }
       }
+
+      if (sideProbability < 0.5) {
+        return {
+          "bids": bids,
+          "sequence": sequence,
+        }
+      }
+
       return {
-        "bids": [Math.random() * 13, fV(Math.random() * 5)],
+        "bids": asks,
+        "asks": bids,
         "sequence": sequence,
       }
     },

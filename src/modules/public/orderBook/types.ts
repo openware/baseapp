@@ -42,7 +42,7 @@ export interface DepthIncrementState {
 }
 
 export interface DepthIncrementUpdateData {
-    asks: string[] | null;
-    bids: string[] | null;
+    asks: string[][] | string[] | null;
+    bids: string[][] | string[] | null;
     sequence: number;
 }

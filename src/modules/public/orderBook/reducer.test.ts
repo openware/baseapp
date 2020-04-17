@@ -244,6 +244,49 @@ describe('orderBook reducer', () => {
     expect(incrementDepthReducer(fakeInitialState, actions.depthDataIncrement(fakeOrder))).toEqual(expectedState);
   });
 
+  it('updates list of asks price level by DEPTH_DATA_INCREMENT', () => {
+    const fakeInitialState: DepthIncrementState = {
+      sequence: 12,
+      asks: [
+        ['0.60', '0.1'],
+        ['0.70', '1'],
+        ['0.75', '1'],
+        ['0.99', '1'],
+      ],
+      bids: [
+        ['0.50', '0.041'],
+        ['0.49', '0.5'],
+        ['0.26', '25'],
+      ],
+      loading: false,
+    };
+
+    const fakeOrderArray: DepthIncrementUpdateData = {
+      sequence: 13,
+      asks: [
+        ['0.99', '0'],
+        ['0.75', '1.2'],
+        ['0.50', '2.0'],
+      ],
+      bids: null,
+    };
+
+    const fakeUpdatedDepth: DepthIncrementState = {
+      sequence: 13,
+      asks: [
+        ['0.50', '2.0'],
+        ['0.60', '0.1'],
+        ['0.70', '1'],
+        ['0.75', '1.2'],
+      ],
+      bids: fakeInitialState.bids,
+      loading: false,
+    };
+
+    const expectedState = { ...fakeUpdatedDepth };
+    expect(incrementDepthReducer(fakeInitialState, actions.depthDataIncrement(fakeOrderArray))).toEqual(expectedState);
+  });
+
   it('updates bids price level by DEPTH_DATA_INCREMENT', () => {
     const fakeInitialState: DepthIncrementState = {
       sequence: 12,
@@ -272,6 +315,49 @@ describe('orderBook reducer', () => {
       asks: fakeInitialState.asks,
       bids: [
         ['0.50', '0.041'],
+        ['0.49', '0.5'],
+        ['0.26', '12'],
+      ],
+      loading: false,
+    };
+
+    const expectedState = { ...fakeUpdatedDepth };
+    expect(incrementDepthReducer(fakeInitialState, actions.depthDataIncrement(fakeOrder))).toEqual(expectedState);
+  });
+
+  it('updates list of bids price level by DEPTH_DATA_INCREMENT', () => {
+    const fakeInitialState: DepthIncrementState = {
+      sequence: 12,
+      asks: [
+        ['0.60', '0.1'],
+        ['0.70', '1'],
+        ['0.75', '1'],
+        ['0.99', '1'],
+      ],
+      bids: [
+        ['0.50', '0.041'],
+        ['0.49', '0.5'],
+        ['0.26', '25'],
+      ],
+      loading: false,
+    };
+
+    const fakeOrder: DepthIncrementUpdateData = {
+      sequence: 13,
+      asks: null,
+      bids: [
+        ['0.26', '12'],
+        ['0.50', '0'],
+        ['0.60', '12'],
+        ['0.70', '0.0'],
+      ],
+    };
+
+    const fakeUpdatedDepth: DepthIncrementState = {
+      sequence: 13,
+      asks: fakeInitialState.asks,
+      bids: [
+        ['0.60', '12'],
         ['0.49', '0.5'],
         ['0.26', '12'],
       ],
