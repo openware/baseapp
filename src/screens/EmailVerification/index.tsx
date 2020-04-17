@@ -11,6 +11,10 @@ import { compose } from 'redux';
 import { setDocumentTitle} from '../../helpers';
 import { IntlProps } from '../../index';
 import { GeetestCaptcha } from '../../containers';
+<<<<<<< HEAD
+=======
+import { EMAIL_REGEX, setDocumentTitle } from '../../helpers';
+>>>>>>> Fix: add check to disable Resend Confirmation form
 import {
     Configs,
     emailVerificationFetch,
@@ -73,6 +77,8 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
         }
     }
 
+    public translate = (id: string) => this.props.intl.formatMessage({ id });
+
     public renderCaptcha = () => {
         const { shouldGeetestReset } = this.state;
         const { configs } = this.props;
@@ -104,9 +110,15 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
     public render() {
         const { emailVerificationLoading, isMobileDevice } = this.props;
 
-        const title = this.props.intl.formatMessage({ id: 'page.header.signUp.modal.header' });
-        const text = this.props.intl.formatMessage({ id: 'page.header.signUp.modal.body' });
-        const button = this.props.intl.formatMessage({ id: 'page.resendConfirmation' });
+        const button = (
+            <button
+                className="pg-emailverification-body-container-button"
+                onClick={this.handleClick}
+                disabled={this.disableButton()}
+            >
+                {this.translate('page.resendConfirmation')}
+            </button>
+        );
 
         return (
             <div className="pg-emailverification-container">
@@ -142,7 +154,6 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
             </div>
         );
     }
-
 
     private handleClick = () => {
         const { captcha_response } = this.state;
