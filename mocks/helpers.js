@@ -1,3 +1,17 @@
+const getRandomArbitrary = (min, max, precision) => {
+  const randomValue = Math.random() * (max - min) + min;
+
+  return precision ? randomValue.toFixed(precision) : randomValue;
+}
+
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
 const Helpers = {
     getMarketInfos: (marketName) => {
         let pairs = marketName.split("/");
@@ -71,20 +85,20 @@ const Helpers = {
       }
     },
     getDepthIncrement: (sequence) => {
-      const delta = 2 * (1 + Math.cos(2 * Math.PI * Date.now() / 1000 / 3600))
-      const fV = (volume) => String(parseFloat(volume) + delta * 10);
-      const countOfAsks = Math.floor(Math.random() * 5) + 1;
-      const countOfBids = Math.floor(Math.random() * 5) + 1;
+      const delta = getRandomArbitrary(1, 100, 2) * (1 + Math.cos(2 * Math.PI * Date.now() / 1000 / 3600))
+      const fV = (volume) => String(parseFloat(volume) + delta);
+      const countOfAsks = getRandomInt(1, 5);
+      const countOfBids = getRandomInt(1, 5);
       const sideProbability = Math.random();
       const asks = [];
       const bids = [];
     
       for (var i = 0; i < countOfAsks; i++) {
-        asks.push([Math.random() * 13, fV(Math.random() * 5)]);
+        asks.push([getRandomArbitrary(15, 20, 1), fV("1.5")]);
       }
   
       for (var i = 0; i < countOfBids; i++) {
-        bids.push([Math.random() * 13, fV(Math.random() * 5)]);
+        bids.push([getRandomArbitrary(10, 12, 2), fV("1.5")]);
       }
 
       if (sideProbability < 0.25) {
