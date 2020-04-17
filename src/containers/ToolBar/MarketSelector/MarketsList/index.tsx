@@ -133,7 +133,6 @@ class MarketsListComponent extends React.Component<Props, State> {
             vol: 0,
             price_change_percent: '+0.00%',
         };
-        const regExp = new RegExp(search.toLowerCase());
         const arr: Market[] = [];
 
         const marketsMapped = markets.map((market: Market) => {
@@ -157,7 +156,7 @@ class MarketsListComponent extends React.Component<Props, State> {
         return marketsMapped.reduce((pV, cV) => {
             const [,quote] = cV.name.toLowerCase().split('/');
             if (
-                regExp.test(cV.id.toLowerCase()) &&
+                cV.id.toLowerCase().includes(search.toLowerCase()) &&
                 (
                     currencyQuote === '' ||
                     currencyQuote.toLowerCase() === quote ||
