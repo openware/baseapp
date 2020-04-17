@@ -2,13 +2,13 @@
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import {
-  orderBookData,
-  orderBookError,
-  OrderBookFetch,
+    orderBookData,
+    orderBookError,
+    OrderBookFetch,
 } from '../actions';
 
 const orderBookOptions: RequestOptions = {
-  apiVersion: 'peatio',
+    apiVersion: 'peatio',
 };
 
 export function* orderBookSaga(action: OrderBookFetch) {
