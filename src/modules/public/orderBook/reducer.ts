@@ -1,5 +1,5 @@
 import { orderBookSideLimit } from '../../../api';
-import { handleIncrementalUpdate } from '../../../helpers';
+import { handleIncrementalUpdate, handleIncrementalUpdateArray } from '../../../helpers';
 import { DepthActions, OrderBookActions } from './actions';
 import {
   DEPTH_DATA,
@@ -107,23 +107,28 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
         loading: state.marketId === undefined || state.marketId !== action.payload,
       };
     case DEPTH_DATA_INCREMENT:
+      const payload = {
+        ...state,
+        sequence: action.payload.sequence,
+      };
+
       if (action.payload.asks) {
-        return {
-          ...state,
-          sequence: action.payload.sequence,
-          asks: handleIncrementalUpdate(state.asks, action.payload.asks, 'asks').slice(0, orderBookSideLimit()),
-        };
+        payload.asks = Array.isArray(action.payload.asks[0]) ? (
+          handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(0, orderBookSideLimit())
+        ) : (
+          handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(0, orderBookSideLimit())
+        );
       }
 
       if (action.payload.bids) {
-        return {
-          ...state,
-          sequence: action.payload.sequence,
-          bids: handleIncrementalUpdate(state.bids, action.payload.bids, 'bids').slice(0, orderBookSideLimit()),
-        };
+        payload.bids = Array.isArray(action.payload.bids[0]) ? (
+          handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(0, orderBookSideLimit())
+        ) : (
+          handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(0, orderBookSideLimit())
+        );
       }
 
-      return state;
+      return payload;
     case DEPTH_DATA_SNAPSHOT:
       const {asks, bids, sequence} = action.payload;
 

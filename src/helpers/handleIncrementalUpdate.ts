@@ -48,3 +48,12 @@ export const handleIncrementalUpdate = (depthOld: string[][], newLevel: string[]
 
     return depthNew;
 };
+
+
+export const handleIncrementalUpdateArray = (depthOld: string[][], newLevels: string[][], type: string): string[][] => {
+    const depthNew = newLevels.reduce((result: string[][], currentLevel: string[]) => {
+        return handleIncrementalUpdate(result, currentLevel, type);
+    }, depthOld);
+
+    return depthNew;
+};

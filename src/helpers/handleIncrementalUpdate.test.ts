@@ -1,4 +1,4 @@
-import { handleIncrementalUpdate } from './';
+import { handleIncrementalUpdate, handleIncrementalUpdateArray } from './';
 
 describe('Describe incremental update of order book asks', () => {
     it('should append value to order book', () => {
@@ -339,5 +339,144 @@ describe('Describe incremental update of order book bids', () => {
 
         const result = handleIncrementalUpdate(bids, newBidOrder, 'bids');
         expect(result).toEqual(updatedBids);
+    });
+});
+
+describe('Describe incremental array update of order book asks', () => {
+    it('should append values to order book', () => {
+        const asks: string[][] = [
+            ['0.60', '0.1'],
+            ['0.70', '1.5'],
+            ['0.75', '2.0'],
+            ['0.80', '3.0'],
+            ['0.90', '1.5'],
+            ['0.95', '0.5'],
+        ];
+
+        const newAsksOrderArray: string[][] = [['0.50', '0.7'], ['0.40', '0.8']];
+
+        const updatedAsks: string[][] = [
+            ['0.40', '0.8'],
+            ['0.50', '0.7'],
+            ['0.60', '0.1'],
+            ['0.70', '1.5'],
+            ['0.75', '2.0'],
+            ['0.80', '3.0'],
+            ['0.90', '1.5'],
+            ['0.95', '0.5'],
+        ];
+
+        const result = handleIncrementalUpdateArray(asks, newAsksOrderArray, 'asks');
+        expect(result).toEqual(updatedAsks);
+    });
+
+    it('should add values inside the order book', () => {
+        const asks: string[][] = [
+            ['0.60', '0.1'],
+            ['0.70', '1.5'],
+            ['0.75', '2.0'],
+            ['0.80', '3.0'],
+            ['0.90', '1.5'],
+            ['0.95', '0.5'],
+        ];
+
+        const newAsksOrderArray: string[][] = [['0.71', '0.7'], ['0.85', '0.1']];
+
+        const updatedAsks: string[][] = [
+            ['0.60', '0.1'],
+            ['0.70', '1.5'],
+            ['0.71', '0.7'],
+            ['0.75', '2.0'],
+            ['0.80', '3.0'],
+            ['0.85', '0.1'],
+            ['0.90', '1.5'],
+            ['0.95', '0.5'],
+        ];
+
+        const result = handleIncrementalUpdateArray(asks, newAsksOrderArray, 'asks');
+        expect(result).toEqual(updatedAsks);
+    });
+
+    it('should add values at the end of the order book', () => {
+        const asks: string[][] = [
+            ['0.60', '0.1'],
+            ['0.70', '1.5'],
+            ['0.75', '2.0'],
+            ['0.80', '3.0'],
+            ['0.90', '1.5'],
+            ['0.95', '0.5'],
+        ];
+
+        const newAsksOrderArray: string[][] = [['0.99', '0.7'], ['1.0', '1.0']];
+
+        const updatedAsks: string[][] = [
+            ['0.60', '0.1'],
+            ['0.70', '1.5'],
+            ['0.75', '2.0'],
+            ['0.80', '3.0'],
+            ['0.90', '1.5'],
+            ['0.95', '0.5'],
+            ['0.99', '0.7'],
+            ['1.0', '1.0'],
+        ];
+
+        const result = handleIncrementalUpdateArray(asks, newAsksOrderArray, 'asks');
+        expect(result).toEqual(updatedAsks);
+    });
+
+    it('should add values to empty order book', () => {
+        const asks: string[][] = [];
+        const newAsksOrderArray: string[][] = [['0.71', '0.7'], ['0.85', '0.1']];
+        const updatedAsks: string[][] = [['0.71', '0.7'], ['0.85', '0.1']];
+
+        const result = handleIncrementalUpdateArray(asks, newAsksOrderArray, 'asks');
+        expect(result).toEqual(updatedAsks);
+    });
+
+    it('should update existing values in order book', () => {
+        const asks: string[][] = [
+            ['0.60', '0.1'],
+            ['0.70', '1.5'],
+            ['0.75', '2.0'],
+            ['0.80', '3.0'],
+            ['0.90', '1.5'],
+            ['0.95', '0.5'],
+        ];
+
+        const newAsksOrderArray: string[][] = [['0.70', '0.2'], ['0.80', '20.0']];
+
+        const updatedAsks: string[][] = [
+            ['0.60', '0.1'],
+            ['0.70', '0.2'],
+            ['0.75', '2.0'],
+            ['0.80', '20.0'],
+            ['0.90', '1.5'],
+            ['0.95', '0.5'],
+        ];
+
+        const result = handleIncrementalUpdateArray(asks, newAsksOrderArray, 'asks');
+        expect(result).toEqual(updatedAsks);
+    });
+
+    it('should remove values from order book if value is zero', () => {
+        const asks: string[][] = [
+            ['0.60', '0.1'],
+            ['0.70', '1.5'],
+            ['0.75', '2.0'],
+            ['0.80', '3.0'],
+            ['0.90', '1.5'],
+            ['0.95', '0.5'],
+        ];
+
+        const newAsksOrderArray: string[][] = [['0.60', '0.0'], ['0.75', '0.0'], ['0.95', '0.0']];
+
+        const updatedAsks: string[][] = [
+            ['0.70', '1.5'],
+            ['0.80', '3.0'],
+            ['0.90', '1.5'],
+        ];
+
+        const result = handleIncrementalUpdateArray(asks, newAsksOrderArray, 'asks');
+        expect(result).toEqual(updatedAsks);
     });
 });
