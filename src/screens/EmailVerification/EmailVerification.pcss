@@ -34,8 +34,9 @@
       background: var(--body-background-color);
       display: flex;
       flex-direction: column;
-      height: calc(var(--big-gap) * 3.6);
+      height: max-content;
       justify-content: space-around;
+      padding: 20px 0;
 
       &-text {
         align-items: center;
@@ -68,6 +69,12 @@
           }
         }
       }
+    }
+
+    &-recaptcha {
+      display: flex;
+      justify-content: center;
+      margin: 10px;
     }
   }
 }

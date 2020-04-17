@@ -1,6 +1,7 @@
 import {
     CommonError,
 } from '../../types';
+import { GeetestCaptchaResponse } from '../auth';
 import {
     EMAIL_VERIFICATION_DATA,
     EMAIL_VERIFICATION_ERROR,
@@ -20,6 +21,7 @@ export interface EmailVerificationFetch {
     type: typeof EMAIL_VERIFICATION_FETCH;
     payload: {
       email: string;
+      captcha_response?: string | GeetestCaptchaResponse;
     };
 }
 
