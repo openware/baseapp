@@ -20,17 +20,14 @@ import {
     RootState,
     selectCustomizationCurrent,
     selectCustomizationData,
-    selectUserInfo,
     selectUserLoggedIn,
     toggleChartRebuild,
-    User,
 } from '../../modules';
 import { AVAILABLE_COLORS_TITLES, ThemeColorInterface } from '../../themes';
 
 interface ReduxProps {
     currentCustomization?: CustomizationCurrentDataInterface;
     customization?: CustomizationDataInterface;
-    user: User;
     userLoggedIn: boolean;
 }
 
@@ -101,10 +98,10 @@ class CustomizationContainer extends React.Component<Props, State> {
     }
 
     public render() {
-        const { user, userLoggedIn } = this.props;
+        const { userLoggedIn } = this.props;
         const { currentTabIndex, isOpen } = this.state;
 
-        if (!userLoggedIn || user.role !== 'superadmin' || !this.handleCheckRoute()) {
+        if (!userLoggedIn || !this.handleCheckRoute()) {
             return null;
         }
 
@@ -202,7 +199,6 @@ class CustomizationContainer extends React.Component<Props, State> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     currentCustomization: selectCustomizationCurrent(state),
     customization: selectCustomizationData(state),
-    user: selectUserInfo(state),
     userLoggedIn: selectUserLoggedIn(state),
 });
 
