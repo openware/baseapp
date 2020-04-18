@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { OrderForm } from '../';
+import {Decimal, OrderForm} from '../';
 import { TabPanel } from '../../components';
+import { getAmount, getTotalPrice } from '../../helpers';
 
 export type FormType = 'buy' | 'sell';
 
@@ -131,6 +132,8 @@ export interface OrderComponentProps {
 }
 interface State {
     index: number;
+    amountSell: string;
+    amountBuy: string;
 }
 
 const defaultOrderTypes: DropdownElem[] = [
@@ -145,6 +148,8 @@ const defaultWidth = 635;
 class Order extends React.PureComponent<OrderComponentProps, State> {
     public state = {
         index: 0,
+        amountSell: '',
+        amountBuy: '',
     };
 
     public render() {
@@ -218,6 +223,7 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
             bids,
             listenInputPrice,
         } = this.props;
+        const { amountSell, amountBuy } = this.state;
 
         const proposals = this.isTypeSell(type) ? bids : asks;
         const available = this.isTypeSell(type) ? availableBase : availableQuote;
@@ -226,11 +232,11 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
         const preLable = this.isTypeSell(type) ? labelSecond : labelFirst;
         const label = this.isTypeSell(type) ? 'Sell' : 'Buy';
         const disabledData = this.isTypeSell(type) ? {} : { disabled };
+        const amount = this.isTypeSell(type) ? amountSell : amountBuy;
 
         return {
             content: (
                 <OrderForm
-                    proposals={proposals}
                     type={type}
                     from={from}
                     {...disabledData}
@@ -249,7 +255,11 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
                     totalText={totalText}
                     availableText={availableText}
                     submitButtonText={submitButtonText}
+                    totalPrice={getTotalPrice(amount, proposals)}
+                    amount={amount}
                     listenInputPrice={listenInputPrice}
+                    handleAmountChange={this.handleAmountChange}
+                    handleChangeAmountByButton={this.handleChangeAmountByButton}
                 />
             ),
             label: preLable || label,
@@ -268,6 +278,53 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
         this.setState({
             index: index,
         });
+    };
+
+    private handleAmountChange = (amount, type) => {
+        if (type === 'sell') {
+            this.setState({ amountSell: amount });
+        } else {
+            this.setState({ amountBuy: amount });
+        }
+    };
+
+    private handleChangeAmountByButton = (value, orderType, price, type) => {
+        const { bids, asks, availableBase, availableQuote } = this.props;
+        const proposals = this.isTypeSell(type) ? bids : asks;
+        const available = this.isTypeSell(type) ? availableBase : availableQuote;
+        let newAmount = '';
+        switch (type) {
+            case 'buy':
+                switch (orderType) {
+                    case 'Limit':
+                        newAmount = available && +price ? (
+                            Decimal.format(available / +price * value, this.props.currentMarketAskPrecision)
+                        ) : '';
+
+                        break;
+                    case 'Market':
+                        newAmount = available ? (
+                            Decimal.format(getAmount(Number(available), proposals, value), this.props.currentMarketAskPrecision)
+                        ) : '';
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 'sell':
+                newAmount = available ? (
+                    Decimal.format(available * value, this.props.currentMarketAskPrecision)
+                ) : '';
+                break;
+            default:
+                break;
+        }
+
+        if (type === 'sell') {
+            this.setState({ amountSell: newAmount });
+        } else {
+            this.setState({ amountBuy: newAmount });
+        }
     };
 }
 

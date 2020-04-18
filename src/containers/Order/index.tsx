@@ -1,3 +1,4 @@
+/* tslint:disable */
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import {
@@ -129,12 +130,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         );
 
         const translations = this.getListOfTranslations();
-
         return (
-
             <div className={'pg-order'} ref={this.orderRef}>
                 {this.state.width > 448 ? headerContent : undefined}
-                // @ts-ignore
+                //@ts-ignore
                 <Order
                     asks={asks}
                     bids={bids}
