@@ -111,8 +111,6 @@ interface OrderFormState {
     amount: string;
     price: string;
     priceMarket: number;
-    currentMarketAskPrecision: number;
-    currentMarketBidPrecision: number;
     amountFocused: boolean;
     priceFocused: boolean;
 }
@@ -137,26 +135,24 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             amount: '',
             price: '',
             priceMarket: this.props.priceMarket,
-            currentMarketAskPrecision: this.props.currentMarketAskPrecision || 6,
-            currentMarketBidPrecision: this.props.currentMarketBidPrecision || 6,
             priceFocused: false,
             amountFocused: false,
         };
     }
 
     public componentWillReceiveProps(next: OrderFormProps) {
-        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.state.currentMarketBidPrecision);
+        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.props.currentMarketBidPrecision);
         if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
             this.setState({
                 price: nextPriceLimitTruncated,
             });
         }
 
-        this.setState({
-            priceMarket: next.priceMarket,
-            currentMarketAskPrecision: next.currentMarketAskPrecision,
-            currentMarketBidPrecision: next.currentMarketBidPrecision,
-        });
+        if (this.state.priceMarket !== next.priceMarket) {
+            this.setState({
+                priceMarket: next.priceMarket,
+            });
+        }
     }
 
     public render() {
@@ -173,6 +169,8 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             totalText,
             availableText,
             submitButtonText,
+            currentMarketAskPrecision,
+            currentMarketBidPrecision,
             proposals,
         } = this.props;
         const {
@@ -180,8 +178,6 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             amount,
             price,
             priceMarket,
-            currentMarketAskPrecision,
-            currentMarketBidPrecision,
             priceFocused,
             amountFocused,
         } = this.state;
@@ -344,7 +340,7 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
 
     private handlePriceChange = (value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
-        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.state.currentMarketBidPrecision}}|[\\d-]*\\.[\\d-])$`);
+        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.props.currentMarketBidPrecision}}|[\\d-]*\\.[\\d-])$`);
         if (convertedValue.match(condition)) {
             this.setState({
                 price: convertedValue,
@@ -355,7 +351,7 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
 
     private handleAmountChange = (value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
-        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.state.currentMarketAskPrecision}}|[\\d-]*\\.[\\d-])$`);
+        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.props.currentMarketAskPrecision}}|[\\d-]*\\.[\\d-])$`);
         if (convertedValue.match(condition)) {
             this.setState({
                 amount: convertedValue,
@@ -370,14 +366,14 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
                     case 'Limit':
                         this.setState({
                             amount: this.props.available && + this.state.price ? (
-                                Decimal.format(this.props.available / +this.state.price * value, this.state.currentMarketAskPrecision)
+                                Decimal.format(this.props.available / +this.state.price * value, this.props.currentMarketAskPrecision)
                             ) : '',
                         });
                         break;
                     case 'Market':
                         this.setState({
                             amount: this.props.available ? (
-                                Decimal.format(getAmount(Number(this.props.available), this.props.proposals, value), this.state.currentMarketAskPrecision)
+                                Decimal.format(getAmount(Number(this.props.available), this.props.proposals, value), this.props.currentMarketAskPrecision)
                             ) : '',
                         });
                         break;
@@ -388,7 +384,7 @@ export class OrderForm extends React.Component<OrderFormProps, OrderFormState> {
             case 'sell':
                 this.setState({
                     amount: this.props.available ? (
-                        Decimal.format(this.props.available * value, this.state.currentMarketAskPrecision)
+                        Decimal.format(this.props.available * value, this.props.currentMarketAskPrecision)
                     ) : '',
                 });
                 break;
