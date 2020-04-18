@@ -50,6 +50,17 @@ class DropdownComponent extends React.Component<DropdownComponentProps & {}, Dro
         };
     }
 
+    public componentDidUpdate(prevProps: DropdownComponentProps) {
+        const { placeholder } = this.props;
+
+        if (placeholder && placeholder !== prevProps.placeholder) {
+            this.setState({
+                selected: placeholder,
+                selectedIndex: '0',
+            });
+        }
+    }
+
     public render() {
         const { selected } = this.state;
         const { list } = this.props;
