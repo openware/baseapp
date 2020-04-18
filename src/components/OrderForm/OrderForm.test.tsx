@@ -32,7 +32,7 @@ const defaultProps = {
     listenInputPrice: spy(),
     handleAmountChange: spy(),
     handleChangeAmountByButton: spy(),
-    amount: '',
+    amount: '1.5',
     totalPrice: 0,
 };
 
@@ -40,7 +40,7 @@ const setup = (props: Partial<OrderFormProps> = {}) =>
     shallow(<OrderForm {...{ ...defaultProps, ...props }} />);
 
 // TODO: Requires changes to almost all tests since the logic of calculation was moved to parent component
-describe.skip('OrderForm', () => {
+describe('OrderForm', () => {
     it('should match snapshot', () => {
         const wrapper = setup();
         expect(wrapper).toMatchSnapshot();
@@ -86,20 +86,20 @@ describe.skip('OrderForm', () => {
         const onSubmit: SinonSpy = spy();
         const wrapper = setup({ onSubmit });
 
-        const nextState = { price: '135.58', amount: '0.34' };
+        const nextState = { price: '135.58' };
         wrapper.setState(nextState);
 
         const submitButton = wrapper.find(Button);
         submitButton.simulate('click');
 
-        expect(onSubmit.calledOnceWith({type: 'buy', orderType: 'Limit', price: nextState.price, amount: nextState.amount, available: 50})).toBeTruthy();
+        expect(onSubmit.calledOnceWith({type: 'buy', orderType: 'Limit', price: nextState.price, amount: '1.5', available: 50})).toBeTruthy();
     });
 
     it('should disable button if price is 0 in Limit order', () => {
         const onSubmit: SinonSpy = spy();
         const wrapper = setup({ onSubmit });
 
-        const orderState = { orderType: 'Limit', amount: '0.05' };
+        const orderState = { orderType: 'Limit' };
         wrapper.setState(orderState);
 
         let priceState = { price: '118.643' };
@@ -119,7 +119,7 @@ describe.skip('OrderForm', () => {
         const onSubmit: SinonSpy = spy();
         let priceMarket = 135.15;
         let wrapper = setup({ onSubmit, priceMarket });
-        const orderState = { orderType: 'Market', amount: '0.05' };
+        const orderState = { orderType: 'Market' };
         wrapper.setState(orderState);
 
         let submitButton = wrapper.find(Button);
@@ -133,18 +133,16 @@ describe.skip('OrderForm', () => {
 
     it('should disable button if amount is 0 in Limit order', () => {
         const onSubmit: SinonSpy = spy();
-        const wrapper = setup({ onSubmit });
+        let amountProps = '0.001';
+        let wrapper = setup({ onSubmit, amount: amountProps });
         const orderState = { orderType: 'Limit', price: '118.643' };
         wrapper.setState(orderState);
-
-        let amountState = { amount: '0.001' };
-        wrapper.setState(amountState);
 
         let submitButton = wrapper.find(Button);
         expect(submitButton.props().disabled).toBe(false);
 
-        amountState = { amount: '0' };
-        wrapper.setState(amountState);
+        amountProps = '0';
+        wrapper = setup({ onSubmit, amount: amountProps });
 
         submitButton = wrapper.find(Button);
         expect(submitButton.props().disabled).toBe(true);
@@ -152,215 +150,19 @@ describe.skip('OrderForm', () => {
 
     it('should disable button amount 0 in Market order', () => {
         const onSubmit: SinonSpy = spy();
-        const wrapper = setup({ onSubmit });
+        let amountProps = '0.001';
+        let wrapper = setup({ onSubmit, amount: amountProps });
         const orderState = { orderType: 'Market'};
         wrapper.setState(orderState);
-
-        let amountState = { amount: '0.001' };
-        wrapper.setState(amountState);
 
         let submitButton = wrapper.find(Button);
         expect(submitButton.props().disabled).toBe(false);
 
-        amountState = { amount: '0' };
-        wrapper.setState(amountState);
+        amountProps = '0';
+        wrapper = setup({ onSubmit, amount: amountProps });
 
         submitButton = wrapper.find(Button);
         expect(submitButton.props().disabled).toBe(true);
-    });
-
-    const findInputAmount = (wrapper: ShallowWrapper) => wrapper.find('.cr-order-item').at(2).find('div').last().children().last();
-
-    it('does not change positive well formatted integers', () => {
-        const wrapper = setup();
-        const inputAmount = findInputAmount(wrapper);
-
-        inputAmount.props().handleChangeValue('1');
-        expect(wrapper.state('amount')).toBe('1');
-
-        inputAmount.props().handleChangeValue('123456');
-        expect(wrapper.state('amount')).toBe('123456');
-    });
-
-    it('does not change positive well formatted floats', () => {
-        const wrapper = setup();
-        const inputAmount = findInputAmount(wrapper);
-
-        inputAmount.props().handleChangeValue('3120.123');
-        expect(wrapper.state('amount')).toBe('3120.123');
-    });
-
-    it('formats lazy float format', () => {
-        const wrapper = setup();
-        const inputAmount = findInputAmount(wrapper);
-
-        inputAmount.props().handleChangeValue('.123');
-        expect(wrapper.state('amount')).toBe('0.123');
-
-        inputAmount.props().handleChangeValue(',123');
-        expect(wrapper.state('amount')).toBe('0.123');
-    });
-
-    it('fixes some errors in float format', () => {
-        const wrapper = setup();
-        const inputAmount = findInputAmount(wrapper);
-
-        inputAmount.props().handleChangeValue('0..123');
-        expect(wrapper.state('amount')).toBe('0.123');
-
-        inputAmount.props().handleChangeValue('0..123.');
-        expect(wrapper.state('amount')).toBe('0.123');
-
-        inputAmount.props().handleChangeValue('0..123.10');
-        expect(wrapper.state('amount')).toBe('0.123');
-    });
-
-    it('changes negative numbers to positive', () => {
-        const wrapper = setup();
-        const inputAmount = findInputAmount(wrapper);
-
-        inputAmount.props().handleChangeValue('-12');
-        expect(wrapper.state('amount')).toBe('12');
-
-        inputAmount.props().handleChangeValue('-3120.123');
-        expect(wrapper.state('amount')).toBe('3120.123');
-
-        inputAmount.props().handleChangeValue('--123');
-        expect(wrapper.state('amount')).toBe('123');
-    });
-
-    it('should cleanup leading zeros', () => {
-        const wrapper = setup();
-        const inputAmount = findInputAmount(wrapper);
-
-        inputAmount.props().handleChangeValue('0');
-        expect(wrapper.state('amount')).toBe('0');
-
-        inputAmount.props().handleChangeValue('0123');
-        expect(wrapper.state('amount')).toBe('123');
-
-        inputAmount.props().handleChangeValue('000100023300.123');
-        expect(wrapper.state('amount')).toBe('100023300.123');
-
-        inputAmount.props().handleChangeValue('0.');
-        expect(wrapper.state('amount')).toBe('0.');
-
-        inputAmount.props().handleChangeValue('0.0');
-        expect(wrapper.state('amount')).toBe('0.0');
-
-        inputAmount.props().handleChangeValue('0.000');
-        expect(wrapper.state('amount')).toBe('0.000');
-
-        inputAmount.props().handleChangeValue('0.0001');
-        expect(wrapper.state('amount')).toBe('0.0001');
-    });
-
-    it('should set correct values by percentage buttons when type is buy', () => {
-        const type = 'buy';
-        const wrapper = setup({type});
-        const nextState = { price: '2' };
-
-        wrapper.setState(nextState);
-
-        const inputAmount = findInputAmount(wrapper);
-        inputAmount.props().handleChangeValue('10');
-
-        expect(wrapper.state('amount')).toBe('10');
-
-        const firstPercentageButton = wrapper.find(PercentageButton).at(0);
-        firstPercentageButton.simulate('click');
-
-        expect(wrapper.state('amount')).toBe('6.2500');
-
-        const secondPercentageButton = wrapper.find(PercentageButton).at(1);
-        secondPercentageButton.simulate('click');
-
-        expect(wrapper.state('amount')).toBe('12.5000');
-
-        const thirdPercentageButton = wrapper.find(PercentageButton).at(2);
-        thirdPercentageButton.simulate('click');
-
-        expect(wrapper.state('amount')).toBe('18.7500');
-
-        const fourthPercentageButton = wrapper.find(PercentageButton).at(3);
-        fourthPercentageButton.simulate('click');
-
-        expect(wrapper.state('amount')).toBe('25.0000');
-    });
-
-    it('should set correct values by percentage buttons when type is sell', () => {
-        const type = 'sell';
-        const wrapper = setup({type});
-        const nextState = { price: '2' };
-
-        wrapper.setState(nextState);
-
-        const inputAmount = findInputAmount(wrapper);
-        inputAmount.props().handleChangeValue('10');
-
-        expect(wrapper.state('amount')).toBe('10');
-
-        const firstPercentageButton = wrapper.find(PercentageButton).at(0);
-        firstPercentageButton.simulate('click');
-
-        expect(wrapper.state('amount')).toBe('12.5000');
-
-        const secondPercentageButton = wrapper.find(PercentageButton).at(1);
-        secondPercentageButton.simulate('click');
-
-        expect(wrapper.state('amount')).toBe('25.0000');
-
-        const thirdPercentageButton = wrapper.find(PercentageButton).at(2);
-        thirdPercentageButton.simulate('click');
-
-        expect(wrapper.state('amount')).toBe('37.5000');
-
-        const fourthPercentageButton = wrapper.find(PercentageButton).at(3);
-        fourthPercentageButton.simulate('click');
-
-        expect(wrapper.state('amount')).toBe('50.0000');
-    });
-
-    it('should display correct values', () => {
-        const type = 'buy';
-        // const proposals = [['2', '200']];
-        const wrapper = setup({type});
-        const nextState = { total: '0', price: '2' };
-
-        wrapper.setState(nextState);
-
-        const inputAmount = findInputAmount(wrapper);
-        inputAmount.props().handleChangeValue('110');
-
-        expect(wrapper.state('amount')).toBe('110');
-
-        const total = wrapper.find('.cr-order-item__total').find('.cr-order-item__total__content').find('.cr-order-item__total__content__amount').props().children;
-        const available = wrapper.find('.cr-order-item__available').find('.cr-order-item__available__content').find('.cr-order-item__available__content__amount').props().children;
-
-        expect(total).toEqual('220.000000000');
-        expect(available).toEqual('50.00000');
-    });
-
-    it('should display values with correct precision', () => {
-        const type = 'buy';
-        const currentMarketAskPrecision = 3;
-        const currentMarketBidPrecision = 2;
-        // const proposals = [['2', '5']];
-        const wrapper = setup({type, currentMarketAskPrecision, currentMarketBidPrecision});
-        const nextState = { total: '0', price: '2' };
-
-        wrapper.setState(nextState);
-
-        const inputAmount = findInputAmount(wrapper);
-        inputAmount.props().handleChangeValue('0.1');
-
-        expect(wrapper.state('amount')).toBe('0.1');
-
-        const total = wrapper.find('.cr-order-item__total').find('.cr-order-item__total__content').find('.cr-order-item__total__content__amount').props().children;
-        const available = wrapper.find('.cr-order-item__available').find('.cr-order-item__available__content').find('.cr-order-item__available__content__amount').props().children;
-
-        expect(total).toEqual('0.20000');
-        expect(available).toEqual('50.00');
     });
 
     const findInputPrice = (wrapper: ShallowWrapper) => wrapper.find('.cr-order-item').at(1).find('div').last().children().last();
