@@ -97,7 +97,7 @@ class Table extends React.Component<TableProps, TableState> {
     }
 
     public componentWillReceiveProps(next: TableProps) {
-        if (next.selectedKey) {
+        if (this.state.selectedRowKey !== next.selectedKey) {
             this.setState({selectedRowKey: next.selectedKey});
         }
     }

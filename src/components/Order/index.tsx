@@ -170,7 +170,7 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
                 <div className="cr-order--extended__buy">
                     <TabPanel
                         fixed={true}
-                        panels={this.getPanelsBuy()}
+                        panels={[this.getPanel('buy')]}
                         onTabChange={this.handleChangeTab}
                         currentTabIndex={this.state.index}
                     />
@@ -178,7 +178,7 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
                 <div className="cr-order--extended__sell">
                     <TabPanel
                         fixed={true}
-                        panels={this.getPanelsSell()}
+                        panels={[this.getPanel('sell')]}
                         onTabChange={this.handleChangeTab}
                         currentTabIndex={this.state.index}
                     />
@@ -187,195 +187,77 @@ class Order extends React.PureComponent<OrderComponentProps, State> {
         );
     }
 
+    private isTypeSell = (type: string) => {
+      return type === 'sell';
+    };
+
+    private getPanel = (type: FormType) => {
+        const {
+            availableBase,
+            availableQuote,
+            disabled,
+            priceMarketBuy,
+            priceMarketSell,
+            priceLimit,
+            from,
+            to,
+            currentMarketAskPrecision,
+            currentMarketBidPrecision,
+            orderTypeText,
+            priceText,
+            amountText,
+            totalText,
+            availableText,
+            submitBuyButtonText,
+            submitSellButtonText,
+            labelFirst,
+            labelSecond,
+            orderTypes,
+            orderTypesIndex,
+            asks,
+            bids,
+            listenInputPrice,
+        } = this.props;
+
+        const proposals = this.isTypeSell(type) ? bids : asks;
+        const available = this.isTypeSell(type) ? availableBase : availableQuote;
+        const priceMarket = this.isTypeSell(type) ? priceMarketSell : priceMarketBuy;
+        const submitButtonText = this.isTypeSell(type) ? submitSellButtonText : submitBuyButtonText;
+        const preLable = this.isTypeSell(type) ? labelSecond : labelFirst;
+        const label = this.isTypeSell(type) ? 'Sell' : 'Buy';
+        const disabledData = this.isTypeSell(type) ? {} : { disabled };
+
+        return {
+            content: (
+                <OrderForm
+                    proposals={proposals}
+                    type={type}
+                    from={from}
+                    {...disabledData}
+                    to={to}
+                    available={available}
+                    priceMarket={priceMarket}
+                    priceLimit={priceLimit}
+                    onSubmit={this.props.onSubmit}
+                    orderTypes={orderTypes || defaultOrderTypes}
+                    orderTypesIndex={orderTypesIndex || defaultOrderTypes}
+                    currentMarketAskPrecision={currentMarketAskPrecision || 6}
+                    currentMarketBidPrecision={currentMarketBidPrecision || 6}
+                    orderTypeText={orderTypeText}
+                    priceText={priceText}
+                    amountText={amountText}
+                    totalText={totalText}
+                    availableText={availableText}
+                    submitButtonText={submitButtonText}
+                    listenInputPrice={listenInputPrice}
+                />
+            ),
+            label: preLable || label,
+        };
+    };
+
     private getPanels = () => {
-        const {
-            availableBase,
-            availableQuote,
-            disabled,
-            priceMarketBuy,
-            priceMarketSell,
-            priceLimit,
-            from,
-            to,
-            currentMarketAskPrecision,
-            currentMarketBidPrecision,
-            orderTypeText,
-            priceText,
-            amountText,
-            totalText,
-            availableText,
-            submitBuyButtonText,
-            submitSellButtonText,
-            labelFirst,
-            labelSecond,
-            orderTypes,
-            orderTypesIndex,
-            asks,
-            bids,
-            listenInputPrice,
-        } = this.props;
-
-        return [
-            {
-                content: (
-                    <OrderForm
-                        proposals={asks}
-                        disabled={disabled}
-                        type="buy"
-                        from={from}
-                        to={to}
-                        available={availableQuote}
-                        priceMarket={priceMarketBuy}
-                        priceLimit={priceLimit}
-                        onSubmit={this.props.onSubmit}
-                        orderTypes={orderTypes ? orderTypes : defaultOrderTypes}
-                        orderTypesIndex={orderTypesIndex ? orderTypesIndex : defaultOrderTypes}
-                        currentMarketAskPrecision={currentMarketAskPrecision}
-                        currentMarketBidPrecision={currentMarketBidPrecision}
-                        orderTypeText={orderTypeText}
-                        priceText={priceText}
-                        amountText={amountText}
-                        totalText={totalText}
-                        availableText={availableText}
-                        submitButtonText={submitBuyButtonText}
-                        listenInputPrice={listenInputPrice}
-                    />
-                ),
-                label: labelFirst ? labelFirst : 'Buy',
-            },
-            {
-                content: (
-                    <OrderForm
-                        proposals={bids}
-                        type="sell"
-                        from={from}
-                        to={to}
-                        available={availableBase}
-                        priceMarket={priceMarketSell}
-                        priceLimit={priceLimit}
-                        onSubmit={this.props.onSubmit}
-                        orderTypes={orderTypes ? orderTypes : defaultOrderTypes}
-                        orderTypesIndex={orderTypesIndex ? orderTypesIndex : defaultOrderTypes}
-                        currentMarketAskPrecision={currentMarketAskPrecision}
-                        currentMarketBidPrecision={currentMarketBidPrecision}
-                        orderTypeText={orderTypeText}
-                        priceText={priceText}
-                        amountText={amountText}
-                        totalText={totalText}
-                        availableText={availableText}
-                        submitButtonText={submitSellButtonText}
-                        listenInputPrice={listenInputPrice}
-                    />
-                ),
-                label: labelSecond ? labelSecond : 'Sell',
-            },
-        ];
-    };
-
-    private getPanelsBuy = () => {
-        const {
-            availableQuote,
-            disabled,
-            priceMarketBuy,
-            priceLimit,
-            from,
-            to,
-            currentMarketAskPrecision,
-            currentMarketBidPrecision,
-            orderTypeText,
-            priceText,
-            amountText,
-            totalText,
-            availableText,
-            submitBuyButtonText,
-            labelFirst,
-            orderTypes,
-            orderTypesIndex,
-            asks,
-            listenInputPrice,
-        } = this.props;
-
-        return [
-            {
-                content: (
-                    <OrderForm
-                        proposals={asks}
-                        disabled={disabled}
-                        type="buy"
-                        from={from}
-                        to={to}
-                        available={availableQuote}
-                        priceMarket={priceMarketBuy}
-                        priceLimit={priceLimit}
-                        onSubmit={this.props.onSubmit}
-                        orderTypes={orderTypes ? orderTypes : defaultOrderTypes}
-                        orderTypesIndex={orderTypesIndex ? orderTypesIndex : defaultOrderTypes}
-                        currentMarketAskPrecision={currentMarketAskPrecision}
-                        currentMarketBidPrecision={currentMarketBidPrecision}
-                        orderTypeText={orderTypeText}
-                        priceText={priceText}
-                        amountText={amountText}
-                        totalText={totalText}
-                        availableText={availableText}
-                        submitButtonText={submitBuyButtonText}
-                        listenInputPrice={listenInputPrice}
-                    />
-                ),
-                label: labelFirst ? labelFirst : 'Buy',
-            },
-        ];
-    };
-
-    private getPanelsSell = () => {
-        const {
-            availableBase,
-            priceMarketSell,
-            priceLimit,
-            from,
-            to,
-            currentMarketAskPrecision,
-            currentMarketBidPrecision,
-            orderTypeText,
-            priceText,
-            amountText,
-            totalText,
-            availableText,
-            submitSellButtonText,
-            labelSecond,
-            orderTypes,
-            orderTypesIndex,
-            bids,
-            listenInputPrice,
-        } = this.props;
-
-        return [
-            {
-                content: (
-                    <OrderForm
-                        proposals={bids}
-                        type="sell"
-                        from={from}
-                        to={to}
-                        available={availableBase}
-                        priceMarket={priceMarketSell}
-                        priceLimit={priceLimit}
-                        onSubmit={this.props.onSubmit}
-                        orderTypes={orderTypes ? orderTypes : defaultOrderTypes}
-                        orderTypesIndex={orderTypesIndex ? orderTypesIndex : defaultOrderTypes}
-                        currentMarketAskPrecision={currentMarketAskPrecision}
-                        currentMarketBidPrecision={currentMarketBidPrecision}
-                        orderTypeText={orderTypeText}
-                        priceText={priceText}
-                        amountText={amountText}
-                        totalText={totalText}
-                        availableText={availableText}
-                        submitButtonText={submitSellButtonText}
-                        listenInputPrice={listenInputPrice}
-                    />
-                ),
-                label: labelSecond ? labelSecond : 'Sell',
-            },
-        ];
+        return [this.getPanel('buy'), this.getPanel('sell')];
     };
 
     private handleChangeTab = (index: number, label?: string) => {
