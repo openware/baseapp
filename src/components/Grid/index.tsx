@@ -1,6 +1,13 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { GridItem, GridItemProps } from '../';
+import { MarketDepthsComponent } from '../../containers/MarketDepth';
+import { MarketsComponent } from '../../containers/Markets';
+import { OpenOrdersComponent } from '../../containers/OpenOrders';
+import { OrderComponent } from '../../containers/Order';
+import { OrderBook } from '../../containers/OrderBook';
+import { RecentTrades } from '../../containers/RecentTrades';
+import { TradingChart } from '../../containers/TradingChart';
 
 /* tslint:disable-next-line */
 const { WidthProvider, Responsive } = require('react-grid-layout');
@@ -39,10 +46,6 @@ export interface GridProps {
      */
     breakpoints: GridGeneralInterface;
     /**
-     * Property for children nodes for Grid component. These nodes are GridItems
-     */
-    children: GridChildInterface[];
-    /**
      * Additional class name. By default element receives `cr-grid` class
      * @default empty
      */
@@ -75,23 +78,14 @@ export interface GridProps {
         e: React.MouseEvent,
         element: HTMLElement,
     ) => void;
+    orderComponentResized: number;
+    orderBookComponentResized: number;
 }
 
 const ReactGridLayout = WidthProvider(Responsive);
 
-/* tslint:disable jsx-no-multiline-js */
-const generateChildren = (children: GridProps['children'], layouts: LayoutGrid) => {
-    return (children || layouts.lg).map((child: GridChildInterface) => (
-        <div key={child.i}>
-            {child.title ? <GridItem title={child.title}>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>
-            : <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>}
-        </div>
-    ));
-};
-
 export const Grid: React.FunctionComponent<GridProps> = props => {
     const {
-        children,
         className,
         draggableHandle,
         rowHeight,
@@ -99,10 +93,52 @@ export const Grid: React.FunctionComponent<GridProps> = props => {
         cols,
         layouts,
         onLayoutChange,
+        orderComponentResized,
+        orderBookComponentResized,
         handleResize,
     } = props;
     const cx = classnames('cr-grid', className);
     const margin = 5;
+    const children = React.useMemo(() => {
+        const data = [
+            {
+                i: 1,
+                render: () => <OrderComponent size={orderComponentResized} />,
+            },
+            {
+                i: 2,
+                render: () => <TradingChart />,
+            },
+            {
+                i: 3,
+                render: () => <OrderBook size={orderBookComponentResized} />,
+            },
+            {
+                i: 4,
+                render: () => <MarketDepthsComponent />,
+            },
+            {
+                i: 5,
+                render: () => <OpenOrdersComponent/>,
+            },
+            {
+                i: 6,
+                render: () => <RecentTrades/>,
+            },
+            {
+                i: 7,
+                render: () => <MarketsComponent/>,
+            },
+        ];
+
+        // @ts-ignore
+        return data.map((child: GridChildInterface) => (
+            <div key={child.i}>
+                {child.title ? <GridItem title={child.title}>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>
+                    : <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>}
+            </div>
+        ));
+    }, [orderComponentResized, orderBookComponentResized]);
 
     return (
         <div data-react-toolbox="grid" className={cx}>
@@ -117,7 +153,7 @@ export const Grid: React.FunctionComponent<GridProps> = props => {
                   margin={[margin, margin]}
                   onResize={handleResize}
                 >
-                    {generateChildren(children, layouts)}
+                    {children}
                 </ReactGridLayout>
             </div>
         </div>

@@ -10,24 +10,6 @@ const defaultProps: GridProps = {
     xs: 480,
     xxs: 0,
   },
-  children: [
-    {
-      i: 0,
-      render: () => 'Child Body 0',
-    },
-    {
-      i: 1,
-      render: () => 'Child Body 1',
-    },
-    {
-      i: 2,
-      render: () => 'Child Body 2',
-    },
-    {
-      i: 3,
-      render: () => 'Child Body 3',
-    },
-  ],
   cols: {
     lg: 12,
     md: 10,
@@ -57,6 +39,8 @@ const defaultProps: GridProps = {
   },
   onLayoutChange: () => { return; },
   rowHeight: 30,
+  orderComponentResized: 6,
+  orderBookComponentResized: 6,
 };
 
 const setup = (props: Partial<GridProps> = {}) =>

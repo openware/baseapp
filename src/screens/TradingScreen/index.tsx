@@ -5,16 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { Grid } from '../../components/Grid';
-import {
-    MarketDepthsComponent,
-    MarketsComponent,
-    OpenOrdersComponent,
-    OrderBook,
-    OrderComponent,
-    RecentTrades,
-    ToolBar,
-    TradingChart,
-} from '../../containers';
+import { ToolBar } from '../../containers';
 import { getUrlPart, setDocumentTitle } from '../../helpers';
 import {
     RootState,
@@ -87,37 +78,6 @@ class Trading extends React.Component<Props, StateProps> {
         orderBookComponentResized: 5,
     };
 
-    private gridItems = [
-        {
-            i: 1,
-            render: () => <OrderComponent size={this.state.orderComponentResized} />,
-        },
-        {
-            i: 2,
-            render: () => <TradingChart />,
-        },
-        {
-            i: 3,
-            render: () => <OrderBook size={this.state.orderBookComponentResized} />,
-        },
-        {
-            i: 4,
-            render: () => <MarketDepthsComponent />,
-        },
-        {
-            i: 5,
-            render: () => <OpenOrdersComponent/>,
-        },
-        {
-            i: 6,
-            render: () => <RecentTrades/>,
-        },
-        {
-            i: 7,
-            render: () => <MarketsComponent/>,
-        },
-    ];
-
     public componentDidMount() {
         setDocumentTitle('Trading');
         const { wallets, markets, currentMarket, userLoggedIn, rangerState: { connected, withAuth } } = this.props;
@@ -178,7 +138,7 @@ class Trading extends React.Component<Props, StateProps> {
 
     public render() {
         const rowHeight = 14;
-        const allGridItems = [...this.gridItems];
+        const { orderComponentResized, orderBookComponentResized } = this.state;
         const {rgl} = this.props;
 
         return (
@@ -188,10 +148,11 @@ class Trading extends React.Component<Props, StateProps> {
                     <Grid
                         breakpoints={breakpoints}
                         className="layout"
-                        children={allGridItems}
                         cols={cols}
                         draggableHandle=".cr-table-header__content, .pg-trading-screen__tab-panel, .draggable-container"
                         layouts={rgl.layouts}
+                        orderComponentResized={orderComponentResized}
+                        orderBookComponentResized={orderBookComponentResized}
                         rowHeight={rowHeight}
                         onLayoutChange={() => {return;}}
                         handleResize={this.handleResize}
