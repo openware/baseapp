@@ -4,8 +4,17 @@ import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redu
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
-import { Grid } from '../../components/Grid';
-import { ToolBar } from '../../containers';
+import { GridItem } from '../../components/GridItem';
+import {
+    MarketDepthsComponent,
+    MarketsComponent,
+    OpenOrdersComponent,
+    OrderBook,
+    OrderComponent,
+    RecentTrades,
+    ToolBar,
+    TradingChart,
+} from '../../containers';
 import { getUrlPart, setDocumentTitle } from '../../helpers';
 import {
     RootState,
@@ -25,6 +34,8 @@ import { rangerConnectFetch, RangerConnectFetch } from '../../modules/public/ran
 import { RangerState } from '../../modules/public/ranger/reducer';
 import { selectRanger } from '../../modules/public/ranger/selectors';
 import { selectWallets, Wallet, walletsFetch } from '../../modules/user/wallets';
+
+const { WidthProvider, Responsive } = require('react-grid-layout');
 
 const breakpoints = {
     lg: 1200,
@@ -70,7 +81,66 @@ interface StateProps {
     orderBookComponentResized: number;
 }
 
+const ReactGridLayout = WidthProvider(Responsive);
 type Props = DispatchProps & ReduxProps & RouteComponentProps & InjectedIntlProps;
+
+const TradingWrapper = props => {
+    const { orderComponentResized, orderBookComponentResized, layouts, handleResize } = props;
+    const children = React.useMemo(() => {
+        const data = [
+            {
+                i: 1,
+                render: () => <OrderComponent size={orderComponentResized} />,
+            },
+            {
+                i: 2,
+                render: () => <TradingChart />,
+            },
+            {
+                i: 3,
+                render: () => <OrderBook size={orderBookComponentResized} />,
+            },
+            {
+                i: 4,
+                render: () => <MarketDepthsComponent />,
+            },
+            {
+                i: 5,
+                render: () => <OpenOrdersComponent/>,
+            },
+            {
+                i: 6,
+                render: () => <RecentTrades/>,
+            },
+            {
+                i: 7,
+                render: () => <MarketsComponent/>,
+            },
+        ];
+
+        // @ts-ignore
+        return data.map((child: GridChildInterface) => (
+            <div key={child.i}>
+                <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>}
+            </div>
+        ));
+    }, [orderComponentResized, orderBookComponentResized]);
+
+    return (
+        <ReactGridLayout
+            breakpoints={breakpoints}
+            cols={cols}
+            draggableHandle=".cr-table-header__content, .pg-trading-screen__tab-panel, .draggable-container"
+            rowHeight={14}
+            layouts={layouts}
+            onLayoutChange={() => {return;}}
+            margin={[5, 5]}
+            onResize={handleResize}
+        >
+            {children}
+        </ReactGridLayout>
+    );
+};
 
 class Trading extends React.Component<Props, StateProps> {
     public readonly state = {
@@ -137,26 +207,23 @@ class Trading extends React.Component<Props, StateProps> {
     }
 
     public render() {
-        const rowHeight = 14;
         const { orderComponentResized, orderBookComponentResized } = this.state;
-        const {rgl} = this.props;
+        const { rgl } = this.props;
 
         return (
             <div className={'pg-trading-screen'}>
                 <div className={'pg-trading-wrap'}>
                     <ToolBar/>
-                    <Grid
-                        breakpoints={breakpoints}
-                        className="layout"
-                        cols={cols}
-                        draggableHandle=".cr-table-header__content, .pg-trading-screen__tab-panel, .draggable-container"
-                        layouts={rgl.layouts}
-                        orderComponentResized={orderComponentResized}
-                        orderBookComponentResized={orderBookComponentResized}
-                        rowHeight={rowHeight}
-                        onLayoutChange={() => {return;}}
-                        handleResize={this.handleResize}
-                    />
+                    <div data-react-toolbox="grid" className={'cr-grid'}>
+                        <div className="cr-grid__grid-wrapper">
+                            <TradingWrapper
+                                layouts={rgl.layouts}
+                                orderComponentResized={orderComponentResized}
+                                orderBookComponentResized={orderBookComponentResized}
+                                handleResize={this.handleResize}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         );

@@ -1,6 +1,6 @@
-import { LayoutGrid } from '../../../components/Grid';
 import {
     getLayoutFromLS,
+    LayoutGrid,
     layouts,
     resetLayout,
     saveLayoutToLS,

@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { GridChildInterface } from '../';
 
 export interface GridItemProps {
   /*
@@ -15,6 +14,12 @@ export interface GridItemProps {
   /*
   * Children node for GridItem component
   */
+  title?: string;
+}
+
+export interface GridChildInterface {
+  i: number;
+  render: () => React.ReactNode | GridChildInterface;
   title?: string;
 }
 
