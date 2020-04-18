@@ -1,4 +1,4 @@
-import { LayoutGrid } from '../../../components/Grid';
+import { LayoutGrid} from '../../../helpers/layout';
 import * as actions from './actions';
 import { gridLayoutReducer, GridLayoutState, initialLayoutState } from './reducer';
 

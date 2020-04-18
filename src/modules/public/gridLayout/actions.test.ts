@@ -1,4 +1,4 @@
-import { LayoutGrid } from '../../../components/Grid';
+import { LayoutGrid} from '../../../helpers/layout';
 import * as actions from './actions';
 
 describe('Grid Layout actions', () => {

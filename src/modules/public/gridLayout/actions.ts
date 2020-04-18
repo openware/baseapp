@@ -1,4 +1,4 @@
-import { LayoutGrid } from '../../../components/Grid';
+import { LayoutGrid} from '../../../helpers/layout';
 import { RESET_LAYOUTS, SAVE_LAYOUTS } from './constants';
 
 interface SaveLayoutsAction {
