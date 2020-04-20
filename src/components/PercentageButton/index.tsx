@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { areEqualProps } from '../../helpers/areEqualProps';
 
 export interface PercentageButtonProps {
     /**
-     * String that will be displayed as the name on the button
+     * Number that will be displayed as the name on the button
      */
-    label: string;
+    value: number;
     /**
      * Additional class name for styling. By default element receives `cr-percentage-button` class
      * @default empty
@@ -13,9 +14,11 @@ export interface PercentageButtonProps {
     /**
      * Callback called on button click
      */
-    onClick: () => void;
+    onClick: (index: number) => void;
 }
 
-export const PercentageButton: React.FunctionComponent<PercentageButtonProps> = (props: PercentageButtonProps) => (
-    <button className={props.className || 'cr-percentage-button'} onClick={props.onClick}>{props.label}</button>
-);
+export const PercentageButton: React.FunctionComponent<PercentageButtonProps> = React.memo((props: PercentageButtonProps) => {
+  return (
+      <button className={props.className || 'cr-percentage-button'} onClick={() => props.onClick(props.value)}>{`${props.value * 100}%`}</button>
+  );
+}, areEqualProps);

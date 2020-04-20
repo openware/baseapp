@@ -118,9 +118,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         const walletBase = this.getWallet(currentMarket.base_unit, wallets);
         const walletQuote = this.getWallet(currentMarket.quote_unit, wallets);
 
-        const to = currentMarket.base_unit;
-        const from = currentMarket.quote_unit;
-
         const currentTicker = marketTickers[currentMarket.id];
         const defaultCurrentTicker = { last: '0' };
         const headerContent = (
@@ -137,14 +134,14 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     asks={asks}
                     bids={bids}
                     disabled={executeLoading}
-                    from={from}
+                    from={currentMarket.quote_unit}
                     availableBase={this.getAvailableValue(walletBase)}
                     availableQuote={this.getAvailableValue(walletQuote)}
                     onSubmit={this.handleSubmit}
                     priceMarketBuy={Number((currentTicker || defaultCurrentTicker).last)}
                     priceMarketSell={Number((currentTicker || defaultCurrentTicker).last)}
                     priceLimit={priceLimit}
-                    to={to}
+                    to={currentMarket.base_unit}
                     handleSendType={this.getOrderType}
                     orderTypes={this.getOrderTypes}
                     currentMarketAskPrecision={currentMarket.amount_precision}

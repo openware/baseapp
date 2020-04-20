@@ -118,14 +118,6 @@ const handleSetValue = (value: string | number | undefined, defaultValue: string
     value || defaultValue
 );
 
-const checkButtonIsDisabled = (safeAmount: number, safePrice: number, price: string, props: OrderFormProps, state: OrderFormState) => {
-    const invalidAmount = safeAmount <= 0;
-    const invalidLimitPrice = Number(price) <= 0 && state.orderType === 'Limit';
-    const invalidMarketPrice = safePrice <= 0 && state.orderType === 'Market';
-
-    return props.disabled || !props.available || invalidAmount || invalidLimitPrice || invalidMarketPrice;
-};
-
 export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormState> {
     constructor(props: OrderFormProps) {
         super(props);
@@ -186,12 +178,11 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             ? totalPrice : safeAmount * (Number(price) || 0);
         const amountPercentageArray = [0.25, 0.5, 0.75, 1];
 
-        const cx = classnames('cr-order-form', className);
         const availablePrecision = type === 'buy' ? currentMarketBidPrecision : currentMarketAskPrecision;
         const availableCurrency = type === 'buy' ? from : to;
 
         return (
-            <div className={cx} onKeyPress={this.handleEnterPress}>
+            <div className={classnames('cr-order-form', className)} onKeyPress={this.handleEnterPress}>
                 <div className="cr-order-item">
                     {orderTypeText ? <div className="cr-order-item__dropdown__label">{orderTypeText}</div> : null}
                     <DropdownComponent list={orderTypes} onSelect={this.handleOrderTypeChange} placeholder=""/>
@@ -202,10 +193,10 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                             currency={from}
                             label={priceText}
                             placeholder={priceText}
-                            value={handleSetValue(price,'')}
+                            value={price || ''}
                             isFocused={priceFocused}
                             handleChangeValue={this.handlePriceChange}
-                            handleFocusInput={() => this.handleFieldFocus(priceText)}
+                            handleFocusInput={this.handleFieldFocus}
                         />
                     </div>
                 ) : (
@@ -230,31 +221,22 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                         currency={to}
                         label={amountText}
                         placeholder={amountText}
-                        value={handleSetValue(amount, '')}
+                        value={amount || ''}
                         isFocused={amountFocused}
                         handleChangeValue={this.handleAmountChange}
-                        handleFocusInput={() => this.handleFieldFocus(amountText)}
+                        handleFocusInput={this.handleFieldFocus}
                     />
                 </div>
 
                 <div className="cr-order-item">
                     <div className="cr-order-item__percentage-buttons">
-                        <PercentageButton
-                            label={`${amountPercentageArray[0] * 100}%`}
-                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[0], type)}
-                        />
-                        <PercentageButton
-                            label={`${amountPercentageArray[1] * 100}%`}
-                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[1], type)}
-                        />
-                        <PercentageButton
-                            label={`${amountPercentageArray[2] * 100}%`}
-                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[2], type)}
-                        />
-                        <PercentageButton
-                            label={`${amountPercentageArray[3] * 100}%`}
-                            onClick={() => this.handleChangeAmountByButton(amountPercentageArray[3], type)}
-                        />
+                        {
+                            [0, 1, 2, 3].map(index => <PercentageButton
+                                value={amountPercentageArray[index]}
+                                key={index}
+                                onClick={this.handleChangeAmountByButton}
+                            />)
+                        }
                     </div>
                 </div>
 
@@ -298,7 +280,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                     <Button
                         block={true}
                         className="btn-block mr-1 mt-1 btn-lg"
-                        disabled={checkButtonIsDisabled(safeAmount, safePrice, price, this.props, this.state)}
+                        disabled={this.checkButtonIsDisabled()}
                         onClick={this.handleSubmit}
                         size="lg"
                         variant={type === 'buy' ? 'success' : 'danger'}
@@ -354,10 +336,10 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         }
     };
 
-    private handleChangeAmountByButton = (value: number, type: string) => {
+    private handleChangeAmountByButton = (value: number) => {
         const { orderType, price } = this.state;
 
-        this.props.handleChangeAmountByButton(value, orderType, price, type);
+        this.props.handleChangeAmountByButton(value, orderType, price, this.props.type);
     };
 
     private handleSubmit = () => {
@@ -378,6 +360,18 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         }, () => {
             this.props.handleAmountChange('', this.props.type);
         });
+    };
+
+    private checkButtonIsDisabled = (): boolean => {
+        const { disabled, available, amount, totalPrice } = this.props;
+        const { orderType, priceMarket, price } = this.state;
+        const safePrice = totalPrice / Number(amount) || priceMarket;
+
+        const invalidAmount = Number(amount) <= 0;
+        const invalidLimitPrice = Number(price) <= 0 && orderType === 'Limit';
+        const invalidMarketPrice = safePrice <= 0 && orderType === 'Market';
+
+        return disabled || !available || invalidAmount || invalidLimitPrice || invalidMarketPrice;
     };
 
     private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
