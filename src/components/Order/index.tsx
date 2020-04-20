@@ -144,7 +144,7 @@ const defaultOrderTypes: DropdownElem[] = [
 const splitBorder = 449;
 const defaultWidth = 635;
 
-export class Order extends React.PureComponent<OrderComponentProps, State> {
+export class Order extends React.Component<OrderComponentProps, State> {
     public state = {
         index: 0,
         amountSell: '',

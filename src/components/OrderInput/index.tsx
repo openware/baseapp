@@ -1,6 +1,7 @@
 import cr from 'classnames';
 import * as React from 'react';
 import { CustomInput } from '../../components';
+import {areEqualProps} from '../../helpers/areEqualProps';
 
 export interface OrderInputProps {
     /**
@@ -37,7 +38,7 @@ export interface OrderInputProps {
     /**
      * Function for handling input focus
      */
-    handleFocusInput: () => void;
+    handleFocusInput: (value?: string) => void;
     /**
      * Function for handling 'Enter' key
      */
@@ -47,7 +48,8 @@ export interface OrderInputProps {
 /**
  * Input with cryptocurrency icon and label.
  */
-export const OrderInput: React.FunctionComponent<OrderInputProps> = (props: OrderInputProps) => {
+
+export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((props: OrderInputProps) => {
     const { currency, className, isFocused, label, placeholder, value, handleChangeValue, onKeyPress, handleFocusInput } = props;
     const cx = cr('cr-order-input', className);
 
@@ -65,12 +67,12 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = (props: Orde
                 <CustomInput
                     type="text"
                     inputValue={value}
-                    placeholder={placeholder ? placeholder : '0'}
+                    placeholder={placeholder || '0'}
                     handleChangeInput={handleChangeValue}
                     label={value && label ? label : ''}
                     defaultLabel={value && label ? label : ''}
                     onKeyPress={onKeyPress}
-                    handleFocusInput={handleFocusInput}
+                    handleFocusInput={() => handleFocusInput(props.label)}
                 />
             </fieldset>
             <div className={cryptoIconClass}>
@@ -78,4 +80,4 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = (props: Orde
             </div>
         </div>
     );
-};
+}, areEqualProps);

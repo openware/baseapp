@@ -66,10 +66,10 @@ describe('OrderForm', () => {
     it('should render percentage buttons', () => {
         const wrapper = setup();
         const percentageButton = wrapper.find(PercentageButton);
-        expect(percentageButton.at(0).props().label.toLowerCase()).toBe('25%');
-        expect(percentageButton.at(1).props().label.toLowerCase()).toBe('50%');
-        expect(percentageButton.at(2).props().label.toLowerCase()).toBe('75%');
-        expect(percentageButton.at(3).props().label.toLowerCase()).toBe('100%');
+        expect(percentageButton.at(0).props().value).toBe(0.25);
+        expect(percentageButton.at(1).props().value).toBe(0.5);
+        expect(percentageButton.at(2).props().value).toBe(0.75);
+        expect(percentageButton.at(3).props().value).toBe(1);
     });
 
     it('should render submit button', () => {

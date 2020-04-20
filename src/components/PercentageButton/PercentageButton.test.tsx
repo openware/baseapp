@@ -5,7 +5,7 @@ import { PercentageButton, PercentageButtonProps } from '.';
 
 const onClickSpy = spy();
 const defaultProps: PercentageButtonProps = {
-    label: '100%',
+    value: 100,
     className: 'cr-button-percentage-100',
     onClick: onClickSpy,
 };
