@@ -6,6 +6,11 @@ Why React? We consider it's the biggest frontend community and have capacities t
 
 You can see an example of a live application running at: https://demo.openware.com/
 
+## License
+
+Please note, that BaseApp license only allows Non-Commercial use of this component. To purchase the Commercial license, please contact us at hello@openware.com.
+
+
 ## Install dependencies
 
 ```bash
