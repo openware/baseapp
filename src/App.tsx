@@ -8,18 +8,14 @@ import { gaTrackerKey } from '../src/api';
 import { Alerts, ErrorWrapper, Footer, Header, Sidebar } from './containers';
 import { RootState } from './modules';
 import { Layout } from './routes';
-
-interface Locale {
-    lang: string;
-    messages: object;
-}
+import { languageMap } from './translations';
 
 interface AppProps {
     history: History;
 }
 
 interface ReduxProps {
-    locale: Locale;
+    lang: string;
 }
 
 const gaKey = gaTrackerKey();
@@ -41,13 +37,10 @@ class AppLayout extends React.Component<Props, {}, {}> {
     }
 
     public render() {
-        const {
-            locale,
-        } = this.props;
-        const { lang, messages } = locale;
+        const { lang } = this.props;
 
         return (
-            <IntlProvider locale={lang} messages={messages} key={lang}>
+            <IntlProvider locale={lang} messages={languageMap[lang]} key={lang}>
                 <Router history={history}>
                     <ErrorWrapper>
                         <Header/>
@@ -64,7 +57,7 @@ class AppLayout extends React.Component<Props, {}, {}> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
     (state: RootState): ReduxProps => ({
-        locale: state.public.i18n,
+        lang: state.public.i18n.lang,
     });
 
 // tslint:disable-next-line:no-any
