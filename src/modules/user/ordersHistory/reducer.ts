@@ -1,4 +1,5 @@
 import { defaultStorageLimit } from '../../../api';
+import { sliceArray } from '../../../helpers';
 import { OrderCommon } from '../../types';
 import { convertOrderEvent } from '../openOrders/helpers';
 import { OrdersHistoryAction } from './actions';
@@ -50,25 +51,25 @@ export const ordersHistoryReducer = (
         case ORDERS_HISTORY_DATA:
             return {
                 ...state,
-                list: action.payload.list.slice(0, defaultStorageLimit()),
+                list: sliceArray(action.payload.list, defaultStorageLimit()),
                 fetching: false,
                 pageIndex: action.payload.pageIndex,
                 nextPageExists: action.payload.nextPageExists,
             };
         case ORDERS_HISTORY_RANGER_DATA:
-            return { ...state, cancelFetching: false, list: insertOrUpdate(state.list, convertOrderEvent(action.payload)).slice(0, defaultStorageLimit()) };
+            return { ...state, cancelFetching: false, list: sliceArray(insertOrUpdate(state.list, convertOrderEvent(action.payload)), defaultStorageLimit()) };
         case ORDERS_HISTORY_ERROR:
             return { ...state, list: [], pageIndex: 0, fetching: false };
         case ORDERS_CANCEL_ALL_FETCH:
             return { ...state, cancelAllFetching: true, cancelAllError: false };
         case ORDERS_CANCEL_ALL_DATA:
-            return { ...state, cancelAllFetching: false, list: action.payload.slice(0, defaultStorageLimit()) };
+            return { ...state, cancelAllFetching: false, list: sliceArray(action.payload, defaultStorageLimit()) };
         case ORDERS_CANCEL_ALL_ERROR:
             return { ...state, cancelAllFetching: false, cancelAllError: true };
         case ORDERS_HISTORY_CANCEL_FETCH:
             return { ...state, cancelFetching: true, cancelError: false };
         case ORDERS_HISTORY_CANCEL_DATA:
-            return { ...state, cancelFetching: false, list: action.payload.slice(0, defaultStorageLimit()) };
+            return { ...state, cancelFetching: false, list: sliceArray(action.payload, defaultStorageLimit()) };
         case ORDERS_HISTORY_CANCEL_ERROR:
             return { ...state, cancelFetching: false, cancelError: true };
         case ORDERS_HISTORY_RESET: {
