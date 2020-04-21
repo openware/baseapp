@@ -17,7 +17,8 @@ import {
     selectUserLoggedIn,
     selectWallets,
     setCurrentPrice,
-    Wallet, walletsFetch,
+    Wallet,
+    walletsFetch,
 } from '../../modules';
 import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/public/markets';
 import {
@@ -46,7 +47,7 @@ interface StoreProps {
 }
 
 interface DispatchProps {
-    accountWallets: typeof walletsFetch;
+    walletsFetch: typeof walletsFetch;
     setCurrentPrice: typeof setCurrentPrice;
     orderExecute: typeof orderExecuteFetch;
     pushAlert: typeof alertPush;
@@ -74,6 +75,12 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
     private orderRef;
 
+    public componentDidMount() {
+        if (!this.props.wallets.length) {
+            this.props.walletsFetch();
+        }
+    }
+
     public componentDidUpdate() {
         if (this.orderRef.current && this.state.width !== this.orderRef.current.clientWidth) {
             this.setState({
@@ -83,10 +90,12 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     }
 
     public componentWillReceiveProps(next: Props) {
-        const {userLoggedIn, accountWallets} = this.props;
-        if (userLoggedIn && (!next.wallets || next.wallets.length === 0)) {
-            accountWallets();
+        const { userLoggedIn } = this.props;
+
+        if (userLoggedIn && !next.wallets.length) {
+            this.props.walletsFetch();
         }
+
         if (+next.currentPrice && next.currentPrice !== this.state.priceLimit) {
             this.setState({
                 priceLimit: +next.currentPrice,
@@ -278,7 +287,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    accountWallets: () => dispatch(walletsFetch()),
+    walletsFetch: () => dispatch(walletsFetch()),
     orderExecute: payload => dispatch(orderExecuteFetch(payload)),
     pushAlert: payload => dispatch(alertPush(payload)),
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),

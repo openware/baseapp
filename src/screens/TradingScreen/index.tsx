@@ -33,7 +33,6 @@ import { depthFetch } from '../../modules/public/orderBook';
 import { rangerConnectFetch, RangerConnectFetch } from '../../modules/public/ranger';
 import { RangerState } from '../../modules/public/ranger/reducer';
 import { selectRanger } from '../../modules/public/ranger/selectors';
-import { selectWallets, Wallet, walletsFetch } from '../../modules/user/wallets';
 
 const { WidthProvider, Responsive } = require('react-grid-layout');
 
@@ -56,7 +55,6 @@ const cols = {
 interface ReduxProps {
     currentMarket: Market | undefined;
     markets: Market[];
-    wallets: Wallet [];
     user: User;
     rangerState: RangerState;
     userLoggedIn: boolean;
@@ -69,7 +67,6 @@ interface ReduxProps {
 interface DispatchProps {
     depthFetch: typeof depthFetch;
     marketsFetch: typeof marketsFetch;
-    accountWallets: typeof walletsFetch;
     rangerConnect: typeof rangerConnectFetch;
     setCurrentPrice: typeof setCurrentPrice;
     setCurrentMarket: typeof setCurrentMarket;
@@ -150,17 +147,16 @@ class Trading extends React.Component<Props, StateProps> {
 
     public componentDidMount() {
         setDocumentTitle('Trading');
-        const { wallets, markets, currentMarket, userLoggedIn, rangerState: { connected, withAuth } } = this.props;
+        const { markets, currentMarket, userLoggedIn, rangerState: { connected, withAuth } } = this.props;
 
         if (markets.length < 1) {
             this.props.marketsFetch();
         }
-        if (!wallets || wallets.length === 0) {
-            this.props.accountWallets();
-        }
+
         if (currentMarket && !incrementalOrderBook()) {
             this.props.depthFetch(currentMarket);
         }
+
         if (!connected) {
             this.props.rangerConnect({ withAuth: userLoggedIn });
         }
@@ -264,7 +260,6 @@ class Trading extends React.Component<Props, StateProps> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     currentMarket: selectCurrentMarket(state),
     markets: selectMarkets(state),
-    wallets: selectWallets(state),
     user: selectUserInfo(state),
     rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
@@ -275,7 +270,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     marketsFetch: () => dispatch(marketsFetch()),
     depthFetch: payload => dispatch(depthFetch(payload)),
-    accountWallets: () => dispatch(walletsFetch()),
     rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     setCurrentMarket: payload => dispatch(setCurrentMarket(payload)),
