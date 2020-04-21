@@ -21,6 +21,7 @@ export * from './localeDate';
 export * from './preciseNumber';
 export * from './setDocumentTitle';
 export * from './setTradeColor';
+export * from './sliceArray';
 export * from './sliceString';
 export * from './sortByDate';
 export * from './sortByPrice';

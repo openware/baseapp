@@ -1,4 +1,5 @@
 import { defaultStorageLimit } from '../../../api';
+import { sliceArray } from '../../../helpers';
 import { RangerAction } from './actions';
 import {
     RANGER_CONNECT_DATA,
@@ -30,7 +31,7 @@ export const rangerReducer = (state = initialRangerState, action: RangerAction):
         case RANGER_SUBSCRIPTIONS_DATA:
             return {
                 ...state,
-                subscriptions: [...action.payload.subscriptions].slice(0, defaultStorageLimit()),
+                subscriptions: sliceArray([...action.payload.subscriptions], defaultStorageLimit()),
             };
         case RANGER_CONNECT_DATA:
             return {

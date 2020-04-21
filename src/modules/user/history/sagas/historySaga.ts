@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, defaultStorageLimit, RequestOptions } from '../../../../api';
-import { getHistorySagaParam } from '../../../../helpers';
+import { getHistorySagaParam, sliceArray } from '../../../../helpers';
 import { alertPush } from '../../../public/alert';
 import { failHistory, HistoryFetch, successHistory } from '../actions';
 
@@ -38,7 +38,7 @@ export function* historySaga(action: HistoryFetch) {
         let updatedData = data;
 
         if (type === 'trades') {
-            updatedData = data.slice(0, defaultStorageLimit());
+            updatedData = sliceArray(data, defaultStorageLimit());
         }
 
         yield put(successHistory({ list: updatedData, page, nextPageExists }));

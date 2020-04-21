@@ -1,4 +1,5 @@
 import { defaultStorageLimit } from '../../../api';
+import { sliceArray } from '../../../helpers';
 import { CommonError } from '../../types';
 import { PublicTrade } from '../../user/history';
 import { RecentTradesActions } from './actions';
@@ -39,7 +40,7 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
     switch (action.type) {
         case RECENT_TRADES_DATA: {
             return {
-                list: action.payload.slice(0, defaultStorageLimit()),
+                list: sliceArray(action.payload, defaultStorageLimit()),
                 loading: false,
             };
         }
@@ -58,13 +59,14 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
         }
         case RECENT_TRADES_PUSH: {
             const lastTrades = convertTradeEventList(action.payload.market, action.payload.trades);
+            const updatedList = [
+                ...lastTrades,
+                ...state.list,
+            ];
 
             return {
                 ...state,
-                list: [
-                    ...lastTrades,
-                    ...state.list,
-                ].slice(0, defaultStorageLimit()),
+                list: sliceArray(updatedList, defaultStorageLimit()),
             };
         }
         default:

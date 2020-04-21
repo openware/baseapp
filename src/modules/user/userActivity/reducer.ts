@@ -1,4 +1,5 @@
 import { defaultStorageLimit } from '../../../api';
+import { sliceArray } from '../../../helpers';
 import { CommonError } from '../../types';
 import { UserActivityAction, UserActivityDataInterface } from './actions';
 import {
@@ -33,7 +34,7 @@ export const userActivityReducer = (state = initialUserActivityState, action: Us
         case USER_ACTIVITY_DATA:
             return {
                 ...state,
-                list: action.payload.list.slice(0, defaultStorageLimit()),
+                list: sliceArray(action.payload.list, defaultStorageLimit()),
                 loading: false,
                 page: action.payload.page,
                 total: action.payload.total,
