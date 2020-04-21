@@ -1,15 +1,8 @@
-import {
-    CHANGE_LANGUAGE,
-} from './constants';
-
-import { languageMap } from '../../../translations';
-import {
-    ChangeLanguageAction,
-} from './actions';
+import { ChangeLanguageAction } from './actions';
+import { CHANGE_LANGUAGE } from './constants';
 
 export interface LanguageState {
     lang: string;
-    messages: { [pair: string]: string };
 }
 
 const defaultLanguage = {
@@ -20,7 +13,6 @@ const currentLang: string = localStorage.getItem('lang_code') || defaultLanguage
 
 export const initialChangeLanguageState: LanguageState = {
     lang: currentLang,
-    messages: languageMap[currentLang],
 };
 
 export const changeLanguageReducer = (state = initialChangeLanguageState, action: ChangeLanguageAction) => {
@@ -30,7 +22,6 @@ export const changeLanguageReducer = (state = initialChangeLanguageState, action
 
             return {
                 lang: action.payload,
-                messages: languageMap[action.payload],
              };
         default:
             return state;
