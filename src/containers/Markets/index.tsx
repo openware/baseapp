@@ -21,7 +21,6 @@ import {
     Ticker,
 } from '../../modules/public/markets';
 import { depthFetch } from '../../modules/public/orderBook';
-import { walletsFetch } from '../../modules/user/wallets';
 
 interface ReduxProps {
     userData: User;
@@ -36,7 +35,6 @@ interface ReduxProps {
 interface DispatchProps {
     setCurrentMarket: typeof setCurrentMarket;
     depthFetch: typeof depthFetch;
-    walletsFetch: typeof walletsFetch;
     tickers: typeof marketsTickersFetch;
     setCurrentPrice: typeof setCurrentPrice;
 }
@@ -54,7 +52,6 @@ class MarketsContainer extends React.Component<Props> {
         if (this.props.markets.length === 0) {
             this.props.tickers();
         }
-        this.props.walletsFetch();
     }
 
     public render() {
@@ -129,7 +126,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         setCurrentMarket: (market: Market) => dispatch(setCurrentMarket(market)),
-        walletsFetch: () => dispatch(walletsFetch()),
         depthFetch: (market: Market) => dispatch(depthFetch(market)),
         tickers: () => dispatch(marketsTickersFetch()),
         setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
