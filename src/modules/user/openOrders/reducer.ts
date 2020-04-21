@@ -1,3 +1,4 @@
+import { defaultStorageLimit } from '../../../api';
 import { OrderCommon } from '../../types';
 import { OpenOrdersAction } from './actions';
 import {
@@ -40,22 +41,22 @@ export const openOrdersReducer = (
         case OPEN_ORDERS_FETCH:
             return { ...state, fetching: true };
         case OPEN_ORDERS_DATA:
-            return { ...state, fetching: false, list: action.payload.map(convertOrderAPI) };
+            return { ...state, fetching: false, list: action.payload.map(convertOrderAPI).slice(0, defaultStorageLimit()) };
         case OPEN_ORDERS_UPDATE:
             return {
                 ...state,
-                list: insertOrUpdate(state.list, convertOrderEvent(action.payload)),
+                list: insertOrUpdate(state.list, convertOrderEvent(action.payload)).slice(0, defaultStorageLimit()),
             };
         case OPEN_ORDERS_ERROR:
             return { ...state, fetching: false, list: [] };
         case OPEN_ORDERS_APPEND:
-            return { ...state, list: insertIfNotExisted(state.list, convertOrderAPI(action.payload)) };
+            return { ...state, list: insertIfNotExisted(state.list, convertOrderAPI(action.payload)).slice(0, defaultStorageLimit()) };
         case OPEN_ORDERS_RESET:
             return initialOpenOrdersState;
         case OPEN_ORDERS_CANCEL_FETCH:
             return { ...state, cancelFetching: true, cancelError: false };
         case OPEN_ORDERS_CANCEL_DATA:
-            return { ...state, cancelFetching: false, list: action.payload };
+            return { ...state, cancelFetching: false, list: action.payload.slice(0, defaultStorageLimit()) };
         case OPEN_ORDERS_CANCEL_ERROR:
             return { ...state, cancelFetching: false, cancelError: true };
         default:

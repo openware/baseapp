@@ -1,3 +1,4 @@
+import { defaultStorageLimit } from '../../../api';
 import { NewHistoryActions } from './actions';
 import {
     NEW_HISTORY_DATA,
@@ -25,7 +26,7 @@ export const newHistoryReducer = (state = initialNewHistoryState, action: NewHis
         case NEW_HISTORY_DATA:
             return {
                 ...state,
-                list: action.payload.list,
+                list: action.payload.list.slice(0, defaultStorageLimit()),
                 fetching: false,
             };
         case NEW_HISTORY_ERROR: {

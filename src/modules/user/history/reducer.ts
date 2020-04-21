@@ -1,3 +1,4 @@
+import { defaultStorageLimit } from '../../../api';
 import { getUnique } from '../../../helpers/getUnique';
 import { HistoryActions } from './actions';
 import {
@@ -31,7 +32,7 @@ export const historyReducer = (state = initialState, action: HistoryActions) => 
         case HISTORY_DATA:
             return {
                 ...state,
-                list: action.payload.list,
+                list: action.payload.list.slice(0, defaultStorageLimit()),
                 fetching: false,
                 page: action.payload.page,
                 nextPageExists: action.payload.nextPageExists,
@@ -46,7 +47,7 @@ export const historyReducer = (state = initialState, action: HistoryActions) => 
             let list = [...action.payload];
             list = getUnique(list, 'id');
 
-            return { ...state, list: list };
+            return { ...state, list: list.slice(0, defaultStorageLimit()) };
         }
         default:
             return state;
