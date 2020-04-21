@@ -231,8 +231,8 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 <div className="cr-order-item">
                     <div className="cr-order-item__percentage-buttons">
                         {
-                            [0, 1, 2, 3].map(index => <PercentageButton
-                                value={amountPercentageArray[index]}
+                            amountPercentageArray.map((value, index) => <PercentageButton
+                                value={value}
                                 key={index}
                                 onClick={this.handleChangeAmountByButton}
                             />)
