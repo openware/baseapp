@@ -6,4 +6,4 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 
-{"at":1543958863,"ticker":{"buy":"0.0","sell":"0.0","low":"0.0","high":"0.0","last":"4096.77","vol":"0.0"}}
+{"at":1543958863,"ticker":{"amount":"0.0","buy":"0.0","sell":"0.0","low":"0.0","high":"0.0","last":"4096.77","volume":"0.0"}}

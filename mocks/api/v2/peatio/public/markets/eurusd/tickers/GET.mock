@@ -31,11 +31,12 @@ accept: application/json
  {
   "at": 1544793336,
   "ticker": {
+    "amount": "0.0",
     "buy": "0.0",
     "sell": "0.0",
     "low": "0.0",
     "high": "0.0",
     "last": "0.0",
-    "vol": "0.0"
+    "volume": "0.0"
   }
 }

@@ -85,12 +85,13 @@ class MarketsTableContainer extends React.Component<Props, State> {
         } = this.props;
         const { currentBidUnit } = this.state;
         const defaultTicker = {
+            amount: '0.0',
             last: '0.0',
             high: '0.0',
             open: '0.0',
             low: '0.0',
             price_change_percent: '+0.00%',
-            vol: '0.0',
+            volume: '0.0',
         };
 
         let currentBidUnitsList: string[] = [''];
@@ -113,7 +114,7 @@ class MarketsTableContainer extends React.Component<Props, State> {
                 price_change_percent: String((marketTickers[market.id] || defaultTicker).price_change_percent),
                 high: Decimal.format(Number((marketTickers[market.id] || defaultTicker).high), market.amount_precision),
                 low: Decimal.format(Number((marketTickers[market.id] || defaultTicker).low), market.amount_precision),
-                vol: Decimal.format(Number((marketTickers[market.id] || defaultTicker).vol), market.amount_precision),
+                volume: Decimal.format(Number((marketTickers[market.id] || defaultTicker).volume), market.amount_precision),
             }),
         ).map(market =>
             ({

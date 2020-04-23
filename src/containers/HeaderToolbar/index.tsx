@@ -26,7 +26,7 @@ type Props = InjectedIntlProps & ReduxProps;
 class HeaderToolbarContainer extends React.Component<Props> {
     public render() {
         const { marketTickers, currentMarket } = this.props;
-        const defaultTicker = { low: 0, last: 0, high: 0, vol: 0, price_change_percent: '+0.00%' };
+        const defaultTicker = { amount: 0, low: 0, last: 0, high: 0, volume: 0, price_change_percent: '+0.00%' };
 
         const isPositive = currentMarket && /\+/.test(this.getTickerValue('price_change_percent'));
         const cls = isPositive ? 'positive' : 'negative';
@@ -62,7 +62,7 @@ class HeaderToolbarContainer extends React.Component<Props> {
                 </div>
                 <div className="pg-header__toolbar-item">
                     <p className="pg-header__toolbar-item-value pg-header__toolbar-item-value-positive">
-                        {currentMarket && Decimal.format(Number(this.getTickerValue('vol')), currentMarket.amount_precision)} {askUnit}
+                        {currentMarket && Decimal.format(Number(this.getTickerValue('volume')), currentMarket.amount_precision)} {askUnit}
                     </p>
                     <p className="pg-header__toolbar-item-text">
                         {this.translate('page.body.trade.toolBar.volume')}
@@ -82,7 +82,7 @@ class HeaderToolbarContainer extends React.Component<Props> {
 
     private getTickerValue = (value: string) => {
         const { marketTickers, currentMarket } = this.props;
-        const defaultTicker = {low: 0, last: 0, high: 0, vol: 0, price_change_percent: '+0.00%'};
+        const defaultTicker = { amount: 0, low: 0, last: 0, high: 0, volume: 0, price_change_percent: '+0.00%'};
 
         return currentMarket && (marketTickers[currentMarket.id] || defaultTicker)[value];
     };
