@@ -63,11 +63,12 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     public shouldComponentUpdate(nextProps: Props) {
-        const { asks, bids } = this.props;
+        const { asks, bids, currentMarket } = this.props;
 
         return (
             JSON.stringify(nextProps.asks) !== JSON.stringify(asks) ||
-            JSON.stringify(nextProps.bids) !== JSON.stringify(bids)
+            JSON.stringify(nextProps.bids) !== JSON.stringify(bids) ||
+            (nextProps.currentMarket && nextProps.currentMarket.id) !== (currentMarket && currentMarket.id)
         );
     }
 
