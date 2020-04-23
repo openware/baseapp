@@ -58,27 +58,25 @@ describe('Saga: marketsFetchSaga', () => {
     ];
 
     const btcethTicker: Ticker = {
-        buy: '0.0',
-        sell: '0.0',
+        amount: '5.0',
         low: '0.0',
         high: '0.0',
         open: 1,
         last: '0.0',
-        vol: '10.0',
+        volume: '10.0',
         avg_price: '1.42857142857142857143',
         price_change_percent: '-100.00%',
     };
 
     const btcusdTicker: Ticker = {
-        buy: '0.0',
-        sell: '1.0',
+        amount: '10.0',
         low: '0.0',
         high: '0.0',
         open: 1,
         last: '0.0',
         avg_price: '0.875',
         price_change_percent: '-100.00%',
-        vol: '15.5',
+        volume: '15.5',
     };
 
     const marketsTickersListResponse = {

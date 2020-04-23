@@ -14,23 +14,21 @@ export interface Market {
 }
 
 export interface Ticker {
-    buy: string;
-    sell: string;
-    low: string;
-    high: string;
-    open: number | string;
-    last: string;
+    amount: string;
     avg_price: string;
+    high: string;
+    last: string;
+    low: string;
+    open: number | string;
     price_change_percent: string;
-    vol: string;
+    volume: string;
 }
 
 export interface TickerEvent {
+    amount: string;
     name: string;
     base_unit: string;
     quote_unit: string;
-    buy: string;
-    sell: string;
     low: string;
     high: string;
     open: number;

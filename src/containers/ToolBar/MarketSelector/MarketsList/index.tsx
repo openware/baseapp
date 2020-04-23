@@ -130,7 +130,7 @@ class MarketsListComponent extends React.Component<Props, State> {
         const { markets, marketTickers, search, currencyQuote } = this.props;
         const defaultTicker = {
             last: 0,
-            vol: 0,
+            volume: 0,
             price_change_percent: '+0.00%',
         };
         const arr: Market[] = [];
@@ -139,7 +139,7 @@ class MarketsListComponent extends React.Component<Props, State> {
             return {
                 ...market,
                 last: (marketTickers[market.id] || defaultTicker).last,
-                vol: (marketTickers[market.id] || defaultTicker).vol,
+                volume: (marketTickers[market.id] || defaultTicker).volume,
                 price_change_percent: (marketTickers[market.id] || defaultTicker).price_change_percent,
                 price_change_percent_num: Number.parseFloat((marketTickers[market.id] || defaultTicker).price_change_percent),
             };
@@ -177,7 +177,7 @@ class MarketsListComponent extends React.Component<Props, State> {
             return [
                 market.name,
                 (<span className={classname}>{Decimal.format(Number(market.last), market.price_precision)}</span>),
-                (<span className={classname}>{Decimal.format(Number(market.vol), market.amount_precision)}</span>),
+                (<span className={classname}>{Decimal.format(Number(market.volume), market.amount_precision)}</span>),
                 (<span className={classname}>{market.price_change_percent}</span>),
             ];
         });

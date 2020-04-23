@@ -10,8 +10,26 @@ export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: 
     for (const market in events) {
         if (events.hasOwnProperty(market)) {
             const event: TickerEvent = events[market];
-            const { open, low, high, last, volume, sell, buy, avg_price, price_change_percent } = event;
-            tickers[market] = { open, low, high, last, sell, buy, vol: volume, avg_price, price_change_percent };
+            const {
+                amount,
+                avg_price,
+                high,
+                last,
+                low,
+                open,
+                price_change_percent,
+                volume,
+            } = event;
+            tickers[market] = {
+                amount,
+                avg_price,
+                high,
+                last,
+                low,
+                open,
+                price_change_percent,
+                volume,
+            };
         }
     }
 
