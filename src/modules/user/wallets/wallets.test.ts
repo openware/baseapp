@@ -102,33 +102,6 @@ describe('Wallets', () => {
             },
         ];
 
-        const feesResponse = [
-            {
-                currency: 'bch',
-                fee: {
-                    type: 'fixed',
-                    value: '0.0',
-                },
-                type: 'coin',
-            },
-            {
-                currency: 'btc',
-                fee: {
-                    type: 'fixed',
-                    value: '0.0',
-                },
-                type: 'coin',
-            },
-            {
-                currency: 'eth',
-                fee: {
-                    type: 'fixed',
-                    value: '0.0',
-                },
-                type: 'coin',
-            },
-        ];
-
         const walletsDataActionPayload = [
             {
                 balance: '0.0',
@@ -187,14 +160,9 @@ describe('Wallets', () => {
             mockAxios.onGet('/public/currencies').reply(200, currenciesResponse);
         };
 
-        const mockWalletsWithdrawFeesFetch = () => {
-            mockAxios.onGet('/public/fees/withdraw').reply(200, feesResponse);
-        };
-
         it('should handle wallet address data', async () => {
             mockWalletsBalancesFetch();
             mockWalletsCurrenciesFetch();
-            mockWalletsWithdrawFeesFetch();
             const promise = new Promise(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
