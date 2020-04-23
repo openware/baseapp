@@ -229,7 +229,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${fixed}}|[\\d-]*\\.[\\d-])$`);
         if (convertedValue.match(condition)) {
             const amount = (convertedValue !== '') ? Number(parseFloat(convertedValue).toFixed(fixed)) : '';
-            const total = (amount !== '') ? amount - this.props.fee : 0;
+            const total = (amount !== '') ? Number((amount - this.props.fee).toFixed(fixed)) : 0;
 
             if (total < 0) {
                 this.setTotal(0);
