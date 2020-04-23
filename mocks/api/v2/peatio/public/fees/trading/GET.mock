@@ -1,8 +1,0 @@
-HTTP/2 200
-Content-Type: application/json; charset=utf-8
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
-Access-Control-Max-Age: 3600
-Access-Control-Allow-Credentials: true
-
-[{"market":"bchbtc","ask_fee":{"type":"relative","value":"0.0001"},"bid_fee":{"type":"relative","value":"0.0001"}},{"market":"ethbtc","ask_fee":{"type":"relative","value":"0.0001"},"bid_fee":{"type":"relative","value":"0.0001"}},{"market":"xrpbtc","ask_fee":{"type":"relative","value":"0.0001"},"bid_fee":{"type":"relative","value":"0.0001"}},{"market":"ltcbtc","ask_fee":{"type":"relative","value":"0.0001"},"bid_fee":{"type":"relative","value":"0.0001"}}]

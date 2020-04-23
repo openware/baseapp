@@ -1,6 +1,0 @@
-HTTP/2 201
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
-access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
-Access-Control-Max-Age: 3600
-Access-Control-Allow-Credentials: true
