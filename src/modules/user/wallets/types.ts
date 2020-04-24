@@ -18,14 +18,14 @@ export interface WalletAddress {
 }
 
 export interface WalletWithdrawCCY {
-    amount: number;
+    amount: string;
     currency: string;
     otp: string;
     beneficiary_id: string;
 }
 
 export interface WalletWithdrawFiat {
-    amount: number;
+    amount: string;
     currency: string;
     currency_type: string;
     otp: string;

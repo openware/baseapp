@@ -79,7 +79,7 @@ const defaultBeneficiary: Beneficiary = {
 interface WalletsState {
     activeIndex: number;
     otpCode: string;
-    amount: number;
+    amount: string;
     beneficiary: Beneficiary;
     selectedWalletIndex: number;
     withdrawSubmitModal: boolean;
@@ -88,7 +88,7 @@ interface WalletsState {
     filteredWallets?: WalletItemProps[] | null;
     tab: string;
     withdrawDone: boolean;
-    total: number;
+    total: string;
     currentTabIndex: number;
 }
 
@@ -104,11 +104,11 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             withdrawSubmitModal: false,
             withdrawConfirmModal: false,
             otpCode: '',
-            amount: 0,
+            amount: '',
             beneficiary: defaultBeneficiary,
             tab: this.translate('page.body.wallets.tabs.deposit'),
             withdrawDone: false,
-            total: 0,
+            total: '',
             currentTabIndex: 0,
         };
     }
@@ -255,13 +255,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }));
     };
 
-    private toggleConfirmModal = (amount?: number, total?: number, beneficiary?: Beneficiary, otpCode?: string) => {
+    private toggleConfirmModal = (amount?: string, total?: string, beneficiary?: Beneficiary, otpCode?: string) => {
         this.setState((state: WalletsState) => ({
-            amount: amount ? amount : 0,
+            amount: amount || '',
             beneficiary: beneficiary ? beneficiary : defaultBeneficiary,
             otpCode: otpCode ? otpCode : '',
             withdrawConfirmModal: !state.withdrawConfirmModal,
-            total: total ? total : 0,
+            total: total || '',
             withdrawDone: false,
         }));
     };

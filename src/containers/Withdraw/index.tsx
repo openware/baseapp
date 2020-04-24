@@ -13,7 +13,7 @@ import { Beneficiary } from '../../modules';
 export interface WithdrawProps {
     currency: string;
     fee: number;
-    onClick: (amount: number, total: number, beneficiary: Beneficiary, otpCode: string) => void;
+    onClick: (amount: string, total: string, beneficiary: Beneficiary, otpCode: string) => void;
     fixed: number;
     className?: string;
     type: 'fiat' | 'coin';
@@ -37,12 +37,12 @@ const defaultBeneficiary: Beneficiary = {
 };
 
 interface WithdrawState {
-    amount: number | string;
+    amount: string;
     beneficiary: Beneficiary;
     otpCode: string;
     withdrawAmountFocused: boolean;
     withdrawCodeFocused: boolean;
-    total: number;
+    total: string;
 }
 
 export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
@@ -52,7 +52,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         otpCode: '',
         withdrawAmountFocused: false,
         withdrawCodeFocused: false,
-        total: 0,
+        total: '',
     };
 
     public componentWillReceiveProps(nextProps) {
@@ -62,7 +62,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             this.setState({
                 amount: '',
                 otpCode: '',
-                total: 0,
+                total: '',
             });
         }
     }
@@ -199,7 +199,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     };
 
     private handleClick = () => this.props.onClick(
-        parseFloat(this.state.amount),
+        this.state.amount,
         this.state.total,
         this.state.beneficiary,
         this.state.otpCode,
@@ -229,10 +229,10 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${fixed}}|[\\d-]*\\.[\\d-])$`);
         if (convertedValue.match(condition)) {
             const amount = (convertedValue !== '') ? Number(parseFloat(convertedValue).toFixed(fixed)) : '';
-            const total = (amount !== '') ? Number((amount - this.props.fee).toFixed(fixed)) : 0;
+            const total = (amount !== '') ? (amount - this.props.fee).toFixed(fixed) : '';
 
-            if (total < 0) {
-                this.setTotal(0);
+            if (Number(total) <= 0) {
+                this.setTotal((0).toFixed(fixed));
             } else {
                 this.setTotal(total);
             }
@@ -243,7 +243,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         }
     };
 
-    private setTotal = (value: number) => {
+    private setTotal = (value: string) => {
         this.setState({ total: value });
     };
 
