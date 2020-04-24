@@ -301,21 +301,21 @@ describe('Helpers', () => {
 
     // getTotalPrice.ts
     it('should return correct total price', () => {
-        expect(helpers.getTotalPrice('0', [['0','0']])).toEqual(0);
-        expect(helpers.getTotalPrice('2', [['0','0']])).toEqual(0);
-        expect(helpers.getTotalPrice('0', [['2','10']])).toEqual(0);
-        expect(helpers.getTotalPrice('2', [['2','10']])).toEqual(4);
-        expect(helpers.getTotalPrice('10', proposals)).toEqual(120);
+        expect(helpers.getTotalPrice('0', 10, [['0','0']])).toEqual(0);
+        expect(helpers.getTotalPrice('2', 10, [['0','0']])).toEqual(0);
+        expect(helpers.getTotalPrice('0', 10, [['2','10']])).toEqual(0);
+        expect(helpers.getTotalPrice('2', 10, [['2','10']])).toEqual(4);
+        expect(helpers.getTotalPrice('10', 10, proposals)).toEqual(120);
     });
 
     it('should return correct total price if amount more then orderBook amount', () => {
-        expect(helpers.getTotalPrice('1000', proposals)).toEqual(13060.5);
+        expect(helpers.getTotalPrice('1000', 10, proposals)).toEqual(13060.5);
     });
 
     it('should return 0 total price if invalid args', () => {
-        expect(helpers.getTotalPrice('1', [])).toEqual(0);
-        expect(helpers.getTotalPrice('2', [[]])).toEqual(0);
-        expect(helpers.getTotalPrice('3', [['', '']])).toEqual(0);
+        expect(helpers.getTotalPrice('1', 10, [])).toEqual(10);
+        expect(helpers.getTotalPrice('2', 10, [[]])).toEqual(20);
+        expect(helpers.getTotalPrice('3', 10, [['', '']])).toEqual(0);
     });
 
     it('should return correct total amount for percent', () => {
