@@ -7,7 +7,7 @@ import {
 import { Modal } from '../../components';
 
 interface ModalWithdrawConfirmationProps {
-    amount: number;
+    amount: string;
     currency: string;
     onSubmit: () => void;
     onDismiss: () => void;
