@@ -4,7 +4,7 @@ import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'red
 import { isFinexEnabled, rangerUrl } from '../../../../api';
 import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
-import { selectOpenOrdersList, userOpenOrdersUpdate } from '../../../user/openOrders';
+import { userOpenOrdersUpdate } from '../../../user/openOrders';
 import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';
 import { updateWalletsDataByRanger } from '../../../user/wallets';
 import { alertPush } from '../../alert';
@@ -170,21 +170,17 @@ const initRanger = (
 
                         // private
                         case 'order':
-                            const orders = selectOpenOrdersList(store.getState());
-
-                            if (isFinexEnabled()) {
-                                const updatedOrder = orders.length && orders.find(order => event.uuid && order.uuid === event.uuid);
-
-                                switch (updatedOrder && updatedOrder.state) {
+                            if (isFinexEnabled() && event) {
+                                switch (event.state) {
                                     case 'wait':
                                     case 'pending':
-                                        alertPush({ message: ['success.order.created'], type: 'success'});
+                                        emitter(alertPush({ message: ['success.order.created'], type: 'success'}));
                                         break;
                                     case 'done':
-                                        alertPush({ message: ['success.order.done'], type: 'success'});
+                                        emitter(alertPush({ message: ['success.order.done'], type: 'success'}));
                                         break;
                                     case 'reject':
-                                        alertPush({ message: ['error.order.reject'], type: 'error'});
+                                        emitter(alertPush({ message: ['error.order.rejected'], type: 'error'}));
                                         break;
                                     default:
                                         break;
