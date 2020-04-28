@@ -13,7 +13,6 @@ export interface ForgotPasswordFetch {
     type: typeof PASSWORD_FORGOT_FETCH;
     payload: {
         email: string;
-        lang: string;
     };
 }
 

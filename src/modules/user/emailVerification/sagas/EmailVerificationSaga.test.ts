@@ -26,7 +26,7 @@ describe('Email Verification Saga', () => {
         message: ['Server error'],
     };
 
-    const fakePayload = {email: 'test@gmail.com', lang: 'EN'};
+    const fakePayload = {email: 'test@gmail.com'};
 
     const mockResendVerificationEmail = () => {
         mockAxios.onPost('/identity/users/email/generate_code').reply(201);

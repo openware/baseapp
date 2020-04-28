@@ -1,3 +1,4 @@
+import { languages } from '../../../api/config';
 import { ChangeLanguageAction } from './actions';
 import { CHANGE_LANGUAGE } from './constants';
 
@@ -6,7 +7,7 @@ export interface LanguageState {
 }
 
 const defaultLanguage = {
-    code: 'en',
+    code: languages[0],
 };
 
 const currentLang: string = localStorage.getItem('lang_code') || defaultLanguage.code;
