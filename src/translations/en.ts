@@ -550,6 +550,7 @@ export const en = {
     'success.email.confirmed': 'Your email address has been successfully confirmed',
     'success.order.created': 'Order was created',
     'success.order.done': 'Order successfully completed',
+    'success.data.changed.language': 'Language has been changed',
 
     // error messages
     'error.order.rejected': 'Order rejected',

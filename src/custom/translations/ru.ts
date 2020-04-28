@@ -553,6 +553,7 @@ export const ru: LangType = {
     'success.email.confirmed': 'Email был успешно подтвержден',
     'success.order.created': 'Запрос успешно создан',
     'success.order.done': 'Запрос успешно завершён',
+    'success.data.changed.language': 'Язык успешно изменен',
 
     // error messages
     'error.order.rejected': 'Запрос отвергнут',

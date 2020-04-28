@@ -24,3 +24,6 @@ export const selectUserInfo = (state: RootState): User =>
 
 export const selectUserFetching = (state: RootState): boolean =>
     state.user.profile.userData.isFetching;
+
+export const selectUserDataChange = (state: RootState): boolean | undefined =>
+    state.user.profile.userData.success;
