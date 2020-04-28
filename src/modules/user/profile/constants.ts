@@ -19,3 +19,8 @@ export const PROFILE_RESET_USER = 'profile/RESET_USER';
 export const PROFILE_CHANGE_USER_LEVEL = 'profile/CHANGE_USER_LEVEL';
 
 export const PROFILE_TOGGLE_USER_2FA = 'profile/TOGGLE_USER_2FA';
+
+export const PROFILE_CHANGE_USER_FETCH = 'profile/CHANGE_USER_FETCH';
+export const PROFILE_CHANGE_USER_DATA = 'profile/CHANGE_USER_DATA';
+export const PROFILE_CHANGE_USER_ERROR = 'profile/CHANGE_USER_ERROR';
+

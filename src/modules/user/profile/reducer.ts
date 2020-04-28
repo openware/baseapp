@@ -4,6 +4,9 @@ import {
     PROFILE_CHANGE_PASSWORD_DATA,
     PROFILE_CHANGE_PASSWORD_ERROR,
     PROFILE_CHANGE_PASSWORD_FETCH,
+    PROFILE_CHANGE_USER_DATA,
+    PROFILE_CHANGE_USER_ERROR,
+    PROFILE_CHANGE_USER_FETCH,
     PROFILE_CHANGE_USER_LEVEL,
     PROFILE_GENERATE_2FA_QRCODE_DATA,
     PROFILE_GENERATE_2FA_QRCODE_ERROR,
@@ -34,6 +37,7 @@ export interface ProfileState {
         user: User;
         error?: CommonError;
         isFetching: boolean;
+        success?: boolean;
     };
 }
 
@@ -173,6 +177,29 @@ export const userReducer = (state: ProfileState['userData'], action: ProfileActi
                     otp: !state.user.otp,
                 },
             };
+        case PROFILE_CHANGE_USER_FETCH:
+            return {
+                ...state,
+                success: false,
+            };
+        case PROFILE_CHANGE_USER_DATA:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    data: action.payload.user.data,
+                },
+                success: true,
+            };
+        case PROFILE_CHANGE_USER_ERROR:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    data: state.user.data,
+                },
+                success: false,
+            };
         default:
             return state;
     }
@@ -209,6 +236,9 @@ export const profileReducer = (state = initialStateProfile, action: ProfileActio
         case PROFILE_USER_ERROR:
         case PROFILE_CHANGE_USER_LEVEL:
         case PROFILE_TOGGLE_USER_2FA:
+        case PROFILE_CHANGE_USER_FETCH:
+        case PROFILE_CHANGE_USER_DATA:
+        case PROFILE_CHANGE_USER_ERROR:
             const userState = { ...state.userData };
 
             return {

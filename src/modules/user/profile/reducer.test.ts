@@ -29,6 +29,7 @@ describe('Profile reducer', () => {
             state: 'active',
             csrf_token: '31415926535897932384626433832795028841971',
             profiles: fakeProfiles,
+            data: '{\'language\':\'en\'}',
         },
     };
 
@@ -230,5 +231,41 @@ describe('Profile reducer', () => {
             twoFactorAuth: { ...initialStateProfile.twoFactorAuth, success: false, error },
         };
         expect(profileReducer(actualState, actions.toggle2faError(error))).toEqual(expectedState);
+    });
+
+    it('should handle CHANGE_USER_FETCH', () => {
+        const actualState = {
+            ...initialStateProfile,
+            userData: { ...initialStateProfile.userData, user: userData.user },
+        };
+        const expectedState = {
+            ...initialStateProfile,
+            userData: {
+                ...initialStateProfile.userData,
+                user: {
+                    ...userData.user,
+                },
+                success: false,
+            },
+        };
+        expect(profileReducer(actualState, actions.changeUserDataFetch({ user: userData.user }))).toEqual(expectedState);
+    });
+
+    it('should handle CHANGE_USER_DATA', () => {
+        const actualState = {
+            ...initialStateProfile,
+            userData: { ...initialStateProfile.userData, user: userData.user },
+        };
+        const expectedState = {
+            ...initialStateProfile,
+            userData: {
+                ...initialStateProfile.userData,
+                user: {
+                    ...userData.user,
+                },
+                success: true,
+            },
+        };
+        expect(profileReducer(actualState, actions.changeUserData({ user: userData.user }))).toEqual(expectedState);
     });
 });
