@@ -393,7 +393,9 @@ class SignUp extends React.Component<Props> {
                         email,
                         password,
                         refid: refId,
-                        lang: i18n.toUpperCase(),
+                        data: JSON.stringify({
+                            language: i18n,
+                        }),
                     });
                     break;
                 case 'recaptcha':
@@ -411,7 +413,9 @@ class SignUp extends React.Component<Props> {
                         password,
                         captcha_response,
                         refid: refId,
-                        lang: i18n.toUpperCase(),
+                        data: JSON.stringify({
+                            language: i18n,
+                        }),
                     });
                     break;
             }
@@ -421,7 +425,9 @@ class SignUp extends React.Component<Props> {
                     this.props.signUp({
                         email,
                         password,
-                        lang: i18n.toUpperCase(),
+                        data: JSON.stringify({
+                            language: i18n,
+                        }),
                     });
                     break;
                 case 'recaptcha':
@@ -431,7 +437,9 @@ class SignUp extends React.Component<Props> {
                         email,
                         password,
                         captcha_response,
-                        lang: i18n.toUpperCase(),
+                        data: JSON.stringify({
+                            language: i18n,
+                        }),
                     });
                     break;
             }

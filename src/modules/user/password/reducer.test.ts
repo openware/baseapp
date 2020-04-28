@@ -5,7 +5,6 @@ import { passwordReducer } from './reducer';
 describe('Forgot password reducer', () => {
     const request = {
         email: 'admin@barong.io',
-        lang: 'EN',
     };
 
     const initialState = {

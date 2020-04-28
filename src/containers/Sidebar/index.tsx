@@ -12,6 +12,7 @@ import { SidebarIcons } from '../../assets/images/sidebar/SidebarIcons';
 import { pgRoutes } from '../../constants';
 import {
     changeLanguage,
+    changeUserDataFetch,
     logoutFetch,
     Market,
     RootState,
@@ -19,8 +20,10 @@ import {
     selectCurrentLanguage,
     selectCurrentMarket,
     selectSidebarState,
+    selectUserInfo,
     selectUserLoggedIn,
     toggleSidebar,
+    User,
 } from '../../modules';
 
 interface State {
@@ -39,11 +42,13 @@ interface ReduxProps {
     isLoggedIn: boolean;
     currentMarket: Market | undefined;
     isActive: boolean;
+    user: User;
 }
 
 interface OwnProps {
     onLinkChange?: () => void;
     history: History;
+    changeUserDataFetch: typeof changeUserDataFetch;
 }
 
 type Props = OwnProps & ReduxProps & RouteProps & DispatchProps;
@@ -193,6 +198,16 @@ class SidebarContainer extends React.Component<Props, State> {
 
 
     private handleChangeLanguage = (language: string) => {
+        const { user, isLoggedIn } = this.props;
+        if (isLoggedIn) {
+            const payload = {
+                ...user,
+                data: JSON.stringify({ language }),
+            };
+
+            this.props.changeUserDataFetch({ user: payload });
+        }
+
         this.props.changeLanguage(language);
     };
 }
@@ -203,6 +218,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     currentMarket: selectCurrentMarket(state),
     lang: selectCurrentLanguage(state),
     isActive: selectSidebarState(state),
+    user: selectUserInfo(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
@@ -210,6 +226,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         changeLanguage: payload => dispatch(changeLanguage(payload)),
         toggleSidebar: payload => dispatch(toggleSidebar(payload)),
         logoutFetch: () => dispatch(logoutFetch()),
+        changeUserDataFetch: payload => dispatch(changeUserDataFetch(payload)),
     });
 
 // tslint:disable no-any
