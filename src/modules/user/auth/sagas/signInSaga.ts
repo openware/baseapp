@@ -2,9 +2,9 @@
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import { alertPush } from '../../../public/alert';
+import { changeLanguage } from '../../../public/i18n';
 import { userData } from '../../profile';
 import { signInError, SignInFetch, signInRequire2FA, signUpRequireVerification } from '../actions';
-
 
 const sessionsConfig: RequestOptions = {
     apiVersion: 'barong',
@@ -13,6 +13,9 @@ const sessionsConfig: RequestOptions = {
 export function* signInSaga(action: SignInFetch) {
     try {
         const user = yield call(API.post(sessionsConfig), '/identity/sessions', action.payload);
+        if (user.data) {
+            yield put(changeLanguage(JSON.parse(user.data).language));
+        }
         yield put(userData({ user }));
         localStorage.setItem('csrfToken', user.csrf_token);
         yield put(signUpRequireVerification({ requireVerification: user.state === 'pending' }));

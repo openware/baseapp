@@ -187,17 +187,13 @@ export const userReducer = (state: ProfileState['userData'], action: ProfileActi
                 ...state,
                 user: {
                     ...state.user,
-                    data: action.payload.user.data,
+                    data: (action.payload && action.payload.user && action.payload.user.data) || state.user.data,
                 },
                 success: true,
             };
         case PROFILE_CHANGE_USER_ERROR:
             return {
                 ...state,
-                user: {
-                    ...state.user,
-                    data: state.user.data,
-                },
                 success: false,
             };
         default:

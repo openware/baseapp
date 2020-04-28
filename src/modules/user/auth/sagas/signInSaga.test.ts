@@ -3,6 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga, signUpRequireVerification } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { changeLanguage } from '../../../public/i18n';
 import { userData } from '../../profile';
 import { signIn, signInError, signInRequire2FA } from '../actions';
 
@@ -25,7 +26,7 @@ describe('SignIn saga', () => {
 
     const fake2FAError = { code: 403, message: ['Require 2fa'] };
 
-    const fakeCredentials = { email: 'john.barong@gmail.com', password: '123123', data: '{\'language\':\'en\'}' };
+    const fakeCredentials = { email: 'john.barong@gmail.com', password: '123123' };
 
     const fakeUser = {
         email: 'admin@barong.io',
@@ -35,6 +36,7 @@ describe('SignIn saga', () => {
         otp: false,
         state: 'active',
         profiles: [],
+        data: '{\"language\":\"en\"}',
     };
 
     const mockSignIn = () => {
@@ -47,6 +49,7 @@ describe('SignIn saga', () => {
 
     const expectedActionsFetch = [
         signIn(fakeCredentials),
+        changeLanguage('en'),
         userData({user: fakeUser}),
         signUpRequireVerification({ requireVerification: fakeUser.state === 'pending' }),
         signInRequire2FA({ require2fa: false }),

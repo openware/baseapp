@@ -123,7 +123,7 @@ describe('Profile actions', () => {
                     state: 'active',
                     profiles: [],
                     csrf_token: '31415926535897932384626433832795028841971',
-                    data: '{\'language\':\'en\'}',
+                    data: '{\"language\":\"en\"}',
                 },
             };
             const expectedAction = { type: 'profile/CHANGE_USER_FETCH', payload };
@@ -141,7 +141,7 @@ describe('Profile actions', () => {
                     state: 'active',
                     profiles: [],
                     csrf_token: '31415926535897932384626433832795028841971',
-                    data: '{\'language\':\'en\'}',
+                    data: '{\"language\":\"en\"}',
                 },
             };
             const expectedAction = { type: 'profile/CHANGE_USER_DATA', payload };
