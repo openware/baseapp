@@ -174,8 +174,8 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         return (
             <div key={index} className="pg-beneficiaries__dropdown__body__item item">
                 <div className="item__left" onClick={this.handleClickSelectAddress(item)}>
-                    <span className="item__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.address')}</span>
-                    <span className="item__left__address">{item.data ? item.data.address : ''}</span>
+                    <span className="item__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.name')}</span>
+                    <span className="item__left__address">{item.name}</span>
                 </div>
                 <div className="item__right">
                     <span className="item__right__delete" onClick={this.handleClickDeleteAddress(item)}><TrashBin/></span>
@@ -299,8 +299,8 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             <div className={dropdownClassName}>
                 <div className="pg-beneficiaries__dropdown__select select" onClick={this.handleToggleDropdown}>
                     <div className="select__left">
-                        <span className="select__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.address')}</span>
-                        <span className="select__left__address">{currentWithdrawalBeneficiary.data.address}</span>
+                        <span className="select__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.name')}</span>
+                        <span className="select__left__address"><span>{currentWithdrawalBeneficiary.name}</span></span>
                     </div>
                     <div className="select__right">
                     <span className="select__right__tip" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>

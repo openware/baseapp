@@ -194,6 +194,7 @@ export const en = {
     'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',
     'page.body.wallets.beneficiaries.dropdown.address': 'Address',
     'page.body.wallets.beneficiaries.dropdown.select': 'Select',
+    'page.body.wallets.beneficiaries.dropdown.name': 'Name',
 
     'page.body.wallets.beneficiaries.dropdown.fiat.account': 'Account',
     'page.body.wallets.beneficiaries.dropdown.fiat.bankOfBeneficiary': 'Bank of Beneficiary',
