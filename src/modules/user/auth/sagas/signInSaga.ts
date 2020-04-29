@@ -13,7 +13,7 @@ const sessionsConfig: RequestOptions = {
 export function* signInSaga(action: SignInFetch) {
     try {
         const user = yield call(API.post(sessionsConfig), '/identity/sessions', action.payload);
-        if (user.data) {
+        if (user.data && JSON.parse(user.data).language) {
             yield put(changeLanguage(JSON.parse(user.data).language));
         }
         yield put(userData({ user }));

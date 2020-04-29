@@ -203,7 +203,7 @@ class SidebarContainer extends React.Component<Props, State> {
         if (isLoggedIn) {
             const data = user.data && JSON.parse(user.data);
 
-            if (data.language !== language) {
+            if (data && data.language && data.language !== language) {
                 const payload = {
                     ...user,
                     data: JSON.stringify({
