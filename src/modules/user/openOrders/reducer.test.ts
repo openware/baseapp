@@ -1,7 +1,6 @@
-import { OrderAPI, OrderCommon, OrderEvent } from '../../types';
+import { OrderCommon, OrderEvent } from '../../types';
 import * as actions from './actions';
 import {
-    convertOrderAPI,
     convertOrderEvent,
     insertOrUpdate,
 } from './helpers';
@@ -58,7 +57,7 @@ describe('Open Orders reducer', () => {
     });
 
     describe('USER_OPEN_ORDERS_APPEND', () => {
-        const newOrder: OrderAPI = {
+        const newOrder: OrderCommon = {
             id: 162,
             confirmed: true,
             side: 'buy',
@@ -76,7 +75,7 @@ describe('Open Orders reducer', () => {
         it('inserts order', () => {
             const expectedState = {
                 ...initialOpenOrdersState,
-                list: [convertOrderAPI(newOrder)],
+                list: [newOrder],
             };
             expect(
                 openOrdersReducer(
@@ -88,7 +87,7 @@ describe('Open Orders reducer', () => {
     });
 
     describe('USER_OPEN_ORDERS_APPEND UUID', () => {
-        const newOrder: OrderAPI = {
+        const newOrder: OrderCommon = {
             uuid: '3ea3e2e4-5d29-11ea-a122-0242ac140008',
             confirmed: false,
             side: 'buy',
@@ -106,7 +105,7 @@ describe('Open Orders reducer', () => {
         it('inserts order', () => {
             const expectedState = {
                 ...initialOpenOrdersState,
-                list: [convertOrderAPI(newOrder)],
+                list: [newOrder],
             };
             expect(
                 openOrdersReducer(
@@ -123,6 +122,7 @@ describe('Open Orders reducer', () => {
             id: 162,
             at: 1550180631,
             market: 'ethusd',
+            side: 'buy',
             kind: 'bid',
             price: '0.3',
             state: 'wait',
@@ -134,6 +134,7 @@ describe('Open Orders reducer', () => {
             uuid: '3ea3e2e4-5d29-11ea-a122-0242ac140008',
             at: 1550180631,
             market: 'ethusd',
+            side: 'buy',
             kind: 'bid',
             price: '0.3',
             state: 'wait',
@@ -144,12 +145,12 @@ describe('Open Orders reducer', () => {
         const newOrderCommon: OrderCommon = {
             id: 162,
             side: 'buy',
-            price: 0.3,
+            price: '0.3',
             state:'wait',
             created_at: '2018-11-29T16:54:46+01:00',
-            remaining_volume: 123.1234,
-            origin_volume: 123.1234,
-            executed_volume: 0,
+            remaining_volume: '123.1234',
+            origin_volume: '123.1234',
+            executed_volume: '0',
             market: 'ethusd',
         };
 
@@ -266,12 +267,12 @@ describe('Open Orders reducer', () => {
         const orderToCancel: OrderCommon = {
             id: 162,
             side: 'buy',
-            price: 0.3,
+            price: '0.3',
             state:'wait',
             created_at: '2018-11-29T16:54:46+01:00',
-            remaining_volume: 123.1234,
-            origin_volume: 123.1234,
-            executed_volume: 0,
+            remaining_volume: '123.1234',
+            origin_volume: '123.1234',
+            executed_volume: '0',
             market: 'ethusd',
         };
 

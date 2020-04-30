@@ -5,7 +5,7 @@ import { rootSaga } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { Market } from '../../../../modules';
 import { alertPush } from '../../../public/alert';
-import { OrderAPI } from '../../../types';
+import { OrderCommon } from '../../../types';
 import { userOpenOrdersData, userOpenOrdersError, userOpenOrdersFetch } from '../actions';
 
 
@@ -43,7 +43,7 @@ describe('Open Orders Cancel', () => {
         price_precision:4,
     };
 
-    const fakeOpenOrders: OrderAPI[] = [
+    const fakeOpenOrders: OrderCommon[] = [
         {
             id: 162,
             side: 'buy',

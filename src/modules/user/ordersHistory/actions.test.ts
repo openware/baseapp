@@ -78,6 +78,7 @@ describe('Orders History actions', () => {
             at: 123123123,
             market: 'ethusd',
             kind: 'bid',
+            side: 'buy',
             price: '0.3',
             state: 'wait',
             remaining_volume: '1.213432',

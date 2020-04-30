@@ -14,7 +14,6 @@ import {
     OPEN_ORDERS_UPDATE,
 } from './constants';
 import {
-    convertOrderAPI,
     convertOrderEvent,
     insertIfNotExisted,
     insertOrUpdate,
@@ -42,7 +41,7 @@ export const openOrdersReducer = (
         case OPEN_ORDERS_FETCH:
             return { ...state, fetching: true };
         case OPEN_ORDERS_DATA:
-            return { ...state, fetching: false, list: sliceArray(action.payload.map(convertOrderAPI), defaultStorageLimit()) };
+            return { ...state, fetching: false, list: sliceArray(action.payload, defaultStorageLimit()) };
         case OPEN_ORDERS_UPDATE:
             return {
                 ...state,
@@ -51,7 +50,7 @@ export const openOrdersReducer = (
         case OPEN_ORDERS_ERROR:
             return { ...state, fetching: false, list: [] };
         case OPEN_ORDERS_APPEND:
-            return { ...state, list: sliceArray(insertIfNotExisted(state.list, convertOrderAPI(action.payload)), defaultStorageLimit()) };
+            return { ...state, list: sliceArray(insertIfNotExisted(state.list, action.payload), defaultStorageLimit()) };
         case OPEN_ORDERS_RESET:
             return initialOpenOrdersState;
         case OPEN_ORDERS_CANCEL_FETCH:

@@ -2,7 +2,6 @@
 import { call, put } from 'redux-saga/effects';
 import { alertPush } from '../../..';
 import { API, RequestOptions } from '../../../../api';
-import { convertOrderAPI } from '../../openOrders/helpers';
 import {
     userOrdersHistoryData,
     userOrdersHistoryError,
@@ -27,9 +26,8 @@ export function* ordersHistorySaga(action: UserOrdersHistoryFetch) {
                 nextPageExists = true;
             }
         }
-        const list = data.map(convertOrderAPI);
 
-        yield put(userOrdersHistoryData({ list, nextPageExists, pageIndex }));
+        yield put(userOrdersHistoryData({ list: data, nextPageExists, pageIndex }));
     } catch (error) {
         yield put(userOrdersHistoryError());
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
