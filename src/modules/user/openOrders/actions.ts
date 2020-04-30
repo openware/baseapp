@@ -1,5 +1,5 @@
 import { Market } from '../../public/markets';
-import { OrderAPI, OrderCommon, OrderEvent } from '../../types';
+import { OrderCommon, OrderEvent } from '../../types';
 import {
     OPEN_ORDERS_APPEND,
     OPEN_ORDERS_CANCEL_DATA,
@@ -22,7 +22,7 @@ export interface UserOpenOrdersFetch {
 
 export interface UserOpenOrdersData {
     type: typeof OPEN_ORDERS_DATA;
-    payload: OrderAPI[];
+    payload: OrderCommon[];
 }
 
 export interface UserOpenOrdersError {
@@ -36,7 +36,7 @@ export interface UserOpenOrdersUpdate {
 
 export interface UserOpenOrdersAppend {
     type: typeof OPEN_ORDERS_APPEND;
-    payload: OrderAPI;
+    payload: OrderCommon;
 }
 
 export interface UserOpenOrdersReset {

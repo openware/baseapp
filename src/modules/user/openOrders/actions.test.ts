@@ -1,4 +1,4 @@
-import { OrderAPI, OrderCommon, OrderEvent } from '../../types';
+import { OrderCommon, OrderEvent } from '../../types';
 import * as actions from './actions';
 import { OPEN_ORDERS_APPEND, OPEN_ORDERS_CANCEL_DATA, OPEN_ORDERS_CANCEL_ERROR, OPEN_ORDERS_CANCEL_FETCH, OPEN_ORDERS_DATA, OPEN_ORDERS_ERROR, OPEN_ORDERS_FETCH, OPEN_ORDERS_RESET, OPEN_ORDERS_UPDATE } from './constants';
 
@@ -33,7 +33,7 @@ describe('Open Orders actions', () => {
     });
 
     it('should check userOpenOrdersAppend action creator', () => {
-        const payload: OrderAPI = {
+        const payload: OrderCommon = {
             id: 162,
             confirmed: true,
             side: 'buy',
@@ -52,7 +52,7 @@ describe('Open Orders actions', () => {
     });
 
     it('should check userOpenOrdersAppend UUID action creator', () => {
-        const payload: OrderAPI = {
+        const payload: OrderCommon = {
             uuid: '3ea3e2e4-5d29-11ea-a122-0242ac140008',
             confirmed: false,
             side: 'buy',
@@ -75,6 +75,7 @@ describe('Open Orders actions', () => {
             id: 1,
             at: 123123123,
             market: 'ethusd',
+            side: 'buy',
             kind: 'bid',
             price: '0.3',
             state: 'wait',
@@ -94,12 +95,12 @@ describe('Open Orders actions', () => {
         const orderToCancel: OrderCommon = {
             id: 162,
             side: 'buy',
-            price: 0.3,
+            price: '0.3',
             state:'wait',
             created_at: '2018-11-29T16:54:46+01:00',
-            remaining_volume: 123.1234,
-            origin_volume: 123.1234,
-            executed_volume: 0,
+            remaining_volume: '123.1234',
+            origin_volume: '123.1234',
+            executed_volume: '0',
             market: 'ethusd',
         };
 

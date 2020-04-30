@@ -1,5 +1,5 @@
-import { OrderAPI, OrderCommon, OrderEvent } from '../../types';
-import { convertOrderAPI, convertOrderEvent } from '../openOrders/helpers';
+import { OrderCommon, OrderEvent } from '../../types';
+import { convertOrderEvent } from '../openOrders/helpers';
 import * as actions from './actions';
 import { ORDERS_TEST_HISTORY_STATE } from './constants';
 import { insertOrUpdate } from './helpers';
@@ -18,7 +18,7 @@ describe('Orders History reducer', () => {
 
     it('should handle USER_ORDERS_HISTORY_DATA', () => {
         const initialState = { ...initialOrdersHistoryState, fetching: true };
-        const apiList: OrderAPI[] = [
+        const apiList: OrderCommon[] = [
             {
                 id: 162,
                 side: 'buy',
@@ -47,7 +47,7 @@ describe('Orders History reducer', () => {
             },
         ];
         const payload: actions.UserOrdersHistoryDataPayload = {
-            list: apiList.map(convertOrderAPI),
+            list: apiList,
             pageIndex: 1,
             nextPageExists: false,
         };
@@ -110,6 +110,7 @@ describe('Orders History reducer', () => {
             id: 162,
             at: 1550180631,
             market: 'ethusd',
+            side: 'buy',
             kind: 'bid',
             price: '0.3',
             state: 'wait',
@@ -119,12 +120,12 @@ describe('Orders History reducer', () => {
         const newOrderCommon: OrderCommon = {
             id: 162,
             side: 'buy',
-            price: 0.3,
+            price: '0.3',
             state:'wait',
             created_at: '2018-11-29T16:54:46+01:00',
-            remaining_volume: 123.1234,
-            origin_volume: 123.1234,
-            executed_volume: 0,
+            remaining_volume: '123.1234',
+            origin_volume: '123.1234',
+            executed_volume: '0',
             market: 'ethusd',
         };
 

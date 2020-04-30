@@ -3,8 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { alertPush, rootSaga } from '../../../index';
-import { OrderAPI } from '../../../types';
-import { convertOrderAPI } from '../../openOrders/helpers';
+import { OrderCommon } from '../../../types';
 import { userOrdersHistoryData, userOrdersHistoryError, userOrdersHistoryFetch } from '../actions';
 
 describe('Orders History', () => {
@@ -29,7 +28,7 @@ describe('Orders History', () => {
         type: 'error',
     };
 
-    const fakeHistory: OrderAPI[] = [
+    const fakeHistory: OrderCommon[] = [
         {
             id: 162,
             side: 'buy',
@@ -64,7 +63,7 @@ describe('Orders History', () => {
         limit: 25,
     };
     const fakeSuccessPayloadFirstPage = {
-        list: fakeHistory.map(convertOrderAPI),
+        list: fakeHistory,
         pageIndex: 0,
         nextPageExists: false,
     };
