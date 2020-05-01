@@ -75,7 +75,7 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
         case 'wait':
             const index = list.findIndex((value: OrderCommon) => (value.uuid && value.uuid === uuid) || value.id === id);
             if (index === -1) {
-                return list.concat({...order});
+                return [{...order}, ...list];
             }
 
             return list.map(item => {
@@ -100,5 +100,5 @@ export const insertIfNotExisted = (list: OrderCommon[], order: OrderCommon): Ord
     const index = list.findIndex((value: OrderCommon) =>
         order.confirmed ? value.id === order.id : value.uuid === order.uuid);
 
-    return (index === -1) ? list.concat({...order}) : [...list];
+    return (index === -1) ? [{...order}, ...list] : [...list];
 };
