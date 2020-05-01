@@ -67,7 +67,7 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     public shouldComponentUpdate(nextProps: Props) {
-        const { asks, bids, currentMarket, openOrdersList, marketTickers } = this.props;
+        const { asks, bids, currentMarket, openOrdersList, marketTickers, orderBookLoading } = this.props;
 
         const lastPrice = currentMarket && this.getTickerValue(currentMarket, marketTickers).last;
         const nextLastPrice = nextProps.currentMarket && this.getTickerValue(nextProps.currentMarket, nextProps.marketTickers).last;
@@ -77,7 +77,8 @@ class OrderBookContainer extends React.Component<Props, State> {
             JSON.stringify(nextProps.bids) !== JSON.stringify(bids) ||
             (nextProps.currentMarket && nextProps.currentMarket.id) !== (currentMarket && currentMarket.id) ||
             nextLastPrice !== lastPrice ||
-            nextProps.openOrdersList !== openOrdersList
+            nextProps.openOrdersList !== openOrdersList ||
+            nextProps.orderBookLoading !== orderBookLoading
         );
     }
 
@@ -134,18 +135,18 @@ class OrderBookContainer extends React.Component<Props, State> {
         const currentTicker = currentMarket && this.getTickerValue(currentMarket, marketTickers);
 
         if (currentMarket && currentTicker) {
-          const cn = classNames('', {
-            'cr-combined-order-book__market-negative': currentTicker.price_change_percent.includes('-'),
-            'cr-combined-order-book__market-positive': currentTicker.price_change_percent.includes('+'),
-          });
+            const cn = classNames('', {
+                    'cr-combined-order-book__market-negative': currentTicker.price_change_percent.includes('-'),
+                    'cr-combined-order-book__market-positive': currentTicker.price_change_percent.includes('+'),
+            });
 
-          return (
-              <React.Fragment>
-                  <span className={cn}>
-                      {Decimal.format(+(currentTicker.last), currentMarket.price_precision)} {currentMarket.quote_unit.toUpperCase()}
-                  </span>
-                  <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
-              </React.Fragment>
+            return (
+                <React.Fragment>
+                    <span className={cn}>
+                        {Decimal.format(+(currentTicker.last), currentMarket.price_precision)} {currentMarket.quote_unit.toUpperCase()}
+                    </span>
+                    <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
+                </React.Fragment>
             );
         } else {
           return <React.Fragment><span className={'cr-combined-order-book__market-negative'}>0</span><span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span></React.Fragment>;
