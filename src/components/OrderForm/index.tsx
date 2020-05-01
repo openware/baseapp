@@ -248,11 +248,11 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                         <div className="cr-order-item__total__content">
                             {orderType === 'Limit' ? (
                                 <span className="cr-order-item__total__content__amount">
-                                    {total.toFixed(currentMarketBidPrecision + currentMarketAskPrecision)}
+                                    {total.toFixed(currentMarketBidPrecision)}
                                 </span>
                             ) : (
                                 <span className="cr-order-item__total__content__amount">
-                                    &asymp;{total.toFixed(currentMarketBidPrecision + currentMarketAskPrecision)}
+                                    &asymp;{total.toFixed(currentMarketBidPrecision)}
                                 </span>
                             )}
                             <span className="cr-order-item__total__content__currency">
