@@ -4,7 +4,7 @@ import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'red
 import { isFinexEnabled, rangerUrl } from '../../../../api';
 import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
-import { userOpenOrdersUpdate } from '../../../user/openOrders';
+import { selectOpenOrdersList, userOpenOrdersUpdate } from '../../../user/openOrders';
 import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';
 import { updateWalletsDataByRanger } from '../../../user/wallets';
 import { alertPush } from '../../alert';
@@ -174,7 +174,11 @@ const initRanger = (
                                 switch (event.state) {
                                     case 'wait':
                                     case 'pending':
-                                        emitter(alertPush({ message: ['success.order.created'], type: 'success'}));
+                                        const orders = selectOpenOrdersList(store.getState());
+                                        const updatedOrder = orders.length && orders.find(order => event.uuid && order.uuid === event.uuid);
+                                        if (!updatedOrder) {
+                                            emitter(alertPush({ message: ['success.order.created'], type: 'success'}));
+                                        }
                                         break;
                                     case 'done':
                                         emitter(alertPush({ message: ['success.order.done'], type: 'success'}));
