@@ -136,8 +136,8 @@ class OrderBookContainer extends React.Component<Props, State> {
 
         if (currentMarket && currentTicker) {
             const cn = classNames('', {
-                    'cr-combined-order-book__market-negative': currentTicker.price_change_percent.includes('-'),
-                    'cr-combined-order-book__market-positive': currentTicker.price_change_percent.includes('+'),
+                'cr-combined-order-book__market-negative': currentTicker.price_change_percent.includes('-'),
+                'cr-combined-order-book__market-positive': currentTicker.price_change_percent.includes('+'),
             });
 
             return (
