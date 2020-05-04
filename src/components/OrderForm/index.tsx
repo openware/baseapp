@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
+import { isFinexEnabled } from '../../api';
 import { cleanPositiveFloatInput } from '../../helpers';
 import { Decimal } from '../Decimal';
 import { DropdownComponent } from '../Dropdown';
@@ -232,6 +233,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                     <div className="cr-order-item__percentage-buttons">
                         {
                             amountPercentageArray.map((value, index) => <PercentageButton
+                                calcValue={this.getPercentageButtonCalcValue(value, to, type)}
                                 value={value}
                                 key={index}
                                 onClick={this.handleChangeAmountByButton}
@@ -291,6 +293,14 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             </div>
         );
     }
+
+    private getPercentageButtonCalcValue = (value: number, to: string, type: FormType) => {
+        if (isFinexEnabled() && to.toLowerCase() === 'btc' && type === 'buy' && value === 1) {
+            return 0.97;
+        }
+
+        return value;
+    };
 
     private handleOrderTypeChange = (index: number) => {
         const { orderTypesIndex } = this.props;

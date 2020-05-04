@@ -7,6 +7,10 @@ export interface PercentageButtonProps {
      */
     value: number;
     /**
+     * Number that will be used for calculations
+     */
+    calcValue?: number;
+    /**
      * Additional class name for styling. By default element receives `cr-percentage-button` class
      * @default empty
      */
@@ -19,6 +23,8 @@ export interface PercentageButtonProps {
 
 export const PercentageButton: React.FunctionComponent<PercentageButtonProps> = React.memo((props: PercentageButtonProps) => {
   return (
-      <button className={props.className || 'cr-percentage-button'} onClick={() => props.onClick(props.value)}>{`${props.value * 100}%`}</button>
+    <button className={props.className || 'cr-percentage-button'} onClick={() => props.onClick(props.calcValue || props.value)}>
+      {`${props.value * 100}%`}
+    </button>
   );
 }, areEqualProps);
