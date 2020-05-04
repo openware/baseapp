@@ -2,6 +2,7 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { SinonSpy, spy } from 'sinon';
+import { Market } from '../../modules';
 import { DropdownComponent } from '../Dropdown';
 import { PercentageButton } from '../PercentageButton';
 import { OrderForm, OrderFormProps } from './';
@@ -19,8 +20,6 @@ const defaultProps = {
     orderTypes: defaultOrderTypes,
     orderTypesIndex: defaultOrderTypes,
     type: 'buy' as FormType,
-    currentMarketAskPrecision: 4,
-    currentMarketBidPrecision: 5,
     available: 50,
     priceMarket: 5,
     priceLimit: 12,
@@ -34,6 +33,12 @@ const defaultProps = {
     handleChangeAmountByButton: spy(),
     amount: '1.5',
     totalPrice: 0,
+    currentMarket: {
+        quote_unit: 'btc',
+        base_unit: 'eth',
+        amount_precision: 4,
+        price_precision: 5,
+    } as Market,
 };
 
 const setup = (props: Partial<OrderFormProps> = {}) =>

@@ -143,18 +143,15 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     asks={asks}
                     bids={bids}
                     disabled={executeLoading}
-                    from={currentMarket.quote_unit}
+                    currentMarket={currentMarket}
                     availableBase={this.getAvailableValue(walletBase)}
                     availableQuote={this.getAvailableValue(walletQuote)}
                     onSubmit={this.handleSubmit}
                     priceMarketBuy={Number((currentTicker || defaultCurrentTicker).last)}
                     priceMarketSell={Number((currentTicker || defaultCurrentTicker).last)}
                     priceLimit={priceLimit}
-                    to={currentMarket.base_unit}
                     handleSendType={this.getOrderType}
                     orderTypes={this.getOrderTypes}
-                    currentMarketAskPrecision={currentMarket.amount_precision}
-                    currentMarketBidPrecision={currentMarket.price_precision}
                     width={this.state.width}
                     listenInputPrice={this.listenInputPrice}
                     {...translations}

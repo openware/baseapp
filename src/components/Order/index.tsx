@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { TabPanel } from '../../components';
+import { DEFAULT_CCY_PRECISION } from '../../constants';
 import { getAmount, getTotalPrice } from '../../helpers';
+import { Market } from '../../modules';
 import { Decimal, OrderForm } from '../index';
 
 export type FormType = 'buy' | 'sell';
@@ -43,29 +45,10 @@ export interface OrderComponentProps {
      */
     priceLimit?: number;
     /**
-     * Name of currency for price field
-     */
-    from: string;
-    /**
-     * Name of currency for amount field
-     */
-    to: string;
-    /**
      * Whether order is disabled to execute
      */
     disabled?: boolean;
     handleSendType?: (index: number, label: string) => void;
-    /**
-     * Index of tab to switch on
-     */
-    /**
-     * Precision of amount, total, available, fee value
-     */
-    currentMarketAskPrecision: number;
-    /**
-     * Precision of price value
-     */
-    currentMarketBidPrecision: number;
     /**
      * @default 'Order Type'
      * Text for order type dropdown label.
@@ -129,6 +112,7 @@ export interface OrderComponentProps {
      * start handling change price
      */
     listenInputPrice?: () => void;
+    currentMarket: Market;
 }
 interface State {
     index: number;
@@ -195,14 +179,11 @@ export class Order extends React.Component<OrderComponentProps, State> {
         const {
             availableBase,
             availableQuote,
+            currentMarket,
             disabled,
             priceMarketBuy,
             priceMarketSell,
             priceLimit,
-            from,
-            to,
-            currentMarketAskPrecision,
-            currentMarketBidPrecision,
             orderTypeText,
             priceText,
             amountText,
@@ -233,17 +214,14 @@ export class Order extends React.Component<OrderComponentProps, State> {
             content: (
                 <OrderForm
                     type={type}
-                    from={from}
                     {...disabledData}
-                    to={to}
                     available={available}
+                    currentMarket={currentMarket}
                     priceMarket={priceMarket}
                     priceLimit={priceLimit}
                     onSubmit={this.props.onSubmit}
                     orderTypes={orderTypes || defaultOrderTypes}
                     orderTypesIndex={orderTypesIndex || defaultOrderTypes}
-                    currentMarketAskPrecision={currentMarketAskPrecision || 6}
-                    currentMarketBidPrecision={currentMarketBidPrecision || 6}
                     orderTypeText={orderTypeText}
                     priceText={priceText}
                     amountText={amountText}
@@ -284,9 +262,16 @@ export class Order extends React.Component<OrderComponentProps, State> {
     };
 
     private handleChangeAmountByButton = (value, orderType, price, type) => {
-        const { bids, asks, availableBase, availableQuote } = this.props;
+        const {
+            asks,
+            availableBase,
+            availableQuote,
+            bids,
+            currentMarket,
+        } = this.props;
         const proposals = this.isTypeSell(type) ? bids : asks;
         const available = this.isTypeSell(type) ? availableBase : availableQuote;
+        const currentMarketAskPrecision = currentMarket.amount_precision || DEFAULT_CCY_PRECISION;
         let newAmount = '';
 
         switch (type) {
@@ -294,13 +279,13 @@ export class Order extends React.Component<OrderComponentProps, State> {
                 switch (orderType) {
                     case 'Limit':
                         newAmount = available && +price ? (
-                            Decimal.format(available / +price * value, this.props.currentMarketAskPrecision)
+                            Decimal.format(available / +price * value, currentMarketAskPrecision)
                         ) : '';
 
                         break;
                     case 'Market':
                         newAmount = available ? (
-                            Decimal.format(getAmount(Number(available), proposals, value), this.props.currentMarketAskPrecision)
+                            Decimal.format(getAmount(Number(available), proposals, value), currentMarketAskPrecision)
                         ) : '';
 
                         break;
@@ -310,7 +295,7 @@ export class Order extends React.Component<OrderComponentProps, State> {
                 break;
             case 'sell':
                 newAmount = available ? (
-                    Decimal.format(available * value, this.props.currentMarketAskPrecision)
+                    Decimal.format(available * value, currentMarketAskPrecision)
                 ) : '';
 
                 break;

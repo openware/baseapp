@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { cleanPositiveFloatInput } from '../../helpers';
+import { Market } from '../../modules';
 import { Decimal } from '../Decimal';
 import { DropdownComponent } from '../Dropdown';
 import { OrderProps } from '../Order';
@@ -39,25 +40,9 @@ export interface OrderFormProps {
      */
     className?: string;
     /**
-     * Name of currency for price field
-     */
-    from: string;
-    /**
-     * Name of currency for amount field
-     */
-    to: string;
-    /**
      * Amount of money in a wallet
      */
     available?: number;
-    /**
-     * Precision of amount, total, available, fee value
-     */
-    currentMarketAskPrecision: number;
-    /**
-     * Precision of price value
-     */
-    currentMarketBidPrecision: number;
     /**
      * Whether order is disabled to execute
      */
@@ -102,6 +87,7 @@ export interface OrderFormProps {
     listenInputPrice?: () => void;
     totalPrice: number;
     amount: string;
+    currentMarket: Market;
     handleAmountChange: (amount: string, type: FormType) => void;
     handleChangeAmountByButton: (value: number, orderType: string | React.ReactNode, price: string, type: string) => void;
 }
@@ -112,6 +98,7 @@ interface OrderFormState {
     priceMarket: number;
     amountFocused: boolean;
     priceFocused: boolean;
+    priceWrong: boolean;
 }
 
 const handleSetValue = (value: string | number | undefined, defaultValue: string) => (
@@ -126,12 +113,15 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             price: '',
             priceMarket: this.props.priceMarket,
             priceFocused: false,
+            priceWrong: false,
             amountFocused: false,
         };
     }
 
     public componentWillReceiveProps(next: OrderFormProps) {
-        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.props.currentMarketBidPrecision);
+        const { currentMarket } = this.props;
+        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, currentMarket.price_precision);
+
         if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
             this.setState({
                 price: nextPriceLimitTruncated,
@@ -150,8 +140,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             type,
             orderTypes,
             className,
-            from,
-            to,
+            currentMarket,
             available,
             orderTypeText,
             priceText,
@@ -159,8 +148,6 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             totalText,
             availableText,
             submitButtonText,
-            currentMarketAskPrecision,
-            currentMarketBidPrecision,
             totalPrice,
             amount,
         } = this.props;
@@ -169,6 +156,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             price,
             priceMarket,
             priceFocused,
+            priceWrong,
             amountFocused,
         } = this.state;
         const safeAmount = Number(amount) || 0;
@@ -178,8 +166,8 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             ? totalPrice : safeAmount * (Number(price) || 0);
         const amountPercentageArray = [0.25, 0.5, 0.75, 1];
 
-        const availablePrecision = type === 'buy' ? currentMarketBidPrecision : currentMarketAskPrecision;
-        const availableCurrency = type === 'buy' ? from : to;
+        const availablePrecision = type === 'buy' ? currentMarket.price_precision : currentMarket.amount_precision;
+        const availableCurrency = type === 'buy' ? currentMarket.quote_unit : currentMarket.base_unit;
 
         return (
             <div className={classnames('cr-order-form', className)} onKeyPress={this.handleEnterPress}>
@@ -190,11 +178,12 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 {orderType === 'Limit' ? (
                     <div className="cr-order-item">
                         <OrderInput
-                            currency={from}
+                            currency={currentMarket.quote_unit}
                             label={priceText}
                             placeholder={priceText}
                             value={price || ''}
                             isFocused={priceFocused}
+                            isWrong={priceWrong}
                             handleChangeValue={this.handlePriceChange}
                             handleFocusInput={this.handleFieldFocus}
                         />
@@ -207,18 +196,18 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                                     {handleSetValue(priceText, '')}
                                 </legend>
                                 <div className="cr-order-input__fieldset__input">
-                                    &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision), '0')}</span>
+                                    &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarket.price_precision), '0')}</span>
                                 </div>
                             </fieldset>
                             <div className="cr-order-input__crypto-icon">
-                                {from.toUpperCase()}
+                                {currentMarket.quote_unit.toUpperCase()}
                             </div>
                         </div>
                     </div>
                 )}
                 <div className="cr-order-item">
                     <OrderInput
-                        currency={to}
+                        currency={currentMarket.base_unit}
                         label={amountText}
                         placeholder={amountText}
                         value={amount || ''}
@@ -248,15 +237,15 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                         <div className="cr-order-item__total__content">
                             {orderType === 'Limit' ? (
                                 <span className="cr-order-item__total__content__amount">
-                                    {total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
+                                    {total.toFixed(currentMarket.amount_precision + currentMarket.price_precision)}
                                 </span>
                             ) : (
                                 <span className="cr-order-item__total__content__amount">
-                                    &asymp;{total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
+                                    &asymp;{total.toFixed(currentMarket.amount_precision + currentMarket.price_precision)}
                                 </span>
                             )}
                             <span className="cr-order-item__total__content__currency">
-                                {from.toUpperCase()}
+                                {currentMarket.quote_unit.toUpperCase()}
                             </span>
                         </div>
                     </div>
@@ -317,20 +306,30 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         }
     };
 
+    private handleCheckPrice = (value: string) => {
+        return false;
+    };
+
     private handlePriceChange = (value: string) => {
+        const { currentMarket } = this.props;
         const convertedValue = cleanPositiveFloatInput(String(value));
-        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.props.currentMarketBidPrecision}}|[\\d-]*\\.[\\d-])$`);
+        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${currentMarket.price_precision}}|[\\d-]*\\.[\\d-])$`);
+
         if (convertedValue.match(condition)) {
             this.setState({
                 price: convertedValue,
+                priceWrong: this.handleCheckPrice(value),
             });
         }
+
         this.props.listenInputPrice && this.props.listenInputPrice();
     };
 
     private handleAmountChange = (value: string) => {
+        const { currentMarket } = this.props;
         const convertedValue = cleanPositiveFloatInput(String(value));
-        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.props.currentMarketAskPrecision}}|[\\d-]*\\.[\\d-])$`);
+        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${currentMarket.amount_precision}}|[\\d-]*\\.[\\d-])$`);
+
         if (convertedValue.match(condition)) {
             this.props.handleAmountChange(convertedValue, this.props.type);
         }
