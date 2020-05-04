@@ -114,17 +114,17 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
 
             if (action.payload.asks) {
                 payload.asks = Array.isArray(action.payload.asks[0]) ? (
-                    handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(0, orderBookSideLimit())
+                    sliceArray(handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks'), orderBookSideLimit())
                 ) : (
-                    handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(0, orderBookSideLimit())
+                    sliceArray(handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks'), orderBookSideLimit())
                 );
             }
 
             if (action.payload.bids) {
                 payload.bids = Array.isArray(action.payload.bids[0]) ? (
-                    handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(0, orderBookSideLimit())
+                    sliceArray(handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids'), orderBookSideLimit())
                 ) : (
-                    handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(0, orderBookSideLimit())
+                    sliceArray(handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids'), orderBookSideLimit())
                 );
             }
 

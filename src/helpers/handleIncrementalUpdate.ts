@@ -1,5 +1,5 @@
 export const handleIncrementalUpdate = (depthOld: string[][], newLevel: string[], type: string): string[][] => {
-    if (newLevel.length !== 2) {
+    if (newLevel.length !== 2 || !newLevel[1]) {
         return depthOld;
     }
     const newLevelPrice = +newLevel[0];
