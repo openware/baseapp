@@ -22,9 +22,9 @@ export interface PercentageButtonProps {
 }
 
 export const PercentageButton: React.FunctionComponent<PercentageButtonProps> = React.memo((props: PercentageButtonProps) => {
-  return (
-    <button className={props.className || 'cr-percentage-button'} onClick={() => props.onClick(props.calcValue || props.value)}>
-      {`${props.value * 100}%`}
-    </button>
-  );
+    return (
+        <button className={props.className || 'cr-percentage-button'} onClick={() => props.onClick(props.calcValue || props.value)}>
+            {`${props.value * 100}%`}
+        </button>
+    );
 }, areEqualProps);
