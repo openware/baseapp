@@ -49,51 +49,6 @@ export interface OrderComponentProps {
      */
     disabled?: boolean;
     handleSendType?: (index: number, label: string) => void;
-    /**
-     * @default 'Order Type'
-     * Text for order type dropdown label.
-     */
-    orderTypeText?: string;
-    /**
-     * @default 'Price'
-     * Text for Price field Text.
-     */
-    priceText?: string;
-    /**
-     * @default 'Amount'
-     * Text for Amount field Text.
-     */
-    amountText?: string;
-    /**
-     * @default 'Total'
-     * Text for Total field Text.
-     */
-    totalText?: string;
-    /**
-     * @default 'Available'
-     * Text for Available field Text.
-     */
-    availableText?: string;
-    /**
-     * @default 'BUY'
-     * Text for buy order submit button.
-     */
-    submitBuyButtonText?: string;
-    /**
-     * @default 'SELL'
-     * Text for sell order submit button.
-     */
-    submitSellButtonText?: string;
-    /**
-     * @default 'Buy'
-     * Text for Buy tab label.
-     */
-    labelFirst?: string;
-    /**
-     * @default 'Sell'
-     * Text for Sell tab label.
-     */
-    labelSecond?: string;
     orderTypes?: DropdownElem[];
     orderTypesIndex?: DropdownElem[];
     /**
@@ -113,6 +68,7 @@ export interface OrderComponentProps {
      */
     listenInputPrice?: () => void;
     currentMarket: Market;
+    translate: (id: string) => string;
 }
 interface State {
     index: number;
@@ -184,28 +140,24 @@ export class Order extends React.Component<OrderComponentProps, State> {
             priceMarketBuy,
             priceMarketSell,
             priceLimit,
-            orderTypeText,
-            priceText,
-            amountText,
-            totalText,
-            availableText,
-            submitBuyButtonText,
-            submitSellButtonText,
-            labelFirst,
-            labelSecond,
             orderTypes,
             orderTypesIndex,
             asks,
             bids,
             listenInputPrice,
+            translate,
         } = this.props;
         const { amountSell, amountBuy } = this.state;
 
         const proposals = this.isTypeSell(type) ? bids : asks;
         const available = this.isTypeSell(type) ? availableBase : availableQuote;
         const priceMarket = this.isTypeSell(type) ? priceMarketSell : priceMarketBuy;
-        const submitButtonText = this.isTypeSell(type) ? submitSellButtonText : submitBuyButtonText;
-        const preLabel = this.isTypeSell(type) ? labelSecond : labelFirst;
+        const submitButtonText = this.isTypeSell(type) ?
+            translate('page.body.trade.header.newOrder.content.tabs.sell') :
+            translate('page.body.trade.header.newOrder.content.tabs.buy');
+        const preLabel = this.isTypeSell(type) ?
+            translate('page.body.trade.header.newOrder.content.tabs.sell') :
+            translate('page.body.trade.header.newOrder.content.tabs.buy');
         const label = this.isTypeSell(type) ? 'Sell' : 'Buy';
         const disabledData = this.isTypeSell(type) ? {} : { disabled };
         const amount = this.isTypeSell(type) ? amountSell : amountBuy;
@@ -222,17 +174,13 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     onSubmit={this.props.onSubmit}
                     orderTypes={orderTypes || defaultOrderTypes}
                     orderTypesIndex={orderTypesIndex || defaultOrderTypes}
-                    orderTypeText={orderTypeText}
-                    priceText={priceText}
-                    amountText={amountText}
-                    totalText={totalText}
-                    availableText={availableText}
                     submitButtonText={submitButtonText}
                     totalPrice={getTotalPrice(amount, proposals)}
                     amount={amount}
                     listenInputPrice={listenInputPrice}
                     handleAmountChange={this.handleAmountChange}
                     handleChangeAmountByButton={this.handleChangeAmountByButton}
+                    translate={translate}
                 />
             ),
             label: preLabel || label,

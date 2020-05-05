@@ -103,20 +103,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         }
     }
 
-    public getListOfTranslations = () => {
-        return {
-            amountText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.amount' }),
-            availableText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.available' }),
-            orderTypeText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType' }),
-            priceText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.price' }),
-            totalText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.total' }),
-            labelFirst: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' }),
-            labelSecond: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' }),
-            submitBuyButtonText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' }),
-            submitSellButtonText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' }),
-        };
-    };
-
     public render() {
         const { executeLoading, marketTickers, currentMarket, wallets, asks, bids } = this.props;
         if (!currentMarket) {
@@ -135,7 +121,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             </div>
         );
 
-        const translations = this.getListOfTranslations();
         return (
             <div className={'pg-order'} ref={this.orderRef}>
                 {this.state.width > 448 ? headerContent : undefined}
@@ -154,7 +139,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     orderTypes={this.getOrderTypes}
                     width={this.state.width}
                     listenInputPrice={this.listenInputPrice}
-                    {...translations}
+                    translate={this.translate}
                 />
                 {executeLoading && <div className="pg-order--loading"><Spinner animation="border" variant="primary" /></div>}
             </div>
@@ -267,6 +252,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         });
         this.props.setCurrentPrice();
     };
+
+    private translate = (id: string) => this.props.intl.formatMessage({ id });
 }
 
 const mapStateToProps = (state: RootState) => ({

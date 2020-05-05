@@ -52,31 +52,6 @@ export interface OrderFormProps {
      */
     onSubmit: OnSubmitCallback;
     /**
-     * @default 'Order Type'
-     * Text for order type dropdown label.
-     */
-    orderTypeText?: string;
-    /**
-     * @default 'Price'
-     * Text for Price field Text.
-     */
-    priceText?: string;
-    /**
-     * @default 'Amount'
-     * Text for Amount field Text.
-     */
-    amountText?: string;
-    /**
-     * @default 'Total'
-     * Text for Total field Text.
-     */
-    totalText?: string;
-    /**
-     * @default 'Available'
-     * Text for Available field Text.
-     */
-    availableText?: string;
-    /**
      * @default type.toUpperCase()
      * Text for submit Button.
      */
@@ -88,6 +63,7 @@ export interface OrderFormProps {
     totalPrice: number;
     amount: string;
     currentMarket: Market;
+    translate: (id: string) => string;
     handleAmountChange: (amount: string, type: FormType) => void;
     handleChangeAmountByButton: (value: number, orderType: string | React.ReactNode, price: string, type: string) => void;
 }
@@ -142,14 +118,10 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             className,
             currentMarket,
             available,
-            orderTypeText,
-            priceText,
-            amountText,
-            totalText,
-            availableText,
             submitButtonText,
             totalPrice,
             amount,
+            translate,
         } = this.props;
         const {
             orderType,
@@ -172,20 +144,22 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         return (
             <div className={classnames('cr-order-form', className)} onKeyPress={this.handleEnterPress}>
                 <div className="cr-order-item">
-                    {orderTypeText ? <div className="cr-order-item__dropdown__label">{orderTypeText}</div> : null}
+                    <div className="cr-order-item__dropdown__label">
+                        {translate('page.body.trade.header.newOrder.content.orderType')}
+                    </div>
                     <DropdownComponent list={orderTypes} onSelect={this.handleOrderTypeChange} placeholder=""/>
                 </div>
                 {orderType === 'Limit' ? (
                     <div className="cr-order-item">
                         <OrderInput
                             currency={currentMarket.quote_unit}
-                            label={priceText}
-                            placeholder={priceText}
+                            label={translate('page.body.trade.header.newOrder.content.price')}
+                            placeholder={translate('page.body.trade.header.newOrder.content.price')}
                             value={price || ''}
                             isFocused={priceFocused}
                             isWrong={priceWrong}
                             handleChangeValue={this.handlePriceChange}
-                            handleFocusInput={this.handleFieldFocus}
+                            handleFocusInput={e => this.handleFieldFocus('price')}
                         />
                     </div>
                 ) : (
@@ -193,7 +167,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                         <div className="cr-order-input">
                             <fieldset className="cr-order-input__fieldset">
                                 <legend className={'cr-order-input__fieldset__label'}>
-                                    {handleSetValue(priceText, '')}
+                                    {translate('page.body.trade.header.newOrder.content.price')}
                                 </legend>
                                 <div className="cr-order-input__fieldset__input">
                                     &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarket.price_precision), '0')}</span>
@@ -208,12 +182,12 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 <div className="cr-order-item">
                     <OrderInput
                         currency={currentMarket.base_unit}
-                        label={amountText}
-                        placeholder={amountText}
+                        label={translate('page.body.trade.header.newOrder.content.amount')}
+                        placeholder={translate('page.body.trade.header.newOrder.content.amount')}
                         value={amount || ''}
                         isFocused={amountFocused}
                         handleChangeValue={this.handleAmountChange}
-                        handleFocusInput={this.handleFieldFocus}
+                        handleFocusInput={e => this.handleFieldFocus('amount')}
                     />
                 </div>
 
@@ -232,7 +206,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 <div className="cr-order-item">
                     <div className="cr-order-item__total">
                         <label className="cr-order-item__total__label">
-                            {handleSetValue(totalText, 'Total')}
+                            {translate('page.body.trade.header.newOrder.content.total')}
                         </label>
                         <div className="cr-order-item__total__content">
                             {orderType === 'Limit' ? (
@@ -253,7 +227,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 <div className="cr-order-item">
                     <div className="cr-order-item__available">
                         <label className="cr-order-item__available__label">
-                            {handleSetValue(availableText, 'Available')}
+                            {translate('page.body.trade.header.newOrder.content.available')}
                         </label>
                         <div className="cr-order-item__available__content">
                             <span className="cr-order-item__available__content__amount">
@@ -288,15 +262,15 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         });
     };
 
-    private handleFieldFocus = (field: string | undefined) => {
+    private handleFieldFocus = (field: string) => {
         switch (field) {
-            case this.props.priceText:
+            case 'price':
                 this.setState(prev => ({
                     priceFocused: !prev.priceFocused,
                 }));
                 this.props.listenInputPrice && this.props.listenInputPrice();
                 break;
-            case this.props.amountText:
+            case 'amount':
                 this.setState(prev => ({
                     amountFocused: !prev.amountFocused,
                 }));

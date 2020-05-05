@@ -39,6 +39,7 @@ const defaultProps = {
         amount_precision: 4,
         price_precision: 5,
     } as Market,
+    translate: spy(),
 };
 
 const setup = (props: Partial<OrderFormProps> = {}) =>
