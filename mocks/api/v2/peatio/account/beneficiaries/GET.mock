@@ -7,5 +7,6 @@ Access-Control-Allow-Credentials: true
 
 [
   {"id":9,"currency":"btc","name":"Mom","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"active"},
+  {"id":10,"currency":"btc","name":"Pentagon","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
   {"id":8,"currency":"usd","name":"My local bank","description":null,"data":{"bank_name":"ABC Bank","full_name":"John Smith","account_number":"123456789"},"state":"active"}
 ]
