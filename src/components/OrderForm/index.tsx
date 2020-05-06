@@ -295,7 +295,9 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     }
 
     private getPercentageButtonCalcValue = (value: number, to: string, type: FormType) => {
-        if (isFinexEnabled() && to.toLowerCase() === 'btc' && type === 'buy' && value === 1) {
+        const { orderType } = this.state;
+
+        if (isFinexEnabled() && to.toLowerCase() === 'btc' && orderType === 'Market' && type === 'buy' && value === 1) {
             return 0.97;
         }
 
