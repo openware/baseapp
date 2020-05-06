@@ -75,6 +75,7 @@ interface OrderFormState {
     amountFocused: boolean;
     priceFocused: boolean;
     priceWrong: boolean;
+    minPriceStep?: number;
 }
 
 const handleSetValue = (value: string | number | undefined, defaultValue: string) => (
@@ -116,6 +117,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             priceFocused: false,
             priceWrong: false,
             amountFocused: false,
+            minPriceStep: undefined,
         };
     }
 
@@ -132,6 +134,14 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         if (this.state.priceMarket !== next.priceMarket) {
             this.setState({
                 priceMarket: next.priceMarket,
+            });
+        }
+
+        if (next.currentMarket && currentMarket && next.currentMarket.id !== currentMarket.id) {
+            this.setState({
+                price: '',
+                priceWrong: false,
+                minPriceStep: undefined,
             });
         }
     }
@@ -155,6 +165,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             priceFocused,
             priceWrong,
             amountFocused,
+            minPriceStep,
         } = this.state;
         const safeAmount = Number(amount) || 0;
         const safePrice = totalPrice / Number(amount) || priceMarket;
@@ -186,6 +197,11 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                             handleChangeValue={this.handlePriceChange}
                             handleFocusInput={e => this.handleFieldFocus('price')}
                         />
+                        {minPriceStep ? <div className="cr-order-item__price-tip">
+                            <span>{translate('page.body.trade.header.newOrder.content.priceTip')}</span>
+                            <span>{minPriceStep}</span>
+                            <span>{currentMarket.quote_unit.toUpperCase()}</span>
+                        </div> : null}
                     </div>
                 ) : (
                     <div className="cr-order-item">
@@ -315,7 +331,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             isValid = countSigDigits(value) <= maxDigits;
         }
 
-        if (typeof priceSteps !== 'boolean') {
+        if (typeof priceSteps !== 'boolean' && isValid) {
             const nextIndex = priceSteps.findIndex(step => step && +step.limit > +value);
             const zeroIndex = priceSteps.findIndex(step => step && +step.limit === 0);
             const currentLimit = nextIndex > 0 ? (
@@ -331,6 +347,9 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             if (currentLimit) {
                 const stepDecimals = countDecimals(currentLimit.step);
                 isValid = stepDecimals ? +value <= +(+value).toFixed(stepDecimals) : !(+value % +currentLimit.step);
+                this.setState({
+                    minPriceStep: !isValid ? currentLimit.step : undefined,
+                });
             }
         }
 

@@ -327,6 +327,18 @@
       .cr-order-item {
         margin-bottom: calc(var(--gap) * 0.9);
 
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3) {
+          margin-bottom: calc(var(--gap) * 1.4);
+        }
+
+        &__price-tip {
+          color: var(--system-red);
+          margin-top: 37px;
+          position: absolute;
+        }
+
         &__dropdown__label {
           font-size: calc(var(--gap) * 2);
           margin-left: calc(var(--gap) * 1.55);
