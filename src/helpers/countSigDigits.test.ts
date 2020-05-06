@@ -2,7 +2,9 @@ import { countSigDigits } from './index';
 
 describe('Describe countSigDigits helper', () => {
     it('should count significant digits of number type', () => {
+        expect(countSigDigits(100000000)).toEqual(9);
         expect(countSigDigits(100000009)).toEqual(9);
+        expect(countSigDigits(0.100006)).toEqual(6);
         expect(countSigDigits(10005.100006)).toEqual(11);
     });
 

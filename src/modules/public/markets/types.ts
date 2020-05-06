@@ -11,6 +11,7 @@ export interface Market {
     amount_precision: number;
     price_precision: number;
     state?: string;
+    filters?: any;
 }
 
 export interface Ticker {

@@ -11,5 +11,9 @@ export const countSigDigits = (value: number | string) => {
         return i;
     }
 
-    return t2.replace(/0+$/,'').length; // remove trailing zeros
+    if (t2.length < t1.length) {
+        return t2.replace(/^0+/,'').length;
+    }
+
+    return t2.length;
 };

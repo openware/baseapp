@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { cleanPositiveFloatInput } from '../../helpers';
+import { cleanPositiveFloatInput, countSigDigits } from '../../helpers';
 import { Market } from '../../modules';
 import { Decimal } from '../Decimal';
 import { DropdownComponent } from '../Dropdown';
@@ -80,6 +80,18 @@ interface OrderFormState {
 const handleSetValue = (value: string | number | undefined, defaultValue: string) => (
     value || defaultValue
 );
+
+const getFinexFilter = (type: string, currentMarket: Market) => {
+    if (currentMarket.filters) {
+        const currentFilter = currentMarket.filters.find(item => item.type === type);
+
+        if (type === 'significant_digits' && currentFilter !== -1) {
+            return currentFilter.digits;
+        }
+    }
+
+    return false;
+};
 
 export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormState> {
     constructor(props: OrderFormProps) {
@@ -281,7 +293,15 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     };
 
     private handleCheckPrice = (value: string) => {
-        return false;
+        const { currentMarket } = this.props;
+        const maxDigits = getFinexFilter('significant_digits', currentMarket);
+        let isValid = true;
+
+        if (typeof maxDigits !== 'boolean') {
+            isValid = countSigDigits(value) <= maxDigits;
+        }
+
+        return isValid;
     };
 
     private handlePriceChange = (value: string) => {
@@ -292,7 +312,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         if (convertedValue.match(condition)) {
             this.setState({
                 price: convertedValue,
-                priceWrong: this.handleCheckPrice(value),
+                priceWrong: !this.handleCheckPrice(value),
             });
         }
 
