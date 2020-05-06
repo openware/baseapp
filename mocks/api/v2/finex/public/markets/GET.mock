@@ -37,8 +37,21 @@ Access-Control-Allow-Credentials: true
     "min_amount":"0.00001",
     "filters": [
       {
-        "digits":5,
-        "type":"significant_digits"
+        "type":"significant_digits",
+        "digits":5
+      },
+      {
+        "type":"custom_price_steps",
+        "rules": [
+          {
+            "limit":"1",
+            "step":"0.0000001"
+          },
+          {
+            "limit":"0",
+            "step":"0.00001"
+          }
+        ]
       }
     ]
   },

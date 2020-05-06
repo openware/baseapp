@@ -85,12 +85,25 @@ const getFinexFilter = (type: string, currentMarket: Market) => {
     if (currentMarket.filters) {
         const currentFilter = currentMarket.filters.find(item => item.type === type);
 
-        if (type === 'significant_digits' && currentFilter !== -1) {
-            return currentFilter.digits;
+        if (currentFilter) {
+            if (type === 'significant_digits') {
+                return currentFilter.digits;
+            }
+
+            if (type === 'custom_price_steps') {
+                return currentFilter.rules;
+            }
         }
     }
 
     return false;
+};
+
+const countDecimals = value => {
+    if (Math.floor(value) === value) { return 0; }
+    const decimalPart = value.toString().split('.')[1];
+
+    return decimalPart ? decimalPart.length : 0;
 };
 
 export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormState> {
@@ -295,10 +308,30 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     private handleCheckPrice = (value: string) => {
         const { currentMarket } = this.props;
         const maxDigits = getFinexFilter('significant_digits', currentMarket);
+        const priceSteps = getFinexFilter('custom_price_steps', currentMarket);
         let isValid = true;
 
         if (typeof maxDigits !== 'boolean') {
             isValid = countSigDigits(value) <= maxDigits;
+        }
+
+        if (typeof priceSteps !== 'boolean') {
+            const nextIndex = priceSteps.findIndex(step => step && +step.limit > +value);
+            const zeroIndex = priceSteps.findIndex(step => step && +step.limit === 0);
+            const currentLimit = nextIndex > 0 ? (
+                priceSteps[nextIndex - 1]
+            ) : (
+                nextIndex === 0 ? (
+                    priceSteps[nextIndex]
+                ) : (
+                    zeroIndex ? priceSteps[zeroIndex] : null
+                )
+            );
+
+            if (currentLimit) {
+                const stepDecimals = countDecimals(currentLimit.step);
+                isValid = stepDecimals ? +value <= +(+value).toFixed(stepDecimals) : !(+value % +currentLimit.step);
+            }
         }
 
         return isValid;
