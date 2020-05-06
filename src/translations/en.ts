@@ -33,7 +33,7 @@ export const en = {
     'page.body.trade.header.newOrder.content.orderType.limit': 'Limit',
     'page.body.trade.header.newOrder.content.orderType.market': 'Market',
     'page.body.trade.header.newOrder.content.price': 'Price',
-    'page.body.trade.header.newOrder.content.priceTip': 'The minimum price step is ',
+    'page.body.trade.header.newOrder.content.priceTip': 'The minimum price step is {step} {currency}',
     'page.body.trade.header.newOrder.content.amount': 'Amount',
     'page.body.trade.header.newOrder.content.total': 'Total',
     'page.body.trade.header.newOrder.content.available': 'Available',

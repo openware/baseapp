@@ -63,7 +63,7 @@ export interface OrderFormProps {
     totalPrice: number;
     amount: string;
     currentMarket: Market;
-    translate: (id: string) => string;
+    translate: (id: string, values?: any) => string;
     handleAmountChange: (amount: string, type: FormType) => void;
     handleChangeAmountByButton: (value: number, orderType: string | React.ReactNode, price: string, type: string) => void;
 }
@@ -177,6 +177,11 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         const availablePrecision = type === 'buy' ? currentMarket.price_precision : currentMarket.amount_precision;
         const availableCurrency = type === 'buy' ? currentMarket.quote_unit : currentMarket.base_unit;
 
+        const minPriceStepTip = translate(
+            'page.body.trade.header.newOrder.content.priceTip',
+            { step: minPriceStep, currency: currentMarket.quote_unit.toUpperCase() },
+        );
+
         return (
             <div className={classnames('cr-order-form', className)} onKeyPress={this.handleEnterPress}>
                 <div className="cr-order-item">
@@ -197,11 +202,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                             handleChangeValue={this.handlePriceChange}
                             handleFocusInput={e => this.handleFieldFocus('price')}
                         />
-                        {minPriceStep ? <div className="cr-order-item__price-tip">
-                            <span>{translate('page.body.trade.header.newOrder.content.priceTip')}</span>
-                            <span>{minPriceStep}</span>
-                            <span>{currentMarket.quote_unit.toUpperCase()}</span>
-                        </div> : null}
+                        {minPriceStep ? <span className="cr-order-item__price-tip">{minPriceStepTip}</span> : null}
                     </div>
                 ) : (
                     <div className="cr-order-item">

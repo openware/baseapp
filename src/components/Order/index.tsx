@@ -68,7 +68,7 @@ export interface OrderComponentProps {
      */
     listenInputPrice?: () => void;
     currentMarket: Market;
-    translate: (id: string) => string;
+    translate: (id: string, values?: any) => string;
 }
 interface State {
     index: number;

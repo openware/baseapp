@@ -252,8 +252,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         });
         this.props.setCurrentPrice();
     };
-
-    private translate = (id: string) => this.props.intl.formatMessage({ id });
+    
+    private translate = (id: string, value?: any) => this.props.intl.formatMessage({ id }, value);
 }
 
 const mapStateToProps = (state: RootState) => ({

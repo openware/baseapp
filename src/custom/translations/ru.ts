@@ -30,7 +30,7 @@ export const ru: LangType = {
     'page.body.trade.header.newOrder.content.orderType.limit': 'Лимит',
     'page.body.trade.header.newOrder.content.orderType.market': 'Рынок',
     'page.body.trade.header.newOrder.content.price': 'Цена',
-    'page.body.trade.header.newOrder.content.priceTip': 'Минимальный шаг цены ',
+    'page.body.trade.header.newOrder.content.priceTip': 'Минимальный шаг цены {step} {currency}',
     'page.body.trade.header.newOrder.content.amount': 'Кол.',
     'page.body.trade.header.newOrder.content.total': 'Всего',
     'page.body.trade.header.newOrder.content.available': 'Доступно',
