@@ -1,5 +1,22 @@
 export type MarketId = string;
 
+export interface MarketFilterCustomStepRule {
+    limit: string;
+    step: string;
+}
+
+export interface MarketFilterCustomStep {
+    type: string;
+    rules: MarketFilterCustomStepRule[];
+}
+
+export interface MarketFilterSignificantDigit {
+    type: string;
+    digits: number;
+}
+
+export type MarketFilter = MarketFilterSignificantDigit | MarketFilterCustomStep;
+
 export interface Market {
     id: MarketId;
     name: string;
@@ -11,6 +28,7 @@ export interface Market {
     amount_precision: number;
     price_precision: number;
     state?: string;
+    filters?: MarketFilter[];
 }
 
 export interface Ticker {

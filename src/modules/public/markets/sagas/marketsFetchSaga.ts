@@ -1,6 +1,7 @@
 // tslint:disable-next-line
 import { call, put, takeLeading } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
+import { getOrderAPI } from '../../../../helpers';
 import { alertPush } from '../../alert';
 import {
     marketsData,
@@ -13,7 +14,7 @@ import {
 import { MARKETS_FETCH, MARKETS_TICKERS_FETCH } from '../constants';
 
 const marketsRequestOptions: RequestOptions = {
-    apiVersion: 'peatio',
+    apiVersion: getOrderAPI(),
 };
 
 const tickersOptions: RequestOptions = {

@@ -1,0 +1,97 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+[
+  {
+    "id":"dashbtc",
+    "name":"DASH/BTC",
+    "base_unit":"dash",
+    "quote_unit":"btc",
+    "state":"enabled",
+    "amount_precision":3,
+    "price_precision":6,
+    "min_price":"0.000001",
+    "max_price":"0",
+    "min_amount":"0.001",
+    "filters": [
+      {
+        "digits":5,
+        "type":"significant_digits"
+      }
+    ]
+  },
+  {
+    "id":"ethbtc",
+    "name":"ETH/BTC",
+    "base_unit":"eth",
+    "quote_unit":"btc",
+    "state":"enabled",
+    "amount_precision":5,
+    "price_precision":7,
+    "min_price":"0.0000001",
+    "max_price":"0",
+    "min_amount":"0.00001",
+    "filters": [
+      {
+        "type":"significant_digits",
+        "digits":5
+      },
+      {
+        "type":"custom_price_steps",
+        "rules": [
+          {
+            "limit":"1",
+            "step":"0.0000001"
+          },
+          {
+            "limit":"0",
+            "step":"0.00001"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id":"btcusd",
+    "name":"BTC/USD",
+    "base_unit":"btc",
+    "quote_unit":"usd",
+    "state":"enabled",
+    "amount_precision":7,
+    "price_precision":2,
+    "min_price":"0.01",
+    "max_price":"0",
+    "min_amount":"0.0000001",
+    "filters": [
+      {
+        "rules": [
+          {
+            "limit":"1",
+            "step":"0.01"
+          },
+          {
+            "limit":"10",
+            "step":"0.1"
+          },
+          {
+            "limit":"100",
+            "step":"1"
+          },
+          {
+            "limit":"1000",
+            "step":"10"
+          },
+          {
+            "limit":"0",
+            "step":"100"
+          }
+        ],
+        "type":"custom_price_steps"
+      }
+    ]
+  }
+]
