@@ -100,16 +100,18 @@ export const estimateValue = (targetCurrency: string, currencies: Currency[], wa
     const formattedTargetCurrency = targetCurrency.toLowerCase();
     let estimatedValue = 0;
 
-    for (const wallet of wallets) {
-        const formattedWalletCurrency = wallet.currency.toLowerCase();
+    if (wallets && wallets.length) {
+        for (const wallet of wallets) {
+            const formattedWalletCurrency = wallet.currency.toLowerCase();
 
-        if (formattedWalletCurrency === formattedTargetCurrency) {
-            const walletTotal = (Number(wallet.balance) || 0) + (Number(wallet.locked) || 0);
-            estimatedValue += walletTotal;
-        } else if (isMarketPresent(formattedTargetCurrency, formattedWalletCurrency, markets)) {
-            estimatedValue += estimateWithMarket(formattedTargetCurrency, formattedWalletCurrency, getWalletTotal(wallet), currencies, markets, marketTickers);
-        } else {
-            estimatedValue += estimateWithoutMarket(formattedTargetCurrency, wallet.currency, getWalletTotal(wallet), currencies, markets, marketTickers);
+            if (formattedWalletCurrency === formattedTargetCurrency) {
+                const walletTotal = (Number(wallet.balance) || 0) + (Number(wallet.locked) || 0);
+                estimatedValue += walletTotal;
+            } else if (isMarketPresent(formattedTargetCurrency, formattedWalletCurrency, markets)) {
+                estimatedValue += estimateWithMarket(formattedTargetCurrency, formattedWalletCurrency, getWalletTotal(wallet), currencies, markets, marketTickers);
+            } else {
+                estimatedValue += estimateWithoutMarket(formattedTargetCurrency, wallet.currency, getWalletTotal(wallet), currencies, markets, marketTickers);
+            }
         }
     }
 
