@@ -7,6 +7,7 @@ export * from './cleanPositiveFloatInput';
 export * from './convertRgbToHex';
 export * from './copy';
 export * from './countDecimals';
+export * from './countMinValidPriceStep';
 export * from './countSigDigits';
 export * from './emailValidation';
 export * from './filterData';

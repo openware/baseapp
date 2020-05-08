@@ -1,4 +1,4 @@
-import { countSigDigits } from '../../helpers';
+import { countMinValidPriceStep, countSigDigits } from '../../helpers';
 import { MarketFilterSignificantDigit } from '../../modules';
 import { FilterPrice, PriceValidation } from './index';
 
@@ -11,7 +11,12 @@ export class FilterPriceSignificantDigit implements FilterPrice {
 
     public validatePriceStep(price: number): PriceValidation {
         const valid = countSigDigits(price) <= this.filter.digits;
+        let priceStep = 0;
 
-        return { valid, priceStep: 0 } as PriceValidation;
+        if (!valid) {
+            priceStep = countMinValidPriceStep(price, this.filter.digits);
+        }
+
+        return { valid, priceStep } as PriceValidation;
     }
 }

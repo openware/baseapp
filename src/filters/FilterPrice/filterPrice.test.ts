@@ -4,8 +4,8 @@ describe('Describe validatePriceStep filter', () => {
     it('should validate significant_digits filter', () => {
         expect(validatePriceStep(100, [])).toEqual({ valid: true, priceStep: 0 });
         expect(validatePriceStep(100, [{ type: 'significant_digits', digits: 5 }].map(buildFilterPrice))).toEqual({ valid: true, priceStep: 0 });
-        expect(validatePriceStep(100.001, [{ type: 'significant_digits', digits: 5 }].map(buildFilterPrice))).toEqual({ valid: false, priceStep: 0 });
-        expect(validatePriceStep(100.001, [{ type: 'significant_digits', digits: 5 }].map(buildFilterPrice))).toEqual({ valid: false, priceStep: 0 });
+        expect(validatePriceStep(100.001, [{ type: 'significant_digits', digits: 5 }].map(buildFilterPrice))).toEqual({ valid: false, priceStep: 0.01 });
+        expect(validatePriceStep(100.001, [{ type: 'significant_digits', digits: 5 }].map(buildFilterPrice))).toEqual({ valid: false, priceStep: 0.01 });
     });
 
     it('should validate custom_price_steps filter', () => {
@@ -33,6 +33,6 @@ describe('Describe validatePriceStep filter', () => {
         expect(validatePriceStep(110, filters)).toEqual({ valid: true, priceStep: 0 });
         expect(validatePriceStep(111, filters)).toEqual({ valid: false, priceStep: 10 });
         expect(validatePriceStep(1110, filters)).toEqual({ valid: true, priceStep: 0 });
-        expect(validatePriceStep(111000, filters)).toEqual({ valid: false, priceStep: 0 });
+        expect(validatePriceStep(111000, filters)).toEqual({ valid: false, priceStep: 10 });
     });
 });
