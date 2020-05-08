@@ -1,4 +1,49 @@
+import { countDecimals } from './FilterPriceCustomStep';
+import { countMinValidPriceStep, countSignificantDigits } from './FilterPriceSignificantDigit';
 import { buildFilterPrice, validatePriceStep } from './index';
+
+
+describe('Describe countDecimals helper', () => {
+    it('should count number of decimal digits', () => {
+        expect(countDecimals(100000000)).toEqual(0);
+        expect(countDecimals(0.100006)).toEqual(6);
+        expect(countDecimals(10005.100006)).toEqual(6);
+        expect(countDecimals('10005.100006')).toEqual(6);
+        expect(countDecimals('000010000.00000600000')).toEqual(11);
+    });
+});
+
+describe('Describe countSigDigits helper', () => {
+    it('should count significant digits of number type', () => {
+        expect(countSignificantDigits(100000000)).toEqual(9);
+        expect(countSignificantDigits(100000009)).toEqual(9);
+        expect(countSignificantDigits(0.100006)).toEqual(6);
+        expect(countSignificantDigits(10005.100006)).toEqual(11);
+    });
+
+    it('should count significant digits of string type', () => {
+        expect(countSignificantDigits('100000009')).toEqual(9);
+        expect(countSignificantDigits('10005.100006')).toEqual(11);
+        expect(countSignificantDigits('000010005.10000600000')).toEqual(11);
+        expect(countSignificantDigits('000010000.00000600000')).toEqual(11);
+    });
+
+    it('should count significant digits of exponent', () => {
+        expect(countSignificantDigits('7.71234e+1')).toEqual(6);
+    });
+});
+
+describe('Describe countMinValidPriceStep helper', () => {
+    it('should count minimum valid price step', () => {
+        expect(countMinValidPriceStep(0, 0)).toEqual(1);
+        expect(countMinValidPriceStep(0, 5)).toEqual(0.00001);
+        expect(countMinValidPriceStep(100000000, 5)).toEqual(10000);
+        expect(countMinValidPriceStep(0.100006, 5)).toEqual(0.00001);
+        expect(countMinValidPriceStep(10005.100006, 5)).toEqual(1);
+        expect(countMinValidPriceStep('10005.100006', 6)).toEqual(0.1);
+        expect(countMinValidPriceStep('000010000.00000600000', 3)).toEqual(100);
+    });
+});
 
 describe('Describe validatePriceStep filter', () => {
     it('should validate significant_digits filter', () => {
