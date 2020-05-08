@@ -10,7 +10,11 @@ export const countMinValidPriceStep = (price: number | string, digits: number) =
         indexOfDot -= 1;
     }
 
-    const minValidPrice = 10 ** (indexOfDot - digits);
+    let minValidPrice = 10 ** (indexOfDot - digits);
+
+    if (minValidPrice < 1) {
+        minValidPrice = +(minValidPrice.toFixed(digits - indexOfDot));
+    }
 
     return minValidPrice;
 };
