@@ -4,7 +4,7 @@
 Base React application to build a trading platform interface for use with OpenDAX: https://github.com/openware/opendax
 Why React? We consider it's the biggest frontend community and have capacities to work in mobile native.
 
-You can see an example of a live application running at: https://demo.openware.com/
+You can see an example of a live application running at: https://mividex.com/
 
 ## Install dependencies
 
