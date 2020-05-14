@@ -18,6 +18,7 @@ import {
 } from '../../modules';
 import { HeaderToolbar } from '../HeaderToolbar';
 import { NavBar } from '../NavBar';
+improt { Sidebar } from '../Sidebar';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
@@ -50,28 +51,35 @@ class Head extends React.Component<Props> {
             {shouldRenderHeader &&
                 <header className={`pg-header`}>
                     <div className={`pg-container pg-header__content ${tradingCls}`}>
-                        <div
+                        /*<div
                             className={`pg-sidebar__toggler ${mobileWallet && 'pg-sidebar__toggler-mobile'}`}
                             onClick={this.openSidebar}
                         >
                             <span className="pg-sidebar__toggler-item"/>
                             <span className="pg-sidebar__toggler-item"/>
                             <span className="pg-sidebar__toggler-item"/>
-                        </div>
+                        </div>*/
                         <div onClick={e => this.redirectToLanding()} className="pg-header__logo">
                             <div className="pg-logo">
                                 <LogoIcon className="pg-logo__img" />
                             </div>
                         </div>
+
                         {this.renderMarketToggler()}
+
                         <div className="pg-header__location">
                             {mobileWallet ? <span>{mobileWallet}</span> : <span>{window.location.pathname.split('/')[1]}</span>}
                         </div>
+
                         {this.renderMobileWalletNav()}
+
+
                         <div className="pg-header__navbar">
                             {this.renderMarketToolbar()}
+                            <Sidebar/>
                             <NavBar onLinkChange={this.closeMenu}/>
                         </div>
+
                     </div>
                 </header>}
           </React.Fragment>
