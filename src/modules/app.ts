@@ -24,6 +24,7 @@ import { customizationUpdateReducer } from './user/customization';
 import { sendEmailVerificationReducer } from './user/emailVerification';
 import { historyReducer  } from './user/history';
 import {
+    addressesReducer,
     documentsReducer,
     identityReducer,
     labelReducer,
@@ -66,9 +67,10 @@ export const userReducer = combineReducers({
     password: passwordReducer,
     profile: profileReducer,
     wallets: walletsReducer,
-    phone: phoneReducer,
-    identity: identityReducer,
+    addresses: addressesReducer,
     documents: documentsReducer,
+    identity: identityReducer,
+    phone: phoneReducer,
     history: historyReducer,
     newHistory: newHistoryReducer,
     apiKeys: apiKeysReducer,
