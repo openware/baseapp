@@ -1,26 +1,34 @@
 import cr from 'classnames';
+import * as countries from 'i18n-iso-countries';
 import * as React from 'react';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { CloseIcon } from '../../../assets/images/CloseIcon';
-import { CustomInput } from '../../../components';
-import { DropdownComponent } from '../../../components/Dropdown';
-import { formatDate } from '../../../helpers';
-import { isDateInFuture } from '../../../helpers/checkDate';
-import { alertPush, RootState } from '../../../modules';
+import { compose } from 'redux';
+import { languages } from '../../../api/config';
 import {
-    selectSendDocumentsLoading,
+    CustomInput,
+    DropdownComponent,
+    UploadFile,
+} from '../../../components';
+import { formatDate, isDateInFuture } from '../../../helpers';
+import {
+    alertPush,
+    RootState,
+    selectCurrentLanguage,
     selectSendDocumentsSuccess,
     sendDocuments,
-} from '../../../modules/user/kyc/documents';
+} from '../../../modules';
+const DocumentFrontExample = require('../../../assets/images/kyc/DocumentFrontExample.svg');
+const DocumentBackExample = require('../../../assets/images/kyc/DocumentBackExample.svg');
+const DocumentSelfieExample = require('../../../assets/images/kyc/DocumentSelfieExample.svg');
 
 interface ReduxProps {
+    lang: string;
     success?: string;
-    loading: boolean;
 }
 
 interface DispatchProps {
@@ -35,13 +43,17 @@ interface OnChangeEvent {
 }
 
 interface DocumentsState {
+    country: string;
     documentsType: string;
-    documentsFocused: boolean;
-    expiration: string;
-    expirationFocused: boolean;
+    issuedDate: string;
+    issuedDateFocused: boolean;
+    expireDate: string;
+    expireDateFocused: boolean;
     idNumber: string;
     idNumberFocused: boolean;
-    scans: File[];
+    fileFront: File[];
+    fileBack: File[];
+    fileSelfie: File[];
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
@@ -56,140 +68,176 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         this.translate('page.body.kyc.documents.select.passport'),
         this.translate('page.body.kyc.documents.select.identityCard'),
         this.translate('page.body.kyc.documents.select.driverLicense'),
-        this.translate('page.body.kyc.documents.select.utilityBill'),
     ];
 
     public state = {
+        country: '',
         documentsType: '',
-        documentsFocused :false,
-        expiration: '',
-        expirationFocused: false,
+        issuedDate: '',
+        issuedDateFocused: false,
+        expireDate: '',
+        expireDateFocused: false,
         idNumber: '',
         idNumberFocused: false,
-        scans: [],
+        fileFront: [],
+        fileBack: [],
+        fileSelfie: [],
     };
 
-    public componentWillReceiveProps(next: Props) {
-        if (next.success){
-            this.props.history.push('/profile');
+    public UNSAFE_componentWillReceiveProps(next: Props) {
+        if (next.success && !this.props.success) {
+            this.props.history.push('/settings');
         }
     }
 
     public render() {
+        const { lang } = this.props;
         const {
-            documentsType,
-            documentsFocused,
-            expiration,
-            expirationFocused,
+            fileFront,
+            fileBack,
+            fileSelfie,
+            issuedDate,
+            issuedDateFocused,
+            expireDate,
+            expireDateFocused,
             idNumber,
             idNumberFocused,
-            scans,
         }: DocumentsState = this.state;
 
-        const { loading } = this.props;
+        /* tslint:disable */
+        languages.map((l: string) => countries.registerLocale(require(`i18n-iso-countries/langs/${l}.json`)));
+        /* tslint:enable */
 
-        const dropdownFocusedClass = cr('pg-confirm__content-documents-col-row-content-3', {
-            'pg-confirm__content-documents-col-row-content-3--focused': documentsFocused,
+        const dataCountries = Object.values(countries.getNames(lang));
+        const onSelectCountry = value => this.selectCountry(dataCountries[value]);
+
+        const issuedDateFocusedClass = cr('pg-confirm__content-documents__row__content', {
+            'pg-confirm__content-documents__row__content--focused': issuedDateFocused,
+            'pg-confirm__content-documents__row__content--wrong': issuedDate && !this.handleValidateInput('issuedDate', issuedDate),
         });
 
-        const expirationFocusedClass = cr('pg-confirm__content-documents-col-row-content', {
-            'pg-confirm__content-documents-col-row-content--focused': expirationFocused,
+        const expireDateFocusedClass = cr('pg-confirm__content-documents__row__content', {
+            'pg-confirm__content-documents__row__content--focused': expireDateFocused,
+            'pg-confirm__content-documents__row__content--wrong': expireDate && !this.handleValidateInput('expireDate', expireDate),
         });
 
-        const idNumberFocusedClass = cr('pg-confirm__content-documents-col-row-content', {
-            'pg-confirm__content-documents-col-row-content--focused': idNumberFocused,
+        const idNumberFocusedClass = cr('pg-confirm__content-documents__row__content', {
+            'pg-confirm__content-documents__row__content--focused': idNumberFocused,
+            'pg-confirm__content-documents__row__content--wrong': idNumber && !this.handleValidateInput('idNumber', idNumber),
         });
 
         const onSelect = value => this.handleChangeDocumentsType(this.data[value]);
-        const numberType = `${documentsType || this.translate('page.body.kyc.documentsType')}${this.translate('page.body.kyc.documents.number')}`;
 
         return (
             <React.Fragment>
                 <div className="pg-confirm__content-documents">
-                    <div className="pg-confirm__content-documents-col-row">
-                        <div className="pg-confirm__content-documents-col">
-                            <div className="pg-confirm__content-documents-col-row">
-                                <div className={dropdownFocusedClass} onClick={this.handleFieldFocus('document')} onBlur={this.handleBlur('document')}>
-                                    <div className="pg-confirm__content-documents-col-row-content-label">
-                                        {documentsType && this.translate('page.body.kyc.documentsType')}
-                                    </div>
-                                    <DropdownComponent
-                                        className="pg-confirm__content-documents-col-row-content-number"
-                                        list={this.data}
-                                        placeholder={this.translate('page.body.kyc.documentsType')}
-                                        onSelect={onSelect}
-                                    />
-                                </div>
-                                <fieldset className={idNumberFocusedClass}>
-                                    <CustomInput
-                                        type="string"
-                                        label={idNumber ? documentsType : ''}
-                                        defaultLabel={idNumber ? documentsType : ''}
-                                        placeholder={numberType}
-                                        inputValue={idNumber}
-                                        handleChangeInput={this.handleChangeIdNumber}
-                                        handleFocusInput={this.handleFieldFocus('idNumber')}
-                                    />
-                                </fieldset>
-                                <fieldset className={expirationFocusedClass}>
-                                    {expiration && <legend>{this.translate('page.body.kyc.documents.expiryDate')}</legend>}
-                                    <MaskInput
-                                      maskString="00/00/0000"
-                                      mask="00/00/0000"
-                                      onChange={this.handleChangeExpiration}
-                                      onFocus={this.handleFieldFocus('expiration')}
-                                      onBlur={this.handleFieldFocus('expiration')}
-                                      value={expiration}
-                                      className="group-input"
-                                      placeholder={this.translate('page.body.kyc.documents.expiryDate')}
-                                    />
-                                </fieldset>
-                            </div>
+                    <div className="pg-confirm__content-documents__row__content">
+                        <div className="pg-confirm__content-documents__row__content-label">
+                            {this.translate('page.body.kyc.documents.country')}
                         </div>
-                        <div className="pg-confirm__loader">
-                            {loading ? <Spinner animation="border" variant="primary" /> : null}
-                        </div>
-                        <div className="pg-confirm__content-documents-col pg-confirm__content-documents-drag">
-                            <div className="pg-confirm__content-documents-col-row">
-                                <div className="pg-confirm__content-documents-col-row-content-2">
-                                    {this.translate('page.body.kyc.documents.upload')}
-                                    <div className="pg-confirm__content-documents-col-row-content-2-documents">
-                                        <form
-                                            className="box"
-                                            draggable={true}
-                                            onDrop={this.handleFileDrop}
-                                            onDragOver={this.handleDragOver}
-                                            method="post"
-                                            action=""
-                                            data-enctype="multipart/form-data"
-                                        >
-                                            <input
-                                                className="pg-confirm__content-documents-col-row-content-2-documents-input"
-                                                data-multiple-caption="files selected"
-                                                draggable={true}
-                                                multiple={true}
-                                                name="files[]"
-                                                type="file"
-                                                id="file"
-                                                onChange={this.handleUploadScan}
-                                            />
-                                            <div className="pg-confirm__content-documents-col-row-content-2-documents-label">
-                                                <label
-                                                    className="pg-confirm__content-documents-col-row-content-2-documents-label-item"
-                                                    htmlFor="file"
-                                                >
-                                                    <p className="active">{this.translate('page.body.kyc.documents.drag')}</p>
-                                                    <div className="muted">{this.translate('page.body.kyc.documents.maxFile')}</div>
-                                                    <div className="muted">{this.translate('page.body.kyc.documents.maxNum')}</div>
-                                                </label>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {Array.from(scans).map(this.renderScan)}
-                                </div>
-                            </div>
-                        </div>
+                        <DropdownComponent
+                            className="pg-confirm__content-documents__row__content-number-dropdown"
+                            list={dataCountries}
+                            onSelect={onSelectCountry}
+                            placeholder={this.translate('page.body.kyc.documents.country.placeholder')}
+                        />
                     </div>
+                    <div className="pg-confirm__content-documents__row__content">
+                        <div className="pg-confirm__content-documents__row__content-label">
+                            {this.translate('page.body.kyc.documentsType')}
+                        </div>
+                        <DropdownComponent
+                            className="pg-confirm__content-documents__row__content-number-dropdown"
+                            list={this.data}
+                            onSelect={onSelect}
+                            placeholder={this.translate('page.body.kyc.documentsType.placeholder')}
+                        />
+                    </div>
+                    <div className="pg-confirm__content-documents__row">
+                        <fieldset className={idNumberFocusedClass}>
+                            <CustomInput
+                                type="string"
+                                label={this.translate('page.body.kyc.documents.idNumber')}
+                                labelVisible={true}
+                                defaultLabel={''}
+                                placeholder={this.translate('page.body.kyc.documents.idNumber.placeholder')}
+                                inputValue={idNumber}
+                                handleChangeInput={this.handleChangeIdNumber}
+                                handleFocusInput={this.handleFieldFocus('idNumber')}
+                            />
+                        </fieldset>
+                    </div>
+                    <div className="pg-confirm__content-documents__row input-group">
+                        <fieldset className={issuedDateFocusedClass}>
+                            <div className="custom-input">
+                                <label>{this.translate('page.body.kyc.documents.issuedDate')}</label>
+                                <div className="input-group input-group-lg">
+                                    <MaskInput
+                                        maskString="00/00/0000"
+                                        mask="00/00/0000"
+                                        onChange={this.handleChangeIssuedDate}
+                                        onFocus={this.handleFieldFocus('issuedDate')}
+                                        onBlur={this.handleFieldFocus('issuedDate')}
+                                        value={issuedDate}
+                                        className="group-input"
+                                        placeholder={this.translate('page.body.kyc.documents.issuedDate.placeholder')}
+                                    />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset className={expireDateFocusedClass}>
+                            <div className="custom-input">
+                                <label>{this.translate('page.body.kyc.documents.expiryDate')}</label>
+                                <div className="input-group input-group-lg">
+                                    <MaskInput
+                                        maskString="00/00/0000"
+                                        mask="00/00/0000"
+                                        onChange={this.handleChangeExpiration}
+                                        onFocus={this.handleFieldFocus('expireDate')}
+                                        onBlur={this.handleFieldFocus('expireDate')}
+                                        value={expireDate}
+                                        className="group-input"
+                                        placeholder={this.translate('page.body.kyc.documents.expiryDate.placeholder')}
+                                    />
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <UploadFile
+                        id="fileFront"
+                        title={this.translate('page.body.kyc.documents.uploadFile.front.title')}
+                        label={this.translate('page.body.kyc.documents.uploadFile.front.label')}
+                        buttonText={this.translate('page.body.kyc.documents.uploadFile.front.button')}
+                        sizesText={this.translate('page.body.kyc.documents.uploadFile.front.sizes')}
+                        formatsText={this.translate('page.body.kyc.documents.uploadFile.front.formats')}
+                        handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'front')}
+                        exampleImagePath={DocumentFrontExample}
+                        uploadedFile={fileFront[0] && (fileFront[0] as File).name}
+                    />
+                    {this.state.documentsType !== 'Passport' ? (
+                        <UploadFile
+                            id="fileBack"
+                            title={this.translate('page.body.kyc.documents.uploadFile.back.title')}
+                            label={this.translate('page.body.kyc.documents.uploadFile.back.label')}
+                            buttonText={this.translate('page.body.kyc.documents.uploadFile.back.button')}
+                            sizesText={this.translate('page.body.kyc.documents.uploadFile.back.sizes')}
+                            formatsText={this.translate('page.body.kyc.documents.uploadFile.back.formats')}
+                            handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'back')}
+                            exampleImagePath={DocumentBackExample}
+                            uploadedFile={fileBack[0] && (fileBack[0] as File).name}
+                        />
+                    ) : null}
+                    <UploadFile
+                        id="fileSelfie"
+                        title={this.translate('page.body.kyc.documents.uploadFile.selfie.title')}
+                        label={this.translate('page.body.kyc.documents.uploadFile.selfie.label')}
+                        buttonText={this.translate('page.body.kyc.documents.uploadFile.selfie.button')}
+                        sizesText={this.translate('page.body.kyc.documents.uploadFile.selfie.sizes')}
+                        formatsText={this.translate('page.body.kyc.documents.uploadFile.selfie.formats')}
+                        handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'selfie')}
+                        exampleImagePath={DocumentSelfieExample}
+                        uploadedFile={fileSelfie[0] && (fileSelfie[0] as File).name}
+                    />
                 </div>
                 <div className="pg-confirm__content-deep">
                     <Button
@@ -213,27 +261,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         });
     };
 
-    private handleFileDelete = (key: number) => () => {
-        const fileList = Array.from(this.state.scans);
-        fileList.splice(key, 1);
-        this.setState({
-            scans: fileList,
-        });
-    };
-
-    private renderScan = (scan: File, index: number) => {
-        return (
-            <div
-                className="pg-confirm__content-documents-filename"
-                key={index}
-                onClick={this.handleFileDelete(index)}
-            >
-                {scan.name.slice(0, 27)}...&nbsp;
-                <CloseIcon className="close-icon" />
-            </div>
-        );
-    };
-
     private handleChangeIdNumber = (value: string) => {
         this.setState({
             idNumber: value,
@@ -243,14 +270,14 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     private handleFieldFocus = (field: string) => {
         return () => {
             switch (field) {
-                case 'document':
+                case 'issuedDate':
                     this.setState({
-                        documentsFocused: !this.state.documentsFocused,
+                        issuedDateFocused: !this.state.issuedDateFocused,
                     });
                     break;
-                case 'expiration':
+                case 'expireDate':
                     this.setState({
-                        expirationFocused: !this.state.expirationFocused,
+                        expireDateFocused: !this.state.expireDateFocused,
                     });
                     break;
                 case 'idNumber':
@@ -264,79 +291,125 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         };
     };
 
-    private handleBlur = (field: string) => {
-        return () => {
-            this.setState({
-                documentsFocused: false,
-            });
-        };
+    private selectCountry = (value: string) => {
+        this.setState({
+            country: countries.getAlpha2Code(value, this.props.lang),
+        });
+    };
+
+    private handleChangeIssuedDate = (e: OnChangeEvent) => {
+        this.setState({
+            issuedDate: formatDate(e.target.value),
+        });
     };
 
     private handleChangeExpiration = (e: OnChangeEvent) => {
         this.setState({
-          expiration: formatDate(e.target.value),
+            expireDate: formatDate(e.target.value),
         });
     };
 
-    private handleUploadScan = uploadEvent => {
+    private handleUploadScan = (uploadEvent, id) => {
         const allFiles: File[] = uploadEvent.target.files;
-        const oldFileList = Array.from(this.state.scans);
-        const documentsCount = 5;
-        const additionalFileList = Array.from(allFiles).length > documentsCount ?  Array.from(allFiles).slice(0,documentsCount) : Array.from(allFiles);
-        if (oldFileList.length + additionalFileList.length <= documentsCount) {
-            this.setState({ scans: additionalFileList.concat(oldFileList) });
-        } else {
-            this.setState({ scans: additionalFileList.concat(oldFileList).slice(0,documentsCount) });
-            this.props.fetchAlert({ message: ['resource.documents.limit_reached'], type: 'error'});
+        const maxDocsCount = 1;
+        const additionalFileList = Array.from(allFiles).length > maxDocsCount ?  Array.from(allFiles).slice(0, maxDocsCount) : Array.from(allFiles);
+
+        switch (id) {
+            case 'front':
+                this.setState({ fileFront: additionalFileList });
+                break;
+            case 'back':
+                this.setState({ fileBack: additionalFileList});
+                break;
+            case 'selfie':
+                this.setState({ fileSelfie: additionalFileList });
+                break;
+            default:
+                break;
         }
     };
-    private handleFileDrop = event => {
-      event.preventDefault();
-      event.stopPropagation();
-      const uploadObj = {
-          target: event.nativeEvent.dataTransfer,
-      };
-      this.handleUploadScan(uploadObj);
-    };
 
-    private handleDragOver = event => {
-      event.preventDefault();
-      event.stopPropagation();
+    private handleValidateInput = (field: string, value: string): boolean => {
+        switch (field) {
+            case 'issuedDate':
+                return !isDateInFuture(value);
+            case 'expireDate':
+                return isDateInFuture(value);
+            case 'idNumber':
+                const cityRegex = new RegExp(`^[a-zA-Z0-9]+$`);
+
+                return value.match(cityRegex) ? true : false;
+            default:
+                return true;
+        }
     };
 
     private handleCheckButtonDisabled = () => {
         const {
-            expiration,
+            country,
+            documentsType,
+            issuedDate,
+            expireDate,
+            fileBack,
+            fileFront,
+            fileSelfie,
             idNumber,
-            scans,
         } = this.state;
 
-        return !scans.length || !idNumber || !expiration;
+        const typeOfDocuments = this.getDocumentsType(documentsType);
+        const filesValid = (typeOfDocuments === 'Passport') ? (
+            fileFront.length &&
+            fileSelfie.length
+        ) : (
+            fileSelfie.length &&
+            fileFront.length &&
+            fileBack.length
+        );
+
+        return (
+            !this.handleValidateInput('idNumber', idNumber) ||
+            !this.handleValidateInput('issuedDate', issuedDate) ||
+            (expireDate && !this.handleValidateInput('expireDate', expireDate)) ||
+            !country ||
+            !filesValid
+        );
     };
 
     private sendDocuments = () => {
         const {
-            scans,
-            idNumber,
-            expiration,
+            country,
             documentsType,
+            issuedDate,
+            expireDate,
+            fileBack,
+            fileFront,
+            fileSelfie,
+            idNumber,
         }: DocumentsState = this.state;
 
         const typeOfDocuments = this.getDocumentsType(documentsType);
-        const docExpire = isDateInFuture(expiration) ? expiration : '';
 
-        if (!scans.length) {
+        if (this.handleCheckButtonDisabled()) {
             return;
         }
 
         const request = new FormData();
 
-        for (const scan of scans) {
-            request.append('upload[]', scan);
+        if (expireDate) {
+            request.append('doc_expire', expireDate);
         }
-        request.append('doc_expire', docExpire);
+
+        request.append('doc_issue', issuedDate);
         request.append('doc_type', typeOfDocuments);
         request.append('doc_number', idNumber);
+        request.append('doc_country', country);
+        request.append('upload[]', fileFront[0]);
+
+        if (documentsType !== 'Passport') {
+            request.append('upload[]', fileBack[0]);
+        }
+
+        request.append('upload[]', fileSelfie[0]);
 
         this.props.sendDocuments(request);
     };
@@ -346,22 +419,24 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
            case this.data[0]: return 'Passport';
            case this.data[1]: return 'Identity card';
            case this.data[2]: return 'Driver license';
-           case this.data[3]: return 'Utility Bill';
            default: return value;
         }
     };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
+    lang: selectCurrentLanguage(state),
     success: selectSendDocumentsSuccess(state),
-    loading: selectSendDocumentsLoading(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         fetchAlert: payload => dispatch(alertPush(payload)),
         sendDocuments: payload => dispatch(sendDocuments(payload)),
     });
 
-// tslint:disable-next-line:no-any
-export const Documents = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(DocumentsComponent) as any));
+    export const Documents = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(DocumentsComponent) as any; // tslint:disable-line

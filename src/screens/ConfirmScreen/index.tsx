@@ -1,173 +1,106 @@
 import classnames from 'classnames';
-import { History } from 'history';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { CloseIcon } from '../../assets/images/CloseIcon';
+import { kycSteps } from '../../api';
 import { LogoIcon } from '../../assets/images/LogoIcon';
-import { Phone } from '../../containers';
-import { Documents } from '../../containers/Confirm/Documents';
-import { Identity } from '../../containers/Confirm/Identity';
+import { Address, Documents, Identity, Phone } from '../../containers';
 import { setDocumentTitle } from '../../helpers';
 import {
     Label,
     labelFetch,
     RootState,
-    selectCurrentColorTheme,
     selectLabelData,
-    selectUserInfo,
-    User,
+    selectSidebarState,
 } from '../../modules';
 
 interface ReduxProps {
-    colorTheme: string;
-    userData: User;
+    isSidebarOpen: boolean;
     labels: Label[];
-}
-
-interface HistoryProps {
-    history: History;
-}
-
-interface ConfirmState {
-    title: string;
-    level: number;
 }
 
 interface DispatchProps {
     labelFetch: typeof labelFetch;
 }
 
-type Props = ReduxProps & HistoryProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & InjectedIntlProps;
 
-class ConfirmComponent extends React.Component<Props, ConfirmState> {
-    constructor(props: Props) {
-        super(props);
-
-        this.state = {
-            title: '',
-            level: 1,
-        };
-    }
-
+class ConfirmComponent extends React.Component<Props> {
     public componentDidMount() {
-        const { labels, userData } = this.props;
-
+        const { labels } = this.props;
         setDocumentTitle('Confirm');
         this.props.labelFetch();
-        this.setState({
-            level: userData.level,
-        });
 
-        this.handleCheckPendingLabel(labels);
+        if (labels.length) {
+            this.handleCheckUserLabels(labels);
+        }
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public componentDidUpdate(prevProps: Props) {
         const { labels } = this.props;
 
-        if (next.userData.level !== this.state.level) {
-            this.setState({
-                level: next.userData.level,
-            });
-        }
-
-        if (next.labels && JSON.stringify(next.labels) !== JSON.stringify(labels)) {
-            this.handleCheckPendingLabel(next.labels);
+        if (labels.length && JSON.stringify(labels) !== JSON.stringify(prevProps.labels)) {
+            this.handleCheckUserLabels(labels);
         }
     }
 
-    public goBack = event => {
-      event.preventDefault();
-      this.props.history.goBack();
+    public renderVerificationStep = (step: string) => {
+        switch (step) {
+            case 'phone':    return <Phone />;
+            case 'profile':  return <Identity />;
+            case 'document': return <Documents />;
+            case 'address':  return <Address />;
+            default: return 'Something went wrong';
+        }
     };
 
     public render() {
-        const {
-            userData,
-            labels,
-        } = this.props;
-        const isProfileVerified = labels.length && labels.find(l => l.key === 'profile' && l.value === 'verified' && l.scope === 'private');
-        const currentProfileLevel = userData.level;
-        const cx = classnames('pg-confirm__progress-items', {
-            'pg-confirm__progress-first': currentProfileLevel === 1,
-            'pg-confirm__progress-second': currentProfileLevel === 2 && !isProfileVerified,
-            'pg-confirm__progress-third': currentProfileLevel === 2 && isProfileVerified,
+        const { isSidebarOpen } = this.props;
+        const step = this.handleGetVerificationStep();
+
+        const containerClass = classnames('pg-container pg-confirm', {
+            'pg-container--open': isSidebarOpen,
         });
 
-        if (currentProfileLevel === 3) {
-            this.handleRedirectToProfile();
-        }
-
         return (
-            <div className="pg-wrapper">
-                <div className="pg-logo">
-                    <LogoIcon className="pg-logo__img" />
+            <div className={containerClass}>
+                <div className="pg-confirm__logo">
+                    <LogoIcon />
                 </div>
-                <div className="pg-confirm">
-                    <div className="pg-confirm-box">
-                        <div onClick={this.goBack} className="pg-confirm-box-close">
-                            <CloseIcon className="close-icon" />
-                        </div>
-                        <div className="pg-confirm__progress">
-                            <div className={cx}>
-                                <div className="pg-confirm__progress-circle-1">
-                                    <span className="pg-confirm__title-text pg-confirm__active-1">
-                                    <FormattedMessage id="page.body.kyc.head.phone"/>
-                                    </span>
-                                </div>
-                                <div className="pg-confirm__progress-line-1" />
-                                <div className="pg-confirm__progress-circle-2">
-                                    <span className="pg-confirm__title-text pg-confirm__active-2">
-                                    <FormattedMessage id="page.body.kyc.head.identity"/>
-                                    </span>
-                                </div>
-                                <div className="pg-confirm__progress-line-2" />
-                                <div className="pg-confirm__progress-circle-3">
-                                    <span className="pg-confirm__title-text pg-confirm__active-3">
-                                    <FormattedMessage id="page.body.kyc.head.document"/>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="pg-confirm__content">
-                            {this.renderContent(isProfileVerified)}
-                        </div>
-                    </div>
+                <h3 className="pg-confirm__title">
+                    <FormattedMessage id={`page.confirm.title.${step}`} />
+                </h3>
+                <div className="pg-confirm__content">
+                    {this.renderVerificationStep(step)}
                 </div>
             </div>
         );
     }
 
-    private renderContent = (isProfileVerified: boolean) => {
-        const { level } = this.state;
+    private handleGetVerificationStep = (): string => {
+        const { labels } = this.props;
+        const lastVerifiedStep = labels.length && labels.slice().reverse().find((label: Label) => label.value === 'verified' && label.scope === 'private');
+        const lastVerifiedStepKey = lastVerifiedStep ? lastVerifiedStep.key : '';
+        const lastVerifiedStepIndex = kycSteps().findIndex((step: string) => step === lastVerifiedStepKey);
+        const currentVerificationStep = kycSteps()[lastVerifiedStepIndex + 1] || '';
 
-        switch (level) {
-            case 1: return <Phone />;
-            case 2: return isProfileVerified ? <Documents /> : <Identity />;
-            case 3: return <Documents />;
-            default: return 'Something went wrong';
-        }
+        return currentVerificationStep;
     };
 
-    private handleRedirectToProfile = () => {
-        this.props.history.push('/profile');
-    };
+    private handleCheckUserLabels = (labels: Label[]) => {
+        const pendingLabelExists = Boolean(labels.find(label => kycSteps().includes(label.key) && ['pending', 'drafted'].includes(label.value) && label.scope === 'private'));
+        const passedSteps = kycSteps().filter((step: string) => labels.find(label => step === label.key && label.value === 'verified' && label.scope === 'private'));
 
-    private handleCheckPendingLabel = (labels: Label[]) => {
-        const isProfileSubmitted = labels.length && labels.find(l => l.key === 'profile' && l.value === 'submitted' && l.scope === 'private');
-        const isDocumentPending = labels.length && labels.find(l => l.key === 'document' && l.value === 'pending' && l.scope === 'private');
-
-        if (isProfileSubmitted || isDocumentPending) {
-            this.handleRedirectToProfile();
+        if (pendingLabelExists || (kycSteps().length === passedSteps.length)) {
+            this.props.history.push('/settings');
         }
     };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    colorTheme: selectCurrentColorTheme(state),
-    userData: selectUserInfo(state),
+    isSidebarOpen: selectSidebarState(state),
     labels: selectLabelData(state),
 });
 

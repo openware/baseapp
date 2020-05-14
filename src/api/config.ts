@@ -1,4 +1,8 @@
-import { ORDER_BOOK_DEFAULT_SIDE_LIMIT, STORAGE_DEFAULT_LIMIT } from '../constants';
+import {
+    DEFAULT_KYC_STEPS,
+    ORDER_BOOK_DEFAULT_SIDE_LIMIT,
+    STORAGE_DEFAULT_LIMIT,
+} from '../constants';
 import { Config } from './types';
 
 export const defaultConfig: Config = {
@@ -24,6 +28,13 @@ export const defaultConfig: Config = {
     sessionCheckInterval: '15000',
     balancesFetchInterval: '3000',
     passwordEntropyStep: 0,
+    kycSteps: [
+        'email',
+        'phone',
+        'profile',
+        'document',
+        'address',
+    ],
 };
 
 export const Cryptobase = {
@@ -61,3 +72,4 @@ export const sessionCheckInterval = (): string => Cryptobase.config.sessionCheck
 export const balancesFetchInterval = (): string => Cryptobase.config.balancesFetchInterval || '3000';
 export const isFinexEnabled = (): boolean => Cryptobase.config.finex || false;
 export const passwordEntropyStep = ():number => Cryptobase.config.passwordEntropyStep;
+export const kycSteps = (): string[] => Cryptobase.config.kycSteps || DEFAULT_KYC_STEPS;
