@@ -33,5 +33,6 @@ export * from './Table';
 export * from './TabPanel';
 export * from './TickerTable';
 export * from './TwoFactorAuth';
+export * from './UploadFile';
 export * from './WalletItem';
 export * from './WalletList';

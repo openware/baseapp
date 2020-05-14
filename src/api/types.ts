@@ -25,4 +25,5 @@ export interface Config {
     passwordEntropyStep: number;
     showLanding: boolean;
     sentryEnabled?: boolean;
+    kycSteps?: string[];
 }

@@ -21,4 +21,11 @@ window.env = {
     passwordEntropyStep: 14,
     showLanding: true,
     sentryEnabled: false,
+    kycSteps: [
+        'email',
+        'phone',
+        'profile',
+        'document',
+        'address',
+    ],
 };
