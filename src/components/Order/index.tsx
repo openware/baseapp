@@ -242,8 +242,8 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     onSubmit={this.props.onSubmit}
                     orderTypes={orderTypes || defaultOrderTypes}
                     orderTypesIndex={orderTypesIndex || defaultOrderTypes}
-                    currentMarketAskPrecision={currentMarketAskPrecision || 6}
-                    currentMarketBidPrecision={currentMarketBidPrecision || 6}
+                    currentMarketAskPrecision={currentMarketAskPrecision}
+                    currentMarketBidPrecision={currentMarketBidPrecision}
                     orderTypeText={orderTypeText}
                     priceText={priceText}
                     amountText={amountText}

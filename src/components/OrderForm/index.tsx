@@ -118,6 +118,11 @@ const handleSetValue = (value: string | number | undefined, defaultValue: string
     value || defaultValue
 );
 
+const precisionRegExp = (precision: number) => new RegExp(precision ?
+    `^(?:[\\d-]*\\.?[\\d-]{0,${precision}}|[\\d-]*\\.[\\d-])$` :
+    `^(?:[\\d-]*)$`,
+);
+
 export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormState> {
     constructor(props: OrderFormProps) {
         super(props);
@@ -318,20 +323,23 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     };
 
     private handlePriceChange = (value: string) => {
+        const { currentMarketBidPrecision } = this.props;
         const convertedValue = cleanPositiveFloatInput(String(value));
-        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.props.currentMarketBidPrecision}}|[\\d-]*\\.[\\d-])$`);
-        if (convertedValue.match(condition)) {
+
+        if (convertedValue.match(precisionRegExp(currentMarketBidPrecision))) {
             this.setState({
                 price: convertedValue,
             });
         }
+
         this.props.listenInputPrice && this.props.listenInputPrice();
     };
 
     private handleAmountChange = (value: string) => {
+        const { currentMarketAskPrecision } = this.props;
         const convertedValue = cleanPositiveFloatInput(String(value));
-        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${this.props.currentMarketAskPrecision}}|[\\d-]*\\.[\\d-])$`);
-        if (convertedValue.match(condition)) {
+
+        if (convertedValue.match(precisionRegExp(currentMarketAskPrecision))) {
             this.props.handleAmountChange(convertedValue, this.props.type);
         }
     };
