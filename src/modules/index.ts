@@ -29,6 +29,7 @@ import { GeetestCaptchaState, rootGeetestCaptchaSaga } from './user/captcha';
 import { CustomizationUpdateState, rootCustomizationUpdateSaga } from './user/customization';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
 import { HistoryState, rootHistorySaga } from './user/history';
+import { AddressesState, rootSendAddressesSaga } from './user/kyc/addresses';
 import { DocumentsState, rootSendDocumentsSaga } from './user/kyc/documents';
 import { IdentityState, rootSendIdentitySaga } from './user/kyc/identity';
 import { LabelState, rootLabelSaga } from './user/kyc/label';
@@ -147,6 +148,7 @@ export function* rootSaga() {
         call(rootProfileSaga),
         call(rootRecentTradesSaga),
         call(rootSendCodeSaga),
+        call(rootSendAddressesSaga),
         call(rootSendDocumentsSaga),
         call(rootSendIdentitySaga),
         call(rootUserActivitySaga),
