@@ -8,22 +8,20 @@ import {
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { setDocumentTitle} from '../../helpers';
-import { IntlProps } from '../../index';
 import { GeetestCaptcha } from '../../containers';
-<<<<<<< HEAD
-=======
 import { EMAIL_REGEX, setDocumentTitle } from '../../helpers';
->>>>>>> Fix: add check to disable Resend Confirmation form
+import { IntlProps } from '../../index';
 import {
     Configs,
     emailVerificationFetch,
     RootState,
-    selectCurrentLanguage, selectMobileDeviceState,
     selectConfigs,
-    selectCurrentLanguage,
+    selectCurrentLanguage, selectMobileDeviceState,
+    selectSendEmailVerificationError,
     selectSendEmailVerificationLoading,
+    selectSendEmailVerificationSuccess,
 } from '../../modules';
+import { CommonError } from '../../modules/types';
 
 interface OwnProps {
     history: History;
@@ -32,6 +30,8 @@ interface OwnProps {
             email: string;
         };
     };
+    success: boolean;
+    error?: CommonError;
 }
 
 interface VerificationState {
@@ -77,6 +77,19 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
         }
     }
 
+    public componentDidUpdate(prev: Props) {
+        const { error, success } = this.props;
+        if ((!prev.error && error) || (!prev.success && success)) {
+            if (this.reCaptchaRef.current) {
+                this.reCaptchaRef.current.reset();
+            }
+
+            if (this.geetestCaptchaRef.current) {
+                this.setState({ shouldGeetestReset: true });
+            }
+        }
+    }
+
     public translate = (id: string) => this.props.intl.formatMessage({ id });
 
     public renderCaptcha = () => {
@@ -96,11 +109,13 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
                 );
             case 'geetest':
                 return (
-                    <GeetestCaptcha
-                        ref={this.geetestCaptchaRef}
-                        shouldCaptchaReset={shouldGeetestReset}
-                        onSuccess={this.handleGeetestCaptchaSuccess}
-                    />
+                    <div className="pg-emailverification-geetest">
+                        <GeetestCaptcha
+                            ref={this.geetestCaptchaRef}
+                            shouldCaptchaReset={shouldGeetestReset}
+                            onSuccess={this.handleGeetestCaptchaSuccess}
+                        />
+                    </div>
                 );
             default:
                 return null;
@@ -110,15 +125,9 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
     public render() {
         const { emailVerificationLoading, isMobileDevice } = this.props;
 
-        const button = (
-            <button
-                className="pg-emailverification-body-container-button"
-                onClick={this.handleClick}
-                disabled={this.disableButton()}
-            >
-                {this.translate('page.resendConfirmation')}
-            </button>
-        );
+        const title = this.props.intl.formatMessage({ id: 'page.header.signUp.modal.header' });
+        const text = this.props.intl.formatMessage({ id: 'page.header.signUp.modal.body' });
+        const button = this.props.intl.formatMessage({ id: 'page.resendConfirmation' });
 
         return (
             <div className="pg-emailverification-container">
@@ -182,7 +191,7 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
     };
 
     private disableButton = (): boolean => {
-        const { location, configs } = this.props;
+        const { configs, location } = this.props;
         const { geetestCaptchaSuccess, reCaptchaSuccess } = this.state;
 
         if (location.state.email && !location.state.email.match(EMAIL_REGEX)) {
@@ -221,6 +230,8 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     i18n: selectCurrentLanguage(state),
     isMobileDevice: selectMobileDeviceState(state),
     configs: selectConfigs(state),
+    error: selectSendEmailVerificationError(state),
+    success: selectSendEmailVerificationSuccess(state),
 });
 
 const mapDispatchToProps = {

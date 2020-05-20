@@ -7,8 +7,8 @@ import {
 } from 'react-redux';
 import { Redirect } from 'react-router';
 import { compose } from 'redux';
-import { IntlProps } from '../../index';
 import { languages } from '../../api';
+import { IntlProps } from '../../index';
 import {
     changeLanguage,
     RootState,

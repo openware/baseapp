@@ -77,7 +77,8 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
     }
 
     public componentDidUpdate(prev: Props) {
-        if (!prev.error && this.props.error) {
+        const { error, success } = this.props;
+        if ((!prev.error && error) || (!prev.success && success)) {
             if (this.reCaptchaRef.current) {
                 this.reCaptchaRef.current.reset();
             }
@@ -158,22 +159,15 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
 
     private handleChangePassword = () => {
         const { email, captcha_response } = this.state;
-        const { configs, i18n } = this.props;
+        const { configs } = this.props;
 
         switch (configs.captcha_type) {
             case 'recaptcha':
             case 'geetest':
-                this.props.forgotPassword({
-                    email,
-                    captcha_response,
-                    lang: i18n.toUpperCase(),
-                });
+                this.props.forgotPassword({ email, captcha_response });
                 break;
             default:
-                this.props.forgotPassword({
-                    email,
-                    lang: i18n.toUpperCase(),
-                });
+                this.props.forgotPassword({ email });
                 break;
         }
 
@@ -252,6 +246,6 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
 
 export const ForgotPasswordScreen = compose(
     injectIntl,
-    withRouter,
+withRouter,
     connect(mapStateToProps, mapDispatchToProps),
 )(ForgotPasswordComponent) as React.ComponentClass;

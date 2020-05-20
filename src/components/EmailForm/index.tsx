@@ -130,7 +130,7 @@ const EmailForm = React.memo((props: EmailFormProps) => {
                         />
                         {emailError && <div className="cr-email-form__error">{emailError}</div>}
                     </div>
-                    {this.props.renderCaptcha}
+                    {props.renderCaptcha}
                     <div className="cr-email-form__button-wrapper">
                         <Button
                             block={true}
