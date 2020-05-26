@@ -147,13 +147,18 @@
           }
         }
 
-        &__select {
+        &__select,
+        &__pending {
           color: var(--secondary-contrast-cta-color);
           font-size: 12px;
           font-style: normal;
           font-weight: normal;
           line-height: 12px;
           margin-right: 12px;
+        }
+
+        &__pending {
+          color: var(--primary-cta-color);
         }
 
         &__chevron {
@@ -254,7 +259,8 @@
           }
         }
 
-        &__select {
+        &__select,
+        &__pending {
           color: var(--cta-layer-color);
         }
 
@@ -326,6 +332,10 @@
           display: flex;
           justify-content: flex-end;
           width: 25%;
+
+          &__pending {
+            margin-right: 15px;
+          }
 
           &__delete {
             height: 18px;
