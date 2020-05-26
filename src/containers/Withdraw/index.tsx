@@ -139,7 +139,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             variant="primary"
                             size="lg"
                             onClick={this.handleClick}
-                            disabled={Number(total) <= 0 || !Boolean(beneficiary.id) || !Boolean(otpCode)}
+                            disabled={this.handleCheckButtonDisabled(total, beneficiary, otpCode)}
                         >
                             {withdrawButtonLabel ? withdrawButtonLabel : 'Withdraw'}
                         </Button>
@@ -148,6 +148,12 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             </div>
         );
     }
+
+    private handleCheckButtonDisabled = (total: string, beneficiary: Beneficiary, otpCode: string) => {
+        const isPending = beneficiary.state && beneficiary.state.toLowerCase() === 'pending';
+
+        return Number(total) <= 0 || !Boolean(beneficiary.id) || isPending || !Boolean(otpCode);
+    };
 
     private renderFee = () => {
         const { fee, fixed, currency } = this.props;
