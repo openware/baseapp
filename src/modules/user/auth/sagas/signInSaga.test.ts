@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga, signUpRequireVerification } from '../../..';
+import { rootSaga } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { changeLanguage } from '../../../public/i18n';
 import { userData } from '../../profile';
@@ -24,7 +24,7 @@ describe('SignIn saga', () => {
         mockAxios.reset();
     });
 
-    const fake2FAError = { code: 403, message: ['Require 2fa'] };
+    const fake2FAError = { code: 401, message: ['Require 2fa'] };
 
     const fakeCredentials = { email: 'john.barong@gmail.com', password: '123123' };
 
@@ -44,19 +44,17 @@ describe('SignIn saga', () => {
     };
 
     const mockSignInError = () => {
-        mockAxios.onPost('/identity/sessions').reply(403, fake2FAError);
+        mockAxios.onPost('/identity/sessions').reply(401, fake2FAError);
     };
 
     const expectedActionsFetch = [
         signIn(fakeCredentials),
         changeLanguage('en'),
         userData({user: fakeUser}),
-        signUpRequireVerification({ requireVerification: fakeUser.state === 'pending' }),
         signInRequire2FA({ require2fa: false }),
     ];
     const expectedActions2FAError = [
         signIn(fakeCredentials),
-        signInRequire2FA({ require2fa: true }),
     ];
     const expectedActionsNetworkError = [
         signIn(fakeCredentials),

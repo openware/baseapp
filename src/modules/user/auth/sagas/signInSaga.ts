@@ -17,22 +17,20 @@ export function* signInSaga(action: SignInFetch) {
             yield put(changeLanguage(JSON.parse(user.data).language));
         }
         yield put(userData({ user }));
-        localStorage.setItem('csrfToken', user.csrf_token);
-        yield put(signUpRequireVerification({ requireVerification: user.state === 'pending' }));
-        yield put(signInRequire2FA({ require2fa: user.otp }));
+
+        if (user.state === 'pending') {
+            yield put(signUpRequireVerification({ requireVerification: true }));
+        } else {
+            localStorage.setItem('csrfToken', user.csrf_token);
+            yield put(signInRequire2FA({ require2fa: user.otp }));
+        }
     } catch (error) {
         switch (error.code) {
             case 401:
-                if (error.message.indexOf('identity.session.not_active') > -1) {
-                    yield put(signUpRequireVerification({requireVerification: true}));
+                if (error.message.indexOf('identity.session.invalid_otp') > -1) {
+                    yield put(signInRequire2FA({ require2fa: true }));
                 }
                 yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
-                break;
-            case 403:
-                if (error.message.indexOf('identity.session.invalid_otp') > -1) {
-                    yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
-                }
-                yield put(signInRequire2FA({ require2fa: true }));
                 break;
             default:
                 yield put(signInError(error));
