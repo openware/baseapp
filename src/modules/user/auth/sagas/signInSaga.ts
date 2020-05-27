@@ -27,10 +27,11 @@ export function* signInSaga(action: SignInFetch) {
     } catch (error) {
         switch (error.code) {
             case 401:
-                if (error.message.indexOf('identity.session.invalid_otp') > -1) {
+                if (error.message.indexOf('identity.session.missing_otp') > -1) {
                     yield put(signInRequire2FA({ require2fa: true }));
+                } else {
+                    yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
                 }
-                yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
                 break;
             default:
                 yield put(signInError(error));
