@@ -105,10 +105,6 @@ const matchedTradesMock = (ws, marketId) => {
     let price = 0.0001;
     let volume = 0.0001;
 
-    if (Math.random() > 0.1) {
-        return () => {};
-    };
-
     return function () {
         const orderId = orderIndex++;
         const tradeId = tradeIndex++;
@@ -187,7 +183,7 @@ class RangerMock {
             let { baseUnit, quoteUnit, marketId } = Helpers.getMarketInfos(name);
             ws.timers.push(setInterval(orderBookIncrementMock(ws, marketId), 200));
             ws.timers.push(setInterval(orderBookUpdateMock(ws, marketId), 2000));
-            ws.timers.push(setInterval(matchedTradesMock(ws, marketId), 1000))
+            ws.timers.push(setInterval(matchedTradesMock(ws, marketId), 10000))
             ws.timers.push(setInterval(klinesMock(ws, marketId), 2500))
         });
     }

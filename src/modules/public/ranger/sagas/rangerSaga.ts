@@ -170,21 +170,21 @@ const initRanger = (
 
                         // private
                         case 'order':
-                            const orders = selectOpenOrdersList(store.getState());
-
-                            if (isFinexEnabled()) {
-                                const updatedOrder = orders.length && orders.find(order => event.uuid && order.uuid === event.uuid);
-
-                                switch (updatedOrder && updatedOrder.state) {
+                            if (isFinexEnabled() && event) {
+                                switch (event.state) {
                                     case 'wait':
                                     case 'pending':
-                                        alertPush({ message: ['success.order.created'], type: 'success'});
+                                        const orders = selectOpenOrdersList(store.getState());
+                                        const updatedOrder = orders.length && orders.find(order => event.uuid && order.uuid === event.uuid);
+                                        if (!updatedOrder) {
+                                            emitter(alertPush({ message: ['success.order.created'], type: 'success'}));
+                                        }
                                         break;
                                     case 'done':
-                                        alertPush({ message: ['success.order.done'], type: 'success'});
+                                        emitter(alertPush({ message: ['success.order.done'], type: 'success'}));
                                         break;
                                     case 'reject':
-                                        alertPush({ message: ['error.order.reject'], type: 'error'});
+                                        emitter(alertPush({ message: ['error.order.rejected'], type: 'error'}));
                                         break;
                                     default:
                                         break;
