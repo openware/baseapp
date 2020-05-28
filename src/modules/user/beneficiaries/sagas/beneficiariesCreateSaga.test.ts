@@ -7,6 +7,7 @@ import {
     beneficiariesCreate,
     beneficiariesCreateData,
     beneficiariesCreateError,
+    beneficiariesDataUpdate,
 } from '../actions';
 import { Beneficiary } from '../types';
 
@@ -52,6 +53,7 @@ describe('Beneficiaries Create', () => {
         const expectedBeneficiariesCreateSuccess = [
             beneficiariesCreate(fakePayload),
             beneficiariesCreateData(fakeSuccessPayload),
+            beneficiariesDataUpdate(fakeSuccessPayload),
         ];
 
         const expectedBeneficiariesCreateError = [

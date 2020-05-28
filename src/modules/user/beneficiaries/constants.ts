@@ -1,5 +1,6 @@
 export const BENEFICIARIES_FETCH = 'beneficiaries/FETCH';
 export const BENEFICIARIES_DATA  = 'beneficiaries/DATA';
+export const BENEFICIARIES_DATA_UPDATE = 'beneficiaries/DATA_UPDATE';
 export const BENEFICIARIES_ERROR = 'beneficiaries/ERROR';
 
 export const BENEFICIARIES_ACTIVATE       = 'beneficiaries/ACTIVATE';

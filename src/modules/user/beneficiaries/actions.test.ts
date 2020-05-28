@@ -7,6 +7,7 @@ import {
     BENEFICIARIES_CREATE_DATA,
     BENEFICIARIES_CREATE_ERROR,
     BENEFICIARIES_DATA,
+    BENEFICIARIES_DATA_UPDATE,
     BENEFICIARIES_DELETE,
     BENEFICIARIES_DELETE_DATA,
     BENEFICIARIES_DELETE_ERROR,
@@ -144,6 +145,21 @@ describe('Beneficiaries actions', () => {
     it('should check beneficiariesData action creator', () => {
         const expectedAction = { type: BENEFICIARIES_DATA, payload: fakeBeneficiariesArray };
         expect(actions.beneficiariesData(fakeBeneficiariesArray)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesDataUpdate action creator', () => {
+        const fakeCreateBeneficiary: Beneficiary = {
+            id: 1,
+            currency: 'eth',
+            name: 'Company Name',
+            state: 'pending',
+            data: {
+                address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
+            },
+        };
+
+        const expectedAction = { type: BENEFICIARIES_DATA_UPDATE, payload: fakeCreateBeneficiary };
+        expect(actions.beneficiariesDataUpdate(fakeCreateBeneficiary)).toEqual(expectedAction);
     });
 
     it('should check beneficiariesError action creator', () => {

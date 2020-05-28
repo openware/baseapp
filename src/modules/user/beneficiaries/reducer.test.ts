@@ -66,6 +66,68 @@ describe('Beneficiaries reducer', () => {
         expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesData(fakeBeneficiaries))).toEqual(expectedState);
     });
 
+    it('should handle beneficiariesDataUpdate', () => {
+        const fakeBeneficiary: Beneficiary = {
+            id: 1,
+            currency: 'eth',
+            name: 'Company Name',
+            state: 'pending',
+            data: {
+                address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
+            },
+        };
+
+        const fakeUpdatedBeneficiaries: Beneficiary[] = [
+            {
+                id: 1,
+                currency: 'eth',
+                name: 'Company Name',
+                state: 'pending',
+                data: {
+                    address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
+                },
+            },
+            {
+                id: 2,
+                currency: 'usd',
+                name: 'Second company',
+                state: 'archieved',
+                description: 'Information about second company',
+                data: {
+                    address: 'Somestreet 42, City',
+                    country: 'Wakanda',
+                    full_name: 'Some name',
+                    account_number: '1234512345',
+                    account_type: 'Account type',
+                    bank_name: 'First bank',
+                    bank_address: 'Anotherstreet 13',
+                    bank_country: 'Wakanda',
+                },
+            },
+        ];
+
+        const initialState = {
+            ...initialBeneficiariesState,
+            fetch: {
+                ...initialBeneficiariesState.fetch,
+                data: fakeBeneficiaries,
+            },
+        };
+
+        const expectedState = {
+            ...initialBeneficiariesState,
+            fetch: {
+                ...initialBeneficiariesState.fetch,
+                data: fakeUpdatedBeneficiaries,
+                fetching: false,
+                success: true,
+                error: undefined,
+            },
+        };
+
+        expect(beneficiariesReducer(initialState, actions.beneficiariesDataUpdate(fakeBeneficiary))).toEqual(expectedState);
+    });
+
     it('should handle beneficiariesError', () => {
         const expectedState = {
             ...initialBeneficiariesState,

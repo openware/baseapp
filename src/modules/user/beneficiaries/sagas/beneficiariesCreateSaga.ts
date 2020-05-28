@@ -7,6 +7,7 @@ import {
     BeneficiariesCreate,
     beneficiariesCreateData,
     beneficiariesCreateError,
+    beneficiariesDataUpdate,
 } from '../actions';
 
 const config = (csrfToken?: string): RequestOptions => {
@@ -20,6 +21,7 @@ export function* beneficiariesCreateSaga(action: BeneficiariesCreate) {
     try {
         const payload = yield call(API.post(config(getCsrfToken())), '/account/beneficiaries', action.payload);
         yield put(beneficiariesCreateData(payload));
+        yield put(beneficiariesDataUpdate(payload));
         yield put(alertPush({message: ['success.beneficiaries.created'], type: 'success'}));
     } catch (error) {
         yield put(beneficiariesCreateError(error));
