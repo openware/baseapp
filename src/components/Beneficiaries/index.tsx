@@ -80,10 +80,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     public componentDidMount() {
         const { currency, beneficiaries, memberLevels } = this.props;
         if (currency && beneficiaries.length) {
-            const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(beneficiaries, currency));
-            if (filtredBeneficiaries.length) {
-                this.handleSetCurrentAddress(filtredBeneficiaries[0]);
-            }
+            this.handleSetCurrentAddressOnUpdate(beneficiaries, currency);
         }
 
         if (!memberLevels) {
@@ -96,11 +93,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
 
         if ((nextProps.currency && nextProps.currency !== currency) ||
             (nextProps.beneficiaries.length && nextProps.beneficiaries !== beneficiaries)) {
-            const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(nextProps.beneficiaries, nextProps.currency));
-
-            if (filtredBeneficiaries.length) {
-                this.handleSetCurrentAddress(filtredBeneficiaries[0]);
-            }
+            this.handleSetCurrentAddressOnUpdate(nextProps.beneficiaries, nextProps.currency);
         }
     }
 
@@ -117,7 +110,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             isOpenConfirmationModal,
             isOpenFailModal,
         } = this.state;
-        const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(beneficiaries, currency));
+        const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(beneficiaries, currency), ['active', 'pending']);
 
         return (
             <div className="pg-beneficiaries">
@@ -369,9 +362,9 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         return [];
     };
 
-    private handleFilterByState = (beneficiaries: Beneficiary[]) => {
+    private handleFilterByState = (beneficiaries: Beneficiary[], filter: string | string[]) => {
         if (beneficiaries.length) {
-            return beneficiaries.filter(item => item.state.toLowerCase() === 'active' || item.state.toLowerCase() === 'pending');
+            return beneficiaries.filter(item => filter.includes(item.state.toLowerCase()));
         }
 
         return [];
@@ -384,6 +377,19 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                 isOpenDropdown: false,
             });
             this.props.onChangeValue(item);
+        }
+    };
+
+    private handleSetCurrentAddressOnUpdate = (beneficiaries: Beneficiary[], currency: string) => {
+        const filteredByCurrency = this.handleFilterByCurrency(beneficiaries, currency);
+        let filteredByState = this.handleFilterByState(filteredByCurrency, 'active');
+
+        if (!filteredByState.length) {
+            filteredByState = this.handleFilterByState(filteredByCurrency, 'pending');
+        }
+
+        if (filteredByState.length) {
+            this.handleSetCurrentAddress(filteredByState[0]);
         }
     };
 
