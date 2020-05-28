@@ -7,6 +7,7 @@ import {
     BENEFICIARIES_CREATE_DATA,
     BENEFICIARIES_CREATE_ERROR,
     BENEFICIARIES_DATA,
+    BENEFICIARIES_DATA_UPDATE,
     BENEFICIARIES_DELETE,
     BENEFICIARIES_DELETE_DATA,
     BENEFICIARIES_DELETE_ERROR,
@@ -22,6 +23,11 @@ export interface BeneficiariesFetch {
 export interface BeneficiariesData {
     type: typeof BENEFICIARIES_DATA;
     payload: Beneficiary[];
+}
+
+export interface BeneficiariesDataUpdate {
+    type: typeof BENEFICIARIES_DATA_UPDATE;
+    payload: Beneficiary;
 }
 
 export interface BeneficiariesError {
@@ -89,6 +95,7 @@ export interface BeneficiariesDeleteError {
 export type BeneficiariesActions =
     BeneficiariesFetch
     | BeneficiariesData
+    | BeneficiariesDataUpdate
     | BeneficiariesError
     | BeneficiariesActivate
     | BeneficiariesActivateData
@@ -106,6 +113,11 @@ export const beneficiariesFetch = (): BeneficiariesFetch => ({
 
 export const beneficiariesData = (payload: BeneficiariesData['payload']): BeneficiariesData => ({
     type: BENEFICIARIES_DATA,
+    payload,
+});
+
+export const beneficiariesDataUpdate = (payload: BeneficiariesDataUpdate['payload']): BeneficiariesDataUpdate => ({
+    type: BENEFICIARIES_DATA_UPDATE,
     payload,
 });
 

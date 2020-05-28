@@ -8,6 +8,7 @@ import {
     BENEFICIARIES_CREATE_DATA,
     BENEFICIARIES_CREATE_ERROR,
     BENEFICIARIES_DATA,
+    BENEFICIARIES_DATA_UPDATE,
     BENEFICIARIES_DELETE,
     BENEFICIARIES_DELETE_DATA,
     BENEFICIARIES_DELETE_ERROR,
@@ -97,14 +98,30 @@ export const beneficiariesFetchReducer = (state: BeneficiariesState['fetch'], ac
                 success: true,
                 error: undefined,
             };
-        case BENEFICIARIES_ERROR: {
+        case BENEFICIARIES_DATA_UPDATE:
+            const updatedData: Beneficiary[] = [...state.data];
+            const updateItemIndex = updatedData.findIndex(item => action.payload && action.payload.id === item.id);
+
+            if (updateItemIndex > -1) {
+                updatedData[updateItemIndex] = action.payload;
+            } else {
+                updatedData.push(action.payload);
+            }
+
+            return {
+                ...state,
+                data: updatedData,
+                fetching: false,
+                success: true,
+                error: undefined,
+            };
+        case BENEFICIARIES_ERROR:
             return {
                 ...state,
                 fetching: false,
                 success: false,
                 error: action.payload,
             };
-        }
         default:
             return state;
     }
@@ -210,6 +227,7 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
             };
         case BENEFICIARIES_FETCH:
         case BENEFICIARIES_DATA:
+        case BENEFICIARIES_DATA_UPDATE:
         case BENEFICIARIES_ERROR:
             const beneficiariesFetchState = { ...state.fetch };
 
