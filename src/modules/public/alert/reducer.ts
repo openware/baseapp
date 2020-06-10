@@ -3,6 +3,7 @@ import {
     ALERT_DATA,
     ALERT_DELETE,
     ALERT_DELETE_BY_INDEX,
+    ALERT_PUSH,
 } from './constants';
 
 export interface AlertState {
@@ -25,6 +26,7 @@ export const alertReducer = (state = initialAlertState, action: AlertAction) => 
             return {
                 alerts: [...state.alerts.slice(0, action.index).concat(...state.alerts.slice(action.index + 1))],
             };
+        case ALERT_PUSH:
         default:
             return state;
     }

@@ -41,6 +41,9 @@ export function* handleAlertSaga(action: AlertPush) {
                 }
 
                 return;
+            case 471:
+                window.console.log('restricted');
+                break;
             default:
                 yield call(callAlertData, action);
         }
