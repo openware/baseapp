@@ -36,6 +36,7 @@ import {
     ForgotPasswordScreen,
     HistoryScreen,
     LandingScreen,
+    MagicLinkWrapper,
     OrdersTabScreen,
     ProfileScreen,
     ProfileTwoFactorAuthScreen,
@@ -183,6 +184,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         return (
             <div className={`container-fluid pg-layout ${tradingCls}`}>
                 <Switch>
+                    <Route exact={true} path="/magic-link" component={MagicLinkWrapper} />;
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpScreen} />

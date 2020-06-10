@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
+import { BlacklistAccessState, rootBlacklistAccessSaga } from './public/blacklistAccess';
 import { ColorThemeState } from './public/colorTheme';
 import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
@@ -69,45 +70,47 @@ export * from './user/kyc';
 export * from './user/emailVerification';
 export * from './user/withdrawLimit';
 export * from './public/memberLevels';
+export * from './public/blacklistAccess';
 
 export interface RootState {
     public: {
+        alerts: AlertState;
+        blacklistAccess: BlacklistAccessState;
         colorTheme: ColorThemeState;
         configs: ConfigsState;
         currencies: CurrenciesState;
         customization: CustomizationState;
-        recentTrades: RecentTradesState;
+        rgl: GridLayoutState;
+        i18n: LanguageState;
+        kline: KlineState;
         markets: MarketsState;
+        memberLevels: MemberLevelsState;
         orderBook: OrderBookState;
+        ranger: RangerState;
+        recentTrades: RecentTradesState;
         depth: DepthState;
         incrementDepth: DepthIncrementState;
-        ranger: RangerState;
-        i18n: LanguageState;
-        alerts: AlertState;
-        kline: KlineState;
-        rgl: GridLayoutState;
-        memberLevels: MemberLevelsState;
     };
     user: {
+        apiKeys: ApiKeysState;
         auth: AuthState;
         beneficiaries: BeneficiariesState;
+        captchaKeys: GeetestCaptchaState;
         customizationUpdate: CustomizationUpdateState;
-        orders: OrdersState;
-        password: PasswordState;
-        profile: ProfileState;
-        label: LabelState;
-        wallets: WalletsState;
+        sendEmailVerification: EmailVerificationState;
+        history: HistoryState;
         documents: DocumentsState;
         identity: IdentityState;
+        label: LabelState;
         phone: PhoneState;
-        history: HistoryState;
         newHistory: NewHistoryState;
-        apiKeys: ApiKeysState;
-        userActivity: UserActivityState;
-        ordersHistory: OrdersHistoryState;
         openOrders: OpenOrdersState;
-        sendEmailVerification: EmailVerificationState;
-        captchaKeys: GeetestCaptchaState;
+        orders: OrdersState;
+        ordersHistory: OrdersHistoryState;
+        password: PasswordState;
+        profile: ProfileState;
+        userActivity: UserActivityState;
+        wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
     };
 }
@@ -122,6 +125,7 @@ export function* rootSaga() {
         call(rootApiKeysSaga),
         call(rootAuthSaga),
         call(rootBeneficiariesSaga),
+        call(rootBlacklistAccessSaga),
         call(rootConfigsSaga),
         call(rootCurrenciesSaga),
         call(rootCustomizationSaga),
