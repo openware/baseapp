@@ -24,6 +24,7 @@ export const defaultConfig: Config = {
     sessionCheckInterval: '15000',
     balancesFetchInterval: '3000',
     passwordEntropyStep: 0,
+    showLanding: true,
 };
 
 export const Cryptobase = {
@@ -61,3 +62,4 @@ export const sessionCheckInterval = (): string => Cryptobase.config.sessionCheck
 export const balancesFetchInterval = (): string => Cryptobase.config.balancesFetchInterval || '3000';
 export const isFinexEnabled = (): boolean => Cryptobase.config.finex || false;
 export const passwordEntropyStep = ():number => Cryptobase.config.passwordEntropyStep;
+export const showLanding = (): boolean => Cryptobase.config.showLanding;

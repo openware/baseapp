@@ -29,6 +29,7 @@ const mockConfig: Config = {
     sessionCheckInterval: '15000',
     balancesFetchInterval: '3000',
     passwordEntropyStep: 0,
+    showLanding: true,
 };
 
 // tslint:disable no-any no-console

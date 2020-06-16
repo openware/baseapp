@@ -18,6 +18,7 @@ import {
 } from '../../modules';
 import { HeaderToolbar } from '../HeaderToolbar';
 import { NavBar } from '../NavBar';
+import { showLanding } from '../../api';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
@@ -124,8 +125,8 @@ class Head extends React.Component<Props> {
 
     private redirectToLanding = () => {
         this.props.toggleSidebar(false);
-        this.props.history.push('/');
-    };
+        this.props.history.push(`${showLanding() ? '/' : '/trading'}`);
+    }
 
     private openSidebar = () => this.props.toggleSidebar(!this.props.sidebarOpened);
 
