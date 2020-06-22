@@ -5,8 +5,8 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
-import { ExpiredSessionModal } from '../../components';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../../api';
+import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import {
