@@ -636,7 +636,7 @@ export const en = {
     'authz.apikey_not_active': 'API Key state is \'inactive',
     'authz.disabled_2fa': 'API Key owner has disabled 2FA',
     'authz.invalid_api_key_headers': 'Blank or missing API Key headers',
-    'authz.permission_denied': 'Path is blacklisted',
+    'authz.permission_denied': 'Path is denylisted',
     'authz.unexistent_apikey': 'X-Auth-Apikey header is invalid',
     'authz.client_session_mismatch': 'Session mismatch',
     'authz.csrf_token_mismatch': 'CSRF token mismatch',
