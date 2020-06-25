@@ -325,13 +325,6 @@ describe('Helpers', () => {
         expect(helpers.getAmount(1000, proposals, 1)).toEqual(79.2);
     });
 
-    // capitalize.ts
-    it('Should correctly convert to capitalized string', () => {
-        expect(helpers.capitalize('helios')).toEqual('Helios');
-        expect(helpers.capitalize('')).toEqual('');
-        expect(helpers.capitalize(' ')).toEqual(' ');
-    });
-
     //  timeConvert.js
     it('Should correctly convert date', () => {
         expect(helpers.dateTo12HFormat('2019-01-22T15:18:33.000Z')).toBe('Jan 22, 2019 3:18 PM');
