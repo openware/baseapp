@@ -7,7 +7,7 @@ import {
     SummaryField,
 } from '../../components';
 import { Decimal } from '../../components/Decimal';
-import { cleanPositiveFloatInput } from '../../helpers';
+import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 import { Beneficiary } from '../../modules';
 
 export interface WithdrawProps {
@@ -224,10 +224,9 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
 
     private handleChangeInputAmount = (value: string) => {
         const { fixed } = this.props;
-
         const convertedValue = cleanPositiveFloatInput(String(value));
-        const condition = new RegExp(`^(?:[\\d-]*\\.?[\\d-]{0,${fixed}}|[\\d-]*\\.[\\d-])$`);
-        if (convertedValue.match(condition)) {
+
+        if (convertedValue.match(precisionRegExp(fixed))) {
             const amount = (convertedValue !== '') ? Number(parseFloat(convertedValue).toFixed(fixed)) : '';
             const total = (amount !== '') ? (amount - this.props.fee).toFixed(fixed) : '';
 
