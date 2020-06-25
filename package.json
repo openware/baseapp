@@ -1,6 +1,6 @@
 {
   "name": "@openware/base-app",
-  "version": "2.3.25",
+  "version": "2.5.0",
   "private": true,
   "dependencies": {
     "@openware/cryptofont": "2.3.0",
