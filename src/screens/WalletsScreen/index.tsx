@@ -26,6 +26,7 @@ import {
     selectMobileWalletUi,
     selectUserInfo,
     selectWalletAddress,
+    selectWalletCurrency,
     selectWallets,
     selectWalletsAddressError,
     selectWalletsLoading,
@@ -49,6 +50,7 @@ interface ReduxProps {
     walletsLoading?: boolean;
     historyList: WalletHistoryList;
     mobileWalletChosen: string;
+    selectedWalletCurrency: string;
     selectedWalletAddress: string;
     beneficiariesActivateSuccess: boolean;
     beneficiariesDeleteSuccess: boolean;
@@ -90,6 +92,7 @@ interface WalletsState {
     withdrawDone: boolean;
     total: string;
     currentTabIndex: number;
+    generateAddressTriggered: boolean;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
@@ -110,6 +113,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             withdrawDone: false,
             total: '',
             currentTabIndex: 0,
+            generateAddressTriggered: false,
         };
     }
 
@@ -317,12 +321,20 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         if (!wallets[selectedWalletIndex].address && wallets.length && wallets[selectedWalletIndex].type !== 'fiat') {
             this.props.fetchAddress({ currency: wallets[selectedWalletIndex].currency });
             this.props.fetchWallets();
+            this.setState({ generateAddressTriggered: true });
         }
     };
 
     private renderDeposit = (isAccountActivated: boolean) => {
-        const { addressDepositError, wallets, user, selectedWalletAddress, currencies } = this.props;
-        const { selectedWalletIndex } = this.state;
+        const {
+            addressDepositError,
+            currencies,
+            selectedWalletAddress,
+            selectedWalletCurrency,
+            user,
+            wallets,
+        } = this.props;
+        const { generateAddressTriggered, selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
         const currencyItem = (currencies && currencies.find(item => item.id === currency)) || { min_confirmations: 6 };
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
@@ -331,7 +343,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             this.props.intl.formatMessage({id: addressDepositError.message}) :
             this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
 
-        const walletAddress = formatCCYAddress(currency, selectedWalletAddress);
+        const walletAddress = (selectedWalletCurrency === currency) ? formatCCYAddress(currency, selectedWalletAddress) : '';
 
         const buttonLabel = `
             ${this.translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${currency.toUpperCase()} ${this.translate('page.body.wallets.tabs.deposit.ccy.button.address')}
@@ -361,6 +373,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         handleGenerateAddress={this.handleGenerateAddress}
                         buttonLabel={buttonLabel}
                         isAccountActivated={isAccountActivated}
+                        generateAddressTriggered={generateAddressTriggered}
                     />
                     {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
                 </React.Fragment>
@@ -476,7 +489,11 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase(),
         );
 
-        this.setState({ selectedWalletIndex: nextWalletIndex, withdrawDone: false });
+        this.setState({
+            selectedWalletIndex: nextWalletIndex,
+            generateAddressTriggered: false,
+            withdrawDone: false,
+        });
         this.props.setMobileWalletUi(wallets[nextWalletIndex].name);
     };
 }
@@ -490,6 +507,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     historyList: selectHistory(state),
     mobileWalletChosen: selectMobileWalletUi(state),
     selectedWalletAddress: selectWalletAddress(state),
+    selectedWalletCurrency: selectWalletCurrency(state),
     beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
     beneficiariesDeleteSuccess: selectBeneficiariesDeleteSuccess(state),
     currencies: selectCurrencies(state),

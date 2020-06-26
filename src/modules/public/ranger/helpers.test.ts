@@ -127,6 +127,7 @@ describe('ranger helpers', () => {
                 'global.tickers',
                 'order',
                 'trade',
+                'deposit_address',
             ]);
         });
 
@@ -135,6 +136,7 @@ describe('ranger helpers', () => {
                 'global.tickers',
                 'order',
                 'trade',
+                'deposit_address',
                 'abcdefg.trades',
                 'abcdefg.update',
             ]);
@@ -147,6 +149,7 @@ describe('ranger helpers', () => {
                 'global.tickers',
                 'order',
                 'trade',
+                'deposit_address',
                 'abcdefg.trades',
                 'abcdefg.update',
                 'some subscription',
@@ -160,6 +163,7 @@ describe('ranger helpers', () => {
                 'global.tickers',
                 'order',
                 'trade',
+                'deposit_address',
                 'abcdefg.trades',
                 'abcdefg.update',
             ]);
@@ -175,6 +179,7 @@ describe('ranger helpers', () => {
                 'global.tickers',
                 'order',
                 'trade',
+                'deposit_address',
                 'balances',
             ]);
         });

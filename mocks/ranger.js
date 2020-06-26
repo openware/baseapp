@@ -186,6 +186,7 @@ class RangerMock {
             ws.timers.push(setInterval(matchedTradesMock(ws, marketId), 10000))
             ws.timers.push(setInterval(klinesMock(ws, marketId), 2500))
         });
+        ws.timers.push(setTimeout(() => {sendEvent(ws, "deposit_address", { currency: "xrp", address: "a4E49HU6CTHyYMmsYt3F1ar1q5W89t3hfQ?dt=1" })}, 10000));
     }
     closeConnection() {
         console.log('Ranger: connection closed');

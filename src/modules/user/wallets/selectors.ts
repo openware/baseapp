@@ -17,5 +17,8 @@ export const selectWalletsAddressError = (state: RootState): CommonError | undef
 export const selectMobileWalletUi = (state: RootState): string =>
     state.user.wallets.wallets.mobileWalletChosen;
 
+export const selectWalletCurrency = (state: RootState): string =>
+    state.user.wallets.wallets.selectedWalletCurrency;
+
 export const selectWalletAddress = (state: RootState): string =>
     state.user.wallets.wallets.selectedWalletAddress;

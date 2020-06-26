@@ -5,4 +5,4 @@ Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
 Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
-{"currency":"xrp","address":"r4JEqX6izuUH5WsHw5VrLCGo7wF4SkPGTt?dt=10"}
+{"currency":"xrp","address":null}

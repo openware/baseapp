@@ -20,6 +20,7 @@ describe('DepositCrypto', () => {
                 handleOnCopy={handleOnCopy}
                 handleGenerateAddress={handleGenerateAddress}
                 isAccountActivated={true}
+                generateAddressTriggered={false}
             />,
         );
     });
