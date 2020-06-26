@@ -28,9 +28,11 @@ module.exports = {
         '\\.(css|scss|pcss)$': '<rootDir>/__mocks__/styleMock.js',
     },
     'testURL': "http://localhost",
-    'collectCoverage': false,
     'collectCoverageFrom': [
         "<rootDir>/src/**/*.{ts,tsx,js,jsx}",
-        "!<rootDir>/src/charting_library/**",
     ],
+    "coveragePathIgnorePatterns": [
+        "<rootDir>/node_modules/",
+        "<rootDir>/src/charting_library/**",
+    ]
 };
