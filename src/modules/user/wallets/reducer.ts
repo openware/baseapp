@@ -3,6 +3,7 @@ import { WalletsAction } from './actions';
 import {
     SET_MOBILE_WALLET_UI,
     WALLETS_ADDRESS_DATA,
+    WALLETS_ADDRESS_DATA_WS,
     WALLETS_ADDRESS_ERROR,
     WALLETS_ADDRESS_FETCH,
     WALLETS_DATA,
@@ -23,6 +24,7 @@ export interface WalletsState {
         withdrawSuccess: boolean;
         error?: CommonError;
         mobileWalletChosen: string;
+        selectedWalletCurrency: string;
         selectedWalletAddress: string;
     };
 }
@@ -33,6 +35,7 @@ export const initialWalletsState: WalletsState = {
         loading: false,
         withdrawSuccess: false,
         mobileWalletChosen: '',
+        selectedWalletCurrency: '',
         selectedWalletAddress: '',
     },
 };
@@ -103,6 +106,7 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 return {
                     ...state,
                     loading: false,
+                    selectedWalletCurrency: action.payload.currency,
                     selectedWalletAddress: action.payload.address,
                 };
             }
@@ -118,6 +122,20 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 loading: false,
                 withdrawSuccess: true,
             };
+        case WALLETS_ADDRESS_DATA_WS: {
+            if (state.selectedWalletCurrency === action.payload.currency) {
+                return {
+                    ...state,
+                    loading: false,
+                    selectedWalletAddress: action.payload.address,
+                };
+            }
+
+            return {
+                ...state,
+                loading: false,
+            };
+            }
         case WALLETS_WITHDRAW_CCY_ERROR:
             return {
                 ...state,
@@ -148,6 +166,7 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
         case WALLETS_ERROR:
         case WALLETS_ADDRESS_FETCH:
         case WALLETS_ADDRESS_DATA:
+        case WALLETS_ADDRESS_DATA_WS:
         case WALLETS_ADDRESS_ERROR:
         case WALLETS_WITHDRAW_CCY_FETCH:
         case WALLETS_WITHDRAW_CCY_DATA:
@@ -167,6 +186,7 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
                     loading: false,
                     withdrawSuccess: false,
                     mobileWalletChosen: '',
+                    selectedWalletCurrency: '',
                     selectedWalletAddress: '',
                 },
             };

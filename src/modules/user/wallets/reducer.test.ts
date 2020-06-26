@@ -67,6 +67,7 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
          };
@@ -80,6 +81,7 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
          };
@@ -94,6 +96,7 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
          };
@@ -107,6 +110,7 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
          };
@@ -120,6 +124,7 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
         };
@@ -130,6 +135,7 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: 'btc',
                 selectedWalletAddress: 'address',
             },
          };
@@ -144,6 +150,7 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
          };
@@ -157,6 +164,7 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
          };
@@ -170,6 +178,7 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: true,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
          };
@@ -184,6 +193,7 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
+                selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
          };

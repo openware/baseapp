@@ -2,6 +2,7 @@ import { CommonError } from '../../types';
 import {
     SET_MOBILE_WALLET_UI,
     WALLETS_ADDRESS_DATA,
+    WALLETS_ADDRESS_DATA_WS,
     WALLETS_ADDRESS_ERROR,
     WALLETS_ADDRESS_FETCH,
     WALLETS_DATA,
@@ -57,6 +58,11 @@ export interface WalletsAddressData {
     payload: WalletAddress;
 }
 
+export interface WalletsAddressDataWS {
+    type: typeof WALLETS_ADDRESS_DATA_WS;
+    payload: WalletAddress;
+}
+
 export interface WalletsAddressError {
     type: typeof WALLETS_ADDRESS_ERROR;
     payload: CommonError;
@@ -87,6 +93,7 @@ export type WalletsAction = WalletsFetch
     | WalletsError
     | WalletsAddressFetch
     | WalletsAddressData
+    | WalletsAddressDataWS
     | WalletsAddressError
     | WalletsWithdrawCcyFetch
     | WalletsWithdrawCcyData
@@ -125,6 +132,11 @@ export const walletsAddressData = (payload: WalletsAddressData['payload']): Wall
 
 export const walletsAddressError = (payload: WalletsAddressError['payload']): WalletsAddressError => ({
     type: WALLETS_ADDRESS_ERROR,
+    payload,
+});
+
+export const walletsAddressDataWS = (payload: WalletsAddressDataWS['payload']): WalletsAddressDataWS => ({
+    type: WALLETS_ADDRESS_DATA_WS,
     payload,
 });
 

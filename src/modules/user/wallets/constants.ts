@@ -6,6 +6,7 @@ export const WALLETS_RESET = 'wallets/RESET';
 
 export const WALLETS_ADDRESS_FETCH = 'wallets/ADDRESS_FETCH';
 export const WALLETS_ADDRESS_DATA = 'wallets/ADDRESS_DATA';
+export const WALLETS_ADDRESS_DATA_WS = 'wallets/ADDRESS_DATA_WS';
 export const WALLETS_ADDRESS_ERROR = 'wallets/ADDRESS_ERROR';
 
 export const WALLETS_WITHDRAW_FIAT_FETCH = 'wallets/WITHDRAW_FIAT_FETCH';

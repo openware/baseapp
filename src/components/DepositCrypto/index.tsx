@@ -53,6 +53,10 @@ export interface DepositCryptoProps {
      * Generate address button label
      */
     buttonLabel?: string;
+    /**
+     * Triggered deposit address generation
+     */
+    generateAddressTriggered: boolean;
 }
 
 
@@ -73,13 +77,14 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         handleGenerateAddress,
         buttonLabel,
         isAccountActivated,
+        generateAddressTriggered,
     } = props;
     const size = dimensions || QR_SIZE;
     const onCopy = !disabled ? handleOnCopy : undefined;
     const className = classnames({'cr-copyable-text-field__disabled': data === ''});
 
     const getContent = () => {
-        if (isAccountActivated) {
+        if (isAccountActivated || generateAddressTriggered) {
             return (
                 <>
                     <div>

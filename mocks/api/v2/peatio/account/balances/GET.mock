@@ -33,7 +33,7 @@ Access-Control-Allow-Credentials: true
   },
   {
     "currency":"xrp",
-    "balance":"1234.0",
+    "balance":null,
     "locked":"0.0"
   },
   {
