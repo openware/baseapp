@@ -14,7 +14,7 @@ import {
     DropdownComponent,
     UploadFile,
 } from '../../../components';
-import { formatDate, isDateInFuture } from '../../../helpers';
+import { formatDate, isDateInFuture, randomSecureHex } from '../../../helpers';
 import {
     alertPush,
     RootState,
@@ -377,21 +377,35 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     private sendDocuments = () => {
         const {
-            country,
             documentsType,
-            issuedDate,
-            expireDate,
             fileBack,
             fileFront,
             fileSelfie,
-            idNumber,
-        }: DocumentsState = this.state;
-
-        const typeOfDocuments = this.getDocumentsType(documentsType);
+        } = this.state;
+        const identificator = randomSecureHex(32);
 
         if (this.handleCheckButtonDisabled()) {
             return;
         }
+
+        this.props.sendDocuments(this.createFormData('front_side', fileFront, identificator));
+
+        if (documentsType !== 'Passport') {
+            this.props.sendDocuments(this.createFormData('back_side', fileBack, identificator));
+        }
+
+        this.props.sendDocuments(this.createFormData('selfie', fileSelfie, identificator));
+    };
+
+    private createFormData = (docCategory: string, upload: File[], identificator: string) => {
+        const {
+            country,
+            documentsType,
+            expireDate,
+            issuedDate,
+            idNumber,
+        }: DocumentsState = this.state;
+        const typeOfDocuments = this.getDocumentsType(documentsType);
 
         const request = new FormData();
 
@@ -403,15 +417,11 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         request.append('doc_type', typeOfDocuments);
         request.append('doc_number', idNumber);
         request.append('doc_country', country);
-        request.append('upload[]', fileFront[0]);
+        request.append('identificator', identificator);
+        request.append('doc_category', docCategory);
+        request.append('upload[]', upload[0]);
 
-        if (documentsType !== 'Passport') {
-            request.append('upload[]', fileBack[0]);
-        }
-
-        request.append('upload[]', fileSelfie[0]);
-
-        this.props.sendDocuments(request);
+        return request;
     };
 
     private getDocumentsType = (value: string) => {
