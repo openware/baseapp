@@ -54,6 +54,7 @@ class ProfileVerificationComponent extends React.Component<Props, State> {
                 );
             case 'drafted':
             case 'pending':
+            case 'submitted':
                 return (
                     <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--pending">
                         <FormattedMessage id={`page.body.profile.verification.progress.level`} />
@@ -123,6 +124,7 @@ class ProfileVerificationComponent extends React.Component<Props, State> {
                 );
             case 'drafted':
             case 'pending':
+            case 'submitted':
                 return (
                     <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--pending">
                         <div className="pg-profile-page-verification__step__info">
