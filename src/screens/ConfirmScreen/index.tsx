@@ -90,11 +90,11 @@ class ConfirmComponent extends React.Component<Props> {
     };
 
     private handleCheckUserLabels = (labels: Label[]) => {
-        const pendingLabelExists = Boolean(labels.find(label => kycSteps().includes(label.key) && ['pending', 'drafted'].includes(label.value) && label.scope === 'private'));
+        const pendingLabelExists = Boolean(labels.find(label => kycSteps().includes(label.key) && ['pending', 'drafted', 'submitted'].includes(label.value) && label.scope === 'private'));
         const passedSteps = kycSteps().filter((step: string) => labels.find(label => step === label.key && label.value === 'verified' && label.scope === 'private'));
 
         if (pendingLabelExists || (kycSteps().length === passedSteps.length)) {
-            this.props.history.push('/settings');
+            this.props.history.push('/profile');
         }
     };
 }

@@ -29,7 +29,7 @@
     margin: 0;
     margin-block-end: 0;
     margin-block-start: 0;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
     margin-inline-end: 0;
     margin-inline-start: 0;
     text-align: center;
@@ -46,6 +46,9 @@
     &-identity,
     &-documents,
     &-address {
+      max-width: 380px;
+      padding: 0 10px;
+
       &__row,
       &__forms__row {
         align-items: flex-start;
@@ -220,8 +223,7 @@
   &__content-deep {
     margin: 0;
     margin-top: 24px;
-    max-width: 380px;
-    padding: 0;
+    max-width: 100%;
     width: 100vw;
 
     button {

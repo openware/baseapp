@@ -14,7 +14,7 @@ import {
     DropdownComponent,
     UploadFile,
 } from '../../../components';
-import { formatDate, isDateInFuture } from '../../../helpers';
+import { formatDate, isDateInFuture, randomSecureHex } from '../../../helpers';
 import {
     alertPush,
     RootState,
@@ -43,7 +43,6 @@ interface OnChangeEvent {
 }
 
 interface DocumentsState {
-    country: string;
     documentsType: string;
     issuedDate: string;
     issuedDateFocused: boolean;
@@ -71,7 +70,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     ];
 
     public state = {
-        country: '',
         documentsType: '',
         issuedDate: '',
         issuedDateFocused: false,
@@ -86,12 +84,11 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.success && !this.props.success) {
-            this.props.history.push('/settings');
+            this.props.history.push('/profile');
         }
     }
 
     public render() {
-        const { lang } = this.props;
         const {
             fileFront,
             fileBack,
@@ -107,9 +104,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         /* tslint:disable */
         languages.map((l: string) => countries.registerLocale(require(`i18n-iso-countries/langs/${l}.json`)));
         /* tslint:enable */
-
-        const dataCountries = Object.values(countries.getNames(lang));
-        const onSelectCountry = value => this.selectCountry(dataCountries[value]);
 
         const issuedDateFocusedClass = cr('pg-confirm__content-documents__row__content', {
             'pg-confirm__content-documents__row__content--focused': issuedDateFocused,
@@ -131,17 +125,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         return (
             <React.Fragment>
                 <div className="pg-confirm__content-documents">
-                    <div className="pg-confirm__content-documents__row__content">
-                        <div className="pg-confirm__content-documents__row__content-label">
-                            {this.translate('page.body.kyc.documents.country')}
-                        </div>
-                        <DropdownComponent
-                            className="pg-confirm__content-documents__row__content-number-dropdown"
-                            list={dataCountries}
-                            onSelect={onSelectCountry}
-                            placeholder={this.translate('page.body.kyc.documents.country.placeholder')}
-                        />
-                    </div>
                     <div className="pg-confirm__content-documents__row__content">
                         <div className="pg-confirm__content-documents__row__content-label">
                             {this.translate('page.body.kyc.documentsType')}
@@ -238,18 +221,18 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         exampleImagePath={DocumentSelfieExample}
                         uploadedFile={fileSelfie[0] && (fileSelfie[0] as File).name}
                     />
-                </div>
-                <div className="pg-confirm__content-deep">
-                    <Button
-                        onClick={this.sendDocuments}
-                        disabled={this.handleCheckButtonDisabled()}
-                        size="lg"
-                        variant="primary"
-                        type="button"
-                        block={true}
-                    >
-                        {this.translate('page.body.kyc.submit')}
-                    </Button>
+                    <div className="pg-confirm__content-deep">
+                        <Button
+                            onClick={this.sendDocuments}
+                            disabled={this.handleCheckButtonDisabled()}
+                            size="lg"
+                            variant="primary"
+                            type="button"
+                            block={true}
+                        >
+                            {this.translate('page.body.kyc.submit')}
+                        </Button>
+                    </div>
                 </div>
             </React.Fragment>
         );
@@ -289,12 +272,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                     break;
             }
         };
-    };
-
-    private selectCountry = (value: string) => {
-        this.setState({
-            country: countries.getAlpha2Code(value, this.props.lang),
-        });
     };
 
     private handleChangeIssuedDate = (e: OnChangeEvent) => {
@@ -346,7 +323,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     private handleCheckButtonDisabled = () => {
         const {
-            country,
             documentsType,
             issuedDate,
             expireDate,
@@ -370,28 +346,40 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             !this.handleValidateInput('idNumber', idNumber) ||
             !this.handleValidateInput('issuedDate', issuedDate) ||
             (expireDate && !this.handleValidateInput('expireDate', expireDate)) ||
-            !country ||
             !filesValid
         );
     };
 
     private sendDocuments = () => {
         const {
-            country,
             documentsType,
-            issuedDate,
-            expireDate,
             fileBack,
             fileFront,
             fileSelfie,
-            idNumber,
-        }: DocumentsState = this.state;
-
-        const typeOfDocuments = this.getDocumentsType(documentsType);
+        } = this.state;
+        const identificator = randomSecureHex(32);
 
         if (this.handleCheckButtonDisabled()) {
             return;
         }
+
+        this.props.sendDocuments(this.createFormData('front_side', fileFront, identificator));
+
+        if (documentsType !== 'Passport') {
+            this.props.sendDocuments(this.createFormData('back_side', fileBack, identificator));
+        }
+
+        this.props.sendDocuments(this.createFormData('selfie', fileSelfie, identificator));
+    };
+
+    private createFormData = (docCategory: string, upload: File[], identificator: string) => {
+        const {
+            documentsType,
+            expireDate,
+            issuedDate,
+            idNumber,
+        }: DocumentsState = this.state;
+        const typeOfDocuments = this.getDocumentsType(documentsType);
 
         const request = new FormData();
 
@@ -402,16 +390,11 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         request.append('doc_issue', issuedDate);
         request.append('doc_type', typeOfDocuments);
         request.append('doc_number', idNumber);
-        request.append('doc_country', country);
-        request.append('upload[]', fileFront[0]);
+        request.append('identificator', identificator);
+        request.append('doc_category', docCategory);
+        request.append('upload[]', upload[0]);
 
-        if (documentsType !== 'Passport') {
-            request.append('upload[]', fileBack[0]);
-        }
-
-        request.append('upload[]', fileSelfie[0]);
-
-        this.props.sendDocuments(request);
+        return request;
     };
 
     private getDocumentsType = (value: string) => {

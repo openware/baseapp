@@ -94,7 +94,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
         if ((!prev.editSuccess && editSuccess) || (!prev.sendSuccess && sendSuccess)) {
             this.props.labelFetch();
-            history.push('/settings');
+            history.push('/profile');
         }
     }
 
@@ -420,6 +420,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             postcode: this.state.postcode,
             city: this.state.city,
             country: this.state.countryOfBirth,
+            confirm: true,
         };
         const isIdentity = labels.length && labels.find(w => w.key === 'profile' && w.value === 'verified' && w.scope === 'private');
 

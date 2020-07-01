@@ -101,6 +101,7 @@ export interface RootState {
         sendEmailVerification: EmailVerificationState;
         history: HistoryState;
         documents: DocumentsState;
+        addresses: AddressesState;
         identity: IdentityState;
         label: LabelState;
         phone: PhoneState;
