@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+import { getTimestampPeriod } from '../../../../helpers';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { alertPush, rootSaga } from '../../../index';
 import {
@@ -28,8 +29,8 @@ describe('Kline', () => {
     const fakePayload = {
         market: 'ethusd',
         resolution: 60,
-        from: '1',
-        to: '2',
+        from: '1593565189',
+        to: '1593678649',
     };
 
     const fakeResponse = [
@@ -63,7 +64,9 @@ describe('Kline', () => {
     };
 
     const mockKline = () => {
-        mockAxios.onGet(`/public/markets/${fakePayload.market}/k-line?period=${fakePayload.resolution}&time_from=${fakePayload.from}&time_to=${fakePayload.to}`).reply(200, fakeResponse);
+        mockAxios.onGet(`/public/markets/${fakePayload.market}/k-line?period=${fakePayload.resolution}&` +
+        `time_from=${getTimestampPeriod(fakePayload.from, fakePayload.resolution)}&` +
+        `time_to=${getTimestampPeriod(fakePayload.to, fakePayload.resolution)}`).reply(200, fakeResponse);
     };
 
     const expectedActions = [

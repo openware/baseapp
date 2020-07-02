@@ -14,7 +14,6 @@ import {
     setDepositStatusColor,
     setTradesType,
     setWithdrawStatusColor,
-    uppercase,
 } from '../../helpers';
 import {
     currenciesFetch,
@@ -194,7 +193,7 @@ class HistoryComponent extends React.Component<Props> {
                 return [
                     <div className="pg-history-elem__hide" key={txid || rid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid || rid}</a></div>,
                     localeDate(created_at, 'fullDate'),
-                    uppercase(currency),
+                    currency && currency.toUpperCase(),
                     wallet && preciseData(amount, wallet.fixed),
                     fee,
                     <span style={{ color: setWithdrawStatusColor(item.state) }} key={txid || rid}>{state}</span>,

@@ -1,4 +1,5 @@
 export * from './accumulateVolume';
+export * from './buildQueryString';
 export * from './calcMaxVolume';
 export * from './checkDate';
 export * from './cleanPositiveFloatInput';
@@ -13,6 +14,7 @@ export * from './getHistorySagaParam';
 export * from './getLanguageByCode';
 export * from './getOrderAPI';
 export * from './getStylesValueByKey';
+export * from './getTimestampPeriod';
 export * from './getTotalPrice';
 export * from './getUrlPart';
 export * from './getUserAgent';
@@ -32,4 +34,3 @@ export * from './sortByPrice';
 export * from './timeConvert';
 export * from './timezone';
 export * from './toggleColorTheme';
-export * from './uppercase';
