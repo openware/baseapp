@@ -1,6 +1,5 @@
 .pg-restricted-screen {
   align-items: center;
-  background: var(--main-background-color);
   color: var(--primary-text-color);
   display: flex;
   flex-direction: column;
@@ -9,13 +8,15 @@
   width: 100%;
 
   &__title {
-    h1 {
-      font-size: 144px;
-      font-weight: bold;
-    }
+    font-size: 144px;
+    font-weight: bold;
+    line-height: 76px;
+    letter-spacing: 10px;
   }
 
   &__content {
     font-size: 36px;
+    padding-top: 36px;
+    font-weight: 300;
   }
 }
