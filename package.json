@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@openware/cryptofont": "2.3.0",
+    "@sentry/browser": "^5.17.0",
     "@types/compression-webpack-plugin": "^2.0.1",
     "@types/ws": "^6.0.4",
     "axios": "^0.18.0",
