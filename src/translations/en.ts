@@ -533,7 +533,7 @@ export const en = {
 
     //404 and 500 pages
 
-    'page.body.404': 'Page not found',
+    'page.body.restricted': 'Page not found',
     'page.body.500.maintenance': 'The platform is under maintenance',
     'page.body.500.availableSoon': 'It will be available as soon as possible',
 

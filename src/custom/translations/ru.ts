@@ -143,7 +143,7 @@ export const ru: LangType = {
 
     //404 and 500 pages
 
-    'page.body.404': 'Страница не найдена',
+    'page.body.restricted': 'Страница не найдена',
     'page.body.500.maintenance': 'Платформа находится на обслуживании',
     'page.body.500.availableSoon': 'Платформа будет доступна как можно скорее',
 
