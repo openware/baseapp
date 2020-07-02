@@ -2,9 +2,24 @@ import * as React from 'react';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 
-class FooterComponent extends React.Component<RouterProps> {
+interface LocationProps extends RouterProps {
+    location: {
+        pathname: string;
+    };
+}
+
+const noFooterRoutes = [
+    '/confirm',
+    '/404',
+    '/500',
+];
+
+class FooterComponent extends React.Component<LocationProps> {
     public render() {
-        if (this.props.history.location.pathname.startsWith('/confirm')) {
+        const { location } = this.props;
+        const shouldRenderFooter = !noFooterRoutes.some(r => location.pathname.includes(r));
+
+        if (!shouldRenderFooter) {
             return <React.Fragment />;
         }
 
@@ -19,9 +34,4 @@ class FooterComponent extends React.Component<RouterProps> {
     }
 }
 
-// tslint:disable-next-line:no-any
-const Footer = withRouter(FooterComponent as any) as any;
-
-export {
-    Footer,
-};
+export const Footer = withRouter(FooterComponent as any);

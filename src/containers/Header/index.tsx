@@ -1,8 +1,9 @@
-import { History } from 'history';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { showLanding } from '../../api';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import {
@@ -34,17 +35,25 @@ interface DispatchProps {
     toggleMarketSelector: typeof toggleMarketSelector;
 }
 
-interface HistoryProps {
-    history: History;
+interface LocationProps extends RouterProps {
+    location: {
+        pathname: string;
+    };
 }
 
-type Props = ReduxProps & HistoryProps & DispatchProps & InjectedIntlProps;
+const noHeaderRoutes = [
+    '/confirm',
+    '/404',
+    '/500',
+];
+
+type Props = ReduxProps & DispatchProps & InjectedIntlProps & LocationProps;
 
 class Head extends React.Component<Props> {
     public render() {
-        const {mobileWallet } = this.props;
+        const { mobileWallet, location } = this.props;
         const tradingCls = window.location.pathname.includes('/trading') ? 'pg-container-trading' : '';
-        const shouldRenderHeader = !['/confirm'].some(r => window.location.pathname.includes(r)) && window.location.pathname !== '/';
+        const shouldRenderHeader = !noHeaderRoutes.some(r => location.pathname.includes(r)) && location.pathname !== '/';
 
         return (
             <React.Fragment>
@@ -66,7 +75,7 @@ class Head extends React.Component<Props> {
                         </div>
                         {this.renderMarketToggler()}
                         <div className="pg-header__location">
-                            {mobileWallet ? <span>{mobileWallet}</span> : <span>{window.location.pathname.split('/')[1]}</span>}
+                            {mobileWallet ? <span>{mobileWallet}</span> : <span>{location.pathname.split('/')[1]}</span>}
                         </div>
                         {this.renderMobileWalletNav()}
                         <div className="pg-header__navbar">
@@ -95,7 +104,7 @@ class Head extends React.Component<Props> {
     };
 
     private renderMarketToolbar = () => {
-        if (!window.location.pathname.includes('/trading/')) {
+        if (!this.props.location.pathname.includes('/trading/')) {
             return null;
         }
 
@@ -105,7 +114,7 @@ class Head extends React.Component<Props> {
     private renderMarketToggler = () => {
         const { currentMarket, marketSelectorOpened, colorTheme } = this.props;
         const isLight = colorTheme === 'light';
-        if (!window.location.pathname.includes('/trading/')) {
+        if (!this.props.location.pathname.includes('/trading/')) {
             return null;
         }
 
@@ -150,8 +159,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         toggleMarketSelector: () => dispatch(toggleMarketSelector()),
     });
 
-const Header = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Head) as any) as any);
-
-export {
-    Header,
-};
+export const Header = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(Head) as React.ComponentClass;
