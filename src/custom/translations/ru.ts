@@ -141,6 +141,12 @@ export const ru: LangType = {
     'page.body.landing.footer.info': 'Info',
     'page.body.landing.footer.rights': 'Baseapp © All rights reserved.',
 
+    //404 and 500 pages
+
+    'page.body.404': 'Страница не найдена',
+    'page.body.500.maintenance': 'Платформа находится на обслуживании',
+    'page.body.500.availableSoon': 'Платформа будет доступна как можно скорее',
+
 
     /* Wallets */
     'page.body.wallets.estimated_value': 'Оценочная стоимость',
