@@ -531,6 +531,12 @@ export const en = {
     'page.body.customization.themes.theme.purple.title': 'Purple',
     'page.body.customization.themes.theme.green.title': 'Green',
 
+    //404 and 500 pages
+
+    'page.body.restricted': 'Page not found',
+    'page.body.500.maintenance': 'The platform is under maintenance',
+    'page.body.500.availableSoon': 'It will be available as soon as possible',
+
 
     // success messages
     'success.documents.accepted': 'Documents upload was successful',
