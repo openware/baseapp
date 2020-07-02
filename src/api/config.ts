@@ -7,7 +7,6 @@ export const defaultConfig: Config = {
         tradeUrl: '',
         applogicUrl: '',
         rangerUrl: '',
-        arkeUrl: '',
         finexUrl: '',
     },
     minutesUntilAutoLogout: '5',
@@ -42,7 +41,6 @@ Cryptobase.config = { ...window.env };
 Cryptobase.config.storage = Cryptobase.config.storage || {};
 
 export const tradeUrl = () => Cryptobase.config.api.tradeUrl;
-export const arkeUrl = () => Cryptobase.config.api.arkeUrl || tradeUrl();
 export const authUrl = () => Cryptobase.config.api.authUrl;
 export const applogicUrl = () => Cryptobase.config.api.applogicUrl;
 export const rangerUrl = () => Cryptobase.config.api.rangerUrl;

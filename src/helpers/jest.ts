@@ -13,7 +13,6 @@ const mockConfig: Config = {
         tradeUrl: '/api/v2/peatio',
         applogicUrl: '/api/v2/applogic',
         rangerUrl: '/api/v2/ranger',
-        arkeUrl: '/api/v2/arke',
         finexUrl: '/api/v2/finex',
     },
     minutesUntilAutoLogout: '5',

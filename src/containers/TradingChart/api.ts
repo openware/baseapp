@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { TradingChartComponent } from '.';
-import { arkeUrl, finexUrl, isFinexEnabled } from '../../api/config';
+import { finexUrl, isFinexEnabled, tradeUrl } from '../../api/config';
 import { LibrarySymbolInfo } from '../../charting_library/datafeed-api';
 import {
     klineArrayToObject,
@@ -18,7 +18,7 @@ export interface CurrentKlineSubscription {
     periodString?: string;
 }
 
-const getHistoryApi = (): string => isFinexEnabled() ? finexUrl() : arkeUrl();
+const getHistoryApi = (): string => isFinexEnabled() ? finexUrl() : tradeUrl();
 
 const makeHistoryUrl = (market: string, resolution: number, from: number, to: number) =>
     `${getHistoryApi()}/public/markets/${market}/k-line?period=${resolution}&time_from=${from}&time_to=${to}`;
