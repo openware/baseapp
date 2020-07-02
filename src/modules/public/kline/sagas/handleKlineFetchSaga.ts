@@ -1,11 +1,11 @@
 // tslint:disable-next-line no-submodule-imports
 import { call, put } from 'redux-saga/effects';
-import { API, RequestOptions } from '../../../../api';
+import { API, isFinexEnabled , RequestOptions } from '../../../../api';
 import { alertPush } from '../../alert';
 import { klineData, KlineFetch } from '../actions';
 
 const klineRequestOptions: RequestOptions = {
-    apiVersion: 'arke',
+    apiVersion: isFinexEnabled() ? 'finex' : 'arke',
 };
 
 export function* handleKlineFetchSaga(action: KlineFetch) {
