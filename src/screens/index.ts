@@ -15,3 +15,4 @@ export * from './TradingScreen';
 export * from './VerificationScreen';
 export * from './WalletsScreen';
 export * from './RestrictedScreen';
+export * from './MaintenanceScreen';
