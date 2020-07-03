@@ -399,7 +399,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     private createFormData = (docCategory: string, upload: File[], identificator: string) => {
         const {
-            country,
             documentsType,
             expireDate,
             issuedDate,
@@ -416,7 +415,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         request.append('doc_issue', issuedDate);
         request.append('doc_type', typeOfDocuments);
         request.append('doc_number', idNumber);
-        request.append('doc_country', country);
         request.append('identificator', identificator);
         request.append('doc_category', docCategory);
         request.append('upload[]', upload[0]);
