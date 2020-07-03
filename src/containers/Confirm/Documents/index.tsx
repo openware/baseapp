@@ -86,7 +86,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.success && !this.props.success) {
-            this.props.history.push('/settings');
+            this.props.history.push('/profile');
         }
     }
 
