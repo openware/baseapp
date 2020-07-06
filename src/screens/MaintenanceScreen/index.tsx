@@ -1,11 +1,23 @@
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { RouterProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { BackgroundMaintenance } from '../../assets/images/BackgroundMaintenance';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 
-type Props = InjectedIntlProps;
+type Props = RouterProps & InjectedIntlProps;
 
 class Maintenance extends React.Component<Props> {
+    constructor(props: Props) {
+        super(props);
+
+        const isUnderMaintenance = localStorage.getItem('maintenance');
+        if (!isUnderMaintenance) {
+            props.history.replace('/');
+        }
+    }
+
     public render() {
         return (
             <div className="pg-maintenance-screen">
@@ -32,4 +44,7 @@ class Maintenance extends React.Component<Props> {
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 }
 
-export const MaintenanceScreen = injectIntl(Maintenance);
+export const MaintenanceScreen = compose(
+    injectIntl,
+    withRouter,
+)(Maintenance) as React.ComponentClass;

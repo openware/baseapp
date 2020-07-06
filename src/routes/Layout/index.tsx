@@ -1,9 +1,8 @@
-import { History } from 'history';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../../api';
 import { ExpiredSessionModal } from '../../components';
@@ -66,15 +65,17 @@ interface DispatchProps {
     walletsReset: typeof walletsReset;
 }
 
-interface OwnProps {
-    history: History;
+interface LocationProps extends RouterProps {
+    location: {
+        pathname: string;
+    };
 }
 
 interface LayoutState {
     isShownExpSessionModal: boolean;
 }
 
-export type LayoutProps = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
+export type LayoutProps = ReduxProps & DispatchProps & LocationProps & InjectedIntlProps;
 
 const renderLoader = () => (
     <div className="pg-loader-container">
@@ -138,22 +139,43 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         this.state = {
             isShownExpSessionModal: false,
         };
+
+        const restricted = localStorage.getItem('restricted');
+        const underMaintenance = localStorage.getItem('maintenance');
+
+        if (restricted || underMaintenance) {
+            if (!this.props.location.pathname.includes('/magic-link')) {
+                if (restricted) {
+                    this.props.history.replace('/404');
+                }
+
+                if (underMaintenance) {
+                    this.props.history.replace('/500');
+                }
+            }
+        }
     }
 
     public componentDidMount() {
-        this.props.fetchConfigs();
-        this.props.userFetch();
-        this.initInterval();
-        this.check();
+        const restricted = localStorage.getItem('restricted');
+        const underMaintenance = localStorage.getItem('maintenance');
+
+        if (!restricted && !underMaintenance) {
+            this.props.fetchConfigs();
+            this.props.userFetch();
+            this.initInterval();
+            this.check();
+        }
     }
 
     public componentDidUpdate(prevProps: LayoutProps) {
-        const { customization, isLoggedIn, history } = this.props;
+        const { customization, isLoggedIn } = this.props;
 
         if (!isLoggedIn && prevProps.isLoggedIn) {
             this.props.walletsReset();
-            if (!history.location.pathname.includes('/trading')) {
-                history.push('/trading/');
+
+            if (!this.props.location.pathname.includes('/trading')) {
+                this.props.history.push('/trading/');
             }
         }
 
@@ -177,10 +199,11 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             colorTheme,
             isLoggedIn,
             userLoading,
+            location,
         } = this.props;
         const { isShownExpSessionModal } = this.state;
 
-        const tradingCls = window.location.pathname.includes('/trading') ? 'trading-layout' : '';
+        const tradingCls = location.pathname.includes('/trading') ? 'trading-layout' : '';
         toggleColorTheme(colorTheme);
 
         return (

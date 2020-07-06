@@ -1,4 +1,3 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import { alertPush } from '../../alert';
@@ -12,8 +11,20 @@ export function* blacklistAccessFetchSaga(action: SendAccessTokenFetch) {
     try {
         const response = yield call(API.post(requestOptions), '/identity/users/access', action.payload);
         yield put(sendAccessTokenData());
+
         if (response) {
-            window.location.replace('/signin');
+            const restricted = localStorage.getItem('restricted');
+            const underMaintenance = localStorage.getItem('maintenance');
+
+            if (restricted) {
+                localStorage.removeItem('restricted');
+            }
+
+            if (underMaintenance) {
+                localStorage.removeItem('maintenance');
+            }
+
+            window.location.replace('/trading');
         }
     } catch (error) {
         yield put(sendAccessTokenError());

@@ -1,5 +1,4 @@
 import { delay } from 'redux-saga';
-// tslint:disable-next-line no-submodule-imports
 import { call, put } from 'redux-saga/effects';
 import { userReset } from '../../../';
 import { msAlertDisplayTime } from '../../../../api';
@@ -42,7 +41,12 @@ export function* handleAlertSaga(action: AlertPush) {
 
                 return;
             case 471:
-                window.console.log('restricted');
+                localStorage.setItem('restricted', 'true');
+                window.location.replace('/404');
+                break;
+            case 472:
+                localStorage.setItem('maintenance', 'true');
+                window.location.replace('/500');
                 break;
             default:
                 yield call(callAlertData, action);

@@ -1,10 +1,22 @@
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { RouterProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { setDocumentTitle } from '../../helpers';
 
-type Props = InjectedIntlProps;
+type Props = RouterProps & InjectedIntlProps;
 
 class Restricted extends React.Component<Props> {
+    constructor(props: Props) {
+        super(props);
+
+        const isRestricted = localStorage.getItem('restricted');
+        if (!isRestricted) {
+            props.history.replace('/');
+        }
+    }
+
     public componentDidMount() {
         setDocumentTitle('404');
     }
@@ -25,4 +37,7 @@ class Restricted extends React.Component<Props> {
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 }
 
-export const RestrictedScreen = injectIntl(Restricted) as any;
+export const RestrictedScreen = compose(
+    injectIntl,
+    withRouter,
+)(Restricted) as React.ComponentClass;
