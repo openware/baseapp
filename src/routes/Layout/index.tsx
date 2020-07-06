@@ -144,13 +144,13 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         const underMaintenance = localStorage.getItem('maintenance');
 
         if (restricted || underMaintenance) {
-            if (!this.props.location.pathname.includes('/magic-link')) {
+            if (!props.location.pathname.includes('/magic-link')) {
                 if (restricted) {
-                    this.props.history.replace('/404');
+                    props.history.replace('/404');
                 }
 
                 if (underMaintenance) {
-                    this.props.history.replace('/500');
+                    props.history.replace('/500');
                 }
             }
         }
