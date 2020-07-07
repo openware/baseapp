@@ -557,6 +557,8 @@ export const ru: LangType = {
     'success.order.done': 'Запрос успешно завершён',
     'success.data.changed.language': 'Язык успешно изменен',
 
+    'sentry.report_feedback': 'Отправить отчет',
+
     // error messages
     'error.order.rejected': 'Запрос отвергнут',
     'error.invalid_request': 'Запрос - неверный запрос',

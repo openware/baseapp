@@ -554,6 +554,8 @@ export const en = {
     'success.order.done': 'Order successfully completed',
     'success.data.changed.language': 'Language has been changed',
 
+    'sentry.report_feedback': 'Report feedback',
+
     // error messages
     'error.order.rejected': 'Order rejected',
     'error.invalid_request': 'Order - invalid request',

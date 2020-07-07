@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 
 interface ErrorWrapperState {
     eventId: any; // tslint:disable-line
@@ -10,7 +11,7 @@ interface ErrorWrapperProps {
     children: React.ReactNode;
 }
 
-class ErrorWrapper extends React.Component<ErrorWrapperProps, ErrorWrapperState> {
+class Errors extends React.Component<ErrorWrapperProps & InjectedIntlProps, ErrorWrapperState> {
     constructor(props) {
         super(props);
 
@@ -35,7 +36,9 @@ class ErrorWrapper extends React.Component<ErrorWrapperProps, ErrorWrapperState>
     public render() {
         if (this.state.hasError) {
             return (
-                <button onClick={() => Sentry.showReportDialog({ eventId: this.state.eventId })}>Report feedback</button>
+                <button onClick={() => Sentry.showReportDialog({ eventId: this.state.eventId })}>
+                    {this.props.intl.formatMessage({ id: 'sentry.report_feedback' })}
+                </button>
             );
         }
 
@@ -43,6 +46,4 @@ class ErrorWrapper extends React.Component<ErrorWrapperProps, ErrorWrapperState>
     }
 }
 
-export {
-    ErrorWrapper,
-};
+export const ErrorWrapper = injectIntl(Errors);
