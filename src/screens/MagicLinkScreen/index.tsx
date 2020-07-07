@@ -23,7 +23,7 @@ interface DispatchProps {
 
 export type MagicLinkProps = LocationProps & DispatchProps;
 
-class MagicLink extends React.Component<MagicLinkProps, MagicLinkState> {
+class MagicLinkScreen extends React.Component<MagicLinkProps, MagicLinkState> {
     constructor(props: MagicLinkProps) {
         super(props);
 
@@ -37,7 +37,9 @@ class MagicLink extends React.Component<MagicLinkProps, MagicLinkState> {
         const token = urlParams.get('token') as string;
 
         if (token) {
-            this.props.sendAccessToken({ whitelink_token: token});
+            this.props.sendAccessToken({ allowlink_token: token });
+        } else {
+            this.props.history.replace('/');
         }
     }
 
@@ -50,7 +52,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch
     sendAccessToken: payload => dispatch(sendAccessToken(payload)),
 });
 
-export const MagicLinkWrapper = compose(
+export const MagicLink = compose(
     withRouter,
     connect(null, mapDispatchProps),
-)(MagicLink) as React.ComponentType;
+)(MagicLinkScreen) as React.ComponentClass;

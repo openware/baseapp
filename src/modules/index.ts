@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
-import { BlacklistAccessState, rootBlacklistAccessSaga } from './public/blacklistAccess';
+import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
 import { ColorThemeState } from './public/colorTheme';
 import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
@@ -70,12 +70,12 @@ export * from './user/kyc';
 export * from './user/emailVerification';
 export * from './user/withdrawLimit';
 export * from './public/memberLevels';
-export * from './public/blacklistAccess';
+export * from './public/blocklistAccess';
 
 export interface RootState {
     public: {
         alerts: AlertState;
-        blacklistAccess: BlacklistAccessState;
+        blocklistAccess: BlocklistAccessState;
         colorTheme: ColorThemeState;
         configs: ConfigsState;
         currencies: CurrenciesState;
@@ -125,7 +125,7 @@ export function* rootSaga() {
         call(rootApiKeysSaga),
         call(rootAuthSaga),
         call(rootBeneficiariesSaga),
-        call(rootBlacklistAccessSaga),
+        call(rootBlocklistAccessSaga),
         call(rootConfigsSaga),
         call(rootCurrenciesSaga),
         call(rootCustomizationSaga),

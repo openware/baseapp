@@ -141,7 +141,7 @@ export const ru: LangType = {
     'page.body.landing.footer.info': 'Info',
     'page.body.landing.footer.rights': 'Baseapp © All rights reserved.',
 
-    //404 and 500 pages
+    /* Error pages */
 
     'page.body.restricted': 'Страница не найдена',
     'page.body.500.maintenance': 'Платформа находится на обслуживании',

@@ -7,7 +7,7 @@ const requestOptions: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* blacklistAccessFetchSaga(action: SendAccessTokenFetch) {
+export function* blocklistAccessFetchSaga(action: SendAccessTokenFetch) {
     try {
         const response = yield call(API.post(requestOptions), '/identity/users/access', action.payload);
         yield put(sendAccessTokenData());

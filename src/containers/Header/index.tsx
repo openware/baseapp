@@ -52,7 +52,7 @@ type Props = ReduxProps & DispatchProps & InjectedIntlProps & LocationProps;
 class Head extends React.Component<Props> {
     public render() {
         const { mobileWallet, location } = this.props;
-        const tradingCls = window.location.pathname.includes('/trading') ? 'pg-container-trading' : '';
+        const tradingCls = location.pathname.includes('/trading') ? 'pg-container-trading' : '';
         const shouldRenderHeader = !noHeaderRoutes.some(r => location.pathname.includes(r)) && location.pathname !== '/';
 
         return (

@@ -531,7 +531,7 @@ export const en = {
     'page.body.customization.themes.theme.purple.title': 'Purple',
     'page.body.customization.themes.theme.green.title': 'Green',
 
-    //404 and 500 pages
+    /* Error pages */
 
     'page.body.restricted': 'Page not found',
     'page.body.500.maintenance': 'The platform is under maintenance',
