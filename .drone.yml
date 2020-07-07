@@ -94,6 +94,13 @@ steps:
   - name: "Build Docker image"
     image: plugins/docker
     settings:
+      environment:
+      REACT_APP_SENTRY_KEY:
+        from_secret: master_sentry_key
+      REACT_APP_SENTRY_ORGANIZATION:
+        from_secret: master_sentry_organization
+      REACT_APP_SENTRY_PROJECT:
+        from_secret: master_sentry_project
       username:
         from_secret: quay_username
       password:

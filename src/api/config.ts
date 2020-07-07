@@ -25,6 +25,7 @@ export const defaultConfig: Config = {
     balancesFetchInterval: '3000',
     passwordEntropyStep: 0,
     showLanding: true,
+    sentryEnabled: false,
 };
 
 export const Cryptobase = {
@@ -63,3 +64,4 @@ export const balancesFetchInterval = (): string => Cryptobase.config.balancesFet
 export const isFinexEnabled = (): boolean => Cryptobase.config.finex || false;
 export const passwordEntropyStep = ():number => Cryptobase.config.passwordEntropyStep;
 export const showLanding = (): boolean => Cryptobase.config.showLanding;
+export const sentryEnabled = () => Cryptobase.config.sentryEnabled || defaultConfig.sentryEnabled;
