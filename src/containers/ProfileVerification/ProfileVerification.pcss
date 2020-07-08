@@ -185,7 +185,6 @@
 
     &__button {
       align-items: center;
-      border: 2px solid var(--system-green);
       border-radius: 4px;
       display: flex;
       height: 30px;
@@ -211,12 +210,15 @@
 
       &--active,
       &--blocked {
-        background: var(--primary-cta-color);
-        border: 2px solid var(--primary-cta-color);
+        background: var(--button-primary-cta-background-color);
 
         span {
           color: var(--primary-text-color);
         }
+      }
+
+      &--active:hover {
+        background: var(--button-primary-cta-background-color-hover);
       }
     }
 
