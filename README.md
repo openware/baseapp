@@ -33,6 +33,11 @@ In `<rootDir>`
 $ yarn test
 ```
 
+Check test coverage:
+```bash
+$ yarn test -- --coverage --watchAll
+```
+
 For more options for `jest` run `yarn test --help`.
 
 ## Configuration documentation
