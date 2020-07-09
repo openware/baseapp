@@ -142,6 +142,8 @@ export const en = {
     'page.body.landing.footer.info': 'Info',
     'page.body.landing.footer.rights': 'Baseapp © All rights reserved.',
 
+    'pagy.body.footer.powered_by': 'Powered by',
+
 
     /* Wallets */
     'page.body.wallets.estimated_value': 'Estimated Value',

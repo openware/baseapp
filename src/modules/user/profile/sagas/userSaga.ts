@@ -8,13 +8,8 @@ const userOptions: RequestOptions = {
 
 export function* userSaga() {
     try {
-        const restricted = localStorage.getItem('restricted');
-        const underMaintenance = localStorage.getItem('maintenance');
-
-        if (!restricted && !underMaintenance) {
-            const user = yield call(API.get(userOptions), '/resource/users/me');
-            yield put(userData({ user }));
-        }
+        const user = yield call(API.get(userOptions), '/resource/users/me');
+        yield put(userData({ user }));
     } catch (error) {
         yield put(userError(error));
     }

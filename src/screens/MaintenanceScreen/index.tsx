@@ -1,20 +1,31 @@
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { BackgroundMaintenance } from '../../assets/images/BackgroundMaintenance';
 import { LogoIcon } from '../../assets/images/LogoIcon';
+import { setDocumentTitle } from '../../helpers';
+import { RootState, selectPlatformAccessStatus } from '../../modules';
 
-type Props = RouterProps & InjectedIntlProps;
+interface ReduxProps {
+    status: string;
+}
+
+type Props = RouterProps & InjectedIntlProps & ReduxProps;
 
 class Maintenance extends React.Component<Props> {
-    constructor(props: Props) {
-        super(props);
+    public componentDidMount() {
+        setDocumentTitle('500');
+        if (this.props.status.lenght && this.props.status !== 'maintenance') {
+            this.props.history.replace('/');
+        }
+    }
 
-        const isUnderMaintenance = localStorage.getItem('maintenance');
-        if (!isUnderMaintenance) {
-            props.history.replace('/');
+    public componentWillReceiveProps(nextProps: Props) {
+        if (!this.props.status.lenght && nextProps.status.length && nextProps.status !== 'maintenance') {
+            this.props.history.replace('/');
         }
     }
 
@@ -44,7 +55,12 @@ class Maintenance extends React.Component<Props> {
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 }
 
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    status: selectPlatformAccessStatus(state),
+});
+
 export const MaintenanceScreen = compose(
     injectIntl,
     withRouter,
+    connect(mapStateToProps),
 )(Maintenance) as React.ComponentClass;

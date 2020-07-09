@@ -4,6 +4,7 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
@@ -13,8 +14,11 @@ import {
     logoutFetch,
     Market,
     RootState,
+    selectConfigsLoading,
+    selectConfigsSuccess,
     selectCurrentColorTheme,
     selectCurrentMarket,
+    selectPlatformAccessStatus,
     selectUserFetching,
     selectUserInfo,
     selectUserLoggedIn,
@@ -55,6 +59,9 @@ interface ReduxProps {
     user: User;
     isLoggedIn: boolean;
     userLoading?: boolean;
+    platformAccessStatus: string;
+    configsLoading: boolean;
+    configsSuccess: boolean;
 }
 
 interface DispatchProps {
@@ -139,32 +146,55 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         this.state = {
             isShownExpSessionModal: false,
         };
+    }
 
-        const restricted = localStorage.getItem('restricted');
-        const underMaintenance = localStorage.getItem('maintenance');
+    public componentDidMount() {
+        this.props.fetchConfigs();
+        if (
+            !(this.props.location.pathname.includes('/magic-link')
+            || this.props.location.pathname.includes('/404')
+            || this.props.location.pathname.includes('/500'))
+        ) {
+            switch (this.props.platformAccessStatus) {
+                case 'restricted':
+                    this.props.history.replace('/404');
+                    break;
+                case 'maintenance':
+                    this.props.history.replace('/500');
+                    break;
+                default:
+                    const token = localStorage.getItem('csrfToken');
 
-        if (restricted || underMaintenance) {
-            if (!props.location.pathname.includes('/magic-link')) {
-                if (restricted) {
-                    props.history.replace('/404');
-                }
-
-                if (underMaintenance) {
-                    props.history.replace('/500');
-                }
+                    if (token) {
+                        this.props.userFetch();
+                        this.initInterval();
+                        this.check();
+                    }
             }
         }
     }
 
-    public componentDidMount() {
-        const restricted = localStorage.getItem('restricted');
-        const underMaintenance = localStorage.getItem('maintenance');
+    public componentWillReceiveProps(nextProps: LayoutProps) {
+        if (
+            !(nextProps.location.pathname.includes('/magic-link')
+            || nextProps.location.pathname.includes('/404')
+            || nextProps.location.pathname.includes('/500'))
+            || this.props.platformAccessStatus !== nextProps.platformAccessStatus
+        ) {
+            switch (nextProps.platformAccessStatus) {
+                case 'restricted':
+                    this.props.history.replace('/404');
+                    break;
+                case 'maintenance':
+                    this.props.history.replace('/500');
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        if (!restricted && !underMaintenance) {
-            this.props.fetchConfigs();
+        if (!this.props.user.email && nextProps.user.email) {
             this.props.userFetch();
-            this.initInterval();
-            this.check();
         }
     }
 
@@ -200,16 +230,21 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             isLoggedIn,
             userLoading,
             location,
+            configsLoading,
+            platformAccessStatus,
         } = this.props;
         const { isShownExpSessionModal } = this.state;
-
         const tradingCls = location.pathname.includes('/trading') ? 'trading-layout' : '';
         toggleColorTheme(colorTheme);
+
+        if (configsLoading && !platformAccessStatus.length) {
+            return renderLoader();
+        }
 
         return (
             <div className={`container-fluid pg-layout ${tradingCls}`}>
                 <Switch>
-                    <Route exact={true} path="/magic-link" component={MagicLink} />;
+                    <Route exact={true} path="/magic-link" component={MagicLink} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpScreen} />
@@ -217,7 +252,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationScreen} />
                     <Route path="/404" component={RestrictedScreen} />
-                    <Route path="/500" component={MaintenanceScreen} />s
+                    <Route path="/500" component={MaintenanceScreen} />
                     <Route exact={true} path="/trading/:market?" component={TradingScreen} />
                     {showLanding() && <Route exact={true} path="/" component={LandingScreen} />}
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
@@ -320,12 +355,15 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    configsLoading: selectConfigsLoading(state),
+    configsSuccess: selectConfigsSuccess(state),
     colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
     customization: selectCustomizationData(state),
     user: selectUserInfo(state),
     isLoggedIn: selectUserLoggedIn(state),
     userLoading: selectUserFetching(state),
+    platformAccessStatus: selectPlatformAccessStatus(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
@@ -337,9 +375,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     walletsReset: () => dispatch(walletsReset()),
 });
 
-// tslint:disable-next-line no-any
-const Layout = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(LayoutComponent) as any) as any);
-
-export {
-    Layout,
-};
+export const Layout = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(LayoutComponent) as any;

@@ -29,7 +29,7 @@ describe('blacklistAccessFetchSaga test', () => {
 
     it('should send access token', async () => {
         const expectedActions = [
-            sendAccessToken({ allowlink_token: '' }),
+            sendAccessToken({ whitelink_token: '' }),
             sendAccessTokenData(),
         ];
         mockRequest();
@@ -43,7 +43,7 @@ describe('blacklistAccessFetchSaga test', () => {
                 }
             });
         });
-        store.dispatch(sendAccessToken({ allowlink_token: '' }));
+        store.dispatch(sendAccessToken({ whitelink_token: '' }));
 
         return promise;
     });
@@ -51,7 +51,7 @@ describe('blacklistAccessFetchSaga test', () => {
 
     it('should trigger an error', async () => {
         const expectedActions = [
-            sendAccessToken({ allowlink_token: '' }),
+            sendAccessToken({ whitelink_token: '' }),
             sendAccessTokenError(),
         ];
         mockNetworkError(mockAxios);
@@ -65,7 +65,7 @@ describe('blacklistAccessFetchSaga test', () => {
                 }
             });
         });
-        store.dispatch(sendAccessToken({ allowlink_token: '' }));
+        store.dispatch(sendAccessToken({ whitelink_token: '' }));
 
         return promise;
     });

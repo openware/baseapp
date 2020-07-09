@@ -9,6 +9,7 @@ import { LogoIcon } from '../../assets/images/LogoIcon';
 import {
     Market,
     RootState,
+    selectConfigsLoading,
     selectCurrentColorTheme,
     selectCurrentMarket,
     selectMarketSelectorState,
@@ -27,6 +28,7 @@ interface ReduxProps {
     mobileWallet: string;
     sidebarOpened: boolean;
     marketSelectorOpened: boolean;
+    configsLoading: boolean;
 }
 
 interface DispatchProps {
@@ -51,40 +53,41 @@ type Props = ReduxProps & DispatchProps & InjectedIntlProps & LocationProps;
 
 class Head extends React.Component<Props> {
     public render() {
-        const { mobileWallet, location } = this.props;
+        const { mobileWallet, location, configsLoading } = this.props;
         const tradingCls = location.pathname.includes('/trading') ? 'pg-container-trading' : '';
         const shouldRenderHeader = !noHeaderRoutes.some(r => location.pathname.includes(r)) && location.pathname !== '/';
 
+        if (!shouldRenderHeader || configsLoading) {
+            return <React.Fragment />;
+        }
+
         return (
-            <React.Fragment>
-            {shouldRenderHeader &&
-                <header className={`pg-header`}>
-                    <div className={`pg-container pg-header__content ${tradingCls}`}>
-                        <div
-                            className={`pg-sidebar__toggler ${mobileWallet && 'pg-sidebar__toggler-mobile'}`}
-                            onClick={this.openSidebar}
-                        >
-                            <span className="pg-sidebar__toggler-item"/>
-                            <span className="pg-sidebar__toggler-item"/>
-                            <span className="pg-sidebar__toggler-item"/>
-                        </div>
-                        <div onClick={e => this.redirectToLanding()} className="pg-header__logo">
-                            <div className="pg-logo">
-                                <LogoIcon className="pg-logo__img" />
-                            </div>
-                        </div>
-                        {this.renderMarketToggler()}
-                        <div className="pg-header__location">
-                            {mobileWallet ? <span>{mobileWallet}</span> : <span>{location.pathname.split('/')[1]}</span>}
-                        </div>
-                        {this.renderMobileWalletNav()}
-                        <div className="pg-header__navbar">
-                            {this.renderMarketToolbar()}
-                            <NavBar onLinkChange={this.closeMenu}/>
+            <header className={`pg-header`}>
+                <div className={`pg-container pg-header__content ${tradingCls}`}>
+                    <div
+                        className={`pg-sidebar__toggler ${mobileWallet && 'pg-sidebar__toggler-mobile'}`}
+                        onClick={this.openSidebar}
+                    >
+                        <span className="pg-sidebar__toggler-item"/>
+                        <span className="pg-sidebar__toggler-item"/>
+                        <span className="pg-sidebar__toggler-item"/>
+                    </div>
+                    <div onClick={e => this.redirectToLanding()} className="pg-header__logo">
+                        <div className="pg-logo">
+                            <LogoIcon className="pg-logo__img" />
                         </div>
                     </div>
-                </header>}
-          </React.Fragment>
+                    {this.renderMarketToggler()}
+                    <div className="pg-header__location">
+                        {mobileWallet ? <span>{mobileWallet}</span> : <span>{location.pathname.split('/')[1]}</span>}
+                    </div>
+                    {this.renderMobileWalletNav()}
+                    <div className="pg-header__navbar">
+                        {this.renderMarketToolbar()}
+                        <NavBar onLinkChange={this.closeMenu}/>
+                    </div>
+                </div>
+            </header>
         );
     }
 
@@ -150,6 +153,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     mobileWallet: selectMobileWalletUi(state),
     sidebarOpened: selectSidebarState(state),
     marketSelectorOpened: selectMarketSelectorState(state),
+    configsLoading: selectConfigsLoading(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =

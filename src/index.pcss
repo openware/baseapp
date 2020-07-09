@@ -242,8 +242,15 @@ body {
 }
 
 .pg-loader-container {
-  filter: brightness(0.2);
-  margin-top: calc(var(--gap) * 2);
+  display: flex;
+  justify-content: space-around;
+  margin-top: calc(var(--gap) * 10);
+
+  .text-primary {
+    color: #fff !important;
+    height: 4rem;
+    width: 4rem;
+  }
 }
 
 .cr-loader {

@@ -141,6 +141,8 @@ export const ru: LangType = {
     'page.body.landing.footer.info': 'Info',
     'page.body.landing.footer.rights': 'Baseapp © All rights reserved.',
 
+    'pagy.body.footer.powered_by': 'Сделано',
+
     /* Error pages */
 
     'page.body.restricted': 'Страница не найдена',

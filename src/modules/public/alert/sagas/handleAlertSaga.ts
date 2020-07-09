@@ -1,6 +1,6 @@
 import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
-import { userReset } from '../../../';
+import { setBlocklistStatus, userReset } from '../../../';
 import { msAlertDisplayTime } from '../../../../api';
 import { alertData, alertDelete, AlertPush } from '../actions';
 
@@ -40,13 +40,16 @@ export function* handleAlertSaga(action: AlertPush) {
                 }
 
                 return;
+            case 422:
+                if (action.payload.message.indexOf('value.taken') > -1) {
+                    window.location.replace('/');
+                }
+                break;
             case 471:
-                localStorage.setItem('restricted', 'true');
-                window.location.replace('/404');
+                yield put(setBlocklistStatus({ status: 'restricted' }));
                 break;
             case 472:
-                localStorage.setItem('maintenance', 'true');
-                window.location.replace('/500');
+                yield put(setBlocklistStatus({ status: 'maintenance' }));
                 break;
             default:
                 yield call(callAlertData, action);

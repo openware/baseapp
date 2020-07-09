@@ -1,8 +1,11 @@
 import { RootState } from '../../../modules';
 import { BlocklistAccessState } from './reducer';
 
-export const selectBlacklistAccessLoading = (state: RootState): BlocklistAccessState['loading'] =>
+export const selectBlocklistAccessLoading = (state: RootState): BlocklistAccessState['loading'] =>
     state.public.blocklistAccess.loading;
 
-export const selectBlacklistAccessSuccess = (state: RootState): BlocklistAccessState['success'] =>
+export const selectBlocklistAccessSuccess = (state: RootState): BlocklistAccessState['success'] =>
     state.public.blocklistAccess.success;
+
+export const selectPlatformAccessStatus = (state: RootState): BlocklistAccessState['status'] =>
+    state.public.blocklistAccess.status;
