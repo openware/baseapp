@@ -46,7 +46,6 @@ export interface SignInFetch {
         email: string;
         password: string;
         otp_code?: string;
-        data: string;
     };
 }
 
