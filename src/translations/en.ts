@@ -142,6 +142,8 @@ export const en = {
     'page.body.landing.footer.info': 'Info',
     'page.body.landing.footer.rights': 'Baseapp © All rights reserved.',
 
+    'pagy.body.footer.powered_by': 'Powered by',
+
 
     /* Wallets */
     'page.body.wallets.estimated_value': 'Estimated Value',
@@ -530,6 +532,12 @@ export const en = {
     'page.body.customization.themes.theme.darkRed.title': 'Dark red',
     'page.body.customization.themes.theme.purple.title': 'Purple',
     'page.body.customization.themes.theme.green.title': 'Green',
+
+    /* Error pages */
+
+    'page.body.restricted': 'Page not found',
+    'page.body.500.maintenance': 'The platform is under maintenance',
+    'page.body.500.availableSoon': 'It will be available as soon as possible',
 
 
     // success messages

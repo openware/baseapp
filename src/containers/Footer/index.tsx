@@ -1,27 +1,57 @@
 import * as React from 'react';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { RootState, selectConfigsLoading } from '../../modules';
 
-class FooterComponent extends React.Component<RouterProps> {
+interface ReduxProps {
+    configsLoading: boolean;
+}
+
+interface LocationProps extends RouterProps {
+    location: {
+        pathname: string;
+    };
+}
+
+const noFooterRoutes = [
+    '/confirm',
+    '/404',
+    '/500',
+];
+
+type FooterProps = LocationProps & ReduxProps & InjectedIntlProps;
+
+class FooterComponent extends React.Component<FooterProps> {
     public render() {
-        if (this.props.history.location.pathname.startsWith('/confirm')) {
+        const { location, configsLoading } = this.props;
+        const shouldRenderFooter = !noFooterRoutes.some(r => location.pathname.includes(r));
+
+        if (!shouldRenderFooter || configsLoading) {
             return <React.Fragment />;
         }
 
         return (
             <React.Fragment>
                 <footer className="pg-footer">
-                    <span>Powered by</span>
+                    <span>{this.translate('pagy.body.footer.powered_by')}</span>
                     <a href="https://www.openware.com">openware.com</a>
                 </footer>
             </React.Fragment>
         );
     }
+
+    public translate = (key: string) => this.props.intl.formatMessage({id: key});
 }
 
-// tslint:disable-next-line:no-any
-const Footer = withRouter(FooterComponent as any) as any;
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    configsLoading: selectConfigsLoading(state),
+});
 
-export {
-    Footer,
-};
+export const Footer = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps),
+)(FooterComponent) as React.ComponentClass;

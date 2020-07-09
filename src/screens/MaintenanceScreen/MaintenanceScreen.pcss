@@ -1,0 +1,39 @@
+.pg-maintenance-screen {
+  display: flex;
+  height: 100vh;
+  justify-content: space-around;
+  width: 100%;
+
+  &__container {
+    text-align: center;
+
+    &-header {
+      padding: 80px 0 120px 0;
+    }
+
+    &-body {
+      &-title {
+        color: var(--primary-text-color);
+        font-family: var(--font-family);
+        font-size: 48px;
+        font-weight: 500;
+        line-height: 56px;
+        max-width: 500px;
+        padding: 16px;
+      }
+
+      &-subtitle {
+        color: var(--primary-text-color);
+        font-family: var(--font-family);
+        font-size: 22px;
+        font-weight: 300;
+        padding-top: 10px;
+      }
+    }
+  }
+
+  &__background {
+    position: absolute;
+    top: 50px;
+  }
+}

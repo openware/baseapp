@@ -1,7 +1,6 @@
 import { delay } from 'redux-saga';
-// tslint:disable-next-line no-submodule-imports
 import { call, put } from 'redux-saga/effects';
-import { userReset } from '../../../';
+import { setBlocklistStatus, userReset } from '../../../';
 import { msAlertDisplayTime } from '../../../../api';
 import { alertData, alertDelete, AlertPush } from '../actions';
 
@@ -41,6 +40,17 @@ export function* handleAlertSaga(action: AlertPush) {
                 }
 
                 return;
+            case 422:
+                if (action.payload.message.indexOf('value.taken') > -1) {
+                    window.location.replace('/');
+                }
+                break;
+            case 471:
+                yield put(setBlocklistStatus({ status: 'restricted' }));
+                break;
+            case 472:
+                yield put(setBlocklistStatus({ status: 'maintenance' }));
+                break;
             default:
                 yield call(callAlertData, action);
         }

@@ -1,10 +1,10 @@
-import { History } from 'history';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
@@ -14,8 +14,11 @@ import {
     logoutFetch,
     Market,
     RootState,
+    selectConfigsLoading,
+    selectConfigsSuccess,
     selectCurrentColorTheme,
     selectCurrentMarket,
+    selectPlatformAccessStatus,
     selectUserFetching,
     selectUserInfo,
     selectUserLoggedIn,
@@ -36,9 +39,12 @@ import {
     ForgotPasswordScreen,
     HistoryScreen,
     LandingScreen,
+    MagicLink,
+    MaintenanceScreen,
     OrdersTabScreen,
     ProfileScreen,
     ProfileTwoFactorAuthScreen,
+    RestrictedScreen,
     SignInScreen,
     SignUpScreen,
     TradingScreen,
@@ -53,6 +59,9 @@ interface ReduxProps {
     user: User;
     isLoggedIn: boolean;
     userLoading?: boolean;
+    platformAccessStatus: string;
+    configsLoading: boolean;
+    configsSuccess: boolean;
 }
 
 interface DispatchProps {
@@ -63,15 +72,17 @@ interface DispatchProps {
     walletsReset: typeof walletsReset;
 }
 
-interface OwnProps {
-    history: History;
+interface LocationProps extends RouterProps {
+    location: {
+        pathname: string;
+    };
 }
 
 interface LayoutState {
     isShownExpSessionModal: boolean;
 }
 
-export type LayoutProps = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
+export type LayoutProps = ReduxProps & DispatchProps & LocationProps & InjectedIntlProps;
 
 const renderLoader = () => (
     <div className="pg-loader-container">
@@ -139,18 +150,62 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 
     public componentDidMount() {
         this.props.fetchConfigs();
-        this.props.userFetch();
-        this.initInterval();
-        this.check();
+        if (
+            !(this.props.location.pathname.includes('/magic-link')
+            || this.props.location.pathname.includes('/404')
+            || this.props.location.pathname.includes('/500'))
+        ) {
+            switch (this.props.platformAccessStatus) {
+                case 'restricted':
+                    this.props.history.replace('/404');
+                    break;
+                case 'maintenance':
+                    this.props.history.replace('/500');
+                    break;
+                default:
+                    const token = localStorage.getItem('csrfToken');
+
+                    if (token) {
+                        this.props.userFetch();
+                        this.initInterval();
+                        this.check();
+                    }
+            }
+        }
+    }
+
+    public componentWillReceiveProps(nextProps: LayoutProps) {
+        if (
+            !(nextProps.location.pathname.includes('/magic-link')
+            || nextProps.location.pathname.includes('/404')
+            || nextProps.location.pathname.includes('/500'))
+            || this.props.platformAccessStatus !== nextProps.platformAccessStatus
+        ) {
+            switch (nextProps.platformAccessStatus) {
+                case 'restricted':
+                    this.props.history.replace('/404');
+                    break;
+                case 'maintenance':
+                    this.props.history.replace('/500');
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (!this.props.user.email && nextProps.user.email) {
+            this.props.userFetch();
+        }
     }
 
     public componentDidUpdate(prevProps: LayoutProps) {
-        const { customization, isLoggedIn, history } = this.props;
+        const { customization, isLoggedIn } = this.props;
 
         if (!isLoggedIn && prevProps.isLoggedIn) {
             this.props.walletsReset();
-            if (!history.location.pathname.includes('/trading')) {
-                history.push('/trading/');
+
+            if (!this.props.location.pathname.includes('/trading')) {
+                this.props.history.push('/trading/');
             }
         }
 
@@ -174,21 +229,30 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             colorTheme,
             isLoggedIn,
             userLoading,
+            location,
+            configsLoading,
+            platformAccessStatus,
         } = this.props;
         const { isShownExpSessionModal } = this.state;
-
-        const tradingCls = window.location.pathname.includes('/trading') ? 'trading-layout' : '';
+        const tradingCls = location.pathname.includes('/trading') ? 'trading-layout' : '';
         toggleColorTheme(colorTheme);
+
+        if (configsLoading && !platformAccessStatus.length) {
+            return renderLoader();
+        }
 
         return (
             <div className={`container-fluid pg-layout ${tradingCls}`}>
                 <Switch>
+                    <Route exact={true} path="/magic-link" component={MagicLink} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationScreen} />
+                    <Route path="/404" component={RestrictedScreen} />
+                    <Route path="/500" component={MaintenanceScreen} />
                     <Route exact={true} path="/trading/:market?" component={TradingScreen} />
                     {showLanding() && <Route exact={true} path="/" component={LandingScreen} />}
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
@@ -291,12 +355,15 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    configsLoading: selectConfigsLoading(state),
+    configsSuccess: selectConfigsSuccess(state),
     colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
     customization: selectCustomizationData(state),
     user: selectUserInfo(state),
     isLoggedIn: selectUserLoggedIn(state),
     userLoading: selectUserFetching(state),
+    platformAccessStatus: selectPlatformAccessStatus(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
@@ -308,9 +375,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     walletsReset: () => dispatch(walletsReset()),
 });
 
-// tslint:disable-next-line no-any
-const Layout = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(LayoutComponent) as any) as any);
-
-export {
-    Layout,
-};
+export const Layout = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(LayoutComponent) as any;

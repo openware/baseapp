@@ -5,6 +5,7 @@ import { Dropdown } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { languages } from '../../api/config';
 import { LogoutIcon } from '../../assets/images/sidebar/LogoutIcon';
 import { ProfileIcon } from '../../assets/images/sidebar/ProfileIcon';
@@ -173,8 +174,8 @@ class SidebarContainer extends React.Component<Props, State> {
     };
 
     public getLanguageDropdownItems = () => {
-        return languages.map((l: string) =>
-            <Dropdown.Item onClick={e => this.handleChangeLanguage(l)}>
+        return languages.map((l: string, index: number) =>
+            <Dropdown.Item key={index} onClick={e => this.handleChangeLanguage(l)}>
                 <div className="dropdown-row">
                     <img
                         src={this.tryRequire(l) && require(`../../assets/images/sidebar/${l}.svg`)}
@@ -229,17 +230,14 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        changeLanguage: payload => dispatch(changeLanguage(payload)),
-        toggleSidebar: payload => dispatch(toggleSidebar(payload)),
-        logoutFetch: () => dispatch(logoutFetch()),
-        changeUserDataFetch: payload => dispatch(changeUserDataFetch(payload)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    changeLanguage: payload => dispatch(changeLanguage(payload)),
+    toggleSidebar: payload => dispatch(toggleSidebar(payload)),
+    logoutFetch: () => dispatch(logoutFetch()),
+    changeUserDataFetch: payload => dispatch(changeUserDataFetch(payload)),
+});
 
-// tslint:disable no-any
-const Sidebar = withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContainer) as any) as any;
-
-export {
-    Sidebar,
-};
+export const Sidebar = compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(SidebarContainer) as React.ComponentClass;
