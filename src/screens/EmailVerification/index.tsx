@@ -68,7 +68,6 @@ class EmailVerificationComponent extends React.Component<Props> {
     private handleClick = () => {
         this.props.emailVerificationFetch({
           email: this.props.location.state.email,
-          lang: this.props.i18n.toLowerCase(),
         });
     };
 }
