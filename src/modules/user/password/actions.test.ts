@@ -3,7 +3,6 @@ import * as actions from './actions';
 describe('Password actions', () => {
     const fakePasswordRequest = {
         email: 'test@test.com',
-        lang: 'EN',
     };
 
     const fakeNewPassword = {

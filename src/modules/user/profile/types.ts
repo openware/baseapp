@@ -21,4 +21,5 @@ export interface User {
     uid: string;
     profiles: UserProfile[];
     csrf_token?: string;
+    data?: string;
 }

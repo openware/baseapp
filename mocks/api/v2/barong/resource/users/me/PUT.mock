@@ -11,9 +11,9 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
     "otp":true,
     "state":"active",
     "referral_uid":null,
-    "data":"{\"language\":\"en\"}",
     "created_at":"2019-10-30T11:15:07Z",
     "updated_at":"2020-01-13T11:59:31Z",
+    "data":"{\"language\":\"en\"}",
     "labels":[
         {"key":"email","value":"verified","scope":"private","created_at":"2019-10-30T11:15:07Z","updated_at":"2019-10-30T11:15:07Z"},
         {"key":"phone","value":"","scope":"private","created_at":"2019-12-24T12:05:26Z","updated_at":"2019-12-24T12:05:26Z"},
@@ -24,6 +24,7 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
         {"country":"UA","number":"380504403893","validated_at":"2019-12-24T12:05:26.000Z"}
     ],
     "data_storages":[],
+    "data":"{\"language\":\"en\"}",
     "csrf_token": "wddwew33r",
     "profiles": [
         {

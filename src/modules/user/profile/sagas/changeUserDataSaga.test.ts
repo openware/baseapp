@@ -3,9 +3,10 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { emailVerificationData, emailVerificationError, emailVerificationFetch } from '../actions';
+import { changeUserDataError, changeUserDataFetch } from '../actions';
 
-describe('Email Verification Saga', () => {
+
+describe('Module: Change user info', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware<{}>;
     let mockAxios: MockAdapter;
@@ -26,17 +27,26 @@ describe('Email Verification Saga', () => {
         message: ['Server error'],
     };
 
-    const fakePayload = {email: 'test@gmail.com'};
-
-    const mockResendVerificationEmail = () => {
-        mockAxios.onPost('/identity/users/email/generate_code').reply(201);
+    const fakeUser = {
+        email: 'admin@barong.io',
+        uid: 'ID26C901376F',
+        role: 'admin',
+        level: 3,
+        otp: false,
+        state: 'active',
+        profiles: [],
+        data: '',
     };
 
-    const expectedActionsFetch = [emailVerificationFetch(fakePayload), emailVerificationData()];
-    const expectedActionsError = [emailVerificationFetch(fakePayload), emailVerificationError(fakeError)];
+    const mockchangeUserData = () => {
+        mockAxios.onPut('/resource/users/me').reply(200);
+    };
 
-    it('should resend confirmation email in success flow', async () => {
-        mockResendVerificationEmail();
+    const expectedActionsFetch = [changeUserDataFetch({ user: fakeUser })];
+    const expectedActionsError = [changeUserDataFetch({ user: fakeUser }), changeUserDataError(fakeError)];
+
+    it('should change user data info in success flow', async () => {
+        mockchangeUserData();
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
@@ -47,12 +57,12 @@ describe('Email Verification Saga', () => {
             });
         });
 
-        store.dispatch(emailVerificationFetch(fakePayload));
+        store.dispatch(changeUserDataFetch({ user: fakeUser }));
 
         return promise;
     });
 
-    it('should resend confirmation email an error', async () => {
+    it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
         const promise = new Promise(resolve => {
             store.subscribe(() => {
@@ -63,7 +73,7 @@ describe('Email Verification Saga', () => {
                 }
             });
         });
-        store.dispatch(emailVerificationFetch(fakePayload));
+        store.dispatch(changeUserDataFetch({ user: fakeUser }));
 
         return promise;
     });

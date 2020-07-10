@@ -46,7 +46,6 @@ export interface SignInFetch {
         email: string;
         password: string;
         otp_code?: string;
-        lang: string;
     };
 }
 
@@ -67,6 +66,7 @@ export interface SignUpFetch {
     payload: {
         email: string;
         password: string;
+        data: string;
         captcha_response?: string | GeetestCaptchaResponse;
         refid?: string;
     };

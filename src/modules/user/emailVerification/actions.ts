@@ -20,7 +20,6 @@ export interface EmailVerificationFetch {
     type: typeof EMAIL_VERIFICATION_FETCH;
     payload: {
       email: string;
-      lang: string;
     };
 }
 

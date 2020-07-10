@@ -3,6 +3,9 @@ import {
     PROFILE_CHANGE_PASSWORD_DATA,
     PROFILE_CHANGE_PASSWORD_ERROR,
     PROFILE_CHANGE_PASSWORD_FETCH,
+    PROFILE_CHANGE_USER_DATA,
+    PROFILE_CHANGE_USER_ERROR,
+    PROFILE_CHANGE_USER_FETCH,
     PROFILE_CHANGE_USER_LEVEL,
     PROFILE_GENERATE_2FA_QRCODE_DATA,
     PROFILE_GENERATE_2FA_QRCODE_ERROR,
@@ -101,6 +104,25 @@ export interface ToggleUser2fa {
     type: typeof PROFILE_TOGGLE_USER_2FA;
 }
 
+export interface ChangeUserDataFetch {
+    type: typeof PROFILE_CHANGE_USER_FETCH;
+    payload: {
+        user: User;
+    };
+}
+
+export interface ChangeUserData {
+    type: typeof PROFILE_CHANGE_USER_DATA;
+    payload: {
+        user: User;
+    };
+}
+
+export interface ChangeUserDataError {
+    type: typeof PROFILE_CHANGE_USER_ERROR;
+    payload: CommonError;
+}
+
 export type ProfileAction =
     | ChangePasswordFetch
     | ChangePasswordData
@@ -116,7 +138,10 @@ export type ProfileAction =
     | UserError
     | UserReset
     | ChangeUserLevel
-    | ToggleUser2fa;
+    | ToggleUser2fa
+    | ChangeUserDataFetch
+    | ChangeUserData
+    | ChangeUserDataError;
 
 export const changePasswordFetch = (payload: ChangePasswordFetch['payload']): ChangePasswordFetch => ({
     type: PROFILE_CHANGE_PASSWORD_FETCH,
@@ -186,4 +211,21 @@ export const changeUserLevel =
 
 export const toggleUser2fa = (): ToggleUser2fa => ({
         type: PROFILE_TOGGLE_USER_2FA,
+    });
+
+export const changeUserDataFetch =
+    (payload: ChangeUserDataFetch['payload']): ChangeUserDataFetch => ({
+        type: PROFILE_CHANGE_USER_FETCH,
+        payload,
+    });
+
+export const changeUserData =
+    (payload: ChangeUserData['payload']): ChangeUserData => ({
+        type: PROFILE_CHANGE_USER_DATA,
+        payload,
+    });
+
+export const changeUserDataError = (payload: ChangeUserDataError['payload']): ChangeUserDataError => ({
+        type: PROFILE_CHANGE_USER_ERROR,
+        payload,
     });

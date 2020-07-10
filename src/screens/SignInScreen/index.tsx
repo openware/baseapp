@@ -158,14 +158,21 @@ class SignIn extends React.Component<Props, SignInState> {
 
     private handleSignIn = () => {
         const { email, password } = this.state;
+        const { i18n } = this.props;
+
         this.props.signIn({
             email,
             password,
+            data: JSON.stringify({
+                language: i18n,
+            }),
         });
     };
 
     private handle2FASignIn = () => {
         const { email, password, otpCode } = this.state;
+        const { i18n } = this.props;
+
         if (!otpCode) {
             this.setState({
                 error2fa: 'Please enter 2fa code',
@@ -175,6 +182,9 @@ class SignIn extends React.Component<Props, SignInState> {
                 email,
                 password,
                 otp_code: otpCode,
+                data: JSON.stringify({
+                    language: i18n,
+                }),
             });
         }
     };

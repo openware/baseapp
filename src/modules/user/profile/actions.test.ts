@@ -111,5 +111,41 @@ describe('Profile actions', () => {
             const expectedAction = { type: 'profile/GENERATE_2FA_QRCODE_ERROR', payload: error };
             expect(actions.generate2faQRError(error)).toEqual(expectedAction);
         });
+
+        it('should check changeUserDataFetch action creator', () => {
+            const payload = {
+                user: {
+                    email: 'admin@barong.io',
+                    uid: 'ID26C901376F',
+                    role: 'admin',
+                    level: 3,
+                    otp: false,
+                    state: 'active',
+                    profiles: [],
+                    csrf_token: '31415926535897932384626433832795028841971',
+                    data: '{\'language\':\'en\'}',
+                },
+            };
+            const expectedAction = { type: 'profile/CHANGE_USER_FETCH', payload };
+            expect(actions.changeUserDataFetch(payload)).toEqual(expectedAction);
+        });
+
+        it('should check changeUserData action creator', () => {
+            const payload = {
+                user: {
+                    email: 'admin@barong.io',
+                    uid: 'ID26C901376F',
+                    role: 'admin',
+                    level: 3,
+                    otp: false,
+                    state: 'active',
+                    profiles: [],
+                    csrf_token: '31415926535897932384626433832795028841971',
+                    data: '{\'language\':\'en\'}',
+                },
+            };
+            const expectedAction = { type: 'profile/CHANGE_USER_DATA', payload };
+            expect(actions.changeUserData(payload)).toEqual(expectedAction);
+        });
     });
 });
