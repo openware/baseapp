@@ -1,7 +1,7 @@
 // tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
 import { API, isFinexEnabled, RequestOptions } from '../../../../api';
-import { getCsrfToken } from '../../../../helpers';
+import { getCsrfToken, getOrderAPI } from '../../../../helpers';
 import { alertPush } from '../../../index';
 import {
     ordersHistoryCancelError,
@@ -10,7 +10,7 @@ import {
 
 const ordersCancelOptions = (csrfToken?: string): RequestOptions => {
     return {
-        apiVersion: 'peatio',
+        apiVersion: getOrderAPI(),
         headers: { 'X-CSRF-Token': csrfToken },
     };
 };
