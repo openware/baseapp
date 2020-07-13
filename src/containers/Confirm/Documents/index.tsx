@@ -43,7 +43,6 @@ interface OnChangeEvent {
 }
 
 interface DocumentsState {
-    country: string;
     documentsType: string;
     issuedDate: string;
     issuedDateFocused: boolean;
@@ -71,7 +70,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     ];
 
     public state = {
-        country: '',
         documentsType: '',
         issuedDate: '',
         issuedDateFocused: false,
@@ -91,7 +89,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     }
 
     public render() {
-        const { lang } = this.props;
         const {
             fileFront,
             fileBack,
@@ -107,9 +104,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         /* tslint:disable */
         languages.map((l: string) => countries.registerLocale(require(`i18n-iso-countries/langs/${l}.json`)));
         /* tslint:enable */
-
-        const dataCountries = Object.values(countries.getNames(lang));
-        const onSelectCountry = value => this.selectCountry(dataCountries[value]);
 
         const issuedDateFocusedClass = cr('pg-confirm__content-documents__row__content', {
             'pg-confirm__content-documents__row__content--focused': issuedDateFocused,
@@ -131,17 +125,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         return (
             <React.Fragment>
                 <div className="pg-confirm__content-documents">
-                    <div className="pg-confirm__content-documents__row__content">
-                        <div className="pg-confirm__content-documents__row__content-label">
-                            {this.translate('page.body.kyc.documents.country')}
-                        </div>
-                        <DropdownComponent
-                            className="pg-confirm__content-documents__row__content-number-dropdown"
-                            list={dataCountries}
-                            onSelect={onSelectCountry}
-                            placeholder={this.translate('page.body.kyc.documents.country.placeholder')}
-                        />
-                    </div>
                     <div className="pg-confirm__content-documents__row__content">
                         <div className="pg-confirm__content-documents__row__content-label">
                             {this.translate('page.body.kyc.documentsType')}
@@ -291,12 +274,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         };
     };
 
-    private selectCountry = (value: string) => {
-        this.setState({
-            country: countries.getAlpha2Code(value, this.props.lang),
-        });
-    };
-
     private handleChangeIssuedDate = (e: OnChangeEvent) => {
         this.setState({
             issuedDate: formatDate(e.target.value),
@@ -346,7 +323,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     private handleCheckButtonDisabled = () => {
         const {
-            country,
             documentsType,
             issuedDate,
             expireDate,
@@ -370,7 +346,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             !this.handleValidateInput('idNumber', idNumber) ||
             !this.handleValidateInput('issuedDate', issuedDate) ||
             (expireDate && !this.handleValidateInput('expireDate', expireDate)) ||
-            !country ||
             !filesValid
         );
     };
