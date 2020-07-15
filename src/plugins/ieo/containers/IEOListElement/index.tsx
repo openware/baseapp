@@ -6,6 +6,7 @@ import {
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { Currency } from '../../../../modules';
 import { IEOCard } from '../../components';
 import {
@@ -59,5 +60,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     setCurrentIEO: payload => dispatch(setCurrentIEO(payload)),
 });
 
-// tslint:disable-next-line:no-any
-export const IEOListElement = injectIntl(withRouter(connect(null, mapDispatchToProps)(IEOListContainer) as any));
+export const IEOListElement = compose(
+    injectIntl,
+    withRouter,
+    connect(null, mapDispatchToProps),
+)(IEOListContainer) as any;

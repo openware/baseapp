@@ -3,6 +3,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { OrderIEO } from '../';
 import { Decimal } from '../../../../components';
 import { getCountdownDate, localeDate } from '../../../../helpers';
@@ -320,4 +321,7 @@ class IEOInfoComponent extends React.Component<Props, State> {
     };
 }
 
-export const IEOInfo = injectIntl(withRouter(IEOInfoComponent));
+export const IEOInfo = compose(
+    injectIntl,
+    withRouter,
+)(IEOInfoComponent) as any;

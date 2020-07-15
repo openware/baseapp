@@ -21,6 +21,7 @@ interface State {
 const limitDescription = 80;
 
 type Props = CardIEOProps & InjectedIntlProps;
+
 class IEOCardComponent extends React.Component<Props, State> {
     public countdownInterval;
 

@@ -4,6 +4,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { Decimal, WalletItemProps } from '../../../../components';
 import { DEFAULT_CCY_PRECISION } from '../../../../constants';
 import { handleCCYPrecision, localeDate } from '../../../../helpers';
@@ -181,9 +182,7 @@ const mapDispatchToProps = dispatch => ({
     ieoOrdersPush: payload => dispatch(ieoOrdersPush(payload)),
 });
 
-// tslint:disable-next-line no-any
-const OrderIEO = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderIEOContainer as any)) as any;
-
-export {
-    OrderIEO,
-};
+export const OrderIEO = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(OrderIEOContainer) as any;
