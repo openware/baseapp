@@ -221,18 +221,18 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         exampleImagePath={DocumentSelfieExample}
                         uploadedFile={fileSelfie[0] && (fileSelfie[0] as File).name}
                     />
-                </div>
-                <div className="pg-confirm__content-deep">
-                    <Button
-                        onClick={this.sendDocuments}
-                        disabled={this.handleCheckButtonDisabled()}
-                        size="lg"
-                        variant="primary"
-                        type="button"
-                        block={true}
-                    >
-                        {this.translate('page.body.kyc.submit')}
-                    </Button>
+                    <div className="pg-confirm__content-deep">
+                        <Button
+                            onClick={this.sendDocuments}
+                            disabled={this.handleCheckButtonDisabled()}
+                            size="lg"
+                            variant="primary"
+                            type="button"
+                            block={true}
+                        >
+                            {this.translate('page.body.kyc.submit')}
+                        </Button>
+                    </div>
                 </div>
             </React.Fragment>
         );
