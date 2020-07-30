@@ -30,8 +30,14 @@ export function* ordersExecuteSaga(action: OrderExecuteFetch) {
         const order = yield call(API.post(executeOptions(getCsrfToken())), '/market/orders', params);
         yield put(orderExecuteData());
 
-        if (order.ord_type !== 'market') {
-            yield put(userOpenOrdersAppend(order));
+        if (getOrderAPI() === 'finex') {
+            if (order.type !== 'market') {
+                yield put(userOpenOrdersAppend(order));
+            }
+        } else {
+            if (order.ord_type !== 'market') {
+                yield put(userOpenOrdersAppend(order));
+            }
         }
 
         yield put(alertPush({ message: ['success.order.created'], type: 'success'}));

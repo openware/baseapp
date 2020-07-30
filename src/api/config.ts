@@ -64,7 +64,4 @@ export const balancesFetchInterval = (): string => Cryptobase.config.balancesFet
 export const isFinexEnabled = (): boolean => Cryptobase.config.finex || false;
 export const passwordEntropyStep = ():number => Cryptobase.config.passwordEntropyStep;
 export const showLanding = (): boolean => Cryptobase.config.showLanding;
-<<<<<<< HEAD
 export const sentryEnabled = () => Cryptobase.config.sentryEnabled || defaultConfig.sentryEnabled;
-=======
->>>>>>> Fix: rework landing as optional page
