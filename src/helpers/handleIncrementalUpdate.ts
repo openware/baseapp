@@ -1,3 +1,5 @@
+import { sortAsks, sortBids } from './sortByPrice';
+
 export const handleIncrementalUpdate = (depthOld: string[][], newLevel: string[], type: string): string[][] => {
     if (newLevel.length !== 2) {
         return depthOld;
@@ -8,10 +10,10 @@ export const handleIncrementalUpdate = (depthOld: string[][], newLevel: string[]
     if (index === -1) {
         const data = [...depthOld, newLevel];
         if (type === 'asks') {
-            return data.sort((a, b) => +a[0] - +b[0]);
+            return sortAsks(data);
         }
 
-        return data.sort((a, b) => +b[0] - +a[0]);
+        return sortBids(data);
     }
 
     const result = [...depthOld];
@@ -37,8 +39,8 @@ export const handleIncrementalUpdateArray = (depthOld: string[][], newLevels: st
     const result = [...rest, ...newData];
 
     if (type === 'asks') {
-        return result.sort((a, b) => +a[0] - +b[0]);
+        return sortAsks(result);
     }
 
-    return result.sort((a, b) => +b[0] - +a[0]);
+    return sortBids(result);
 };
