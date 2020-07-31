@@ -1,7 +1,12 @@
-export const sliceArray = (data, index) => {
-    if (!data || data.length === 0) {
-        return [];
+export const sliceArray = (data, limit) => {
+    const temp = data;
+    if (!temp) {
+        return temp;
     }
 
-    return data.slice(0, index);
+    if (temp.length > limit) {
+        temp.length = limit;
+    }
+
+    return temp;
 };
