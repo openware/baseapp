@@ -4,7 +4,6 @@ export interface Config {
         tradeUrl: string;
         applogicUrl: string;
         rangerUrl: string;
-        arkeUrl: string;
         finexUrl: string;
     };
     minutesUntilAutoLogout?: string;

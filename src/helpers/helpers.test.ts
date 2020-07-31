@@ -222,13 +222,6 @@ describe('Helpers', () => {
         expect(helpers.getTimezone()).toEqual('Europe/Paris');
     });
 
-    // uppercase.js
-    it('Should correctly convert to uppercase', () => {
-        expect(helpers.uppercase('Helios')).toEqual('HELIOS');
-        expect(helpers.uppercase('')).toEqual('');
-        expect(helpers.uppercase(' ')).toEqual(' ');
-    });
-
     // accumulateVolume.ts
     it('should accumulate volume of asks properly', () => {
         const expectedResult = [0.1, 1.1, 2.1, 3.1, 4.1, 24.1, 25.1];
@@ -388,6 +381,14 @@ describe('Helpers', () => {
             expect(helpers.cleanPositiveFloatInput('-')).toBe('');
             expect(helpers.cleanPositiveFloatInput('000')).toBe('0');
             expect(helpers.cleanPositiveFloatInput('00.0')).toBe('0.0');
+        });
+    });
+
+    // getTimestampPeriod.ts
+    describe('getTimestampPeriod', () => {
+        it('return correct value', () => {
+            expect(helpers.getTimestampPeriod(1593676605, 0)).toBe(1593676560);
+            expect(helpers.getTimestampPeriod(1593676605, 120)).toBe(1593669600);
         });
     });
 });
