@@ -1,4 +1,3 @@
-// tslint:disable-next-line
 import { takeLatest } from 'redux-saga/effects';
 import {
     GET_GEETEST_CAPTCHA_FETCH,

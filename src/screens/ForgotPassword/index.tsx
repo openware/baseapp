@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import {
@@ -10,12 +9,14 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { EmailForm } from '../../components';
 import {
     EMAIL_REGEX,
     ERROR_INVALID_EMAIL,
     setDocumentTitle,
 } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     forgotPassword,
     RootState,
@@ -37,7 +38,7 @@ interface ForgotPasswordState {
     emailFocused: boolean;
 }
 
-type Props = RouterProps & ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = RouterProps & ReduxProps & DispatchProps & IntlProps;
 
 class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState> {
     constructor(props: Props) {
@@ -136,10 +137,13 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     i18n: selectCurrentLanguage(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         forgotPassword: credentials => dispatch(forgotPassword(credentials)),
     });
 
-// tslint:disable-next-line:no-any
-export const ForgotPasswordScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(ForgotPasswordComponent) as any));
+export const ForgotPasswordScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(ForgotPasswordComponent) as React.ComponentClass;

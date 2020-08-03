@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { Modal } from '../../components';
+import { IntlProps } from '../../index';
+import { Modal as MobileModal } from '../../mobile/components/Modal';
 
 interface ModalWithdrawConfirmationProps {
     amount: string;
@@ -12,19 +13,28 @@ interface ModalWithdrawConfirmationProps {
     onSubmit: () => void;
     onDismiss: () => void;
     rid: string;
+    isMobileDevice?: boolean;
     show: boolean;
 }
 
-type Props = ModalWithdrawConfirmationProps & InjectedIntlProps;
+type Props = ModalWithdrawConfirmationProps & IntlProps;
 
 class ModalWithdraw extends React.Component<Props> {
     public translate = (e: string) => {
         return this.props.intl.formatMessage({id: e});
     };
     public render() {
-        const { show } = this.props;
+        const { show, isMobileDevice } = this.props;
 
-        return (
+        return isMobileDevice ?
+            <MobileModal title={this.renderHeader()} onClose={this.props.onDismiss} isOpen={this.props.show}>
+                <div>
+                    {this.renderBody()}
+                </div>
+                <div>
+                    {this.renderFooter()}
+                </div>
+            </MobileModal> : (
             <Modal
                 show={show}
                 header={this.renderHeader()}
@@ -84,4 +94,4 @@ class ModalWithdraw extends React.Component<Props> {
 }
 
 // tslint:disable-next-line
-export const ModalWithdrawConfirmation = injectIntl(ModalWithdraw);
+export const ModalWithdrawConfirmation = injectIntl(ModalWithdraw) as any;

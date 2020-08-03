@@ -8,7 +8,7 @@ import { userOrdersHistoryData, userOrdersHistoryError, userOrdersHistoryFetch }
 
 describe('Orders History', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

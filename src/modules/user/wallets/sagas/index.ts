@@ -1,5 +1,4 @@
-// tslint:disable-next-line
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
 import {
     WALLETS_ADDRESS_FETCH,
     WALLETS_FETCH,
@@ -10,7 +9,7 @@ import { walletsSaga } from './walletsSaga';
 import { walletsWithdrawCcySaga } from './walletsWithdrawSaga';
 
 export function* rootWalletsSaga() {
-    yield takeEvery(WALLETS_FETCH, walletsSaga);
-    yield takeEvery(WALLETS_ADDRESS_FETCH, walletsAddressSaga);
+    yield takeLeading(WALLETS_FETCH, walletsSaga);
+    yield takeLatest(WALLETS_ADDRESS_FETCH, walletsAddressSaga);
     yield takeEvery(WALLETS_WITHDRAW_CCY_FETCH, walletsWithdrawCcySaga);
 }

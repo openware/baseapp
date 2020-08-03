@@ -14,7 +14,7 @@ const debug = false;
 
 describe('Orders', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     const executedOrder = {

@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
 import { DropdownComponent, DropdownComponentProps } from '.';
+import { ChevronIcon } from '../../assets/images/ChevronIcon';
 
 const defaults: DropdownComponentProps = {
     list: ['Limit', 'Market'],
@@ -53,7 +54,7 @@ describe('Dropdown', () => {
             input.simulate('click');
             // @ts-ignore
             const item = wrapper.find('div').first().props().children.props.children[0].props.children;
-            expect(item).toBe(defaults.list[0]);
+            expect(item).toStrictEqual([defaults.list[0], <ChevronIcon className="cr-dropdown__arrow" />]);
         });
 
         it('should handle keyPress char', () => {

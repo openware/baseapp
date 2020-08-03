@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
@@ -12,6 +12,7 @@ import {
     CustomizationThemes,
     TabPanel,
 } from '../../components';
+import { IntlProps } from '../../index';
 import {
     CustomizationCurrentDataInterface,
     CustomizationDataInterface,
@@ -34,9 +35,10 @@ interface ReduxProps {
 interface DispatchProps {
     customizationUpdateCurrent: typeof customizationUpdateCurrent;
     toggleChartRebuild: typeof toggleChartRebuild;
+    customizationUpdate: typeof customizationUpdate;
 }
 
-type Props = ReduxProps & RouterProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & RouterProps & DispatchProps & IntlProps;
 
 interface State {
     currentTabIndex: number;
@@ -180,6 +182,7 @@ class CustomizationContainer extends React.Component<Props, State> {
             [key]: value,
         };
 
+        // @ts-ignore
         this.props.customizationUpdateCurrent(updatedCustomization);
     };
 

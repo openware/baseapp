@@ -1,35 +1,35 @@
-import { createBrowserHistory, History } from 'history';
+import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
-import { connect, MapStateToProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Router } from 'react-router';
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
-import { RootState } from './modules';
+import * as mobileTranslations from './mobile/translations';
+import {
+    selectCurrentLanguage,
+    selectMobileDeviceState,
+    setMobileDevice,
+} from './modules';
 import { languageMap } from './translations';
 
-interface AppProps {
-    history: History;
-}
-
-interface ReduxProps {
-    lang: string;
-}
-
 const gaKey = gaTrackerKey();
-const history = createBrowserHistory();
+const browserHistory = createBrowserHistory();
 
 if (gaKey) {
     ReactGA.initialize(gaKey);
-    history.listen(location => {
+    browserHistory.listen(location => {
         ReactGA.set({ page: location.pathname });
         ReactGA.pageview(location.pathname);
     });
 }
 
-type Props = AppProps & ReduxProps;
+/* Mobile components */
+const MobileFooter = React.lazy(() => import('./mobile/components/Footer').then(({ Footer }) => ({ default: Footer })));
+const MobileHeader = React.lazy(() => import('./mobile/components/Header').then(({ Header }) => ({ default: Header })));
 
+/* Desktop components */
 const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ Alerts }) => ({ default: Alerts })));
 const CustomizationContainer = React.lazy(() => import('./containers/Customization').then(({ Customization }) => ({ default: Customization })));
 const FooterContainer = React.lazy(() => import('./containers/Footer').then(({ Footer }) => ({ default: Footer })));
@@ -37,37 +37,81 @@ const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ H
 const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
 const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
 
-class AppLayout extends React.Component<Props, {}, {}> {
-    public componentDidMount() {
-        ReactGA.pageview(history.location.pathname);
+
+const handleChangeWindowWidth = (dispatch, isMobileDevice: boolean) => {
+    const height = window.innerHeight;
+    const width = window.innerWidth;
+    let updatedMobileDeviceState = false;
+
+    if ((width && width < 768) || (height && height < 600)) {
+        updatedMobileDeviceState = true;
     }
 
-    public render() {
-        const { lang } = this.props;
+    if (isMobileDevice !== updatedMobileDeviceState) {
+        dispatch(setMobileDevice(updatedMobileDeviceState));
+    }
+};
 
+const getTranslations = (lang: string, isMobileDevice: boolean) => {
+    if (isMobileDevice) {
+        return  {
+            ...languageMap[lang],
+            ...mobileTranslations[lang],
+        };
+    }
+
+    return languageMap[lang];
+};
+
+const RenderDeviceContainers = () => {
+    const isMobileDevice = useSelector(selectMobileDeviceState);
+
+    if (isMobileDevice) {
         return (
-            <IntlProvider locale={lang} messages={languageMap[lang]} key={lang}>
-                <Router history={history}>
-                    <ErrorWrapper>
-                        <React.Suspense fallback={null}>
-                            <HeaderContainer/>
-                            <SidebarContainer/>
-                            <CustomizationContainer/>
-                            <AlertsContainer/>
-                            <LayoutContainer/>
-                            <FooterContainer/>
-                        </React.Suspense>
-                    </ErrorWrapper>
-                </Router>
-            </IntlProvider>
+            <div className="pg-mobile-app">
+                <MobileHeader />
+                <LayoutContainer/>
+                <MobileFooter />
+            </div>
         );
     }
-}
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
-    (state: RootState): ReduxProps => ({
-        lang: state.public.i18n.lang,
-    });
+    return (
+        <React.Fragment>
+            <HeaderContainer/>
+            <SidebarContainer/>
+            <CustomizationContainer/>
+            <AlertsContainer/>
+            <LayoutContainer/>
+            <FooterContainer/>
+        </React.Fragment>
+    );
+};
 
-// tslint:disable-next-line:no-any
-export const App = connect(mapStateToProps)(AppLayout) as any;
+export const App = () => {
+    const dispatch = useDispatch();
+    const lang = useSelector(selectCurrentLanguage);
+    const isMobileDevice = useSelector(selectMobileDeviceState);
+
+    React.useEffect(() => {
+        ReactGA.pageview(window.location.pathname);
+        window.addEventListener('resize', () => handleChangeWindowWidth(dispatch, isMobileDevice));
+        handleChangeWindowWidth(dispatch, isMobileDevice);
+
+        return () => {
+            window.removeEventListener('resize', () => handleChangeWindowWidth(dispatch, isMobileDevice));
+        };
+    }, [isMobileDevice]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    return (
+        <IntlProvider locale={lang} messages={getTranslations(lang, isMobileDevice)} key={lang}>
+            <Router history={browserHistory}>
+                <ErrorWrapper>
+                    <React.Suspense fallback={null}>
+                        <RenderDeviceContainers />
+                    </React.Suspense>
+                </ErrorWrapper>
+            </Router>
+        </IntlProvider>
+    );
+};

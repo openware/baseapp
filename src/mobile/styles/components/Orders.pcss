@@ -1,0 +1,115 @@
+.pg-mobile-orders {
+  align-items: flex-start;
+  background: var(--body-background-color);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+
+  .cr-tab-panel {
+    background: var(--body-background-color);
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    &__navigation-container {
+      align-items: center;
+      border: none;
+      border-radius: 0;
+      box-shadow: inset 0 -1px 0 var(--divider-color-level-1);
+      display: flex;
+      flex-direction: row;
+      height: 36px;
+      justify-content: space-between;
+      margin: 0;
+      padding: 0 20px;
+      width: 100%;
+
+      &-navigation {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        height: 36px;
+        justify-content: space-between;
+        margin: 0;
+        padding: 0;
+        width: 38% !important;
+
+        .cr-tab {
+          align-items: center;
+          display: flex;
+          font-size: 14px;
+          font-weight: normal;
+          height: 36px;
+          justify-content: center;
+          letter-spacing: 0.1px;
+          line-height: 22px;
+          margin: 0;
+          padding: 0;
+          user-select: none;
+          width: 100%;
+
+          &__pointer {
+            bottom: 0;
+          }
+        }
+      }
+    }
+
+    &__optinal-head {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      height: 32px;
+      justify-content: flex-end;
+      margin: 0;
+      padding: 0;
+      width: 62%;
+    }
+  }
+
+  &__optional-head {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 32px;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    span {
+      align-items: center;
+      color: var(--primary-cta-color);
+      display: flex;
+      font-size: 14px;
+      font-weight: normal;
+      height: 32px;
+      letter-spacing: 0.1px;
+      padding-right: 8px;
+    }
+
+    svg {
+      path {
+        fill: var(--primary-cta-color);
+      }
+    }
+  }
+
+  &__content {
+    background: var(--body-background-color);
+    padding: 0 20px 12px 20px;
+
+    .no-data {
+      align-items: flex-start;
+      color: var(--table-text-color);
+      display: flex;
+      flex-direction: row;
+      font-size: 14px;
+      justify-content: center;
+      line-height: 24px;
+      padding: 10px 0;
+      width: 100%;
+    }
+  }
+}

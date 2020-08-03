@@ -1,4 +1,3 @@
-// tslint:disable-next-line
 import { takeLatest } from 'redux-saga/effects';
 import {
     DEPTH_FETCH,

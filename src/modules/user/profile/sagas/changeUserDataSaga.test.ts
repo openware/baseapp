@@ -8,7 +8,7 @@ import { changeUserDataError, changeUserDataFetch } from '../actions';
 
 describe('Module: Change user info', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

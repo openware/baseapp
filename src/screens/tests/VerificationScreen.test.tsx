@@ -1,22 +1,22 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import {connect, Provider} from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { VerificationScreen } from '..';
+import { IntlProps } from '../../index';
 import { rootReducer } from '../../modules';
-import { extractToken, RouterProps } from '../VerificationScreen';
-
-const defaultProps: RouterProps = {
-    location: {
-        search: '',
-    },
-};
+import { extractToken } from '../VerificationScreen';
 
 const store = createStore(rootReducer);
 const Verification = connect()(VerificationScreen);
 
-const setup = (props: Partial<RouterProps> = {}) =>
-      shallow(<Provider store={store}><Verification  {...{ ...defaultProps, ...props }}/></Provider>);
+const setup = (props: Partial<IntlProps> = {}) =>
+    shallow(
+        <Provider store={store}>
+            <Verification />
+        </Provider>,
+    );
+
 
 describe('VerificationScreen test', () => {
     it('should render', () => {

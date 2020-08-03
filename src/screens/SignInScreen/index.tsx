@@ -1,11 +1,13 @@
 import cx from 'classnames';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { SignInComponent, TwoFactorAuth } from '../../components';
 import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     RootState,
     selectAlertState,
@@ -45,7 +47,7 @@ interface SignInState {
     codeFocused: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class SignIn extends React.Component<Props, SignInState> {
     public state = {
@@ -62,7 +64,7 @@ class SignIn extends React.Component<Props, SignInState> {
 
     public componentDidMount() {
         setDocumentTitle('Sign In');
-        this.props.signInError({ code: undefined, message: undefined });
+        this.props.signInError({ code: 0, message: [''] });
         this.props.signUpRequireVerification({requireVerification: false});
     }
 
@@ -259,22 +261,15 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     requireEmailVerification: selectSignUpRequireVerification(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     signIn: data => dispatch(signIn(data)),
     signInError: error => dispatch(signInError(error)),
     signInRequire2FA: payload => dispatch(signInRequire2FA(payload)),
     signUpRequireVerification: data => dispatch(signUpRequireVerification(data)),
 });
 
-// tslint:disable no-any
-const SignInScreen = injectIntl(
-    withRouter(connect(
-        mapStateToProps,
-        mapDispatchProps,
-    )(SignIn) as any),
-);
-// tslint:enable no-any
-
-export {
-    SignInScreen,
-};
+export const SignInScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(SignIn) as React.ComponentClass;

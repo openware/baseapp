@@ -9,7 +9,7 @@ import { openOrdersCancelError, openOrdersCancelFetch } from '../actions';
 
 describe('Open Orders Cancel', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

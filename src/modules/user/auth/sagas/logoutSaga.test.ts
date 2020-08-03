@@ -9,7 +9,7 @@ import { logoutError, logoutFetch } from '../actions';
 
 describe('Logout saga', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

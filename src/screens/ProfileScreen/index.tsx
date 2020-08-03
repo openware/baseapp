@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { ProfileApiKeys, ProfileVerification } from '../../containers';
 import { ProfileAccountActivity } from '../../containers/ProfileAccountActivity';
 import { ProfileAuthDetails } from '../../containers/ProfileAuthDetails';
 import { ReferralProgram } from '../../containers/ReferralProgram';
 import { setDocumentTitle } from '../../helpers';
+import { IntlProps } from '../../index';
 
-class ProfileComponent extends React.Component<RouterProps, InjectedIntlProps> {
+class ProfileComponent extends React.Component<RouterProps, IntlProps> {
 
     public componentDidMount() {
         setDocumentTitle('Profile');
@@ -56,9 +58,7 @@ class ProfileComponent extends React.Component<RouterProps, InjectedIntlProps> {
     }
 }
 
-// tslint:disable-next-line:no-any
-const ProfileScreen = injectIntl(withRouter(ProfileComponent as any));
-
-export {
-    ProfileScreen,
-};
+export const ProfileScreen = compose(
+    injectIntl,
+    withRouter,
+)(ProfileComponent) as React.ComponentClass;

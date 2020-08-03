@@ -1,13 +1,15 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { kycSteps } from '../../api';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { Address, Documents, Identity, Phone } from '../../containers';
 import { setDocumentTitle } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     Label,
     labelFetch,
@@ -25,7 +27,7 @@ interface DispatchProps {
     labelFetch: typeof labelFetch;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class ConfirmComponent extends React.Component<Props> {
     public componentDidMount() {

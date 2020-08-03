@@ -13,7 +13,7 @@ import { Beneficiary } from '../types';
 
 describe('Beneficiaries Fetch', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {
