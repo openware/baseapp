@@ -1,16 +1,13 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LogoIcon } from '../../../assets/images/LogoIcon';
 import { ProfileIcon } from '../../../assets/images/sidebar/ProfileIcon';
+import { selectUserLoggedIn } from '../../../modules';
 
-interface Props {
-    translate: (id: string) => string;
-    userLoggedIn: boolean;
-}
-
-export const HeaderComponent: React.FunctionComponent<Props> = props => {
-    const { translate, userLoggedIn } = props;
+const HeaderComponent = () => {
+    const userLoggedIn = useSelector(selectUserLoggedIn);
 
     return (
         <div className="pg-mobile-header">
@@ -30,7 +27,7 @@ export const HeaderComponent: React.FunctionComponent<Props> = props => {
                             size="lg"
                             variant="primary"
                         >
-                            {translate('page.mobile.header.signIn')}
+                            Log in
                         </Button>
                     </Link>
                 )}
@@ -38,3 +35,5 @@ export const HeaderComponent: React.FunctionComponent<Props> = props => {
         </div>
     );
 };
+
+export const Header = React.memo(HeaderComponent);
