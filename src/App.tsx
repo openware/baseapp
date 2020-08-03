@@ -41,10 +41,11 @@ if (gaKey) {
 
 type Props = AppProps & ReduxProps & DispatchProps;
 
-/* Mobile containers */
-const MobileHeaderContainer = React.lazy(() => import('./mobile/components/Header').then(({ Header }) => ({ default: Header })));
+/* Mobile components */
+const MobileFooter = React.lazy(() => import('./mobile/components/Footer').then(({ Footer }) => ({ default: Footer })));
+const MobileHeader = React.lazy(() => import('./mobile/components/Header').then(({ Header }) => ({ default: Header })));
 
-/* Desktop containers */
+/* Desktop components */
 const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ Alerts }) => ({ default: Alerts })));
 const CustomizationContainer = React.lazy(() => import('./containers/Customization').then(({ Customization }) => ({ default: Customization })));
 const FooterContainer = React.lazy(() => import('./containers/Footer').then(({ Footer }) => ({ default: Footer })));
@@ -71,7 +72,8 @@ class AppLayout extends React.Component<Props, {}, {}> {
         if (isMobileDevice) {
             return (
                 <div className="pg-mobile-app">
-                    <MobileHeaderContainer/>
+                    <MobileHeader />
+                    <MobileFooter />
                 </div>
             );
         }
