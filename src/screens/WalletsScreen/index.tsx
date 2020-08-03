@@ -347,7 +347,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
                                                    { confirmations: currencyItem.min_confirmations });
         const error = addressDepositError ?
-            this.props.intl.formatMessage({id: addressDepositError.message}) :
+            this.props.intl.formatMessage({id: addressDepositError.message[0]}) :
             this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
 
         const walletAddress = (selectedWalletCurrency === currency) ? formatCCYAddress(currency, selectedWalletAddress) : '';

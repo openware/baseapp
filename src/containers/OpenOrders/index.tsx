@@ -91,8 +91,8 @@ export class OpenOrdersContainer extends React.Component<Props> {
     };
 
     private renderHeaders = () => {
-        const currentAskUnit = this.props.currentMarket ? ` (${this.props.currentMarket.base_unit.toUpperCase()})` : null;
-        const currentBidUnit = this.props.currentMarket ? ` (${this.props.currentMarket.quote_unit.toUpperCase()})` : null;
+        const currentAskUnit = this.props.currentMarket ? ` (${this.props.currentMarket.base_unit.toUpperCase()})` : '';
+        const currentBidUnit = this.props.currentMarket ? ` (${this.props.currentMarket.quote_unit.toUpperCase()})` : '';
 
         return [
             this.translate('page.body.trade.header.openOrders.content.date'),

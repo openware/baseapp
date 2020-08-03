@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import {  WrappedComponentProps } from 'react-intl';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
 import { sentryEnabled } from './api/config';
@@ -16,9 +17,7 @@ import { rangerMiddleware, sagaMiddleware, store } from './store';
 sagaMiddleware.run(rootSaga);
 rangerMiddleware.run(rangerSagas);
 
-export interface IntlProps {
-    intl: any;
-}
+export type IntlProps = WrappedComponentProps;
 
 if (sentryEnabled()) {
     const key = process.env.REACT_APP_SENTRY_KEY;
