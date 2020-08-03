@@ -7,8 +7,11 @@ export const selectCurrentColorTheme = (state: RootState): ColorThemeState['colo
 export const selectChartRebuildState = (state: RootState): ColorThemeState['chartRebuild'] =>
     state.public.colorTheme.chartRebuild;
 
-export const selectSidebarState = (state: RootState): ColorThemeState['sideBarActive'] =>
-    state.public.colorTheme.sideBarActive;
-
 export const selectMarketSelectorState = (state: RootState): ColorThemeState['marketSelectorActive'] =>
     state.public.colorTheme.marketSelectorActive;
+
+export const selectMobileDeviceState = (state: RootState): ColorThemeState['isMobileDevice'] =>
+    state.public.colorTheme.isMobileDevice;
+
+export const selectSidebarState = (state: RootState): ColorThemeState['sideBarActive'] =>
+    state.public.colorTheme.sideBarActive;
