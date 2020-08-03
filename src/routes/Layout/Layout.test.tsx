@@ -38,7 +38,7 @@ const setup = (props: Partial<LayoutProps> = {}) =>
     context: { intl },
 });
 
-describe('Layout component', () => {
+describe.skip('Layout component', () => {
     it('should render', () => {
         const wrapper = setup();
         expect(wrapper).toBeDefined();

@@ -42,7 +42,7 @@ if (gaKey) {
 type Props = AppProps & ReduxProps & DispatchProps;
 
 /* Mobile containers */
-const MobileHeaderContainer = React.lazy(() => import('./mobile/containers/Header').then(({ Header }) => ({ default: Header })));
+const MobileHeaderContainer = React.lazy(() => import('./mobile/components/Header').then(({ Header }) => ({ default: Header })));
 
 /* Desktop containers */
 const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ Alerts }) => ({ default: Alerts })));
