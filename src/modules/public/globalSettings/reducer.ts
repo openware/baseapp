@@ -2,14 +2,16 @@ import {
     CHANGE_COLOR_THEME,
     TOGGLE_CHART_REBUILD,
     TOGGLE_MARKET_SELECTOR,
+    TOGGLE_MOBILE_DEVICE,
     TOGGLE_SIDEBAR,
 } from './constants';
 
 export interface ColorThemeState {
     color: string;
     chartRebuild: boolean;
-    sideBarActive: boolean;
     marketSelectorActive: boolean;
+    isMobileDevice: boolean;
+    sideBarActive: boolean;
 }
 
 const currentColorTheme: string = localStorage.getItem('colorTheme') || 'basic';
@@ -17,8 +19,9 @@ const currentColorTheme: string = localStorage.getItem('colorTheme') || 'basic';
 export const initialChangeColorThemeState: ColorThemeState = {
     color: currentColorTheme,
     chartRebuild: false,
-    sideBarActive: false,
     marketSelectorActive: false,
+    isMobileDevice: false,
+    sideBarActive: false,
 };
 
 export const changeColorThemeReducer = (state = initialChangeColorThemeState, action) => {
@@ -35,17 +38,22 @@ export const changeColorThemeReducer = (state = initialChangeColorThemeState, ac
                 ...state,
                 chartRebuild: !state.chartRebuild,
             };
-        case TOGGLE_SIDEBAR:
-            return {
-                ...state,
-                sideBarActive: action.payload,
-                marketSelectorActive: false,
-            };
         case TOGGLE_MARKET_SELECTOR:
             return {
                 ...state,
                 marketSelectorActive: !state.marketSelectorActive,
                 sideBarActive: false,
+            };
+        case TOGGLE_MOBILE_DEVICE:
+            return {
+                ...state,
+                isMobileDevice: action.payload,
+            };
+        case TOGGLE_SIDEBAR:
+            return {
+                ...state,
+                sideBarActive: action.payload,
+                marketSelectorActive: false,
             };
         default:
             return state;
