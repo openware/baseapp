@@ -2,14 +2,16 @@ import cr from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { languages } from '../../../api/config';
 import { CustomInput, DropdownComponent } from '../../../components';
 import { formatDate, isDateInFuture } from '../../../helpers';
+import { IntlProps } from '../../../index';
 import {
     editIdentity,
     Label,
@@ -62,7 +64,7 @@ interface IdentityState {
     residentialAddressFocused: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class IdentityComponent extends React.Component<Props, IdentityState> {
     public state = {

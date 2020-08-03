@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate, setTradeColor } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     Market,
     ordersHistoryCancelFetch,
@@ -50,7 +51,7 @@ interface OrdersState {
 }
 
 
-type Props = OrdersProps & ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = OrdersProps & ReduxProps & DispatchProps & IntlProps;
 
 class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     public componentDidMount() {

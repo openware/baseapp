@@ -1,0 +1,47 @@
+/* stylelint-disable */
+.pg-mobile-app {
+  .cr-mobile-email-verification {
+    .cr-mobile-modal__block--open {
+      height: 50%;
+    }
+    .cr-mobile-modal__header {
+      &-title {
+        font-size: 12px;
+        color: var(--primary-text-color);
+      }
+      &-back {
+        display: none;
+      }
+    }
+    .pg-emailverification-container {
+      background: unset;
+      height: auto;
+
+      .pg-emailverification {
+        background: unset;
+        &-body {
+          &-text {
+            padding: 0 12px;
+            font-size: 14px;
+            color: var(--primary-text-color);
+            text-align: left;
+          }
+
+          &-container {
+            &-button {
+              background: var(--button-primary-cta-background-color);
+            }
+          }
+        }
+      }
+    }
+    .pg-emailverification-body-container {
+      button {
+        margin: 0 13px;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: var(--primary-text-color);
+      }
+    }
+  }
+}

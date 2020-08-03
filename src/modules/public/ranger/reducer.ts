@@ -12,12 +12,15 @@ import {
 export interface RangerState {
     withAuth: boolean;
     connected: boolean;
+    connecting: boolean;
     subscriptions: string[];
+    timestamp?: number;
 }
 
 const initialRangerState: RangerState = {
     withAuth: false,
     connected: false,
+    connecting: false,
     subscriptions: [],
 };
 export const rangerReducer = (state = initialRangerState, action: RangerAction): RangerState => {
@@ -27,6 +30,8 @@ export const rangerReducer = (state = initialRangerState, action: RangerAction):
                 ...state,
                 withAuth: action.payload.withAuth,
                 connected: false,
+                connecting: true,
+                timestamp: Math.floor(Date.now() / 1000),
             };
         case RANGER_SUBSCRIPTIONS_DATA:
             return {
@@ -37,6 +42,7 @@ export const rangerReducer = (state = initialRangerState, action: RangerAction):
             return {
                 ...state,
                 connected: true,
+                connecting: false,
             };
 
         case RANGER_CONNECT_ERROR:
@@ -44,6 +50,7 @@ export const rangerReducer = (state = initialRangerState, action: RangerAction):
             return {
                 ...state,
                 connected: false,
+                connecting: false,
             };
 
         default:

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Decimal } from '../../components/Decimal';
+import { IntlProps } from '../../index';
 import {
     Market,
     RootState,
@@ -20,7 +21,7 @@ interface ReduxProps {
     };
 }
 
-type Props = InjectedIntlProps & ReduxProps;
+type Props = IntlProps & ReduxProps;
 
 // tslint:disable no-any jsx-no-multiline-js
 class HeaderToolbarContainer extends React.Component<Props> {

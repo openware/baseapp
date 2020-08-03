@@ -9,7 +9,7 @@ const debug = false;
 
 describe('KYC - Documents', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     afterEach(() => {

@@ -2,19 +2,16 @@ import cr from 'classnames';
 import * as countries from 'i18n-iso-countries';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { languages } from '../../../api/config';
-import {
-    CustomInput,
-    DropdownComponent,
-    UploadFile,
-} from '../../../components';
+import { CustomInput, DropdownComponent, UploadFile } from '../../../components';
 import { formatDate, isDateInFuture, randomSecureHex } from '../../../helpers';
+import { IntlProps } from '../../../index';
 import {
     alertPush,
     RootState,
@@ -22,6 +19,7 @@ import {
     selectSendDocumentsSuccess,
     sendDocuments,
 } from '../../../modules';
+
 const DocumentFrontExample = require('../../../assets/images/kyc/DocumentFrontExample.svg');
 const DocumentBackExample = require('../../../assets/images/kyc/DocumentBackExample.svg');
 const DocumentSelfieExample = require('../../../assets/images/kyc/DocumentSelfieExample.svg');
@@ -55,7 +53,7 @@ interface DocumentsState {
     fileSelfie: File[];
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 // tslint:disable:member-ordering
 class DocumentsComponent extends React.Component<Props, DocumentsState> {
@@ -418,7 +416,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         sendDocuments: payload => dispatch(sendDocuments(payload)),
     });
 
-    export const Documents = compose(
+export const Documents = compose(
     injectIntl,
     withRouter,
     connect(mapStateToProps, mapDispatchToProps),

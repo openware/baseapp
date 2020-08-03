@@ -1,21 +1,24 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CustomInput } from '../../components';
+import { IntlProps } from '../../index';
+import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesCreate,
     BeneficiaryBank,
     RootState,
     selectBeneficiariesCreateError,
-    selectBeneficiariesCreateSuccess,
+    selectBeneficiariesCreateSuccess, selectMobileDeviceState,
 } from '../../modules';
 import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
     beneficiariesAddError?: CommonError;
     beneficiariesAddSuccess: boolean;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -57,7 +60,7 @@ interface FiatState {
     fiatIntermediaryBankSwiftCodeFocused: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 type State = CoinState & FiatState;
 
 const defaultState = {
@@ -110,11 +113,24 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const { type } = this.props;
+        return (
+            this.props.isMobileDevice ?
+                <Modal
+                    title={this.props.intl.formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.header' })}
+                    onClose={this.props.handleToggleAddAddressModal}
+                    isOpen>
+                {this.renderContent()}
+            </Modal> : this.renderContent()
+        );
+    }
 
-        const addModalClass = classnames('cr-modal beneficiaries-add-address-modal', {
+    private renderContent = () => {
+        const { type, isMobileDevice } = this.props;
+
+        const addModalClass = classnames('beneficiaries-add-address-modal', {
             'beneficiaries-add-address-modal--coin': type === 'coin',
             'beneficiaries-add-address-modal--fiat': type === 'fiat',
+            'cr-modal': !isMobileDevice,
         });
 
         return (
@@ -125,7 +141,7 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
                 </div>
             </div>
         );
-    }
+    };
 
     private renderAddAddressModalHeader = () => {
         return (
@@ -336,6 +352,7 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesAddError: selectBeneficiariesCreateError(state),
     beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
@@ -343,4 +360,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const BeneficiariesAddModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesAddModalComponent) as any);
+export const BeneficiariesAddModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesAddModalComponent) as any) as any;

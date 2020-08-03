@@ -1,22 +1,25 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { LetterIcon } from '../../assets/images/LetterIcon';
 import { CustomInput } from '../../components';
+import { IntlProps } from '../../index';
+import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesActivate,
     Beneficiary,
     RootState,
     selectBeneficiariesActivateError,
-    selectBeneficiariesActivateSuccess,
+    selectBeneficiariesActivateSuccess, selectMobileDeviceState,
 } from '../../modules';
 import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
     beneficiariesActivateError?: CommonError;
     beneficiariesActivateSuccess: boolean;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -33,7 +36,7 @@ interface State {
     confirmationModalCodeFocused: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 const defaultState = {
     confirmationModalCode: '',
@@ -64,14 +67,30 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
 
     public render() {
         return (
-            <div className="cr-modal beneficiaries-confirmation-modal">
+            this.props.isMobileDevice ?
+                <Modal
+                    onClose={this.props.handleToggleConfirmationModal}
+                    title={this.props.intl.formatMessage({ id: 'page.mobile.wallet.withdraw.modal.new.account' })}
+                    isOpen>
+                    {this.renderContent()}
+                </Modal> : this.renderContent()
+        );
+    }
+
+    private renderContent = () => {
+        const className = classnames('beneficiaries-confirmation-modal', {
+            'cr-modal': !this.props.isMobileDevice,
+        });
+
+        return (
+            <div className={className}>
                 <div className="cr-email-form">
                     {this.renderConfirmationModalHeader()}
                     {this.renderConfirmationModalBody()}
                 </div>
             </div>
         );
-    }
+    };
 
     private renderConfirmationModalHeader = () => {
         return (
@@ -187,6 +206,7 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesActivateError: selectBeneficiariesActivateError(state),
     beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
@@ -194,4 +214,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const BeneficiariesActivateModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesActivateModalComponent) as any);
+export const BeneficiariesActivateModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesActivateModalComponent) as any) as any;

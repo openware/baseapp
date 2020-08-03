@@ -1,4 +1,3 @@
-// tslint:disable-next-line no-submodule-imports
 import { call, put } from 'redux-saga/effects';
 import { API, isFinexEnabled, RequestOptions } from '../../../../api';
 import { buildQueryString, getTimestampPeriod } from '../../../../helpers';

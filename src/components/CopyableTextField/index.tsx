@@ -100,4 +100,5 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
 
 export {
     CopyableTextField,
+    copy,
 };

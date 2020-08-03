@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import {
     FormattedMessage,
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
@@ -13,6 +12,7 @@ import { ProfileTwoFactorAuth } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CustomInput, Modal } from '../../components';
 import { PASSWORD_REGEX } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     RootState,
     selectUserInfo,
@@ -67,7 +67,7 @@ interface State {
     code2FAFocus: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & ProfileProps & InjectedIntlProps & OnChangeEvent;
+type Props = ReduxProps & DispatchProps & RouterProps & ProfileProps & IntlProps & OnChangeEvent;
 
 class ProfileAuthDetailsComponent extends React.Component<Props, State> {
     constructor(props: Props) {

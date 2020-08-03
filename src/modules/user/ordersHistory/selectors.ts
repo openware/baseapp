@@ -24,3 +24,9 @@ export const selectCancelAllFetching = (state: RootState): boolean =>
 
 export const selectCancelFetching = (state: RootState): boolean =>
     state.user.ordersHistory.cancelFetching;
+
+export const selectShouldFetchCancelAll = (state: RootState): boolean =>
+    !selectCancelAllFetching(state) && !!selectOrdersHistory(state).length;
+
+export const selectShouldFetchCancelSingle = (state: RootState): boolean =>
+    !selectCancelFetching(state) && !!selectOrdersHistory(state).length;

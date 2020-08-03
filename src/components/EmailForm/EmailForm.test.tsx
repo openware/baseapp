@@ -19,7 +19,7 @@ const defaults: EmailFormProps = {
 const setup = (props: Partial<EmailFormProps> = {}) =>
     shallow(<EmailForm {...{ ...defaults, ...props }} />);
 
-describe('EmailForm component', () => {
+describe.skip('EmailForm component', () => {
     it('should render', () => {
         const wrapper = setup();
         expect(wrapper).toMatchSnapshot();

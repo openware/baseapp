@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { WalletItemProps } from '../../../components/WalletItem';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
+import { IntlProps } from '../../../index';
 import {
     currenciesFetch,
     Currency,
@@ -42,7 +43,7 @@ interface DispatchProps {
     rangerConnect: typeof rangerConnectFetch;
 }
 
-type Props = DispatchProps & ReduxProps & EstimatedValueProps & InjectedIntlProps;
+type Props = DispatchProps & ReduxProps & EstimatedValueProps & IntlProps;
 
 class EstimatedValueContainer extends React.Component<Props> {
     public componentDidMount(): void {

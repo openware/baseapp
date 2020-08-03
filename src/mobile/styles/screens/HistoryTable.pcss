@@ -1,0 +1,39 @@
+/* stylelint-disable */
+.cr-mobile-history-table {
+  &__row {
+    font-size: 14px;
+  }
+
+  &--success {
+    color: var(--bids);
+  }
+
+  &--failed {
+    color: var(--asks);
+  }
+
+  &--pending {
+    color: var(--system-yellow);
+  }
+
+  .pg-history-elem__pagination {
+    margin-bottom: 40px !important;
+  }
+
+  .cr-table__body {
+    tr {
+      border-bottom: 1px solid var(--divider-color-level-1) !important;
+      margin: 0 17px !important;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &:last-child {
+        border-bottom: none !important;
+      }
+    }
+    td {
+      padding: 12px 0 !important;
+    }
+  }
+}

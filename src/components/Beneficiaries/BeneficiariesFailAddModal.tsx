@@ -1,25 +1,30 @@
+import classnames from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { RouteProps, withRouter } from 'react-router-dom';
+import { IntlProps } from '../../index';
+import { Modal } from '../../mobile/components/Modal';
 
 interface OwnProps {
     handleToggleFailModal: () => void;
     history: History;
+    isMobileDevice?: boolean;
 }
 
-type Props = OwnProps & InjectedIntlProps & RouteProps;
+type Props = OwnProps & IntlProps & RouteProps;
 
 class BeneficiariesFailAddModalComponent extends React.Component<Props> {
     public render() {
         return (
-            <div className="cr-modal beneficiaries-fail-modal">
-                <div className="cr-email-form">
-                    <this.ModalHeader/>
-                    <this.ModalBody/>
-                </div>
-            </div>
+            this.props.isMobileDevice ?
+                <Modal
+                    isOpen
+                    onClose={this.props.handleToggleFailModal}
+                    title={this.translate('page.body.wallets.beneficiaries.failAddModal.content')}>
+                    {this.renderContent()}
+                </Modal> : this.renderContent()
         );
     }
 
@@ -56,8 +61,23 @@ class BeneficiariesFailAddModalComponent extends React.Component<Props> {
         </div>
     );
 
+    private renderContent = () => {
+        const className = classnames('beneficiaries-fail-modal', {
+            'cr-modal': !this.props.isMobileDevice,
+        });
+
+        return (
+            <div className={className}>
+                <div className="cr-email-form">
+                    <this.ModalHeader/>
+                    <this.ModalBody/>
+                </div>
+            </div>
+        );
+    };
+
     private translate = (id: string) => this.props.intl.formatMessage({ id });
 }
 
 // tslint:disable-next-line:no-any
-export const BeneficiariesFailAddModal = withRouter(injectIntl(BeneficiariesFailAddModalComponent)) as any;
+export const BeneficiariesFailAddModal = withRouter(injectIntl(BeneficiariesFailAddModalComponent) as any) as any;

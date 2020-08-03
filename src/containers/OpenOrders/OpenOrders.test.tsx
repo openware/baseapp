@@ -46,6 +46,7 @@ const OpenOrders = connect()(OpenOrdersComponent);
 const setup = (props: Partial<OpenOrdersProps> = {}) =>
     shallow(
         <Provider store={store}>
+            // @ts-ignore
             <OpenOrders {...{ ...defaultProps, ...props }} />
         </Provider>,
     );

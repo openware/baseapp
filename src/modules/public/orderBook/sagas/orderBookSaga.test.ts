@@ -10,7 +10,7 @@ import { OrderBookState } from '../types';
 // tslint:disable no-any no-magic-numbers
 describe('Saga: OrderBook', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

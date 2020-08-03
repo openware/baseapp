@@ -1,0 +1,41 @@
+/* stylelint-disable */
+.cr-mobile-wallets-banner {
+  height: 87px;
+  background: var(--body-background-color);
+  margin-top: 4px;
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title {
+    font-size: 12px;
+  }
+
+  &__body {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 19px;
+
+    &-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &-number {
+      color: var(--primary-text-color);
+      font-size: 16px;
+      padding-right: 10px;
+    }
+
+    &-currency {
+      background: var(--primary-cta-color);
+      color: var(--primary-text-color);
+      padding: 2px 4px;
+      border-radius: 10%;
+    }
+  }
+}

@@ -14,7 +14,7 @@ import { Currency } from '../types';
 // tslint:disable no-any no-magic-numbers
 describe('Saga: currenciesFetchSaga', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

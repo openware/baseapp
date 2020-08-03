@@ -13,7 +13,7 @@ const debug = false;
 
 describe('Trades module', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
     let originalTz: string;
 

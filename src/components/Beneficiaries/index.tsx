@@ -1,11 +1,12 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { TrashBin } from '../../assets/images/TrashBin';
+import { IntlProps } from '../../index';
 import {
     beneficiariesCreateData,
     beneficiariesDelete,
@@ -16,7 +17,7 @@ import {
     RootState,
     selectBeneficiaries,
     selectBeneficiariesCreate,
-    selectMemberLevels,
+    selectMemberLevels, selectMobileDeviceState,
     selectUserInfo,
     User,
 } from '../../modules';
@@ -29,11 +30,13 @@ interface ReduxProps {
     beneficiariesAddData: Beneficiary;
     memberLevels?: MemberLevels;
     userData: User;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
     deleteAddress: typeof beneficiariesDelete;
     memberLevelsFetch: typeof memberLevelsFetch;
+    beneficiariesCreateData: typeof beneficiariesCreateData;
 }
 
 interface OwnProps {
@@ -61,7 +64,7 @@ const defaultBeneficiary: Beneficiary = {
     },
 };
 
-type Props = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 // tslint:disable jsx-no-multiline-js
 class BeneficiariesComponent extends React.Component<Props, State> {
@@ -103,6 +106,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             type,
             beneficiaries,
             beneficiariesAddData,
+            isMobileDevice,
         } = this.props;
         const {
             currentWithdrawalBeneficiary,
@@ -131,7 +135,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                     />
                 )}
                 {isOpenFailModal && (
-                    <BeneficiariesFailAddModal handleToggleFailModal={this.handleToggleFailModal} />
+                    <BeneficiariesFailAddModal isMobileDevice={isMobileDevice} handleToggleFailModal={this.handleToggleFailModal} />
                 )}
             </div>
         );
@@ -329,7 +333,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
 
     private handleClickSelectAddress = (item: Beneficiary) => () => {
         if (item.state && item.state.toLowerCase() === 'pending') {
-            this.props.beneficiariesCreateData({ id: item.id });
+            this.props.beneficiariesCreateData({ id: item.id } as any);
             this.handleToggleConfirmationModal();
         } else {
             this.handleSetCurrentAddress(item);
@@ -339,7 +343,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     private handleClickToggleAddAddressModal = () => () => {
         const { memberLevels, userData } = this.props;
 
-        if (userData.level < memberLevels.withdraw.minimum_level) {
+        if (memberLevels && (userData.level < memberLevels.withdraw.minimum_level)) {
             this.handleToggleFailModal();
         } else {
             this.handleToggleAddAddressModal();
@@ -431,6 +435,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesAddData: selectBeneficiariesCreate(state),
     memberLevels: selectMemberLevels(state),
     userData: selectUserInfo(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
@@ -440,4 +445,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const Beneficiaries = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesComponent) as any);
+export const Beneficiaries = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesComponent) as any) as any;

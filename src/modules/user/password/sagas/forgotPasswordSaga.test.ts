@@ -8,7 +8,7 @@ import { forgotPassword, forgotPasswordError, forgotPasswordSuccess } from '../a
 
 describe('FORGOT PASSWORD SAGA', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {
