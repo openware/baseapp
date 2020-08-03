@@ -3,21 +3,22 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { addLocaleData } from 'react-intl';
-import en from 'react-intl/locale-data/en';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
 import { sentryEnabled } from './api/config';
 import { App } from './App';
-import { customLocaleData } from './custom/translations';
 import './index.css';
 import { rootSaga } from './modules';
 import { rangerSagas } from './modules/public/ranger';
 import { rangerMiddleware, sagaMiddleware, store } from './store';
 
-addLocaleData([...en, ...customLocaleData]);
+// addLocaleData([...en, ...customLocaleData]);
 sagaMiddleware.run(rootSaga);
 rangerMiddleware.run(rangerSagas);
+
+export interface IntlProps {
+    intl: any;
+}
 
 if (sentryEnabled()) {
     const key = process.env.REACT_APP_SENTRY_KEY;

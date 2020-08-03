@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { CombinedOrderBook, Decimal } from '../../components';
 import { colors } from '../../constants';
@@ -40,7 +40,17 @@ interface State {
     width: number;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+interface IntlProps {
+    intl: any;
+}
+
+interface OwnProps {
+    marketTickers: {
+        [key: string]: Ticker;
+    };
+}
+
+type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 // render big/small breakpoint
 const breakpoint = 448;
@@ -239,5 +249,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     });
 
-export const OrderBook = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer));
+export const OrderBook = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer)) as any;
 export type OrderBookProps = ReduxProps;

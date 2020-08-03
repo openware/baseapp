@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
@@ -7,24 +7,25 @@ import { compose } from 'redux';
 import { BackgroundMaintenance } from '../../assets/images/BackgroundMaintenance';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { setDocumentTitle } from '../../helpers';
+import {IntlProps} from '../../index';
 import { RootState, selectPlatformAccessStatus } from '../../modules';
 
 interface ReduxProps {
     status: string;
 }
 
-type Props = RouterProps & InjectedIntlProps & ReduxProps;
+type Props = RouterProps & IntlProps & ReduxProps;
 
 class Maintenance extends React.Component<Props> {
     public componentDidMount() {
         setDocumentTitle('500');
-        if (this.props.status.lenght && this.props.status !== 'maintenance') {
+        if (this.props.status.length && this.props.status !== 'maintenance') {
             this.props.history.replace('/');
         }
     }
 
     public componentWillReceiveProps(nextProps: Props) {
-        if (!this.props.status.lenght && nextProps.status.length && nextProps.status !== 'maintenance') {
+        if (!this.props.status.length && nextProps.status.length && nextProps.status !== 'maintenance') {
             this.props.history.replace('/');
         }
     }

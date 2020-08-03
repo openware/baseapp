@@ -2,12 +2,12 @@ import classnames from 'classnames';
 import * as React from 'react';
 import {
     FormattedMessage,
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Pagination, Table } from '../../components';
 import { getUserAgent, localeDate } from '../../helpers';
+import {IntlProps} from '../../index';
 import {
     getUserActivity,
     RootState,
@@ -39,7 +39,7 @@ interface DispatchProps {
 
 const paginationLimit = 25;
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & IntlProps;
 
 class ProfileAccountActivityComponent extends React.Component<Props> {
     public componentDidMount() {
@@ -165,4 +165,4 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         getUserActivity: params => dispatch(getUserActivity(params)),
     });
 
-export const ProfileAccountActivity = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAccountActivityComponent));
+export const ProfileAccountActivity = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAccountActivityComponent)) as any;

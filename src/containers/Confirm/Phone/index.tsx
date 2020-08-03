@@ -1,12 +1,13 @@
 import cr from 'classnames';
 import * as React from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import {
     connect,
     MapDispatchToPropsFunction,
 } from 'react-redux';
 import { CustomInput } from '../../../components';
+import {IntlProps} from '../../../index';
 import { RootState } from '../../../modules';
 import {
     resendCode,
@@ -35,7 +36,7 @@ interface DispatchProps {
     changeUserLevel: typeof changeUserLevel;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & IntlProps;
 
 class PhoneComponent extends React.Component<Props, PhoneState> {
     constructor(props: Props) {
@@ -250,4 +251,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line
-export const Phone = injectIntl(connect(mapStateToProps, mapDispatchProps)(PhoneComponent) as any);
+export const Phone = injectIntl(connect(mapStateToProps, mapDispatchProps)(PhoneComponent) as any) as any;

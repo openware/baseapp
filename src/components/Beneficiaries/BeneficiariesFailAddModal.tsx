@@ -1,15 +1,16 @@
 import { History } from 'history';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { RouteProps, withRouter } from 'react-router-dom';
+import {IntlProps} from '../../index';
 
 interface OwnProps {
     handleToggleFailModal: () => void;
     history: History;
 }
 
-type Props = OwnProps & InjectedIntlProps & RouteProps;
+type Props = OwnProps & IntlProps & RouteProps;
 
 class BeneficiariesFailAddModalComponent extends React.Component<Props> {
     public render() {
@@ -60,4 +61,4 @@ class BeneficiariesFailAddModalComponent extends React.Component<Props> {
 }
 
 // tslint:disable-next-line:no-any
-export const BeneficiariesFailAddModal = withRouter(injectIntl(BeneficiariesFailAddModalComponent)) as any;
+export const BeneficiariesFailAddModal = withRouter(injectIntl(BeneficiariesFailAddModalComponent) as any) as any;

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import {
@@ -16,6 +15,7 @@ import {
     ERROR_INVALID_EMAIL,
     setDocumentTitle,
 } from '../../helpers';
+import {IntlProps} from '../../index';
 import {
     forgotPassword,
     RootState,
@@ -37,7 +37,7 @@ interface ForgotPasswordState {
     emailFocused: boolean;
 }
 
-type Props = RouterProps & ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = RouterProps & ReduxProps & DispatchProps & IntlProps;
 
 class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState> {
     constructor(props: Props) {
@@ -142,4 +142,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line:no-any
-export const ForgotPasswordScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(ForgotPasswordComponent) as any));
+export const ForgotPasswordScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(ForgotPasswordComponent) as any)) as any;

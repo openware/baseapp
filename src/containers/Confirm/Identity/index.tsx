@@ -2,12 +2,13 @@ import cr from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { languages } from '../../../api/config';
 import { CustomInput, DropdownComponent } from '../../../components';
 import { formatDate, isDateInFuture } from '../../../helpers';
+import {IntlProps} from '../../../index';
 import {
     Label,
     labelFetch,
@@ -60,7 +61,7 @@ interface IdentityState {
     residentialAddressFocused: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & IntlProps;
 
 class IdentityComponent extends React.Component<Props, IdentityState> {
     public state = {
@@ -469,4 +470,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line
-export const Identity = injectIntl(connect(mapStateToProps, mapDispatchProps)(IdentityComponent) as any);
+export const Identity = injectIntl(connect(mapStateToProps, mapDispatchProps)(IdentityComponent) as any) as any;

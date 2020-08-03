@@ -34,6 +34,10 @@
     "noImplicitAny": false,
     "isolatedModules": true
   },
+  "rules": {
+    // This package uses the Function type, and it will take effort to fix.
+    "ban-types": false
+  },
   "include": [
     "./src/assets",
     "./src",

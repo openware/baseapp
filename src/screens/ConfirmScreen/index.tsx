@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -11,6 +11,7 @@ import { Phone } from '../../containers';
 import { Documents } from '../../containers/Confirm/Documents';
 import { Identity } from '../../containers/Confirm/Identity';
 import { setDocumentTitle } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     Label,
     labelFetch,
@@ -40,7 +41,7 @@ interface DispatchProps {
     labelFetch: typeof labelFetch;
 }
 
-type Props = ReduxProps & HistoryProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & HistoryProps & DispatchProps & IntlProps;
 
 class ConfirmComponent extends React.Component<Props, ConfirmState> {
     constructor(props: Props) {
@@ -132,7 +133,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                             </div>
                         </div>
                         <div className="pg-confirm__content">
-                            {this.renderContent(isProfileVerified)}
+                            {this.renderContent(!!isProfileVerified)}
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import {
   connect,
   MapDispatchToPropsFunction,
@@ -11,6 +11,7 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { CustomInput } from '../../components';
 import { PASSWORD_REGEX, setDocumentTitle } from '../../helpers';
+import {IntlProps} from '../../index';
 import {
     changeForgotPasswordFetch,
     changeLanguage,
@@ -44,7 +45,7 @@ interface HistoryProps {
     };
 }
 
-type Props = RouterProps & DispatchProps & HistoryProps & ReduxProps & InjectedIntlProps;
+type Props = RouterProps & DispatchProps & HistoryProps & ReduxProps & IntlProps;
 
 class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForgottenPasswordState> {
     constructor(props: Props) {

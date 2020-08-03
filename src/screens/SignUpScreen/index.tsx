@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import ReCAPTCHA from 'react-google-recaptcha';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import {
@@ -26,9 +25,10 @@ import {
     passwordErrorThirdSolution,
     setDocumentTitle,
 } from '../../helpers';
+import {IntlProps} from '../../index';
 import {
     Configs,
-    entropyPasswordFetch,
+    entropyPasswordFetch, LanguageState,
     RootState,
     selectConfigs,
     selectCurrentLanguage,
@@ -57,7 +57,12 @@ interface RouterProps {
     history: History;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+interface OwnProps {
+    signUpError: boolean;
+    i18n: LanguageState['lang'];
+}
+
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps & OwnProps;
 
 export const extractRefID = (props: RouterProps) => new URLSearchParams(props.location.search).get('refid');
 
@@ -405,7 +410,7 @@ class SignUp extends React.Component<Props> {
                         password,
                         captcha_response,
                         refid: refId,
-                    });
+                    } as any);
                     break;
                 default:
                     this.props.signUp({
@@ -559,7 +564,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line:no-any
-const SignUpScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(SignUp) as any));
+const SignUpScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(SignUp) as any)) as any;
 
 export {
     SignUpScreen,

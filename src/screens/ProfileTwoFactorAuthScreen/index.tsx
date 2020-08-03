@@ -1,12 +1,13 @@
 import { History } from 'history';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CopyableTextField, CustomInput } from '../../components';
 import { setDocumentTitle } from '../../helpers';
+import {IntlProps} from '../../index';
 import { alertPush, RootState } from '../../modules';
 import {
     generate2faQRFetch,
@@ -34,7 +35,7 @@ interface DispatchProps {
     fetchSuccess: typeof alertPush;
 }
 
-type Props = RouterProps & ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = RouterProps & ReduxProps & DispatchProps & IntlProps;
 
 interface State {
     otpCode: string;
@@ -266,7 +267,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchSuccess: payload => dispatch(alertPush(payload)),
 });
 
-const ProfileTwoFactorAuthScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(ToggleTwoFactorAuthComponent) as any));
+const ProfileTwoFactorAuthScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(ToggleTwoFactorAuthComponent) as any)) as any;
 
 export {
     ProfileTwoFactorAuthScreen,

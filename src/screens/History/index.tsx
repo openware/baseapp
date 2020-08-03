@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import {
@@ -10,6 +9,7 @@ import {
 import { TabPanel } from '../../components';
 import { HistoryElement } from '../../containers/HistoryElement';
 import { setDocumentTitle } from '../../helpers';
+import {IntlProps} from '../../index';
 import {
     fetchHistory,
     marketsFetch,
@@ -24,7 +24,7 @@ interface DispatchProps {
     fetchHistory: typeof fetchHistory;
 }
 
-type Props = DispatchProps & InjectedIntlProps;
+type Props = DispatchProps & IntlProps;
 
 interface State {
     tab: string;
@@ -101,4 +101,4 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     resetHistory: () => dispatch(resetHistory()),
 });
 
-export const HistoryScreen = injectIntl(connect(null, mapDispatchToProps)(History));
+export const HistoryScreen = injectIntl(connect(null, mapDispatchToProps)(History)) as any;

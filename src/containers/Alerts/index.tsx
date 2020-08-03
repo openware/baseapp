@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Alert } from 'react-bootstrap';
 import FadeIn from 'react-fade-in';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import {IntlProps} from '../../index';
 import {
     alertDelete,
     alertDeleteByIndex,
@@ -23,7 +23,7 @@ interface DispatchProps {
     alertDeleteByIndex: typeof alertDeleteByIndex;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & IntlProps;
 
 class AlertComponent extends React.Component<Props> {
     public deleteAlertByIndex = (key: number) => {
@@ -41,6 +41,7 @@ class AlertComponent extends React.Component<Props> {
                     <FadeIn key={index}>
                         <div onClick={() => this.deleteAlertByIndex(index)}>
                             <Alert
+                                // @ts-ignore
                                 variant={w.type === 'error' ? 'danger' : w.type}
                             >
                                 {this.translate(msg)}
@@ -64,4 +65,4 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         alertDeleteByIndex: payload => dispatch(alertDeleteByIndex(payload)),
     });
 
-export const Alerts = injectIntl(connect(mapStateToProps, mapDispatchToProps)(AlertComponent));
+export const Alerts = injectIntl(connect(mapStateToProps, mapDispatchToProps)(AlertComponent)) as any;

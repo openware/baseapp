@@ -1,12 +1,12 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { TabPanel } from '../../components';
+import {IntlProps} from '../../index';
 import {
     Market,
     PublicTrade,
@@ -40,7 +40,7 @@ interface State {
     disable: boolean;
 }
 
-export type RecentTradesProps = DispatchProps & ReduxProps & InjectedIntlProps;
+export type RecentTradesProps = DispatchProps & ReduxProps & IntlProps;
 
 class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
     public state = { tab: 'market', index: 0, disable: false };

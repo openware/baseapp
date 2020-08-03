@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import {
     connect,
     MapDispatchToPropsFunction,
     MapStateToProps,
 } from 'react-redux';
+import {IntlProps} from '../../index';
 import {
     Market,
     RootState,
@@ -34,7 +35,7 @@ interface DispatchProps {
     resetLayouts: typeof resetLayouts;
 }
 
-type Props = DispatchProps & ReduxProps & InjectedIntlProps;
+type Props = DispatchProps & ReduxProps & IntlProps;
 
 class ToolBarComponent extends React.Component<Props, State> {
     public readonly state = {
@@ -66,4 +67,4 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     resetLayouts: payload => dispatch(resetLayouts(payload)),
 });
 
-export const ToolBar = injectIntl(connect(reduxProps, mapDispatchToProps)(ToolBarComponent));
+export const ToolBar = injectIntl(connect(reduxProps, mapDispatchToProps)(ToolBarComponent)) as any;

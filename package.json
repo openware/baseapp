@@ -30,7 +30,7 @@
     "react-ga": "^2.6.0",
     "react-google-recaptcha": "^1.0.4",
     "react-grid-layout": "^0.18.3",
-    "react-intl": "^2.8.0",
+    "react-intl": "^3.12.1",
     "react-maskinput": "^1.0.1",
     "react-perfect-scrollbar": "^1.5.8",
     "react-redux": "^6.0.0",

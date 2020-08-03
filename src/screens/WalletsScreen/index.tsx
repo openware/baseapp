@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button, Spinner } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { ModalWithdrawSubmit } from '../../containers/ModalWithdrawSubmit';
 import { EstimatedValue } from '../../containers/Wallets/EstimatedValue';
 import { WalletHistory } from '../../containers/Wallets/History';
 import { formatCCYAddress, setDocumentTitle } from '../../helpers';
+import {IntlProps} from '../../index';
 import {
     alertPush,
     beneficiariesFetch,
@@ -95,7 +96,13 @@ interface WalletsState {
     generateAddressTriggered: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+interface OwnProps {
+    walletsError: {
+        message: string;
+    };
+}
+
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps & OwnProps;
 
 class WalletsComponent extends React.Component<Props, WalletsState> {
     constructor(props: Props) {
@@ -282,7 +289,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         return [
             {
-                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit(showWithdraw) : null,
+                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit(!!showWithdraw) : null,
                 label: this.translate('page.body.wallets.tabs.deposit'),
             },
             {
@@ -304,7 +311,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             amount,
             currency: currency.toLowerCase(),
             otp: otpCode,
-            beneficiary_id: beneficiary.id,
+            beneficiary_id: String(beneficiary.id),
         };
         this.props.walletsWithdrawCcy(withdrawRequest);
         this.toggleConfirmModal();
@@ -336,7 +343,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         } = this.props;
         const { generateAddressTriggered, selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-        const currencyItem = (currencies && currencies.find(item => item.id === currency)) || { min_confirmations: 6 };
+        const currencyItem = (currencies && currencies.find(item => item.id === currency)) || { min_confirmations: 6, deposit_enabled: false };
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
                                                    { confirmations: currencyItem.min_confirmations });
         const error = addressDepositError ?
@@ -525,4 +532,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const WalletsScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletsComponent) as any));
+export const WalletsScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletsComponent) as any)) as any;

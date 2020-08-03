@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { Modal } from '../../components';
+import {IntlProps} from '../../index';
 
 interface ModalWithdrawConfirmationProps {
     amount: string;
@@ -15,7 +15,7 @@ interface ModalWithdrawConfirmationProps {
     show: boolean;
 }
 
-type Props = ModalWithdrawConfirmationProps & InjectedIntlProps;
+type Props = ModalWithdrawConfirmationProps & IntlProps;
 
 class ModalWithdraw extends React.Component<Props> {
     public translate = (e: string) => {
@@ -84,4 +84,4 @@ class ModalWithdraw extends React.Component<Props> {
 }
 
 // tslint:disable-next-line
-export const ModalWithdrawConfirmation = injectIntl(ModalWithdraw);
+export const ModalWithdrawConfirmation = injectIntl(ModalWithdraw) as any;

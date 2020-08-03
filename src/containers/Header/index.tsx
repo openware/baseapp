@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { showLanding } from '../../api';
 import { LogoIcon } from '../../assets/images/LogoIcon';
+import {IntlProps} from '../../index';
 import {
     Market,
     RootState,
@@ -49,7 +50,7 @@ const noHeaderRoutes = [
     '/500',
 ];
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps & LocationProps;
+type Props = ReduxProps & DispatchProps & IntlProps & LocationProps;
 
 class Head extends React.Component<Props> {
     public render() {

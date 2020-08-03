@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { Decimal, TickerTable } from '../../components';
+import {IntlProps} from '../../index';
 import {
     Market,
     marketsFetch,
@@ -39,7 +40,7 @@ interface State {
     currentBidUnit: string;
 }
 
-export type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+export type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class MarketsTableContainer extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -128,7 +129,7 @@ class MarketsTableContainer extends React.Component<Props, State> {
             <TickerTable
                 currentBidUnit={currentBidUnit}
                 currentBidUnitsList={currentBidUnitsList}
-                markets={formattedMarkets}
+                markets={formattedMarkets || []}
                 redirectToTrading={this.handleRedirectToTrading}
                 setCurrentBidUnit={this.handleSetCurrentBidUnit}
                 translate={this.translate}
@@ -178,4 +179,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const MarketsTable = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(MarketsTableContainer) as any));
+export const MarketsTable = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(MarketsTableContainer) as any)) as any;

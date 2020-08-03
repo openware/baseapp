@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {
     FormattedMessage,
-    InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CopyableTextField } from '../../components';
@@ -36,14 +34,13 @@ const copy = (id: string) => {
     }
 };
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+interface IntlProps {
+    intl: any;
+}
+
+type Props = ReduxProps & DispatchProps & IntlProps;
 
 class ReferralProgramClass extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public translate = (e: string) => {
         return this.props.intl.formatMessage({id: e});
     };
@@ -84,4 +81,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line
-export const ReferralProgram = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ReferralProgramClass) as any);
+export const ReferralProgram = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ReferralProgramClass) as any) as any;

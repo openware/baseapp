@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {
     FormattedMessage,
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { TabPanel } from '../../components';
 import { OrdersElement } from '../../containers/OrdersElement';
 import { setDocumentTitle } from '../../helpers';
+import {IntlProps} from '../../index';
 import {
     marketsFetch,
     ordersCancelAllFetch,
@@ -34,7 +34,7 @@ interface DispatchProps {
     rangerConnect: typeof rangerConnectFetch;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & IntlProps;
 
 interface State {
     tab: string;
@@ -132,7 +132,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
     });
 
-const OrdersTabScreen = injectIntl(connect(mapStateToProps, mapDispatchToProps)(Orders));
+const OrdersTabScreen = injectIntl(connect(mapStateToProps, mapDispatchToProps)(Orders)) as any;
 
 export {
     OrdersTabScreen,

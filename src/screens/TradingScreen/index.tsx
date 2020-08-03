@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { incrementalOrderBook } from '../../api';
@@ -16,6 +16,7 @@ import {
     TradingChart,
 } from '../../containers';
 import { getUrlPart, setDocumentTitle } from '../../helpers';
+import {IntlProps} from '../../index';
 import {
     RootState,
     selectCurrentMarket,
@@ -79,7 +80,7 @@ interface StateProps {
 }
 
 const ReactGridLayout = WidthProvider(Responsive);
-type Props = DispatchProps & ReduxProps & RouteComponentProps & InjectedIntlProps;
+type Props = DispatchProps & ReduxProps & RouteComponentProps & IntlProps;
 
 const TradingWrapper = props => {
     const { orderComponentResized, orderBookComponentResized, layouts, handleResize } = props;
@@ -277,7 +278,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
 });
 
 // tslint:disable-next-line no-any
-const TradingScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Trading) as any));
+const TradingScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Trading) as any)) as any;
 
 export {
     TradingScreen,
