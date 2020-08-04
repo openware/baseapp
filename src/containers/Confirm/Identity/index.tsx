@@ -470,4 +470,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line
-export const Identity = injectIntl(connect(mapStateToProps, mapDispatchProps)(IdentityComponent) as any) as any;
+export const Identity = injectIntl(connect(mapStateToProps, mapDispatchProps)(IdentityComponent) as any) as React.FunctionComponent;

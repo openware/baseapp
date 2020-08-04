@@ -177,4 +177,4 @@ export const OpenOrdersComponent = injectIntl(
         mapStateToProps,
         mapDispatchToProps,
     )(OpenOrdersContainer),
-) as any;
+) as React.FunctionComponent;

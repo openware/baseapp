@@ -251,4 +251,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line
-export const Phone = injectIntl(connect(mapStateToProps, mapDispatchProps)(PhoneComponent) as any) as any;
+export const Phone = injectIntl(connect(mapStateToProps, mapDispatchProps)(PhoneComponent) as any) as React.FunctionComponent;

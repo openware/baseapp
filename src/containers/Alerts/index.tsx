@@ -65,4 +65,4 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         alertDeleteByIndex: payload => dispatch(alertDeleteByIndex(payload)),
     });
 
-export const Alerts = injectIntl(connect(mapStateToProps, mapDispatchToProps)(AlertComponent)) as any;
+export const Alerts = injectIntl(connect(mapStateToProps, mapDispatchToProps)(AlertComponent)) as React.FunctionComponent;
