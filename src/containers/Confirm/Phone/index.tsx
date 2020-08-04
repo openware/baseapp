@@ -7,7 +7,7 @@ import {
     MapDispatchToPropsFunction,
 } from 'react-redux';
 import { CustomInput } from '../../../components';
-import {IntlProps} from '../../../index';
+import { IntlProps } from '../../../index';
 import { RootState } from '../../../modules';
 import {
     resendCode,

@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CustomInput } from '../../components';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     beneficiariesCreate,
     BeneficiaryBank,

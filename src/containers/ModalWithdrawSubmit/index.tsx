@@ -5,7 +5,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { Modal } from '../../components';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 
 interface ModalWithdrawSubmitProps {
     currency: string;
@@ -66,4 +66,4 @@ class ModalWithdrawSubmitComponent extends React.Component<Props> {
     };
 }
 
-export const ModalWithdrawSubmit = injectIntl(ModalWithdrawSubmitComponent) as any;
+export const ModalWithdrawSubmit = injectIntl(ModalWithdrawSubmitComponent);

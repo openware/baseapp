@@ -5,7 +5,7 @@ import {
 } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CopyableTextField } from '../../components';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     alertPush,
     RootState,

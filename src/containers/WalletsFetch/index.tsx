@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { withRouter } from 'react-router';
+import { compose } from 'redux';
 import { balancesFetchInterval, isFinexEnabled } from '../../api';
 import { walletsFetch } from '../../modules/user/wallets';
 
@@ -36,5 +37,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     walletsFetch: () => dispatch(walletsFetch()),
 });
 
-// tslint:disable-next-line no-any
-export const WalletsFetch = withRouter(connect(null, mapDispatchToProps)(WalletsFetchComponent) as any);
+export const WalletsFetch = compose(
+    withRouter,
+    connect(null, mapDispatchToProps),
+)(WalletsFetchComponent) as React.ComponentClass;

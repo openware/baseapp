@@ -6,7 +6,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { CombinedOrderBook, Decimal } from '../../components';
 import { colors } from '../../constants';
 import { accumulateVolume, calcMaxVolume, sortAsks, sortBids } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     Market,
     RootState,

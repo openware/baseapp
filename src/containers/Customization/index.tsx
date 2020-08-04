@@ -12,7 +12,7 @@ import {
     CustomizationThemes,
     TabPanel,
 } from '../../components';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     CustomizationCurrentDataInterface,
     CustomizationDataInterface,

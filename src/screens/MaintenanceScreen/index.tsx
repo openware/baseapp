@@ -7,7 +7,7 @@ import { compose } from 'redux';
 import { BackgroundMaintenance } from '../../assets/images/BackgroundMaintenance';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { setDocumentTitle } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import { RootState, selectPlatformAccessStatus } from '../../modules';
 
 interface ReduxProps {

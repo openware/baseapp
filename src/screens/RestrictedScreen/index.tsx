@@ -5,7 +5,7 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { setDocumentTitle } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import { RootState, selectPlatformAccessStatus } from '../../modules';
 
 interface ReduxProps {

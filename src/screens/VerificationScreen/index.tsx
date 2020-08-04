@@ -6,7 +6,8 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { Redirect } from 'react-router';
-import {IntlProps} from '../../index';
+import { compose } from 'redux';
+import { IntlProps } from '../../index';
 import {
     changeLanguage,
     RootState,
@@ -65,8 +66,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         changeLanguage: lang => dispatch(changeLanguage(lang)),
     });
 
-const VerificationScreen = injectIntl(connect(mapStateToProps, mapDispatchToProps)(Verification) as any) as any;
-
-export {
-    VerificationScreen,
-};
+export const VerificationScreen = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(Verification) as React.ComponentClass;

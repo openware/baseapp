@@ -3,7 +3,7 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Decimal } from '../../components/Decimal';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     Market,
     RootState,

@@ -4,7 +4,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { Modal } from '../../components';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 
 interface ModalWithdrawConfirmationProps {
     amount: string;

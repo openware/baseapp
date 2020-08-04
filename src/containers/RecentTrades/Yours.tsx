@@ -8,7 +8,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { Decimal, Table } from '../../components';
 import { localeDate, setTradesType } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     fetchHistory,
     Market,
@@ -115,10 +115,9 @@ class RecentTradesYoursContainer extends React.Component<Props> {
 
     private handleOnSelect = (index: string) => {
         const { list, currentPrice } = this.props;
-        const priceToSet = list[Number(index)] ? list[Number(index)].price : '';
+        const priceToSet = list[Number(index)] ? Number(list[Number(index)].price) : 0;
 
         if (currentPrice !== priceToSet) {
-            // @ts-ignore
             this.props.setCurrentPrice(priceToSet);
         }
     };

@@ -6,7 +6,7 @@ import {
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { TabPanel } from '../../components';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     Market,
     PublicTrade,

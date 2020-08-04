@@ -5,7 +5,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     alertDelete,
     alertDeleteByIndex,

@@ -6,7 +6,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
 import { CopyableTextField, CustomInput, Table } from '../../components';
 import { localeDate } from '../../helpers/localeDate';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 
 import {
     alertPush,

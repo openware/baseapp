@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { RouteProps, withRouter } from 'react-router-dom';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 
 interface OwnProps {
     handleToggleFailModal: () => void;

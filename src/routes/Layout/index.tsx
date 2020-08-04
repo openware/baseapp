@@ -9,7 +9,7 @@ import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../..
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     configsFetch,
     logoutFetch,

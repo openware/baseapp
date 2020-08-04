@@ -4,7 +4,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { WalletItemProps } from '../../../components/WalletItem';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
-import {IntlProps} from '../../../index';
+import { IntlProps } from '../../../index';
 import {
     currenciesFetch,
     Currency,

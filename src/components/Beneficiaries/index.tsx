@@ -6,7 +6,7 @@ import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { TrashBin } from '../../assets/images/TrashBin';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     beneficiariesCreateData,
     beneficiariesDelete,

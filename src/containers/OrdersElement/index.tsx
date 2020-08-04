@@ -7,7 +7,7 @@ import { CloseIcon } from '../../assets/images/CloseIcon';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate, setTradeColor } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     Market,
     ordersHistoryCancelFetch,

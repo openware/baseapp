@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { LetterIcon } from '../../assets/images/LetterIcon';
 import { CustomInput } from '../../components';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     beneficiariesActivate,
     Beneficiary,

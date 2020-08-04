@@ -7,7 +7,7 @@ import {
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Pagination, Table } from '../../components';
 import { getUserAgent, localeDate } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     getUserActivity,
     RootState,

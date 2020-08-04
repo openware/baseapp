@@ -6,8 +6,9 @@ import {
 } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { setDocumentTitle } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     emailVerificationFetch,
     RootState,
@@ -77,9 +78,12 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     i18n: selectCurrentLanguage(state),
 });
 
-const mapDispatchProps = {
+const mapDispatchToProps = {
     emailVerificationFetch,
 };
 
-//tslint:disable-next-line:no-any
-export const EmailVerificationScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(EmailVerificationComponent) as any)) as any;
+export const EmailVerificationScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(EmailVerificationComponent) as React.ComponentClass;

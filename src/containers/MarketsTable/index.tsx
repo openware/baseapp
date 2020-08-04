@@ -4,7 +4,7 @@ import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { Decimal, TickerTable } from '../../components';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     Market,
     marketsFetch,
@@ -107,7 +107,7 @@ class MarketsTableContainer extends React.Component<Props, State> {
             currentBidUnitMarkets = markets.length ? markets.filter(market => market.quote_unit === currentBidUnit) : [];
         }
 
-        const formattedMarkets = currentBidUnitMarkets.length && currentBidUnitMarkets.map(market =>
+        const formattedMarkets = currentBidUnitMarkets.length ? currentBidUnitMarkets.map(market =>
             ({
                 ...market,
                 last: Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision),
@@ -123,13 +123,13 @@ class MarketsTableContainer extends React.Component<Props, State> {
                 change: Decimal.format((+market.last - +market.open)
                     .toFixed(market.price_precision), market.price_precision),
             }),
-        );
+        ) : [];
 
         return (
             <TickerTable
                 currentBidUnit={currentBidUnit}
                 currentBidUnitsList={currentBidUnitsList}
-                markets={formattedMarkets || []}
+                markets={formattedMarkets}
                 redirectToTrading={this.handleRedirectToTrading}
                 setCurrentBidUnit={this.handleSetCurrentBidUnit}
                 translate={this.translate}

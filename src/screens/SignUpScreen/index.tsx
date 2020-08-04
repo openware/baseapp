@@ -12,6 +12,7 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { Modal, SignUpForm } from '../../components';
 import { GeetestCaptcha } from '../../containers';
 import {
@@ -25,7 +26,7 @@ import {
     passwordErrorThirdSolution,
     setDocumentTitle,
 } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     Configs,
     entropyPasswordFetch, LanguageState,
@@ -557,15 +558,14 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     currentPasswordEntropy: selectCurrentPasswordEntropy(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         signUp: credentials => dispatch(signUp(credentials)),
         fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
     });
 
-// tslint:disable-next-line:no-any
-const SignUpScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(SignUp) as any)) as any;
-
-export {
-    SignUpScreen,
-};
+export const SignUpScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(SignUp) as React.ComponentClass;

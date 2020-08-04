@@ -4,10 +4,11 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { compose } from 'redux';
 import { TabPanel } from '../../components';
 import { OrdersElement } from '../../containers/OrdersElement';
 import { setDocumentTitle } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     marketsFetch,
     ordersCancelAllFetch,
@@ -132,8 +133,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
     });
 
-const OrdersTabScreen = injectIntl(connect(mapStateToProps, mapDispatchToProps)(Orders)) as any;
-
-export {
-    OrdersTabScreen,
-};
+export const OrdersTabScreen = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(Orders) as React.ComponentClass;

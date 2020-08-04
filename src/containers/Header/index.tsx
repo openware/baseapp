@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { showLanding } from '../../api';
 import { LogoIcon } from '../../assets/images/LogoIcon';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     Market,
     RootState,

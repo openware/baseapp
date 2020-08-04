@@ -4,10 +4,11 @@ import { Button } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CopyableTextField, CustomInput } from '../../components';
 import { setDocumentTitle } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import { alertPush, RootState } from '../../modules';
 import {
     generate2faQRFetch,
@@ -267,8 +268,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchSuccess: payload => dispatch(alertPush(payload)),
 });
 
-const ProfileTwoFactorAuthScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(ToggleTwoFactorAuthComponent) as any)) as any;
-
-export {
-    ProfileTwoFactorAuthScreen,
-};
+export const ProfileTwoFactorAuthScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(ToggleTwoFactorAuthComponent) as React.ComponentClass;

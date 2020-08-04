@@ -6,7 +6,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { OpenOrders } from '../../components';
 import { localeDate, preciseData, setTradeColor } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     Market,
     openOrdersCancelFetch,

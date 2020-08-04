@@ -8,7 +8,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { languages } from '../../../api/config';
 import { CustomInput, DropdownComponent } from '../../../components';
 import { formatDate, isDateInFuture } from '../../../helpers';
-import {IntlProps} from '../../../index';
+import { IntlProps } from '../../../index';
 import {
     Label,
     labelFetch,

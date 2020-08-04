@@ -12,7 +12,7 @@ import { ProfileTwoFactorAuth } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CustomInput, Modal } from '../../components';
 import { PASSWORD_REGEX } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     RootState,
     selectUserInfo,

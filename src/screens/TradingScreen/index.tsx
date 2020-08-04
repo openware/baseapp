@@ -2,9 +2,10 @@ import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
-import { GridItem } from '../../components/GridItem';
+import { GridChildInterface, GridItem } from '../../components/GridItem';
 import {
     MarketDepthsComponent,
     MarketsComponent,
@@ -16,7 +17,7 @@ import {
     TradingChart,
 } from '../../containers';
 import { getUrlPart, setDocumentTitle } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     RootState,
     selectCurrentMarket,
@@ -116,10 +117,9 @@ const TradingWrapper = props => {
             },
         ];
 
-        // @ts-ignore
         return data.map((child: GridChildInterface) => (
             <div key={child.i}>
-                <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>}
+                <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>
             </div>
         ));
     }, [orderComponentResized, orderBookComponentResized]);
@@ -277,9 +277,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     saveLayouts: payload => dispatch(saveLayouts(payload)),
 });
 
-// tslint:disable-next-line no-any
-const TradingScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Trading) as any)) as any;
-
-export {
-    TradingScreen,
-};
+export const TradingScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(Trading) as React.ComponentClass;

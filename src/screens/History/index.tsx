@@ -6,10 +6,11 @@ import {
     connect,
     MapDispatchToPropsFunction,
 } from 'react-redux';
+import { compose } from 'redux';
 import { TabPanel } from '../../components';
 import { HistoryElement } from '../../containers/HistoryElement';
 import { setDocumentTitle } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     fetchHistory,
     marketsFetch,
@@ -101,4 +102,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     resetHistory: () => dispatch(resetHistory()),
 });
 
-export const HistoryScreen = injectIntl(connect(null, mapDispatchToProps)(History)) as any;
+export const HistoryScreen = compose(
+    injectIntl,
+    connect(null, mapDispatchToProps),
+)(History) as React.ComponentClass;

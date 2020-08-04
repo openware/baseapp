@@ -9,9 +9,10 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { CustomInput } from '../../components';
 import { PASSWORD_REGEX, setDocumentTitle } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     changeForgotPasswordFetch,
     changeLanguage,
@@ -231,15 +232,14 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     changeForgotPassword: selectChangeForgotPasswordSuccess(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         changeForgotPasswordFetch: credentials => dispatch(changeForgotPasswordFetch(credentials)),
         changeLanguage: lang => dispatch(changeLanguage(lang)),
     });
 
-// tslint:disable-next-line:no-any
-const ChangeForgottenPasswordScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(ChangeForgottenPasswordComponent) as any));
-
-export {
-    ChangeForgottenPasswordScreen,
-};
+export const ChangeForgottenPasswordScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(ChangeForgottenPasswordComponent) as React.ComponentClass;

@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 
 interface ErrorWrapperState {
     eventId: any; // tslint:disable-line

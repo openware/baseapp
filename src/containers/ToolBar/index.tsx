@@ -5,7 +5,7 @@ import {
     MapDispatchToPropsFunction,
     MapStateToProps,
 } from 'react-redux';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     Market,
     RootState,

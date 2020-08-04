@@ -11,7 +11,7 @@ import { CustomInput } from '../../../components';
 import { DropdownComponent } from '../../../components/Dropdown';
 import { formatDate } from '../../../helpers';
 import { isDateInFuture } from '../../../helpers/checkDate';
-import {IntlProps} from '../../../index';
+import { IntlProps } from '../../../index';
 import { alertPush, RootState } from '../../../modules';
 import {
     selectSendDocumentsLoading,

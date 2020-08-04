@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { SignInComponent, TwoFactorAuth } from '../../components';
 import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
 import { IntlProps } from '../../index';
@@ -260,22 +261,15 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     requireEmailVerification: selectSignUpRequireVerification(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     signIn: data => dispatch(signIn(data)),
     signInError: error => dispatch(signInError(error)),
     signInRequire2FA: payload => dispatch(signInRequire2FA(payload)),
     signUpRequireVerification: data => dispatch(signUpRequireVerification(data)),
 });
 
-// tslint:disable no-any
-const SignInScreen = injectIntl(
-    withRouter(connect(
-        mapStateToProps,
-        mapDispatchProps,
-    )(SignIn) as any),
-);
-// tslint:enable no-any
-
-export {
-    SignInScreen,
-};
+export const SignInScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(SignIn) as React.ComponentClass;

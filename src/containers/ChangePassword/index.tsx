@@ -5,7 +5,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { CustomInput } from '../../components';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 
 type OnClearError = () => void;
 type OnSubmitChangePassword = (oldPassword: string, newPassword: string, confirmPassword: string) => void;

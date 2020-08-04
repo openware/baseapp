@@ -14,7 +14,7 @@ import {
     setTradesType,
     setWithdrawStatusColor,
 } from '../../helpers';
-import {IntlProps} from '../../index';
+import { IntlProps } from '../../index';
 import {
     currenciesFetch,
     Currency,
