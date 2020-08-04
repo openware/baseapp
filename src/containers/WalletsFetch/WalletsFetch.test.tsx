@@ -1,15 +1,22 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { WalletsFetch, WalletsFetchProps } from './index';
+import { connect, Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { IntlProps } from '../../index';
+import { rootReducer } from '../../modules';
+import { WalletsFetch } from './index';
 
-const defaults: WalletsFetchProps = {
-    walletsFetch: jest.fn(),
-};
+const store = createStore(rootReducer);
+const Wallets = connect()(WalletsFetch);
 
-const setup = (props: Partial<WalletsFetchProps> = {}) =>
-    shallow(<WalletsFetch {...{...defaults, ...props}} />);
+const setup = (props: Partial<IntlProps> = {}) =>
+    shallow(
+        <Provider store={store}>
+            <Wallets />
+        </Provider>,
+    );
 
-describe.skip('WalletsFetch component', () => {
+describe('WalletsFetch component', () => {
     let wrapper;
 
     beforeEach(() => {

@@ -1,7 +1,7 @@
 import cr from 'classnames';
 import * as React from 'react';
 import { Button, Spinner } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -11,6 +11,7 @@ import { CustomInput } from '../../../components';
 import { DropdownComponent } from '../../../components/Dropdown';
 import { formatDate } from '../../../helpers';
 import { isDateInFuture } from '../../../helpers/checkDate';
+import { IntlProps } from '../../../index';
 import { alertPush, RootState } from '../../../modules';
 import {
     selectSendDocumentsLoading,
@@ -44,7 +45,7 @@ interface DocumentsState {
     scans: File[];
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 // tslint:disable:member-ordering
 class DocumentsComponent extends React.Component<Props, DocumentsState> {
@@ -364,4 +365,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     });
 
 // tslint:disable-next-line:no-any
-export const Documents = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(DocumentsComponent) as any));
+export const Documents = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(DocumentsComponent) as any)) as React.FunctionComponent;

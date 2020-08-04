@@ -2,12 +2,13 @@ import { History } from 'history';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { setDocumentTitle } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     emailVerificationFetch,
     RootState,
@@ -32,7 +33,7 @@ interface ReduxProps {
     emailVerificationLoading: boolean;
 }
 
-type Props = DispatchProps & ReduxProps & OwnProps & InjectedIntlProps;
+type Props = DispatchProps & ReduxProps & OwnProps & IntlProps;
 
 class EmailVerificationComponent extends React.Component<Props> {
     public componentDidMount() {
@@ -77,9 +78,12 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     i18n: selectCurrentLanguage(state),
 });
 
-const mapDispatchProps = {
+const mapDispatchToProps = {
     emailVerificationFetch,
 };
 
-//tslint:disable-next-line:no-any
-export const EmailVerificationScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(EmailVerificationComponent) as any));
+export const EmailVerificationScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(EmailVerificationComponent) as React.ComponentClass;

@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import {
     FormattedMessage,
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { Modal } from '../../components';
+import { IntlProps } from '../../index';
 
 interface ModalWithdrawSubmitProps {
     currency: string;
@@ -13,7 +13,7 @@ interface ModalWithdrawSubmitProps {
     show: boolean;
 }
 
-type Props = ModalWithdrawSubmitProps & InjectedIntlProps;
+type Props = ModalWithdrawSubmitProps & IntlProps;
 
 class ModalWithdrawSubmitComponent extends React.Component<Props> {
     public translate = (e: string) => {

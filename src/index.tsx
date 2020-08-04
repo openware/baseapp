@@ -3,21 +3,33 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { addLocaleData } from 'react-intl';
-import en from 'react-intl/locale-data/en';
+import {  WrappedComponentProps } from 'react-intl';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
 import { sentryEnabled } from './api/config';
 import { App } from './App';
-import { customLocaleData } from './custom/translations';
 import './index.css';
 import { rootSaga } from './modules';
 import { rangerSagas } from './modules/public/ranger';
 import { rangerMiddleware, sagaMiddleware, store } from './store';
 
-addLocaleData([...en, ...customLocaleData]);
+
+if (!Intl.PluralRules) {
+    require('@formatjs/intl-pluralrules/polyfill');
+    require('@formatjs/intl-pluralrules/locale-data/en');
+    require('@formatjs/intl-pluralrules/locale-data/ru');
+}
+// @ts-ignore
+if (!Intl.RelativeTimeFormat) {
+    require('@formatjs/intl-relativetimeformat/polyfill');
+    require('@formatjs/intl-relativetimeformat/locale-data/en');
+    require('@formatjs/intl-relativetimeformat/locale-data/ru');
+}
+
 sagaMiddleware.run(rootSaga);
 rangerMiddleware.run(rangerSagas);
+
+export type IntlProps = WrappedComponentProps;
 
 if (sentryEnabled()) {
     const key = process.env.REACT_APP_SENTRY_KEY;

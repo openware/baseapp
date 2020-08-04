@@ -1,9 +1,10 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CustomInput } from '../../components';
+import { IntlProps } from '../../index';
 import {
     beneficiariesCreate,
     BeneficiaryBank,
@@ -57,7 +58,7 @@ interface FiatState {
     fiatIntermediaryBankSwiftCodeFocused: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 type State = CoinState & FiatState;
 
 const defaultState = {
@@ -343,4 +344,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const BeneficiariesAddModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesAddModalComponent) as any);
+export const BeneficiariesAddModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesAddModalComponent) as any) as any;

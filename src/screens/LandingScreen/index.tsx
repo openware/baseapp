@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { MarketsTable } from '../../containers';
+import { IntlProps } from '../../index';
 import {
     RootState,
     selectUserLoggedIn,
@@ -30,7 +32,7 @@ interface ReduxProps {
     isLoggedIn: boolean;
 }
 
-type Props = ReduxProps & RouteProps & InjectedIntlProps;
+type Props = ReduxProps & RouteProps & IntlProps;
 
 class Landing extends React.Component<Props> {
     public renderHeader() {
@@ -297,5 +299,8 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     isLoggedIn: selectUserLoggedIn(state),
 });
 
-// tslint:disable no-any
-export const LandingScreen = withRouter(injectIntl(connect(mapStateToProps, null)(Landing) as any));
+export const LandingScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, null),
+)(Landing) as React.ComponentClass;

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../index';
 import { RootState, selectConfigsLoading } from '../../modules';
 
 interface ReduxProps {
@@ -22,7 +23,7 @@ const noFooterRoutes = [
     '/500',
 ];
 
-type FooterProps = LocationProps & ReduxProps & InjectedIntlProps;
+type FooterProps = LocationProps & ReduxProps & IntlProps;
 
 class FooterComponent extends React.Component<FooterProps> {
     public render() {

@@ -1,8 +1,12 @@
 import classnames from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import {
+    connect,
+    MapDispatchToPropsFunction,
+    MapStateToProps,
+  } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { CloseIcon } from '../../assets/images/CloseIcon';
@@ -11,6 +15,7 @@ import { Phone } from '../../containers';
 import { Documents } from '../../containers/Confirm/Documents';
 import { Identity } from '../../containers/Confirm/Identity';
 import { setDocumentTitle } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     Label,
     labelFetch,
@@ -40,7 +45,7 @@ interface DispatchProps {
     labelFetch: typeof labelFetch;
 }
 
-type Props = ReduxProps & HistoryProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & HistoryProps & DispatchProps & IntlProps;
 
 class ConfirmComponent extends React.Component<Props, ConfirmState> {
     constructor(props: Props) {
@@ -79,8 +84,8 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
     }
 
     public goBack = event => {
-      event.preventDefault();
-      this.props.history.goBack();
+        event.preventDefault();
+        this.props.history.goBack();
     };
 
     public render() {
@@ -132,7 +137,7 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
                             </div>
                         </div>
                         <div className="pg-confirm__content">
-                            {this.renderContent(isProfileVerified)}
+                            {this.renderContent(!!isProfileVerified)}
                         </div>
                     </div>
                 </div>
@@ -165,18 +170,19 @@ class ConfirmComponent extends React.Component<Props, ConfirmState> {
     };
 }
 
-const mapStateToProps = (state: RootState): ReduxProps => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     colorTheme: selectCurrentColorTheme(state),
     userData: selectUserInfo(state),
     labels: selectLabelData(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    labelFetch: () => dispatch(labelFetch()),
-});
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+    dispatch => ({
+        labelFetch: () => dispatch(labelFetch()),
+    });
 
 export const ConfirmScreen = compose(
     injectIntl,
     withRouter,
     connect(mapStateToProps, mapDispatchToProps),
-)(ConfirmComponent) as any; // tslint:disable-line
+)(ConfirmComponent) as React.ComponentClass;

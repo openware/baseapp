@@ -1,10 +1,11 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { LetterIcon } from '../../assets/images/LetterIcon';
 import { CustomInput } from '../../components';
+import { IntlProps } from '../../index';
 import {
     beneficiariesActivate,
     Beneficiary,
@@ -33,7 +34,7 @@ interface State {
     confirmationModalCodeFocused: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & OwnProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 const defaultState = {
     confirmationModalCode: '',
@@ -194,4 +195,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const BeneficiariesActivateModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesActivateModalComponent) as any);
+export const BeneficiariesActivateModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesActivateModalComponent) as any) as any;

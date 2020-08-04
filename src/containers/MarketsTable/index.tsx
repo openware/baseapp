@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { Decimal, TickerTable } from '../../components';
+import { IntlProps } from '../../index';
 import {
     Market,
     marketsFetch,
@@ -39,7 +40,7 @@ interface State {
     currentBidUnit: string;
 }
 
-export type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+export type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class MarketsTableContainer extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -106,7 +107,7 @@ class MarketsTableContainer extends React.Component<Props, State> {
             currentBidUnitMarkets = markets.length ? markets.filter(market => market.quote_unit === currentBidUnit) : [];
         }
 
-        const formattedMarkets = currentBidUnitMarkets.length && currentBidUnitMarkets.map(market =>
+        const formattedMarkets = currentBidUnitMarkets.length ? currentBidUnitMarkets.map(market =>
             ({
                 ...market,
                 last: Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision),
@@ -122,7 +123,7 @@ class MarketsTableContainer extends React.Component<Props, State> {
                 change: Decimal.format((+market.last - +market.open)
                     .toFixed(market.price_precision), market.price_precision),
             }),
-        );
+        ) : [];
 
         return (
             <TickerTable
@@ -178,4 +179,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const MarketsTable = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(MarketsTableContainer) as any));
+export const MarketsTable = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(MarketsTableContainer) as any)) as any;

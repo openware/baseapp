@@ -46,6 +46,7 @@ export interface Withdraw {
     updated_at: string;
     completed_at: string;
     done_at: string;
+    price?: number;
 }
 
 export interface Deposit {
@@ -58,6 +59,7 @@ export interface Deposit {
     confirmations: number;
     completed_at: string;
     state: string;
+    price?: number;
 }
 
 export type WalletHistoryElement = Withdraw | Deposit | PrivateTrade;

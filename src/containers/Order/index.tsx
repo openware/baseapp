@@ -3,11 +3,11 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import {
     FormattedMessage,
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
 import { Order, OrderProps, WalletItemProps } from '../../components';
+import { IntlProps } from '../../index';
 import {
     alertPush,
     RootState,
@@ -53,7 +53,12 @@ interface DispatchProps {
     pushAlert: typeof alertPush;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+interface OwnProps {
+    userLoggedIn: boolean;
+    currentPrice: string;
+}
+
+type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 class OrderInsert extends React.PureComponent<Props, StoreProps> {
     constructor(props: Props) {
@@ -179,7 +184,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             type,
         } = value;
 
-        this.props.setCurrentPrice();
+        this.props.setCurrentPrice(0);
 
         const resultData = {
             market: currentMarket.id,
@@ -268,7 +273,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.setState({
             priceLimit: undefined,
         });
-        this.props.setCurrentPrice();
+        this.props.setCurrentPrice(0);
     };
 }
 

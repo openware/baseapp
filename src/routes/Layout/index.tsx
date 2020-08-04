@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../..
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     configsFetch,
     logoutFetch,
@@ -82,7 +83,11 @@ interface LayoutState {
     isShownExpSessionModal: boolean;
 }
 
-export type LayoutProps = ReduxProps & DispatchProps & LocationProps & InjectedIntlProps;
+interface OwnProps {
+    toggleChartRebuild: typeof toggleChartRebuild;
+}
+
+export type LayoutProps = ReduxProps & DispatchProps & LocationProps & IntlProps & OwnProps;
 
 const renderLoader = () => (
     <div className="pg-loader-container">
