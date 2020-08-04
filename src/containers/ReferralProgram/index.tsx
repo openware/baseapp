@@ -5,6 +5,7 @@ import {
 } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CopyableTextField } from '../../components';
+import {IntlProps} from '../../index';
 import {
     alertPush,
     RootState,
@@ -33,10 +34,6 @@ const copy = (id: string) => {
         (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
     }
 };
-
-interface IntlProps {
-    intl: any;
-}
 
 type Props = ReduxProps & DispatchProps & IntlProps;
 

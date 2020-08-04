@@ -5,6 +5,7 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { LetterIcon } from '../../assets/images/LetterIcon';
 import { CustomInput } from '../../components';
+import {IntlProps} from '../../index';
 import {
     beneficiariesActivate,
     Beneficiary,
@@ -31,10 +32,6 @@ interface OwnProps {
 interface State {
     confirmationModalCode: string;
     confirmationModalCodeFocused: boolean;
-}
-
-interface IntlProps {
-    intl: any;
 }
 
 type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
