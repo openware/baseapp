@@ -79,12 +79,12 @@ class EstimatedValueContainer extends React.Component<Props> {
             markets,
         } = this.props;
 
-        if (next.markets.length === 0 && next.markets !== markets) {
+        if (next.markets.length === 0 && markets.length) {
             fetchMarkets();
             fetchTickers();
         }
 
-        if (next.currencies.length === 0 && next.currencies !== currencies) {
+        if (next.currencies.length === 0 && currencies.length) {
             fetchCurrencies();
         }
     }

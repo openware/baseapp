@@ -70,7 +70,7 @@ class HistoryComponent extends React.Component<Props> {
     public componentWillReceiveProps(nextProps) {
         const { currencies } = this.props;
 
-        if (nextProps.currencies.length === 0 && nextProps.currencies !== currencies) {
+        if (nextProps.currencies.length === 0 && currencies.length) {
             this.props.fetchCurrencies();
         }
     }

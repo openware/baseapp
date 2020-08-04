@@ -73,7 +73,7 @@ class MarketsTableContainer extends React.Component<Props, State> {
             tickers,
         } = this.props;
 
-        if (next.markets.length === 0 && next.markets !== markets) {
+        if (next.markets.length === 0 && markets.length) {
             tickers();
         }
     }
