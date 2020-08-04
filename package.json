@@ -3,6 +3,8 @@
   "version": "2.3.25",
   "private": true,
   "dependencies": {
+    "@formatjs/intl-pluralrules": "^3.2.5",
+    "@formatjs/intl-relativetimeformat": "^7.0.0",
     "@openware/cryptofont": "2.3.0",
     "@sentry/browser": "^5.17.0",
     "@types/compression-webpack-plugin": "^2.0.1",
