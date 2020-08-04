@@ -1,30 +1,31 @@
+/* stylelint-disable */
 .cr-mobile-modal {
-    background-color: rgba(0, 0, 0, 0.7);
-    position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  z-index: 999;
+
+  &--open {
+    height: 100vh;
+  }
+
+  &__block {
+    position: absolute;
+    margin-top: 20px;
     bottom: 0;
-    left: 0;
     right: 0;
+    left: 0;
     height: 0;
-    z-index: 999;
+    background: white;
+    transition: all ease 3s;
+    overflow: hidden;
+
 
     &--open {
         height: 100vh;
     }
-
-    &__block {
-        position: absolute;
-        margin-top: 20px;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        height: 0;
-        background: white;
-        transition: all ease 3s;
-        overflow: hidden;
-
-
-        &--open {
-            height: 100vh;
-        }
-    }
+  }
 }

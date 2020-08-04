@@ -11,6 +11,7 @@ describe('Change color theme reducer', () => {
             chartRebuild: false,
             sideBarActive: false,
             marketSelectorActive: false,
+            isMobileDevice: false,
         };
         expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('light'))).toEqual(expectedState);
         expect(localStorage.getItem('colorTheme')).toEqual('light');
@@ -19,6 +20,7 @@ describe('Change color theme reducer', () => {
             chartRebuild: false,
             sideBarActive: false,
             marketSelectorActive: false,
+            isMobileDevice: false,
         };
         expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('black'))).toEqual(expectedState);
         expect(localStorage.getItem('colorTheme')).toEqual('black');

@@ -2,11 +2,17 @@ import { createBrowserHistory, History } from 'history';
 import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
-import { connect, MapStateToProps } from 'react-redux';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Router } from 'react-router';
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
-import { RootState } from './modules';
+import * as mobileTranslations from './mobile/translations';
+import {
+    RootState,
+    selectCurrentLanguage,
+    selectMobileDeviceState,
+    setMobileDevice,
+} from './modules';
 import { languageMap } from './translations';
 
 interface AppProps {
@@ -15,6 +21,11 @@ interface AppProps {
 
 interface ReduxProps {
     lang: string;
+    isMobileDevice: boolean;
+}
+
+interface DispatchProps {
+    setMobileDevice: typeof setMobileDevice;
 }
 
 const gaKey = gaTrackerKey();
@@ -28,8 +39,12 @@ if (gaKey) {
     });
 }
 
-type Props = AppProps & ReduxProps;
+type Props = AppProps & ReduxProps & DispatchProps;
 
+/* Mobile containers */
+const MobileHeaderContainer = React.lazy(() => import('./mobile/components/Header').then(({ Header }) => ({ default: Header })));
+
+/* Desktop containers */
 const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ Alerts }) => ({ default: Alerts })));
 const CustomizationContainer = React.lazy(() => import('./containers/Customization').then(({ Customization }) => ({ default: Customization })));
 const FooterContainer = React.lazy(() => import('./containers/Footer').then(({ Footer }) => ({ default: Footer })));
@@ -37,37 +52,95 @@ const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ H
 const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
 const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
 
+
 class AppLayout extends React.Component<Props, {}, {}> {
     public componentDidMount() {
         ReactGA.pageview(history.location.pathname);
+        window.addEventListener('resize', this.handleChangeWindowWidth);
+        this.handleChangeWindowWidth();
+    }
+
+    public componentWillUnmount() {
+        window.removeEventListener('resize', this.handleChangeWindowWidth);
+    }
+
+
+    public renderDeviceContainers() {
+        const { isMobileDevice } = this.props;
+
+        if (isMobileDevice) {
+            return (
+                <div className="pg-mobile-app">
+                    <MobileHeaderContainer/>
+                </div>
+            );
+        }
+
+        return (
+            <React.Fragment>
+                <HeaderContainer/>
+                <SidebarContainer/>
+                <CustomizationContainer/>
+                <AlertsContainer/>
+                <LayoutContainer/>
+                <FooterContainer/>
+            </React.Fragment>
+        );
     }
 
     public render() {
         const { lang } = this.props;
 
         return (
-            <IntlProvider locale={lang} messages={languageMap[lang]} key={lang}>
+            <IntlProvider locale={lang} messages={this.getTranslations()} key={lang}>
                 <Router history={history}>
                     <ErrorWrapper>
                         <React.Suspense fallback={null}>
-                            <HeaderContainer/>
-                            <SidebarContainer/>
-                            <CustomizationContainer/>
-                            <AlertsContainer/>
-                            <LayoutContainer/>
-                            <FooterContainer/>
+                            {this.renderDeviceContainers()}
                         </React.Suspense>
                     </ErrorWrapper>
                 </Router>
             </IntlProvider>
         );
     }
+
+    private handleChangeWindowWidth = () => {
+        const { isMobileDevice } = this.props;
+        const height = window.innerHeight;
+        const width = window.innerWidth;
+        let updatedMobileDeviceState = false;
+
+        if ((width && width < 768) || (height && height < 600)) {
+            updatedMobileDeviceState = true;
+        }
+
+        if (isMobileDevice !== updatedMobileDeviceState) {
+            this.props.setMobileDevice(updatedMobileDeviceState);
+        }
+    };
+
+    private getTranslations = () => {
+        const { lang, isMobileDevice } = this.props;
+
+        if (isMobileDevice) {
+            return  {
+                ...languageMap[lang],
+                ...mobileTranslations[lang],
+            };
+        }
+
+        return languageMap[lang];
+    };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
-    (state: RootState): ReduxProps => ({
-        lang: state.public.i18n.lang,
-    });
+const mapStateToProps = (state: RootState): ReduxProps => ({
+    lang: selectCurrentLanguage(state),
+    isMobileDevice: selectMobileDeviceState(state),
+});
+
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    setMobileDevice: payload => dispatch(setMobileDevice(payload)),
+});
 
 // tslint:disable-next-line:no-any
-export const App = connect(mapStateToProps)(AppLayout) as any;
+export const App = connect(mapStateToProps, mapDispatchToProps)(AppLayout) as any;

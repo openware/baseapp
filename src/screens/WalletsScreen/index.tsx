@@ -363,7 +363,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
-                    {currencyItem && currencyItem.deposit_enabled === false ? (
+                    {currencyItem && !currencyItem.deposit_enabled ? (
                         <Blur
                             className={blurCryptoClassName}
                             text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
@@ -389,7 +389,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
-                    {currencyItem && currencyItem.deposit_enabled === false ? (
+                    {currencyItem && !currencyItem.deposit_enabled ? (
                         <Blur
                             className="pg-blur-deposit-fiat"
                             text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
@@ -412,7 +412,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             <React.Fragment>
                 <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
-                {currencyItem && currencyItem.withdrawal_enabled === false ? (
+                {currencyItem && !currencyItem.withdrawal_enabled ? (
                     <Blur
                         className="pg-blur-withdraw"
                         text={this.translate('page.body.wallets.tabs.withdraw.disabled.message')}

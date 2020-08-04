@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import { RecentTrades, RecentTradesProps } from '..';
 import { rootReducer } from '../../modules';
 
-const defaultProps: RecentTradesProps = {
+const defaultProps: { recentTrades: any[]; currentMarket: undefined; userLoggedIn: boolean; currentPrice: undefined } = {
     recentTrades: [],
     currentMarket: undefined,
     currentPrice: undefined,
