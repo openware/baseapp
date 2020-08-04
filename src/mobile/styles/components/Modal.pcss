@@ -1,11 +1,10 @@
-/* stylelint-disable */
 .cr-mobile-modal {
   background-color: rgba(0, 0, 0, 0.7);
-  position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
   height: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
   z-index: 999;
 
   &--open {
@@ -13,19 +12,18 @@
   }
 
   &__block {
-    position: absolute;
-    margin-top: 20px;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    height: 0;
     background: white;
-    transition: all ease 3s;
+    bottom: 0;
+    height: 0;
+    left: 0;
+    margin-top: 20px;
     overflow: hidden;
-
+    position: absolute;
+    right: 0;
+    transition: all ease 3s;
 
     &--open {
-        height: 100vh;
+      height: 100vh;
     }
   }
 }

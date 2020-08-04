@@ -10,6 +10,7 @@ import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import { IntlProps } from '../../index';
+import { LandingScreenMobile } from '../../mobile/screens';
 import {
     configsFetch,
     logoutFetch,
@@ -19,6 +20,7 @@ import {
     selectConfigsSuccess,
     selectCurrentColorTheme,
     selectCurrentMarket,
+    selectMobileDeviceState,
     selectPlatformAccessStatus,
     selectUserFetching,
     selectUserInfo,
@@ -59,6 +61,7 @@ interface ReduxProps {
     customization?: CustomizationDataInterface;
     user: User;
     isLoggedIn: boolean;
+    isMobileDevice: boolean;
     userLoading?: boolean;
     platformAccessStatus: string;
     configsLoading: boolean;
@@ -233,6 +236,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         const {
             colorTheme,
             isLoggedIn,
+            isMobileDevice,
             userLoading,
             location,
             configsLoading,
@@ -244,6 +248,19 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 
         if (configsLoading && !platformAccessStatus.length) {
             return renderLoader();
+        }
+
+        if (isMobileDevice) {
+            return (
+                <div className={'container-fluid pg-layout pg-layout--mobile'}>
+                    <Switch>
+                        {showLanding() && <Route exact={true} path="/" component={LandingScreenMobile} />}
+                        <Route path="**"><Redirect to="/trading/" /></Route>
+                    </Switch>
+                    {isLoggedIn && <WalletsFetch />}
+                    {isShownExpSessionModal && this.handleRenderExpiredSessionModal()}
+                </div>
+            );
         }
 
         return (
@@ -367,6 +384,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     customization: selectCustomizationData(state),
     user: selectUserInfo(state),
     isLoggedIn: selectUserLoggedIn(state),
+    isMobileDevice: selectMobileDeviceState(state),
     userLoading: selectUserFetching(state),
     platformAccessStatus: selectPlatformAccessStatus(state),
 });
