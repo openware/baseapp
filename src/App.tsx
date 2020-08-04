@@ -1,45 +1,29 @@
-import { createBrowserHistory, History } from 'history';
+import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
-import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Router } from 'react-router';
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
 import * as mobileTranslations from './mobile/translations';
 import {
-    RootState,
     selectCurrentLanguage,
     selectMobileDeviceState,
     setMobileDevice,
 } from './modules';
 import { languageMap } from './translations';
 
-interface AppProps {
-    history: History;
-}
-
-interface ReduxProps {
-    lang: string;
-    isMobileDevice: boolean;
-}
-
-interface DispatchProps {
-    setMobileDevice: typeof setMobileDevice;
-}
-
 const gaKey = gaTrackerKey();
-const history = createBrowserHistory();
+const browserHistory = createBrowserHistory();
 
 if (gaKey) {
     ReactGA.initialize(gaKey);
-    history.listen(location => {
+    browserHistory.listen(location => {
         ReactGA.set({ page: location.pathname });
         ReactGA.pageview(location.pathname);
     });
 }
-
-type Props = AppProps & ReduxProps & DispatchProps;
 
 /* Mobile components */
 const MobileFooter = React.lazy(() => import('./mobile/components/Footer').then(({ Footer }) => ({ default: Footer })));
@@ -54,95 +38,80 @@ const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({
 const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
 
 
-class AppLayout extends React.Component<Props, {}, {}> {
-    public componentDidMount() {
-        ReactGA.pageview(history.location.pathname);
-        window.addEventListener('resize', this.handleChangeWindowWidth);
-        this.handleChangeWindowWidth();
+const handleChangeWindowWidth = (dispatch, isMobileDevice: boolean) => {
+    const height = window.innerHeight;
+    const width = window.innerWidth;
+    let updatedMobileDeviceState = false;
+
+    if ((width && width < 768) || (height && height < 600)) {
+        updatedMobileDeviceState = true;
     }
 
-    public componentWillUnmount() {
-        window.removeEventListener('resize', this.handleChangeWindowWidth);
+    if (isMobileDevice !== updatedMobileDeviceState) {
+        dispatch(setMobileDevice(updatedMobileDeviceState));
+    }
+};
+
+const getTranslations = (lang: string, isMobileDevice: boolean) => {
+    if (isMobileDevice) {
+        return  {
+            ...languageMap[lang],
+            ...mobileTranslations[lang],
+        };
     }
 
+    return languageMap[lang];
+};
 
-    public renderDeviceContainers() {
-        const { isMobileDevice } = this.props;
+const RenderDeviceContainers = () => {
+    const isMobileDevice = useSelector(selectMobileDeviceState);
 
-        if (isMobileDevice) {
-            return (
-                <div className="pg-mobile-app">
-                    <MobileHeader />
-                    <MobileFooter />
-                </div>
-            );
-        }
-
+    if (isMobileDevice) {
         return (
-            <React.Fragment>
-                <HeaderContainer/>
-                <SidebarContainer/>
-                <CustomizationContainer/>
-                <AlertsContainer/>
+            <div className="pg-mobile-app">
+                <MobileHeader />
                 <LayoutContainer/>
-                <FooterContainer/>
-            </React.Fragment>
+                <MobileFooter />
+            </div>
         );
     }
 
-    public render() {
-        const { lang } = this.props;
+    return (
+        <React.Fragment>
+            <HeaderContainer/>
+            <SidebarContainer/>
+            <CustomizationContainer/>
+            <AlertsContainer/>
+            <LayoutContainer/>
+            <FooterContainer/>
+        </React.Fragment>
+    );
+};
 
-        return (
-            <IntlProvider locale={lang} messages={this.getTranslations()} key={lang}>
-                <Router history={history}>
-                    <ErrorWrapper>
-                        <React.Suspense fallback={null}>
-                            {this.renderDeviceContainers()}
-                        </React.Suspense>
-                    </ErrorWrapper>
-                </Router>
-            </IntlProvider>
-        );
-    }
+export const App = () => {
+    const dispatch = useDispatch();
+    const lang = useSelector(selectCurrentLanguage);
+    const isMobileDevice = useSelector(selectMobileDeviceState);
 
-    private handleChangeWindowWidth = () => {
-        const { isMobileDevice } = this.props;
-        const height = window.innerHeight;
-        const width = window.innerWidth;
-        let updatedMobileDeviceState = false;
+    React.useEffect(() => {
+        ReactGA.pageview(window.location.pathname);
+        window.addEventListener('resize', () => handleChangeWindowWidth(dispatch, isMobileDevice));
+        handleChangeWindowWidth(dispatch, isMobileDevice);
 
-        if ((width && width < 768) || (height && height < 600)) {
-            updatedMobileDeviceState = true;
-        }
+        return () => {
+            window.removeEventListener('resize', () => handleChangeWindowWidth(dispatch, isMobileDevice));
+        };
+    });
 
-        if (isMobileDevice !== updatedMobileDeviceState) {
-            this.props.setMobileDevice(updatedMobileDeviceState);
-        }
-    };
-
-    private getTranslations = () => {
-        const { lang, isMobileDevice } = this.props;
-
-        if (isMobileDevice) {
-            return  {
-                ...languageMap[lang],
-                ...mobileTranslations[lang],
-            };
-        }
-
-        return languageMap[lang];
-    };
-}
-
-const mapStateToProps = (state: RootState): ReduxProps => ({
-    lang: selectCurrentLanguage(state),
-    isMobileDevice: selectMobileDeviceState(state),
-});
-
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    setMobileDevice: payload => dispatch(setMobileDevice(payload)),
-});
-
-// tslint:disable-next-line:no-any
-export const App = connect(mapStateToProps, mapDispatchToProps)(AppLayout) as any;
+    return (
+        <IntlProvider locale={lang} messages={getTranslations(lang, isMobileDevice)} key={lang}>
+            <Router history={browserHistory}>
+                <ErrorWrapper>
+                    <React.Suspense fallback={null}>
+                        <RenderDeviceContainers />
+                    </React.Suspense>
+                </ErrorWrapper>
+            </Router>
+        </IntlProvider>
+    );
+};
