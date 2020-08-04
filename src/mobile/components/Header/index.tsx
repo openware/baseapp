@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LogoIcon } from '../../../assets/images/LogoIcon';
@@ -8,6 +9,7 @@ import { selectUserLoggedIn } from '../../../modules';
 
 const HeaderComponent = () => {
     const userLoggedIn = useSelector(selectUserLoggedIn);
+    const intl = useIntl();
 
     return (
         <div className="pg-mobile-header">
@@ -27,7 +29,7 @@ const HeaderComponent = () => {
                             size="lg"
                             variant="primary"
                         >
-                            Log in
+                            {intl.formatMessage({id: 'page.mobile.header.signIn'})}
                         </Button>
                     </Link>
                 )}
