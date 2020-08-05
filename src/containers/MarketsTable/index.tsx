@@ -3,6 +3,7 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { Decimal, TickerTable } from '../../components';
 import { IntlProps } from '../../index';
 import {
@@ -178,5 +179,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     tickers: () => dispatch(marketsTickersFetch()),
 });
 
-// tslint:disable-next-line:no-any
-export const MarketsTable = injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(MarketsTableContainer) as any)) as any;
+export const MarketsTable = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(MarketsTableContainer) as React.ComponentClass;

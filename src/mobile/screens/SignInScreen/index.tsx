@@ -12,6 +12,7 @@ const SignInMobileScreen = () => {
     return <div>
         <Modal
             isOpen={true}
+            onClose={() => history.goBack()}
             onBack={() => history.push('/signup')}
             backTitle={intl.formatMessage({ id: 'page.body.landing.header.button3' })}
             title={intl.formatMessage({ id: 'page.body.landing.header.button2' })}>

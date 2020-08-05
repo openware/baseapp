@@ -15,7 +15,7 @@ const handleGetActiveItemClass = (currentRoute: string, targetRoute: string, abs
 };
 
 const FooterComponent = () => {
-    const { pathname } =  useLocation();
+    const { pathname } = useLocation();
     const intl = useIntl();
 
     return (
