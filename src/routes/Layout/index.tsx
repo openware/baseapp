@@ -10,7 +10,7 @@ import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import { IntlProps } from '../../index';
-import { LandingScreenMobile, SignInMobileScreen, SignUpMobileScreen } from '../../mobile/screens';
+import { ForgotPasswordMobileScreen, LandingScreenMobile, SignInMobileScreen, SignUpMobileScreen } from '../../mobile/screens';
 import {
     configsFetch,
     logoutFetch,
@@ -256,6 +256,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <Switch>
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpMobileScreen} />
+                        <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordMobileScreen} />
                         {showLanding() && <Route exact={true} path="/" component={LandingScreenMobile} />}
                         <Route path="**"><Redirect to="/trading/" /></Route>
                     </Switch>
