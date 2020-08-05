@@ -33,7 +33,7 @@ const handleRedirectToTrading = (dispatch, history, markets: Market[], id: strin
 };
 
 const formatFilteredMarkets = (list: string[], market: Market) => {
-    if (list.indexOf(market.quote_unit) === -1) {
+    if (!list.includes(market.quote_unit)) {
         list.push(market.quote_unit);
     }
 
@@ -58,7 +58,7 @@ const MarketsTableComponent = () => {
             dispatch(marketsTickersFetch());
         }
 
-    });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     let currentBidUnitsList: string[] = [''];
 

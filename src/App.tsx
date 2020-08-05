@@ -101,7 +101,7 @@ export const App = () => {
         return () => {
             window.removeEventListener('resize', () => handleChangeWindowWidth(dispatch, isMobileDevice));
         };
-    });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <IntlProvider locale={lang} messages={getTranslations(lang, isMobileDevice)} key={lang}>
