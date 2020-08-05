@@ -1,0 +1,48 @@
+/* stylelint-disable */
+.pg-mobile-app {
+  .pg-sign-in-screen {
+    background: none;
+    height: unset;
+
+    .pg-sign-in-screen__register {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 12px;
+
+      &-button {
+        color: var(--button-primary-cta-background-color);
+        text-transform: capitalize;
+        padding-left: 2px;
+      }
+    }
+
+    .cr-sign-in-form__form-content {
+      position: static;
+    }
+    .cr-sign-in-form__group--focused input {
+      border-width: 2px;
+      border-color: var(--button-primary-cta-background-color);
+    }
+
+    .cr-sign-in-form__button-wrapper {
+      position: static;
+      margin-top: 12px;
+      button {
+        background: var(--button-primary-cta-background-color);
+      }
+    }
+
+    .cr-sign-in-form__label {
+      font-size: 12px;
+    }
+
+    .cr-sign-in-form__bottom-section {
+      &-password {
+        text-align: right;
+        font-size: 12px;
+        color: var(--button-primary-cta-background-color);
+      }
+      position: static;
+    }
+  }
+}
