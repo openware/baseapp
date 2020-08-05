@@ -4,11 +4,21 @@ import { CloseIcon } from '../../../assets/images/CloseIcon';
 import { ArrowIcon } from '../../../containers/ToolBar/icons/ArrowIcon';
 
 const Modal = props => {
+    const [shouldAnimate, setShouldAnimate] = React.useState(false);
+
+    React.useEffect(() => {
+        if (props.isOpen) {
+            setTimeout(() => {
+                setShouldAnimate(true);
+            }, 200);
+        }
+    }, [props.isOpen]);
+
     const modalClassName = classnames('cr-mobile-modal', {
-        'cr-mobile-modal--open': props.isOpen,
+        'cr-mobile-modal--open': shouldAnimate,
     });
     const bodyClassName = classnames('cr-mobile-modal__block', {
-        'cr-mobile-modal__block--open': props.isOpen,
+        'cr-mobile-modal__block--open': shouldAnimate,
     });
 
     return (
@@ -17,7 +27,7 @@ const Modal = props => {
                 <div className="cr-mobile-modal__header">
                     <div className="cr-mobile-modal__header-back" onClick={props.onBack}>
                         <ArrowIcon/>
-                        {props.backTitle}
+                        <span>{props.backTitle}</span>
                     </div>
                     <div className="cr-mobile-modal__header-title">{props.title}</div>
                     <div className="cr-mobile-modal__header-close" onClick={props.onClose}>
