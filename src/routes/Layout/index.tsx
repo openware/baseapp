@@ -10,7 +10,7 @@ import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import { IntlProps } from '../../index';
-import { LandingScreenMobile, SignInMobileScreen } from '../../mobile/screens';
+import { LandingScreenMobile, SignInMobileScreen, SignUpMobileScreen } from '../../mobile/screens';
 import {
     configsFetch,
     logoutFetch,
@@ -255,6 +255,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                 <div className={'container-fluid pg-layout pg-layout--mobile'}>
                     <Switch>
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInMobileScreen} />
+                        <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpMobileScreen} />
                         {showLanding() && <Route exact={true} path="/" component={LandingScreenMobile} />}
                         <Route path="**"><Redirect to="/trading/" /></Route>
                     </Switch>

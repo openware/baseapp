@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
-import { SignInScreen } from '../../../screens/SignInScreen';
+import { SignUpScreen } from '../../../screens/SignUpScreen';
 import { Modal } from '../../components/Modal/Modal';
 
 
-const SignInMobileScreen = () => {
+const SignUpMobileScreen = () => {
     const history = useHistory();
     const intl = useIntl();
 
@@ -13,14 +13,14 @@ const SignInMobileScreen = () => {
         <Modal
             isOpen={true}
             onClose={() => history.push('/trading')}
-            onBack={() => history.push('/signup')}
-            backTitle={intl.formatMessage({ id: 'page.body.landing.header.button3' })}
-            title={intl.formatMessage({ id: 'page.body.landing.header.button2' })}>
-            <SignInScreen/>
+            onBack={() => history.push('/signin')}
+            backTitle={intl.formatMessage({ id: 'page.body.landing.header.button2' })}
+            title={intl.formatMessage({ id: 'page.body.landing.header.button3' })}>
+            <SignUpScreen/>
         </Modal>
     </div>;
 };
 
 export {
-    SignInMobileScreen,
+    SignUpMobileScreen,
 };
