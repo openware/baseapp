@@ -104,7 +104,7 @@ const SignInComponent = React.memo((props: SignInProps) => {
             <span>
                 {intl.formatMessage({ id: 'page.header.signIN.noAccountYet' })}
                 <span
-                    onClick={() => history.push('/singup')}
+                    onClick={() => history.push('/signup')}
                     className="pg-sign-in-screen__register-button">
                     {intl.formatMessage({ id: 'page.body.landing.header.button3' })}
                 </span>
