@@ -6,6 +6,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Router } from 'react-router';
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
+import { SignInMobileScreen } from './mobile/screens/SignInScreen';
 import * as mobileTranslations from './mobile/translations';
 import {
     RootState,
@@ -73,6 +74,7 @@ class AppLayout extends React.Component<Props, {}, {}> {
             return (
                 <div className="pg-mobile-app">
                     <MobileHeader />
+                    <SignInMobileScreen />
                     <MobileFooter />
                 </div>
             );
