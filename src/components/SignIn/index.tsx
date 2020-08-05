@@ -38,7 +38,7 @@ export interface SignInProps {
     changeEmail: (value: string) => void;
 }
 
-const SignInComponent = (props: SignInProps) => {
+const SignInComponent = React.memo((props: SignInProps) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const history = useHistory();
     const intl = useIntl();
@@ -207,7 +207,7 @@ const SignInComponent = (props: SignInProps) => {
             </div>
         </form>
     );
-};
+});
 
 export {
     SignInComponent,

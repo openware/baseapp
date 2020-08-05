@@ -12,7 +12,25 @@ const Modal = props => {
                 setShouldAnimate(true);
             }, 200);
         }
+
+        return () => setShouldAnimate(false);
     }, [props.isOpen]);
+
+    const handleOnClose = () => {
+        setShouldAnimate(false);
+
+        setTimeout(() => {
+            props.onClose();
+        }, 200);
+    };
+
+    const handleOnBack = () => {
+        setShouldAnimate(false);
+
+        setTimeout(() => {
+            props.onBack();
+        }, 200);
+    };
 
     const modalClassName = classnames('cr-mobile-modal', {
         'cr-mobile-modal--open': shouldAnimate,
@@ -25,12 +43,12 @@ const Modal = props => {
         <div className={modalClassName}>
             <div className={bodyClassName}>
                 <div className="cr-mobile-modal__header">
-                    <div className="cr-mobile-modal__header-back" onClick={props.onBack}>
+                    <div className="cr-mobile-modal__header-back" onClick={handleOnBack}>
                         <ArrowIcon/>
                         <span>{props.backTitle}</span>
                     </div>
                     <div className="cr-mobile-modal__header-title">{props.title}</div>
-                    <div className="cr-mobile-modal__header-close" onClick={props.onClose}>
+                    <div className="cr-mobile-modal__header-close" onClick={handleOnClose}>
                         <CloseIcon />
                     </div>
                 </div>
