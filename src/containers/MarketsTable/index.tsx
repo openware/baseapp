@@ -7,6 +7,7 @@ import {
     marketsFetch,
     marketsTickersFetch,
     selectMarkets,
+    selectMarketsLoading,
     selectMarketTickers,
     setCurrentMarket,
 } from '../../modules';
@@ -44,6 +45,7 @@ const MarketsTableComponent = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const markets = useSelector(selectMarkets);
+    const marketsLoading = useSelector(selectMarketsLoading);
     const marketTickers = useSelector(selectMarketTickers);
     const rangerState = useSelector(selectRanger);
     const [currentBidUnit, setCurrentBidUnit] = React.useState('');
@@ -53,12 +55,12 @@ const MarketsTableComponent = () => {
             dispatch(rangerConnectFetch({ withAuth: false }));
         }
 
-        if (markets.length === 0) {
+        if (!markets.length && !marketsLoading) {
             dispatch(marketsFetch());
             dispatch(marketsTickersFetch());
         }
 
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [dispatch, rangerState.connected, markets, marketsLoading]);
 
     let currentBidUnitsList: string[] = [''];
 
