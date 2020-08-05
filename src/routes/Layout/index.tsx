@@ -17,6 +17,7 @@ import {
     LandingScreenMobile,
     SignInMobileScreen,
     SignUpMobileScreen,
+    TradingScreenMobile,
 } from '../../mobile/screens';
 import {
     configsFetch,
@@ -267,6 +268,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationMobileScreen} />
+                        <Route exact={true} path="/trading/:market?" component={TradingScreenMobile} />
                         {showLanding() && <Route exact={true} path="/" component={LandingScreenMobile} />}
                         <Route path="**"><Redirect to="/trading/" /></Route>
                     </Switch>
