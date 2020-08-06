@@ -1,59 +1,46 @@
+import { sortAsks, sortBids } from './sortByPrice';
+
 export const handleIncrementalUpdate = (depthOld: string[][], newLevel: string[], type: string): string[][] => {
     if (newLevel.length !== 2) {
         return depthOld;
     }
-    const newLevelPrice = +newLevel[0];
-    const newLevelVolume = +newLevel[1];
-    const depthNew = [...depthOld];
 
-    if (depthOld.length === 0) {
-      return [newLevel];
+    const index = depthOld.findIndex(([price]) => +price === +newLevel[0]);
+
+    if (index === -1) {
+        const data = [...depthOld, newLevel];
+        if (type === 'asks') {
+            return sortAsks(data);
+        }
+
+        return sortBids(data);
     }
 
-    for (let index = 0; index < depthOld.length; index++) {
-        const levelPrice = +depthOld[index][0];
-        if (type === 'asks' && newLevelVolume > 0) {
-            if (newLevelPrice < levelPrice) {
-                depthNew.splice(index, 0, newLevel);
-                break;
-            }
-
-            if (newLevelPrice > levelPrice && index === (depthOld.length - 1)) {
-                depthNew.push(newLevel);
-                break;
-            }
-        }
-
-        if (type === 'bids' && newLevelVolume > 0) {
-            if (newLevelPrice > levelPrice) {
-                depthNew.splice(index, 0, newLevel);
-                break;
-            }
-
-            if (newLevelPrice < levelPrice && index === (depthOld.length - 1)) {
-                depthNew.push(newLevel);
-                break;
-            }
-        }
-
-        if (newLevelPrice === levelPrice) {
-            if (newLevelVolume === 0) {
-                depthNew.splice(index, 1);
-            } else {
-                depthNew.splice(index, 1, newLevel);
-            }
-            break;
-        }
+    const result = [...depthOld];
+    if (Number(newLevel[1]) !== 0) {
+        result[index] = newLevel;
+    } else {
+        result.splice(index, 1);
     }
 
-    return depthNew;
+    return result;
 };
 
-
 export const handleIncrementalUpdateArray = (depthOld: string[][], newLevels: string[][], type: string): string[][] => {
-    const depthNew = newLevels.reduce((result: string[][], currentLevel: string[]) => {
-        return handleIncrementalUpdate(result, currentLevel, type);
-    }, depthOld);
+    const prices = {};
 
-    return depthNew;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < newLevels.length; i += 1) {
+        prices[newLevels[i][0]] = newLevels[i][1];
+    }
+
+    const rest = depthOld.filter(([price]) => !prices[price]);
+    const newData = newLevels.filter(([_, amount]) => Number(amount) !== 0);
+    const result = [...rest, ...newData];
+
+    if (type === 'asks') {
+        return sortAsks(result);
+    }
+
+    return sortBids(result);
 };
