@@ -10,7 +10,14 @@ import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import { IntlProps } from '../../index';
-import { ForgotPasswordMobileScreen, LandingScreenMobile, SignInMobileScreen, SignUpMobileScreen } from '../../mobile/screens';
+import {
+    ChangeForgottenPasswordMobileScreen,
+    EmailVerificationMobileScreen,
+    ForgotPasswordMobileScreen,
+    LandingScreenMobile,
+    SignInMobileScreen,
+    SignUpMobileScreen,
+} from '../../mobile/screens';
 import {
     configsFetch,
     logoutFetch,
@@ -257,6 +264,9 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordMobileScreen} />
+                        <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordMobileScreen} />
+                        <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />
+                        <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationMobileScreen} />
                         {showLanding() && <Route exact={true} path="/" component={LandingScreenMobile} />}
                         <Route path="**"><Redirect to="/trading/" /></Route>
                     </Switch>

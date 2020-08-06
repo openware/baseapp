@@ -17,7 +17,7 @@ import {
     changeForgotPasswordFetch,
     changeLanguage,
     RootState,
-    selectChangeForgotPasswordSuccess,
+    selectChangeForgotPasswordSuccess, selectMobileDeviceState,
 } from '../../modules';
 
 interface ChangeForgottenPasswordState {
@@ -31,6 +31,7 @@ interface ChangeForgottenPasswordState {
 
 interface ReduxProps {
     changeForgotPassword?: boolean;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -108,13 +109,15 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                 <div className="pg-change-forgotten-password-screen__container">
                     <form>
                         <div className="cr-email-form">
+                            {!this.props.isMobileDevice &&
                             <div className="cr-email-form__options-group">
-                                <div className="cr-email-form__option">
-                                    <div className="cr-email-form__option-inner">
-                                        {this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.title'})}
-                                    </div>
+                              <div className="cr-email-form__option">
+                                <div className="cr-email-form__option-inner">
+                                    {this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.title'})}
                                 </div>
+                              </div>
                             </div>
+                            }
                             <div className="cr-email-form__form-content">
                                 <div className={passwordFocusedClass}>
                                     <CustomInput
@@ -230,6 +233,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     changeForgotPassword: selectChangeForgotPasswordSuccess(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
