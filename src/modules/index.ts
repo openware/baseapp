@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-// tslint:disable-next-line no-submodule-imports
 import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';

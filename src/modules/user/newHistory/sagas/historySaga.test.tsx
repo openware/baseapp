@@ -8,7 +8,7 @@ import { failNewHistory, fetchNewHistory, successNewHistory } from '../actions';
 
 describe('History saga', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

@@ -8,7 +8,7 @@ import { toggle2faData, toggle2faError, toggle2faFetch } from '../actions';
 
 describe('Module: Toggle 2fa', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

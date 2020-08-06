@@ -10,7 +10,7 @@ import { signIn, signInError, signInRequire2FA } from '../actions';
 
 describe('SignIn saga', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

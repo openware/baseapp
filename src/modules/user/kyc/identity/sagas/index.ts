@@ -1,4 +1,3 @@
-// tslint:disable-next-line
 import { takeEvery } from 'redux-saga/effects';
 import {
     EDIT_IDENTITY_FETCH,

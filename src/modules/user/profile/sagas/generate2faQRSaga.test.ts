@@ -8,7 +8,7 @@ import { generate2faQRData, generate2faQRError, generate2faQRFetch } from '../ac
 
 describe('Module: Generate 2fa QR', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

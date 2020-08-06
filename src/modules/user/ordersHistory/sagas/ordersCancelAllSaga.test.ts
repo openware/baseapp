@@ -7,7 +7,7 @@ import { ordersCancelAllError, ordersCancelAllFetch } from '../actions';
 
 describe('Orders Cancel All', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

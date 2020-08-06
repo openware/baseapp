@@ -9,7 +9,7 @@ const debug = false;
 
 describe('User activity', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     afterEach(() => {

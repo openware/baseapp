@@ -12,7 +12,7 @@ import { CustomizationDataInterface } from '../types';
 
 describe('Saga: customizationFetchSaga', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

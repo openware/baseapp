@@ -12,7 +12,7 @@ const debug = false;
 
 describe('Alert error handler', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     afterEach(() => {

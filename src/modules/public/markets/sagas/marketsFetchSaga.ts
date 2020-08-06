@@ -1,5 +1,5 @@
 // tslint:disable-next-line
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLeading } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import { alertPush } from '../../alert';
 import {
@@ -21,8 +21,8 @@ const tickersOptions: RequestOptions = {
 };
 
 export function* rootMarketsSaga() {
-    yield takeLatest(MARKETS_FETCH, marketsFetchSaga);
-    yield takeLatest(MARKETS_TICKERS_FETCH, tickersSaga);
+    yield takeLeading(MARKETS_FETCH, marketsFetchSaga);
+    yield takeLeading(MARKETS_TICKERS_FETCH, tickersSaga);
 }
 
 export function* marketsFetchSaga() {

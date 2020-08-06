@@ -7,7 +7,7 @@ import { emailVerificationData, emailVerificationError, emailVerificationFetch }
 
 describe('Email Verification Saga', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {
