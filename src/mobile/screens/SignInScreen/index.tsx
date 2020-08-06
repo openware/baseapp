@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { selectSignInRequire2FA } from '../../../modules/user/auth';
 import { SignInScreen } from '../../../screens/SignInScreen';
-import { Modal } from '../../components/Modal/Modal';
+import { Modal } from '../../components';
 
 
 const SignInMobileScreen = () => {

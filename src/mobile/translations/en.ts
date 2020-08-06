@@ -6,6 +6,7 @@ export const en = {
     'page.mobile.footer.wallets': 'Wallets',
     'page.mobile.footer.profile': 'Profile',
 
+    'page.body.currentMarketInfo.search.placeholder': 'Search',
     'page.body.currentMarketInfo.volume': 'Vol',
     'page.body.currentMarketInfo.high': 'High',
     'page.body.currentMarketInfo.low': 'Low',

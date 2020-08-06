@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
 import { ChangeForgottenPasswordScreen } from '../../../screens/ChangeForgottenPasswordScreen';
-import { Modal } from '../../components/Modal/Modal';
+import { Modal } from '../../components';
 
 
 const ChangeForgottenPasswordMobileScreen = () => {
