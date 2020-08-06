@@ -7,7 +7,7 @@ import { sendAccessToken, sendAccessTokenData, sendAccessTokenError } from '../a
 
 describe('blacklistAccessFetchSaga test', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

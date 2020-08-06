@@ -21,7 +21,7 @@ const debug = false;
 
 describe('Wallets', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     afterEach(() => {

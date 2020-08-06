@@ -8,7 +8,7 @@ import { changePasswordData, changePasswordError, changePasswordFetch } from '..
 
 describe('Module: Change password', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {
