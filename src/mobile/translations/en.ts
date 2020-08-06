@@ -10,4 +10,6 @@ export const en = {
     'page.header.signIN.noAccountYet': 'No account yet?',
     'page.header.signUp.terms': 'I  agree all statements in terms of service',
     'page.header.signUp.alreadyRegistered': 'Already registered?',
+
+    'page.mobile.reset.header': 'Resend confirmation',
 };
