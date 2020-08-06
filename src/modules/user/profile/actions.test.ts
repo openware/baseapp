@@ -24,6 +24,11 @@ describe('Profile actions', () => {
                     state: 'active',
                     profiles: [],
                     csrf_token: '31415926535897932384626433832795028841971',
+                    referal_uid: '',
+                    labels: [],
+                    phone: [],
+                    created_at: '',
+                    updated_at: '',
                 },
             };
             const expectedAction = { type: 'profile/GET_USER_DATA', payload };
@@ -124,6 +129,11 @@ describe('Profile actions', () => {
                     profiles: [],
                     csrf_token: '31415926535897932384626433832795028841971',
                     data: '{\"language\":\"en\"}',
+                    referal_uid: '',
+                    labels: [],
+                    phone: [],
+                    created_at: '',
+                    updated_at: '',
                 },
             };
             const expectedAction = { type: 'profile/CHANGE_USER_FETCH', payload };
@@ -142,6 +152,11 @@ describe('Profile actions', () => {
                     profiles: [],
                     csrf_token: '31415926535897932384626433832795028841971',
                     data: '{\"language\":\"en\"}',
+                    referal_uid: '',
+                    labels: [],
+                    phone: [],
+                    created_at: '',
+                    updated_at: '',
                 },
             };
             const expectedAction = { type: 'profile/CHANGE_USER_DATA', payload };

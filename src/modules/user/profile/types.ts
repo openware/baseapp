@@ -1,3 +1,5 @@
+import { Label } from '../kyc';
+
 export interface UserProfile {
     first_name: string;
     last_name: string;
@@ -12,6 +14,12 @@ export interface UserProfile {
     metadata?: string;
 }
 
+export interface Phone {
+    country: string;
+    number: string;
+    validated_at: string | null;
+}
+
 export interface User {
     email: string;
     level: number;
@@ -22,4 +30,9 @@ export interface User {
     profiles: UserProfile[];
     csrf_token?: string;
     data?: string;
+    referal_uid: string | null;
+    labels: Label[];
+    phone: Phone[];
+    created_at: string;
+    updated_at: string;
 }

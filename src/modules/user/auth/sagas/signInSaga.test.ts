@@ -37,6 +37,11 @@ describe('SignIn saga', () => {
         state: 'active',
         profiles: [],
         data: '{\"language\":\"en\"}',
+        referal_uid: '',
+        labels: [],
+        phone: [],
+        created_at: '',
+        updated_at: '',
     };
 
     const mockSignIn = () => {
