@@ -118,7 +118,7 @@ const TradingWrapper = props => {
         // @ts-ignore
         return data.map((child: GridChildInterface) => (
             <div key={child.i}>
-                <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>}
+                <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>
             </div>
         ));
     }, [orderComponentResized, orderBookComponentResized]);
@@ -236,7 +236,7 @@ class Trading extends React.Component<Props, StateProps> {
 
     private setTradingTitle = (market: Market, tickers: ReduxProps['tickers']) => {
         const tickerPrice = tickers[market.id] ? tickers[market.id].last : '0.0';
-        document.title = `${Decimal.format(tickerPrice, market.price_precision)} ${market.name}`;
+        document.title = `${Decimal.format(tickerPrice, market.price_precision, ',')} ${market.name}`;
     };
 
     private handleResize = (layout, oldItem, newItem) => {

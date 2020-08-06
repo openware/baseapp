@@ -160,7 +160,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
 
         return (
             <span>
-                <Decimal fixed={fixed}>{fee.toString()}</Decimal> {currency.toUpperCase()}
+                <Decimal fixed={fixed} thousSep=",">{fee.toString()}</Decimal> {currency.toUpperCase()}
             </span>
         );
     };
@@ -171,7 +171,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
 
         return total ? (
             <span>
-                <Decimal fixed={fixed}>{total.toString()}</Decimal> {currency.toUpperCase()}
+                <Decimal fixed={fixed} thousSep=",">{total.toString()}</Decimal> {currency.toUpperCase()}
             </span>
         ) : <span>0 {currency.toUpperCase()}</span>;
     };

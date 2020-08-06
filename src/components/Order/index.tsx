@@ -294,13 +294,13 @@ export class Order extends React.Component<OrderComponentProps, State> {
                 switch (orderType) {
                     case 'Limit':
                         newAmount = available && +price ? (
-                            Decimal.format(available / +price * value, this.props.currentMarketAskPrecision)
+                            Decimal.format(available / +price * value, this.props.currentMarketAskPrecision, ',')
                         ) : '';
 
                         break;
                     case 'Market':
                         newAmount = available ? (
-                            Decimal.format(getAmount(Number(available), proposals, value), this.props.currentMarketAskPrecision)
+                            Decimal.format(getAmount(Number(available), proposals, value), this.props.currentMarketAskPrecision, ',')
                         ) : '';
 
                         break;
@@ -310,7 +310,7 @@ export class Order extends React.Component<OrderComponentProps, State> {
                 break;
             case 'sell':
                 newAmount = available ? (
-                    Decimal.format(available * value, this.props.currentMarketAskPrecision)
+                    Decimal.format(available * value, this.props.currentMarketAskPrecision, ',')
                 ) : '';
 
                 break;

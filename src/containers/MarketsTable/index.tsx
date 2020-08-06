@@ -109,18 +109,18 @@ class MarketsTableContainer extends React.Component<Props, State> {
         const formattedMarkets = currentBidUnitMarkets.length && currentBidUnitMarkets.map(market =>
             ({
                 ...market,
-                last: Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision),
-                open: Decimal.format(Number((marketTickers[market.id] || defaultTicker).open), market.price_precision),
+                last: Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision, ','),
+                open: Decimal.format(Number((marketTickers[market.id] || defaultTicker).open), market.price_precision, ','),
                 price_change_percent: String((marketTickers[market.id] || defaultTicker).price_change_percent),
-                high: Decimal.format(Number((marketTickers[market.id] || defaultTicker).high), market.amount_precision),
-                low: Decimal.format(Number((marketTickers[market.id] || defaultTicker).low), market.amount_precision),
-                volume: Decimal.format(Number((marketTickers[market.id] || defaultTicker).volume), market.amount_precision),
+                high: Decimal.format(Number((marketTickers[market.id] || defaultTicker).high), market.amount_precision, ','),
+                low: Decimal.format(Number((marketTickers[market.id] || defaultTicker).low), market.amount_precision, ','),
+                volume: Decimal.format(Number((marketTickers[market.id] || defaultTicker).volume), market.amount_precision, ','),
             }),
         ).map(market =>
             ({
                 ...market,
                 change: Decimal.format((+market.last - +market.open)
-                    .toFixed(market.price_precision), market.price_precision),
+                    .toFixed(market.price_precision), market.price_precision, ','),
             }),
         );
 

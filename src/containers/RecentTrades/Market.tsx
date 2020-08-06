@@ -97,8 +97,8 @@ class RecentTradesMarketContainer extends React.Component<Props> {
 
             return [
                 <span style={{ color: setTradeColor(taker_type).color }} key={i}>{higlightedDate}</span>,
-                <span style={{ color: setTradeColor(taker_type).color }} key={i}><Decimal fixed={amountFixed}>{amount}</Decimal></span>,
-                <span style={{ color: setTradeColor(taker_type).color }} key={i}><Decimal fixed={priceFixed} prevValue={trades[i - 1] ? trades[i - 1].price : 0}>{price}</Decimal></span>,
+                <span style={{ color: setTradeColor(taker_type).color }} key={i}><Decimal fixed={amountFixed} thousSep=",">{amount}</Decimal></span>,
+                <span style={{ color: setTradeColor(taker_type).color }} key={i}><Decimal fixed={priceFixed} prevValue={trades[i - 1] ? trades[i - 1].price : 0} thousSep=",">{price}</Decimal></span>,
             ];
         };
 

@@ -210,9 +210,9 @@ class HistoryComponent extends React.Component<Props> {
                     localeDate(created_at, 'fullDate'),
                     <span style={{ color: setTradesType(side).color }} key={id}>{sideText}</span>,
                     marketName,
-                    <Decimal key={id} fixed={marketToDisplay.price_precision}>{price}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{amount}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{total}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.price_precision} thousSep=",">{price}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{amount}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{total}</Decimal>,
                 ];
             }
             default: {
