@@ -60,6 +60,11 @@ const defaultUser = {
     state: '',
     uid: '',
     profiles: [],
+    referal_uid: '',
+    labels: [],
+    phone: [],
+    created_at: '',
+    updated_at: '',
 };
 
 export const initialStateProfile: ProfileState = {
