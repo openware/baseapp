@@ -44,12 +44,11 @@ const Modal = props => {
             <div className={bodyClassName}>
                 <div className="cr-mobile-modal__header">
                     <div className="cr-mobile-modal__header-back" onClick={handleOnBack}>
-                        {props.backTitle &&
-                        <React.Fragment>
-                          <ArrowIcon/>
-                          <span>{props.backTitle}</span>
-                        </React.Fragment>
-                        }
+                        {props.backTitle ?
+                            <React.Fragment>
+                              <ArrowIcon/>
+                              <span>{props.backTitle}</span>
+                            </React.Fragment> : null}
                     </div>
                     <div className="cr-mobile-modal__header-title">{props.title}</div>
                     <div className="cr-mobile-modal__header-close" onClick={handleOnClose}>

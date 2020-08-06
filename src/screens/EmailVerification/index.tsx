@@ -58,25 +58,25 @@ class EmailVerificationComponent extends React.Component<Props> {
                     <div className="pg-emailverification-body">
                         <div className="pg-emailverification-body-text">{text}</div>
                         {
-                            !isMobileDevice &&
-                            <div className="pg-emailverification-body-container">
-                                {emailVerificationLoading ? <Spinner animation="border" variant="primary"/> :
-                                    <button className="pg-emailverification-body-container-button"
-                                            onClick={this.handleClick}>{button}</button>}
-                            </div>
+                            !isMobileDevice && (
+                                <div className="pg-emailverification-body-container">
+                                    {emailVerificationLoading ? <Spinner animation="border" variant="primary"/> :
+                                        <button className="pg-emailverification-body-container-button"
+                                                onClick={this.handleClick}>{button}</button>}
+                                </div>)
                         }
                         {isMobileDevice &&
-                        <div className="pg-emailverification-body-container">
-                          <Button
-                            block={true}
-                            type="button"
-                            onClick={this.handleClick}
-                            size="lg"
-                            variant="primary"
-                          >
-                              {this.props.intl.formatMessage({ id:  'page.mobile.reset.header' })}
-                          </Button>
-                        </div>
+                            (<div className="pg-emailverification-body-container">
+                              <Button
+                                block={true}
+                                type="button"
+                                onClick={this.handleClick}
+                                size="lg"
+                                variant="primary"
+                              >
+                                  {this.props.intl.formatMessage({ id:  'page.mobile.reset.header' })}
+                              </Button>
+                            </div>)
                         }
                     </div>
                 </div>
