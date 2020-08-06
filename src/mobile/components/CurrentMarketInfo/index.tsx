@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Decimal } from '../../../components/Decimal';
 import { DEFAULT_CCY_PRECISION } from '../../../constants';
 import { selectCurrentMarket, selectMarketTickers } from '../../../modules';
+import { ChevronIcon } from '../../assets/images/ChevronIcon';
 
 const defaultTicker = {
     amount: '0.0',
@@ -20,6 +21,8 @@ const CurrentMarketInfoComponent = () => {
     const intl = useIntl();
     const currentMarket = useSelector(selectCurrentMarket);
     const tickers = useSelector(selectMarketTickers);
+    const [isOpenMarketSelector, setOpenMarketSelector] = React.useState(false);
+
     const currentMarketPricePrecision = currentMarket ? currentMarket.price_precision : DEFAULT_CCY_PRECISION;
     const currentMarketTicker = (currentMarket && tickers[currentMarket.id]) || defaultTicker;
     const currentMarketTickerChange = +(+currentMarketTicker.last - +currentMarketTicker.open).toFixed(currentMarketPricePrecision);
@@ -27,14 +30,20 @@ const CurrentMarketInfoComponent = () => {
         'change-positive': (+currentMarketTickerChange || 0) >= 0,
         'change-negative': (+currentMarketTickerChange || 0) < 0,
     });
+    const isOpenMarketSelectorClass = classnames('pg-mobile-current-market-info__left__selector__chevron', {
+        'pg-mobile-current-market-info__left__selector__chevron--open': isOpenMarketSelector,
+    });
 
     return (
         <div className="pg-mobile-current-market-info">
             <div className="pg-mobile-current-market-info__left">
-                <div className="pg-mobile-current-market-info__left__selector">
+                <div className="pg-mobile-current-market-info__left__selector" onClick={() => setOpenMarketSelector(!isOpenMarketSelector)}>
                     <span>{currentMarket ? currentMarket.name : ''}</span>
+                    <div className={isOpenMarketSelectorClass}>
+                        <ChevronIcon />
+                    </div>
                 </div>
-                <div className="pg-mobile-current-market-info__left__item">
+                <div className="pg-mobile-current-market-info__left__price-change">
                     <span className={currentMarketChangeClass}>
                         {Decimal.format(currentMarketTicker.last, currentMarketPricePrecision, ',')}
                     </span>
@@ -42,20 +51,18 @@ const CurrentMarketInfoComponent = () => {
                 </div>
             </div>
             <div className="pg-mobile-current-market-info__right">
-                <div className="pg-mobile-current-market-info__right__item">
+                <div className="pg-mobile-current-market-info__right__col">
                     <span>{intl.formatMessage({id: 'page.body.currentMarketInfo.volume'})}</span>
+                    <span>{intl.formatMessage({id: 'page.body.currentMarketInfo.high'})}</span>
+                    <span>{intl.formatMessage({id: 'page.body.currentMarketInfo.low'})}</span>
+                </div>
+                <div className="pg-mobile-current-market-info__right__col">
                     <span className={currentMarketChangeClass}>
                         {Decimal.format(currentMarketTicker.volume, currentMarketPricePrecision, ',')}
                     </span>
-                </div>
-                <div className="pg-mobile-current-market-info__right__item">
-                    <span>{intl.formatMessage({id: 'page.body.currentMarketInfo.high'})}</span>
                     <span className={currentMarketChangeClass}>
                         {Decimal.format(currentMarketTicker.high, currentMarketPricePrecision, ',')}
                     </span>
-                </div>
-                <div className="pg-mobile-current-market-info__right__item">
-                    <span>{intl.formatMessage({id: 'page.body.currentMarketInfo.low'})}</span>
                     <span className={currentMarketChangeClass}>
                         {Decimal.format(currentMarketTicker.low, currentMarketPricePrecision, ',')}
                     </span>

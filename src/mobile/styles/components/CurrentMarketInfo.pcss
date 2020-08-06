@@ -1,0 +1,126 @@
+.pg-mobile-current-market-info {
+  align-items: flex-start;
+  background: var(--body-background-color);
+  display: flex;
+  flex-direction: row;
+  height: 87px;
+  justify-content: space-between;
+  margin: 4px 0;
+  padding: 12px 14px;
+  width: 100%;
+
+  .change-positive {
+    color: var(--system-green);
+  }
+
+  .change-negative {
+    color: var(--system-red);
+  }
+
+  &__left {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    max-width: 50%;
+    padding-right: 14px;
+    width: 50%;
+
+    &__selector {
+      align-items: center;
+      background: var(--icons-level-2);
+      border-radius: 3px;
+      display: flex;
+      flex-direction: row;
+      height: 30px;
+      justify-content: space-between;
+      padding: 0 10px;
+      width: 100%;
+
+      span {
+        color: var(--primary-text-color);
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        line-height: 22px;
+      }
+
+      &__chevron {
+        transition: transform 0.2s;
+
+        &--open {
+          transform: rotate(-180deg);
+        }
+      }
+    }
+
+    &__price-change {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+
+      span {
+        align-items: center;
+        display: flex;
+        font-size: 12px;
+        height: 21px;
+        line-height: 15px;
+
+        &:first-child {
+          font-size: 20px;
+          font-weight: 500;
+          letter-spacing: 0.44px;
+          line-height: 24px;
+          padding-right: 8px;
+        }
+
+        &:last-child {
+          border-radius: 3px;
+          justify-content: center;
+          padding: 0 7px;
+        }
+
+        &:last-child.change-positive {
+          background: var(--system-green-level-1);
+        }
+
+        &:last-child.change-negative {
+          background: var(--system-red-level-1);
+        }
+      }
+    }
+  }
+
+  &__right {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    justify-content: center;
+    max-width: 50%;
+    width: max-content;
+
+    &__col {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 100%;
+
+      &:first-child > span {
+        padding-right: 12px;
+      }
+
+      span {
+        align-items: center;
+        color: var(--secondary-contrast-cta-color);
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+      }
+    }
+  }
+}
