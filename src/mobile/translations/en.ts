@@ -12,4 +12,5 @@ export const en = {
     'page.header.signUp.alreadyRegistered': 'Already registered?',
 
     'page.mobile.reset.header': 'Resend confirmation',
+    'page.mobile.signin.kyc.header': '2FA Verification',
 };
