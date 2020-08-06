@@ -24,24 +24,7 @@ const defaultTicker = {
     volume: '0.0',
 };
 
-const handleRedirectToTrading = (dispatch, history, markets: Market[], id: string) => {
-    const currentMarket: Market | undefined = markets.find(item => item.id === id);
-
-    if (currentMarket) {
-        dispatch(setCurrentMarket(currentMarket));
-        history.push(`/trading/${currentMarket.id}`);
-    }
-};
-
-const formatFilteredMarkets = (list: string[], market: Market) => {
-    if (!list.includes(market.quote_unit)) {
-        list.push(market.quote_unit);
-    }
-
-    return list;
-};
-
-const MarketsTableComponent = () => {
+const MarketsTableComponent = props => {
     const history = useHistory();
     const dispatch = useDispatch();
     const markets = useSelector(selectMarkets);
@@ -49,6 +32,24 @@ const MarketsTableComponent = () => {
     const marketTickers = useSelector(selectMarketTickers);
     const rangerState = useSelector(selectRanger);
     const [currentBidUnit, setCurrentBidUnit] = React.useState('');
+
+    const handleRedirectToTrading = (id: string) => {
+        const currentMarket: Market | undefined = markets.find(item => item.id === id);
+
+        if (currentMarket) {
+            props.handleChangeCurrentMarket && props.handleChangeCurrentMarket(currentMarket);
+            dispatch(setCurrentMarket(currentMarket));
+            history.push(`/trading/${currentMarket.id}`);
+        }
+    };
+
+    const formatFilteredMarkets = (list: string[], market: Market) => {
+        if (!list.includes(market.quote_unit)) {
+            list.push(market.quote_unit);
+        }
+
+        return list;
+    };
 
     React.useEffect(() => {
         if (!rangerState.connected) {
@@ -68,10 +69,10 @@ const MarketsTableComponent = () => {
         currentBidUnitsList = markets.reduce(formatFilteredMarkets, currentBidUnitsList);
     }
 
-    let currentBidUnitMarkets = markets;
+    let currentBidUnitMarkets = props.markets || markets;
 
     if (currentBidUnit) {
-        currentBidUnitMarkets = markets.length ? markets.filter(market => market.quote_unit === currentBidUnit) : [];
+        currentBidUnitMarkets = currentBidUnitMarkets.length ? currentBidUnitMarkets.filter(market => market.quote_unit === currentBidUnit) : [];
     }
 
     const formattedMarkets = currentBidUnitMarkets.length ? currentBidUnitMarkets.map(market =>
@@ -97,7 +98,7 @@ const MarketsTableComponent = () => {
             currentBidUnit={currentBidUnit}
             currentBidUnitsList={currentBidUnitsList}
             markets={formattedMarkets}
-            redirectToTrading={id => handleRedirectToTrading(dispatch, history, markets, id)}
+            redirectToTrading={handleRedirectToTrading}
             setCurrentBidUnit={setCurrentBidUnit}
         />
     );

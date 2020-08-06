@@ -3,7 +3,7 @@ import * as React from 'react';
 import { CloseIcon } from '../../../assets/images/CloseIcon';
 import { ArrowIcon } from '../../../containers/ToolBar/icons/ArrowIcon';
 
-const Modal = props => {
+const ModalComponent = props => {
     const [shouldAnimate, setShouldAnimate] = React.useState(false);
 
     React.useEffect(() => {
@@ -32,6 +32,24 @@ const Modal = props => {
         }, 200);
     };
 
+    const renderDefaultHeader = () => {
+        return (
+            <div className="cr-mobile-modal__header">
+                <div className="cr-mobile-modal__header-back" onClick={handleOnBack}>
+                    {props.backTitle ?
+                        <React.Fragment>
+                        <ArrowIcon/>
+                        <span>{props.backTitle}</span>
+                        </React.Fragment> : null}
+                </div>
+                <div className="cr-mobile-modal__header-title">{props.title}</div>
+                <div className="cr-mobile-modal__header-close" onClick={handleOnClose}>
+                    <CloseIcon />
+                </div>
+            </div>
+        );
+    };
+
     const modalClassName = classnames('cr-mobile-modal', {
         'cr-mobile-modal--open': shouldAnimate,
     });
@@ -42,25 +60,11 @@ const Modal = props => {
     return (
         <div className={modalClassName}>
             <div className={bodyClassName}>
-                <div className="cr-mobile-modal__header">
-                    <div className="cr-mobile-modal__header-back" onClick={handleOnBack}>
-                        {props.backTitle ?
-                            <React.Fragment>
-                              <ArrowIcon/>
-                              <span>{props.backTitle}</span>
-                            </React.Fragment> : null}
-                    </div>
-                    <div className="cr-mobile-modal__header-title">{props.title}</div>
-                    <div className="cr-mobile-modal__header-close" onClick={handleOnClose}>
-                        <CloseIcon />
-                    </div>
-                </div>
+                {props.header || renderDefaultHeader()}
                 {props.children}
             </div>
         </div>
     );
 };
 
-export {
-    Modal,
-};
+export const Modal = React.memo(ModalComponent);

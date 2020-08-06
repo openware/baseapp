@@ -2,10 +2,13 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Decimal } from '../../../components/Decimal';
+import { CloseIcon } from '../../../assets/images/CloseIcon';
+import { Decimal, FilterInput } from '../../../components';
 import { DEFAULT_CCY_PRECISION } from '../../../constants';
-import { selectCurrentMarket, selectMarketTickers } from '../../../modules';
+import { MarketsTable } from '../../../containers';
+import { Market, selectCurrentMarket, selectMarkets, selectMarketTickers } from '../../../modules';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
+import { Modal } from '../../components';
 
 const defaultTicker = {
     amount: '0.0',
@@ -20,8 +23,39 @@ const defaultTicker = {
 const CurrentMarketInfoComponent = () => {
     const intl = useIntl();
     const currentMarket = useSelector(selectCurrentMarket);
+    const markets = useSelector(selectMarkets);
     const tickers = useSelector(selectMarketTickers);
     const [isOpenMarketSelector, setOpenMarketSelector] = React.useState(false);
+    const [filteredMarkets, setFilteredMarkets] = React.useState(markets);
+    const [marketsSearchKey, setMarketsSearchKey] = React.useState('');
+
+    const searchFilter = (row: Market, searchKey: string) => {
+        setMarketsSearchKey(searchKey);
+
+        return row ? (row.name as string).toLowerCase().includes(searchKey.toLowerCase()) : false;
+    };
+
+    const handleFilter = (result: object[]) => {
+        setFilteredMarkets(result as Market[]);
+    };
+
+    const renderModalHeader = () => {
+        return (
+            <div className="cr-mobile-modal__header">
+                <div className="cr-mobile-modal__header-search">
+                    <FilterInput
+                        data={markets}
+                        onFilter={handleFilter}
+                        filter={searchFilter}
+                        placeholder={intl.formatMessage({id: 'page.body.currentMarketInfo.search.placeholder'})}
+                    />
+                </div>
+                <div className="cr-mobile-modal__header-close" onClick={() => setOpenMarketSelector(false)}>
+                    <CloseIcon />
+                </div>
+            </div>
+        );
+    };
 
     const currentMarketPricePrecision = currentMarket ? currentMarket.price_precision : DEFAULT_CCY_PRECISION;
     const currentMarketTicker = (currentMarket && tickers[currentMarket.id]) || defaultTicker;
@@ -33,6 +67,10 @@ const CurrentMarketInfoComponent = () => {
     const isOpenMarketSelectorClass = classnames('pg-mobile-current-market-info__left__selector__chevron', {
         'pg-mobile-current-market-info__left__selector__chevron--open': isOpenMarketSelector,
     });
+
+    React.useEffect(() => {
+        setOpenMarketSelector(false);
+    }, [currentMarket]);
 
     return (
         <div className="pg-mobile-current-market-info">
@@ -68,6 +106,16 @@ const CurrentMarketInfoComponent = () => {
                     </span>
                 </div>
             </div>
+            <Modal
+                header={renderModalHeader()}
+                isOpen={isOpenMarketSelector}
+                onClose={() => setOpenMarketSelector(!isOpenMarketSelector)}
+                title={intl.formatMessage({ id: 'page.header.signUp.modal.header' })}>
+                <MarketsTable
+                    handleChangeCurrentMarket={() => setOpenMarketSelector(false)}
+                    markets={marketsSearchKey && filteredMarkets}
+                />
+            </Modal>
         </div>
     );
 };
