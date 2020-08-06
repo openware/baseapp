@@ -18,7 +18,7 @@ const setup = (props: Partial<IntlProps> = {}) =>
     );
 
 
-describe('ChangeForgottenPasswordScreen test', () => {
+describe('VerificationScreen test', () => {
     it('should render', () => {
         const wrapper = setup();
         expect(wrapper).toMatchSnapshot();
