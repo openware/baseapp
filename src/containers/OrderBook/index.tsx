@@ -176,7 +176,7 @@ class OrderBookContainer extends React.Component<Props, State> {
                     total = isLarge ? accumulateVolume(array) : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
 
                     return [
-                        <span key={i}><Decimal fixed={priceFixed} prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal></span>,
+                        <span key={i}><Decimal fixed={priceFixed} prevValue={array[i + 1] ? array[i + 1][0] : 0} thousSep=",">{price}</Decimal></span>,
                         <Decimal key={i} fixed={amountFixed} thousSep="," >{volume}</Decimal>,
                         <Decimal key={i} fixed={amountFixed} thousSep="," >{total[i]}</Decimal>,
                     ];
@@ -185,11 +185,11 @@ class OrderBookContainer extends React.Component<Props, State> {
                         return [
                             <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
                             <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
-                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
+                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0} thousSep=",">{price}</Decimal></span>,
                             ];
                     } else {
                         return [
-                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
+                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0} thousSep=",">{price}</Decimal></span>,
                             <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
                             <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
                             ];

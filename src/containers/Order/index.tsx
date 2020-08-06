@@ -188,7 +188,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             ord_type: (orderType as string).toLowerCase(),
         };
 
-        const order = orderType === 'Limit' ? { ...resultData, price: price.toString() } : resultData;
+        const currentPrice = price.toString().split(',').join('');
+
+        const order = orderType === 'Limit' ? { ...resultData, price: currentPrice } : resultData;
         let orderAllowed = true;
 
         if (+resultData.volume < +currentMarket.min_amount) {
@@ -203,7 +205,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if (+price < +currentMarket.min_price) {
+        if (+currentPrice < +currentMarket.min_price) {
             this.props.pushAlert({
                 message: [this.props.intl.formatMessage(
                     { id: 'error.order.create.minPrice' },
@@ -215,7 +217,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if (+currentMarket.max_price && +price > +currentMarket.max_price) {
+        if (+currentMarket.max_price && +currentPrice > +currentMarket.max_price) {
             this.props.pushAlert({
                 message: [this.props.intl.formatMessage(
                     { id: 'error.order.create.maxPrice' },
@@ -227,7 +229,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if ((+available < (+amount * +price) && order.side === 'buy') ||
+        if ((+available < (+amount * +currentPrice) && order.side === 'buy') ||
             (+available < +amount && order.side === 'sell')) {
             this.props.pushAlert({
                 message: [this.props.intl.formatMessage(
