@@ -6,3 +6,4 @@ export * from './Landing';
 export * from './SignInScreen';
 export * from './SignUpScreen';
 export * from './Trading';
+export * from './WalletsScreen';
