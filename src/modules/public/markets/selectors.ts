@@ -10,6 +10,9 @@ export const selectMarkets = (state: RootState): Market[] =>
 export const selectMarketsLoading = (state: RootState): boolean | undefined =>
     selectMarketsState(state).loading;
 
+export const selectMarketsTimestamp = (state: RootState): number | undefined =>
+    selectMarketsState(state).timestamp;
+
 export const selectCurrentMarket = (state: RootState): Market | undefined =>
     selectMarketsState(state).currentMarket;
 
