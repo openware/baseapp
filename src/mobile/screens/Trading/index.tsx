@@ -10,7 +10,7 @@ import {
 } from '../../../modules';
 import { rangerConnectFetch } from '../../../modules/public/ranger';
 import { selectRanger } from '../../../modules/public/ranger/selectors';
-import { CurrentMarketInfo } from '../../components';
+import { CurrentMarketInfo, TradingTabs } from '../../components';
 
 const TradingComponent = () => {
     const dispatch = useDispatch();
@@ -40,6 +40,7 @@ const TradingComponent = () => {
     return (
         <div className="pg-trading-screen-mobile">
             <CurrentMarketInfo />
+            <TradingTabs />
         </div>
     );
 };
