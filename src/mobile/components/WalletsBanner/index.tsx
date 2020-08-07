@@ -1,14 +1,24 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
+import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
+import { selectCurrencies, selectMarkets, selectMarketTickers, selectWallets } from '../../../modules';
+import { useCurrenciesFetch, useMarketsFetch, useTickersFetch, useWalletsFetch } from '../../hooks';
 
-interface Props {
-    estimatedValue: string;
-    estimateUnitValue: string;
-}
-
-const WalletsBanner = React.memo((props: Props) => {
+const WalletsBanner = React.memo(() => {
     const intl = useIntl();
+    const wallets = useSelector(selectWallets);
+    const markets = useSelector(selectMarkets);
+    const currencies = useSelector(selectCurrencies);
+    const tickers = useSelector(selectMarketTickers);
+    const estimatedValue = estimateValue(VALUATION_PRIMARY_CURRENCY, currencies, wallets, markets, tickers);
+    const estimatedSecondaryValue = estimateUnitValue(VALUATION_SECONDARY_CURRENCY, VALUATION_PRIMARY_CURRENCY, +estimatedValue, currencies, markets, tickers);
+
+    useWalletsFetch();
+    useMarketsFetch();
+    useCurrenciesFetch();
+    useTickersFetch();
 
     return (
         <div className="cr-mobile-wallets-banner">
@@ -17,11 +27,11 @@ const WalletsBanner = React.memo((props: Props) => {
             </div>
             <div className="cr-mobile-wallets-banner__body">
                 <div className="cr-mobile-wallets-banner__body-wrap">
-                    <span className="cr-mobile-wallets-banner__body-number">{props.estimatedValue}</span>
+                    <span className="cr-mobile-wallets-banner__body-number">{estimatedValue}</span>
                     <span className="cr-mobile-wallets-banner__body-currency">{VALUATION_PRIMARY_CURRENCY.toUpperCase()}</span>
                 </div>
                 <div className="cr-mobile-wallets-banner__body-wrap">
-                    <span className="cr-mobile-wallets-banner__body-number">{props.estimateUnitValue}</span>
+                    <span className="cr-mobile-wallets-banner__body-number">{estimatedSecondaryValue}</span>
                     <span className="cr-mobile-wallets-banner__body-currency">{VALUATION_SECONDARY_CURRENCY.toUpperCase()}</span>
                 </div>
             </div>

@@ -1,15 +1,18 @@
 import * as React from 'react';
 import { CryptoIcon } from '../../../components/CryptoIcon';
+import { areEqualSelectedProps } from '../../../helpers/areEqualSelectedProps';
 
 interface Props {
-    iconUrl?: string;
-    currency: string;
-    name: string;
-    balance?: string;
+    wallet: {
+        iconUrl?: string;
+        currency: string;
+        name: string;
+        balance?: string;
+    };
 }
 
-const WalletItem = React.memo((props: Props) => {
-    const { currency, name, balance } = props;
+const WalletItemComponent = (props: Props) => {
+    const { wallet: { currency, name, balance } } = props;
 
     return (
         <div className="cr-mobile-wallet-item">
@@ -23,7 +26,9 @@ const WalletItem = React.memo((props: Props) => {
             </div>
         </div>
     );
-});
+};
+
+const WalletItem = React.memo(WalletItemComponent, areEqualSelectedProps('wallet', ['currency', 'name', 'balance']));
 
 export {
     WalletItem,
