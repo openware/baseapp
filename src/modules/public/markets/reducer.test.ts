@@ -63,6 +63,7 @@ describe('Markets reducer', () => {
         const expectedState: MarketsState = {
             ...initialMarketsState,
             loading: true,
+            timestamp: Math.floor(Date.now() / 1000),
         };
         expect(marketsReducer(initialMarketsState, actions.marketsFetch())).toEqual(expectedState);
     });

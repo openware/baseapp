@@ -8,6 +8,7 @@ import {
     marketsTickersFetch,
     selectMarkets,
     selectMarketsLoading,
+    selectMarketsTimestamp,
     selectMarketTickers,
     setCurrentMarket,
 } from '../../modules';
@@ -29,6 +30,7 @@ const MarketsTableComponent = props => {
     const dispatch = useDispatch();
     const markets = useSelector(selectMarkets);
     const marketsLoading = useSelector(selectMarketsLoading);
+    const marketsTimestamp = useSelector(selectMarketsTimestamp);
     const marketTickers = useSelector(selectMarketTickers);
     const rangerState = useSelector(selectRanger);
     const [currentBidUnit, setCurrentBidUnit] = React.useState('');
@@ -56,12 +58,18 @@ const MarketsTableComponent = props => {
             dispatch(rangerConnectFetch({ withAuth: false }));
         }
 
-        if (!markets.length && !marketsLoading) {
+        if (!markets.length && !marketsLoading && !marketsTimestamp) {
             dispatch(marketsFetch());
             dispatch(marketsTickersFetch());
         }
 
-    }, [dispatch, rangerState.connected, markets, marketsLoading]);
+    }, [
+        dispatch,
+        markets,
+        marketsLoading,
+        marketsTimestamp,
+        rangerState.connected,
+    ]);
 
     let currentBidUnitsList: string[] = [''];
 
