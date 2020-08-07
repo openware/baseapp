@@ -5,6 +5,7 @@ import {
     marketsTickersFetch,
     selectMarkets,
     selectMarketsLoading,
+    selectMarketsTimestamp,
     selectUserLoggedIn,
 } from '../../../modules';
 import { rangerConnectFetch } from '../../../modules/public/ranger';
@@ -17,6 +18,7 @@ const TradingComponent = () => {
     const { connected, withAuth } = useSelector(selectRanger);
     const markets = useSelector(selectMarkets);
     const marketsLoading = useSelector(selectMarketsLoading);
+    const marketsTimestamp = useSelector(selectMarketsTimestamp);
 
     React.useEffect(() => {
         if (!connected) {
@@ -29,11 +31,11 @@ const TradingComponent = () => {
     }, [dispatch, connected, withAuth, userLoggedIn]);
 
     React.useEffect(() => {
-        if (!markets.length && !marketsLoading) {
+        if (!markets.length && !marketsLoading && !marketsTimestamp) {
             dispatch(marketsFetch());
             dispatch(marketsTickersFetch());
         }
-    }, [dispatch, withAuth, markets, marketsLoading]);
+    }, [dispatch, markets, marketsLoading, marketsTimestamp]);
 
     return (
         <div className="pg-trading-screen-mobile">
