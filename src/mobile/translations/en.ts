@@ -6,10 +6,14 @@ export const en = {
     'page.mobile.footer.wallets': 'Wallets',
     'page.mobile.footer.profile': 'Profile',
 
-    'page.body.currentMarketInfo.search.placeholder': 'Search',
-    'page.body.currentMarketInfo.volume': 'Vol',
-    'page.body.currentMarketInfo.high': 'High',
-    'page.body.currentMarketInfo.low': 'Low',
+    'page.mobile.tradingTabs.label.createOrder': 'Create Order',
+    'page.mobile.tradingTabs.label.charts': 'Charts',
+    'page.mobile.tradingTabs.label.orders': 'Orders',
+
+    'page.mobile.currentMarketInfo.search.placeholder': 'Search',
+    'page.mobile.currentMarketInfo.volume': 'Vol',
+    'page.mobile.currentMarketInfo.high': 'High',
+    'page.mobile.currentMarketInfo.low': 'Low',
 
     'page.header.signIn.forgotPassword': 'Forgot password?',
     'page.header.signIN.noAccountYet': 'No account yet?',
