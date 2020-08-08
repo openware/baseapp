@@ -5,7 +5,7 @@ import { selectWallets } from '../../../modules/user/wallets';
 import { WalletItem, WalletsBanner } from '../../components';
 
 const WalletsMobileScreen = () => {
-    const wallets = useSelector(selectWallets);
+    const wallets = useSelector(selectWallets) || [];
 
     useWalletsFetch();
 
