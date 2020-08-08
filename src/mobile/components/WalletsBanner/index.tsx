@@ -3,8 +3,8 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
+import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useWalletsFetch } from '../../../hooks';
 import { selectCurrencies, selectMarkets, selectMarketTickers, selectWallets } from '../../../modules';
-import { useCurrenciesFetch, useMarketsFetch, useTickersFetch, useWalletsFetch } from '../../hooks';
 
 const WalletsBanner = React.memo(() => {
     const intl = useIntl();
@@ -18,7 +18,7 @@ const WalletsBanner = React.memo(() => {
     useWalletsFetch();
     useMarketsFetch();
     useCurrenciesFetch();
-    useTickersFetch();
+    useMarketsTickersFetch();
 
     return (
         <div className="cr-mobile-wallets-banner">

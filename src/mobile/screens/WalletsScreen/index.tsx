@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+import { useWalletsFetch } from '../../../hooks';
 import { selectWallets } from '../../../modules/user/wallets';
 import { WalletItem, WalletsBanner } from '../../components';
-import { useWalletsFetch } from '../../hooks';
 
 const WalletsMobileScreen = () => {
     const wallets = useSelector(selectWallets);

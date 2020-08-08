@@ -11,6 +11,9 @@ export const selectWalletsLoading = (state: RootState): boolean =>
 export const selectWithdrawSuccess = (state: RootState): boolean =>
     state.user.wallets.wallets.withdrawSuccess;
 
+export const selectWalletsTimestamp = (state: RootState): number | undefined =>
+    state.user.wallets.wallets.timestamp;
+
 export const selectWalletsAddressError = (state: RootState): CommonError | undefined =>
     state.user.wallets.wallets.error;
 
@@ -22,3 +25,6 @@ export const selectWalletCurrency = (state: RootState): string =>
 
 export const selectWalletAddress = (state: RootState): string =>
     state.user.wallets.wallets.selectedWalletAddress;
+
+export const selectShouldFetchWallets = (state: RootState): boolean =>
+    !selectWalletsTimestamp(state);

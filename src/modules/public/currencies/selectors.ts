@@ -10,3 +10,9 @@ export const selectCurrencies = (state: RootState): Currency[] =>
 
 export const selectCurrenciesLoading = (state: RootState): boolean | undefined =>
     selectCurrenciesState(state).loading;
+
+export const selectCurrenciesTimestamp = (state: RootState): number | undefined =>
+    selectCurrenciesState(state).timestamp;
+
+export const selectShouldFetchCurrencies = (state: RootState): boolean =>
+    !selectCurrenciesTimestamp(state);

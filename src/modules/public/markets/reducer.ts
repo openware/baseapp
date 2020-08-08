@@ -21,6 +21,7 @@ export interface MarketsState extends CommonState {
     tickerLoading: boolean;
     loading: boolean;
     timestamp?: number;
+    tickersTimestamp?: number;
 }
 
 export const initialMarketsState: MarketsState = {
@@ -71,6 +72,7 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
             return {
                 ...state,
                 tickerLoading: true,
+                tickersTimestamp: Math.floor(Date.now() / 1000),
             };
         case MARKETS_TICKERS_DATA:
             return {
