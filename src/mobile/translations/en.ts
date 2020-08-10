@@ -22,4 +22,7 @@ export const en = {
 
     'page.mobile.reset.header': 'Resend confirmation',
     'page.mobile.signin.kyc.header': '2FA Verification',
+
+    'page.mobile.wallets.deposit.history': 'Deposit history',
+    'page.mobile.wallets.withdraw.history': 'Withdraw history',
 };
