@@ -1,42 +1,52 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { Table} from '../../../components';
-import { FailIcon } from '../../../containers/Wallets/FailIcon';
-import { SucceedIcon } from '../../../containers/Wallets/SucceedIcon';
+import {useDispatch, useSelector} from 'react-redux';
+import { Pagination, Table } from '../../../components';
 import { localeDate } from '../../../helpers';
 import { useCurrenciesFetch, useHistoryFetch, useWalletsFetch } from '../../../hooks';
+import { fetchHistory, RootState, selectCurrentPage, selectLastElemIndex, selectNextPageExists } from '../../../modules';
 import { selectCurrencies } from '../../../modules/public/currencies';
-import { selectHistory } from '../../../modules/user/history';
+import { selectFirstElemIndex, selectHistory } from '../../../modules/user/history';
 import { selectWallets } from '../../../modules/user/wallets';
 import { RowItem } from './Rowitem';
 
 const HistoryTable = (props: any) => {
+    const dispatch = useDispatch();
+    const intl = useIntl();
+    const page = useSelector(selectCurrentPage);
     const list = useSelector(selectHistory);
     const wallets = useSelector(selectWallets);
     const currencies = useSelector(selectCurrencies);
-    const intl = useIntl();
+    const firstElemIndex = useSelector((state: RootState) => selectFirstElemIndex(state, 6));
+    const lastElemIndex = useSelector((state: RootState) => selectLastElemIndex(state, 6));
+    const nextPageExists = useSelector((state: RootState) => selectNextPageExists(state, 6));
 
     useWalletsFetch();
     useCurrenciesFetch();
     useHistoryFetch({ type: props.type, currency: props.currency });
 
+    const onClickPrevPage = () => {
+        dispatch(fetchHistory({ page: Number(page) - 1, type: props.type, limit: 6 }));
+    };
+    const onClickNextPage = () => {
+        dispatch(fetchHistory({ page: Number(page) + 1, type: props.type, limit: 6 }));
+    };
     const formatTxState = (tx: string, confirmations?: number, minConfirmations?: number) => {
         const statusMapping = {
-            succeed: 'Completed',
-            failed: <FailIcon />,
-            accepted: 'Accepted',
-            collected: 'Collected',
-            canceled: <FailIcon />,
-            rejected: <FailIcon />,
-            processing: intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
-            prepared: intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
-            submitted: (confirmations !== undefined && minConfirmations !== undefined) ? (
+            succeed: <span className="cr-mobile-history-table--success">{intl.formatMessage({ id: 'page.body.history.withdraw.content.status.succeed' })}</span>,
+            failed:  <span className="cr-mobile-history-table--failed">{intl.formatMessage({ id: 'page.body.history.withdraw.content.status.failed' })}</span>,
+            accepted: <span className="cr-mobile-history-table--success">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.accepted' })}</span>,
+            collected: <span className="cr-mobile-history-table--success">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.collected' })}</span>,
+            canceled: <span className="cr-mobile-history-table--failed">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.canceled' })}</span>,
+            rejected: <span className="cr-mobile-history-table--failed">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.rejected' })}</span>,
+            processing: <span className="cr-mobile-history-table--pending">{intl.formatMessage({ id: 'page.body.wallets.table.pending' })}</span>,
+            prepared: <span className="cr-mobile-history-table--pending">{intl.formatMessage({ id: 'page.body.wallets.table.pending' })}</span>,
+            submitted: <span className="cr-mobile-history-table--pending">{(confirmations !== undefined && minConfirmations !== undefined) ? (
                 `${confirmations}/${minConfirmations}`
             ) : (
                 intl.formatMessage({ id: 'page.body.wallets.table.pending' })
-            ),
-            skipped: <SucceedIcon />,
+                )}</span>,
+            skipped: <span className="cr-mobile-history-table--success">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.skipped' })}</span>,
         };
 
         return statusMapping[tx];
@@ -80,6 +90,14 @@ const HistoryTable = (props: any) => {
     return (
         <div className="cr-mobile-history-table">
             <Table data={tableData}/>
+            <Pagination
+                firstElemIndex={firstElemIndex}
+                lastElemIndex={lastElemIndex}
+                page={page}
+                nextPageExists={nextPageExists}
+                onClickPrevPage={onClickPrevPage}
+                onClickNextPage={onClickNextPage}
+            />
         </div>
     );
 };

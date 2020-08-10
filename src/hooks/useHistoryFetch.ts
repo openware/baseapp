@@ -6,6 +6,6 @@ export const useHistoryFetch = ({ type, currency }) => {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        dispatch(fetchHistory({ type, limit: 6, currency, page: 1 }));
+        dispatch(fetchHistory({ type, limit: 6, currency, page: 0 }));
     }, [dispatch, type, currency]);
 };
