@@ -17,6 +17,7 @@ import {
     selectDepthBids,
     selectDepthLoading,
     selectMarketTickers,
+    selectMobileDeviceState,
     selectOpenOrdersList,
     setCurrentPrice,
     Ticker,
@@ -31,6 +32,7 @@ interface ReduxProps {
     currentPrice?: number;
     openOrdersList: OrderCommon[];
     orderBookLoading: boolean;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -138,7 +140,7 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private lastPrice = () => {
-        const { marketTickers, currentMarket } = this.props;
+        const { currentMarket, isMobileDevice, marketTickers } = this.props;
         const currentTicker = currentMarket && this.getTickerValue(currentMarket, marketTickers);
 
         if (currentMarket && currentTicker) {
@@ -150,7 +152,8 @@ class OrderBookContainer extends React.Component<Props, State> {
             return (
                 <React.Fragment>
                     <span className={cn}>
-                        {Decimal.format(+(currentTicker.last), currentMarket.price_precision)} {currentMarket.quote_unit.toUpperCase()}
+                        {Decimal.format(+(currentTicker.last), currentMarket.price_precision)}&nbsp;
+                        {isMobileDevice ? null : currentMarket.quote_unit.toUpperCase()}
                     </span>
                     <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
                 </React.Fragment>
@@ -161,7 +164,18 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private renderHeaders = () => {
-        const { intl, currentMarket } = this.props;
+        const {
+            currentMarket,
+            intl,
+            isMobileDevice,
+        } = this.props;
+
+        if (isMobileDevice) {
+            return [
+                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n(${currentMarket && currentMarket.quote_unit.toUpperCase()})`,
+                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n(${currentMarket && currentMarket.base_unit.toUpperCase()})`,
+            ];
+        }
 
         return [
             `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n(${currentMarket && currentMarket.quote_unit.toUpperCase()})`,
@@ -171,6 +185,7 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private renderOrderBook = (array: string[][], side: string, message: string, currentMarket?: Market) => {
+        const { isMobileDevice } = this.props;
         let total = accumulateVolume(array);
         const isLarge = this.state.width > breakpoint;
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
@@ -182,6 +197,13 @@ class OrderBookContainer extends React.Component<Props, State> {
                 case 'asks':
                     total = isLarge ? accumulateVolume(array) : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
 
+                    if (isMobileDevice) {
+                        return [
+                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal></span>,
+                            <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                        ];
+                    }
+
                     return [
                         <span key={i}><Decimal fixed={priceFixed} prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal></span>,
                         <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
@@ -189,17 +211,31 @@ class OrderBookContainer extends React.Component<Props, State> {
                     ];
                 default:
                     if (isLarge) {
+                        if (isMobileDevice) {
+                            return [
+                                <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                                <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
+                            ];
+                        }
+
                         return [
                             <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
                             <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
                             <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
-                            ];
+                        ];
                     } else {
+                        if (isMobileDevice) {
+                            return [
+                                <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
+                                <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                            ];
+                        }
+
                         return [
                             <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
                             <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
                             <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
-                            ];
+                        ];
                     }
             }
         }) : [[[''], message]];
@@ -239,6 +275,7 @@ const mapStateToProps = (state: RootState) => ({
     currentPrice: selectCurrentPrice(state),
     marketTickers: selectMarketTickers(state),
     openOrdersList: selectOpenOrdersList(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
