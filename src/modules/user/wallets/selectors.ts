@@ -27,4 +27,4 @@ export const selectWalletAddress = (state: RootState): string =>
     state.user.wallets.wallets.selectedWalletAddress;
 
 export const selectShouldFetchWallets = (state: RootState): boolean =>
-    !selectWalletsTimestamp(state);
+    !selectWalletsTimestamp(state) && !selectWalletsLoading(state);
