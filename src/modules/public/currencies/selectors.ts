@@ -15,4 +15,4 @@ export const selectCurrenciesTimestamp = (state: RootState): number | undefined 
     selectCurrenciesState(state).timestamp;
 
 export const selectShouldFetchCurrencies = (state: RootState): boolean =>
-    !selectCurrenciesTimestamp(state);
+    !selectCurrenciesTimestamp(state) && !selectCurrenciesLoading(state);

@@ -23,7 +23,7 @@ export const selectMarketTickers = (state: RootState): MarketsState['tickers'] =
     selectMarketsState(state).tickers;
 
 export const selectShouldFetchMarkets = (state: RootState): boolean =>
-    !selectMarketsTimestamp(state);
+    !selectMarketsTimestamp(state) && !selectMarketsLoading(state);
 
 export const selectShouldFetchMarketsTickers = (state: RootState): boolean =>
     !selectMarketsTickersTimestamp(state);
