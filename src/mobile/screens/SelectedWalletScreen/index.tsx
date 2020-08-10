@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { useWalletsFetch } from '../../../hooks';
 import { selectWallets } from '../../../modules/user/wallets';
-import { WalletBanner, WalletHeader, WalletsHistory } from '../../components';
+import { WalletBanner, WalletHeader, WalletsButtons } from '../../components';
+import { WalletsHistory } from '../WalletsHistory';
 
 const SelectedWalletMobileScreen = ()  =>  {
     const { currency } = useParams();
@@ -15,12 +16,10 @@ const SelectedWalletMobileScreen = ()  =>  {
 
     return (
         <React.Fragment>
-            <WalletHeader
-                currency={wallet.currency}
-                name={wallet.name}
-            />
+            <WalletHeader currency={wallet.currency} name={wallet.name}/>
             <WalletBanner wallet={wallet}/>
             <WalletsHistory />
+            <WalletsButtons/>
         </React.Fragment>
     );
 };

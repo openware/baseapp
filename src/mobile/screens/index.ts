@@ -7,4 +7,5 @@ export * from './SignInScreen';
 export * from './SignUpScreen';
 export * from './Trading';
 export * from './WalletsScreen';
-export * from './SelectedWalletScreen'
+export * from './SelectedWalletScreen';
+export * from './WalletsHistory';

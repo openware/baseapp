@@ -7,4 +7,4 @@ export * from './Modal';
 export * from './TradingTabs';
 export * from './WalletHeader';
 export * from './WalletBanner';
-export * from '../screens/WalletsHistory';
+export * from './WalletsButtons';
