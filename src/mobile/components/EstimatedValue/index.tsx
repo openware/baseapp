@@ -6,7 +6,7 @@ import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue
 import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useWalletsFetch } from '../../../hooks';
 import { selectCurrencies, selectMarkets, selectMarketTickers, selectWallets } from '../../../modules';
 
-const WalletsBanner = React.memo(() => {
+const EstimatedValueMobile = React.memo(() => {
     const intl = useIntl();
     const wallets = useSelector(selectWallets);
     const markets = useSelector(selectMarkets);
@@ -40,5 +40,5 @@ const WalletsBanner = React.memo(() => {
 });
 
 export {
-    WalletsBanner,
+    EstimatedValueMobile,
 };

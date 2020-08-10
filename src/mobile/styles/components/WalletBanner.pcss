@@ -1,0 +1,33 @@
+.cr-wallet-banner-mobile {
+  height: 87px;
+  background: var(--body-background-color);
+  margin-top: 4px;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+
+    &-title  {
+      font-size: 12px;
+    }
+
+    &-info {
+      font-size: 16px;
+
+      &-currency {
+        text-transform: uppercase;
+        font-size: 16px;
+        color: var(--primary-text-color);
+        padding-left: 5px;
+      }
+    }
+
+    &:first-child {
+      margin-right: 32px;
+    }
+  }
+}

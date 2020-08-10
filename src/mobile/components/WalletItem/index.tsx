@@ -9,13 +9,14 @@ interface Props {
         name: string;
         balance?: string;
     };
+    onClick: (v: string) => void;
 }
 
 const WalletItemComponent = (props: Props) => {
     const { wallet: { currency, name, balance } } = props;
 
     return (
-        <div className="cr-mobile-wallet-item">
+        <div className="cr-mobile-wallet-item" onClick={() => props.onClick(currency)}>
             <div>
                 <CryptoIcon className="cr-wallet-item__icon" code={currency.toUpperCase()} />
                 <span className="cr-mobile-wallet-item__currency">{currency}</span>

@@ -15,6 +15,7 @@ import {
     EmailVerificationMobileScreen,
     ForgotPasswordMobileScreen,
     LandingScreenMobile,
+    SelectedWalletMobileScreen,
     SignInMobileScreen,
     SignUpMobileScreen,
     TradingScreenMobile,
@@ -269,7 +270,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationMobileScreen} />
-
+                        <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets/:currency/history" component={SelectedWalletMobileScreen} />
                         <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsMobileScreen} />
                         <Route exact={true} path="/trading/:market?" component={TradingScreenMobile} />
                         {showLanding() && <Route exact={true} path="/" component={LandingScreenMobile} />}

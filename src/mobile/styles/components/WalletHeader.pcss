@@ -1,0 +1,33 @@
+.cr-wallet-mobile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 87px;
+  background: var(--body-background-color);
+  margin-top: 4px;
+  margin-bottom: 4px;
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+
+    &-currency {
+      text-transform: uppercase;
+      font-size: 16px;
+      color: var(--primary-text-color);
+    }
+
+    &-name {
+      font-size: 14px;
+    }
+  }
+
+  .cr-wallet-item__icon {
+    margin-left: 0;
+    img {
+      width: 48px;
+      margin-right: 12px;
+      height: 48px;
+    }
+  }
+}
