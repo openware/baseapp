@@ -118,6 +118,7 @@ describe('Markets reducer', () => {
             ...initialMarketsState,
             tickerLoading: true,
             loading: false,
+            tickersTimestamp: Math.floor(Date.now() / 1000),
         };
         expect(marketsReducer(initialMarketsState, actions.marketsTickersFetch())).toEqual(expectedState);
     });

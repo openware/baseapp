@@ -26,6 +26,7 @@ export interface WalletsState {
         mobileWalletChosen: string;
         selectedWalletCurrency: string;
         selectedWalletAddress: string;
+        timestamp?: number;
     };
 }
 
@@ -47,6 +48,7 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
             return {
                 ...state,
                 loading: true,
+                timestamp: Math.floor(Date.now() / 1000),
             };
         case WALLETS_WITHDRAW_CCY_FETCH:
             return {
