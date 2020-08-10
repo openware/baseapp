@@ -2,14 +2,15 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { TabPanel } from '../../../components';
 import { TradingChart } from '../../../containers';
+import { CreateOrder } from '../index';
 
 const TradingTabsComponent = () => {
     const intl = useIntl();
-    const [currentTabIndex, setCurrentTabIndex] = React.useState(1);
+    const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
     const renderTabs = () => [
         {
-            content: currentTabIndex === 0 ? 'First content' : null,
+            content: currentTabIndex === 0 ? <CreateOrder /> : null,
             label: intl.formatMessage({id: 'page.mobile.tradingTabs.label.createOrder'}),
         },
         {
