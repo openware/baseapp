@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Dropdown } from 'react-bootstrap';
+import { ChevronIcon } from '../../assets/images/ChevronIcon';
 
 type DropdownElem = number | string | React.ReactNode;
 
@@ -62,8 +63,8 @@ class DropdownComponent extends React.PureComponent<DropdownComponentProps & {},
     }
 
     public render() {
-        const { selected } = this.state;
         const { list } = this.props;
+        const { selected } = this.state;
         const cx = classnames('cr-dropdown', this.props.className);
 
         return (
@@ -71,6 +72,7 @@ class DropdownComponent extends React.PureComponent<DropdownComponentProps & {},
                 <Dropdown>
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
                         {selected}
+                        <ChevronIcon className="cr-dropdown__arrow" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         {list.map((elem, index) => this.renderElem(elem, index))}
