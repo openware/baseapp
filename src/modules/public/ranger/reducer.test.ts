@@ -7,12 +7,16 @@ describe('Ranger reducer', () => {
         expect(rangerReducer(undefined, rangerConnectFetch({withAuth: false}))).toEqual({
             withAuth: false,
             connected: false,
+            connecting: true,
+            timestamp: Math.floor(Date.now() / 1000),
             subscriptions: [],
         });
 
         expect(rangerReducer(undefined, rangerConnectFetch({withAuth: true}))).toEqual({
             withAuth: true,
             connected: false,
+            connecting: true,
+            timestamp: Math.floor(Date.now() / 1000),
             subscriptions: [],
         });
     });
@@ -21,6 +25,7 @@ describe('Ranger reducer', () => {
         expect(rangerReducer(undefined, rangerConnectData())).toEqual({
             withAuth: false,
             connected: true,
+            connecting: false,
             subscriptions: [],
         });
     });
@@ -29,11 +34,13 @@ describe('Ranger reducer', () => {
         const initialState: RangerState = {
             withAuth: true,
             connected: true,
+            connecting: false,
             subscriptions: [],
         };
         expect(rangerReducer(initialState, rangerDisconnectData())).toEqual({
             withAuth: true,
             connected: false,
+            connecting: false,
             subscriptions: [],
         });
     });

@@ -3,17 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Decimal, TickerTable } from '../../components';
 import {
+    useMarketsFetch,
+    useMarketsTickersFetch,
+    useRangerConnectFetch,
+} from '../../hooks';
+import {
     Market,
-    marketsFetch,
-    marketsTickersFetch,
     selectMarkets,
-    selectMarketsLoading,
-    selectMarketsTimestamp,
     selectMarketTickers,
     setCurrentMarket,
 } from '../../modules';
-import { rangerConnectFetch } from '../../modules/public/ranger';
-import { selectRanger } from '../../modules/public/ranger/selectors';
 
 const defaultTicker = {
     amount: '0.0',
@@ -26,13 +25,13 @@ const defaultTicker = {
 };
 
 const MarketsTableComponent = props => {
+    useMarketsFetch();
+    useMarketsTickersFetch();
+    useRangerConnectFetch();
     const history = useHistory();
     const dispatch = useDispatch();
     const markets = useSelector(selectMarkets);
-    const marketsLoading = useSelector(selectMarketsLoading);
-    const marketsTimestamp = useSelector(selectMarketsTimestamp);
     const marketTickers = useSelector(selectMarketTickers);
-    const rangerState = useSelector(selectRanger);
     const [currentBidUnit, setCurrentBidUnit] = React.useState('');
 
     const handleRedirectToTrading = (id: string) => {
@@ -52,24 +51,6 @@ const MarketsTableComponent = props => {
 
         return list;
     };
-
-    React.useEffect(() => {
-        if (!rangerState.connected) {
-            dispatch(rangerConnectFetch({ withAuth: false }));
-        }
-
-        if (!markets.length && !marketsLoading && !marketsTimestamp) {
-            dispatch(marketsFetch());
-            dispatch(marketsTickersFetch());
-        }
-
-    }, [
-        dispatch,
-        markets,
-        marketsLoading,
-        marketsTimestamp,
-        rangerState.connected,
-    ]);
 
     let currentBidUnitsList: string[] = [''];
 

@@ -1,41 +1,15 @@
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import {
-    marketsFetch,
-    marketsTickersFetch,
-    selectMarkets,
-    selectMarketsLoading,
-    selectMarketsTimestamp,
-    selectUserLoggedIn,
-} from '../../../modules';
-import { rangerConnectFetch } from '../../../modules/public/ranger';
-import { selectRanger } from '../../../modules/public/ranger/selectors';
+    useMarketsFetch,
+    useMarketsTickersFetch,
+    useRangerConnectFetch,
+} from '../../../hooks';
 import { CurrentMarketInfo, TradingTabs } from '../../components';
 
 const TradingComponent = () => {
-    const dispatch = useDispatch();
-    const userLoggedIn = useSelector(selectUserLoggedIn);
-    const { connected, withAuth } = useSelector(selectRanger);
-    const markets = useSelector(selectMarkets);
-    const marketsLoading = useSelector(selectMarketsLoading);
-    const marketsTimestamp = useSelector(selectMarketsTimestamp);
-
-    React.useEffect(() => {
-        if (!connected) {
-            dispatch(rangerConnectFetch({ withAuth: userLoggedIn }));
-        }
-
-        if (connected && !withAuth && userLoggedIn) {
-            dispatch(rangerConnectFetch({ withAuth: userLoggedIn }));
-        }
-    }, [dispatch, connected, withAuth, userLoggedIn]);
-
-    React.useEffect(() => {
-        if (!markets.length && !marketsLoading && !marketsTimestamp) {
-            dispatch(marketsFetch());
-            dispatch(marketsTickersFetch());
-        }
-    }, [dispatch, markets, marketsLoading, marketsTimestamp]);
+    useMarketsFetch();
+    useMarketsTickersFetch();
+    useRangerConnectFetch();
 
     return (
         <div className="pg-trading-screen-mobile">
