@@ -97,7 +97,7 @@ export const TickerTable = (props: Props) => {
                         {markets[0] ? (
                             markets.map(renderItem)
                         ) : (
-                            <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
+                            <tr><td><span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span></td></tr>
                         )}
                     </tbody>
                 </table>

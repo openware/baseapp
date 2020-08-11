@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { TabPanel } from '../../../components';
 import { TradingChart } from '../../../containers';
-import { CreateOrder } from '../index';
+import { CreateOrder, Orders } from '../index';
 
 const TradingTabsComponent = () => {
     const intl = useIntl();
@@ -18,7 +18,7 @@ const TradingTabsComponent = () => {
             label: intl.formatMessage({id: 'page.mobile.tradingTabs.label.charts'}),
         },
         {
-            content: currentTabIndex === 2 ? 'Third content' : null,
+            content: currentTabIndex === 2 ? <Orders /> : null,
             label: intl.formatMessage({id: 'page.mobile.tradingTabs.label.orders'}),
         },
     ];

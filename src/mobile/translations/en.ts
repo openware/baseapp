@@ -10,6 +10,10 @@ export const en = {
     'page.mobile.tradingTabs.label.charts': 'Charts',
     'page.mobile.tradingTabs.label.orders': 'Orders',
 
+    'page.mobile.orders.tabs.open': 'Open',
+    'page.mobile.orders.tabs.all': 'All',
+    'page.mobile.orders.cancelAll': 'Cancel All',
+
     'page.mobile.currentMarketInfo.search.placeholder': 'Search',
     'page.mobile.currentMarketInfo.volume': 'Vol',
     'page.mobile.currentMarketInfo.high': 'High',

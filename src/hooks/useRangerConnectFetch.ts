@@ -4,17 +4,17 @@ import { selectUserLoggedIn } from '../modules';
 import { rangerConnectFetch } from '../modules/public/ranger';
 import { selectRanger, selectShouldRangerConnect } from '../modules/public/ranger/selectors';
 
-export const useRangerConnectFetch = (forceFetch = false) => {
+export const useRangerConnectFetch = () => {
     const dispatch = useDispatch();
     const userLoggedIn = useSelector(selectUserLoggedIn);
     const shouldFetch = useSelector(selectShouldRangerConnect);
     const { connected, withAuth } = useSelector(selectRanger);
 
     React.useEffect(() => {
-        if ((!connected && shouldFetch) || forceFetch) {
+        if (!connected && shouldFetch) {
             dispatch(rangerConnectFetch({ withAuth: userLoggedIn }));
         } else if (connected && !withAuth && userLoggedIn) {
             dispatch(rangerConnectFetch({ withAuth: userLoggedIn }));
         }
-    }, [dispatch, shouldFetch, connected, withAuth, userLoggedIn, forceFetch]);
+    }, [dispatch, shouldFetch, connected, withAuth, userLoggedIn]);
 };
