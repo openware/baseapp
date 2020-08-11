@@ -238,7 +238,7 @@ class OrderBookContainer extends React.Component<Props, State> {
                         ];
                     }
             }
-        }) : [[[''], message]];
+        }) : [[[''], message, ['']]];
     };
 
     private handleOnSelectBids = (index: string) => {
