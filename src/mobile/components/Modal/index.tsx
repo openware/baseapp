@@ -16,12 +16,18 @@ const ModalComponent = props => {
         return () => setShouldAnimate(false);
     }, [props.isOpen]);
 
-    const handleOnClose = () => {
-        setShouldAnimate(false);
+    const handleOnClose = event => {
+        if (event) {
+            event.preventDefault();
 
-        setTimeout(() => {
-            props.onClose();
-        }, 200);
+            if (event.target === event.currentTarget) {
+                setShouldAnimate(false);
+
+                setTimeout(() => {
+                    props.onClose();
+                }, 200);
+            }
+        }
     };
 
     const handleOnBack = () => {
@@ -58,7 +64,7 @@ const ModalComponent = props => {
     });
 
     return (
-        <div className={modalClassName}>
+        <div className={modalClassName} onClick={handleOnClose}>
             <div className={bodyClassName}>
                 {props.header || renderDefaultHeader()}
                 {props.children}
