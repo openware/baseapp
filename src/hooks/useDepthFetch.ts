@@ -7,15 +7,15 @@ import {
     selectShouldFetchDepth,
 } from '../modules';
 
-export const useDepthFetch = (forceFetch = false) => {
+export const useDepthFetch = () => {
     const isIncrementalOrderBook = incrementalOrderBook();
     const currentMarket = useSelector(selectCurrentMarket);
-    const shouldFetch = useSelector(selectShouldFetchDepth);
+    const shouldDispatch = useSelector(selectShouldFetchDepth);
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        if ((shouldFetch || forceFetch) && (currentMarket && !isIncrementalOrderBook)) {
+        if (shouldDispatch && currentMarket && !isIncrementalOrderBook) {
             dispatch(depthFetch(currentMarket));
         }
-    }, [dispatch, shouldFetch, forceFetch, currentMarket, isIncrementalOrderBook]);
+    }, [dispatch, shouldDispatch, currentMarket, isIncrementalOrderBook]);
 };
