@@ -84,7 +84,12 @@ describe('orderBook reducer', () => {
     });
 
     it('should handle DEPTH_FETCH', () => {
-        const expectedState = { ...initialDepth, loading: true, error: undefined };
+        const expectedState = {
+            ...initialDepth,
+            loading: true,
+            error: undefined,
+            timestamp: Math.floor(Date.now() / 1000),
+        };
         expect(depthReducer(initialDepth, actions.depthFetch(fakeMarket))).toEqual(expectedState);
     });
 
@@ -458,6 +463,7 @@ describe('orderBook reducer', () => {
             asks: [],
             bids: [],
             loading: true,
+            timestamp: Math.floor(Date.now() / 1000),
         };
 
         expect(incrementDepthReducer(fakeInitialState, actions.depthIncrementSubscribe(marketId))).toEqual(expectedState);
@@ -479,6 +485,7 @@ describe('orderBook reducer', () => {
             asks: [],
             bids: [],
             loading: false,
+            timestamp: Math.floor(Date.now() / 1000),
         };
 
         expect(incrementDepthReducer(fakeInitialState, actions.depthIncrementSubscribe(marketId))).toEqual(expectedState);
