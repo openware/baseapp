@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+    useDepthFetch,
     useMarketsFetch,
     useMarketsTickersFetch,
     useRangerConnectFetch,
@@ -10,6 +11,7 @@ const TradingComponent = () => {
     useMarketsFetch();
     useMarketsTickersFetch();
     useRangerConnectFetch();
+    useDepthFetch();
 
     return (
         <div className="pg-trading-screen-mobile">
