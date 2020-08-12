@@ -35,3 +35,4 @@ export * from './TickerTable';
 export * from './TwoFactorAuth';
 export * from './WalletItem';
 export * from './WalletList';
+export * from './QRCode';

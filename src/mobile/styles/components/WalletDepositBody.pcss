@@ -1,0 +1,48 @@
+/* stylelint-disable */
+.cr-mobile-wallet-deposit {
+  background: var(--body-background-color);
+  padding: 16px;
+  min-height: 300px;
+  &__wrap {
+    margin-bottom: 48px;
+  }
+
+  .cr-copyable-text-field {
+    .custom-input {
+      flex: 1;
+      margin-right: 42px;
+
+      input {
+        padding-left: 0;
+        padding-top: 0;
+      }
+    }
+
+    button {
+      border-radius: 2px !important;
+      width: 131px;
+      height: 27px;
+      font-size: 14px;
+      padding: 0;
+    }
+  }
+
+  &__qr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-text {
+      margin-right: 20px;
+      font-size: 14px;
+    }
+  }
+
+  &__address {
+    display: flex;
+    &-currency {
+      text-transform: uppercase;
+      padding-right: 5px;
+    }
+  }
+}

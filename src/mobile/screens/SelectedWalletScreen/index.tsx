@@ -19,7 +19,7 @@ const SelectedWalletMobileScreen = ()  =>  {
             <WalletHeader currency={wallet.currency} name={wallet.name}/>
             <WalletBanner wallet={wallet}/>
             <WalletsHistory />
-            <WalletsButtons/>
+            <WalletsButtons currency={wallet.currency} />
         </React.Fragment>
     );
 };

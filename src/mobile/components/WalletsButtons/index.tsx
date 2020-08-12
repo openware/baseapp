@@ -3,14 +3,14 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
 
-const WalletsButtonsComponent = () => {
+const WalletsButtonsComponent = props => {
     const intl = useIntl();
     const history = useHistory();
 
     return (
         <div className="cr-mobile-wallets-buttons">
             <Button
-                onClick={() => history.push('/wallets/history/deposit')}
+                onClick={() => history.push(`/wallets/${props.currency}/deposit`)}
                 size="lg"
                 variant="success"
             >

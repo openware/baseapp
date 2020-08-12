@@ -9,3 +9,4 @@ export * from './Trading';
 export * from './WalletsScreen';
 export * from './SelectedWalletScreen';
 export * from './WalletsHistory';
+export * from './WalletDeposit';
