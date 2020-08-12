@@ -56,6 +56,7 @@ interface DispatchProps {
 interface OwnProps {
     userLoggedIn: boolean;
     currentPrice: string;
+    defaultTabIndex?: number;
 }
 
 type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
@@ -123,7 +124,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     };
 
     public render() {
-        const { executeLoading, marketTickers, currentMarket, wallets, asks, bids } = this.props;
+        const { defaultTabIndex, executeLoading, marketTickers, currentMarket, wallets, asks, bids } = this.props;
         if (!currentMarket) {
             return null;
         }
@@ -162,6 +163,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     currentMarketBidPrecision={currentMarket.price_precision}
                     width={this.state.width}
                     listenInputPrice={this.listenInputPrice}
+                    defaultTabIndex={defaultTabIndex}
                     {...translations}
                 />
                 {executeLoading && <div className="pg-order--loading"><Spinner animation="border" variant="primary" /></div>}

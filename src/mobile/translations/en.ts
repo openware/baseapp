@@ -10,6 +10,12 @@ export const en = {
     'page.mobile.tradingTabs.label.charts': 'Charts',
     'page.mobile.tradingTabs.label.orders': 'Orders',
 
+    'page.mobile.charts.label.orderBook': 'Order book',
+    'page.mobile.charts.label.trades': 'Trades',
+
+    'page.mobile.orderButtons.buy': 'Buy {base_unit}',
+    'page.mobile.orderButtons.sell': 'Sell {base_unit}',
+
     'page.mobile.orders.tabs.open': 'Open',
     'page.mobile.orders.tabs.all': 'All',
     'page.mobile.orders.cancelAll': 'Cancel All',
