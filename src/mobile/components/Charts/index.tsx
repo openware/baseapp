@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { TabPanel } from '../../../components';
-import { TradingChart } from '../../../containers';
+import { RecentTrades, TradingChart } from '../../../containers';
 import { OrderButtons } from '../index';
 
 const ChartsComponent = props => {
@@ -14,7 +14,7 @@ const ChartsComponent = props => {
             label: intl.formatMessage({id: 'page.mobile.charts.label.orderBook'}),
         },
         {
-            content: currentTabIndex === 1 ? 'Trades' : null,
+            content: currentTabIndex === 1 ? <RecentTrades /> : null,
             label: intl.formatMessage({id: 'page.mobile.charts.label.trades'}),
         },
     ];
