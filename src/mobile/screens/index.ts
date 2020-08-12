@@ -10,3 +10,4 @@ export * from './WalletsScreen';
 export * from './SelectedWalletScreen';
 export * from './WalletsHistory';
 export * from './WalletDeposit';
+export * from './WalletWithdraw';
