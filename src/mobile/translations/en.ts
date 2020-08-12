@@ -29,4 +29,8 @@ export const en = {
 
     'page.mobile.wallets.deposit.history': 'Deposit history',
     'page.mobile.wallets.withdraw.history': 'Withdraw history',
+
+    'page.mobile.copy.text': 'Copy Address',
+    'page.mobile.wallet.deposit.generate': 'Generate deposit address',
+    'page.mobile.wallet.deposit.generating': 'Generating address...',
 };

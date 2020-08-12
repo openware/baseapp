@@ -10,3 +10,4 @@ export * from './WalletBanner';
 export * from './WalletHeader';
 export * from './WalletItem';
 export * from './WalletsButtons';
+export * from './WalletDepositBody';
