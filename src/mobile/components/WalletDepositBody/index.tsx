@@ -8,7 +8,7 @@ import { AddressGenerating } from './AddressGenerating';
 
 const WalletDepositBodyComponent = props => {
     const intl = useIntl();
-    const address = useSelector(selectWalletAddress) || 'Generating address...';
+    const address = useSelector(selectWalletAddress) || intl.formatMessage({ id: 'page.mobile.wallet.deposit.generating' });
     const data = formatCCYAddress(props.currency, address);
 
     return (
@@ -16,8 +16,6 @@ const WalletDepositBodyComponent = props => {
             {props.isAccountActivated || props.generateAddressTriggered ?
                 <AddressGenerated
                 currency={props.currency}
-                addressMessage={intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.address'})}
-                copyText={intl.formatMessage({id: 'page.mobile.copy.text'})}
                 address={address}
                 qrMessage={intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.submit'}, {confirmations: props.minConfirmations})}
                 data={data}
