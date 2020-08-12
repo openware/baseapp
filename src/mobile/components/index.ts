@@ -4,6 +4,7 @@ export * from './EstimatedValue';
 export * from './Footer';
 export * from './Header';
 export * from './Modal';
+export * from './OpenOrders';
 export * from './Orders';
 export * from './TradingTabs';
 export * from './WalletBanner';
