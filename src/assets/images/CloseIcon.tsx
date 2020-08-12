@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface CloseIconProps {
     className?: string;
-    onClick?: () => void;
+    onClick?: (e?: any) => void;
 }
 
 export const CloseIcon: React.FC<CloseIconProps> = (props: CloseIconProps) => {
