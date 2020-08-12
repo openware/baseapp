@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { TabPanel } from '../../../components';
 import { TradingChart } from '../../../containers';
+import { selectUserLoggedIn } from '../../../modules';
 import { CreateOrder, Orders } from '../index';
 
 const TradingTabsComponent = () => {
     const intl = useIntl();
+    const userLoggedIn = useSelector(selectUserLoggedIn);
     const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
     const renderTabs = () => [
@@ -20,6 +23,7 @@ const TradingTabsComponent = () => {
         {
             content: currentTabIndex === 2 ? <Orders /> : null,
             label: intl.formatMessage({id: 'page.mobile.tradingTabs.label.orders'}),
+            disabled: !userLoggedIn,
         },
     ];
 

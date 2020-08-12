@@ -14,6 +14,15 @@ export const en = {
     'page.mobile.orders.tabs.all': 'All',
     'page.mobile.orders.cancelAll': 'Cancel All',
 
+    'page.mobile.orders.header.orderType.buy.market': 'Buy market',
+    'page.mobile.orders.header.orderType.buy.limit': 'Buy limit',
+    'page.mobile.orders.header.orderType.sell.market': 'Sell market',
+    'page.mobile.orders.header.orderType.sell.limit': 'Sell limit',
+    'page.mobile.orders.header.amount': 'Amount',
+    'page.mobile.orders.header.price': 'Price',
+    'page.mobile.orders.header.filled': 'Filled',
+    'page.mobile.orders.header.cancel': 'Cancel',
+
     'page.mobile.currentMarketInfo.search.placeholder': 'Search',
     'page.mobile.currentMarketInfo.volume': 'Vol',
     'page.mobile.currentMarketInfo.high': 'High',
