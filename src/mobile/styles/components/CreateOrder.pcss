@@ -1,10 +1,25 @@
 .pg-mobile-create-order {
   align-items: flex-start;
+  background: var(--main-background-color);
   display: flex;
-  flex-direction: row;
-  height: 332px;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 4px;
   width: 100%;
+
+  &__row-double {
+    align-items: flex-start;
+    background: var(--body-background-color);
+    display: flex;
+    flex-direction: row;
+    height: 332px;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .pg-mobile-orders {
+    margin: 4px 0;
+  }
 
   .pg-combined-order-book,
   .pg-order {

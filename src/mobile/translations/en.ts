@@ -14,6 +14,7 @@ export const en = {
     'page.mobile.orders.tabs.all': 'All',
     'page.mobile.orders.cancelAll': 'Cancel All',
 
+    'page.mobile.orders.open.title': 'Open Orders',
     'page.mobile.orders.header.orderType.buy.market': 'Buy market',
     'page.mobile.orders.header.orderType.buy.limit': 'Buy limit',
     'page.mobile.orders.header.orderType.sell.market': 'Sell market',
