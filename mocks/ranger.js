@@ -102,34 +102,78 @@ let orderIndex = 100;
 
 const matchedTradesMock = (ws, marketId) => {
     let kind = "bid";
-    let price = 0.0001;
-    let volume = 0.0001;
+    let price = 0.1;
+    let volume = 1000;
 
     return function () {
+        const shouldPushOrder = Math.random() < 0.1;
         const orderId = orderIndex++;
         const tradeId = tradeIndex++;
         kind = kind == "bid" ? "ask" : "bid";
         const takerType = Math.random() < 0.5 ? "buy" : "sell";
-        price += 0.0001;
-        volume += 0.00005;
+        const orderType = Math.random() < 0.5 ? "limit" : "market";
+        price += 0.01;
+        volume += 50;
         let bidId = kind == "bid" ? orderId : orderId - 10;
         let askId = kind == "ask" ? orderId : orderId - 10;
         let at = parseInt(Date.now() / 1000);
+        let remainingVolume = volume;
+        const executedVolume = volume - remainingVolume;
 
-        if (ws.authenticated) {
-            sendEvent(ws, "order", { "id": orderId, "at": at, "market": marketId, "kind": kind, "price": price, "state": "wait", "remaining_volume": volume, "origin_volume": volume });
+        const order = {
+            "uuid": orderId + 1000000,
+            "id": orderId,
+            "at": at + 1,
+            "market": marketId,
+            "kind": kind,
+            "price": price,
+            "avg_price": price,
+            "state": "wait",
+            "remaining_volume": volume,
+            "origin_volume": volume,
+            "executed_volume": executedVolume,
+            "side": takerType, 
+            "created_at": at,
+            "updated_at": at + 1,
+            "order_type": orderType,
+            "trades_count": 0
+        };
+
+        const privateTrade = {
+            "uuid": orderId + 1000000,
+            "id": tradeId,
+            "price": price,
+            "total": (volume * price).toFixed(4),
+            "amount": volume,
+            "market": marketId,
+            "at": at + 1,
+            "created_at": at,
+            "taker_type": takerType
+        };
+
+        const publicTrade = {
+            "tid": tradeId,
+            "date": at,
+            "taker_type": takerType,
+            "price": price,
+            "amount": volume,
+            "total": (volume * price).toFixed(4)
+        };
+
+        if (ws.authenticated && shouldPushOrder) {
+            sendEvent(ws, "order", order);
 
             setTimeout(() => {
-                const remainingVolume = volume / (Math.random() + 2);
-                sendEvent(ws, "order", { "id": orderId, "at": at, "market": marketId, "kind": kind, "price": price, "state": "wait", "remaining_volume": String(remainingVolume), "origin_volume": volume });
+                remainingVolume = volume / (Math.random() + 2);
+                sendEvent(ws, "order", { ...order, "remaining_volume": String(remainingVolume) });
 
                 setTimeout(() => {
-                    sendEvent(ws, "order", { "id": orderId, "at": at, "market": marketId, "kind": kind, "price": price, "state": "done", "remaining_volume": "0.0", "origin_volume": volume });
-                    sendEvent(ws, "trade", { "id": tradeId, "kind": kind, "at": at, "price": price, "volume": volume, "ask_id": askId, "bid_id": bidId, "market": marketId });
+                    sendEvent(ws, "order", { ...order, "state": "done", "remaining_volume": "0.0" });
+                    sendEvent(ws, "trade", privateTrade);
                 }, 10000);
             }, 5000);
         }
-        sendEvent(ws, `${marketId}.trades`, { "trades": [{ "tid": tradeId, "taker_type": takerType, "date": at, "price": price, "amount": volume }] });
+        sendEvent(ws, `${marketId}.trades`, { "trades": [publicTrade] });
     }
 };
 
@@ -183,8 +227,8 @@ class RangerMock {
             let { baseUnit, quoteUnit, marketId } = Helpers.getMarketInfos(name);
             ws.timers.push(setInterval(orderBookIncrementMock(ws, marketId), 200));
             ws.timers.push(setInterval(orderBookUpdateMock(ws, marketId), 2000));
-            ws.timers.push(setInterval(matchedTradesMock(ws, marketId), 10000))
-            ws.timers.push(setInterval(klinesMock(ws, marketId), 2500))
+            ws.timers.push(setInterval(matchedTradesMock(ws, marketId), 10000));
+            ws.timers.push(setInterval(klinesMock(ws, marketId), 2500));
         });
         ws.timers.push(setTimeout(() => {sendEvent(ws, "deposit_address", { currency: "xrp", address: "a4E49HU6CTHyYMmsYt3F1ar1q5W89t3hfQ?dt=1" })}, 10000));
     }
