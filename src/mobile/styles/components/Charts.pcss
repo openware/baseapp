@@ -17,6 +17,34 @@
     background: var(--body-background-color);
     padding: 6px 20px;
 
+    &--no-data-first .cr-order-book:first-child {
+      .cr-table__body tr td {
+        height: 23px !important;
+        top: 50px;
+      }
+    }
+
+    &--no-data-second .cr-order-book:last-child {
+      .cr-table__body tr td {
+        height: 23px !important;
+        top: 50px;
+      }
+    }
+
+    &--no-data-first.pg-combined-order-book--no-data-second .cr-order-book {
+      border: none !important;
+
+      &:last-child {
+        height: 100px !important;
+        top: 23px;
+      }
+
+      .cr-table__body tr td {
+        height: 23px !important;
+        top: 50px;
+      }
+    }
+
     .cr-order-book {
       .cr-table thead {
         display: flex;
@@ -130,6 +158,18 @@
   .pg-recent-trades {
     .cr-tab-panel__optinal-head {
       display: none;
+    }
+
+    .cr-table__noData {
+      .cr-table td,
+      .cr-table th {
+        text-align: right;
+
+        &:nth-child(2) {
+          text-align: center;
+          width: 100%;
+        }
+      }
     }
 
     .cr-table {
