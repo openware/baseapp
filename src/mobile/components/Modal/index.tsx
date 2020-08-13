@@ -16,17 +16,19 @@ const ModalComponent = props => {
         return () => setShouldAnimate(false);
     }, [props.isOpen]);
 
-    const handleOnClose = event => {
+    const handleOnClose = (event, strictTarget?: boolean) => {
         if (event) {
             event.preventDefault();
 
-            if (event.target === event.currentTarget) {
-                setShouldAnimate(false);
-
-                setTimeout(() => {
-                    props.onClose();
-                }, 200);
+            if (strictTarget && event.target !== event.currentTarget) {
+                return;
             }
+
+            setShouldAnimate(false);
+
+            setTimeout(() => {
+                props.onClose();
+            }, 200);
         }
     };
 
@@ -64,7 +66,7 @@ const ModalComponent = props => {
     });
 
     return (
-        <div className={modalClassName} onClick={handleOnClose}>
+        <div className={modalClassName} onClick={e => handleOnClose(e, true)}>
             <div className={bodyClassName}>
                 {props.header || renderDefaultHeader()}
                 {props.children}

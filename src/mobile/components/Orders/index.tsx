@@ -6,8 +6,10 @@ import { TabPanel } from '../../../components';
 import { useUserOrdersHistoryFetch } from '../../../hooks';
 import {
     ordersCancelAllFetch,
+    ordersHistoryCancelFetch,
     selectOrdersHistory,
     selectShouldFetchCancelAll,
+    selectShouldFetchCancelSingle,
 } from '../../../modules';
 import { OrdersItem } from './OrdersItem';
 
@@ -19,11 +21,22 @@ const OrdersComponent = () => {
     const intl = useIntl();
     const orders = useSelector(selectOrdersHistory);
     const shouldFetchCancelAll = useSelector(selectShouldFetchCancelAll);
+    const shouldFetchCancelSingle = useSelector(selectShouldFetchCancelSingle);
     useUserOrdersHistoryFetch(0, userOrdersHistoryTabs[currentTabIndex], 25);
 
     const handleCancelAllOrders = () => {
         if (shouldFetchCancelAll) {
             dispatch(ordersCancelAllFetch());
+        }
+    };
+
+    const handleCancelSingleOrder = (id: number) => () => {
+        if (shouldFetchCancelAll && shouldFetchCancelSingle) {
+            dispatch(ordersHistoryCancelFetch({
+                id,
+                type: userOrdersHistoryTabs[currentTabIndex],
+                list: orders,
+            }));
         }
     };
 
@@ -37,7 +50,13 @@ const OrdersComponent = () => {
     const renderTab = (tabIndex: number) => (
         <div key={tabIndex} className="pg-mobile-orders__content">
             {orders.length ? (
-                orders.map((order, index) => <OrdersItem order={order} key={index} />)
+                orders.map((order, index) => (
+                    <OrdersItem
+                        key={index}
+                        order={order}
+                        handleCancel={handleCancelSingleOrder}
+                    />
+                ))
             ) : (
                 <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
             )}

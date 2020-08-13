@@ -10,9 +10,25 @@ export const en = {
     'page.mobile.tradingTabs.label.charts': 'Charts',
     'page.mobile.tradingTabs.label.orders': 'Orders',
 
+    'page.mobile.charts.label.orderBook': 'Order book',
+    'page.mobile.charts.label.trades': 'Trades',
+
+    'page.mobile.orderButtons.buy': 'Buy {base_unit}',
+    'page.mobile.orderButtons.sell': 'Sell {base_unit}',
+
     'page.mobile.orders.tabs.open': 'Open',
     'page.mobile.orders.tabs.all': 'All',
     'page.mobile.orders.cancelAll': 'Cancel All',
+
+    'page.mobile.orders.open.title': 'Open Orders',
+    'page.mobile.orders.header.orderType.buy.market': 'Buy market',
+    'page.mobile.orders.header.orderType.buy.limit': 'Buy limit',
+    'page.mobile.orders.header.orderType.sell.market': 'Sell market',
+    'page.mobile.orders.header.orderType.sell.limit': 'Sell limit',
+    'page.mobile.orders.header.amount': 'Amount',
+    'page.mobile.orders.header.price': 'Price',
+    'page.mobile.orders.header.filled': 'Filled',
+    'page.mobile.orders.header.cancel': 'Cancel',
 
     'page.mobile.currentMarketInfo.search.placeholder': 'Search',
     'page.mobile.currentMarketInfo.volume': 'Vol',
