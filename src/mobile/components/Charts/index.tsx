@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { TabPanel } from '../../../components';
-import { RecentTrades, TradingChart } from '../../../containers';
+import {
+    OrderBook,
+    RecentTrades,
+    TradingChart,
+} from '../../../containers';
 import { OrderButtons } from '../index';
 
 const ChartsComponent = props => {
@@ -10,7 +14,7 @@ const ChartsComponent = props => {
 
     const renderTabs = () => [
         {
-            content: currentTabIndex === 0 ? 'Order book' : null,
+            content: currentTabIndex === 0 ? <OrderBook breakpoint={1} /> : null,
             label: intl.formatMessage({id: 'page.mobile.charts.label.orderBook'}),
         },
         {
