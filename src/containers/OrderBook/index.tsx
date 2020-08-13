@@ -47,12 +47,13 @@ interface OwnProps {
     marketTickers: {
         [key: string]: Ticker;
     };
+    breakpoint?: number;
 }
 
 type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 // render big/small breakpoint
-const breakpoint = 448;
+const DEFAULT_BREAKPOINT = 448;
 
 class OrderBookContainer extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -95,10 +96,11 @@ class OrderBookContainer extends React.Component<Props, State> {
         const {
             asks,
             bids,
+            breakpoint,
             orderBookLoading,
         } = this.props;
 
-        const isLarge = this.state.width > breakpoint;
+        const isLarge = this.state.width > (breakpoint || DEFAULT_BREAKPOINT);
         const cn = classNames('pg-combined-order-book ', {
             'cr-combined-order-book--data-loading': orderBookLoading,
             'pg-combined-order-book--no-data-first': (!asks.length && !isLarge) || (!bids.length && isLarge),
@@ -116,9 +118,13 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     private orderBook = (bids, asks) => {
-        const { colorTheme, currentMarket } = this.props;
+        const {
+            breakpoint,
+            colorTheme,
+            currentMarket,
+        } = this.props;
 
-        const isLarge = this.state.width > breakpoint;
+        const isLarge = this.state.width > (breakpoint || DEFAULT_BREAKPOINT);
         const asksData = isLarge ? asks : asks.slice(0).reverse();
 
         return (
@@ -185,9 +191,9 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private renderOrderBook = (array: string[][], side: string, message: string, currentMarket?: Market) => {
-        const { isMobileDevice } = this.props;
+        const { breakpoint, isMobileDevice } = this.props;
         let total = accumulateVolume(array);
-        const isLarge = this.state.width > breakpoint;
+        const isLarge = this.state.width > (breakpoint || DEFAULT_BREAKPOINT);
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
 
@@ -250,8 +256,8 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private handleOnSelectAsks = (index: string) => {
-        const { currentPrice, asks } = this.props;
-        const isLarge = this.state.width >= breakpoint;
+        const { asks, breakpoint, currentPrice } = this.props;
+        const isLarge = this.state.width >= (breakpoint || DEFAULT_BREAKPOINT);
         const asksData = isLarge ? asks : asks.slice(0).reverse();
         const priceToSet = asksData[Number(index)] && Number(asksData[Number(index)][0]);
         if (currentPrice !== priceToSet) {
