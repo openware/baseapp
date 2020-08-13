@@ -14,7 +14,7 @@ const ChartsComponent = props => {
 
     const renderTabs = () => [
         {
-            content: currentTabIndex === 0 ? <OrderBook breakpoint={1} /> : null,
+            content: currentTabIndex === 0 ? <OrderBook forceLarge={true} /> : null,
             label: intl.formatMessage({id: 'page.mobile.charts.label.orderBook'}),
         },
         {

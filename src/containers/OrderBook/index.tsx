@@ -47,13 +47,13 @@ interface OwnProps {
     marketTickers: {
         [key: string]: Ticker;
     };
-    breakpoint?: number;
+    forceLarge?: boolean;
 }
 
 type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 // render big/small breakpoint
-const DEFAULT_BREAKPOINT = 448;
+const breakpoint = 448;
 
 class OrderBookContainer extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -96,11 +96,12 @@ class OrderBookContainer extends React.Component<Props, State> {
         const {
             asks,
             bids,
-            breakpoint,
+            forceLarge,
             orderBookLoading,
         } = this.props;
 
-        const isLarge = this.state.width > (breakpoint || DEFAULT_BREAKPOINT);
+        const isLarge = forceLarge || (this.state.width > breakpoint);
+
         const cn = classNames('pg-combined-order-book ', {
             'cr-combined-order-book--data-loading': orderBookLoading,
             'pg-combined-order-book--no-data-first': (!asks.length && !isLarge) || (!bids.length && isLarge),
@@ -119,12 +120,12 @@ class OrderBookContainer extends React.Component<Props, State> {
 
     private orderBook = (bids, asks) => {
         const {
-            breakpoint,
+            forceLarge,
             colorTheme,
             currentMarket,
         } = this.props;
 
-        const isLarge = this.state.width > (breakpoint || DEFAULT_BREAKPOINT);
+        const isLarge = forceLarge || this.state.width > breakpoint;
         const asksData = isLarge ? asks : asks.slice(0).reverse();
 
         return (
@@ -175,25 +176,27 @@ class OrderBookContainer extends React.Component<Props, State> {
             intl,
             isMobileDevice,
         } = this.props;
+        const formattedBaseUnit = (currentMarket && currentMarket.base_unit) ? `(${currentMarket.base_unit.toUpperCase()})` : '';
+        const formattedQuoteUnit = (currentMarket && currentMarket.quote_unit) ? `(${currentMarket.quote_unit.toUpperCase()})` : '';
 
         if (isMobileDevice) {
             return [
-                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n(${currentMarket && currentMarket.quote_unit.toUpperCase()})`,
-                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n(${currentMarket && currentMarket.base_unit.toUpperCase()})`,
+                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
+                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
             ];
         }
 
         return [
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n(${currentMarket && currentMarket.quote_unit.toUpperCase()})`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n(${currentMarket && currentMarket.base_unit.toUpperCase()})`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})}\n(${currentMarket && currentMarket.base_unit.toUpperCase()})`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
+            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})}\n${formattedBaseUnit}`,
         ];
     };
 
     private renderOrderBook = (array: string[][], side: string, message: string, currentMarket?: Market) => {
-        const { breakpoint, isMobileDevice } = this.props;
+        const { isMobileDevice, forceLarge } = this.props;
         let total = accumulateVolume(array);
-        const isLarge = this.state.width > (breakpoint || DEFAULT_BREAKPOINT);
+        const isLarge = forceLarge || this.state.width > breakpoint;
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
 
@@ -256,8 +259,8 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private handleOnSelectAsks = (index: string) => {
-        const { asks, breakpoint, currentPrice } = this.props;
-        const isLarge = this.state.width >= (breakpoint || DEFAULT_BREAKPOINT);
+        const { asks, currentPrice, forceLarge } = this.props;
+        const isLarge = forceLarge || this.state.width >= breakpoint;
         const asksData = isLarge ? asks : asks.slice(0).reverse();
         const priceToSet = asksData[Number(index)] && Number(asksData[Number(index)][0]);
         if (currentPrice !== priceToSet) {
