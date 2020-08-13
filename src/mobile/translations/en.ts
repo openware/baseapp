@@ -49,4 +49,6 @@ export const en = {
     'page.mobile.copy.text': 'Copy Address',
     'page.mobile.wallet.deposit.generate': 'Generate deposit address',
     'page.mobile.wallet.deposit.generating': 'Generating address...',
+
+    'page.mobile.wallet.withdraw.modal.new.account': 'Confirm new account',
 };

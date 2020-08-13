@@ -3,6 +3,34 @@
   background: var(--body-background-color);
   padding: 16px;
 
+  .pg-beneficiaries__dropdown {
+    position: relative;
+    .pg-beneficiaries__dropdown__body {
+      top: 70px;
+    }
+  }
+
+  .pg-beneficiaries__dropdown__tip {
+    top: 70px;
+  }
+
+  .cr-email-form {
+    box-shadow: unset;
+  }
+  .cr-mobile-modal__block, .beneficiaries-confirmation-modal {
+    background: var(--body-background-color);
+  }
+  .cr-email-form__button-wrapper {
+    min-height: auto;
+  }
+  .cr-email-form__form-content__info {
+    display: none;
+  }
+
+  .cr-email-form__button-wrapper {
+    margin-top: 24px;
+  }
+
   .cr-withdraw__summary-field {
     padding-right: 0 !important;
     color: var(--primary-text-color);
@@ -10,7 +38,7 @@
   }
 
   .cr-withdraw__group__amount {
-    margin-top: 18px;
+    margin-top: 32px;
   }
   .cr-withdraw__deep {
     margin-top: 18px;
@@ -21,6 +49,69 @@
   .cr-withdraw-column {
     &:first-child {
       margin-bottom: 12px;
+    }
+  }
+
+  .cr-summary-field-message {
+    margin-bottom: 13px;
+  }
+
+  .cr-withdraw__group__code {
+    margin-bottom: 24px;
+    margin-top: 24px;
+  }
+
+  .cr-email-form__options-group {
+    display: none;
+  }
+  .cr-mobile-modal {
+    .cr-email-form__form-content {
+      padding: 0 14px;
+      .custom-input {
+        input {
+          height: 49px;
+        }
+      }
+
+      .confirmation-modal__content {
+        span {
+          color: var(--primary-text-color);
+        }
+
+        svg {
+          display: none;
+        }
+      }
+    }
+    .beneficiaries-add-address-modal {
+      padding: 24px 14px;
+      input {
+        height: 49px;
+      }
+
+      .cr-email-form__button-wrapper {
+        min-height: auto;
+        button {
+          font-weight: bold;
+          color: var(--primary-text-color);
+          letter-spacing: 1px;
+        }
+      }
+    }
+    &__header {
+      &-back {
+        display: none;
+      }
+
+      &-title {
+        text-align: left;
+        color: var(--primary-text-color);
+        font-weight: 500;
+      }
+
+      &-close {
+        flex: 0;
+      }
     }
   }
 }

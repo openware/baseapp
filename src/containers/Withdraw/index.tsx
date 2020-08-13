@@ -24,6 +24,7 @@ export interface WithdrawProps {
     withdrawTotalLabel?: string;
     withdrawButtonLabel?: string;
     withdrawDone: boolean;
+    isMobile?: boolean;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -84,6 +85,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             withdrawFeeLabel,
             withdrawTotalLabel,
             withdrawButtonLabel,
+            isMobile,
         } = this.props;
 
         const cx = classnames('cr-withdraw', className);
@@ -119,7 +121,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                         />
                     </div>
                     <div className={lastDividerClassName} />
-                    {twoFactorAuthRequired && this.renderOtpCodeInput()}
+                    {!isMobile && twoFactorAuthRequired && this.renderOtpCodeInput()}
                 </div>
                 <div className="cr-withdraw-column">
                     <div>
@@ -134,6 +136,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             content={this.renderTotal()}
                         />
                     </div>
+                    {isMobile && twoFactorAuthRequired && this.renderOtpCodeInput()}
                     <div className="cr-withdraw__deep">
                         <Button
                             variant="primary"

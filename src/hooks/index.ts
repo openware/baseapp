@@ -6,3 +6,5 @@ export * from './useRangerConnectFetch';
 export * from './useTickersFetch';
 export * from './useUserOrdersHistoryFetch';
 export * from './useWalletsFetch';
+export * from './useWalletsAddressFetch';
+export * from './useBeneficiariesFetch';
