@@ -4,7 +4,7 @@ import {
     InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
-import { Modal } from '../../components';
+import { Decimal, Modal } from '../../components';
 
 interface ModalWithdrawConfirmationProps {
     amount: string;
@@ -13,6 +13,7 @@ interface ModalWithdrawConfirmationProps {
     onDismiss: () => void;
     rid: string;
     show: boolean;
+    precision: number;
 }
 
 type Props = ModalWithdrawConfirmationProps & InjectedIntlProps;
@@ -43,14 +44,14 @@ class ModalWithdraw extends React.Component<Props> {
     };
 
     private renderBody = () => {
-        const { amount, currency, rid } = this.props;
+        const { amount, currency, rid, precision } = this.props;
         const formattedCurrency = currency.toUpperCase();
 
         return (
             <div className="pg-exchange-modal-submit-body modal-body__withdraw-confirm">
                 <p>
                     {this.translate('page.body.wallets.tabs.withdraw.modal.message1')}
-                    {amount} {formattedCurrency}
+                    {Decimal.format(amount, precision, ',')} {formattedCurrency}
                     {this.translate('page.body.wallets.tabs.withdraw.modal.message2')} {rid}
                 </p>
             </div>

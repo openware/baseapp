@@ -177,7 +177,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     }
 
     public render() {
-        const { wallets, historyList, mobileWalletChosen, walletsLoading } = this.props;
+        const { wallets, historyList, mobileWalletChosen, walletsLoading, currencies } = this.props;
         const {
             beneficiary,
             total,
@@ -193,6 +193,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             iconUrl: wallet.iconUrl ? wallet.iconUrl : '',
         }));
         const selectedCurrency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
+        const selectedCurrencyPrecision = (currencies.filter(currency => currency.id === selectedCurrency)[0] || { precision: 2}).precision;
 
         let confirmationAddress = '';
         if (wallets[selectedWalletIndex]) {
@@ -240,6 +241,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         rid={confirmationAddress}
                         onSubmit={this.handleWithdraw}
                         onDismiss={this.toggleConfirmModal}
+                        precision={selectedCurrencyPrecision}
                     />
                 </div>
             </React.Fragment>

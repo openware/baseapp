@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { Decimal } from '../../../components';
 import { WalletItemProps } from '../../../components/WalletItem';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
@@ -97,6 +98,7 @@ class EstimatedValueContainer extends React.Component<Props> {
             wallets,
         } = this.props;
         const estimatedValue = estimateValue(VALUATION_PRIMARY_CURRENCY, currencies, wallets, markets, tickers);
+        const estimatedCurrencyPrecision = (currencies.filter(currency => currency.id.toLowerCase() === VALUATION_PRIMARY_CURRENCY.toLowerCase())[0] || { precision: 2}).precision;
 
         return (
             <div className="pg-estimated-value">
@@ -104,7 +106,7 @@ class EstimatedValueContainer extends React.Component<Props> {
                     {this.translate('page.body.wallets.estimated_value')}
                     <span className="value-container">
                         <span className="value">
-                            {estimatedValue}
+                            {Decimal.format(estimatedValue.toString(), estimatedCurrencyPrecision, ',')}
                         </span>
                         <span className="value-sign">{VALUATION_PRIMARY_CURRENCY.toUpperCase()}</span>
                     </span>
@@ -123,11 +125,13 @@ class EstimatedValueContainer extends React.Component<Props> {
             tickers,
         } = this.props;
         const estimatedValueSecondary = estimateUnitValue(VALUATION_SECONDARY_CURRENCY, VALUATION_PRIMARY_CURRENCY, +estimatedValue, currencies, markets, tickers);
+        const estimatedCurrencyPrecision = (currencies.filter(currency => currency.id.toLowerCase() === VALUATION_SECONDARY_CURRENCY.toLowerCase())[0] || { precision: 2}).precision;
+
 
         return (
             <span className="value-container">
                 <span className="value">
-                    {estimatedValueSecondary}
+                    {Decimal.format(estimatedValueSecondary.toString(), estimatedCurrencyPrecision, ',')}
                 </span>
                 <span className="value-sign">{VALUATION_SECONDARY_CURRENCY.toUpperCase()}</span>
             </span>

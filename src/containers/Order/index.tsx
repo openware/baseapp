@@ -184,7 +184,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         const resultData = {
             market: currentMarket.id,
             side: type,
-            volume: amount.toString(),
+            volume: amount.toString().split(',').join(''),
             ord_type: (orderType as string).toLowerCase(),
         };
 

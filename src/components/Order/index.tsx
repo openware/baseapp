@@ -289,12 +289,14 @@ export class Order extends React.Component<OrderComponentProps, State> {
         const available = this.isTypeSell(type) ? availableBase : availableQuote;
         let newAmount = '';
 
+        const parsedPrice = price.toString().split(',').join('');
+
         switch (type) {
             case 'buy':
                 switch (orderType) {
                     case 'Limit':
-                        newAmount = available && +price ? (
-                            Decimal.format(available / +price * value, this.props.currentMarketAskPrecision, ',')
+                        newAmount = available && +parsedPrice ? (
+                            Decimal.format(available / +parsedPrice * value, this.props.currentMarketAskPrecision, ',')
                         ) : '';
 
                         break;
