@@ -120,7 +120,7 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
                     onClose={this.props.handleToggleAddAddressModal}
                     isOpen>
                 {this.renderContent()}
-            </Modal> : this.renderContent
+            </Modal> : this.renderContent()
         );
     }
 

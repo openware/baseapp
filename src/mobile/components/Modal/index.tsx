@@ -27,7 +27,7 @@ const ModalComponent = props => {
             setShouldAnimate(false);
 
             setTimeout(() => {
-                props.onClose();
+                props.onClose && props.onClose();
             }, 200);
         }
     };

@@ -3,6 +3,25 @@
   background: var(--body-background-color);
   padding: 16px;
 
+  &__confirmation, &__submit {
+    .cr-mobile-modal__block--open {
+      height: calc(100vh - 250px);
+    }
+    .pg-exchange-modal-submit-footer {
+      margin: 0 14px;
+    }
+    .pg-exchange-modal-submit-body {
+      margin: 14px;
+
+      p {
+        word-break: break-word;
+        font-size: 14px;
+        color: var(--primary-text-color);
+        text-align: left;
+      }
+    }
+  }
+
   .pg-beneficiaries__dropdown {
     position: relative;
     .pg-beneficiaries__dropdown__body {
