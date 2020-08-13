@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import { TabPanel } from '../../../components';
+import { TabPanel } from '../../../../components';
 import {
     OrderBook,
     RecentTrades,
     TradingChart,
-} from '../../../containers';
-import { OrderButtons } from '../index';
+} from '../../../../containers';
+import { OrderButtons } from '../../index';
 
 const ChartsComponent = props => {
     const intl = useIntl();

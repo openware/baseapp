@@ -3,7 +3,9 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { TabPanel } from '../../../components';
 import { selectUserLoggedIn } from '../../../modules';
-import { Charts, CreateOrder, Orders } from '../index';
+import { Orders } from '../index';
+import { Charts } from './Charts';
+import { CreateOrder } from './CreateOrder';
 
 const TradingTabsComponent = () => {
     const intl = useIntl();
