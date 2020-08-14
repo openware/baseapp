@@ -17,7 +17,7 @@ import {
     RootState,
     selectBeneficiaries,
     selectBeneficiariesCreate,
-    selectMemberLevels,
+    selectMemberLevels, selectMobileDeviceState,
     selectUserInfo,
     User,
 } from '../../modules';
@@ -30,6 +30,7 @@ interface ReduxProps {
     beneficiariesAddData: Beneficiary;
     memberLevels?: MemberLevels;
     userData: User;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -105,6 +106,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             type,
             beneficiaries,
             beneficiariesAddData,
+            isMobileDevice,
         } = this.props;
         const {
             currentWithdrawalBeneficiary,
@@ -133,7 +135,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                     />
                 )}
                 {isOpenFailModal && (
-                    <BeneficiariesFailAddModal handleToggleFailModal={this.handleToggleFailModal} />
+                    <BeneficiariesFailAddModal isMobileDevice={isMobileDevice} handleToggleFailModal={this.handleToggleFailModal} />
                 )}
             </div>
         );
@@ -433,6 +435,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesAddData: selectBeneficiariesCreate(state),
     memberLevels: selectMemberLevels(state),
     userData: selectUserInfo(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({

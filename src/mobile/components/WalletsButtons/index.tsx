@@ -17,7 +17,7 @@ const WalletsButtonsComponent = props => {
                 {intl.formatMessage({ id: 'page.body.wallets.tabs.deposit' })}
             </Button>
             <Button
-                onClick={() => history.push('/wallets/history/withdraw')}
+                onClick={() => history.push(`/wallets/${props.currency}/withdraw`)}
                 size="lg"
                 variant="danger"
             >

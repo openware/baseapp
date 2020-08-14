@@ -6,11 +6,13 @@ import {
 } from 'react-intl';
 import { Modal } from '../../components';
 import { IntlProps } from '../../index';
+import { Modal as MobileModal } from '../../mobile/components/Modal';
 
 interface ModalWithdrawSubmitProps {
     currency: string;
     onSubmit: () => void;
     show: boolean;
+    isMobileDevice?: boolean;
 }
 
 type Props = ModalWithdrawSubmitProps & IntlProps;
@@ -21,9 +23,17 @@ class ModalWithdrawSubmitComponent extends React.Component<Props> {
     };
 
     public render() {
-        const { show } = this.props;
+        const { show, isMobileDevice } = this.props;
 
-        return (
+        return isMobileDevice ?
+            <MobileModal title={this.renderHeaderModalSubmit()} isOpen={this.props.show}>
+              <div>
+                  {this.renderBodyModalSubmit()}
+              </div>
+              <div>
+                  {this.renderFooterModalSubmit()}
+              </div>
+            </MobileModal> : (
             <Modal
                 show={show}
                 header={this.renderHeaderModalSubmit()}

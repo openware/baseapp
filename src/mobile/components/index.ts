@@ -12,3 +12,4 @@ export * from './WalletDepositBody';
 export * from './WalletHeader';
 export * from './WalletItem';
 export * from './WalletsButtons';
+export * from './WalletWithdrawBody';
