@@ -2,10 +2,10 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalWithdrawConfirmation, ModalWithdrawSubmit, Withdraw } from '../../../containers';
-import { useBeneficiariesFetch, useWalletsAddressFetch } from '../../../hooks';
+import {useBeneficiariesFetch, usePrevious, useWalletsAddressFetch} from '../../../hooks';
 import { Beneficiary } from '../../../modules/user/beneficiaries';
 import { selectUserInfo } from '../../../modules/user/profile';
-import { walletsWithdrawCcyFetch } from '../../../modules/user/wallets';
+import {selectWithdrawSuccess, walletsWithdrawCcyFetch} from '../../../modules/user/wallets';
 
 const defaultBeneficiary: Beneficiary = {
     id: 0,
@@ -31,6 +31,7 @@ const WalletWithdrawBodyComponent = props => {
     const intl = useIntl();
     const dispatch = useDispatch();
     const user = useSelector(selectUserInfo);
+    const withdrawSuccess = useSelector(selectWithdrawSuccess);
     const { currency, fee, type } = props.wallet;
     const fixed = (props.wallet || { fixed: 0 }).fixed;
     const withdrawAmountLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }), [intl]);
@@ -66,7 +67,7 @@ const WalletWithdrawBodyComponent = props => {
         }));
     };
     const toggleSubmitModal = () => {
-        setWithdrawSubmitModal(false);
+        setWithdrawSubmitModal(state => !state);
         setWithdrawData(state => ({ ...state, withdrawDone: true }));
     };
     const handleWithdraw = () => {
@@ -87,6 +88,12 @@ const WalletWithdrawBodyComponent = props => {
 
     useWalletsAddressFetch(currency);
     useBeneficiariesFetch();
+
+    const prevWithdrawSuccess = usePrevious(withdrawSuccess);
+
+    if (!prevWithdrawSuccess && withdrawSuccess) {
+        toggleSubmitModal();
+    }
 
     return (
         <div className="cr-mobile-wallet-withdraw-body">
