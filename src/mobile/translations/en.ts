@@ -51,4 +51,7 @@ export const en = {
     'page.mobile.wallet.deposit.generating': 'Generating address...',
 
     'page.mobile.wallet.withdraw.modal.new.account': 'Confirm new account',
+
+    'page.mobile.userInfo.details.uid': 'UID: {uid}',
+    'page.mobile.userInfo.logout.button': 'Logout',
 };
