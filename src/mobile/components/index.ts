@@ -6,6 +6,7 @@ export * from './Modal';
 export * from './OpenOrders';
 export * from './OrderButtons';
 export * from './Orders';
+export * from './Profile';
 export * from './TradingTabs';
 export * from './WalletBanner';
 export * from './WalletDepositBody';

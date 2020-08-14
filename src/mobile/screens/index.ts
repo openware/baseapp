@@ -4,6 +4,7 @@ export * from './ForgotPassword';
 export * from './ForgotPassword';
 export * from './Landing';
 export * from './Orders';
+export * from './Profile';
 export * from './SelectedWalletScreen';
 export * from './SignInScreen';
 export * from './SignUpScreen';
