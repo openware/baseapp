@@ -5,10 +5,13 @@ import { useWalletsFetch } from '../../../hooks';
 import { selectWallets } from '../../../modules/user/wallets';
 import { WalletHeader, WalletWithdrawBody } from '../../components';
 
+
+const defaultWallet = { name: '', currency: '', balance: '', type: '', address: '', fee: '' };
+
 const WalletWithdraw = () => {
     const { currency = '' } = useParams();
     const wallets = useSelector(selectWallets) || [];
-    const wallet = wallets.find(item => item.currency === currency) || { name: '', currency: '', balance: '', type: '', address: '', fee: '' };
+    const wallet = wallets.find(item => item.currency === currency) || defaultWallet;
 
     useWalletsFetch();
 
