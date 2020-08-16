@@ -1,0 +1,113 @@
+/* stylelint-disable */
+.cr-mobile-confirm {
+  .cr-mobile-modal__header-back,
+  .pg-logo,
+  .pg-confirm__progress,
+  .pg-confirm__content-phone-head,
+  .pg-confirm-box-close {
+    display: none;
+  }
+  .pg-wrapper {
+    background: unset;
+    height: auto;
+  }
+
+  &__phone {
+    .cr-mobile-modal__header-title {
+      text-align: left;
+      color: var(--primary-text-color);
+    }
+    .pg-confirm__content-phone-col {
+      margin: 24px 0;
+    }
+    .pg-confirm {
+      margin: 24px 0 0 0;
+    }
+    .pg-confirm-box {
+      margin: 0 14px;
+    }
+    .input-group-append {
+      button {
+        font-size: 14px;
+        line-height: 22px;
+        padding: 2px 10px;
+        margin: 0;
+        height: 27px;
+        top: 5px;
+        border-radius: 2px !important;
+        right: 5px;
+      }
+    }
+    .pg-confirm__content-deep {
+      margin: 0;
+    }
+  }
+
+  &__identity {
+    .pg-confirm,
+    .pg-confirm-box {
+      margin: 0;
+      width: 100%;
+
+      .pg-confirm__content-documents {
+        margin: 0 14px;
+        .dropdown {
+          button {
+            max-height: 48px;
+            &:first-child {
+              height: 47px !important;
+            }
+          }
+        }
+      }
+
+      .pg-confirm__content-deep {
+        margin: 0 14px;
+      }
+
+      .pg-confirm__content-documents-col-row-content-3,
+      .pg-confirm__content-documents-col-row-content {
+        font-size: 14px;
+      }
+      .pg-confirm__content-documents-col-row-content-2 {
+        font-size: 16px;
+      }
+      .pg-confirm__content-identity-col-row-content {
+        max-height: 48px;
+      }
+      .pg-confirm__content-identity-col-row-content-number {
+        margin-top: 11px;
+      }
+      .pg-confirm__content-identity {
+        font-size: 14px;
+        .dropdown-menu.show {
+          height: 120px;
+        }
+        .pg-confirm__content-identity-col-row-content-label,
+        legend {
+          font-size: 12px;
+        }
+        .pg-confirm__content-identity-forms {
+          margin: 14px;
+          padding: 0;
+        }
+        .pg-confirm__content-identity-col-row-content {
+          width: 100%;
+          input {
+            font-size: 14px;
+          }
+        }
+        fieldset {
+          margin: 0;
+          width: 100%;
+        }
+        .dropdown {
+          button {
+            max-height: 48px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
