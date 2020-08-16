@@ -89,7 +89,6 @@ const WalletWithdrawBodyComponent = props => {
         };
         dispatch(walletsWithdrawCcyFetch(withdrawRequest));
         toggleConfirmModal();
-        useCurrenciesFetch();
     };
 
     React.useEffect(() => {
@@ -100,6 +99,7 @@ const WalletWithdrawBodyComponent = props => {
 
     useWalletsAddressFetch(currency);
     useBeneficiariesFetch();
+    useCurrenciesFetch();
 
     const className = classnames('cr-mobile-wallet-withdraw-body', {
         'cr-mobile-wallet-withdraw-body--disabled': currencyItem && !currencyItem.withdrawal_enabled,
