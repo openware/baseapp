@@ -26,3 +26,6 @@ index.css
 
 # environment config
 public/config/
+
+# mock
+mock/api/v2
