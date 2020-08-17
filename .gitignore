@@ -28,4 +28,5 @@ index.css
 public/config/
 
 # mock
-mocks/api/v2
+mocks/api/v2/
+
