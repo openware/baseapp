@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { kycSteps } from '../../api';
 import { CrossIcon } from '../../assets/images/kyc/CrossIcon';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { Address, Documents, Identity, Phone } from '../../containers';
 import { getVerificationStep, setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Label,
     labelFetch,

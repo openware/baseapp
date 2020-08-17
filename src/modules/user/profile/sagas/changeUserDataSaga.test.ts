@@ -1,10 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { CommonError } from '../../../types';
 import { changeUserDataError, changeUserDataFetch } from '../actions';
-
 
 describe('Module: Change user info', () => {
     let store: MockStoreEnhanced;
@@ -22,7 +22,7 @@ describe('Module: Change user info', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -48,7 +48,16 @@ describe('Module: Change user info', () => {
     };
 
     const expectedActionsFetch = [changeUserDataFetch({ user: fakeUser })];
-    const expectedActionsError = [changeUserDataFetch({ user: fakeUser }), changeUserDataError(fakeError)];
+    const expectedActionsError = [
+        changeUserDataFetch({ user: fakeUser }),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: changeUserDataError,
+            },
+        }),
+    ];
 
     it('should change user data info in success flow', async () => {
         mockchangeUserData();

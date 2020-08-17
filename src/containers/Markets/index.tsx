@@ -5,10 +5,10 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../';
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { Markets } from '../../components/Markets';
-import { IntlProps } from '../../index';
 import { RootState, selectUserInfo, setCurrentPrice, User } from '../../modules';
 import {
     Market,

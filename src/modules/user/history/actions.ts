@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import {
     HISTORY_DATA,
     HISTORY_ERROR,
@@ -36,7 +37,7 @@ export interface HistoryData {
 
 export interface HistoryError {
     type: typeof HISTORY_ERROR;
-    payload: WalletHistoryList;
+    error: CommonError;
 }
 
 export interface HistoryPushFinish {
@@ -72,9 +73,9 @@ export const successHistory = (payload: HistorySuccessPayload): HistoryData => (
     payload,
 });
 
-export const failHistory = (payload: WalletHistoryList): HistoryError => ({
+export const failHistory = (error: CommonError): HistoryError => ({
     type: HISTORY_ERROR,
-    payload,
+    error,
 });
 
 export const resetHistory = (): HistoryReset => ({

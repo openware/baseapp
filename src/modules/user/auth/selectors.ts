@@ -1,4 +1,4 @@
-import { RootState } from '../../index';
+import { RootState } from '../../';
 import { CommonError } from '../../types';
 import { AuthState } from './reducer';
 

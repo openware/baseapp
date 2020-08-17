@@ -1,9 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { alertData, alertPush } from '../../alert';
+import { CommonError } from '../../../types';
 import {
     marketsData,
     marketsError,
@@ -15,8 +15,7 @@ import {
 } from '../actions';
 import { Market, Ticker } from '../types';
 
-// tslint:disable no-any no-magic-numbers
-describe('Saga: marketsFetchSaga', () => {
+describe('Markets & Tickers sagas', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
@@ -103,10 +102,9 @@ describe('Saga: marketsFetchSaga', () => {
         btcusd: btcusdTicker,
     };
 
-    const alertDataPayload = {
+    const error: CommonError = {
         message: ['Server error'],
         code: 500,
-        type: 'error',
     };
 
     it('should fetch markets', async () => {
@@ -130,17 +128,23 @@ describe('Saga: marketsFetchSaga', () => {
     });
 
     it('should trigger an error on market fetch', async () => {
-        const expectedActions = [marketsFetch(), marketsError(), alertPush(alertDataPayload), alertData(alertDataPayload)];
         mockNetworkError(mockAxios);
+        const expectedActions = [
+            marketsFetch(),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: marketsError,
+                },
+            }),
+        ];
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
                     expect(actions).toEqual(expectedActions);
                     setTimeout(resolve, 0.01);
-                }
-                if (actions.length > expectedActions.length) {
-                    fail(`Unexpected action: ${JSON.stringify(actions.slice(-1)[0])}`);
                 }
             });
         });
@@ -150,8 +154,9 @@ describe('Saga: marketsFetchSaga', () => {
     });
 
     it('should fetch tickers', async () => {
-        const expectedActions = [marketsTickersFetch(), marketsTickersData(marketsTickersList)];
         mockTickers();
+
+        const expectedActions = [marketsTickersFetch(), marketsTickersData(marketsTickersList)];
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
@@ -170,17 +175,24 @@ describe('Saga: marketsFetchSaga', () => {
     });
 
     it('should trigger an error on tickers fetch', async () => {
-        const expectedActions = [marketsTickersFetch(), marketsTickersError(), alertPush(alertDataPayload), alertData(alertDataPayload)];
         mockNetworkError(mockAxios);
+
+        const expectedActions = [
+            marketsTickersFetch(),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: marketsTickersError,
+                },
+            }),
+        ];
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
                     expect(actions).toEqual(expectedActions);
                     setTimeout(resolve, 0.01);
-                }
-                if (actions.length > expectedActions.length) {
-                    fail(`Unexpected action: ${JSON.stringify(actions.slice(-1)[0])}`);
                 }
             });
         });

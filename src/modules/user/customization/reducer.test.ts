@@ -7,7 +7,7 @@ describe('customizationReducer', () => {
         settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

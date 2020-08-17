@@ -27,12 +27,12 @@ export interface OrderExecuteData {
 
 export interface OrderExecuteError {
     type: typeof ORDER_EXECUTE_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface SetCurrentPrice {
-  type: typeof ORDERS_SET_CURRENT_PRICE;
-  payload: number | undefined;
+    type: typeof ORDERS_SET_CURRENT_PRICE;
+    payload: number | undefined;
 }
 
 export interface SetAmount {
@@ -63,11 +63,10 @@ export const orderExecuteData = (): OrderExecuteData => ({
     type: ORDER_EXECUTE_DATA,
 });
 
-export const orderExecuteError =
-    (payload: OrderExecuteError['payload']): OrderExecuteError => ({
-        type: ORDER_EXECUTE_ERROR,
-        payload,
-    });
+export const orderExecuteError = (error: CommonError): OrderExecuteError => ({
+    type: ORDER_EXECUTE_ERROR,
+    error,
+});
 
 export const setCurrentPrice =
   (payload: SetCurrentPrice['payload']): SetCurrentPrice => ({
@@ -86,4 +85,3 @@ export const setOrderType =
         type: ORDERS_SET_ORDER_TYPE,
         payload,
     });
-

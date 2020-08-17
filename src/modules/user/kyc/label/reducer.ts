@@ -34,7 +34,7 @@ export const labelReducer = (state = initialLabelState, action: LabelAction) => 
             return {
                 ...state,
                 isFetching: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;

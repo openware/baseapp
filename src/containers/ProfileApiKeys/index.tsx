@@ -4,6 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
+import { IntlProps } from '../../';
 import {
     CopyableTextField,
     CustomInput,
@@ -11,7 +12,6 @@ import {
     Table,
 } from '../../components';
 import { localeDate } from '../../helpers/localeDate';
-import { IntlProps } from '../../index';
 
 import {
     alertPush,

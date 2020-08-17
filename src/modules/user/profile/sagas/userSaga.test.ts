@@ -1,13 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import {
-    userData,
-    userError,
-    userFetch,
-} from '../actions';
+import { CommonError } from '../../../types';
+import { userData, userError, userFetch } from '../actions';
 
 describe('Module: User', () => {
     let store: MockStoreEnhanced;
@@ -25,7 +22,7 @@ describe('Module: User', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -49,8 +46,21 @@ describe('Module: User', () => {
         mockAxios.onGet('/resource/users/me').reply(200, fakeUser);
     };
 
-    const expectedActionsFetch = [userFetch(), userData({ user: fakeUser })];
-    const expectedActionsError = [userFetch(), userError(fakeError)];
+    const expectedActionsFetch = [
+        userFetch(),
+        userData({ user: fakeUser }),
+    ];
+
+    const expectedActionsError = [
+        userFetch(),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: userError,
+            },
+        }),
+    ];
 
     it('should fetch user in success flow', async () => {
         mockUser();

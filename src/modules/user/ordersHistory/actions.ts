@@ -1,4 +1,4 @@
-import {OrderCommon, OrderEvent} from '../../types';
+import { CommonError, OrderCommon, OrderEvent } from '../../types';
 import {
     ORDERS_CANCEL_ALL_DATA,
     ORDERS_CANCEL_ALL_ERROR,
@@ -44,6 +44,7 @@ export interface UserOrdersHistoryRangerData {
 
 export interface UserOrdersHistoryError {
     type: typeof ORDERS_HISTORY_ERROR;
+    error: CommonError;
 }
 
 export interface TestOrdersHistoryState {
@@ -63,6 +64,7 @@ export interface OrdersCancelAllData {
 
 export interface OrdersCancelAllError {
     type: typeof ORDERS_CANCEL_ALL_ERROR;
+    error: CommonError;
 }
 
 export interface OrdersHistoryCancelFetch {
@@ -81,6 +83,7 @@ export interface OrdersHistoryCancelData {
 
 export interface OrdersHistoryCancelError {
     type: typeof ORDERS_HISTORY_CANCEL_ERROR;
+    error: CommonError;
 }
 
 export interface OrdersHistoryReset {
@@ -117,8 +120,9 @@ export const userOrdersHistoryRangerData = (payload: OrderEvent): UserOrdersHist
     payload,
 });
 
-export const userOrdersHistoryError = (): UserOrdersHistoryError => ({
+export const userOrdersHistoryError = (error: CommonError): UserOrdersHistoryError => ({
     type: ORDERS_HISTORY_ERROR,
+    error,
 });
 
 export const ordersCancelAllFetch = (payload?: OrdersCancelAllFetch['payload']): OrdersCancelAllFetch => ({
@@ -130,8 +134,9 @@ export const ordersCancelAllData = (): OrdersCancelAllData => ({
     type: ORDERS_CANCEL_ALL_DATA,
 });
 
-export const ordersCancelAllError = (): OrdersCancelAllError => ({
+export const ordersCancelAllError = (error: CommonError): OrdersCancelAllError => ({
     type: ORDERS_CANCEL_ALL_ERROR,
+    error,
 });
 
 export const ordersHistoryCancelFetch = (payload: OrdersHistoryCancelFetch['payload']): OrdersHistoryCancelFetch => ({
@@ -144,8 +149,9 @@ export const ordersHistoryCancelData = (payload: OrdersHistoryCancelData['payloa
     payload,
 });
 
-export const ordersHistoryCancelError = (): OrdersHistoryCancelError => ({
+export const ordersHistoryCancelError = (error: CommonError): OrdersHistoryCancelError => ({
     type: ORDERS_HISTORY_CANCEL_ERROR,
+    error,
 });
 
 export const resetOrdersHistory = (): OrdersHistoryReset => ({

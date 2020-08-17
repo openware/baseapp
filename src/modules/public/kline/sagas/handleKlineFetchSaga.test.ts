@@ -1,14 +1,11 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+import { rootSaga, sendError } from '../../../';
 import { getTimestampPeriod } from '../../../../helpers';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { alertPush, rootSaga } from '../../../index';
-import {
-    klineData,
-    klineFetch,
-} from '../actions';
-
+import { CommonError } from '../../../types';
+import { klineData, klineError, klineFetch } from '../actions';
 
 describe('Kline', () => {
     let store: MockStoreEnhanced;
@@ -57,10 +54,9 @@ describe('Kline', () => {
         },
     ];
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
-        type: 'error',
     };
 
     const mockKline = () => {
@@ -69,18 +65,10 @@ describe('Kline', () => {
         `time_to=${getTimestampPeriod(fakePayload.to, fakePayload.resolution)}`).reply(200, fakeResponse);
     };
 
-    const expectedActions = [
-        klineFetch(fakePayload),
-        klineData(fakeResponseData),
-    ];
-
-    const expectedActionsError = [
-        klineFetch(fakePayload),
-        alertPush(fakeError),
-    ];
-
     it('should fetch kline in success flow', async () => {
         mockKline();
+
+        const expectedActions = [klineFetch(fakePayload), klineData(fakeResponseData)];
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
@@ -97,6 +85,17 @@ describe('Kline', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
+
+        const expectedActionsError = [
+            klineFetch(fakePayload),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: klineError,
+                },
+            }),
+        ];
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();

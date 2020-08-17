@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+import { Orders } from '../';
 import { TabPanel } from '../../../components';
 import { selectUserLoggedIn } from '../../../modules';
-import { Orders } from '../index';
 import { Charts } from './Charts';
 import { CreateOrder } from './CreateOrder';
 

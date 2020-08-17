@@ -1,9 +1,5 @@
 import * as actions from './actions';
-import {
-    CUSTOMIZATION_DATA,
-    CUSTOMIZATION_ERROR,
-    CUSTOMIZATION_FETCH,
-} from './constants';
+import { CUSTOMIZATION_DATA, CUSTOMIZATION_ERROR, CUSTOMIZATION_FETCH } from './constants';
 import { CustomizationDataInterface } from './types';
 
 describe('Customization actions', () => {
@@ -11,7 +7,7 @@ describe('Customization actions', () => {
         settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

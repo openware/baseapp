@@ -6,6 +6,7 @@ import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { Blur, CurrencyInfo, DepositCrypto, DepositFiat, TabPanel, WalletItemProps, WalletList } from '../../components';
 import { DEFAULT_CCY_PRECISION } from '../../constants';
 import { Withdraw, WithdrawProps } from '../../containers';
@@ -14,7 +15,6 @@ import { ModalWithdrawSubmit } from '../../containers/ModalWithdrawSubmit';
 import { EstimatedValue } from '../../containers/Wallets/EstimatedValue';
 import { WalletHistory } from '../../containers/Wallets/History';
 import { formatCCYAddress, setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     alertPush,
     beneficiariesFetch,

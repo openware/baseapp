@@ -2,7 +2,8 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { rootSaga } from '../../../../modules/index';
+import { rootSaga, sendError } from '../../../../modules/index';
+import { CommonError } from '../../../types';
 import {
     beneficiariesCreate,
     beneficiariesCreateData,
@@ -50,6 +51,11 @@ describe('Beneficiaries Create', () => {
             mockAxios.onPost('/account/beneficiaries').reply(200, fakeSuccessPayload);
         };
 
+        const error: CommonError = {
+            code: 500,
+            message: ['Server error'],
+        };
+
         const expectedBeneficiariesCreateSuccess = [
             beneficiariesCreate(fakePayload),
             beneficiariesCreateData(fakeSuccessPayload),
@@ -58,7 +64,13 @@ describe('Beneficiaries Create', () => {
 
         const expectedBeneficiariesCreateError = [
             beneficiariesCreate(fakePayload),
-            beneficiariesCreateError({ code: 500, message: ['Server error'] }),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: beneficiariesCreateError,
+                },
+            }),
         ];
 
         it('should create beneficiaries in success flow', async () => {

@@ -29,17 +29,35 @@ const initialState: OrdersState = {
 export const ordersReducer = (state = initialState, action: OrdersAction) => {
     switch (action.type) {
         case ORDER_EXECUTE_FETCH:
-            return { ...state, executeLoading: true, executeError: undefined };
+            return {
+                ...state, executeLoading: true,
+                executeError: undefined,
+            };
         case ORDER_EXECUTE_DATA:
-            return { ...state, executeLoading: false, executeError: undefined };
+            return {
+                ...state, executeLoading: false,
+                executeError: undefined,
+            };
         case ORDER_EXECUTE_ERROR:
-            return { ...state, executeLoading: false, executeError: action.payload };
+            return {
+                ...state, executeLoading: false,
+                executeError: action.error,
+            };
         case ORDERS_SET_CURRENT_PRICE:
-          return { ...state, currentPrice: action.payload };
+            return {
+                ...state,
+                currentPrice: action.payload,
+            };
         case ORDERS_SET_AMOUNT:
-            return { ...state, amount: action.payload };
+            return {
+                ...state,
+                amount: action.payload,
+            };
         case ORDERS_SET_ORDER_TYPE:
-            return { ...state, orderType: action.payload };
+            return {
+                ...state,
+                orderType: action.payload,
+            };
         default:
             return state;
     }

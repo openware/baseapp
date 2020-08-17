@@ -1,4 +1,4 @@
-import { ThemeColorInterface } from './index';
+import { ThemeColorInterface } from './';
 
 export const PurpleTheme: ThemeColorInterface[] = [
     { key: '--rgb-main-background-color', value: '29, 14, 56' },

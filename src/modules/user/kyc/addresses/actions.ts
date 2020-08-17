@@ -1,9 +1,5 @@
 import { CommonError } from '../../../types';
-import {
-    SEND_ADDRESSES_DATA,
-    SEND_ADDRESSES_ERROR,
-    SEND_ADDRESSES_FETCH,
-} from './constants';
+import { SEND_ADDRESSES_DATA, SEND_ADDRESSES_ERROR, SEND_ADDRESSES_FETCH } from './constants';
 
 export interface SendAddressesFetch {
     type: typeof SEND_ADDRESSES_FETCH;
@@ -19,7 +15,7 @@ export interface SendAddressesData {
 
 export interface SendAddressesError {
     type: typeof SEND_ADDRESSES_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export type AddressesAction = SendAddressesFetch
@@ -36,7 +32,7 @@ export const sendAddressesData = (payload: SendAddressesData['payload']): SendAd
     payload,
 });
 
-export const sendAddressesError = (payload: SendAddressesError['payload']): SendAddressesError => ({
+export const sendAddressesError = (error: CommonError): SendAddressesError => ({
     type: SEND_ADDRESSES_ERROR,
-    payload,
+    error,
 });

@@ -1,4 +1,4 @@
-import { RootState } from '../../../index';
+import { RootState } from '../../../';
 import { Label } from './actions';
 
 export const selectLabelData = (state: RootState): Label[] =>

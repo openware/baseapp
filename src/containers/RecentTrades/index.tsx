@@ -5,8 +5,8 @@ import {
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { TabPanel } from '../../components';
-import { IntlProps } from '../../index';
 import {
     Market,
     PublicTrade,

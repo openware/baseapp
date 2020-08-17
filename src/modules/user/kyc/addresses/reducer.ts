@@ -1,10 +1,6 @@
 import { CommonError } from '../../../types';
 import { AddressesAction } from './actions';
-import {
-    SEND_ADDRESSES_DATA,
-    SEND_ADDRESSES_ERROR,
-    SEND_ADDRESSES_FETCH,
-} from './constants';
+import { SEND_ADDRESSES_DATA, SEND_ADDRESSES_ERROR, SEND_ADDRESSES_FETCH } from './constants';
 
 export interface AddressesState {
     success?: string;
@@ -33,7 +29,7 @@ export const addressesReducer = (state = initialAddressesState, action: Addresse
         case SEND_ADDRESSES_ERROR:
             return {
                 success: undefined,
-                error: action.payload,
+                error: action.error,
                 loading: false,
             };
         default:

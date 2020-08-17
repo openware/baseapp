@@ -1,9 +1,5 @@
 import * as actions from './actions';
-import {
-    initialMemberLevelsState,
-    memberLevelsReducer,
-    MemberLevelsState,
-} from './reducer';
+import { initialMemberLevelsState, memberLevelsReducer, MemberLevelsState } from './reducer';
 import { MemberLevels } from './types';
 
 describe('MemberLevels reducer', () => {
