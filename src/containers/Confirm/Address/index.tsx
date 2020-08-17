@@ -55,7 +55,7 @@ class AddressComponent extends React.Component<Props, State> {
 
     public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.success && !this.props.success) {
-            this.props.history.push('/settings');
+            this.props.history.push('/profile');
         }
     }
 
@@ -155,18 +155,18 @@ class AddressComponent extends React.Component<Props, State> {
                         handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'fileScan')}
                         uploadedFile={fileScan[0] && (fileScan[0] as File).name}
                     />
-                </div>
-                <div className="pg-confirm__content-deep">
-                    <Button
-                        onClick={this.sendAddress}
-                        disabled={this.handleCheckButtonDisabled()}
-                        size="lg"
-                        variant="primary"
-                        type="button"
-                        block={true}
-                    >
-                        {this.translate('page.body.kyc.submit')}
-                    </Button>
+                    <div className="pg-confirm__content-deep">
+                        <Button
+                            onClick={this.sendAddress}
+                            disabled={this.handleCheckButtonDisabled()}
+                            size="lg"
+                            variant="primary"
+                            type="button"
+                            block={true}
+                        >
+                            {this.translate('page.body.kyc.submit')}
+                        </Button>
+                    </div>
                 </div>
             </React.Fragment>
         );
