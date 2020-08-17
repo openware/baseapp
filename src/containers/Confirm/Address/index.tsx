@@ -2,7 +2,7 @@ import cr from 'classnames';
 import * as countries from 'i18n-iso-countries';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { compose } from 'redux';
 import { languages } from '../../../api/config';
 import { CustomInput, UploadFile } from '../../../components';
 import { DropdownComponent } from '../../../components/Dropdown';
+import { IntlProps } from '../../../index';
 import {
     alertPush,
     RootState,
@@ -39,7 +40,7 @@ interface State {
     fileScan: File[];
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class AddressComponent extends React.Component<Props, State> {
     public state = {

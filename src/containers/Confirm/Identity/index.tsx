@@ -25,6 +25,7 @@ import {
     sendIdentity,
     User,
 } from '../../../modules';
+import { IdentityData } from '../../../modules/user/kyc/identity/types';
 
 import * as countries from 'i18n-iso-countries';
 
@@ -414,7 +415,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     private sendData = () => {
         const { labels, user } = this.props;
         const dob = !isDateInFuture(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
-        const profileInfo = {
+        const profileInfo: IdentityData = {
             first_name: this.state.firstName,
             last_name: this.state.lastName,
             dob,
@@ -425,8 +426,10 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             confirm: true,
         };
         const isIdentity = labels.length && labels.find(w => w.key === 'profile' && w.value === 'verified' && w.scope === 'private');
+        const verifiedProfiles = user.profiles.length ? user.profiles.filter(i => i.state === 'verified') : [];
+        const lastVerifiedProfile = verifiedProfiles.length && verifiedProfiles[verifiedProfiles.length - 1];
 
-        if (!isIdentity && user.profile && user.profile.address) {
+        if (!isIdentity && lastVerifiedProfile && lastVerifiedProfile.address) {
             this.props.editIdentity(profileInfo);
         } else {
             this.props.sendIdentity(profileInfo);
