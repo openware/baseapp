@@ -1,8 +1,11 @@
+import classnames from 'classnames';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { Blur } from '../../../components/Blur';
 import { ModalWithdrawConfirmation, ModalWithdrawSubmit, Withdraw } from '../../../containers';
-import { useBeneficiariesFetch, useWalletsAddressFetch } from '../../../hooks';
+import { useBeneficiariesFetch, useCurrenciesFetch, useWalletsAddressFetch } from '../../../hooks';
+import { selectCurrencies } from '../../../modules/public/currencies';
 import { Beneficiary } from '../../../modules/user/beneficiaries';
 import { selectUserInfo } from '../../../modules/user/profile';
 import { selectWithdrawSuccess, walletsWithdrawCcyFetch } from '../../../modules/user/wallets';
@@ -31,6 +34,7 @@ const WalletWithdrawBodyComponent = props => {
     const intl = useIntl();
     const dispatch = useDispatch();
     const user = useSelector(selectUserInfo);
+    const currencies = useSelector(selectCurrencies);
     const withdrawSuccess = useSelector(selectWithdrawSuccess);
     const { currency, fee, type } = props.wallet;
     const fixed = (props.wallet || { fixed: 0 }).fixed;
@@ -39,6 +43,7 @@ const WalletWithdrawBodyComponent = props => {
     const withdrawFeeLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }), [intl]);
     const withdrawTotalLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }), [intl]);
     const withdrawButtonLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }), [intl]);
+    const currencyItem = (currencies && currencies.find(item => item.id === currency));
 
     const isTwoFactorAuthRequired = (level: number, is2faEnabled: boolean) => {
         return level > 1 || (level === 1 && is2faEnabled);
@@ -94,24 +99,36 @@ const WalletWithdrawBodyComponent = props => {
 
     useWalletsAddressFetch(currency);
     useBeneficiariesFetch();
+    useCurrenciesFetch();
+
+    const className = classnames('cr-mobile-wallet-withdraw-body', {
+        'cr-mobile-wallet-withdraw-body--disabled': currencyItem && !currencyItem.withdrawal_enabled,
+    });
 
     return (
-        <div className="cr-mobile-wallet-withdraw-body">
-            <Withdraw
-                isMobileDevice
-                fee={fee}
-                type={type}
-                fixed={fixed}
-                currency={currency}
-                onClick={toggleConfirmModal}
-                withdrawAmountLabel={withdrawAmountLabel}
-                withdraw2faLabel={withdraw2faLabel}
-                withdrawFeeLabel={withdrawFeeLabel}
-                withdrawTotalLabel={withdrawTotalLabel}
-                withdrawDone={withdrawData.withdrawDone}
-                withdrawButtonLabel={withdrawButtonLabel}
-                twoFactorAuthRequired={isTwoFactorAuthRequired(user.level, user.otp)}
-            />
+        <div className={className}>
+            {currencyItem && !currencyItem.withdrawal_enabled ? (
+                    <Blur
+                        className="pg-blur-withdraw"
+                        text={intl.formatMessage({id: 'page.body.wallets.tabs.withdraw.disabled.message'})}
+                    />
+                ) :
+                <Withdraw
+                    isMobileDevice
+                    fee={fee}
+                    type={type}
+                    fixed={fixed}
+                    currency={currency}
+                    onClick={toggleConfirmModal}
+                    withdrawAmountLabel={withdrawAmountLabel}
+                    withdraw2faLabel={withdraw2faLabel}
+                    withdrawFeeLabel={withdrawFeeLabel}
+                    withdrawTotalLabel={withdrawTotalLabel}
+                    withdrawDone={withdrawData.withdrawDone}
+                    withdrawButtonLabel={withdrawButtonLabel}
+                    twoFactorAuthRequired={isTwoFactorAuthRequired(user.level, user.otp)}
+                />
+            }
             <div className="cr-mobile-wallet-withdraw-body__submit">
                 <ModalWithdrawSubmit
                     isMobileDevice

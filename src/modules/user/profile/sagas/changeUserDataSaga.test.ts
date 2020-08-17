@@ -36,6 +36,11 @@ describe('Module: Change user info', () => {
         state: 'active',
         profiles: [],
         data: '',
+        referal_uid: '',
+        labels: [],
+        phone: [],
+        created_at: '',
+        updated_at: '',
     };
 
     const mockchangeUserData = () => {

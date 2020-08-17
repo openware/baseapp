@@ -1,6 +1,7 @@
 export * from './accumulateVolume';
 export * from './buildQueryString';
 export * from './calcMaxVolume';
+export * from './changeElementPosition';
 export * from './checkDate';
 export * from './cleanPositiveFloatInput';
 export * from './convertRgbToHex';
@@ -34,3 +35,4 @@ export * from './sortByPrice';
 export * from './timeConvert';
 export * from './timezone';
 export * from './toggleColorTheme';
+export * from './randomSecretHex';

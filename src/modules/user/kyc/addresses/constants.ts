@@ -1,0 +1,3 @@
+export const SEND_ADDRESSES_ERROR = 'addresses/SEND_ADDRESSES_ERROR';
+export const SEND_ADDRESSES_FETCH = 'addresses/SEND_ADDRESSES_FETCH';
+export const SEND_ADDRESSES_DATA = 'addresses/SEND_ADDRESSES_DATA';

@@ -1,48 +1,66 @@
 /* stylelint-disable */
-.cr-mobile-wallet-deposit {
-  background: var(--body-background-color);
-  padding: 16px;
-  min-height: 300px;
-  &__wrap {
-    margin-bottom: 48px;
+.cr-mobile-wallet-deposit-body {
+  .cr-wallet-item__single {
+    display: none;
   }
-
-  .cr-copyable-text-field {
-    .custom-input {
-      flex: 1;
-      margin-right: 42px;
-
-      input {
-        padding-left: 0;
-        padding-top: 0;
+  .cr-deposit-crypto {
+    background: var(--body-background-color);
+    display: flex;
+    padding: 0 14px 30px 14px;
+    .cr-deposit-info {
+      font-size: 14px;
+      text-align: left;
+    }
+    .cr-copyable-text-field {
+      border: none;
+    }
+    .qr-code {
+      margin: 0 0 0 20px;
+    }
+    .input-group {
+      display: flex;
+      .input-group-append {
+        button {
+          width: 131px;
+          padding: 0;
+          font-size: 14px;
+          height: 27px;
+          border-radius: 2px;
+        }
+      }
+      .custom-input {
+        width: auto;
+        flex: 1;
+        label {
+          left: 0;
+          padding-left: 0;
+        }
+        input {
+          padding-left: 0;
+        }
       }
     }
-
-    button {
-      border-radius: 2px !important;
-      width: 131px;
-      height: 27px;
-      font-size: 14px;
-      padding: 0;
+    & > div {
+      &:first-child {
+        order: 1;
+        margin-top: 20px;
+      }
+    }
+    .d-none {
+      display: block !important;
     }
   }
 
-  &__qr {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .cr-deposit-fiat {
+    background: var(--body-background-color);
+    font-size: 14px;
 
-    &-text {
-      margin-right: 20px;
-      font-size: 14px;
+    &-credentials {
+      width: 100%;
     }
-  }
 
-  &__address {
-    display: flex;
-    &-currency {
-      text-transform: uppercase;
-      padding-right: 5px;
+    &__title {
+      color: var(--primary-text-color);
     }
   }
 }

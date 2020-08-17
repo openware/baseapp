@@ -1,76 +1,10 @@
 .pg-confirm__content-phone {
-  color: var(--secondary-contrast-cta-color);
-
-  &-head {
-    color: var(--primary-text-color);
-    font-weight: var(--font-weight);
-    margin: calc(var(--gap) * 1.6) calc(var(--gap) * 3.4) calc(var(--gap) * 1.6) calc(var(--gap) * 2.5);
-  }
+  display: flex;
+  flex-direction: column;
+  max-width: 380px;
+  width: 100vw;
 
   &-col {
-    font-size: calc(var(--gap) * 2.33);
-    margin: 0 calc(var(--gap) * 3.4) calc(var(--gap) * 3.2) calc(var(--gap) * 3.4);
-
-    fieldset {
-      border: 1px solid var(--input-border-color);
-      border-radius: 4px;
-      box-sizing: border-box;
-      color: var(--input-text-color);
-      height: 49px;
-      margin-top: 16px;
-      padding-left: 16px;
-      padding-right: 4px;
-      padding-top: 4px;
-      width: 100%;
-    }
-
-    &-content {
-      border-bottom: 1px solid var(--input-border-color);
-      display: inline-block;
-      font-weight: normal;
-      position: relative;
-
-      &--focused {
-        border: 1px solid var(--input-border-color-active) !important;
-        color: var(--input-legend-color-active) !important;
-      }
-
-      .input-group {
-        justify-content: space-between;
-
-        .custom-input {
-          width: 69%;
-        }
-
-        .btn {
-          border-radius: 5px;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 576px) {
-  .pg-confirm__content-phone {
-    &-head {
-      text-align: center;
-    }
-
-    &-col {
-      font-size: calc(var(--gap) * 2);
-      margin: 0 calc(var(--gap) * 3.4) calc(var(--gap) * 3.2) calc(var(--gap) * 3.4);
-
-      &-content {
-        .btn {
-          font-size: calc(var(--gap) * 1.5);
-        }
-
-        .input-group {
-          .custom-input {
-            width: 50%;
-          }
-        }
-      }
-    }
+    margin: 0;
   }
 }

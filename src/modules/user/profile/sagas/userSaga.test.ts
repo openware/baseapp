@@ -38,6 +38,11 @@ describe('Module: User', () => {
         otp: false,
         state: 'active',
         profiles: [],
+        referal_uid: '',
+        labels: [],
+        phone: [],
+        created_at: '',
+        updated_at: '',
     };
 
     const mockUser = () => {

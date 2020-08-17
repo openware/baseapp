@@ -1,10 +1,17 @@
-import cn from 'classnames';
+import classnames from 'classnames';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { PendingIcon } from '../../assets/images/PendingIcon';
-import { RejectedIcon } from '../../assets/images/RejectedIcon';
+import { Link } from 'react-router-dom';
+import { kycSteps } from '../../api';
+import { changeElementPosition } from '../../helpers/changeElementPosition';
 import { Label, labelFetch, selectLabelData, selectUserInfo, User } from '../../modules';
+
+/* Icons */
+import { CheckBigIcon } from '../../assets/images/kyc/CheckBigIcon';
+import { CheckIcon } from '../../assets/images/kyc/CheckIcon';
+import { ClocksIcon } from '../../assets/images/kyc/ClocksIcon';
+import { CrossIcon } from '../../assets/images/kyc/CrossIcon';
 
 interface ReduxProps {
     labels: Label[];
@@ -18,189 +25,225 @@ interface ProfileVerificationProps {
     user: User;
 }
 
+interface State {
+    isMouseTooltipVisible: boolean;
+}
+
 type Props =  DispatchProps & ProfileVerificationProps & ReduxProps;
 
-class ProfileVerificationComponent extends React.Component<Props> {
+class ProfileVerificationComponent extends React.Component<Props, State> {
+    public state = {
+        isMouseTooltipVisible: false,
+    };
+
     public componentDidMount() {
         this.props.labelFetch();
     }
 
-    public renderFirstLevel(userLevel: number) {
-        const targetLevel = 1;
-        const {
-            titleClassName,
-        } = this.getLevelsClassNames(userLevel, targetLevel);
+    public renderProgressBarStep = (step: string, index: number, labels: Label[]) => {
+        const targetLabelStatus = this.handleCheckLabel(labels, step);
 
-        return (
-            <div className="pg-profile-page__row pg-profile-page__level-verification">
-                <div className={titleClassName}>
-                    {this.renderVerificationLevel('page.body.profile.header.account.profile.email', userLevel, targetLevel)}
-                    <p><FormattedMessage id="page.body.profile.header.account.profile.email.message" /></p>
-                </div>
-            </div>
-        );
-    }
-
-    public renderSecondLevel(userLevel: number) {
-        const targetLevel = 2;
-        const {
-            titleClassName,
-        } = this.getLevelsClassNames(userLevel, targetLevel);
-
-        return (
-            <div className="pg-profile-page__row pg-profile-page__level-verification">
-                <div className={titleClassName}>
-                    {this.renderVerificationLevel('page.body.profile.header.account.profile.phone', userLevel, targetLevel)}
-                    <p><FormattedMessage id="page.body.profile.header.account.profile.phone.message" /></p>
-                </div>
-            </div>
-        );
-    }
-
-    public renderThirdLevel(userLevel: number) {
-        const { labels } = this.props;
-        const targetLevel = 3;
-
-        const isProfileSubmitted = labels && labels.find(l => l.key === 'profile' && l.scope === 'private' && l.value === 'submitted');
-        const isProfileRejected = labels && labels.find(l => l.key === 'profile' && l.scope === 'private' && l.value === 'rejected');
-        const isDocumentPending = labels && labels.find(l => l.key === 'document' && l.scope === 'private' && l.value === 'pending');
-        const isDocumentRejected = labels && labels.find(l => l.key === 'document' && l.scope === 'private' && l.value === 'rejected');
-
-        const isPendingLabel = isDocumentPending || isProfileSubmitted;
-        const isRejectedLabel = isDocumentRejected || isProfileRejected;
-
-        const { titleClassName } = this.getLevelsClassNames(userLevel, targetLevel);
-
-        return (
-            <div className="pg-profile-page__row pg-profile-page__level-verification">
-                <div className={titleClassName}>
-                    {this.renderIdentityVerification('page.body.profile.header.account.profile.identity', userLevel, targetLevel, isPendingLabel)}
-                    <p><FormattedMessage id="page.body.profile.header.account.profile.identity.message" /></p>
-                </div>
-                {isPendingLabel ? this.renderPendingIcon() : null}
-                {isRejectedLabel && !isPendingLabel ? this.renderRejectedIcon() : null}
-            </div>
-        );
-    }
-
-    public renderPendingIcon() {
-        return (
-            <div className="pg-profile-page__level-verification__pending">
-                <p><FormattedMessage id="page.body.wallets.table.pending" /></p>
-                <PendingIcon />
-            </div>
-        );
-    }
-
-    public renderRejectedIcon() {
-        return (
-            <div className="pg-profile-page__level-verification__rejected">
-                <p><FormattedMessage id="page.body.wallets.table.rejected" /></p>
-                <RejectedIcon />
-            </div>
-        );
-    }
-
-    public renderVerificationLevel(text: string, userLevel, targetLevel) {
-        if (userLevel === (targetLevel - 1)) {
-            return (
-                <a href="/confirm" className="pg-profile-page__level-verification__url">
-                    <FormattedMessage id={`${text}.unverified.title`}/>
-                </a>
-            );
-        } else {
-            if (userLevel < targetLevel) {
+        switch (targetLabelStatus) {
+            case 'verified':
                 return (
-                    <p className="pg-profile-page__level-verification__name">
-                        <FormattedMessage id={`${text}.unverified.title`}/>
-                    </p>
+                    <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--verified">
+                        <FormattedMessage id={`page.body.profile.verification.progress.level`} />
+                        <span>&nbsp;{index + 1}</span>
+                        <CheckIcon />
+                    </div>
                 );
-            } else {
+            case 'drafted':
+            case 'pending':
+            case 'submitted':
                 return (
-                    <p className="pg-profile-page__level-verification__name">
-                        <FormattedMessage id={`${text}.title`}/>
-                    </p>
+                    <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--pending">
+                        <FormattedMessage id={`page.body.profile.verification.progress.level`} />
+                        <span>&nbsp;{index + 1}</span>
+                        <ClocksIcon />
+                    </div>
                 );
-            }
+            case 'rejected':
+                return (
+                    <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--rejected">
+                        <FormattedMessage id={`page.body.profile.verification.progress.level`} />
+                        <span>&nbsp;{index + 1}</span>
+                        <CrossIcon />
+                    </div>
+                );
+            case 'blocked':
+                return (
+                    <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--blocked">
+                        <FormattedMessage id={`page.body.profile.verification.progress.level`} />
+                        <span>&nbsp;{index + 1}</span>
+                    </div>
+                );
+            default:
+                return (
+                    <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--active">
+                        <FormattedMessage id={`page.body.profile.verification.progress.level`} />
+                        <span>&nbsp;{index + 1}</span>
+                    </div>
+                );
         }
+    };
+
+    public renderProgressBar(labels: Label[]) {
+        return (
+            <div className="pg-profile-page-verification__progress-bar">
+                {kycSteps().map((step, index) => this.renderProgressBarStep(step, index, labels))}
+            </div>
+        );
     }
 
-    public renderIdentityVerification(text: string, userLevel, targetLevel, isPendingLabel) {
-        const { labels } = this.props;
+    public renderVerificationLabel(labels: Label[], labelToCheck: string, index: number) {
+        const { isMouseTooltipVisible } = this.state;
+        const targetLabelStatus = this.handleCheckLabel(labels, labelToCheck);
 
-        if (labels.length) {
-            switch (userLevel) {
-                case targetLevel - 1: {
-                    if (isPendingLabel) {
-                        return (
-                            <p className="pg-profile-page__level-verification__name">
-                                <FormattedMessage id={`${text}.unverified.title`}/>
-                            </p>
-                        );
-                    } else {
-                        return (
-                            <a href="/confirm" className="pg-profile-page__level-verification__url">
-                                <FormattedMessage id={`${text}.unverified.title`}/>
-                            </a>
-                        );
-                    }
-                }
-                case targetLevel: {
-                    return (
-                        <p className="pg-profile-page__level-verification__name">
-                            <FormattedMessage id={`${text}.title`}/>
-                        </p>
-                    );
-                }
-                default: {
-                    return (
-                        <p className="pg-profile-page__level-verification__name">
-                            <FormattedMessage id={`${text}.unverified.title`}/>
-                        </p>
-                    );
-                }
-            }
-        } else {
-            return (
-                <p className="pg-profile-page__level-verification__name">
-                    <FormattedMessage id={`${text}.unverified.title`}/>
-                </p>
-            );
-        }
-    }
-
-    public getLevelsClassNames(currentLevel: number, targetLevel: number) {
-        const levelSatisfied = currentLevel >= targetLevel;
-
-        const levelClassName = cn({
-            'pg-profile-page__text-purple': levelSatisfied,
-        });
-        const titleClassName = cn('pg-profile-page__ml-gap', {
-            'pg-profile-page__text-success': levelSatisfied,
+        const tooltipClass = classnames('pg-profile-page-verification__step__tooltip tooltip-hover', {
+            'tooltip-hover--visible': isMouseTooltipVisible,
         });
 
-        return { levelClassName, titleClassName };
+        switch (targetLabelStatus) {
+            case 'verified':
+                return (
+                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--verified">
+                        <div className="pg-profile-page-verification__step__info">
+                            <div className="pg-profile-page-verification__step__info__title">
+                                <span>{index + 1}.&nbsp;</span>
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.title`} />
+                            </div>
+                            <div className="pg-profile-page-verification__step__info__subtitle">
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.subtitle`} />
+                            </div>
+                        </div>
+                        <div className="pg-profile-page-verification__step__label pg-profile-page-verification__step__label--verified">
+                            <FormattedMessage id="page.body.profile.verification.verified" />
+                            <CheckBigIcon />
+                        </div>
+                    </div>
+                );
+            case 'drafted':
+            case 'pending':
+            case 'submitted':
+                return (
+                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--pending">
+                        <div className="pg-profile-page-verification__step__info">
+                            <div className="pg-profile-page-verification__step__info__title">
+                                <span>{index + 1}.&nbsp;</span>
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.title`} />
+                            </div>
+                            <div className="pg-profile-page-verification__step__info__subtitle">
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.subtitle`} />
+                            </div>
+                        </div>
+                        <div className="pg-profile-page-verification__step__label pg-profile-page-verification__step__label--pending">
+                            <FormattedMessage id="page.body.profile.verification.pending" />
+                            <ClocksIcon />
+                        </div>
+                    </div>
+                );
+            case 'rejected':
+                return (
+                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--rejected">
+                        <div className="pg-profile-page-verification__step__info">
+                            <div className="pg-profile-page-verification__step__info__title">
+                                <span>{index + 1}.&nbsp;</span>
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.title`} />
+                            </div>
+                            <div className="pg-profile-page-verification__step__info__subtitle">
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.subtitle`} />
+                            </div>
+                        </div>
+                        <div
+                            className="pg-profile-page-verification__step__label pg-profile-page-verification__step__label--rejected"
+                            onMouseEnter={e => this.handleHoverTooltipIcon()}
+                            onMouseLeave={e => this.handleToggleTooltipVisible()}
+                        >
+                            <Link to="/confirm"><FormattedMessage id="page.body.profile.verification.reverify" /></Link>
+                            <CrossIcon />
+                        </div>
+                        <span className={tooltipClass}>
+                            <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.rejected.tooltip`} />
+                        </span>
+                    </div>
+                );
+            case 'blocked':
+                return (
+                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--blocked">
+                        <div className="pg-profile-page-verification__step__info">
+                            <div className="pg-profile-page-verification__step__info__title">
+                                <span>{index + 1}.&nbsp;</span>
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.title`} />
+                            </div>
+                            <div className="pg-profile-page-verification__step__info__subtitle">
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.subtitle`} />
+                            </div>
+                        </div>
+                        <div className="pg-profile-page-verification__step__button pg-profile-page-verification__step__button--blocked">
+                            <Link to="/confirm"><FormattedMessage id="page.body.profile.verification.verify" /></Link>
+                        </div>
+                    </div>
+                );
+            default:
+                return (
+                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--active">
+                        <div className="pg-profile-page-verification__step__info">
+                            <div className="pg-profile-page-verification__step__info__title">
+                                <span>{index + 1}.&nbsp;</span>
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.title`} />
+                            </div>
+                            <div className="pg-profile-page-verification__step__info__subtitle">
+                                <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.subtitle`} />
+                            </div>
+                        </div>
+                        <div className="pg-profile-page-verification__step__button pg-profile-page-verification__step__button--active">
+                            <Link to="/confirm"><FormattedMessage id="page.body.profile.verification.verify" /></Link>
+                        </div>
+                    </div>
+                );
+        }
     }
 
     public render() {
-        const { user } = this.props;
-        const userLevel = user.level;
+        const { labels } = this.props;
 
         return (
-            <div className="pg-profile-page__box pg-profile-page__left-col__verification">
-                <div className="pg-profile-page__box-header">
-                    <div className="pg-profile-page__row">
-                        <div className="pg-profile-page__verification-header">
-                            <FormattedMessage id="page.body.profile.header.account.profile" />
-                        </div>
-                    </div>
-                </div>
-                {this.renderFirstLevel(userLevel)}
-                {this.renderSecondLevel(userLevel)}
-                {this.renderThirdLevel(userLevel)}
+            <div className="pg-profile-page__box pg-profile-page-verification">
+                <h3 className="pg-profile-page-verification__title">
+                    <FormattedMessage id="page.body.profile.header.account.profile" />
+                </h3>
+                {this.renderProgressBar(labels)}
+                {kycSteps().map((step: string, index: number) => this.renderVerificationLabel(labels, step, index))}
             </div>
         );
     }
+
+    private handleCheckLabel = (labels: Label[], labelToCheck: string) => {
+        const targetLabel = labels.length && labels.find((label: Label) => label.key === labelToCheck && label.scope === 'private');
+        let targetLabelStatus = targetLabel ? targetLabel.value : '';
+        const indexOfPrevStep = kycSteps().indexOf(labelToCheck) - 1;
+
+        if (indexOfPrevStep !== -1) {
+            const prevStepPassed = Boolean(labels.find((label: Label) => label.key === kycSteps()[indexOfPrevStep] && label.value === 'verified' && label.scope === 'private'));
+
+            if (!prevStepPassed) {
+                targetLabelStatus = 'blocked';
+            }
+        }
+
+        return targetLabelStatus;
+    };
+
+    private handleToggleTooltipVisible = () => {
+        this.setState(prevState => ({
+            isMouseTooltipVisible: !prevState.isMouseTooltipVisible,
+        }));
+    };
+
+    private handleHoverTooltipIcon = () => {
+        changeElementPosition('pg-profile-page-verification__step__tooltip', 0, -100, 20);
+        this.handleToggleTooltipVisible();
+    };
 }
 
 const mapStateToProps = state => ({
@@ -213,8 +256,4 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         labelFetch: () => dispatch(labelFetch()),
     });
 
-const ProfileVerification = connect(mapStateToProps, mapDispatchProps)(ProfileVerificationComponent);
-
-export {
-    ProfileVerification,
-};
+export const ProfileVerification = connect(mapStateToProps, mapDispatchProps)(ProfileVerificationComponent);

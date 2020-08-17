@@ -2,20 +2,20 @@ import cr from 'classnames';
 import * as React from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { RouterProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { CustomInput } from '../../../components';
 import { IntlProps } from '../../../index';
-import { RootState } from '../../../modules';
 import {
+    changeUserLevel,
     resendCode,
+    RootState,
     selectVerifyPhoneSuccess,
     sendCode,
     verifyPhone,
-} from '../../../modules/user/kyc/phone';
-import { changeUserLevel } from '../../../modules/user/profile';
+} from '../../../modules';
 
 interface ReduxProps {
     verifyPhoneSuccess?: string;
@@ -36,7 +36,7 @@ interface DispatchProps {
     changeUserLevel: typeof changeUserLevel;
 }
 
-type Props = ReduxProps & DispatchProps & IntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class PhoneComponent extends React.Component<Props, PhoneState> {
     constructor(props: Props) {
@@ -51,9 +51,13 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         };
     }
 
-    public translate = (e: string) => {
-        return this.props.intl.formatMessage({ id: e });
-    };
+    public componentDidUpdate(prevProps: Props) {
+        const { history, verifyPhoneSuccess } = this.props;
+
+        if (verifyPhoneSuccess !== prevProps.verifyPhoneSuccess) {
+            history.push('/profile');
+        }
+    }
 
     public render() {
         const {
@@ -62,9 +66,6 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
             confirmationCode,
             confirmationCodeFocused,
         } = this.state;
-        const {
-            verifyPhoneSuccess,
-        } = this.props;
 
         const phoneNumberFocusedClass = cr('pg-confirm__content-phone-col-content', {
             'pg-confirm__content-phone-col-content--focused': phoneNumberFocused,
@@ -76,11 +77,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
 
         return (
             <div className="pg-confirm__content-phone">
-                <h2 className="pg-confirm__content-phone-head">{this.translate('page.body.kyc.phone.head')}</h2>
                 <div className="pg-confirm__content-phone-col">
-                    <div className="pg-confirm__content-phone-col-text">
-                        1. {this.translate('page.body.kyc.phone.enterPhone')}
-                    </div>
                     <fieldset className={phoneNumberFocusedClass}>
                         <InputGroup>
                             <CustomInput
@@ -110,9 +107,6 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                     </fieldset>
                 </div>
                 <div className="pg-confirm__content-phone-col">
-                    <div className="pg-confirm__content-phone-col-text">
-                        2. {this.translate('page.body.kyc.phone.enterCode')}
-                    </div>
                     <fieldset className={confirmationCodeFocusedClass}>
                         <CustomInput
                             type="string"
@@ -126,7 +120,6 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                         />
                     </fieldset>
                 </div>
-                {verifyPhoneSuccess && <p className="pg-confirm__success">{this.translate(verifyPhoneSuccess)}</p>}
                 <div className="pg-confirm__content-deep">
                     <Button
                         block={true}
@@ -236,13 +229,15 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
             this.props.resendCode(requestProps);
         }
     };
+
+    private translate = (id: string) => this.props.intl.formatMessage({ id });
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     verifyPhoneSuccess: selectVerifyPhoneSuccess(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         resendCode: phone => dispatch(resendCode(phone)),
         sendCode: phone => dispatch(sendCode(phone)),
@@ -250,5 +245,8 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         changeUserLevel: payload => dispatch(changeUserLevel(payload)),
     });
 
-// tslint:disable-next-line
-export const Phone = injectIntl(connect(mapStateToProps, mapDispatchProps)(PhoneComponent) as any) as React.FunctionComponent;
+export const Phone = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(PhoneComponent) as any; // tslint:disable-line
