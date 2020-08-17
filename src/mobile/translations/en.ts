@@ -54,4 +54,20 @@ export const en = {
 
     'page.mobile.userInfo.details.uid': 'UID: {uid}',
     'page.mobile.userInfo.logout.button': 'Logout',
+    'page.mobile.profileLinks.main.verification': 'Profile verification',
+    'page.mobile.profileLinks.main.2fa': 'Two-factor authentication',
+    'page.mobile.profileLinks.main.changePassword': 'Change password',
+    'page.mobile.profileLinks.main.activity': 'Account activity',
+    'page.mobile.profileLinks.main.apiKeys': 'My API keys',
+
+    'page.mobile.profileLinks.settings.language': 'Language',
+    'page.mobile.profileLinks.settings.theme': 'Theme',
+
+    'page.mobile.profileLinks.additional.referral': 'Referral Link',
+    'page.mobile.profileLinks.link.referral.success': 'Successfully copied!',
+
+    'page.mobile.profileLinks.link.verification': 'Level {level}',
+    'page.mobile.profileLinks.link.2fa.enabled': 'Enabled',
+    'page.mobile.profileLinks.link.2fa.disabled': 'Disabled',
+    'page.mobile.profileLinks.link.referral': 'Copy Link',
 };

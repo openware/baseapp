@@ -5,6 +5,7 @@ export * from './changeElementPosition';
 export * from './checkDate';
 export * from './cleanPositiveFloatInput';
 export * from './convertRgbToHex';
+export * from './copy';
 export * from './emailValidation';
 export * from './filterData';
 export * from './formatCCYAddress';
