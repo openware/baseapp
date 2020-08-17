@@ -131,7 +131,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     }
 
     public componentWillReceiveProps(next: OrderFormProps) {
-        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.props.currentMarketBidPrecision, ',');
+        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.props.currentMarketBidPrecision);
         if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
             this.setState({
                 price: nextPriceLimitTruncated,
@@ -248,11 +248,11 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                         <div className="cr-order-item__total__content">
                             {orderType === 'Limit' ? (
                                 <span className="cr-order-item__total__content__amount">
-                                    {total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
+                                    {Decimal.format(total, currentMarketAskPrecision + currentMarketBidPrecision, ',')}
                                 </span>
                             ) : (
                                 <span className="cr-order-item__total__content__amount">
-                                    &asymp;{total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
+                                    &asymp;{Decimal.format(total, currentMarketAskPrecision + currentMarketBidPrecision, ',')}
                                 </span>
                             )}
                             <span className="cr-order-item__total__content__currency">
