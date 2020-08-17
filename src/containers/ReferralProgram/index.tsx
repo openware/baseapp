@@ -5,6 +5,7 @@ import {
 } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CopyableTextField } from '../../components';
+import { copy } from '../../helpers';
 import { IntlProps } from '../../index';
 import {
     alertPush,
@@ -21,19 +22,6 @@ interface DispatchProps {
     fetchSuccess: typeof alertPush;
 }
 
-
-type CopyTypes = HTMLInputElement | null;
-
-const copy = (id: string) => {
-    const copyText: CopyTypes = document.querySelector(`#${id}`);
-
-    if (copyText) {
-        copyText.select();
-
-        document.execCommand('copy');
-        (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
-    }
-};
 
 type Props = ReduxProps & DispatchProps & IntlProps;
 

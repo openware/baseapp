@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CopyableTextField, CustomInput } from '../../components';
-import { setDocumentTitle } from '../../helpers';
+import { copy, setDocumentTitle } from '../../helpers';
 import { IntlProps } from '../../index';
 import { alertPush, RootState } from '../../modules';
 import {
@@ -41,19 +41,6 @@ type Props = RouterProps & ReduxProps & DispatchProps & IntlProps;
 interface State {
     otpCode: string;
 }
-
-type CopyTypes = HTMLInputElement | null;
-
-const copy = (id: string) => {
-    const copyText: CopyTypes = document.querySelector(`#${id}`);
-
-    if (copyText) {
-        copyText.select();
-
-        document.execCommand('copy');
-        (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
-    }
-};
 
 class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
     public state = {
