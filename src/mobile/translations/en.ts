@@ -70,4 +70,7 @@ export const en = {
     'page.mobile.profileLinks.link.2fa.enabled': 'Enabled',
     'page.mobile.profileLinks.link.2fa.disabled': 'Disabled',
     'page.mobile.profileLinks.link.referral': 'Copy Link',
+
+    'page.mobile.profileColorTheme.theme.basic': 'Basic',
+    'page.mobile.profileColorTheme.theme.light': 'Light',
 };
