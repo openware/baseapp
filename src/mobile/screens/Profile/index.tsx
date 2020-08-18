@@ -86,6 +86,7 @@ const ProfileMobileScreenComponent = () => {
                         type="text"
                         id="referral-link"
                         value={`${window.document.location.origin}/signup?refid=${user.uid}`}
+                        readOnly={true}
                     />
                     <span>{intl.formatMessage({id: 'page.mobile.profileLinks.link.referral'})}</span>
                 </div>

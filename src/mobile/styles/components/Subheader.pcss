@@ -1,0 +1,46 @@
+.cr-mobile-subheader {
+  align-items: center;
+  background: var(--body-background-color);
+  display: flex;
+  flex-direction: row;
+  height: 48px;
+  justify-content: space-between;
+  left: 0;
+  padding: 10px 14px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 100;
+
+  &__back,
+  &__close,
+  &__title {
+    color: var(--secondary-contrast-cta-color);
+    flex: 1;
+    height: 48px;
+  }
+
+  &__back {
+    align-items: center;
+    display: flex;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+
+    svg {
+      margin-right: 5px;
+      transform: rotate(90deg);
+    }
+  }
+
+  &__title {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    font-weight: 500;
+    justify-content: center;
+    letter-spacing: 0.1px;
+    line-height: 22px;
+    text-align: center;
+  }
+}

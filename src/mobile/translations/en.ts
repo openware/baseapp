@@ -73,4 +73,19 @@ export const en = {
 
     'page.mobile.profileColorTheme.theme.basic': 'Basic',
     'page.mobile.profileColorTheme.theme.light': 'Light',
+
+    'page.mobile.wallets.title': 'Wallets',
+
+    'page.mobile.profile.accountActivity.title': 'Account activity',
+    'page.mobile.profile.theme.title': 'Theme',
+    'page.mobile.profile.language.title': 'Language',
+
+    'page.mobile.profile.accountActivity.action': 'Action',
+    'page.mobile.profile.accountActivity.ip': 'IP address',
+    'page.mobile.profile.accountActivity.result': 'Result',
+
+    'page.mobile.confirm.profile': 'Identity verification',
+    'page.mobile.confirm.document': 'ID verification',
+    'page.mobile.confirm.address': 'Residence verification',
+    'page.mobile.confirm.back': 'Back',
 };
