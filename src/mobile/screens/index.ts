@@ -16,3 +16,4 @@ export * from './WalletsHistory';
 export * from './WalletsScreen';
 export * from './WalletWithdraw';
 export * from './ConfirmScreen';
+export * from './ProfileVerificationScreen';

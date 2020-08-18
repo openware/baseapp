@@ -1,0 +1,25 @@
+/* stylelint-disable */
+.cr-mobile-profile-verification {
+  .pg-profile-page-verification {
+    background: var(--body-background-color);
+    margin: 0;
+    height: 100vh;
+    padding: 0 14px;
+    overflow: hidden;
+
+    &__title {
+      display: none;
+    }
+    &__progress-bar__step--blocked,
+    &__progress-bar__step--active {
+      background: var(--secondary-contrast-cta-color);
+      color: var(--contrast-cta-color-level-3);
+      span {
+        color: var(--contrast-cta-color-level-3);
+      }
+    }
+    &__progress-bar {
+      margin-top: 24px;
+    }
+  }
+}
