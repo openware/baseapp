@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { ProfileVerification } from '../../../containers/ProfileVerification';
 import { Subheader } from '../../components/Subheader';
 
-const ProfileVerificationMobileScreen = () => {
+export const ProfileVerificationMobileScreen: React.FC = () => {
     const intl = useIntl();
     const history = useHistory();
 
@@ -20,8 +20,4 @@ const ProfileVerificationMobileScreen = () => {
             </div>
         </React.Fragment>
     );
-};
-
-export {
-    ProfileVerificationMobileScreen,
 };
