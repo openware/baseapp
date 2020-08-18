@@ -11,7 +11,7 @@ import { ProfileTwoFactorAuthScreen } from '../../../screens/ProfileTwoFactorAut
 import { Modal } from '../../components/Modal';
 import { Subheader } from '../../components/Subheader';
 
-export const ProfileAuthMobileScreen = () => {
+export const ProfileAuthMobileScreen: React.FC = () => {
     const [showModal, setShowModal] = React.useState(false);
     const [code2FA, setCode2FA] = React.useState('');
     const [code2FAFocus, setCode2FAFocus] = React.useState(false);
@@ -29,13 +29,11 @@ export const ProfileAuthMobileScreen = () => {
         setCode2FA('');
     };
 
-    const handleNavigateTo2fa = (enable2fa: boolean) => {
-        if (enable2fa) {
-            history.push('/security/2fa', { enable2fa });
-        } else {
+    const handleNavigateTo2fa = React.useCallback((enable2fa: boolean) => {
+        if (!enable2fa) {
             setShowModal(state => !state);
         }
-    };
+    }, []);
 
     const renderModalBody = () => {
         const code2FAClass = cr('cr-email-form__group', {
