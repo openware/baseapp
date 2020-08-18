@@ -52,7 +52,7 @@ const ifUserIsLoggedIn = () => {
 };
 
 
-const defaultUser = {
+export const defaultUser = {
     email: '',
     level: 0,
     otp: false,
