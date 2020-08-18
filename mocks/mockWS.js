@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const http = require('http');
-const mockserver = require('mockserver');
+const mockserver = require('./mockserver');
 var markets = require('./markets.js');
 var RangerMock = require('./ranger.js');
 const argv = require('yargs').argv;
