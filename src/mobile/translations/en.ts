@@ -83,4 +83,8 @@ export const en = {
     'page.mobile.confirm.document': 'ID verification',
     'page.mobile.confirm.address': 'Residence verification',
     'page.mobile.confirm.back': 'Back',
+
+    'page.body.profile.header.account.content.twoFactorAuthentication':  'Two-factor authentication',
+
+    'page.profile.kyc.title': '2FA',
 };

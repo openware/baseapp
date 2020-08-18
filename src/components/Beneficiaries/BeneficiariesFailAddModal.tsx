@@ -3,7 +3,7 @@ import { History } from 'history';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
-import { RouteProps, withRouter, Link } from 'react-router-dom';
+import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { IntlProps } from '../../index';
 import { Modal } from '../../mobile/components/Modal';
 
