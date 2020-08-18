@@ -37,6 +37,9 @@ const ProfileMobileScreenComponent = () => {
         {
             titleKey: 'page.mobile.profileLinks.main.2fa',
             route: '/profile/2fa',
+            state: {
+                enable2fa: !user.otp,
+            },
             children: (
                 <div>
                     {user.otp ? (

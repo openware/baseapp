@@ -8,9 +8,12 @@ const ProfileLinksComponent = props => {
     const history = useHistory();
     const links = props.links || [];
 
-    const handleRedirect = route => {
-        if (history.location.pathname !== route) {
-            history.push(route);
+    const handleRedirect = location => {
+        if (history.location.pathname !== location.route) {
+            history.push({
+                pathname: location.route,
+                state: location.state,
+            });
         }
     };
 
@@ -35,7 +38,7 @@ const ProfileLinksComponent = props => {
             <div
                 key={index}
                 className="pg-mobile-profile-links__item"
-                onClick={() => handleRedirect(link.route)}
+                onClick={() => handleRedirect(link)}
             >
                 <span className="pg-mobile-profile-links__item__left">
                     {intl.formatMessage({id: link.titleKey})}
