@@ -1,12 +1,15 @@
 import * as React from 'react';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { selectWallets, walletsAddressFetch, walletsFetch } from '../../../modules/user/wallets';
-import { WalletDepositBody, WalletHeader } from '../../components';
+import { Subheader, WalletDepositBody, WalletHeader } from '../../components';
 
 const WalletDeposit = () => {
     const [generateAddressTriggered, setGenerateAddressTriggered] = React.useState(false);
     const dispatch = useDispatch();
+    const intl = useIntl();
+    const history = useHistory();
     const { currency = '' } = useParams();
     const wallets = useSelector(selectWallets) || [];
 
@@ -29,6 +32,11 @@ const WalletDeposit = () => {
 
     return (
         <React.Fragment>
+            <Subheader
+                title={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit' })}
+                backTitle={intl.formatMessage({ id: 'page.body.wallets.balance' })}
+                onGoBack={() => history.push(`/wallets/${currency}/history`)}
+            />
             <WalletHeader currency={wallet.currency} name={wallet.name}/>
             <WalletDepositBody
                 wallet={wallet}

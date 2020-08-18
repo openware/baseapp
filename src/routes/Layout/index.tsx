@@ -224,19 +224,19 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     }
 
     public componentDidUpdate(prevProps: LayoutProps) {
-        const { customization, isLoggedIn } = this.props;
-
-        if (!isLoggedIn && prevProps.isLoggedIn) {
-            this.props.walletsReset();
-
-            if (!this.props.location.pathname.includes('/trading')) {
-                this.props.history.push('/trading/');
-            }
-        }
-
-        if (customization && customization !== prevProps.customization) {
-            this.handleApplyCustomization(customization);
-        }
+        // const { customization, isLoggedIn } = this.props;
+        //
+        // if (!isLoggedIn && prevProps.isLoggedIn) {
+        //     this.props.walletsReset();
+        //
+        //     if (!this.props.location.pathname.includes('/trading')) {
+        //         this.props.history.push('/trading/');
+        //     }
+        // }
+        //
+        // if (customization && customization !== prevProps.customization) {
+        //     this.handleApplyCustomization(customization);
+        // }
     }
 
     public componentWillUnmount() {
@@ -389,24 +389,24 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         });
     };
 
-    private handleApplyCustomization = (customization: CustomizationDataInterface) => {
-        const rootElement = document.documentElement;
-        const parsedSettings = customization && customization.settings ? JSON.parse(customization.settings) : null;
-
-        if (rootElement && parsedSettings && parsedSettings.theme_colors) {
-            parsedSettings.theme_colors.reduce((result, item) => {
-                const newItemColor = item.value;
-
-                if (newItemColor) {
-                    rootElement.style.setProperty(item.key, item.value);
-                }
-
-                return result;
-            }, {});
-
-            this.props.toggleChartRebuild();
-        }
-    };
+    // private handleApplyCustomization = (customization: CustomizationDataInterface) => {
+    //     const rootElement = document.documentElement;
+    //     const parsedSettings = customization && customization.settings ? JSON.parse(customization.settings) : null;
+    //
+    //     if (rootElement && parsedSettings && parsedSettings.theme_colors) {
+    //         parsedSettings.theme_colors.reduce((result, item) => {
+    //             const newItemColor = item.value;
+    //
+    //             if (newItemColor) {
+    //                 rootElement.style.setProperty(item.key, item.value);
+    //             }
+    //
+    //             return result;
+    //         }, {});
+    //
+    //         this.props.toggleChartRebuild();
+    //     }
+    // };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
