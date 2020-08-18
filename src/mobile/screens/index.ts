@@ -13,3 +13,4 @@ export * from './WalletDeposit';
 export * from './WalletsHistory';
 export * from './WalletsScreen';
 export * from './WalletWithdraw';
+export * from './ProfileVerificationScreen';
