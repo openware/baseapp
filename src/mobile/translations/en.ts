@@ -77,12 +77,18 @@ export const en = {
     'page.mobile.wallets.title': 'Wallets',
 
     'page.mobile.profile.accountActivity.title': 'Account activity',
+    'page.mobile.profile.apiKeys.title': 'My API keys',
     'page.mobile.profile.theme.title': 'Theme',
     'page.mobile.profile.language.title': 'Language',
 
     'page.mobile.profile.accountActivity.action': 'Action',
     'page.mobile.profile.accountActivity.ip': 'IP address',
     'page.mobile.profile.accountActivity.result': 'Result',
+
+    'page.mobile.profile.apiKeys.item.kid': 'Kid',
+    'page.mobile.profile.apiKeys.item.algorithm': 'Algorithm',
+    'page.mobile.profile.apiKeys.item.created': 'Created',
+    'page.mobile.profile.apiKeys.item.updated': 'Updated',
 
     'page.mobile.confirm.profile': 'Identity verification',
     'page.mobile.confirm.document': 'ID verification',

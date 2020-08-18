@@ -6,6 +6,7 @@ export * from './Landing';
 export * from './Orders';
 export * from './Profile';
 export * from './ProfileAccountActivity';
+export * from './ProfileApiKeys';
 export * from './ProfileColorTheme';
 export * from './ProfileLanguage';
 export * from './SelectedWalletScreen';
