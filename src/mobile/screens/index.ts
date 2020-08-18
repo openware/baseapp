@@ -18,3 +18,4 @@ export * from './WalletsScreen';
 export * from './WalletWithdraw';
 export * from './ConfirmScreen';
 export * from './ProfileVerificationScreen';
+export * from './ProfileAuth';

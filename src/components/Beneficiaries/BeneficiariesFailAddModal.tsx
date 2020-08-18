@@ -3,7 +3,7 @@ import { History } from 'history';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
-import { RouteProps, withRouter } from 'react-router-dom';
+import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { IntlProps } from '../../index';
 import { Modal } from '../../mobile/components/Modal';
 
@@ -48,7 +48,7 @@ class BeneficiariesFailAddModalComponent extends React.Component<Props> {
                 {this.translate('page.body.wallets.beneficiaries.failAddModal.content')}
             </span>
             <div className="cr-email-form__button-wrapper">
-                <a href="/confirm">
+                <Link to="/confirm">
                     <Button
                         size="lg"
                         variant="primary"
@@ -56,7 +56,7 @@ class BeneficiariesFailAddModalComponent extends React.Component<Props> {
                     >
                         {this.translate('page.body.wallets.beneficiaries.failAddModal.button')}
                     </Button>
-                </a>
+                </Link>
             </div>
         </div>
     );

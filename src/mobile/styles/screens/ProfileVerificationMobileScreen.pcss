@@ -2,13 +2,17 @@
 .cr-mobile-profile-verification {
   .pg-profile-page-verification {
     background: var(--body-background-color);
-    margin: 0;
+    margin: 5px 0 0 0;
     height: 100vh;
     padding: 0 14px;
     overflow: hidden;
 
     &__title {
       display: none;
+    }
+    &__step {
+      border-bottom: 1px solid var(--divider-color-level-1);
+      padding-bottom: 25px;
     }
     &__progress-bar__step--blocked,
     &__progress-bar__step--active {
@@ -20,6 +24,7 @@
     }
     &__progress-bar {
       margin-top: 24px;
+      margin-bottom: 40px;
     }
   }
 }
