@@ -11,6 +11,7 @@ interface OwnPropsTranslations {
     sizesText?: string;
     formatsText?: string;
     tipText?: string;
+    isMobileDevice?: boolean;
 }
 
 interface OwnProps extends OwnPropsTranslations {
@@ -60,6 +61,7 @@ export class UploadFile extends React.Component<Props, State> {
             tipText,
             exampleImagePath,
             id,
+            isMobileDevice,
             uploadedFile,
         } = this.props;
         const { isMouseTooltipVisible } = this.state;
@@ -85,14 +87,24 @@ export class UploadFile extends React.Component<Props, State> {
                             onChange={this.props.handleUploadScan}
                         />
                         <div className="pg-upload-file__content__form__info">
-                            {buttonText ? <span className="pg-upload-file__content__form__info__button btn-primary">{buttonText}</span> : null}
-                            {sizesText ? <span className="pg-upload-file__content__form__info__text">{sizesText}</span> : null}
-                            {formatsText ? <span className="pg-upload-file__content__form__info__text">{formatsText}</span> : null}
-                            {uploadedFile ? <span className="pg-upload-file__content__form__info__text file">{uploadedFile}</span> : null}
+                            {exampleImagePath && isMobileDevice ? (
+                                <div className="pg-upload-file__doc-image">
+                                    <img
+                                        src={exampleImagePath}
+                                        alt={`${label} example`}
+                                    />
+                                </div>
+                            ) : null}
+                            <div>
+                                {buttonText ? <span className="pg-upload-file__content__form__info__button btn-primary">{buttonText}</span> : null}
+                                {sizesText ? <span className="pg-upload-file__content__form__info__text">{sizesText}</span> : null}
+                                {formatsText ? <span className="pg-upload-file__content__form__info__text">{formatsText}</span> : null}
+                                {uploadedFile ? <span className="pg-upload-file__content__form__info__text file">{uploadedFile}</span> : null}
+                            </div>
                         </div>
                     </div>
                 </div>
-                {exampleImagePath ? (
+                {exampleImagePath && !isMobileDevice ? (
                     <div className="pg-upload-file__doc-image">
                         <img
                             src={exampleImagePath}

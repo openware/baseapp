@@ -8,7 +8,7 @@ import { compose } from 'redux';
 import { kycSteps } from '../../api';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { Address, Documents, Identity, Phone } from '../../containers';
-import { setDocumentTitle } from '../../helpers';
+import { getVerificationStep, setDocumentTitle } from '../../helpers';
 import { IntlProps } from '../../index';
 import {
     Label,
@@ -83,12 +83,8 @@ class ConfirmComponent extends React.Component<Props> {
 
     private handleGetVerificationStep = (): string => {
         const { labels } = this.props;
-        const lastVerifiedStep = labels.length && labels.slice().reverse().find((label: Label) => label.value === 'verified' && label.scope === 'private');
-        const lastVerifiedStepKey = lastVerifiedStep ? lastVerifiedStep.key : '';
-        const lastVerifiedStepIndex = kycSteps().findIndex((step: string) => step === lastVerifiedStepKey);
-        const currentVerificationStep = kycSteps()[lastVerifiedStepIndex + 1] || '';
 
-        return currentVerificationStep;
+        return getVerificationStep(labels);
     };
 
     private handleCheckUserLabels = (labels: Label[]) => {
