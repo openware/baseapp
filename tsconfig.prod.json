@@ -32,7 +32,7 @@
     "noEmit": true,
     "jsx": "preserve",
     "noImplicitAny": false,
-    "isolatedModules": false
+    "isolatedModules": true
   },
   "include": [
     "./src/assets",
