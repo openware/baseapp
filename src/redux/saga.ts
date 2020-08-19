@@ -1,4 +1,6 @@
 import { all, call } from 'redux-saga/effects';
+import { SagaIterator } from 'redux-saga';
+
 import { rootBlocklistAccessSaga } from '../modules/public/blocklistAccess';
 import { rootConfigsSaga } from '../modules/public/configs';
 import { rootCurrenciesSaga } from '../modules/public/currencies';
@@ -6,9 +8,7 @@ import { rootCustomizationSaga } from '../modules/public/customization';
 import { rootMarketsSaga } from '../modules/public/markets';
 import { rootKlineFetchSaga } from '../modules/public/kline';
 import { rootMemberLevelsSaga } from '../modules/public/memberLevels';
-import {
-    rootOrderBookSaga,
-} from '../modules/public/orderBook';
+import { rootOrderBookSaga } from '../modules/public/orderBook';
 import { rootRecentTradesSaga } from '../modules/public/recentTrades';
 import { rootApiKeysSaga } from '../modules/user/apiKeys/sagas';
 import { rootAuthSaga } from '../modules/user/auth';
@@ -33,8 +33,7 @@ import { rootWalletsSaga } from '../modules/user/wallets';
 import { rootWithdrawLimitSaga } from '../modules/user/withdrawLimit';
 import { rootHandleAlertSaga } from '../modules/public/alert';
 
-
-export function* rootSaga() {
+export function* rootSaga(): SagaIterator {
     yield all([
         call(rootApiKeysSaga),
         call(rootAuthSaga),
