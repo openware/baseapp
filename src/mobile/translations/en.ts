@@ -98,4 +98,8 @@ export const en = {
     'page.body.profile.header.account.content.twoFactorAuthentication':  'Two-factor authentication',
 
     'page.profile.kyc.title': '2FA',
+
+    'page.mobile.twoFactorModal.title': '2FA Verification',
+    'page.mobile.twoFactorModal.subtitle': 'Enter 2fa code from the app',
+    'page.mobile.twoFactorModal.send': 'Send',
 };
