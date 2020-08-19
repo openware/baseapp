@@ -203,7 +203,7 @@
     "callable-types": true,
     "class-name": true,
     "comment-format": [
-      true,
+      false,
       "check-lowercase",
       {
         "ignore-words": [
