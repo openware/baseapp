@@ -80,6 +80,7 @@ export const en = {
     'page.mobile.profile.apiKeys.title': 'My API keys',
     'page.mobile.profile.theme.title': 'Theme',
     'page.mobile.profile.language.title': 'Language',
+    'page.mobile.profile.changePassword.title': 'Change password',
 
     'page.mobile.profile.accountActivity.action': 'Action',
     'page.mobile.profile.accountActivity.ip': 'IP address',
