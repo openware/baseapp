@@ -24,7 +24,7 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 // deprecated
-for (let sagaKey in rangerSagas) {
+for (const sagaKey in rangerSagas) {
     rangerMiddleware.run(rangerSagas[sagaKey]);
 }
 // rangerMiddleware.run(rangerSagas);
