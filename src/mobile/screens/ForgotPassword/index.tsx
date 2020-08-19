@@ -8,16 +8,18 @@ const ForgotPasswordMobileScreen = () => {
     const history = useHistory();
     const intl = useIntl();
 
-    return <div>
-        <Modal
-            isOpen={true}
-            onClose={() => history.push('/trading')}
-            onBack={() => history.push('/signin')}
-            backTitle={intl.formatMessage({ id: 'page.body.landing.header.button2' })}
-            title={intl.formatMessage({ id: 'page.forgotPassword' })}>
-            <ForgotPasswordScreen/>
-        </Modal>
-    </div>;
+    return (
+        <div>
+            <Modal
+                isOpen={true}
+                onClose={() => history.push('/trading')}
+                onBack={() => history.push('/signin')}
+                backTitle={intl.formatMessage({ id: 'page.body.landing.header.button2' })}
+                title={intl.formatMessage({ id: 'page.forgotPassword' })}>
+                <ForgotPasswordScreen/>
+            </Modal>
+        </div>
+    );
 };
 
 export {
