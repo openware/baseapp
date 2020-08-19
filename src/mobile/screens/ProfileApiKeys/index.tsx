@@ -3,11 +3,17 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useApiKeysFetch } from '../../../hooks';
-import { apiKeyUpdateFetch, selectUserInfo } from '../../../modules';
+import {
+    ApiKeyDataInterface,
+    apiKeyUpdateFetch,
+    selectUserInfo,
+} from '../../../modules';
 import { selectApiKeys } from '../../../modules/user/apiKeys/selectors';
-import { ApiKeysItem, Subheader } from '../../components';
+import { ApiKeysItem, Subheader, TwoFactorModal } from '../../components';
 
-const ProfileApiKeysMobileScreenComponent = () => {
+const ProfileApiKeysMobileScreenComponent: React.FC = () => {
+    const [itemToUpdate, setItemToUpdate] = React.useState<ApiKeyDataInterface | null>(null);
+    const [showModal, setShowModal] = React.useState(false);
     const dispatch = useDispatch();
     const intl = useIntl();
     const history = useHistory();
@@ -16,14 +22,24 @@ const ProfileApiKeysMobileScreenComponent = () => {
     useApiKeysFetch();
 
     const handleUpdateKey = item => {
-        const payload = {
-            totp_code: '',
-            apiKey: {
-                ...item,
-                state: item.state === 'active' ? 'disabled' : 'active',
-            },
-        };
-        dispatch(apiKeyUpdateFetch(payload));
+        setItemToUpdate(item);
+        setShowModal(state => !state);
+    };
+
+    const handleToggle2FA = (code2FA, shouldFetch) => {
+        if (shouldFetch && itemToUpdate) {
+            const payload = {
+                totp_code: code2FA,
+                apiKey: {
+                    ...itemToUpdate,
+                    state: itemToUpdate.state === 'active' ? 'disabled' : 'active',
+                },
+            };
+            dispatch(apiKeyUpdateFetch(payload));
+        }
+
+        setItemToUpdate(null);
+        setShowModal(false);
     };
 
     return (
@@ -47,6 +63,10 @@ const ProfileApiKeysMobileScreenComponent = () => {
                         <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
                     )}
                 </div>
+                <TwoFactorModal
+                    showModal={showModal}
+                    handleToggle2FA={handleToggle2FA}
+                />
             </div>
         </React.Fragment>
     );
