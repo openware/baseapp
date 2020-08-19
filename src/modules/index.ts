@@ -1,48 +1,43 @@
-import { combineReducers } from 'redux';
 // tslint:disable-next-line no-submodule-imports
-import { all, call } from 'redux-saga/effects';
-import { publicReducer, userReducer } from './app';
-import { AlertState, rootHandleAlertSaga } from './public/alert';
-import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
+import { AlertState } from './public/alert';
+import { BlocklistAccessState } from './public/blocklistAccess';
 import { ColorThemeState } from './public/colorTheme';
-import { ConfigsState, rootConfigsSaga } from './public/configs';
-import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
-import { CustomizationState, rootCustomizationSaga } from './public/customization';
+import { ConfigsState } from './public/configs';
+import { CurrenciesState } from './public/currencies';
+import { CustomizationState } from './public/customization';
 import { GridLayoutState } from './public/gridLayout';
 import { LanguageState } from './public/i18n';
-import { KlineState, rootKlineFetchSaga } from './public/kline';
-import { MarketsState, rootMarketsSaga } from './public/markets';
-import { MemberLevelsState, rootMemberLevelsSaga } from './public/memberLevels';
+import { MarketsState } from './public/markets';
+import { KlineState } from './public/kline';
+import { MemberLevelsState } from './public/memberLevels';
 import {
     DepthIncrementState,
     DepthState,
     OrderBookState,
-    rootOrderBookSaga,
 } from './public/orderBook';
 import { RangerState } from './public/ranger/reducer';
-import { RecentTradesState, rootRecentTradesSaga } from './public/recentTrades';
+import { RecentTradesState } from './public/recentTrades';
 import { ApiKeysState } from './user/apiKeys';
-import { rootApiKeysSaga } from './user/apiKeys/sagas';
-import { AuthState, rootAuthSaga } from './user/auth';
-import { BeneficiariesState, rootBeneficiariesSaga } from './user/beneficiaries';
-import { GeetestCaptchaState, rootGeetestCaptchaSaga } from './user/captcha';
-import { CustomizationUpdateState, rootCustomizationUpdateSaga } from './user/customization';
-import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
-import { HistoryState, rootHistorySaga } from './user/history';
-import { AddressesState, rootSendAddressesSaga } from './user/kyc/addresses';
-import { DocumentsState, rootSendDocumentsSaga } from './user/kyc/documents';
-import { IdentityState, rootSendIdentitySaga } from './user/kyc/identity';
-import { LabelState, rootLabelSaga } from './user/kyc/label';
-import { PhoneState, rootSendCodeSaga } from './user/kyc/phone';
-import { NewHistoryState, rootNewHistorySaga } from './user/newHistory';
-import { OpenOrdersState, rootOpenOrdersSaga } from './user/openOrders';
-import { OrdersState, rootOrdersSaga } from './user/orders';
-import { OrdersHistoryState, rootOrdersHistorySaga } from './user/ordersHistory';
-import { PasswordState, rootPasswordSaga } from './user/password';
-import { ProfileState, rootProfileSaga } from './user/profile';
-import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
-import { rootWalletsSaga, WalletsState } from './user/wallets';
-import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
+import { AuthState } from './user/auth';
+import { BeneficiariesState } from './user/beneficiaries';
+import { GeetestCaptchaState } from './user/captcha';
+import { CustomizationUpdateState } from './user/customization';
+import { EmailVerificationState } from './user/emailVerification';
+import { HistoryState } from './user/history';
+import { AddressesState } from './user/kyc/addresses';
+import { DocumentsState } from './user/kyc/documents';
+import { IdentityState } from './user/kyc/identity';
+import { LabelState } from './user/kyc/label';
+import { PhoneState } from './user/kyc/phone';
+import { NewHistoryState } from './user/newHistory';
+import { OpenOrdersState } from './user/openOrders';
+import { OrdersState } from './user/orders';
+import { OrdersHistoryState } from './user/ordersHistory';
+import { PasswordState } from './user/password';
+import { ProfileState } from './user/profile';
+import { UserActivityState } from './user/userActivity';
+import { WalletsState } from './user/wallets';
+import { WithdrawLimitState } from './user/withdrawLimit';
 
 export * from './public/markets';
 export * from './public/orderBook';
@@ -115,45 +110,4 @@ export interface RootState {
         wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
     };
-}
-
-export const rootReducer = combineReducers({
-    public: publicReducer,
-    user: userReducer,
-});
-
-export function* rootSaga() {
-    yield all([
-        call(rootApiKeysSaga),
-        call(rootAuthSaga),
-        call(rootBeneficiariesSaga),
-        call(rootBlocklistAccessSaga),
-        call(rootConfigsSaga),
-        call(rootCurrenciesSaga),
-        call(rootCustomizationSaga),
-        call(rootCustomizationUpdateSaga),
-        call(rootEmailVerificationSaga),
-        call(rootGeetestCaptchaSaga),
-        call(rootHandleAlertSaga),
-        call(rootHistorySaga),
-        call(rootKlineFetchSaga),
-        call(rootLabelSaga),
-        call(rootMarketsSaga),
-        call(rootMemberLevelsSaga),
-        call(rootNewHistorySaga),
-        call(rootOpenOrdersSaga),
-        call(rootOrderBookSaga),
-        call(rootOrdersHistorySaga),
-        call(rootOrdersSaga),
-        call(rootPasswordSaga),
-        call(rootProfileSaga),
-        call(rootRecentTradesSaga),
-        call(rootSendCodeSaga),
-        call(rootSendAddressesSaga),
-        call(rootSendDocumentsSaga),
-        call(rootSendIdentitySaga),
-        call(rootUserActivitySaga),
-        call(rootWalletsSaga),
-        call(rootWithdrawLimitSaga),
-    ]);
 }

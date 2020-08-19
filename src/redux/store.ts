@@ -1,8 +1,11 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { rootReducer } from './modules';
+import { rootReducer } from './reducer';
+import { rootSaga } from './saga';
+import { rangerSagas } from '../modules/public/ranger';
 
 const sagaMiddleware = createSagaMiddleware();
+// deprecated
 const rangerMiddleware = createSagaMiddleware();
 
 // tslint:disable-next-line:no-any
@@ -19,9 +22,13 @@ const store = createStore(
     ),
 );
 
+sagaMiddleware.run(rootSaga);
+// deprecated
+for (let sagaKey in rangerSagas) {
+    rangerMiddleware.run(rangerSagas[sagaKey]);
+}
+// rangerMiddleware.run(rangerSagas);
 
 export {
     store,
-    sagaMiddleware,
-    rangerMiddleware,
 };

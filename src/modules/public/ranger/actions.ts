@@ -1,5 +1,4 @@
 import { incrementalOrderBook } from '../../../api';
-import { store } from '../../../store';
 import { CommonError, OrderEvent } from '../../types';
 import { Market } from '../markets';
 import { depthIncrementSubscribe } from '../orderBook';
@@ -14,6 +13,7 @@ import {
     RANGER_USER_ORDER_UPDATE,
 } from './constants';
 import { marketKlineStreams } from './helpers';
+import { store } from '../../../redux';
 
 export interface RangerConnectFetch {
     type: typeof RANGER_CONNECT_FETCH;
@@ -118,6 +118,7 @@ export const marketStreams = (market: Market) => {
         `${market.id}.trades`,
     ];
 
+    // deprecated
     if (incrementalOrderBook()) {
         store.dispatch(depthIncrementSubscribe(market.id));
 
