@@ -13,7 +13,6 @@
     "bitcoincashjs": "0.1.10",
     "bootstrap": "^4.3.1",
     "compression-webpack-plugin": "^3.0.1",
-    "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.6",
