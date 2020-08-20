@@ -8,7 +8,7 @@ import { SignInScreen } from '../../../screens/SignInScreen';
 import { Modal } from '../../components';
 
 
-const SignInMobileScreen = () => {
+const SignInMobileScreen: React.FC = () => {
     const require2FA = useSelector(selectSignInRequire2FA);
     const history = useHistory();
     const intl = useIntl();

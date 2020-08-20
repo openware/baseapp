@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { ForgotPasswordScreen } from '../../../screens/ForgotPassword';
 import { Modal } from '../../components';
 
-const ForgotPasswordMobileScreen = () => {
+const ForgotPasswordMobileScreen: React.FC = () => {
     const history = useHistory();
     const intl = useIntl();
 

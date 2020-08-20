@@ -5,7 +5,7 @@ import { useCurrenciesFetch, useDocumentTitle, useWalletsFetch } from '../../../
 import { selectWallets } from '../../../modules/user/wallets';
 import { EstimatedValueMobile, WalletItem } from '../../components';
 
-const WalletsMobileScreen = () => {
+const WalletsMobileScreen: React.FC = () => {
     const wallets = useSelector(selectWallets) || [];
     const history = useHistory();
 

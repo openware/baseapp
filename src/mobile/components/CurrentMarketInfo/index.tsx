@@ -20,7 +20,7 @@ const defaultTicker = {
     volume: '0.0',
 };
 
-const CurrentMarketInfoComponent = () => {
+const CurrentMarketInfoComponent: React.FC = () => {
     const intl = useIntl();
     const currentMarket = useSelector(selectCurrentMarket);
     const markets = useSelector(selectMarkets);

@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { TabPanel } from '../../../components/TabPanel';
 import { HistoryTable } from '../../components/HistoryTable';
 
-const WalletsHistory = () => {
+const WalletsHistory: React.FC = () => {
     const intl = useIntl();
     const { currency } = useParams();
     const [currentTabIndex, setCurrentTabIndex] = React.useState(0);

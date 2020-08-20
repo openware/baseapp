@@ -9,7 +9,7 @@ import { Subheader, WalletHeader, WalletWithdrawBody } from '../../components';
 
 const defaultWallet = { name: '', currency: '', balance: '', type: '', address: '', fee: '' };
 
-const WalletWithdraw = () => {
+const WalletWithdraw: React.FC = () => {
     const { currency = '' } = useParams();
     const intl = useIntl();
     const history = useHistory();

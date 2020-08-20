@@ -6,7 +6,7 @@ import { useUserActivityFetch } from '../../../hooks';
 import { selectUserActivity } from '../../../modules';
 import { Subheader, UserActivityItem } from '../../components';
 
-const ProfileAccountActivityMobileScreenComponent = () => {
+const ProfileAccountActivityMobileScreenComponent: React.FC = () => {
     const intl = useIntl();
     const history = useHistory();
     const userActivity = useSelector(selectUserActivity);

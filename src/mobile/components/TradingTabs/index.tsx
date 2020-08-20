@@ -7,7 +7,7 @@ import { Orders } from '../index';
 import { Charts } from './Charts';
 import { CreateOrder } from './CreateOrder';
 
-const TradingTabsComponent = () => {
+const TradingTabsComponent: React.FC = () => {
     const intl = useIntl();
     const userLoggedIn = useSelector(selectUserLoggedIn);
     const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
