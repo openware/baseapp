@@ -39,23 +39,21 @@ const CurrentMarketInfoComponent: React.FC = () => {
         setFilteredMarkets(result as Market[]);
     };
 
-    const renderModalHeader = () => {
-        return (
-            <div className="cr-mobile-modal__header">
-                <div className="cr-mobile-modal__header-search">
-                    <FilterInput
-                        data={markets}
-                        onFilter={handleFilter}
-                        filter={searchFilter}
-                        placeholder={intl.formatMessage({id: 'page.mobile.currentMarketInfo.search.placeholder'})}
-                    />
-                </div>
-                <div className="cr-mobile-modal__header-close" onClick={() => setOpenMarketSelector(false)}>
-                    <CloseIcon />
-                </div>
+    const renderModalHeader = (
+        <div className="cr-mobile-modal__header">
+            <div className="cr-mobile-modal__header-search">
+                <FilterInput
+                    data={markets}
+                    onFilter={handleFilter}
+                    filter={searchFilter}
+                    placeholder={intl.formatMessage({id: 'page.mobile.currentMarketInfo.search.placeholder'})}
+                />
             </div>
-        );
-    };
+            <div className="cr-mobile-modal__header-close" onClick={() => setOpenMarketSelector(false)}>
+                <CloseIcon />
+            </div>
+        </div>
+    );
 
     const currentMarketPricePrecision = currentMarket ? currentMarket.price_precision : DEFAULT_CCY_PRECISION;
     const currentMarketTicker = (currentMarket && tickers[currentMarket.id]) || defaultTicker;
@@ -107,7 +105,7 @@ const CurrentMarketInfoComponent: React.FC = () => {
                 </div>
             </div>
             <Modal
-                header={renderModalHeader()}
+                header={renderModalHeader}
                 isOpen={isOpenMarketSelector}
                 onClose={() => setOpenMarketSelector(!isOpenMarketSelector)}
                 title={intl.formatMessage({ id: 'page.header.signUp.modal.header' })}>

@@ -88,19 +88,19 @@ const SignInComponent = React.memo((props: SignInProps) => {
         }
     };
 
-    const renderForgotButton = () => {
-        return <div className="cr-sign-in-form__bottom-section">
+    const renderForgotButton = (
+        <div className="cr-sign-in-form__bottom-section">
             <div
                 className="cr-sign-in-form__bottom-section-password"
                 onClick={() => props.onForgotPassword(email)}
             >
                 {props.forgotPasswordLabel || 'Forgot your password?'}
             </div>
-        </div>;
-    };
+        </div>
+    );
 
-    const renderRegister = () => {
-        return <div className="pg-sign-in-screen__register">
+    const renderRegister = (
+        <div className="pg-sign-in-screen__register">
             <span>
                 {intl.formatMessage({ id: 'page.header.signIN.noAccountYet' })}
                 <span
@@ -109,8 +109,8 @@ const SignInComponent = React.memo((props: SignInProps) => {
                     {intl.formatMessage({ id: 'page.body.landing.header.button3' })}
                 </span>
             </span>
-        </div>;
-    };
+        </div>
+    );
 
     const {
         email,
@@ -188,7 +188,7 @@ const SignInComponent = React.memo((props: SignInProps) => {
                         />
                         {passwordError && <div className={'cr-sign-in-form__error'}>{passwordError}</div>}
                     </div>
-                    {isMobileDevice && renderForgotButton()}
+                    {isMobileDevice && renderForgotButton}
                     <div className="cr-sign-in-form__button-wrapper">
                         <Button
                             block={true}
@@ -201,8 +201,8 @@ const SignInComponent = React.memo((props: SignInProps) => {
                             {isLoading ? 'Loading...' : (labelSignIn ? labelSignIn : 'Sign in')}
                         </Button>
                     </div>
-                    {!isMobileDevice && renderForgotButton()}
-                    {isMobileDevice && renderRegister()}
+                    {!isMobileDevice && renderForgotButton}
+                    {isMobileDevice && renderRegister}
                 </div>
             </div>
         </form>

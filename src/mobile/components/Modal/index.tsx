@@ -40,23 +40,21 @@ const ModalComponent = props => {
         }, 200);
     };
 
-    const renderDefaultHeader = () => {
-        return (
-            <div className="cr-mobile-modal__header">
-                <div className="cr-mobile-modal__header-back" onClick={handleOnBack}>
-                    {props.backTitle ?
-                        <React.Fragment>
-                        <ArrowIcon/>
-                        <span>{props.backTitle}</span>
-                        </React.Fragment> : null}
-                </div>
-                <div className="cr-mobile-modal__header-title">{props.title}</div>
-                <div className="cr-mobile-modal__header-close" onClick={handleOnClose}>
-                    <CloseIcon />
-                </div>
+    const renderDefaultHeader = (
+        <div className="cr-mobile-modal__header">
+            <div className="cr-mobile-modal__header-back" onClick={handleOnBack}>
+                {props.backTitle ?
+                    <React.Fragment>
+                    <ArrowIcon/>
+                    <span>{props.backTitle}</span>
+                    </React.Fragment> : null}
             </div>
-        );
-    };
+            <div className="cr-mobile-modal__header-title">{props.title}</div>
+            <div className="cr-mobile-modal__header-close" onClick={handleOnClose}>
+                <CloseIcon />
+            </div>
+        </div>
+    );
 
     const modalClassName = classnames('cr-mobile-modal', {
         'cr-mobile-modal--open': shouldAnimate,
@@ -68,7 +66,7 @@ const ModalComponent = props => {
     return (
         <div className={modalClassName} onClick={e => handleOnClose(e, true)}>
             <div className={bodyClassName}>
-                {props.header || renderDefaultHeader()}
+                {props.header || renderDefaultHeader}
                 {props.children}
             </div>
         </div>
