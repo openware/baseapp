@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { EmailVerificationScreen } from '../../../screens/EmailVerification';
 import { Modal } from '../../components';
 
-const EmailVerificationMobileScreen = () => {
+const EmailVerificationMobileScreen: React.FC = () => {
     const history = useHistory();
     const intl = useIntl();
 

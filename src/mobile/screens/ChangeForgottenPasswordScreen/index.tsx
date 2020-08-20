@@ -5,7 +5,7 @@ import { ChangeForgottenPasswordScreen } from '../../../screens/ChangeForgottenP
 import { Modal } from '../../components';
 
 
-const ChangeForgottenPasswordMobileScreen = () => {
+const ChangeForgottenPasswordMobileScreen: React.FC = () => {
     const history = useHistory();
     const intl = useIntl();
 

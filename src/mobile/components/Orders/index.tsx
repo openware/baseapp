@@ -15,7 +15,7 @@ import { OrdersItem } from './OrdersItem';
 
 const userOrdersHistoryTabs = ['open', 'all'];
 
-const OrdersComponent = () => {
+const OrdersComponent: React.FC = () => {
     const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
     const dispatch = useDispatch();
     const intl = useIntl();

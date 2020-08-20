@@ -7,7 +7,7 @@ import {
 } from '../../../hooks';
 import { CurrentMarketInfo, TradingTabs } from '../../components';
 
-const TradingComponent = () => {
+const TradingComponent: React.FC = () => {
     useMarketsFetch();
     useMarketsTickersFetch();
     useRangerConnectFetch();

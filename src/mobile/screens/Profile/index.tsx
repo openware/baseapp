@@ -11,7 +11,7 @@ import {
 } from '../../../modules';
 import { ProfileLinks, UserInfo } from '../../components';
 
-const ProfileMobileScreenComponent = () => {
+const ProfileMobileScreenComponent: React.FC = () => {
     const intl = useIntl();
     const dispatch = useDispatch();
     const user = useSelector(selectUserInfo);

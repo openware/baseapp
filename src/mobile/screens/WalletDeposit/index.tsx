@@ -5,7 +5,7 @@ import { useHistory, useParams } from 'react-router';
 import { selectWallets, walletsAddressFetch, walletsFetch } from '../../../modules/user/wallets';
 import { Subheader, WalletDepositBody, WalletHeader } from '../../components';
 
-const WalletDeposit = () => {
+const WalletDeposit: React.FC = () => {
     const [generateAddressTriggered, setGenerateAddressTriggered] = React.useState(false);
     const dispatch = useDispatch();
     const intl = useIntl();

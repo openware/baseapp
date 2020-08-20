@@ -5,7 +5,7 @@ import { SignUpScreen } from '../../../screens/SignUpScreen';
 import { Modal } from '../../components';
 
 
-const SignUpMobileScreen = () => {
+const SignUpMobileScreen: React.FC = () => {
     const history = useHistory();
     const intl = useIntl();
 

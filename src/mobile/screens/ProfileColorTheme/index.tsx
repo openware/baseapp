@@ -12,7 +12,7 @@ import { Subheader } from '../../components/Subheader';
 
 const COLOR_THEMES = ['basic', 'light'];
 
-const ProfileThemeMobileScreenComponent = () => {
+const ProfileThemeMobileScreenComponent: React.FC = () => {
     const intl = useIntl();
     const history = useHistory();
     const dispatch = useDispatch();

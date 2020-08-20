@@ -8,7 +8,7 @@ import { ConfirmScreen } from '../../../screens/ConfirmScreen';
 import { Modal } from '../../components/Modal';
 import { Subheader } from '../../components/Subheader';
 
-const ConfirmMobileScreen = () => {
+const ConfirmMobileScreen: React.FC = () => {
     const intl = useIntl();
     const history = useHistory();
     const labels = useSelector(selectLabelData) ;

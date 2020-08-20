@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useRangerConnectFetch } from '../../../hooks';
 import { Orders } from '../../components';
 
-const OrdersMobileScreenComponent = () => {
+const OrdersMobileScreenComponent: React.FC = () => {
     useRangerConnectFetch();
 
     return (

@@ -12,7 +12,7 @@ import {
 } from '../../../modules';
 import { OrdersItem } from '../Orders/OrdersItem';
 
-const OpenOrdersComponent = () => {
+const OpenOrdersComponent: React.FC = () => {
     const dispatch = useDispatch();
     const intl = useIntl();
     const orders = useSelector(selectOrdersHistory);

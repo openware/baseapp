@@ -15,7 +15,7 @@ import {
 import { CheckIcon } from '../../assets/images/CheckIcon';
 import { Subheader } from '../../components/Subheader';
 
-const ProfileLanguageMobileScreenComponent = () => {
+const ProfileLanguageMobileScreenComponent: React.FC = () => {
     const dispatch = useDispatch();
     const intl = useIntl();
     const history = useHistory();
