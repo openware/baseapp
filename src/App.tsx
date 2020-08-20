@@ -2,16 +2,13 @@ import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Router } from 'react-router';
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
+import { useSetMobileDevice } from './hooks';
 import * as mobileTranslations from './mobile/translations';
-import {
-    selectCurrentLanguage,
-    selectMobileDeviceState,
-    setMobileDevice,
-} from './modules';
+import { selectCurrentLanguage, selectMobileDeviceState } from './modules';
 import { languageMap } from './translations';
 
 const gaKey = gaTrackerKey();
@@ -36,21 +33,6 @@ const FooterContainer = React.lazy(() => import('./containers/Footer').then(({ F
 const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ Header }) => ({ default: Header })));
 const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
 const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
-
-
-const handleChangeWindowWidth = (dispatch, isMobileDevice: boolean) => {
-    const height = window.innerHeight;
-    const width = window.innerWidth;
-    let updatedMobileDeviceState = false;
-
-    if ((width && width < 768) || (height && height < 600)) {
-        updatedMobileDeviceState = true;
-    }
-
-    if (isMobileDevice !== updatedMobileDeviceState) {
-        dispatch(setMobileDevice(updatedMobileDeviceState));
-    }
-};
 
 const getTranslations = (lang: string, isMobileDevice: boolean) => {
     if (isMobileDevice) {
@@ -89,19 +71,9 @@ const RenderDeviceContainers = () => {
 };
 
 export const App = () => {
-    const dispatch = useDispatch();
+    useSetMobileDevice();
     const lang = useSelector(selectCurrentLanguage);
     const isMobileDevice = useSelector(selectMobileDeviceState);
-
-    React.useEffect(() => {
-        ReactGA.pageview(window.location.pathname);
-        window.addEventListener('resize', () => handleChangeWindowWidth(dispatch, isMobileDevice));
-        handleChangeWindowWidth(dispatch, isMobileDevice);
-
-        return () => {
-            window.removeEventListener('resize', () => handleChangeWindowWidth(dispatch, isMobileDevice));
-        };
-    }, [isMobileDevice]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <IntlProvider locale={lang} messages={getTranslations(lang, isMobileDevice)} key={lang}>

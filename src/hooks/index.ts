@@ -7,6 +7,7 @@ export * from './useHistoryFetch';
 export * from './useMarketsFetch';
 export * from './usePrevious';
 export * from './useRangerConnectFetch';
+export * from './useSetMobileDevice';
 export * from './useTickersFetch';
 export * from './useUserActivityFetch';
 export * from './useUserOrdersHistoryFetch';
