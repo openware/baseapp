@@ -1,6 +1,6 @@
-import { Channel, delay, eventChannel } from 'redux-saga';
+import { Channel, eventChannel } from 'redux-saga';
 // tslint:disable-next-line no-submodule-imports
-import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
+import { all, call, cancel, fork, put, race, select, take, takeEvery, delay } from 'redux-saga/effects';
 import { isFinexEnabled, rangerUrl } from '../../../../api';
 import { pushHistoryEmit } from '../../../user/history';
 import { selectOpenOrdersList, userOpenOrdersUpdate } from '../../../user/openOrders';
@@ -227,7 +227,7 @@ const initRanger = (
         };
     });
 
-    return [channel, ws];
+    return [channel as any, ws];
 };
 
 function* writter(socket: WebSocket, buffer: { messages: object[] }) {
