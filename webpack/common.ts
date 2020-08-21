@@ -4,7 +4,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 //import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
-import { AppConfig } from './app-config';
+import { AppConfig } from './config';
 import alias from './alias.js';
 
 const rootDir = path.resolve(__dirname, '..');
