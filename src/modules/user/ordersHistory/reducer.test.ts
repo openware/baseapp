@@ -69,9 +69,8 @@ describe('Orders History reducer', () => {
 
     it('should handle ORDERS_CANCEL_ALL_DATA', () => {
         const initialState = { ...initialOrdersHistoryState, cancelAllFetching: true };
-        const payload = [];
-        const expectedState = { ...initialState, ...payload, cancelAllFetching: false };
-        expect(ordersHistoryReducer(initialState, actions.ordersCancelAllData(payload))).toEqual(expectedState);
+        const expectedState = { ...initialState, cancelAllFetching: false };
+        expect(ordersHistoryReducer(initialState, actions.ordersCancelAllData())).toEqual(expectedState);
     });
 
     it('should handle ORDERS_CANCEL_ALL_ERROR', () => {

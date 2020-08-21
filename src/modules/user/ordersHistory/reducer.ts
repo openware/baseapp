@@ -63,7 +63,7 @@ export const ordersHistoryReducer = (
         case ORDERS_CANCEL_ALL_FETCH:
             return { ...state, cancelAllFetching: true, cancelAllError: false };
         case ORDERS_CANCEL_ALL_DATA:
-            return { ...state, cancelAllFetching: false, list: sliceArray(action.payload, defaultStorageLimit()) };
+            return { ...state, cancelAllFetching: false };
         case ORDERS_CANCEL_ALL_ERROR:
             return { ...state, cancelAllFetching: false, cancelAllError: true };
         case ORDERS_HISTORY_CANCEL_FETCH:

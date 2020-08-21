@@ -59,7 +59,6 @@ export interface OrdersCancelAllFetch {
 
 export interface OrdersCancelAllData {
     type: typeof ORDERS_CANCEL_ALL_DATA;
-    payload: OrderCommon[];
 }
 
 export interface OrdersCancelAllError {
@@ -127,9 +126,8 @@ export const ordersCancelAllFetch = (payload?: OrdersCancelAllFetch['payload']):
     payload,
 });
 
-export const ordersCancelAllData = (payload: OrdersCancelAllData['payload']): OrdersCancelAllData => ({
+export const ordersCancelAllData = (): OrdersCancelAllData => ({
     type: ORDERS_CANCEL_ALL_DATA,
-    payload,
 });
 
 export const ordersCancelAllError = (): OrdersCancelAllError => ({

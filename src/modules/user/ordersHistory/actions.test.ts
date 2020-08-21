@@ -39,9 +39,8 @@ describe('Orders History actions', () => {
     });
 
     it('should check ordersCancelAllData action creator', () => {
-        const payload = [];
-        const expectedAction = { type: ORDERS_CANCEL_ALL_DATA, payload };
-        expect(actions.ordersCancelAllData(payload)).toEqual(expectedAction);
+        const expectedAction = { type: ORDERS_CANCEL_ALL_DATA };
+        expect(actions.ordersCancelAllData()).toEqual(expectedAction);
     });
 
     it('should check ordersCancelAllError action creator', () => {
