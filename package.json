@@ -82,7 +82,7 @@
         "clean:mapfiles": "find build -name '*.map' -exec rm {} ';'",
         "test": "jest --config jest/config.js",
         "test:coverage": "react-scripts test --collectCoverage=true",
-        "test:ci": "jest",
+        "test:ci": "jest --config jest/config.js",
         "test:ci:old": "react-scripts test --ci",
         "spec:integration": "cypress open",
         "eject": "react-scripts eject",
