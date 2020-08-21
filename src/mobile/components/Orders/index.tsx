@@ -22,6 +22,7 @@ const OrdersComponent: React.FC = () => {
     const orders = useSelector(selectOrdersHistory);
     const shouldFetchCancelAll = useSelector(selectShouldFetchCancelAll);
     const shouldFetchCancelSingle = useSelector(selectShouldFetchCancelSingle);
+    const filteredOrders = currentTabIndex === 0 ? orders.filter(o => ['wait', 'pending'].includes(o.state)) : orders;
     useUserOrdersHistoryFetch(0, userOrdersHistoryTabs[currentTabIndex], 25);
 
     const handleCancelAllOrders = () => {
@@ -35,7 +36,7 @@ const OrdersComponent: React.FC = () => {
             dispatch(ordersHistoryCancelFetch({
                 id,
                 type: userOrdersHistoryTabs[currentTabIndex],
-                list: orders,
+                list: filteredOrders,
             }));
         }
     };
@@ -49,8 +50,8 @@ const OrdersComponent: React.FC = () => {
 
     const renderTab = (tabIndex: number) => (
         <div key={tabIndex} className="pg-mobile-orders__content">
-            {orders.length ? (
-                orders.map((order, index) => (
+            {filteredOrders.length ? (
+                filteredOrders.map((order, index) => (
                     <OrdersItem
                         key={index}
                         order={order}
@@ -80,7 +81,7 @@ const OrdersComponent: React.FC = () => {
                 panels={renderTabs()}
                 currentTabIndex={currentTabIndex}
                 onCurrentTabChange={setCurrentTabIndex}
-                optionalHead={orders.length ? renderOptionalHead() : null}
+                optionalHead={filteredOrders.length ? renderOptionalHead() : null}
             />
         </div>
     );

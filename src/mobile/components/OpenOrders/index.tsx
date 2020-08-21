@@ -19,6 +19,7 @@ const OpenOrdersComponent: React.FC = () => {
     const shouldFetchCancelAll = useSelector(selectShouldFetchCancelAll);
     const shouldFetchCancelSingle = useSelector(selectShouldFetchCancelSingle);
     useUserOrdersHistoryFetch(0, 'open', 25);
+    const waitOrders = orders.filter(o => ['wait', 'pending'].includes(o.state));
 
     const handleCancelAllOrders = () => {
         if (shouldFetchCancelAll) {
@@ -31,7 +32,7 @@ const OpenOrdersComponent: React.FC = () => {
             dispatch(ordersHistoryCancelFetch({
                 id,
                 type: 'open',
-                list: orders,
+                list: waitOrders,
             }));
         }
     };
@@ -48,8 +49,8 @@ const OpenOrdersComponent: React.FC = () => {
                 </div>
             </div>
             <div className="pg-mobile-open-orders__content">
-                {orders.length ? (
-                    orders.map((order, index) => (
+                {waitOrders.length ? (
+                    waitOrders.map((order, index) => (
                         <OrdersItem
                             key={index}
                             order={order}
