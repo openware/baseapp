@@ -1,7 +1,6 @@
-const alias = require('../webpack/alias');
+const alias = require('./webpack/alias');
 
 module.exports = {
-    rootDir: '../',
     setupFilesAfterEnv: ['jest-enzyme', '<rootDir>/jest/setup.tsx'],
     testEnvironment: 'enzyme',
     verbose: false,
