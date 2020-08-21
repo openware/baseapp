@@ -3,7 +3,7 @@ const alias = require('./webpack/alias');
 module.exports = {
     setupFilesAfterEnv: ['jest-enzyme', '<rootDir>/jest/setup.tsx'],
     testEnvironment: 'enzyme',
-    verbose: false,
+    verbose: true,
     moduleNameMapper: {
         ...alias.jest,
         '^.+\\.(css|less|scss)$': 'identity-obj-proxy',

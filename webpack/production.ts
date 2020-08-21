@@ -2,13 +2,20 @@ import webpack from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import merge from 'webpack-merge';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import path from 'path';
+
+const rootDir = path.resolve(__dirname, '..');
+const BUILD_DIR = path.resolve(rootDir, 'build');
 
 import commonConfig from './common';
 
 const config = merge(commonConfig, {
     mode: 'production',
     output: {
-        publicPath: '/xchange/'
+        path: BUILD_DIR,
+        filename: '[name].js',
+        globalObject: 'this',
+        publicPath: '/',
     },
     plugins: [
         new webpack.ExtendedAPIPlugin(),
@@ -16,16 +23,16 @@ const config = merge(commonConfig, {
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
             cssProcessorPluginOptions: {
-                preset: ['default', { discardComments: { removeAll: true } }]
+                preset: ['default', { discardComments: { removeAll: true } }],
             },
-            canPrint: false
-        })
+            canPrint: false,
+        }),
     ],
     module: {
         rules: [
             {
                 test: /\.(css|sass|scss)$/,
-                use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+                use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
             },
             {
                 test: /\.(tsx|ts)?$/,
@@ -33,24 +40,24 @@ const config = merge(commonConfig, {
                     {
                         loader: 'thread-loader',
                         options: {
-                            poolTimeout: 2000
-                        }
+                            poolTimeout: 2000,
+                        },
                     },
                     {
                         loader: 'ts-loader',
                         options: {
                             transpileOnly: true,
-                            happyPackMode: true
-                        }
-                    }
+                            happyPackMode: true,
+                        },
+                    },
                 ],
-                exclude: /node_modules/
-            }
-        ]
+                exclude: /node_modules/,
+            },
+        ],
     },
     stats: {
-        children: false
-    }
+        children: false,
+    },
 });
 
 // eslint-disable-next-line import/no-default-export

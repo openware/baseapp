@@ -24,7 +24,7 @@
         "mocks",
         "scripts",
         "spec",
-        "jest/jest.config.js",
+        "jest.config.js",
         "webpack",
         "./src/*.test.*",
         "./src/charting_library"
