@@ -23,7 +23,9 @@ module.exports = {
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node', 'css', 'scss'],
     snapshotSerializers: ['enzyme-to-json/serializer'],
     transformIgnorePatterns: ['<rootDir>/node_modules/(?!lodash-es)'],
-    testURL: 'http://localhost'
+    testURL: 'http://localhost',
+    collectCoverageFrom: ['<rootDir>/src/units/**/*.{ts,tsx,js,jsx}'],
+    coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/charting_library/**'],
 };
 
 // moduleNameMapper: {
