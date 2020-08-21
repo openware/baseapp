@@ -270,10 +270,14 @@ class SignUp extends React.Component<Props> {
         }
     };
 
-    private handleCheckboxClick = () => {
-        this.setState({
-            hasConfirmed: !this.state.hasConfirmed,
-        });
+    private handleCheckboxClick = event => {
+        if (event) {
+            event.preventDefault();
+
+            this.setState({
+                hasConfirmed: !this.state.hasConfirmed,
+            });
+        }
     };
 
     private handleChangeEmail = (value: string) => {

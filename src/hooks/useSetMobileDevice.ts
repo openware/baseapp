@@ -10,8 +10,6 @@ export const useSetMobileDevice = () => {
         const handleResize = () => {
             const isMobileDeviceCurrent = (window.innerWidth < 768) || (window.innerHeight < 600);
 
-            window.console.log('here');
-
             if (isMobileDevice !== isMobileDeviceCurrent) {
                 dispatch(setMobileDevice(isMobileDeviceCurrent));
             }

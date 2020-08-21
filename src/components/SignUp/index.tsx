@@ -31,7 +31,7 @@ export interface SignUpFormProps {
     handleChangeConfirmPassword: (value: string) => void;
     handleChangeRefId: (value: string) => void;
     hasConfirmed: boolean;
-    clickCheckBox: () => void;
+    clickCheckBox: (e) => void;
     validateForm: () => void;
     emailError: string;
     passwordError: string;
@@ -60,7 +60,7 @@ export interface SignUpFormProps {
     translate: (id: string) => string;
 }
 
-const SignUpForm = React.memo((props: SignUpFormProps) => {
+export const SignUpForm = (props: SignUpFormProps) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const history = useHistory();
     const intl = useIntl();
@@ -269,13 +269,12 @@ const SignUpForm = React.memo((props: SignUpFormProps) => {
                             autoFocus={false}
                         />
                     </div>
-                    <Form className="cr-sign-up-form__group">
+                    <Form className="cr-sign-up-form__group" onClick={e => props.clickCheckBox(e)}>
                         <Form.Check
                             type="checkbox"
                             custom
                             id="agreeWithTerms"
                             checked={hasConfirmed}
-                            onChange={props.clickCheckBox}
                             label={termsMessage ? termsMessage : 'I  agree all statements in terms of service'}
                         />
                     </Form>
@@ -297,8 +296,4 @@ const SignUpForm = React.memo((props: SignUpFormProps) => {
             </div>
         </form>
     );
-});
-
-export {
-    SignUpForm,
 };
