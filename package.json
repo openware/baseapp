@@ -82,7 +82,7 @@
         "clean:mapfiles": "find build -name '*.map' -exec rm {} ';'",
         "test": "react-scripts test",
         "test:coverage": "react-scripts test --collectCoverage=true",
-        "test:ci": "react-scripts test --ci",
+        "test:ci": "",
         "spec:integration": "cypress open",
         "eject": "react-scripts eject",
         "clean": "rimraf build",
