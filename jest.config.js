@@ -25,7 +25,7 @@ module.exports = {
     transformIgnorePatterns: ['<rootDir>/node_modules/(?!lodash-es)'],
     testURL: 'http://localhost',
     collectCoverageFrom: ['<rootDir>/src/units/**/*.{ts,tsx,js,jsx}'],
-    coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/charting_library/**'],
+    coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/charting_library/'],
 };
 
 // moduleNameMapper: {
