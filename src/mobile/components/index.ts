@@ -1,4 +1,5 @@
 export * from './ChangePassword';
+export * from './CreatedApiKeyModal';
 export * from './CurrentMarketInfo';
 export * from './EstimatedValue';
 export * from './Footer';

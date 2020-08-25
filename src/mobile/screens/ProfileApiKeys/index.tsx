@@ -7,21 +7,32 @@ import {
     apiKeyCreateFetch,
     ApiKeyDataInterface,
     apiKeyDeleteFetch,
+    apiKeys2FAModal,
     apiKeyUpdateFetch,
     selectUserInfo,
 } from '../../../modules';
-import { selectApiKeys } from '../../../modules/user/apiKeys/selectors';
+import {
+    selectApiKeys,
+    selectApiKeysModal,
+} from '../../../modules/user/apiKeys/selectors';
 import { AddIcon } from '../../assets/images/AddIcon';
-import { ApiKeysItem, Subheader, TwoFactorModal } from '../../components';
+import {
+    ApiKeysItem,
+    CreatedApiKeyModal,
+    Subheader,
+    TwoFactorModal,
+} from '../../components';
 
 const ProfileApiKeysMobileScreenComponent: React.FC = () => {
     const [itemToUpdate, setItemToUpdate] = React.useState<ApiKeyDataInterface | undefined>();
     const [currentAction, setCurrentAction] = React.useState('');
     const [show2FAModal, setShow2FAModal] = React.useState(false);
+    const [showCreatedApiKeyModal, setShowCreatedApiKeyModal] = React.useState(false);
     const dispatch = useDispatch();
     const intl = useIntl();
     const history = useHistory();
     const apiKeys = useSelector(selectApiKeys);
+    const apiKeysAction = useSelector(selectApiKeysModal) || { action: '' };
     const user = useSelector(selectUserInfo);
     useApiKeysFetch();
 
@@ -97,6 +108,13 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
         }
     };
 
+    React.useEffect(() => {
+        if (apiKeysAction.action === 'createSuccess' && !showCreatedApiKeyModal) {
+            setShowCreatedApiKeyModal(true);
+            dispatch(apiKeys2FAModal({ active: false }));
+        }
+    }, [dispatch, showCreatedApiKeyModal, apiKeysAction.action]);
+
     return (
         <React.Fragment>
           <Subheader
@@ -117,7 +135,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                     {user.otp && apiKeys.length ? (
                         apiKeys.map((apiKey, index) => (
                             <ApiKeysItem
-                                key={index}
+                                index={index}
                                 item={apiKey}
                                 handleUpdateKey={item => handleSetApiKeyProcess('update', item)}
                                 handleDeleteKey={item => handleSetApiKeyProcess('delete', item)}
@@ -127,6 +145,10 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                         <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
                     )}
                 </div>
+                <CreatedApiKeyModal
+                    showModal={showCreatedApiKeyModal}
+                    closeCreatedApiKeyModal={() => setShowCreatedApiKeyModal(false)}
+                />
                 <TwoFactorModal
                     showModal={show2FAModal}
                     handleToggle2FA={handleTriggerAction}
