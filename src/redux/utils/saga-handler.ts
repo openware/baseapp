@@ -1,5 +1,3 @@
-import { put } from 'redux-saga/effects';
-
 import { ActionWith } from 'lib/interfaces';
 import { ApiException } from '../interfaces';
 
@@ -26,5 +24,5 @@ export const SagaHandler = {
         } catch (e) {
             console.error(e);
         }
-    }
+    },
 };

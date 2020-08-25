@@ -4,23 +4,23 @@ import { ActionWith } from 'lib/interfaces';
 
 function getAction(type: string): Action;
 function getAction<T>(type: string, payload: T): ActionWith<T>;
-function getAction(type: any, payload?: any): any {
+function getAction<T = any>(type: string, payload?: T): Action | ActionWith<T> {
     if (payload) {
         const result: ActionWith<any> = {
             type,
-            payload
+            payload,
         };
         return result;
     } else {
         return {
-            type
+            type,
         } as Action;
     }
 }
 
 export const ReduxUtil = {
-    getType: (prefix: string, id: string) => {
+    getType: (prefix: string, id: string): string => {
         return `${prefix}/${id}`;
     },
-    getAction
+    getAction,
 };
