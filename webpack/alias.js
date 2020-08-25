@@ -4,6 +4,7 @@ const path = require('path');
 /** also modify tsconfig */
 const alias = {
     lib: path.join(__dirname, '../src/lib'),
+    src: path.join(__dirname, '../src'),
 };
 
 function transformToJestAlias() {

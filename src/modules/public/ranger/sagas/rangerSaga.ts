@@ -78,7 +78,7 @@ const initRanger = (
                 if (payload.hasOwnProperty(routingKey)) {
                     const event = payload[routingKey];
 
-                    const currentMarket = selectCurrentMarket(store.getState());
+                    const currentMarket = selectCurrentMarket(store.getState() as any);
                     const orderBookMatch = routingKey.match(/([^.]*)\.update/);
                     const orderBookMatchSnap = routingKey.match(/([^.]*)\.ob-snap/);
                     const orderBookMatchInc = routingKey.match(/([^.]*)\.ob-inc/);
@@ -104,7 +104,7 @@ const initRanger = (
                     // public
                     if (orderBookMatchInc) {
                         if (currentMarket && orderBookMatchInc[1] === currentMarket.id) {
-                            const previousSequence = selectOrderBookSequence(store.getState());
+                            const previousSequence = selectOrderBookSequence(store.getState() as any);
                             if (previousSequence === null) {
                                 window.console.log('OrderBook increment received before snapshot');
 
@@ -175,7 +175,7 @@ const initRanger = (
                                 switch (event.state) {
                                     case 'wait':
                                     case 'pending':
-                                        const orders = selectOpenOrdersList(store.getState());
+                                        const orders = selectOpenOrdersList(store.getState() as any);
                                         const updatedOrder = orders.length && orders.find(order => event.uuid && order.uuid === event.uuid);
                                         if (!updatedOrder) {
                                             emitter(alertPush({ message: ['success.order.created'], type: 'success'}));

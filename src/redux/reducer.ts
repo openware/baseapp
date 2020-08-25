@@ -1,8 +1,11 @@
+import { reducer as form } from 'redux-form';
 import { combineReducers } from 'redux';
 
-import { publicReducer, userReducer } from '../modules/app';
+import { localizationReducer as localization } from '../units/localization/redux/reducer';
+import { keepReducer as keep } from '../units/keep/redux/reducer';
 
 export const rootReducer = combineReducers({
-    public: publicReducer,
-    user: userReducer,
+    form,
+    localization,
+    keep,
 });

@@ -4,15 +4,14 @@ import { Router } from 'react-router';
 import { createBrowserHistory } from 'history';
 
 import { RootRoutes } from './routes';
-import { languageMap } from '../translations';
 import { useReduxSelector } from '../lib/hooks';
 
 const history = createBrowserHistory();
 
 export const AppContent: React.FC = () => {
-    const lang = useReduxSelector((x) => x.public.i18n.lang);
+    const locale = useReduxSelector((x) => x.keep.locale);
     return (
-        <IntlProvider locale={lang} messages={languageMap[lang]} key={lang}>
+        <IntlProvider locale={locale}>
             <Router history={history}>
                 <RootRoutes />
             </Router>
