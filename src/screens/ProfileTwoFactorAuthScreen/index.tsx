@@ -16,7 +16,6 @@ import {
     selectTwoFactorAuthQR,
     selectTwoFactorAuthSuccess,
     toggle2faFetch,
-    toggleUser2fa,
 } from '../../modules/user/profile';
 
 interface RouterProps {
@@ -33,7 +32,6 @@ interface ReduxProps {
 interface DispatchProps {
     toggle2fa: typeof toggle2faFetch;
     generateQR: typeof generate2faQRFetch;
-    toggleUser2fa: typeof toggleUser2fa;
     fetchSuccess: typeof alertPush;
 }
 
@@ -59,12 +57,6 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
     public componentWillReceiveProps(next: Props) {
         if (!this.props.success && next.success) {
             this.handleNavigateToProfile();
-        }
-    }
-
-    public componentDidUpdate(prev: Props) {
-        if (!prev.success && this.props.success) {
-            this.props.toggleUser2fa();
         }
     }
 
@@ -253,7 +245,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, Props, RootState> = state => 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     generateQR: () => dispatch(generate2faQRFetch()),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
-    toggleUser2fa: () => dispatch(toggleUser2fa()),
     fetchSuccess: payload => dispatch(alertPush(payload)),
 });
 

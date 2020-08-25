@@ -8,7 +8,7 @@ import { ProfileTwoFactorAuthScreen } from '../../../screens/ProfileTwoFactorAut
 import { TwoFactorModal } from '../../components';
 import { Subheader } from '../../components/Subheader';
 
-export const ProfileAuthMobileScreen: React.FC = () => {
+export const ProfileAuthMobileScreen: React.FC = React.memo(() => {
     const [showModal, setShowModal] = React.useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -21,6 +21,7 @@ export const ProfileAuthMobileScreen: React.FC = () => {
                 code: code2FA,
                 enable: false,
             }));
+            history.push('/profile');
         }
         setShowModal(false);
     };
@@ -55,4 +56,4 @@ export const ProfileAuthMobileScreen: React.FC = () => {
             </div>
         </React.Fragment>
     );
-};
+});
