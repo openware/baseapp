@@ -71,7 +71,7 @@
         "build:css": "postcss src/index.pcss -o src/index.css",
         "watch:css": "postcss src/index.pcss -o src/index.css -w",
         "lint:old": "yarn style:lint && eslint --ext .ts,.tsx src/",
-        "lint": "eslint --ext .ts,.tsx src/redux/ src/app/ src/lib/",
+        "lint": "eslint --ext .ts,.tsx src/redux/ src/app/ src/lib/ src/context",
         "lint-fix": "eslint --ext .ts,.tsx src/ --fix",
         "style:lint": "npx stylelint \"src/**/*.pcss\"",
         "mockAPI": "node mocks/mockAPI.js",

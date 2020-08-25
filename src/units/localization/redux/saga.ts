@@ -17,6 +17,10 @@ function* refresh(locale: string): SagaIterator {
     yield put(LocalizationActions.loadSuccess(localization));
 }
 
+export const LocalizationSagaActions = {
+    refresh,
+};
+
 export function* setLocale({ payload }: ActionWith<string>): SagaIterator {
     try {
         yield call(refresh, payload);

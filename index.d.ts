@@ -13,7 +13,29 @@ declare module 'config' {
 }
 
 interface AppConfig {
-    version: string;
+    api: {
+        authUrl: string;
+        tradeUrl: string;
+        applogicUrl: string;
+        rangerUrl: string;
+        finexUrl: string;
+    };
+    minutesUntilAutoLogout: number;
+    withCredentials: boolean;
+    gaTrackerKey: string;
+    rangerReconnectPeriod: number;
+    msAlertDisplayTime: number;
+    incrementalOrderBook: boolean;
+    finex: boolean;
+    isResizable: boolean;
+    isDraggable: boolean;
+    languages: string[];
+    sessionCheckInterval: number;
+    balancesFetchInterval: number;
+    passwordEntropyStep: number;
+    showLanding: boolean;
+    sentryEnabled: boolean;
+    kycSteps: string[];
 }
 
 interface Window {
