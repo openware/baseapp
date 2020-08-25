@@ -2,14 +2,12 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
-//import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
 import { AppConfig } from './config';
 import alias from './alias.js';
 
 const rootDir = path.resolve(__dirname, '..');
 const BUILD_DIR = path.resolve(rootDir, 'public');
-const paths = [path.resolve(rootDir, 'node_modules')];
 
 const config: webpack.Configuration = {
     entry: {
@@ -45,7 +43,7 @@ const config: webpack.Configuration = {
             cacheGroups: {
                 styles: {
                     name: 'styles',
-                    test: /\.(css|less|sass|scss)$/,
+                    test: /\.(css|sass|scss|pcss)$/,
                     chunks: 'all',
                     enforce: true,
                 },
@@ -64,26 +62,6 @@ const config: webpack.Configuration = {
             {
                 test: /\.(png|jpg|gif|ttf|eot|woff|svg)$/,
                 use: 'url-loader',
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    'style-loader',
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader', // translates CSS into CommonJS
-                        options: {
-                            paths: paths,
-                        },
-                    },
-                    {
-                        loader: 'less-loader', // compiles Less to CSS
-                        options: {
-                            javascriptEnabled: true,
-                            paths: paths,
-                        },
-                    },
-                ],
             },
         ],
     },

@@ -31,8 +31,8 @@ const config = merge(commonConfig, {
     module: {
         rules: [
             {
-                test: /\.(css|sass|scss)$/,
-                use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+                test: /\.(css|sass|scss|pcss)$/,
+                use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader', 'postcss-loader'],
             },
             {
                 test: /\.(tsx|ts)?$/,

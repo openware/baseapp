@@ -13,7 +13,7 @@ const config = merge(commonConfig, {
     module: {
         rules: [
             {
-                test: /\.(css|sass|scss)$/,
+                test: /\.(css|sass|scss|pcss)$/,
                 use: [
                     'style-loader',
                     {
@@ -26,6 +26,7 @@ const config = merge(commonConfig, {
                     'cache-loader',
                     'css-loader',
                     'sass-loader',
+                    'postcss-loader',
                 ],
             },
             {

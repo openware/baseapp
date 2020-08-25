@@ -26,3 +26,9 @@ index.css
 
 # environment config
 public/config/
+
+#public generic stuff
+/public/*.js
+/public/*.js.map
+/public/*.html
+/public/*.css

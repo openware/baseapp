@@ -2,6 +2,8 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 
+import './index.scss';
+
 import { store } from '../redux/store';
 import { AppContent } from './content';
 
