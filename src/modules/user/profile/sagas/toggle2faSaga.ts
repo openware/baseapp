@@ -7,6 +7,7 @@ import {
     toggle2faData,
     toggle2faError,
     Toggle2FAFetch,
+    toggleUser2fa,
 } from '../actions';
 
 const enable2faOptions = (csrfToken?: string): RequestOptions => {
@@ -23,6 +24,7 @@ export function* toggle2faSaga(action: Toggle2FAFetch) {
 
         yield call(API.post(enable2faOptions(getCsrfToken())), `/resource/otp/${enable ? 'enable' : 'disable'}`, code);
         yield put(toggle2faData());
+        yield put(toggleUser2fa());
         yield put(alertPush({message: [`success.otp.${enable ? 'enabled' : 'disabled'}`], type: 'success'}));
     } catch (error) {
         yield put(toggle2faError(error));
