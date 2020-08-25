@@ -20,6 +20,7 @@ const ConfirmMobileScreen: React.FC = () => {
                 <div className="cr-mobile-confirm__phone">
                     <Modal
                         isOpen
+                        onClose={() => history.goBack()}
                         title={intl.formatMessage({id: 'page.body.profile.header.account.profile.phone.unverified.title'})}>
                         <ConfirmScreen/>
                     </Modal>
