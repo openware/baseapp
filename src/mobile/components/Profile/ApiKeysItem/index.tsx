@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+import { CloseIcon } from '../../../../assets/images/CloseIcon';
 import { localeDate } from '../../../../helpers';
 
 const ApiKeysItemComponent = props => {
@@ -21,8 +22,6 @@ const ApiKeysItemComponent = props => {
             <div className="pg-mobile-profile-api-keys-item__row">
                 <div className="pg-mobile-profile-api-keys-item__row__block">
                     <span className={statusClassName}>{item.state}</span>
-                </div>
-                <div className="pg-mobile-profile-api-keys-item__row__block">
                     <Form>
                         <Form.Check
                             type="switch"
@@ -32,6 +31,15 @@ const ApiKeysItemComponent = props => {
                             checked={item.state === 'active'}
                         />
                     </Form>
+                </div>
+                <div className="pg-mobile-profile-api-keys-item__row__block">
+                    <div
+                        className="pg-mobile-profile-api-keys-item__row__block__button"
+                        onClick={() => props.handleDeleteKey(item)}
+                    >
+                        <span>{intl.formatMessage({ id: 'page.mobile.profile.apiKeys.item.delete' })}</span>
+                        <CloseIcon />
+                    </div>
                 </div>
             </div>
             <div className="pg-mobile-profile-api-keys-item__row">

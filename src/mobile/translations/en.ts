@@ -92,6 +92,7 @@ export const en = {
     'page.mobile.profile.apiKeys.item.algorithm': 'Algorithm',
     'page.mobile.profile.apiKeys.item.created': 'Created',
     'page.mobile.profile.apiKeys.item.updated': 'Updated',
+    'page.mobile.profile.apiKeys.item.delete': 'Delete',
 
     'page.mobile.confirm.profile': 'Identity verification',
     'page.mobile.confirm.document': 'ID verification',
