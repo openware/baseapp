@@ -3,7 +3,7 @@
   .pg-profile-page-verification {
     background: var(--body-background-color);
     margin: 5px 0 0 0;
-    height: 100vh;
+    height: calc(100vh - 105px);
     padding: 0 14px;
     overflow: hidden;
 
@@ -25,6 +25,14 @@
     &__progress-bar {
       margin-top: 24px;
       margin-bottom: 40px;
+    }
+  }
+}
+
+@media screen and (orientation:landscape) {
+  .cr-mobile-profile-verification {
+    .pg-profile-page-verification {
+      height: 100vh;
     }
   }
 }
