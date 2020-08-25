@@ -5,7 +5,6 @@ import { DEFAULT_LOCALIZATION_TEXT } from './default';
 
 export const LocalizationParser = {
     parse: (jsonObject: any): LocalizationContainer => {
-        
         const initObj = { ...DEFAULT_LOCALIZATION_TEXT };
         const initLines = flatten<{}, {}>(initObj, {});
         Object.keys(initLines).forEach((key) => {

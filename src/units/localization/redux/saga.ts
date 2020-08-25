@@ -1,5 +1,5 @@
 import { SagaIterator } from 'redux-saga';
-import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { takeLatest, call, put, all, delay } from 'redux-saga/effects';
 
 import { LocalizationActionTypes } from './types';
 import { LocalizationContainer } from '../interfaces';
@@ -9,11 +9,20 @@ import { SagaHandler } from '../../../redux/utils/saga-handler';
 import { ActionWith } from 'lib/interfaces';
 import { KeepActions } from 'src/units/keep/redux';
 
-function* refresh(locale: string): SagaIterator {
-    const localeResponse: Response = yield call(fetch, `/localization/${locale}.json?${__webpack_hash__}`, {
+async function fetchJson(locale: string): Promise<object> {
+    let localeResponse: Response = await fetch(`/localization/${locale}.json?${__webpack_hash__}`, {
         headers: { 'Content-Type': 'application/json' },
     });
-    const localization: LocalizationContainer = LocalizationParser.parse(localeResponse.json());
+    if (localeResponse.ok) {
+        return await localeResponse.json();
+    } else {
+        throw Error(localeResponse.statusText);
+    }
+}
+
+function* refresh(locale: string): SagaIterator {
+    const jsonObject = yield call(fetchJson, locale);
+    const localization: LocalizationContainer = LocalizationParser.parse(jsonObject);
     yield put(LocalizationActions.loadSuccess(localization));
 }
 
@@ -24,6 +33,7 @@ export const LocalizationSagaActions = {
 export function* setLocale({ payload }: ActionWith<string>): SagaIterator {
     try {
         yield call(refresh, payload);
+        // yield call(delay, 1000);
         yield put(KeepActions.saveLocale(payload));
     } catch (exception) {
         yield all(SagaHandler.handleException(exception));
