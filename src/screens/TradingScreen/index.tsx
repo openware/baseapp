@@ -118,7 +118,7 @@ const TradingWrapper = props => {
         // @ts-ignore
         return data.map((child: GridChildInterface) => (
             <div key={child.i}>
-                <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>}
+                <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>
             </div>
         ));
     }, [orderComponentResized, orderBookComponentResized]);

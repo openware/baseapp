@@ -1,3 +1,4 @@
+#todo: remove
 #!/bin/sh
 
 export REACT_APP_GIT_SHA=$(git rev-parse --short HEAD)

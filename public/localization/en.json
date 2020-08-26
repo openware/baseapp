@@ -1,0 +1,16 @@
+{
+    "page.header.navbar.signIn": "Sign In",
+    "page.header.navbar.trade": "Trade",
+    "page.header.navbar.wallets": "Wallets",
+    "page.header.navbar.openOrders": "Orders",
+    "page.header.navbar.history": "History",
+
+    "page.header.navbar.profile": "Profile",
+    "page.header.navbar.logout": "Logout",
+
+    "page.sidebar.group.text": "Fee Group:",
+    "page.sidebar.group.value": "Base",
+
+    "page.body.trade.header.market": "Market",
+    "page.body.trade.header.yours": "Yours"
+}

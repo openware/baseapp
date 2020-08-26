@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+//todo: remove
 const fs = require('fs');
 const chalk = require('chalk');
 const validate = require('@openware/coding-standards/dist').isCommitMsgValid;

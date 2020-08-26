@@ -1,1 +1,35 @@
-tsconfig.prod.json
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "lib": ["dom", "dom.iterable", "es6", "scripthost", "webworker", "es5", "es7", "es2017"],
+        "types": ["node", "jest", "webpack-env"],
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "allowJs": true,
+        "baseUrl": "./",
+        "strict": false,
+        "paths": {
+            "lib/*": ["src/lib/*"],
+            "src/*": ["src/*"]
+        },
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "noImplicitAny": false,
+        "typeRoots": ["./node_modules/@types"]
+    },
+    "exclude": [
+        "node_modules",
+        "public",
+        "mocks",
+        "scripts",
+        "spec",
+        "jest.config.js",
+        "webpack",
+        "./src/*.test.*",
+        "./src/charting_library"
+    ]
+}
