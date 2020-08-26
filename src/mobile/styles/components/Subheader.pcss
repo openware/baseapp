@@ -1,0 +1,37 @@
+/* stylelint-disable */
+.cr-mobile-subheader {
+  align-items: center;
+  background: var(--body-background-color);
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  flex-direction: row;
+  height: 48px;
+  justify-content: space-between;
+  padding: 10px 14px;
+  z-index: 100;
+
+  &__back,
+  &__close {
+    flex: 1;
+  }
+
+  &__title {
+    flex: 2;
+  }
+
+  &__back {
+    display: flex;
+    align-items: center;
+    svg {
+      margin-right: 5px;
+      transform: rotate(90deg);
+    }
+  }
+
+  &__title {
+    text-align: center;
+  }
+}

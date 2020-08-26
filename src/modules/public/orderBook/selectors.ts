@@ -17,4 +17,11 @@ export const selectDepthLoading = incrementalOrderBook() ?
     (state: RootState): boolean => state.public.incrementDepth.loading :
     (state: RootState): boolean => state.public.depth.loading;
 
+export const selectDepthTimestamp = incrementalOrderBook() ?
+    (state: RootState): number | undefined => state.public.incrementDepth.timestamp :
+    (state: RootState): number | undefined => state.public.depth.timestamp;
+
 export const selectOrderBookSequence = (state: RootState): number | null => state.public.incrementDepth.sequence;
+
+export const selectShouldFetchDepth = (state: RootState): boolean =>
+    !selectDepthTimestamp(state) && !selectDepthLoading(state);

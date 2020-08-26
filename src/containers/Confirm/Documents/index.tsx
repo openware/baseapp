@@ -2,26 +2,25 @@ import cr from 'classnames';
 import * as countries from 'i18n-iso-countries';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { languages } from '../../../api/config';
-import {
-    CustomInput,
-    DropdownComponent,
-    UploadFile,
-} from '../../../components';
+import { CustomInput, DropdownComponent, UploadFile } from '../../../components';
 import { formatDate, isDateInFuture, randomSecureHex } from '../../../helpers';
+import { IntlProps } from '../../../index';
 import {
     alertPush,
     RootState,
     selectCurrentLanguage,
+    selectMobileDeviceState,
     selectSendDocumentsSuccess,
     sendDocuments,
 } from '../../../modules';
+
 const DocumentFrontExample = require('../../../assets/images/kyc/DocumentFrontExample.svg');
 const DocumentBackExample = require('../../../assets/images/kyc/DocumentBackExample.svg');
 const DocumentSelfieExample = require('../../../assets/images/kyc/DocumentSelfieExample.svg');
@@ -29,6 +28,7 @@ const DocumentSelfieExample = require('../../../assets/images/kyc/DocumentSelfie
 interface ReduxProps {
     lang: string;
     success?: string;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -55,7 +55,7 @@ interface DocumentsState {
     fileSelfie: File[];
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 // tslint:disable:member-ordering
 class DocumentsComponent extends React.Component<Props, DocumentsState> {
@@ -89,6 +89,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     }
 
     public render() {
+        const { isMobileDevice } = this.props;
         const {
             fileFront,
             fileBack,
@@ -187,6 +188,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         </fieldset>
                     </div>
                     <UploadFile
+                        isMobileDevice={isMobileDevice}
                         id="fileFront"
                         title={this.translate('page.body.kyc.documents.uploadFile.front.title')}
                         label={this.translate('page.body.kyc.documents.uploadFile.front.label')}
@@ -199,6 +201,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                     />
                     {this.state.documentsType !== 'Passport' ? (
                         <UploadFile
+                            isMobileDevice={isMobileDevice}
                             id="fileBack"
                             title={this.translate('page.body.kyc.documents.uploadFile.back.title')}
                             label={this.translate('page.body.kyc.documents.uploadFile.back.label')}
@@ -211,6 +214,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         />
                     ) : null}
                     <UploadFile
+                        isMobileDevice={isMobileDevice}
                         id="fileSelfie"
                         title={this.translate('page.body.kyc.documents.uploadFile.selfie.title')}
                         label={this.translate('page.body.kyc.documents.uploadFile.selfie.label')}
@@ -410,6 +414,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
     success: selectSendDocumentsSuccess(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
@@ -418,7 +423,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         sendDocuments: payload => dispatch(sendDocuments(payload)),
     });
 
-    export const Documents = compose(
+export const Documents = compose(
     injectIntl,
     withRouter,
     connect(mapStateToProps, mapDispatchToProps),

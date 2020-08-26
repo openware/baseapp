@@ -2,13 +2,13 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { Decimal, Table } from '../../components';
 import { localeDate, setTradesType } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     fetchHistory,
     Market,
@@ -34,16 +34,16 @@ interface DispatchProps {
     setCurrentPrice: typeof setCurrentPrice;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & IntlProps;
 
-const timeFrom = Math.floor((Date.now() - 1000 * 60 * 60 * 24) / 1000);
+const timeFrom = String(Math.floor((Date.now() - 1000 * 60 * 60 * 24) / 1000));
 
 class RecentTradesYoursContainer extends React.Component<Props> {
 
     public componentDidMount() {
         const { currentMarket } = this.props;
         if (currentMarket) {
-            this.props.fetchHistory({ type: 'trades', page: 0, time_from: timeFrom, market: currentMarket.id});
+            this.props.fetchHistory({ type: 'trades', page: 0, time_from: timeFrom, market: currentMarket.id} as any);
         }
     }
 
@@ -115,7 +115,7 @@ class RecentTradesYoursContainer extends React.Component<Props> {
 
     private handleOnSelect = (index: string) => {
         const { list, currentPrice } = this.props;
-        const priceToSet = list[Number(index)] ? list[Number(index)].price : '';
+        const priceToSet = list[Number(index)] ? Number(list[Number(index)].price) : 0;
 
         if (currentPrice !== priceToSet) {
             this.props.setCurrentPrice(priceToSet);

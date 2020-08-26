@@ -1,0 +1,67 @@
+/* stylelint-disable */
+.pg-mobile-app {
+  .pg-sign-up-screen {
+    height: auto;
+    background: unset;
+    min-height: auto;
+
+    .pg-sign-up-screen__login {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 12px;
+
+      &-button {
+        padding-left: 2px;
+        color: var(--button-primary-cta-background-color);
+      }
+    }
+
+    .cr-sign-up-form {
+      position: static;
+      height: auto;
+      min-height: auto;
+      box-shadow: none;
+
+      .cr-sign-up-form__button-wrapper {
+        position: static;
+      }
+
+      &__group {
+        margin-bottom: calc(var(--gap) * 2.3);
+      }
+
+      &__form-content {
+        position: static;
+        height: auto;
+
+        .custom-control-label {
+          font-size: 12px;
+        }
+
+        form {
+          margin-bottom: 0;
+        }
+      }
+
+      &__recaptcha {
+        margin-bottom: 26px;
+      }
+
+      .custom-input {
+        font-size: 12px;
+
+        input {
+          font-size: 14px;
+          &::placeholder {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  .cr-sign-up-form input:focus {
+    border-width: 2px;
+    border-color: var(--button-primary-cta-background-color);
+  }
+}

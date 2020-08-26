@@ -52,24 +52,26 @@
 
       &--blocked {
         background: var(--icons);
+        color: var(--contrast-cta-color-level-4);
 
         span {
-          color: var(--primary-text-color);
-          opacity: 0.48;
+          color: var(--contrast-cta-color-level-4);
         }
       }
 
       &--active {
         background: var(--primary-cta-color);
+        color: var(--primary-text-color);
+        text-decoration: underline;
 
         span {
           color: var(--primary-text-color);
-          text-decoration: underline;
         }
       }
 
       &--pending {
         background: var(--system-yellow);
+        color: var(--primary-text-color);
 
         span {
           color: var(--primary-text-color);
@@ -83,6 +85,8 @@
 
       &--rejected {
         background: var(--system-red);
+        color: var(--primary-text-color);
+        text-decoration: underline;
 
         span {
           color: var(--primary-text-color);
@@ -118,7 +122,7 @@
 
     &--rejected {
       .pg-profile-page-verification__step__info__title {
-        color: var(--system-red);
+        color: var(--primary-text-color);
       }
     }
 
@@ -164,18 +168,27 @@
       }
 
       &--pending {
+        color: var(--system-yellow);
+
         span {
           color: var(--system-yellow);
         }
       }
 
       &--verified {
+        color: var(--system-green);
+
         span {
           color: var(--system-green);
         }
       }
 
       &--rejected {
+        a {
+          color: var(--system-red);
+          text-decoration: underline;
+        }
+
         span {
           color: var(--system-red);
           text-decoration: underline;
@@ -211,6 +224,11 @@
       &--active,
       &--blocked {
         background: var(--button-primary-cta-background-color);
+
+        a {
+          color: var(--primary-text-color);
+          font-weight: bold;
+        }
 
         span {
           color: var(--primary-text-color);

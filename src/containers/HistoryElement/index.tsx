@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
@@ -15,6 +14,7 @@ import {
     setTradesType,
     setWithdrawStatusColor,
 } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     currenciesFetch,
     Currency,
@@ -55,7 +55,7 @@ interface DispatchProps {
     fetchHistory: typeof fetchHistory;
 }
 
-type Props = HistoryProps & ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = HistoryProps & ReduxProps & DispatchProps & IntlProps;
 
 class HistoryComponent extends React.Component<Props> {
     public componentDidMount() {

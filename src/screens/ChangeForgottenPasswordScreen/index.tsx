@@ -1,7 +1,7 @@
 import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import {
   connect,
   MapDispatchToPropsFunction,
@@ -9,13 +9,15 @@ import {
 } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { CustomInput } from '../../components';
 import { PASSWORD_REGEX, setDocumentTitle } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     changeForgotPasswordFetch,
     changeLanguage,
     RootState,
-    selectChangeForgotPasswordSuccess,
+    selectChangeForgotPasswordSuccess, selectMobileDeviceState,
 } from '../../modules';
 
 interface ChangeForgottenPasswordState {
@@ -29,6 +31,7 @@ interface ChangeForgottenPasswordState {
 
 interface ReduxProps {
     changeForgotPassword?: boolean;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -44,7 +47,7 @@ interface HistoryProps {
     };
 }
 
-type Props = RouterProps & DispatchProps & HistoryProps & ReduxProps & InjectedIntlProps;
+type Props = RouterProps & DispatchProps & HistoryProps & ReduxProps & IntlProps;
 
 class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForgottenPasswordState> {
     constructor(props: Props) {
@@ -106,13 +109,15 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                 <div className="pg-change-forgotten-password-screen__container">
                     <form>
                         <div className="cr-email-form">
+                            {!this.props.isMobileDevice &&
                             <div className="cr-email-form__options-group">
-                                <div className="cr-email-form__option">
-                                    <div className="cr-email-form__option-inner">
-                                        {this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.title'})}
-                                    </div>
+                              <div className="cr-email-form__option">
+                                <div className="cr-email-form__option-inner">
+                                    {this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.title'})}
                                 </div>
+                              </div>
                             </div>
+                            }
                             <div className="cr-email-form__form-content">
                                 <div className={passwordFocusedClass}>
                                     <CustomInput
@@ -228,17 +233,17 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     changeForgotPassword: selectChangeForgotPasswordSuccess(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         changeForgotPasswordFetch: credentials => dispatch(changeForgotPasswordFetch(credentials)),
         changeLanguage: lang => dispatch(changeLanguage(lang)),
     });
 
-// tslint:disable-next-line:no-any
-const ChangeForgottenPasswordScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(ChangeForgottenPasswordComponent) as any));
-
-export {
-    ChangeForgottenPasswordScreen,
-};
+export const ChangeForgottenPasswordScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(ChangeForgottenPasswordComponent) as React.ComponentClass;

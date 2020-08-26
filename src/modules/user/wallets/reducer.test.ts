@@ -69,6 +69,7 @@ describe('walletsList reducer', () => {
                 mobileWalletChosen: '',
                 selectedWalletCurrency: '',
                 selectedWalletAddress: '',
+                timestamp: Math.floor(Date.now() / 1000),
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsFetch())).toEqual(expectedState);
@@ -112,6 +113,7 @@ describe('walletsList reducer', () => {
                 mobileWalletChosen: '',
                 selectedWalletCurrency: '',
                 selectedWalletAddress: '',
+                timestamp: Math.floor(Date.now() / 1000),
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressFetch(addressFetchPayload))).toEqual(expectedState);

@@ -11,7 +11,7 @@ const debug = false;
 
 describe('Alert success handler', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     afterEach(() => {

@@ -1,0 +1,28 @@
+/* stylelint-disable */
+.cr-mobile-wallet-item {
+  display: flex;
+  background: var(--body-background-color);
+  padding: 10px 14px;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--divider-color-level-1) !important;
+
+  &:last-child {
+    border-bottom: none !important;
+  }
+
+  &__currency {
+    text-transform: uppercase;
+    color: var(--primary-text-color);
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  &__balance {
+    align-self: center;
+    color: var(--primary-text-color);
+  }
+
+  .cr-wallet-item__icon {
+    margin: 0;
+  }
+}

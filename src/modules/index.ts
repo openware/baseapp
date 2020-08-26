@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux';
-// tslint:disable-next-line no-submodule-imports
 import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
-import { ColorThemeState } from './public/colorTheme';
 import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
 import { CustomizationState, rootCustomizationSaga } from './public/customization';
+import { ColorThemeState } from './public/globalSettings';
 import { GridLayoutState } from './public/gridLayout';
 import { LanguageState } from './public/i18n';
 import { KlineState, rootKlineFetchSaga } from './public/kline';
@@ -46,7 +45,7 @@ import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit'
 
 export * from './public/markets';
 export * from './public/orderBook';
-export * from './public/colorTheme';
+export * from './public/globalSettings';
 export * from './public/configs';
 export * from './public/currencies';
 export * from './public/customization';

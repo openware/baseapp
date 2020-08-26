@@ -10,6 +10,7 @@ import { Currency } from './types';
 export interface CurrenciesState extends CommonState {
     list: Currency[];
     loading: boolean;
+    timestamp?: number;
 }
 
 export const initialCurrenciesState: CurrenciesState = {
@@ -23,6 +24,7 @@ export const currenciesReducer = (state = initialCurrenciesState, action: Curren
             return {
                 ...state,
                 loading: true,
+                timestamp: Math.floor(Date.now() / 1000),
             };
         case CURRENCIES_DATA:
             return {

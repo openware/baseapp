@@ -31,6 +31,7 @@ export interface DepthState extends CommonState {
     asks: string[][];
     bids: string[][];
     loading: boolean;
+    timestamp?: number;
 }
 
 export interface DepthIncrementState {
@@ -39,6 +40,7 @@ export interface DepthIncrementState {
     bids: string[][];
     sequence: number | null;
     loading: boolean;
+    timestamp?: number;
 }
 
 export interface DepthIncrementUpdateData {

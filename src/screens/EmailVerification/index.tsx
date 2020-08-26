@@ -1,17 +1,18 @@
 import { History } from 'history';
 import * as React from 'react';
-import { Spinner } from 'react-bootstrap';
+import {Button, Spinner} from 'react-bootstrap';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { setDocumentTitle } from '../../helpers';
+import { compose } from 'redux';
+import { setDocumentTitle} from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     emailVerificationFetch,
     RootState,
-    selectCurrentLanguage,
+    selectCurrentLanguage, selectMobileDeviceState,
     selectSendEmailVerificationLoading,
 } from '../../modules';
 
@@ -30,9 +31,10 @@ interface DispatchProps {
 
 interface ReduxProps {
     emailVerificationLoading: boolean;
+    isMobileDevice: boolean;
 }
 
-type Props = DispatchProps & ReduxProps & OwnProps & InjectedIntlProps;
+type Props = DispatchProps & ReduxProps & OwnProps & IntlProps;
 
 class EmailVerificationComponent extends React.Component<Props> {
     public componentDidMount() {
@@ -43,7 +45,7 @@ class EmailVerificationComponent extends React.Component<Props> {
     }
 
     public render() {
-        const { emailVerificationLoading } = this.props;
+        const { emailVerificationLoading, isMobileDevice } = this.props;
 
         const title = this.props.intl.formatMessage({ id: 'page.header.signUp.modal.header' });
         const text = this.props.intl.formatMessage({ id: 'page.header.signUp.modal.body' });
@@ -52,12 +54,30 @@ class EmailVerificationComponent extends React.Component<Props> {
         return (
             <div className="pg-emailverification-container">
                 <div className="pg-emailverification">
-                    <div className="pg-emailverification-title">{title}</div>
+                    {!isMobileDevice && <div className="pg-emailverification-title">{title}</div>}
                     <div className="pg-emailverification-body">
                         <div className="pg-emailverification-body-text">{text}</div>
-                        <div className="pg-emailverification-body-container">
-                            {emailVerificationLoading ? <Spinner animation="border" variant="primary" /> : <button className="pg-emailverification-body-container-button" onClick={this.handleClick}>{button}</button>}
-                        </div>
+                        {
+                            !isMobileDevice && (
+                                <div className="pg-emailverification-body-container">
+                                    {emailVerificationLoading ? <Spinner animation="border" variant="primary"/> :
+                                        <button className="pg-emailverification-body-container-button"
+                                                onClick={this.handleClick}>{button}</button>}
+                                </div>)
+                        }
+                        {isMobileDevice &&
+                            (<div className="pg-emailverification-body-container">
+                              <Button
+                                block={true}
+                                type="button"
+                                onClick={this.handleClick}
+                                size="lg"
+                                variant="primary"
+                              >
+                                  {this.props.intl.formatMessage({ id:  'page.mobile.reset.header' })}
+                              </Button>
+                            </div>)
+                        }
                     </div>
                 </div>
             </div>
@@ -75,11 +95,15 @@ class EmailVerificationComponent extends React.Component<Props> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     emailVerificationLoading: selectSendEmailVerificationLoading(state),
     i18n: selectCurrentLanguage(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchProps = {
+const mapDispatchToProps = {
     emailVerificationFetch,
 };
 
-//tslint:disable-next-line:no-any
-export const EmailVerificationScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(EmailVerificationComponent) as any));
+export const EmailVerificationScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(EmailVerificationComponent) as React.ComponentClass;

@@ -3,11 +3,15 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { alertPush, rootSaga } from '../../../index';
-import { ordersCancelAllError, ordersCancelAllFetch } from '../actions';
+import {
+    ordersCancelAllData,
+    ordersCancelAllError,
+    ordersCancelAllFetch,
+} from '../actions';
 
 describe('Orders Cancel All', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {
@@ -33,6 +37,7 @@ describe('Orders Cancel All', () => {
 
     const expectedActionsSuccess = [
         ordersCancelAllFetch(),
+        ordersCancelAllData(),
         alertPush({ message: ['success.order.cancelling.all'], type: 'success'}),
     ];
     const expectedActionsError = [

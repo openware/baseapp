@@ -55,6 +55,7 @@ describe('Currencies reducer', () => {
         const expectedState: CurrenciesState = {
             ...initialCurrenciesState,
             loading: true,
+            timestamp: Math.floor(Date.now() / 1000),
         };
         expect(currenciesReducer(initialCurrenciesState, actions.currenciesFetch())).toEqual(expectedState);
     });

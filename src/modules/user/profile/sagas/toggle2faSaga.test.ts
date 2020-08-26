@@ -3,12 +3,16 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { toggle2faData, toggle2faError, toggle2faFetch } from '../actions';
-
+import {
+    toggle2faData,
+    toggle2faError,
+    toggle2faFetch,
+    toggleUser2fa,
+} from '../actions';
 
 describe('Module: Toggle 2fa', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {
@@ -36,7 +40,7 @@ describe('Module: Toggle 2fa', () => {
         mockAxios.onPost('/resource/otp/enable').reply(200);
     };
 
-    const expectedActionsFetch = [toggle2faFetch(fakeCredentials), toggle2faData()];
+    const expectedActionsFetch = [toggle2faFetch(fakeCredentials), toggle2faData(), toggleUser2fa()];
     const expectedActionsError = [toggle2faFetch(fakeCredentials), toggle2faError(fakeError)];
 
     it('should change password in success flow', async () => {

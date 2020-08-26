@@ -3,11 +3,11 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import {
     FormattedMessage,
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
 import { Order, OrderProps, WalletItemProps } from '../../components';
+import { IntlProps } from '../../index';
 import {
     alertPush,
     RootState,
@@ -53,7 +53,13 @@ interface DispatchProps {
     pushAlert: typeof alertPush;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+interface OwnProps {
+    userLoggedIn: boolean;
+    currentPrice: string;
+    defaultTabIndex?: number;
+}
+
+type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 class OrderInsert extends React.PureComponent<Props, StoreProps> {
     constructor(props: Props) {
@@ -118,7 +124,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     };
 
     public render() {
-        const { executeLoading, marketTickers, currentMarket, wallets, asks, bids } = this.props;
+        const { defaultTabIndex, executeLoading, marketTickers, currentMarket, wallets, asks, bids } = this.props;
         if (!currentMarket) {
             return null;
         }
@@ -157,6 +163,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     currentMarketBidPrecision={currentMarket.price_precision}
                     width={this.state.width}
                     listenInputPrice={this.listenInputPrice}
+                    defaultTabIndex={defaultTabIndex}
                     {...translations}
                 />
                 {executeLoading && <div className="pg-order--loading"><Spinner animation="border" variant="primary" /></div>}
@@ -179,7 +186,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             type,
         } = value;
 
-        this.props.setCurrentPrice();
+        this.props.setCurrentPrice(0);
 
         const resultData = {
             market: currentMarket.id,
@@ -268,7 +275,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.setState({
             priceLimit: undefined,
         });
-        this.props.setCurrentPrice();
+        this.props.setCurrentPrice(0);
     };
 }
 

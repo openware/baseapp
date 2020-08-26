@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { Decimal, Table } from '../../components';
 import { localeDate, setTradeColor } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     Market,
     PublicTrade,
@@ -28,7 +28,7 @@ interface DispatchProps {
     setCurrentPrice: typeof setCurrentPrice;
 }
 
-type Props = DispatchProps & ReduxProps & InjectedIntlProps;
+type Props = DispatchProps & ReduxProps & IntlProps;
 
 const handleHighlightValue = (prevValue: string, curValue: string) => {
     let highlighted = '';
@@ -104,12 +104,12 @@ class RecentTradesMarketContainer extends React.Component<Props> {
 
         return (trades.length > 0)
             ? trades.map(renderRow)
-            : [[[''], this.props.intl.formatMessage({ id: 'page.noDataToShow' })]];
+            : [[[''], this.props.intl.formatMessage({ id: 'page.noDataToShow' }), ['']]];
     }
 
     private handleOnSelect = (index: string) => {
         const { recentTrades, currentPrice } = this.props;
-        const priceToSet = recentTrades[Number(index)] ? recentTrades[Number(index)].price : '';
+        const priceToSet = recentTrades[Number(index)] ? Number(recentTrades[Number(index)].price) : 0;
 
         if (currentPrice !== priceToSet) {
             this.props.setCurrentPrice(priceToSet);

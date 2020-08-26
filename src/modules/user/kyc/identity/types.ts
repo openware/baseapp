@@ -6,6 +6,6 @@ export interface IdentityData {
     postcode: string;
     city: string;
     country: string;
-    metadata: string;
+    metadata?: string;
     confirm?: boolean;
 }

@@ -15,7 +15,7 @@ const debug = false;
 
 describe('Beneficiaries Create', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

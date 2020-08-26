@@ -1,5 +1,4 @@
-// tslint:disable-next-line
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLeading } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import { alertPush } from '../../alert';
 import {
@@ -13,7 +12,7 @@ const currenciesOptions: RequestOptions = {
 };
 
 export function* rootCurrenciesSaga() {
-    yield takeLatest(CURRENCIES_FETCH, currenciesFetchSaga);
+    yield takeLeading(CURRENCIES_FETCH, currenciesFetchSaga);
 }
 
 export function* currenciesFetchSaga() {

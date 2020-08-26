@@ -1,0 +1,5 @@
+export const CHANGE_COLOR_THEME = 'colorTheme/CHANGE_COLOR_THEME';
+export const TOGGLE_CHART_REBUILD = 'colorTheme/TOGGLE_CHART_REBUILD';
+export const TOGGLE_MARKET_SELECTOR = 'colorTheme/TOGGLE_MARKET_SELECTOR';
+export const TOGGLE_MOBILE_DEVICE = 'colorTheme/TOGGLE_MOBILE_DEVICE';
+export const TOGGLE_SIDEBAR = 'colorTheme/TOGGLE_SIDEBAR';

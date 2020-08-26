@@ -36,7 +36,7 @@ const echoServerPort = 9100;
 
 describe('Ranger module', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let pingServer: any;
 
     beforeAll(() => {

@@ -11,7 +11,7 @@ import { userOpenOrdersData, userOpenOrdersError, userOpenOrdersFetch } from '..
 
 describe('Open Orders Cancel', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

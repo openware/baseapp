@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import ReCAPTCHA from 'react-google-recaptcha';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import {
@@ -13,6 +12,7 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { Modal, SignUpForm } from '../../components';
 import { GeetestCaptcha } from '../../containers';
 import {
@@ -26,9 +26,10 @@ import {
     passwordErrorThirdSolution,
     setDocumentTitle,
 } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     Configs,
-    entropyPasswordFetch,
+    entropyPasswordFetch, LanguageState,
     RootState,
     selectConfigs,
     selectCurrentLanguage,
@@ -57,7 +58,12 @@ interface RouterProps {
     history: History;
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+interface OwnProps {
+    signUpError: boolean;
+    i18n: LanguageState['lang'];
+}
+
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps & OwnProps;
 
 export const extractRefID = (props: RouterProps) => new URLSearchParams(props.location.search).get('refid');
 
@@ -264,10 +270,14 @@ class SignUp extends React.Component<Props> {
         }
     };
 
-    private handleCheckboxClick = () => {
-        this.setState({
-            hasConfirmed: !this.state.hasConfirmed,
-        });
+    private handleCheckboxClick = event => {
+        if (event) {
+            event.preventDefault();
+
+            this.setState({
+                hasConfirmed: !this.state.hasConfirmed,
+            });
+        }
     };
 
     private handleChangeEmail = (value: string) => {
@@ -405,7 +415,7 @@ class SignUp extends React.Component<Props> {
                         password,
                         captcha_response,
                         refid: refId,
-                    });
+                    } as any);
                     break;
                 default:
                     this.props.signUp({
@@ -552,15 +562,14 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     currentPasswordEntropy: selectCurrentPasswordEntropy(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         signUp: credentials => dispatch(signUp(credentials)),
         fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
     });
 
-// tslint:disable-next-line:no-any
-const SignUpScreen = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(SignUp) as any));
-
-export {
-    SignUpScreen,
-};
+export const SignUpScreen = compose(
+    injectIntl,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps),
+)(SignUp) as React.ComponentClass;

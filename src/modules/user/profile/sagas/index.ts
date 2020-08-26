@@ -1,5 +1,4 @@
-// tslint:disable-next-line
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery, takeLeading } from 'redux-saga/effects';
 import {
     PROFILE_CHANGE_PASSWORD_FETCH,
     PROFILE_CHANGE_USER_FETCH,
@@ -18,5 +17,5 @@ export function* rootProfileSaga() {
     yield takeEvery(PROFILE_CHANGE_PASSWORD_FETCH, changePasswordSaga);
     yield takeEvery(PROFILE_GENERATE_2FA_QRCODE_FETCH, generate2faQRSaga);
     yield takeEvery(PROFILE_TOGGLE_2FA_FETCH, toggle2faSaga);
-    yield takeEvery(PROFILE_USER_FETCH, userSaga);
+    yield takeLeading(PROFILE_USER_FETCH, userSaga);
 }

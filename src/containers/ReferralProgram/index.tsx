@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {
     FormattedMessage,
-    InjectedIntlProps,
     injectIntl,
-    intlShape,
 } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { CopyableTextField } from '../../components';
+import { copy } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     alertPush,
     RootState,
@@ -23,27 +23,9 @@ interface DispatchProps {
 }
 
 
-type CopyTypes = HTMLInputElement | null;
-
-const copy = (id: string) => {
-    const copyText: CopyTypes = document.querySelector(`#${id}`);
-
-    if (copyText) {
-        copyText.select();
-
-        document.execCommand('copy');
-        (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
-    }
-};
-
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & IntlProps;
 
 class ReferralProgramClass extends React.Component<Props> {
-    //tslint:disable-next-line:no-any
-    public static propsTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    };
-
     public translate = (e: string) => {
         return this.props.intl.formatMessage({id: e});
     };
@@ -84,4 +66,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line
-export const ReferralProgram = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ReferralProgramClass) as any);
+export const ReferralProgram = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ReferralProgramClass) as any) as any;

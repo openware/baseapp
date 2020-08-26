@@ -1,6 +1,5 @@
-import { Channel, delay, eventChannel } from 'redux-saga';
-// tslint:disable-next-line no-submodule-imports
-import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
+import { Channel, eventChannel, EventChannel } from 'redux-saga';
+import { all, call, cancel, delay, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 import { isFinexEnabled, rangerUrl } from '../../../../api';
 import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
@@ -43,7 +42,7 @@ const initRanger = (
     market: Market | undefined,
     prevSubs: string[],
     buffer: RangerBuffer,
-): [Channel<any>, WebSocket] => {
+): [EventChannel<any>, WebSocket] => {
     const baseUrl = `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
     const streams = streamsBuilder(withAuth, prevSubs, market);
 
@@ -325,7 +324,7 @@ export function* rangerSagas() {
         }
 
         if (disconnectData) {
-            yield call(delay, 1000);
+            yield delay(1000);
         }
 
         try {

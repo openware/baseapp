@@ -2,14 +2,16 @@ import cr from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { languages } from '../../../api/config';
 import { CustomInput, DropdownComponent } from '../../../components';
 import { formatDate, isDateInFuture } from '../../../helpers';
+import { IntlProps } from '../../../index';
 import {
     editIdentity,
     Label,
@@ -23,6 +25,7 @@ import {
     sendIdentity,
     User,
 } from '../../../modules';
+import { IdentityData } from '../../../modules/user/kyc/identity/types';
 
 import * as countries from 'i18n-iso-countries';
 
@@ -62,7 +65,7 @@ interface IdentityState {
     residentialAddressFocused: boolean;
 }
 
-type Props = ReduxProps & DispatchProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class IdentityComponent extends React.Component<Props, IdentityState> {
     public state = {
@@ -412,7 +415,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     private sendData = () => {
         const { labels, user } = this.props;
         const dob = !isDateInFuture(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
-        const profileInfo = {
+        const profileInfo: IdentityData = {
             first_name: this.state.firstName,
             last_name: this.state.lastName,
             dob,
@@ -423,8 +426,10 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
             confirm: true,
         };
         const isIdentity = labels.length && labels.find(w => w.key === 'profile' && w.value === 'verified' && w.scope === 'private');
+        const verifiedProfiles = user.profiles.length ? user.profiles.filter(i => i.state === 'verified') : [];
+        const lastVerifiedProfile = verifiedProfiles.length && verifiedProfiles[verifiedProfiles.length - 1];
 
-        if (!isIdentity && user.profile && user.profile.address) {
+        if (!isIdentity && lastVerifiedProfile && lastVerifiedProfile.address) {
             this.props.editIdentity(profileInfo);
         } else {
             this.props.sendIdentity(profileInfo);

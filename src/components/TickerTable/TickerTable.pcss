@@ -38,7 +38,12 @@
       flex-direction: row;
       height: 100%;
       justify-content: flex-start;
+      overflow-x: auto;
       width: 100%;
+
+      &::-webkit-scrollbar {
+        height: 0;
+      }
 
       &__item {
         align-items: center;
@@ -47,6 +52,7 @@
         flex-direction: row;
         height: 100%;
         justify-content: center;
+        min-width: 54px;
         padding-top: 0;
         width: 54px;
 
@@ -147,14 +153,30 @@
       height: 38px;
     }
 
-    tbody tr {
-      &:hover {
-        background: var(--table-row-selector-color);
-        cursor: pointer;
+    tbody {
+      overflow-y: auto;
 
-        td {
-          color: var(--primary-text-color);
+      tr {
+        &:hover {
+          background: var(--table-row-selector-color);
+          cursor: pointer;
+
+          td {
+            color: var(--primary-text-color);
+          }
         }
+      }
+
+      .no-data {
+        align-items: flex-start;
+        color: var(--table-text-color);
+        display: flex;
+        flex-direction: row;
+        font-size: 14px;
+        justify-content: center;
+        line-height: 24px;
+        padding: 10px 0;
+        width: 100%;
       }
     }
   }

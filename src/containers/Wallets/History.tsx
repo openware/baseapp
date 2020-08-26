@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {
-    InjectedIntlProps,
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { History, Pagination, WalletItemProps } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
     currenciesFetch,
     Currency,
@@ -49,7 +49,7 @@ interface DispatchProps {
     resetHistory: typeof resetHistory;
 }
 
-export type Props = HistoryProps & ReduxProps & DispatchProps & InjectedIntlProps;
+export type Props = HistoryProps & ReduxProps & DispatchProps & IntlProps;
 
 export class WalletTable extends React.Component<Props> {
     public componentDidMount() {
@@ -197,4 +197,4 @@ export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         resetHistory: () => dispatch(resetHistory()),
     });
 
-export const WalletHistory = injectIntl(connect(mapStateToProps, mapDispatchToProps)(WalletTable));
+export const WalletHistory = injectIntl(connect(mapStateToProps, mapDispatchToProps)(WalletTable)) as any;

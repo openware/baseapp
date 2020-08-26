@@ -9,7 +9,7 @@ import { depthData, depthError, depthFetch } from '../actions';
 // tslint:disable no-any no-magic-numbers
 describe('Saga: depth', () => {
     let store: MockStoreEnhanced;
-    let sagaMiddleware: SagaMiddleware<{}>;
+    let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
 
     beforeEach(() => {

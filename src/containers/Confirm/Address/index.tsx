@@ -2,7 +2,7 @@ import cr from 'classnames';
 import * as countries from 'i18n-iso-countries';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
@@ -10,10 +10,12 @@ import { compose } from 'redux';
 import { languages } from '../../../api/config';
 import { CustomInput, UploadFile } from '../../../components';
 import { DropdownComponent } from '../../../components/Dropdown';
+import { IntlProps } from '../../../index';
 import {
     alertPush,
     RootState,
     selectCurrentLanguage,
+    selectMobileDeviceState,
     selectSendAddressesSuccess,
     sendAddresses,
 } from '../../../modules';
@@ -21,6 +23,7 @@ import {
 interface ReduxProps {
     lang: string;
     success?: string;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -39,7 +42,7 @@ interface State {
     fileScan: File[];
 }
 
-type Props = ReduxProps & DispatchProps & RouterProps & InjectedIntlProps;
+type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class AddressComponent extends React.Component<Props, State> {
     public state = {
@@ -60,7 +63,7 @@ class AddressComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const { lang } = this.props;
+        const { lang, isMobileDevice } = this.props;
         const {
             address,
             addressFocused,
@@ -146,6 +149,7 @@ class AddressComponent extends React.Component<Props, State> {
                     </div>
                     <UploadFile
                         id="fileScan"
+                        isMobileDevice={isMobileDevice}
                         title={this.translate('page.body.kyc.address.uploadFile.title')}
                         label={this.translate('page.body.kyc.address.uploadFile.label')}
                         buttonText={this.translate('page.body.kyc.address.uploadFile.button')}
@@ -289,6 +293,7 @@ class AddressComponent extends React.Component<Props, State> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
     success: selectSendAddressesSuccess(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =

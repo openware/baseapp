@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import { CustomInput } from '../';
+import { copy } from '../../helpers';
 
 
 export interface CopyableTextFieldProps {
@@ -31,20 +32,6 @@ export interface CopyableTextFieldProps {
     disabled?: boolean;
     label?: string;
 }
-
-type CopyTypes = HTMLInputElement | null;
-
-
-const copy = (id: string) => {
-    const copyText: CopyTypes = document.querySelector(`#${id}`);
-
-    if (copyText) {
-        copyText.select();
-
-        document.execCommand('copy');
-        (window.getSelection() as any).removeAllRanges(); // tslint:disable-line
-    }
-};
 
 /**
  * Text field component with ability to copy inner text.
@@ -100,4 +87,5 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
 
 export {
     CopyableTextField,
+    copy,
 };
