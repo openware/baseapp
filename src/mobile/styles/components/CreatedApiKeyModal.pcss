@@ -1,0 +1,110 @@
+.pg-mobile-created-api-key-modal {
+  .cr-mobile-modal {
+    &__body {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 20px 16px;
+
+      &__fieldset {
+        display: flex;
+        width: 100%;
+
+        &:first-child {
+          box-shadow: inset 0 -1px 0 var(--divider-color-level-1);
+          margin-bottom: 20px;
+        }
+
+        fieldset {
+          display: flex;
+          width: 100%;
+
+          .input-group {
+            align-items: center;
+            display: flex;
+            height: 73px;
+            justify-content: space-between;
+
+            .custom-input {
+              flex: 1;
+              width: auto;
+
+              label {
+                font-size: 12px;
+                font-weight: normal;
+                left: 0;
+                line-height: 15px;
+                margin: 0;
+                padding-left: 0;
+              }
+
+              input {
+                font-size: 14px;
+                font-weight: 500;
+                letter-spacing: 0.1px;
+                line-height: 22px;
+                padding-left: 0;
+              }
+            }
+
+            .input-group-append {
+              button {
+                border-radius: 2px;
+                font-size: 14px;
+                height: 27px;
+                letter-spacing: 0.1px;
+                padding: 0;
+                text-transform: capitalize;
+                width: 131px;
+              }
+            }
+          }
+        }
+      }
+
+      &__title {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        height: 28px;
+        justify-content: flex-start;
+        margin: 4px 0 6px 0;
+
+        span {
+          color: var(--primary-text-color);
+          font-size: 14px;
+          letter-spacing: 0.1px;
+          margin-left: 8px;
+        }
+      }
+
+      &__note {
+        font-size: 12px;
+        line-height: 15px;
+
+        p:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    &__footer {
+      padding: 0 16px;
+
+      button {
+        align-items: center;
+        border-radius: 4px;
+        display: flex;
+        font-size: 14px;
+        font-weight: bold;
+        height: 36px;
+        justify-content: center;
+        letter-spacing: 1px;
+        line-height: 16px;
+        padding: 0;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
