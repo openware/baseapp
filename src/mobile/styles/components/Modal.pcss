@@ -67,3 +67,18 @@
     }
   }
 }
+
+@media screen and (orientation: landscape) {
+  .cr-mobile-modal {
+    overflow: scroll;
+
+    &__block {
+      position: fixed;
+      &--open {
+        padding-bottom: 120px;
+        top: 5vh;
+        overflow: scroll;
+      }
+    }
+  }
+}

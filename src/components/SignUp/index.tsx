@@ -235,7 +235,7 @@ export const SignUpForm = (props: SignUpFormProps) => {
                             handleFocusInput={props.handleFocusEmail}
                             classNameLabel="cr-sign-up-form__label"
                             classNameInput="cr-sign-up-form__input"
-                            autoFocus={true}
+                            autoFocus={!isMobileDevice}
                         />
                         {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
                     </div>
