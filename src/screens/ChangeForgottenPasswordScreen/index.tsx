@@ -93,6 +93,8 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
             confirmPasswordFocused,
         } = this.state;
 
+        const { isMobileDevice } = this.props;
+
         const passwordFocusedClass = cr('cr-email-form__group', {
             'cr-email-form__group--focused': passwordFocused,
         });
@@ -109,7 +111,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                 <div className="pg-change-forgotten-password-screen__container">
                     <form>
                         <div className="cr-email-form">
-                            {!this.props.isMobileDevice &&
+                            {!isMobileDevice &&
                             <div className="cr-email-form__options-group">
                               <div className="cr-email-form__option">
                                 <div className="cr-email-form__option-inner">
@@ -130,7 +132,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                                         handleFocusInput={this.handleFieldFocus('password')}
                                         classNameLabel="cr-email-form__label"
                                         classNameInput="cr-email-form__input"
-                                        autoFocus={true}
+                                        autoFocus={!isMobileDevice}
                                     />
                                 </div>
                                 <div className={confirmPasswordFocusedClass}>

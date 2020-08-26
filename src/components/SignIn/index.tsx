@@ -170,7 +170,7 @@ const SignInComponent = React.memo((props: SignInProps) => {
                             inputValue={email}
                             handleFocusInput={() => handleFieldFocus('email')}
                             classNameLabel="cr-sign-in-form__label"
-                            autoFocus={true}
+                            autoFocus={!isMobileDevice}
                         />
                         {emailError && <div className={'cr-sign-in-form__error'}>{emailError}</div>}
                     </div>
