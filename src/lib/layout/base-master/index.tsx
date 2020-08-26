@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { Spinner } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 
 import './index.scss';
 
 import { useReduxSelector } from 'lib/hooks';
-import { useDispatch } from 'react-redux';
 import { CommonActions } from 'src/units/common/redux';
 
 interface Props extends PropsWithChildren<any> {

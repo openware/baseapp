@@ -14,7 +14,7 @@ export const MasterPage: React.FC<Props> = ({ children }) => {
         <BaseMasterPage>
             <div className="plane-master">
                 <PlaneHeader />
-                <div>{children}</div>                
+                <div>{children}</div>
             </div>
         </BaseMasterPage>
     );

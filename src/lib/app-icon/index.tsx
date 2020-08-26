@@ -19,7 +19,6 @@ export const AppIcon: React.FC<AppIconProps> = ({ name, className, relativeSize 
 };
 
 const stringLitArray = <L extends string>(arr: L[]) => arr;
-export const vedverIcons = stringLitArray([
-]);
+export const vedverIcons = stringLitArray([]);
 
 export type AppIconName = typeof vedverIcons[number];
