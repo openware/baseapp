@@ -804,6 +804,9 @@ export interface LocalizationContainer {
                         placeholder: string;
                     };
                 };
+                nationalities: {
+                    [key: string]: string;
+                };
             };
             lock: {
                 oops: string;
