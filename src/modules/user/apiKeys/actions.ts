@@ -16,15 +16,9 @@ export interface ApiKeyDataInterface {
     created_at: string;
     kid: string;
     scope?: typeof Array;
-    secret?: SecretInterface;
+    secret?: string;
     state: string;
     updated_at: string;
-}
-
-export interface SecretInterface {
-   data: {
-       value: string;
-   };
 }
 
 export interface ApiKeysFetch {

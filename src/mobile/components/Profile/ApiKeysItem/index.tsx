@@ -18,7 +18,7 @@ const ApiKeysItemComponent = props => {
     });
 
     return (
-        <div key={index} className="pg-mobile-profile-api-keys-item">
+        <div className="pg-mobile-profile-api-keys-item">
             <div className="pg-mobile-profile-api-keys-item__row">
                 <div className="pg-mobile-profile-api-keys-item__row__block">
                     <span className={statusClassName}>{item.state}</span>

@@ -32,7 +32,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
     const intl = useIntl();
     const history = useHistory();
     const apiKeys = useSelector(selectApiKeys);
-    const apiKeysAction = useSelector(selectApiKeysModal) || { action: '' };
+    const apiKeysModal= useSelector(selectApiKeysModal) || { action: '' };
     const user = useSelector(selectUserInfo);
     useApiKeysFetch();
 
@@ -109,11 +109,11 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
     };
 
     React.useEffect(() => {
-        if (apiKeysAction.action === 'createSuccess' && !showCreatedApiKeyModal) {
+        if (apiKeysModal.action === 'createSuccess' && !showCreatedApiKeyModal) {
             setShowCreatedApiKeyModal(true);
             dispatch(apiKeys2FAModal({ active: false }));
         }
-    }, [dispatch, showCreatedApiKeyModal, apiKeysAction.action]);
+    }, [dispatch, showCreatedApiKeyModal, apiKeysModal.action]);
 
     return (
         <React.Fragment>
@@ -135,6 +135,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                     {user.otp && apiKeys.length ? (
                         apiKeys.map((apiKey, index) => (
                             <ApiKeysItem
+                                key={index}
                                 index={index}
                                 item={apiKey}
                                 handleUpdateKey={item => handleSetApiKeyProcess('update', item)}
@@ -148,6 +149,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                 <CreatedApiKeyModal
                     showModal={showCreatedApiKeyModal}
                     closeCreatedApiKeyModal={() => setShowCreatedApiKeyModal(false)}
+                    apiKey={apiKeysModal.apiKey}
                 />
                 <TwoFactorModal
                     showModal={show2FAModal}
