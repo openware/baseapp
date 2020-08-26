@@ -2,7 +2,6 @@ import { Channel, delay, eventChannel } from 'redux-saga';
 // tslint:disable-next-line no-submodule-imports
 import { all, call, cancel, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 import { isFinexEnabled, rangerUrl } from '../../../../api';
-import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
 import { selectOpenOrdersList, userOpenOrdersUpdate } from '../../../user/openOrders';
 import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';
@@ -33,11 +32,13 @@ import {
 } from '../constants';
 import { formatTicker, generateSocketURI, streamsBuilder } from '../helpers';
 import { selectSubscriptions } from '../selectors';
+import { store } from '../../../../redux';
 
 interface RangerBuffer {
     messages: object[];
 }
 
+// deprecated: wrong saga using. WS connection should be defined in different way
 const initRanger = (
     { withAuth }: RangerConnectFetch['payload'],
     market: Market | undefined,

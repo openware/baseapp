@@ -168,7 +168,7 @@
     "deprecation": true,
     "eofline": true,
     "linebreak-style": [
-      true,
+      false,
       "LF"
     ],
     "max-classes-per-file": [
@@ -203,7 +203,7 @@
     "callable-types": true,
     "class-name": true,
     "comment-format": [
-      true,
+      false,
       "check-lowercase",
       {
         "ignore-words": [
@@ -265,7 +265,8 @@
     ],
     "no-any": false,
     "no-var-requires": false,
-    "ordered-imports": true,
-    "newline-before-return": true
+    "ordered-imports": false,
+    "newline-before-return": true,
+    "no-unused-variable": false
   }
 }

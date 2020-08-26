@@ -11,13 +11,9 @@ import { sentryEnabled } from './api/config';
 import { App } from './App';
 import { customLocaleData } from './custom/translations';
 import './index.css';
-import { rootSaga } from './modules';
-import { rangerSagas } from './modules/public/ranger';
-import { rangerMiddleware, sagaMiddleware, store } from './store';
+import { store } from './redux/store';
 
 addLocaleData([...en, ...customLocaleData]);
-sagaMiddleware.run(rootSaga);
-rangerMiddleware.run(rangerSagas);
 
 if (sentryEnabled()) {
     const key = process.env.REACT_APP_SENTRY_KEY;
