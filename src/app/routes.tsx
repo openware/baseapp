@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { HelloPage } from '../units/plain/pages/hello';
+import { HelloPage } from '../units/plain/pages/introduction';
 
 export const RootRoutes: React.FC = () => {
     return (
