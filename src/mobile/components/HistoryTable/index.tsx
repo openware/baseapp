@@ -1,35 +1,38 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import {useDispatch, useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Pagination, Table } from '../../../components';
+import { DEFAULT_CCY_PRECISION } from '../../../constants';
 import { localeDate } from '../../../helpers';
 import { useCurrenciesFetch, useHistoryFetch, useWalletsFetch } from '../../../hooks';
-import { fetchHistory, RootState, selectCurrentPage, selectLastElemIndex, selectNextPageExists } from '../../../modules';
+import { RootState, selectCurrentPage, selectLastElemIndex, selectNextPageExists } from '../../../modules';
 import { selectCurrencies } from '../../../modules/public/currencies';
 import { selectFirstElemIndex, selectHistory } from '../../../modules/user/history';
 import { selectWallets } from '../../../modules/user/wallets';
 import { RowItem } from './Rowitem';
 
+const DEFAULT_LIMIT = 6;
+
 const HistoryTable = (props: any) => {
-    const dispatch = useDispatch();
+    const [currentPage, setCurrentPage] = React.useState(0);
     const intl = useIntl();
     const page = useSelector(selectCurrentPage);
     const list = useSelector(selectHistory);
     const wallets = useSelector(selectWallets);
     const currencies = useSelector(selectCurrencies);
-    const firstElemIndex = useSelector((state: RootState) => selectFirstElemIndex(state, 6));
-    const lastElemIndex = useSelector((state: RootState) => selectLastElemIndex(state, 6));
-    const nextPageExists = useSelector((state: RootState) => selectNextPageExists(state, 6));
+    const firstElemIndex = useSelector((state: RootState) => selectFirstElemIndex(state, DEFAULT_LIMIT));
+    const lastElemIndex = useSelector((state: RootState) => selectLastElemIndex(state, DEFAULT_LIMIT));
+    const nextPageExists = useSelector((state: RootState) => selectNextPageExists(state, DEFAULT_LIMIT));
 
     useWalletsFetch();
     useCurrenciesFetch();
-    useHistoryFetch({ type: props.type, currency: props.currency });
+    useHistoryFetch({ type: props.type, currency: props.currency, limit: DEFAULT_LIMIT, page: currentPage });
 
     const onClickPrevPage = () => {
-        dispatch(fetchHistory({ page: Number(page) - 1, type: props.type, limit: 6 }));
+        setCurrentPage(Number(page) - 1);
     };
     const onClickNextPage = () => {
-        dispatch(fetchHistory({ page: Number(page) + 1, type: props.type, limit: 6 }));
+        setCurrentPage(Number(page) + 1);
     };
     const formatTxState = (tx: string, confirmations?: number, minConfirmations?: number) => {
         const statusMapping = {
@@ -56,7 +59,7 @@ const HistoryTable = (props: any) => {
             currency,
             type,
         } = props;
-        const { fixed } = wallets.find(w => w.currency === currency) || { fixed: 8 };
+        const { fixed } = wallets.find(w => w.currency === currency) || { fixed: DEFAULT_CCY_PRECISION };
         if (list.length === 0) {
             return [[intl.formatMessage({ id: 'page.noDataToShow' }), '', '']];
         }
