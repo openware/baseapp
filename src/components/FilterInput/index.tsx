@@ -49,8 +49,8 @@ export class FilterInput extends React.Component<FilterInputProps, SearchInputSt
         this.filterList = this.filterList.bind(this);
     }
 
-    public filterList(event: OnChangeEvent) {
-        const value = event.target.value;
+    public filterList(event?: OnChangeEvent) {
+        const value = event ? event.target.value : '';
         const { data, filter } = this.props;
 
         const result = data
@@ -78,21 +78,9 @@ export class FilterInput extends React.Component<FilterInputProps, SearchInputSt
                     onChange={this.filterList}
                 />
                 <span className="cr-search__cancel">
-                    <SearchFieldCloseIcon
-                        onClick={() => this.InputCancel()}
-                    />
+                    <SearchFieldCloseIcon onClick={e => this.filterList()} />
                 </span>
             </div>
         );
     }
-
-    private InputCancel = () => {
-        const { data, filter } = this.props;
-
-        const result = data
-            .filter(item => filter(item, ''));
-
-        this.props.onFilter(result);
-        this.setState({ key: '' });
-    };
 }
