@@ -73,7 +73,7 @@ export const en = {
     'page.mobile.profileLinks.link.2fa.disabled': 'Disabled',
     'page.mobile.profileLinks.link.referral': 'Copy Link',
 
-    'page.mobile.profileColorTheme.theme.basic': 'Basic',
+    'page.mobile.profileColorTheme.theme.dark': 'Dark',
     'page.mobile.profileColorTheme.theme.light': 'Light',
 
     'page.mobile.wallets.title': 'Wallets',

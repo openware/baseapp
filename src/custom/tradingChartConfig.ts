@@ -35,9 +35,9 @@ export const customWidgetOptions = (colorTheme?: string) => {
         });
     }
 
-    const primaryColor = convertRgbToHex(getStylesValueByKey(colors.basic.chart.primary));
-    const upColor = convertRgbToHex(getStylesValueByKey(colors.basic.chart.up));
-    const downColor = convertRgbToHex(getStylesValueByKey(colors.basic.chart.down));
+    const primaryColor = convertRgbToHex(getStylesValueByKey(colors.dark.chart.primary));
+    const upColor = convertRgbToHex(getStylesValueByKey(colors.dark.chart.up));
+    const downColor = convertRgbToHex(getStylesValueByKey(colors.dark.chart.down));
 
     return ({
         toolbar_bg: primaryColor,
