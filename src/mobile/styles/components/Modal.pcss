@@ -1,22 +1,21 @@
-/* stylelint-disable */
 .cr-mobile-modal {
   background-color: rgba(0, 0, 0, 0.7);
-  position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
   height: 0;
-  z-index: 99999;
+  left: 0;
   overflow: hidden;
+  position: fixed;
+  right: 0;
+  z-index: 99999;
 
   &__header {
-    height: 36px;
-    background: var(--subheader-background-color);
-    border-top: 1px solid rgba(var(--rgb-divider-color), var(--alpha-level-2));
-    border-bottom: 1px solid rgba(var(--rgb-divider-color), var(--alpha-level-2));
-    display: flex;
-    padding: 0 14px;
     align-items: center;
+    background: var(--subheader-background-color);
+    border-bottom: 1px solid rgba(var(--rgb-divider-color), var(--alpha-level-2));
+    border-top: 1px solid rgba(var(--rgb-divider-color), var(--alpha-level-2));
+    display: flex;
+    height: 36px;
+    padding: 0 14px;
     text-transform: capitalize;
 
     &-title {
@@ -25,21 +24,23 @@
       text-align: center;
     }
 
-    &-back, &-close {
-      flex: 1
+    &-back,
+    &-close {
+      flex: 1;
     }
 
     &-back {
       font-size: 14px;
+
       svg {
-        transform: rotate(90deg);
         padding-right: 2px;
+        transform: rotate(90deg);
       }
     }
 
     &-close {
-      text-align: right;
       cursor: pointer;
+      text-align: right;
     }
   }
 
@@ -48,37 +49,26 @@
   }
 
   &__block {
-    position: absolute;
-    margin-top: 20px;
     background-color: var(--header-background-color);
     bottom: 0;
-    right: 0;
-    left: 0;
-    top: 100vh;
     height: 0;
-    transition: all ease 0.4s;
+    left: 0;
+    margin-top: 20px;
     overflow: hidden;
-
+    position: absolute;
+    right: 0;
+    top: 100vh;
+    transition: all ease 0.4s;
 
     &--open {
-      top: 20vh;
-      overflow: hidden;
       height: 100vh;
+      overflow: hidden;
+      top: 20vh;
     }
   }
-}
 
-@media screen and (orientation: landscape) {
-  .cr-mobile-modal {
-    overflow: scroll;
-
-    &__block {
-      position: fixed;
-      &--open {
-        padding-bottom: 120px;
-        top: 5vh;
-        overflow: scroll;
-      }
-    }
+  &__body {
+    height: 65vh;
+    overflow-y: scroll;
   }
 }
