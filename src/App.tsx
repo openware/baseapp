@@ -52,6 +52,7 @@ const RenderDeviceContainers = () => {
         return (
             <div className="pg-mobile-app">
                 <MobileHeader />
+                <AlertsContainer/>
                 <LayoutContainer/>
                 <MobileFooter />
             </div>
