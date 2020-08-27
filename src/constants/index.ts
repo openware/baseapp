@@ -53,7 +53,7 @@ export const colors = {
             strokeAxis: '#cccccc',
         },
     },
-    basic: {
+    dark: {
         chart: {
             primary: 'var(--rgb-body-background-color)',
             up: 'var(--rgb-bids)',
