@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
+import { SearchFieldCloseIcon } from '../../assets/images/SearchFieldCloseIcon';
 import SearchIcon from './Search.svg';
 
 interface OnChangeEvent {
@@ -48,8 +49,8 @@ export class FilterInput extends React.Component<FilterInputProps, SearchInputSt
         this.filterList = this.filterList.bind(this);
     }
 
-    public filterList(event: OnChangeEvent) {
-        const value = event.target.value;
+    public filterList(event?: OnChangeEvent) {
+        const value = event ? event.target.value : '';
         const { data, filter } = this.props;
 
         const result = data
@@ -76,6 +77,9 @@ export class FilterInput extends React.Component<FilterInputProps, SearchInputSt
                     placeholder={placeholder ? placeholder : 'Search'}
                     onChange={this.filterList}
                 />
+                <span className="cr-search__cancel">
+                    <SearchFieldCloseIcon onClick={e => this.filterList()} />
+                </span>
             </div>
         );
     }
