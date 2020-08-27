@@ -1,4 +1,18 @@
+@import "~lib/styles/base.scss";
+
 .plane-header {
+    height: $header-height;
+
+    &__fixed {
+        height: $header-height;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: rgb(30, 40, 65);
+        color: white;
+    }
+
     &__content {
         max-width: 1200px;
         margin: 0 auto;
@@ -6,6 +20,13 @@
         justify-content: space-between;
         align-items: center;
         height: 50px;
-        color: #333;
+        padding: 0 0.5em;
+    }
+
+    &__action {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        @include children-row-margin(1em);
     }
 }

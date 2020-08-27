@@ -37,6 +37,65 @@ export interface LocalizationContainer {
                 profile: string;
                 logout: string;
             };
+            signIn: {
+                title: string;
+                email: string;
+                receiveConfirmation: string;
+                forgotPassword: string;
+                password: {
+                    title: string;
+                    message: {
+                        error: string;
+                    };
+                };
+                resetPassword: {
+                    title: string;
+                    newPassword: string;
+                    repeatPassword: string;
+                    button: string;
+                    error: string;
+                };
+            };
+            signUp: {
+                title: string;
+                email: {
+                    title: string;
+                    message: {
+                        error: string;
+                    };
+                };
+                password: {
+                    title: string;
+                    weak: string;
+                    good: string;
+                    strong: string;
+                    message: {
+                        error: string;
+                    };
+                    too: {
+                        weak: string;
+                    };
+                    very: {
+                        strong: string;
+                    };
+                };
+                confirmPassword: {
+                    title: string;
+                    message: {
+                        error: string;
+                    };
+                };
+                referalCode: string;
+                terms: string;
+                modal: {
+                    header: string;
+                    body: string;
+                    footer: string;
+                };
+                strength: {
+                    password: string;
+                };
+            };
         };
         sidebar: {
             group: {
@@ -899,67 +958,6 @@ export interface LocalizationContainer {
             profile: string;
             document: string;
             address: string;
-        };
-    };
-    header: {
-        signIn: {
-            title: string;
-            email: string;
-            receiveConfirmation: string;
-            forgotPassword: string;
-            password: {
-                title: string;
-                message: {
-                    error: string;
-                };
-            };
-            resetPassword: {
-                title: string;
-                newPassword: string;
-                repeatPassword: string;
-                button: string;
-                error: string;
-            };
-        };
-        signUp: {
-            title: string;
-            email: {
-                title: string;
-                message: {
-                    error: string;
-                };
-            };
-            password: {
-                title: string;
-                weak: string;
-                good: string;
-                strong: string;
-                message: {
-                    error: string;
-                };
-                too: {
-                    weak: string;
-                };
-                very: {
-                    strong: string;
-                };
-            };
-            confirmPassword: {
-                title: string;
-                message: {
-                    error: string;
-                };
-            };
-            referalCode: string;
-            terms: string;
-            modal: {
-                header: string;
-                body: string;
-                footer: string;
-            };
-            strength: {
-                password: string;
-            };
         };
     };
     footer: {

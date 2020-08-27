@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { HelloPage } from '../units/plain/pages/introduction';
+import { IntroductionPage } from '../units/plain/pages/introduction';
 
 export const RootRoutes: React.FC = () => {
     return (
         <Switch>
-            <Route path="/" component={HelloPage} />
+            <Route path="/" component={IntroductionPage} />
             {/* <Route exact={true} path={AppUrls.magicLink.path} component={MagicLink} />
             <Route path={AppUrls.signIn.path} component={SignInScreen} />
             <Route path={AppUrls.accountsConfirmation.path} component={VerificationScreen} />

@@ -1,0 +1,17 @@
+$header-height: 50px;
+
+@mixin children-row-margin($size: 0.5em) {
+    > * {
+        &:not(:last-child) {
+            margin-right: $size;
+        }
+    }
+}
+
+@mixin children-column-margin($size: 0.5em) {
+    > * {
+        &:not(:last-child) {
+            margin-bottom: $size;
+        }
+    }
+}

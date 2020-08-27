@@ -10,7 +10,7 @@ const accountsPasswordReset = new AppRoute('/accounts/password_reset');
 const emailVerification = new AppRoute('/email-verification');
 const noFound = new AppRoute('/404');
 const maintenance = new AppRoute('/500');
-const trading = new AppRoute('/trading/:market');
+const trading = new AppRoute<{ market?: string }>('/trading/:market?');
 
 const orders = new AppRoute('/orders');
 const history = new AppRoute('/history');

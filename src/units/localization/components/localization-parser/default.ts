@@ -39,6 +39,66 @@ export const DEFAULT_LOCALIZATION_TEXT: LocalizationContainer = {
                 profile: '',
                 logout: '',
             },
+
+            signIn: {
+                title: '',
+                email: '',
+                receiveConfirmation: '',
+                forgotPassword: '',
+                password: {
+                    title: '',
+                    message: {
+                        error: '',
+                    },
+                },
+                resetPassword: {
+                    title: '',
+                    newPassword: '',
+                    repeatPassword: '',
+                    button: '',
+                    error: '',
+                },
+            },
+            signUp: {
+                title: '',
+                email: {
+                    title: '',
+                    message: {
+                        error: '',
+                    },
+                },
+                password: {
+                    title: '',
+                    weak: '',
+                    good: '',
+                    strong: '',
+                    message: {
+                        error: '',
+                    },
+                    too: {
+                        weak: '',
+                    },
+                    very: {
+                        strong: '',
+                    },
+                },
+                confirmPassword: {
+                    title: '',
+                    message: {
+                        error: '',
+                    },
+                },
+                referalCode: '',
+                terms: '',
+                modal: {
+                    header: '',
+                    body: '',
+                    footer: '',
+                },
+                strength: {
+                    password: '',
+                },
+            },
         },
         sidebar: {
             group: {
@@ -899,67 +959,6 @@ export const DEFAULT_LOCALIZATION_TEXT: LocalizationContainer = {
             profile: '',
             document: '',
             address: '',
-        },
-    },
-    header: {
-        signIn: {
-            title: '',
-            email: '',
-            receiveConfirmation: '',
-            forgotPassword: '',
-            password: {
-                title: '',
-                message: {
-                    error: '',
-                },
-            },
-            resetPassword: {
-                title: '',
-                newPassword: '',
-                repeatPassword: '',
-                button: '',
-                error: '',
-            },
-        },
-        signUp: {
-            title: '',
-            email: {
-                title: '',
-                message: {
-                    error: '',
-                },
-            },
-            password: {
-                title: '',
-                weak: '',
-                good: '',
-                strong: '',
-                message: {
-                    error: '',
-                },
-                too: {
-                    weak: '',
-                },
-                very: {
-                    strong: '',
-                },
-            },
-            confirmPassword: {
-                title: '',
-                message: {
-                    error: '',
-                },
-            },
-            referalCode: '',
-            terms: '',
-            modal: {
-                header: '',
-                body: '',
-                footer: '',
-            },
-            strength: {
-                password: '',
-            },
         },
     },
     footer: {

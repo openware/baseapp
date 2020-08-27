@@ -25,8 +25,8 @@ const config = merge(commonConfig, {
                     },
                     'cache-loader',
                     'css-loader',
-                    'sass-loader',
                     'postcss-loader',
+                    'sass-loader',
                 ],
             },
             {
