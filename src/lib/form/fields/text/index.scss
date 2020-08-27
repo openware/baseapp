@@ -1,0 +1,14 @@
+@import "~lib/styles/base.scss";
+
+.form-text-control {
+    position: relative;
+
+    &__length {
+        position: absolute;
+        right: 0;
+        bottom: -12px;
+        line-height: 10px;
+        font-size: 10px;
+        color: $black;
+    }
+}

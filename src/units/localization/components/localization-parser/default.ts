@@ -1269,4 +1269,15 @@ export const DEFAULT_LOCALIZATION_TEXT: LocalizationContainer = {
             },
         },
     },
+    form: {
+        validation: {
+            required: '',
+            maxLength: '',
+            minLength: '',
+            number: '',
+            email: '',
+            length: '',
+            passwordMatch: '',
+        },
+    },
 };

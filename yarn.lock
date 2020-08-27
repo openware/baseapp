@@ -9071,6 +9071,10 @@ react-smooth@^1.0.5:
     raf "^3.4.0"
     react-transition-group "^2.5.0"
 
+react-string-format@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-string-format/-/react-string-format-0.0.6.tgz#930085ef5f254a8b0550b6b8c7602d1a9c7c35df"
+
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.4.2:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.13.1.tgz#de25ea358d9012606de51e012d9742e7f0deabc1"

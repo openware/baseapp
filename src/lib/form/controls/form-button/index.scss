@@ -1,0 +1,11 @@
+.form-button {
+    color: red;
+    padding-bottom: 10px;
+    text-align: center;
+
+    > div {
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+}

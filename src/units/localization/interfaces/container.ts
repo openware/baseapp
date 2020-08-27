@@ -1268,4 +1268,15 @@ export interface LocalizationContainer {
             };
         };
     };
+    form: {
+        validation: {
+            required: string;
+            maxLength: string;
+            minLength: string;
+            number: string;
+            email: string;
+            length: string;
+            passwordMatch: string;
+        };
+    };
 }
