@@ -65,7 +65,7 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
         <div className={cx}>
             <fieldset className={fieldsetFocusedClass}>
                 <CustomInput
-                    type="text"
+                    type="number"
                     inputValue={value}
                     placeholder={placeholder || '0'}
                     handleChangeInput={handleChangeValue}
