@@ -82,6 +82,7 @@ const OrdersComponent: React.FC = () => {
                 currentTabIndex={currentTabIndex}
                 onCurrentTabChange={setCurrentTabIndex}
                 optionalHead={filteredOrders.length ? renderOptionalHead() : null}
+                isMobileDevice={true}
             />
         </div>
     );

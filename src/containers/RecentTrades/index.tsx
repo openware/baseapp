@@ -14,6 +14,7 @@ import {
     RootState,
     selectCurrentMarket,
     selectCurrentPrice,
+    selectMobileDeviceState,
     selectUserLoggedIn,
     setCurrentPrice,
 } from '../../modules';
@@ -26,6 +27,7 @@ interface ReduxProps {
     currentMarket: Market | undefined;
     currentPrice: number | undefined;
     userLoggedIn: boolean;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -70,6 +72,8 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
     }
 
     private renderContent = () => {
+        const { isMobileDevice } = this.props;
+
         return this.props.userLoggedIn ?
         (
             <TabPanel
@@ -77,6 +81,7 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
                 onTabChange={this.handleMakeRequest}
                 optionalHead={this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades' })}
                 currentTabIndex={this.state.index}
+                isMobileDevice={isMobileDevice}
             />
         ) :
         (
@@ -123,6 +128,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     currentMarket: selectCurrentMarket(state),
     currentPrice: selectCurrentPrice(state),
     userLoggedIn: selectUserLoggedIn(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
