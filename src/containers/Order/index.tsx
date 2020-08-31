@@ -7,6 +7,7 @@ import {
 } from 'react-intl';
 import { connect } from 'react-redux';
 import { Order, OrderProps, WalletItemProps } from '../../components';
+import { FilterPrice } from '../../filters';
 import { IntlProps } from '../../index';
 import {
     alertPush,
@@ -20,7 +21,12 @@ import {
     Wallet,
     walletsFetch,
 } from '../../modules';
-import { Market, selectCurrentMarket, selectMarketTickers } from '../../modules/public/markets';
+import {
+    Market,
+    selectCurrentMarket,
+    selectCurrentMarketFilters,
+    selectMarketTickers,
+} from '../../modules/public/markets';
 import {
     orderExecuteFetch,
     selectOrderExecuteLoading,
@@ -28,6 +34,7 @@ import {
 
 interface ReduxProps {
     currentMarket: Market | undefined;
+    currentMarketFilters: FilterPrice[];
     executeLoading: boolean;
     marketTickers: {
         [key: string]: {
@@ -74,11 +81,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.orderRef = React.createRef();
     }
 
-    private getOrderTypes = [
-        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.limit' }),
-        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.market' }),
-    ];
-
     private orderRef;
 
     public componentDidMount() {
@@ -109,26 +111,22 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         }
     }
 
-    public getListOfTranslations = () => {
-        return {
-            amountText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.amount' }),
-            availableText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.available' }),
-            orderTypeText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType' }),
-            priceText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.price' }),
-            totalText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.total' }),
-            labelFirst: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' }),
-            labelSecond: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' }),
-            submitBuyButtonText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' }),
-            submitSellButtonText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' }),
-        };
-    };
-
     public render() {
-        const { defaultTabIndex, executeLoading, marketTickers, currentMarket, wallets, asks, bids } = this.props;
+        const {
+            asks,
+            bids,
+            currentMarket,
+            currentMarketFilters,
+            defaultTabIndex,
+            executeLoading,
+            marketTickers,
+            wallets,
+        } = this.props;
+        const { priceLimit } = this.state;
+
         if (!currentMarket) {
             return null;
         }
-        const { priceLimit } = this.state;
 
         const walletBase = this.getWallet(currentMarket.base_unit, wallets);
         const walletQuote = this.getWallet(currentMarket.quote_unit, wallets);
@@ -141,7 +139,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             </div>
         );
 
-        const translations = this.getListOfTranslations();
         return (
             <div className={'pg-order'} ref={this.orderRef}>
                 {this.state.width > 448 ? headerContent : undefined}
@@ -164,7 +161,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     width={this.state.width}
                     listenInputPrice={this.listenInputPrice}
                     defaultTabIndex={defaultTabIndex}
-                    {...translations}
+                    currentMarketFilters={currentMarketFilters}
+                    translate={this.translate}
                 />
                 {executeLoading && <div className="pg-order--loading"><Spinner animation="border" variant="primary" /></div>}
             </div>
@@ -200,8 +198,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         if (+resultData.volume < +currentMarket.min_amount) {
             this.props.pushAlert({
-                message: [this.props.intl.formatMessage(
-                    { id: 'error.order.create.minAmount' },
+                message: [this.translate(
+                    'error.order.create.minAmount',
                     { amount: currentMarket.min_amount, currency: currentMarket.base_unit.toUpperCase()},
                 )],
                 type: 'error',
@@ -212,8 +210,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         if (+price < +currentMarket.min_price) {
             this.props.pushAlert({
-                message: [this.props.intl.formatMessage(
-                    { id: 'error.order.create.minPrice' },
+                message: [this.translate(
+                    'error.order.create.minPrice',
                     { price: currentMarket.min_price, currency: currentMarket.quote_unit.toUpperCase()},
                 )],
                 type: 'error',
@@ -224,8 +222,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         if (+currentMarket.max_price && +price > +currentMarket.max_price) {
             this.props.pushAlert({
-                message: [this.props.intl.formatMessage(
-                    { id: 'error.order.create.maxPrice' },
+                message: [this.translate(
+                    'error.order.create.maxPrice',
                     { price: currentMarket.max_price, currency: currentMarket.quote_unit.toUpperCase()},
                 )],
                 type: 'error',
@@ -237,8 +235,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         if ((+available < (+amount * +price) && order.side === 'buy') ||
             (+available < +amount && order.side === 'sell')) {
             this.props.pushAlert({
-                message: [this.props.intl.formatMessage(
-                    { id: 'error.order.create.available' },
+                message: [this.translate(
+                    'error.order.create.available',
                     { available: available, currency: order.side === 'buy' ?
                         currentMarket.quote_unit.toUpperCase() :
                         currentMarket.base_unit.toUpperCase(),
@@ -277,12 +275,20 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         });
         this.props.setCurrentPrice(0);
     };
+
+    private translate = (id: string, value?: any) => this.props.intl.formatMessage({ id }, { ...value });
+
+    private getOrderTypes = [
+        this.translate('page.body.trade.header.newOrder.content.orderType.limit'),
+        this.translate('page.body.trade.header.newOrder.content.orderType.market'),
+    ];
 }
 
 const mapStateToProps = (state: RootState) => ({
     bids: selectDepthBids(state),
     asks: selectDepthAsks(state),
     currentMarket: selectCurrentMarket(state),
+    currentMarketFilters: selectCurrentMarketFilters(state),
     executeLoading: selectOrderExecuteLoading(state),
     marketTickers: selectMarketTickers(state),
     wallets: selectWallets(state),

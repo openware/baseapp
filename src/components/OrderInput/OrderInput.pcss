@@ -7,6 +7,7 @@
     border: 1px solid var(--input-border-color);
     color: var(--input-text-color);
     display: inline-block;
+    height: 51px;
     margin: 0;
     margin-top: calc(var(--gap) * 2);
     position: relative;
@@ -24,26 +25,40 @@
       .form-control {
         border: none;
         box-shadow: none;
+        height: 49px;
         padding: 0;
       }
     }
 
     &--focused {
-      border: 1px solid var(--input-border-color-active) !important;
+      border-color: var(--input-border-color-active) !important;
 
       label {
         color: var(--input-legend-color-active);
       }
     }
+
+    &--wrong {
+      border-color: var(--system-red) !important;
+
+      label {
+        color: var(--system-red);
+      }
+    }
   }
 
   &__crypto-icon {
+    align-items: center;
     background-color: var(--input-background-color);
     border: 1px solid var(--input-border-color);
     border-left: none;
-    display: inline-block;
+    display: flex;
+    height: 51px;
+    justify-content: center;
     margin-top: calc(var(--gap) * 2);
-    padding: calc(var(--gap) * 2);
+    min-width: 50px;
+    padding: 0;
+    padding-top: 2px;
     text-align: center;
     width: 26%;
 

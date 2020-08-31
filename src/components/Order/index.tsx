@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { TabPanel } from '../../components';
+import { FilterPrice } from '../../filters';
 import { getAmount, getTotalPrice } from '../../helpers';
 import { Decimal, OrderForm } from '../index';
 
@@ -66,51 +67,6 @@ export interface OrderComponentProps {
      * Precision of price value
      */
     currentMarketBidPrecision: number;
-    /**
-     * @default 'Order Type'
-     * Text for order type dropdown label.
-     */
-    orderTypeText?: string;
-    /**
-     * @default 'Price'
-     * Text for Price field Text.
-     */
-    priceText?: string;
-    /**
-     * @default 'Amount'
-     * Text for Amount field Text.
-     */
-    amountText?: string;
-    /**
-     * @default 'Total'
-     * Text for Total field Text.
-     */
-    totalText?: string;
-    /**
-     * @default 'Available'
-     * Text for Available field Text.
-     */
-    availableText?: string;
-    /**
-     * @default 'BUY'
-     * Text for buy order submit button.
-     */
-    submitBuyButtonText?: string;
-    /**
-     * @default 'SELL'
-     * Text for sell order submit button.
-     */
-    submitSellButtonText?: string;
-    /**
-     * @default 'Buy'
-     * Text for Buy tab label.
-     */
-    labelFirst?: string;
-    /**
-     * @default 'Sell'
-     * Text for Sell tab label.
-     */
-    labelSecond?: string;
     orderTypes?: DropdownElem[];
     orderTypesIndex?: DropdownElem[];
     /**
@@ -133,7 +89,10 @@ export interface OrderComponentProps {
      * default tab index
      */
     defaultTabIndex?: number;
+    currentMarketFilters: FilterPrice[];
+    translate: (id: string, value?: any) => string;
 }
+
 interface State {
     index: number;
     amountSell: string;
@@ -154,7 +113,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
         amountSell: '',
         amountBuy: '',
     };
-
 
     public componentDidMount() {
         const { defaultTabIndex } = this.props;
@@ -216,31 +174,27 @@ export class Order extends React.Component<OrderComponentProps, State> {
             to,
             currentMarketAskPrecision,
             currentMarketBidPrecision,
-            orderTypeText,
-            priceText,
-            amountText,
-            totalText,
-            availableText,
-            submitBuyButtonText,
-            submitSellButtonText,
-            labelFirst,
-            labelSecond,
             orderTypes,
             orderTypesIndex,
             asks,
             bids,
+            currentMarketFilters,
             listenInputPrice,
+            translate,
         } = this.props;
         const { amountSell, amountBuy } = this.state;
 
         const proposals = this.isTypeSell(type) ? bids : asks;
         const available = this.isTypeSell(type) ? availableBase : availableQuote;
         const priceMarket = this.isTypeSell(type) ? priceMarketSell : priceMarketBuy;
-        const submitButtonText = this.isTypeSell(type) ? submitSellButtonText : submitBuyButtonText;
-        const preLabel = this.isTypeSell(type) ? labelSecond : labelFirst;
-        const label = this.isTypeSell(type) ? 'Sell' : 'Buy';
         const disabledData = this.isTypeSell(type) ? {} : { disabled };
         const amount = this.isTypeSell(type) ? amountSell : amountBuy;
+        const preLabel = this.isTypeSell(type) ? (
+            translate('page.body.trade.header.newOrder.content.tabs.sell')
+        ) : (
+            translate('page.body.trade.header.newOrder.content.tabs.buy')
+        );
+        const label = this.isTypeSell(type) ? 'Sell' : 'Buy';
 
         return {
             content: (
@@ -257,17 +211,13 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     orderTypesIndex={orderTypesIndex || defaultOrderTypes}
                     currentMarketAskPrecision={currentMarketAskPrecision}
                     currentMarketBidPrecision={currentMarketBidPrecision}
-                    orderTypeText={orderTypeText}
-                    priceText={priceText}
-                    amountText={amountText}
-                    totalText={totalText}
-                    availableText={availableText}
-                    submitButtonText={submitButtonText}
                     totalPrice={getTotalPrice(amount, priceMarket, proposals)}
                     amount={amount}
                     listenInputPrice={listenInputPrice}
                     handleAmountChange={this.handleAmountChange}
                     handleChangeAmountByButton={this.handleChangeAmountByButton}
+                    currentMarketFilters={currentMarketFilters}
+                    translate={translate}
                 />
             ),
             label: preLabel || label,

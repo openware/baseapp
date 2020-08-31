@@ -5,6 +5,29 @@
   margin-bottom: calc(var(--gap) * 2);
   width: 100%;
 
+  .error-message {
+    align-items: center;
+    background: var(--system-red);
+    border-radius: 2px;
+    color: var(--primary-text-color);
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+    height: 24px;
+    margin-top: 80px;
+    opacity: 0;
+    padding: 0 14px;
+    position: fixed;
+    transition: 0.2s;
+    user-select: none;
+    width: calc(100% - var(--gap) * 4);
+    z-index: 10;
+
+    &--visible {
+      opacity: 1;
+    }
+  }
+
   .cr-dropdown,
   .cr-order-input,
   &__percentage-buttons,

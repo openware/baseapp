@@ -1,3 +1,4 @@
+import { FilterPrice } from '../../../filters';
 import { RootState } from '../../index';
 import { MarketsState } from './reducer';
 import { Market } from './types';
@@ -19,6 +20,9 @@ export const selectMarketsTickersTimestamp = (state: RootState): number | undefi
 export const selectCurrentMarket = (state: RootState): Market | undefined =>
     selectMarketsState(state).currentMarket;
 
+export const selectCurrentMarketFilters = (state: RootState): FilterPrice =>
+    selectMarketFilters(state)[(selectCurrentMarket(state) || { id: '' }).id];
+
 export const selectMarketTickers = (state: RootState): MarketsState['tickers'] =>
     selectMarketsState(state).tickers;
 
@@ -27,3 +31,6 @@ export const selectShouldFetchMarkets = (state: RootState): boolean =>
 
 export const selectShouldFetchMarketsTickers = (state: RootState): boolean =>
     !selectMarketsTickersTimestamp(state);
+
+export const selectMarketFilters = (state: RootState): MarketsState['filters'] =>
+    selectMarketsState(state).filters;
