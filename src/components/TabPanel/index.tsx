@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
+import { DropdownComponent } from '../Dropdown';
 
 export enum HideMode {
     hide = 'hide',
@@ -54,6 +55,11 @@ export interface TabPanelProps {
      * Optinal JSX element to head
      */
     optionalHead?: React.ReactNode;
+    /**
+     * Determines whether tab header should looks like dropdown or tab switcher
+     */
+    isMobileDevice?: boolean;
+
 }
 
 /**
@@ -76,20 +82,57 @@ export class TabPanel extends React.Component<TabPanelProps> {
                 .filter((panel, index) => index === currentTabIndex)
                 .map(this.renderTabContent);
 
-        const navCx = 'cr-tab-panel__navigation-container-navigation';
-
         return (
             <div className={className}>
                 <div className="cr-tab-panel__navigation-container draggable-container">
-                    <div className={navCx} role="tablist">
-                        {panels.map(this.renderTabPanel)}
-                    </div>
+                    {this.tabPanelRender()}
                     {optionalHead && <div className="cr-tab-panel__optinal-head">{optionalHead}</div>}
                 </div>
                 {contents}
             </div>
         );
     }
+
+    private tabPanelRender = () => {
+        const { panels, isMobileDevice } = this.props;
+        const navCx = 'cr-tab-panel__navigation-container-navigation';
+
+        if (isMobileDevice) {
+            return (
+                <div className="cr-tab-panel__dropdown">
+                    <DropdownComponent list={this.dropdownLabels()} className="cr-dropdown--mobile" onSelect={this.handleOrderTypeChange} placeholder=""/>
+                </div>
+            );
+        } else {
+            return (
+                <div className={navCx} role="tablist">
+                    {panels.map(this.renderTabPanel)}
+                </div>
+            );
+        }
+    };
+
+    private dropdownLabels = () => {
+        const { panels, currentTabIndex } = this.props;
+
+        if (!panels.length) {
+            return [];
+        }
+
+        const tabNames = panels.map(panel => panel.label).filter(label => label !== panels[currentTabIndex].label);
+        tabNames.unshift(panels[currentTabIndex].label);
+
+        return tabNames;
+    };
+
+    private handleOrderTypeChange = (index: number) => {
+        const { panels } = this.props;
+        const currentLabels = this.dropdownLabels();
+
+        const activeIndex = panels.findIndex(tab => tab.label === currentLabels[index]);
+
+        this.createOnTabChangeHandler(activeIndex, panels[activeIndex])();
+    };
 
     private renderTabPanel = (tab: Tab, index: number) => {
         const { disabled, hidden, label } = tab;
@@ -142,7 +185,6 @@ export class TabPanel extends React.Component<TabPanelProps> {
             if (this.props.onTabChange) {
                 this.props.onTabChange(index, tab.label);
             }
-
         }
     };
 }
