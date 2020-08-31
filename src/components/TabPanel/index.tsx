@@ -100,7 +100,7 @@ export class TabPanel extends React.Component<TabPanelProps> {
         if (isMobileDevice) {
             return (
                 <div className="cr-tab-panel__dropdown">
-                    <DropdownComponent list={this.dropdownLabels()} className="cr-dropdown__header" onSelect={this.handleOrderTypeChange} placeholder=""/>
+                    <DropdownComponent list={this.dropdownLabels()} className="cr-dropdown--mobile" onSelect={this.handleOrderTypeChange} placeholder=""/>
                 </div>
             );
         } else {
