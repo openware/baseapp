@@ -22,14 +22,11 @@ export const countMinValidPriceStep = (price: number | string, digits: number) =
 export const countSignificantDigits = (value: number | string) => {
     if (value === 0) { return 0; }
 
-    const formattedValue = String(Math.abs(+value));
-    const valueAsInteger = formattedValue.replace('.','');
-    const i = valueAsInteger.indexOf('e'); // return the index if number is represented by scientific notation
-
-    if (i > -1) { return i; }
-    if (valueAsInteger.length < formattedValue.length) { return valueAsInteger.replace(/^0+/,'').length; }
-
-    return valueAsInteger.length;
+    return Number(value)
+      .toExponential()
+      .replace(/e[\+\-0-9]*$/, '')  // remove exponential notation
+      .replace( /^0\.?0*|\./, '')   // remove decimal point and leading zeros
+      .length;
 };
 
 export class FilterPriceSignificantDigit implements FilterPrice {

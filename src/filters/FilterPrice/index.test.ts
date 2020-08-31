@@ -15,7 +15,8 @@ describe('Describe countDecimals helper', () => {
 
 describe('Describe countSigDigits helper', () => {
     it('should count significant digits of number type', () => {
-        expect(countSignificantDigits(100000000)).toEqual(9);
+        expect(countSignificantDigits(0.000006)).toEqual(1);
+        expect(countSignificantDigits(100000000)).toEqual(1);
         expect(countSignificantDigits(100000009)).toEqual(9);
         expect(countSignificantDigits(0.100006)).toEqual(6);
         expect(countSignificantDigits(10005.100006)).toEqual(11);
@@ -68,16 +69,17 @@ describe('Describe validatePriceStep filter', () => {
     it('should validate multiple filters', () => {
         const filters = [
             {
-                type: 'significant_digits', digits: 5,
+                type: 'significant_digits', digits: 2,
             },
             {
                 type: 'custom_price_steps', rules: [{ limit: '10', step: '1' },{ limit: '0', step: '10'}],
             },
         ].map(buildFilterPrice);
 
+        expect(validatePriceStep(5.6, filters)).toEqual({ valid: false, priceStep: 1 });
         expect(validatePriceStep(110, filters)).toEqual({ valid: true, priceStep: 0 });
         expect(validatePriceStep(111, filters)).toEqual({ valid: false, priceStep: 10 });
-        expect(validatePriceStep(1110, filters)).toEqual({ valid: true, priceStep: 0 });
-        expect(validatePriceStep(111000, filters)).toEqual({ valid: false, priceStep: 10 });
+        expect(validatePriceStep(1110, filters)).toEqual({ valid: false, priceStep: 100 });
+        expect(validatePriceStep(111000, filters)).toEqual({ valid: false, priceStep: 10000 });
     });
 });
