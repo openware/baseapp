@@ -7,6 +7,7 @@ import {
     validatePriceStep,
 } from '../../filters';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
+import { OrderInput as OrderInputMobile } from '../../mobile/components';
 import { Decimal } from '../Decimal';
 import { DropdownComponent } from '../Dropdown';
 import { OrderProps } from '../Order';
@@ -77,6 +78,7 @@ export interface OrderFormProps {
     listenInputPrice?: () => void;
     totalPrice: number;
     amount: string;
+    isMobileDevice?: boolean;
     currentMarketFilters: FilterPrice[];
     handleAmountChange: (amount: string, type: FormType) => void;
     handleChangeAmountByButton: (value: number, orderType: string | React.ReactNode, price: string, type: string) => void;
@@ -138,6 +140,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             currentMarketBidPrecision,
             totalPrice,
             amount,
+            isMobileDevice,
             translate,
         } = this.props;
         const {
@@ -208,15 +211,27 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                     </div>
                 )}
                 <div className="cr-order-item">
-                    <OrderInput
-                        currency={to}
-                        label={amountText}
-                        placeholder={amountText}
-                        value={amount || ''}
-                        isFocused={amountFocused}
-                        handleChangeValue={this.handleAmountChange}
-                        handleFocusInput={this.handleFieldFocus}
-                    />
+                    {isMobileDevice ? (
+                        <OrderInputMobile
+                            label={amountText}
+                            placeholder={translate('page.mobile.order.amount.placeholder', { currency: to ? to.toUpperCase() : '' })}
+                            value={amount || ''}
+                            isFocused={amountFocused}
+                            precision={currentMarketAskPrecision}
+                            handleChangeValue={this.handleAmountChange}
+                            handleFocusInput={this.handleFieldFocus}
+                        />
+                    ) : (
+                        <OrderInput
+                            currency={to}
+                            label={amountText}
+                            placeholder={amountText}
+                            value={amount || ''}
+                            isFocused={amountFocused}
+                            handleChangeValue={this.handleAmountChange}
+                            handleFocusInput={this.handleFieldFocus}
+                        />
+                    )}
                 </div>
 
                 <div className="cr-order-item">
