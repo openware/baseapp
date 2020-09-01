@@ -7,6 +7,7 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { Blur, CurrencyInfo, DepositCrypto, DepositFiat, TabPanel, WalletItemProps, WalletList } from '../../components';
+import { DEFAULT_CCY_PRECISION } from '../../constants';
 import { Withdraw, WithdrawProps } from '../../containers';
 import { ModalWithdrawConfirmation } from '../../containers/ModalWithdrawConfirmation';
 import { ModalWithdrawSubmit } from '../../containers/ModalWithdrawSubmit';
@@ -201,9 +202,11 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             iconUrl: wallet.iconUrl ? wallet.iconUrl : '',
         }));
         const selectedCurrency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-
         let confirmationAddress = '';
+        let selectedWalletPrecision = DEFAULT_CCY_PRECISION;
+
         if (wallets[selectedWalletIndex]) {
+            selectedWalletPrecision = wallets[selectedWalletIndex].fixed;
             confirmationAddress = wallets[selectedWalletIndex].type === 'fiat' ? (
                 beneficiary.name
             ) : (
@@ -248,6 +251,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         rid={confirmationAddress}
                         onSubmit={this.handleWithdraw}
                         onDismiss={this.toggleConfirmModal}
+                        precision={selectedWalletPrecision}
                     />
                 </div>
             </React.Fragment>

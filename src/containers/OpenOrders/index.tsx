@@ -4,8 +4,8 @@ import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { CloseIcon } from '../../assets/images/CloseIcon';
-import { OpenOrders } from '../../components';
-import { localeDate, preciseData, setTradeColor } from '../../helpers';
+import { Decimal, OpenOrders } from '../../components';
+import { localeDate, setTradeColor } from '../../helpers';
 import { IntlProps } from '../../index';
 import {
     Market,
@@ -133,9 +133,9 @@ export class OpenOrdersContainer extends React.Component<Props> {
 
             return [
                 localeDate(created_at, 'fullDate'),
-                <span style={{ color: setTradeColor(side).color }} key={id}>{preciseData(price, priceFixed)}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{preciseData(remainingAmount, amountFixed)}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{preciseData(total, amountFixed)}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(price, priceFixed, ',')}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(remainingAmount, amountFixed, ',')}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(total, amountFixed, ',')}</span>,
                 <span style={{ color: setTradeColor(side).color }} key={id}>{filled}%</span>,
                 side,
             ];

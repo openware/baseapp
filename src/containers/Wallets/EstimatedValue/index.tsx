@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { formatWithSeparators } from '../../../components';
 import { WalletItemProps } from '../../../components/WalletItem';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
@@ -23,7 +24,6 @@ import { selectRanger } from '../../../modules/public/ranger/selectors';
 
 interface EstimatedValueProps {
     wallets: WalletItemProps[];
-    hello: string;
 }
 
 interface ReduxProps {
@@ -105,7 +105,7 @@ class EstimatedValueContainer extends React.Component<Props> {
                     {this.translate('page.body.wallets.estimated_value')}
                     <span className="value-container">
                         <span className="value">
-                            {estimatedValue}
+                            {formatWithSeparators(estimatedValue, ',')}
                         </span>
                         <span className="value-sign">{VALUATION_PRIMARY_CURRENCY.toUpperCase()}</span>
                     </span>
@@ -128,7 +128,7 @@ class EstimatedValueContainer extends React.Component<Props> {
         return (
             <span className="value-container">
                 <span className="value">
-                    {estimatedValueSecondary}
+                    {formatWithSeparators(estimatedValueSecondary, ',')}
                 </span>
                 <span className="value-sign">{VALUATION_SECONDARY_CURRENCY.toUpperCase()}</span>
             </span>
