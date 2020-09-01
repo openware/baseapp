@@ -1,3 +1,7 @@
+html.theme-dark .chart-page {
+  background-color: var(--body-background-color);
+}
+
 html.theme-dark .group-wWM3zP_M- {
-  background-color: #1E2841;
+  background-color: transparent;
 }
