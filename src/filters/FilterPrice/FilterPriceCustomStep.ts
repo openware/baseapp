@@ -19,19 +19,17 @@ export class FilterPriceCustomStep implements FilterPrice {
         const currentValidation: PriceValidation = { valid: true, priceStep: 0 };
         const nextIndex = this.filter.rules.findIndex(step => step && +step.limit > price);
         const zeroIndex = this.filter.rules.findIndex(step => step && +step.limit === 0);
-        const currentLimit = nextIndex > 0 ? (
-            this.filter.rules[nextIndex - 1]
+
+        const currentLimit = nextIndex >= 0 ? (
+            this.filter.rules[nextIndex]
         ) : (
-            nextIndex === 0 ? (
-                this.filter.rules[nextIndex]
-            ) : (
-                zeroIndex ? this.filter.rules[zeroIndex] : null
-            )
+            zeroIndex ? this.filter.rules[zeroIndex] : null
         );
 
         if (currentLimit) {
             const stepDecimals = countDecimals(currentLimit.step);
-            currentValidation.valid = stepDecimals ? price <= +price.toFixed(stepDecimals) : !(price % +currentLimit.step);
+            const validCoefficient = stepDecimals ? 10 ** stepDecimals : 1;
+            currentValidation.valid = !((validCoefficient * price) % (validCoefficient * +currentLimit.step));
             currentValidation.priceStep = !currentValidation.valid ? +currentLimit.step : 0;
         }
 
