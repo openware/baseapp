@@ -52,7 +52,10 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
             if (isFinexEnabled() && action.payload) {
                 filters = action.payload.reduce((result, market: Market) => {
                     result[market.id] = result[market.id] || [];
-                    result[market.id] = (market.filters || []).map(buildFilterPrice);
+
+                    if (market.filters) {
+                        result[market.id] = market.filters.map(buildFilterPrice);
+                    }
 
                     return result;
                 }, {});

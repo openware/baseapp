@@ -164,12 +164,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
 
         const priceText = this.props.translate('page.body.trade.header.newOrder.content.price');
         const amountText = this.props.translate('page.body.trade.header.newOrder.content.amount');
-
-        const submitButtonText = type === 'buy' ? (
-            translate('page.body.trade.header.newOrder.content.tabs.buy')
-        ) : (
-            translate('page.body.trade.header.newOrder.content.tabs.sell')
-        );
+        const submitButtonText = translate(`page.body.trade.header.newOrder.content.tabs.${type}`);
 
         return (
             <div className={classnames('cr-order-form', className)} onKeyPress={this.handleEnterPress}>
