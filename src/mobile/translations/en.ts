@@ -13,6 +13,7 @@ export const en = {
     'page.mobile.charts.label.orderBook': 'Order book',
     'page.mobile.charts.label.trades': 'Trades',
 
+    'page.mobile.order.price.placeholder': 'Price ({currency})',
     'page.mobile.order.amount.placeholder': 'Amount ({currency})',
 
     'page.mobile.orderButtons.buy': 'Buy {base_unit}',

@@ -162,7 +162,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         const availableCurrency = type === 'buy' ? from : to;
 
         const priceErrorClass = classnames('error-message', {
-            'error-message--visible': priceFocused && !isPriceValid.valid,
+            'error-message--visible': (priceFocused || isMobileDevice) && !isPriceValid.valid,
         });
 
         const priceText = this.props.translate('page.body.trade.header.newOrder.content.price');
@@ -179,16 +179,28 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 </div>
                 {orderType === 'Limit' ? (
                     <div className="cr-order-item">
-                        <OrderInput
-                            currency={from}
-                            label={priceText}
-                            placeholder={priceText}
-                            value={price || ''}
-                            isFocused={priceFocused}
-                            isWrong={!isPriceValid.valid}
-                            handleChangeValue={this.handlePriceChange}
-                            handleFocusInput={this.handleFieldFocus}
-                        />
+                        {isMobileDevice ? (
+                            <OrderInputMobile
+                                label={priceText}
+                                placeholder={translate('page.mobile.order.price.placeholder', { currency: from ? from.toUpperCase() : '' })}
+                                value={price || ''}
+                                isFocused={priceFocused}
+                                precision={currentMarketBidPrecision}
+                                handleChangeValue={this.handlePriceChange}
+                                handleFocusInput={this.handleFieldFocus}
+                            />
+                        ) : (
+                            <OrderInput
+                                currency={from}
+                                label={priceText}
+                                placeholder={priceText}
+                                value={price || ''}
+                                isFocused={priceFocused}
+                                isWrong={!isPriceValid.valid}
+                                handleChangeValue={this.handlePriceChange}
+                                handleFocusInput={this.handleFieldFocus}
+                            />
+                        )}
                         <div className={priceErrorClass}>
                             {translate('page.body.trade.header.newOrder.content.filterPrice', { priceStep: isPriceValid.priceStep })}
                         </div>

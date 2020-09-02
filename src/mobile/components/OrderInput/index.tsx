@@ -3,6 +3,10 @@ import * as React from 'react';
 import { CustomInput } from '../../../components';
 import { areEqualProps} from '../../../helpers/areEqualProps';
 
+/* Icons */
+import { MinusIcon } from '../../assets/images/MinusIcon';
+import { PlusIcon } from '../../assets/images/PlusIcon';
+
 export interface OrderInputProps {
     className?: string;
     isFocused: boolean;
@@ -50,10 +54,9 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
 
     return (
         <div className={cx}>
-            <div
-                className="cr-order-input-mobile__button"
-                onClick={() => handleChangeValueByButton(false)}
-            >-</div>
+            <div className="cr-order-input-mobile__button" onClick={() => handleChangeValueByButton(false)}>
+                <MinusIcon />
+            </div>
             <fieldset className={fieldsetFocusedClass}>
                 <CustomInput
                     type="number"
@@ -66,10 +69,9 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
                     handleFocusInput={() => handleFocusInput(label)}
                 />
             </fieldset>
-            <div
-                className="cr-order-input-mobile__button"
-                onClick={() => handleChangeValueByButton(true)}
-            >+</div>
+            <div className="cr-order-input-mobile__button" onClick={() => handleChangeValueByButton(true)}>
+                <PlusIcon />
+            </div>
         </div>
     );
 }, areEqualProps);
