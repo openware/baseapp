@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { RecentTrades, RecentTradesProps } from '..';
+import { RecentTrades } from '..';
 import { rootReducer } from '../../modules';
 
 const defaultProps: { recentTrades: any[]; currentMarket: undefined; userLoggedIn: boolean; currentPrice: undefined } = {
@@ -15,10 +15,10 @@ const defaultProps: { recentTrades: any[]; currentMarket: undefined; userLoggedI
 const store = createStore(rootReducer);
 const RecentTradesComponent = connect()(RecentTrades);
 
-const setup = (props: Partial<RecentTradesProps> = {}) =>
+const setup = () =>
     shallow(
         <Provider store={store}>
-            <RecentTradesComponent {...{ ...defaultProps, ...props }} />
+            <RecentTradesComponent {...{ ...defaultProps }} />
         </Provider>,
     );
 
