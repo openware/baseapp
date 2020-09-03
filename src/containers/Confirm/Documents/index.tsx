@@ -187,19 +187,21 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             </div>
                         </fieldset>
                     </div>
-                    <UploadFile
-                        isMobileDevice={isMobileDevice}
-                        id="fileFront"
-                        title={this.translate('page.body.kyc.documents.uploadFile.front.title')}
-                        label={this.translate('page.body.kyc.documents.uploadFile.front.label')}
-                        buttonText={this.translate('page.body.kyc.documents.uploadFile.front.button')}
-                        sizesText={this.translate('page.body.kyc.documents.uploadFile.front.sizes')}
-                        formatsText={this.translate('page.body.kyc.documents.uploadFile.front.formats')}
-                        handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'front')}
-                        exampleImagePath={DocumentFrontExample}
-                        uploadedFile={fileFront[0] && (fileFront[0] as File).name}
-                    />
-                    {this.state.documentsType !== 'Passport' ? (
+                    {this.state.documentsType  ? (
+                        <UploadFile
+                            isMobileDevice={isMobileDevice}
+                            id="fileFront"
+                            title={this.translate('page.body.kyc.documents.uploadFile.front.title')}
+                            label={this.translate('page.body.kyc.documents.uploadFile.front.label')}
+                            buttonText={this.translate('page.body.kyc.documents.uploadFile.front.button')}
+                            sizesText={this.translate('page.body.kyc.documents.uploadFile.front.sizes')}
+                            formatsText={this.translate('page.body.kyc.documents.uploadFile.front.formats')}
+                            handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'front')}
+                            exampleImagePath={DocumentFrontExample}
+                            uploadedFile={fileFront[0] && (fileFront[0] as File).name}
+                        />
+                    ) : null}
+                    {this.state.documentsType && this.state.documentsType !== 'Passport' ? (
                         <UploadFile
                             isMobileDevice={isMobileDevice}
                             id="fileBack"
@@ -213,18 +215,20 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             uploadedFile={fileBack[0] && (fileBack[0] as File).name}
                         />
                     ) : null}
-                    <UploadFile
-                        isMobileDevice={isMobileDevice}
-                        id="fileSelfie"
-                        title={this.translate('page.body.kyc.documents.uploadFile.selfie.title')}
-                        label={this.translate('page.body.kyc.documents.uploadFile.selfie.label')}
-                        buttonText={this.translate('page.body.kyc.documents.uploadFile.selfie.button')}
-                        sizesText={this.translate('page.body.kyc.documents.uploadFile.selfie.sizes')}
-                        formatsText={this.translate('page.body.kyc.documents.uploadFile.selfie.formats')}
-                        handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'selfie')}
-                        exampleImagePath={DocumentSelfieExample}
-                        uploadedFile={fileSelfie[0] && (fileSelfie[0] as File).name}
-                    />
+                    {this.state.documentsType  ? (
+                        <UploadFile
+                            isMobileDevice={isMobileDevice}
+                            id="fileSelfie"
+                            title={this.translate('page.body.kyc.documents.uploadFile.selfie.title')}
+                            label={this.translate('page.body.kyc.documents.uploadFile.selfie.label')}
+                            buttonText={this.translate('page.body.kyc.documents.uploadFile.selfie.button')}
+                            sizesText={this.translate('page.body.kyc.documents.uploadFile.selfie.sizes')}
+                            formatsText={this.translate('page.body.kyc.documents.uploadFile.selfie.formats')}
+                            handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'selfie')}
+                            exampleImagePath={DocumentSelfieExample}
+                            uploadedFile={fileSelfie[0] && (fileSelfie[0] as File).name}
+                        />
+                    ) : null}
                     <div className="pg-confirm__content-deep">
                         <Button
                             onClick={this.sendDocuments}
