@@ -44,12 +44,28 @@ Access-Control-Allow-Credentials: true
         "type":"custom_price_steps",
         "rules": [
           {
-            "limit":"1",
-            "step":"0.0000001"
+            "limit":"10",
+            "step":"0.01"
+          },
+          {
+            "limit":"100",
+            "step":"0.1"
+          },
+          {
+            "limit":"1000",
+            "step":"1"
+          },
+          {
+            "limit":"10000",
+            "step":"5"
+          },
+          {
+            "limit":"100000",
+            "step":"10"
           },
           {
             "limit":"0",
-            "step":"0.00001"
+            "step":"1000"
           }
         ]
       }

@@ -1,7 +1,7 @@
 import { MarketFilterCustomStep } from '../../modules';
 import { FilterPrice, PriceValidation } from './index';
 
-export const countDecimals = value => {
+export const countDecimals = (value): number => {
     if (!value || Math.floor(value) === value) { return 0; }
     const decimalPart = value.toString().split('.')[1];
 
@@ -27,9 +27,12 @@ export class FilterPriceCustomStep implements FilterPrice {
         );
 
         if (currentLimit) {
+            const priceDecimals = countDecimals(price);
             const stepDecimals = countDecimals(currentLimit.step);
-            const validCoefficient = stepDecimals ? 10 ** stepDecimals : 1;
-            currentValidation.valid = !(+(validCoefficient * price).toFixed(0) % (validCoefficient * +currentLimit.step));
+            const targetCoefficient = priceDecimals > stepDecimals ? priceDecimals : stepDecimals;
+            const validStepCoefficient = targetCoefficient ? 10 ** targetCoefficient : 1;
+
+            currentValidation.valid = !(+(validStepCoefficient * price).toFixed(0) % (validStepCoefficient * +currentLimit.step));
             currentValidation.priceStep = !currentValidation.valid ? +currentLimit.step : 0;
         }
 

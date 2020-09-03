@@ -72,10 +72,11 @@ describe('Describe validatePriceStep filter', () => {
                 type: 'significant_digits', digits: 2,
             },
             {
-                type: 'custom_price_steps', rules: [{ limit: '10', step: '1' },{ limit: '0', step: '10'}],
+                type: 'custom_price_steps', rules: [{ limit: '5', step: '0.01' }, { limit: '10', step: '1' },{ limit: '0', step: '10'}],
             },
         ].map(buildFilterPrice);
 
+        expect(validatePriceStep(1, filters)).toEqual({ valid: true, priceStep: 0 });
         expect(validatePriceStep(5.6, filters)).toEqual({ valid: false, priceStep: 1 });
         expect(validatePriceStep(110, filters)).toEqual({ valid: true, priceStep: 0 });
         expect(validatePriceStep(111, filters)).toEqual({ valid: false, priceStep: 10 });
