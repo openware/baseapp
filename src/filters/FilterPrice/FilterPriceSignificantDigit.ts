@@ -24,7 +24,7 @@ export const countSignificantDigits = (value: number | string) => {
 
     return Number(value)
       .toExponential()
-      .replace(/e[\+\-0-9]*$/, '')  // remove exponential notation
+      .replace(/e[+\-0-9]*$/, '')  // remove exponential notation
       .replace( /^0\.?0*|\./, '')   // remove decimal point and leading zeros
       .length;
 };

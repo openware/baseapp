@@ -29,7 +29,7 @@ export class FilterPriceCustomStep implements FilterPrice {
         if (currentLimit) {
             const stepDecimals = countDecimals(currentLimit.step);
             const validCoefficient = stepDecimals ? 10 ** stepDecimals : 1;
-            currentValidation.valid = !((validCoefficient * price) % (validCoefficient * +currentLimit.step));
+            currentValidation.valid = !(+(validCoefficient * price).toFixed(0) % (validCoefficient * +currentLimit.step));
             currentValidation.priceStep = !currentValidation.valid ? +currentLimit.step : 0;
         }
 
