@@ -479,8 +479,6 @@ export const ru: LangType = {
     'page.body.kyc.address.city.placeholder': 'Your city',
     'page.body.kyc.address.postcode': 'Postcode (ZIP)',
     'page.body.kyc.address.postcode.placeholder': 'Your Postcode',
-    'page.body.kyc.address.country': 'Country',
-    'page.body.kyc.address.country.placeholder': 'Select your country',
     'page.body.kyc.address.uploadFile.title': 'Proof of Address',
     'page.body.kyc.address.uploadFile.label': 'Please upload a Utility bill with your Address (Photo or scan)',
     'page.body.kyc.address.uploadFile.button': 'Upload',
