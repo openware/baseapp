@@ -1,6 +1,11 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
+import {
+    FilterPrice,
+    PriceValidation,
+    validatePriceStep,
+} from '../../filters';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 import { Decimal } from '../Decimal';
 import { DropdownComponent } from '../Dropdown';
@@ -67,49 +72,22 @@ export interface OrderFormProps {
      */
     onSubmit: OnSubmitCallback;
     /**
-     * @default 'Order Type'
-     * Text for order type dropdown label.
-     */
-    orderTypeText?: string;
-    /**
-     * @default 'Price'
-     * Text for Price field Text.
-     */
-    priceText?: string;
-    /**
-     * @default 'Amount'
-     * Text for Amount field Text.
-     */
-    amountText?: string;
-    /**
-     * @default 'Total'
-     * Text for Total field Text.
-     */
-    totalText?: string;
-    /**
-     * @default 'Available'
-     * Text for Available field Text.
-     */
-    availableText?: string;
-    /**
-     * @default type.toUpperCase()
-     * Text for submit Button.
-     */
-    submitButtonText?: string;
-    /**
      * start handling change price
      */
     listenInputPrice?: () => void;
     totalPrice: number;
     amount: string;
+    currentMarketFilters: FilterPrice[];
     handleAmountChange: (amount: string, type: FormType) => void;
     handleChangeAmountByButton: (value: number, orderType: string | React.ReactNode, price: string, type: string) => void;
+    translate: (id: string, value?: any) => string;
 }
 
 interface OrderFormState {
     orderType: string | React.ReactNode;
     price: string;
     priceMarket: number;
+    isPriceValid: PriceValidation;
     amountFocused: boolean;
     priceFocused: boolean;
 }
@@ -125,6 +103,10 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             orderType: 'Limit',
             price: '',
             priceMarket: this.props.priceMarket,
+            isPriceValid: {
+                valid: true,
+                priceStep: 0,
+            },
             priceFocused: false,
             amountFocused: false,
         };
@@ -132,10 +114,9 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
 
     public componentWillReceiveProps(next: OrderFormProps) {
         const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.props.currentMarketBidPrecision);
+
         if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
-            this.setState({
-                price: nextPriceLimitTruncated,
-            });
+            this.handlePriceChange(nextPriceLimitTruncated);
         }
 
         if (this.state.priceMarket !== next.priceMarket) {
@@ -153,21 +134,17 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             from,
             to,
             available,
-            orderTypeText,
-            priceText,
-            amountText,
-            totalText,
-            availableText,
-            submitButtonText,
             currentMarketAskPrecision,
             currentMarketBidPrecision,
             totalPrice,
             amount,
+            translate,
         } = this.props;
         const {
             orderType,
             price,
             priceMarket,
+            isPriceValid,
             priceFocused,
             amountFocused,
         } = this.state;
@@ -181,10 +158,20 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         const availablePrecision = type === 'buy' ? currentMarketBidPrecision : currentMarketAskPrecision;
         const availableCurrency = type === 'buy' ? from : to;
 
+        const priceErrorClass = classnames('error-message', {
+            'error-message--visible': priceFocused && !isPriceValid.valid,
+        });
+
+        const priceText = this.props.translate('page.body.trade.header.newOrder.content.price');
+        const amountText = this.props.translate('page.body.trade.header.newOrder.content.amount');
+        const submitButtonText = translate(`page.body.trade.header.newOrder.content.tabs.${type}`);
+
         return (
             <div className={classnames('cr-order-form', className)} onKeyPress={this.handleEnterPress}>
                 <div className="cr-order-item">
-                    {orderTypeText ? <div className="cr-order-item__dropdown__label">{orderTypeText}</div> : null}
+                    <div className="cr-order-item__dropdown__label">
+                        {translate('page.body.trade.header.newOrder.content.orderType')}
+                    </div>
                     <DropdownComponent list={orderTypes} onSelect={this.handleOrderTypeChange} placeholder=""/>
                 </div>
                 {orderType === 'Limit' ? (
@@ -195,16 +182,20 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                             placeholder={priceText}
                             value={price || ''}
                             isFocused={priceFocused}
+                            isWrong={!isPriceValid.valid}
                             handleChangeValue={this.handlePriceChange}
                             handleFocusInput={this.handleFieldFocus}
                         />
+                        <div className={priceErrorClass}>
+                            {translate('page.body.trade.header.newOrder.content.filterPrice', { priceStep: isPriceValid.priceStep })}
+                        </div>
                     </div>
                 ) : (
                     <div className="cr-order-item">
                         <div className="cr-order-input">
                             <fieldset className="cr-order-input__fieldset">
                                 <legend className={'cr-order-input__fieldset__label'}>
-                                    {handleSetValue(priceText, '')}
+                                    {priceText}
                                 </legend>
                                 <div className="cr-order-input__fieldset__input">
                                     &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision), '0')}</span>
@@ -243,7 +234,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 <div className="cr-order-item">
                     <div className="cr-order-item__total">
                         <label className="cr-order-item__total__label">
-                            {handleSetValue(totalText, 'Total')}
+                            {translate('page.body.trade.header.newOrder.content.total')}
                         </label>
                         <div className="cr-order-item__total__content">
                             {orderType === 'Limit' ? (
@@ -264,7 +255,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 <div className="cr-order-item">
                     <div className="cr-order-item__available">
                         <label className="cr-order-item__available__label">
-                            {handleSetValue(availableText, 'Available')}
+                            {translate('page.body.trade.header.newOrder.content.available')}
                         </label>
                         <div className="cr-order-item__available__content">
                             <span className="cr-order-item__available__content__amount">
@@ -300,14 +291,17 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     };
 
     private handleFieldFocus = (field: string | undefined) => {
+        const priceText = this.props.translate('page.body.trade.header.newOrder.content.price');
+        const amountText = this.props.translate('page.body.trade.header.newOrder.content.amount');
+
         switch (field) {
-            case this.props.priceText:
+            case priceText:
                 this.setState(prev => ({
                     priceFocused: !prev.priceFocused,
                 }));
                 this.props.listenInputPrice && this.props.listenInputPrice();
                 break;
-            case this.props.amountText:
+            case amountText:
                 this.setState(prev => ({
                     amountFocused: !prev.amountFocused,
                 }));
@@ -318,12 +312,13 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     };
 
     private handlePriceChange = (value: string) => {
-        const { currentMarketBidPrecision } = this.props;
+        const { currentMarketBidPrecision, currentMarketFilters } = this.props;
         const convertedValue = cleanPositiveFloatInput(String(value));
 
         if (convertedValue.match(precisionRegExp(currentMarketBidPrecision))) {
             this.setState({
                 price: convertedValue,
+                isPriceValid: validatePriceStep(convertedValue, currentMarketFilters),
             });
         }
 
@@ -358,20 +353,17 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         };
 
         this.props.onSubmit(order);
-        this.setState({
-            price: '',
-        }, () => {
-            this.props.handleAmountChange('', this.props.type);
-        });
+        this.handlePriceChange('');
+        this.props.handleAmountChange('', this.props.type);
     };
 
     private checkButtonIsDisabled = (): boolean => {
         const { disabled, available, amount, totalPrice } = this.props;
-        const { orderType, priceMarket, price } = this.state;
+        const { isPriceValid, orderType, priceMarket, price } = this.state;
         const safePrice = totalPrice / Number(amount) || priceMarket;
 
         const invalidAmount = Number(amount) <= 0;
-        const invalidLimitPrice = Number(price) <= 0 && orderType === 'Limit';
+        const invalidLimitPrice = orderType === 'Limit' && (Number(price) <= 0 || !isPriceValid.valid);
         const invalidMarketPrice = safePrice <= 0 && orderType === 'Market';
 
         return disabled || !available || invalidAmount || invalidLimitPrice || invalidMarketPrice;

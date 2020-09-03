@@ -1,3 +1,5 @@
+import { isFinexEnabled } from '../../../api';
+import { buildFilterPrice, FilterPrice } from '../../../filters';
 import { CommonState } from '../../types';
 import { MarketsAction } from './actions';
 import {
@@ -14,6 +16,9 @@ import { Market, Ticker } from './types';
 
 export interface MarketsState extends CommonState {
     list: Market[];
+    filters: {
+        [marketId: string]: FilterPrice;
+    };
     currentMarket: Market | undefined;
     tickers: {
         [pair: string]: Ticker;
@@ -26,6 +31,7 @@ export interface MarketsState extends CommonState {
 
 export const initialMarketsState: MarketsState = {
     list: [],
+    filters: {},
     currentMarket: undefined,
     tickers: {},
     tickerLoading: false,
@@ -41,10 +47,25 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
                 timestamp: Math.floor(Date.now() / 1000),
             };
         case MARKETS_DATA:
+            let filters = {};
+
+            if (isFinexEnabled() && action.payload) {
+                filters = action.payload.reduce((result, market: Market) => {
+                    result[market.id] = result[market.id] || [];
+
+                    if (market.filters) {
+                        result[market.id] = market.filters.map(buildFilterPrice);
+                    }
+
+                    return result;
+                }, {});
+            }
+
             return {
                 ...state,
                 loading: false,
                 list: action.payload,
+                filters: filters,
             };
         case MARKETS_ERROR:
             return {

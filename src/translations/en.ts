@@ -36,6 +36,7 @@ export const en = {
     'page.body.trade.header.newOrder.content.amount': 'Amount',
     'page.body.trade.header.newOrder.content.total': 'Total',
     'page.body.trade.header.newOrder.content.available': 'Available',
+    'page.body.trade.header.newOrder.content.filterPrice': 'Valid price step is {priceStep}',
 
     'error.order.create.minAmount': 'Amount is too low. Minimum amount is {amount} {currency}',
     'error.order.create.minPrice': 'Price is too low. Minimum price is {price} {currency}',

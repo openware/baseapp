@@ -33,6 +33,7 @@ export const ru: LangType = {
     'page.body.trade.header.newOrder.content.amount': 'Кол.',
     'page.body.trade.header.newOrder.content.total': 'Всего',
     'page.body.trade.header.newOrder.content.available': 'Доступно',
+    'page.body.trade.header.newOrder.content.filterPrice': 'Валидный шаг цены {priceStep}',
 
     'error.order.create.minAmount': 'Кол-во слишком мало. Минимальное кол-во: {amount} {currency}',
     'error.order.create.minPrice': 'Цена слишком мала. Минимальная цена: {price} {currency}',
