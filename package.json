@@ -1,6 +1,6 @@
 {
   "name": "@openware/base-app",
-  "version": "2.3.25",
+  "version": "2.6.0",
   "private": true,
   "dependencies": {
     "@formatjs/intl-pluralrules": "^3.2.5",
