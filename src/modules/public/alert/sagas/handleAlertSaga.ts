@@ -1,34 +1,44 @@
 import { call, delay, put } from 'redux-saga/effects';
-import { setBlocklistStatus, userReset } from '../../../';
 import { msAlertDisplayTime } from '../../../../api';
+import {
+    resetHistory,
+    setBlocklistStatus,
+    signInRequire2FA,
+    userOpenOrdersReset,
+    userReset,
+} from '../../../index';
 import { alertData, alertDelete, AlertPush } from '../actions';
 
 export function* handleAlertSaga(action: AlertPush) {
     if (action.payload.type === 'error') {
         switch (action.payload.code) {
             case 401:
-                if (action.payload.message.indexOf('identity.session.not_active') > -1){
+                if (
+                    action.payload.message.indexOf('identity.session.not_active') > -1 ||
+                    action.payload.message.indexOf('authz.invalid_session') > -1 ||
+                    action.payload.message.indexOf('authz.client_session_mismatch') > -1 ||
+                    action.payload.message.indexOf('authz.csrf_token_mismatch') > -1
+                ) {
                     yield put(userReset());
                     localStorage.removeItem('csrfToken');
+                    yield put(userOpenOrdersReset());
+                    yield put(signInRequire2FA({ require2fa: false }));
+                    yield put(resetHistory());
+                }
+
+                if (action.payload.message.indexOf('identity.session.not_active') > -1){
                     yield put(alertData(action.payload));
 
                     return;
                 } else {
-                    if (action.payload.message.indexOf('authz.invalid_session') > -1) {
-                        yield put(userReset());
-                        localStorage.removeItem('csrfToken');
-                    } else {
-                        if (action.payload.message.indexOf('authz.client_session_mismatch') > -1 ||
-                            action.payload.message.indexOf('authz.csrf_token_mismatch') > -1) {
-                            yield put(userReset());
-                            localStorage.removeItem('csrfToken');
+                    if (action.payload.message.indexOf('authz.client_session_mismatch') > -1 ||
+                        action.payload.message.indexOf('authz.csrf_token_mismatch') > -1) {
                             yield call(callAlertData, action);
                         } else {
                             yield call(callAlertData, action);
                             break;
                         }
                     }
-                }
                 break;
             case 403:
                 if (action.payload.message.indexOf('identity.session.invalid_otp') > -1) {

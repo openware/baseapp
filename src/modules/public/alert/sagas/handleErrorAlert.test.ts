@@ -4,6 +4,9 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga } from '../../../';
 import { Cryptobase, defaultConfig } from '../../../../api';
 import { setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { AUTH_SIGN_IN_REQUIRE_2FA } from '../../../user/auth/constants';
+import { HISTORY_RESET } from '../../../user/history/constants';
+import { OPEN_ORDERS_RESET } from '../../../user/openOrders/constants';
 import { PROFILE_RESET_USER } from '../../../user/profile/constants';
 import { alertPush } from '../actions';
 import { ALERT_DATA, ALERT_DELETE, ALERT_PUSH } from '../constants';
@@ -45,6 +48,21 @@ describe('Alert error handler', () => {
         type: PROFILE_RESET_USER,
     };
 
+    const expectedUserOpenOrdersReset = {
+        type: OPEN_ORDERS_RESET,
+    };
+
+    const expectedUserRequire2FAReset = {
+        type: AUTH_SIGN_IN_REQUIRE_2FA,
+        payload: {
+            require2fa: false,
+        },
+    };
+
+    const expectedUserHistoryReset = {
+        type: HISTORY_RESET,
+    };
+
     const expectedAlertErrorData = {
         type: ALERT_DATA,
         payload: {
@@ -72,11 +90,53 @@ describe('Alert error handler', () => {
                         setTimeout(resolve, 0.01);
                         break;
                     case 3:
-                        expect(actions).toEqual([expectedErrorActionUnauthorized, expectedUserProfileReset, expectedAlertErrorData]);
+                        expect(actions).toEqual([
+                            expectedErrorActionUnauthorized,
+                            expectedUserProfileReset,
+                            expectedUserOpenOrdersReset,
+                        ]);
                         setTimeout(resolve, 0.01);
                         break;
                     case 4:
-                        expect(actions).toEqual([expectedErrorActionUnauthorized, expectedUserProfileReset, expectedAlertErrorData, expectedDeleteError]);
+                        expect(actions).toEqual([
+                            expectedErrorActionUnauthorized,
+                            expectedUserProfileReset,
+                            expectedUserOpenOrdersReset,
+                            expectedUserRequire2FAReset,
+                        ]);
+                        setTimeout(resolve, 0.01);
+                        break;
+                    case 5:
+                        expect(actions).toEqual([
+                            expectedErrorActionUnauthorized,
+                            expectedUserProfileReset,
+                            expectedUserOpenOrdersReset,
+                            expectedUserRequire2FAReset,
+                            expectedUserHistoryReset,
+                        ]);
+                        setTimeout(resolve, 0.01);
+                        break;
+                    case 6:
+                        expect(actions).toEqual([
+                            expectedErrorActionUnauthorized,
+                            expectedUserProfileReset,
+                            expectedUserOpenOrdersReset,
+                            expectedUserRequire2FAReset,
+                            expectedUserHistoryReset,
+                            expectedAlertErrorData,
+                        ]);
+                        setTimeout(resolve, 0.01);
+                        break;
+                    case 7:
+                        expect(actions).toEqual([
+                            expectedErrorActionUnauthorized,
+                            expectedUserProfileReset,
+                            expectedUserOpenOrdersReset,
+                            expectedUserRequire2FAReset,
+                            expectedUserHistoryReset,
+                            expectedAlertErrorData,
+                            expectedDeleteError,
+                        ]);
                         setTimeout(resolve, 0.01);
                         break;
                     default:
