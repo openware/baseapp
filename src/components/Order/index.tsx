@@ -89,6 +89,7 @@ export interface OrderComponentProps {
      * default tab index
      */
     defaultTabIndex?: number;
+    isMobileDevice?: boolean;
     currentMarketFilters: FilterPrice[];
     translate: (id: string, value?: any) => string;
 }
@@ -179,6 +180,7 @@ export class Order extends React.Component<OrderComponentProps, State> {
             asks,
             bids,
             currentMarketFilters,
+            isMobileDevice,
             listenInputPrice,
             translate,
         } = this.props;
@@ -217,6 +219,7 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     handleAmountChange={this.handleAmountChange}
                     handleChangeAmountByButton={this.handleChangeAmountByButton}
                     currentMarketFilters={currentMarketFilters}
+                    isMobileDevice={isMobileDevice}
                     translate={translate}
                 />
             ),

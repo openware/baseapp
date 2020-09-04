@@ -7,6 +7,7 @@ import {
     validatePriceStep,
 } from '../../filters';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
+import { OrderInput as OrderInputMobile } from '../../mobile/components';
 import { Decimal } from '../Decimal';
 import { DropdownComponent } from '../Dropdown';
 import { OrderProps } from '../Order';
@@ -77,6 +78,7 @@ export interface OrderFormProps {
     listenInputPrice?: () => void;
     totalPrice: number;
     amount: string;
+    isMobileDevice?: boolean;
     currentMarketFilters: FilterPrice[];
     handleAmountChange: (amount: string, type: FormType) => void;
     handleChangeAmountByButton: (value: number, orderType: string | React.ReactNode, price: string, type: string) => void;
@@ -138,6 +140,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             currentMarketBidPrecision,
             totalPrice,
             amount,
+            isMobileDevice,
             translate,
         } = this.props;
         const {
@@ -159,7 +162,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         const availableCurrency = type === 'buy' ? from : to;
 
         const priceErrorClass = classnames('error-message', {
-            'error-message--visible': priceFocused && !isPriceValid.valid,
+            'error-message--visible': (priceFocused || isMobileDevice) && !isPriceValid.valid,
         });
 
         const priceText = this.props.translate('page.body.trade.header.newOrder.content.price');
@@ -176,16 +179,28 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 </div>
                 {orderType === 'Limit' ? (
                     <div className="cr-order-item">
-                        <OrderInput
-                            currency={from}
-                            label={priceText}
-                            placeholder={priceText}
-                            value={price || ''}
-                            isFocused={priceFocused}
-                            isWrong={!isPriceValid.valid}
-                            handleChangeValue={this.handlePriceChange}
-                            handleFocusInput={this.handleFieldFocus}
-                        />
+                        {isMobileDevice ? (
+                            <OrderInputMobile
+                                label={priceText}
+                                placeholder={translate('page.mobile.order.price.placeholder', { currency: from ? from.toUpperCase() : '' })}
+                                value={price || ''}
+                                isFocused={priceFocused}
+                                precision={currentMarketBidPrecision}
+                                handleChangeValue={this.handlePriceChange}
+                                handleFocusInput={this.handleFieldFocus}
+                            />
+                        ) : (
+                            <OrderInput
+                                currency={from}
+                                label={priceText}
+                                placeholder={priceText}
+                                value={price || ''}
+                                isFocused={priceFocused}
+                                isWrong={!isPriceValid.valid}
+                                handleChangeValue={this.handlePriceChange}
+                                handleFocusInput={this.handleFieldFocus}
+                            />
+                        )}
                         <div className={priceErrorClass}>
                             {translate('page.body.trade.header.newOrder.content.filterPrice', { priceStep: isPriceValid.priceStep })}
                         </div>
@@ -208,15 +223,27 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                     </div>
                 )}
                 <div className="cr-order-item">
-                    <OrderInput
-                        currency={to}
-                        label={amountText}
-                        placeholder={amountText}
-                        value={amount || ''}
-                        isFocused={amountFocused}
-                        handleChangeValue={this.handleAmountChange}
-                        handleFocusInput={this.handleFieldFocus}
-                    />
+                    {isMobileDevice ? (
+                        <OrderInputMobile
+                            label={amountText}
+                            placeholder={translate('page.mobile.order.amount.placeholder', { currency: to ? to.toUpperCase() : '' })}
+                            value={amount || ''}
+                            isFocused={amountFocused}
+                            precision={currentMarketAskPrecision}
+                            handleChangeValue={this.handleAmountChange}
+                            handleFocusInput={this.handleFieldFocus}
+                        />
+                    ) : (
+                        <OrderInput
+                            currency={to}
+                            label={amountText}
+                            placeholder={amountText}
+                            value={amount || ''}
+                            isFocused={amountFocused}
+                            handleChangeValue={this.handleAmountChange}
+                            handleFocusInput={this.handleFieldFocus}
+                        />
+                    )}
                 </div>
 
                 <div className="cr-order-item">
