@@ -1,3 +1,4 @@
+import { isFinexEnabled } from '../../api';
 import {
     MarketFilter,
     MarketFilterCustomStep,
@@ -27,16 +28,20 @@ export const buildFilterPrice = (filter: MarketFilter) : FilterPrice => {
 };
 
 export const validatePriceStep = (price: string | number = 0, filters: FilterPrice[]): PriceValidation => {
-    return filters.reduce((result, filter) => {
-        const currentValidation = filter.validatePriceStep(+price);
+    if (isFinexEnabled() && filters.length) {
+        return filters.reduce((result, filter) => {
+            const currentValidation = filter.validatePriceStep(+price);
 
-        if (!currentValidation.valid) {
-            result.valid = false;
-            if (currentValidation.priceStep > result.priceStep) {
-                result.priceStep = currentValidation.priceStep;
+            if (!currentValidation.valid) {
+                result.valid = false;
+                if (currentValidation.priceStep > result.priceStep) {
+                    result.priceStep = currentValidation.priceStep;
+                }
             }
-        }
 
-        return result;
-    }, { valid: true, priceStep: 0 } as PriceValidation);
+            return result;
+        }, { valid: true, priceStep: 0 } as PriceValidation);
+    }
+
+    return { valid: true, priceStep: 0 } as PriceValidation;
 };
