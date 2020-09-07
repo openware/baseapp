@@ -161,7 +161,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         const onSelectCountry = value => this.selectCountry(dataCountries[value]);
 
         return (
-          <form className="pg-confirm__content-identity" autoComplete="on">xf
+          <form className="pg-confirm__content-identity" autoComplete="on">
             <div className="pg-confirm__content-identity__forms">
                 <div className="pg-confirm__content-identity__forms__row input-group">
                     <fieldset className={firstNameGroupClass}>
