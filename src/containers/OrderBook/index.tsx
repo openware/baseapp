@@ -41,7 +41,7 @@ export const OrderBook = props => {
     const marketTickers = useSelector(selectMarketTickers);
     const isMobileDevice = useSelector(selectMobileDeviceState);
 
-    const isLarge = props.forceLarge || (width > breakpoint);
+    const isLarge = React.useMemo(() => (props.forceLarge || (width > breakpoint)), [props.forceLarge, width]);
 
     const cn = classNames('pg-combined-order-book ', {
         'cr-combined-order-book--data-loading': orderBookLoading,
@@ -220,13 +220,13 @@ export const OrderBook = props => {
         return tickers[cMarket.id] || defaultTicker;
     };
 
+    // eslint-disable-next-line
     React.useEffect(() => {
         const { current } = orderRef;
-
-        if (current && current.clientWidth) {
+        if (current && (current.clientWidth !== width)) {
             setWidth(current.clientWidth);
         }
-    }, [width]);
+    });
 
     return (
         <div className={cn} ref={orderRef}>
