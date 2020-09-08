@@ -1,9 +1,3 @@
-export interface MenuItem {
-    key: string;                                                    /* a route to a page */
-    value: string;                                                  /* menu item's name */
-    target?: string;                                                /* Backend database model's name */
-    isLink: boolean;                                                /* if true means it opens the page by click, */
-}                                                                   /* false - opens nested sidebar */
 
 export interface HeaderActions {
     pagesWithFilter?: string[];                                     /* routes which requires filter icon */
@@ -19,7 +13,7 @@ export interface BaseappPluginInterface {
     getReduxSaga: () => any;                                        /* root plugin's redux saga */
     getRoutes: (userLoading, isCurrentSession) => JSX.Element[];    /* plugin's routes */
     getHeaderActions: () => HeaderActions;                          /* plugin's header actions like Filter, Refresh at the NavBar */
-    getMenu: () => MenuItem[];                                      /* plugin's menu items */
+    getMenu: (isLoggedIn: boolean, isLight?: boolean) => string[];       /* plugin's menu items */
     getMenuIcons: (name: string) => JSX.Element;                    /* plugin's menu icons */
     hasCustomApi: () => boolean;                                    /* plugin's custom API */
 }
@@ -31,7 +25,7 @@ export class BaseappPlugin implements BaseappPluginInterface {
     public getReduxSaga: () => any;
     public getRoutes: (userLoading, isCurrentSession) => JSX.Element[];
     public getHeaderActions: () => HeaderActions;
-    public getMenu: () => MenuItem[];
+    public getMenu: (isLoggedIn: boolean, isLight?: boolean) => string[];
     public getMenuIcons: (name: string) => JSX.Element;
     public hasCustomApi: () => boolean;
 
@@ -40,7 +34,7 @@ export class BaseappPlugin implements BaseappPluginInterface {
         this.getReduxSaga = () => reduxSaga;
         this.getRoutes = routes;
         this.getHeaderActions = () => headerActions;
-        this.getMenu = () => menu;
+        this.getMenu = menu;
         this.getMenuIcons = icons;
         this.hasCustomApi = () => api;
     }

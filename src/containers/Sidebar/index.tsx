@@ -26,6 +26,7 @@ import {
     toggleSidebar,
     User,
 } from '../../modules';
+import { Plugins } from '../../Plugins';
 
 interface State {
     isOpenLanguage: boolean;
@@ -79,7 +80,7 @@ class SidebarContainer extends React.Component<Props, State> {
             <div className={sidebarClassName}>
                 {this.renderProfileLink()}
                 <div className="pg-sidebar-wrapper-nav">
-                    {pgRoutes(isLoggedIn).map(this.renderNavItems(address))}
+                    {pgRoutes(isLoggedIn, Plugins).map(this.renderNavItems(address))}
                 </div>
                 <div className="pg-sidebar-wrapper-lng">
                     <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-menu-language-container">

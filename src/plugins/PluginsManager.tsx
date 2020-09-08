@@ -3,14 +3,12 @@ import { combineReducers } from 'redux';
 import { all, call, CallEffect } from 'redux-saga/effects';
 import { pluginsList } from '../api/config';
 import { pluginsInstances } from './PluginsTemplate';
-// import { MenuItem } from './TowerPlugin';
 
 const pluginsNames = pluginsList().map(item => item.name);
 
 export class PluginsManager {
     public pluginsReducer;
     public rootPluginsSaga;
-    // public menuItems: MenuItem[] = [];
 
     constructor() {
         const initialReducer = (state = []) => state;
@@ -22,9 +20,7 @@ export class PluginsManager {
                 if (pluginsNames.includes(key)) {
                     reducerObject = { ...reducerObject, [key]: pluginsInstances[key].getReduxReducer() };
                     sagaArray = [ ...sagaArray, call(pluginsInstances[key].getReduxSaga())];
-                    // this.menuItems = [ ...this.menuItems, ...pluginsInstances[key].getMenu() ];
                 }
-                window.console.log(reducerObject);
             }
 
             this.pluginsReducer = combineReducers(Object.keys(reducerObject).length ? { ...reducerObject } : { initialReducer });
@@ -46,9 +42,16 @@ export class PluginsManager {
     //     return Object.keys(pluginsInstances).map(key => pluginsInstances[key].getRoutes(userLoading, isCurrentSession));
     // };
 
-    // public getMenu = () => {
-    //     return [ ...this.menuItems ];
-    // };
+    public getMenu = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
+        let menuItems: string[][] = [];
+        if (pluginsInstances) {
+            for (const key of Object.keys(pluginsInstances)) {
+                menuItems = [ ...menuItems, ...pluginsInstances[key].getMenu(isLoggedIn, isLight) ];
+            }
+        }
+
+        return menuItems;
+    };
 
     // public getMenuIcons = (name: string) => {
     //     return <>{Object.keys(pluginsInstances).map(key => pluginsInstances[key].getMenuIcons ? pluginsInstances[key].getMenuIcons(name) : null)}</>;

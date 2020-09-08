@@ -8,6 +8,7 @@
 //import { Config } from '../api/config';
 // import { ComponentsFactoryMap } from '../components';
 // import { ContainersFactoryMap } from '../containers';
+import { IeoPlugin, IeoPluginState } from './tower-plugin-ieo';
 
 // export const FactoryMap = {
 //   ...ComponentsFactoryMap,
@@ -16,7 +17,7 @@
 
 // tslint:disable-next-line: no-empty-interface
 export interface PluginsState {
-
+  ieo: IeoPluginState;
 }
 
 // tslint:disable-next-line: no-empty-interface
@@ -25,5 +26,5 @@ export interface PluginsState {
 // }
 
 export const pluginsInstances = {
-
+  ieo: IeoPlugin,
 };
