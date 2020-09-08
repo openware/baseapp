@@ -1,15 +1,13 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
-import { injectIntl } from 'react-intl';
-import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { useIntl} from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { CombinedOrderBook, Decimal } from '../../components';
 import { colors } from '../../constants';
 import { accumulateVolume, calcMaxVolume } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Market,
-    RootState,
     selectCurrentColorTheme,
     selectCurrentMarket,
     selectCurrentPrice,
@@ -18,114 +16,40 @@ import {
     selectDepthLoading,
     selectMarketTickers,
     selectMobileDeviceState,
-    selectOpenOrdersList,
     setCurrentPrice,
     Ticker,
 } from '../../modules';
-import { OrderCommon } from '../../modules/types';
+import { OrderBookTableRow } from './OrderBookTableRow';
 
-interface ReduxProps {
-    asks: string[][];
-    bids: string[][];
-    colorTheme: string;
-    currentMarket?: Market;
-    currentPrice?: number;
-    openOrdersList: OrderCommon[];
-    orderBookLoading: boolean;
-    isMobileDevice: boolean;
-}
-
-interface DispatchProps {
-    setCurrentPrice: typeof setCurrentPrice;
-}
-
-interface State {
-    width: number;
-}
-
-interface OwnProps {
-    marketTickers: {
-        [key: string]: Ticker;
-    };
-    forceLarge?: boolean;
-}
-
-type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 // render big/small breakpoint
 const breakpoint = 448;
 
-class OrderBookContainer extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
 
-        this.state = {
-            width: 0,
-        };
+export const OrderBook = props => {
+    const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
+    const [width, setWidth] = React.useState(0);
+    const orderRef = React.useRef<HTMLDivElement>(null);
 
-        this.orderRef = React.createRef();
-    }
+    const bids = useSelector(selectDepthBids);
+    const asks = useSelector(selectDepthAsks);
+    const colorTheme = useSelector(selectCurrentColorTheme);
+    const orderBookLoading = useSelector(selectDepthLoading);
+    const currentMarket = useSelector(selectCurrentMarket);
+    const currentPrice = useSelector(selectCurrentPrice);
+    const marketTickers = useSelector(selectMarketTickers);
+    const isMobileDevice = useSelector(selectMobileDeviceState);
 
-    private orderRef;
+    const isLarge = props.forceLarge || (width > breakpoint);
 
-    public componentDidUpdate() {
-        if (this.orderRef.current && this.state.width !== this.orderRef.current.clientWidth) {
-            this.setState({
-                width: this.orderRef.current.clientWidth,
-            });
-        }
-    }
+    const cn = classNames('pg-combined-order-book ', {
+        'cr-combined-order-book--data-loading': orderBookLoading,
+        'pg-combined-order-book--no-data-first': (!asks.length && !isLarge) || (!bids.length && isLarge),
+        'pg-combined-order-book--no-data-second': (!bids.length && !isLarge) || (!asks.length && isLarge),
+    });
 
-    public shouldComponentUpdate(nextProps: Props) {
-        const { asks, bids, currentMarket, openOrdersList, marketTickers, orderBookLoading } = this.props;
-
-        const lastPrice = currentMarket && this.getTickerValue(currentMarket, marketTickers).last;
-        const nextLastPrice = nextProps.currentMarket && this.getTickerValue(nextProps.currentMarket, nextProps.marketTickers).last;
-
-        return (
-            JSON.stringify(nextProps.asks) !== JSON.stringify(asks) ||
-            JSON.stringify(nextProps.bids) !== JSON.stringify(bids) ||
-            (nextProps.currentMarket && nextProps.currentMarket.id) !== (currentMarket && currentMarket.id) ||
-            nextLastPrice !== lastPrice ||
-            nextProps.openOrdersList !== openOrdersList ||
-            nextProps.orderBookLoading !== orderBookLoading
-        );
-    }
-
-    public render() {
-        const {
-            asks,
-            bids,
-            forceLarge,
-            orderBookLoading,
-        } = this.props;
-
-        const isLarge = forceLarge || (this.state.width > breakpoint);
-
-        const cn = classNames('pg-combined-order-book ', {
-            'cr-combined-order-book--data-loading': orderBookLoading,
-            'pg-combined-order-book--no-data-first': (!asks.length && !isLarge) || (!bids.length && isLarge),
-            'pg-combined-order-book--no-data-second': (!bids.length && !isLarge) || (!asks.length && isLarge),
-        });
-
-        return (
-            <div className={cn} ref={this.orderRef}>
-                <div className={'cr-table-header__content'}>
-                    {this.props.intl.formatMessage({id: 'page.body.trade.orderbook'})}
-                </div>
-                {orderBookLoading ? <div className="pg-combined-order-book-loader"><Spinner animation="border" variant="primary" /></div> : this.orderBook(bids, asks)}
-            </div>
-        );
-    }
-
-    private orderBook = (bids, asks) => {
-        const {
-            forceLarge,
-            colorTheme,
-            currentMarket,
-        } = this.props;
-
-        const isLarge = forceLarge || this.state.width > breakpoint;
+    const orderBook = () => {
         const asksData = isLarge ? asks : asks.slice(0).reverse();
 
         return (
@@ -135,70 +59,62 @@ class OrderBookContainer extends React.Component<Props, State> {
                 orderBookEntryBids={accumulateVolume(bids)}
                 rowBackgroundColorAsks={colors[colorTheme].orderBook.asks}
                 rowBackgroundColorBids={colors[colorTheme].orderBook.bids}
-                dataAsks={this.renderOrderBook(asksData, 'asks', this.props.intl.formatMessage({id: 'page.noDataToShow'}), currentMarket)}
-                dataBids={this.renderOrderBook(bids, 'bids', this.props.intl.formatMessage({id: 'page.noDataToShow'}), currentMarket)}
-                headers={this.renderHeaders()}
-                lastPrice={this.lastPrice()}
-                onSelectAsks={this.handleOnSelectAsks}
-                onSelectBids={this.handleOnSelectBids}
+                dataAsks={renderOrderBook(asksData, 'asks', formatMessage({id: 'page.noDataToShow'}), currentMarket) as any}
+                dataBids={renderOrderBook(bids, 'bids', formatMessage({id: 'page.noDataToShow'}), currentMarket) as any}
+                headers={renderHeaders()}
+                lastPrice={lastPrice()}
+                onSelectAsks={handleOnSelectAsks}
+                onSelectBids={handleOnSelectBids}
                 isLarge={isLarge}
             />
         );
     };
 
-    private lastPrice = () => {
-        const { currentMarket, isMobileDevice, marketTickers } = this.props;
-        const currentTicker = currentMarket && this.getTickerValue(currentMarket, marketTickers);
+    const lastPrice = () => {
+        const currentTicker = currentMarket && getTickerValue(currentMarket, marketTickers);
 
         if (currentMarket && currentTicker) {
-            const cn = classNames('', {
+            const classnames = classNames('', {
                 'cr-combined-order-book__market-negative': currentTicker.price_change_percent.includes('-'),
                 'cr-combined-order-book__market-positive': currentTicker.price_change_percent.includes('+'),
             });
 
             return (
                 <React.Fragment>
-                    <span className={cn}>
+                    <span className={classnames}>
                         {Decimal.format(+(currentTicker.last), currentMarket.price_precision)}&nbsp;
                         {isMobileDevice ? null : currentMarket.quote_unit.toUpperCase()}
                     </span>
-                    <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
+                    <span>{formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
                 </React.Fragment>
             );
         } else {
-          return <React.Fragment><span className={'cr-combined-order-book__market-negative'}>0</span><span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span></React.Fragment>;
+            return <React.Fragment><span className={'cr-combined-order-book__market-negative'}>0</span><span>{formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span></React.Fragment>;
         }
     };
 
-    private renderHeaders = () => {
-        const {
-            currentMarket,
-            intl,
-            isMobileDevice,
-        } = this.props;
+    const renderHeaders = () => {
         const formattedBaseUnit = (currentMarket && currentMarket.base_unit) ? `(${currentMarket.base_unit.toUpperCase()})` : '';
         const formattedQuoteUnit = (currentMarket && currentMarket.quote_unit) ? `(${currentMarket.quote_unit.toUpperCase()})` : '';
 
         if (isMobileDevice) {
             return [
-                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
-                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
+                `${formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
+                `${formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
             ];
         }
 
         return [
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})}\n${formattedBaseUnit}`,
+            `${formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
+            `${formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
+            `${formatMessage({id: 'page.body.trade.orderbook.header.volume'})}\n${formattedBaseUnit}`,
         ];
     };
 
-    private renderOrderBook = (array: string[][], side: string, message: string, currentMarket?: Market) => {
-        const { isMobileDevice, forceLarge } = this.props;
+    const renderOrderBook = (array: string[][], side: string, message: string, currentM?: Market) => {
         let total = accumulateVolume(array);
-        const isLarge = forceLarge || this.state.width > breakpoint;
-        const priceFixed = currentMarket ? currentMarket.price_precision : 0;
-        const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
+        const priceFixed = currentM ? currentM.price_precision : 0;
+        const amountFixed = currentM ? currentM.amount_precision : 0;
 
         return (array.length > 0) ? array.map((item, i) => {
             const [price, volume] = item;
@@ -208,89 +124,116 @@ class OrderBookContainer extends React.Component<Props, State> {
 
                     if (isMobileDevice) {
                         return [
-                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal></span>,
-                            <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                            <OrderBookTableRow
+                                type="price"
+                                prevValue={array[i + 1] ? array[i + 1][0] : 0}
+                                price={price}
+                                fixed={priceFixed}
+                            />,
+                              <OrderBookTableRow
+                                total={total[i]}
+                                fixed={amountFixed}
+                              />,
                         ];
                     }
 
                     return [
-                        <span key={i}><Decimal fixed={priceFixed} prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal></span>,
-                        <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
-                        <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                      <OrderBookTableRow
+                        type="price"
+                        prevValue={array[i + 1] ? array[i + 1][0] : 0}
+                        price={price}
+                        fixed={priceFixed}
+                      />,
+                      <OrderBookTableRow total={volume} fixed={amountFixed}/>,
+                      <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
                     ];
                 default:
                     if (isLarge) {
                         if (isMobileDevice) {
                             return [
-                                <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
-                                <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
+                                <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
+                                <OrderBookTableRow
+                                  type="price"
+                                  prevValue={array[i - 1] ? array[i - 1][0] : 0}
+                                  price={price}
+                                  fixed={priceFixed}
+                                />,
                             ];
                         }
 
                         return [
-                            <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
-                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
+                            <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
+                            <OrderBookTableRow total={volume} fixed={amountFixed}/>,
+                            <OrderBookTableRow
+                                type="price"
+                                prevValue={array[i - 1] ? array[i - 1][0] : 0}
+                                price={price}
+                                fixed={priceFixed}
+                            />,
                         ];
                     } else {
                         if (isMobileDevice) {
                             return [
-                                <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
-                                <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                                <OrderBookTableRow
+                                    type="price"
+                                    prevValue={array[i - 1] ? array[i - 1][0] : 0}
+                                    price={price}
+                                    fixed={priceFixed}
+                                />,
+                                <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
                             ];
                         }
 
                         return [
-                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
-                            <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                            <OrderBookTableRow
+                                type="price"
+                                prevValue={array[i - 1] ? array[i - 1][0] : 0}
+                                price={price}
+                                fixed={priceFixed}
+                            />,
+                            <OrderBookTableRow total={volume} fixed={amountFixed}/>,
+                            <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
                         ];
                     }
             }
         }) : [[[''], message, ['']]];
     };
 
-    private handleOnSelectBids = (index: string) => {
-        const { currentPrice, bids } = this.props;
+    const handleOnSelectBids = (index: string) => {
         const priceToSet = bids[Number(index)] && Number(bids[Number(index)][0]);
         if (currentPrice !== priceToSet) {
-            this.props.setCurrentPrice(priceToSet);
+            dispatch(setCurrentPrice(priceToSet));
         }
     };
 
-    private handleOnSelectAsks = (index: string) => {
-        const { asks, currentPrice, forceLarge } = this.props;
-        const isLarge = forceLarge || this.state.width >= breakpoint;
+    const handleOnSelectAsks = (index: string) => {
         const asksData = isLarge ? asks : asks.slice(0).reverse();
         const priceToSet = asksData[Number(index)] && Number(asksData[Number(index)][0]);
         if (currentPrice !== priceToSet) {
-            this.props.setCurrentPrice(priceToSet);
+            dispatch(setCurrentPrice(priceToSet));
         }
     };
 
-    private getTickerValue = (currentMarket: Market, tickers: { [key: string]: Ticker }) => {
+    const getTickerValue = (cMarket: Market, tickers: { [key: string]: Ticker }) => {
         const defaultTicker = { amount: 0, low: 0, last: 0, high: 0, volume: 0, open: 0, price_change_percent: '+0.00%' };
 
-        return tickers[currentMarket.id] || defaultTicker;
+        return tickers[cMarket.id] || defaultTicker;
     };
-}
 
-const mapStateToProps = (state: RootState) => ({
-    bids: selectDepthBids(state),
-    asks: selectDepthAsks(state),
-    colorTheme: selectCurrentColorTheme(state),
-    orderBookLoading: selectDepthLoading(state),
-    currentMarket: selectCurrentMarket(state),
-    currentPrice: selectCurrentPrice(state),
-    marketTickers: selectMarketTickers(state),
-    openOrdersList: selectOpenOrdersList(state),
-    isMobileDevice: selectMobileDeviceState(state),
-});
+    React.useEffect(() => {
+        const { current } = orderRef;
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
-    });
+        if (current && current.clientWidth) {
+            setWidth(current.clientWidth);
+        }
+    }, [width]);
 
-export const OrderBook = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer)) as any;
-export type OrderBookProps = ReduxProps;
+    return (
+        <div className={cn} ref={orderRef}>
+            <div className={'cr-table-header__content'}>
+                {formatMessage({ id: 'page.body.trade.orderbook' })}
+            </div>
+            {orderBookLoading ? <div className="pg-combined-order-book-loader"><Spinner animation="border" variant="primary" /></div> : orderBook()}
+        </div>
+    );
+};
