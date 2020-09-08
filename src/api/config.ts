@@ -36,6 +36,7 @@ export const defaultConfig: Config = {
         'document',
         'address',
     ],
+    plugins: [],
 };
 
 export const Cryptobase = {
@@ -75,3 +76,4 @@ export const passwordEntropyStep = ():number => Cryptobase.config.passwordEntrop
 export const showLanding = (): boolean => Cryptobase.config.showLanding;
 export const sentryEnabled = () => Cryptobase.config.sentryEnabled || defaultConfig.sentryEnabled;
 export const kycSteps = (): string[] => Cryptobase.config.kycSteps || DEFAULT_KYC_STEPS;
+export const pluginsList = () => Cryptobase.config.plugins || defaultConfig.plugins;

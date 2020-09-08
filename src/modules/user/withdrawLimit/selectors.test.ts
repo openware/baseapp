@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import { PluginsManager } from '../../../plugins/PluginsManager';
 import { rootReducer } from '../../index';
 import {
     selectWithdrawLimit,
@@ -7,8 +8,10 @@ import {
     selectWithdrawLimitSuccess,
 } from './selectors';
 
+const Plugins = new PluginsManager();
+
 describe('WithdrawLimit selectors', () => {
-    const state = createStore(rootReducer).getState();
+    const state = createStore(rootReducer(Plugins.getReduxReducer())).getState();
 
     it('should select list', () => {
         expect(selectWithdrawLimit(state)).toEqual(state.user.withdrawLimit.data);

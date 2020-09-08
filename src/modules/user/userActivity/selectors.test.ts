@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import { PluginsManager } from '../../../plugins/PluginsManager';
 import { rootReducer } from '../../index';
 import {
     selectTotalNumber,
@@ -11,8 +12,10 @@ import {
     selectUserActivityPageCount,
 } from './selectors';
 
+const Plugins = new PluginsManager();
+
 describe('User activity selectors', () => {
-    const state = createStore(rootReducer).getState();
+    const state = createStore(rootReducer(Plugins.getReduxReducer())).getState();
     const limit = 25;
 
     it('should select User activity', () => {
