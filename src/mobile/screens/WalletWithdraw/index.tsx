@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { useWalletsFetch } from '../../../hooks';
 import { selectWallets } from '../../../modules/user/wallets';
-import { Subheader, WalletHeader, WalletWithdrawBody } from '../../components';
+import { Subheader, WalletBanner, WalletHeader, WalletWithdrawBody } from '../../components';
 
 
 const defaultWallet = { name: '', currency: '', balance: '', type: '', address: '', fee: '' };
@@ -26,6 +26,7 @@ const WalletWithdraw: React.FC = () => {
                 onGoBack={() => history.push(`/wallets/${currency}/history`)}
             />
             <WalletHeader currency={wallet.currency} name={wallet.name}/>
+            <WalletBanner wallet={wallet} />
             <WalletWithdrawBody wallet={wallet}/>
         </div>
     );

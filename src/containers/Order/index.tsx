@@ -15,6 +15,7 @@ import {
     selectCurrentPrice,
     selectDepthAsks,
     selectDepthBids,
+    selectMobileDeviceState,
     selectUserLoggedIn,
     selectWallets,
     setCurrentPrice,
@@ -45,6 +46,7 @@ interface ReduxProps {
     asks: string[][];
     wallets: WalletItemProps[];
     currentPrice: number | undefined;
+    isMobileDevice: boolean;
 }
 
 interface StoreProps {
@@ -119,6 +121,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             currentMarketFilters,
             defaultTabIndex,
             executeLoading,
+            isMobileDevice,
             marketTickers,
             wallets,
         } = this.props;
@@ -162,6 +165,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     listenInputPrice={this.listenInputPrice}
                     defaultTabIndex={defaultTabIndex}
                     currentMarketFilters={currentMarketFilters}
+                    isMobileDevice={isMobileDevice}
                     translate={this.translate}
                 />
                 {executeLoading && <div className="pg-order--loading"><Spinner animation="border" variant="primary" /></div>}
@@ -294,6 +298,7 @@ const mapStateToProps = (state: RootState) => ({
     wallets: selectWallets(state),
     currentPrice: selectCurrentPrice(state),
     userLoggedIn: selectUserLoggedIn(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps = dispatch => ({
