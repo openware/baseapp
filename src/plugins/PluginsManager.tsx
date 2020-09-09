@@ -1,4 +1,4 @@
-// import * as React from 'react';
+import * as React from 'react';
 import { combineReducers } from 'redux';
 import { all, call, CallEffect } from 'redux-saga/effects';
 import { pluginsList } from '../api/config';
@@ -53,13 +53,21 @@ export class PluginsManager {
         return menuItems;
     };
 
-    // public getMenuIcons = (name: string) => {
-    //     return <>{Object.keys(pluginsInstances).map(key => pluginsInstances[key].getMenuIcons ? pluginsInstances[key].getMenuIcons(name) : null)}</>;
-    // };
+    public getMenuIcons = (name: string, className?: string) => {
+        return <>{Object.keys(pluginsInstances).map(key => pluginsInstances[key].getMenuIcons ? pluginsInstances[key].getMenuIcons(name, className) : null)}</>;
+    };
 
-    // public getHeaderActions = () => {
-    //     return Object.keys(pluginsInstances).map(key => pluginsInstances[key].getHeaderActions ? pluginsInstances[key].getHeaderActions() : null);
-    // };
+    public getTranslations = (lang: string) => {
+        let translations = {};
+
+        for (const key of Object.keys(pluginsInstances)) {
+            if (pluginsNames.includes(key)) {
+                translations = { ...translations, ...pluginsInstances[key].getTranslations(lang)};
+            }
+        }
+
+        return translations;
+    };
 
     // public getAPIUrl = () => {
     //     let PluginsAPI = {};
