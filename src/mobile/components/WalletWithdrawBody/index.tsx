@@ -1,7 +1,9 @@
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { Blur } from '../../../components/Blur';
 import { ModalWithdrawConfirmation, ModalWithdrawSubmit, Withdraw } from '../../../containers';
 import { useBeneficiariesFetch, useCurrenciesFetch, useWalletsAddressFetch } from '../../../hooks';
@@ -32,6 +34,7 @@ const WalletWithdrawBodyComponent = props => {
     });
 
     const intl = useIntl();
+    const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(selectUserInfo);
     const currencies = useSelector(selectCurrencies);
@@ -48,6 +51,7 @@ const WalletWithdrawBodyComponent = props => {
     const isTwoFactorAuthRequired = (level: number, is2faEnabled: boolean) => {
         return level > 1 || (level === 1 && is2faEnabled);
     };
+
     const getConfirmationAddress = () => {
         let confirmationAddress = '';
 
@@ -61,6 +65,7 @@ const WalletWithdrawBodyComponent = props => {
 
         return confirmationAddress;
     };
+
     const toggleConfirmModal = (amount?: string, total?: string, beneficiary?: Beneficiary, otpCode?: string) => {
         setWithdrawData((state: any) => ({
             amount: amount || '',
@@ -71,10 +76,12 @@ const WalletWithdrawBodyComponent = props => {
             withdrawDone: false,
         }));
     };
+
     const toggleSubmitModal = () => {
         setWithdrawSubmitModal(state => !state);
         setWithdrawData(state => ({ ...state, withdrawDone: true }));
     };
+
     const handleWithdraw = () => {
         const { otpCode, amount, beneficiary } = withdrawData;
         if (!props.wallet) {
@@ -91,19 +98,41 @@ const WalletWithdrawBodyComponent = props => {
         toggleConfirmModal();
     };
 
+    const renderOtpDisabled = () => {
+        return (
+            <div className="cr-mobile-wallet-withdraw__otp-disabled">
+                <span className="cr-mobile-wallet-withdraw__otp-disabled__text">
+                    {intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.enable2fa' })}
+                </span>
+                <Button
+                    block={true}
+                    onClick={() => history.push('/profile/2fa')}
+                    size="lg"
+                    variant="primary"
+                >
+                    {intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.enable2faButton'})}
+                </Button>
+            </div>
+        );
+    };
+
+    useWalletsAddressFetch(currency);
+    useBeneficiariesFetch();
+    useCurrenciesFetch();
+
     React.useEffect(() => {
         if (withdrawSuccess) {
             toggleSubmitModal();
         }
     }, [withdrawSuccess]);
 
-    useWalletsAddressFetch(currency);
-    useBeneficiariesFetch();
-    useCurrenciesFetch();
-
     const className = classnames('cr-mobile-wallet-withdraw-body', {
         'cr-mobile-wallet-withdraw-body--disabled': currencyItem && !currencyItem.withdrawal_enabled,
     });
+
+    if (!user.otp) {
+        return renderOtpDisabled();
+    }
 
     return (
         <div className={className}>

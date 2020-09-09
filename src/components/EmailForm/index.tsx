@@ -99,7 +99,7 @@ const EmailForm = React.memo((props: EmailFormProps) => {
                             handleFocusInput={props.handleFieldFocus}
                             classNameLabel="cr-email-form__label"
                             classNameInput="cr-email-form__input"
-                            autoFocus={true}
+                            autoFocus={!isMobileDevice}
                         />
                         {emailError && <div className="cr-email-form__error">{emailError}</div>}
                     </div>

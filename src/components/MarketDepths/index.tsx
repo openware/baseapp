@@ -93,7 +93,7 @@ export interface MarketDepthsProps {
     gradientHide?: boolean;
     /**
      * Current color theme mode
-     *  @default 'basic'
+     *  @default 'dark'
      */
     colorTheme?: string;
 }
@@ -138,14 +138,14 @@ const getColorSettings = (colorTheme?: string) => {
     }
 
     return {
-        strokeAreaAskColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.strokeAreaAsk)),
-        strokeAreaBidColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.strokeAreaBid)),
-        strokeAxisColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.strokeAxis)),
-        strokeGridColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.strokeGrid)),
-        fillAreaAskColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.fillAreaAsk)),
-        fillAreaBidColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.fillAreaBid)),
-        gridBackgroundStartColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.gridBackgroundStart)),
-        gridBackgroundEndColor: convertRgbToHex(getStylesValueByKey(colors.basic.depth.gridBackgroundEnd)),
+        strokeAreaAskColor: convertRgbToHex(getStylesValueByKey(colors.dark.depth.strokeAreaAsk)),
+        strokeAreaBidColor: convertRgbToHex(getStylesValueByKey(colors.dark.depth.strokeAreaBid)),
+        strokeAxisColor: convertRgbToHex(getStylesValueByKey(colors.dark.depth.strokeAxis)),
+        strokeGridColor: convertRgbToHex(getStylesValueByKey(colors.dark.depth.strokeGrid)),
+        fillAreaAskColor: convertRgbToHex(getStylesValueByKey(colors.dark.depth.fillAreaAsk)),
+        fillAreaBidColor: convertRgbToHex(getStylesValueByKey(colors.dark.depth.fillAreaBid)),
+        gridBackgroundStartColor: convertRgbToHex(getStylesValueByKey(colors.dark.depth.gridBackgroundStart)),
+        gridBackgroundEndColor: convertRgbToHex(getStylesValueByKey(colors.dark.depth.gridBackgroundEnd)),
     };
 };
 

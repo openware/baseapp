@@ -2,15 +2,37 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Pagination } from '../../../components';
 import { useUserActivityFetch } from '../../../hooks';
-import { selectUserActivity } from '../../../modules';
+import {
+    RootState,
+    selectUserActivity,
+    selectUserActivityCurrentPage,
+    selectUserActivityFirstElemIndex,
+    selectUserActivityLastElemIndex,
+    selectUserActivityNextPageExists,
+} from '../../../modules';
 import { Subheader, UserActivityItem } from '../../components';
 
+const DEFAULT_LIMIT = 10;
+
 const ProfileAccountActivityMobileScreenComponent: React.FC = () => {
+    const [currentPage, setCurrentPage] = React.useState(0);
     const intl = useIntl();
     const history = useHistory();
+    const page = useSelector(selectUserActivityCurrentPage);
     const userActivity = useSelector(selectUserActivity);
-    useUserActivityFetch({});
+    const firstElemIndex = useSelector((state: RootState) => selectUserActivityFirstElemIndex(state, DEFAULT_LIMIT));
+    const lastElemIndex = useSelector((state: RootState) => selectUserActivityLastElemIndex(state, DEFAULT_LIMIT));
+    const nextPageExists = useSelector((state: RootState) => selectUserActivityNextPageExists(state, DEFAULT_LIMIT));
+    useUserActivityFetch({page: currentPage, limit: DEFAULT_LIMIT});
+
+    const onClickPrevPage = () => {
+        setCurrentPage(Number(page) - 1);
+    };
+    const onClickNextPage = () => {
+        setCurrentPage(Number(page) + 1);
+    };
 
     return (
         <React.Fragment>
@@ -26,7 +48,16 @@ const ProfileAccountActivityMobileScreenComponent: React.FC = () => {
                     ) : (
                         <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
                     )}
+                    <Pagination
+                        firstElemIndex={firstElemIndex}
+                        lastElemIndex={lastElemIndex}
+                        page={currentPage}
+                        nextPageExists={nextPageExists}
+                        onClickPrevPage={onClickPrevPage}
+                        onClickNextPage={onClickNextPage}
+                    />
                 </div>
+
             </div>
         </React.Fragment>
     );

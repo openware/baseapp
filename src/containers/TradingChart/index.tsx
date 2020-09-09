@@ -25,6 +25,7 @@ import {
     selectKline,
     selectMarkets,
     selectMarketTickers,
+    selectMobileDeviceState,
 } from '../../modules';
 import {
     rangerSubscribeKlineMarket,
@@ -50,6 +51,7 @@ interface ReduxProps {
     tickers: MarketsState['tickers'];
     kline: KlineState;
     lang: string;
+    isMobileDevice: boolean;
 }
 
 interface DispatchProps {
@@ -123,7 +125,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     }
 
     private setChart = (markets: Market[], currentMarket: Market, colorTheme: string) => {
-        const { kline, lang } = this.props;
+        const { kline, lang, isMobileDevice } = this.props;
         this.datafeed = dataFeedObject(this, markets);
         const currentTimeOffset = new Date().getTimezoneOffset();
         const clockPeriod = currentTimeOffset === stdTimezoneOffset(new Date()) ? 'STD' : 'DST';
@@ -131,6 +133,48 @@ export class TradingChartComponent extends React.PureComponent<Props> {
         if (this.props.kline.period) {
             widgetParams.interval = String(periodStringToMinutes(this.props.kline.period));
         }
+
+        const disabledFeatures = {
+            disabled_features: isMobileDevice ?
+            [
+                'border_around_the_chart',
+                'chart_property_page_background',
+                'chart_property_page_scales',
+                'chart_property_page_style',
+                'chart_property_page_timezone_sessions',
+                'chart_property_page_trading',
+                'compare_symbol',
+                'control_bar',
+                'countdown',
+                'create_volume_indicator_by_default',
+                'display_market_status',
+                'edit_buttons_in_legend',
+                'go_to_date',
+                'header_chart_type',
+                'header_compare',
+                'header_indicators',
+                'header_saveload',
+                'header_screenshot',
+                'header_symbol_search',
+                'header_undo_redo',
+                'header_widget_dom_node',
+                'hide_last_na_study_output',
+                'hide_left_toolbar_by_default',
+                'left_toolbar',
+                'legend_context_menu',
+                'main_series_scale_menu',
+                'pane_context_menu',
+                'show_chart_property_page',
+                'study_dialog_search_control',
+                'symbol_info',
+                'timeframes_toolbar',
+                'timezone_menu',
+                'volume_force_overlay',
+            ] : [
+                'header_symbol_search',
+                'use_localstorage_for_settings',
+            ]
+        };
 
         const defaultWidgetOptions = {
             symbol: currentMarket.id,
@@ -141,7 +185,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             timezone: getTradingChartTimezone(currentTimeOffset, clockPeriod),
         };
 
-        this.tvWidget = new widget({...defaultWidgetOptions, ...widgetOptions(colorTheme)});
+        this.tvWidget = new widget({...defaultWidgetOptions, ...widgetOptions(colorTheme), ...disabledFeatures});
 
         let previousRange = { from: 0, to: 0 };
         if (kline.range.from !== 0 && kline.range.to !== 0) {
@@ -211,6 +255,7 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     tickers: selectMarketTickers(state),
     kline: selectKline(state),
     lang: selectCurrentLanguage(state),
+    isMobileDevice: selectMobileDeviceState(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
