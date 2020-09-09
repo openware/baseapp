@@ -59,7 +59,6 @@ export interface TabPanelProps {
      * Determines whether tab header should looks like dropdown or tab switcher
      */
     isMobileDevice?: boolean;
-
 }
 
 /**
