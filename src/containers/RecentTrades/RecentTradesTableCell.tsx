@@ -3,7 +3,7 @@ import { Decimal } from '../../components/Decimal';
 import { setTradeColor } from '../../helpers';
 
 const TradeTableCellComponent = props => {
-    const { type, takerType, higlightedDate, amountFixed, amount, priceFixed, price, prevValue } = props as any;
+    const { type, takerType, higlightedDate, amountFixed, amount, priceFixed, price, prevValue } = props;
 
     if (type === 'date') {
         return <span style={{ color: setTradeColor(takerType).color }}>{higlightedDate}</span>;
