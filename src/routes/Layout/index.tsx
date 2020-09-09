@@ -57,6 +57,7 @@ import {
     customizationFetch,
     selectCustomizationData,
 } from '../../modules/public/customization';
+import { Plugins } from '../../Plugins';
 import {
     ChangeForgottenPasswordScreen,
     ConfirmScreen,
@@ -326,6 +327,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
+                    {Plugins.getRoutes(userLoading, isLoggedIn)}
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}

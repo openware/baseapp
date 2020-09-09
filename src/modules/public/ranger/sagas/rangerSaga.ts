@@ -1,7 +1,7 @@
 import { Channel, eventChannel, EventChannel } from 'redux-saga';
 import { all, call, cancel, delay, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 import { isFinexEnabled, rangerUrl } from '../../../../api';
-import { store } from '../../../../store';
+import { store } from '../../../../index';
 import { pushHistoryEmit } from '../../../user/history';
 import { selectOpenOrdersList, userOpenOrdersUpdate } from '../../../user/openOrders';
 import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';

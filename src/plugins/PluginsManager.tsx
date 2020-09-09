@@ -38,9 +38,9 @@ export class PluginsManager {
         return this.rootPluginsSaga;
     }
 
-    // public getRoutes = (userLoading, isCurrentSession) => {
-    //     return Object.keys(pluginsInstances).map(key => pluginsInstances[key].getRoutes(userLoading, isCurrentSession));
-    // };
+    public getRoutes = (userLoading, isCurrentSession) => {
+        return Object.keys(pluginsInstances).map(key => pluginsInstances[key].getRoutes(userLoading, isCurrentSession));
+    };
 
     public getMenu = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
         let menuItems: string[][] = [];
