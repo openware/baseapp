@@ -2,12 +2,16 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { CloseIcon } from '../../../assets/images/CloseIcon';
-import { TabPanel } from '../../../components';
+import { Pagination, TabPanel } from '../../../components';
 import { useUserOrdersHistoryFetch } from '../../../hooks';
 import {
     ordersCancelAllFetch,
     ordersHistoryCancelFetch,
+    RootState,
+    selectOrdersFirstElemIndex,
     selectOrdersHistory,
+    selectOrdersLastElemIndex,
+    selectOrdersNextPageExists,
     selectShouldFetchCancelAll,
     selectShouldFetchCancelSingle,
 } from '../../../modules';
@@ -17,13 +21,17 @@ const userOrdersHistoryTabs = ['open', 'all'];
 
 const OrdersComponent: React.FC = () => {
     const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
+    const [currentPageIndex, setPageIndex] = React.useState(0);
     const dispatch = useDispatch();
     const intl = useIntl();
     const orders = useSelector(selectOrdersHistory);
     const shouldFetchCancelAll = useSelector(selectShouldFetchCancelAll);
     const shouldFetchCancelSingle = useSelector(selectShouldFetchCancelSingle);
+    const firstElemIndex = useSelector((state: RootState) => selectOrdersFirstElemIndex(state, 25));
+    const lastElemIndex = useSelector((state: RootState) => selectOrdersLastElemIndex(state, 25));
+    const ordersNextPageExists = useSelector(selectOrdersNextPageExists);
     const filteredOrders = currentTabIndex === 0 ? orders.filter(o => ['wait', 'pending'].includes(o.state)) : orders;
-    useUserOrdersHistoryFetch(0, userOrdersHistoryTabs[currentTabIndex], 25);
+    useUserOrdersHistoryFetch(currentPageIndex, userOrdersHistoryTabs[currentTabIndex], 25);
 
     const handleCancelAllOrders = () => {
         if (shouldFetchCancelAll) {
@@ -39,6 +47,14 @@ const OrdersComponent: React.FC = () => {
                 list: filteredOrders,
             }));
         }
+    };
+
+    const onClickPrevPage = () => {
+        setPageIndex(currentPageIndex - 1);
+    };
+
+    const onClickNextPage = () => {
+        setPageIndex(currentPageIndex + 1);
     };
 
     const renderOptionalHead = () => (
@@ -61,6 +77,14 @@ const OrdersComponent: React.FC = () => {
             ) : (
                 <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
             )}
+            <Pagination
+                firstElemIndex={firstElemIndex}
+                lastElemIndex={lastElemIndex}
+                page={currentPageIndex}
+                nextPageExists={ordersNextPageExists}
+                onClickPrevPage={onClickPrevPage}
+                onClickNextPage={onClickNextPage}
+            />
         </div>
     );
 
