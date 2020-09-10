@@ -294,9 +294,12 @@ class BeneficiariesComponent extends React.Component<Props, State> {
                             <span className="select__left__address">{currentWithdrawalBeneficiary.data ? (currentWithdrawalBeneficiary.data as BeneficiaryBank).full_name : ''}</span>
                         </div>
                         <div className="select__right">
-                        <span className="select__right__tip" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
-                        <span className="select__right__select">{this.translate('page.body.wallets.beneficiaries.dropdown.select')}</span>
-                        <span className="select__right__chevron"><ChevronIcon /></span>
+                            {isPending ? (
+                                <span className="select__right__pending">{this.translate('page.body.wallets.beneficiaries.dropdown.pending')}</span>
+                            ) : null}
+                            <span className="select__right__tip" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
+                            <span className="select__right__select">{this.translate('page.body.wallets.beneficiaries.dropdown.select')}</span>
+                            <span className="select__right__chevron"><ChevronIcon /></span>
                         </div>
                     </div>
                     {isOpenDropdown && this.renderDropdownBody(beneficiaries, type)}
