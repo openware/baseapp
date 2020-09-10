@@ -5,26 +5,13 @@
  * - Edit plugins.json
  * - Run yarn prepare:plugins
  */
-//import { Config } from '../api/config';
-// import { ComponentsFactoryMap } from '../components';
-// import { ContainersFactoryMap } from '../containers';
-import { IeoPlugin, IeoPluginState } from './tower-plugin-ieo';
 
-// export const FactoryMap = {
-//   ...ComponentsFactoryMap,
-//   ...ContainersFactoryMap,
-// };
 
 // tslint:disable-next-line: no-empty-interface
 export interface PluginsState {
-  ieo: IeoPluginState;
+
 }
 
-// tslint:disable-next-line: no-empty-interface
-// export interface CustomConfig extends Config {
-
-// }
-
 export const pluginsInstances = {
-  ieo: IeoPlugin,
+
 };
