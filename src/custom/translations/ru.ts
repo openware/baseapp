@@ -199,6 +199,7 @@ export const ru: LangType = {
     'success.beneficiaries.created': 'Beficiaries: successfully created',
     'success.beneficiaries.activated': 'Beficiaries: successfully activated',
     'success.beneficiaries.deleted': 'Beficiaries: successfully deleted',
+    'success.beneficiaries.resent_pin': 'Beficiaries: pin resent',
 
     'page.body.wallets.beneficiaries.title': 'Withdraw address',
     'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',
@@ -234,6 +235,7 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.confirmationModal.header': 'Confirm new address',
     'page.body.wallets.beneficiaries.confirmationModal.body.text': 'We have sent you an email containing a confirmation code pin, please enter it below to save the new address:',
     'page.body.wallets.beneficiaries.confirmationModal.body.confirmationModalCode': 'Pin code',
+    'page.body.wallets.beneficiaries.confirmationModal.body.resendButton': 'Resend pin',
     'page.body.wallets.beneficiaries.confirmationModal.body.button': 'Confirm',
 
     'page.body.wallets.beneficiaries.tipAddress': 'Address',
