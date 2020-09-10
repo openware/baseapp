@@ -6,7 +6,13 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
-import { Order, OrderProps, WalletItemProps } from '../../components';
+import {
+    formatWithSeparators,
+    Order,
+    OrderProps,
+    WalletItemProps,
+    Decimal,
+} from '../../components';
 import { FilterPrice } from '../../filters';
 import { IntlProps } from '../../index';
 import {
@@ -204,7 +210,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.minAmount',
-                    { amount: currentMarket.min_amount, currency: currentMarket.base_unit.toUpperCase()},
+                    {
+                        amount: Decimal.format(currentMarket.min_amount, currentMarket.amount_precision, ',' ),
+                        currency: currentMarket.base_unit.toUpperCase(),
+                    },
                 )],
                 type: 'error',
             });
@@ -216,7 +225,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.minPrice',
-                    { price: currentMarket.min_price, currency: currentMarket.quote_unit.toUpperCase()},
+                    {
+                        price: Decimal.format(currentMarket.min_price, currentMarket.price_precision, ','),
+                        currency: currentMarket.quote_unit.toUpperCase(),
+                    },
                 )],
                 type: 'error',
             });
@@ -228,7 +240,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.maxPrice',
-                    { price: currentMarket.max_price, currency: currentMarket.quote_unit.toUpperCase()},
+                    {
+                        price: Decimal.format(currentMarket.max_price, currentMarket.price_precision, ','),
+                        currency: currentMarket.quote_unit.toUpperCase(),
+                    },
                 )],
                 type: 'error',
             });
@@ -241,9 +256,13 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.available',
-                    { available: available, currency: order.side === 'buy' ?
-                        currentMarket.quote_unit.toUpperCase() :
-                        currentMarket.base_unit.toUpperCase(),
+                    {
+                        available: formatWithSeparators(String(available), ','),
+                        currency: order.side === 'buy' ? (
+                            currentMarket.quote_unit.toUpperCase()
+                        ) : (
+                            currentMarket.base_unit.toUpperCase()
+                        ),
                     },
                 )],
                 type: 'error',

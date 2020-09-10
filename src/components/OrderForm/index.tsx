@@ -213,7 +213,9 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                                     {priceText}
                                 </legend>
                                 <div className="cr-order-input__fieldset__input">
-                                    &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision), '0')}</span>
+                                    &asymp;<span className="cr-order-input__fieldset__input__price">
+                                        {handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision, ','), '0')}
+                                    </span>
                                 </div>
                             </fieldset>
                             <div className="cr-order-input__crypto-icon">
@@ -264,15 +266,10 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                             {translate('page.body.trade.header.newOrder.content.total')}
                         </label>
                         <div className="cr-order-item__total__content">
-                            {orderType === 'Limit' ? (
-                                <span className="cr-order-item__total__content__amount">
-                                    {total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
-                                </span>
-                            ) : (
-                                <span className="cr-order-item__total__content__amount">
-                                    &asymp;{total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
-                                </span>
-                            )}
+                            <span className="cr-order-item__total__content__amount">
+                                {orderType === 'Market' ? <span>&asymp;</span> : null}
+                                {Decimal.format(total, currentMarketAskPrecision + currentMarketBidPrecision, ',')}
+                            </span>
                             <span className="cr-order-item__total__content__currency">
                                 {from.toUpperCase()}
                             </span>
@@ -286,7 +283,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                         </label>
                         <div className="cr-order-item__available__content">
                             <span className="cr-order-item__available__content__amount">
-                                {available ? Decimal.format(available, availablePrecision) : ''}
+                                {available ? Decimal.format(available, availablePrecision, ',') : ''}
                             </span>
                             <span className="cr-order-item__available__content__currency">
                                 {available ? availableCurrency.toUpperCase() : ''}
