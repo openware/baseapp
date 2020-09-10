@@ -66,7 +66,7 @@ const LockIcon = () => {
 const renderLocked = (fixed: number, lockedAmount?: string) => {
     return lockedAmount ? (
         <div className="cr-wallet-item__amount-locked">
-            <LockIcon/> <Decimal fixed={fixed}>{lockedAmount.toString()}</Decimal>
+            <LockIcon/> <Decimal fixed={fixed} thousSep=",">{lockedAmount.toString()}</Decimal>
         </div>) : '';
 };
 
@@ -95,7 +95,7 @@ export const WalletItem: React.FunctionComponent<WalletItemProps> = (props: Wall
                 </div>
             </div>
             <span className="cr-wallet-item__balance">
-                <Decimal fixed={fixed}>{balance ? balance.toString() : '0'}</Decimal>&nbsp;
+                <Decimal fixed={fixed} thousSep=",">{balance ? balance.toString() : '0'}</Decimal>&nbsp;
                 <span className="cr-wallet-item__currency">
                     {currency}
                 </span>

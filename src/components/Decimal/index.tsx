@@ -161,4 +161,5 @@ class Decimal extends React.Component<DecimalProps> {
 
 export {
     Decimal,
+    formatWithSeparators,
 };

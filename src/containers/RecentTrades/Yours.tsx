@@ -108,8 +108,12 @@ class RecentTradesYoursContainer extends React.Component<Props> {
 
         return [
             <span style={{ color: setTradesType(orderSide).color }} key={id}>{higlightedDate}</span>,
-            <span style={{ color: setTradesType(orderSide).color }} key={id}><Decimal key={id} fixed={amountFixed}>{amount}</Decimal></span>,
-            <span style={{ color: setTradesType(orderSide).color }} key={id}><Decimal key={id} fixed={priceFixed} prevValue={[...list][i - 1] ? [...list][i - 1].price : 0}>{price}</Decimal></span>,
+            <span style={{ color: setTradesType(orderSide).color }} key={id}>
+                <Decimal key={id} fixed={amountFixed} thousSep=",">{amount}</Decimal>
+            </span>,
+            <span style={{ color: setTradesType(orderSide).color }} key={id}>
+                <Decimal key={id} fixed={priceFixed} thousSep="," prevValue={[...list][i - 1] ? [...list][i - 1].price : 0}>{price}</Decimal>
+            </span>,
         ];
     };
 

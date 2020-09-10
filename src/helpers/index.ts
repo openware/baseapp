@@ -26,7 +26,6 @@ export * from './handleIncrementalUpdate';
 export * from './historyTableUtils';
 export * from './localeDate';
 export * from './passwordValidation';
-export * from './preciseNumber';
 export * from './randomSecretHex';
 export * from './regExp';
 export * from './setDocumentTitle';

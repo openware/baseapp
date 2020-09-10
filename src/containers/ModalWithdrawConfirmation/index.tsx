@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import {
     injectIntl,
 } from 'react-intl';
-import { Modal } from '../../components';
+import { Decimal, Modal } from '../../components';
 import { IntlProps } from '../../index';
 import { Modal as MobileModal } from '../../mobile/components/Modal';
 
@@ -15,6 +15,7 @@ interface ModalWithdrawConfirmationProps {
     rid: string;
     isMobileDevice?: boolean;
     show: boolean;
+    precision: number;
 }
 
 type Props = ModalWithdrawConfirmationProps & IntlProps;
@@ -53,14 +54,14 @@ class ModalWithdraw extends React.Component<Props> {
     };
 
     private renderBody = () => {
-        const { amount, currency, rid } = this.props;
+        const { amount, currency, precision, rid } = this.props;
         const formattedCurrency = currency.toUpperCase();
 
         return (
             <div className="pg-exchange-modal-submit-body modal-body__withdraw-confirm">
                 <p>
                     {this.translate('page.body.wallets.tabs.withdraw.modal.message1')}
-                    {amount} {formattedCurrency}
+                    {Decimal.format(amount, precision, ',')}  {formattedCurrency}
                     {this.translate('page.body.wallets.tabs.withdraw.modal.message2')} {rid}
                 </p>
             </div>

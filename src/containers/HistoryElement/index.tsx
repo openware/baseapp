@@ -5,11 +5,9 @@ import {
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
 import { compose } from 'redux';
-import { History, Pagination } from '../../components';
-import { Decimal } from '../../components/Decimal';
+import { Decimal, History, Pagination } from '../../components';
 import {
     localeDate,
-    preciseData,
     setDepositStatusColor,
     setTradesType,
     setWithdrawStatusColor,
@@ -180,7 +178,7 @@ class HistoryComponent extends React.Component<Props> {
                     <div className="pg-history-elem__hide" key={txid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid}</a></div>,
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
-                    wallet && preciseData(amount, wallet.fixed),
+                    wallet && Decimal.format(amount, wallet.fixed, ','),
                     <span style={{ color: setDepositStatusColor(item.state) }} key={txid}>{state}</span>,
                 ];
             }
@@ -194,8 +192,8 @@ class HistoryComponent extends React.Component<Props> {
                     <div className="pg-history-elem__hide" key={txid || rid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid || rid}</a></div>,
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
-                    wallet && preciseData(amount, wallet.fixed),
-                    fee,
+                    wallet && Decimal.format(amount, wallet.fixed, ','),
+                    wallet && Decimal.format(fee, wallet.fixed, ','),
                     <span style={{ color: setWithdrawStatusColor(item.state) }} key={txid || rid}>{state}</span>,
                 ];
             }
@@ -210,9 +208,9 @@ class HistoryComponent extends React.Component<Props> {
                     localeDate(created_at, 'fullDate'),
                     <span style={{ color: setTradesType(side).color }} key={id}>{sideText}</span>,
                     marketName,
-                    <Decimal key={id} fixed={marketToDisplay.price_precision}>{price}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{amount}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{total}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.price_precision} thousSep=",">{price}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{amount}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{total}</Decimal>,
                 ];
             }
             default: {

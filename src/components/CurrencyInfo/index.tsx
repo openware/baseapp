@@ -38,7 +38,7 @@ const CurrencyInfo: React.FunctionComponent<CurrencyInfoProps> = (props: Currenc
                         <FormattedMessage id="page.body.wallets.locked" />
                     </div>
                     <span className="cr-wallet-item__balance-locked">
-                    <Decimal fixed={selectedFixed}>{stringLocked}</Decimal>
+                    <Decimal fixed={selectedFixed} thousSep=",">{stringLocked}</Decimal>
                 </span>
                 </div>
                 <div>
@@ -47,7 +47,7 @@ const CurrencyInfo: React.FunctionComponent<CurrencyInfoProps> = (props: Currenc
                 </span>
                 &nbsp;
                 <span className="cr-wallet-item__balance-amount">
-                    <Decimal fixed={selectedFixed}>{balance}</Decimal>
+                    <Decimal fixed={selectedFixed} thousSep=",">{balance}</Decimal>
                 </span>
                 </div>
             </div>

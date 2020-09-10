@@ -151,7 +151,7 @@ export class WalletTable extends React.Component<Props> {
             return [
                 localeDate(item.created_at, 'fullDate'),
                 state,
-                <Decimal key={index} fixed={fixed}>{amount}</Decimal>,
+                <Decimal key={index} fixed={fixed} thousSep=",">{amount}</Decimal>,
             ];
         });
     };
