@@ -16,41 +16,38 @@ var templateName = process.argv.slice(2)[0];
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const rootIndexFile = `
-import { TowerPlugin, TowerPluginInterface } from '../TowerPlugin';
-import { ${templateName}Actions, ${templateName}MenuIcons, ${templateName}MenuItems } from './constants';
+import { BaseappPlugin, BaseappPluginInterface } from '../BaseappPlugin';
+import { ${templateName}MenuIcons, ${templateName}MenuItems, ${templateName}Translations } from './constants';
+import { ${templateName}Routes } from './containers';
 import { ${templateName}PluginReducer, root${capitalize(templateName)}PluginSaga } from './modules';
 
 export * from './modules';
 
-export const ${capitalize(templateName)}Plugin: TowerPluginInterface =
-    new TowerPlugin(${templateName}PluginReducer, root${capitalize(templateName)}PluginSaga, ${templateName}Routes, ${templateName}Actions, ${templateName}MenuItems, ${templateName}MenuIcons, null);
+export const ${capitalize(templateName)}Plugin: BaseappPluginInterface =
+    new BaseappPlugin(${templateName}PluginReducer, root${capitalize(templateName)}PluginSaga, ${templateName}Routes, ${templateName}MenuItems, ${templateName}MenuIcons, ${templateName}Translations);
 `
 
 const rootConstantsFile = `
 import * as React from 'react';
-import { HeaderActions, MenuItem } from '../TowerPlugin';
 
-export const ${templateName}MenuItems: MenuItem[] = [
-    { key: '/tower/plugins/${templateName}', value: '${capitalize(templateName)}', isLink: true },
+export const ${templateName}MenuItems = (isLoggedIn: boolean, isLight?: boolean) => [
+    ['page.header.navbar.${templateName}', '/${templateName}', \`${templateName}\${isLight ? 'Light' : ''}\`],
 ];
 
-export const ${templateName}MenuIcons = (name: string) => {
+export const ${templateName}Translations = (lang: string) => {
+    const file = require(\`./translations/\${lang}\`);
+
+    return file[lang];
+};
+
+export const ${templateName}MenuIcons = (name: string, className?: string) => {
     switch (name) {
-        case '/tower/plugins/${templateName}':
+        case '${templateName}':
             return (
                 <svg />
             );
-        default: return;
+        default: return null;
     }
-};
-
-export const pagesWithFilter = ['/tower/plugins/${templateName}'];
-
-export const pagesWithRefresh = ['/tower/plugins/${templateName}'];
-
-export const ${templateName}Actions: HeaderActions = {
-    pagesWithFilter,
-    pagesWithRefresh,
 };
 
 `
@@ -74,6 +71,15 @@ export function* root${capitalize(templateName)}PluginSaga() {
     ]);
 }
 `
+
+const translationsEnFile = 'export const en = {};\n';
+const translationsRuFile = 'export const ru = {};\n';
+const rootStylesFile = '@import \'./themes/style.pcss\';\n';
+const stylesThemesFile = `
+@import './dark.pcss';
+@import './light.pcss';
+`;
+
 const pluginItemJson = plugin =>
     plugin.git ? (
 `
@@ -99,6 +105,13 @@ exec.result(`bash ./bin/create-folders.bash --plugin ${templateName}`, function(
         fs.writeFileSync(`./src/plugins/${templateName}/index.ts`, rootIndexFile);
         fs.writeFileSync(`./src/plugins/${templateName}/constants.tsx`, rootConstantsFile);
         fs.writeFileSync(`./src/plugins/${templateName}/modules/index.ts`, rootModulesFile);
+        fs.writeFileSync(`./src/plugins/${templateName}/styles/style.pcss`, rootStylesFile);
+        fs.writeFileSync(`./src/plugins/${templateName}/styles/themes/style.pcss`, stylesThemesFile);
+        fs.writeFileSync(`./src/plugins/${templateName}/styles/themes/light.pcss`, '/* stylelint-disable-no-empty-source */\n');
+        fs.writeFileSync(`./src/plugins/${templateName}/styles/themes/dark.pcss`, '/* stylelint-disable-no-empty-source */\n');
+        fs.writeFileSync(`./src/plugins/${templateName}/translations/en.ts`, translationsEnFile);
+        fs.writeFileSync(`./src/plugins/${templateName}/translations/ru.ts`, translationsRuFile);
+
         getPlugins(plugins => {
             const pluginsJsonList = [ ...plugins.filter(item => item.name !== templateName), { name: templateName }].map(pluginItemJson);
             fs.writeFileSync('plugins.json', pluginsJson(pluginsJsonList));

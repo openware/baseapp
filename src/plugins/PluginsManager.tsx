@@ -68,19 +68,4 @@ export class PluginsManager {
 
         return translations;
     };
-
-    // public getAPIUrl = () => {
-    //     let PluginsAPI = {};
-    //     for (const key of Object.keys(pluginsInstances)) {
-    //         if (pluginsNames.includes(key) && pluginsInstances[key].hasCustomApi && pluginsInstances[key].hasCustomApi()) {
-    //             pluginsAPI = { ...PluginsAPI, [key]: Tower.config[`${key}Url`] || ''};
-    //         }
-    //     }
-
-    //     return PluginsAPI;
-    // };
-
-    // public getAPIList = (): string[] => {
-    //     return pluginsInstances ? Object.keys(pluginsInstances).map(key => pluginsInstances[key].hasCustomApi && pluginsInstances[key].hasCustomApi() ? pluginsInstances[key] : null) : [];
-    // };
 }

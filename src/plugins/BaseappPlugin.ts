@@ -18,7 +18,7 @@ export class BaseappPlugin implements BaseappPluginInterface {
     public getMenuIcons: (name: string, className?: string) => JSX.Element;
     public getTranslations: (lang: string) => Object;
 
-    constructor(reduxReduser, reduxSaga, routes, menu, icons, translations, api) {
+    constructor(reduxReduser, reduxSaga, routes, menu, icons, translations) {
         this.getReduxReducer = () => reduxReduser;
         this.getReduxSaga = () => reduxSaga;
         this.getRoutes = routes;
