@@ -1,6 +1,8 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { CellData, FilterInput, Table } from '../';
+import { DEFAULT_MARKET_HEADERS } from '../../constants';
+import { isUniqueValue } from '../../helpers';
 
 export interface MarketsProps {
     /**
@@ -39,20 +41,13 @@ export interface MarketsProps {
 }
 
 export const Markets = (props: MarketsProps) => {
-    const [filteredData, setFilteredData] = React.useState<CellData[][]>([]);
     const [searchKey, setSearchKey] = React.useState('');
-
-    const defaultHeaders: string[] = React.useMemo(() => ['Pair', 'Price', '24h Change'], []);
 
     const searchFilter = React.useCallback((row: CellData[], key: string) => {
         setSearchKey(key);
 
         return (row[0] as string).toLowerCase().includes(searchKey.toLowerCase());
     }, [searchKey]);
-
-    const handleFilter = (result: object[]) => {
-        setFilteredData([...result] as CellData[][]);
-    };
 
     const renderChange = React.useCallback((cell: string) => {
         const isItChangeValue = (c: string) => {
@@ -74,16 +69,14 @@ export const Markets = (props: MarketsProps) => {
     }, [renderChange]);
 
     const filterType = (headerKey: string, key: string) => (item: CellData[]) => {
-        const typeIndex = props.headers ? props.headers.indexOf(headerKey) : defaultHeaders.indexOf(headerKey);
+        const typeIndex = (props.headers || DEFAULT_MARKET_HEADERS).indexOf(headerKey);
 
         return (item[typeIndex] as string).includes(key);
     };
 
     const createUniqueCurrencies = (currencies: string[], market: string) => {
-        const isCurrencyUnique = (currency: string) => !currencies.includes(currency);
-
         const marketCurrencies = market.split('/').map((c: string) => c.trim());
-        const uniqueCurrencies = marketCurrencies.filter(isCurrencyUnique);
+        const uniqueCurrencies = marketCurrencies.filter(c => isUniqueValue(currencies, c));
 
         return currencies.concat(uniqueCurrencies);
     };
@@ -93,54 +86,49 @@ export const Markets = (props: MarketsProps) => {
         filter: filterType('Pair', currency),
     });
 
-    const filtersFn = () => {
-        const { data } = props;
+    const getFilters = () => {
+        const { data, filters } = props;
 
         const currencyFilters = data && data.length > 0
             ? data
-                .map(getMarketFromDataRow)
+                .map((market: React.ReactNode[]) => market[0] as string)
                 .reduce(createUniqueCurrencies, [])
                 .map(transformCurrencyToFilter)
             : [];
 
-        return [
+        return filters ? [
             {
                 name: 'All',
                 filter: filterType('Pair', ''),
             },
             ...currencyFilters,
-        ];
+        ] : [];
     };
 
-    const getMarketFromDataRow = (market: React.ReactNode[]) => market[0] as string;
+    const getTableData = () => {
+        const fd = props.data.filter(w => (w[0] as string).toLowerCase().includes(searchKey.toLowerCase()));
+        const tableData = fd.length > 0
+            ? fd
+            : [['', '', '']];
 
-    const { filters = true, headers, title, filterPlaceholder = '', rowKeyIndex, selectedKey } = props;
+        return tableData.map(row => row.map(mapRows));
+    };
 
-    let tableData = filteredData.length > 0
-        ? filteredData
-        : [['', '', '']];
-
-    tableData = tableData.map(row => row.map(mapRows));
-
-    // TODO: Refactor this logic
-    React.useEffect(() => {
-        setFilteredData(props.data.filter(w => (w[0] as string).toLowerCase().includes(searchKey.toLowerCase())));
-    }, [props.data, searchKey]);
+    const { headers, title, filterPlaceholder = '', rowKeyIndex, selectedKey } = props;
 
     return (
         <div className="cr-markets">
             <Table
-                data={tableData}
+                data={getTableData()}
                 rowKeyIndex={rowKeyIndex}
                 selectedKey={selectedKey}
-                filters={filters ? filtersFn() : []}
-                header={headers || defaultHeaders}
+                filters={getFilters()}
+                header={headers || DEFAULT_MARKET_HEADERS}
                 onSelect={props.onSelect}
                 titleComponent={title || 'Markets'}
             />
             <FilterInput
                 data={props.data}
-                onFilter={handleFilter}
                 filter={searchFilter}
                 placeholder={filterPlaceholder}
             />

@@ -34,27 +34,6 @@ describe.skip('Markets', () => {
        expect(wrapper).toMatchSnapshot();
    });
 
-   // it('should correctly filter rows', () => {
-   //     expect((wrapper.instance() as any).searchFilter(['ETH/BTC', '0.123', '+50.00%'], 'btc')).toBeTruthy();
-   //     expect((wrapper.instance() as any).searchFilter(['ETH/BTC', '0.342', '+50.00%'], 'ltc')).toBeFalsy();
-   // });
-
-   // it('should set filtered data to state', () => {
-   //    const component: ReactWrapper = mount(
-   //        <Markets data={data} onSelect={onSelect} />,
-   //    );
-   //
-   //    const filteredData = [
-   //        ['ETH/BTC', '0.123', '+50.00%'],
-   //    ];
-   //
-   //    (component.instance() as any).handleFilter(filteredData as object[]);
-   //    const input = component.find('tr').first();
-   //    input.simulate('click');
-   //
-   //    expect((component.state() as any).filteredData).toEqual(filteredData);
-   // });
-
    it('should set selected market in props', () => {
       const keyIndex = 0;
       const selectedKey = 'ETH/LTC';
@@ -65,17 +44,4 @@ describe.skip('Markets', () => {
       const expectedSelectedRow = component.find('.cr-table__row--selected').first().html();
       expect(resultSelectedRow).toBe(expectedSelectedRow);
    });
-
-   // it('should set new data to state', () => {
-   //     const component: ReactWrapper = mount(
-   //         <Markets data={data} onSelect={onSelect} />,
-   //     );
-   //
-   //     const filteredData = [
-   //         ['ETH/BTC', '0.123', '+50.00%'],
-   //     ];
-   //
-   //     component.setProps({ data: filteredData });
-   //     expect((component.state() as any).filteredData).toEqual(filteredData);
-   // });
 });
