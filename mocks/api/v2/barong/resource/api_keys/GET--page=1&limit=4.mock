@@ -35,13 +35,5 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
         "scope": [],
         "state": "active",
         "updated_at": "2019-02-14T15:58:06Z"
-    },
-    {
-        "algorithm": "HS256",
-        "created_at": "2019-02-14T15:58:06Z",
-        "kid": "46da7aa20353e449",
-        "scope": [],
-        "state": "active",
-        "updated_at": "2019-02-14T15:58:06Z"
     }
 ]

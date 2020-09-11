@@ -1,4 +1,6 @@
 import update from 'immutability-helper';
+import { defaultStorageLimit } from '../../../api';
+import { sliceArray } from '../../../helpers';
 import {
     ApiKeyCreateData,
     ApiKeyCreateFetch,
@@ -25,6 +27,8 @@ export interface ApiKeysState {
     apiKeys: ApiKeyDataInterface[];
     dataLoaded: boolean;
     modal: ApiKeyStateModal;
+    pageIndex: number;
+    nextPageExists: boolean;
 }
 
 export const initialApiKeysState: ApiKeysState = {
@@ -33,6 +37,8 @@ export const initialApiKeysState: ApiKeysState = {
     modal: {
         active: false,
     },
+    pageIndex: 0,
+    nextPageExists: false,
 };
 
 export type ApiKeysAction = ApiKeysFetch |
@@ -50,8 +56,10 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
         case API_KEYS_DATA:
             return {
                 ...state,
-                apiKeys: action.payload,
+                apiKeys: sliceArray(action.payload.apiKeys, defaultStorageLimit()),
                 dataLoaded: true,
+                pageIndex: action.payload.pageIndex,
+                nextPageExists: action.payload.nextPageExists,
             };
         case API_KEY_CREATE:
             return {
