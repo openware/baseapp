@@ -107,11 +107,8 @@ export const Markets = (props: MarketsProps) => {
 
     const getTableData = () => {
         const fd = props.data.filter(w => (w[0] as string).toLowerCase().includes(searchKey.toLowerCase()));
-        const tableData = fd.length > 0
-            ? fd
-            : [['', '', '']];
 
-        return tableData.map(row => row.map(mapRows));
+        return fd.map(row => row.map(mapRows));
     };
 
     const { headers, title, filterPlaceholder = '', rowKeyIndex, selectedKey } = props;
