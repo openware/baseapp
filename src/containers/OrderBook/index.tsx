@@ -43,11 +43,11 @@ export const OrderBook = props => {
 
     const isLarge = React.useMemo(() => (props.forceLarge || (width > breakpoint)), [props.forceLarge, width]);
 
-    const cn = classNames('pg-combined-order-book ', {
+    const cn = React.useMemo(() => classNames('pg-combined-order-book ', {
         'cr-combined-order-book--data-loading': orderBookLoading,
         'pg-combined-order-book--no-data-first': (!asks.length && !isLarge) || (!bids.length && isLarge),
         'pg-combined-order-book--no-data-second': (!bids.length && !isLarge) || (!asks.length && isLarge),
-    });
+    }), [asks.length, bids.length, isLarge, orderBookLoading]);
 
     const orderBook = () => {
         const asksData = isLarge ? asks : asks.slice(0).reverse();
