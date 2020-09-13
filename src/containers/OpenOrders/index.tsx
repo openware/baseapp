@@ -5,7 +5,9 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { OpenOrders } from '../../components';
+import { DEFAULT_MARKET } from '../../constants';
 import { localeDate, preciseData, setTradeColor } from '../../helpers';
+import { useOpenOrdersFetch } from '../../hooks';
 import {
     Market,
     openOrdersCancelFetch,
@@ -13,8 +15,6 @@ import {
     selectCurrentMarket,
     selectOpenOrdersFetching,
     selectOpenOrdersList,
-    selectUserLoggedIn,
-    userOpenOrdersFetch,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
 
@@ -26,26 +26,14 @@ interface ReduxProps {
     userLoggedIn: boolean;
 }
 
-const defaultMarket = {
-    id: '',
-    name: '',
-    base_unit: '',
-    quote_unit: '',
-    min_price: '',
-    max_price: 0,
-    min_amount: 0,
-    amount_precision: 0,
-    price_precision: 0,
-};
 
 export const OpenOrdersComponent = () => {
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
 
     const list = useSelector(selectOpenOrdersList);
-    const { id, base_unit, quote_unit, price_precision, amount_precision } = useSelector(selectCurrentMarket) || defaultMarket;
+    const { id, base_unit, quote_unit, price_precision, amount_precision } = useSelector(selectCurrentMarket) || DEFAULT_MARKET;
     const fetching = useSelector(selectOpenOrdersFetching);
-    const userLoggedIn = useSelector(selectUserLoggedIn);
 
     const headersKeys = React.useMemo(() => [
         'Date',
@@ -120,11 +108,7 @@ export const OpenOrdersComponent = () => {
         'pg-open-orders--loading': fetching,
     }), [list.length, fetching]);
 
-    React.useEffect(() => {
-        if (userLoggedIn && id) {
-            dispatch(userOpenOrdersFetch({ market: { id }} as any));
-        }
-    }, [userLoggedIn, id, dispatch]);
+    useOpenOrdersFetch({ id });
 
     return (
         <div className={classNames}>
