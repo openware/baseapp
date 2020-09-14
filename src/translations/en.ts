@@ -189,10 +189,10 @@ export const en = {
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'To withdraw you have to enable 2FA',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2FA',
 
-    'success.beneficiaries.created': 'Beficiaries: successfully created',
-    'success.beneficiaries.activated': 'Beficiaries: successfully activated',
-    'success.beneficiaries.deleted': 'Beficiaries: successfully deleted',
-    'success.beneficiaries.resent_pin': 'Beficiaries: pin resent',
+    'success.beneficiaries.created': 'Beneficiaries: successfully created',
+    'success.beneficiaries.activated': 'Beneficiaries: successfully activated',
+    'success.beneficiaries.deleted': 'Beneficiaries: successfully deleted',
+    'success.beneficiaries.resent_pin': 'Beneficiaries: pin resent',
 
     'page.body.wallets.beneficiaries.title': 'Withdraw address',
     'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',

@@ -196,10 +196,10 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'Вам нужно активировать 2FA, чтобы получить возможность выводить Ваши валюты!',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Активировать 2FA',
 
-    'success.beneficiaries.created': 'Beficiaries: successfully created',
-    'success.beneficiaries.activated': 'Beficiaries: successfully activated',
-    'success.beneficiaries.deleted': 'Beficiaries: successfully deleted',
-    'success.beneficiaries.resent_pin': 'Beficiaries: pin resent',
+    'success.beneficiaries.created': 'Beneficiaries: successfully created',
+    'success.beneficiaries.activated': 'Beneficiaries: successfully activated',
+    'success.beneficiaries.deleted': 'Beneficiaries: successfully deleted',
+    'success.beneficiaries.resent_pin': 'Beneficiaries: pin resent',
 
     'page.body.wallets.beneficiaries.title': 'Withdraw address',
     'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',
