@@ -137,10 +137,10 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                 )}
 
                 {user.otp && dataLoaded && apiKeys.length > 0 && (
-                    <>
+                    <React.Fragment>
                         <Table
                             header={this.getTableHeaders()}
-                            data={apiKeys && apiKeys.length ? this.getTableData(apiKeys) : [[]]}
+                            data={this.getTableData(apiKeys)}
                         />
                         <Pagination
                             firstElemIndex={firstElemIndex}
@@ -150,7 +150,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                             onClickPrevPage={this.onClickPrevPage}
                             onClickNextPage={this.onClickNextPage}
                         />
-                    </>
+                    </React.Fragment>
                 )}
 
                 {modal}
@@ -191,7 +191,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Form>
                             <Form.Check
                                 type="switch"
-                                id={`apiKeyCheck${item.kid}`}
+                                id={`apiKeyCheck-${item.kid}`}
                                 label=""
                                 onChange={this.handleToggleStateKeyClick(item)}
                                 checked={item.state === 'active'}

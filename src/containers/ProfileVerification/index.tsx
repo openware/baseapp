@@ -164,9 +164,7 @@ class ProfileVerificationComponent extends React.Component<Props> {
                             delay={{ show: 250, hide: 400 }}
                             overlay={Tooltip({ title: `page.body.profile.verification.${labelToCheck}.rejected.tooltip`})}
                         >
-                            <div
-                                className="pg-profile-page-verification__step__label pg-profile-page-verification__step__label--rejected"
-                            >
+                            <div className="pg-profile-page-verification__step__label pg-profile-page-verification__step__label--rejected">
                                 <Link to="/confirm"><FormattedMessage id="page.body.profile.verification.reverify" /></Link>
                                 <CrossIcon />
                             </div>

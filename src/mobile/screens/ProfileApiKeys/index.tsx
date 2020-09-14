@@ -150,7 +150,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                 ) : null}
                 <div className="pg-mobile-profile-api-keys-screen__list">
                     {user.otp && apiKeys.length ? (
-                        <>
+                        <React.Fragment>
                             {apiKeys.map((apiKey, index) => (
                                 <ApiKeysItem
                                     key={index}
@@ -168,7 +168,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                                 onClickPrevPage={onClickPrevPage}
                                 onClickNextPage={onClickNextPage}
                             />
-                        </>
+                        </React.Fragment>
                     ) : (
                         <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
                     )}
