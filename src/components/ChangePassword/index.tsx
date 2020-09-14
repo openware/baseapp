@@ -2,8 +2,14 @@ import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+import { PasswordStrengthMeter } from '..';
 import { CloseIcon } from '../../assets/images/CloseIcon';
-import { PASSWORD_REGEX } from '../../helpers';
+import {
+    PASSWORD_REGEX,
+    passwordErrorFirstSolution,
+    passwordErrorSecondSolution,
+    passwordErrorThirdSolution,
+} from '../../helpers';
 import { CustomInput } from '../CustomInput';
 
 export const ChangePasswordComponent = props => {
@@ -13,6 +19,12 @@ export const ChangePasswordComponent = props => {
     const [oldPasswordFocus, setOldPasswordFocus] = React.useState(false);
     const [newPasswordFocus, setNewPasswordFocus] = React.useState(false);
     const [confirmPasswordFocus, setConfirmPasswordFocus] = React.useState(false);
+    const [passwordErrorFirstSolved, setPasswordErrorFirstSolved] = React.useState(false);
+    const [passwordErrorSecondSolved, setPasswordErrorSecondSolved] = React.useState(false);
+    const [passwordErrorThirdSolved, setPasswordErrorThirdSolved] = React.useState(false);
+    const [passwordPopUp, setPasswordPopUp] = React.useState(false);
+
+    // const passwordWrapper = React.useRef<HTMLDivElement>();
     const intl = useIntl();
 
     const handleChangePassword = () => {
@@ -29,6 +41,38 @@ export const ChangePasswordComponent = props => {
         setNewPasswordFocus(false);
         setConfirmPasswordFocus(false);
     };
+
+    const handleChangeNewPassword = (value: string) => {
+        if (passwordErrorFirstSolution(value) && !passwordErrorFirstSolved) {
+            setPasswordErrorFirstSolved(true);
+        } else if (!passwordErrorFirstSolution(value) && passwordErrorFirstSolved) {
+            setPasswordErrorFirstSolved(false);
+        }
+
+        if (passwordErrorSecondSolution(value) && !passwordErrorSecondSolved) {
+            setPasswordErrorSecondSolved(true);
+        } else if (!passwordErrorSecondSolution(value) && passwordErrorSecondSolved) {
+            setPasswordErrorSecondSolved(false);
+        }
+
+        if (passwordErrorThirdSolution(value) && !passwordErrorThirdSolved) {
+            setPasswordErrorThirdSolved(true);
+        } else if (!passwordErrorThirdSolution(value) && passwordErrorThirdSolved) {
+            setPasswordErrorThirdSolved(false);
+        }
+
+        setNewPassword(value);
+        setTimeout(() => {
+            props.fetchCurrentPasswordEntropy({ password: value });
+        }, 3000);
+    };
+
+    const handleFocusNewPassword = () => {
+        setNewPasswordFocus(!newPassword);
+        setPasswordPopUp(!passwordPopUp);
+    };
+
+    const translate = (key: string) => intl.formatMessage({id: key});
 
     const renderHeader = () => {
         return (
@@ -80,13 +124,24 @@ export const ChangePasswordComponent = props => {
                         label={intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
                         placeholder={intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
                         defaultLabel="New password"
-                        handleChangeInput={setNewPassword}
+                        handleChangeInput={handleChangeNewPassword}
                         inputValue={newPassword}
-                        handleFocusInput={() => setNewPasswordFocus(true)}
+                        handleFocusInput={handleFocusNewPassword}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
                         autoFocus={false}
                     />
+                    {newPassword ?
+                        <PasswordStrengthMeter
+                            minPasswordEntropy={props.configs.password_min_entropy}
+                            currentPasswordEntropy={props.currentPasswordEntropy}
+                            passwordExist={newPassword !== ''}
+                            passwordErrorFirstSolved={passwordErrorFirstSolved}
+                            passwordErrorSecondSolved={passwordErrorSecondSolved}
+                            passwordErrorThirdSolved={passwordErrorThirdSolved}
+                            passwordPopUp={passwordPopUp}
+                            translate={translate}
+                        /> : null}
                 </div>
                 <div className={confirmPasswordClass}>
                     <CustomInput

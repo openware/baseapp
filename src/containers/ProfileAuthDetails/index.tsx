@@ -13,7 +13,11 @@ import { CloseIcon } from '../../assets/images/CloseIcon';
 import { ChangePassword, CustomInput, Modal } from '../../components';
 import { IntlProps } from '../../index';
 import {
+    Configs,
+    entropyPasswordFetch,
     RootState,
+    selectConfigs,
+    selectCurrentPasswordEntropy,
     selectUserInfo,
     User,
 } from '../../modules';
@@ -27,6 +31,8 @@ import {
 interface ReduxProps {
     user: User;
     passwordChangeSuccess?: boolean;
+    configs: Configs;
+    currentPasswordEntropy: number;
 }
 
 interface RouterProps {
@@ -43,6 +49,7 @@ interface DispatchProps {
     changePassword: typeof changePasswordFetch;
     clearPasswordChangeError: () => void;
     toggle2fa: typeof toggle2faFetch;
+    fetchCurrentPasswordEntropy: typeof entropyPasswordFetch;
 }
 
 interface ProfileProps {
@@ -79,6 +86,8 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
     public render() {
         const {
             user,
+            configs,
+            currentPasswordEntropy,
         } = this.props;
 
         const modal = this.state.showChangeModal ? (
@@ -89,6 +98,9 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         handleChangePassword={this.props.changePassword}
                         title={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.change' })}
                         closeModal={this.toggleChangeModal}
+                        configs={configs}
+                        currentPasswordEntropy={currentPasswordEntropy}
+                        fetchCurrentPasswordEntropy={this.props.fetchCurrentPasswordEntropy}
                     />
                 </div>
               </form>
@@ -261,12 +273,15 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
     passwordChangeSuccess: selectChangePasswordSuccess(state),
+    currentPasswordEntropy: selectCurrentPasswordEntropy(state),
+    configs: selectConfigs(state),
 });
 
 const mapDispatchToProps = dispatch => ({
     changePassword: ({ old_password, new_password, confirm_password }) =>
         dispatch(changePasswordFetch({ old_password, new_password, confirm_password })),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
+    fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
 });
 
 const ProfileAuthDetailsConnected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent));
