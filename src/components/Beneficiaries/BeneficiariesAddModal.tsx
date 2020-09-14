@@ -177,7 +177,7 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
                     handleFocusInput={() => this.handleChangeFieldFocus(`${field}Focused`)}
                     classNameLabel="cr-email-form__label"
                     classNameInput="cr-email-form__input"
-                    autoFocus={true}
+                    autoFocus={['coinAddress', 'fiatName'].includes(field)}
                 />
             </div>
         );
