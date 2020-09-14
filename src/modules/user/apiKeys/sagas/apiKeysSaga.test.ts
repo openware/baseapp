@@ -44,6 +44,16 @@ describe('api keys saga', () => {
         },
     ];
 
+    const fakeFetchPayloadFirstPage = {
+        pageIndex: 0,
+        limit: 25,
+    };
+    const fakeSuccessPayloadFirstPage = {
+        apiKeys: fakeApiKeys,
+        pageIndex: 0,
+        nextPageExists: false,
+    };
+
     const fakeError = {
         code: 500,
         message: ['Server error'],
@@ -51,16 +61,16 @@ describe('api keys saga', () => {
     };
 
     const mockApiKeys = () => {
-        mockAxios.onGet(`/resource/api_keys`).reply(200, fakeApiKeys);
+        mockAxios.onGet(`/resource/api_keys?page=1&limit=25`).reply(200, fakeApiKeys);
     };
 
     const expectedApiKeysFetchSuccess = [
-        apiKeysFetch(),
-        apiKeysData(fakeApiKeys),
+        apiKeysFetch(fakeFetchPayloadFirstPage),
+        apiKeysData(fakeSuccessPayloadFirstPage),
     ];
 
     const expectedApiKeysFetchError = [
-        apiKeysFetch(),
+        apiKeysFetch(fakeFetchPayloadFirstPage),
         alertPush(fakeError),
     ];
 
@@ -75,7 +85,7 @@ describe('api keys saga', () => {
                 }
             });
         });
-        store.dispatch(apiKeysFetch());
+        store.dispatch(apiKeysFetch(fakeFetchPayloadFirstPage));
 
         return promise;
     });
@@ -91,7 +101,7 @@ describe('api keys saga', () => {
                 }
             });
         });
-        store.dispatch(apiKeysFetch());
+        store.dispatch(apiKeysFetch(fakeFetchPayloadFirstPage));
 
         return promise;
     });
