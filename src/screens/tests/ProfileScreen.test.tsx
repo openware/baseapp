@@ -5,8 +5,11 @@ import { createStore } from 'redux';
 import { ProfileScreen } from '../';
 import { IntlProps } from '../../index';
 import { rootReducer } from '../../modules';
+import { PluginsManager } from '../../plugins/PluginsManager';
 
-const store = createStore(rootReducer);
+const Plugins = new PluginsManager();
+
+const store = createStore(rootReducer(Plugins.getReduxReducer()));
 const ProfileTab = connect()(ProfileScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>

@@ -5,6 +5,7 @@ import { createStore } from 'redux';
 import { OpenOrdersComponent, OpenOrdersProps } from '..';
 import { Market, rootReducer } from '../../modules';
 import { OrderCommon } from '../../modules/types';
+import { PluginsManager } from '../../plugins/PluginsManager';
 
 const currentMarket: Market | undefined = {
     id: 'ethusd',
@@ -40,7 +41,9 @@ const defaultProps: OpenOrdersProps = {
     userLoggedIn: true,
 };
 
-const store = createStore(rootReducer);
+const Plugins = new PluginsManager();
+
+const store = createStore(rootReducer(Plugins.getReduxReducer()));
 const OpenOrders = connect()(OpenOrdersComponent);
 
 const setup = (props: Partial<OpenOrdersProps> = {}) =>

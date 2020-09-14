@@ -6,30 +6,13 @@ import * as ReactDOM from 'react-dom';
 import {  WrappedComponentProps } from 'react-intl';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose, createStore } from 'redux';
-import createSagaMiddleware from 'redux-saga';
 import { sentryEnabled } from './api/config';
 import { App } from './App';
 import './index.css';
-import { rootReducer, rootSaga } from './modules';
+import { rootSaga } from './modules';
 import { rangerSagas } from './modules/public/ranger';
 import { Plugins } from './Plugins';
-
-const composeEnhancer: typeof compose = (window as any)
-    .__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const sagaMiddleware = createSagaMiddleware();
-const rangerMiddleware = createSagaMiddleware();
-
-export const store = createStore(
-    rootReducer(Plugins.getReduxReducer()),
-    composeEnhancer(
-        applyMiddleware(
-            sagaMiddleware,
-            rangerMiddleware,
-        ),
-    ),
-);
+import { rangerMiddleware, sagaMiddleware, store } from './store';
 
 if (!Intl.PluralRules) {
     require('@formatjs/intl-pluralrules/polyfill');
@@ -43,6 +26,7 @@ if (!Intl.RelativeTimeFormat) {
     require('@formatjs/intl-relativetimeformat/locale-data/ru');
 }
 
+const appStore = store(Plugins.getReduxReducer());
 sagaMiddleware.run(rootSaga);
 rangerMiddleware.run(rangerSagas);
 
@@ -59,7 +43,7 @@ if (sentryEnabled()) {
 }
 
 const render = () => ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={appStore}>
         <App />
     </Provider>,
     document.getElementById('root') as HTMLElement,

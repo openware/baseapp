@@ -4,9 +4,12 @@ import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { IntlProps } from '../../index';
 import { rootReducer } from '../../modules';
+import { PluginsManager } from '../../plugins/PluginsManager';
 import { EmailVerificationScreen } from '../EmailVerification';
 
-const store = createStore(rootReducer);
+const Plugins = new PluginsManager();
+
+const store = createStore(rootReducer(Plugins.getReduxReducer()));
 const EmailVerification = connect()(EmailVerificationScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>

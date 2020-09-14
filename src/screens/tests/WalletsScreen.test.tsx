@@ -4,9 +4,12 @@ import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { IntlProps } from '../../index';
 import { rootReducer } from '../../modules';
+import { PluginsManager } from '../../plugins/PluginsManager';
 import { WalletsScreen } from '../WalletsScreen';
 
-const store = createStore(rootReducer);
+const Plugins = new PluginsManager();
+
+const store = createStore(rootReducer(Plugins.getReduxReducer()));
 const Wallets = connect()(WalletsScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>

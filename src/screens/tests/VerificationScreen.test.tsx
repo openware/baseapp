@@ -5,9 +5,12 @@ import { createStore } from 'redux';
 import { VerificationScreen } from '..';
 import { IntlProps } from '../../index';
 import { rootReducer } from '../../modules';
+import { PluginsManager } from '../../plugins/PluginsManager';
 import { extractToken } from '../VerificationScreen';
 
-const store = createStore(rootReducer);
+const Plugins = new PluginsManager();
+
+const store = createStore(rootReducer(Plugins.getReduxReducer()));
 const Verification = connect()(VerificationScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>

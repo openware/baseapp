@@ -1,5 +1,6 @@
 import { incrementalOrderBook } from '../../../api';
-import { store } from '../../../index';
+import { Plugins } from '../../../Plugins';
+import { store } from '../../../store';
 import { CommonError, OrderEvent } from '../../types';
 import { Market } from '../markets';
 import { depthIncrementSubscribe } from '../orderBook';
@@ -119,7 +120,7 @@ export const marketStreams = (market: Market) => {
     ];
 
     if (incrementalOrderBook()) {
-        store.dispatch(depthIncrementSubscribe(market.id));
+        store(Plugins.getReduxReducer()).dispatch(depthIncrementSubscribe(market.id));
 
         return {
             channels: [

@@ -4,9 +4,12 @@ import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { IntlProps } from '../../index';
 import { rootReducer } from '../../modules';
+import { PluginsManager } from '../../plugins/PluginsManager';
 import { SignUpScreen } from '../SignUpScreen';
 
-const store = createStore(rootReducer);
+const Plugins = new PluginsManager();
+
+const store = createStore(rootReducer(Plugins.getReduxReducer()));
 const SignUp = connect()(SignUpScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>
