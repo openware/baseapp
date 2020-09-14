@@ -33,15 +33,11 @@ class ProfileComponent extends React.Component<RouterProps, IntlProps> {
                         <div className="col-12 col-md-6 mx-0">
                             <div className="row col-12 mx-0">
                                 <ProfileAuthDetails/>
+                                <ReferralProgram/>
                             </div>
                         </div>
                         <div className="col-12 col-md-6">
                             <ProfileVerification/>
-                        </div>
-                    </div>
-                    <div className="row px-4">
-                        <div className="col-12 mx-0">
-                            <ReferralProgram/>
                         </div>
                     </div>
                 </div>

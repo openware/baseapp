@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Pagination } from '../../../components';
 import { useApiKeysFetch } from '../../../hooks';
 import {
     apiKeyCreateFetch,
@@ -9,11 +10,15 @@ import {
     apiKeyDeleteFetch,
     apiKeys2FAModal,
     apiKeyUpdateFetch,
+    RootState,
     selectUserInfo,
 } from '../../../modules';
 import {
     selectApiKeys,
+    selectApiKeysFirstElemIndex,
+    selectApiKeysLastElemIndex,
     selectApiKeysModal,
+    selectApiKeysNextPageExists,
 } from '../../../modules/user/apiKeys/selectors';
 import { AddIcon } from '../../assets/images/AddIcon';
 import {
@@ -25,6 +30,7 @@ import {
 
 const ProfileApiKeysMobileScreenComponent: React.FC = () => {
     const [itemToUpdate, setItemToUpdate] = React.useState<ApiKeyDataInterface | undefined>();
+    const [currentPageIndex, setPageIndex] = React.useState(0);
     const [currentAction, setCurrentAction] = React.useState('');
     const [show2FAModal, setShow2FAModal] = React.useState(false);
     const [showCreatedApiKeyModal, setShowCreatedApiKeyModal] = React.useState(false);
@@ -34,7 +40,18 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
     const apiKeys = useSelector(selectApiKeys);
     const apiKeysModal= useSelector(selectApiKeysModal) || { action: '' };
     const user = useSelector(selectUserInfo);
-    useApiKeysFetch();
+    const firstElemIndex = useSelector((state: RootState) => selectApiKeysFirstElemIndex(state, 4));
+    const lastElemIndex = useSelector((state: RootState) => selectApiKeysLastElemIndex(state, 4));
+    const nextPageExists = useSelector(selectApiKeysNextPageExists);
+    useApiKeysFetch(currentPageIndex, 4);
+
+    const onClickPrevPage = () => {
+        setPageIndex(currentPageIndex - 1);
+    };
+
+    const onClickNextPage = () => {
+        setPageIndex(currentPageIndex + 1);
+    };
 
     const handleCreateApiKey = (code2FA, shouldFetch) => {
         if (shouldFetch) {
@@ -133,15 +150,25 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                 ) : null}
                 <div className="pg-mobile-profile-api-keys-screen__list">
                     {user.otp && apiKeys.length ? (
-                        apiKeys.map((apiKey, index) => (
-                            <ApiKeysItem
-                                key={index}
-                                index={index}
-                                item={apiKey}
-                                handleUpdateKey={item => handleSetApiKeyProcess('update', item)}
-                                handleDeleteKey={item => handleSetApiKeyProcess('delete', item)}
+                        <React.Fragment>
+                            {apiKeys.map((apiKey, index) => (
+                                <ApiKeysItem
+                                    key={index}
+                                    index={index}
+                                    item={apiKey}
+                                    handleUpdateKey={item => handleSetApiKeyProcess('update', item)}
+                                    handleDeleteKey={item => handleSetApiKeyProcess('delete', item)}
+                                />
+                            ))}
+                            <Pagination
+                                firstElemIndex={firstElemIndex}
+                                lastElemIndex={lastElemIndex}
+                                page={currentPageIndex}
+                                nextPageExists={nextPageExists}
+                                onClickPrevPage={onClickPrevPage}
+                                onClickNextPage={onClickNextPage}
                             />
-                        ))
+                        </React.Fragment>
                     ) : (
                         <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
                     )}

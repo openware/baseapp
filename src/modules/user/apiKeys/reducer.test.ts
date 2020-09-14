@@ -4,9 +4,9 @@ import { apiKeysReducer, initialApiKeysState } from './reducer';
 // tslint:disable no-object-literal-type-assertion
 describe('Api Keys reducers', () => {
     it('should handle API_KEYS_DATA', () => {
-        const payload: actions.ApiKeysData['payload'] = [{kid: '1'}] as actions.ApiKeyDataInterface[];
-        const expectedState = {...initialApiKeysState, apiKeys: payload};
-        expect(apiKeysReducer(initialApiKeysState, actions.apiKeysData(payload)).apiKeys).toEqual(expectedState.apiKeys);
+        const payload = { apiKeys: [], pageIndex: 0, nextPageExists: false };
+        const expectedState = { ...initialApiKeysState, ...payload, dataLoaded: true };
+        expect(apiKeysReducer(initialApiKeysState, actions.apiKeysData(payload))).toEqual(expectedState);
     });
 
     it('should handle API_KEY_CREATE', () => {

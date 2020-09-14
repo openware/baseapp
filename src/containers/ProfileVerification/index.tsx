@@ -1,10 +1,10 @@
-import classnames from 'classnames';
 import * as React from 'react';
+import { OverlayTrigger } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { kycSteps } from '../../api';
-import { changeElementPosition } from '../../helpers/changeElementPosition';
+import { Tooltip } from '../../components';
 import { Label, labelFetch, selectLabelData, selectUserInfo, User } from '../../modules';
 
 /* Icons */
@@ -25,17 +25,9 @@ interface ProfileVerificationProps {
     user: User;
 }
 
-interface State {
-    isMouseTooltipVisible: boolean;
-}
-
 type Props =  DispatchProps & ProfileVerificationProps & ReduxProps;
 
-class ProfileVerificationComponent extends React.Component<Props, State> {
-    public state = {
-        isMouseTooltipVisible: false,
-    };
-
+class ProfileVerificationComponent extends React.Component<Props> {
     public componentDidMount() {
         this.props.labelFetch();
     }
@@ -56,19 +48,31 @@ class ProfileVerificationComponent extends React.Component<Props, State> {
             case 'pending':
             case 'submitted':
                 return (
-                    <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--pending">
-                        <FormattedMessage id={`page.body.profile.verification.progress.level`} />
-                        <span>&nbsp;{index + 1}</span>
-                        <ClocksIcon />
-                    </div>
+                    <OverlayTrigger
+                        placement="bottom"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={Tooltip({ title: `page.body.profile.verification.progress.tooltip.${step}.pending`})}
+                    >
+                        <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--pending">
+                            <FormattedMessage id={`page.body.profile.verification.progress.level`} />
+                            <span>&nbsp;{index + 1}</span>
+                            <ClocksIcon />
+                        </div>
+                    </OverlayTrigger>
                 );
             case 'rejected':
                 return (
-                    <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--rejected">
-                        <FormattedMessage id={`page.body.profile.verification.progress.level`} />
-                        <span>&nbsp;{index + 1}</span>
-                        <CrossIcon />
-                    </div>
+                    <OverlayTrigger
+                        placement="bottom"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={Tooltip({ title: `page.body.profile.verification.progress.tooltip.${step}.rejected`})}
+                    >
+                        <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--rejected">
+                            <FormattedMessage id={`page.body.profile.verification.progress.level`} />
+                            <span>&nbsp;{index + 1}</span>
+                            <CrossIcon />
+                        </div>
+                    </OverlayTrigger>
                 );
             case 'blocked':
                 return (
@@ -79,10 +83,16 @@ class ProfileVerificationComponent extends React.Component<Props, State> {
                 );
             default:
                 return (
-                    <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--active">
-                        <FormattedMessage id={`page.body.profile.verification.progress.level`} />
-                        <span>&nbsp;{index + 1}</span>
-                    </div>
+                    <OverlayTrigger
+                        placement="bottom"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={Tooltip({ title: `page.body.profile.verification.progress.tooltip.${step}.default`})}
+                    >
+                        <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--active">
+                            <FormattedMessage id={`page.body.profile.verification.progress.level`} />
+                            <span>&nbsp;{index + 1}</span>
+                        </div>
+                    </OverlayTrigger>
                 );
         }
     };
@@ -96,12 +106,7 @@ class ProfileVerificationComponent extends React.Component<Props, State> {
     }
 
     public renderVerificationLabel(labels: Label[], labelToCheck: string, index: number) {
-        const { isMouseTooltipVisible } = this.state;
         const targetLabelStatus = this.handleCheckLabel(labels, labelToCheck);
-
-        const tooltipClass = classnames('pg-profile-page-verification__step__tooltip tooltip-hover', {
-            'tooltip-hover--visible': isMouseTooltipVisible,
-        });
 
         switch (targetLabelStatus) {
             case 'verified':
@@ -154,17 +159,16 @@ class ProfileVerificationComponent extends React.Component<Props, State> {
                                 <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.subtitle`} />
                             </div>
                         </div>
-                        <div
-                            className="pg-profile-page-verification__step__label pg-profile-page-verification__step__label--rejected"
-                            onMouseEnter={e => this.handleHoverTooltipIcon()}
-                            onMouseLeave={e => this.handleToggleTooltipVisible()}
+                        <OverlayTrigger
+                            placement="bottom"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={Tooltip({ title: `page.body.profile.verification.${labelToCheck}.rejected.tooltip`})}
                         >
-                            <Link to="/confirm"><FormattedMessage id="page.body.profile.verification.reverify" /></Link>
-                            <CrossIcon />
-                        </div>
-                        <span className={tooltipClass}>
-                            <FormattedMessage id={`page.body.profile.verification.${labelToCheck}.rejected.tooltip`} />
-                        </span>
+                            <div className="pg-profile-page-verification__step__label pg-profile-page-verification__step__label--rejected">
+                                <Link to="/confirm"><FormattedMessage id="page.body.profile.verification.reverify" /></Link>
+                                <CrossIcon />
+                            </div>
+                        </OverlayTrigger>
                     </div>
                 );
             case 'blocked':
@@ -232,17 +236,6 @@ class ProfileVerificationComponent extends React.Component<Props, State> {
         }
 
         return targetLabelStatus;
-    };
-
-    private handleToggleTooltipVisible = () => {
-        this.setState(prevState => ({
-            isMouseTooltipVisible: !prevState.isMouseTooltipVisible,
-        }));
-    };
-
-    private handleHoverTooltipIcon = () => {
-        changeElementPosition('pg-profile-page-verification__step__tooltip', 0, -100, 20);
-        this.handleToggleTooltipVisible();
     };
 }
 

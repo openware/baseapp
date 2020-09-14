@@ -4,7 +4,12 @@ import { Button, Form } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
-import { CopyableTextField, CustomInput, Table } from '../../components';
+import {
+    CopyableTextField,
+    CustomInput,
+    Pagination,
+    Table,
+} from '../../components';
 import { localeDate } from '../../helpers/localeDate';
 import { IntlProps } from '../../index';
 
@@ -25,19 +30,27 @@ import {
 import {
     selectApiKeys,
     selectApiKeysDataLoaded,
+    selectApiKeysFirstElemIndex,
+    selectApiKeysLastElemIndex,
     selectApiKeysModal,
+    selectApiKeysNextPageExists,
+    selectApiKeysPageIndex,
 } from '../../modules/user/apiKeys/selectors';
 
 interface ReduxProps {
-    apiKeys: ApiKeyDataInterface[] | [];
+    apiKeys: ApiKeyDataInterface[];
     dataLoaded: boolean;
     modal: ApiKeyStateModal;
     user: User;
+    pageIndex: number;
+    firstElemIndex: number;
+    lastElemIndex: number;
+    nextPageExists: boolean;
 }
 
 interface DispatchProps {
     toggleApiKeys2FAModal: typeof apiKeys2FAModal;
-    getApiKeys: typeof apiKeysFetch;
+    apiKeysFetch: typeof apiKeysFetch;
     createApiKey: typeof apiKeyCreateFetch;
     updateApiKey: typeof apiKeyUpdateFetch;
     deleteApiKey: typeof apiKeyDeleteFetch;
@@ -72,12 +85,21 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         }
     };
 
-    public componentDidMount(): void {
-        this.props.getApiKeys();
+    public componentDidMount() {
+        this.props.apiKeysFetch({ pageIndex: 0, limit: 4 });
     }
 
     public render() {
-        const {user, dataLoaded, apiKeys} = this.props;
+        const {
+            apiKeys,
+            dataLoaded,
+            firstElemIndex,
+            lastElemIndex,
+            nextPageExists,
+            pageIndex,
+            user,
+        } = this.props;
+
         const modal = this.props.modal.active ? (
             <div className="cr-modal">
                 <div className="cr-email-form">
@@ -115,10 +137,20 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                 )}
 
                 {user.otp && dataLoaded && apiKeys.length > 0 && (
-                    <Table
-                        header={this.getTableHeaders()}
-                        data={apiKeys && apiKeys.length ? this.getTableData(apiKeys) : [[]]}
-                    />
+                    <React.Fragment>
+                        <Table
+                            header={this.getTableHeaders()}
+                            data={this.getTableData(apiKeys)}
+                        />
+                        <Pagination
+                            firstElemIndex={firstElemIndex}
+                            lastElemIndex={lastElemIndex}
+                            page={pageIndex}
+                            nextPageExists={nextPageExists}
+                            onClickPrevPage={this.onClickPrevPage}
+                            onClickNextPage={this.onClickNextPage}
+                        />
+                    </React.Fragment>
                 )}
 
                 {modal}
@@ -159,7 +191,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Form>
                             <Form.Check
                                 type="switch"
-                                id="apiKeyCheck"
+                                id={`apiKeyCheck-${item.kid}`}
                                 label=""
                                 onChange={this.handleToggleStateKeyClick(item)}
                                 checked={item.state === 'active'}
@@ -435,6 +467,16 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         this.props.deleteApiKey(payload);
         this.setState({otpCode: ''});
     };
+
+    private onClickPrevPage = () => {
+        const { pageIndex } = this.props;
+        this.props.apiKeysFetch({ pageIndex: Number(pageIndex) - 1, limit: 4 });
+    };
+
+    private onClickNextPage = () => {
+        const { pageIndex } = this.props;
+        this.props.apiKeysFetch({ pageIndex: Number(pageIndex) + 1, limit: 4 });
+    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -442,12 +484,16 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     dataLoaded: selectApiKeysDataLoaded(state),
     modal: selectApiKeysModal(state),
     user: selectUserInfo(state),
+    pageIndex: selectApiKeysPageIndex(state),
+    firstElemIndex: selectApiKeysFirstElemIndex(state, 4),
+    lastElemIndex: selectApiKeysLastElemIndex(state, 4),
+    nextPageExists: selectApiKeysNextPageExists(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         toggleApiKeys2FAModal: (payload: ApiKeys2FAModal['payload']) => dispatch(apiKeys2FAModal(payload)),
-        getApiKeys: () => dispatch(apiKeysFetch()),
+        apiKeysFetch: payload => dispatch(apiKeysFetch(payload)),
         createApiKey: payload => dispatch(apiKeyCreateFetch(payload)),
         updateApiKey: payload => dispatch(apiKeyUpdateFetch(payload)),
         deleteApiKey: payload => dispatch(apiKeyDeleteFetch(payload)),

@@ -86,7 +86,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
     const getContent = () => {
         if (isAccountActivated || generateAddressTriggered) {
             return (
-                <>
+                <React.Fragment>
                     <div>
                         <p className={'cr-deposit-info'}>{text}</p>
                         {data ? <div className="d-none d-md-block qr-code-wrapper"><QRCode dimensions={size} data={data}/></div> : null}
@@ -105,7 +105,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
                             </fieldset>
                         </form>
                     </div>
-                </>
+                </React.Fragment>
             );
         }
 

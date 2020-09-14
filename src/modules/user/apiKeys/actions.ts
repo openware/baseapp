@@ -23,11 +23,19 @@ export interface ApiKeyDataInterface {
 
 export interface ApiKeysFetch {
     type: typeof API_KEYS_FETCH;
+    payload: {
+        pageIndex: number;
+        limit: number;
+    };
 }
 
 export interface ApiKeysData {
     type: typeof API_KEYS_DATA;
-    payload: ApiKeyDataInterface[];
+    payload: {
+        apiKeys: ApiKeyDataInterface[];
+        pageIndex: number;
+        nextPageExists: boolean;
+    };
 }
 
 export interface ApiKeyCreateFetch {
@@ -76,8 +84,9 @@ export interface ApiKeys2FAModal {
     payload: ApiKeysState['modal'];
 }
 
-export const apiKeysFetch = (): ApiKeysFetch => ({
+export const apiKeysFetch = (payload: ApiKeysFetch['payload']): ApiKeysFetch => ({
     type: API_KEYS_FETCH,
+    payload,
 });
 
 export const apiKeysData = (payload: ApiKeysData['payload']): ApiKeysData => ({
