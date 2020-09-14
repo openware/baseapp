@@ -9,6 +9,7 @@ import { IntlProps } from '../../index';
 import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesActivate,
+    beneficiariesResendPin,
     Beneficiary,
     RootState,
     selectBeneficiariesActivateError,
@@ -24,6 +25,7 @@ interface ReduxProps {
 
 interface DispatchProps {
     activateAddress: typeof beneficiariesActivate;
+    beneficiariesResendPin: typeof beneficiariesResendPin;
 }
 
 interface OwnProps {
@@ -144,7 +146,7 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
                     <span className="confirmation-modal__content__text">{this.translate('page.body.wallets.beneficiaries.confirmationModal.body.text')}</span>
                 </div>
                 {this.renderConfirmationModalBodyItem('confirmationModalCode')}
-                <div className="cr-email-form__button-wrapper">
+                <div className="cr-email-form__button-wrapper beneficiaries-confirmation-modal__button">
                     <Button
                         disabled={isDisabled}
                         onClick={this.handleSubmitConfirmationModal}
@@ -153,6 +155,11 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
                     >
                         {this.translate('page.body.wallets.beneficiaries.confirmationModal.body.button')}
                     </Button>
+                </div>
+                <div className="beneficiaries-confirmation-modal__deep">
+                    <div className="beneficiaries-confirmation-modal__deep-text" onClick={this.resendCode}>
+                        {this.translate('page.body.wallets.tabs.withdraw.modal.pin_code')}
+                    </div>
                 </div>
             </div>
         );
@@ -200,6 +207,14 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         }
     };
 
+    private resendCode = () => {
+        const { beneficiariesAddData } = this.props;
+
+        if (beneficiariesAddData) {
+            this.props.beneficiariesResendPin({ id: beneficiariesAddData.id });
+        }
+    };
+
     private translate = (id: string) => this.props.intl.formatMessage({ id });
 }
 
@@ -211,6 +226,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     activateAddress: payload => dispatch(beneficiariesActivate(payload)),
+    beneficiariesResendPin: payload => dispatch(beneficiariesResendPin(payload)),
 });
 
 // tslint:disable-next-line:no-any

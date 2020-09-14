@@ -52,3 +52,16 @@ export const selectBeneficiariesDeleteSuccess = (state: RootState): boolean =>
 
 export const selectBeneficiariesDeleteError = (state: RootState): CommonError | undefined =>
     state.user.beneficiaries.delete.error;
+
+/* Beneficiaries resend */
+export const selectBeneficiariesResendPinSentAt = (state: RootState): string =>
+    state.user.beneficiaries.resend.sent_at;
+
+export const selectBeneficiariesResendPinLoading = (state: RootState): boolean =>
+    state.user.beneficiaries.resend.fetching;
+
+export const selectBeneficiariesResendPinSuccess = (state: RootState): boolean =>
+    state.user.beneficiaries.resend.success;
+
+export const selectBeneficiariesResendPinError = (state: RootState): CommonError | undefined =>
+    state.user.beneficiaries.resend.error;

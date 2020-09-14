@@ -13,6 +13,9 @@ import {
     BENEFICIARIES_DELETE_ERROR,
     BENEFICIARIES_ERROR,
     BENEFICIARIES_FETCH,
+    BENEFICIARIES_RESEND,
+    BENEFICIARIES_RESEND_DATA,
+    BENEFICIARIES_RESEND_ERROR,
 } from './constants';
 import { Beneficiary } from './types';
 
@@ -165,5 +168,26 @@ describe('Beneficiaries actions', () => {
     it('should check beneficiariesError action creator', () => {
         const expectedAction = { type: BENEFICIARIES_ERROR, payload: fakeError };
         expect(actions.beneficiariesError(fakeError)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesResendPin action creator', () => {
+        const expectedAction = {
+            type: BENEFICIARIES_RESEND,
+            payload: { id: 0 },
+        };
+        expect(actions.beneficiariesResendPin({ id: 0 })).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesResendPinData action creator', () => {
+        const expectedAction = {
+            type: BENEFICIARIES_RESEND_DATA,
+            payload: { sent_at: ''},
+        };
+        expect(actions.beneficiariesResendPinData(expectedAction.payload)).toEqual(expectedAction);
+    });
+
+    it('should check beneficiariesResendPinError action creator', () => {
+        const expectedAction = { type: BENEFICIARIES_RESEND_ERROR, payload: fakeError };
+        expect(actions.beneficiariesResendPinError(fakeError)).toEqual(expectedAction);
     });
 });

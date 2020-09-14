@@ -14,3 +14,7 @@ export const BENEFICIARIES_CREATE_ERROR = 'beneficiaries/CREATE_ERROR';
 export const BENEFICIARIES_DELETE       = 'beneficiaries/DELETE';
 export const BENEFICIARIES_DELETE_DATA  = 'beneficiaries/DELETE_DATA';
 export const BENEFICIARIES_DELETE_ERROR = 'beneficiaries/DELETE_ERROR';
+
+export const BENEFICIARIES_RESEND = 'beneficiaries/BENEFICIARIES_RESEND';
+export const BENEFICIARIES_RESEND_DATA = 'beneficiaries/BENEFICIARIES_RESEND_DATA';
+export const BENEFICIARIES_RESEND_ERROR = 'beneficiaries/BENEFICIARIES_RESEND_ERROR';

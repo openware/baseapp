@@ -300,4 +300,50 @@ describe('Beneficiaries reducer', () => {
          };
         expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesDeleteError(error))).toEqual(expectedState);
     });
+
+    it('should handle beneficiariesResendPin', () => {
+        const expectedState = {
+            ...initialBeneficiariesState,
+            resend: {
+                ...initialBeneficiariesState.resend,
+                fetching: true,
+            },
+        };
+
+        const fakePayload = {
+            id: 1,
+        };
+
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPin(fakePayload))).toEqual(expectedState);
+    });
+
+    it('should handle beneficiariesResendPinData', () => {
+        const payload = {
+            sent_at: '',
+        };
+        const expectedState = {
+            ...initialBeneficiariesState,
+            resend: {
+                ...initialBeneficiariesState.resend,
+                sent_at: '',
+                fetching: false,
+                success: true,
+            },
+         };
+
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPinData(payload))).toEqual(expectedState);
+    });
+
+    it('should handle beneficiariesResendPinError', () => {
+        const expectedState = {
+            ...initialBeneficiariesState,
+            resend: {
+                ...initialBeneficiariesState.resend,
+                fetching: false,
+                success: false,
+                error: error,
+            },
+         };
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPinError(error))).toEqual(expectedState);
+    });
 });

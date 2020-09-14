@@ -14,6 +14,9 @@ import {
     BENEFICIARIES_DELETE_ERROR,
     BENEFICIARIES_ERROR,
     BENEFICIARIES_FETCH,
+    BENEFICIARIES_RESEND,
+    BENEFICIARIES_RESEND_DATA,
+    BENEFICIARIES_RESEND_ERROR,
 } from './constants';
 import { Beneficiary } from './types';
 
@@ -54,6 +57,12 @@ export interface BeneficiariesState {
         success: boolean;
         error?: CommonError;
     };
+    resend: {
+        sent_at: string;
+        fetching: boolean;
+        success: boolean;
+        error?: CommonError;
+    };
 }
 
 export const initialBeneficiariesState: BeneficiariesState = {
@@ -76,6 +85,11 @@ export const initialBeneficiariesState: BeneficiariesState = {
         data: {
             id: 0,
         },
+        fetching: false,
+        success: false,
+    },
+    resend: {
+        sent_at: '',
         fetching: false,
         success: false,
     },
@@ -214,6 +228,36 @@ const beneficiariesDeleteReducer = (state: BeneficiariesState['delete'], action:
     }
 };
 
+const beneficiariesResendReducer = (state: BeneficiariesState['resend'], action: BeneficiariesActions) => {
+    switch (action.type) {
+        case BENEFICIARIES_RESEND:
+            return {
+                ...state,
+                fetching: true,
+                success: false,
+                error: undefined,
+            };
+        case BENEFICIARIES_RESEND_DATA:
+            return {
+                ...state,
+                sent_at: action.payload.sent_at,
+                fetching: false,
+                success: true,
+                error: undefined,
+            };
+        case BENEFICIARIES_RESEND_ERROR:
+            return {
+                ...state,
+                sent_at: '',
+                fetching: false,
+                success: false,
+                error: action.payload,
+            };
+        default:
+            return state;
+    }
+};
+
 export const beneficiariesReducer = (state = initialBeneficiariesState, action: BeneficiariesActions) => {
     switch (action.type) {
         case BENEFICIARIES_ACTIVATE:
@@ -253,8 +297,16 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
                 ...state,
                 delete: beneficiariesDeleteReducer(beneficiariesDeleteState, action),
             };
+      case BENEFICIARIES_RESEND:
+      case BENEFICIARIES_RESEND_DATA:
+      case BENEFICIARIES_RESEND_ERROR:
+          const beneficiariesResendState = { ...state.resend };
+
+          return {
+              ...state,
+              resend: beneficiariesResendReducer(beneficiariesResendState, action),
+          };
         default:
             return state;
     }
 };
-

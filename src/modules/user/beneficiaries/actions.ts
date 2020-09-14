@@ -13,6 +13,9 @@ import {
     BENEFICIARIES_DELETE_ERROR,
     BENEFICIARIES_ERROR,
     BENEFICIARIES_FETCH,
+    BENEFICIARIES_RESEND,
+    BENEFICIARIES_RESEND_DATA,
+    BENEFICIARIES_RESEND_ERROR,
 } from './constants';
 import { Beneficiary } from './types';
 
@@ -92,6 +95,25 @@ export interface BeneficiariesDeleteError {
     payload: CommonError;
 }
 
+export interface BeneficiariesResendPin {
+    type: typeof BENEFICIARIES_RESEND;
+    payload: {
+        id: number;
+    };
+}
+
+export interface BeneficiariesResendPinData {
+    type: typeof BENEFICIARIES_RESEND_DATA;
+    payload: {
+        sent_at: string;
+    };
+}
+
+export interface BeneficiariesResendPinError {
+    type: typeof BENEFICIARIES_RESEND_ERROR;
+    payload: CommonError;
+}
+
 export type BeneficiariesActions =
     BeneficiariesFetch
     | BeneficiariesData
@@ -105,7 +127,10 @@ export type BeneficiariesActions =
     | BeneficiariesCreateError
     | BeneficiariesDelete
     | BeneficiariesDeleteData
-    | BeneficiariesDeleteError;
+    | BeneficiariesDeleteError
+    | BeneficiariesResendPin
+    | BeneficiariesResendPinData
+    | BeneficiariesResendPinError;
 
 export const beneficiariesFetch = (): BeneficiariesFetch => ({
     type: BENEFICIARIES_FETCH,
@@ -168,5 +193,20 @@ export const beneficiariesDeleteData = (payload: BeneficiariesDeleteData['payloa
 
 export const beneficiariesDeleteError = (payload: BeneficiariesDeleteError['payload']): BeneficiariesDeleteError => ({
     type: BENEFICIARIES_DELETE_ERROR,
+    payload,
+});
+
+export const beneficiariesResendPin = (payload: BeneficiariesResendPin['payload']): BeneficiariesResendPin => ({
+    type: BENEFICIARIES_RESEND,
+    payload,
+});
+
+export const beneficiariesResendPinData = (payload: BeneficiariesResendPinData['payload']): BeneficiariesResendPinData => ({
+    type: BENEFICIARIES_RESEND_DATA,
+    payload,
+});
+
+export const beneficiariesResendPinError = (payload: BeneficiariesResendPinError['payload']): BeneficiariesResendPinError => ({
+    type: BENEFICIARIES_RESEND_ERROR,
     payload,
 });

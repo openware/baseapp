@@ -190,6 +190,7 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.modal.confirmation': 'Подтверждение',
     'page.body.wallets.tabs.withdraw.modal.message1': 'Вы получите ',
     'page.body.wallets.tabs.withdraw.modal.message2': ' на кошелек',
+    'page.body.wallets.tabs.withdraw.modal.pin_code': 'Отправить пин-код',
     'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Отменить',
     'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Вывести',
 
@@ -199,6 +200,7 @@ export const ru: LangType = {
     'success.beneficiaries.created': 'Beficiaries: successfully created',
     'success.beneficiaries.activated': 'Beficiaries: successfully activated',
     'success.beneficiaries.deleted': 'Beficiaries: successfully deleted',
+    'success.beneficiaries.resend': 'Beficiaries: Pin code is successfully resent',
 
     'page.body.wallets.beneficiaries.title': 'Withdraw address',
     'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',
