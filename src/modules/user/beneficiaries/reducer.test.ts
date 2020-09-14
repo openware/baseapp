@@ -300,4 +300,51 @@ describe('Beneficiaries reducer', () => {
          };
         expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesDeleteError(error))).toEqual(expectedState);
     });
+
+    it('should handle beneficiariesResendPin', () => {
+        const expectedState = {
+            ...initialBeneficiariesState,
+            resendPin: {
+                ...initialBeneficiariesState.resendPin,
+                fetching: true,
+            },
+        };
+
+        const fakePayload = {
+            id: 1,
+        };
+
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPin(fakePayload))).toEqual(expectedState);
+    });
+
+    it('should handle beneficiariesResendPinData', () => {
+        const fakePayload = {
+            id: 1,
+        };
+
+        const expectedState = {
+            ...initialBeneficiariesState,
+            resendPin: {
+                ...initialBeneficiariesState.resendPin,
+                data: fakePayload,
+                fetching: false,
+                success: true,
+            },
+         };
+
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPinData(fakePayload))).toEqual(expectedState);
+    });
+
+    it('should handle beneficiariesResendPinError', () => {
+        const expectedState = {
+            ...initialBeneficiariesState,
+            resendPin: {
+                ...initialBeneficiariesState.resendPin,
+                fetching: false,
+                success: false,
+                error: error,
+            },
+         };
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPinError(error))).toEqual(expectedState);
+    });
 });
