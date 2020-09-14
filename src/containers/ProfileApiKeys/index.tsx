@@ -191,7 +191,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                         <Form>
                             <Form.Check
                                 type="switch"
-                                id="apiKeyCheck"
+                                id={`apiKeyCheck${item.kid}`}
                                 label=""
                                 onChange={this.handleToggleStateKeyClick(item)}
                                 checked={item.state === 'active'}

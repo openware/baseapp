@@ -433,6 +433,21 @@ export const ru: LangType = {
     'page.body.profile.verification.verify': 'Verify',
     'page.body.profile.verification.verified': 'Verified',
     'page.body.profile.verification.progress.level': 'Level',
+    'page.body.profile.verification.progress.tooltip.email.default': 'Email address to to get level 1 and allow Withdrawal',
+    'page.body.profile.verification.progress.tooltip.email.rejected': 'Your email was rejected',
+    'page.body.profile.verification.progress.tooltip.email.pending': 'Email address verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.phone.default': 'Verify Phone number to get level 2 and allow Deposits and Trades',
+    'page.body.profile.verification.progress.tooltip.phone.rejected': 'Your phone was rejected',
+    'page.body.profile.verification.progress.tooltip.phone.pending': 'Phone number verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.profile.default': 'Complete your profile to get level 3 and Increase Withdrawal limit to 1 BTC',
+    'page.body.profile.verification.progress.tooltip.profile.rejected': 'Your profile was rejected',
+    'page.body.profile.verification.progress.tooltip.profile.pending': 'Profile verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.document.default': 'Verify you identity to get level 4 and Increase Withdrawal limit to 10 BTC',
+    'page.body.profile.verification.progress.tooltip.document.rejected': 'Your identity was rejected',
+    'page.body.profile.verification.progress.tooltip.document.pending': 'Identity verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.address.default': 'Verify Proof of residence to get level 5 and Increase Withdrawal limit to 100 BTC',
+    'page.body.profile.verification.progress.tooltip.address.rejected': 'Your proof of residence was rejected',
+    'page.body.profile.verification.progress.tooltip.address.pending': 'Proof of residence verification may take 1-3 business days.',
 
 
     /* KYC */
