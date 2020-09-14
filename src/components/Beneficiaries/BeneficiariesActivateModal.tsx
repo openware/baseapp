@@ -9,6 +9,7 @@ import { IntlProps } from '../../index';
 import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesActivate,
+    beneficiariesResendPin,
     Beneficiary,
     RootState,
     selectBeneficiariesActivateError,
@@ -24,6 +25,7 @@ interface ReduxProps {
 
 interface DispatchProps {
     activateAddress: typeof beneficiariesActivate;
+    resendPin: typeof beneficiariesResendPin;
 }
 
 interface OwnProps {
@@ -146,6 +148,13 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
                 {this.renderConfirmationModalBodyItem('confirmationModalCode')}
                 <div className="cr-email-form__button-wrapper">
                     <Button
+                        onClick={this.handleResendConfirmationCode}
+                        size="lg"
+                        variant="primary"
+                    >
+                        {this.translate('page.body.wallets.beneficiaries.confirmationModal.body.resendButton')}
+                    </Button>
+                    <Button
                         disabled={isDisabled}
                         onClick={this.handleSubmitConfirmationModal}
                         size="lg"
@@ -192,6 +201,18 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         }
     };
 
+    private handleResendConfirmationCode = () => {
+        const { beneficiariesAddData } = this.props;
+
+        if (beneficiariesAddData) {
+            const payload = {
+                id: beneficiariesAddData.id,
+            };
+
+            this.props.resendPin(payload);
+        }
+    };
+
     private handleClickToggleConfirmationModal = (clear?: boolean) => () => {
         this.props.handleToggleConfirmationModal();
 
@@ -211,6 +232,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     activateAddress: payload => dispatch(beneficiariesActivate(payload)),
+    resendPin: payload => dispatch(beneficiariesResendPin(payload)),
 });
 
 // tslint:disable-next-line:no-any
