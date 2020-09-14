@@ -10,9 +10,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileTwoFactorAuth } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
-import { CustomInput, Modal } from '../../components';
+import { ChangePassword, CustomInput, Modal } from '../../components';
 import { IntlProps } from '../../index';
-import { ChangePassword } from '../../mobile/components';
 import {
     RootState,
     selectUserInfo,

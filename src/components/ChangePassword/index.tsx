@@ -2,9 +2,9 @@ import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { CloseIcon } from '../../../assets/images/CloseIcon';
-import { CustomInput } from '../../../components/CustomInput';
-import { PASSWORD_REGEX } from '../../../helpers';
+import { CloseIcon } from '../../assets/images/CloseIcon';
+import { PASSWORD_REGEX } from '../../helpers';
+import { CustomInput } from '../CustomInput';
 
 export const ChangePasswordComponent = props => {
     const [oldPassword, setOldPassword] = React.useState('');

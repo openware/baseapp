@@ -2,8 +2,9 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { ChangePassword } from '../../../components';
 import { changePasswordFetch } from '../../../modules';
-import { ChangePassword, Subheader } from '../../components';
+import { Subheader } from '../../components';
 
 const ChangePasswordScreenComponent: React.FC = () => {
     const dispatch = useDispatch();
