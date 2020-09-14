@@ -1,6 +1,8 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
+import { useIntl } from 'react-intl';
+import { AMOUNT_PERCENTAGE_ARRAY, DEFAULT_ORDER_TYPES } from '../../constants';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 import { Decimal } from '../Decimal';
 import { DropdownComponent } from '../Dropdown';
@@ -9,7 +11,6 @@ import { OrderInput } from '../OrderInput';
 import { PercentageButton } from '../PercentageButton';
 
 type OnSubmitCallback = (order: OrderProps) => void;
-type DropdownElem = number | string | React.ReactNode;
 type FormType = 'buy' | 'sell';
 
 export interface OrderFormProps {
@@ -25,14 +26,6 @@ export interface OrderFormProps {
      * Type of form, can be 'buy' or 'cell'
      */
     type: FormType;
-    /**
-     * Available types of order
-     */
-    orderTypes: DropdownElem[];
-    /**
-     * Available types of order without translations
-     */
-    orderTypesIndex: DropdownElem[];
     /**
      * Additional class name. By default element receives `cr-order` class
      * @default empty
@@ -118,237 +111,88 @@ const handleSetValue = (value: string | number | undefined, defaultValue: string
     value || defaultValue
 );
 
-export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormState> {
-    constructor(props: OrderFormProps) {
-        super(props);
-        this.state = {
-            orderType: 'Limit',
-            price: '',
-            priceMarket: this.props.priceMarket,
-            priceFocused: false,
-            amountFocused: false,
-        };
-    }
+export const OrderFormComponent = (props: OrderFormProps) => {
+    const { formatMessage } = useIntl();
 
-    public componentWillReceiveProps(next: OrderFormProps) {
-        const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.props.currentMarketBidPrecision);
-        if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
-            this.setState({
-                price: nextPriceLimitTruncated,
-            });
-        }
+    const [orderType, setOrderType] = React.useState<OrderFormState['orderType']>('Limit');
+    const [price, setPrice] = React.useState<OrderFormState['price']>('');
+    const [priceMarket, setPriceMarket] = React.useState<OrderFormState['priceMarket']>(props.priceMarket);
+    const [priceFocused, setPriceFocused] = React.useState<OrderFormState['amountFocused']>(false);
+    const [amountFocused, setAmountFocused] = React.useState<OrderFormState['priceFocused']>(false);
 
-        if (this.state.priceMarket !== next.priceMarket) {
-            this.setState({
-                priceMarket: next.priceMarket,
-            });
-        }
-    }
+    const orderTypes = React.useMemo(() => [
+        formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.limit' }),
+        formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.market' }),
+    ], [formatMessage]);
 
-    public render() {
-        const {
-            type,
-            orderTypes,
-            className,
-            from,
-            to,
-            available,
-            orderTypeText,
-            priceText,
-            amountText,
-            totalText,
-            availableText,
-            submitButtonText,
-            currentMarketAskPrecision,
-            currentMarketBidPrecision,
-            totalPrice,
-            amount,
-        } = this.props;
-        const {
-            orderType,
-            price,
-            priceMarket,
-            priceFocused,
-            amountFocused,
-        } = this.state;
-        const safeAmount = Number(amount) || 0;
-        const safePrice = totalPrice / Number(amount) || priceMarket;
+    const {
+        type,
+        className,
+        from,
+        to,
+        available,
+        orderTypeText,
+        priceText,
+        amountText,
+        totalText,
+        availableText,
+        submitButtonText,
+        currentMarketAskPrecision,
+        currentMarketBidPrecision,
+        handleChangeAmountByButton,
+        handleAmountChange,
+        listenInputPrice,
+        totalPrice,
+        amount,
+        onSubmit,
+        disabled,
+    } = props;
 
-        const total = orderType === 'Market'
-            ? totalPrice : safeAmount * (Number(price) || 0);
-        const amountPercentageArray = [0.25, 0.5, 0.75, 1];
+    const safePrice = React.useMemo(() => totalPrice / Number(amount) || priceMarket, [totalPrice, amount, priceMarket]);
 
-        const availablePrecision = type === 'buy' ? currentMarketBidPrecision : currentMarketAskPrecision;
-        const availableCurrency = type === 'buy' ? from : to;
+    const total = React.useMemo(() => (orderType === 'Market'
+        ? totalPrice : (Number(amount) || 0) * (Number(price) || 0)), [orderType, price, totalPrice, amount]);
 
-        return (
-            <div className={classnames('cr-order-form', className)} onKeyPress={this.handleEnterPress}>
-                <div className="cr-order-item">
-                    {orderTypeText ? <div className="cr-order-item__dropdown__label">{orderTypeText}</div> : null}
-                    <DropdownComponent list={orderTypes} onSelect={this.handleOrderTypeChange} placeholder=""/>
-                </div>
-                {orderType === 'Limit' ? (
-                    <div className="cr-order-item">
-                        <OrderInput
-                            currency={from}
-                            label={priceText}
-                            placeholder={priceText}
-                            value={price || ''}
-                            isFocused={priceFocused}
-                            handleChangeValue={this.handlePriceChange}
-                            handleFocusInput={this.handleFieldFocus}
-                        />
-                    </div>
-                ) : (
-                    <div className="cr-order-item">
-                        <div className="cr-order-input">
-                            <fieldset className="cr-order-input__fieldset">
-                                <legend className={'cr-order-input__fieldset__label'}>
-                                    {handleSetValue(priceText, '')}
-                                </legend>
-                                <div className="cr-order-input__fieldset__input">
-                                    &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision), '0')}</span>
-                                </div>
-                            </fieldset>
-                            <div className="cr-order-input__crypto-icon">
-                                {from.toUpperCase()}
-                            </div>
-                        </div>
-                    </div>
-                )}
-                <div className="cr-order-item">
-                    <OrderInput
-                        currency={to}
-                        label={amountText}
-                        placeholder={amountText}
-                        value={amount || ''}
-                        isFocused={amountFocused}
-                        handleChangeValue={this.handleAmountChange}
-                        handleFocusInput={this.handleFieldFocus}
-                    />
-                </div>
+    const availablePrecision = type === 'buy' ? currentMarketBidPrecision : currentMarketAskPrecision;
+    const availableCurrency = type === 'buy' ? from : to;
 
-                <div className="cr-order-item">
-                    <div className="cr-order-item__percentage-buttons">
-                        {
-                            amountPercentageArray.map((value, index) => <PercentageButton
-                                value={value}
-                                key={index}
-                                onClick={this.handleChangeAmountByButton}
-                            />)
-                        }
-                    </div>
-                </div>
-
-                <div className="cr-order-item">
-                    <div className="cr-order-item__total">
-                        <label className="cr-order-item__total__label">
-                            {handleSetValue(totalText, 'Total')}
-                        </label>
-                        <div className="cr-order-item__total__content">
-                            {orderType === 'Limit' ? (
-                                <span className="cr-order-item__total__content__amount">
-                                    {total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
-                                </span>
-                            ) : (
-                                <span className="cr-order-item__total__content__amount">
-                                    &asymp;{total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
-                                </span>
-                            )}
-                            <span className="cr-order-item__total__content__currency">
-                                {from.toUpperCase()}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div className="cr-order-item">
-                    <div className="cr-order-item__available">
-                        <label className="cr-order-item__available__label">
-                            {handleSetValue(availableText, 'Available')}
-                        </label>
-                        <div className="cr-order-item__available__content">
-                            <span className="cr-order-item__available__content__amount">
-                                {available ? Decimal.format(available, availablePrecision) : ''}
-                            </span>
-                            <span className="cr-order-item__available__content__currency">
-                                {available ? availableCurrency.toUpperCase() : ''}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div className="cr-order-item">
-                    <Button
-                        block={true}
-                        className="btn-block mr-1 mt-1 btn-lg"
-                        disabled={this.checkButtonIsDisabled()}
-                        onClick={this.handleSubmit}
-                        size="lg"
-                        variant={type === 'buy' ? 'success' : 'danger'}
-                    >
-                        {submitButtonText || type}
-                    </Button>
-                </div>
-            </div>
-        );
-    }
-
-    private handleOrderTypeChange = (index: number) => {
-        const { orderTypesIndex } = this.props;
-        this.setState({
-            orderType: orderTypesIndex[index],
-        });
-    };
-
-    private handleFieldFocus = (field: string | undefined) => {
+    const handleFieldFocus = React.useCallback((field: string | undefined) => {
         switch (field) {
-            case this.props.priceText:
-                this.setState(prev => ({
-                    priceFocused: !prev.priceFocused,
-                }));
-                this.props.listenInputPrice && this.props.listenInputPrice();
+            case priceText:
+                setPriceFocused(prev => !prev);
+                listenInputPrice && listenInputPrice();
                 break;
-            case this.props.amountText:
-                this.setState(prev => ({
-                    amountFocused: !prev.amountFocused,
-                }));
+            case amountText:
+                setAmountFocused(prev => !prev);
                 break;
             default:
                 break;
         }
-    };
+    }, [amountText, listenInputPrice, priceText]);
 
-    private handlePriceChange = (value: string) => {
-        const { currentMarketBidPrecision } = this.props;
+    const handlePriceChange = React.useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
 
         if (convertedValue.match(precisionRegExp(currentMarketBidPrecision))) {
-            this.setState({
-                price: convertedValue,
-            });
+            setPrice(convertedValue);
         }
 
-        this.props.listenInputPrice && this.props.listenInputPrice();
-    };
+        listenInputPrice && listenInputPrice();
+    }, [currentMarketBidPrecision, listenInputPrice]);
 
-    private handleAmountChange = (value: string) => {
-        const { currentMarketAskPrecision } = this.props;
+    const changeAmount = React.useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
 
         if (convertedValue.match(precisionRegExp(currentMarketAskPrecision))) {
-            this.props.handleAmountChange(convertedValue, this.props.type);
+            handleAmountChange(convertedValue, type);
         }
-    };
+    }, [currentMarketAskPrecision, handleAmountChange, type]);
 
-    private handleChangeAmountByButton = (value: number) => {
-        const { orderType, price } = this.state;
+    const changeAmountByButton = React.useCallback((value: number) => {
+        handleChangeAmountByButton(value, orderType, price, type);
+    }, [orderType, price, type, handleChangeAmountByButton]);
 
-        this.props.handleChangeAmountByButton(value, orderType, price, this.props.type);
-    };
-
-    private handleSubmit = () => {
-        const { available, type, amount } = this.props;
-        const { price, priceMarket, orderType } = this.state;
-
+    const handleSubmit = React.useCallback(() => {
         const order = {
             type,
             orderType,
@@ -357,31 +201,148 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             available: available || 0,
         };
 
-        this.props.onSubmit(order);
-        this.setState({
-            price: '',
-        }, () => {
-            this.props.handleAmountChange('', this.props.type);
-        });
-    };
+        onSubmit(order);
+        setPrice('');
+        handleAmountChange('', type);
+    }, [amount, available, price, priceMarket, type, orderType, onSubmit, handleAmountChange]);
 
-    private checkButtonIsDisabled = (): boolean => {
-        const { disabled, available, amount, totalPrice } = this.props;
-        const { orderType, priceMarket, price } = this.state;
-        const safePrice = totalPrice / Number(amount) || priceMarket;
-
+    const checkButtonIsDisabled = React.useCallback((): boolean => {
         const invalidAmount = Number(amount) <= 0;
         const invalidLimitPrice = Number(price) <= 0 && orderType === 'Limit';
         const invalidMarketPrice = safePrice <= 0 && orderType === 'Market';
 
         return disabled || !available || invalidAmount || invalidLimitPrice || invalidMarketPrice;
-    };
+    }, [amount, available, orderType, price, disabled, safePrice]);
 
-    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleEnterPress = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
 
-            this.handleSubmit();
+            handleSubmit();
         }
-    };
-}
+    }, [handleSubmit]);
+
+    React.useEffect(() => {
+        const nextPriceLimitTruncated = Decimal.format(props.priceLimit, props.currentMarketBidPrecision);
+        if (orderType === 'Limit' && props.priceLimit && nextPriceLimitTruncated !== price) {
+            setPrice(nextPriceLimitTruncated);
+        }
+
+        if (priceMarket !== props.priceMarket) {
+            setPriceMarket(props.priceMarket);
+        }
+    }, [props.priceLimit, props.priceMarket, props.currentMarketBidPrecision, orderType, priceMarket, price]);
+
+    return (
+        <div className={classnames('cr-order-form', className)} onKeyPress={handleEnterPress}>
+            <div className="cr-order-item">
+                {orderTypeText ? <div className="cr-order-item__dropdown__label">{orderTypeText}</div> : null}
+                <DropdownComponent list={orderTypes} onSelect={index => setOrderType(DEFAULT_ORDER_TYPES[index] as string)} placeholder=""/>
+            </div>
+            {orderType === 'Limit' ? (
+                <div className="cr-order-item">
+                    <OrderInput
+                        currency={from}
+                        label={priceText}
+                        placeholder={priceText}
+                        value={price || ''}
+                        isFocused={priceFocused}
+                        handleChangeValue={handlePriceChange}
+                        handleFocusInput={handleFieldFocus}
+                    />
+                </div>
+            ) : (
+                <div className="cr-order-item">
+                    <div className="cr-order-input">
+                        <fieldset className="cr-order-input__fieldset">
+                            <legend className={'cr-order-input__fieldset__label'}>
+                                {handleSetValue(priceText, '')}
+                            </legend>
+                            <div className="cr-order-input__fieldset__input">
+                                &asymp;<span className="cr-order-input__fieldset__input__price">{handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision), '0')}</span>
+                            </div>
+                        </fieldset>
+                        <div className="cr-order-input__crypto-icon">
+                            {from.toUpperCase()}
+                        </div>
+                    </div>
+                </div>
+            )}
+            <div className="cr-order-item">
+                <OrderInput
+                    currency={to}
+                    label={amountText}
+                    placeholder={amountText}
+                    value={amount || ''}
+                    isFocused={amountFocused}
+                    handleChangeValue={changeAmount}
+                    handleFocusInput={handleFieldFocus}
+                />
+            </div>
+
+            <div className="cr-order-item">
+                <div className="cr-order-item__percentage-buttons">
+                    {
+                        AMOUNT_PERCENTAGE_ARRAY.map((value, index) => <PercentageButton
+                            value={value}
+                            key={index}
+                            onClick={changeAmountByButton}
+                        />)
+                    }
+                </div>
+            </div>
+
+            <div className="cr-order-item">
+                <div className="cr-order-item__total">
+                    <label className="cr-order-item__total__label">
+                        {handleSetValue(totalText, 'Total')}
+                    </label>
+                    <div className="cr-order-item__total__content">
+                        {orderType === 'Limit' ? (
+                            <span className="cr-order-item__total__content__amount">
+                                    {total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
+                                </span>
+                        ) : (
+                            <span className="cr-order-item__total__content__amount">
+                                    &asymp;{total.toFixed(currentMarketAskPrecision + currentMarketBidPrecision)}
+                                </span>
+                        )}
+                        <span className="cr-order-item__total__content__currency">
+                                {from.toUpperCase()}
+                            </span>
+                    </div>
+                </div>
+            </div>
+            <div className="cr-order-item">
+                <div className="cr-order-item__available">
+                    <label className="cr-order-item__available__label">
+                        {handleSetValue(availableText, 'Available')}
+                    </label>
+                    <div className="cr-order-item__available__content">
+                            <span className="cr-order-item__available__content__amount">
+                                {available ? Decimal.format(available, availablePrecision) : ''}
+                            </span>
+                        <span className="cr-order-item__available__content__currency">
+                                {available ? availableCurrency.toUpperCase() : ''}
+                            </span>
+                    </div>
+                </div>
+            </div>
+            <div className="cr-order-item">
+                <Button
+                    block={true}
+                    className="btn-block mr-1 mt-1 btn-lg"
+                    disabled={checkButtonIsDisabled()}
+                    onClick={handleSubmit}
+                    size="lg"
+                    variant={type === 'buy' ? 'success' : 'danger'}
+                >
+                    {submitButtonText || type}
+                </Button>
+            </div>
+        </div>
+    );
+};
+
+
+export const OrderForm = React.memo(OrderFormComponent);

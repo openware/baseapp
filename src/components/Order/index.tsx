@@ -140,11 +140,6 @@ interface State {
     amountBuy: string;
 }
 
-const defaultOrderTypes: DropdownElem[] = [
-    'Limit',
-    'Market',
-];
-
 const splitBorder = 449;
 const defaultWidth = 635;
 
@@ -225,8 +220,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
             submitSellButtonText,
             labelFirst,
             labelSecond,
-            orderTypes,
-            orderTypesIndex,
             asks,
             bids,
             listenInputPrice,
@@ -253,8 +246,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     priceMarket={priceMarket}
                     priceLimit={priceLimit}
                     onSubmit={this.props.onSubmit}
-                    orderTypes={orderTypes || defaultOrderTypes}
-                    orderTypesIndex={orderTypesIndex || defaultOrderTypes}
                     currentMarketAskPrecision={currentMarketAskPrecision}
                     currentMarketBidPrecision={currentMarketBidPrecision}
                     orderTypeText={orderTypeText}

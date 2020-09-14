@@ -74,11 +74,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.orderRef = React.createRef();
     }
 
-    private getOrderTypes = [
-        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.limit' }),
-        this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType.market' }),
-    ];
-
     private orderRef;
 
     public componentDidMount() {
@@ -158,7 +153,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     priceLimit={priceLimit}
                     to={currentMarket.base_unit}
                     handleSendType={this.getOrderType}
-                    orderTypes={this.getOrderTypes}
                     currentMarketAskPrecision={currentMarket.amount_precision}
                     currentMarketBidPrecision={currentMarket.price_precision}
                     width={this.state.width}
