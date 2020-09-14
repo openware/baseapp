@@ -2,6 +2,7 @@ import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+import { CloseIcon } from '../../../assets/images/CloseIcon';
 import { CustomInput } from '../../../components/CustomInput';
 import { PASSWORD_REGEX } from '../../../helpers';
 
@@ -27,6 +28,21 @@ export const ChangePasswordComponent = props => {
         setOldPasswordFocus(false);
         setNewPasswordFocus(false);
         setConfirmPasswordFocus(false);
+    };
+
+    const renderHeader = () => {
+        return (
+            <div className="cr-email-form__options-group">
+                <div className="cr-email-form__option">
+                    <div className="cr-email-form__option-inner">
+                        {props.title}
+                        <div className="cr-email-form__cros-icon" onClick={props.closeModal}>
+                            <CloseIcon className="close-icon" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     };
 
     const renderBody = () => {
@@ -115,8 +131,11 @@ export const ChangePasswordComponent = props => {
 
     return (
         <div className="pg-mobile-change-password">
-            {renderBody()}
-            {renderFooter()}
+            {props.title && renderHeader()}
+            <div className="pg-mobile-change-password__wrapper">
+                {renderBody()}
+                {renderFooter()}
+            </div>
         </div>
     );
 };
