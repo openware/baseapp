@@ -6,6 +6,7 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { kycSteps } from '../../api';
+import { CrossIcon } from '../../assets/images/kyc/CrossIcon';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { Address, Documents, Identity, Phone } from '../../containers';
 import { getVerificationStep, setDocumentTitle } from '../../helpers';
@@ -59,7 +60,7 @@ class ConfirmComponent extends React.Component<Props> {
     };
 
     public render() {
-        const { isSidebarOpen } = this.props;
+        const { history, isSidebarOpen } = this.props;
         const step = this.handleGetVerificationStep();
 
         const containerClass = classnames('pg-container pg-confirm', {
@@ -73,6 +74,10 @@ class ConfirmComponent extends React.Component<Props> {
                 </div>
                 <h3 className="pg-confirm__title">
                     <FormattedMessage id={`page.confirm.title.${step}`} />
+                    <CrossIcon
+                        className="pg-confirm__title__icon"
+                        onClick={e => history.push('/profile')}
+                    />
                 </h3>
                 <div className="pg-confirm__content">
                     {this.renderVerificationStep(step)}
