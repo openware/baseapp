@@ -11,6 +11,7 @@ import {
     setDepositStatusColor,
     setTradesType,
     setWithdrawStatusColor,
+    truncateMiddle,
 } from '../../helpers';
 import { IntlProps } from '../../index';
 import {
@@ -175,7 +176,11 @@ class HistoryComponent extends React.Component<Props> {
                 );
 
                 return [
-                    <div className="pg-history-elem__hide" key={txid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid}</a></div>,
+                    <div className="pg-history-elem__hide" key={txid}>
+                        <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
+                            {truncateMiddle(txid, 30)}
+                        </a>
+                    </div>,
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
@@ -189,7 +194,11 @@ class HistoryComponent extends React.Component<Props> {
                 const wallet = wallets.find(obj => obj.currency === currency);
 
                 return [
-                    <div className="pg-history-elem__hide" key={txid || rid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid || rid}</a></div>,
+                    <div className="pg-history-elem__hide" key={txid || rid}>
+                        <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
+                            {truncateMiddle(txid || rid, 30)}
+                        </a>
+                    </div>,
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),

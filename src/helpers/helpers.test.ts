@@ -383,4 +383,15 @@ describe('Helpers', () => {
             expect(helpers.getTimestampPeriod(1593676605, 120)).toBe(1593669600);
         });
     });
+
+    // truncateMiddle.ts
+    describe('truncateMiddle', () => {
+        it('return correct value', () => {
+            expect(helpers.truncateMiddle('', 0)).toBe('');
+            expect(helpers.truncateMiddle('return correct value', 0)).toBe('...');
+            expect(helpers.truncateMiddle('return correct value', 10)).toBe('retu...lue');
+            expect(helpers.truncateMiddle('return correct value', 30)).toBe('return correct value');
+            expect(helpers.truncateMiddle('return correct value', 10, '****')).toBe('ret****lue');
+        });
+    });
 });
