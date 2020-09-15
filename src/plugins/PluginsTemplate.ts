@@ -15,3 +15,8 @@ export interface PluginsState {
 export const pluginsInstances = {
 
 };
+
+export const pluginsLanguageMap = {
+
+};
+

@@ -15,9 +15,10 @@ const getPlugins = (callback) => {
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const pluginClass = (plugin) => `${capitalize(plugin.name)}Plugin`;
 const pluginStateClass = (plugin) => `${capitalize(plugin.name)}PluginState`;
-const pluginPath = (plugin) => `./${plugin.git ? plugin.git.split('/').pop() : plugin.name}`;
-const pluginsImport = (plugin) => `\nimport { ${pluginClass(plugin)}, ${pluginStateClass(plugin)} } from '${pluginPath(plugin)}';`;
-const styleImports = (plugin) => `\n@import '${pluginPath(plugin)}/styles/style.pcss';`;
+const pluginLanguageMap = (plugin) => `${plugin.name}LanguageMap`;
+const pluginPath = (plugin) => `${plugin.git ? plugin.git.split('/').pop() : plugin.name}`;
+const pluginsImport = (plugin) => `\nimport { ${pluginClass(plugin)}, ${pluginStateClass(plugin)}, ${pluginLanguageMap(plugin)} } from './${pluginPath(plugin)}';`;
+const styleImports = (plugin) => `\n@import './${pluginPath(plugin)}/styles/style.pcss';`;
 
 const getPluginsImports = plugins => {
   let imports = [];
@@ -44,8 +45,13 @@ ${plugins.map(p => "    " + p.name + ": " + pluginStateClass(p) + ";").join("\n"
 }
 
 export const pluginsInstances = {
-${plugins.map(p => "    " + p.name + ": " + pluginClass(p)).join(",\n")}${plugins.length > 1 ? "," : ""}
+${plugins.map(p => "    " + p.name + ": " + pluginClass(p)).join(",\n")}${plugins.length === 1 ? "," : ""}
 };
+
+export const pluginsLanguageMap = {
+${plugins.map(p => "    ..." + pluginLanguageMap(p)).join(",\n")}${plugins.length === 1 ? "," : ""}
+};
+
 `;
 
   fs.writeFileSync("./src/plugins/PluginsTemplate.ts", pluginsTemplate)
@@ -65,6 +71,17 @@ const generatePluginsStyles = plugins => {
 getPlugins(plugins => {
   generatePluginsTemplate(plugins);
   generatePluginsStyles(plugins);
+
+  // copy plugins icons to root plugins folder in order to use lang flag icon
+  plugins.map(p => {
+    exec.result(`cp -r src/plugins/${pluginPath(p)}/assets src/plugins`, function(err, response){
+      if (!err){
+          console.log(`Copied src/plugins/${pluginPath(p)}/assets to src/plugins/assets`);
+      } else {
+          console.error(err);
+      }
+    });
+  });
 });
 
 const wait = time => new Promise((resolve) => setTimeout(resolve, time));

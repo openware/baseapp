@@ -76,6 +76,10 @@ class SidebarContainer extends React.Component<Props, State> {
             'pg-sidebar-wrapper--hidden': !isActive,
         });
 
+        const imageSrc = this.tryRequireRoot(lang)
+            ? require(`../../assets/images/sidebar/${lang}.svg`)
+            : this.tryRequirePlugins(lang) && require(`../../plugins/assets/images/${lang}.svg`);
+
         return (
             <div className={sidebarClassName}>
                 {this.renderProfileLink()}
@@ -86,10 +90,7 @@ class SidebarContainer extends React.Component<Props, State> {
                     <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-menu-language-container">
                         <Dropdown>
                             <Dropdown.Toggle variant="primary" id={languageClassName}>
-                                <img
-                                    src={this.tryRequire(lang) && require(`../../assets/images/sidebar/${lang}.svg`)}
-                                    alt={`${lang}-flag-icon`}
-                                />
+                                <img src={imageSrc} alt={`${lang}-flag-icon`} />
                                 <span className="dropdown-menu-language-selected">{languageName}</span>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
@@ -176,20 +177,23 @@ class SidebarContainer extends React.Component<Props, State> {
     };
 
     public getLanguageDropdownItems = () => {
-        return languages.map((l: string, index: number) =>
-            <Dropdown.Item key={index} onClick={e => this.handleChangeLanguage(l)}>
-                <div className="dropdown-row">
-                    <img
-                        src={this.tryRequire(l) && require(`../../assets/images/sidebar/${l}.svg`)}
-                        alt={`${l}-flag-icon`}
-                    />
-                    <span>{l.toUpperCase()}</span>
-                </div>
-            </Dropdown.Item>,
-        );
+        return languages.map((l: string, index: number) => {
+            const imageSrc = this.tryRequireRoot(l)
+                ? require(`../../assets/images/sidebar/${l}.svg`)
+                : this.tryRequirePlugins(l) && require(`../../plugins/assets/images/${l}.svg`);
+
+            return (
+                <Dropdown.Item key={index} onClick={e => this.handleChangeLanguage(l)}>
+                    <div className="dropdown-row">
+                        <img src={imageSrc} alt={`${l}-flag-icon`} />
+                        <span>{l.toUpperCase()}</span>
+                    </div>
+                </Dropdown.Item>
+                );
+        });
     };
 
-    private tryRequire = (name: string) => {
+    private tryRequireRoot = (name: string) => {
         try {
             require(`../../assets/images/sidebar/${name}.svg`);
 
@@ -199,6 +203,15 @@ class SidebarContainer extends React.Component<Props, State> {
         }
     };
 
+    private tryRequirePlugins = (name: string) => {
+        try {
+            require(`../../plugins/assets/images/${name}.svg`);
+
+            return true;
+        } catch (err) {
+            return false;
+        }
+    };
 
     private handleChangeLanguage = (language: string) => {
         const { user, isLoggedIn } = this.props;

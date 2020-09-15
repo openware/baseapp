@@ -183,6 +183,16 @@ export const en = {
     ...
 }
 ```
+In `yourplugin/translations/index.ts` file you should have constant:
+```typescript
+export const ieoLanguageMap = {
+    ko,
+};
+```
+Which is empty if the plugin uses default languages.
+In case your plugin introduce a new language for baseapp languageMap object should contain a new language.
+Also you need to put new lang in an array to env.js file:
+languages: ['en', 'ru']
 Then in root plugins `constants.tsx` file you should export a function
 ```typescript
 export const ieoTranslations = (lang: string) => {
