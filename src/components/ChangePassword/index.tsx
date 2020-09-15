@@ -24,7 +24,6 @@ export const ChangePasswordComponent = props => {
     const [passwordErrorThirdSolved, setPasswordErrorThirdSolved] = React.useState(false);
     const [passwordPopUp, setPasswordPopUp] = React.useState(false);
 
-    // const passwordWrapper = React.useRef<HTMLDivElement>();
     const intl = useIntl();
 
     const handleChangePassword = () => {
@@ -64,7 +63,7 @@ export const ChangePasswordComponent = props => {
         setNewPassword(value);
         setTimeout(() => {
             props.fetchCurrentPasswordEntropy({ password: value });
-        }, 3000);
+        }, 500);
     };
 
     const handleFocusNewPassword = () => {
@@ -74,20 +73,18 @@ export const ChangePasswordComponent = props => {
 
     const translate = (key: string) => intl.formatMessage({id: key});
 
-    const renderHeader = () => {
-        return (
-            <div className="cr-email-form__options-group">
-                <div className="cr-email-form__option">
-                    <div className="cr-email-form__option-inner">
-                        {props.title}
-                        <div className="cr-email-form__cros-icon" onClick={props.closeModal}>
-                            <CloseIcon className="close-icon" />
-                        </div>
+    const renderHeader = () => (
+        <div className="cr-email-form__options-group">
+            <div className="cr-email-form__option">
+                <div className="cr-email-form__option-inner">
+                    {props.title}
+                    <div className="cr-email-form__cros-icon" onClick={props.closeModal}>
+                        <CloseIcon className="close-icon" />
                     </div>
                 </div>
             </div>
-        );
-    };
+        </div>
+    );
 
     const renderBody = () => {
         const oldPasswordClass = cr('cr-email-form__group', {
@@ -112,7 +109,7 @@ export const ChangePasswordComponent = props => {
                         defaultLabel="Old password"
                         handleChangeInput={setOldPassword}
                         inputValue={oldPassword}
-                        handleFocusInput={() => setOldPasswordFocus(true)}
+                        handleFocusInput={() => setOldPasswordFocus(!oldPasswordFocus)}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
                         autoFocus={true}
@@ -151,7 +148,7 @@ export const ChangePasswordComponent = props => {
                         defaultLabel="Password confirmation"
                         handleChangeInput={setConfirmationPassword}
                         inputValue={confirmationPassword}
-                        handleFocusInput={() => setConfirmPasswordFocus(true)}
+                        handleFocusInput={() => setConfirmPasswordFocus(!confirmPasswordFocus)}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
                         autoFocus={false}
@@ -173,7 +170,7 @@ export const ChangePasswordComponent = props => {
             <div className="pg-mobile-change-password__footer">
                 <Button
                     block={true}
-                    disabled={!isValidForm}
+                    disabled={!isValidForm()}
                     onClick={handleChangePassword}
                     size="lg"
                     variant="primary"
