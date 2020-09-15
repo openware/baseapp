@@ -1,9 +1,15 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { changePasswordFetch } from '../../../modules';
-import { ChangePassword, Subheader } from '../../components';
+import { ChangePassword } from '../../../components';
+import {
+    changePasswordFetch,
+    entropyPasswordFetch,
+    selectConfigs,
+    selectCurrentPasswordEntropy,
+ } from '../../../modules';
+import { Subheader } from '../../components';
 
 const ChangePasswordScreenComponent: React.FC = () => {
     const dispatch = useDispatch();
@@ -17,6 +23,15 @@ const ChangePasswordScreenComponent: React.FC = () => {
         }
     };
 
+    const fetchCurrentPasswordEntropy = payload => {
+        if (payload) {
+            dispatch(entropyPasswordFetch(payload));
+        }
+    };
+
+    const configs = useSelector(selectConfigs);
+    const currentPasswordEntropy = useSelector(selectCurrentPasswordEntropy);
+
     return (
         <React.Fragment>
             <Subheader
@@ -27,6 +42,9 @@ const ChangePasswordScreenComponent: React.FC = () => {
             <div className="pg-mobile-profile-change-password-screen">
                 <ChangePassword
                     handleChangePassword={handleChangePassword}
+                    configs={configs}
+                    currentPasswordEntropy={currentPasswordEntropy}
+                    fetchCurrentPasswordEntropy={fetchCurrentPasswordEntropy}
                 />
             </div>
         </React.Fragment>
