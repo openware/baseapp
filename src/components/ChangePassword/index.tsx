@@ -27,11 +27,17 @@ export const ChangePasswordComponent = props => {
     const intl = useIntl();
 
     const handleChangePassword = () => {
-        props.handleChangePassword({
+        const payload = props.hideOldPassword
+        ? {
+            password: newPassword,
+            confirm_password: confirmationPassword,
+        } : {
             old_password: oldPassword,
             new_password: newPassword,
             confirm_password: confirmationPassword,
-        });
+        };
+
+        props.handleChangePassword(payload);
 
         setOldPassword('');
         setNewPassword('');
@@ -39,6 +45,16 @@ export const ChangePasswordComponent = props => {
         setOldPasswordFocus(false);
         setNewPasswordFocus(false);
         setConfirmPasswordFocus(false);
+    };
+
+    const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            if (isValidForm()) {
+                handleChangePassword();
+            }
+        }
     };
 
     const handleChangeNewPassword = (value: string) => {
@@ -73,14 +89,24 @@ export const ChangePasswordComponent = props => {
 
     const translate = (key: string) => intl.formatMessage({id: key});
 
+    const isValidForm = () => {
+        const isNewPasswordValid = newPassword.match(PASSWORD_REGEX);
+        const isConfirmPasswordValid = newPassword === confirmationPassword;
+        const isOldPasswordValid = (!props.hideOldPassword && oldPassword) || true;
+
+        return isOldPasswordValid && isNewPasswordValid && isConfirmPasswordValid;
+    };
+
     const renderHeader = () => (
         <div className="cr-email-form__options-group">
             <div className="cr-email-form__option">
                 <div className="cr-email-form__option-inner">
                     {props.title}
-                    <div className="cr-email-form__cros-icon" onClick={props.closeModal}>
-                        <CloseIcon className="close-icon" />
-                    </div>
+                    {props.closeModal && (
+                        <div className="cr-email-form__cros-icon" onClick={props.closeModal}>
+                            <CloseIcon className="close-icon" />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
@@ -100,21 +126,23 @@ export const ChangePasswordComponent = props => {
         });
 
         return (
-            <div className="pg-mobile-change-password__body">
-                <div className={oldPasswordClass}>
-                    <CustomInput
-                        type="password"
-                        label={intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
-                        placeholder={intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
-                        defaultLabel="Old password"
-                        handleChangeInput={setOldPassword}
-                        inputValue={oldPassword}
-                        handleFocusInput={() => setOldPasswordFocus(!oldPasswordFocus)}
-                        classNameLabel="cr-email-form__label"
-                        classNameInput="cr-email-form__input"
-                        autoFocus={true}
-                    />
-                </div>
+            <div className="pg-mobile-change-password__body" onKeyPress={handleEnterPress}>
+                {!props.hideOldPassword &&
+                    <div className={oldPasswordClass}>
+                        <CustomInput
+                            type="password"
+                            label={intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
+                            placeholder={intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
+                            defaultLabel="Old password"
+                            handleChangeInput={setOldPassword}
+                            inputValue={oldPassword}
+                            handleFocusInput={() => setOldPasswordFocus(!oldPasswordFocus)}
+                            classNameLabel="cr-email-form__label"
+                            classNameInput="cr-email-form__input"
+                            autoFocus={true}
+                        />
+                    </div>
+                }
                 <div className={newPasswordClass}>
                     <CustomInput
                         type="password"
@@ -159,13 +187,6 @@ export const ChangePasswordComponent = props => {
     };
 
     const renderFooter = () => {
-        const isValidForm = () => {
-            const isNewPasswordValid = newPassword.match(PASSWORD_REGEX);
-            const isConfirmPasswordValid = newPassword === confirmationPassword;
-
-            return oldPassword && isNewPasswordValid && isConfirmPasswordValid;
-        };
-
         return (
             <div className="pg-mobile-change-password__footer">
                 <Button
