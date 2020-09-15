@@ -10,11 +10,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileTwoFactorAuth } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
-import { CustomInput, Modal } from '../../components';
-import { PASSWORD_REGEX } from '../../helpers';
+import { ChangePassword, CustomInput, Modal } from '../../components';
 import { IntlProps } from '../../index';
 import {
+    Configs,
+    entropyPasswordFetch,
     RootState,
+    selectConfigs,
+    selectCurrentPasswordEntropy,
     selectUserInfo,
     User,
 } from '../../modules';
@@ -28,6 +31,8 @@ import {
 interface ReduxProps {
     user: User;
     passwordChangeSuccess?: boolean;
+    configs: Configs;
+    currentPasswordEntropy: number;
 }
 
 interface RouterProps {
@@ -44,6 +49,7 @@ interface DispatchProps {
     changePassword: typeof changePasswordFetch;
     clearPasswordChangeError: () => void;
     toggle2fa: typeof toggle2faFetch;
+    fetchCurrentPasswordEntropy: typeof entropyPasswordFetch;
 }
 
 interface ProfileProps {
@@ -53,12 +59,6 @@ interface ProfileProps {
 interface State {
     showChangeModal: boolean;
     showModal: boolean;
-    oldPassword: string;
-    newPassword: string;
-    confirmationPassword: string;
-    oldPasswordFocus: boolean;
-    newPasswordFocus: boolean;
-    confirmPasswordFocus: boolean;
     code2FA: string;
     code2FAFocus: boolean;
 }
@@ -72,12 +72,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         this.state = {
             showChangeModal: false,
             showModal: false,
-            oldPassword: '',
-            newPassword: '',
-            confirmationPassword: '',
-            oldPasswordFocus: false,
-            newPasswordFocus: false,
-            confirmPasswordFocus: false,
             code2FA: '',
             code2FAFocus: false,
         };
@@ -85,104 +79,29 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
 
     public componentWillReceiveProps(next: Props) {
         if (next.passwordChangeSuccess) {
-            this.setState({
-                showChangeModal: false,
-                oldPassword: '',
-                newPassword: '',
-                confirmationPassword: '',
-                confirmPasswordFocus: false,
-            });
+            this.setState({ showChangeModal: false });
         }
     }
 
     public render() {
         const {
             user,
+            configs,
+            currentPasswordEntropy,
         } = this.props;
-        const {
-            oldPasswordFocus,
-            newPasswordFocus,
-            confirmationPassword,
-            oldPassword,
-            newPassword,
-            confirmPasswordFocus,
-        } = this.state;
-
-        const oldPasswordClass = cr('cr-email-form__group', {
-            'cr-email-form__group--focused': oldPasswordFocus,
-        });
-
-        const newPasswordClass = cr('cr-email-form__group', {
-            'cr-email-form__group--focused': newPasswordFocus,
-        });
-
-        const confirmPasswordClass = cr('cr-email-form__group', {
-            'cr-email-form__group--focused': confirmPasswordFocus,
-        });
-
-        const changeModalBody = (
-            <div className="cr-email-form__form-content">
-                <div className={oldPasswordClass}>
-                    <CustomInput
-                        type="password"
-                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
-                        placeholder={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
-                        defaultLabel="Old password"
-                        handleChangeInput={this.handleOldPassword}
-                        inputValue={oldPassword}
-                        handleFocusInput={this.handleClickFieldFocus('oldPasswordFocus')}
-                        classNameLabel="cr-email-form__label"
-                        classNameInput="cr-email-form__input"
-                        autoFocus={true}
-                    />
-                </div>
-                <div className={newPasswordClass}>
-                    <CustomInput
-                        type="password"
-                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
-                        placeholder={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
-                        defaultLabel="New password"
-                        handleChangeInput={this.handleNewPassword}
-                        inputValue={newPassword}
-                        handleFocusInput={this.handleClickFieldFocus('newPasswordFocus')}
-                        classNameLabel="cr-email-form__label"
-                        classNameInput="cr-email-form__input"
-                        autoFocus={false}
-                    />
-                </div>
-                <div className={confirmPasswordClass}>
-                    <CustomInput
-                        type="password"
-                        label={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}
-                        placeholder={this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}
-                        defaultLabel="Password confirmation"
-                        handleChangeInput={this.handleConfPassword}
-                        inputValue={confirmationPassword}
-                        handleFocusInput={this.handleClickFieldFocus('confirmPasswordFocus')}
-                        classNameLabel="cr-email-form__label"
-                        classNameInput="cr-email-form__input"
-                        autoFocus={false}
-                    />
-                </div>
-                <div className="cr-email-form__button-wrapper">
-                    <Button
-                        disabled={!this.isValidForm()}
-                        type="submit"
-                        variant="primary"
-                        size="lg"
-                    >
-                        {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change' })}
-                    </Button>
-                </div>
-            </div>
-        );
 
         const modal = this.state.showChangeModal ? (
             <div className="cr-modal">
-              <form className="cr-email-form" onSubmit={this.handleChangePassword}>
+              <form className="cr-email-form">
                 <div className="pg-change-password-screen">
-                  {this.renderChangeModalHeader()}
-                  {changeModalBody}
+                   <ChangePassword
+                        handleChangePassword={this.props.changePassword}
+                        title={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.change' })}
+                        closeModal={this.toggleChangeModal}
+                        configs={configs}
+                        currentPasswordEntropy={currentPasswordEntropy}
+                        fetchCurrentPasswordEntropy={this.props.fetchCurrentPasswordEntropy}
+                    />
                 </div>
               </form>
             </div>
@@ -211,7 +130,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                     </div>
                     <Button
                         className="btn-block mt-3 mb-3 btn-lg btn btn-primary w-25"
-                        onClick={this.showChangeModal}
+                        onClick={this.toggleChangeModal}
                         size="lg"
                         variant="primary"
                     >
@@ -302,30 +221,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         );
     };
 
-    private renderChangeModalHeader = () => (
-        <div className="cr-email-form__options-group">
-            <div className="cr-email-form__option">
-                <div className="cr-email-form__option-inner">
-                    <FormattedMessage id="page.body.profile.header.account.content.password.change"/>
-                    <div className="cr-email-form__cros-icon" onClick={this.handleCancel}>
-                        <CloseIcon className="close-icon" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-
-    private handleChangePassword = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        this.props.changePassword({
-            old_password: this.state.oldPassword,
-            new_password: this.state.newPassword,
-            confirm_password: this.state.confirmationPassword,
-        });
-    };
-
     private handleChange2FACode = (value: string) => {
         this.setState({
             code2FA: value,
@@ -347,9 +242,9 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         });
       };
 
-    private showChangeModal = () => {
+    private toggleChangeModal = () => {
         this.setState({
-            showChangeModal: true,
+            showChangeModal: !this.state.showChangeModal,
         });
     };
 
@@ -363,33 +258,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         }
     };
 
-    private handleOldPassword = (value: string) => {
-        this.setState({
-            oldPassword: value,
-        });
-    };
-
-    private handleConfPassword = (value: string) => {
-        this.setState({
-            confirmationPassword: value,
-        });
-    };
-
-    private handleNewPassword = (value: string) => {
-        this.setState({
-            newPassword: value,
-        });
-    };
-
-    private handleCancel = () => {
-        this.setState({
-            showChangeModal: false,
-            oldPassword: '',
-            newPassword: '',
-            confirmationPassword: '',
-        });
-    };
-
     private handleClickFieldFocus = (field: string) => () => {
         this.handleFieldFocus(field);
     };
@@ -400,29 +268,20 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             [field]: !prev[field],
         }));
     };
-
-    private isValidForm() {
-        const {
-            confirmationPassword,
-            oldPassword,
-            newPassword,
-        } = this.state;
-        const isNewPasswordValid = newPassword.match(PASSWORD_REGEX);
-        const isConfirmPasswordValid = newPassword === confirmationPassword;
-
-        return oldPassword && isNewPasswordValid && isConfirmPasswordValid;
-    }
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
     passwordChangeSuccess: selectChangePasswordSuccess(state),
+    currentPasswordEntropy: selectCurrentPasswordEntropy(state),
+    configs: selectConfigs(state),
 });
 
 const mapDispatchToProps = dispatch => ({
     changePassword: ({ old_password, new_password, confirm_password }) =>
         dispatch(changePasswordFetch({ old_password, new_password, confirm_password })),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
+    fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
 });
 
 const ProfileAuthDetailsConnected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent));

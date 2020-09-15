@@ -1,6 +1,4 @@
-import cr from 'classnames';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import {
   connect,
@@ -10,33 +8,35 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { CustomInput } from '../../components';
-import { PASSWORD_REGEX, setDocumentTitle } from '../../helpers';
+import { ChangePassword } from '../../components';
+import { setDocumentTitle } from '../../helpers';
 import { IntlProps } from '../../index';
 import {
     changeForgotPasswordFetch,
     changeLanguage,
-    RootState,
-    selectChangeForgotPasswordSuccess, selectMobileDeviceState,
+    Configs,
+    entropyPasswordFetch,
+    RootState, selectChangeForgotPasswordSuccess,
+    selectConfigs,
+    selectCurrentPasswordEntropy,
+    selectMobileDeviceState,
 } from '../../modules';
 
 interface ChangeForgottenPasswordState {
-    error: boolean;
-    password: string;
-    passwordFocused: boolean;
     confirmToken: string;
-    confirmPassword: string;
-    confirmPasswordFocused: boolean;
 }
 
 interface ReduxProps {
     changeForgotPassword?: boolean;
     isMobileDevice: boolean;
+    configs: Configs;
+    currentPasswordEntropy: number;
 }
 
 interface DispatchProps {
     changeForgotPasswordFetch: typeof changeForgotPasswordFetch;
     changeLanguage: typeof changeLanguage;
+    fetchCurrentPasswordEntropy: typeof entropyPasswordFetch;
 }
 
 interface HistoryProps {
@@ -54,12 +54,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
         super(props);
 
         this.state = {
-            error: false,
             confirmToken: '',
-            password: '',
-            passwordFocused: false,
-            confirmPassword: '',
-            confirmPasswordFocused: false,
         };
     }
 
@@ -85,163 +80,45 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
     }
 
     public render() {
-        const {
-            error,
-            password,
-            passwordFocused,
-            confirmPassword,
-            confirmPasswordFocused,
-        } = this.state;
-
-        const { isMobileDevice } = this.props;
-
-        const passwordFocusedClass = cr('cr-email-form__group', {
-            'cr-email-form__group--focused': passwordFocused,
-        });
-
-        const confirmPasswordFocusedClass = cr('cr-email-form__group', {
-            'cr-email-form__group--focused': confirmPasswordFocused,
-        });
-
-        const updatePassword = e => this.handleChange('password', e);
-        const updateConfirmPassword = e => this.handleChange('confirmPassword', e);
+        const { isMobileDevice, configs, currentPasswordEntropy } = this.props;
 
         return (
-            <div className="pg-change-forgotten-password-screen" onKeyPress={this.handleEnterPress}>
+            <div className="pg-change-forgotten-password-screen">
                 <div className="pg-change-forgotten-password-screen__container">
-                    <form>
-                        <div className="cr-email-form">
-                            {!isMobileDevice &&
-                            <div className="cr-email-form__options-group">
-                              <div className="cr-email-form__option">
-                                <div className="cr-email-form__option-inner">
-                                    {this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.title'})}
-                                </div>
-                              </div>
-                            </div>
-                            }
-                            <div className="cr-email-form__form-content">
-                                <div className={passwordFocusedClass}>
-                                    <CustomInput
-                                        type="password"
-                                        label={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.newPassword'})}
-                                        placeholder={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.newPassword'})}
-                                        defaultLabel="New password"
-                                        handleChangeInput={updatePassword}
-                                        inputValue={password}
-                                        handleFocusInput={this.handleFieldFocus('password')}
-                                        classNameLabel="cr-email-form__label"
-                                        classNameInput="cr-email-form__input"
-                                        autoFocus={!isMobileDevice}
-                                    />
-                                </div>
-                                <div className={confirmPasswordFocusedClass}>
-                                    <CustomInput
-                                        type="password"
-                                        label={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.repeatPassword'})}
-                                        placeholder={this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.repeatPassword'})}
-                                        defaultLabel="Repeat password"
-                                        handleChangeInput={updateConfirmPassword}
-                                        inputValue={confirmPassword}
-                                        handleFocusInput={this.handleFieldFocus('confirmPassword')}
-                                        classNameLabel="cr-email-form__label"
-                                        classNameInput="cr-email-form__input"
-                                        autoFocus={false}
-                                    />
-                                </div>
-                                {error && <div className="cr-email-form__error">{this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.error'})}</div>}
-                                <div className="cr-email-form__button-wrapper">
-                                    <Button
-                                        disabled={this.disableButton()}
-                                        onClick={this.handleSendNewPassword}
-                                        size="lg"
-                                        variant="primary"
-                                        type="button"
-                                    >
-                                        {this.props.intl.formatMessage({ id: 'page.header.signIn.resetPassword.button'})}
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    <ChangePassword
+                        handleChangePassword={this.handleSendNewPassword}
+                        title={!isMobileDevice && this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.title'})}
+                        configs={configs}
+                        currentPasswordEntropy={currentPasswordEntropy}
+                        fetchCurrentPasswordEntropy={this.props.fetchCurrentPasswordEntropy}
+                        hideOldPassword={true}
+                    />
                 </div>
             </div>
         );
     }
 
-    private disableButton = (): boolean => {
-        const {
-            password,
-            confirmPassword,
-        } = this.state;
-
-        return !password || !confirmPassword;
-    };
-
-    private handleFieldFocus = (field: string) => {
-        return () => {
-            switch (field) {
-                case 'password':
-                    this.setState({
-                        passwordFocused: !this.state.passwordFocused,
-                    });
-                    break;
-                case 'confirmPassword':
-                    this.setState({
-                        confirmPasswordFocused: !this.state.confirmPasswordFocused,
-                    });
-                    break;
-                default:
-                    break;
-            }
-        };
-    };
-
-    private handleSendNewPassword = () => {
-        const { password, confirmPassword, confirmToken } = this.state;
-        const isPasswordValid = password.match(PASSWORD_REGEX);
-        const isConfirmPasswordValid = password === confirmPassword;
-
-        this.setState({
-            error: !(isPasswordValid && isConfirmPasswordValid),
-        }, () => {
-            if (!this.state.error) {
-                this.props.changeForgotPasswordFetch({
-                    reset_password_token: confirmToken,
-                    password: password,
-                    confirm_password: confirmPassword,
-                });
-            }
+    private handleSendNewPassword = payload => {
+        const { confirmToken } = this.state;
+        this.props.changeForgotPasswordFetch({
+            ...payload,
+            reset_password_token: confirmToken,
         });
-    };
-
-    private handleChange = (key: string, value: string) => {
-      // @ts-ignore
-      this.setState({
-        [key]: value,
-      });
-    };
-
-    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-
-            if (!this.disableButton()) {
-                this.handleSendNewPassword();
-            }
-        }
     };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     changeForgotPassword: selectChangeForgotPasswordSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
+    currentPasswordEntropy: selectCurrentPasswordEntropy(state),
+    configs: selectConfigs(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         changeForgotPasswordFetch: credentials => dispatch(changeForgotPasswordFetch(credentials)),
         changeLanguage: lang => dispatch(changeLanguage(lang)),
+        fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
     });
 
 export const ChangeForgottenPasswordScreen = compose(
