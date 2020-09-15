@@ -23,7 +23,7 @@ getPlugins(plugins => {
                     if (!err){
                         console.log(`Cloned ${p.name} from ${p.git} to src/plugins/${pluginPath(p)}`);
                     } else {
-                        console.log(err);
+                        console.error(err);
                     }
                 });
             }
@@ -34,7 +34,7 @@ getPlugins(plugins => {
                 if (!err) {
                     console.log(response);
                 } else {
-                    console.log(err);
+                    console.error(err);
                 }
             });
         });

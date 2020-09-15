@@ -118,11 +118,11 @@ exec.result(`bash ./bin/create-folders.bash --plugin ${templateName}`, function(
             if (!err) {
                 console.log(response);
             } else {
-                console.log(err);
+                console.error(err);
             }
         });
         console.log(`Generated plugin template`);
     } else {
-        console.log(err);
+        console.error(err);
     }
 });
