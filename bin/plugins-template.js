@@ -73,7 +73,6 @@ export function* root${capitalize(templateName)}PluginSaga() {
 `
 
 const translationsEnFile = 'export const en = {};\n';
-const translationsRuFile = 'export const ru = {};\n';
 const rootStylesFile = '@import \'./themes/style.pcss\';\n';
 const stylesThemesFile = `
 @import './dark.pcss';
@@ -110,7 +109,6 @@ exec.result(`bash ./bin/create-folders.bash --plugin ${templateName}`, function(
         fs.writeFileSync(`./src/plugins/${templateName}/styles/themes/light.pcss`, '/* stylelint-disable-no-empty-source */\n');
         fs.writeFileSync(`./src/plugins/${templateName}/styles/themes/dark.pcss`, '/* stylelint-disable-no-empty-source */\n');
         fs.writeFileSync(`./src/plugins/${templateName}/translations/en.ts`, translationsEnFile);
-        fs.writeFileSync(`./src/plugins/${templateName}/translations/ru.ts`, translationsRuFile);
 
         getPlugins(plugins => {
             const pluginsJsonList = [ ...plugins.filter(item => item.name !== templateName), { name: templateName }].map(pluginItemJson);
