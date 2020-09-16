@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { Markets } from '../../components/Markets';
+import { useMarketsTickersFetch } from '../../hooks';
 import { setCurrentPrice } from '../../modules';
 import {
     Market,
-    marketsTickersFetch,
     selectCurrentMarket,
     selectMarkets,
     selectMarketsLoading,
@@ -34,7 +34,34 @@ export const MarketsComponent = () => {
     ]), [formatMessage]);
 
 
-    const markets = () => {
+    const mapMarkets = React.useCallback(() => {
+        const defaultTicker = {
+            last: 0,
+            price_change_percent: '+0.00%',
+        };
+
+        return marketsData.map((market: Market) =>
+            ([
+                market.name,
+                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision),
+                (marketTickers[market.id] || defaultTicker).price_change_percent,
+            ]),
+        );
+    }, [marketTickers, marketsData]);
+
+    const handleOnSelect = React.useCallback((index: string) => {
+        const marketToSet = marketsData && marketsData.find(el => el.name === index);
+        dispatch(setCurrentPrice(0));
+
+        if (marketToSet && (!currentMarket || currentMarket.id !== marketToSet.id)) {
+            dispatch(setCurrentMarket(marketToSet));
+            if (!incrementalOrderBook()) {
+                dispatch(depthFetch(marketToSet));
+            }
+        }
+    }, [currentMarket, dispatch, marketsData]);
+
+    const renderMarkets = React.useCallback(() => {
         const key = currentMarket && currentMarket.name;
 
         return (
@@ -49,49 +76,17 @@ export const MarketsComponent = () => {
                 filterPlaceholder={formatMessage({ id: 'page.body.trade.header.markets.content.search'})}
             />
         );
-    };
+    }, [currentMarket, formatMessage, handleOnSelect, headers, mapMarkets]);
 
-    const mapMarkets = () => {
-        const defaultTicker = {
-            last: 0,
-            price_change_percent: '+0.00%',
-        };
-
-        return marketsData.map((market: Market) =>
-            ([
-                market.name,
-                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision),
-                (marketTickers[market.id] || defaultTicker).price_change_percent,
-            ]),
-        );
-    };
-
-    const handleOnSelect = (index: string) => {
-        const marketToSet = marketsData.find(el => el.name === index);
-        dispatch(setCurrentPrice(0));
-
-        if (marketToSet && (!currentMarket || currentMarket.id !== marketToSet.id)) {
-            dispatch(setCurrentMarket(marketToSet));
-            if (!incrementalOrderBook()) {
-                dispatch(depthFetch(marketToSet));
-            }
-        }
-    };
-
-    const className = classnames('pg-markets', {
+    const className = React.useMemo(() => classnames('pg-markets', {
         'pg-markets--loading': marketsLoading,
-    });
+    }), [marketsLoading]);
 
-
-    React.useEffect(() => {
-        if (marketsData.length === 0) {
-            dispatch(marketsTickersFetch());
-        }
-    }, [marketsData.length, dispatch]);
+    useMarketsTickersFetch();
 
     return (
         <div className={className}>
-            {marketsLoading ? <div><Spinner animation="border" variant="primary" /></div> : markets()}
+            {marketsLoading ? <div><Spinner animation="border" variant="primary" /></div> : renderMarkets()}
         </div>
     );
 };

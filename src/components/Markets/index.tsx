@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { CellData, FilterInput, Table } from '../';
 import { DEFAULT_MARKET_HEADERS } from '../../constants';
-import { isUniqueValue } from '../../helpers';
+import { hasDuplicates } from '../../helpers';
 
 export interface MarketsProps {
     /**
@@ -76,7 +76,7 @@ export const Markets = (props: MarketsProps) => {
 
     const createUniqueCurrencies = (currencies: string[], market: string) => {
         const marketCurrencies = market.split('/').map((c: string) => c.trim());
-        const uniqueCurrencies = marketCurrencies.filter(c => isUniqueValue(currencies, c));
+        const uniqueCurrencies = marketCurrencies.filter(c => !hasDuplicates(currencies, c));
 
         return currencies.concat(uniqueCurrencies);
     };
