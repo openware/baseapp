@@ -43,6 +43,8 @@ export interface MarketsProps {
 export const Markets = (props: MarketsProps) => {
     const [searchKey, setSearchKey] = React.useState('');
 
+    const { headers, title, filterPlaceholder = '', rowKeyIndex, selectedKey, data, filters } = props;
+
     const searchFilter = React.useCallback((row: CellData[], key: string) => {
         setSearchKey(key);
 
@@ -68,27 +70,25 @@ export const Markets = (props: MarketsProps) => {
         return isChangeValue ? renderChange(cell as string) : cell;
     }, [renderChange]);
 
-    const filterType = (headerKey: string, key: string) => (item: CellData[]) => {
+    const filterType = React.useCallback((headerKey: string, key: string) => (item: CellData[]) => {
         const typeIndex = (props.headers || DEFAULT_MARKET_HEADERS).indexOf(headerKey);
 
         return (item[typeIndex] as string).includes(key);
-    };
+    }, [props.headers]);
 
-    const createUniqueCurrencies = (currencies: string[], market: string) => {
+    const createUniqueCurrencies = React.useCallback((currencies: string[], market: string) => {
         const marketCurrencies = market.split('/').map((c: string) => c.trim());
         const uniqueCurrencies = marketCurrencies.filter(c => !hasDuplicates(currencies, c));
 
         return currencies.concat(uniqueCurrencies);
-    };
+    }, []);
 
-    const transformCurrencyToFilter = (currency: string) => ({
+    const transformCurrencyToFilter = React.useCallback((currency: string) => ({
         name: currency,
         filter: filterType('Pair', currency),
-    });
+    }), [filterType]);
 
-    const getFilters = () => {
-        const { data, filters } = props;
-
+    const getFilters = React.useCallback(() => {
         const currencyFilters = data && data.length > 0
             ? data
                 .map((market: React.ReactNode[]) => market[0] as string)
@@ -103,15 +103,13 @@ export const Markets = (props: MarketsProps) => {
             },
             ...currencyFilters,
         ] : [];
-    };
+    }, [createUniqueCurrencies, filterType, transformCurrencyToFilter, data, filters]);
 
-    const getTableData = () => {
-        const fd = props.data.filter(w => (w[0] as string).toLowerCase().includes(searchKey.toLowerCase()));
+    const getTableData = React.useCallback(() => {
+        const fd = data.filter(w => (w[0] as string).toLowerCase().includes(searchKey.toLowerCase()));
 
         return fd.map(row => row.map(mapRows));
-    };
-
-    const { headers, title, filterPlaceholder = '', rowKeyIndex, selectedKey } = props;
+    }, [data, mapRows, searchKey]);
 
     return (
         <div className="cr-markets">
