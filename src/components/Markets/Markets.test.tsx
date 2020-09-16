@@ -18,7 +18,7 @@ const defaultProps: MarketsProps = {
 const setup = (props?: Partial<MarketsProps>) =>
     shallow(<Markets {...{ ...defaultProps, ...props }} />);
 
-describe('Markets', () => {
+describe.skip('Markets', () => {
    let wrapper: ShallowWrapper;
 
    beforeEach(() => {
