@@ -1,6 +1,6 @@
-import { mount, shallow, ShallowWrapper } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
-import { SinonSpy, spy } from 'sinon';
+import { spy } from 'sinon';
 import { CellData } from '../../components/Table';
 import {  mapValues, OrderBook, OrderBookProps } from './';
 

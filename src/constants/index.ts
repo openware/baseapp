@@ -27,7 +27,7 @@ export const PASSWORD_ENTROPY_STEP = 6;
 
 export const DEFAULT_KYC_STEPS = ['email', 'phone', 'profile', 'document', 'address'];
 
-export const defaultMarket = {
+export const DEFAULT_MARKET = {
     id: '',
     name: '',
     base_unit: '',

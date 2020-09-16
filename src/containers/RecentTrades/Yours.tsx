@@ -3,7 +3,7 @@ import { Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Decimal, Table } from '../../components';
-import { defaultMarket } from '../../constants';
+import { DEFAULT_MARKET } from '../../constants';
 import { localeDate, setTradesType } from '../../helpers';
 import {
     fetchHistory,
@@ -23,7 +23,7 @@ export const RecentTradesYours = () => {
 
     const list = useSelector(selectHistory);
     const fetching = useSelector(selectHistoryLoading);
-    const currentMarket = useSelector(selectCurrentMarket) || defaultMarket;
+    const currentMarket = useSelector(selectCurrentMarket) || DEFAULT_MARKET;
     const currentPrice = useSelector(selectCurrentPrice);
 
     const headers = React.useMemo(() => ([

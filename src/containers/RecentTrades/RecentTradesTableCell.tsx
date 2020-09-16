@@ -5,19 +5,16 @@ import { setTradeColor } from '../../helpers';
 const TradeTableCellComponent = props => {
     const { type, takerType, higlightedDate, amountFixed, amount, priceFixed, price, prevValue } = props;
 
-    if (type === 'date') {
-        return <span style={{ color: setTradeColor(takerType).color }}>{higlightedDate}</span>;
+    switch (type) {
+        case 'date':
+            return <span style={{ color: setTradeColor(takerType).color }}>{higlightedDate}</span>;
+        case 'amount':
+            return <span style={{ color: setTradeColor(takerType).color }}><Decimal fixed={amountFixed}>{amount}</Decimal></span>;
+        case 'price':
+            return <span style={{ color: setTradeColor(takerType).color }}><Decimal fixed={priceFixed} prevValue={prevValue}>{price}</Decimal></span>;
+        default:
+            return <span />;
     }
-
-    if (type === 'amount') {
-        return <span style={{ color: setTradeColor(takerType).color }}><Decimal fixed={amountFixed}>{amount}</Decimal></span>;
-    }
-
-    if (type === 'price') {
-        return <span style={{ color: setTradeColor(takerType).color }}><Decimal fixed={priceFixed} prevValue={prevValue}>{price}</Decimal></span>;
-    }
-
-    return <span />;
 };
 
 const TradeTableCell = React.memo(TradeTableCellComponent);

@@ -46,7 +46,7 @@ const RecentTradesMarket = () => {
         ];
     }, [formatMessage]);
 
-    const getTrades = () => {
+    const getTrades = React.useCallback(() => {
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
 
@@ -71,15 +71,15 @@ const RecentTradesMarket = () => {
         return (recentTrades.length > 0)
             ? recentTrades.map(renderRow)
             : [[]];
-    };
+    }, [currentMarket, recentTrades]);
 
-    const handleOnSelect = (index: string) => {
+    const handleOnSelect = React.useCallback((index: string) => {
         const priceToSet = recentTrades[Number(index)] ? Number(recentTrades[Number(index)].price) : 0;
 
         if (currentPrice !== priceToSet) {
             dispatch(setCurrentPrice(priceToSet));
         }
-    };
+    }, [currentPrice, recentTrades, dispatch]);
 
     React.useEffect(() => {
         if (currentMarket) {
