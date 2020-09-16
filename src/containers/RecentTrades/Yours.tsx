@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
@@ -48,24 +47,18 @@ export const RecentTradesYours = () => {
     };
 
     const retrieveData = () => {
-        return [...list].length > 0
-            ? [...list].map(renderRow)
-            : [[[''], formatMessage({ id: 'page.noDataToShow' })]];
+        return list.length > 0
+            ? list.map(renderRow)
+            : [[]];
     };
-
-    const className = classnames({
-        'cr-tab-content__noData': retrieveData()[0][1] === formatMessage({ id: 'page.noDataToShow' }),
-    });
 
     const renderContent = () => {
         return (
-            <React.Fragment>
-                <Table
-                    header={headers}
-                    data={retrieveData()}
-                    onSelect={handleOnSelect}
-                />
-            </React.Fragment>
+            <Table
+                header={headers}
+                data={retrieveData()}
+                onSelect={handleOnSelect}
+            />
         );
     };
 
@@ -87,7 +80,7 @@ export const RecentTradesYours = () => {
     }, [dispatch, currentMarket.id]);
 
     return (
-        <div className={className}>
+        <div>
             {fetching ? <div className="cr-tab-content-loading"><Spinner animation="border" variant="primary" /></div> : renderContent()}
         </div>
     );

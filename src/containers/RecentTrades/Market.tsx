@@ -70,7 +70,7 @@ const RecentTradesMarket = () => {
 
         return (recentTrades.length > 0)
             ? recentTrades.map(renderRow)
-            : [[[''], formatMessage({ id: 'page.noDataToShow' }), ['']]];
+            : [[]];
     };
 
     const handleOnSelect = (index: string) => {
