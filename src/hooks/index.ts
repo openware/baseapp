@@ -13,3 +13,4 @@ export * from './useUserActivityFetch';
 export * from './useUserOrdersHistoryFetch';
 export * from './useWalletsAddressFetch';
 export * from './useWalletsFetch';
+export * from './useOpenOrdersFetch';
