@@ -90,7 +90,7 @@ const EmailForm = React.memo((props: EmailFormProps) => {
     };
 
     const emailFormClass = cr('cr-email-form', {
-        'cr-email-form--high': captchaType && captchaType !== 'none',
+        'cr-email-form--extended': captchaType && captchaType !== 'none',
     });
 
     const emailGroupClass = cr('cr-email-form__group', {

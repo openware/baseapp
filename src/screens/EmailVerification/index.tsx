@@ -1,14 +1,13 @@
 import { History } from 'history';
 import * as React from 'react';
 import {Button, Spinner} from 'react-bootstrap';
-import ReCAPTCHA from 'react-google-recaptcha';
 import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { GeetestCaptcha } from '../../containers';
+import { Captcha } from '../../components';
 import { EMAIL_REGEX, setDocumentTitle } from '../../helpers';
 import { IntlProps } from '../../index';
 import {
@@ -56,8 +55,6 @@ type Props = DispatchProps & ReduxProps & OwnProps & IntlProps;
 class EmailVerificationComponent extends React.Component<Props, VerificationState> {
     constructor(props: Props) {
         super(props);
-        this.reCaptchaRef = React.createRef();
-        this.geetestCaptchaRef = React.createRef();
 
         this.state = {
             captcha_response: '',
@@ -67,9 +64,6 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
         };
     }
 
-    private reCaptchaRef;
-    private geetestCaptchaRef;
-
     public componentDidMount() {
         setDocumentTitle('Email verification');
         if (!this.props.location.state || !this.props.location.state.email) {
@@ -77,49 +71,22 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
         }
     }
 
-    public componentDidUpdate(prev: Props) {
-        const { error, success } = this.props;
-        if ((!prev.error && error) || (!prev.success && success)) {
-            if (this.reCaptchaRef.current) {
-                this.reCaptchaRef.current.reset();
-            }
-
-            if (this.geetestCaptchaRef.current) {
-                this.setState({ shouldGeetestReset: true });
-            }
-        }
-    }
-
     public translate = (id: string) => this.props.intl.formatMessage({ id });
 
     public renderCaptcha = () => {
         const { shouldGeetestReset } = this.state;
-        const { configs } = this.props;
+        const { error, success } = this.props;
 
-        switch (configs.captcha_type) {
-            case 'recaptcha':
-                return (
-                    <div className="pg-emailverification-recaptcha">
-                        <ReCAPTCHA
-                            ref={this.reCaptchaRef}
-                            sitekey={configs.captcha_id}
-                            onChange={this.handleReCaptchaSuccess}
-                        />
-                    </div>
-                );
-            case 'geetest':
-                return (
-                    <div className="pg-emailverification-geetest">
-                        <GeetestCaptcha
-                            ref={this.geetestCaptchaRef}
-                            shouldCaptchaReset={shouldGeetestReset}
-                            onSuccess={this.handleGeetestCaptchaSuccess}
-                        />
-                    </div>
-                );
-            default:
-                return null;
-        }
+        return (
+            <Captcha
+                error={error}
+                success={success}
+                shouldGeetestReset={shouldGeetestReset}
+                setShouldGeetestReset={this.setShouldGeetestReset}
+                handleReCaptchaSuccess={this.handleReCaptchaSuccess}
+                handleGeetestCaptchaSuccess={this.handleGeetestCaptchaSuccess}
+            />
+        );
     };
 
     public render() {
@@ -223,6 +190,8 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
             shouldGeetestReset: false,
         });
     };
+
+    private setShouldGeetestReset = (value: boolean) => this.setState({ shouldGeetestReset: value });
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

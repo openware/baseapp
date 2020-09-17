@@ -2,7 +2,6 @@ import cx from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import ReCAPTCHA from 'react-google-recaptcha';
 import {
     injectIntl,
 } from 'react-intl';
@@ -13,8 +12,7 @@ import {
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { Modal, SignUpForm } from '../../components';
-import { GeetestCaptcha } from '../../containers';
+import { Captcha, Modal, SignUpForm } from '../../components';
 import {
     EMAIL_REGEX,
     ERROR_INVALID_EMAIL,
@@ -141,6 +139,21 @@ class SignUp extends React.Component<Props> {
         document.removeEventListener('click', this.handleOutsideClick, false);
     }
 
+    public renderCaptcha = () => {
+        const { shouldGeetestReset } = this.state;
+        const { signUpError } = this.props;
+
+        return (
+            <Captcha
+                error={signUpError}
+                shouldGeetestReset={shouldGeetestReset}
+                setShouldGeetestReset={this.setShouldGeetestReset}
+                handleReCaptchaSuccess={this.handleReCaptchaSuccess}
+                handleGeetestCaptchaSuccess={this.handleGeetestCaptchaSuccess}
+            />
+        );
+    };
+
     public render() {
         const { configs, loading, currentPasswordEntropy } = this.props;
         const {
@@ -231,34 +244,7 @@ class SignUp extends React.Component<Props> {
 
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 
-    private renderCaptcha = () => {
-        const { configs } = this.props;
-        const { shouldGeetestReset } = this.state;
-
-        switch (configs.captcha_type) {
-            case 'recaptcha':
-                return (
-                    <div className="cr-sign-up-form__recaptcha">
-                        <ReCAPTCHA
-                            ref={this.reCaptchaRef}
-                            sitekey={configs.captcha_id}
-                            onChange={this.handleReCaptchaSuccess}
-                        />
-                    </div>
-                );
-            case 'geetest':
-                return (
-                    <GeetestCaptcha
-                        ref={this.geetestCaptchaRef}
-                        shouldCaptchaReset={shouldGeetestReset}
-                        onSuccess={this.handleGeetestCaptchaSuccess}
-                    />
-                );
-            default:
-                return null;
-
-        }
-    };
+    private setShouldGeetestReset = (value: boolean) => this.setState({ shouldGeetestReset: value });
 
     private handleOutsideClick = event => {
         const wrapperElement = this.passwordWrapper.current;

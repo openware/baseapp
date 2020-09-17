@@ -1,5 +1,4 @@
 import * as React from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
 import {
     injectIntl,
 } from 'react-intl';
@@ -11,8 +10,7 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { EmailForm } from '../../components';
-import { GeetestCaptcha } from '../../containers';
+import { Captcha, EmailForm } from '../../components';
 import {
     EMAIL_REGEX,
     ERROR_INVALID_EMAIL,
@@ -55,8 +53,6 @@ type Props = RouterProps & ReduxProps & DispatchProps & IntlProps;
 class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState> {
     constructor(props: Props) {
         super(props);
-        this.reCaptchaRef = React.createRef();
-        this.geetestCaptchaRef = React.createRef();
 
         this.state = {
             email: '',
@@ -69,52 +65,24 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
         };
     }
 
-    private reCaptchaRef;
-    private geetestCaptchaRef;
-
     public componentDidMount() {
         setDocumentTitle('Forgot password');
     }
 
-    public componentDidUpdate(prev: Props) {
-        const { error, success } = this.props;
-        if ((!prev.error && error) || (!prev.success && success)) {
-            if (this.reCaptchaRef.current) {
-                this.reCaptchaRef.current.reset();
-            }
-
-            if (this.geetestCaptchaRef.current) {
-                this.setState({ shouldGeetestReset: true });
-            }
-        }
-    }
-
     public renderCaptcha = () => {
         const { shouldGeetestReset } = this.state;
-        const { configs } = this.props;
+        const { error, success } = this.props;
 
-        switch (configs.captcha_type) {
-            case 'recaptcha':
-                return (
-                    <div className="cr-email-form__recaptcha">
-                        <ReCAPTCHA
-                            ref={this.reCaptchaRef}
-                            sitekey={configs.captcha_id}
-                            onChange={this.handleReCaptchaSuccess}
-                        />
-                    </div>
-                );
-            case 'geetest':
-                return (
-                    <GeetestCaptcha
-                        ref={this.geetestCaptchaRef}
-                        shouldCaptchaReset={shouldGeetestReset}
-                        onSuccess={this.handleGeetestCaptchaSuccess}
-                    />
-                );
-            default:
-                return null;
-        }
+        return (
+            <Captcha
+                error={error}
+                success={success}
+                shouldGeetestReset={shouldGeetestReset}
+                setShouldGeetestReset={this.setShouldGeetestReset}
+                handleReCaptchaSuccess={this.handleReCaptchaSuccess}
+                handleGeetestCaptchaSuccess={this.handleGeetestCaptchaSuccess}
+            />
+        );
     };
 
     public render() {
@@ -156,6 +124,8 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
             </div>
         );
     }
+
+    private setShouldGeetestReset = (value: boolean) => this.setState({ shouldGeetestReset: value });
 
     private handleChangePassword = () => {
         const { email, captcha_response } = this.state;
