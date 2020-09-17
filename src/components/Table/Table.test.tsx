@@ -97,16 +97,6 @@ describe.skip('Table', () => {
             expect(thElements.length).toBe(data[0].length);
         });
 
-        it('Check invalid data', () => {
-            const fakeData = [
-                ['Price', 'Time', 'Volume'],
-                ['0', '12:20', '12', 'fake'],
-            ];
-            const wrapper = () => { mount(<Table data={fakeData} />); };
-            expect(wrapper).toThrowError();
-
-        });
-
         it('should filter data due to passed filters', () => {
             const resultData = data.filter(filterMethod('Buy'));
 

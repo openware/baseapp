@@ -391,4 +391,14 @@ describe('Helpers', () => {
             expect(helpers.getTimestampPeriod(1593676605, 120)).toBe(1593669600);
         });
     });
+
+    describe('hasDuplicates', () => {
+        it('should return true if a value is in array', () => {
+            expect(helpers.hasDuplicates([1, 2, 3], 2)).toBeTruthy();
+        });
+
+        it('should return false if a value is not in array', () => {
+            expect(helpers.hasDuplicates([1, 2, 3], 5)).toBeFalsy();
+        });
+    });
 });
