@@ -42,6 +42,7 @@ export const OrderBook = props => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
 
     const isLarge = React.useMemo(() => (props.forceLarge || (width > breakpoint)), [props.forceLarge, width]);
+    const asksData = React.useMemo(() => isLarge ? asks : asks.slice(0).reverse(), [isLarge, asks]);
 
     const cn = React.useMemo(() => classNames('pg-combined-order-book ', {
         'cr-combined-order-book--data-loading': orderBookLoading,
@@ -49,28 +50,13 @@ export const OrderBook = props => {
         'pg-combined-order-book--no-data-second': (!bids.length && !isLarge) || (!asks.length && isLarge),
     }), [asks.length, bids.length, isLarge, orderBookLoading]);
 
-    const orderBook = () => {
-        const asksData = isLarge ? asks : asks.slice(0).reverse();
+    const getTickerValue = React.useCallback((cMarket: Market, tickers: { [key: string]: Ticker }) => {
+        const defaultTicker = { amount: 0, low: 0, last: 0, high: 0, volume: 0, open: 0, price_change_percent: '+0.00%' };
 
-        return (
-            <CombinedOrderBook
-                maxVolume={calcMaxVolume(bids, asks)}
-                orderBookEntryAsks={accumulateVolume(asks)}
-                orderBookEntryBids={accumulateVolume(bids)}
-                rowBackgroundColorAsks={colors[colorTheme].orderBook.asks}
-                rowBackgroundColorBids={colors[colorTheme].orderBook.bids}
-                dataAsks={renderOrderBook(asksData, 'asks', formatMessage({id: 'page.noDataToShow'}), currentMarket) as any}
-                dataBids={renderOrderBook(bids, 'bids', formatMessage({id: 'page.noDataToShow'}), currentMarket) as any}
-                headers={renderHeaders()}
-                lastPrice={lastPrice()}
-                onSelectAsks={handleOnSelectAsks}
-                onSelectBids={handleOnSelectBids}
-                isLarge={isLarge}
-            />
-        );
-    };
+        return tickers[cMarket.id] || defaultTicker;
+    }, []);
 
-    const lastPrice = () => {
+    const lastPrice = React.useCallback(() => {
         const currentTicker = currentMarket && getTickerValue(currentMarket, marketTickers);
 
         if (currentMarket && currentTicker) {
@@ -91,9 +77,9 @@ export const OrderBook = props => {
         } else {
             return <React.Fragment><span className={'cr-combined-order-book__market-negative'}>0</span><span>{formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span></React.Fragment>;
         }
-    };
+    }, [currentMarket, formatMessage, getTickerValue, isMobileDevice, marketTickers]);
 
-    const renderHeaders = () => {
+    const renderHeaders = React.useCallback(() => {
         const formattedBaseUnit = (currentMarket && currentMarket.base_unit) ? `(${currentMarket.base_unit.toUpperCase()})` : '';
         const formattedQuoteUnit = (currentMarket && currentMarket.quote_unit) ? `(${currentMarket.quote_unit.toUpperCase()})` : '';
 
@@ -109,61 +95,50 @@ export const OrderBook = props => {
             `${formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
             `${formatMessage({id: 'page.body.trade.orderbook.header.volume'})}\n${formattedBaseUnit}`,
         ];
-    };
+    }, [currentMarket, formatMessage, isMobileDevice]);
 
-    const renderOrderBook = (array: string[][], side: string, message: string, currentM?: Market) => {
+    const renderOrderBook = React.useCallback((array: string[][], side: string, message: string, currentM?: Market) => {
         let total = accumulateVolume(array);
         const priceFixed = currentM ? currentM.price_precision : 0;
         const amountFixed = currentM ? currentM.amount_precision : 0;
+        if (side === 'asks') {
+            total = isLarge ? total : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
+        }
 
         return (array.length > 0) ? array.map((item, i) => {
             const [price, volume] = item;
-            switch (side) {
-                case 'asks':
-                    total = isLarge ? accumulateVolume(array) : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
 
-                    if (isMobileDevice) {
-                        return [
-                            <OrderBookTableRow
-                                type="price"
-                                prevValue={array[i + 1] ? array[i + 1][0] : 0}
-                                price={price}
-                                fixed={priceFixed}
-                            />,
-                              <OrderBookTableRow
-                                total={total[i]}
-                                fixed={amountFixed}
-                              />,
-                        ];
-                    }
-
+            if (side === 'asks') {
+                if (isMobileDevice) {
                     return [
-                      <OrderBookTableRow
+                        <OrderBookTableRow
+                            type="price"
+                            prevValue={array[i + 1] ? array[i + 1][0] : 0}
+                            price={price}
+                            fixed={priceFixed}
+                        />,
+                        <OrderBookTableRow
+                            total={total[i]}
+                            fixed={amountFixed}
+                        />,
+                    ];
+                }
+
+                return [
+                    <OrderBookTableRow
                         type="price"
                         prevValue={array[i + 1] ? array[i + 1][0] : 0}
                         price={price}
                         fixed={priceFixed}
-                      />,
-                      <OrderBookTableRow total={volume} fixed={amountFixed}/>,
-                      <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
-                    ];
-                default:
-                    if (isLarge) {
-                        if (isMobileDevice) {
-                            return [
-                                <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
-                                <OrderBookTableRow
-                                  type="price"
-                                  prevValue={array[i - 1] ? array[i - 1][0] : 0}
-                                  price={price}
-                                  fixed={priceFixed}
-                                />,
-                            ];
-                        }
-
+                    />,
+                    <OrderBookTableRow total={volume} fixed={amountFixed}/>,
+                    <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
+                ];
+            } else {
+                if (isLarge) {
+                    if (isMobileDevice) {
                         return [
                             <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
-                            <OrderBookTableRow total={volume} fixed={amountFixed}/>,
                             <OrderBookTableRow
                                 type="price"
                                 prevValue={array[i - 1] ? array[i - 1][0] : 0}
@@ -171,19 +146,20 @@ export const OrderBook = props => {
                                 fixed={priceFixed}
                             />,
                         ];
-                    } else {
-                        if (isMobileDevice) {
-                            return [
-                                <OrderBookTableRow
-                                    type="price"
-                                    prevValue={array[i - 1] ? array[i - 1][0] : 0}
-                                    price={price}
-                                    fixed={priceFixed}
-                                />,
-                                <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
-                            ];
-                        }
+                    }
 
+                    return [
+                        <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
+                        <OrderBookTableRow total={volume} fixed={amountFixed}/>,
+                        <OrderBookTableRow
+                            type="price"
+                            prevValue={array[i - 1] ? array[i - 1][0] : 0}
+                            price={price}
+                            fixed={priceFixed}
+                        />,
+                    ];
+                } else {
+                    if (isMobileDevice) {
                         return [
                             <OrderBookTableRow
                                 type="price"
@@ -191,34 +167,38 @@ export const OrderBook = props => {
                                 price={price}
                                 fixed={priceFixed}
                             />,
-                            <OrderBookTableRow total={volume} fixed={amountFixed}/>,
                             <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
                         ];
                     }
+
+                    return [
+                        <OrderBookTableRow
+                            type="price"
+                            prevValue={array[i - 1] ? array[i - 1][0] : 0}
+                            price={price}
+                            fixed={priceFixed}
+                        />,
+                        <OrderBookTableRow total={volume} fixed={amountFixed}/>,
+                        <OrderBookTableRow total={total[i]} fixed={amountFixed}/>,
+                    ];
+                }
             }
         }) : [[[''], message, ['']]];
-    };
+    }, [isLarge, isMobileDevice]);
 
-    const handleOnSelectBids = (index: string) => {
+    const handleOnSelectBids = React.useCallback((index: string) => {
         const priceToSet = bids[Number(index)] && Number(bids[Number(index)][0]);
         if (currentPrice !== priceToSet) {
             dispatch(setCurrentPrice(priceToSet));
         }
-    };
+    }, [bids, currentPrice, dispatch]);
 
-    const handleOnSelectAsks = (index: string) => {
-        const asksData = isLarge ? asks : asks.slice(0).reverse();
+    const handleOnSelectAsks = React.useCallback((index: string) => {
         const priceToSet = asksData[Number(index)] && Number(asksData[Number(index)][0]);
         if (currentPrice !== priceToSet) {
             dispatch(setCurrentPrice(priceToSet));
         }
-    };
-
-    const getTickerValue = (cMarket: Market, tickers: { [key: string]: Ticker }) => {
-        const defaultTicker = { amount: 0, low: 0, last: 0, high: 0, volume: 0, open: 0, price_change_percent: '+0.00%' };
-
-        return tickers[cMarket.id] || defaultTicker;
-    };
+    }, [currentPrice, dispatch, asksData]);
 
     // eslint-disable-next-line
     React.useEffect(() => {
@@ -233,7 +213,22 @@ export const OrderBook = props => {
             <div className={'cr-table-header__content'}>
                 {formatMessage({ id: 'page.body.trade.orderbook' })}
             </div>
-            {orderBookLoading ? <div className="pg-combined-order-book-loader"><Spinner animation="border" variant="primary" /></div> : orderBook()}
+            {orderBookLoading ?
+                <div className="pg-combined-order-book-loader"><Spinner animation="border" variant="primary" /></div>
+                : <CombinedOrderBook
+                    maxVolume={calcMaxVolume(bids, asks)}
+                    orderBookEntryAsks={accumulateVolume(asks)}
+                    orderBookEntryBids={accumulateVolume(bids)}
+                    rowBackgroundColorAsks={colors[colorTheme].orderBook.asks}
+                    rowBackgroundColorBids={colors[colorTheme].orderBook.bids}
+                    dataAsks={renderOrderBook(asksData, 'asks', formatMessage({id: 'page.noDataToShow'}), currentMarket) as any}
+                    dataBids={renderOrderBook(bids, 'bids', formatMessage({id: 'page.noDataToShow'}), currentMarket) as any}
+                    headers={renderHeaders()}
+                    lastPrice={lastPrice()}
+                    onSelectAsks={handleOnSelectAsks}
+                    onSelectBids={handleOnSelectBids}
+                    isLarge={isLarge}
+                />}
         </div>
     );
 };
