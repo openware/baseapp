@@ -18,7 +18,7 @@ import {
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
 
-interface ReduxProps {
+export interface OpenOrdersProps {
     currentMarket: Market | undefined;
     list: OrderCommon[];
     fetching: boolean;
@@ -44,12 +44,11 @@ export const OpenOrdersComponent = () => {
         '',
     ], []);
 
-    const handleCancel = (index: number) => {
-        const orderToDelete = list[index];
-        dispatch(openOrdersCancelFetch({ order: orderToDelete, list }));
-    };
+    const handleCancel = React.useCallback((index: number) => {
+        dispatch(openOrdersCancelFetch({ order: list[index], list }));
+    }, [dispatch, list]);
 
-    const renderData = () => {
+    const renderData = React.useCallback(() => {
         if (list.length === 0) {
             return [[[''], [''], formatMessage({ id: 'page.noDataToShow' })]];
         }
@@ -72,7 +71,7 @@ export const OpenOrdersComponent = () => {
                 side,
             ];
         });
-    };
+    }, [amount_precision, formatMessage, list, price_precision]);
 
     const renderHeaders = React.useCallback(() => {
         const currentAskUnit = base_unit ? ` (${base_unit.toUpperCase()})` : '';
@@ -88,17 +87,6 @@ export const OpenOrdersComponent = () => {
         ];
     }, [base_unit, quote_unit, formatMessage]);
 
-    const openOrders = () => {
-        return (
-            <OpenOrders
-                headersKeys={headersKeys}
-                headers={renderHeaders()}
-                data={renderData()}
-                onCancel={handleCancel}
-            />
-        );
-    };
-
     const handleCancelAll = React.useCallback(() => {
         id && dispatch(ordersCancelAllFetch({ market: id }));
     }, [id, dispatch]);
@@ -108,7 +96,7 @@ export const OpenOrdersComponent = () => {
         'pg-open-orders--loading': fetching,
     }), [list.length, fetching]);
 
-    useOpenOrdersFetch({ id });
+    useOpenOrdersFetch({ id } as Market);
 
     return (
         <div className={classNames}>
@@ -121,9 +109,14 @@ export const OpenOrdersComponent = () => {
                         </span>
                 </div>
             </div>
-            {fetching ? <div className="open-order-loading"><Spinner animation="border" variant="primary" /></div> : openOrders()}
+            {fetching ?
+                <div className="open-order-loading"><Spinner animation="border" variant="primary" /></div>
+                : <OpenOrders
+                    headersKeys={headersKeys}
+                    headers={renderHeaders()}
+                    data={renderData()}
+                    onCancel={handleCancel}
+                />}
         </div>
     );
 };
-
-export type OpenOrdersProps = ReduxProps;
