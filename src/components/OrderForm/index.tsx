@@ -59,39 +59,6 @@ export interface OrderFormProps {
      * Callback that is called when form is submitted
      */
     onSubmit: OnSubmitCallback;
-    /**
-     * @default 'Order Type'
-     * Text for order type dropdown label.
-     */
-    orderTypeText?: string;
-    /**
-     * @default 'Price'
-     * Text for Price field Text.
-     */
-    priceText?: string;
-    /**
-     * @default 'Amount'
-     * Text for Amount field Text.
-     */
-    amountText?: string;
-    /**
-     * @default 'Total'
-     * Text for Total field Text.
-     */
-    totalText?: string;
-    /**
-     * @default 'Available'
-     * Text for Available field Text.
-     */
-    availableText?: string;
-    /**
-     * @default type.toUpperCase()
-     * Text for submit Button.
-     */
-    submitButtonText?: string;
-    /**
-     * start handling change price
-     */
     listenInputPrice?: () => void;
     totalPrice: number;
     amount: string;
@@ -131,12 +98,6 @@ export const OrderFormComponent = (props: OrderFormProps) => {
         from,
         to,
         available,
-        orderTypeText,
-        priceText,
-        amountText,
-        totalText,
-        availableText,
-        submitButtonText,
         currentMarketAskPrecision,
         currentMarketBidPrecision,
         handleChangeAmountByButton,
@@ -149,6 +110,8 @@ export const OrderFormComponent = (props: OrderFormProps) => {
     } = props;
 
     const safePrice = React.useMemo(() => totalPrice / Number(amount) || priceMarket, [totalPrice, amount, priceMarket]);
+    const priceText = React.useMemo(() => formatMessage({ id: 'page.body.trade.header.newOrder.content.price' }), [formatMessage]);
+    const amountText = React.useMemo(() => formatMessage({ id: 'page.body.trade.header.newOrder.content.amount' }), [formatMessage]);
 
     const total = React.useMemo(() => (orderType === 'Market'
         ? totalPrice : (Number(amount) || 0) * (Number(price) || 0)), [orderType, price, totalPrice, amount]);
@@ -236,7 +199,7 @@ export const OrderFormComponent = (props: OrderFormProps) => {
     return (
         <div className={classnames('cr-order-form', className)} onKeyPress={handleEnterPress}>
             <div className="cr-order-item">
-                {orderTypeText ? <div className="cr-order-item__dropdown__label">{orderTypeText}</div> : null}
+                <div className="cr-order-item__dropdown__label">{formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType' })}</div>
                 <DropdownComponent list={orderTypes} onSelect={index => setOrderType(DEFAULT_ORDER_TYPES[index] as string)} placeholder=""/>
             </div>
             {orderType === 'Limit' ? (
@@ -295,7 +258,7 @@ export const OrderFormComponent = (props: OrderFormProps) => {
             <div className="cr-order-item">
                 <div className="cr-order-item__total">
                     <label className="cr-order-item__total__label">
-                        {handleSetValue(totalText, 'Total')}
+                        {handleSetValue(formatMessage({ id: 'page.body.trade.header.newOrder.content.total' }), 'Total')}
                     </label>
                     <div className="cr-order-item__total__content">
                         {orderType === 'Limit' ? (
@@ -316,7 +279,7 @@ export const OrderFormComponent = (props: OrderFormProps) => {
             <div className="cr-order-item">
                 <div className="cr-order-item__available">
                     <label className="cr-order-item__available__label">
-                        {handleSetValue(availableText, 'Available')}
+                        {handleSetValue(formatMessage({ id: 'page.body.trade.header.newOrder.content.available' }), 'Available')}
                     </label>
                     <div className="cr-order-item__available__content">
                             <span className="cr-order-item__available__content__amount">
@@ -337,7 +300,7 @@ export const OrderFormComponent = (props: OrderFormProps) => {
                     size="lg"
                     variant={type === 'buy' ? 'success' : 'danger'}
                 >
-                    {submitButtonText || type}
+                    {formatMessage({ id: `page.body.trade.header.newOrder.content.tabs.${type}` })}
                 </Button>
             </div>
         </div>

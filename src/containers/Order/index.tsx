@@ -106,15 +106,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
     public getListOfTranslations = () => {
         return {
-            amountText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.amount' }),
-            availableText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.available' }),
-            orderTypeText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.orderType' }),
-            priceText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.price' }),
-            totalText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.total' }),
             labelFirst: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' }),
             labelSecond: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' }),
-            submitBuyButtonText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' }),
-            submitSellButtonText: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' }),
         };
     };
 

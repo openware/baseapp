@@ -66,45 +66,6 @@ export interface OrderComponentProps {
      * Precision of price value
      */
     currentMarketBidPrecision: number;
-    /**
-     * @default 'Order Type'
-     * Text for order type dropdown label.
-     */
-    orderTypeText?: string;
-    /**
-     * @default 'Price'
-     * Text for Price field Text.
-     */
-    priceText?: string;
-    /**
-     * @default 'Amount'
-     * Text for Amount field Text.
-     */
-    amountText?: string;
-    /**
-     * @default 'Total'
-     * Text for Total field Text.
-     */
-    totalText?: string;
-    /**
-     * @default 'Available'
-     * Text for Available field Text.
-     */
-    availableText?: string;
-    /**
-     * @default 'BUY'
-     * Text for buy order submit button.
-     */
-    submitBuyButtonText?: string;
-    /**
-     * @default 'SELL'
-     * Text for sell order submit button.
-     */
-    submitSellButtonText?: string;
-    /**
-     * @default 'Buy'
-     * Text for Buy tab label.
-     */
     labelFirst?: string;
     /**
      * @default 'Sell'
@@ -211,13 +172,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
             to,
             currentMarketAskPrecision,
             currentMarketBidPrecision,
-            orderTypeText,
-            priceText,
-            amountText,
-            totalText,
-            availableText,
-            submitBuyButtonText,
-            submitSellButtonText,
             labelFirst,
             labelSecond,
             asks,
@@ -229,7 +183,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
         const proposals = this.isTypeSell(type) ? bids : asks;
         const available = this.isTypeSell(type) ? availableBase : availableQuote;
         const priceMarket = this.isTypeSell(type) ? priceMarketSell : priceMarketBuy;
-        const submitButtonText = this.isTypeSell(type) ? submitSellButtonText : submitBuyButtonText;
         const preLabel = this.isTypeSell(type) ? labelSecond : labelFirst;
         const label = this.isTypeSell(type) ? 'Sell' : 'Buy';
         const disabledData = this.isTypeSell(type) ? {} : { disabled };
@@ -248,12 +201,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     onSubmit={this.props.onSubmit}
                     currentMarketAskPrecision={currentMarketAskPrecision}
                     currentMarketBidPrecision={currentMarketBidPrecision}
-                    orderTypeText={orderTypeText}
-                    priceText={priceText}
-                    amountText={amountText}
-                    totalText={totalText}
-                    availableText={availableText}
-                    submitButtonText={submitButtonText}
                     totalPrice={getTotalPrice(amount, priceMarket, proposals)}
                     amount={amount}
                     listenInputPrice={listenInputPrice}
