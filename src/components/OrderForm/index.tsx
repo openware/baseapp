@@ -109,7 +109,7 @@ export const OrderFormComponent = (props: OrderFormProps) => {
         disabled,
     } = props;
 
-    const safePrice = React.useMemo(() => totalPrice / Number(amount) || priceMarket, [totalPrice, amount, priceMarket]);
+    const safePrice = React.useMemo(() => amount && (totalPrice / Number(amount)) || priceMarket, [totalPrice, amount, priceMarket]);
     const priceText = React.useMemo(() => formatMessage({ id: 'page.body.trade.header.newOrder.content.price' }), [formatMessage]);
     const amountText = React.useMemo(() => formatMessage({ id: 'page.body.trade.header.newOrder.content.amount' }), [formatMessage]);
 
