@@ -27,18 +27,6 @@ export const PASSWORD_ENTROPY_STEP = 6;
 
 export const DEFAULT_KYC_STEPS = ['email', 'phone', 'profile', 'document', 'address'];
 
-export const DEFAULT_MARKET = {
-    id: '',
-    name: '',
-    base_unit: '',
-    quote_unit: '',
-    min_price: '',
-    max_price: 0,
-    min_amount: 0,
-    amount_precision: 0,
-    price_precision: 0,
-};
-
 export const DEFAULT_MARKET_HEADERS = ['Pair', 'Price', '24h Change'];
 
 export const DEFAULT_MARKET = {
