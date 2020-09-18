@@ -20,11 +20,16 @@ import { IntlProps } from '../../index';
 import {
     Configs,
     forgotPassword,
+    GeetestCaptchaResponse,
+    resetCaptchaState,
     RootState,
+    selectCaptchaResponse,
     selectConfigs,
     selectCurrentLanguage,
     selectForgotPasswordError,
     selectForgotPasswordSuccess,
+    selectGeetestCaptchaSuccess,
+    selectRecaptchaSuccess,
 } from '../../modules';
 import { CommonError } from '../../modules/types';
 
@@ -32,20 +37,20 @@ interface ReduxProps {
     success: boolean;
     error?: CommonError;
     configs: Configs;
+    captcha_response?: string | GeetestCaptchaResponse;
+    reCaptchaSuccess: boolean;
+    geetestCaptchaSuccess: boolean;
 }
 
 interface DispatchProps {
     forgotPassword: typeof forgotPassword;
+    resetCaptchaState: typeof resetCaptchaState;
 }
 
 interface ForgotPasswordState {
     email: string;
     emailError: string;
     emailFocused: boolean;
-    captcha_response: string;
-    reCaptchaSuccess: boolean;
-    geetestCaptchaSuccess: boolean;
-    shouldGeetestReset: boolean;
 }
 
 type Props = RouterProps & ReduxProps & DispatchProps & IntlProps;
@@ -58,10 +63,6 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
             email: '',
             emailError: '',
             emailFocused: false,
-            captcha_response: '',
-            reCaptchaSuccess: false,
-            geetestCaptchaSuccess: false,
-            shouldGeetestReset: false,
         };
     }
 
@@ -70,17 +71,12 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
     }
 
     public renderCaptcha = () => {
-        const { shouldGeetestReset } = this.state;
         const { error, success } = this.props;
 
         return (
             <Captcha
                 error={error}
                 success={success}
-                shouldGeetestReset={shouldGeetestReset}
-                setShouldGeetestReset={this.setShouldGeetestReset}
-                handleReCaptchaSuccess={this.handleReCaptchaSuccess}
-                handleGeetestCaptchaSuccess={this.handleGeetestCaptchaSuccess}
             />
         );
     };
@@ -90,11 +86,13 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
             email,
             emailFocused,
             emailError,
+        } = this.state;
+        const {
+            configs,
             captcha_response,
             reCaptchaSuccess,
             geetestCaptchaSuccess,
-        } = this.state;
-        const { configs } = this.props;
+        } = this.props;
 
         return (
             <div className="pg-forgot-password-screen" onKeyPress={this.handleEnterPress}>
@@ -125,11 +123,9 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
         );
     }
 
-    private setShouldGeetestReset = (value: boolean) => this.setState({ shouldGeetestReset: value });
-
     private handleChangePassword = () => {
-        const { email, captcha_response } = this.state;
-        const { configs } = this.props;
+        const { email } = this.state;
+        const { configs, captcha_response } = this.props;
 
         switch (configs.captcha_type) {
             case 'recaptcha':
@@ -141,11 +137,9 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
                 break;
         }
 
-        this.setState({
-            reCaptchaSuccess: false,
-            geetestCaptchaSuccess: false,
-            captcha_response: '',
-        });
+        this.setState({ email: '' });
+
+        this.props.resetCaptchaState();
     };
 
     private handleFocusEmail = () => {
@@ -185,21 +179,6 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
             this.handleChangePassword();
         }
     };
-
-    private handleReCaptchaSuccess = (value: string) => {
-        this.setState({
-            reCaptchaSuccess: true,
-            captcha_response: value,
-        });
-    };
-
-    private handleGeetestCaptchaSuccess = value => {
-        this.setState({
-            geetestCaptchaSuccess: true,
-            captcha_response: value,
-            shouldGeetestReset: false,
-        });
-    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
@@ -207,15 +186,19 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     error: selectForgotPasswordError(state),
     i18n: selectCurrentLanguage(state),
     configs: selectConfigs(state),
+    captcha_response: selectCaptchaResponse(state),
+    reCaptchaSuccess: selectRecaptchaSuccess(state),
+    geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         forgotPassword: credentials => dispatch(forgotPassword(credentials)),
+        resetCaptchaState: () => dispatch(resetCaptchaState()),
     });
 
 export const ForgotPasswordScreen = compose(
     injectIntl,
-withRouter,
+    withRouter,
     connect(mapStateToProps, mapDispatchToProps),
 )(ForgotPasswordComponent) as React.ComponentClass;

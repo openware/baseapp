@@ -13,9 +13,15 @@ import { IntlProps } from '../../index';
 import {
     Configs,
     emailVerificationFetch,
+    GeetestCaptchaResponse,
+    resetCaptchaState,
     RootState,
+    selectCaptchaResponse,
     selectConfigs,
-    selectCurrentLanguage, selectMobileDeviceState,
+    selectCurrentLanguage,
+    selectGeetestCaptchaSuccess,
+    selectMobileDeviceState,
+    selectRecaptchaSuccess,
     selectSendEmailVerificationError,
     selectSendEmailVerificationLoading,
     selectSendEmailVerificationSuccess,
@@ -33,37 +39,23 @@ interface OwnProps {
     error?: CommonError;
 }
 
-interface VerificationState {
-    captcha_response: string;
-    reCaptchaSuccess: boolean;
-    geetestCaptchaSuccess: boolean;
-    shouldGeetestReset: boolean;
-}
-
 interface DispatchProps {
     emailVerificationFetch: typeof emailVerificationFetch;
+    resetCaptchaState: typeof resetCaptchaState;
 }
 
 interface ReduxProps {
     emailVerificationLoading: boolean;
     isMobileDevice: boolean;
     configs: Configs;
+    captcha_response?: string | GeetestCaptchaResponse;
+    reCaptchaSuccess: boolean;
+    geetestCaptchaSuccess: boolean;
 }
 
 type Props = DispatchProps & ReduxProps & OwnProps & IntlProps;
 
-class EmailVerificationComponent extends React.Component<Props, VerificationState> {
-    constructor(props: Props) {
-        super(props);
-
-        this.state = {
-            captcha_response: '',
-            reCaptchaSuccess: false,
-            geetestCaptchaSuccess: false,
-            shouldGeetestReset: false,
-        };
-    }
-
+class EmailVerificationComponent extends React.Component<Props> {
     public componentDidMount() {
         setDocumentTitle('Email verification');
         if (!this.props.location.state || !this.props.location.state.email) {
@@ -74,17 +66,12 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
     public translate = (id: string) => this.props.intl.formatMessage({ id });
 
     public renderCaptcha = () => {
-        const { shouldGeetestReset } = this.state;
         const { error, success } = this.props;
 
         return (
             <Captcha
                 error={error}
                 success={success}
-                shouldGeetestReset={shouldGeetestReset}
-                setShouldGeetestReset={this.setShouldGeetestReset}
-                handleReCaptchaSuccess={this.handleReCaptchaSuccess}
-                handleGeetestCaptchaSuccess={this.handleGeetestCaptchaSuccess}
             />
         );
     };
@@ -132,8 +119,7 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
     }
 
     private handleClick = () => {
-        const { captcha_response } = this.state;
-        const { configs } = this.props;
+        const { configs, captcha_response } = this.props;
 
         switch (configs.captcha_type) {
             case 'recaptcha':
@@ -150,16 +136,16 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
                 break;
         }
 
-        this.setState({
-            reCaptchaSuccess: false,
-            geetestCaptchaSuccess: false,
-            captcha_response: '',
-        });
+        this.props.resetCaptchaState();
     };
 
     private disableButton = (): boolean => {
-        const { configs, location } = this.props;
-        const { geetestCaptchaSuccess, reCaptchaSuccess } = this.state;
+        const {
+            configs,
+            location,
+            geetestCaptchaSuccess,
+            reCaptchaSuccess,
+        } = this.props;
 
         if (location.state.email && !location.state.email.match(EMAIL_REGEX)) {
             return true;
@@ -175,23 +161,6 @@ class EmailVerificationComponent extends React.Component<Props, VerificationStat
 
         return false;
     };
-
-    private handleReCaptchaSuccess = (value: string) => {
-        this.setState({
-            reCaptchaSuccess: true,
-            captcha_response: value,
-        });
-    };
-
-    private handleGeetestCaptchaSuccess = value => {
-        this.setState({
-            geetestCaptchaSuccess: true,
-            captcha_response: value,
-            shouldGeetestReset: false,
-        });
-    };
-
-    private setShouldGeetestReset = (value: boolean) => this.setState({ shouldGeetestReset: value });
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
@@ -201,10 +170,14 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     configs: selectConfigs(state),
     error: selectSendEmailVerificationError(state),
     success: selectSendEmailVerificationSuccess(state),
+    captcha_response: selectCaptchaResponse(state),
+    reCaptchaSuccess: selectRecaptchaSuccess(state),
+    geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
 });
 
 const mapDispatchToProps = {
     emailVerificationFetch,
+    resetCaptchaState,
 };
 
 export const EmailVerificationScreen = compose(

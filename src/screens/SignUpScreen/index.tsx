@@ -27,11 +27,16 @@ import {
 import { IntlProps } from '../../index';
 import {
     Configs,
-    entropyPasswordFetch, LanguageState,
+    entropyPasswordFetch, GeetestCaptchaResponse,
+    LanguageState,
+    resetCaptchaState,
     RootState,
+    selectCaptchaResponse,
     selectConfigs,
     selectCurrentLanguage,
     selectCurrentPasswordEntropy,
+    selectGeetestCaptchaSuccess,
+    selectRecaptchaSuccess,
     selectSignUpError,
     selectSignUpRequireVerification,
     signUp,
@@ -42,11 +47,15 @@ interface ReduxProps {
     requireVerification?: boolean;
     loading?: boolean;
     currentPasswordEntropy: number;
+    captcha_response?: string | GeetestCaptchaResponse;
+    reCaptchaSuccess: boolean;
+    geetestCaptchaSuccess: boolean;
 }
 
 interface DispatchProps {
     signUp: typeof signUp;
     fetchCurrentPasswordEntropy: typeof entropyPasswordFetch;
+    resetCaptchaState: typeof resetCaptchaState;
 }
 
 interface RouterProps {
@@ -71,8 +80,6 @@ class SignUp extends React.Component<Props> {
         email: '',
         password: '',
         confirmPassword: '',
-        captcha_response: '',
-        reCaptchaSuccess: false,
         refId: '',
         hasConfirmed: false,
         emailError: '',
@@ -82,8 +89,6 @@ class SignUp extends React.Component<Props> {
         passwordFocused: false,
         confirmPasswordFocused: false,
         refIdFocused: false,
-        geetestCaptchaSuccess: false,
-        shouldGeetestReset: false,
         typingTimeout: 0,
         passwordErrorFirstSolved: false,
         passwordErrorSecondSolved: false,
@@ -91,16 +96,8 @@ class SignUp extends React.Component<Props> {
         passwordPopUp: false,
     };
 
-    public constructor(props) {
-        super(props);
-        this.reCaptchaRef = React.createRef();
-        this.geetestCaptchaRef = React.createRef();
-    }
-
     private myRef = React.createRef<HTMLInputElement>();
     private passwordWrapper = React.createRef<HTMLDivElement>();
-    private reCaptchaRef;
-    private geetestCaptchaRef;
 
     public componentDidMount() {
         setDocumentTitle('Sign Up');
@@ -123,16 +120,6 @@ class SignUp extends React.Component<Props> {
         if (nextProps.requireVerification) {
             nextProps.history.push('/email-verification', {email: email});
         }
-
-        if (nextProps.signUpError) {
-            if (this.reCaptchaRef.current) {
-                this.reCaptchaRef.current.reset();
-            }
-
-            if (this.geetestCaptchaRef.current) {
-                this.setState({ shouldGeetestReset: true });
-            }
-        }
     }
 
     public componentWillUnmount() {
@@ -140,29 +127,25 @@ class SignUp extends React.Component<Props> {
     }
 
     public renderCaptcha = () => {
-        const { shouldGeetestReset } = this.state;
         const { signUpError } = this.props;
 
-        return (
-            <Captcha
-                error={signUpError}
-                shouldGeetestReset={shouldGeetestReset}
-                setShouldGeetestReset={this.setShouldGeetestReset}
-                handleReCaptchaSuccess={this.handleReCaptchaSuccess}
-                handleGeetestCaptchaSuccess={this.handleGeetestCaptchaSuccess}
-            />
-        );
+        return <Captcha error={signUpError} />;
     };
 
     public render() {
-        const { configs, loading, currentPasswordEntropy } = this.props;
+        const {
+            configs,
+            loading,
+            currentPasswordEntropy,
+            captcha_response,
+            reCaptchaSuccess,
+            geetestCaptchaSuccess,
+        } = this.props;
         const {
             email,
             password,
             confirmPassword,
             refId,
-            captcha_response,
-            reCaptchaSuccess,
             hasConfirmed,
             emailError,
             passwordError,
@@ -171,7 +154,6 @@ class SignUp extends React.Component<Props> {
             passwordFocused,
             confirmPasswordFocused,
             refIdFocused,
-            geetestCaptchaSuccess,
             passwordErrorFirstSolved,
             passwordErrorSecondSolved,
             passwordErrorThirdSolved,
@@ -243,8 +225,6 @@ class SignUp extends React.Component<Props> {
     }
 
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
-
-    private setShouldGeetestReset = (value: boolean) => this.setState({ shouldGeetestReset: value });
 
     private handleOutsideClick = event => {
         const wrapperElement = this.passwordWrapper.current;
@@ -358,27 +338,11 @@ class SignUp extends React.Component<Props> {
         this.props.history.push('/signin');
     };
 
-    private handleReCaptchaSuccess = (value: string) => {
-        this.setState({
-            reCaptchaSuccess: true,
-            captcha_response: value,
-        });
-    };
-
-    private handleGeetestCaptchaSuccess = value => {
-        this.setState({
-            geetestCaptchaSuccess: true,
-            captcha_response: value,
-            shouldGeetestReset: false,
-        });
-    };
-
     private handleSignUp = () => {
-        const { configs, i18n } = this.props;
+        const { configs, i18n, captcha_response } = this.props;
         const {
             email,
             password,
-            captcha_response,
             refId,
         } = this.state;
 
@@ -432,11 +396,7 @@ class SignUp extends React.Component<Props> {
             }
         }
 
-        this.setState({
-            reCaptchaSuccess: false,
-            geetestCaptchaSuccess: false,
-            captcha_response: '',
-        });
+        this.props.resetCaptchaState();
     };
 
     private renderModalHeader = () => {
@@ -537,12 +497,16 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     requireVerification: selectSignUpRequireVerification(state),
     signUpError: selectSignUpError(state),
     currentPasswordEntropy: selectCurrentPasswordEntropy(state),
+    captcha_response: selectCaptchaResponse(state),
+    reCaptchaSuccess: selectRecaptchaSuccess(state),
+    geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         signUp: credentials => dispatch(signUp(credentials)),
         fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
+        resetCaptchaState: () => dispatch(resetCaptchaState()),
     });
 
 export const SignUpScreen = compose(

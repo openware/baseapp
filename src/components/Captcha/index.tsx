@@ -1,11 +1,21 @@
 import * as React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GeetestCaptcha } from '../../containers';
-import { selectConfigs } from '../../modules';
+import { useSetShouldGeetestReset } from '../../hooks';
+import {
+    GeetestCaptchaResponse,
+    selectConfigs,
+    selectShouldGeetestReset,
+    setGeetestCaptchaSuccess,
+    setRecaptchaSuccess,
+} from '../../modules';
 
 export const CaptchaComponent = props => {
+    const dispatch = useDispatch();
     const configs = useSelector(selectConfigs);
+    const shouldGeetestReset = useSelector(selectShouldGeetestReset);
+
     let reCaptchaRef;
 
     reCaptchaRef = React.useRef();
@@ -16,11 +26,18 @@ export const CaptchaComponent = props => {
             if (reCaptchaRef.current) {
                 reCaptchaRef.current.reset();
             }
-            if (geetestCaptchaRef) {
-                props.setShouldGeetestReset(true);
-            }
         }
-    }, [props.error, props.success]);
+    }, [props.error, props.success, reCaptchaRef]);
+
+    useSetShouldGeetestReset(props.error, props.success, geetestCaptchaRef);
+
+    const handleRecaptchaChange = (value: string) => {
+        dispatch(setRecaptchaSuccess({ captcha_response: value }));
+    };
+
+    const handleGeetestCaptchaChange = (value?: GeetestCaptchaResponse) => {
+        dispatch(setGeetestCaptchaSuccess({ captcha_response: value }));
+    };
 
     const renderCaptcha = () => {
         switch (configs.captcha_type) {
@@ -30,7 +47,7 @@ export const CaptchaComponent = props => {
                         <ReCAPTCHA
                             ref={reCaptchaRef}
                             sitekey={configs.captcha_id}
-                            onChange={props.handleReCaptchaSuccess}
+                            onChange={handleRecaptchaChange}
                         />
                     </div>
                 );
@@ -39,8 +56,8 @@ export const CaptchaComponent = props => {
                     <div className="pg-captcha--geetest">
                         <GeetestCaptcha
                             ref={geetestCaptchaRef}
-                            shouldCaptchaReset={props.shouldGeetestReset}
-                            onSuccess={props.handleGeetestCaptchaSuccess}
+                            shouldCaptchaReset={shouldGeetestReset}
+                            onSuccess={handleGeetestCaptchaChange}
                         />
                     </div>
                 );

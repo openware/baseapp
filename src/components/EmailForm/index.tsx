@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { CustomInput } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { EMAIL_REGEX } from '../../helpers';
+import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
 
 export interface EmailFormProps {
@@ -28,7 +29,7 @@ export interface EmailFormProps {
     renderCaptcha?: JSX.Element | null;
     reCaptchaSuccess?: boolean;
     geetestCaptchaSuccess?: boolean;
-    captcha_response?: string;
+    captcha_response?: string | GeetestCaptchaResponse;
 }
 
 const EmailForm = React.memo((props: EmailFormProps) => {
