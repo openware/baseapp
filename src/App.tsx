@@ -4,6 +4,7 @@ import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Router } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
 import { useSetMobileDevice } from './hooks';
@@ -78,13 +79,15 @@ export const App = () => {
 
     return (
         <IntlProvider locale={lang} messages={getTranslations(lang, isMobileDevice)} key={lang}>
-            <Router history={browserHistory}>
-                <ErrorWrapper>
-                    <React.Suspense fallback={null}>
-                        <RenderDeviceContainers />
-                    </React.Suspense>
-                </ErrorWrapper>
-            </Router>
+            <BrowserRouter>
+                <Router history={browserHistory}>
+                    <ErrorWrapper>
+                        <React.Suspense fallback={null}>
+                            <RenderDeviceContainers />
+                        </React.Suspense>
+                    </ErrorWrapper>
+                </Router>
+            </BrowserRouter>
         </IntlProvider>
     );
 };

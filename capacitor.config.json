@@ -12,5 +12,6 @@
   "ios": {
     "contentInset": "always"
   },
+  "linuxAndroidStudioPath": "/snap/bin/android-studio",
   "cordova": {}
 }
