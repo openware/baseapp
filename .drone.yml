@@ -13,11 +13,12 @@ steps:
       - echo $REACT_APP_GIT_SHA > .tags
       - export BUILD_DOMAIN=$(cat .domains)
       - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
-      - npm -g install yarn
-      - yarn install
+      - npm -g install ionic
+      - npm install
       - yarn lint
       - yarn test:ci --collectCoverage=true
       - yarn build
+      - ionic capacitor add android
 
   - name: "Stage with mock server"
     image: instrumentisto/rsync-ssh
