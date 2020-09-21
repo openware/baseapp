@@ -21,6 +21,7 @@
     "history": "^4.7.2",
     "i18n-iso-countries": "^3.7.8",
     "immutability-helper": "^3.0.0",
+    "ionic": "^5.4.16",
     "js-yaml": "^3.12.0",
     "moment": "^2.23.0",
     "moment-timezone": "^0.5.23",
