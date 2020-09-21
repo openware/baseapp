@@ -1,0 +1,16 @@
+{
+  "appId": "master.devkube.com",
+  "appName": "Baseapp",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "build",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "ios": {
+    "contentInset": "always"
+  },
+  "cordova": {}
+}
