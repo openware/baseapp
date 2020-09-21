@@ -1,3 +1,5 @@
+import { Beneficiary } from '../modules/user/beneficiaries';
+
 export const PG_TITLE_PREFIX = 'Cryptobase';
 
 export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
@@ -28,6 +30,16 @@ export const PASSWORD_ENTROPY_STEP = 6;
 export const DEFAULT_KYC_STEPS = ['email', 'phone', 'profile', 'document', 'address'];
 
 export const DEFAULT_MARKET_HEADERS = ['Pair', 'Price', '24h Change'];
+
+export const DEFAULT_BENEFICIARY: Beneficiary = {
+    id: 0,
+    currency: '',
+    name: '',
+    state: '',
+    data: {
+        address: '',
+    },
+};
 
 export const DEFAULT_MARKET = {
     id: '',
