@@ -161,12 +161,14 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         const onSelectCountry = value => this.selectCountry(dataCountries[value]);
 
         return (
-          <div className="pg-confirm__content-identity">
+          <form className="pg-confirm__content-identity" autoComplete="on">
             <div className="pg-confirm__content-identity__forms">
                 <div className="pg-confirm__content-identity__forms__row input-group">
                     <fieldset className={firstNameGroupClass}>
                         <CustomInput
                             type="string"
+                            name="fname"
+                            autoComplete="given-name"
                             inputValue={firstName}
                             placeholder={this.translate('page.body.kyc.identity.firstName')}
                             handleChangeInput={e => this.handleChange(e, 'firstName')}
@@ -179,6 +181,8 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     <fieldset className={lastNameGroupClass}>
                         <CustomInput
                             type="string"
+                            name="lname"
+                            autoComplete="family-name"
                             inputValue={lastName}
                             handleChangeInput={e => this.handleChange(e, 'lastName')}
                             placeholder={this.translate('page.body.kyc.identity.lastName')}
@@ -221,6 +225,8 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     <fieldset className={residentialAddressGroupClass}>
                         <CustomInput
                             type="string"
+                            name="ship-address"
+                            autoComplete="shipping street-address"
                             inputValue={residentialAddress}
                             placeholder={this.translate('page.body.kyc.identity.residentialAddress')}
                             label={this.translate('page.body.kyc.identity.residentialAddress')}
@@ -234,6 +240,8 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                     <fieldset className={cityGroupClass}>
                         <CustomInput
                             type="string"
+                            name="ship-city"
+                            autoComplete="shipping locality"
                             inputValue={city}
                             handleChangeInput={e => this.handleChange(e, 'city')}
                             placeholder={this.translate('page.body.kyc.identity.city')}
@@ -247,6 +255,8 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                             label={this.translate('page.body.kyc.identity.postcode')}
                             defaultLabel={this.translate('page.body.kyc.identity.postcode')}
                             type="string"
+                            name="ship-zip"
+                            autoComplete="shipping postal-code"
                             inputValue={postcode}
                             handleChangeInput={e => this.handleChange(e, 'postcode')}
                             onKeyPress={this.handleConfirmEnterPress}
@@ -264,13 +274,13 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                         disabled={this.handleCheckButtonDisabled()}
                         size="lg"
                         variant="primary"
-                        type="button"
+                        type="submit"
                         block={true}
                     >
                         {this.translate('page.body.kyc.next')}
                     </Button>
               </div>
-          </div>
+          </form>
         );
     }
 
@@ -334,7 +344,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     private handleConfirmEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter' && !this.handleCheckButtonDisabled()) {
             event.preventDefault();
-            this.sendData();
+            this.sendData(event);
         }
     };
 
@@ -361,7 +371,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
                 return value.match(lastNameRegex) ? true : false;
             case 'residentialAddress':
-                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9,.;/\\s]+$`);
+                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\s]+$`);
 
                 return value.match(residentialAddressRegex) ? true : false;
             case 'city':
@@ -412,7 +422,8 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         );
     };
 
-    private sendData = () => {
+    private sendData = event => {
+        event.preventDefault();
         const { labels, user } = this.props;
         const dob = !isDateInFuture(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
         const profileInfo: IdentityData = {
