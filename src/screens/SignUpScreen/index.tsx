@@ -127,13 +127,7 @@ class SignUp extends React.Component<Props> {
         }
 
         if (nextProps.signUpError) {
-            if (this.reCaptchaRef.current) {
-                this.reCaptchaRef.current.reset();
-            }
-
-            if (this.geetestCaptchaRef.current) {
-                this.setState({ shouldGeetestReset: true });
-            }
+            this.resetCaptcha();
         }
     }
 
@@ -217,6 +211,7 @@ class SignUp extends React.Component<Props> {
                         myRef={this.myRef}
                         passwordWrapper={this.passwordWrapper}
                         translate={this.translate}
+                        resetCaptcha={this.resetCaptcha}
                     />
                     <Modal
                         show={this.state.showModal}
@@ -228,6 +223,16 @@ class SignUp extends React.Component<Props> {
             </div>
         );
     }
+
+    private resetCaptcha = () => {
+        if (this.reCaptchaRef.current) {
+            this.reCaptchaRef.current.reset();
+        }
+
+        if (this.geetestCaptchaRef.current) {
+            this.setState({ shouldGeetestReset: true });
+        }
+    };
 
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 

@@ -58,6 +58,7 @@ export interface SignUpFormProps {
     myRef: any;
     passwordWrapper: any;
     translate: (id: string) => string;
+    resetCaptcha: () => void;
 }
 
 export const SignUpForm = (props: SignUpFormProps) => {
@@ -93,7 +94,10 @@ export const SignUpForm = (props: SignUpFormProps) => {
         emailFocused,
         confirmPasswordFocused,
         refIdFocused,
+        resetCaptcha,
     } = props;
+
+    React.useEffect(resetCaptcha, [confirmationError, emailError]);
 
     const disableButton = (): boolean => {
         if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {

@@ -42,6 +42,7 @@ const defaults: SignUpFormProps = {
     myRef: null,
     passwordWrapper: null,
     translate: jest.fn(),
+    resetCaptcha: jest.fn(),
 };
 
 const setup = (props: Partial<SignUpFormProps> = {}) =>
