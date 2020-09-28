@@ -85,12 +85,8 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
 
     return (
         <Modal title={renderHeader()} onClose={props.onDismiss} isOpen={props.show}>
-            <div>
-                {renderBody()}
-            </div>
-            <div>
-                {renderFooter()}
-            </div>
+            {renderBody()}
+            {renderFooter()}
         </Modal>
     );
 };
