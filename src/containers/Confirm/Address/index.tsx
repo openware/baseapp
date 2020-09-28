@@ -1,4 +1,5 @@
 import cr from 'classnames';
+import * as countries from 'i18n-iso-countries';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
@@ -6,17 +7,20 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { CustomInput, UploadFile } from '../../../components';
+import { languages } from '../../../api/config';
+import { CustomInput, DropdownComponent, UploadFile } from '../../../components';
 import { IntlProps } from '../../../index';
 import {
     alertPush,
     RootState,
+    selectCurrentLanguage,
     selectMobileDeviceState,
     selectSendAddressesSuccess,
     sendAddresses,
 } from '../../../modules';
 
 interface ReduxProps {
+    lang: string;
     success?: string;
     isMobileDevice: boolean;
 }
@@ -31,6 +35,7 @@ interface State {
     addressFocused: boolean;
     city: string;
     cityFocused: boolean;
+    country: string;
     postcode: string;
     postcodeFocused: boolean;
     fileScan: File[];
@@ -44,6 +49,7 @@ class AddressComponent extends React.Component<Props, State> {
         addressFocused: false,
         city: '',
         cityFocused: false,
+        country: '',
         postcode: '',
         postcodeFocused: false,
         fileScan: [],
@@ -56,7 +62,7 @@ class AddressComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const { isMobileDevice } = this.props;
+        const { lang, isMobileDevice } = this.props;
         const {
             address,
             addressFocused,
@@ -66,6 +72,10 @@ class AddressComponent extends React.Component<Props, State> {
             postcodeFocused,
             fileScan,
         } = this.state;
+
+        /* tslint:disable */
+        languages.map((l: string) => countries.registerLocale(require(`i18n-iso-countries/langs/${l}.json`)));
+        /* tslint:enable */
 
         const addressFocusedClass = cr('pg-confirm__content-address__row__content', {
             'pg-confirm__content-address__row__content--focused': addressFocused,
@@ -81,6 +91,9 @@ class AddressComponent extends React.Component<Props, State> {
             'pg-confirm__content-address__row__content--focused': postcodeFocused,
             'pg-confirm__content-address__row__content--wrong': postcode && !this.handleValidateInput('postcode', postcode),
         });
+
+        const dataCountries = Object.values(countries.getNames(lang));
+        const onSelectCountry = value => this.selectCountry(dataCountries[value]);
 
         return (
             <React.Fragment>
@@ -124,6 +137,17 @@ class AddressComponent extends React.Component<Props, State> {
                                 handleFocusInput={this.handleFieldFocus('postcode')}
                             />
                         </fieldset>
+                    </div>
+                    <div className="pg-confirm__content-address__row__content">
+                        <div className="pg-confirm__content-address__row__content-label">
+                            {this.translate('page.body.kyc.documents.country')}
+                        </div>
+                        <DropdownComponent
+                            className="pg-confirm__content-address__row__content-number-dropdown"
+                            list={dataCountries}
+                            onSelect={onSelectCountry}
+                            placeholder={this.translate('page.body.kyc.documents.country.placeholder')}
+                        />
                     </div>
                     <UploadFile
                         id="fileScan"
@@ -218,10 +242,17 @@ class AddressComponent extends React.Component<Props, State> {
         }
     };
 
+    private selectCountry = (value: string) => {
+        this.setState({
+            country: countries.getAlpha2Code(value, this.props.lang),
+        });
+    };
+
     private handleCheckButtonDisabled = () => {
         const {
             address,
             city,
+            country,
             fileScan,
             postcode,
         } = this.state;
@@ -233,6 +264,7 @@ class AddressComponent extends React.Component<Props, State> {
         return (
             !addressValid ||
             !cityValid ||
+            !country.length ||
             !postcodeValid ||
             !fileScan.length
         );
@@ -242,6 +274,7 @@ class AddressComponent extends React.Component<Props, State> {
         const {
             address,
             city,
+            country,
             fileScan,
             postcode,
         } = this.state;
@@ -250,6 +283,7 @@ class AddressComponent extends React.Component<Props, State> {
         request.append('upload[]', fileScan[0]);
         request.append('address', address);
         request.append('city', city);
+        request.append('country', country);
         request.append('postcode', postcode);
 
         this.props.sendAddresses(request);
@@ -259,6 +293,7 @@ class AddressComponent extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
+    lang: selectCurrentLanguage(state),
     success: selectSendAddressesSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
 });
