@@ -115,7 +115,6 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
             return;
         }
 
-        this.props.resetHistory();
         this.setState({
             tab: this.tabMapping[index],
             index: index,
