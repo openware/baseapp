@@ -5,8 +5,6 @@ access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
 access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
 
 {
-    "session_expire_time": 5000,
-    "captcha_type": "none",
-    "captcha_id": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
-    "password_min_entropy": 14
+  "gt": "0c4ab8ac2ed12c1c3f4a023dff99cd87",
+  "challenge": "25e8fe07feed0b02eb88634a7b052be4"
 }
