@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { CustomInput } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { EMAIL_REGEX } from '../../helpers';
+import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
 
 export interface EmailFormProps {
@@ -24,6 +25,11 @@ export interface EmailFormProps {
     handleInputEmail: (value: string) => void;
     handleFieldFocus: () => void;
     handleReturnBack: () => void;
+    captchaType?: 'recaptcha' | 'geetest' | 'none';
+    renderCaptcha?: JSX.Element | null;
+    reCaptchaSuccess?: boolean;
+    geetestCaptchaSuccess?: boolean;
+    captcha_response?: string | GeetestCaptchaResponse;
 }
 
 const EmailForm = React.memo((props: EmailFormProps) => {
@@ -38,6 +44,9 @@ const EmailForm = React.memo((props: EmailFormProps) => {
         email,
         emailFocused,
         emailError,
+        captchaType,
+        geetestCaptchaSuccess,
+        reCaptchaSuccess,
     } = props;
 
     const handleCancel = () => {
@@ -54,6 +63,22 @@ const EmailForm = React.memo((props: EmailFormProps) => {
         return email && isEmailValid;
     };
 
+    const isButtonDisabled = (): boolean => {
+        if (isLoading || !email.match(EMAIL_REGEX)) {
+            return true;
+        }
+
+        if (captchaType === 'recaptcha' && !reCaptchaSuccess) {
+            return true;
+        }
+
+        if (captchaType === 'geetest' && !geetestCaptchaSuccess) {
+            return true;
+        }
+
+        return false;
+    };
+
     const handleClick = (label?: string, e?: React.FormEvent<HTMLInputElement>) => {
         if (e) {
             e.preventDefault();
@@ -65,6 +90,9 @@ const EmailForm = React.memo((props: EmailFormProps) => {
         }
     };
 
+    const emailFormClass = cr('cr-email-form', {
+        'cr-email-form--extended': captchaType && captchaType !== 'none',
+    });
 
     const emailGroupClass = cr('cr-email-form__group', {
         'cr-email-form__group--focused': emailFocused,
@@ -72,7 +100,7 @@ const EmailForm = React.memo((props: EmailFormProps) => {
 
     return (
         <form>
-            <div className="cr-email-form">
+            <div className={emailFormClass}>
                 {!isMobileDevice && <div className="cr-email-form__options-group">
                   <div className="cr-email-form__option">
                     <div className="cr-email-form__option-inner">
@@ -103,11 +131,12 @@ const EmailForm = React.memo((props: EmailFormProps) => {
                         />
                         {emailError && <div className="cr-email-form__error">{emailError}</div>}
                     </div>
+                    {props.renderCaptcha}
                     <div className="cr-email-form__button-wrapper">
                         <Button
                             block={true}
                             type="button"
-                            disabled={isLoading || !email.match(EMAIL_REGEX)}
+                            disabled={isButtonDisabled()}
                             onClick={e => handleClick(undefined, e)}
                             size="lg"
                             variant="primary"
@@ -124,4 +153,3 @@ const EmailForm = React.memo((props: EmailFormProps) => {
 export {
     EmailForm,
 };
-

@@ -7,6 +7,7 @@ import {
 } from 'react-redux';
 import { Redirect } from 'react-router';
 import { compose } from 'redux';
+import { languages } from '../../api';
 import { IntlProps } from '../../index';
 import {
     changeLanguage,
@@ -41,10 +42,12 @@ class Verification extends React.Component<Props, IntlProps> {
     public componentDidMount() {
         const token = extractToken(this.props);
         const lang = extractLang(this.props);
+
         if (token) {
             this.props.verification({ token });
         }
-        if (lang) {
+
+        if (lang && languages.includes(lang.toLowerCase())) {
             this.props.changeLanguage(lang.toLowerCase());
         }
     }

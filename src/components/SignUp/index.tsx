@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { CustomInput, PasswordStrengthMeter } from '../';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../../helpers';
+import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
 
 export interface SignUpFormProps {
@@ -48,7 +49,7 @@ export interface SignUpFormProps {
     renderCaptcha: JSX.Element | null;
     reCaptchaSuccess: boolean;
     geetestCaptchaSuccess: boolean;
-    captcha_response: string;
+    captcha_response?: string | GeetestCaptchaResponse;
     currentPasswordEntropy: number;
     minPasswordEntropy: number;
     passwordErrorFirstSolved: boolean;
