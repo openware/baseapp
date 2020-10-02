@@ -126,6 +126,11 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 priceMarket: next.priceMarket,
             });
         }
+
+        if (this.props.to !== next.to || this.props.from !== next.from) {
+            this.setState({ price: '' });
+            this.props.handleAmountChange('', next.type);
+        }
     }
 
     public render() {
