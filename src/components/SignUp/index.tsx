@@ -61,10 +61,10 @@ export interface SignUpFormProps {
     translate: (id: string) => string;
 }
 
-export const SignUpForm = (props: SignUpFormProps) => {
+const SignUpFormComponent = (props: SignUpFormProps) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const history = useHistory();
-    const intl = useIntl();
+    const { formatMessage } = useIntl();
 
     const {
         email,
@@ -92,11 +92,19 @@ export const SignUpForm = (props: SignUpFormProps) => {
         translate,
         confirmationError,
         emailFocused,
+        passwordErrorFirstSolved,
+        passwordErrorSecondSolved,
         confirmPasswordFocused,
+        handleChangePassword,
+        passwordErrorThirdSolved,
+        handleFocusPassword,
+        minPasswordEntropy,
         refIdFocused,
+        validateForm,
+        onSignUp,
     } = props;
 
-    const disableButton = (): boolean => {
+    const disableButton = React.useCallback((): boolean => {
         if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {
             return true;
         }
@@ -108,9 +116,9 @@ export const SignUpForm = (props: SignUpFormProps) => {
         }
 
         return false;
-    };
+    }, [captchaType, confirmPassword, email, geetestCaptchaSuccess, hasConfirmed, isLoading, password, reCaptchaSuccess]);
 
-    const renderPasswordInput = () => {
+    const renderPasswordInput = React.useCallback(() => {
         const passwordGroupClass = cr('cr-sign-up-form__group', {
             'cr-sign-up-form__group--focused': passwordFocused,
         });
@@ -122,90 +130,105 @@ export const SignUpForm = (props: SignUpFormProps) => {
                     label={passwordLabel || 'Password'}
                     placeholder={passwordLabel || 'Password'}
                     defaultLabel="Password"
-                    handleChangeInput={props.handleChangePassword}
+                    handleChangeInput={handleChangePassword}
                     inputValue={password}
-                    handleFocusInput={props.handleFocusPassword}
+                    handleFocusInput={handleFocusPassword}
                     classNameLabel="cr-sign-up-form__label"
                     classNameInput="cr-sign-up-form__input"
                     autoFocus={false}
                 />
                 {password ?
                     <PasswordStrengthMeter
-                        minPasswordEntropy={props.minPasswordEntropy}
+                        minPasswordEntropy={minPasswordEntropy}
                         currentPasswordEntropy={currentPasswordEntropy}
                         passwordExist={password !== ''}
-                        passwordErrorFirstSolved={props.passwordErrorFirstSolved}
-                        passwordErrorSecondSolved={props.passwordErrorSecondSolved}
-                        passwordErrorThirdSolved={props.passwordErrorThirdSolved}
+                        passwordErrorFirstSolved={passwordErrorFirstSolved}
+                        passwordErrorSecondSolved={passwordErrorSecondSolved}
+                        passwordErrorThirdSolved={passwordErrorThirdSolved}
                         passwordPopUp={passwordPopUp}
                         translate={translate}
                     /> : null}
             </div>
         );
-    };
+    }, [
+        currentPasswordEntropy,
+        password,
+        passwordFocused,
+        passwordLabel,
+        passwordPopUp,
+        handleChangePassword,
+        handleFocusPassword,
+        minPasswordEntropy,
+        passwordErrorFirstSolved,
+        passwordErrorSecondSolved,
+        passwordErrorThirdSolved,
+        translate,
+    ]);
 
-    const handleSubmitForm = () => {
-        props.onSignUp();
-    };
+    const handleSubmitForm = React.useCallback(() => {
+        onSignUp();
+    }, [onSignUp]);
 
-    const isValidForm = () => {
-        const isEmailValid = props.email.match(EMAIL_REGEX);
-        const isPasswordValid = props.password.match(PASSWORD_REGEX);
-        const isConfirmPasswordValid = props.password === props.confirmPassword;
+    const isValidForm = React.useCallback(() => {
+        const isEmailValid = email.match(EMAIL_REGEX);
+        const isPasswordValid = password.match(PASSWORD_REGEX);
+        const isConfirmPasswordValid = password === confirmPassword;
 
         return (email && isEmailValid) &&
-            (props.password && isPasswordValid) &&
+            (password && isPasswordValid) &&
             (confirmPassword && isConfirmPasswordValid);
-    };
+    }, [confirmPassword, email, password]);
 
-    const handleClick = (label?: string, e?: React.FormEvent<HTMLInputElement>) => {
+    const handleClick = React.useCallback((label?: string, e?: React.FormEvent<HTMLInputElement>) => {
         if (e) {
             e.preventDefault();
         }
 
         if (!isValidForm()) {
-            props.validateForm();
+            validateForm();
         } else {
             handleSubmitForm();
         }
-    };
+    }, [handleSubmitForm, isValidForm, validateForm]);
 
-    const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleEnterPress = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
 
             handleClick();
         }
-    };
+    }, [handleClick]);
 
-    const renderLogIn = () => {
+    const renderLogIn = React.useCallback(() => {
         return <div className="pg-sign-up-screen__login">
             <span>
-                {intl.formatMessage({ id: 'page.header.signUp.alreadyRegistered' })}
+                {formatMessage({ id: 'page.header.signUp.alreadyRegistered' })}
                 <span
                     onClick={() => history.push('/signin')}
                     className="pg-sign-up-screen__login-button">
-                    {intl.formatMessage({ id: 'page.mobile.header.signIn' })}
+                    {formatMessage({ id: 'page.mobile.header.signIn' })}
                 </span>
             </span>
         </div>;
-    };
+    }, [history, formatMessage]);
 
-    const emailGroupClass = cr('cr-sign-up-form__group', {
+    const emailGroupClass = React.useMemo(() => cr('cr-sign-up-form__group', {
         'cr-sign-up-form__group--focused': emailFocused,
-    });
+    }), [emailFocused]);
 
-    const confirmPasswordGroupClass = cr('cr-sign-up-form__group', {
+    const confirmPasswordGroupClass = React.useMemo(() => cr('cr-sign-up-form__group', {
         'cr-sign-up-form__group--focused': confirmPasswordFocused,
-    });
-    const refIdGroupClass = cr('cr-sign-up-form__group', {
+    }), [confirmPasswordFocused]);
+
+    const refIdGroupClass = React.useMemo(() => cr('cr-sign-up-form__group', {
         'cr-sign-up-form__group--focused': refIdFocused,
-    });
-    const logo = image ? (
+    }), [refIdFocused]);
+
+    const logo = React.useMemo(() => image ? (
         <h1 className="cr-sign-up-form__title">
             <img className="cr-sign-up-form__image" src={image} alt="logo" />
         </h1>
-    ) : null;
+    ) : null, [image]);
 
     return (
         <form>
@@ -298,3 +321,5 @@ export const SignUpForm = (props: SignUpFormProps) => {
         </form>
     );
 };
+
+export const SignUpForm = React.memo(SignUpFormComponent);
