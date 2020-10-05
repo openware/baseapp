@@ -38,79 +38,10 @@ export interface SignInProps {
     changeEmail: (value: string) => void;
 }
 
-const SignInComponent = React.memo((props: SignInProps) => {
+const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const history = useHistory();
-    const intl = useIntl();
-    const isValidForm = () => {
-        const isEmailValid = props.email.match(EMAIL_REGEX);
-
-        return props.email && isEmailValid && props.password;
-    };
-
-    const handleChangeEmail = (value: string) => {
-            props.changeEmail(value);
-        };
-
-    const handleChangePassword = (value: string) => {
-            props.changePassword(value);
-        };
-
-    const handleFieldFocus = (field: string) => {
-            props.handleChangeFocusField(field);
-        };
-
-    const handleSubmitForm = () => {
-            props.refreshError();
-            props.onSignIn();
-        };
-
-    const handleValidateForm = () => {
-            props.isFormValid();
-        };
-
-    const handleClick = (label?: string, e?: React.FormEvent<HTMLInputElement>) => {
-            if (e) {
-                e.preventDefault();
-            }
-            if (!isValidForm()) {
-                handleValidateForm();
-            } else {
-                handleSubmitForm();
-            }
-        };
-
-    const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-
-            handleClick();
-        }
-    };
-
-    const renderForgotButton = (
-        <div className="cr-sign-in-form__bottom-section">
-            <div
-                className="cr-sign-in-form__bottom-section-password"
-                onClick={() => props.onForgotPassword(email)}
-            >
-                {props.forgotPasswordLabel || 'Forgot your password?'}
-            </div>
-        </div>
-    );
-
-    const renderRegister = (
-        <div className="pg-sign-in-screen__register">
-            <span>
-                {intl.formatMessage({ id: 'page.header.signIN.noAccountYet' })}
-                <span
-                    onClick={() => history.push('/signup')}
-                    className="pg-sign-in-screen__register-button">
-                    {intl.formatMessage({ id: 'page.body.landing.header.button3' })}
-                </span>
-            </span>
-        </div>
-    );
+    const { formatMessage } = useIntl();
 
     const {
         email,
@@ -128,18 +59,97 @@ const SignInComponent = React.memo((props: SignInProps) => {
         passwordLabel,
         emailFocused,
         passwordFocused,
+        onForgotPassword,
+        forgotPasswordLabel,
+        refreshError,
+        onSignIn,
+        isFormValid,
+        handleChangeFocusField,
+        changePassword,
+        changeEmail,
     } = props;
-    const emailGroupClass = cr('cr-sign-in-form__group', {
+
+    const isValidForm = React.useCallback(() => {
+        const isEmailValid = email.match(EMAIL_REGEX);
+
+        return email && isEmailValid && password;
+    }, [email, password]);
+
+    const handleChangeEmail = React.useCallback((value: string) => {
+        changeEmail(value);
+    }, [changeEmail]);
+
+    const handleChangePassword = React.useCallback((value: string) => {
+        changePassword(value);
+    }, [changePassword]);
+
+    const handleFieldFocus = React.useCallback((field: string) => {
+        handleChangeFocusField(field);
+    }, [handleChangeFocusField]);
+
+    const handleSubmitForm = React.useCallback(() => {
+        refreshError();
+        onSignIn();
+    }, [onSignIn, refreshError]);
+
+    const handleValidateForm = React.useCallback(() => {
+        isFormValid();
+    }, [isFormValid]);
+
+    const handleClick = React.useCallback((label?: string, e?: React.FormEvent<HTMLInputElement>) => {
+        if (e) {
+            e.preventDefault();
+        }
+        if (!isValidForm()) {
+            handleValidateForm();
+        } else {
+            handleSubmitForm();
+        }
+    }, [handleSubmitForm, handleValidateForm, isValidForm]);
+
+    const handleEnterPress = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            handleClick();
+        }
+    }, [handleClick]);
+
+    const renderForgotButton = React.useMemo(() =>
+        <div className="cr-sign-in-form__bottom-section">
+            <div
+                className="cr-sign-in-form__bottom-section-password"
+                onClick={() => onForgotPassword(email)}
+            >
+                {forgotPasswordLabel || 'Forgot your password?'}
+            </div>
+        </div>, [forgotPasswordLabel, onForgotPassword, email]);
+
+    const renderRegister = React.useMemo(() =>
+        <div className="pg-sign-in-screen__register">
+            <span>
+                {formatMessage({ id: 'page.header.signIN.noAccountYet' })}
+                <span
+                    onClick={() => history.push('/signup')}
+                    className="pg-sign-in-screen__register-button">
+                    {formatMessage({ id: 'page.body.landing.header.button3' })}
+                </span>
+            </span>
+        </div>, [formatMessage, history]);
+
+    const emailGroupClass = React.useMemo(() => cr('cr-sign-in-form__group', {
         'cr-sign-in-form__group--focused': emailFocused,
-    });
-    const passwordGroupClass = cr('cr-sign-in-form__group', {
+    }), [emailFocused]);
+
+    const passwordGroupClass = React.useMemo(() => cr('cr-sign-in-form__group', {
         'cr-sign-in-form__group--focused': passwordFocused,
-    });
-    const logo = image ? (
+    }), [passwordFocused]);
+
+    const logo = React.useMemo(() => image ? (
         <h1 className="cr-sign-in-form__title">
             <img className="cr-sign-in-form__image" src={image} alt="logo" />
         </h1>
-    ) : null;
+    ) : null, [image]);
 
     return (
         <form>
@@ -207,8 +217,6 @@ const SignInComponent = React.memo((props: SignInProps) => {
             </div>
         </form>
     );
-});
-
-export {
-    SignInComponent,
 };
+
+export const SignInComponent = React.memo(SignIn);
