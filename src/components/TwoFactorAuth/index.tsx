@@ -20,7 +20,7 @@ export interface TwoFactorAuthProps {
     handleClose2fa: () => void;
 }
 
-export const TwoFactorAuth: React.FC<TwoFactorAuthProps> = (props: TwoFactorAuthProps) => {
+export const TwoFactorAuthComponent: React.FC<TwoFactorAuthProps> = (props: TwoFactorAuthProps) => {
     const {
         errorMessage,
         isLoading,
@@ -103,3 +103,6 @@ export const TwoFactorAuth: React.FC<TwoFactorAuthProps> = (props: TwoFactorAuth
         </div>
     );
 };
+
+
+export const TwoFactorAuth = React.memo(TwoFactorAuthComponent);

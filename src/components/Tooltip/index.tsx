@@ -8,10 +8,12 @@ interface Props {
     className?: string;
 }
 
-export const Tooltip = (props: Props) => (
+export const TooltipComponent = (props: Props) => (
     <BootstrapTooltip id="tooltip" className="tooltip" {...props}>
         <div className="tooltip__content">
             <FormattedMessage id={props.title} />
         </div>
     </BootstrapTooltip>
 );
+
+export const Tooltip = React.memo(TooltipComponent);
