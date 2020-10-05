@@ -24,41 +24,36 @@ const style: React.CSSProperties = {
 /**
  * Component to display list of user wallets. It is scrollable and reacts on WalletItem click.
  */
-export class WalletList extends React.Component<WalletListProps> {
-    public itemState = (i: number) => {
-        return this.props.activeIndex === i;
+export const WalletList: React.FC<WalletListProps> = (props: WalletListProps) => {
+    const handleClick = (i: number, p: WalletItemProps) => {
+        if (props.onWalletSelectionChange) {
+            props.onWalletSelectionChange(p);
+        }
+        if (props.onActiveIndexChange) {
+            props.onActiveIndexChange(i);
+        }
     };
 
-    public makeWalletItem = (props: WalletItemProps, i: number) => (
+    const makeWalletItem = (p: WalletItemProps, i: number) => (
         <li
             key={i}
             style={style}
-            onClick={this.handleClick.bind(this, i, props)}
+            onClick={() => handleClick(i, p)}
         >
             <WalletItem
                 key={i}
                 {...{
-                    ...props,
-                    active: this.itemState(i),
-                    currency: removeAlt(props.currency),
+                    ...p,
+                    active: props.activeIndex === i,
+                    currency: removeAlt(p.currency),
                 }}
             />
         </li>
     );
-    public handleClick = (i: number, props: WalletItemProps) => {
-        if (this.props.onWalletSelectionChange) {
-            this.props.onWalletSelectionChange(props);
-        }
-        if (this.props.onActiveIndexChange) {
-            this.props.onActiveIndexChange(i);
-        }
-    };
 
-    public render() {
-        return (
-            <ul className="cr-wallet-list">
-                {this.props.walletItems.map(this.makeWalletItem)}
-            </ul>
-        );
-    }
-}
+    return (
+        <ul className="cr-wallet-list">
+            {props.walletItems.map(makeWalletItem)}
+        </ul>
+    );
+};
