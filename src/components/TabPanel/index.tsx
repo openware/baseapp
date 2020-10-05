@@ -64,56 +64,23 @@ export interface TabPanelProps {
 /**
  * Component for switching between different tabs on one page.
  */
-export class TabPanel extends React.Component<TabPanelProps> {
-    public static defaultProps = {
-        hideMode: HideMode.hide,
-    };
+export const TabPanel: React.FC<TabPanelProps> = (props: TabPanelProps) => {
+    const {
+        fixed,
+        hideMode = HideMode.hide,
+        panels,
+        optionalHead,
+        currentTabIndex,
+        isMobileDevice,
+        onCurrentTabChange,
+        onTabChange,
+    } = props;
 
-    public render() {
-        const { fixed, hideMode, panels, optionalHead, currentTabIndex } = this.props;
-        const className: string = classnames('cr-tab-panel', {
-            'cr-tab-panel__fixed': fixed,
-        });
+    const className: string = React.useMemo(() => classnames('cr-tab-panel', {
+        'cr-tab-panel__fixed': fixed,
+    }), [fixed]);
 
-        const contents = hideMode === HideMode.hide
-            ? panels.map(this.renderTabContent)
-            : panels
-                .filter((panel, index) => index === currentTabIndex)
-                .map(this.renderTabContent);
-
-        return (
-            <div className={className}>
-                <div className="cr-tab-panel__navigation-container draggable-container">
-                    {this.tabPanelRender()}
-                    {optionalHead && <div className="cr-tab-panel__optinal-head">{optionalHead}</div>}
-                </div>
-                {contents}
-            </div>
-        );
-    }
-
-    private tabPanelRender = () => {
-        const { panels, isMobileDevice } = this.props;
-        const navCx = 'cr-tab-panel__navigation-container-navigation';
-
-        if (isMobileDevice) {
-            return (
-                <div className="cr-tab-panel__dropdown">
-                    <DropdownComponent list={this.dropdownLabels()} className="cr-dropdown--mobile" onSelect={this.handleOrderTypeChange} placeholder=""/>
-                </div>
-            );
-        } else {
-            return (
-                <div className={navCx} role="tablist">
-                    {panels.map(this.renderTabPanel)}
-                </div>
-            );
-        }
-    };
-
-    private dropdownLabels = () => {
-        const { panels, currentTabIndex } = this.props;
-
+    const dropdownLabels = React.useCallback(() => {
         if (!panels.length) {
             return [];
         }
@@ -122,23 +89,32 @@ export class TabPanel extends React.Component<TabPanelProps> {
         tabNames.unshift(panels[currentTabIndex].label);
 
         return tabNames;
-    };
+    }, [currentTabIndex, panels]);
 
-    private handleOrderTypeChange = (index: number) => {
-        const { panels } = this.props;
-        const currentLabels = this.dropdownLabels();
+    const createOnTabChangeHandler = React.useCallback((index: number, tab: Tab) => () => {
+        if (!tab.disabled) {
+            if (onCurrentTabChange) {
+                onCurrentTabChange(index);
+            }
+            if (onTabChange) {
+                onTabChange(index, tab.label);
+            }
+        }
+    }, [onCurrentTabChange, onTabChange]);
+
+    const handleOrderTypeChange = React.useCallback((index: number) => {
+        const currentLabels = dropdownLabels();
 
         const activeIndex = panels.findIndex(tab => tab.label === currentLabels[index]);
 
-        this.createOnTabChangeHandler(activeIndex, panels[activeIndex])();
-    };
+        createOnTabChangeHandler(activeIndex, panels[activeIndex])();
+    }, [createOnTabChangeHandler, dropdownLabels, panels]);
 
-    private renderTabPanel = (tab: Tab, index: number) => {
+    const renderTabPanel = React.useCallback((tab: Tab, index: number) => {
         const { disabled, hidden, label } = tab;
-        const { currentTabIndex } = this.props;
 
         const active = currentTabIndex === index;
-        const className = classnames('cr-tab', {
+        const cn = classnames('cr-tab', {
             'cr-tab__active': active,
             'cr-tab__disabled': disabled,
             'cr-tab__hidden': hidden,
@@ -146,9 +122,9 @@ export class TabPanel extends React.Component<TabPanelProps> {
 
         return (
             <div
-                className={className}
+                className={cn}
                 key={index}
-                onClick={this.createOnTabChangeHandler(index, tab)}
+                onClick={createOnTabChangeHandler(index, tab)}
                 role="tab"
                 tabIndex={index}
             >
@@ -156,12 +132,28 @@ export class TabPanel extends React.Component<TabPanelProps> {
                 {active && <span className="cr-tab__pointer" />}
             </div>
         );
-    };
+    }, [createOnTabChangeHandler, currentTabIndex]);
 
-    private renderTabContent = (tab: Tab, index: number) => {
-        const { hideMode, currentTabIndex } = this.props;
+    const tabPanelRender = React.useCallback(() => {
+        const navCx = 'cr-tab-panel__navigation-container-navigation';
 
-        const className: string = classnames('cr-tab-content',
+        if (isMobileDevice) {
+            return (
+                <div className="cr-tab-panel__dropdown">
+                    <DropdownComponent list={dropdownLabels()} className="cr-dropdown--mobile" onSelect={handleOrderTypeChange} placeholder=""/>
+                </div>
+            );
+        } else {
+            return (
+                <div className={navCx} role="tablist">
+                    {panels.map(renderTabPanel)}
+                </div>
+            );
+        }
+    }, [dropdownLabels, handleOrderTypeChange, isMobileDevice, panels, renderTabPanel]);
+
+    const renderTabContent = React.useCallback((tab: Tab, index: number) => {
+        const cn: string = classnames('cr-tab-content',
             {
                 'cr-tab-content__active':
                     hideMode === HideMode.hide ?
@@ -170,20 +162,25 @@ export class TabPanel extends React.Component<TabPanelProps> {
         );
 
         return (
-            <div className={className} key={`${tab.label}-${index}`}>
+            <div className={cn} key={`${tab.label}-${index}`}>
                 {tab.content}
             </div>
         );
-    };
+    }, [currentTabIndex, hideMode]);
 
-    private createOnTabChangeHandler = (index: number, tab: Tab) => () => {
-        if (!tab.disabled) {
-            if (this.props.onCurrentTabChange) {
-                this.props.onCurrentTabChange(index);
-            }
-            if (this.props.onTabChange) {
-                this.props.onTabChange(index, tab.label);
-            }
-        }
-    };
-}
+    const contents = React.useMemo(() => hideMode === HideMode.hide
+        ? panels.map(renderTabContent)
+        : panels
+            .filter((panel, index) => index === currentTabIndex)
+            .map(renderTabContent), [currentTabIndex, hideMode, panels, renderTabContent]);
+
+    return (
+        <div className={className}>
+            <div className="cr-tab-panel__navigation-container draggable-container">
+                {tabPanelRender()}
+                {optionalHead && <div className="cr-tab-panel__optinal-head">{optionalHead}</div>}
+            </div>
+            {contents}
+        </div>
+    );
+};
