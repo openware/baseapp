@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { passwordEntropyStep } from '../../api/config';
+import { passwordEntropyStep } from '../../api';
 import { PasswordStrengthTip } from '../PasswordStrengthTip';
 
 export interface PasswordStrengthMeterProps {
@@ -13,7 +13,7 @@ export interface PasswordStrengthMeterProps {
     translate: (id: string) => string;
 }
 
-export const PasswordStrengthMeter: React.FunctionComponent<PasswordStrengthMeterProps> = props => {
+const PasswordStrengthMeterComponent: React.FunctionComponent<PasswordStrengthMeterProps> = props => {
     const passwordComplite = props.passwordErrorSecondSolved && props.passwordErrorFirstSolved && props.passwordErrorThirdSolved;
     const AVG_PASSWORD_ENTROPY = props.minPasswordEntropy + passwordEntropyStep();
     const STRONG_PASSWORD_ENTROPY = props.minPasswordEntropy + passwordEntropyStep() * 2;
@@ -98,3 +98,6 @@ const passwordStrengthStatus = (passwordStrengthMeterLength: number, translate) 
         default: return translate('page.header.signUp.password.too.weak') || 'TOO WEAK';
     }
 };
+
+
+export const PasswordStrengthMeter = React.memo(PasswordStrengthMeterComponent);

@@ -18,7 +18,7 @@ interface QRCodeProps {
 /**
  * Component for displaying QR code.
  */
-const QRCode: React.FunctionComponent<QRCodeProps> = (props: QRCodeProps) => {
+const QRCodeComponent: React.FunctionComponent<QRCodeProps> = (props: QRCodeProps) => {
     const { data = '', dimensions } = props;
 
     return (
@@ -32,6 +32,4 @@ const QRCode: React.FunctionComponent<QRCodeProps> = (props: QRCodeProps) => {
     );
 };
 
-export {
-    QRCode,
-};
+export const QRCode = React.memo(QRCodeComponent);

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { areEqualProps } from '../../helpers/areEqualProps';
 
 export interface PercentageButtonProps {
     /**
@@ -17,8 +16,10 @@ export interface PercentageButtonProps {
     onClick: (index: number) => void;
 }
 
-export const PercentageButton: React.FunctionComponent<PercentageButtonProps> = React.memo((props: PercentageButtonProps) => {
+export const PercentageButtonComponent: React.FunctionComponent<PercentageButtonProps> = (props: PercentageButtonProps) => {
   return (
       <button className={props.className || 'cr-percentage-button'} onClick={() => props.onClick(props.value)}>{`${props.value * 100}%`}</button>
   );
-}, areEqualProps);
+};
+
+export const PercentageButton = React.memo(PercentageButtonComponent);
