@@ -20,7 +20,7 @@ export interface SummaryFieldProps {
 /**
  * Component to display currency amount with specific label.
  */
-export const SummaryField: React.FunctionComponent<SummaryFieldProps> = props => {
+export const SummaryFieldComponent: React.FunctionComponent<SummaryFieldProps> = props => {
     const { message, className, content } = props;
     const cx = classnames('cr-summary-field', className);
 
@@ -35,3 +35,5 @@ export const SummaryField: React.FunctionComponent<SummaryFieldProps> = props =>
         </div>
     );
 };
+
+export const SummaryField = React.memo(SummaryFieldComponent);
