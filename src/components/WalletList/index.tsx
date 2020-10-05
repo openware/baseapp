@@ -25,16 +25,17 @@ const style: React.CSSProperties = {
  * Component to display list of user wallets. It is scrollable and reacts on WalletItem click.
  */
 export const WalletList: React.FC<WalletListProps> = (props: WalletListProps) => {
-    const handleClick = (i: number, p: WalletItemProps) => {
-        if (props.onWalletSelectionChange) {
-            props.onWalletSelectionChange(p);
+    const { onWalletSelectionChange, onActiveIndexChange, activeIndex } = props;
+    const handleClick = React.useCallback((i: number, p: WalletItemProps) => {
+        if (onWalletSelectionChange) {
+            onWalletSelectionChange(p);
         }
-        if (props.onActiveIndexChange) {
-            props.onActiveIndexChange(i);
+        if (onActiveIndexChange) {
+            onActiveIndexChange(i);
         }
-    };
+    }, [onWalletSelectionChange, onActiveIndexChange]);
 
-    const makeWalletItem = (p: WalletItemProps, i: number) => (
+    const makeWalletItem = React.useCallback((p: WalletItemProps, i: number) => (
         <li
             key={i}
             style={style}
@@ -44,12 +45,12 @@ export const WalletList: React.FC<WalletListProps> = (props: WalletListProps) =>
                 key={i}
                 {...{
                     ...p,
-                    active: props.activeIndex === i,
+                    active: activeIndex === i,
                     currency: removeAlt(p.currency),
                 }}
             />
         </li>
-    );
+    ), [handleClick, activeIndex]);
 
     return (
         <ul className="cr-wallet-list">
