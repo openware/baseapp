@@ -84,7 +84,7 @@ const ReactGridLayout = WidthProvider(Responsive);
 type Props = DispatchProps & ReduxProps & RouteComponentProps & IntlProps;
 
 const TradingWrapper = props => {
-    const { orderComponentResized, orderBookComponentResized, layouts, handleResize } = props;
+    const { orderComponentResized, orderBookComponentResized, layouts, handleResize, handeDrag } = props;
     const children = React.useMemo(() => {
         const data = [
             {
@@ -134,6 +134,7 @@ const TradingWrapper = props => {
             onLayoutChange={() => {return;}}
             margin={[5, 5]}
             onResize={handleResize}
+            onDrag={handeDrag}
         >
             {children}
         </ReactGridLayout>
@@ -218,6 +219,7 @@ class Trading extends React.Component<Props, StateProps> {
                                 orderComponentResized={orderComponentResized}
                                 orderBookComponentResized={orderBookComponentResized}
                                 handleResize={this.handleResize}
+                                handeDrag={this.handeDrag}
                             />
                         </div>
                     </div>
@@ -255,6 +257,14 @@ class Trading extends React.Component<Props, StateProps> {
             default:
                 break;
         }
+    };
+
+    private handeDrag = (layout, oldItem, newItem) => {
+        layout.map(elem => {
+            if (elem.y < 0) {
+                elem.y = 0;
+            }
+        });
     };
 }
 
