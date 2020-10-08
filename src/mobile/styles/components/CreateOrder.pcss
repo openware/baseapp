@@ -183,6 +183,14 @@
         height: calc(50% - 30px) !important;
         top: calc(50% + 25px);
 
+        .cr-table {
+          min-height: 0;
+
+          &__body {
+            height: fit-content;
+          }
+        }
+
         tbody::after {
           height: 0;
         }
