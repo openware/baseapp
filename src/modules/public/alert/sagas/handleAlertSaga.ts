@@ -52,6 +52,8 @@ export function* handleAlertSaga(action: AlertPush) {
             case 422:
                 if (action.payload.message.indexOf('value.taken') > -1) {
                     window.location.replace('/');
+                } else {
+                    yield call(callAlertData, action);
                 }
                 break;
             case 471:
