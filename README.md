@@ -66,6 +66,63 @@ While building a Docker image you can pass build-dependant arguments using `--bu
 | `BUILD_EXPIRE` | Unix Timestamp of the build expiration date in seconds |
 | `BUILD_DOMAIN` | Domain which you'd like to use during the deployment   |
 
+## Build mobile app
+Install dependencies using npm
+```bash
+npm install
+```
+Generate a native project (ios, android)
+```bash
+ionic capacitor add <platform>
+```
+To build a native app you should have Xcode or Android studio on your local machine.
+
+## Build IOS app
+**1. Install Xcode**
+
+Xcode is the IDE for creating native iOS apps. It includes the iOS SDK and Xcode command-line tools. Xcode can be downloaded for free with an Apple account or it can be installed through the App Store.
+Once Xcode is installed, make sure the command-line tools are selected for use:
+```bash
+xcode-select --install
+```
+**2. Set up a development team**
+
+All iOS apps must be code signed, even for development. Luckily, Xcode makes this easy with automatic code signing. The only prerequisite is an Apple ID.
+
+Open Xcode and navigate to **Xcode » Preferences » Accounts**. Add an Apple ID if none are listed. Once logged in, a Personal Team will appear in the team list of the Apple ID.
+
+**3. Create an iOS Simulator**
+
+You can test your mobile application with a connected Iphone device to the Mac or using IOS Simulator.
+Open Xcode and navigate to **Window » Devices and Simulators**. Create an **iPhone 11** simulator if one does not already exist.
+
+**4. Set the Package ID**
+
+Open the `capacitor.config.json` file and modify the appId property.
+
+**5. Open the project in Xcode.**
+
+Launch Xcode with a prepared app:
+```bash
+ionic capacitor open ios
+```
+
+**6. Check Xcode configuration**
+In Project navigator, select the project root to open the project editor. Under the **Identity section**, verify that the **Package ID** that was set matches the Bundle Identifier.
+
+In the same project editor, under the **Signing section**, ensure Automatically manage signing is enabled. Then, select a Development Team. Given a Development Team, Xcode will attempt to automatically prepare provisioning and signing.
+
+**7. Update native app with the changes**
+
+With each meaningful change, Ionic apps must be built into web assets before the change can appear on iOS simulators and devices. The web assets then must be copied into the native project:
+```bash
+ionic capacitor copy ios
+```
+
+**8. Build IOS app**
+
+To receive an executable app file run 'build' command on Xcode.
+
 ## Happy trading with OpenDAX BaseApp UI
 
 If you have designed something beautiful with it, we would love to see it!
