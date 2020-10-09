@@ -71,6 +71,10 @@ Install dependencies using npm
 ```bash
 npm install
 ```
+Build frontend
+```bash
+npm build
+```
 Generate a native project (ios, android)
 ```bash
 ionic capacitor add <platform>
@@ -122,6 +126,42 @@ ionic capacitor copy ios
 **8. Build IOS app**
 
 To receive an executable app file run 'build' command on Xcode.
+
+## Build Android app
+**1. Install Android studio**
+
+Android Studio is IDE, that provides the fastest tools for building apps on every type of Android device.
+
+**2. Open the `capacitor.config.json` file and modify the `linuxAndroidStudioPath` property.**
+
+Run next command
+```bash
+whereis android-studio
+```
+
+**3. Build your android application**
+
+```bash
+ionic capacitor add android
+```
+
+**4. Launch android application with Android Studio**
+```bash
+ionic capacitor run android
+```
+
+**5. Android Studio configuration**
+
+Select connected android device or configure device simulator, which required
+
+**6. Update app with the changes**
+```bash
+ionic capacitor copy android [options]
+```
+
+**7. Build android app**
+
+Build android app using Android Studio Build tab
 
 ## Happy trading with OpenDAX BaseApp UI
 
