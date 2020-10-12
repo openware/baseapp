@@ -19,7 +19,7 @@ interface Props {
 }
 
 
-const BeneficiariesAddModal: React.FC<Props> = (props: Props) => {
+const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const [coinAddress, setCoinAddress] = React.useState('');
     const [coinBeneficiaryName, setCoinBeneficiaryName] = React.useState('');
     const [coinDescription, setCoinDescription] = React.useState('');
@@ -410,6 +410,7 @@ const BeneficiariesAddModal: React.FC<Props> = (props: Props) => {
     );
 };
 
+const BeneficiariesAddModal= React.memo(BeneficiariesAddModalComponent);
 
 export {
     BeneficiariesAddModal,
