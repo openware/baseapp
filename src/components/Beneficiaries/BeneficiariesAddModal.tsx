@@ -1,131 +1,54 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { injectIntl } from 'react-intl';
-import { connect, MapDispatchToProps } from 'react-redux';
-import { CustomInput } from '../../components';
-import { IntlProps } from '../../index';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesCreate,
     BeneficiaryBank,
-    RootState,
-    selectBeneficiariesCreateError,
-    selectBeneficiariesCreateSuccess, selectMobileDeviceState,
+    selectMobileDeviceState,
 } from '../../modules';
-import { CommonError } from '../../modules/types';
+import { CustomInput } from '../CustomInput';
 
-interface ReduxProps {
-    beneficiariesAddError?: CommonError;
-    beneficiariesAddSuccess: boolean;
-    isMobileDevice: boolean;
-}
-
-interface DispatchProps {
-    createAddress: typeof beneficiariesCreate;
-}
-
-interface OwnProps {
+interface Props {
     currency: string;
     type: 'fiat' | 'coin';
     handleToggleAddAddressModal: () => void;
     handleToggleConfirmationModal: () => void;
 }
 
-interface CoinState {
-    coinAddress: string;
-    coinBeneficiaryName: string;
-    coinDescription: string;
 
-    coinAddressFocused: boolean;
-    coinBeneficiaryNameFocused: boolean;
-    coinDescriptionFocused: boolean;
-}
+const BeneficiariesAddModal: React.FC<Props> = (props: Props) => {
+    const [coinAddress, setCoinAddress] = React.useState('');
+    const [coinBeneficiaryName, setCoinBeneficiaryName] = React.useState('');
+    const [coinDescription, setCoinDescription] = React.useState('');
+    const [coinAddressFocused, setCoinAddressFocused] = React.useState(false);
+    const [coinBeneficiaryNameFocused, setCoinBeneficiaryNameFocused] = React.useState(false);
+    const [coinDescriptionFocused, setCoinDescriptionFocused] = React.useState(false);
 
-interface FiatState {
-    fiatName: string;
-    fiatFullName: string;
-    fiatAccountNumber: string;
-    fiatBankName: string;
-    fiatBankSwiftCode: string;
-    fiatIntermediaryBankName: string;
-    fiatIntermediaryBankSwiftCode: string;
+    const [fiatName, setFiatName] = React.useState('');
+    const [fiatFullName, setFiatFullName] = React.useState('');
+    const [fiatAccountNumber, setFiatAccountNumber] = React.useState('');
+    const [fiatBankName, setFiatBankName] = React.useState('');
+    const [fiatBankSwiftCode, setFiatBankSwiftCode] = React.useState('');
+    const [fiatIntermediaryBankName, setFiatIntermediaryBankName] = React.useState('');
+    const [fiatIntermediaryBankSwiftCode, setFiatIntermediaryBankSwiftCode] = React.useState('');
+    const [fiatNameFocused, setFiatNameFocused] = React.useState(false);
+    const [fiatFullNameFocused, setFiatFullNameFocused] = React.useState(false);
+    const [fiatAccountNumberFocused, setFiatAccountNumberFocused] = React.useState(false);
+    const [fiatBankNameFocused, setFiatBankNameFocused] = React.useState(false);
+    const [fiatBankSwiftCodeFocused, setFiatBankSwiftCodeFocused] = React.useState(false);
+    const [fiatIntermediaryBankNameFocused, setFiatIntermediaryBankNameFocused] = React.useState(false);
+    const [fiatIntermediaryBankSwiftCodeFocused, setFiatIntermediaryBankSwiftCodeFocused] = React.useState(false);
 
-    fiatNameFocused: boolean;
-    fiatFullNameFocused: boolean;
-    fiatAccountNumberFocused: boolean;
-    fiatBankNameFocused: boolean;
-    fiatBankSwiftCodeFocused: boolean;
-    fiatIntermediaryBankNameFocused: boolean;
-    fiatIntermediaryBankSwiftCodeFocused: boolean;
-}
+    const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
 
-type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
-type State = CoinState & FiatState;
+    const isMobileDevice = useSelector(selectMobileDeviceState);
 
-const defaultState = {
-    coinAddress: '',
-    coinBeneficiaryName: '',
-    coinDescription: '',
-    coinAddressFocused: false,
-    coinBeneficiaryNameFocused: false,
-    coinDescriptionFocused: false,
-
-    fiatName: '',
-    fiatFullName: '',
-    fiatAccountNumber: '',
-    fiatBankName: '',
-    fiatBankSwiftCode: '',
-    fiatIntermediaryBankName: '',
-    fiatIntermediaryBankSwiftCode: '',
-    fiatNameFocused: false,
-    fiatFullNameFocused: false,
-    fiatAccountNumberFocused: false,
-    fiatBankNameFocused: false,
-    fiatBankSwiftCodeFocused: false,
-    fiatIntermediaryBankNameFocused: false,
-    fiatIntermediaryBankSwiftCodeFocused: false,
-};
-
-class BeneficiariesAddModalComponent extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            ...defaultState,
-        };
-    }
-
-    public componentWillReceiveProps(nextProps: Props) {
-        const {
-            beneficiariesAddError,
-            beneficiariesAddSuccess,
-        } = this.props;
-
-        if ((nextProps.beneficiariesAddError && !beneficiariesAddError) ||
-            (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess)) {
-            this.props.handleToggleAddAddressModal();
-            this.handleClearModalsInputs();
-        }
-
-        if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
-            this.props.handleToggleConfirmationModal();
-        }
-    }
-
-    public render() {
-        return (
-            this.props.isMobileDevice ?
-                <Modal
-                    title={this.props.intl.formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.header' })}
-                    onClose={this.props.handleToggleAddAddressModal}
-                    isOpen>
-                {this.renderContent()}
-            </Modal> : this.renderContent()
-        );
-    }
-
-    private renderContent = () => {
-        const { type, isMobileDevice } = this.props;
+    const renderContent = () => {
+        const { type } = props;
 
         const addModalClass = classnames('beneficiaries-add-address-modal', {
             'beneficiaries-add-address-modal--coin': type === 'coin',
@@ -136,22 +59,22 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
         return (
             <div className={addModalClass}>
                 <div className="cr-email-form">
-                    {this.renderAddAddressModalHeader()}
-                    {type === 'coin' ? this.renderAddAddressModalCryptoBody() : this.renderAddAddressModalFiatBody()}
+                    {renderAddAddressModalHeader()}
+                    {type === 'coin' ? renderAddAddressModalCryptoBody() : renderAddAddressModalFiatBody()}
                 </div>
             </div>
         );
     };
 
-    private renderAddAddressModalHeader = () => {
+    const renderAddAddressModalHeader = () => {
         return (
             <div className="cr-email-form__options-group">
                 <div className="cr-email-form__option">
                     <div className="cr-email-form__option-inner">
-                        {this.translate('page.body.wallets.beneficiaries.addAddressModal.header')}
+                        {formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.header' })}
                         <span
                             className="pg-profile-page__close pg-profile-page__pull-right"
-                            onClick={this.handleClickToggleAddAddressModal(true)}
+                            onClick={handleClickToggleAddAddressModal(true)}
                         />
                     </div>
                 </div>
@@ -159,9 +82,56 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
         );
     };
 
-    private renderAddAddressModalBodyItem = (field: string, optional?: boolean) => {
+    const getState = key => {
+        switch (key) {
+            case 'coinAddress':
+                return coinAddress;
+            case 'coinBeneficiaryName':
+                return coinBeneficiaryName;
+            case 'coinDescription':
+                return coinDescription;
+            case 'coinAddressFocused':
+                return coinAddressFocused;
+            case 'coinBeneficiaryNameFocused':
+                return coinBeneficiaryNameFocused;
+            case 'coinDescriptionFocused':
+                return coinDescriptionFocused;
+            case 'fiatName':
+                return fiatName;
+            case 'fiatFullName':
+                return fiatFullName;
+            case 'fiatAccountNumber':
+                return fiatAccountNumber;
+            case 'fiatBankName':
+                return fiatBankName;
+            case 'fiatBankSwiftCode':
+                return fiatBankSwiftCode;
+            case 'fiatIntermediaryBankName':
+                return fiatIntermediaryBankName;
+            case 'fiatIntermediaryBankSwiftCode':
+                return fiatIntermediaryBankSwiftCode;
+            case 'fiatNameFocused':
+                return fiatNameFocused;
+            case 'fiatFullNameFocused':
+                return fiatFullNameFocused;
+            case 'fiatAccountNumberFocused':
+                return fiatAccountNumberFocused;
+            case 'fiatBankNameFocused':
+                return fiatBankNameFocused;
+            case 'fiatBankSwiftCodeFocused':
+                return fiatBankSwiftCodeFocused;
+            case 'fiatIntermediaryBankNameFocused':
+                return fiatIntermediaryBankNameFocused;
+            case 'fiatIntermediaryBankSwiftCodeFocused':
+                return fiatIntermediaryBankSwiftCodeFocused;
+            default:
+                return '';
+        }
+    };
+
+    const renderAddAddressModalBodyItem = (field: string, optional?: boolean) => {
         const focusedClass = classnames('cr-email-form__group', {
-            'cr-email-form__group--focused': this.state[`${field}Focused`],
+            'cr-email-form__group--focused': getState(`${field}Focused`),
             'cr-email-form__group--optional': optional,
         });
 
@@ -169,12 +139,13 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
             <div key={field} className={focusedClass}>
                 <CustomInput
                     type="text"
-                    label={this.translate(`page.body.wallets.beneficiaries.addAddressModal.body.${field}`)}
-                    placeholder={this.translate(`page.body.wallets.beneficiaries.addAddressModal.body.${field}`)}
+                    label={formatMessage({ id: `page.body.wallets.beneficiaries.addAddressModal.body.${field}` })}
+                    placeholder={formatMessage({ id: `page.body.wallets.beneficiaries.addAddressModal.body.${field}` })}
                     defaultLabel={field}
-                    handleChangeInput={value => this.handleChangeFieldValue(field, value)}
-                    inputValue={this.state[field]}
-                    handleFocusInput={() => this.handleChangeFieldFocus(`${field}Focused`)}
+                    handleChangeInput={value => handleChangeFieldValue(field, value)}
+                    // @ts-ignore
+                    inputValue={getState(field)}
+                    handleFocusInput={() => handleChangeFieldFocus(`${field}Focused`)}
                     classNameLabel="cr-email-form__label"
                     classNameInput="cr-email-form__input"
                     autoFocus={true}
@@ -183,93 +154,154 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
         );
     };
 
-    private renderAddAddressModalCryptoBody = () => {
-        const {
-            coinAddress,
-            coinBeneficiaryName,
-        } = this.state;
-
+    const renderAddAddressModalCryptoBody = () => {
         const isDisabled = !coinAddress || !coinBeneficiaryName;
 
         return (
             <div className="cr-email-form__form-content">
-                {this.renderAddAddressModalBodyItem('coinAddress')}
-                {this.renderAddAddressModalBodyItem('coinBeneficiaryName')}
-                {this.renderAddAddressModalBodyItem('coinDescription', true)}
+                {renderAddAddressModalBodyItem('coinAddress')}
+                {renderAddAddressModalBodyItem('coinBeneficiaryName')}
+                {renderAddAddressModalBodyItem('coinDescription', true)}
                 <div className="cr-email-form__button-wrapper">
                     <Button
                         disabled={isDisabled}
-                        onClick={this.handleSubmitAddAddressCoinModal}
+                        onClick={handleSubmitAddAddressCoinModal}
                         size="lg"
                         variant="primary"
                     >
-                        {this.translate('page.body.wallets.beneficiaries.addAddressModal.body.button')}
+                        {formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.button' })}
                     </Button>
                 </div>
             </div>
         );
     };
 
-    private renderAddAddressModalFiatBody = () => {
-        const {
-            fiatName,
-            fiatFullName,
-            fiatAccountNumber,
-            fiatBankName,
-        } = this.state;
-
+    const renderAddAddressModalFiatBody = () => {
         const isDisabled = !fiatName || !fiatFullName || !fiatAccountNumber || !fiatBankName;
 
         return (
             <div className="cr-email-form__form-content">
-                {this.renderAddAddressModalBodyItem('fiatName')}
-                {this.renderAddAddressModalBodyItem('fiatFullName')}
-                {this.renderAddAddressModalBodyItem('fiatAccountNumber')}
-                {this.renderAddAddressModalBodyItem('fiatBankName')}
-                {this.renderAddAddressModalBodyItem('fiatBankSwiftCode', true)}
-                {this.renderAddAddressModalBodyItem('fiatIntermediaryBankName', true)}
-                {this.renderAddAddressModalBodyItem('fiatIntermediaryBankSwiftCode', true)}
+                {renderAddAddressModalBodyItem('fiatName')}
+                {renderAddAddressModalBodyItem('fiatFullName')}
+                {renderAddAddressModalBodyItem('fiatAccountNumber')}
+                {renderAddAddressModalBodyItem('fiatBankName')}
+                {renderAddAddressModalBodyItem('fiatBankSwiftCode', true)}
+                {renderAddAddressModalBodyItem('fiatIntermediaryBankName', true)}
+                {renderAddAddressModalBodyItem('fiatIntermediaryBankSwiftCode', true)}
                 <div className="cr-email-form__button-wrapper">
                     <Button
                         disabled={isDisabled}
-                        onClick={this.handleSubmitAddAddressFiatModal}
+                        onClick={handleSubmitAddAddressFiatModal}
                         size="lg"
                         variant="primary"
                     >
-                        {this.translate('page.body.wallets.beneficiaries.addAddressModal.body.button')}
+                        {formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.button' })}
                     </Button>
                 </div>
             </div>
         );
     };
 
-    private handleChangeFieldValue = (key: string, value: string) => {
-        // @ts-ignore
-        this.setState({
-            [key]: value,
-        });
+    const handleChangeFieldValue = (key: string, value: string) => {
+        switch (key) {
+            case 'coinAddress':
+                setCoinAddress(value);
+                break;
+            case 'coinBeneficiaryName':
+                setCoinBeneficiaryName(value);
+                break;
+            case 'coinDescription':
+                setCoinDescription(value);
+                break;
+            case 'fiatName':
+                setFiatName(value);
+                break;
+            case 'fiatFullName':
+                setFiatFullName(value);
+                break;
+            case 'fiatAccountNumber':
+                setFiatAccountNumber(value);
+                break;
+            case 'fiatBankName':
+                setFiatBankName(value);
+                break;
+            case 'fiatBankSwiftCode':
+                setFiatBankSwiftCode(value);
+                break;
+            case 'fiatIntermediaryBankName':
+                setFiatIntermediaryBankName(value);
+                break;
+            case 'fiatIntermediaryBankSwiftCode':
+                setFiatIntermediaryBankSwiftCode(value);
+                break;
+            default:
+                break;
+        }
     };
 
-    private handleChangeFieldFocus = (key: string) => {
-        // @ts-ignore
-        this.setState(prev => ({
-            [key]: !prev[key],
-        }));
+    const handleChangeFieldFocus = (key: string) => {
+        switch (key) {
+            case 'coinAddressFocused':
+                setCoinAddressFocused(v => !v);
+                break;
+            case 'coinBeneficiaryNameFocused':
+                setCoinBeneficiaryNameFocused(v => !v);
+                break;
+            case 'coinDescriptionFocused':
+                setCoinDescriptionFocused(v => !v);
+                break;
+            case 'fiatNameFocused':
+                setFiatNameFocused(v => !v);
+                break;
+            case 'fiatFullNameFocused':
+                setFiatFullNameFocused(v => !v);
+                break;
+            case 'fiatAccountNumberFocused':
+                setFiatAccountNumberFocused(v => !v);
+                break;
+            case 'fiatBankNameFocused':
+                setFiatBankNameFocused(v => !v);
+                break;
+            case 'fiatBankSwiftCodeFocused':
+                setFiatBankSwiftCodeFocused(v => !v);
+                break;
+            case 'fiatIntermediaryBankNameFocused':
+                setFiatIntermediaryBankNameFocused(v => !v);
+                break;
+            case 'fiatIntermediaryBankSwiftCodeFocused':
+                setFiatIntermediaryBankSwiftCodeFocused(v => !v);
+                break;
+            default:
+                break;
+        }
     };
 
-    private handleClearModalsInputs = () => {
-        this.setState({
-            ...defaultState,
-        });
+    const handleClearModalsInputs = () => {
+        setCoinAddress('');
+        setCoinBeneficiaryName('');
+        setCoinDescription('');
+        setCoinAddressFocused(false);
+        setCoinBeneficiaryNameFocused(false);
+        setCoinDescriptionFocused(false);
+
+        setFiatAccountNumber('');
+        setFiatName('');
+        setFiatFullName('');
+        setFiatBankName('');
+        setFiatBankSwiftCode('');
+        setFiatIntermediaryBankName('');
+        setFiatIntermediaryBankSwiftCode('');
+        setFiatNameFocused(false);
+        setFiatFullNameFocused(false);
+        setFiatAccountNumberFocused(false);
+        setFiatBankNameFocused(false);
+        setFiatBankSwiftCodeFocused(false);
+        setFiatIntermediaryBankNameFocused(false);
+        setFiatIntermediaryBankSwiftCodeFocused(false);
     };
 
-    private handleSubmitAddAddressCoinModal = () => {
-        const { currency } = this.props;
-        const {
-            coinAddress,
-            coinBeneficiaryName,
-            coinDescription,
-        } = this.state;
+    const handleSubmitAddAddressCoinModal = () => {
+        const { currency } = props;
 
         // tslint:disable-next-line:no-any
         let payload: any = {
@@ -287,20 +319,12 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
             };
         }
 
-        this.props.createAddress(payload);
+        dispatch(beneficiariesCreate(payload));
+        handleClearModalsInputs();
     };
 
-    private handleSubmitAddAddressFiatModal = () => {
-        const { currency } = this.props;
-        const {
-            fiatName,
-            fiatFullName,
-            fiatAccountNumber,
-            fiatBankName,
-            fiatBankSwiftCode,
-            fiatIntermediaryBankName,
-            fiatIntermediaryBankSwiftCode,
-        } = this.state;
+    const handleSubmitAddAddressFiatModal = () => {
+        const { currency } = props;
 
         let data: BeneficiaryBank = {
             full_name: fiatFullName,
@@ -335,29 +359,30 @@ class BeneficiariesAddModalComponent extends React.Component<Props, State> {
             data: JSON.stringify(data),
         };
 
-        this.props.createAddress(payload);
+        dispatch(beneficiariesCreate(payload));
+        handleClearModalsInputs();
     };
 
-    private handleClickToggleAddAddressModal = (clear?: boolean) => () => {
-        this.props.handleToggleAddAddressModal();
+    const handleClickToggleAddAddressModal = (clear?: boolean) => () => {
+        props.handleToggleAddAddressModal();
 
         if (clear) {
-            this.handleClearModalsInputs();
+            handleClearModalsInputs();
         }
     };
 
-    private translate = (id: string) => this.props.intl.formatMessage({ id });
-}
+    return (
+        isMobileDevice ?
+            <Modal
+                title={formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.header' })}
+                onClose={props.handleToggleAddAddressModal}
+                isOpen>
+                {renderContent()}
+            </Modal> : renderContent()
+    );
+};
 
-const mapStateToProps = (state: RootState): ReduxProps => ({
-    beneficiariesAddError: selectBeneficiariesCreateError(state),
-    beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
-    isMobileDevice: selectMobileDeviceState(state),
-});
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
-    createAddress: payload => dispatch(beneficiariesCreate(payload)),
-});
-
-// tslint:disable-next-line:no-any
-export const BeneficiariesAddModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesAddModalComponent) as any) as any;
+export {
+    BeneficiariesAddModal,
+};
