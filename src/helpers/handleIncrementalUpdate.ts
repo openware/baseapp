@@ -23,7 +23,7 @@ export const handleIncrementalUpdate = (depthOld: string[][], newLevel: string[]
         result.splice(index, 1);
     }
 
-    return result;
+    return result.filter(order => order[1]); //order[0] - price, order[1] - amount
 };
 
 export const handleIncrementalUpdateArray = (depthOld: string[][], newLevels: string[][], type: string): string[][] => {
@@ -42,5 +42,5 @@ export const handleIncrementalUpdateArray = (depthOld: string[][], newLevels: st
         return sortAsks(result);
     }
 
-    return sortBids(result);
+    return sortBids(result.filter(order => order[1])); //order[0] - price, order[1] - amount
 };

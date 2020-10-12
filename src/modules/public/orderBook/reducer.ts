@@ -116,17 +116,17 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
 
             if (action.payload.asks) {
                 payload.asks = Array.isArray(action.payload.asks[0]) ? (
-                    handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(0, orderBookSideLimit()).filter(ask => ask[1]) //ask[0] - price, ask[1] - amount
+                    handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(0, orderBookSideLimit())
                 ) : (
-                    handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(0, orderBookSideLimit()).filter(ask => ask[1]) //ask[0] - price, ask[1] - amount
+                    handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(0, orderBookSideLimit())
                 );
             }
 
             if (action.payload.bids) {
                 payload.bids = Array.isArray(action.payload.bids[0]) ? (
-                    handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(0, orderBookSideLimit()).filter(bid => bid[1]) //bid[0] - price, ask[1] - amount
+                    handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(0, orderBookSideLimit())
                 ) : (
-                    handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(0, orderBookSideLimit()).filter(bid => bid[1]) //bid[0] - price, ask[1] - amount
+                    handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(0, orderBookSideLimit())
                 );
             }
 
