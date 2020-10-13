@@ -163,6 +163,18 @@ ionic capacitor copy android [options]
 
 Build android app using Android Studio Build tab
 
+or
+
+You can 
+```bash
+yarn android-build-release
+```
+for release build and
+```bash
+yarn android-build-debug
+```
+for debug build
+
 ## Happy trading with OpenDAX BaseApp UI
 
 If you have designed something beautiful with it, we would love to see it!
