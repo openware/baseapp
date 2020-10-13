@@ -81,7 +81,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         this.state = {
             currentWithdrawalBeneficiary: defaultBeneficiary,
             isOpenAddressModal: false,
-            isOpenConfirmationModal: true,
+            isOpenConfirmationModal: false,
             isOpenDropdown: false,
             isOpenTip: false,
             isOpenFailModal: false,
