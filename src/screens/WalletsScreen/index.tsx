@@ -95,7 +95,6 @@ interface WalletsState {
     withdrawDone: boolean;
     total: string;
     currentTabIndex: number;
-    generateAddressTriggered: boolean;
 }
 
 interface OwnProps {
@@ -122,7 +121,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             withdrawDone: false,
             total: '',
             currentTabIndex: 0,
-            generateAddressTriggered: false,
         };
     }
 
@@ -326,17 +324,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         this.props.fetchSuccess({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
     };
 
-    private handleGenerateAddress = () => {
-        const { selectedWalletIndex } = this.state;
-        const { wallets } = this.props;
-
-        if (!wallets[selectedWalletIndex].address && wallets.length && wallets[selectedWalletIndex].type !== 'fiat') {
-            this.props.fetchAddress({ currency: wallets[selectedWalletIndex].currency });
-            this.props.fetchWallets();
-            this.setState({ generateAddressTriggered: true });
-        }
-    };
-
     private renderDeposit = (isAccountActivated: boolean) => {
         const {
             addressDepositError,
@@ -346,7 +333,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             user,
             wallets,
         } = this.props;
-        const { generateAddressTriggered, selectedWalletIndex } = this.state;
+        const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
         const currencyItem = (currencies && currencies.find(item => item.id === currency)) || { min_confirmations: 6, deposit_enabled: false };
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
@@ -356,10 +343,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
 
         const walletAddress = (selectedWalletCurrency === currency) ? formatCCYAddress(currency, selectedWalletAddress) : '';
-
-        const buttonLabel = `
-            ${this.translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${currency.toUpperCase()} ${this.translate('page.body.wallets.tabs.deposit.ccy.button.address')}
-        `;
         const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
             'pg-blur-deposit-crypto--active': isAccountActivated,
         });
@@ -382,10 +365,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         disabled={walletAddress === ''}
                         copiableTextFieldText={this.translate('page.body.wallets.tabs.deposit.ccy.message.address')}
                         copyButtonText={this.translate('page.body.wallets.tabs.deposit.ccy.message.button')}
-                        handleGenerateAddress={this.handleGenerateAddress}
-                        buttonLabel={buttonLabel}
-                        isAccountActivated={isAccountActivated}
-                        generateAddressTriggered={generateAddressTriggered}
                     />
                     {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
                 </React.Fragment>
@@ -490,7 +469,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { tab } = this.state;
         const depositTab = { label: this.renderTabs()[0].label, index: 0 };
 
-        if (!value.address && wallets.length && value.balance && value.type !== 'fiat') {
+        if (!value.address && wallets.length && value.type !== 'fiat') {
             this.props.fetchAddress({ currency: value.currency });
         } else if (tab !== depositTab.label && value.type !== 'fiat') {
             this.onTabChange(depositTab.index, depositTab.label);
@@ -503,7 +482,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         this.setState({
             selectedWalletIndex: nextWalletIndex,
-            generateAddressTriggered: false,
             withdrawDone: false,
         });
         this.props.setMobileWalletUi(wallets[nextWalletIndex].name);
