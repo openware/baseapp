@@ -75,7 +75,9 @@
     "spec:integration": "cypress open",
     "eject": "react-scripts eject",
     "clean": "rimraf build",
-    "analyze": "source-map-explorer build/static/js/main.*"
+    "analyze": "source-map-explorer build/static/js/main.*",
+    "android-build-release": "./bin/androidBuildRelease.js",
+    "android-build-debug": "./bin/androidBuildDebug.js"
   },
   "devDependencies": {
     "@openware/coding-standards": "2.3.0",
