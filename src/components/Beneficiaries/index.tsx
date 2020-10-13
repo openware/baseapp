@@ -16,6 +16,7 @@ import {
     memberLevelsFetch,
     RootState,
     selectBeneficiaries,
+    selectBeneficiariesActivateError,
     selectBeneficiariesCreate,
     selectBeneficiariesCreateError,
     selectBeneficiariesCreateSuccess,
@@ -37,6 +38,7 @@ interface ReduxProps {
     memberLevels?: MemberLevels;
     userData: User;
     isMobileDevice: boolean;
+    beneficiariesActivateError?: CommonError;
 }
 
 interface DispatchProps {
@@ -79,7 +81,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         this.state = {
             currentWithdrawalBeneficiary: defaultBeneficiary,
             isOpenAddressModal: false,
-            isOpenConfirmationModal: false,
+            isOpenConfirmationModal: true,
             isOpenDropdown: false,
             isOpenTip: false,
             isOpenFailModal: false,
@@ -103,6 +105,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             beneficiaries,
             beneficiariesAddError,
             beneficiariesAddSuccess,
+            beneficiariesActivateError,
         } = this.props;
 
 
@@ -117,7 +120,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             this.handleToggleAddAddressModal();
         }
 
-        if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
+        if ((nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) || (nextProps.beneficiariesActivateError && !beneficiariesActivateError)) {
             this.handleToggleConfirmationModal();
         }
     }
@@ -460,6 +463,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     isMobileDevice: selectMobileDeviceState(state),
     beneficiariesAddError: selectBeneficiariesCreateError(state),
     beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
+    beneficiariesActivateError: selectBeneficiariesActivateError(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({

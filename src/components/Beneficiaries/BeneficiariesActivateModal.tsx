@@ -1,106 +1,56 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { injectIntl } from 'react-intl';
-import { connect, MapDispatchToProps } from 'react-redux';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { LetterIcon } from '../../assets/images/LetterIcon';
-import { CustomInput } from '../../components';
-import { IntlProps } from '../../index';
 import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesActivate,
     Beneficiary,
-    RootState,
-    selectBeneficiariesActivateError,
-    selectBeneficiariesActivateSuccess, selectMobileDeviceState,
+    selectMobileDeviceState,
 } from '../../modules';
-import { CommonError } from '../../modules/types';
+import { CustomInput } from '../CustomInput';
 
-interface ReduxProps {
-    beneficiariesActivateError?: CommonError;
-    beneficiariesActivateSuccess: boolean;
-    isMobileDevice: boolean;
-}
 
-interface DispatchProps {
-    activateAddress: typeof beneficiariesActivate;
-}
-
-interface OwnProps {
+interface Props {
     beneficiariesAddData: Beneficiary;
     handleToggleConfirmationModal: () => void;
 }
 
-interface State {
-    confirmationModalCode: string;
-    confirmationModalCodeFocused: boolean;
-}
+const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
+    const [confirmationModalCode, setConfirmationModalCode] = React.useState('');
+    const [confirmationModalCodeFocused, setConfirmationModalCodeFocused] = React.useState(false);
 
-type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
+    const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
 
-const defaultState = {
-    confirmationModalCode: '',
-    confirmationModalCodeFocused: false,
-};
+    const isMobileDevice = useSelector(selectMobileDeviceState);
 
-class BeneficiariesActivateModalComponent extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            ...defaultState,
-        };
-    }
-
-    public componentWillReceiveProps(nextProps: Props) {
-        const {
-            beneficiariesActivateError,
-            beneficiariesActivateSuccess,
-        } = this.props;
-
-        if ((nextProps.beneficiariesActivateError && !beneficiariesActivateError) ||
-            (nextProps.beneficiariesActivateSuccess && !beneficiariesActivateSuccess)) {
-            this.props.handleToggleConfirmationModal();
-            this.handleClearModalsInputs();
-        }
-    }
-
-
-    public render() {
-        return (
-            this.props.isMobileDevice ?
-                <Modal
-                    onClose={this.props.handleToggleConfirmationModal}
-                    title={this.props.intl.formatMessage({ id: 'page.mobile.wallet.withdraw.modal.new.account' })}
-                    isOpen>
-                    {this.renderContent()}
-                </Modal> : this.renderContent()
-        );
-    }
-
-    private renderContent = () => {
+    const renderContent = () => {
         const className = classnames('beneficiaries-confirmation-modal', {
-            'cr-modal': !this.props.isMobileDevice,
+            'cr-modal': !isMobileDevice,
         });
 
         return (
             <div className={className}>
                 <div className="cr-email-form">
-                    {this.renderConfirmationModalHeader()}
-                    {this.renderConfirmationModalBody()}
+                    {renderConfirmationModalHeader()}
+                    {renderConfirmationModalBody()}
                 </div>
             </div>
         );
     };
 
-    private renderConfirmationModalHeader = () => {
+    const renderConfirmationModalHeader = () => {
         return (
             <div className="cr-email-form__options-group">
                 <div className="cr-email-form__option">
                     <div className="cr-email-form__option-inner">
-                        {this.translate('page.body.wallets.beneficiaries.confirmationModal.header')}
+                        {formatMessage({ id: 'page.body.wallets.beneficiaries.confirmationModal.header' })}
                         <span
                             className="pg-profile-page__close pg-profile-page__pull-right"
-                            onClick={this.handleClickToggleConfirmationModal(true)}
+                            onClick={handleClickToggleConfirmationModal(true)}
                         />
                     </div>
                 </div>
@@ -108,9 +58,9 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         );
     };
 
-    private renderConfirmationModalBodyItem = (field: string, optional?: boolean) => {
+    const renderConfirmationModalBodyItem = (field: string, optional?: boolean) => {
         const focusedClass = classnames('cr-email-form__group', {
-            'cr-email-form__group--focused': this.state[`${field}Focused`],
+            'cr-email-form__group--focused': confirmationModalCodeFocused,
             'cr-email-form__group--optional': optional,
         });
 
@@ -118,12 +68,12 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
             <div key={field} className={focusedClass}>
                 <CustomInput
                     type="text"
-                    label={this.translate(`page.body.wallets.beneficiaries.confirmationModal.body.${field}`)}
-                    placeholder={this.translate(`page.body.wallets.beneficiaries.confirmationModal.body.${field}`)}
+                    label={formatMessage({ id: `page.body.wallets.beneficiaries.confirmationModal.body.${field}` })}
+                    placeholder={formatMessage({ id: `page.body.wallets.beneficiaries.confirmationModal.body.${field}` })}
                     defaultLabel={field}
-                    handleChangeInput={value => this.handleChangeFieldValue(field, value)}
-                    inputValue={this.state[field]}
-                    handleFocusInput={() => this.handleChangeFieldFocus(`${field}Focused`)}
+                    handleChangeInput={value => handleChangeFieldValue(field, value)}
+                    inputValue={confirmationModalCode}
+                    handleFocusInput={() => handleChangeFieldFocus(`${field}Focused`)}
                     classNameLabel="cr-email-form__label"
                     classNameInput="cr-email-form__input"
                     autoFocus={true}
@@ -132,55 +82,45 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
         );
     };
 
-    private renderConfirmationModalBody = () => {
-        const { confirmationModalCode } = this.state;
-
+    const renderConfirmationModalBody = () => {
         const isDisabled = !confirmationModalCode;
 
         return (
             <div className="cr-email-form__form-content">
                 <div className="confirmation-modal__content">
                     <LetterIcon className="confirmation-modal__content__icon" />
-                    <span className="confirmation-modal__content__text">{this.translate('page.body.wallets.beneficiaries.confirmationModal.body.text')}</span>
+                    <span className="confirmation-modal__content__text">{formatMessage({ id: 'page.body.wallets.beneficiaries.confirmationModal.body.text' })}</span>
                 </div>
-                {this.renderConfirmationModalBodyItem('confirmationModalCode')}
+                {renderConfirmationModalBodyItem('confirmationModalCode')}
                 <div className="cr-email-form__button-wrapper">
                     <Button
                         disabled={isDisabled}
-                        onClick={this.handleSubmitConfirmationModal}
+                        onClick={handleSubmitConfirmationModal}
                         size="lg"
                         variant="primary"
                     >
-                        {this.translate('page.body.wallets.beneficiaries.confirmationModal.body.button')}
+                        {formatMessage({ id: 'page.body.wallets.beneficiaries.confirmationModal.body.button' })}
                     </Button>
                 </div>
             </div>
         );
     };
 
-    private handleChangeFieldValue = (key: string, value: string) => {
-        // @ts-ignore
-        this.setState({
-            [key]: value,
-        });
+    const handleChangeFieldValue = (key: string, value: string) => {
+        setConfirmationModalCode(value);
     };
 
-    private handleChangeFieldFocus = (key: string) => {
-        // @ts-ignore
-        this.setState(prev => ({
-            [key]: !prev[key],
-        }));
+    const handleChangeFieldFocus = (key: string) => {
+        setConfirmationModalCodeFocused(v => !v);
     };
 
-    private handleClearModalsInputs = () => {
-        this.setState({
-            ...defaultState,
-        });
+    const handleClearModalsInputs = () => {
+        setConfirmationModalCode('');
+        setConfirmationModalCodeFocused(false);
     };
 
-    private handleSubmitConfirmationModal = () => {
-        const { beneficiariesAddData } = this.props;
-        const { confirmationModalCode } = this.state;
+    const handleSubmitConfirmationModal = () => {
+        const { beneficiariesAddData } = props;
 
         if (beneficiariesAddData) {
             const payload = {
@@ -188,30 +128,33 @@ class BeneficiariesActivateModalComponent extends React.Component<Props, State> 
                 id: beneficiariesAddData.id,
             };
 
-            this.props.activateAddress(payload);
+            dispatch(beneficiariesActivate(payload));
         }
+
+        handleClearModalsInputs();
     };
 
-    private handleClickToggleConfirmationModal = (clear?: boolean) => () => {
-        this.props.handleToggleConfirmationModal();
+    const handleClickToggleConfirmationModal = (clear?: boolean) => () => {
+        props.handleToggleConfirmationModal();
 
         if (clear) {
-            this.handleClearModalsInputs();
+            handleClearModalsInputs();
         }
     };
 
-    private translate = (id: string) => this.props.intl.formatMessage({ id });
-}
+    return (
+        isMobileDevice ?
+            <Modal
+                onClose={props.handleToggleConfirmationModal}
+                title={formatMessage({ id: 'page.mobile.wallet.withdraw.modal.new.account' })}
+                isOpen>
+                {renderContent()}
+            </Modal> : renderContent()
+    );
+};
 
-const mapStateToProps = (state: RootState): ReduxProps => ({
-    beneficiariesActivateError: selectBeneficiariesActivateError(state),
-    beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
-    isMobileDevice: selectMobileDeviceState(state),
-});
+const BeneficiariesActivateModal = React.memo(BeneficiariesActivateModalComponent);
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
-    activateAddress: payload => dispatch(beneficiariesActivate(payload)),
-});
-
-// tslint:disable-next-line:no-any
-export const BeneficiariesActivateModal = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesActivateModalComponent) as any) as any;
+export {
+    BeneficiariesActivateModal,
+};
