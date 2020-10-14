@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector} from 'react-redux';
 import { LetterIcon } from '../../assets/images/LetterIcon';
-import { CustomInput } from '../CustomInput';
 import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesActivate,
@@ -12,6 +11,7 @@ import {
     Beneficiary,
     selectMobileDeviceState,
 } from '../../modules';
+import { CustomInput } from '../CustomInput';
 
 interface Props {
     beneficiariesAddData: Beneficiary;
