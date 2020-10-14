@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { LetterIcon } from '../../assets/images/LetterIcon';
-import { CustomInput } from '../../components';
+import { CustomInput } from '../CustomInput';
 import { IntlProps } from '../../index';
 import { Modal } from '../../mobile/components/Modal';
 import {
