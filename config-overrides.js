@@ -34,7 +34,7 @@ module.exports = function override(config, env) {
 
         config.plugins.push(
             new CompressionPlugin({
-                filename: "[path].gz[query]",
+                filename: "[path][base].gz[query]",
                 algorithm: "gzip",
                 test: /\.js$|\.css$|\.html$/,
                 threshold: 10240,
