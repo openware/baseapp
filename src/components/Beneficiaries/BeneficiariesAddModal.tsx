@@ -279,7 +279,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                     handleFocusInput={() => handleChangeFieldFocus(`${field}Focused`)}
                     classNameLabel="cr-email-form__label"
                     classNameInput="cr-email-form__input"
-                    autoFocus={field === 'coinAddress'}
+                    autoFocus={field === 'coinAddress' || field === 'fiatName'}
                 />
             </div>
         );

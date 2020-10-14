@@ -16,6 +16,7 @@ import {
     memberLevelsFetch,
     RootState,
     selectBeneficiaries,
+    selectBeneficiariesActivateSuccess,
     selectBeneficiariesCreate,
     selectBeneficiariesCreateSuccess,
     selectMemberLevels,
@@ -35,6 +36,7 @@ interface ReduxProps {
     beneficiariesAddError?: CommonError;
     beneficiariesActivateError?: CommonError;
     memberLevels?: MemberLevels;
+    beneficiariesActivateSuccess: boolean;
     userData: User;
     isMobileDevice: boolean;
 }
@@ -102,6 +104,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             currency,
             beneficiaries,
             beneficiariesAddSuccess,
+            beneficiariesActivateSuccess,
         } = this.props;
 
         if ((nextProps.currency && nextProps.currency !== currency) ||
@@ -111,9 +114,10 @@ class BeneficiariesComponent extends React.Component<Props, State> {
 
         if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
             this.handleToggleAddAddressModal();
+            this.handleToggleConfirmationModal();
         }
 
-        if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
+        if (nextProps.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) {
             this.handleToggleConfirmationModal();
         }
     }
@@ -458,6 +462,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
     userData: selectUserInfo(state),
     isMobileDevice: selectMobileDeviceState(state),
+    beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
