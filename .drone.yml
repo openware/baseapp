@@ -13,7 +13,7 @@ steps:
       - echo $REACT_APP_GIT_SHA > .tags
       - export BUILD_DOMAIN=$(cat .domains)
       - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
-      - npm -g install ionic
+      - npm -g install @ionic/cli
       - npm install
       - yarn lint
       - yarn test:ci --collectCoverage=true
@@ -36,6 +36,13 @@ steps:
       - rsync -avzhre "ssh -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" coverage/ mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}-coverage
       - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work"
       - echo "http://${DRONE_COMMIT_SHA:0:7}-coverage.mock.openware.work"
+
+  - name: Build Android app
+    commands:
+      - npm -g install @ionic/cli
+      - ionic capacior add android
+      - npm run android-build-debug
+      - npm run android-build-release
 
   - name: "Notify staging"
     image: plugins/slack
