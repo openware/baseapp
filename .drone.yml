@@ -35,11 +35,11 @@ steps:
       - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work"
       - echo "http://${DRONE_COMMIT_SHA:0:7}-coverage.mock.openware.work"
 
-  - name: Build Android app
+  - name: "Build Android app"
     image: node:12.13.1
     commands:
       - npm -g install @ionic/cli
-      - ionic capacior add android
+      - ionic capacitor add android
       - npm run android-build-debug
       - npm run android-build-release
 
