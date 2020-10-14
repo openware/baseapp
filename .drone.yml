@@ -14,9 +14,18 @@ steps:
       - export BUILD_DOMAIN=$(cat .domains)
       - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
       - npm install
+      - npm -g install @ionic/cli
       - yarn lint
       - yarn test:ci --collectCoverage=true
       - yarn build
+      - ionic capacitor add android
+
+  - name: "Build Android app"
+    image: maven:3-jdk-10
+    commands:
+      - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+      - ./android-build-debug
+      - ./android-build-release
 
   - name: "Stage with mock server"
     image: instrumentisto/rsync-ssh
@@ -34,14 +43,6 @@ steps:
       - rsync -avzhre "ssh -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" coverage/ mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}-coverage
       - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work"
       - echo "http://${DRONE_COMMIT_SHA:0:7}-coverage.mock.openware.work"
-
-  - name: Build Android app
-    image: node:12.13.1
-    commands:
-      - npm -g install @ionic/cli
-      - ionic capacior add android
-      - npm run android-build-debug
-      - npm run android-build-release
 
   - name: "Notify staging"
     image: plugins/slack
@@ -96,7 +97,6 @@ steps:
         from_secret: kite_bot_key
     commands:
       - BUNDLE_GEMFILE=/sdk/Gemfile bundle exec rake --rakefile=/sdk/Rakefile ci:prebuild
-
 
   - name: "Build Docker image"
     image: plugins/docker
