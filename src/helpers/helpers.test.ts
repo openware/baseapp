@@ -376,6 +376,16 @@ describe('Helpers', () => {
         });
     });
 
+    describe('hasDuplicates', () => {
+        it('should return true if a value is in array', () => {
+            expect(helpers.hasDuplicates([1, 2, 3], 2)).toBeTruthy();
+        });
+
+        it('should return false if a value is not in array', () => {
+            expect(helpers.hasDuplicates([1, 2, 3], 5)).toBeFalsy();
+        });
+    });
+
     // getTimestampPeriod.ts
     describe('getTimestampPeriod', () => {
         it('return correct value', () => {
