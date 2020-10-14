@@ -67,13 +67,13 @@ While building a Docker image you can pass build-dependant arguments using `--bu
 | `BUILD_DOMAIN` | Domain which you'd like to use during the deployment   |
 
 ## Build mobile app
-Install dependencies using npm
+Install dependencies using npm. Important for mobile app development.
 ```bash
 npm install
 ```
 Build frontend
 ```bash
-npm build
+yarn build
 ```
 Generate a native project (ios, android)
 ```bash
@@ -100,15 +100,22 @@ Open Xcode and navigate to **Xcode » Preferences » Accounts**. Add an Apple ID
 You can test your mobile application with a connected Iphone device to the Mac or using IOS Simulator.
 Open Xcode and navigate to **Window » Devices and Simulators**. Create an **iPhone 11** simulator if one does not already exist.
 
-**4. Set the Package ID**
+**4. Set configs**
 
-Open the `capacitor.config.json` file and modify the appId property.
+Open the `capacitor.config.json` file and modify the `appId` property.
+
+Put the name of BE server:
+```json
+  "server": {
+    "hostname": "example.openware.work"
+  }
+```
 
 **5. Open the project in Xcode.**
 
 Launch Xcode with a prepared app:
 ```bash
-ionic capacitor open ios
+ionic capacitor run ios
 ```
 
 **6. Check Xcode configuration**
@@ -125,7 +132,7 @@ ionic capacitor copy ios
 
 **8. Build IOS app**
 
-To receive an executable app file run 'build' command on Xcode.
+To receive an executable app file run 'build' command on Xcode. You need to have an Apple Developer account to be able to extract an executable file from Xcode.
 
 ## Build Android app
 **1. Install Android studio**

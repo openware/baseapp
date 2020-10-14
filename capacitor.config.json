@@ -1,5 +1,5 @@
 {
-  "appId": "master.devkube.com",
+  "appId": "odax.openware.work",
   "appName": "Baseapp",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
@@ -12,5 +12,9 @@
   "ios": {
     "contentInset": "always"
   },
-  "cordova": {}
+  "linuxAndroidStudioPath": "/snap/bin/android-studio",
+  "cordova": {},
+  "server": {
+    "hostname": "odax.openware.work"
+  }
 }
