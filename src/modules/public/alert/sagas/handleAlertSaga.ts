@@ -1,4 +1,4 @@
-import { call, delay, put } from 'redux-saga/effects';
+import { call, delay, put, select } from 'redux-saga/effects';
 import { msAlertDisplayTime } from '../../../../api';
 import {
     resetHistory,
@@ -7,6 +7,7 @@ import {
     userOpenOrdersReset,
     userReset,
 } from '../../../index';
+import { selectUserInfo } from '../../../user/profile';
 import { alertData, alertDelete, AlertPush } from '../actions';
 
 export function* handleAlertSaga(action: AlertPush) {
@@ -35,10 +36,16 @@ export function* handleAlertSaga(action: AlertPush) {
                         action.payload.message.indexOf('authz.csrf_token_mismatch') > -1) {
                             yield call(callAlertData, action);
                         } else {
-                            yield call(callAlertData, action);
-                            break;
+                            const user = yield select(selectUserInfo);
+
+                            if (!user.email.length && action.payload.message.indexOf('authz.invalid_session') > -1) {
+                                break;
+                            } else {
+                                yield call(callAlertData, action);
+                                break;
+                            }
                         }
-                    }
+                }
                 break;
             case 403:
                 if (action.payload.message.indexOf('identity.session.invalid_otp') > -1) {
