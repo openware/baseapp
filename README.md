@@ -166,9 +166,33 @@ Select connected android device or configure device simulator, which required
 ionic capacitor copy android [options]
 ```
 
-**7. Build android app**
+**7. Set ANDROID_SDK_ROOT variale**
+
+Set android ask path to ANDROID_SDK_ROOT or write sdk.dir variable in android/local.properties file (it doesn't exist as a default)
+
+**8. Build android app**
 
 Build android app using Android Studio Build tab
+
+or you can build apk file with command line
+
+Debug build:
+
+```bash
+  ionic capacitor copy android && cd android && ./gradlew assembleDebug && cd ..
+```
+
+Release build:
+
+For release build you have to create keystore path and keystore alias and run next command:
+
+```bash
+  cd android &&
+  ./gradlew assembleRelease &&
+  cd app/build/outputs/apk/release &&
+  jarsigner -keystore YOUR_KEYSTORE_PATH -storepass YOUR_KEYSTORE_PASS app-release-unsigned.apk YOUR_KEYSTORE_ALIAS &&
+  zipalign 4 app-release-unsigned.apk app-release.apk
+```
 
 ## Happy trading with OpenDAX BaseApp UI
 
