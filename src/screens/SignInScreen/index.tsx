@@ -68,12 +68,12 @@ class SignIn extends React.Component<Props, SignInState> {
         this.props.signUpRequireVerification({requireVerification: false});
     }
 
-    public componentWillReceiveProps(props: Props) {
-        if (props.isLoggedIn) {
+    public componentWillReceiveProps(nextProps: Props) {
+        if (!this.props.isLoggedIn && nextProps.isLoggedIn) {
             this.props.history.push('/wallets');
         }
-        if (props.requireEmailVerification) {
-            props.history.push('/email-verification', { email: this.state.email });
+        if (this.props.requireEmailVerification) {
+            this.props.history.push('/email-verification');
         }
     }
 

@@ -25,6 +25,8 @@ import {
     selectSendEmailVerificationError,
     selectSendEmailVerificationLoading,
     selectSendEmailVerificationSuccess,
+    selectUserInfo,
+    User,
 } from '../../modules';
 import { CommonError } from '../../modules/types';
 
@@ -51,6 +53,7 @@ interface ReduxProps {
     captcha_response?: string | GeetestCaptchaResponse;
     reCaptchaSuccess: boolean;
     geetestCaptchaSuccess: boolean;
+    user: User;
 }
 
 type Props = DispatchProps & ReduxProps & OwnProps & IntlProps;
@@ -58,7 +61,7 @@ type Props = DispatchProps & ReduxProps & OwnProps & IntlProps;
 class EmailVerificationComponent extends React.Component<Props> {
     public componentDidMount() {
         setDocumentTitle('Email verification');
-        if (!this.props.location.state || !this.props.location.state.email) {
+        if (!this.props.user.email.length && !this.props.emailVerificationLoading) {
             this.props.history.push('/signin');
         }
     }
@@ -125,13 +128,13 @@ class EmailVerificationComponent extends React.Component<Props> {
             case 'recaptcha':
             case 'geetest':
                 this.props.emailVerificationFetch({
-                    email: this.props.location.state.email,
+                    email: this.props.user.email,
                     captcha_response,
                 });
                 break;
             default:
                 this.props.emailVerificationFetch({
-                    email: this.props.location.state.email,
+                    email: this.props.user.email,
                 });
                 break;
         }
@@ -142,12 +145,12 @@ class EmailVerificationComponent extends React.Component<Props> {
     private disableButton = (): boolean => {
         const {
             configs,
-            location,
+            user,
             geetestCaptchaSuccess,
             reCaptchaSuccess,
         } = this.props;
 
-        if (location.state.email && !location.state.email.match(EMAIL_REGEX)) {
+        if (user.email && !user.email.match(EMAIL_REGEX)) {
             return true;
         }
 
@@ -173,6 +176,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     captcha_response: selectCaptchaResponse(state),
     reCaptchaSuccess: selectRecaptchaSuccess(state),
     geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
+    user: selectUserInfo(state),
 });
 
 const mapDispatchToProps = {
