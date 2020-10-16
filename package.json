@@ -3,8 +3,13 @@
   "version": "2.6.0",
   "private": true,
   "dependencies": {
+    "@capacitor/android": "2.4.1",
+    "@capacitor/cli": "^2.4.2",
+    "@capacitor/core": "^2.4.1",
+    "@capacitor/ios": "2.4.1",
     "@formatjs/intl-pluralrules": "^3.2.5",
     "@formatjs/intl-relativetimeformat": "^7.0.0",
+    "@ionic/cli": "^6.11.11",
     "@openware/cryptofont": "2.3.0",
     "@sentry/browser": "^5.17.0",
     "@types/compression-webpack-plugin": "^2.0.1",
