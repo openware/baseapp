@@ -16,3 +16,9 @@ export const selectEmailVerified = (state: RootState): AuthState['emailVerified'
 
 export const selectCurrentPasswordEntropy = (state: RootState): AuthState['current_password_entropy'] =>
     state.user.auth.current_password_entropy;
+
+export const selectSignInLoading = (state: RootState): AuthState['signInLoading'] =>
+    state.user.auth.signInLoading;
+
+export const selectSignUpLoading = (state: RootState): AuthState['signUpLoading'] =>
+    state.user.auth.signUpLoading;

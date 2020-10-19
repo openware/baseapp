@@ -5,9 +5,12 @@ import {
     AUTH_ENTROPY_PASSWORD_FETCH,
     AUTH_LOGOUT_FAILURE,
     AUTH_LOGOUT_FETCH,
+    AUTH_SIGN_IN_DATA,
     AUTH_SIGN_IN_ERROR,
     AUTH_SIGN_IN_FETCH,
     AUTH_SIGN_IN_REQUIRE_2FA,
+    AUTH_SIGN_IN_REQUIRE_2FA_RESET,
+    AUTH_SIGN_UP_DATA,
     AUTH_SIGN_UP_ERROR,
     AUTH_SIGN_UP_FETCH,
     AUTH_SIGN_UP_REQUIRE_VERIFICATION,
@@ -45,6 +48,7 @@ export interface SignInFetch {
     payload: {
         email: string;
         password: string;
+        data?: string;
         otp_code?: string;
     };
 }
@@ -61,6 +65,10 @@ export interface SignInRequire2FA {
     };
 }
 
+export interface SignInData {
+    type: typeof AUTH_SIGN_IN_DATA;
+}
+
 export interface SignUpFetch {
     type: typeof AUTH_SIGN_UP_FETCH;
     payload: {
@@ -70,6 +78,10 @@ export interface SignUpFetch {
         captcha_response?: string | GeetestCaptchaResponse;
         refid?: string;
     };
+}
+
+export interface SignUpData {
+    type: typeof AUTH_SIGN_UP_DATA;
 }
 
 export interface SignUpError {
@@ -108,10 +120,16 @@ export interface TestAuthState {
     type: typeof AUTH_TEST_STATE;
 }
 
+export interface AuthSignInRequire2FAReset {
+    type: typeof AUTH_SIGN_IN_REQUIRE_2FA_RESET;
+}
+
 export type AuthAction =
     | SignInFetch
+    | SignInData
     | SignInError
     | SignInRequire2FA
+    | SignUpData
     | SignUpFetch
     | SignUpError
     | SignUpRequireVerification
@@ -122,7 +140,8 @@ export type AuthAction =
     | TestAuthState
     | EntropyPasswordFetch
     | EntropyPasswordData
-    | EntropyPasswordError;
+    | EntropyPasswordError
+    | AuthSignInRequire2FAReset;
 
 export const entropyPasswordFetch = (payload: EntropyPasswordFetch['payload']): EntropyPasswordFetch => ({
     type: AUTH_ENTROPY_PASSWORD_FETCH,
@@ -144,6 +163,10 @@ export const signIn = (payload: SignInFetch['payload']): SignInFetch => ({
     payload,
 });
 
+export const signInData = (): SignInData => ({
+    type: AUTH_SIGN_IN_DATA,
+});
+
 export const signInError = (payload: SignInError['payload']): SignInError => ({
     type: AUTH_SIGN_IN_ERROR,
     payload,
@@ -157,6 +180,10 @@ export const signInRequire2FA = (payload: SignInRequire2FA['payload']): SignInRe
 export const signUp = (payload: SignUpFetch['payload']): SignUpFetch => ({
     type: AUTH_SIGN_UP_FETCH,
     payload,
+});
+
+export const signUpData = (): SignUpData => ({
+    type: AUTH_SIGN_UP_DATA,
 });
 
 export const signUpError = (payload: SignUpError['payload']): SignUpError => ({
@@ -185,4 +212,8 @@ export const logoutFetch = (): LogoutFetch => ({
 export const logoutError = (payload: LogoutFailed['payload']): LogoutFailed => ({
     type: AUTH_LOGOUT_FAILURE,
     payload,
+});
+
+export const require2FAReset = (): AuthSignInRequire2FAReset => ({
+    type: AUTH_SIGN_IN_REQUIRE_2FA_RESET,
 });
