@@ -6,9 +6,14 @@ import {
     AUTH_ENTROPY_PASSWORD_FETCH,
     AUTH_LOGOUT_FAILURE,
     AUTH_LOGOUT_FETCH,
+    AUTH_SIGN_IN_DATA,
     AUTH_SIGN_IN_ERROR,
+    AUTH_SIGN_IN_FETCH,
     AUTH_SIGN_IN_REQUIRE_2FA,
+    AUTH_SIGN_IN_REQUIRE_2FA_RESET,
+    AUTH_SIGN_UP_DATA,
     AUTH_SIGN_UP_ERROR,
+    AUTH_SIGN_UP_FETCH,
     AUTH_SIGN_UP_REQUIRE_VERIFICATION,
     AUTH_VERIFICATION_FETCH,
     AUTH_VERIFICATION_SUCCESS,
@@ -22,6 +27,8 @@ export interface AuthState {
     authError?: CommonError;
     signUpError?: CommonError;
     current_password_entropy: number;
+    signInLoading: boolean;
+    signUpLoading: boolean;
 }
 
 export const initialStateAuth: AuthState = {
@@ -29,6 +36,8 @@ export const initialStateAuth: AuthState = {
     requireVerification: false,
     emailVerified: false,
     current_password_entropy: 0,
+    signInLoading: false,
+    signUpLoading: false,
 };
 
 export const authReducer = (state = initialStateAuth, action: AuthAction) => {
@@ -37,6 +46,12 @@ export const authReducer = (state = initialStateAuth, action: AuthAction) => {
             return {
                 ...state,
                 require2FA: action.payload.require2fa,
+            };
+        case AUTH_SIGN_IN_REQUIRE_2FA_RESET:
+            return {
+                ...state,
+                require2FA: false,
+                signInLoading: false,
             };
         case AUTH_SIGN_UP_REQUIRE_VERIFICATION:
             return {
@@ -47,10 +62,18 @@ export const authReducer = (state = initialStateAuth, action: AuthAction) => {
             return { ...state, emailVerified: false };
         case AUTH_VERIFICATION_SUCCESS:
             return { ...state, emailVerified: true };
+        case AUTH_SIGN_IN_FETCH:
+            return { ...state, signInLoading: true };
+        case AUTH_SIGN_IN_DATA:
+            return { ...state, signInLoading: false };
         case AUTH_SIGN_IN_ERROR:
-            return { ...state, authError: action.payload };
+            return { ...state, authError: action.payload, signInLoading: false };
+        case AUTH_SIGN_UP_FETCH:
+            return { ...state, signUpLoading: true };
+        case AUTH_SIGN_UP_DATA:
+            return { ...state, signUpLoading: false };
         case AUTH_SIGN_UP_ERROR:
-            return { ...state, signUpError: action.payload };
+            return { ...state, signUpError: action.payload, signUpLoading: false };
         case AUTH_LOGOUT_FETCH:
             return { ...state };
         case AUTH_LOGOUT_FAILURE:
