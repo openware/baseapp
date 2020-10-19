@@ -15,50 +15,44 @@ interface ModalWithdrawConfirmationProps {
 }
 
 const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
-    const intl = useIntl();
+    const { formatMessage } = useIntl();
+    const { amount, currency, precision, rid } = props;
 
-    const translate = (e: string) => {
-        return intl.formatMessage({id: e});
-    };
-
-    const renderHeader = () => {
+    const renderHeader = React.useCallback(() => {
         return (
             <div className="pg-exchange-modal-submit-header">
-                {translate('page.mobile.wallet.withdraw.modal.confirmation')}
+                {formatMessage({ id: 'page.mobile.wallet.withdraw.modal.confirmation' })}
             </div>
         );
-    };
+    }, [formatMessage]);
 
-    const renderBody = () => {
-        const { amount, currency, precision, rid } = props;
-        const formattedCurrency = currency.toUpperCase();
-
+    const renderBody = React.useCallback(() => {
         return (
             <div className="pg-exchange-modal-submit-body mobile-modal-body__withdraw-confirm">
                 <div className="mobile-modal-body__withdraw-confirm--block">
                     <span className="mobile-modal-body__withdraw-confirm--light">
-                        {translate('page.mobile.wallet.withdraw.modal.confirmation.warning')}
+                        {formatMessage({ id: 'page.mobile.wallet.withdraw.modal.confirmation.warning' })}
                     </span>
                 </div>
                 <div className="mobile-modal-body__withdraw-confirm--block">
                     <span className="mobile-modal-body__withdraw-confirm--mute">
-                        {translate('page.mobile.wallet.withdraw.modal.confirmation.message1')}
+                        {formatMessage({ id: 'page.mobile.wallet.withdraw.modal.confirmation.message1' })}
                     </span>
                     <span className="mobile-modal-body__withdraw-confirm--light">
-                        {Decimal.format(amount, precision, ',')}  {formattedCurrency}
+                        {Decimal.format(amount, precision, ',')}  {currency.toUpperCase()}
                     </span>
                 </div>
                 <div className="mobile-modal-body__withdraw-confirm--block">
                     <span className="mobile-modal-body__withdraw-confirm--mute">
-                        {translate('page.mobile.wallet.withdraw.modal.confirmation.message2')}
+                        {formatMessage({ id: 'page.mobile.wallet.withdraw.modal.confirmation.message2' })}
                     </span>
                     <span className="mobile-modal-body__withdraw-confirm--light">{rid}</span>
                 </div>
             </div>
         );
-    };
+    }, [formatMessage, amount, currency, precision, rid]);
 
-    const renderFooter = () => {
+    const renderFooter = React.useCallback(() => {
         return (
             <div className="pg-exchange-modal-submit-footer modal-footer__withdraw-confirm">
                 <Button
@@ -68,7 +62,7 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                     size="lg"
                     variant="danger"
                 >
-                    {translate('page.body.wallets.tabs.withdraw.modal.button.cancel')}
+                    {formatMessage({ id: 'page.body.wallets.tabs.withdraw.modal.button.cancel' })}
                 </Button>
                 <Button
                     block={true}
@@ -77,11 +71,11 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                     size="lg"
                     variant="primary"
                 >
-                    {translate('page.body.wallets.tabs.withdraw.modal.button.withdraw')}
+                    {formatMessage({ id: 'page.body.wallets.tabs.withdraw.modal.button.withdraw' })}
                 </Button>
             </div>
         );
-    };
+    }, [formatMessage]);
 
     return (
         <Modal title={renderHeader()} onClose={props.onDismiss} isOpen={props.show}>
