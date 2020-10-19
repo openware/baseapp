@@ -16,7 +16,14 @@ interface ModalWithdrawConfirmationProps {
 
 const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
     const { formatMessage } = useIntl();
-    const { amount, currency, precision, rid } = props;
+    const {
+        amount,
+        currency,
+        precision,
+        rid,
+        onDismiss,
+        onSubmit,
+    } = props;
 
     const renderHeader = React.useCallback(() => {
         return (
@@ -58,7 +65,7 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                 <Button
                     block={true}
                     className="btn-block mr-1 mt-1 btn-lg"
-                    onClick={props.onDismiss}
+                    onClick={onDismiss}
                     size="lg"
                     variant="danger"
                 >
@@ -67,7 +74,7 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                 <Button
                     block={true}
                     className="btn-block mr-1 mt-1 btn-lg"
-                    onClick={props.onSubmit}
+                    onClick={onSubmit}
                     size="lg"
                     variant="primary"
                 >
@@ -75,10 +82,10 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                 </Button>
             </div>
         );
-    }, [formatMessage]);
+    }, [formatMessage, onSubmit, onDismiss]);
 
     return (
-        <Modal title={renderHeader()} onClose={props.onDismiss} isOpen={props.show}>
+        <Modal title={renderHeader()} onClose={onDismiss} isOpen={props.show}>
             {renderBody()}
             {renderFooter()}
         </Modal>
