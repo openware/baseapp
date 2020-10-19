@@ -260,11 +260,11 @@ class Trading extends React.Component<Props, StateProps> {
     };
 
     private handeDrag = (layout, oldItem, newItem) => {
-        layout.map(elem => {
+        for (const elem of layout) {
             if (elem.y < 0) {
                 elem.y = 0;
             }
-        });
+        }
     };
 }
 
