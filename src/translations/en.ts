@@ -654,6 +654,9 @@ export const en = {
 
     'sentry.report_feedback': 'Report feedback',
 
+    // metamask
+    'metamask.success.connected': 'You\'re already connected to the MetaMask',
+
     // error messages
     'error.order.rejected': 'Order rejected',
     'error.invalid_request': 'Order - invalid request',
@@ -878,6 +881,12 @@ export const en = {
     'password.strength.tip.number.characters': 'At least 8 characters',
     'password.strength.tip.letter': 'At least One upper case and lower case letter',
     'password.strength.tip.digit': 'At least One digit',
+
+    // metamask
+    'metamask.error.noExtension': 'No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.',
+    'metamask.error.unsupportedNetwork': `You\'re connected to an unsupported network.`,
+    'metamask.error.unauthorized': 'Please authorize this website to access your Ethereum account.',
+    'metamask.error.unknown': 'An unknown error occurred. Check the console for more details.',
 
     ...nationalitiesNames,
     ...customTranslations,

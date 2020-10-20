@@ -11,6 +11,7 @@ describe('DepositCrypto', () => {
     beforeEach(() => {
         wrapper = shallow(
             <DepositCrypto
+                currency="eth"
                 text={'text123'}
                 data={'123123'}
                 dimensions={118}

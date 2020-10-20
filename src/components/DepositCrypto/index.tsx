@@ -1,9 +1,14 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { CopyableTextField } from '../CopyableTextField';
+import { MetaMaskButton } from '../MetaMaskButton';
 import { QRCode } from '../QRCode';
 
 export interface DepositCryptoProps {
+    /**
+     * Current deposit crypto currency
+     */
+    currency: string;
     /**
      * Data which is used to generate QR code
      */
@@ -49,14 +54,15 @@ export interface DepositCryptoProps {
 const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: DepositCryptoProps) => {
     const QR_SIZE = 118;
     const {
-        data,
-        dimensions,
-        error,
-        text,
         copiableTextFieldText,
         copyButtonText,
-        handleOnCopy,
+        currency,
+        data,
+        dimensions,
         disabled,
+        error,
+        handleOnCopy,
+        text,
     } = props;
     const size = dimensions || QR_SIZE;
     const onCopy = !disabled ? handleOnCopy : undefined;
@@ -69,7 +75,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
                     <p className="cr-deposit-info">{text}</p>
                     {data ? <div className="d-none d-md-block qr-code-wrapper"><QRCode dimensions={size} data={data}/></div> : null}
                 </div>
-                <div>
+                <div className="cr-deposit-crypto__block">
                     <form className="cr-deposit-crypto__copyable">
                         <fieldset className="cr-copyable-text-field" onClick={onCopy}>
                             <CopyableTextField
@@ -82,6 +88,9 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
                             />
                         </fieldset>
                     </form>
+                    {currency === 'eth' ? (
+                        <MetaMaskButton depositAddress={data} />
+                    ) : null}
                 </div>
             </div>
         </div>

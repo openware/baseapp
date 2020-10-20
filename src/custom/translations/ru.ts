@@ -657,6 +657,9 @@ export const ru: LangType = {
 
     'sentry.report_feedback': 'Отправить отчет',
 
+    // metamask
+    'metamask.success.connected': 'Вы уже подключены к MetaMask',
+
     // error messages
     'error.order.rejected': 'Запрос отвергнут',
     'error.invalid_request': 'Запрос - неверный запрос',
@@ -881,6 +884,12 @@ export const ru: LangType = {
     'password.strength.tip.number.characters': 'At least 8 characters',
     'password.strength.tip.letter': 'At least One upper case and lower case letter',
     'password.strength.tip.digit': 'At least One digit',
+
+    // metamask
+    'metamask.error.noExtension': 'Расширение браузера для Ethereum не было обнаружено, установите MetaMask.',
+    'metamask.error.unsupportedNetwork': 'Вы подключены к неподдерживаемой сети.',
+    'metamask.error.unauthorized': 'Пожалуйста, авторизуйте этот сайт для доступа к вашей учетной записи Ethereum.',
+    'metamask.error.unknown': 'Произошла неизвестная ошибка. Проверьте консоль для получения дополнительных сведений.',
 
     ...nationalitiesNames,
     ...mobileTranslationsRu,
