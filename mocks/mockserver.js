@@ -197,7 +197,6 @@ function getObjectPath(instance, parentName) {
     Object.keys(instance).forEach(key=>{
         const value = instance[key];
         const formatKey = parentName? `${parentName}.${key}`: key;
-        // console.log('object.key', formatKey, value, typeof value);
 
         if(typeof value === 'object') {
             result += getObjectPath(value, formatKey);
@@ -220,7 +219,6 @@ function getBodyOrQueryString(body, query) {
       try{
             let obj = eval('(' + body + ')');
             const path = getObjectPath(obj);
-            // console.log('[Body Parsed]', body, path);
             return '--' + path.replace(/^&/gi, '');
       }
       catch (error) {
