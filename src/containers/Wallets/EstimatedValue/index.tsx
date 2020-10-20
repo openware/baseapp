@@ -54,15 +54,19 @@ class EstimatedValueContainer extends React.Component<Props> {
             fetchTickers,
             markets,
             rangerState: {connected},
+            tickers,
             userLoggedIn,
         } = this.props;
 
-        if (markets.length === 0) {
+        if (!markets.length) {
             fetchMarkets();
+        }
+
+        if (!tickers.length) {
             fetchTickers();
         }
 
-        if (currencies.length === 0) {
+        if (!currencies.length) {
             fetchCurrencies();
         }
 
@@ -78,14 +82,18 @@ class EstimatedValueContainer extends React.Component<Props> {
             fetchMarkets,
             fetchTickers,
             markets,
+            tickers,
         } = this.props;
 
-        if (next.markets.length === 0 && next.markets !== markets) {
+        if (!markets.length && next.markets.length) {
             fetchMarkets();
+        }
+
+        if (!tickers.length && next.tickers.length) {
             fetchTickers();
         }
 
-        if (next.currencies.length === 0 && next.currencies !== currencies) {
+        if (!currencies.length && next.currencies.length) {
             fetchCurrencies();
         }
     }
