@@ -19,10 +19,20 @@
     height: 300px;
   }
 
-  &__confirmation, &__submit {
+  &__submit {
     .cr-mobile-modal__block--open {
       height: calc(100vh - 250px);
     }
+  }
+
+  &__confirmation {
+    .cr-mobile-modal__block--open {
+      height: 50vh;
+      top: 47vh;
+    }
+  }
+
+  &__confirmation, &__submit {
     .pg-exchange-modal-submit-footer {
       margin: 0 14px;
     }

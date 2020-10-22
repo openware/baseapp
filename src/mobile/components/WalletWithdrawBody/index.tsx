@@ -5,12 +5,13 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Blur } from '../../../components/Blur';
-import { ModalWithdrawConfirmation, ModalWithdrawSubmit, Withdraw } from '../../../containers';
+import { ModalWithdrawSubmit, Withdraw } from '../../../containers';
 import { useBeneficiariesFetch, useCurrenciesFetch, useWalletsAddressFetch } from '../../../hooks';
 import { selectCurrencies } from '../../../modules/public/currencies';
 import { Beneficiary } from '../../../modules/user/beneficiaries';
 import { selectUserInfo } from '../../../modules/user/profile';
 import { selectWithdrawSuccess, walletsWithdrawCcyFetch } from '../../../modules/user/wallets';
+import { ModalWithdrawConfirmation } from '../../components';
 
 const defaultBeneficiary: Beneficiary = {
     id: 0,
@@ -168,10 +169,10 @@ const WalletWithdrawBodyComponent = props => {
             </div>
             <div className="cr-mobile-wallet-withdraw-body__confirmation">
                 <ModalWithdrawConfirmation
-                    isMobileDevice
                     show={withdrawData.withdrawConfirmModal}
                     amount={withdrawData.total}
                     currency={currency}
+                    precision={currencyItem ? currencyItem.precision : 0}
                     rid={getConfirmationAddress()}
                     onSubmit={handleWithdraw}
                     onDismiss={toggleConfirmModal}
