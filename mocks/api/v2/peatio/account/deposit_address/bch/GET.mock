@@ -5,4 +5,8 @@ Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
 Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
-{"currency":"bch","address":"2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL"}
+{
+    "currencies": ["bch", "ada"],
+    "address": "2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL",
+    "state": "active"
+}

@@ -56,8 +56,10 @@ describe('walletsList reducer', () => {
     };
 
     const addressDataPayload = {
+        currencies: ['btc', 'tbtc'],
         currency: 'btc',
         address: 'address',
+        state: 'active',
     };
 
     it('should handle WALLETS_FETCH', () => {
