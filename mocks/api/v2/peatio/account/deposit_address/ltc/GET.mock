@@ -5,4 +5,8 @@ Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
 Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
-{"currency":"ltc","address":"QaoJLPL98dmXJD5vuaBcu1xSzugJXqwFr2"}
+{
+    "currencies": ["ltc"],
+    "address": "QaoJLPL98dmXJD5vuaBcu1xSzugJXqwFr2",
+    "state": "active"
+}
