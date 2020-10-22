@@ -7,9 +7,9 @@ import {
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { Captcha } from '../../components';
 import { EMAIL_REGEX, setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Configs,
     emailVerificationFetch,

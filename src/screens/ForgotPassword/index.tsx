@@ -10,13 +10,13 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { Captcha, EmailForm } from '../../components';
 import {
     EMAIL_REGEX,
     ERROR_INVALID_EMAIL,
     setDocumentTitle,
 } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Configs,
     forgotPassword,

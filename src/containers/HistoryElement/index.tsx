@@ -5,6 +5,7 @@ import {
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { Decimal, History, Pagination } from '../../components';
 import {
     localeDate,
@@ -13,7 +14,6 @@ import {
     setWithdrawStatusColor,
     truncateMiddle,
 } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     currenciesFetch,
     Currency,

@@ -14,7 +14,7 @@ import {
     Decimal,
 } from '../../components';
 import { FilterPrice } from '../../filters';
-import { IntlProps } from '../../index';
+import { IntlProps } from '../../';
 import {
     alertPush,
     RootState,

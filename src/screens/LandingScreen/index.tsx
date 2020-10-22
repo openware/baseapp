@@ -3,10 +3,10 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { MarketsTable } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     RootState,
     selectCurrentColorTheme,

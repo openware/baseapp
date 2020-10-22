@@ -2,7 +2,6 @@ import { RootState } from '../../../modules';
 import { CommonError } from '../../../modules/types';
 import { Beneficiary } from './types';
 
-
 /* Beneficiaries fetch */
 export const selectBeneficiaries = (state: RootState): Beneficiary[] =>
     state.user.beneficiaries.fetch.data;

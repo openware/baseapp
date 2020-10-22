@@ -5,11 +5,11 @@ import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     ChangeForgottenPasswordMobileScreen,
     ConfirmMobileScreen,

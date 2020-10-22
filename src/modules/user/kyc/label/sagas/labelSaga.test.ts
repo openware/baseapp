@@ -1,16 +1,12 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../../..';
+import { rootSaga, sendError } from '../../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../../helpers/jest';
-import {
-    labelData,
-    labelError,
-    labelFetch,
-} from '../actions';
+import { CommonError } from '../../../../types';
+import { labelData, labelError, labelFetch } from '../actions';
 
-
-describe('Module: label', () => {
+describe('Module: KYC - label', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
@@ -26,7 +22,7 @@ describe('Module: label', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -46,7 +42,16 @@ describe('Module: label', () => {
     };
 
     const expectedActionsFetch = [labelFetch(), labelData(data)];
-    const expectedActionsError = [labelFetch(), labelError(fakeError)];
+    const expectedActionsError = [
+        labelFetch(),
+        sendError({
+            error,
+            processingType: 'console',
+            extraOptions: {
+                actionError: labelError,
+            },
+        }),
+    ];
 
     it('should fetch label in success flow', async () => {
         mockLabel();

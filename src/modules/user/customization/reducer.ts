@@ -1,11 +1,7 @@
 import { CustomizationDataInterface } from '../../public/customization';
 import { CommonError, CommonState } from '../../types';
 import { CustomizationUpdateAction } from './actions';
-import {
-    CUSTOMIZATION_UPDATE,
-    CUSTOMIZATION_UPDATE_DATA,
-    CUSTOMIZATION_UPDATE_ERROR,
-} from './constants';
+import { CUSTOMIZATION_UPDATE, CUSTOMIZATION_UPDATE_DATA, CUSTOMIZATION_UPDATE_ERROR } from './constants';
 
 export interface CustomizationUpdateState extends CommonState {
     data?: CustomizationDataInterface;

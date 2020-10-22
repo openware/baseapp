@@ -3,10 +3,10 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { Decimal, OpenOrders } from '../../components';
 import { localeDate, setTradeColor } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Market,
     openOrdersCancelFetch,

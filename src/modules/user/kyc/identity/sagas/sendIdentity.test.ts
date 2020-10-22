@@ -1,14 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../../..';
+import { rootSaga, sendError } from '../../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../../helpers/jest';
-import {
-    sendIdentity,
-    sendIdentityData,
-    sendIdentityError,
-} from '../actions';
-
+import { CommonError } from '../../../../types';
+import { sendIdentity, sendIdentityData, sendIdentityError } from '../actions';
 
 describe('Send Identity Saga', () => {
     let store: MockStoreEnhanced;
@@ -26,7 +22,7 @@ describe('Send Identity Saga', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -51,7 +47,16 @@ describe('Send Identity Saga', () => {
     };
 
     const expectedActionsFetch = [sendIdentity(confirmIdentityPayload), sendIdentityData(confirmIdentityResponse)];
-    const expectedActionsError = [sendIdentity(confirmIdentityPayload), sendIdentityError(fakeError)];
+    const expectedActionsError = [
+        sendIdentity(confirmIdentityPayload),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: sendIdentityError,
+            },
+        }),
+    ];
 
     it('should send identity data in success flow', async () => {
         mockSendIdentity();

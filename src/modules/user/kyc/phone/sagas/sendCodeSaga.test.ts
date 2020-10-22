@@ -1,16 +1,12 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../../..';
+import { rootSaga, sendError } from '../../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../../helpers/jest';
-import {
-    resendCode,
-    sendCode,
-    sendCodeData,
-    sendCodeError,
-} from '../actions';
+import { CommonError } from '../../../../types';
+import { resendCode, sendCode, sendCodeData, sendCodeError } from '../actions';
 
-describe('Module: label', () => {
+describe('Module: phone', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
@@ -26,7 +22,7 @@ describe('Module: label', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -40,7 +36,16 @@ describe('Module: label', () => {
     };
 
     const expectedActionsFetch = [sendCode(data), sendCodeData()];
-    const expectedActionsError = [sendCode(data), sendCodeError(fakeError)];
+    const expectedActionsError = [
+        sendCode(data),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: sendCodeError,
+            },
+        }),
+    ];
 
     it('should fetch label in success flow', async () => {
         mockLabel();
@@ -70,29 +75,6 @@ describe('Module: label', () => {
                 }
             });
         });
-        store.dispatch(sendCode(data));
-
-        return promise;
-    });
-
-    const mockPhoneExist = () => {
-        mockAxios.onPost('/resource/phones').reply(400, { errors: ['resource.phone.exists']});
-    };
-
-    const expectedPhoneExistFetch = [sendCode(data), resendCode(data)];
-
-    it('should fetch label if phone already exist in success flow', async () => {
-        mockPhoneExist();
-        const promise = new Promise(resolve => {
-            store.subscribe(() => {
-                const actions = store.getActions();
-                if (actions.length === expectedPhoneExistFetch.length) {
-                    expect(actions).toEqual(expectedPhoneExistFetch);
-                    resolve();
-                }
-            });
-        });
-
         store.dispatch(sendCode(data));
 
         return promise;

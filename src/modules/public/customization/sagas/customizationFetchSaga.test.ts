@@ -1,13 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import {
-    customizationData,
-    customizationError,
-    customizationFetch,
-} from '../actions';
+import { CommonError } from '../../../types';
+import { customizationData, customizationError, customizationFetch } from '../actions';
 import { CustomizationDataInterface } from '../types';
 
 describe('Saga: customizationFetchSaga', () => {
@@ -34,7 +31,7 @@ describe('Saga: customizationFetchSaga', () => {
         mockAxios.onGet('/customization').reply(200, fakeCustomization);
     };
 
-    const alertDataPayload = {
+    const error: CommonError = {
         message: ['Server error'],
         code: 500,
     };
@@ -65,7 +62,13 @@ describe('Saga: customizationFetchSaga', () => {
     it('should trigger an error on customization fetch', async () => {
         const expectedActions = [
             customizationFetch(),
-            customizationError(alertDataPayload),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: customizationError,
+                },
+            }),
         ];
 
         mockNetworkError(mockAxios);

@@ -1,10 +1,6 @@
 import { CommonState } from '../../types';
 import { MemberLevelsAction } from './actions';
-import {
-    MEMBER_LEVELS_DATA,
-    MEMBER_LEVELS_ERROR,
-    MEMBER_LEVELS_FETCH,
-} from './constants';
+import { MEMBER_LEVELS_DATA, MEMBER_LEVELS_ERROR, MEMBER_LEVELS_FETCH } from './constants';
 import { MemberLevels } from './types';
 
 export interface MemberLevelsState extends CommonState {

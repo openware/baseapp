@@ -4,7 +4,6 @@ import { ordersCancelAllSaga } from './ordersCancelAllSaga';
 import { ordersHistoryCancelSaga } from './ordersHistoryCancelSaga';
 import { ordersHistorySaga } from './ordersHistorySaga';
 
-
 export function* rootOrdersHistorySaga() {
     yield takeLatest(ORDERS_HISTORY_FETCH, ordersHistorySaga);
     yield takeLatest(ORDERS_CANCEL_ALL_FETCH, ordersCancelAllSaga);

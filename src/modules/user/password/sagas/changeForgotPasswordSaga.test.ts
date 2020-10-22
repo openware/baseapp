@@ -1,10 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { changeForgotPasswordFetch, changeForgotPasswordSuccess,forgotPasswordError } from '../actions';
-
+import { CommonError } from '../../../types';
+import { changeForgotPasswordFetch, changeForgotPasswordSuccess, forgotPasswordError } from '../actions';
 
 describe('Change Forgot Password Saga', () => {
     let store: MockStoreEnhanced;
@@ -22,12 +22,12 @@ describe('Change Forgot Password Saga', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const fakeError: CommonError = {
         code: 422,
         message: ['User doesnt exist or has already been activated'],
     };
 
-    const fakeNetworkError = {
+    const fakeNetworkError: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -49,8 +49,27 @@ describe('Change Forgot Password Saga', () => {
     };
 
     const expectedActionsFetch = [changeForgotPasswordFetch(fakeNewPassword), changeForgotPasswordSuccess()];
-    const expectedActionsNetworkError = [changeForgotPasswordFetch(fakeNewPassword), forgotPasswordError(fakeNetworkError)];
-    const expectedActionsError = [changeForgotPasswordFetch(fakeNewPassword), forgotPasswordError(fakeError)];
+    const expectedActionsNetworkError = [
+        changeForgotPasswordFetch(fakeNewPassword),
+        sendError({
+            error: fakeNetworkError,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: forgotPasswordError,
+            },
+        }),
+    ];
+
+    const expectedActionsError = [
+        changeForgotPasswordFetch(fakeNewPassword),
+        sendError({
+            error: fakeError,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: forgotPasswordError,
+            },
+        }),
+    ];
 
     it('should change forgotten password in success flow', async () => {
         mockChangeForgotPassword();

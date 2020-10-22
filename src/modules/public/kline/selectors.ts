@@ -1,4 +1,4 @@
-import { RootState } from '../../index';
+import { RootState } from '../../';
 import { KlineState } from './reducer';
 
 export const selectKline = (state: RootState): KlineState =>

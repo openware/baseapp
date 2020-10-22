@@ -1,5 +1,5 @@
+import { RootState } from '../../';
 import { incrementalOrderBook } from '../../../api';
-import { RootState } from '../../index';
 import { DepthIncrementState, DepthState } from './types';
 
 export const selectOrderBookLoading = (state: RootState): boolean =>

@@ -8,7 +8,6 @@ import {
     API_KEYS_FETCH,
 } from './constants';
 
-// tslint:disable no-object-literal-type-assertion
 describe('Api Keys actions', () => {
     it('should check apiKeysFetch action creator', () => {
         const payload = { pageIndex: 0, limit: 25 };

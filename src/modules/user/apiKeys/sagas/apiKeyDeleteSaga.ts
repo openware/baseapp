@@ -1,9 +1,8 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import { alertPush } from '../../../index';
-import { apiKeyDelete, ApiKeyDeleteFetch, apiKeys2FAModal } from '../actions';
+import { apiKeyDelete, ApiKeyDeleteFetch, apiKeys2FAModal, apiKeysError } from '../actions';
 
 const deleteOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -14,13 +13,18 @@ const deleteOptions = (csrfToken?: string): RequestOptions => {
 
 export function* apiKeyDeleteSaga(action: ApiKeyDeleteFetch) {
     try {
-        const {kid, totp_code} = action.payload;
+        const { kid, totp_code } = action.payload;
         yield call(API.delete(deleteOptions(getCsrfToken())), `/resource/api_keys/${kid}?totp_code=${totp_code}`);
         yield put(apiKeyDelete({kid}));
-        yield put(alertPush({message: ['success.api_keys.deleted'], type: 'success'}));
+        yield put(alertPush({ message: ['success.api_keys.deleted'], type: 'success' }));
+        yield put(apiKeys2FAModal({ active: false }));
     } catch (error) {
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
-    } finally {
-        yield put(apiKeys2FAModal({active: false}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: apiKeysError,
+            },
+        }));
     }
 }

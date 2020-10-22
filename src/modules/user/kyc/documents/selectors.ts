@@ -1,4 +1,4 @@
-import { RootState } from '../../../index';
+import { RootState } from '../../../';
 import { DocumentsState } from './reducer';
 
 export const selectSendDocumentsSuccess = (state: RootState): DocumentsState['success'] =>

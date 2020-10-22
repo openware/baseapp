@@ -2,7 +2,8 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { rootSaga } from '../../../../modules/index';
+import { rootSaga, sendError } from '../../../../modules/index';
+import { CommonError } from '../../../types';
 import {
     beneficiariesActivate,
     beneficiariesActivateData,
@@ -44,11 +45,10 @@ describe('Beneficiaries Activate', () => {
         },
     };
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
-
 
     describe('Activate beneficiaries data', () => {
         const mockBeneficiariesActivate = () => {
@@ -63,7 +63,13 @@ describe('Beneficiaries Activate', () => {
 
         const expectedBeneficiariesActivateError = [
             beneficiariesActivate(fakePayload),
-            beneficiariesActivateError(fakeError),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: beneficiariesActivateError,
+                },
+            }),
         ];
 
         it('should activate beneficiaries in success flow', async () => {

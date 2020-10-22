@@ -1,13 +1,13 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { CommonError } from '../../../types';
 import { Market } from '../../markets';
 import { orderBookData, orderBookError, orderBookFetch } from '../actions';
 import { OrderBookState } from '../types';
 
-// tslint:disable no-any no-magic-numbers
 describe('Saga: OrderBook', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
@@ -36,7 +36,7 @@ describe('Saga: OrderBook', () => {
         price_precision: 4,
     };
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -83,7 +83,16 @@ describe('Saga: OrderBook', () => {
 
     const expectedActionsFetch = [ orderBookFetch(fakeMarket), orderBookData(fakeOrderBook) ];
 
-    const expectedActionsError = [ orderBookFetch(fakeMarket), orderBookError(fakeError) ];
+    const expectedActionsError = [
+        orderBookFetch(fakeMarket),
+        sendError({
+            error,
+            processingType: 'console',
+            extraOptions: {
+                actionError: orderBookError,
+            },
+        }),
+    ];
 
     it('should fetch orderBook', async () => {
         mockOrderBook();

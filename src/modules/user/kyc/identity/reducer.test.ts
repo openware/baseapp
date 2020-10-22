@@ -1,8 +1,5 @@
 import * as actions from './actions';
-import {
-    identityReducer,
-    initialIdentityState,
-} from './reducer';
+import { identityReducer, initialIdentityState } from './reducer';
 
 describe('Identity reducer', () => {
     const confirmIdentityResponse = {
@@ -20,7 +17,7 @@ describe('Identity reducer', () => {
         metadata: `{'nationality': 'nationality'}`,
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

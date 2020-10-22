@@ -1,8 +1,5 @@
 import * as actions from './actions';
-import {
-    changeColorThemeReducer,
-    initialChangeColorThemeState,
-} from './reducer';
+import { changeColorThemeReducer, initialChangeColorThemeState } from './reducer';
 
 describe('Change color theme reducer', () => {
     it('should handle CHANGE_COLOR_THEME', () => {

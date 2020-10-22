@@ -1,6 +1,4 @@
-import {
-    CHANGE_LANGUAGE,
-} from './constants';
+import { CHANGE_LANGUAGE } from './constants';
 
 export interface ChangeLanguageAction {
     type: string;

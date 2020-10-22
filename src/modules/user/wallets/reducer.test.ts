@@ -1,8 +1,5 @@
 import * as actions from './actions';
-import {
-  initialWalletsState,
-  walletsReducer,
-} from './reducer';
+import { initialWalletsState, walletsReducer } from './reducer';
 import { Wallet } from './types';
 
 describe('walletsList reducer', () => {
@@ -39,7 +36,7 @@ describe('walletsList reducer', () => {
         },
     ];
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

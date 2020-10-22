@@ -3,10 +3,10 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../';
 import { History, Pagination, WalletItemProps } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     currenciesFetch,
     Currency,

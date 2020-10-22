@@ -30,7 +30,6 @@ import {
     RANGER_USER_ORDER_UPDATE,
 } from '../constants';
 
-// tslint:disable no-any no-magic-numbers no-console
 const debug = false;
 const echoServerPort = 9100;
 

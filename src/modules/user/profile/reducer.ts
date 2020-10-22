@@ -98,7 +98,7 @@ const passwordChangeReducer = (state: ProfileState['passwordChange'], action: Pr
         case PROFILE_CHANGE_PASSWORD_ERROR:
             return  {
                 ...state,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -126,7 +126,7 @@ const twoAuthReducer = (state: ProfileState['twoFactorAuth'], action: ProfileAct
             return {
                 ...state,
                 success: false,
-                error: action.payload,
+                error: action.error,
                 barcode: '',
                 url: '',
             };
@@ -146,7 +146,7 @@ const twoAuthReducer = (state: ProfileState['twoFactorAuth'], action: ProfileAct
             return {
                 ...state,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -170,7 +170,7 @@ export const userReducer = (state: ProfileState['userData'], action: ProfileActi
             return {
                 ...state,
                 isFetching: false,
-                error: action.payload,
+                error: action.error,
             };
         case PROFILE_RESET_USER:
             return {

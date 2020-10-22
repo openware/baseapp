@@ -1,8 +1,8 @@
 import { call, put } from 'redux-saga/effects';
+import { sendError } from '../../../';
 import { API, isFinexEnabled, RequestOptions } from '../../../../api';
 import { buildQueryString, getTimestampPeriod } from '../../../../helpers';
-import { alertPush } from '../../alert';
-import { klineData, KlineFetch } from '../actions';
+import { klineData, klineError, KlineFetch } from '../actions';
 
 const klineRequestOptions: RequestOptions = {
     apiVersion: isFinexEnabled() ? 'finex' : 'peatio',
@@ -54,6 +54,12 @@ export function* handleKlineFetchSaga(action: KlineFetch) {
         });
         yield put(klineData(convertedData));
     } catch (error) {
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: klineError,
+            },
+        }));
     }
 }
