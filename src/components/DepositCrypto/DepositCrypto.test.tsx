@@ -7,7 +7,6 @@ import { DepositCrypto } from './';
 describe('DepositCrypto', () => {
     let wrapper;
     const handleOnCopy = jest.fn();
-    const handleGenerateAddress = jest.fn();
 
     beforeEach(() => {
         wrapper = shallow(
@@ -18,9 +17,6 @@ describe('DepositCrypto', () => {
                 error={'error123'}
                 disabled={false}
                 handleOnCopy={handleOnCopy}
-                handleGenerateAddress={handleGenerateAddress}
-                isAccountActivated={true}
-                generateAddressTriggered={false}
             />,
         );
     });

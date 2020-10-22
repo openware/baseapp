@@ -80,6 +80,6 @@ export const userReducer = combineReducers({
     ordersHistory: ordersHistoryReducer,
     openOrders: openOrdersReducer,
     sendEmailVerification: sendEmailVerificationReducer,
-    captchaKeys: getGeetestCaptchaReducer,
+    captcha: getGeetestCaptchaReducer,
     withdrawLimit: withdrawLimitReducer,
 });

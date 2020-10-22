@@ -97,7 +97,7 @@ export interface RootState {
         apiKeys: ApiKeysState;
         auth: AuthState;
         beneficiaries: BeneficiariesState;
-        captchaKeys: GeetestCaptchaState;
+        captcha: GeetestCaptchaState;
         customizationUpdate: CustomizationUpdateState;
         sendEmailVerification: EmailVerificationState;
         history: HistoryState;

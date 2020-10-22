@@ -80,8 +80,8 @@ export interface BeneficiariesCreate {
     payload: {
         currency: string;
         name: string;
-        description?: string;
         data: string;
+        description?: string;
     };
 }
 

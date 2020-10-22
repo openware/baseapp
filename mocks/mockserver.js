@@ -190,6 +190,26 @@ function getDirectoriesRecursive(srcpath) {
  * 
  * GET--query=string&hello=hella.mock
  */
+// POST--email=accountant@barong.io&password=123123&data.address=111
+function getObjectPath(instance, parentName) {
+    let result = '';
+
+    Object.keys(instance).forEach(key=>{
+        const value = instance[key];
+        const formatKey = parentName? `${parentName}.${key}`: key;
+
+        if(typeof value === 'object') {
+            result += getObjectPath(value, formatKey);
+        }
+        else {
+            result += `&${formatKey}=${value}`;
+        }
+    });
+    
+    return result;
+}
+
+
 function getBodyOrQueryString(body, query) {
   if (query) {
     return '--' + query;
@@ -197,13 +217,9 @@ function getBodyOrQueryString(body, query) {
   
   if (body && body !== '') {
       try{
-            let bs ='';
             let obj = eval('(' + body + ')');
-            Object.keys(obj).forEach(x=>{
-                bs += `${bs?'&':''}${x}=${obj[x]}`
-            });
-            // console.log('[Body Parsed]', body, bs);
-            return '--' + bs;
+            const path = getObjectPath(obj);
+            return '--' + path.replace(/^&/gi, '');
       }
       catch (error) {
           console.log('[Body parse error]', error);
@@ -247,7 +263,7 @@ function getMockedContent(path, prefix, body, query) {
     try {
         content = fs.readFileSync(mockFile, {encoding: 'utf8'});
         if (mockserver.verbose) {
-            console.log('Reading from '+ mockFile.yellow +' file: ' + 'Matched 2'.green);
+            console.log('Reading from '+ mockFile.yellow +' file: ' + 'Matched'.green);
         }
     } catch(err) {
         if (mockserver.verbose) {
