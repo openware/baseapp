@@ -60,7 +60,7 @@ export class WalletTable extends React.Component<Props> {
         } = this.props;
         this.props.fetchHistory({ page: 0, currency, type, limit: 6 });
 
-        if (currencies.length === 0) {
+        if (!currencies.length) {
             this.props.fetchCurrencies();
         }
     }
@@ -76,7 +76,7 @@ export class WalletTable extends React.Component<Props> {
             this.props.fetchHistory({ page: 0, currency: nextProps.currency, type, limit: 6 });
         }
 
-        if (nextProps.currencies.length === 0 && nextProps.currencies !== currencies) {
+        if (!currencies.length && nextProps.currencies.length) {
             this.props.fetchCurrencies();
         }
     }
