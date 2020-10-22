@@ -33,8 +33,8 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
         );
     }, [formatMessage]);
 
-    const renderBody = React.useCallback(() => {
-        return (
+    return (
+        <Modal title={renderHeader()} onClose={onDismiss} isOpen={props.show}>
             <div className="pg-exchange-modal-submit-body mobile-modal-body__withdraw-confirm">
                 <div className="mobile-modal-body__withdraw-confirm--block">
                     <span className="mobile-modal-body__withdraw-confirm--light">
@@ -56,11 +56,6 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                     <span className="mobile-modal-body__withdraw-confirm--light">{rid}</span>
                 </div>
             </div>
-        );
-    }, [formatMessage, amount, currency, precision, rid]);
-
-    const renderFooter = React.useCallback(() => {
-        return (
             <div className="pg-exchange-modal-submit-footer modal-footer__withdraw-confirm">
                 <Button
                     block={true}
@@ -81,13 +76,6 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                     {formatMessage({ id: 'page.body.wallets.tabs.withdraw.modal.button.withdraw' })}
                 </Button>
             </div>
-        );
-    }, [formatMessage, onSubmit, onDismiss]);
-
-    return (
-        <Modal title={renderHeader()} onClose={onDismiss} isOpen={props.show}>
-            {renderBody()}
-            {renderFooter()}
         </Modal>
     );
 };
