@@ -67,17 +67,17 @@ export const authReducer = (state = initialStateAuth, action: AuthAction) => {
         case AUTH_SIGN_IN_DATA:
             return { ...state, signInLoading: false };
         case AUTH_SIGN_IN_ERROR:
-            return { ...state, authError: action.payload, signInLoading: false };
+            return { ...state, authError: action.error, signInLoading: false };
         case AUTH_SIGN_UP_FETCH:
             return { ...state, signUpLoading: true };
         case AUTH_SIGN_UP_DATA:
             return { ...state, signUpLoading: false };
         case AUTH_SIGN_UP_ERROR:
-            return { ...state, signUpError: action.payload, signUpLoading: false };
+            return { ...state, signUpError: action.error, signUpLoading: false };
         case AUTH_LOGOUT_FETCH:
             return { ...state };
         case AUTH_LOGOUT_FAILURE:
-            return { ...state, logoutError: action.payload };
+            return { ...state, logoutError: action.error };
         case AUTH_ENTROPY_PASSWORD_FETCH:
             return { ...state };
         case AUTH_ENTROPY_PASSWORD_DATA:

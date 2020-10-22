@@ -63,7 +63,6 @@ const initRanger = (
             channel.close();
         };
         ws.onmessage = ({ data }) => {
-            // tslint:disable-next-line no-any
             let payload: { [pair: string]: any } = {};
 
             try {

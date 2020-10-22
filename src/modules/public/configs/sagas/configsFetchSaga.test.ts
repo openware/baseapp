@@ -1,16 +1,12 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import {
-    configsData,
-    configsError,
-    configsFetch,
-} from '../actions';
+import { CommonError } from '../../../types';
+import { configsData, configsError, configsFetch } from '../actions';
 import { Configs } from '../types';
 
-// tslint:disable no-any no-magic-numbers
 describe('Saga: configsFetchSaga', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
@@ -36,7 +32,7 @@ describe('Saga: configsFetchSaga', () => {
         mockAxios.onGet('/identity/configs').reply(200, fakeConfigs);
     };
 
-    const alertDataPayload = {
+    const error: CommonError = {
         message: ['Server error'],
         code: 500,
     };
@@ -67,7 +63,13 @@ describe('Saga: configsFetchSaga', () => {
     it('should trigger an error on configs fetch', async () => {
         const expectedActions = [
             configsFetch(),
-            configsError(alertDataPayload),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: configsError,
+                },
+            }),
         ];
 
         mockNetworkError(mockAxios);

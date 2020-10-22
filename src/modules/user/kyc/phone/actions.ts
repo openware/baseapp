@@ -24,7 +24,7 @@ export interface SendCodeData {
 
 export interface SendCodeError {
     type: typeof PHONE_SEND_CODE_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface ResendCodeFetch {
@@ -40,7 +40,7 @@ export interface ResendCodeData {
 
 export interface ResendCodeError {
     type: typeof PHONE_RESEND_CODE_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface VerifyPhoneFetch {
@@ -60,7 +60,7 @@ export interface VerifyPhoneData {
 
 export interface VerifyPhoneError {
     type: typeof PHONE_VERIFY_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export type PhoneAction = SendCodeFetch
@@ -82,9 +82,9 @@ export const sendCodeData = (): SendCodeData => ({
     type: PHONE_SEND_CODE_DATA,
 });
 
-export const sendCodeError = (payload: SendCodeError['payload']): SendCodeError => ({
+export const sendCodeError = (error: CommonError): SendCodeError => ({
     type: PHONE_SEND_CODE_ERROR,
-    payload,
+    error,
 });
 
 export const resendCode = (payload: ResendCodeFetch['payload']): ResendCodeFetch => ({
@@ -96,9 +96,9 @@ export const resendCodeData = (): ResendCodeData => ({
     type: PHONE_RESEND_CODE_DATA,
 });
 
-export const resendCodeError = (payload: ResendCodeError['payload']): ResendCodeError => ({
+export const resendCodeError = (error: CommonError): ResendCodeError => ({
     type: PHONE_RESEND_CODE_ERROR,
-    payload,
+    error,
 });
 
 export const verifyPhone = (payload: VerifyPhoneFetch['payload']): VerifyPhoneFetch => ({
@@ -111,7 +111,7 @@ export const verifyPhoneData = (payload: VerifyPhoneData['payload']): VerifyPhon
     payload,
 });
 
-export const verifyPhoneError = (payload: VerifyPhoneError['payload']): VerifyPhoneError => ({
+export const verifyPhoneError = (error: CommonError): VerifyPhoneError => ({
     type: PHONE_VERIFY_ERROR,
-    payload,
+    error,
 });

@@ -1,13 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import {
-    withdrawLimitData,
-    withdrawLimitError,
-    withdrawLimitFetch,
-} from '../actions';
+import { CommonError } from '../../../types';
+import { withdrawLimitData, withdrawLimitError, withdrawLimitFetch } from '../actions';
 
 describe('Module: WithdrawLimit', () => {
     let store: MockStoreEnhanced;
@@ -25,7 +22,7 @@ describe('Module: WithdrawLimit', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -41,8 +38,21 @@ describe('Module: WithdrawLimit', () => {
         mockAxios.onGet('/private/withdraws').reply(200, fakeData);
     };
 
-    const expectedActionsFetch = [withdrawLimitFetch(), withdrawLimitData(fakeData)];
-    const expectedActionsError = [withdrawLimitFetch(), withdrawLimitError(fakeError)];
+    const expectedActionsFetch = [
+        withdrawLimitFetch(),
+        withdrawLimitData(fakeData),
+    ];
+
+    const expectedActionsError = [
+        withdrawLimitFetch(),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: withdrawLimitError,
+            },
+        }),
+    ];
 
     it('should fetch wallets in success flow', async () => {
         mockWithdrawLimit();

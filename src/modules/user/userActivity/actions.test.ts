@@ -1,9 +1,5 @@
 import * as actions from './actions';
-import {
-    USER_ACTIVITY_DATA,
-    USER_ACTIVITY_ERROR,
-    USER_ACTIVITY_FETCH,
-} from './constants';
+import { USER_ACTIVITY_DATA, USER_ACTIVITY_ERROR, USER_ACTIVITY_FETCH } from './constants';
 
 describe('User Activity actions', () => {
     it('should check getUserActivity action creator', () => {
@@ -19,8 +15,8 @@ describe('User Activity actions', () => {
     });
 
     it('should check userActivityError action creator', () => {
-        const payload = { code: 500, message: ['Server error'] };
-        const expectedAction = { type: USER_ACTIVITY_ERROR, payload };
-        expect(actions.userActivityError(payload)).toEqual(expectedAction);
+        const error: CommonError = { code: 500, message: ['Server error'] };
+        const expectedAction = { type: USER_ACTIVITY_ERROR, error };
+        expect(actions.userActivityError(error)).toEqual(expectedAction);
     });
 });

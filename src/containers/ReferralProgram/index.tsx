@@ -4,9 +4,9 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { IntlProps } from '../../';
 import { CopyableTextField } from '../../components';
 import { copy } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     alertPush,
     RootState,

@@ -2,12 +2,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { alertPush, rootSaga } from '../../../../modules/index';
-import {
-    ApiKeyDataInterface,
-    apiKeysData,
-    apiKeysFetch,
-} from '../actions';
+import { rootSaga, sendError } from '../../../../modules/index';
+import { CommonError } from '../../../types';
+import { ApiKeyDataInterface, apiKeysData, apiKeysError, apiKeysFetch } from '../actions';
 
 describe('api keys saga', () => {
     let store: MockStoreEnhanced;
@@ -54,10 +51,9 @@ describe('api keys saga', () => {
         nextPageExists: false,
     };
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
-        type: 'error',
     };
 
     const mockApiKeys = () => {
@@ -71,7 +67,13 @@ describe('api keys saga', () => {
 
     const expectedApiKeysFetchError = [
         apiKeysFetch(fakeFetchPayloadFirstPage),
-        alertPush(fakeError),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: apiKeysError,
+            },
+        }),
     ];
 
     it('should fetch api keys', async () => {
@@ -106,4 +108,3 @@ describe('api keys saga', () => {
         return promise;
     });
 });
-

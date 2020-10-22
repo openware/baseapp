@@ -1,21 +1,23 @@
 import { call, put } from 'redux-saga/effects';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../alert';
-import {
-    customizationData,
-    customizationError,
-} from '../actions';
+import { customizationData, customizationError, CustomizationFetch } from '../actions';
 
 const customizationOptions: RequestOptions = {
     apiVersion: 'applogic',
 };
 
-export function* customizationFetchSaga() {
+export function* customizationFetchSaga(action: CustomizationFetch) {
     try {
         const customization = yield call(API.get(customizationOptions), '/customization');
         yield put(customizationData(customization));
     } catch (error) {
-        yield put(customizationError(error));
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: customizationError,
+            },
+        }));
     }
 }

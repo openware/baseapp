@@ -1,9 +1,9 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { SketchPicker } from 'react-color';
+import { handleConvertColorCode } from '../';
 import { ArrowIcon } from '../../../../assets/images/customization/ArrowIcon';
 import { ThemeColorTitleInterface } from '../../../../themes';
-import { handleConvertColorCode } from '../index';
 
 interface OwnProps {
     handleCloseColorSettings: () => void;

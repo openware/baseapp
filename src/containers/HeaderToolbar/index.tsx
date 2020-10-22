@@ -2,8 +2,8 @@ import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { IntlProps } from '../../';
 import { Decimal } from '../../components/Decimal';
-import { IntlProps } from '../../index';
 import {
     Market,
     RootState,

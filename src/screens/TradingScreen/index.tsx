@@ -3,6 +3,7 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { GridChildInterface, GridItem } from '../../components/GridItem';
@@ -17,7 +18,6 @@ import {
     TradingChart,
 } from '../../containers';
 import { getUrlPart, setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     RootState,
     selectCurrentMarket,

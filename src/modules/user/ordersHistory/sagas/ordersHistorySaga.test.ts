@@ -1,9 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { alertPush, rootSaga } from '../../../index';
-import { OrderCommon } from '../../../types';
+import { CommonError, OrderCommon } from '../../../types';
 import { userOrdersHistoryData, userOrdersHistoryError, userOrdersHistoryFetch } from '../actions';
 
 describe('Orders History', () => {
@@ -21,12 +21,6 @@ describe('Orders History', () => {
     afterEach(() => {
         mockAxios.reset();
     });
-
-    const fakeError = {
-        code: 500,
-        message: ['Server error'],
-        type: 'error',
-    };
 
     const fakeHistory: OrderCommon[] = [
         {
@@ -68,6 +62,11 @@ describe('Orders History', () => {
         nextPageExists: false,
     };
 
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     const mockOrdersHistory = () => {
         mockAxios.onGet(`/market/orders?page=1&limit=25`).reply(200, fakeHistory);
     };
@@ -76,10 +75,16 @@ describe('Orders History', () => {
         userOrdersHistoryFetch(fakeFetchPayloadFirstPage),
         userOrdersHistoryData(fakeSuccessPayloadFirstPage),
     ];
+
     const expectedActionsError = [
         userOrdersHistoryFetch(fakeFetchPayloadFirstPage),
-        userOrdersHistoryError(),
-        alertPush(fakeError),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: userOrdersHistoryError,
+            },
+        }),
     ];
 
     it('should fetch currency deposit history for 1 page in success flow', async () => {

@@ -1,14 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import {
-    toggle2faData,
-    toggle2faError,
-    toggle2faFetch,
-    toggleUser2fa,
-} from '../actions';
+import { CommonError } from '../../../types';
+import { toggle2faData, toggle2faError, toggle2faFetch, toggleUser2fa } from '../actions';
 
 describe('Module: Toggle 2fa', () => {
     let store: MockStoreEnhanced;
@@ -26,7 +22,7 @@ describe('Module: Toggle 2fa', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -40,8 +36,22 @@ describe('Module: Toggle 2fa', () => {
         mockAxios.onPost('/resource/otp/enable').reply(200);
     };
 
-    const expectedActionsFetch = [toggle2faFetch(fakeCredentials), toggle2faData(), toggleUser2fa()];
-    const expectedActionsError = [toggle2faFetch(fakeCredentials), toggle2faError(fakeError)];
+    const expectedActionsFetch = [
+        toggle2faFetch(fakeCredentials),
+        toggle2faData(),
+        toggleUser2fa(),
+    ];
+
+    const expectedActionsError = [
+        toggle2faFetch(fakeCredentials),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: toggle2faError,
+            },
+        }),
+    ];
 
     it('should change password in success flow', async () => {
         mockToggle2fa();

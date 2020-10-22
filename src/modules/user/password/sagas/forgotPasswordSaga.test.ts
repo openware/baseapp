@@ -1,10 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { CommonError } from '../../../types';
 import { forgotPassword, forgotPasswordError, forgotPasswordSuccess } from '../actions';
-
 
 describe('FORGOT PASSWORD SAGA', () => {
     let store: MockStoreEnhanced;
@@ -22,12 +22,12 @@ describe('FORGOT PASSWORD SAGA', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const fakeError: CommonError = {
         code: 422,
         message: ['User doesn\'t exist or has already been activated'],
     };
 
-    const fakeNetworkError = {
+    const fakeNetworkError: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -47,8 +47,26 @@ describe('FORGOT PASSWORD SAGA', () => {
     };
 
     const expectedActionsFetch = [forgotPassword(fakeRequest), forgotPasswordSuccess()];
-    const expectedActionsNetworkError = [forgotPassword(fakeRequest), forgotPasswordError(fakeNetworkError)];
-    const expectedActionsError = [forgotPassword(fakeRequest), forgotPasswordError(fakeError)];
+    const expectedActionsNetworkError = [
+        forgotPassword(fakeRequest),
+        sendError({
+            error: fakeNetworkError,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: forgotPasswordError,
+            },
+        }),
+    ];
+    const expectedActionsError = [
+        forgotPassword(fakeRequest),
+        sendError({
+            error: fakeError,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: forgotPasswordError,
+            },
+        }),
+    ];
 
     it('should request forgotten password in success flow', async () => {
         mockForgotPassword();

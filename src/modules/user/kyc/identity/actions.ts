@@ -23,7 +23,7 @@ export interface SendIdentityData {
 
 export interface SendIdentityError {
     type: typeof SEND_IDENTITY_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface EditIdentityFetch {
@@ -40,7 +40,7 @@ export interface EditIdentityData {
 
 export interface EditIdentityError {
     type: typeof EDIT_IDENTITY_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export type IdentityAction = SendIdentityFetch
@@ -60,9 +60,9 @@ export const sendIdentityData = (payload: SendIdentityData['payload']): SendIden
     payload,
 });
 
-export const sendIdentityError = (payload: SendIdentityError['payload']): SendIdentityError => ({
+export const sendIdentityError = (error: CommonError): SendIdentityError => ({
     type: SEND_IDENTITY_ERROR,
-    payload,
+    error,
 });
 
 export const editIdentity = (payload: EditIdentityFetch['payload']): EditIdentityFetch => ({
@@ -75,7 +75,7 @@ export const editIdentityData = (payload: EditIdentityData['payload']): EditIden
     payload,
 });
 
-export const editIdentityError = (payload: EditIdentityError['payload']): EditIdentityError => ({
+export const editIdentityError = (error: CommonError): EditIdentityError => ({
     type: EDIT_IDENTITY_ERROR,
-    payload,
+    error,
 });

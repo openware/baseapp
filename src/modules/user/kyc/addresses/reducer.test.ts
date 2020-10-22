@@ -1,8 +1,5 @@
 import * as actions from './actions';
-import {
-    addressesReducer,
-    initialAddressesState,
-} from './reducer';
+import { addressesReducer, initialAddressesState } from './reducer';
 
 describe('Addresses reducer', () => {
     const payloadFormData = new FormData();
@@ -11,7 +8,7 @@ describe('Addresses reducer', () => {
         message: 'Success',
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -21,7 +18,10 @@ describe('Addresses reducer', () => {
             ...initialAddressesState,
             loading: true,
         };
-        expect(addressesReducer(initialAddressesState, actions.sendAddresses(payloadFormData))).toEqual(expectedState);
+        expect(addressesReducer(
+            initialAddressesState,
+            actions.sendAddresses(payloadFormData),
+        )).toEqual(expectedState);
     });
 
     it('should handle SEND_ADDRESSES_DATA', () => {
@@ -29,7 +29,10 @@ describe('Addresses reducer', () => {
             ...initialAddressesState,
             success: confirmAddressesResponse.message,
         };
-        expect(addressesReducer(initialAddressesState, actions.sendAddressesData(confirmAddressesResponse))).toEqual(expectedState);
+        expect(addressesReducer(
+            initialAddressesState,
+            actions.sendAddressesData(confirmAddressesResponse),
+        )).toEqual(expectedState);
     });
 
     it('should handle SEND_ADDRESSES_ERROR', () => {
@@ -37,6 +40,9 @@ describe('Addresses reducer', () => {
             ...initialAddressesState,
             error: error,
         };
-        expect(addressesReducer(initialAddressesState, actions.sendAddressesError(error))).toEqual(expectedState);
+        expect(addressesReducer(
+            initialAddressesState,
+            actions.sendAddressesError(error),
+        )).toEqual(expectedState);
     });
 });

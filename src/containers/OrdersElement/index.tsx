@@ -3,11 +3,11 @@ import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate, setTradeColor } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Market,
     ordersHistoryCancelFetch,

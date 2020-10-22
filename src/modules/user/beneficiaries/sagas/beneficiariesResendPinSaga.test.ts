@@ -2,12 +2,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { rootSaga } from '../../../../modules/index';
-import {
-    beneficiariesResendPin,
-    beneficiariesResendPinData,
-    beneficiariesResendPinError,
-} from '../actions';
+import { rootSaga, sendError } from '../../../../modules/index';
+import { CommonError } from '../../../types';
+import { beneficiariesResendPin, beneficiariesResendPinData, beneficiariesResendPinError } from '../actions';
 
 const debug = false;
 
@@ -31,58 +28,61 @@ describe('Beneficiaries resend pin', () => {
         id: 1,
     };
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
 
+    const mockBeneficiariesResendPin = () => {
+        mockAxios.onPatch(`/account/beneficiaries/${fakePayload.id}/resend_pin`).reply(204);
+    };
 
-    describe('Resend pin beneficiaries data', () => {
-        const mockBeneficiariesResendPin = () => {
-            mockAxios.onPatch(`/account/beneficiaries/${fakePayload.id}/resend_pin`).reply(204);
-        };
+    const expectedBeneficiariesResendPinSuccess = [
+        beneficiariesResendPin(fakePayload),
+        beneficiariesResendPinData(fakePayload),
+    ];
 
-        const expectedBeneficiariesResendPinSuccess = [
-            beneficiariesResendPin(fakePayload),
-            beneficiariesResendPinData(fakePayload),
-        ];
+    const expectedBeneficiariesResendPinError = [
+        beneficiariesResendPin(fakePayload),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: beneficiariesResendPinError,
+            },
+        }),
+    ];
 
-        const expectedBeneficiariesResendPinError = [
-            beneficiariesResendPin(fakePayload),
-            beneficiariesResendPinError(fakeError),
-        ];
+    it('should resend pin beneficiaries success flow', async () => {
+        mockBeneficiariesResendPin();
 
-        it('should resend pin beneficiaries success flow', async () => {
-            mockBeneficiariesResendPin();
-
-            const promise = new Promise(resolve => {
-                store.subscribe(() => {
-                    const actions = store.getActions();
-                    if (actions.length === expectedBeneficiariesResendPinSuccess.length) {
-                        expect(actions).toEqual(expectedBeneficiariesResendPinSuccess);
-                        resolve();
-                    }
-                });
+        const promise = new Promise(resolve => {
+            store.subscribe(() => {
+                const actions = store.getActions();
+                if (actions.length === expectedBeneficiariesResendPinSuccess.length) {
+                    expect(actions).toEqual(expectedBeneficiariesResendPinSuccess);
+                    resolve();
+                }
             });
-            store.dispatch(beneficiariesResendPin(fakePayload));
-
-            return promise;
         });
+        store.dispatch(beneficiariesResendPin(fakePayload));
 
-        it('should handle resend pin beneficiaries error', async () => {
-            mockNetworkError(mockAxios);
-            const promise = new Promise(resolve => {
-                store.subscribe(() => {
-                    const actions = store.getActions();
-                    if (actions.length === expectedBeneficiariesResendPinError.length) {
-                        expect(actions).toEqual(expectedBeneficiariesResendPinError);
-                        resolve();
-                    }
-                });
+        return promise;
+    });
+
+    it('should handle resend pin beneficiaries error', async () => {
+        mockNetworkError(mockAxios);
+        const promise = new Promise(resolve => {
+            store.subscribe(() => {
+                const actions = store.getActions();
+                if (actions.length === expectedBeneficiariesResendPinError.length) {
+                    expect(actions).toEqual(expectedBeneficiariesResendPinError);
+                    resolve();
+                }
             });
-            store.dispatch(beneficiariesResendPin(fakePayload));
-
-            return promise;
         });
+        store.dispatch(beneficiariesResendPin(fakePayload));
+
+        return promise;
     });
 });

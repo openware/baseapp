@@ -1,10 +1,6 @@
 import { CustomizationDataInterface } from '../../public/customization';
 import { CommonError } from '../../types';
-import {
-    CUSTOMIZATION_UPDATE,
-    CUSTOMIZATION_UPDATE_DATA,
-    CUSTOMIZATION_UPDATE_ERROR,
-} from './constants';
+import { CUSTOMIZATION_UPDATE, CUSTOMIZATION_UPDATE_DATA, CUSTOMIZATION_UPDATE_ERROR } from './constants';
 
 export interface CustomizationUpdate {
     type: typeof CUSTOMIZATION_UPDATE;

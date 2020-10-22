@@ -1,9 +1,5 @@
 import { CommonError } from '../../../types';
-import {
-    GET_LABEL_DATA,
-    GET_LABEL_ERROR,
-    GET_LABEL_FETCH,
-} from './constants';
+import { GET_LABEL_DATA, GET_LABEL_ERROR, GET_LABEL_FETCH } from './constants';
 
 export interface Label {
     key: string;
@@ -24,7 +20,7 @@ export interface LabelData {
 
 export interface LabelError {
     type: typeof GET_LABEL_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export type LabelAction =
@@ -41,7 +37,7 @@ export const labelData = (payload: LabelData['payload']): LabelData => ({
     payload,
 });
 
-export const labelError = (payload: LabelError['payload']): LabelError => ({
+export const labelError = (error: CommonError): LabelError => ({
     type: GET_LABEL_ERROR,
-    payload,
+    error,
 });

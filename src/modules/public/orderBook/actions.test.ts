@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import { Market } from '../markets';
 import * as actions from './actions';
 import {
@@ -26,7 +27,7 @@ describe('Orderbook/MarketDepth actions', () => {
         price_precision: 4,
     };
 
-    const fakeError = {
+    const fakeError: CommonError = {
         code: 500,
         message: ['Server error'],
     };

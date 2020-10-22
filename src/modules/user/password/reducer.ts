@@ -37,7 +37,7 @@ export const passwordReducer = (state = initialState, action: PasswordAction) =>
         case PASSWORD_FORGOT_ERROR:
             return {
                 ...state,
-                forgotPasswordError: action.payload,
+                forgotPasswordError: action.error,
                 loading: false,
             };
         case PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH:

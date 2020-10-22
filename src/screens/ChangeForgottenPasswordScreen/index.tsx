@@ -8,9 +8,9 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { ChangePassword } from '../../components';
 import { setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     changeForgotPasswordFetch,
     changeLanguage,

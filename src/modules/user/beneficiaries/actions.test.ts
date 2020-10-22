@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import {
     BENEFICIARIES_ACTIVATE,
@@ -49,7 +50,7 @@ describe('Beneficiaries actions', () => {
         },
     ];
 
-    const fakeError = {
+    const fakeError: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -80,7 +81,7 @@ describe('Beneficiaries actions', () => {
     });
 
     it('should check beneficiariesActivateError action creator', () => {
-        const expectedAction = { type: BENEFICIARIES_ACTIVATE_ERROR, payload: fakeError };
+        const expectedAction = { type: BENEFICIARIES_ACTIVATE_ERROR, error: fakeError };
         expect(actions.beneficiariesActivateError(fakeError)).toEqual(expectedAction);
     });
 
@@ -113,7 +114,7 @@ describe('Beneficiaries actions', () => {
     });
 
     it('should check beneficiariesCreateError action creator', () => {
-        const expectedAction = { type: BENEFICIARIES_CREATE_ERROR, payload: fakeError };
+        const expectedAction = { type: BENEFICIARIES_CREATE_ERROR, error: fakeError };
         expect(actions.beneficiariesCreateError(fakeError)).toEqual(expectedAction);
     });
 
@@ -136,7 +137,7 @@ describe('Beneficiaries actions', () => {
     });
 
     it('should check beneficiariesDeleteError action creator', () => {
-        const expectedAction = { type: BENEFICIARIES_DELETE_ERROR, payload: fakeError };
+        const expectedAction = { type: BENEFICIARIES_DELETE_ERROR, error: fakeError };
         expect(actions.beneficiariesDeleteError(fakeError)).toEqual(expectedAction);
     });
 
@@ -166,7 +167,7 @@ describe('Beneficiaries actions', () => {
     });
 
     it('should check beneficiariesError action creator', () => {
-        const expectedAction = { type: BENEFICIARIES_ERROR, payload: fakeError };
+        const expectedAction = { type: BENEFICIARIES_ERROR, error: fakeError };
         expect(actions.beneficiariesError(fakeError)).toEqual(expectedAction);
     });
 
@@ -189,7 +190,7 @@ describe('Beneficiaries actions', () => {
     });
 
     it('should check beneficiariesResendPinError action creator', () => {
-        const expectedAction = { type: BENEFICIARIES_RESEND_PIN_ERROR, payload: fakeError };
+        const expectedAction = { type: BENEFICIARIES_RESEND_PIN_ERROR, error: fakeError };
         expect(actions.beneficiariesResendPinError(fakeError)).toEqual(expectedAction);
     });
 

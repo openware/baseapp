@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { IntlProps } from '../../index';
+import { IntlProps } from '../../';
 import { rootReducer } from '../../modules';
 import { ChangeForgottenPasswordScreen } from '../ChangeForgottenPasswordScreen';
 

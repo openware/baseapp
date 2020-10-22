@@ -1,4 +1,3 @@
-// tslint:disable-next-line
 import { put, select } from 'redux-saga/effects';
 import { defaultStorageLimit } from '../../../../api';
 import { sliceArray } from '../../../../helpers';
