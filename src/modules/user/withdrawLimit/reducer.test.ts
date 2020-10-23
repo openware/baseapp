@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { initialWithdrawLimitState, withdrawLimitReducer } from './reducer';
 import { WithdrawLimit } from './types';

@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { configsReducer, initialConfigsState } from './reducer';
 import { Configs } from './types';

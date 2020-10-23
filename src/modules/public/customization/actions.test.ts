@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { CUSTOMIZATION_DATA, CUSTOMIZATION_ERROR, CUSTOMIZATION_FETCH } from './constants';
 import { CustomizationDataInterface } from './types';

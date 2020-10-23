@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { initialWalletsState, walletsReducer } from './reducer';
 import { Wallet } from './types';

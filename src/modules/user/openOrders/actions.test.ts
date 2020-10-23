@@ -1,8 +1,13 @@
-import { OrderCommon, OrderEvent } from '../../types';
+import { CommonError, OrderCommon, OrderEvent } from '../../types';
 import * as actions from './actions';
 import { OPEN_ORDERS_APPEND, OPEN_ORDERS_CANCEL_DATA, OPEN_ORDERS_CANCEL_ERROR, OPEN_ORDERS_CANCEL_FETCH, OPEN_ORDERS_DATA, OPEN_ORDERS_ERROR, OPEN_ORDERS_FETCH, OPEN_ORDERS_RESET, OPEN_ORDERS_UPDATE } from './constants';
 
 describe('Open Orders actions', () => {
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     it('should check userOpenOrdersFetch action creator', () => {
         const payload = {
             market: {
@@ -28,8 +33,8 @@ describe('Open Orders actions', () => {
     });
 
     it('should check userOpenOrdersError action creator', () => {
-        const expectedAction = { type: OPEN_ORDERS_ERROR };
-        expect(actions.userOpenOrdersError()).toEqual(expectedAction);
+        const expectedAction = { type: OPEN_ORDERS_ERROR, error };
+        expect(actions.userOpenOrdersError(error)).toEqual(expectedAction);
     });
 
     it('should check userOpenOrdersAppend action creator', () => {
@@ -119,7 +124,7 @@ describe('Open Orders actions', () => {
     });
 
     it('should check openOrdersCancelError action creator', () => {
-        const expectedAction = { type: OPEN_ORDERS_CANCEL_ERROR };
-        expect(actions.openOrdersCancelError()).toEqual(expectedAction);
+        const expectedAction = { type: OPEN_ORDERS_CANCEL_ERROR, error };
+        expect(actions.openOrdersCancelError(error)).toEqual(expectedAction);
     });
 });

@@ -1,5 +1,6 @@
 import { Cryptobase, defaultStorageLimit } from '../../../api';
 import { getTimezone, setTimezone } from '../../../helpers/timezone';
+import { CommonError } from '../../types';
 import { PublicTrade } from '../../user/history';
 import { Market } from '../markets';
 import { recentTradesData, recentTradesError, recentTradesFetch, recentTradesPush } from './actions';

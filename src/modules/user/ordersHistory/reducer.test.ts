@@ -1,4 +1,4 @@
-import { OrderCommon, OrderEvent } from '../../types';
+import { CommonError, OrderCommon, OrderEvent } from '../../types';
 import { convertOrderEvent } from '../openOrders/helpers';
 import * as actions from './actions';
 import { ORDERS_TEST_HISTORY_STATE } from './constants';
@@ -6,6 +6,11 @@ import { insertOrUpdate } from './helpers';
 import { initialOrdersHistoryState, ordersHistoryReducer, OrdersHistoryState } from './reducer';
 
 describe('Orders History reducer', () => {
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     it('should return initial state', () => {
         expect(ordersHistoryReducer(undefined, { type: ORDERS_TEST_HISTORY_STATE })).toEqual(initialOrdersHistoryState);
     });
@@ -58,7 +63,7 @@ describe('Orders History reducer', () => {
     it('should handle USER_ORDERS_HISTORY_ERROR', () => {
         const initialState = { ...initialOrdersHistoryState, fetching: true };
         const expectedState = { ...initialOrdersHistoryState, list: [], pageIndex: 0, fetching: false };
-        expect(ordersHistoryReducer(initialState, actions.userOrdersHistoryError())).toEqual(expectedState);
+        expect(ordersHistoryReducer(initialState, actions.userOrdersHistoryError(error))).toEqual(expectedState);
     });
 
     it('should handle ORDERS_CANCEL_ALL_FETCH', () => {
@@ -76,7 +81,7 @@ describe('Orders History reducer', () => {
     it('should handle ORDERS_CANCEL_ALL_ERROR', () => {
         const initialState = { ...initialOrdersHistoryState, cancelAllFetching: true };
         const expectedState = { ...initialOrdersHistoryState, cancelAllError: true, cancelAllFetching: false };
-        expect(ordersHistoryReducer(initialState, actions.ordersCancelAllError())).toEqual(expectedState);
+        expect(ordersHistoryReducer(initialState, actions.ordersCancelAllError(error))).toEqual(expectedState);
     });
 
     it('should handle ORDERS_HISTORY_CANCEL_FETCH', () => {
@@ -95,7 +100,7 @@ describe('Orders History reducer', () => {
     it('should handle ORDERS_HISTORY_CANCEL_ERROR', () => {
         const initialState = { ...initialOrdersHistoryState, cancelFetching: true };
         const expectedState = { ...initialOrdersHistoryState, cancelError: true, cancelFetching: false };
-        expect(ordersHistoryReducer(initialState, actions.ordersHistoryCancelError())).toEqual(expectedState);
+        expect(ordersHistoryReducer(initialState, actions.ordersHistoryCancelError(error))).toEqual(expectedState);
     });
 
     it('should handle ORDERS_HISTORY_RESET', () => {

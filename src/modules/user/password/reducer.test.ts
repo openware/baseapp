@@ -1,5 +1,5 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
-import { PASSWORD_TEST_FORGOT_PASSWORD } from './constants';
 import { passwordReducer } from './reducer';
 
 describe('Forgot password reducer', () => {
@@ -15,10 +15,6 @@ describe('Forgot password reducer', () => {
         code: 401,
         message: ['Invalid Session'],
     };
-
-    it('should return initial state', () => {
-        expect(passwordReducer(undefined, { type: PASSWORD_TEST_FORGOT_PASSWORD })).toEqual(initialState);
-    });
 
     it('should handle forgot password fetch', () => {
         const expectedState = {

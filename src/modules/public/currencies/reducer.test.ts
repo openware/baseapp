@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { currenciesReducer, CurrenciesState, initialCurrenciesState } from './reducer';
 import { Currency } from './types';
@@ -47,6 +48,11 @@ describe('Currencies reducer', () => {
         },
     ];
 
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     it('should handle CURRENCIES_FETCH', () => {
         const expectedState: CurrenciesState = {
             ...initialCurrenciesState,
@@ -70,6 +76,6 @@ describe('Currencies reducer', () => {
             ...initialCurrenciesState,
             loading: false,
         };
-        expect(currenciesReducer(initialCurrenciesState, actions.currenciesError())).toEqual(expectedState);
+        expect(currenciesReducer(initialCurrenciesState, actions.currenciesError(error))).toEqual(expectedState);
     });
 });

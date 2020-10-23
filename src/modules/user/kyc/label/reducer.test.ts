@@ -1,3 +1,4 @@
+import { CommonError } from '../../../types';
 import * as actions from './actions';
 import { initialLabelState, labelReducer } from './reducer';
 

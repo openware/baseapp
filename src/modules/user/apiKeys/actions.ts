@@ -1,4 +1,4 @@
-import { CommonError } from '../../../modules/types';
+import { CommonError } from '../../types';
 import {
     API_KEY_CREATE,
     API_KEY_CREATE_FETCH,

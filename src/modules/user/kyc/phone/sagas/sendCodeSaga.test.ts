@@ -4,7 +4,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { rootSaga, sendError } from '../../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../../helpers/jest';
 import { CommonError } from '../../../../types';
-import { resendCode, sendCode, sendCodeData, sendCodeError } from '../actions';
+import { sendCode, sendCodeData, sendCodeError } from '../actions';
 
 describe('Module: phone', () => {
     let store: MockStoreEnhanced;
