@@ -6,7 +6,7 @@ import {
     UserRejectedRequestError as UserRejectedRequestErrorInjected,
   } from '@web3-react/injected-connector';
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+
 import { useDispatch } from 'react-redux';
 import { MetaMaskLogo } from '../../assets/images/MetaMaskLogo';
 import { Web3ProviderWrapper } from '../../helpers';
@@ -32,29 +32,41 @@ const getErrorMessage = (error: Error): string => {
     }
 };
 
-export const injected = new InjectedConnector({ supportedChainIds: [1] });
+export const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] });
 
 export const MetaMaskButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
     const {
         account,
         activate,
+        connector,
         error,
     } = useWeb3ReactCore<Web3Provider>();
+    const [activatingConnector, setActivatingConnector] = React.useState<any>();
     const dispatch = useDispatch();
-    const { formatMessage } = useIntl();
 
     const handleConnectWallet = React.useCallback(() => {
         if (account) {
-            dispatch(alertPush({ message: [formatMessage({ id: 'metamask.success.connected'})], type: 'success'}));
+            dispatch(alertPush({ message: ['metamask.success.connected'], type: 'success'}));
         } else {
+            setActivatingConnector(injected);
             // tslint:disable-next-line: no-floating-promises
             activate(injected);
         }
     }, [account]);
 
     React.useEffect(() => {
+        if (activatingConnector &&
+            activatingConnector === connector &&
+            account
+        ) {
+            dispatch(alertPush({ message: ['metamask.success.connected'], type: 'success'}));
+            setActivatingConnector(undefined);
+        }
+    }, [activatingConnector, connector, account]);
+
+    React.useEffect(() => {
         if (!!error) {
-            dispatch(alertPush({ message: [formatMessage({ id: getErrorMessage(error)})], type: 'error'}));
+            dispatch(alertPush({ message: [getErrorMessage(error)], type: 'error'}));
         }
     }, [!!error]);
 

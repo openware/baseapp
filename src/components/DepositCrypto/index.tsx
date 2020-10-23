@@ -1,5 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
+import { selectMobileDeviceState } from '../../modules';
 import { CopyableTextField } from '../CopyableTextField';
 import { MetaMaskButton } from '../MetaMaskButton';
 import { QRCode } from '../QRCode';
@@ -64,6 +66,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         handleOnCopy,
         text,
     } = props;
+    const isMobileDevice = useSelector(selectMobileDeviceState);
     const size = dimensions || QR_SIZE;
     const onCopy = !disabled ? handleOnCopy : undefined;
     const className = classnames({'cr-copyable-text-field__disabled': data === ''});
@@ -76,6 +79,9 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
                     {data ? <div className="d-none d-md-block qr-code-wrapper"><QRCode dimensions={size} data={data}/></div> : null}
                 </div>
                 <div className="cr-deposit-crypto__block">
+                    {currency === 'eth' && !isMobileDevice ? (
+                        <MetaMaskButton depositAddress={data} />
+                    ) : null}
                     <form className="cr-deposit-crypto__copyable">
                         <fieldset className="cr-copyable-text-field" onClick={onCopy}>
                             <CopyableTextField
@@ -88,9 +94,6 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
                             />
                         </fieldset>
                     </form>
-                    {currency === 'eth' ? (
-                        <MetaMaskButton depositAddress={data} />
-                    ) : null}
                 </div>
             </div>
         </div>
