@@ -21,10 +21,7 @@
     "cyclomatic-complexity": false,
     "no-mixed-operators": false,
     "no-unexpected-multiline": false,
-    "arrow-parens": [
-      true,
-      "ban-single-arg-parens"
-    ],
+    "arrow-parens": false,
     "interface-name": [
       true,
       "never-prefix"
