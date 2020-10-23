@@ -6,7 +6,7 @@ import { rootSaga, sendError } from '../../../../modules/index';
 import { CommonError } from '../../../types';
 import { ApiKeyDataInterface, apiKeysData, apiKeysError, apiKeysFetch } from '../actions';
 
-describe('api keys saga', () => {
+describe('API - Keys saga', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
@@ -27,7 +27,6 @@ describe('api keys saga', () => {
             algorithm: 'HS256',
             created_at: '2019-02-14T15:56:57Z',
             kid: '5c3933e8c8f97071',
-            scope: Array,
             state: 'active',
             updated_at: '2019-02-14T15:56:57Z',
         },
@@ -35,7 +34,6 @@ describe('api keys saga', () => {
             algorithm: 'HS256',
             created_at: '2019-02-14T15:58:06Z',
             kid: 'c6da7aa20353e449',
-            scope: Array,
             state: 'active',
             updated_at: '2019-02-14T15:58:06Z',
         },
@@ -45,6 +43,7 @@ describe('api keys saga', () => {
         pageIndex: 0,
         limit: 25,
     };
+
     const fakeSuccessPayloadFirstPage = {
         apiKeys: fakeApiKeys,
         pageIndex: 0,
