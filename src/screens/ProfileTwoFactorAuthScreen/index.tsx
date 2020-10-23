@@ -225,7 +225,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
     };
 
     private get2faAction = () => {
-        const routingState = this.props.history.location.state;
+        const routingState = this.props.history.location.state as any;
 
         return routingState ? routingState.enable2fa : false;
     };

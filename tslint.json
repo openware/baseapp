@@ -168,10 +168,7 @@
     "use-isnan": true,
     "deprecation": true,
     "eofline": true,
-    "linebreak-style": [
-      true,
-      "LF"
-    ],
+    "linebreak-style": false,
     "max-classes-per-file": [
       true,
       1
