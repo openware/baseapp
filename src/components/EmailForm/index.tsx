@@ -136,7 +136,7 @@ const EmailForm = React.memo((props: EmailFormProps) => {
                             block={true}
                             type="button"
                             disabled={isButtonDisabled()}
-                            onClick={(e) => handleClick(e as any)}
+                            onClick={e => handleClick(e as any)}
                             size="lg"
                             variant="primary">
                             {isLoading ? 'Loading...' : buttonLabel ? buttonLabel : 'Send'}
