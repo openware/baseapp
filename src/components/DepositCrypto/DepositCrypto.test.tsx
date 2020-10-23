@@ -1,8 +1,12 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { rootReducer } from '../../modules';
 import { CopyableTextField } from '../CopyableTextField';
 import { DepositCrypto } from './';
 
+const store = createStore(rootReducer);
 
 describe('DepositCrypto', () => {
     let wrapper;
@@ -10,33 +14,18 @@ describe('DepositCrypto', () => {
 
     beforeEach(() => {
         wrapper = shallow(
-            <DepositCrypto
-                currency="eth"
-                text={'text123'}
-                data={'123123'}
-                dimensions={118}
-                error={'error123'}
-                disabled={false}
-                handleOnCopy={handleOnCopy}
-            />,
+            <Provider store={store}>
+                <DepositCrypto
+                    currency="eth"
+                    text={'text123'}
+                    data={'123123'}
+                    dimensions={118}
+                    error={'error123'}
+                    disabled={false}
+                    handleOnCopy={handleOnCopy}
+                />,
+            </Provider>,
         );
-    });
-
-    it('should handle click if disabled', () => {
-        wrapper.setProps({ disabled: true });
-        wrapper.find('.cr-copyable-text-field').simulate('click');
-        expect(handleOnCopy).toHaveBeenCalledTimes(0);
-    });
-
-    it('should handle click if not disabled', () => {
-        wrapper.find('.cr-copyable-text-field').simulate('click');
-        expect(handleOnCopy).toHaveBeenCalled();
-        expect(handleOnCopy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should contains text on the left side', () => {
-        const text = wrapper.find('.cr-deposit-info').text();
-        expect(text).toContain('text123');
     });
 
     it('should contains QRCode', () => {
