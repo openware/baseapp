@@ -1,3 +1,4 @@
+import { ru as mobileTranslationsRu } from '../../mobile/translations';
 import { LangType } from '../../translations';
 import { nationalitiesNames } from '../../translations/nationalities';
 
@@ -882,4 +883,5 @@ export const ru: LangType = {
     'password.strength.tip.digit': 'At least One digit',
 
     ...nationalitiesNames,
+    ...mobileTranslationsRu,
 };
