@@ -1,8 +1,5 @@
 import * as actions from './actions';
-import {
-    initialUserActivityState,
-    userActivityReducer,
-} from './reducer';
+import { initialUserActivityState, userActivityReducer } from './reducer';
 
 describe('UserActivity reducer', () => {
     const userActivityData = [
@@ -30,7 +27,7 @@ describe('UserActivity reducer', () => {
         },
     ];
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

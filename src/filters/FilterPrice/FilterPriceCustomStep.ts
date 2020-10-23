@@ -1,5 +1,5 @@
 import { MarketFilterCustomStep } from '../../modules';
-import { FilterPrice, PriceValidation } from './index';
+import { FilterPrice, PriceValidation } from './';
 
 export const countDecimals = (value): number => {
     if (!value || Math.floor(value) === value) { return 0; }

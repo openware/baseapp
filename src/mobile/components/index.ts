@@ -4,6 +4,7 @@ export * from './EstimatedValue';
 export * from './Footer';
 export * from './Header';
 export * from './Modal';
+export * from './ModalWithdrawConfirmation';
 export * from './OpenOrders';
 export * from './OrderButtons';
 export * from './OrderInput';

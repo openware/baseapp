@@ -2,11 +2,11 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { IntlProps } from '../../';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { TrashBin } from '../../assets/images/TrashBin';
-import { IntlProps } from '../../index';
 import {
     beneficiariesCreateData,
     beneficiariesDelete,

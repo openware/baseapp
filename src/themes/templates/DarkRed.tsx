@@ -1,4 +1,4 @@
-import { ThemeColorInterface } from './index';
+import { ThemeColorInterface } from './';
 
 export const DarkRedTheme: ThemeColorInterface[] = [
     { key: '--rgb-main-background-color', value: '30, 30, 30' },

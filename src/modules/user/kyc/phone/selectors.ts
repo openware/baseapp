@@ -1,4 +1,4 @@
-import { RootState } from '../../../index';
+import { RootState } from '../../../';
 import { PhoneState } from './reducer';
 
 export const sendPhoneCode = (state: RootState): PhoneState['codeSend'] =>

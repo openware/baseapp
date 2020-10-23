@@ -1,8 +1,5 @@
 import * as actions from './actions';
-import {
-  initialWithdrawLimitState,
-  withdrawLimitReducer,
-} from './reducer';
+import { initialWithdrawLimitState, withdrawLimitReducer } from './reducer';
 import { WithdrawLimit } from './types';
 
 describe('withdrawLimitList reducer', () => {
@@ -13,7 +10,7 @@ describe('withdrawLimitList reducer', () => {
             currency: 'btc',
         };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

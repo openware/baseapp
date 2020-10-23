@@ -1,12 +1,12 @@
 import { call, delay, put, select } from 'redux-saga/effects';
-import { msAlertDisplayTime } from '../../../../api';
 import {
     resetHistory,
     setBlocklistStatus,
     signInRequire2FA,
     userOpenOrdersReset,
     userReset,
-} from '../../../index';
+} from '../../../';
+import { msAlertDisplayTime } from '../../../../api';
 import { selectUserInfo } from '../../../user/profile';
 import { alertData, alertDelete, AlertPush } from '../actions';
 

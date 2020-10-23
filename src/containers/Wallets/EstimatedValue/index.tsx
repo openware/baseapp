@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../../';
 import { formatWithSeparators } from '../../../components';
 import { WalletItemProps } from '../../../components/WalletItem';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
-import { IntlProps } from '../../../index';
 import {
     currenciesFetch,
     Currency,

@@ -2,6 +2,11 @@ import { MarketsState, TickerEvent } from './public/markets';
 import { OrderBookState } from './public/orderBook';
 import { OrdersState } from './user/orders';
 
+export interface CommonError {
+    code: number;
+    message: string[];
+}
+
 export interface CommonState {
     error?: CommonError;
     loading?: boolean;
@@ -43,11 +48,6 @@ export interface MarketUpdateEvent {
 }
 
 export type RangerEvent = TickerEvent | OrderEvent | MarketUpdateEvent;
-
-export interface CommonError {
-    code: number;
-    message: string[];
-}
 
 export interface CoreState {
     orders: OrdersState;

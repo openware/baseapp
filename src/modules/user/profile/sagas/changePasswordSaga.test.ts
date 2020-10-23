@@ -1,10 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { CommonError } from '../../../types';
 import { changePasswordData, changePasswordError, changePasswordFetch } from '../actions';
-
 
 describe('Module: Change password', () => {
     let store: MockStoreEnhanced;
@@ -22,7 +22,7 @@ describe('Module: Change password', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -37,8 +37,21 @@ describe('Module: Change password', () => {
         mockAxios.onPut('/resource/users/password').reply(200);
     };
 
-    const expectedActionsFetch = [changePasswordFetch(fakePassword), changePasswordData()];
-    const expectedActionsError = [changePasswordFetch(fakePassword), changePasswordError(fakeError)];
+    const expectedActionsFetch = [
+        changePasswordFetch(fakePassword),
+        changePasswordData(),
+    ];
+
+    const expectedActionsError = [
+        changePasswordFetch(fakePassword),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: changePasswordError,
+            },
+        }),
+    ];
 
     it('should change password in success flow', async () => {
         mockChangePassword();

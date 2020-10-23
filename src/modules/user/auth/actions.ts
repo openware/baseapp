@@ -34,7 +34,7 @@ export interface EntropyPasswordFetch {
 
 export interface EntropyPasswordError {
     type: typeof AUTH_ENTROPY_PASSWORD_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface EntropyPasswordData {
@@ -55,7 +55,7 @@ export interface SignInFetch {
 
 export interface SignInError {
     type: typeof AUTH_SIGN_IN_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface SignInRequire2FA {
@@ -86,7 +86,7 @@ export interface SignUpData {
 
 export interface SignUpError {
     type: typeof AUTH_SIGN_UP_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface SignUpRequireVerification {
@@ -113,7 +113,7 @@ export interface LogoutFetch {
 
 export interface LogoutFailed {
     type: typeof AUTH_LOGOUT_FAILURE;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface TestAuthState {
@@ -153,9 +153,9 @@ export const entropyPasswordData = (payload: EntropyPasswordData['payload']): En
     payload,
 });
 
-export const entropyPasswordError = (payload: EntropyPasswordError['payload']): EntropyPasswordError => ({
+export const entropyPasswordError = (error: CommonError): EntropyPasswordError => ({
     type: AUTH_ENTROPY_PASSWORD_ERROR,
-    payload,
+    error,
 });
 
 export const signIn = (payload: SignInFetch['payload']): SignInFetch => ({
@@ -167,9 +167,9 @@ export const signInData = (): SignInData => ({
     type: AUTH_SIGN_IN_DATA,
 });
 
-export const signInError = (payload: SignInError['payload']): SignInError => ({
+export const signInError = (error: CommonError): SignInError => ({
     type: AUTH_SIGN_IN_ERROR,
-    payload,
+    error,
 });
 
 export const signInRequire2FA = (payload: SignInRequire2FA['payload']): SignInRequire2FA => ({
@@ -186,9 +186,9 @@ export const signUpData = (): SignUpData => ({
     type: AUTH_SIGN_UP_DATA,
 });
 
-export const signUpError = (payload: SignUpError['payload']): SignUpError => ({
+export const signUpError = (error: CommonError): SignUpError => ({
     type: AUTH_SIGN_UP_ERROR,
-    payload,
+    error,
 });
 
 export const signUpRequireVerification = (payload: SignUpRequireVerification['payload']): SignUpRequireVerification => ({
@@ -209,9 +209,9 @@ export const logoutFetch = (): LogoutFetch => ({
     type: AUTH_LOGOUT_FETCH,
 });
 
-export const logoutError = (payload: LogoutFailed['payload']): LogoutFailed => ({
+export const logoutError = (error: CommonError): LogoutFailed => ({
     type: AUTH_LOGOUT_FAILURE,
-    payload,
+    error,
 });
 
 export const require2FAReset = (): AuthSignInRequire2FAReset => ({

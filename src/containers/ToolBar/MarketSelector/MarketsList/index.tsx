@@ -3,10 +3,10 @@ import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { IntlProps } from '../../../../';
 import { incrementalOrderBook } from '../../../../api';
 import { SortAsc, SortDefault, SortDesc } from '../../../../assets/images/SortIcons';
 import { Decimal, Table } from '../../../../components';
-import { IntlProps } from '../../../../index';
 import {
     depthFetch,
     Market,

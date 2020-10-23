@@ -1,10 +1,11 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { CommonError } from '../../../types';
 import { generate2faQRData, generate2faQRError, generate2faQRFetch } from '../actions';
-
+import { PROFILE_GENERATE_2FA_QRCODE_FETCH } from '../constants';
 
 describe('Module: Generate 2fa QR', () => {
     let store: MockStoreEnhanced;
@@ -22,7 +23,7 @@ describe('Module: Generate 2fa QR', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -38,8 +39,21 @@ describe('Module: Generate 2fa QR', () => {
         mockAxios.onPost('/resource/otp/generate_qrcode').reply(200, fakeCredentials);
     };
 
-    const expectedActionsFetch = [generate2faQRFetch(), generate2faQRData(fakeCredentials.data)];
-    const expectedActionsError = [generate2faQRFetch(), generate2faQRError(fakeError)];
+    const expectedActionsFetch = [
+        generate2faQRFetch(),
+        generate2faQRData(fakeCredentials.data),
+    ];
+
+    const expectedActionsError = [
+        generate2faQRFetch(),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: generate2faQRError,
+            },
+        }),
+    ];
 
     it('should change password in success flow', async () => {
         mockGenerate2faQR();

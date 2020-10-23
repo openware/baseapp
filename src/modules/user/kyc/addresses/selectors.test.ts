@@ -1,9 +1,6 @@
 import { createStore } from 'redux';
-import { rootReducer } from '../../../index';
-import {
-    selectSendAddressesLoading,
-    selectSendAddressesSuccess,
-} from './selectors';
+import { rootReducer } from '../../../';
+import { selectSendAddressesLoading, selectSendAddressesSuccess } from './selectors';
 
 describe('KYC address selectors', () => {
     const state = createStore(rootReducer).getState();

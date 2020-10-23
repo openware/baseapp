@@ -9,9 +9,9 @@ import {
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileTwoFactorAuth } from '../';
+import { IntlProps } from '../../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { ChangePassword, CustomInput, Modal } from '../../components';
-import { IntlProps } from '../../index';
 import {
     Configs,
     entropyPasswordFetch,

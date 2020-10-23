@@ -104,7 +104,6 @@ describe('Table', () => {
             ];
             const wrapper = () => { mount(<Table data={fakeData} />); };
             expect(wrapper).toThrowError();
-
         });
 
         it('should filter data due to passed filters', () => {
@@ -115,7 +114,6 @@ describe('Table', () => {
             const tbElements = component.find('tbody').first().children();
 
             expect(tbElements.length).toBe(resultData.length);
-
         });
 
         it('should filter data according to clicked filter', () => {

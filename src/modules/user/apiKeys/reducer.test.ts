@@ -1,7 +1,6 @@
 import * as actions from './actions';
 import { apiKeysReducer, initialApiKeysState } from './reducer';
 
-// tslint:disable no-object-literal-type-assertion
 describe('Api Keys reducers', () => {
     it('should handle API_KEYS_DATA', () => {
         const payload = { apiKeys: [], pageIndex: 0, nextPageExists: false };

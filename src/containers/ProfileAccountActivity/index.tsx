@@ -5,9 +5,9 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../';
 import { Pagination, Table } from '../../components';
 import { getUserAgent, localeDate } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     getUserActivity,
     RootState,

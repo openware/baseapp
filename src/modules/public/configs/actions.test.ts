@@ -4,7 +4,7 @@ import {
     CONFIGS_ERROR,
     CONFIGS_FETCH,
 } from './constants';
-import { Configs } from './types';
+import { CommonError, Configs } from './types';
 
 describe('Configs actions', () => {
     const fakeConfigs: Configs = {
@@ -12,7 +12,7 @@ describe('Configs actions', () => {
         password_min_entropy: 0,
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

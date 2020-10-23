@@ -1,5 +1,5 @@
 
-import { RootState } from '../../index';
+import { RootState } from '../../';
 import { CurrenciesState } from './reducer';
 import { Currency } from './types';
 

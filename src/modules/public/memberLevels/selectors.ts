@@ -1,4 +1,4 @@
-import { RootState } from '../../index';
+import { RootState } from '../../';
 import { MemberLevels } from './types';
 
 export const selectMemberLevels = (state: RootState): MemberLevels | undefined =>

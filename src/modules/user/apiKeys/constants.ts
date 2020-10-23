@@ -7,3 +7,4 @@ export const API_KEYS_DATA = 'api-keys/API_KEYS_DATA';
 export const API_KEYS_2FA_MODAL = 'api-keys/API_KEYS_2FA_MODAL';
 export const API_KEY_UPDATE = 'api-keys/API_KEY_UPDATE';
 export const API_KEY_UPDATE_FETCH = 'api-keys/API_KEY_UPDATE_FETCH';
+export const API_KEYS_ERROR = 'api-keys/API_KEYS_ERROR';

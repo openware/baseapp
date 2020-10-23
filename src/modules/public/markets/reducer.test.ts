@@ -1,9 +1,5 @@
 import * as actions from './actions';
-import {
-    initialMarketsState,
-    marketsReducer,
-    MarketsState,
-} from './reducer';
+import { initialMarketsState, marketsReducer, MarketsState } from './reducer';
 import { Market, Ticker } from './types';
 
 describe('Markets reducer', () => {

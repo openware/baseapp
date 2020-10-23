@@ -1,11 +1,11 @@
-// tslint:disable-next-line
 import { call, put, takeLeading } from 'redux-saga/effects';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getOrderAPI } from '../../../../helpers';
-import { alertPush } from '../../alert';
 import {
     marketsData,
     marketsError,
+    MarketsFetch,
     marketsTickersData,
     marketsTickersError,
     MarketsTickersFetch,
@@ -26,14 +26,19 @@ export function* rootMarketsSaga() {
     yield takeLeading(MARKETS_TICKERS_FETCH, tickersSaga);
 }
 
-export function* marketsFetchSaga() {
+export function* marketsFetchSaga(action: MarketsFetch) {
     try {
         const markets = yield call(API.get(marketsRequestOptions), '/public/markets');
         yield put(marketsData(markets));
         yield put(setCurrentMarketIfUnset(markets[0]));
     } catch (error) {
-        yield put(marketsError());
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: marketsError,
+            },
+        }));
     }
 }
 
@@ -52,7 +57,12 @@ export function* tickersSaga(action: MarketsTickersFetch) {
             yield put(marketsTickersData(convertedTickers));
         }
     } catch (error) {
-        yield put(marketsTickersError());
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: marketsTickersError,
+            },
+        }));
     }
 }

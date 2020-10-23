@@ -1,10 +1,7 @@
 import * as actions from './actions';
-import {
-    initialLabelState,
-    labelReducer,
-} from './reducer';
+import { initialLabelState, labelReducer } from './reducer';
 
-describe('Profile reducer', () => {
+describe('Label reducer', () => {
     const labelData = [{
       created_at: '2018-12-10T12:49:00Z',
       key: 'email',
@@ -13,7 +10,7 @@ describe('Profile reducer', () => {
       value: 'verified',
     }];
 
-    const error = {
+    const error: CommonError = {
         code: 401,
         message: ['Invalid Session'],
     };
@@ -26,7 +23,7 @@ describe('Profile reducer', () => {
         expect(labelReducer(initialLabelState, actions.labelFetch())).toEqual(expectedState);
     });
 
-    it('should handle GET_USER_DATA', () => {
+    it('should handle GET_LABEL_DATA', () => {
         const expectedState = {
             ...initialLabelState,
             data: labelData,
@@ -34,7 +31,7 @@ describe('Profile reducer', () => {
         expect(labelReducer(initialLabelState, actions.labelData(labelData))).toEqual(expectedState);
     });
 
-    it('should handle GET_USER_ERROR', () => {
+    it('should handle GET_LABEL_ERROR', () => {
         const expectedState = {
             ...initialLabelState,
             error: error,

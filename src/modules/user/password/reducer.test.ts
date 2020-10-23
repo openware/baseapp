@@ -3,9 +3,7 @@ import { PASSWORD_TEST_FORGOT_PASSWORD } from './constants';
 import { passwordReducer } from './reducer';
 
 describe('Forgot password reducer', () => {
-    const request = {
-        email: 'admin@barong.io',
-    };
+    const request = { email: 'admin@barong.io' };
 
     const initialState = {
         loading: false,
@@ -13,7 +11,7 @@ describe('Forgot password reducer', () => {
         forgotPasswordRequested: false,
     };
 
-    const error = {
+    const error: CommonError = {
         code: 401,
         message: ['Invalid Session'],
     };

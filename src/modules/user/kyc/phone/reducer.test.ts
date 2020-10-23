@@ -1,15 +1,12 @@
 import * as actions from './actions';
-import {
-    initialPhoneState,
-    phoneReducer,
-} from './reducer';
+import { initialPhoneState, phoneReducer } from './reducer';
 
 describe('Phone reducer', () => {
     const sendPhonePayload = {
         phone_number: '38099999999',
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

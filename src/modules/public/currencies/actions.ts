@@ -1,8 +1,5 @@
-import {
-    CURRENCIES_DATA,
-    CURRENCIES_ERROR,
-    CURRENCIES_FETCH,
-} from './constants';
+import { CommonError } from '../../types';
+import { CURRENCIES_DATA, CURRENCIES_ERROR, CURRENCIES_FETCH } from './constants';
 import { Currency } from './types';
 
 export interface CurrenciesFetch {
@@ -16,6 +13,7 @@ export interface CurrenciesData {
 
 export interface CurrenciesError {
     type: typeof CURRENCIES_ERROR;
+    error: CommonError;
 }
 
 export type CurrenciesAction =
@@ -32,6 +30,7 @@ export const currenciesData = (payload: CurrenciesData['payload']): CurrenciesDa
     payload,
 });
 
-export const currenciesError = (): CurrenciesError => ({
+export const currenciesError = (error: CommonError): CurrenciesError => ({
     type: CURRENCIES_ERROR,
+    error,
 });

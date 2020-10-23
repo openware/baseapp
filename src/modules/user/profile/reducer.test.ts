@@ -38,7 +38,7 @@ describe('Profile reducer', () => {
         },
     };
 
-    const error = {
+    const error: CommonError = {
         code: 401,
         message: ['Invalid Session'],
     };

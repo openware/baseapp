@@ -1,9 +1,5 @@
 import * as actions from './actions';
-import {
-    currenciesReducer,
-    CurrenciesState,
-    initialCurrenciesState,
-} from './reducer';
+import { currenciesReducer, CurrenciesState, initialCurrenciesState } from './reducer';
 import { Currency } from './types';
 
 describe('Currencies reducer', () => {

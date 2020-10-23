@@ -6,7 +6,6 @@ import { recentTradesData, recentTradesError, recentTradesFetch, recentTradesPus
 import { recentTradesReducer } from './reducer';
 import { PublicTradeEvent } from './types';
 
-
 describe('recentTrade reducer', () => {
     const market: Market = {
         id: 'ethbtc',
@@ -163,7 +162,7 @@ describe('recentTrade reducer', () => {
     });
 
     it('supports recentTradesError', () => {
-        const error = {
+        const error: CommonError = {
             code: 421,
             message: ['BADDDD!'],
         };
