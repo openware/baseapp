@@ -1,4 +1,5 @@
 {
+  "extends": ["tslint-plugin-prettier"],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",

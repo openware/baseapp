@@ -118,6 +118,7 @@
     "postcss-hexrgba": "^1.0.1",
     "postcss-import": "^12.0.0",
     "postcss-nested": "^3.0.0",
+    "prettier": "1.9.0",
     "ramda": "^0.26.1",
     "react-app-rewired": "^2.1.5",
     "react-hot-loader": "^4.3.4",
@@ -127,6 +128,7 @@
     "source-map-explorer": "^1.7.0",
     "ts-jest": "^23.1.3",
     "ts-node": "^7.0.1",
+    "tslint-plugin-prettier": "^2.3.0",
     "typescript": "3.4.5",
     "webpack": "4.42.0",
     "webpack-obfuscator": "^2.3.0"
@@ -136,16 +138,6 @@
       "commit-msg": "./scripts/validate_commit.js $HUSKY_GIT_PARAMS && (cd \"./$GIT_PREFIX\"; yarn lint)",
       "pre-push": "yarn lint && CI=true yarn test --no-watch"
     }
-  },
-  "prettier": {
-    "trailingComma": "es6",
-    "tabWidth": 4,
-    "printWidth": 130,
-    "semi": true,
-    "singleQuote": true,
-    "tslintIntegration": true,
-    "stylelintIntegration": true,
-    "ignorePath": ".gitignore"
   },
   "browserslist": [
     ">0.2%",
