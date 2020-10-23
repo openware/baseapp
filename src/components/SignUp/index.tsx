@@ -158,7 +158,7 @@ export const SignUpForm = (props: SignUpFormProps) => {
             (confirmPassword && isConfirmPasswordValid);
     };
 
-    const handleClick = (label?: string, e?: React.FormEvent<HTMLInputElement>) => {
+    const handleClick = (e?: React.FormEvent<HTMLInputElement>) => {
         if (e) {
             e.preventDefault();
         }
@@ -285,7 +285,7 @@ export const SignUpForm = (props: SignUpFormProps) => {
                             block={true}
                             type="button"
                             disabled={disableButton()}
-                            onClick={e => handleClick(undefined, e)}
+                            onClick={e => handleClick(e as any)}
                             size="lg"
                             variant="primary"
                         >

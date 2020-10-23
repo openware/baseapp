@@ -1,5 +1,5 @@
 import cr from 'classnames';
-import * as React from 'react';
+import React, { FormEvent } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { CustomInput } from '../';
@@ -79,7 +79,7 @@ const EmailForm = React.memo((props: EmailFormProps) => {
         return false;
     };
 
-    const handleClick = (label?: string, e?: React.FormEvent<HTMLInputElement>) => {
+    const handleClick = (e: FormEvent<HTMLInputElement>) => {
         if (e) {
             e.preventDefault();
         }
@@ -101,21 +101,20 @@ const EmailForm = React.memo((props: EmailFormProps) => {
     return (
         <form>
             <div className={emailFormClass}>
-                {!isMobileDevice && <div className="cr-email-form__options-group">
-                  <div className="cr-email-form__option">
-                    <div className="cr-email-form__option-inner">
-                        {title || 'Forgot password'}
-                      <div className="cr-email-form__cros-icon" onClick={handleCancel}>
-                        <CloseIcon className="close-icon"/>
-                      </div>
+                {!isMobileDevice && (
+                    <div className="cr-email-form__options-group">
+                        <div className="cr-email-form__option">
+                            <div className="cr-email-form__option-inner">
+                                {title || 'Forgot password'}
+                                <div className="cr-email-form__cros-icon" onClick={handleCancel}>
+                                    <CloseIcon className="close-icon" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-                }
+                )}
                 <div className="cr-email-form__form-content">
-                    <div className="cr-email-form__header">
-                        {message}
-                    </div>
+                    <div className="cr-email-form__header">{message}</div>
                     <div className={emailGroupClass}>
                         <CustomInput
                             type="email"
@@ -137,10 +136,9 @@ const EmailForm = React.memo((props: EmailFormProps) => {
                             block={true}
                             type="button"
                             disabled={isButtonDisabled()}
-                            onClick={e => handleClick(undefined, e)}
+                            onClick={(e) => handleClick(e as any)}
                             size="lg"
-                            variant="primary"
-                        >
+                            variant="primary">
                             {isLoading ? 'Loading...' : buttonLabel ? buttonLabel : 'Send'}
                         </Button>
                     </div>
@@ -150,6 +148,4 @@ const EmailForm = React.memo((props: EmailFormProps) => {
     );
 });
 
-export {
-    EmailForm,
-};
+export { EmailForm };
