@@ -1,4 +1,4 @@
-import { ThemeColorInterface } from './index';
+import { ThemeColorInterface } from './';
 
 export const DarkBlueTheme: ThemeColorInterface[] = [
     { key: '--rgb-main-background-color', value: '23, 28, 41' },

@@ -5,4 +5,8 @@ Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
 Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
-{"currency":"eth","address":"0x00eec1e95026faf0412d7a29b94d514d31446141"}
+{
+    "currencies": ["eth"],
+    "address": "0x00eec1e95026faf0412d7a29b94d514d31446141",
+    "state": "create"
+}

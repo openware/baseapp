@@ -4,7 +4,7 @@ import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { IntlProps } from '../../index';
+import { IntlProps } from '../../';
 import { RootState, selectConfigsLoading } from '../../modules';
 
 interface ReduxProps {

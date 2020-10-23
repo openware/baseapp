@@ -4,8 +4,8 @@ import {
     FormattedMessage,
     injectIntl,
 } from 'react-intl';
+import { IntlProps } from '../../';
 import { Modal } from '../../components';
-import { IntlProps } from '../../index';
 import { Modal as MobileModal } from '../../mobile/components/Modal';
 
 interface ModalWithdrawSubmitProps {

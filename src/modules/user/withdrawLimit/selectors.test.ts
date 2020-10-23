@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import { rootReducer } from '../../index';
+import { rootReducer } from '../../';
 import {
     selectWithdrawLimit,
     selectWithdrawLimitError,

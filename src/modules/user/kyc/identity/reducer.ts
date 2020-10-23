@@ -42,7 +42,7 @@ export const identitySendReducer = (state: IdentityState['send'], action: Identi
         case SEND_IDENTITY_ERROR:
             return {
                 success: undefined,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -66,7 +66,7 @@ export const identityEditReducer = (state: IdentityState['edit'], action: Identi
         case EDIT_IDENTITY_ERROR:
             return {
                 success: undefined,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;

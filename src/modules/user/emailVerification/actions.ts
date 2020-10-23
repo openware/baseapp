@@ -1,12 +1,6 @@
-import {
-    CommonError,
-} from '../../types';
+import { CommonError } from '../../types';
 import { GeetestCaptchaResponse } from '../auth';
-import {
-    EMAIL_VERIFICATION_DATA,
-    EMAIL_VERIFICATION_ERROR,
-    EMAIL_VERIFICATION_FETCH,
-} from './constants';
+import { EMAIL_VERIFICATION_DATA, EMAIL_VERIFICATION_ERROR, EMAIL_VERIFICATION_FETCH } from './constants';
 
 export interface EmailVerificationData {
     type: typeof EMAIL_VERIFICATION_DATA;
@@ -30,6 +24,11 @@ export type EmailVerificationAction =
     | EmailVerificationError
     | EmailVerificationFetch;
 
+export const emailVerificationFetch = (payload: EmailVerificationFetch['payload']): EmailVerificationFetch => ({
+    type: EMAIL_VERIFICATION_FETCH,
+    payload,
+});
+
 export const emailVerificationData = (): EmailVerificationData => ({
     type: EMAIL_VERIFICATION_DATA,
 });
@@ -37,9 +36,4 @@ export const emailVerificationData = (): EmailVerificationData => ({
 export const emailVerificationError = (error: CommonError): EmailVerificationError => ({
     type: EMAIL_VERIFICATION_ERROR,
     error,
-});
-
-export const emailVerificationFetch = (payload: EmailVerificationFetch['payload']): EmailVerificationFetch => ({
-    type: EMAIL_VERIFICATION_FETCH,
-    payload,
 });

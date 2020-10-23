@@ -12,6 +12,7 @@ import {
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { Captcha, Modal, SignUpForm } from '../../components';
 import {
     EMAIL_REGEX,
@@ -24,7 +25,6 @@ import {
     passwordErrorThirdSolution,
     setDocumentTitle,
 } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Configs,
     entropyPasswordFetch, GeetestCaptchaResponse,

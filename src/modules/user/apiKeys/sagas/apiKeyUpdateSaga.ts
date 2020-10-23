@@ -1,9 +1,8 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import { alertPush } from '../../../index';
-import { apiKeys2FAModal, apiKeyUpdate, ApiKeyUpdateFetch } from '../actions';
+import { apiKeys2FAModal, apiKeysError, apiKeyUpdate, ApiKeyUpdateFetch } from '../actions';
 
 const updateOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -18,10 +17,15 @@ export function* apiKeyUpdateSaga(action: ApiKeyUpdateFetch) {
         const {kid, state} = action.payload.apiKey;
         const updatedApiKey = yield call(API.patch(updateOptions(getCsrfToken())), `/resource/api_keys/${kid}`, {totp_code, state});
         yield put(apiKeyUpdate(updatedApiKey));
-        yield put(alertPush({message: ['success.api_keys.updated'], type: 'success'}));
+        yield put(alertPush({ message: ['success.api_keys.updated'], type: 'success' }));
+        yield put(apiKeys2FAModal({ active: false }));
     } catch (error) {
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
-    } finally {
-        yield put(apiKeys2FAModal({active: false}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: apiKeysError,
+            },
+        }));
     }
 }

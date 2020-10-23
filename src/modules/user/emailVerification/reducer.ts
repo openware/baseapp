@@ -1,12 +1,6 @@
-import {
-    CommonError,
-} from '../../types';
+import { CommonError } from '../../types';
 import { EmailVerificationAction } from './actions';
-import {
-    EMAIL_VERIFICATION_DATA,
-    EMAIL_VERIFICATION_ERROR,
-    EMAIL_VERIFICATION_FETCH,
-} from './constants';
+import { EMAIL_VERIFICATION_DATA, EMAIL_VERIFICATION_ERROR, EMAIL_VERIFICATION_FETCH } from './constants';
 
 export interface EmailVerificationState {
     loading: boolean;

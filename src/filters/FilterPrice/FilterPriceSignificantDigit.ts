@@ -1,5 +1,5 @@
 import { MarketFilterSignificantDigit } from '../../modules';
-import { FilterPrice, PriceValidation } from './index';
+import { FilterPrice, PriceValidation } from './';
 
 export const countMinValidPriceStep = (price: number | string, digits: number) => {
     const clearPrice = String(+price);

@@ -1,11 +1,7 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import {
-    orderBookData,
-    orderBookError,
-    OrderBookFetch,
-} from '../actions';
+import { orderBookData, orderBookError, OrderBookFetch } from '../actions';
 
 const orderBookOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -21,6 +17,12 @@ export function* orderBookSaga(action: OrderBookFetch) {
         const orderBook = yield call(API.get(orderBookOptions), `/public/markets/${market.id}/order-book`);
         yield put(orderBookData(orderBook));
     } catch (error) {
-        yield put(orderBookError(error));
+        yield put(sendError({
+            error,
+            processingType: 'console',
+            extraOptions: {
+                actionError: orderBookError,
+            },
+        }));
     }
 }

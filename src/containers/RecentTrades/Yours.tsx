@@ -1,7 +1,16 @@
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
+<<<<<<< HEAD
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+=======
+import {
+    injectIntl,
+} from 'react-intl';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { compose } from 'redux';
+import { IntlProps } from '../../';
+>>>>>>> d459de118e31c1f432a0f6ded57fadf6dce991ce
 import { Decimal, Table } from '../../components';
 import { DEFAULT_MARKET } from '../../constants';
 import { localeDate, setTradesType } from '../../helpers';

@@ -1,5 +1,5 @@
 import { Market } from '../../public/markets';
-import { OrderCommon, OrderEvent } from '../../types';
+import { CommonError, OrderCommon, OrderEvent } from '../../types';
 import {
     OPEN_ORDERS_APPEND,
     OPEN_ORDERS_CANCEL_DATA,
@@ -27,6 +27,7 @@ export interface UserOpenOrdersData {
 
 export interface UserOpenOrdersError {
     type: typeof OPEN_ORDERS_ERROR;
+    error: CommonError;
 }
 
 export interface UserOpenOrdersUpdate {
@@ -58,6 +59,7 @@ export interface OpenOrdersCancelData {
 
 export interface OpenOrdersCancelError {
     type: typeof OPEN_ORDERS_CANCEL_ERROR;
+    error: CommonError;
 }
 
 export type OpenOrdersAction =
@@ -91,8 +93,9 @@ export const userOpenOrdersAppend = (payload: UserOpenOrdersAppend['payload']): 
     payload,
 });
 
-export const userOpenOrdersError = (): UserOpenOrdersError => ({
+export const userOpenOrdersError = (error: CommonError): UserOpenOrdersError => ({
     type: OPEN_ORDERS_ERROR,
+    error,
 });
 
 export const userOpenOrdersReset = (): UserOpenOrdersReset => ({
@@ -109,6 +112,7 @@ export const openOrdersCancelData = (payload: OpenOrdersCancelData['payload']): 
     payload,
 });
 
-export const openOrdersCancelError = (): OpenOrdersCancelError => ({
+export const openOrdersCancelError = (error: CommonError): OpenOrdersCancelError => ({
     type: OPEN_ORDERS_CANCEL_ERROR,
+    error,
 });

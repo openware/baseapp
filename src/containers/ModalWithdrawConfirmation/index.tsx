@@ -3,8 +3,8 @@ import { Button } from 'react-bootstrap';
 import {
     injectIntl,
 } from 'react-intl';
+import { IntlProps } from '../../';
 import { Decimal, Modal } from '../../components';
-import { IntlProps } from '../../index';
 import { Modal as MobileModal } from '../../mobile/components/Modal';
 
 interface ModalWithdrawConfirmationProps {

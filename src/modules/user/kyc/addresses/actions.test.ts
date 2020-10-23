@@ -1,9 +1,6 @@
+import { CommonError } from '../../../types';
 import * as actions from './actions';
-import {
-    SEND_ADDRESSES_DATA,
-    SEND_ADDRESSES_ERROR,
-    SEND_ADDRESSES_FETCH,
-} from './constants';
+import { SEND_ADDRESSES_DATA, SEND_ADDRESSES_ERROR, SEND_ADDRESSES_FETCH } from './constants';
 
 describe('KYC - addresses actions', () => {
     it('should check sendAddresses action creator', () => {
@@ -20,11 +17,11 @@ describe('KYC - addresses actions', () => {
     });
 
     it('should check sendAddressesError action creator', () => {
-        const fakeError = {
+        const fakeError: CommonError = {
             code: 500,
             message: ['Server error'],
         };
-        const expectedAction = { type: SEND_ADDRESSES_ERROR, payload: fakeError };
+        const expectedAction = { type: SEND_ADDRESSES_ERROR, error: fakeError };
         expect(actions.sendAddressesError(fakeError)).toEqual(expectedAction);
     });
 });

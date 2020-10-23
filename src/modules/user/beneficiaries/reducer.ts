@@ -138,7 +138,7 @@ export const beneficiariesFetchReducer = (state: BeneficiariesState['fetch'], ac
                 ...state,
                 fetching: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -167,7 +167,7 @@ const beneficiariesActivateReducer = (state: BeneficiariesState['activate'], act
                 ...state,
                 fetching: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -196,7 +196,7 @@ const beneficiariesCreateReducer = (state: BeneficiariesState['create'], action:
                 ...state,
                 fetching: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -225,7 +225,7 @@ const beneficiariesDeleteReducer = (state: BeneficiariesState['delete'], action:
                 ...state,
                 fetching: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -254,7 +254,7 @@ const beneficiariesResendPinReducer = (state: BeneficiariesState['resendPin'], a
                 ...state,
                 fetching: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -313,4 +313,3 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
             return state;
     }
 };
-

@@ -1,8 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { CommonError } from '../../../types';
 import { sendAccessToken, sendAccessTokenData, sendAccessTokenError } from '../actions';
 
 describe('blacklistAccessFetchSaga test', () => {
@@ -25,6 +26,11 @@ describe('blacklistAccessFetchSaga test', () => {
 
     const mockRequest = () => {
         mockAxios.onPost('/identity/users/access').reply(200, fakeResponse);
+    };
+
+    const error: CommonError = {
+        message: ['Server error'],
+        code: 500,
     };
 
     it('should send access token', async () => {
@@ -52,7 +58,13 @@ describe('blacklistAccessFetchSaga test', () => {
     it('should trigger an error', async () => {
         const expectedActions = [
             sendAccessToken({ whitelink_token: '' }),
-            sendAccessTokenError(),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: sendAccessTokenError,
+                },
+            }),
         ];
         mockNetworkError(mockAxios);
 

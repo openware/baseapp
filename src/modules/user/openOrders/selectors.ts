@@ -1,4 +1,4 @@
-import { RootState } from '../../index';
+import { RootState } from '../../';
 import { OrderCommon } from '../../types';
 
 export const selectOpenOrdersList = (state: RootState): OrderCommon[] =>

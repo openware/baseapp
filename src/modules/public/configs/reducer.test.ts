@@ -8,7 +8,7 @@ describe('configsReducer', () => {
         password_min_entropy: 0,
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

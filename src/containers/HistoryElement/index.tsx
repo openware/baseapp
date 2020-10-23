@@ -5,6 +5,7 @@ import {
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { Decimal, History, Pagination } from '../../components';
 import {
     localeDate,
@@ -13,7 +14,6 @@ import {
     setWithdrawStatusColor,
     truncateMiddle,
 } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     currenciesFetch,
     Currency,
@@ -66,10 +66,10 @@ class HistoryComponent extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public componentWillReceiveProps(nextProps: Props) {
         const { currencies } = this.props;
 
-        if (nextProps.currencies.length === 0 && nextProps.currencies !== currencies) {
+        if (!currencies.length && nextProps.currencies.length) {
             this.props.fetchCurrencies();
         }
     }

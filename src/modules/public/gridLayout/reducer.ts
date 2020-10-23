@@ -1,10 +1,4 @@
-import {
-    getLayoutFromLS,
-    LayoutGrid,
-    layouts,
-    resetLayout,
-    saveLayoutToLS,
-} from '../../../helpers/layout';
+import { getLayoutFromLS, LayoutGrid, layouts, resetLayout, saveLayoutToLS } from '../../../helpers/layout';
 import { RESET_LAYOUTS, SAVE_LAYOUTS } from './constants';
 
 export interface GridLayoutState {

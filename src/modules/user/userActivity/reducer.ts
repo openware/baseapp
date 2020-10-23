@@ -2,12 +2,7 @@ import { defaultStorageLimit } from '../../../api';
 import { sliceArray } from '../../../helpers';
 import { CommonError } from '../../types';
 import { UserActivityAction, UserActivityDataInterface } from './actions';
-import {
-    USER_ACTIVITY_DATA,
-    USER_ACTIVITY_ERROR,
-    USER_ACTIVITY_FETCH,
-} from './constants';
-
+import { USER_ACTIVITY_DATA, USER_ACTIVITY_ERROR, USER_ACTIVITY_FETCH } from './constants';
 
 export interface UserActivityState {
     loading: boolean;
@@ -42,7 +37,7 @@ export const userActivityReducer = (state = initialUserActivityState, action: Us
         case USER_ACTIVITY_ERROR:
             return {
                 ...state,
-                error: action.payload,
+                error: action.error,
                 list: [],
                 loading: false,
                 page: 0,

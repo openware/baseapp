@@ -1,11 +1,11 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { CommonError } from '../../../types';
 import { userReset } from '../../profile';
 import { logoutError, logoutFetch } from '../actions';
-
 
 describe('Logout saga', () => {
     let store: MockStoreEnhanced;
@@ -23,7 +23,7 @@ describe('Logout saga', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -33,7 +33,16 @@ describe('Logout saga', () => {
     };
 
     const expectedActionsFetch = [logoutFetch(), userReset()];
-    const expectedActionsError = [logoutFetch(), logoutError(fakeError)];
+    const expectedActionsError = [
+        logoutFetch(),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: logoutError,
+            },
+        }),
+    ];
 
     it('should logout user in success flow', async () => {
         mockLogout();

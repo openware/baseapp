@@ -1,14 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../../..';
+import { rootSaga, sendError } from '../../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../../helpers/jest';
-import {
-    editIdentity,
-    editIdentityData,
-    editIdentityError,
-} from '../actions';
-
+import { CommonError } from '../../../../types';
+import { editIdentity, editIdentityData, editIdentityError } from '../actions';
 
 describe('Edit Identity Saga', () => {
     let store: MockStoreEnhanced;
@@ -26,7 +22,7 @@ describe('Edit Identity Saga', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -51,7 +47,16 @@ describe('Edit Identity Saga', () => {
     };
 
     const expectedActionsFetch = [editIdentity(confirmIdentityPayload), editIdentityData(confirmIdentityResponse)];
-    const expectedActionsError = [editIdentity(confirmIdentityPayload), editIdentityError(fakeError)];
+    const expectedActionsError = [
+        editIdentity(confirmIdentityPayload),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: editIdentityError,
+            },
+        }),
+    ];
 
     it('should edit identity data in success flow', async () => {
         mockEditIdentity();

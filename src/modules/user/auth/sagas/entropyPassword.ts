@@ -1,7 +1,6 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../public/alert';
 import { entropyPasswordData, entropyPasswordError, EntropyPasswordFetch } from '../actions';
 
 const config: RequestOptions = {
@@ -14,6 +13,12 @@ export function* entropyPassword(action: EntropyPasswordFetch) {
         yield put(entropyPasswordData(data));
     } catch (error) {
         yield put(entropyPasswordError(error));
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: entropyPasswordError,
+            },
+        }));
     }
 }

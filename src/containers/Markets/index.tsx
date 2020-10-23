@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
+<<<<<<< HEAD
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { incrementalOrderBook } from '../../api';
@@ -8,6 +9,17 @@ import { Decimal } from '../../components/Decimal';
 import { Markets } from '../../components/Markets';
 import { useMarketsTickersFetch } from '../../hooks';
 import { setCurrentPrice } from '../../modules';
+=======
+import {
+    injectIntl,
+} from 'react-intl';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../';
+import { incrementalOrderBook } from '../../api';
+import { Decimal } from '../../components/Decimal';
+import { Markets } from '../../components/Markets';
+import { RootState, selectUserInfo, setCurrentPrice, User } from '../../modules';
+>>>>>>> d459de118e31c1f432a0f6ded57fadf6dce991ce
 import {
     Market,
     selectCurrentMarket,

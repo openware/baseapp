@@ -2,11 +2,11 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { IntlProps } from '../../';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { TrashBin } from '../../assets/images/TrashBin';
-import { IntlProps } from '../../index';
 import {
     beneficiariesCreateData,
     beneficiariesDelete,
@@ -16,11 +16,15 @@ import {
     memberLevelsFetch,
     RootState,
     selectBeneficiaries,
+    selectBeneficiariesActivateSuccess,
     selectBeneficiariesCreate,
-    selectMemberLevels, selectMobileDeviceState,
+    selectBeneficiariesCreateSuccess,
+    selectMemberLevels,
+    selectMobileDeviceState,
     selectUserInfo,
     User,
 } from '../../modules';
+import { CommonError } from '../../modules/types';
 import { BeneficiariesActivateModal } from './BeneficiariesActivateModal';
 import { BeneficiariesAddModal } from './BeneficiariesAddModal';
 import { BeneficiariesFailAddModal } from './BeneficiariesFailAddModal';
@@ -28,7 +32,11 @@ import { BeneficiariesFailAddModal } from './BeneficiariesFailAddModal';
 interface ReduxProps {
     beneficiaries: Beneficiary[];
     beneficiariesAddData: Beneficiary;
+    beneficiariesAddSuccess: boolean;
+    beneficiariesAddError?: CommonError;
+    beneficiariesActivateError?: CommonError;
     memberLevels?: MemberLevels;
+    beneficiariesActivateSuccess: boolean;
     userData: User;
     isMobileDevice: boolean;
 }
@@ -92,11 +100,25 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     }
 
     public componentWillReceiveProps(nextProps: Props) {
-        const { currency, beneficiaries } = this.props;
+        const {
+            currency,
+            beneficiaries,
+            beneficiariesAddSuccess,
+            beneficiariesActivateSuccess,
+        } = this.props;
 
         if ((nextProps.currency && nextProps.currency !== currency) ||
             (nextProps.beneficiaries.length && nextProps.beneficiaries !== beneficiaries)) {
             this.handleSetCurrentAddressOnUpdate(nextProps.beneficiaries, nextProps.currency);
+        }
+
+        if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
+            this.handleToggleAddAddressModal();
+            this.handleToggleConfirmationModal();
+        }
+
+        if (nextProps.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) {
+            this.handleToggleConfirmationModal();
         }
     }
 
@@ -437,8 +459,10 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiaries: selectBeneficiaries(state),
     beneficiariesAddData: selectBeneficiariesCreate(state),
     memberLevels: selectMemberLevels(state),
+    beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
     userData: selectUserInfo(state),
     isMobileDevice: selectMobileDeviceState(state),
+    beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({

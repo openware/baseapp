@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import {
     MARKETS_DATA,
     MARKETS_ERROR,
@@ -22,6 +23,7 @@ export interface MarketsData {
 
 export interface MarketsError {
     type: typeof MARKETS_ERROR;
+    error: CommonError;
 }
 
 export interface SetCurrentMarket {
@@ -54,6 +56,7 @@ export interface MarketsTickersData {
 
 export interface MarketsTickersError {
     type: typeof MARKETS_TICKERS_ERROR;
+    error: CommonError;
 }
 
 export type MarketsAction =
@@ -75,8 +78,9 @@ export const marketsData = (payload: MarketsData['payload']): MarketsData => ({
     payload,
 });
 
-export const marketsError = (): MarketsError => ({
+export const marketsError = (error: CommonError): MarketsError => ({
     type: MARKETS_ERROR,
+    error,
 });
 
 export const setCurrentMarket =
@@ -100,8 +104,9 @@ export const marketsTickersData = (payload: MarketsTickersData['payload']): Mark
     payload,
 });
 
-export const marketsTickersError = (): MarketsTickersError => ({
+export const marketsTickersError = (error: CommonError): MarketsTickersError => ({
     type: MARKETS_TICKERS_ERROR,
+    error,
 });
 
 export const marketsTickersPush = (payload: MarketsTickersPush['payload']): MarketsTickersPush => ({

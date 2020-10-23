@@ -4,9 +4,9 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { showLanding } from '../../api';
 import { LogoIcon } from '../../assets/images/LogoIcon';
-import { IntlProps } from '../../index';
 import {
     Market,
     RootState,
