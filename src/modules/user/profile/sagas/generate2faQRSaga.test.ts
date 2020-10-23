@@ -5,7 +5,6 @@ import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
 import { generate2faQRData, generate2faQRError, generate2faQRFetch } from '../actions';
-import { PROFILE_GENERATE_2FA_QRCODE_FETCH } from '../constants';
 
 describe('Module: Generate 2fa QR', () => {
     let store: MockStoreEnhanced;

@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { initialMarketsState, marketsReducer, MarketsState } from './reducer';
 import { Market, Ticker } from './types';
@@ -55,6 +56,11 @@ describe('Markets reducer', () => {
         btcusd: btcusdTicker,
     };
 
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     it('should handle MARKETS_FETCH', () => {
         const expectedState: MarketsState = {
             ...initialMarketsState,
@@ -80,7 +86,7 @@ describe('Markets reducer', () => {
             tickerLoading: false,
             loading: false,
         };
-        expect(marketsReducer(initialMarketsState, actions.marketsError())).toEqual(expectedState);
+        expect(marketsReducer(initialMarketsState, actions.marketsError(error))).toEqual(expectedState);
     });
 
     it('should handle SET_CURRENT_MARKET', () => {
@@ -133,6 +139,6 @@ describe('Markets reducer', () => {
             tickerLoading: false,
             loading: false,
         };
-        expect(marketsReducer(initialMarketsState, actions.marketsTickersError())).toEqual(expectedState);
+        expect(marketsReducer(initialMarketsState, actions.marketsTickersError(error))).toEqual(expectedState);
     });
 });

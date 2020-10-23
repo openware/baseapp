@@ -1,10 +1,11 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import {
     CONFIGS_DATA,
     CONFIGS_ERROR,
     CONFIGS_FETCH,
 } from './constants';
-import { CommonError, Configs } from './types';
+import { Configs } from './types';
 
 describe('Configs actions', () => {
     const fakeConfigs: Configs = {

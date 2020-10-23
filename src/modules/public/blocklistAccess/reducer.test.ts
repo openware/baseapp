@@ -1,7 +1,13 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { blocklistAccessReducer, initialBlocklistAccessState } from './reducer';
 
 describe('blacklistCountryReducer', () => {
+    const error: CommonError = {
+        message: ['Server error'],
+        code: 500,
+    };
+
     it('should handle SEND_BLOCKLIST_ACCESS_TOKEN_FETCH', () => {
         const expectedState = {
             ...initialBlocklistAccessState,
@@ -26,7 +32,7 @@ describe('blacklistCountryReducer', () => {
             loading: false,
             error: true,
         };
-        expect(blocklistAccessReducer(initialBlocklistAccessState, actions.sendAccessTokenError())).toEqual(expectedState);
+        expect(blocklistAccessReducer(initialBlocklistAccessState, actions.sendAccessTokenError(error))).toEqual(expectedState);
     });
 
     it('should handle SET_BLOCKLIST_STATUS', () => {
