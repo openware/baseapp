@@ -1,12 +1,12 @@
 import classnames from 'classnames';
-import * as React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { convertToString } from '../../helpers';
 
 type DropdownElem = number | string | React.ReactNode;
 
-export interface DropdownComponentProps {
+interface Props {
     /**
      * List of options
      */
@@ -34,50 +34,43 @@ export interface DropdownComponentProps {
     disableContentEditable?: boolean;
 }
 
-
 /**
  *  Cryptobase Dropdown that overrides default dropdown with list of options.
  */
 
-export const DropdownComponent = (props: DropdownComponentProps) => {
-    const [selected, setSelected] = React.useState<string | undefined>('');
+export const DropdownComponent: React.FC<Props> = ({ list, className, placeholder = '', onSelect }) => {
+    const [selected, setSelected] = React.useState<string>('');
 
-    const { list, className, placeholder, onSelect } = props;
     const defaultPlaceholder = list[0];
 
-    const cx = React.useMemo(() => classnames('cr-dropdown', className, {
-        'cr-dropdown--default': selected === placeholder,
-    }), [selected, placeholder, className]);
+    const handleSelect = useCallback(
+        (elem: DropdownElem, index: number) => {
+            onSelect && onSelect(index);
+            setSelected(convertToString(elem));
+        },
+        [onSelect]
+    );
 
-    const handleSelect = React.useCallback((elem: DropdownElem, index: number) => {
-        onSelect && onSelect(index);
-        setSelected(convertToString(elem));
-    }, [onSelect]);
-
-    const renderElem = React.useCallback((elem: DropdownElem, index: number) => {
-        return  (
-            <Dropdown.Item
-                key={index}
-                onSelect={() => handleSelect(elem, index)}
-            >
-                {elem}
-            </Dropdown.Item>
-        );
-    }, [handleSelect]);
-
-    React.useEffect(() => {
+    useEffect(() => {
         setSelected(placeholder || convertToString(defaultPlaceholder));
     }, [placeholder, defaultPlaceholder]);
 
     return (
-        <div className={cx}>
+        <div
+            className={classnames('cr-dropdown', className, {
+                'cr-dropdown--default': selected === placeholder,
+            })}>
             <Dropdown>
                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
                     {selected}
                     <ChevronIcon className="cr-dropdown__arrow" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    {list.map(renderElem)}
+                    {list.map((item, index) => (
+                        <Dropdown.Item key={index} onSelect={() => handleSelect(item, index)}>
+                            {item}
+                        </Dropdown.Item>
+                    ))}
                 </Dropdown.Menu>
             </Dropdown>
         </div>

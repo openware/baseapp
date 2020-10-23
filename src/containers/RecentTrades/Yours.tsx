@@ -1,32 +1,29 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Decimal, Table } from '../../components';
 import { DEFAULT_MARKET } from '../../constants';
 import { localeDate, setTradesType } from '../../helpers';
+import { useReduxState } from '../../hooks';
 import {
     fetchHistory,
-    selectCurrentMarket,
-    selectCurrentPrice,
-    selectHistory,
-    selectHistoryLoading,
     setCurrentPrice,
 } from '../../modules';
 import { handleHighlightValue } from './Market';
 
 const timeFrom = String(Math.floor((Date.now() - 1000 * 60 * 60 * 24) / 1000));
 
-export const RecentTradesYours = () => {
+export const RecentTradesYours: React.FC = () => {
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
 
-    const list = useSelector(selectHistory);
-    const fetching = useSelector(selectHistoryLoading);
-    const currentMarket = useSelector(selectCurrentMarket) || DEFAULT_MARKET;
-    const currentPrice = useSelector(selectCurrentPrice);
+    const list = useReduxState((x) => x.user.history.list);
+    const fetching = useReduxState((x) => x.user.history.fetching);
+    const currentMarket = useReduxState((x) => x.public.markets.currentMarket) || DEFAULT_MARKET;
+    const currentPrice = useReduxState((x) => x.user.orders.currentPrice);
 
-    const headers = React.useMemo(
+    const headers = useMemo(
         () => [
             formatMessage({ id: 'page.body.trade.header.recentTrades.content.time' }),
             formatMessage({ id: 'page.body.trade.header.recentTrades.content.amount' }),
@@ -35,7 +32,7 @@ export const RecentTradesYours = () => {
         [formatMessage]
     );
 
-    const renderRow = (item, i) => {
+    const renderRow = useCallback((item, i) => {
         const { id, created_at, price, amount, side } = item;
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
@@ -60,25 +57,17 @@ export const RecentTradesYours = () => {
                 </Decimal>
             </span>,
         ];
-    };
+    }, []);
 
-    const retrieveData = () => {
-        return list.length > 0 ? list.map(renderRow) : [[]];
-    };
-
-    const renderContent = () => {
-        return <Table header={headers} data={retrieveData()} onSelect={handleOnSelect} />;
-    };
-
-    const handleOnSelect = (index: string) => {
+    const handleOnSelect = useCallback((index: string) => {
         const priceToSet = list[Number(index)] ? Number(list[Number(index)].price) : 0;
 
         if (currentPrice !== priceToSet) {
             dispatch(setCurrentPrice(priceToSet));
         }
-    };
+    }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(
             fetchHistory({
                 type: 'trades',
@@ -87,7 +76,7 @@ export const RecentTradesYours = () => {
                 market: currentMarket.id,
             })
         );
-    }, [dispatch, currentMarket.id]);
+    }, [currentMarket.id]);
 
     return (
         <div>
@@ -96,7 +85,7 @@ export const RecentTradesYours = () => {
                     <Spinner animation="border" variant="primary" />
                 </div>
             ) : (
-                renderContent()
+                <Table header={headers} data={list.length > 0 ? list.map(renderRow) : [[]]} onSelect={handleOnSelect} />
             )}
         </div>
     );
