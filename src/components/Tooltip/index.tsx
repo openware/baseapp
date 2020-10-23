@@ -8,10 +8,10 @@ interface Props {
     className?: string;
 }
 
-export const Tooltip = (props: Props) => (
-    <BootstrapTooltip id="tooltip" className="tooltip" {...props}>
+export const Tooltip = ({ id = 'tooltip', ...rest }: Props) => (
+    <BootstrapTooltip id={`${id}`} className="tooltip" {...rest}>
         <div className="tooltip__content">
-            <FormattedMessage id={props.title} />
+            <FormattedMessage id={rest.title} />
         </div>
     </BootstrapTooltip>
 );
