@@ -112,7 +112,6 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "enzyme-to-json": "^3.3.4",
-    "ethers": "^5.0.18",
     "file-loader": "^1.1.11",
     "header-case-normalizer": "1.0.3",
     "husky": "^1.0.0-rc.13",
