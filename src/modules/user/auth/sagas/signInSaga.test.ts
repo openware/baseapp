@@ -6,7 +6,7 @@ import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../he
 import { changeLanguage } from '../../../public/i18n';
 import { CommonError } from '../../../types';
 import { userData } from '../../profile';
-import { signIn, signInData, signInError, signInRequire2FA } from '../actions';
+import { signIn, signInError, signInRequire2FA } from '../actions';
 
 describe('SignIn saga', () => {
     let store: MockStoreEnhanced;
@@ -23,8 +23,6 @@ describe('SignIn saga', () => {
     afterEach(() => {
         mockAxios.reset();
     });
-
-    const fake2FAError = { code: 401, message: ['Require 2fa'] };
 
     const fakeCredentials = { email: 'john.barong@gmail.com', password: '123123' };
 
@@ -46,10 +44,6 @@ describe('SignIn saga', () => {
 
     const mockSignIn = () => {
         mockAxios.onPost('/identity/sessions').reply(200, fakeUser);
-    };
-
-    const mockSignInError = () => {
-        mockAxios.onPost('/identity/sessions').reply(401, fake2FAError);
     };
 
     const error: CommonError = {

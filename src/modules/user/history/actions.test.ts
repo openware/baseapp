@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { HISTORY_DATA, HISTORY_ERROR, HISTORY_FETCH, HISTORY_RESET } from './constants';
 

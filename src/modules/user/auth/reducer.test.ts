@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { AUTH_TEST_STATE } from './constants';
 import { authReducer, initialStateAuth } from './reducer';

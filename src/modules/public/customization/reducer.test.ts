@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { customizationReducer, initialCustomizationState } from './reducer';
 import { CustomizationDataInterface } from './types';
