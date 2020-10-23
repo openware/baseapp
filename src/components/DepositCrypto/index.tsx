@@ -79,9 +79,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
                     {data ? <div className="d-none d-md-block qr-code-wrapper"><QRCode dimensions={size} data={data}/></div> : null}
                 </div>
                 <div className="cr-deposit-crypto__block">
-                    {currency === 'eth' && !isMobileDevice ? (
-                        <MetaMaskButton depositAddress={data} />
-                    ) : null}
+                    {currency === 'eth' && !isMobileDevice ? <MetaMaskButton depositAddress={data} /> : null}
                     <form className="cr-deposit-crypto__copyable">
                         <fieldset className="cr-copyable-text-field" onClick={onCopy}>
                             <CopyableTextField

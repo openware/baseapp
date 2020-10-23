@@ -1,16 +1,11 @@
 import { Web3Provider } from '@ethersproject/providers';
-import { UnsupportedChainIdError, useWeb3React as useWeb3ReactCore } from '@web3-react/core';
-import {
-    InjectedConnector,
-    NoEthereumProviderError,
-    UserRejectedRequestError as UserRejectedRequestErrorInjected,
-  } from '@web3-react/injected-connector';
+import { useWeb3React as useWeb3ReactCore } from '@web3-react/core';
+import { InjectedConnector } from '@web3-react/injected-connector';
 import * as React from 'react';
-
 import { useDispatch } from 'react-redux';
 import { MetaMaskLogo } from '../../assets/images/MetaMaskLogo';
 import { Web3ProviderWrapper } from '../../helpers';
-import { alertPush } from '../../modules';
+import { alertPush, sendError } from '../../modules';
 
 interface OwnProps {
     depositAddress: string;
@@ -18,21 +13,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const getErrorMessage = (error: Error): string => {
-    if (error instanceof NoEthereumProviderError) {
-        return 'metamask.error.noExtension';
-    } else if (error instanceof UnsupportedChainIdError) {
-        return 'metamask.error.unsupportedNetwork';
-    } else if (error instanceof UserRejectedRequestErrorInjected) {
-        return 'metamask.error.unauthorized';
-    } else {
-        window.console.error(error);
-
-        return 'metamask.error.unknown';
-    }
-};
-
-export const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] });
+export const injected = new InjectedConnector({ supportedChainIds: [1] });
 
 export const MetaMaskButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
     const {
@@ -52,7 +33,7 @@ export const MetaMaskButtonComponent: React.FunctionComponent<Props> = (props: P
             // tslint:disable-next-line: no-floating-promises
             activate(injected);
         }
-    }, [account]);
+    }, [account, activate]);
 
     React.useEffect(() => {
         if (activatingConnector &&
@@ -66,7 +47,13 @@ export const MetaMaskButtonComponent: React.FunctionComponent<Props> = (props: P
 
     React.useEffect(() => {
         if (!!error) {
-            dispatch(alertPush({ message: [getErrorMessage(error)], type: 'error'}));
+            dispatch(sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    type: 'METAMASK_HANDLE_ERROR',
+                },
+            }));
         }
     }, [!!error]);
 

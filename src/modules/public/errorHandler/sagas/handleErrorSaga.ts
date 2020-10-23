@@ -2,23 +2,35 @@ import * as Sentry from '@sentry/browser';
 import { call, put } from 'redux-saga/effects';
 import { alertPush } from '../../alert';
 import { ErrorHandlerFetch, getErrorData } from '../actions';
+import { getMetaMaskErrorMessage } from '../helpers/getMetaMaskErrorMessage';
 
 export function* handleErrorSaga(action: ErrorHandlerFetch) {
     const { processingType, extraOptions, error } = action.payload;
     const { actionError } = extraOptions;
 
-    if (extraOptions && actionError) {
+    if (extraOptions) {
         const { params, type } = extraOptions;
 
         if (type) {
             switch (type) {
+                case 'METAMASK_HANDLE_ERROR':
+                    error.message = [getMetaMaskErrorMessage(error)];
+
+
+                    if (error.message[0] === 'metamask.error.unknown') {
+                        yield call(handleConsoleError, error);
+                    }
+
+                    break;
                 default:
                     window.console.log(`Unexpected action with type: ${type}`);
                     break;
             }
         }
 
-        params ? yield put(actionError(params)) : yield put(actionError(error));
+        if (actionError) {
+            params ? yield put(actionError(params)) : yield put(actionError(error));
+        }
     }
 
     switch (processingType) {
