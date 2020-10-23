@@ -128,8 +128,11 @@ class SignUp extends React.Component<Props> {
 
     public renderCaptcha = () => {
         const { signUpError } = this.props;
+        const { confirmationError, emailError } = this.state;
 
-        return <Captcha error={signUpError} />;
+        const error = signUpError || confirmationError || emailError;
+
+        return <Captcha error={error} />;
     };
 
     public render() {
