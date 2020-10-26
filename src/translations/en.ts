@@ -882,6 +882,14 @@ export const en = {
     'password.strength.tip.letter': 'At least One upper case and lower case letter',
     'password.strength.tip.digit': 'At least One digit',
 
+    // metamask
+    'metamask.success.connected': '[MetaMask] Account connected',
+
+    'metamask.error.noExtension': '[MetaMask] No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile',
+    'metamask.error.unsupportedNetwork': '[MetaMask] You\'re connected to an unsupported network',
+    'metamask.error.unauthorized': '[MetaMask] Please authorize this website to access your Ethereum account',
+    'metamask.error.unknown': '[MetaMask] An unknown error occurred. Check the console for more details',
+
     ...nationalitiesNames,
     ...customTranslations,
     ...mobileTranslations,

@@ -358,6 +358,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         />
                     ) : null}
                     <DepositCrypto
+                        currency={currency}
                         data={walletAddress}
                         handleOnCopy={this.handleOnCopy}
                         error={error}

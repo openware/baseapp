@@ -885,6 +885,14 @@ export const ru: LangType = {
     'password.strength.tip.letter': 'At least One upper case and lower case letter',
     'password.strength.tip.digit': 'At least One digit',
 
+    // metamask
+    'metamask.success.connected': '[MetaMask] Аккаунт подключен',
+
+    'metamask.error.noExtension': '[MetaMask] Расширение браузера для Ethereum не было обнаружено, установите MetaMask',
+    'metamask.error.unsupportedNetwork': '[MetaMask] Вы подключены к неподдерживаемой сети',
+    'metamask.error.unauthorized': '[MetaMask] Пожалуйста, авторизуйте этот сайт для доступа к вашей учетной записи Ethereum',
+    'metamask.error.unknown': '[MetaMask] Произошла неизвестная ошибка. Проверьте консоль для получения дополнительных сведений',
+
     ...nationalitiesNames,
     ...mobileTranslationsRu,
 };
