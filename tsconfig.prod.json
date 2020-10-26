@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "suppressImplicitAnyIndexErrors": false,
     "noUnusedLocals": true,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "types": [
       "node",

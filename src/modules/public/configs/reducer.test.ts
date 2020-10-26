@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { configsReducer, initialConfigsState } from './reducer';
 import { Configs } from './types';
@@ -8,7 +9,7 @@ describe('configsReducer', () => {
         password_min_entropy: 0,
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

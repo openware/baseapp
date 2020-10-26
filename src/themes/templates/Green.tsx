@@ -1,4 +1,4 @@
-import { ThemeColorInterface } from './index';
+import { ThemeColorInterface } from './';
 
 export const GreenTheme: ThemeColorInterface[] = [
     { key: '--rgb-main-background-color', value: '3, 30, 34' },

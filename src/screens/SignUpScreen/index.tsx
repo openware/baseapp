@@ -12,6 +12,7 @@ import {
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { Captcha, Modal, SignUpForm } from '../../components';
 import {
     EMAIL_REGEX,
@@ -24,7 +25,6 @@ import {
     passwordErrorThirdSolution,
     setDocumentTitle,
 } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Configs,
     entropyPasswordFetch, GeetestCaptchaResponse,
@@ -128,8 +128,11 @@ class SignUp extends React.Component<Props> {
 
     public renderCaptcha = () => {
         const { signUpError } = this.props;
+        const { confirmationError, emailError } = this.state;
 
-        return <Captcha error={signUpError} />;
+        const error = signUpError || confirmationError || emailError;
+
+        return <Captcha error={error} />;
     };
 
     public render() {

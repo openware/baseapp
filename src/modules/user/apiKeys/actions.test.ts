@@ -1,14 +1,16 @@
 import * as actions from './actions';
 import {
     API_KEY_CREATE,
-    API_KEY_CREATE_FETCH, API_KEY_DELETE, API_KEY_DELETE_FETCH,
+    API_KEY_CREATE_FETCH,
+    API_KEY_DELETE,
+    API_KEY_DELETE_FETCH,
     API_KEY_UPDATE,
-    API_KEY_UPDATE_FETCH, API_KEYS_2FA_MODAL,
+    API_KEY_UPDATE_FETCH,
+    API_KEYS_2FA_MODAL,
     API_KEYS_DATA,
     API_KEYS_FETCH,
 } from './constants';
 
-// tslint:disable no-object-literal-type-assertion
 describe('Api Keys actions', () => {
     it('should check apiKeysFetch action creator', () => {
         const payload = { pageIndex: 0, limit: 25 };

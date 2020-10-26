@@ -1,10 +1,6 @@
 import { CommonError } from '../../../types';
 import { DocumentsAction } from './actions';
-import {
-    SEND_DOCUMENTS_DATA,
-    SEND_DOCUMENTS_ERROR,
-    SEND_DOCUMENTS_FETCH,
-} from './constants';
+import { SEND_DOCUMENTS_DATA, SEND_DOCUMENTS_ERROR, SEND_DOCUMENTS_FETCH } from './constants';
 
 export interface DocumentsState {
     success?: string;
@@ -33,7 +29,7 @@ export const documentsReducer = (state = initialDocumentsState, action: Document
         case SEND_DOCUMENTS_ERROR:
             return {
                 success: undefined,
-                error: action.payload,
+                error: action.error,
                 loading: false,
             };
         default:

@@ -1,4 +1,4 @@
-import { OrderEvent } from '../../types';
+import { CommonError, OrderEvent } from '../../types';
 import * as actions from './actions';
 import {
     ORDERS_CANCEL_ALL_DATA,
@@ -15,6 +15,11 @@ import {
 } from './constants';
 
 describe('Orders History actions', () => {
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     it('should check userOrdersHistoryFetch action creator', () => {
         const payload = { pageIndex: 0, type: 'all', limit: 25 };
         const expectedAction = { type: ORDERS_HISTORY_FETCH, payload };
@@ -28,8 +33,8 @@ describe('Orders History actions', () => {
     });
 
     it('should check userOrdersHistoryError action creator', () => {
-        const expectedAction = { type: ORDERS_HISTORY_ERROR };
-        expect(actions.userOrdersHistoryError()).toEqual(expectedAction);
+        const expectedAction = { type: ORDERS_HISTORY_ERROR, error };
+        expect(actions.userOrdersHistoryError(error)).toEqual(expectedAction);
     });
 
     it('should check ordersCancelAllFetch action creator', () => {
@@ -44,8 +49,8 @@ describe('Orders History actions', () => {
     });
 
     it('should check ordersCancelAllError action creator', () => {
-        const expectedAction = { type: ORDERS_CANCEL_ALL_ERROR };
-        expect(actions.ordersCancelAllError()).toEqual(expectedAction);
+        const expectedAction = { type: ORDERS_CANCEL_ALL_ERROR, error };
+        expect(actions.ordersCancelAllError(error)).toEqual(expectedAction);
     });
 
     it('should check ordersHistoryCancelFetch action creator', () => {
@@ -61,8 +66,8 @@ describe('Orders History actions', () => {
     });
 
     it('should check ordersHistoryCancelError action creator', () => {
-        const expectedAction = { type: ORDERS_HISTORY_CANCEL_ERROR };
-        expect(actions.ordersHistoryCancelError()).toEqual(expectedAction);
+        const expectedAction = { type: ORDERS_HISTORY_CANCEL_ERROR, error };
+        expect(actions.ordersHistoryCancelError(error)).toEqual(expectedAction);
     });
 
 

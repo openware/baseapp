@@ -1,13 +1,8 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import { alertPush } from '../../../index';
-import {
-    changePasswordData,
-    changePasswordError,
-    ChangePasswordFetch,
-} from '../actions';
+import { changePasswordData, changePasswordError, ChangePasswordFetch } from '../actions';
 
 const changePasswordOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -22,7 +17,12 @@ export function* changePasswordSaga(action: ChangePasswordFetch) {
         yield put(changePasswordData());
         yield put(alertPush({message: ['success.password.changed'], type: 'success'}));
     } catch (error) {
-        yield put(changePasswordError(error));
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: changePasswordError,
+            },
+        }));
     }
 }

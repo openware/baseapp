@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { customizationReducer, initialCustomizationState } from './reducer';
 import { CustomizationDataInterface } from './types';
@@ -7,7 +8,7 @@ describe('customizationReducer', () => {
         settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

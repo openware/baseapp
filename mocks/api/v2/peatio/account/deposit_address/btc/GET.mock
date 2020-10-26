@@ -5,4 +5,8 @@ Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
 Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
-{"currency":"btc","address":"2NCimTNGnbm92drX7ARcwBKw6rvr456VWym"}
+{
+    "currencies": ["btc"],
+    "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
+    "state": "active"
+}

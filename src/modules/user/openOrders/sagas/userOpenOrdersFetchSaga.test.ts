@@ -1,15 +1,13 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { Market } from '../../../../modules';
-import { alertPush } from '../../../public/alert';
-import { OrderCommon } from '../../../types';
+import { CommonError, OrderCommon } from '../../../types';
 import { userOpenOrdersData, userOpenOrdersError, userOpenOrdersFetch } from '../actions';
 
-
-describe('Open Orders Cancel', () => {
+describe('Open Orders Fetch', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
@@ -24,12 +22,6 @@ describe('Open Orders Cancel', () => {
     afterEach(() => {
         mockAxios.reset();
     });
-
-    const fakeError = {
-        code: 500,
-        message: ['Server error'],
-        type: 'error',
-    };
 
     const fakeMarket: Market = {
         id:'ethusd',
@@ -74,6 +66,10 @@ describe('Open Orders Cancel', () => {
 
     const fakeFetchPayload = { market: fakeMarket };
 
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
 
     const mockGetOpenOrders = () => {
         mockAxios.onGet(`/market/orders?market=ethusd&state=wait`).reply(200, fakeOpenOrders);
@@ -85,8 +81,13 @@ describe('Open Orders Cancel', () => {
     ];
     const expectedActionsError = [
         userOpenOrdersFetch(fakeFetchPayload),
-        userOpenOrdersError(),
-        alertPush(fakeError),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: userOpenOrdersError,
+            },
+        }),
     ];
 
     it('should fetch open orders', async () => {

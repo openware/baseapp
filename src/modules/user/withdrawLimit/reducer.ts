@@ -1,10 +1,6 @@
 import { CommonError } from '../../types';
 import { withdrawLimitAction } from './actions';
-import {
-    WITHDRAW_LIMIT_DATA,
-    WITHDRAW_LIMIT_ERROR,
-    WITHDRAW_LIMIT_FETCH,
-} from './constants';
+import { WITHDRAW_LIMIT_DATA, WITHDRAW_LIMIT_ERROR, WITHDRAW_LIMIT_FETCH } from './constants';
 import { WithdrawLimit } from './types';
 
 export interface WithdrawLimitState {
@@ -44,7 +40,7 @@ export const withdrawLimitReducer = (state = initialWithdrawLimitState, action: 
                 ...state,
                 loading: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;

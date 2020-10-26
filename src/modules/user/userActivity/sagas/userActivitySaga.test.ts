@@ -1,8 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { rootSaga } from '../../../index';
+import { CommonError } from '../../../types';
 import { getUserActivity, userActivityData, userActivityError } from '../actions';
 
 const debug = false;
@@ -40,8 +41,21 @@ describe('User activity', () => {
 
         const fakeHeaders = { total: 1 };
 
-        const fakeSuccessPayloadFirstPage = { list: payload, page: 0, total: fakeHeaders.total };
-        const fakeFetchPayloadFirstPage = { page: 0, limit: 2 };
+        const fakeSuccessPayloadFirstPage = {
+            list: payload,
+            page: 0,
+            total: fakeHeaders.total,
+        };
+
+        const fakeFetchPayloadFirstPage = {
+            page: 0,
+            limit: 2,
+        };
+
+        const error: CommonError = {
+            code: 500,
+            message: ['Server error'],
+        };
 
         const mockUserActivityFetch = () => {
             mockAxios.onGet('/resource/users/activity/all?limit=2&page=1').reply(200, payload, fakeHeaders);
@@ -51,9 +65,16 @@ describe('User activity', () => {
             getUserActivity(fakeFetchPayloadFirstPage),
             userActivityData(fakeSuccessPayloadFirstPage),
         ];
+
         const expectedActionsError = [
             getUserActivity(fakeFetchPayloadFirstPage),
-            userActivityError({ code: 500, message: ['Server error'] }),
+            sendError({
+                error,
+                processingType: 'console',
+                extraOptions: {
+                    actionError: userActivityError,
+                },
+            }),
         ];
 
         it('should fetch user activity for 1 page in success flow', async () => {

@@ -5,9 +5,9 @@ import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redu
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { SignInComponent, TwoFactorAuth } from '../../components';
 import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     RootState,
     selectAlertState,
@@ -68,12 +68,12 @@ class SignIn extends React.Component<Props, SignInState> {
         this.props.signUpRequireVerification({requireVerification: false});
     }
 
-    public componentWillReceiveProps(props: Props) {
-        if (props.isLoggedIn) {
+    public componentWillReceiveProps(nextProps: Props) {
+        if (!this.props.isLoggedIn && nextProps.isLoggedIn) {
             this.props.history.push('/wallets');
         }
-        if (props.requireEmailVerification) {
-            props.history.push('/email-verification', { email: this.state.email });
+        if (this.props.requireEmailVerification) {
+            this.props.history.push('/email-verification');
         }
     }
 

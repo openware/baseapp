@@ -10,5 +10,4 @@ export * from './identity';
 export * from './phone';
 export * from './label';
 
-
 export type KycState = AddressesState & PhoneState & IdentityState & DocumentsState & LabelState;

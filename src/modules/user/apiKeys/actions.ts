@@ -1,10 +1,14 @@
+import { CommonError } from '../../types';
 import {
     API_KEY_CREATE,
     API_KEY_CREATE_FETCH,
     API_KEY_DELETE,
-    API_KEY_DELETE_FETCH, API_KEY_UPDATE, API_KEY_UPDATE_FETCH,
+    API_KEY_DELETE_FETCH,
+    API_KEY_UPDATE,
+    API_KEY_UPDATE_FETCH,
     API_KEYS_2FA_MODAL,
     API_KEYS_DATA,
+    API_KEYS_ERROR,
     API_KEYS_FETCH,
 } from './constants';
 import { ApiKeysState } from './reducer';
@@ -84,6 +88,22 @@ export interface ApiKeys2FAModal {
     payload: ApiKeysState['modal'];
 }
 
+export interface ApiKeysError {
+    type: typeof API_KEYS_ERROR;
+    error: CommonError;
+}
+
+export type ApiKeysAction = ApiKeysFetch
+    | ApiKeysData
+    | ApiKeyCreateFetch
+    | ApiKeyCreateData
+    | ApiKeyUpdateFetch
+    | ApiKeyUpdate
+    | ApiKeyDeleteFetch
+    | ApiKeyDelete
+    | ApiKeys2FAModal
+    | ApiKeysError;
+
 export const apiKeysFetch = (payload: ApiKeysFetch['payload']): ApiKeysFetch => ({
     type: API_KEYS_FETCH,
     payload,
@@ -130,4 +150,9 @@ export const apiKeyDelete = (payload: ApiKeyDelete['payload']): ApiKeyDelete => 
 export const apiKeys2FAModal = (payload: ApiKeys2FAModal['payload']): ApiKeys2FAModal => ({
     type: API_KEYS_2FA_MODAL,
     payload,
+});
+
+export const apiKeysError = (error: CommonError): ApiKeysError => ({
+    type: API_KEYS_ERROR,
+    error,
 });

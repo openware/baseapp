@@ -1,0 +1,20 @@
+{
+  "appId": "odax.openware.work",
+  "appName": "Baseapp",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "build",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "ios": {
+    "contentInset": "always"
+  },
+  "linuxAndroidStudioPath": "/snap/bin/android-studio",
+  "cordova": {},
+  "server": {
+    "hostname": "odax.openware.work"
+  }
+}

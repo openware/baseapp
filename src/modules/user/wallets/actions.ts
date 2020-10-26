@@ -14,11 +14,7 @@ import {
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
 } from './constants';
-import {
-    Wallet,
-    WalletAddress,
-    WalletWithdrawCCY,
-} from './types';
+import { Wallet, WalletAddress, WalletWithdrawCCY } from './types';
 
 export interface WalletsFetch {
     type: typeof WALLETS_FETCH;
@@ -39,7 +35,7 @@ export interface WalletsDataByRanger {
 
 export interface WalletsError {
     type: typeof WALLETS_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface WalletsReset {
@@ -65,7 +61,7 @@ export interface WalletsAddressDataWS {
 
 export interface WalletsAddressError {
     type: typeof WALLETS_ADDRESS_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface WalletsWithdrawCcyFetch {
@@ -79,7 +75,7 @@ export interface WalletsWithdrawCcyData {
 
 export interface WalletsWithdrawCcyError {
     type: typeof WALLETS_WITHDRAW_CCY_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface SetMobileWalletUi {
@@ -115,9 +111,9 @@ export const updateWalletsDataByRanger = (payload: WalletsDataByRanger['payload'
     payload,
 });
 
-export const walletsError = (payload: WalletsError['payload']): WalletsError => ({
+export const walletsError = (error: CommonError): WalletsError => ({
     type: WALLETS_ERROR,
-    payload,
+    error,
 });
 
 export const walletsAddressFetch = (payload: WalletsAddressFetch['payload']): WalletsAddressFetch => ({
@@ -130,9 +126,9 @@ export const walletsAddressData = (payload: WalletsAddressData['payload']): Wall
     payload,
 });
 
-export const walletsAddressError = (payload: WalletsAddressError['payload']): WalletsAddressError => ({
+export const walletsAddressError = (error: CommonError): WalletsAddressError => ({
     type: WALLETS_ADDRESS_ERROR,
-    payload,
+    error,
 });
 
 export const walletsAddressDataWS = (payload: WalletsAddressDataWS['payload']): WalletsAddressDataWS => ({
@@ -149,9 +145,9 @@ export const walletsWithdrawCcyData = (): WalletsWithdrawCcyData => ({
     type: WALLETS_WITHDRAW_CCY_DATA,
 });
 
-export const walletsWithdrawCcyError = (payload: WalletsWithdrawCcyError['payload']): WalletsWithdrawCcyError => ({
+export const walletsWithdrawCcyError = (error: CommonError): WalletsWithdrawCcyError => ({
     type: WALLETS_WITHDRAW_CCY_ERROR,
-    payload,
+    error,
 });
 
 export const walletsReset = (): WalletsReset => ({

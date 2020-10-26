@@ -6,9 +6,9 @@ import {
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { Decimal, Table } from '../../components';
 import { localeDate, setTradesType } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     fetchHistory,
     Market,

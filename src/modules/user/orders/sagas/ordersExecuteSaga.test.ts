@@ -1,15 +1,12 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../..';
-import { getOrderAPI } from '../../../helpers';
-import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../helpers/jest';
-import { orderExecuteFetch } from './';
-import { OrderExecution } from './actions';
-import { ORDER_EXECUTE_DATA, ORDER_EXECUTE_ERROR, ORDER_EXECUTE_FETCH } from './constants';
+import { rootSaga, sendError } from '../../../';
+import { getOrderAPI } from '../../../../helpers';
+import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { CommonError } from '../../../types';
+import { orderExecuteData, orderExecuteError, orderExecuteFetch, OrderExecution } from '../actions';
 
-
-// tslint:disable no-any no-magic-numbers no-console
 const debug = false;
 
 describe('Orders', () => {
@@ -55,31 +52,34 @@ describe('Orders', () => {
         ord_type: 'limit',
     };
 
-    const expectedOrderExecuteFetch = {
-        type: ORDER_EXECUTE_FETCH,
-        payload: order,
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
     };
 
-    const expectedOrderExecuteData = {
-        type: ORDER_EXECUTE_DATA,
-    };
+    const expectedActionsSuccess = [
+        orderExecuteFetch(order),
+        orderExecuteData(),
+    ];
 
-    const expectedOrderExecuteError = {
-        type: ORDER_EXECUTE_ERROR,
-        payload: {
-            code: 500,
-            message: ['Server error'],
-        },
-    };
+    const expectedActionsError = [
+        orderExecuteFetch(order),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: orderExecuteError,
+            },
+        }),
+    ];
 
     it('should execute order', async () => {
         mockOrderExecute();
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === 2) {
-                    expect(actions[0]).toEqual(expectedOrderExecuteFetch);
-                    expect(actions[1]).toEqual(expectedOrderExecuteData);
+                if (actions.length === expectedActionsSuccess.length) {
+                    expect(actions).toEqual(expectedActionsSuccess);
                     resolve();
                 }
             });
@@ -94,9 +94,8 @@ describe('Orders', () => {
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === 2) {
-                    expect(actions[0]).toEqual(expectedOrderExecuteFetch);
-                    expect(actions[1]).toEqual(expectedOrderExecuteError);
+                if (actions.length === expectedActionsError.length) {
+                    expect(actions).toEqual(expectedActionsError);
                     resolve();
                 }
             });

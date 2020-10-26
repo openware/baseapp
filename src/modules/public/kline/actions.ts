@@ -1,5 +1,7 @@
+import { CommonError } from '../../types';
 import {
     KLINE_DATA,
+    KLINE_ERROR,
     KLINE_FETCH,
     KLINE_PUSH,
     KLINE_UPDATE_PERIOD,
@@ -29,7 +31,6 @@ export interface KlineFetch {
 
 export interface KlineData {
     type: typeof KLINE_DATA;
-    // tslint:disable-next-line:no-any
     payload: any;
 }
 
@@ -46,11 +47,17 @@ export interface KlineUpdatePeriod {
     payload: string;
 }
 
+export interface KlineError {
+    type: typeof KLINE_ERROR;
+    error: CommonError;
+}
+
 export type KlineActions = KlinePush
     | KlineFetch
     | KlineData
     | KlineUpdateTimeRange
-    | KlineUpdatePeriod;
+    | KlineUpdatePeriod
+    | KlineError;
 
 
 export const klinePush = (payload: KlinePush['payload']): KlinePush => ({
@@ -76,4 +83,9 @@ export const klineUpdateTimeRange = (payload: KlineUpdateTimeRange['payload']): 
 export const klineUpdatePeriod = (payload: KlineUpdatePeriod['payload']): KlineUpdatePeriod => ({
     type: KLINE_UPDATE_PERIOD,
     payload,
+});
+
+export const klineError = (error: CommonError): KlineError => ({
+    type: KLINE_ERROR,
+    error,
 });

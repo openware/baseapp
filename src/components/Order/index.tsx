@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { Decimal, OrderForm } from '../';
 import { TabPanel } from '../../components';
 import { FilterPrice } from '../../filters';
 import { getAmount, getTotalPrice } from '../../helpers';
-import { Decimal, OrderForm } from '../index';
 
 export type FormType = 'buy' | 'sell';
 

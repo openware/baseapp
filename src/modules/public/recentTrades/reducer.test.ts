@@ -1,11 +1,11 @@
 import { Cryptobase, defaultStorageLimit } from '../../../api';
 import { getTimezone, setTimezone } from '../../../helpers/timezone';
+import { CommonError } from '../../types';
 import { PublicTrade } from '../../user/history';
 import { Market } from '../markets';
 import { recentTradesData, recentTradesError, recentTradesFetch, recentTradesPush } from './actions';
 import { recentTradesReducer } from './reducer';
 import { PublicTradeEvent } from './types';
-
 
 describe('recentTrade reducer', () => {
     const market: Market = {
@@ -163,7 +163,7 @@ describe('recentTrade reducer', () => {
     });
 
     it('supports recentTradesError', () => {
-        const error = {
+        const error: CommonError = {
             code: 421,
             message: ['BADDDD!'],
         };

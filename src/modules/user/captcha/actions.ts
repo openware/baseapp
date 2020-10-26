@@ -1,7 +1,5 @@
 import { GeetestCaptchaResponse } from '../..';
-import {
-    CommonError,
-} from '../../types';
+import { CommonError } from '../../types';
 import {
     GEETEST_CAPTCHA_SUCCESS_DATA,
     GET_GEETEST_CAPTCHA_DATA,

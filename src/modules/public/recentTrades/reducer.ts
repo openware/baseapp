@@ -3,12 +3,7 @@ import { sliceArray } from '../../../helpers';
 import { CommonError } from '../../types';
 import { PublicTrade } from '../../user/history';
 import { RecentTradesActions } from './actions';
-import {
-    RECENT_TRADES_DATA,
-    RECENT_TRADES_ERROR,
-    RECENT_TRADES_FETCH,
-    RECENT_TRADES_PUSH,
-} from './constants';
+import { RECENT_TRADES_DATA, RECENT_TRADES_ERROR, RECENT_TRADES_FETCH, RECENT_TRADES_PUSH } from './constants';
 import { PublicTradeEvent } from './types';
 
 export interface RecentTradesState {
@@ -48,7 +43,7 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
             return {
                 list: [],
                 loading: false,
-                error: action.payload,
+                error: action.error,
             };
         }
         case RECENT_TRADES_FETCH: {

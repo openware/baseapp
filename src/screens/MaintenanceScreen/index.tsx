@@ -4,10 +4,10 @@ import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { BackgroundMaintenance } from '../../assets/images/BackgroundMaintenance';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import { RootState, selectPlatformAccessStatus } from '../../modules';
 
 interface ReduxProps {

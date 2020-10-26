@@ -1,4 +1,4 @@
-import { ApiKeys2FAModal, ApiKeysState, RootState } from '../../index';
+import { ApiKeys2FAModal, ApiKeysState, RootState } from '../../';
 
 export const selectApiKeys = (state: RootState): ApiKeysState['apiKeys'] => state.user.apiKeys.apiKeys;
 

@@ -183,6 +183,14 @@
         height: calc(50% - 30px) !important;
         top: calc(50% + 25px);
 
+        .cr-table {
+          min-height: 0;
+
+          &__body {
+            height: fit-content;
+          }
+        }
+
         tbody::after {
           height: 0;
         }
@@ -327,7 +335,7 @@
                 align-items: center;
                 color: var(--primary-text-color);
                 display: flex;
-                font-size: 14px;
+                font-size: 16px;
                 font-weight: bold;
                 height: 35px;
                 justify-content: flex-start;

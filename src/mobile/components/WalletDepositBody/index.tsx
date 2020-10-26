@@ -30,12 +30,8 @@ const WalletDepositBodyComponent = props => {
             intl.formatMessage({id: addressDepositError.message[0]}) :
             intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
 
-
         const walletAddress = formatCCYAddress(wallet.currency, selectedWalletAddress) || '';
 
-        const buttonLabel = `
-            ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.generate' })} ${wallet.currency.toUpperCase()} ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.address' })}
-        `;
         const title = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message1' });
         const description = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message2' });
         const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
@@ -60,10 +56,6 @@ const WalletDepositBodyComponent = props => {
                         disabled={walletAddress === ''}
                         copiableTextFieldText={`${wallet.currency.toUpperCase()} ${label}`}
                         copyButtonText={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.button'} )}
-                        handleGenerateAddress={props.handleGenerateAddress}
-                        buttonLabel={buttonLabel}
-                        isAccountActivated={isAccountActivated}
-                        generateAddressTriggered={props.generateAddressTriggered}
                     />
                 </React.Fragment>
             );

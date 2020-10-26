@@ -1,13 +1,8 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import { alertPush } from '../../../index';
-import {
-    BeneficiariesResendPin,
-    beneficiariesResendPinData,
-    beneficiariesResendPinError,
-} from '../actions';
+import { BeneficiariesResendPin, beneficiariesResendPinData, beneficiariesResendPinError } from '../actions';
 
 const config = (csrfToken?: string): RequestOptions => {
     return {
@@ -23,7 +18,12 @@ export function* beneficiariesResendPinSaga(action: BeneficiariesResendPin) {
         yield put(beneficiariesResendPinData(action.payload));
         yield put(alertPush({message: ['success.beneficiaries.resent_pin'], type: 'success'}));
     } catch (error) {
-        yield put(beneficiariesResendPinError(error));
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: beneficiariesResendPinError,
+            },
+        }));
     }
 }

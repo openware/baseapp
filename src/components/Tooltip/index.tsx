@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Tooltip as BootstrapTooltip } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 
@@ -8,10 +8,10 @@ interface Props {
     className?: string;
 }
 
-export const TooltipComponent = (props: Props) => (
-    <BootstrapTooltip id="tooltip" className="tooltip" {...props}>
+const TooltipComponent = ({ id = 'tooltip', ...rest }: Props) => (
+    <BootstrapTooltip id={`${id}`} className="tooltip" {...rest}>
         <div className="tooltip__content">
-            <FormattedMessage id={props.title} />
+            <FormattedMessage id={rest.title} />
         </div>
     </BootstrapTooltip>
 );

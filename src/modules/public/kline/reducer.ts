@@ -2,6 +2,7 @@ import { CommonState } from '../../types';
 import { KlineActions, KlineRawElement } from './actions';
 import {
     KLINE_DATA,
+    KLINE_ERROR,
     KLINE_FETCH,
     KLINE_PUSH,
     KLINE_UPDATE_PERIOD,
@@ -14,7 +15,6 @@ export interface KlineState extends CommonState {
     marketId?: string;
     period?: string;
     loading: boolean;
-    // tslint:disable-next-line:no-any
     data: any;
     range: {
         from: number;
@@ -88,6 +88,8 @@ export const klineReducer = (state = initialKlineState, action: KlineActions): K
                 ...state,
                 period: action.payload,
             };
+        case KLINE_ERROR:
+            return initialKlineState;
         default:
             return state;
     }

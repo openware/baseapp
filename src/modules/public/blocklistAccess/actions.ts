@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import {
     SEND_BLOCKLIST_ACCESS_TOKEN_DATA,
     SEND_BLOCKLIST_ACCESS_TOKEN_ERROR,
@@ -18,6 +19,7 @@ export interface SendAccessTokenData {
 
 export interface SendAccessTokenError {
     type: typeof SEND_BLOCKLIST_ACCESS_TOKEN_ERROR;
+    error: CommonError;
 }
 
 export interface SetBlocklistStatus {
@@ -41,8 +43,9 @@ export const sendAccessTokenData = (): SendAccessTokenData => ({
     type: SEND_BLOCKLIST_ACCESS_TOKEN_DATA,
 });
 
-export const sendAccessTokenError = (): SendAccessTokenError => ({
+export const sendAccessTokenError = (error: CommonError): SendAccessTokenError => ({
     type: SEND_BLOCKLIST_ACCESS_TOKEN_ERROR,
+    error,
 });
 
 export const setBlocklistStatus = (payload: SetBlocklistStatus['payload']): SetBlocklistStatus => ({

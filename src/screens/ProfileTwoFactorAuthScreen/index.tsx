@@ -5,10 +5,10 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CopyableTextField, CustomInput } from '../../components';
 import { copy, setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import { alertPush, RootState, selectMobileDeviceState } from '../../modules';
 import {
     generate2faQRFetch,
@@ -225,7 +225,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
     };
 
     private get2faAction = () => {
-        const routingState = this.props.history.location.state;
+        const routingState = this.props.history.location.state as any;
 
         return routingState ? routingState.enable2fa : false;
     };

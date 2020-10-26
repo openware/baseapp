@@ -1,5 +1,5 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
-
 
 describe('Auth actions', () => {
     it('should check logoutFetch action creator', () => {
@@ -8,12 +8,12 @@ describe('Auth actions', () => {
     });
 
     it('should check logoutError action creator', () => {
-        const payload = {
+        const error: CommonError = {
             code: 401,
             message: ['Invalid Session'],
         };
-        const expectedAction = { type: 'auth/LOGOUT_FAILURE', payload };
-        expect(actions.logoutError(payload)).toEqual(expectedAction);
+        const expectedAction = { type: 'auth/LOGOUT_FAILURE', error };
+        expect(actions.logoutError(error)).toEqual(expectedAction);
     });
 
     it('should check signIn action creator', () => {
@@ -26,21 +26,21 @@ describe('Auth actions', () => {
     });
 
     it('should check signInError action creator', () => {
-        const payload = {
+        const error: CommonError = {
             code: 500,
             message: ['Server error'],
         };
-        const expectedAction = { type: 'auth/SIGN_IN_ERROR', payload };
-        expect(actions.signInError(payload)).toEqual(expectedAction);
+        const expectedAction = { type: 'auth/SIGN_IN_ERROR', error };
+        expect(actions.signInError(error)).toEqual(expectedAction);
     });
 
     it('should check signUpError action creator', () => {
-        const payload = {
+        const error: CommonError = {
             code: 500,
             message: ['Server error'],
         };
-        const expectedAction = { type: 'auth/SIGN_UP_ERROR', payload };
-        expect(actions.signUpError(payload)).toEqual(expectedAction);
+        const expectedAction = { type: 'auth/SIGN_UP_ERROR', error };
+        expect(actions.signUpError(error)).toEqual(expectedAction);
     });
 
     it('should check signInRequire2FA action creator', () => {

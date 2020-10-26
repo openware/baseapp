@@ -1,7 +1,10 @@
 export const AUTH_SIGN_IN_FETCH = 'auth/SIGN_IN_FETCH';
+export const AUTH_SIGN_IN_DATA = 'auth/SIGN_IN_DATA';
 export const AUTH_SIGN_IN_ERROR = 'auth/SIGN_IN_ERROR';
 export const AUTH_SIGN_IN_REQUIRE_2FA = 'auth/SIGN_IN_REQUIRE_2FA';
+export const AUTH_SIGN_IN_REQUIRE_2FA_RESET = 'auth/AUTH_SIGN_IN_REQUIRE_2FA_RESET';
 
+export const AUTH_SIGN_UP_DATA = 'auth/SIGN_UP_DATA';
 export const AUTH_SIGN_UP_FETCH = 'auth/SIGN_UP_FETCH';
 export const AUTH_SIGN_UP_ERROR = 'auth/SIGN_UP_ERROR';
 export const AUTH_SIGN_UP_REQUIRE_VERIFICATION = 'auth/SIGN_UP_REQUIRE_VERIFICATION';

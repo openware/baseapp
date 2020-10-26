@@ -1,8 +1,6 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
-import {
-    beneficiariesReducer,
-    initialBeneficiariesState,
-} from './reducer';
+import { beneficiariesReducer, initialBeneficiariesState } from './reducer';
 import { Beneficiary } from './types';
 
 describe('Beneficiaries reducer', () => {
@@ -35,7 +33,7 @@ describe('Beneficiaries reducer', () => {
         },
     ];
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
