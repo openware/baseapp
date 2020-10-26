@@ -825,6 +825,9 @@ export const ru: LangType = {
     'account.withdraw.invalid_otp': 'Неверный 2FA',
     'account.withdraw.disabled_api': 'Снятие API отключено',
 
+    'account.beneficiary.invalid_pin': 'Invalid beneficiary activation pin',
+    'account.beneficiary.cant_resend_within_1_minute': 'Can\'t resend activation pin within 1 minute',
+
     'market.market.doesnt_exist': 'Рынок не существует',
     'market.order.invalid_state': 'Неверное состояние депозита',
     'market.order.invalid_limit': 'Неверный лимит',
