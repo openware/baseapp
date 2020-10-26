@@ -33,7 +33,7 @@ export const MetaMaskButtonComponent: React.FunctionComponent<Props> = (props: P
             // tslint:disable-next-line: no-floating-promises
             activate(injected);
         }
-    }, [account, activate]);
+    }, [account, activate, dispatch]);
 
     React.useEffect(() => {
         if (activatingConnector &&
@@ -43,7 +43,7 @@ export const MetaMaskButtonComponent: React.FunctionComponent<Props> = (props: P
             dispatch(alertPush({ message: ['metamask.success.connected'], type: 'success'}));
             setActivatingConnector(undefined);
         }
-    }, [activatingConnector, connector, account]);
+    }, [activatingConnector, connector, account, dispatch]);
 
     React.useEffect(() => {
         if (!!error) {
@@ -55,7 +55,9 @@ export const MetaMaskButtonComponent: React.FunctionComponent<Props> = (props: P
                 },
             }));
         }
-    }, [!!error]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [!!error, dispatch]);
 
     return (
         <div className="pg-metamask">
