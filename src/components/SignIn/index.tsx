@@ -1,5 +1,5 @@
 import cr from 'classnames';
-import * as React from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -38,36 +38,34 @@ export interface SignInProps {
     changeEmail: (value: string) => void;
 }
 
-const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
+const SignIn: React.FC<SignInProps> = ({
+    email,
+    emailError,
+    emailPlaceholder,
+    password,
+    passwordError,
+    passwordPlaceholder,
+    isLoading,
+    onSignUp,
+    image,
+    labelSignIn,
+    labelSignUp,
+    emailLabel,
+    passwordLabel,
+    emailFocused,
+    passwordFocused,
+    onForgotPassword,
+    forgotPasswordLabel,
+    refreshError,
+    onSignIn,
+    isFormValid,
+    handleChangeFocusField,
+    changePassword,
+    changeEmail,
+}) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const history = useHistory();
     const { formatMessage } = useIntl();
-
-    const {
-        email,
-        emailError,
-        emailPlaceholder,
-        password,
-        passwordError,
-        passwordPlaceholder,
-        isLoading,
-        onSignUp,
-        image,
-        labelSignIn,
-        labelSignUp,
-        emailLabel,
-        passwordLabel,
-        emailFocused,
-        passwordFocused,
-        onForgotPassword,
-        forgotPasswordLabel,
-        refreshError,
-        onSignIn,
-        isFormValid,
-        handleChangeFocusField,
-        changePassword,
-        changeEmail,
-    } = props;
 
     const isValidForm = React.useCallback(() => {
         const isEmailValid = email.match(EMAIL_REGEX);
@@ -75,17 +73,26 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
         return email && isEmailValid && password;
     }, [email, password]);
 
-    const handleChangeEmail = React.useCallback((value: string) => {
-        changeEmail(value);
-    }, [changeEmail]);
+    const handleChangeEmail = React.useCallback(
+        (value: string) => {
+            changeEmail(value);
+        },
+        [changeEmail]
+    );
 
-    const handleChangePassword = React.useCallback((value: string) => {
-        changePassword(value);
-    }, [changePassword]);
+    const handleChangePassword = React.useCallback(
+        (value: string) => {
+            changePassword(value);
+        },
+        [changePassword]
+    );
 
-    const handleFieldFocus = React.useCallback((field: string) => {
-        handleChangeFocusField(field);
-    }, [handleChangeFocusField]);
+    const handleFieldFocus = React.useCallback(
+        (field: string) => {
+            handleChangeFocusField(field);
+        },
+        [handleChangeFocusField]
+    );
 
     const handleSubmitForm = React.useCallback(() => {
         refreshError();
@@ -96,81 +103,85 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
         isFormValid();
     }, [isFormValid]);
 
-    const handleClick = React.useCallback((label?: string, e?: React.FormEvent<HTMLInputElement>) => {
-        if (e) {
-            e.preventDefault();
-        }
-        if (!isValidForm()) {
-            handleValidateForm();
-        } else {
-            handleSubmitForm();
-        }
-    }, [handleSubmitForm, handleValidateForm, isValidForm]);
+    const handleClick = React.useCallback(
+        (e?: MouseEvent) => {
+            if (e) {
+                e.preventDefault();
+            }
+            if (!isValidForm()) {
+                handleValidateForm();
+            } else {
+                handleSubmitForm();
+            }
+        },
+        [handleSubmitForm, handleValidateForm, isValidForm]
+    );
 
-    const handleEnterPress = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
+    const handleEnterPress = React.useCallback(
+        (event: React.KeyboardEvent<HTMLInputElement>) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
 
-            handleClick();
-        }
-    }, [handleClick]);
+                handleClick();
+            }
+        },
+        [handleClick]
+    );
 
-    const renderForgotButton = React.useMemo(() =>
-        <div className="cr-sign-in-form__bottom-section">
-            <div
-                className="cr-sign-in-form__bottom-section-password"
-                onClick={() => onForgotPassword(email)}
-            >
-                {forgotPasswordLabel || 'Forgot your password?'}
+    const renderForgotButton = React.useMemo(
+        () => (
+            <div className="cr-sign-in-form__bottom-section">
+                <div className="cr-sign-in-form__bottom-section-password" onClick={() => onForgotPassword(email)}>
+                    {forgotPasswordLabel || 'Forgot your password?'}
+                </div>
             </div>
-        </div>, [forgotPasswordLabel, onForgotPassword, email]);
+        ),
+        [forgotPasswordLabel, onForgotPassword, email]
+    );
 
-    const renderRegister = React.useMemo(() =>
-        <div className="pg-sign-in-screen__register">
-            <span>
-                {formatMessage({ id: 'page.header.signIN.noAccountYet' })}
-                <span
-                    onClick={() => history.push('/signup')}
-                    className="pg-sign-in-screen__register-button">
-                    {formatMessage({ id: 'page.body.landing.header.button3' })}
+    const renderRegister = React.useMemo(
+        () => (
+            <div className="pg-sign-in-screen__register">
+                <span>
+                    {formatMessage({ id: 'page.header.signIN.noAccountYet' })}
+                    <span onClick={() => history.push('/signup')} className="pg-sign-in-screen__register-button">
+                        {formatMessage({ id: 'page.body.landing.header.button3' })}
+                    </span>
                 </span>
-            </span>
-        </div>, [formatMessage, history]);
-
-    const emailGroupClass = React.useMemo(() => cr('cr-sign-in-form__group', {
-        'cr-sign-in-form__group--focused': emailFocused,
-    }), [emailFocused]);
-
-    const passwordGroupClass = React.useMemo(() => cr('cr-sign-in-form__group', {
-        'cr-sign-in-form__group--focused': passwordFocused,
-    }), [passwordFocused]);
-
-    const logo = React.useMemo(() => image ? (
-        <h1 className="cr-sign-in-form__title">
-            <img className="cr-sign-in-form__image" src={image} alt="logo" />
-        </h1>
-    ) : null, [image]);
+            </div>
+        ),
+        [formatMessage, history]
+    );
 
     return (
         <form>
             <div className="cr-sign-in-form" onKeyPress={handleEnterPress}>
-                {
-                    !isMobileDevice && <div className="cr-sign-in-form__options-group">
-                      <div className="cr-sign-in-form__option">
-                        <div className="cr-sign-in-form__option-inner __selected">
-                            {labelSignIn ? labelSignIn : 'Sign In'}
+                {!isMobileDevice && (
+                    <div className="cr-sign-in-form__options-group">
+                        <div className="cr-sign-in-form__option">
+                            <div className="cr-sign-in-form__option-inner __selected">
+                                {labelSignIn ? labelSignIn : 'Sign In'}
+                            </div>
                         </div>
-                      </div>
-                      <div className="cr-sign-in-form__option">
-                        <div className="cr-sign-in-form__option-inner cr-sign-in-form__tab-signup" onClick={onSignUp}>
-                            {labelSignUp ? labelSignUp : 'Sign Up'}
+                        <div className="cr-sign-in-form__option">
+                            <div
+                                className="cr-sign-in-form__option-inner cr-sign-in-form__tab-signup"
+                                onClick={onSignUp}>
+                                {labelSignUp ? labelSignUp : 'Sign Up'}
+                            </div>
                         </div>
-                      </div>
                     </div>
-                }
+                )}
                 <div className="cr-sign-in-form__form-content">
-                    {logo}
-                    <div className={emailGroupClass}>
+                    {image ? (
+                        <h1 className="cr-sign-in-form__title">
+                            <img className="cr-sign-in-form__image" src={image} alt="logo" />
+                        </h1>
+                    ) : null}
+                    <div
+                        className={cr('cr-sign-in-form__group', {
+                            'cr-sign-in-form__group--focused': emailFocused,
+                        })}>
                         <CustomInput
                             type="email"
                             label={emailLabel || 'Email'}
@@ -184,7 +195,10 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
                         />
                         {emailError && <div className={'cr-sign-in-form__error'}>{emailError}</div>}
                     </div>
-                    <div className={passwordGroupClass}>
+                    <div
+                        className={cr('cr-sign-in-form__group', {
+                            'cr-sign-in-form__group--focused': passwordFocused,
+                        })}>
                         <CustomInput
                             type="password"
                             label={passwordLabel || 'Password'}
@@ -206,9 +220,8 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
                             disabled={isLoading || !email.match(EMAIL_REGEX) || !password}
                             onClick={handleClick as any}
                             size="lg"
-                            variant="primary"
-                        >
-                            {isLoading ? 'Loading...' : (labelSignIn ? labelSignIn : 'Sign in')}
+                            variant="primary">
+                            {isLoading ? 'Loading...' : labelSignIn ? labelSignIn : 'Sign in'}
                         </Button>
                     </div>
                     {!isMobileDevice && renderForgotButton}

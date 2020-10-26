@@ -1,5 +1,5 @@
 import cr from 'classnames';
-import * as React from 'react';
+import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ export interface SignUpFormProps {
     handleChangeConfirmPassword: (value: string) => void;
     handleChangeRefId: (value: string) => void;
     hasConfirmed: boolean;
-    clickCheckBox: (e) => void;
+    clickCheckBox: (e: any) => void;
     validateForm: () => void;
     emailError: string;
     passwordError: string;
@@ -61,48 +61,54 @@ export interface SignUpFormProps {
     translate: (id: string) => string;
 }
 
-const SignUpFormComponent = (props: SignUpFormProps) => {
+const SignUpFormComponent: React.FC<SignUpFormProps> = ({
+    email,
+    confirmPassword,
+    refId,
+    onSignIn,
+    image,
+    isLoading,
+    labelSignIn,
+    labelSignUp,
+    emailLabel,
+    confirmPasswordLabel,
+    passwordFocused,
+    referalCodeLabel,
+    termsMessage,
+    captchaType,
+    geetestCaptchaSuccess,
+    hasConfirmed,
+    reCaptchaSuccess,
+    currentPasswordEntropy,
+    passwordPopUp,
+    password,
+    passwordLabel,
+    emailError,
+    translate,
+    confirmationError,
+    emailFocused,
+    passwordErrorFirstSolved,
+    passwordErrorSecondSolved,
+    confirmPasswordFocused,
+    handleChangePassword,
+    passwordErrorThirdSolved,
+    handleFocusPassword,
+    minPasswordEntropy,
+    refIdFocused,
+    validateForm,
+    onSignUp,
+    handleChangeEmail,
+    handleFocusEmail,
+    handleChangeConfirmPassword,
+    handleFocusConfirmPassword,
+    handleChangeRefId,
+    handleFocusRefId,
+    clickCheckBox,
+    renderCaptcha,
+}) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const history = useHistory();
     const { formatMessage } = useIntl();
-
-    const {
-        email,
-        confirmPassword,
-        refId,
-        onSignIn,
-        image,
-        isLoading,
-        labelSignIn,
-        labelSignUp,
-        emailLabel,
-        confirmPasswordLabel,
-        passwordFocused,
-        referalCodeLabel,
-        termsMessage,
-        captchaType,
-        geetestCaptchaSuccess,
-        hasConfirmed,
-        reCaptchaSuccess,
-        currentPasswordEntropy,
-        passwordPopUp,
-        password,
-        passwordLabel,
-        emailError,
-        translate,
-        confirmationError,
-        emailFocused,
-        passwordErrorFirstSolved,
-        passwordErrorSecondSolved,
-        confirmPasswordFocused,
-        handleChangePassword,
-        passwordErrorThirdSolved,
-        handleFocusPassword,
-        minPasswordEntropy,
-        refIdFocused,
-        validateForm,
-        onSignUp,
-    } = props;
 
     const disableButton = React.useCallback((): boolean => {
         if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {
@@ -116,7 +122,16 @@ const SignUpFormComponent = (props: SignUpFormProps) => {
         }
 
         return false;
-    }, [captchaType, confirmPassword, email, geetestCaptchaSuccess, hasConfirmed, isLoading, password, reCaptchaSuccess]);
+    }, [
+        captchaType,
+        confirmPassword,
+        email,
+        geetestCaptchaSuccess,
+        hasConfirmed,
+        isLoading,
+        password,
+        reCaptchaSuccess,
+    ]);
 
     const renderPasswordInput = React.useCallback(() => {
         const passwordGroupClass = cr('cr-sign-up-form__group', {
@@ -137,7 +152,7 @@ const SignUpFormComponent = (props: SignUpFormProps) => {
                     classNameInput="cr-sign-up-form__input"
                     autoFocus={false}
                 />
-                {password ?
+                {password ? (
                     <PasswordStrengthMeter
                         minPasswordEntropy={minPasswordEntropy}
                         currentPasswordEntropy={currentPasswordEntropy}
@@ -147,7 +162,8 @@ const SignUpFormComponent = (props: SignUpFormProps) => {
                         passwordErrorThirdSolved={passwordErrorThirdSolved}
                         passwordPopUp={passwordPopUp}
                         translate={translate}
-                    /> : null}
+                    />
+                ) : null}
             </div>
         );
     }, [
@@ -174,89 +190,83 @@ const SignUpFormComponent = (props: SignUpFormProps) => {
         const isPasswordValid = password.match(PASSWORD_REGEX);
         const isConfirmPasswordValid = password === confirmPassword;
 
-        return (email && isEmailValid) &&
-            (password && isPasswordValid) &&
-            (confirmPassword && isConfirmPasswordValid);
+        return email && isEmailValid && password && isPasswordValid && confirmPassword && isConfirmPasswordValid;
     }, [confirmPassword, email, password]);
 
-    const handleClick = React.useCallback((e?: React.FormEvent<HTMLInputElement>) => {
-        if (e) {
-            e.preventDefault();
-        }
+    const handleClick = React.useCallback(
+        (e?: React.FormEvent<HTMLInputElement>) => {
+            if (e) {
+                e.preventDefault();
+            }
 
-        if (!isValidForm()) {
-            validateForm();
-        } else {
-            handleSubmitForm();
-        }
-    }, [handleSubmitForm, isValidForm, validateForm]);
+            if (!isValidForm()) {
+                validateForm();
+            } else {
+                handleSubmitForm();
+            }
+        },
+        [handleSubmitForm, isValidForm, validateForm]
+    );
 
-    const handleEnterPress = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
+    const handleEnterPress = React.useCallback(
+        (event: React.KeyboardEvent<HTMLInputElement>) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
 
-            handleClick();
-        }
-    }, [handleClick]);
+                handleClick();
+            }
+        },
+        [handleClick]
+    );
 
     const renderLogIn = React.useCallback(() => {
-        return <div className="pg-sign-up-screen__login">
-            <span>
-                {formatMessage({ id: 'page.header.signUp.alreadyRegistered' })}
-                <span
-                    onClick={() => history.push('/signin')}
-                    className="pg-sign-up-screen__login-button">
-                    {formatMessage({ id: 'page.mobile.header.signIn' })}
+        return (
+            <div className="pg-sign-up-screen__login">
+                <span>
+                    {formatMessage({ id: 'page.header.signUp.alreadyRegistered' })}
+                    <span onClick={() => history.push('/signin')} className="pg-sign-up-screen__login-button">
+                        {formatMessage({ id: 'page.mobile.header.signIn' })}
+                    </span>
                 </span>
-            </span>
-        </div>;
+            </div>
+        );
     }, [history, formatMessage]);
-
-    const emailGroupClass = React.useMemo(() => cr('cr-sign-up-form__group', {
-        'cr-sign-up-form__group--focused': emailFocused,
-    }), [emailFocused]);
-
-    const confirmPasswordGroupClass = React.useMemo(() => cr('cr-sign-up-form__group', {
-        'cr-sign-up-form__group--focused': confirmPasswordFocused,
-    }), [confirmPasswordFocused]);
-
-    const refIdGroupClass = React.useMemo(() => cr('cr-sign-up-form__group', {
-        'cr-sign-up-form__group--focused': refIdFocused,
-    }), [refIdFocused]);
-
-    const logo = React.useMemo(() => image ? (
-        <h1 className="cr-sign-up-form__title">
-            <img className="cr-sign-up-form__image" src={image} alt="logo" />
-        </h1>
-    ) : null, [image]);
 
     return (
         <form>
             <div className="cr-sign-up-form" onKeyPress={handleEnterPress}>
-                {!isMobileDevice && <div className="cr-sign-up-form__options-group">
-                  <div className="cr-sign-up-form__option">
-                    <div className="cr-sign-up-form__option-inner cr-sign-in-form__tab-signin" onClick={onSignIn}>
-                        {labelSignIn || 'Sign In'}
+                {!isMobileDevice && (
+                    <div className="cr-sign-up-form__options-group">
+                        <div className="cr-sign-up-form__option">
+                            <div
+                                className="cr-sign-up-form__option-inner cr-sign-in-form__tab-signin"
+                                onClick={onSignIn}>
+                                {labelSignIn || 'Sign In'}
+                            </div>
+                        </div>
+                        <div className="cr-sign-up-form__option">
+                            <div className="cr-sign-up-form__option-inner __selected">{labelSignUp || 'Sign Up'}</div>
+                        </div>
                     </div>
-                  </div>
-                  <div className="cr-sign-up-form__option">
-                    <div className="cr-sign-up-form__option-inner __selected">
-                        {labelSignUp || 'Sign Up'}
-                    </div>
-                  </div>
-                </div>
-                }
+                )}
                 <div className="cr-sign-up-form__form-content">
-                    {logo}
-                    <div className={emailGroupClass}>
+                    {image ? (
+                        <h1 className="cr-sign-up-form__title">
+                            <img className="cr-sign-up-form__image" src={image} alt="logo" />
+                        </h1>
+                    ) : null}
+                    <div
+                        className={cr('cr-sign-up-form__group', {
+                            'cr-sign-up-form__group--focused': emailFocused,
+                        })}>
                         <CustomInput
                             type="email"
                             label={emailLabel || 'Email'}
                             placeholder={emailLabel || 'Email'}
                             defaultLabel="Email"
-                            handleChangeInput={props.handleChangeEmail}
+                            handleChangeInput={handleChangeEmail}
                             inputValue={email}
-                            handleFocusInput={props.handleFocusEmail}
+                            handleFocusInput={handleFocusEmail}
                             classNameLabel="cr-sign-up-form__label"
                             classNameInput="cr-sign-up-form__input"
                             autoFocus={!isMobileDevice}
@@ -264,36 +274,42 @@ const SignUpFormComponent = (props: SignUpFormProps) => {
                         {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
                     </div>
                     {renderPasswordInput()}
-                    <div className={confirmPasswordGroupClass}>
+                    <div
+                        className={cr('cr-sign-up-form__group', {
+                            'cr-sign-up-form__group--focused': confirmPasswordFocused,
+                        })}>
                         <CustomInput
                             type="password"
                             label={confirmPasswordLabel || 'Confirm Password'}
                             placeholder={confirmPasswordLabel || 'Confirm Password'}
                             defaultLabel="Confirm Password"
-                            handleChangeInput={props.handleChangeConfirmPassword}
+                            handleChangeInput={handleChangeConfirmPassword}
                             inputValue={confirmPassword}
-                            handleFocusInput={props.handleFocusConfirmPassword}
+                            handleFocusInput={handleFocusConfirmPassword}
                             classNameLabel="cr-sign-up-form__label"
                             classNameInput="cr-sign-up-form__input"
                             autoFocus={false}
                         />
                         {confirmationError && <div className={'cr-sign-up-form__error'}>{confirmationError}</div>}
                     </div>
-                    <div className={refIdGroupClass}>
+                    <div
+                        className={cr('cr-sign-up-form__group', {
+                            'cr-sign-up-form__group--focused': refIdFocused,
+                        })}>
                         <CustomInput
                             type="text"
                             label={referalCodeLabel || 'Referral code'}
                             placeholder={referalCodeLabel || 'Referral code'}
                             defaultLabel="Referral code"
-                            handleChangeInput={props.handleChangeRefId}
+                            handleChangeInput={handleChangeRefId}
                             inputValue={refId}
-                            handleFocusInput={props.handleFocusRefId}
+                            handleFocusInput={handleFocusRefId}
                             classNameLabel="cr-sign-up-form__label"
                             classNameInput="cr-sign-up-form__input"
                             autoFocus={false}
                         />
                     </div>
-                    <Form className="cr-sign-up-form__group" onClick={e => props.clickCheckBox(e)}>
+                    <Form className="cr-sign-up-form__group" onClick={clickCheckBox}>
                         <Form.Check
                             type="checkbox"
                             custom
@@ -302,17 +318,16 @@ const SignUpFormComponent = (props: SignUpFormProps) => {
                             label={termsMessage ? termsMessage : 'I  agree all statements in terms of service'}
                         />
                     </Form>
-                    {props.renderCaptcha}
+                    {renderCaptcha}
                     <div className="cr-sign-up-form__button-wrapper">
                         <Button
                             block={true}
                             type="button"
                             disabled={disableButton()}
-                            onClick={e => handleClick(e as any)}
+                            onClick={(e) => handleClick(e as any)}
                             size="lg"
-                            variant="primary"
-                        >
-                            {isLoading ? 'Loading...' : (labelSignUp ? labelSignUp : 'Sign up')}
+                            variant="primary">
+                            {isLoading ? 'Loading...' : labelSignUp ? labelSignUp : 'Sign up'}
                         </Button>
                     </div>
                     {isMobileDevice && renderLogIn()}

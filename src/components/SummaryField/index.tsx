@@ -20,18 +20,13 @@ export interface SummaryFieldProps {
 /**
  * Component to display currency amount with specific label.
  */
-export const SummaryFieldComponent: React.FunctionComponent<SummaryFieldProps> = props => {
-    const { message, className, content } = props;
+export const SummaryFieldComponent: React.FC<SummaryFieldProps> = ({ message, className, content }) => {
     const cx = classnames('cr-summary-field', className);
 
     return (
         <div className={cx}>
-            <span className="cr-summary-field-message">
-            {message}
-          </span>
-            <span className="cr-summary-field-content">
-            {content}
-          </span>
+            <span className="cr-summary-field-message">{message}</span>
+            <span className="cr-summary-field-content">{content}</span>
         </div>
     );
 };

@@ -18,9 +18,7 @@ interface QRCodeProps {
 /**
  * Component for displaying QR code.
  */
-const QRCodeComponent: React.FunctionComponent<QRCodeProps> = (props: QRCodeProps) => {
-    const { data = '', dimensions } = props;
-
+const QRCodeComponent: React.FC<QRCodeProps> = ({ data = '', dimensions }) => {
     return (
         <div className="qr-code">
             <QRCodeGenerator

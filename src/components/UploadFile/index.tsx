@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import * as React from 'react';
+import React, { useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { changeElementPosition } from '../../helpers';
@@ -15,7 +15,7 @@ interface OwnPropsTranslations {
 }
 
 interface OwnProps extends OwnPropsTranslations {
-    handleUploadScan: (e) => void;
+    handleUploadScan: (e: any) => void;
     id?: string;
     exampleImagePath?: string;
     uploadedFile?: string;
@@ -23,44 +23,38 @@ interface OwnProps extends OwnPropsTranslations {
 
 type Props = OwnProps;
 
-const UploadFileComponent: React.FC<Props> = (props: Props) => {
-    const [isMouseTooltipVisible, setIsMouseTooltipVisible] = React.useState<boolean>(false);
+const UploadFileComponent: React.FC<Props> = ({
+    title,
+    label,
+    buttonText,
+    sizesText,
+    formatsText,
+    tipText,
+    exampleImagePath,
+    id,
+    isMobileDevice,
+    uploadedFile,
+    handleUploadScan,
+}) => {
+    const [isMouseTooltipVisible, setIsMouseTooltipVisible] = useState<boolean>(false);
 
-    const {
-        title,
-        label,
-        buttonText,
-        sizesText,
-        formatsText,
-        tipText,
-        exampleImagePath,
-        id,
-        isMobileDevice,
-        uploadedFile,
-    } = props;
-
-    const tooltipClass = React.useMemo(() => classnames('pg-upload-file__tooltip tooltip-hover', {
-        'tooltip-hover--visible': isMouseTooltipVisible,
-    }), [isMouseTooltipVisible]);
-
-    const handleToggleTooltipVisible = React.useCallback(() => {
-        setIsMouseTooltipVisible(prevState => !prevState);
+    const handleToggleTooltipVisible = useCallback(() => {
+        setIsMouseTooltipVisible((prevState) => !prevState);
     }, []);
 
-    const handleHoverTooltipIcon = React.useCallback(() => {
+    const handleHoverTooltipIcon = useCallback(() => {
         changeElementPosition('pg-upload-file__tooltip', 0, -100, 20);
         handleToggleTooltipVisible();
     }, [handleToggleTooltipVisible]);
 
-    const renderTitle = React.useCallback(() => {
+    const renderTitle = useCallback(() => {
         return (
             <div className="pg-upload-file__content__title">
                 {tipText ? (
                     <div
                         className="pg-upload-file__content__title__tip-icon"
                         onMouseEnter={handleHoverTooltipIcon}
-                        onMouseLeave={handleToggleTooltipVisible}
-                    >
+                        onMouseLeave={handleToggleTooltipVisible}>
                         <TipIcon />
                     </div>
                 ) : null}
@@ -83,38 +77,45 @@ const UploadFileComponent: React.FC<Props> = (props: Props) => {
                         name="files[]"
                         type="file"
                         id={id || 'file'}
-                        onChange={props.handleUploadScan}
+                        onChange={handleUploadScan}
                     />
                     <div className="pg-upload-file__content__form__info">
                         {exampleImagePath && isMobileDevice ? (
                             <div className="pg-upload-file__doc-image">
-                                <img
-                                    src={exampleImagePath}
-                                    alt={`${label} example`}
-                                />
+                                <img src={exampleImagePath} alt={`${label} example`} />
                             </div>
                         ) : null}
                         <div>
-                            {buttonText ? <span className="pg-upload-file__content__form__info__button btn-primary">{buttonText}</span> : null}
-                            {sizesText ? <span className="pg-upload-file__content__form__info__text">{sizesText}</span> : null}
-                            {formatsText ? <span className="pg-upload-file__content__form__info__text">{formatsText}</span> : null}
-                            {uploadedFile ? <span className="pg-upload-file__content__form__info__text file">{uploadedFile}</span> : null}
+                            {buttonText ? (
+                                <span className="pg-upload-file__content__form__info__button btn-primary">
+                                    {buttonText}
+                                </span>
+                            ) : null}
+                            {sizesText ? (
+                                <span className="pg-upload-file__content__form__info__text">{sizesText}</span>
+                            ) : null}
+                            {formatsText ? (
+                                <span className="pg-upload-file__content__form__info__text">{formatsText}</span>
+                            ) : null}
+                            {uploadedFile ? (
+                                <span className="pg-upload-file__content__form__info__text file">{uploadedFile}</span>
+                            ) : null}
                         </div>
                     </div>
                 </div>
             </div>
             {exampleImagePath && !isMobileDevice ? (
                 <div className="pg-upload-file__doc-image">
-                    <img
-                        src={exampleImagePath}
-                        alt={`${label} example`}
-                    />
+                    <img src={exampleImagePath} alt={`${label} example`} />
                 </div>
             ) : null}
             {tipText ? (
-                <span className={tooltipClass}>
-                        <FormattedMessage id={tipText} />
-                    </span>
+                <span
+                    className={classnames('pg-upload-file__tooltip tooltip-hover', {
+                        'tooltip-hover--visible': isMouseTooltipVisible,
+                    })}>
+                    <FormattedMessage id={tipText} />
+                </span>
             ) : null}
         </div>
     );

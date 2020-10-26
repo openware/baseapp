@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 export interface PercentageButtonProps {
     /**
@@ -16,10 +16,12 @@ export interface PercentageButtonProps {
     onClick: (index: number) => void;
 }
 
-export const PercentageButtonComponent: React.FunctionComponent<PercentageButtonProps> = (props: PercentageButtonProps) => {
-  return (
-      <button className={props.className || 'cr-percentage-button'} onClick={() => props.onClick(props.value)}>{`${props.value * 100}%`}</button>
-  );
+export const PercentageButtonComponent: React.FC<PercentageButtonProps> = ({ className, onClick, value }) => {
+    return (
+        <button className={className || 'cr-percentage-button'} onClick={() => onClick(value)}>{`${
+            value * 100
+        }%`}</button>
+    );
 };
 
 export const PercentageButton = React.memo(PercentageButtonComponent);
