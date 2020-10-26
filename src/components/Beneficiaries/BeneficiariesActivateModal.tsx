@@ -109,7 +109,7 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
                     <span className="confirmation-modal__content__text">{formatMessage({ id: 'page.body.wallets.beneficiaries.confirmationModal.body.text' })}</span>
                 </div>
                 {renderConfirmationModalBodyItem('confirmationModalCode')}
-                <div className="cr-email-form__button-wrapper">
+                <div className="cr-email-form__button-wrapper cr-email-form__button-wrapper--double">
                     <Button
                         onClick={handleResendConfirmationCode}
                         size="lg"
