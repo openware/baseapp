@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useCallback } from 'react';
 import { WalletItem, WalletItemProps } from '../WalletItem';
 
 export interface WalletListProps {
@@ -24,41 +24,38 @@ const style: React.CSSProperties = {
 /**
  * Component to display list of user wallets. It is scrollable and reacts on WalletItem click.
  */
-export class WalletList extends React.Component<WalletListProps> {
-    public itemState = (i: number) => {
-        return this.props.activeIndex === i;
-    };
-
-    public makeWalletItem = (props: WalletItemProps, i: number) => (
-        <li
-            key={i}
-            style={style}
-            onClick={this.handleClick.bind(this, i, props)}
-        >
-            <WalletItem
-                key={i}
-                {...{
-                    ...props,
-                    active: this.itemState(i),
-                    currency: removeAlt(props.currency),
-                }}
-            />
-        </li>
+export const WalletList: React.FC<WalletListProps> = ({
+    onWalletSelectionChange,
+    onActiveIndexChange,
+    activeIndex,
+    walletItems,
+}) => {
+    const handleClick = useCallback(
+        (i: number, p: WalletItemProps) => {
+            if (onWalletSelectionChange) {
+                onWalletSelectionChange(p);
+            }
+            if (onActiveIndexChange) {
+                onActiveIndexChange(i);
+            }
+        },
+        [onWalletSelectionChange, onActiveIndexChange]
     );
-    public handleClick = (i: number, props: WalletItemProps) => {
-        if (this.props.onWalletSelectionChange) {
-            this.props.onWalletSelectionChange(props);
-        }
-        if (this.props.onActiveIndexChange) {
-            this.props.onActiveIndexChange(i);
-        }
-    };
 
-    public render() {
-        return (
-            <ul className="cr-wallet-list">
-                {this.props.walletItems.map(this.makeWalletItem)}
-            </ul>
-        );
-    }
-}
+    return (
+        <ul className="cr-wallet-list">
+            {walletItems.map((p: WalletItemProps, i: number) => (
+                <li key={i} style={style} onClick={() => handleClick(i, p)}>
+                    <WalletItem
+                        key={i}
+                        {...{
+                            ...p,
+                            active: activeIndex === i,
+                            currency: removeAlt(p.currency),
+                        }}
+                    />
+                </li>
+            ))}
+        </ul>
+    );
+};
