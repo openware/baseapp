@@ -117,13 +117,7 @@
         "no-mergeable-namespace": true,
         "prefer-const": true,
         "object-literal-sort-keys": false,
-        "trailing-comma": [
-            true,
-            {
-                "multiline": "always",
-                "singleline": "never"
-            }
-        ],
+        "trailing-comma": false,
         "array-type": [true, "array-simple"],
         "arrow-return-shorthand": true,
         "binary-expression-operand-order": true,
