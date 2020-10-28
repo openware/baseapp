@@ -63,12 +63,6 @@ const LockIcon = () => {
     );
 };
 
-const renderLocked = (fixed: number, lockedAmount?: string) => {
-    return lockedAmount ? (
-        <div className="cr-wallet-item__amount-locked">
-            <LockIcon/> <Decimal fixed={fixed} thousSep=",">{lockedAmount.toString()}</Decimal>
-        </div>) : '';
-};
 
 /**
  * Component for displaying information about wallet, including address and amount of currency.
@@ -100,7 +94,12 @@ export const WalletItem: React.FunctionComponent<WalletItemProps> = (props: Wall
                     {currency}
                 </span>
                 <span className="cr-wallet-item__balance-locked">
-                    {renderLocked(fixed, locked)}
+                    {
+                        locked ? (
+                            <div className="cr-wallet-item__amount-locked">
+                                <LockIcon/> <Decimal fixed={fixed} thousSep=",">{locked.toString()}</Decimal>
+                            </div>) : ''
+                    }
                 </span>
             </span>
         </div>
