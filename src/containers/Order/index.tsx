@@ -119,13 +119,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         }
     }
 
-    public getListOfTranslations = () => {
-        return {
-            labelFirst: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.buy' }),
-            labelSecond: this.props.intl.formatMessage({ id: 'page.body.trade.header.newOrder.content.tabs.sell' }),
-        };
-    };
-
     public render() {
         const {
             asks,
@@ -306,11 +299,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     };
 
     private translate = (id: string, value?: any) => this.props.intl.formatMessage({ id }, { ...value });
-
-    private getOrderTypes = [
-        this.translate('page.body.trade.header.newOrder.content.orderType.limit'),
-        this.translate('page.body.trade.header.newOrder.content.orderType.market'),
-    ];
 }
 
 const mapStateToProps = (state: RootState) => ({
