@@ -1,7 +1,6 @@
 import cr from 'classnames';
 import * as React from 'react';
 import { CustomInput } from '../../components';
-import {areEqualProps} from '../../helpers/areEqualProps';
 
 export interface OrderInputProps {
     /**
@@ -54,32 +53,18 @@ export interface OrderInputProps {
  */
 
 export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((props: OrderInputProps) => {
-    const {
-        className,
-        currency,
-        handleChangeValue,
-        handleFocusInput,
-        isFocused,
-        isWrong,
-        label,
-        onKeyPress,
-        placeholder,
-        value,
-    } = props;
-    const cx = cr('cr-order-input', className);
+    const { currency, className, isFocused, label, placeholder, value, handleChangeValue, onKeyPress, handleFocusInput } = props;
 
-    const fieldsetFocusedClass = cr('cr-order-input__fieldset', {
-        'cr-order-input__fieldset--focused': isFocused,
-        'cr-order-input__fieldset--wrong': isWrong,
-    });
+    const fieldsetFocusedClass = React.useMemo(() => cr('cr-order-input__fieldset', {
+        'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
+    }), [isFocused]);
 
-    const cryptoIconClass = cr('cr-order-input__crypto-icon', {
+    const cryptoIconClass = React.useMemo(() => cr('cr-order-input__crypto-icon',{
         'cr-order-input__fieldset--focused': isFocused,
-        'cr-order-input__fieldset--wrong': isWrong,
-    });
+    }), [isFocused]);
 
     return (
-        <div className={cx}>
+        <div className={cr('cr-order-input', className)}>
             <fieldset className={fieldsetFocusedClass}>
                 <CustomInput
                     type="number"
@@ -97,4 +82,4 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
             </div>
         </div>
     );
-}, areEqualProps);
+});

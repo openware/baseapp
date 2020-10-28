@@ -392,6 +392,15 @@ describe('Helpers', () => {
             expect(helpers.truncateMiddle('return correct value', 10)).toBe('retu...lue');
             expect(helpers.truncateMiddle('return correct value', 30)).toBe('return correct value');
             expect(helpers.truncateMiddle('return correct value', 10, '****')).toBe('ret****lue');
+    });
+
+    describe('hasDuplicates', () => {
+        it('should return true if a value is in array', () => {
+            expect(helpers.hasDuplicates([1, 2, 3], 2)).toBeTruthy();
+        });
+
+        it('should return false if a value is not in array', () => {
+            expect(helpers.hasDuplicates([1, 2, 3], 5)).toBeFalsy();
         });
     });
 });
