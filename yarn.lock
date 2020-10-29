@@ -1274,17 +1274,19 @@
   dependencies:
     tslib "^2.0.1"
 
-"@formatjs/intl-displaynames@^1.2.0":
-  version "1.2.10"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-displaynames/-/intl-displaynames-1.2.10.tgz#bb9625cca90b099978cd967c6a98aaf4e23fc878"
+"@formatjs/intl-displaynames@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-displaynames/-/intl-displaynames-3.4.1.tgz#b63276045065761cd9d4a2548f337fb3a430a898"
   dependencies:
-    "@formatjs/intl-utils" "^2.3.0"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    tslib "^2.0.1"
 
-"@formatjs/intl-listformat@^1.4.1":
-  version "1.4.8"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-listformat/-/intl-listformat-1.4.8.tgz#70b81005e7dcf74329cb5b314a940ce5fce36cd0"
+"@formatjs/intl-listformat@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-listformat/-/intl-listformat-4.3.1.tgz#273747c42c6d6fd4e16e3588be3dc2743a68d77e"
   dependencies:
-    "@formatjs/intl-utils" "^2.3.0"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    tslib "^2.0.1"
 
 "@formatjs/intl-pluralrules@^3.2.5":
   version "3.5.1"
@@ -1293,28 +1295,25 @@
     "@formatjs/ecma402-abstract" "^1.2.6"
     tslib "^2.0.1"
 
-"@formatjs/intl-relativetimeformat@^4.5.9":
-  version "4.5.16"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-4.5.16.tgz#7449cef3213dd66d25924ca41f125f87b58df95a"
-  dependencies:
-    "@formatjs/intl-utils" "^2.3.0"
-
-"@formatjs/intl-relativetimeformat@^7.0.0":
+"@formatjs/intl-relativetimeformat@^7.0.0", "@formatjs/intl-relativetimeformat@^7.3.1":
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-7.3.1.tgz#eb90e856f89c1367245b3ece53bb8854458c7c2e"
   dependencies:
     "@formatjs/ecma402-abstract" "^1.2.6"
     tslib "^2.0.1"
 
-"@formatjs/intl-unified-numberformat@^3.2.0":
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-unified-numberformat/-/intl-unified-numberformat-3.3.7.tgz#9995a24568908188e716d81a1de5b702b2ee00e2"
+"@formatjs/intl@^1.3.8":
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-1.3.8.tgz#de7ce5119e5c04d70398681d8471f1d2d12f7b7b"
   dependencies:
-    "@formatjs/intl-utils" "^2.3.0"
-
-"@formatjs/intl-utils@^2.2.0", "@formatjs/intl-utils@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-2.3.0.tgz#2dc8c57044de0340eb53a7ba602e59abf80dc799"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    "@formatjs/intl-displaynames" "^3.4.1"
+    "@formatjs/intl-listformat" "^4.3.1"
+    "@formatjs/intl-relativetimeformat" "^7.3.1"
+    fast-memoize "^2.5.2"
+    intl-messageformat "^9.3.12"
+    intl-messageformat-parser "^6.0.11"
+    tslib "^2.0.1"
 
 "@hapi/address@2.x.x":
   version "2.1.4"
@@ -1993,7 +1992,7 @@
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
 
-"@types/invariant@^2.2.31", "@types/invariant@^2.2.33":
+"@types/invariant@^2.2.33":
   version "2.2.34"
   resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.34.tgz#05e4f79f465c2007884374d4795452f995720bbe"
 
@@ -5438,6 +5437,10 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
+fast-memoize@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/fast-memoize/-/fast-memoize-2.5.2.tgz#79e3bb6a4ec867ea40ba0e7146816f6cdce9b57e"
+
 fast-safe-stringify@^2.0.7:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.7.tgz#124aa885899261f68aedb42a7c080de9da608743"
@@ -6563,22 +6566,20 @@ internal-slot@^1.0.2:
     has "^1.0.3"
     side-channel "^1.0.2"
 
-intl-format-cache@^4.2.21:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/intl-format-cache/-/intl-format-cache-4.3.1.tgz#484d31a9872161e6c02139349b259a6229ade377"
-
-intl-messageformat-parser@^3.6.4:
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-3.6.4.tgz#5199d106d816c3dda26ee0694362a9cf823978fb"
+intl-messageformat-parser@^6.0.11:
+  version "6.0.11"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-6.0.11.tgz#b5769990f9eb8c015ef726cf4d782a9445544993"
   dependencies:
-    "@formatjs/intl-unified-numberformat" "^3.2.0"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    tslib "^2.0.1"
 
-intl-messageformat@^7.8.4:
-  version "7.8.4"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-7.8.4.tgz#c29146a06b9cd26662978a4d95fff2b133e3642f"
+intl-messageformat@^9.3.12:
+  version "9.3.12"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-9.3.12.tgz#a5a3f02b7cb275ac1f5bc8127a86763c24fc1255"
   dependencies:
-    intl-format-cache "^4.2.21"
-    intl-messageformat-parser "^3.6.4"
+    fast-memoize "^2.5.2"
+    intl-messageformat-parser "^6.0.11"
+    tslib "^2.0.1"
 
 invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
@@ -10474,22 +10475,22 @@ react-hot-loader@*, react-hot-loader@^4.3.4:
     shallowequal "^1.1.0"
     source-map "^0.7.3"
 
-react-intl@^3.12.1:
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-3.12.1.tgz#e9a783ea20302e9da25e4eda59e5593a43d2ec80"
+react-intl@^5.8.8:
+  version "5.8.8"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.8.8.tgz#8f292c96bbc764b2cb937a5e2a7f2c6bd3d08e28"
   dependencies:
-    "@formatjs/intl-displaynames" "^1.2.0"
-    "@formatjs/intl-listformat" "^1.4.1"
-    "@formatjs/intl-relativetimeformat" "^4.5.9"
-    "@formatjs/intl-unified-numberformat" "^3.2.0"
-    "@formatjs/intl-utils" "^2.2.0"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    "@formatjs/intl" "^1.3.8"
+    "@formatjs/intl-displaynames" "^3.4.1"
+    "@formatjs/intl-listformat" "^4.3.1"
+    "@formatjs/intl-relativetimeformat" "^7.3.1"
     "@types/hoist-non-react-statics" "^3.3.1"
-    "@types/invariant" "^2.2.31"
+    fast-memoize "^2.5.2"
     hoist-non-react-statics "^3.3.2"
-    intl-format-cache "^4.2.21"
-    intl-messageformat "^7.8.4"
-    intl-messageformat-parser "^3.6.4"
+    intl-messageformat "^9.3.12"
+    intl-messageformat-parser "^6.0.11"
     shallow-equal "^1.2.1"
+    tslib "^2.0.1"
 
 react-is@^16.12.0, react-is@^16.13.1, react-is@^16.3.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.13.1"

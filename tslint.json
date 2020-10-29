@@ -62,7 +62,7 @@
         "no-internal-module": true,
         "no-namespace": [true, "allow-declarations"],
         "no-parameter-reassignment": true,
-        "only-arrow-functions": true,
+        "only-arrow-functions": false,
         "prefer-for-of": true,
         "promise-function-async": true,
         "await-promise": true,

@@ -121,11 +121,13 @@ export const SignInScreen: React.FC = ({}) => {
         if (!isEmailValid) {
             setEmailError(formatMessage({ id: ERROR_INVALID_EMAIL }));
             setPasswordError('');
+
             return;
         }
         if (!password) {
             setEmailError('');
             setPasswordError(formatMessage({ id: ERROR_EMPTY_PASSWORD }));
+            
             return;
         }
     }, [email, password]);
