@@ -127,7 +127,7 @@ export const SignInScreen: React.FC = ({}) => {
         if (!password) {
             setEmailError('');
             setPasswordError(formatMessage({ id: ERROR_EMPTY_PASSWORD }));
-            
+
             return;
         }
     }, [email, password]);
