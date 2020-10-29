@@ -25,7 +25,7 @@ interface ProfileVerificationProps {
     user: User;
 }
 
-type Props =  DispatchProps & ProfileVerificationProps & ReduxProps;
+type Props = DispatchProps & ProfileVerificationProps & ReduxProps;
 
 class ProfileVerificationComponent extends React.Component<Props> {
     public componentDidMount() {
@@ -51,8 +51,7 @@ class ProfileVerificationComponent extends React.Component<Props> {
                     <OverlayTrigger
                         placement="bottom"
                         delay={{ show: 250, hide: 400 }}
-                        overlay={Tooltip({ title: `page.body.profile.verification.progress.tooltip.${step}.pending`})}
-                    >
+                        overlay={<Tooltip title={`page.body.profile.verification.progress.tooltip.${step}.pending`} />}>
                         <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--pending">
                             <FormattedMessage id={`page.body.profile.verification.progress.level`} />
                             <span>&nbsp;{index + 1}</span>
@@ -65,8 +64,9 @@ class ProfileVerificationComponent extends React.Component<Props> {
                     <OverlayTrigger
                         placement="bottom"
                         delay={{ show: 250, hide: 400 }}
-                        overlay={Tooltip({ title: `page.body.profile.verification.progress.tooltip.${step}.rejected`})}
-                    >
+                        overlay={
+                            <Tooltip title={`page.body.profile.verification.progress.tooltip.${step}.rejected`} />
+                        }>
                         <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--rejected">
                             <FormattedMessage id={`page.body.profile.verification.progress.level`} />
                             <span>&nbsp;{index + 1}</span>
@@ -86,8 +86,7 @@ class ProfileVerificationComponent extends React.Component<Props> {
                     <OverlayTrigger
                         placement="bottom"
                         delay={{ show: 250, hide: 400 }}
-                        overlay={Tooltip({ title: `page.body.profile.verification.progress.tooltip.${step}.default`})}
-                    >
+                        overlay={<Tooltip title={`page.body.profile.verification.progress.tooltip.${step}.default`} />}>
                         <div className="pg-profile-page-verification__progress-bar__step pg-profile-page-verification__progress-bar__step--active">
                             <FormattedMessage id={`page.body.profile.verification.progress.level`} />
                             <span>&nbsp;{index + 1}</span>
@@ -111,7 +110,9 @@ class ProfileVerificationComponent extends React.Component<Props> {
         switch (targetLabelStatus) {
             case 'verified':
                 return (
-                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--verified">
+                    <div
+                        key={index}
+                        className="pg-profile-page-verification__step pg-profile-page-verification__step--verified">
                         <div className="pg-profile-page-verification__step__info">
                             <div className="pg-profile-page-verification__step__info__title">
                                 <span>{index + 1}.&nbsp;</span>
@@ -131,7 +132,9 @@ class ProfileVerificationComponent extends React.Component<Props> {
             case 'pending':
             case 'submitted':
                 return (
-                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--pending">
+                    <div
+                        key={index}
+                        className="pg-profile-page-verification__step pg-profile-page-verification__step--pending">
                         <div className="pg-profile-page-verification__step__info">
                             <div className="pg-profile-page-verification__step__info__title">
                                 <span>{index + 1}.&nbsp;</span>
@@ -149,7 +152,9 @@ class ProfileVerificationComponent extends React.Component<Props> {
                 );
             case 'rejected':
                 return (
-                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--rejected">
+                    <div
+                        key={index}
+                        className="pg-profile-page-verification__step pg-profile-page-verification__step--rejected">
                         <div className="pg-profile-page-verification__step__info">
                             <div className="pg-profile-page-verification__step__info__title">
                                 <span>{index + 1}.&nbsp;</span>
@@ -162,10 +167,13 @@ class ProfileVerificationComponent extends React.Component<Props> {
                         <OverlayTrigger
                             placement="bottom"
                             delay={{ show: 250, hide: 400 }}
-                            overlay={Tooltip({ title: `page.body.profile.verification.${labelToCheck}.rejected.tooltip`})}
-                        >
+                            overlay={
+                                <Tooltip title={`page.body.profile.verification.${labelToCheck}.rejected.tooltip`} />
+                            }>
                             <div className="pg-profile-page-verification__step__label pg-profile-page-verification__step__label--rejected">
-                                <Link to="/confirm"><FormattedMessage id="page.body.profile.verification.reverify" /></Link>
+                                <Link to="/confirm">
+                                    <FormattedMessage id="page.body.profile.verification.reverify" />
+                                </Link>
                                 <CrossIcon />
                             </div>
                         </OverlayTrigger>
@@ -173,7 +181,9 @@ class ProfileVerificationComponent extends React.Component<Props> {
                 );
             case 'blocked':
                 return (
-                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--blocked">
+                    <div
+                        key={index}
+                        className="pg-profile-page-verification__step pg-profile-page-verification__step--blocked">
                         <div className="pg-profile-page-verification__step__info">
                             <div className="pg-profile-page-verification__step__info__title">
                                 <span>{index + 1}.&nbsp;</span>
@@ -184,13 +194,17 @@ class ProfileVerificationComponent extends React.Component<Props> {
                             </div>
                         </div>
                         <div className="pg-profile-page-verification__step__button pg-profile-page-verification__step__button--blocked">
-                            <Link to="/confirm"><FormattedMessage id="page.body.profile.verification.verify" /></Link>
+                            <Link to="/confirm">
+                                <FormattedMessage id="page.body.profile.verification.verify" />
+                            </Link>
                         </div>
                     </div>
                 );
             default:
                 return (
-                    <div key={index} className="pg-profile-page-verification__step pg-profile-page-verification__step--active">
+                    <div
+                        key={index}
+                        className="pg-profile-page-verification__step pg-profile-page-verification__step--active">
                         <div className="pg-profile-page-verification__step__info">
                             <div className="pg-profile-page-verification__step__info__title">
                                 <span>{index + 1}.&nbsp;</span>
@@ -201,7 +215,9 @@ class ProfileVerificationComponent extends React.Component<Props> {
                             </div>
                         </div>
                         <div className="pg-profile-page-verification__step__button pg-profile-page-verification__step__button--active">
-                            <Link to="/confirm"><FormattedMessage id="page.body.profile.verification.verify" /></Link>
+                            <Link to="/confirm">
+                                <FormattedMessage id="page.body.profile.verification.verify" />
+                            </Link>
                         </div>
                     </div>
                 );
@@ -223,12 +239,20 @@ class ProfileVerificationComponent extends React.Component<Props> {
     }
 
     private handleCheckLabel = (labels: Label[], labelToCheck: string) => {
-        const targetLabel = labels.length && labels.find((label: Label) => label.key === labelToCheck && label.scope === 'private');
+        const targetLabel =
+            labels.length && labels.find((label: Label) => label.key === labelToCheck && label.scope === 'private');
         let targetLabelStatus = targetLabel ? targetLabel.value : '';
         const indexOfPrevStep = kycSteps().indexOf(labelToCheck) - 1;
 
         if (indexOfPrevStep !== -1) {
-            const prevStepPassed = Boolean(labels.find((label: Label) => label.key === kycSteps()[indexOfPrevStep] && label.value === 'verified' && label.scope === 'private'));
+            const prevStepPassed = Boolean(
+                labels.find(
+                    (label: Label) =>
+                        label.key === kycSteps()[indexOfPrevStep] &&
+                        label.value === 'verified' &&
+                        label.scope === 'private'
+                )
+            );
 
             if (!prevStepPassed) {
                 targetLabelStatus = 'blocked';
@@ -239,14 +263,13 @@ class ProfileVerificationComponent extends React.Component<Props> {
     };
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     user: selectUserInfo(state),
     labels: selectLabelData(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        labelFetch: () => dispatch(labelFetch()),
-    });
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    labelFetch: () => dispatch(labelFetch()),
+});
 
 export const ProfileVerification = connect(mapStateToProps, mapDispatchProps)(ProfileVerificationComponent);

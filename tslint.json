@@ -12,7 +12,7 @@
         "cyclomatic-complexity": false,
         "no-mixed-operators": false,
         "no-unexpected-multiline": false,
-        "arrow-parens": [true, "ban-single-arg-parens"],
+        "arrow-parens": false,
         "interface-name": [true, "never-prefix"],
         "indent": [true, "spaces", 4],
         "react/jsx-indent": [4, 4],
