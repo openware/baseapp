@@ -13,13 +13,13 @@ describe('Change color theme reducer', () => {
         expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('light'))).toEqual(expectedState);
         expect(localStorage.getItem('colorTheme')).toEqual('light');
         expectedState = {
-            color: 'black',
+            color: 'dark',
             chartRebuild: false,
             sideBarActive: false,
             marketSelectorActive: false,
             isMobileDevice: false,
         };
-        expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('black'))).toEqual(expectedState);
-        expect(localStorage.getItem('colorTheme')).toEqual('black');
+        expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('dark'))).toEqual(expectedState);
+        expect(localStorage.getItem('colorTheme')).toEqual('dark');
     });
 });
