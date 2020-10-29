@@ -16,7 +16,7 @@ import {
     signUpRequireVerification,
 } from '../../modules';
 
-export const SignInScreen: React.FC = ({}) => {
+export const SignInScreen: React.FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { formatMessage } = useIntl();
@@ -40,19 +40,19 @@ export const SignInScreen: React.FC = ({}) => {
         setDocumentTitle('Sign In');
         dispatch(signInError({ code: 0, message: [''] }));
         dispatch(signUpRequireVerification({ requireVerification: false }));
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (requireEmailVerification) {
             history.push('/email-verification');
         }
-    }, [requireEmailVerification]);
+    }, [requireEmailVerification, history]);
 
     useEffect(() => {
         if (isLoggedIn) {
             history.push('/wallets');
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, history]);
 
     const refreshError = useCallback(() => {
         setEmailError('');
@@ -71,7 +71,7 @@ export const SignInScreen: React.FC = ({}) => {
                 password,
             })
         );
-    }, []);
+    }, [dispatch, email, password]);
 
     const handle2FASignIn = useCallback(() => {
         if (!otpCode) {
@@ -85,7 +85,7 @@ export const SignInScreen: React.FC = ({}) => {
                 })
             );
         }
-    }, []);
+    }, [dispatch, otpCode, email, password]);
 
     const handleSignUp = useCallback(() => {
         history.push('/signup');
@@ -130,7 +130,7 @@ export const SignInScreen: React.FC = ({}) => {
 
             return;
         }
-    }, [email, password]);
+    }, [email, password, formatMessage]);
 
     const handleChangeEmailValue = useCallback((value: string) => {
         setEmail(value);
@@ -142,7 +142,7 @@ export const SignInScreen: React.FC = ({}) => {
 
     const handleClose = useCallback(() => {
         dispatch(signInRequire2FA({ require2fa: false }));
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className="pg-sign-in-screen">
