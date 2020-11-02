@@ -1,14 +1,18 @@
-import webpack from 'webpack';
+import { ExtendedAPIPlugin, DefinePlugin } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import merge from 'webpack-merge';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import path from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import JavaScriptObfuscator from 'webpack-obfuscator';
+import CompressionPlugin from 'compression-webpack-plugin';
 
 const rootDir = path.resolve(__dirname, '..');
 const BUILD_DIR = path.resolve(rootDir, 'build');
 
 import commonConfig from './common';
+
+const domain = process.env.BUILD_DOMAIN ? process.env.BUILD_DOMAIN.split(',') : [];
 
 const config = merge(commonConfig, {
     mode: 'production',
@@ -19,7 +23,8 @@ const config = merge(commonConfig, {
         publicPath: '/',
     },
     plugins: [
-        new webpack.ExtendedAPIPlugin(),
+        new ExtendedAPIPlugin(),
+        new DefinePlugin({ 'process.env.BUILD_EXPIRE': JSON.stringify(process.env.BUILD_EXPIRE) }),
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
@@ -30,6 +35,14 @@ const config = merge(commonConfig, {
         }),
         new CopyWebpackPlugin({
             patterns: [{ from: 'public' }],
+        }),
+        new JavaScriptObfuscator({ rotateUnicodeArray: true, domainLock: domain }),
+        new CompressionPlugin({
+            filename: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: /\.js$|\.css$|\.html$/,
+            threshold: 10240,
+            minRatio: 0.8,
         }),
     ],
     module: {
