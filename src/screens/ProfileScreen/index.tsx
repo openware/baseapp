@@ -57,4 +57,4 @@ class ProfileComponent extends React.Component<RouterProps, IntlProps> {
 export const ProfileScreen = compose(
     injectIntl,
     withRouter,
-)(ProfileComponent) as React.ComponentClass;
+)(ProfileComponent as any) as React.ComponentClass;

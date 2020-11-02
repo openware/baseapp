@@ -1,30 +1,36 @@
 {
     "compilerOptions": {
-        "sourceMap": false,
-        "sourceRoot": null,
-        "rootDir": "src",
-        "allowJs": false,
-        "strict": true,
-        "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true,
-        "suppressImplicitAnyIndexErrors": false,
-        "noUnusedLocals": false,
-        "allowSyntheticDefaultImports": true,
+        "module": "commonjs",
+        "target": "es6",
+        "lib": ["dom", "dom.iterable", "es6", "scripthost", "webworker", "es5", "es7", "es2017"],
+        "types": ["node", "jest", "webpack-env"],
+        "jsx": "react",
         "experimentalDecorators": true,
-        "types": ["node", "jest"],
-        "typeRoots": ["./node_modules/@types"],
-        "target": "es5",
-        "module": "esnext",
-        "lib": ["es2015", "dom", "es2017"],
-        "skipLibCheck": true,
-        "esModuleInterop": false,
         "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "noEmit": true,
-        "jsx": "preserve",
+        "sourceMap": true,
+        "allowJs": true,
+        "baseUrl": "./",
+        "strict": false,
+        "paths": {
+            "lib/*": ["src/lib/*"],
+            "src/*": ["src/*"]
+        },
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
         "noImplicitAny": false,
-        "isolatedModules": true
+        "typeRoots": ["./node_modules/@types"]
     },
-    "include": ["./src/assets", "./src", "./images.d.ts"],
-    "exclude": ["./node_modules", "./src/*.test.*", "./src/charting_library"]
+    "exclude": [
+        "node_modules",
+        "public",
+        "mocks",
+        "__mocks__",
+        "scripts",
+        "spec",
+        "jest.config.js",
+        "webpack",
+        "./src/*.test.*",
+        "./src/charting_library"
+    ]
 }

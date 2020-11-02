@@ -176,7 +176,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                 <CreatedApiKeyModal
                     showModal={showCreatedApiKeyModal}
                     closeCreatedApiKeyModal={() => setShowCreatedApiKeyModal(false)}
-                    apiKey={apiKeysModal.apiKey}
+                    apiKey={(apiKeysModal as any).apiKey}
                 />
                 <TwoFactorModal
                     showModal={show2FAModal}
