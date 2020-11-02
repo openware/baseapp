@@ -31,10 +31,7 @@ export const DEFAULT_KYC_STEPS = ['email', 'phone', 'profile', 'document', 'addr
 
 export const DEFAULT_MARKET_HEADERS = ['Pair', 'Price', '24h Change'];
 
-export const DEFAULT_ORDER_TYPES: DropdownElem[] = [
-    'Limit',
-    'Market',
-];
+export const DEFAULT_ORDER_TYPES: DropdownElem[] = ['Limit', 'Market'];
 export const AMOUNT_PERCENTAGE_ARRAY = [0.25, 0.5, 0.75, 1];
 
 export const DEFAULT_MARKET = {

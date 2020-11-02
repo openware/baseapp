@@ -6,15 +6,18 @@
 /spec
 
 /src/api
+/src/app
 /src/assets
 /src/charting_library
 /src/components
-/src/constants
+# /src/constants
 /src/containers
 /src/custom
+/src/filters
 /src/helpers
+/src/hooks
+/src/mobile
 /src/modules
-
 /src/routes
 /src/screens
 /src/styles
