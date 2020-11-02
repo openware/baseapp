@@ -3,14 +3,12 @@ import * as React from 'react';
 import { CryptoIcon, CryptoIconProps } from '.';
 
 const defaultProps: CryptoIconProps = {
-    code: 'BTC',
+    code: 'btc',
 };
 
-const setup = (props: Partial<CryptoIconProps> = {}) =>
-    shallow(<CryptoIcon {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<CryptoIconProps> = {}) => shallow(<CryptoIcon {...{ ...defaultProps, ...props }} />);
 
 describe('CryptoIcon', () => {
-
     it('should render', () => {
         const wrapper = setup();
         expect(wrapper).toMatchSnapshot();
@@ -28,8 +26,12 @@ describe('CryptoIcon', () => {
     });
 
     it('should have correct path to svg images', () => {
-        const icon = setup();
-        expect(icon.find('img').prop('src')).toEqual(require('../../../node_modules/cryptocurrency-icons/svg/color/btc.svg'));
+        const wrapper = setup();
+        console.log(
+            require('cryptocurrency-icons/svg/color/btc.svg'),
+            require('cryptocurrency-icons/svg/color/generic.svg')
+        );
+        expect(wrapper.find('img').prop('src')).toEqual(require('cryptocurrency-icons/svg/color/btc.svg'));
     });
 
     it('should pass along supplied className', () => {
@@ -37,5 +39,4 @@ describe('CryptoIcon', () => {
         const wrapper = setup({ className });
         expect(wrapper.hasClass(className)).toBeTruthy();
     });
-
 });

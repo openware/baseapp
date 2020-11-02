@@ -8,19 +8,19 @@ export interface CryptoIconProps {
 }
 
 const findIcon = (code: string): string => {
-  try {
-    return require(`../../../node_modules/cryptocurrency-icons/svg/color/${code.toLowerCase()}.svg`);
-  } catch (err){
-    return require('../../../node_modules/cryptocurrency-icons/svg/color/generic.svg');
-  }
+    try {
+        return require(`cryptocurrency-icons/svg/color/${code.toLowerCase()}.svg`);
+    } catch (err) {
+        return require('cryptocurrency-icons/svg/color/generic.svg');
+    }
 };
 
-export const CryptoIcon: React.FunctionComponent<CryptoIconProps> = props => {
+export const CryptoIcon: React.FunctionComponent<CryptoIconProps> = (props) => {
     const { code, className = '', children } = props;
 
     return (
         <span className={cx('cr-crypto-icon', className)}>
-          <img src={findIcon(code)} alt="crypto-icon"/> {children}
+            <img src={findIcon(code)} alt="crypto-icon" /> {children}
         </span>
     );
 };

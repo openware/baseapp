@@ -1,3 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`QRCode renders correctly 1`] = `ShallowWrapper {}`;
+exports[`QRCode renders correctly 1`] = `
+<div
+  className="qr-code"
+>
+  <[object Object]
+    bgColor="#FFFFFF"
+    fgColor="#000000"
+    includeMargin={false}
+    level="L"
+    renderAs="svg"
+    size={118}
+    value="sevaerverv343"
+  />
+</div>
+`;

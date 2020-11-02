@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Markets should render 1`] = `ShallowWrapper {}`;
-
-exports[`Markets should render empty data 1`] = `ShallowWrapper {}`;
