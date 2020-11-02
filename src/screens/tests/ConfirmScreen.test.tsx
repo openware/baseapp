@@ -1,26 +1,19 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { connect, Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { TestComponentWrapper } from 'lib/test';
 import { IntlProps } from '../../';
-import { rootReducer } from '../../modules';
 import { ConfirmScreen } from '../ConfirmScreen';
-
-
-const store = createStore(rootReducer);
-const ConfirmTab = connect()(ConfirmScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
-        <Provider store={store}>
-            <ConfirmTab/>
-        </Provider>,
+        <TestComponentWrapper>
+            <ConfirmScreen />
+        </TestComponentWrapper>
     );
 
 describe('ConfirmScreen test', () => {
     it('should render', () => {
-        const wrapper = setup();
+        const wrapper = setup().render();
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper).toBeDefined();
     });
 });

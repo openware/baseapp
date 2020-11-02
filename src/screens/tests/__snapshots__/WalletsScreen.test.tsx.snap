@@ -1,35 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WalletsScreen should render 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "store": Object {
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-        Symbol(observable): [Function],
-      },
-      "subscription": Subscription {
-        "handleChangeWrapper": [Function],
-        "listeners": Object {
-          "notify": [Function],
-        },
-        "onStateChange": [Function],
-        "parentSub": undefined,
-        "store": Object {
-          "dispatch": [Function],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
-          Symbol(observable): [Function],
-        },
-        "unsubscribe": null,
-      },
-    }
-  }
->
-  <Connect(injectIntl(withRouter(Connect(WalletsComponent)))) />
-</ContextProvider>
+Array [
+  "0",
+  <div
+    class="pg-container pg-wallet"
+  >
+    <div
+      class="text-center"
+    />
+    <div
+      class="row no-gutters pg-wallet__tabs-content pg-wallet__tabs-content-height"
+    >
+      <div
+        class="col-md-5 col-sm-12 col-12 "
+      >
+        <ul
+          class="cr-wallet-list"
+        />
+      </div>
+      <div
+        class="pg-wallet__tabs col-md-7 col-sm-12 col-12 d-none d-md-block"
+      >
+        <div
+          class="cr-tab-panel"
+        >
+          <div
+            class="cr-tab-panel__navigation-container draggable-container"
+          >
+            <div
+              class="cr-tab-panel__navigation-container-navigation"
+              role="tablist"
+            >
+              <div
+                class="cr-tab cr-tab__active"
+                role="tab"
+                tabindex="0"
+              >
+                <span
+                  class="cr-tab__pointer"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="cr-tab-content cr-tab-content__active"
+          />
+        </div>
+      </div>
+    </div>
+  </div>,
+]
 `;

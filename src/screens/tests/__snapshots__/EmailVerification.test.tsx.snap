@@ -1,35 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EmailVerificationScreen should render 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "store": Object {
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-        Symbol(observable): [Function],
-      },
-      "subscription": Subscription {
-        "handleChangeWrapper": [Function],
-        "listeners": Object {
-          "notify": [Function],
-        },
-        "onStateChange": [Function],
-        "parentSub": undefined,
-        "store": Object {
-          "dispatch": [Function],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
-          Symbol(observable): [Function],
-        },
-        "unsubscribe": null,
-      },
-    }
-  }
+<div
+  class="pg-emailverification-container"
 >
-  <Connect(injectIntl(withRouter(Connect(EmailVerificationComponent)))) />
-</ContextProvider>
+  <div
+    class="pg-emailverification"
+  >
+    <div
+      class="pg-emailverification-title"
+    >
+      VERIFY YOUR EMAIL ADDRESS
+    </div>
+    <div
+      class="pg-emailverification-body"
+    >
+      <div
+        class="pg-emailverification-body-text"
+      >
+        To complete registration, check for an email in your inbox with further instruction. If you cannot find the email, please check your spam folder
+      </div>
+      <div
+        class="pg-emailverification-body-container"
+      >
+        <button
+          class="pg-emailverification-body-container-button"
+        >
+          Resend Confirmation
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 `;

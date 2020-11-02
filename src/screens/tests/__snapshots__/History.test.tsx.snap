@@ -1,35 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HistoryScreen should render 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "store": Object {
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-        Symbol(observable): [Function],
-      },
-      "subscription": Subscription {
-        "handleChangeWrapper": [Function],
-        "listeners": Object {
-          "notify": [Function],
-        },
-        "onStateChange": [Function],
-        "parentSub": undefined,
-        "store": Object {
-          "dispatch": [Function],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
-          Symbol(observable): [Function],
-        },
-        "unsubscribe": null,
-      },
-    }
-  }
+<div
+  class="pg-history-tab pg-container"
 >
-  <Connect(injectIntl(Connect(History))) />
-</ContextProvider>
+  <div
+    class="pg-history-tab__tabs-content"
+  >
+    <div
+      class="cr-tab-panel"
+    >
+      <div
+        class="cr-tab-panel__navigation-container draggable-container"
+      >
+        <div
+          class="cr-tab-panel__navigation-container-navigation"
+          role="tablist"
+        >
+          <div
+            class="cr-tab cr-tab__active"
+            role="tab"
+            tabindex="0"
+          >
+            Deposit History
+            <span
+              class="cr-tab__pointer"
+            />
+          </div>
+          <div
+            class="cr-tab"
+            role="tab"
+            tabindex="1"
+          >
+            Withdrawal History
+          </div>
+          <div
+            class="cr-tab"
+            role="tab"
+            tabindex="2"
+          >
+            Trade History
+          </div>
+        </div>
+      </div>
+      <div
+        class="cr-tab-content cr-tab-content__active"
+      >
+        <div
+          class="pg-history-elem pg-history-elem-empty"
+        >
+          <p
+            class="pg-history-elem__empty"
+          >
+            There is no data to show
+          </p>
+        </div>
+      </div>
+      <div
+        class="cr-tab-content"
+      />
+      <div
+        class="cr-tab-content"
+      />
+    </div>
+  </div>
+</div>
 `;
