@@ -26,12 +26,7 @@ const config = merge(commonConfig, {
                     'cache-loader',
                     'css-loader',
                     'sass-loader',
-                ],
-            },
-            {
-                test: /\.(pcss)$/,
-                use: [
-                    'postcss-loader'
+                    'postcss-loader',
                 ],
             },
             {

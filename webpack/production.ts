@@ -3,6 +3,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import merge from 'webpack-merge';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const rootDir = path.resolve(__dirname, '..');
 const BUILD_DIR = path.resolve(rootDir, 'build');
@@ -26,6 +27,9 @@ const config = merge(commonConfig, {
                 preset: ['default', { discardComments: { removeAll: true } }],
             },
             canPrint: false,
+        }),
+        new CopyWebpackPlugin({
+            patterns: [{ from: 'public' }],
         }),
     ],
     module: {
