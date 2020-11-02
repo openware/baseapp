@@ -76,8 +76,8 @@
         "ws": "^7.2.0"
     },
     "scripts": {
-        "lint": "yarn style:lint && tsc --noEmit && tslint --project .",
-        "lint:fix": "tslint --project . --fix",
+        "lint": "eslint --ext .ts,.tsx src",
+        "lint:fix": "eslint --ext .ts,.tsx src --fix",
         "style:lint": "npx stylelint '**/*.pcss'",
         "mockAPI": "node mocks/mockAPI.js",
         "mockWS": "node mocks/mockWS.js",
