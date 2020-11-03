@@ -1,15 +1,26 @@
+![Cryptocurrency Exchange Platform - Baseapp](https://github.com/openware/meta/raw/main/images/github_baseapp.png)
+
+<h3 align="center">
+<a href="https://www.openware.com/sdk/docs.html#baseapp">Guide</a> <span>&vert;</span> 
+<a href="https://www.openware.com/sdk/api.html">API Docs</a> <span>&vert;</span> 
+<a href="https://www.openware.com/">Consulting</a> <span>&vert;</span> 
+<a href="https://t.me/peatio">Community</a>
+</h3>
+<h6 align="center">Component part of <a href="https://github.com/openware/opendax">OpenDAX Trading Platform</a></h6>
+
+---
+
 # OpenDAX BaseApp UI
 ## User Interface for Trading and Wallets Management
 
-Base React application to build a trading platform interface for use with OpenDAX: https://github.com/openware/opendax
-Why React? We consider it's the biggest frontend community and have capacities to work in mobile native.
+React application to build a trading platform interface for use with OpenDAX: https://github.com/openware/opendax
 
-You can see an example of a live application running at: https://demo.openware.com/
+You can see an example of a live application running at: https://www.openfinex.io/
+If you need customization from the experts contact us: https://www.openware.com/
 
 ## License
 
 Please note, that BaseApp license only allows Non-Commercial use of this component. To purchase the Commercial license, please contact us at hello@openware.com.
-
 
 ## Install dependencies
 
