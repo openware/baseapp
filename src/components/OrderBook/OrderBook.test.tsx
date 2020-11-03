@@ -1,8 +1,9 @@
 import { shallow, ShallowWrapper } from 'enzyme';
+import { TestComponentWrapper } from 'lib/test';
 import * as React from 'react';
 import { spy } from 'sinon';
 import { CellData } from '../../components/Table';
-import {  mapValues, OrderBook, OrderBookProps } from './';
+import { mapValues, OrderBook, OrderBookProps } from './';
 
 const data: CellData[][] = [
     ['12349', '14', '12'],
@@ -20,9 +21,13 @@ const defaultProps: OrderBookProps = {
 };
 
 const setup = (props: Partial<OrderBook> = {}) =>
-    shallow(<OrderBook {...{ ...defaultProps, ...props }} />);
+    shallow(
+        <TestComponentWrapper>
+            <OrderBook {...{ ...defaultProps, ...props }} />
+        </TestComponentWrapper>
+    );
 
-describe.skip('History', () => {
+describe('History', () => {
     let wrapper: ShallowWrapper<History>;
 
     beforeEach(() => {
@@ -30,7 +35,7 @@ describe.skip('History', () => {
     });
 
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(wrapper.render()).toMatchSnapshot();
     });
 
     it('should return correct data', () => {

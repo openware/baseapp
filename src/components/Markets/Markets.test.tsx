@@ -1,4 +1,5 @@
 import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { TestComponentWrapper } from 'lib/test';
 import * as React from 'react';
 import { spy } from 'sinon';
 import { Markets, MarketsProps } from '.';
@@ -15,9 +16,14 @@ const defaultProps: MarketsProps = {
     onSelect,
 };
 
-const setup = (props?: Partial<MarketsProps>) => shallow(<Markets {...{ ...defaultProps, ...props }} />);
+const setup = (props?: Partial<MarketsProps>) =>
+    shallow(
+        <TestComponentWrapper>
+            <Markets {...{ ...defaultProps, ...props }} />
+        </TestComponentWrapper>
+    );
 
-describe.skip('Markets', () => {
+describe('Markets', () => {
     let wrapper: ShallowWrapper;
 
     beforeEach(() => {
@@ -25,7 +31,7 @@ describe.skip('Markets', () => {
     });
 
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(wrapper.render()).toMatchSnapshot();
     });
 
     it('should render empty data', () => {
@@ -36,12 +42,17 @@ describe.skip('Markets', () => {
     it('should set selected market in props', () => {
         const keyIndex = 0;
         const selectedKey = 'ETH/LTC';
-        const component: ReactWrapper = mount(
-            <Markets data={data} rowKeyIndex={keyIndex} selectedKey={selectedKey} onSelect={onSelect} />
-        );
-        const resultSelectedRow =
-            '<tr class="cr-table__row--selected"><td>ETH/LTC</td><td>0.223100</td><td><span class="__positive">+25.00%</span></td></tr>';
+
+        const component = setup({
+            data,
+            rowKeyIndex: keyIndex,
+            selectedKey,
+            onSelect,
+        }).render();
+
+        const resultSelectedRow = '<td>ETH/LTC</td><td>0.223100</td><td><span class="__positive">+25.00%</span></td>';
         const expectedSelectedRow = component.find('.cr-table__row--selected').first().html();
+        console.log(expectedSelectedRow);
         expect(resultSelectedRow).toBe(expectedSelectedRow);
     });
 });
