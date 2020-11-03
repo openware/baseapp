@@ -1,61 +1,61 @@
 .expired-session-modal {
-  .cr-modal {
-    .cr-email-form {
-      min-height: calc(var(--big-gap) * 2.9);
+    .cr-modal {
+        .cr-email-form {
+            min-height: calc(var(--big-gap) * 2.9);
 
-      &__option,
-      &__option-inner {
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-      }
+            &__option,
+            &__option-inner {
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+            }
 
-      &__option-inner {
-        align-items: center;
-        display: flex;
-        justify-content: center;
+            &__option-inner {
+                align-items: center;
+                display: flex;
+                justify-content: center;
 
-        .clock-icon {
-          align-items: 4px;
-          height: 16.5px;
-          width: 16.5px;
+                .clock-icon {
+                    align-items: 4px;
+                    height: 16.5px;
+                    width: 16.5px;
+                }
+            }
+
+            &__close {
+                cursor: pointer;
+                display: inline-block;
+                height: calc(var(--gap) * 1.9);
+                margin-top: -2px;
+                overflow: hidden;
+                position: absolute;
+                right: calc(var(--gap) * 1.8);
+                width: calc(var(--gap) * 1.9);
+
+                &::before,
+                &::after {
+                    background: var(--secondary-contrast-cta-color);
+                    content: "";
+                    height: 2px;
+                    left: 0;
+                    position: absolute;
+                    top: 50%;
+                    width: 100%;
+                }
+
+                &::before {
+                    transform: rotate(45deg);
+                }
+
+                &::after {
+                    transform: rotate(-45deg);
+                }
+            }
         }
-      }
-
-      &__close {
-        cursor: pointer;
-        display: inline-block;
-        height: calc(var(--gap) * 1.9);
-        margin-top: -2px;
-        overflow: hidden;
-        position: absolute;
-        right: calc(var(--gap) * 1.8);
-        width: calc(var(--gap) * 1.9);
-
-        &::before,
-        &::after {
-          background: var(--secondary-contrast-cta-color);
-          content: '';
-          height: 2px;
-          left: 0;
-          position: absolute;
-          top: 50%;
-          width: 100%;
-        }
-
-        &::before {
-          transform: rotate(45deg);
-        }
-
-        &::after {
-          transform: rotate(-45deg);
-        }
-      }
     }
-  }
 }
 
 @media screen and (max-width: 767px), (max-height: 599px) {
-  .expired-session-modal .cr-modal .cr-email-form__button-wrapper {
-    padding: 0 14px;
-  }
+    .expired-session-modal .cr-modal .cr-email-form__button-wrapper {
+        padding: 0 14px;
+    }
 }

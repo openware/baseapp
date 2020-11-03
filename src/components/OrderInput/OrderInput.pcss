@@ -1,98 +1,98 @@
 .cr-order-input {
-  display: flex;
-  justify-content: space-between;
-
-  &__fieldset {
-    align-items: center;
-    background-color: var(--input-background-color);
-    border: 1px solid var(--input-border-color);
-    color: var(--input-text-color);
     display: flex;
-    height: 51px;
-    margin: 0;
-    margin-top: calc(var(--gap) * 2);
-    position: relative;
-    width: 100%;
+    justify-content: space-between;
 
-    label {
-      color: var(--input-legend-color);
-    }
-
-    .custom-input {
-      label {
-        left: calc(var(--gap) * 1.55);
-      }
-
-      .form-control {
-        border: none;
-        box-shadow: none;
-        height: 49px;
-        padding: 0;
-      }
-
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-
-      input[type=number] {
-        -moz-appearance: textfield;
-      }
-    }
-
-    &--focused {
-      border-color: var(--input-border-color-active) !important;
-
-      label {
-        color: var(--input-legend-color-active);
-      }
-    }
-
-    &--wrong {
-      border-color: var(--system-red) !important;
-
-      label {
-        color: var(--system-red);
-      }
-    }
-  }
-
-  &__crypto-icon {
-    align-items: center;
-    background-color: var(--input-background-color);
-    border: 1px solid var(--input-border-color);
-    border-left: none;
-    display: flex;
-    height: 51px;
-    justify-content: center;
-    margin-top: calc(var(--gap) * 2);
-    min-width: 50px;
-    padding: 0;
-    padding-top: 2px;
-    text-align: center;
-    width: 26%;
-
-    span {
-      background-color: inherit;
-    }
-  }
-}
-
-@media (max-width: 576px) {
-  .cr-order-input {
     &__fieldset {
-      label {
-        color: var(--input-border-color);
-        font-size: calc(var(--gap) * 1.5);
-      }
+        align-items: center;
+        background-color: var(--input-background-color);
+        border: 1px solid var(--input-border-color);
+        color: var(--input-text-color);
+        display: flex;
+        height: 51px;
+        margin: 0;
+        margin-top: calc(var(--gap) * 2);
+        position: relative;
+        width: 100%;
+
+        label {
+            color: var(--input-legend-color);
+        }
+
+        .custom-input {
+            label {
+                left: calc(var(--gap) * 1.55);
+            }
+
+            .form-control {
+                border: none;
+                box-shadow: none;
+                height: 49px;
+                padding: 0;
+            }
+
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            input[type="number"] {
+                -moz-appearance: textfield;
+            }
+        }
+
+        &--focused {
+            border-color: var(--input-border-color-active) !important;
+
+            label {
+                color: var(--input-legend-color-active);
+            }
+        }
+
+        &--wrong {
+            border-color: var(--system-red) !important;
+
+            label {
+                color: var(--system-red);
+            }
+        }
     }
 
     &__crypto-icon {
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
+        align-items: center;
+        background-color: var(--input-background-color);
+        border: 1px solid var(--input-border-color);
+        border-left: none;
+        display: flex;
+        height: 51px;
+        justify-content: center;
+        margin-top: calc(var(--gap) * 2);
+        min-width: 50px;
+        padding: 0;
+        padding-top: 2px;
+        text-align: center;
+        width: 26%;
+
+        span {
+            background-color: inherit;
+        }
     }
-  }
+}
+
+@media (max-width: 576px) {
+    .cr-order-input {
+        &__fieldset {
+            label {
+                color: var(--input-border-color);
+                font-size: calc(var(--gap) * 1.5);
+            }
+        }
+
+        &__crypto-icon {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+    }
 }

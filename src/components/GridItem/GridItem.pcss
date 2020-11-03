@@ -1,47 +1,47 @@
 .cr-grid-item {
-  background: none !important;
+    background: none !important;
 
-  &__header {
-    background: transparent;
-    padding: calc(var(--gap) * 2) calc(var(--gap) * 2.2) calc(var(--gap) * 1.9) calc(var(--gap) * 3);
-    position: relative;
-  }
+    &__header {
+        background: transparent;
+        padding: calc(var(--gap) * 2) calc(var(--gap) * 2.2) calc(var(--gap) * 1.9) calc(var(--gap) * 3);
+        position: relative;
+    }
 
-  &__close {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+    &__close {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 
-  &__close::after,
-  &__close::before {
-    border: 1px solid #a9cde1;
-    content: '';
-    position: absolute;
-    right: calc(var(--gap) * 2);
-    top: calc(var(--gap) * 3.1);
-    transform: rotate(45deg);
-    width: calc(var(--gap) * 3);
-  }
+    &__close::after,
+    &__close::before {
+        border: 1px solid #a9cde1;
+        content: "";
+        position: absolute;
+        right: calc(var(--gap) * 2);
+        top: calc(var(--gap) * 3.1);
+        transform: rotate(45deg);
+        width: calc(var(--gap) * 3);
+    }
 
-  &__close::after {
-    transform: rotate(-45deg);
-  }
+    &__close::after {
+        transform: rotate(-45deg);
+    }
 
-  &__close:hover::after,
-  &__close:hover::before {
-    border-color: var(--color-white);
-  }
+    &__close:hover::after,
+    &__close:hover::before {
+        border-color: var(--color-white);
+    }
 
-  &__title {
-    background-color: inherit;
-    color: #c1d4df;
-    font-size: calc(var(--gap) * 2.4);
-    text-transform: uppercase;
-  }
+    &__title {
+        background-color: inherit;
+        color: #c1d4df;
+        font-size: calc(var(--gap) * 2.4);
+        text-transform: uppercase;
+    }
 
-  &__body {
-    background: transparent;
-    padding: calc(var(--gap) * 1.8);
-  }
+    &__body {
+        background: transparent;
+        padding: calc(var(--gap) * 1.8);
+    }
 }

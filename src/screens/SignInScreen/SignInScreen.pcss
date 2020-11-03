@@ -1,106 +1,106 @@
 .pg-sign-in-screen {
-  background: url(assets/images/background.svg);
-  background-size: cover;
-  display: flex;
-  height: calc(100vh - 95px);
-  justify-content: center;
-
-  .pg-sign-in-screen__container {
-    background: transparent;
-    margin-top: calc(var(--gap) * 3.33);
-    width: calc(var(--gap) * 70.66);
-  }
-
-  .cr-sign-in-form {
-    background: var(--body-background-color);
-    border-radius: calc(var(--gap) * 0.66);
+    background: url(assets/images/background.svg);
+    background-size: cover;
     display: flex;
-    flex-direction: column;
-    height: calc(var(--big-gap) * 5.5);
-    margin: 0 auto;
+    height: calc(100vh - 95px);
+    justify-content: center;
 
-    &__options-group {
-      border-bottom: 2px solid var(--divider-color-level-2);
-      height: calc(var(--big-gap) * 0.97);
-      width: 100%;
-    }
-
-    &__button-wrapper {
-      bottom: calc(var(--gap) * 3.5);
-      min-height: calc(var(--gap));
-    }
-
-    &__option {
-      background: var(--subheader-background-color);
-
-      .__selected {
-        border-bottom: 2px solid var(--primary-cta-color);
-        color: var(--primary-text-color);
-      }
-    }
-
-    &__title {
-      background: transparent;
-      font-size: calc(var(--gap) * 4);
-      margin: calc(var(--gap) * 6.66) !important;
-    }
-
-    &__forgot {
-      color: var(--secondary-contrast-cta-color);
-      padding-top: calc(var(--gap) * 1.33);
-    }
-
-    &__error,
-    &__error-message {
-      color: var(--system-red);
-    }
-
-    &__footer {
-      bottom: calc(var(--gap) * (-1.66));
-      left: 0;
-      position: absolute;
-      right: 0;
-
-      &-create {
-        font-size: calc(var(--gap) * 2.33);
-        font-weight: bolder;
-      }
-
-      &-signup {
-        font-size: calc(var(--gap) * 2.33);
-        font-weight: bold;
-      }
-    }
-
-    &__group--focused {
-      .cr-sign-in-form__label {
-        color: var(--input-legend-color-active);
-      }
-
-      input {
-        border-color: var(--input-border-color-active) !important;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .pg-sign-in-screen {
     .pg-sign-in-screen__container {
-      margin: calc(var(--gap) * 3.33) calc(var(--gap) * 1.66) 0;
-      width: 100%;
+        background: transparent;
+        margin-top: calc(var(--gap) * 3.33);
+        width: calc(var(--gap) * 70.66);
     }
 
     .cr-sign-in-form {
-      &__button {
-        font-size: calc(var(--gap) * 2);
-        margin-top: calc(var(--gap) * 4);
-      }
+        background: var(--body-background-color);
+        border-radius: calc(var(--gap) * 0.66);
+        display: flex;
+        flex-direction: column;
+        height: calc(var(--big-gap) * 5.5);
+        margin: 0 auto;
 
-      &__title {
-        background: transparent;
-        margin-top: calc(var(--gap) * 2);
-      }
+        &__options-group {
+            border-bottom: 2px solid var(--divider-color-level-2);
+            height: calc(var(--big-gap) * 0.97);
+            width: 100%;
+        }
+
+        &__button-wrapper {
+            bottom: calc(var(--gap) * 3.5);
+            min-height: calc(var(--gap));
+        }
+
+        &__option {
+            background: var(--subheader-background-color);
+
+            .__selected {
+                border-bottom: 2px solid var(--primary-cta-color);
+                color: var(--primary-text-color);
+            }
+        }
+
+        &__title {
+            background: transparent;
+            font-size: calc(var(--gap) * 4);
+            margin: calc(var(--gap) * 6.66) !important;
+        }
+
+        &__forgot {
+            color: var(--secondary-contrast-cta-color);
+            padding-top: calc(var(--gap) * 1.33);
+        }
+
+        &__error,
+        &__error-message {
+            color: var(--system-red);
+        }
+
+        &__footer {
+            bottom: calc(var(--gap) * (-1.66));
+            left: 0;
+            position: absolute;
+            right: 0;
+
+            &-create {
+                font-size: calc(var(--gap) * 2.33);
+                font-weight: bolder;
+            }
+
+            &-signup {
+                font-size: calc(var(--gap) * 2.33);
+                font-weight: bold;
+            }
+        }
+
+        &__group--focused {
+            .cr-sign-in-form__label {
+                color: var(--input-legend-color-active);
+            }
+
+            input {
+                border-color: var(--input-border-color-active) !important;
+            }
+        }
     }
-  }
+}
+
+@media screen and (max-width: 768px) {
+    .pg-sign-in-screen {
+        .pg-sign-in-screen__container {
+            margin: calc(var(--gap) * 3.33) calc(var(--gap) * 1.66) 0;
+            width: 100%;
+        }
+
+        .cr-sign-in-form {
+            &__button {
+                font-size: calc(var(--gap) * 2);
+                margin-top: calc(var(--gap) * 4);
+            }
+
+            &__title {
+                background: transparent;
+                margin-top: calc(var(--gap) * 2);
+            }
+        }
+    }
 }

@@ -1,117 +1,117 @@
 .cr-table-container {
-  position: relative;
+    position: relative;
 }
 
 .cr-table {
-  background: var(--table-background-color);
-  border-collapse: collapse;
-  position: relative;
-  text-align: center;
-  width: 100%;
-
-  &--no-data {
-    text-align: center !important;
-  }
-
-  &__head {
     background: var(--table-background-color);
+    border-collapse: collapse;
+    position: relative;
+    text-align: center;
+    width: 100%;
 
-    tr {
-      background: var(--table-background-color);
-
-      th {
-        color: var(--table-text-color);
-        font-size: calc(var(--gap) * 4);
-        font-weight: lighter;
-        padding: 6px 12px;
-      }
-    }
-  }
-
-  &__body {
-    background: var(--table-background-color);
-
-    tr {
-      background: var(--table-background-color);
-
-      td {
-        color: var(--table-text-color);
-        padding: 6px 12px;
-        position: relative;
-        z-index: 10;
-      }
+    &--no-data {
+        text-align: center !important;
     }
 
-    tr:nth-child(even) {
-      background-color: var(--table-background-color);
-    }
-  }
+    &__head {
+        background: var(--table-background-color);
 
-  &__row {
-    &--selected {
-      background: var(--table-row-selector-color);
+        tr {
+            background: var(--table-background-color);
+
+            th {
+                color: var(--table-text-color);
+                font-size: calc(var(--gap) * 4);
+                font-weight: lighter;
+                padding: 6px 12px;
+            }
+        }
     }
-  }
+
+    &__body {
+        background: var(--table-background-color);
+
+        tr {
+            background: var(--table-background-color);
+
+            td {
+                color: var(--table-text-color);
+                padding: 6px 12px;
+                position: relative;
+                z-index: 10;
+            }
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-background-color);
+        }
+    }
+
+    &__row {
+        &--selected {
+            background: var(--table-row-selector-color);
+        }
+    }
 }
 
 .cr-table-background {
-  background: var(--table-background-color);
-  display: flex;
-  flex-direction: column;
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 104px;
-  width: 100%;
+    background: var(--table-background-color);
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 104px;
+    width: 100%;
 
-  &--left {
-    align-items: flex-start;
-  }
+    &--left {
+        align-items: flex-start;
+    }
 
-  &--right {
-    align-items: flex-end;
-  }
+    &--right {
+        align-items: flex-end;
+    }
 
-  &__row {
-    box-sizing: border-box;
-    display: block;
-    padding: 19px;
-    width: 30%;
-  }
+    &__row {
+        box-sizing: border-box;
+        display: block;
+        padding: 19px;
+        width: 30%;
+    }
 }
 
 .cr-table__filter {
-  background: var(--table-background-color);
-  cursor: pointer;
-  font-size: 15px;
-  margin: 0 5px;
-  padding: 10px 8px;
+    background: var(--table-background-color);
+    cursor: pointer;
+    font-size: 15px;
+    margin: 0 5px;
+    padding: 10px 8px;
 
-  &--active {
-    color: var(--primary-cta-color);
-  }
+    &--active {
+        color: var(--primary-cta-color);
+    }
 }
 
 .cr-table__filters {
-  background: var(--table-background-color);
-  display: flex;
+    background: var(--table-background-color);
+    display: flex;
 }
 
 .cr-table-header__content {
-  align-items: center;
-  background: var(--table-background-color);
-  display: flex;
-  height: calc(var(--gap) * 6);
-  justify-content: space-between;
-  padding: 10px 0 0 10px;
+    align-items: center;
+    background: var(--table-background-color);
+    display: flex;
+    height: calc(var(--gap) * 6);
+    justify-content: space-between;
+    padding: 10px 0 0 10px;
 }
 
 .cr-table-header__content-empty {
-  display: none;
+    display: none;
 }
 
 .cr-title-component {
-  background: var(--subheader-background-color);
-  color: var(--primary-text-color);
-  font-size: calc(var(--gap) * 4);
+    background: var(--subheader-background-color);
+    color: var(--primary-text-color);
+    font-size: calc(var(--gap) * 4);
 }

@@ -1,45 +1,45 @@
 .cr-mobile-two-fa-modal {
-  .cr-mobile-modal {
-    .custom-input {
-      margin: 24px 14px;
+    .cr-mobile-modal {
+        .custom-input {
+            margin: 24px 14px;
+        }
+
+        .pg-exchange-modal-submit-footer {
+            margin: 0 14px;
+        }
+
+        &__header {
+            &-back {
+                display: none;
+            }
+
+            &-title {
+                color: var(--primary-text-color);
+                text-align: left;
+            }
+
+            &-close {
+                flex: 0;
+            }
+        }
+
+        .pg-exchange-modal-submit-body-2fa__subtitle {
+            align-items: center;
+            color: var(--primary-text-color);
+            display: flex;
+            flex-direction: row;
+            font-size: 14px;
+            font-weight: normal;
+            justify-content: flex-start;
+            letter-spacing: 0.1px;
+            padding: 24px 14px 0 14px;
+            position: relative;
+        }
     }
-
-    .pg-exchange-modal-submit-footer {
-      margin: 0 14px;
-    }
-
-    &__header {
-      &-back {
-        display: none;
-      }
-
-      &-title {
-        color: var(--primary-text-color);
-        text-align: left;
-      }
-
-      &-close {
-        flex: 0;
-      }
-    }
-
-    .pg-exchange-modal-submit-body-2fa__subtitle {
-      align-items: center;
-      color: var(--primary-text-color);
-      display: flex;
-      flex-direction: row;
-      font-size: 14px;
-      font-weight: normal;
-      justify-content: flex-start;
-      letter-spacing: 0.1px;
-      padding: 24px 14px 0 14px;
-      position: relative;
-    }
-  }
 }
 
 @media screen and (orientation: portrait) {
-  .cr-mobile-two-fa-modal .cr-mobile-modal__block--open {
-    top: 200px;
-  }
+    .cr-mobile-two-fa-modal .cr-mobile-modal__block--open {
+        top: 200px;
+    }
 }

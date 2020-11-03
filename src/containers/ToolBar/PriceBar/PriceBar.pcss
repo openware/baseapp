@@ -1,43 +1,43 @@
 .pg-trading-header-price-bar {
-  height: 5px;
-  margin: 0 calc(var(--gap)) 0 calc(var(--gap));
-  position: relative;
-  width: calc(var(--big-gap) * 6);
+    height: 5px;
+    margin: 0 calc(var(--gap)) 0 calc(var(--gap));
+    position: relative;
+    width: calc(var(--big-gap) * 6);
 
-  &-filler {
-    display: flex;
-    height: 12px;
+    &-filler {
+        display: flex;
+        height: 12px;
 
-    &-left {
-      background-color: rgba(84, 180, 137, 0.3);
-      border: 1px solid rgba(84, 180, 137, 0.7);
-      border-radius: 20px 0 0 20px;
-      height: 3px;
-      margin-top: 3px;
+        &-left {
+            background-color: rgba(84, 180, 137, 0.3);
+            border: 1px solid rgba(84, 180, 137, 0.7);
+            border-radius: 20px 0 0 20px;
+            height: 3px;
+            margin-top: 3px;
+        }
+
+        &-cursor {
+            background-color: var(--base);
+            height: 100%;
+            margin: 0 -1px 0 -1px;
+            width: 2px;
+        }
+
+        &-right {
+            background-color: rgba(232, 94, 89, 0.3);
+            border: 1px solid rgba(232, 94, 89, 0.7);
+            border-radius: 0 20px 20px 0;
+            height: 3px;
+            margin-top: 3px;
+        }
     }
 
-    &-cursor {
-      background-color: var(--base);
-      height: 100%;
-      margin: 0 -1px 0 -1px;
-      width: 2px;
+    &-text {
+        margin-top: 14px;
+        position: absolute;
     }
 
-    &-right {
-      background-color: rgba(232, 94, 89, 0.3);
-      border: 1px solid rgba(232, 94, 89, 0.7);
-      border-radius: 0 20px 20px 0;
-      height: 3px;
-      margin-top: 3px;
+    @media screen and (max-width: 996px) {
+        display: none;
     }
-  }
-
-  &-text {
-    margin-top: 14px;
-    position: absolute;
-  }
-
-  @media screen and (max-width: 996px) {
-    display: none;
-  }
 }

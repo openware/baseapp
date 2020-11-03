@@ -1,37 +1,37 @@
 .pg-trading-screen {
-  background: var(--main-background-color);
+    background: var(--main-background-color);
 
-  &__tab-panel {
-    .cr-tab {
-      color: var(--tab-panel-text-color) !important;
-      padding: 9px 12px 9px !important;
+    &__tab-panel {
+        .cr-tab {
+            color: var(--tab-panel-text-color) !important;
+            padding: 9px 12px 9px !important;
 
-      &__active {
-        color: var(--tab-panel-text-color-active) !important;
-      }
+            &__active {
+                color: var(--tab-panel-text-color-active) !important;
+            }
 
-      &__pointer {
-        bottom: 0 !important;
-      }
+            &__pointer {
+                bottom: 0 !important;
+            }
 
-      &-panel__navigation-container {
-        &-navigation {
-          padding-bottom: unset;
+            &-panel__navigation-container {
+                &-navigation {
+                    padding-bottom: unset;
+                }
+
+                background: var(--tab-panel-background-color);
+                border-bottom: unset;
+                box-shadow: inset 0 -1px 0 var(--divider-color-level-1);
+                cursor: move;
+                margin-bottom: unset;
+                position: sticky;
+                top: 0;
+                z-index: 9999;
+            }
         }
-
-        background: var(--tab-panel-background-color);
-        border-bottom: unset;
-        box-shadow: inset 0 -1px 0 var(--divider-color-level-1);
-        cursor: move;
-        margin-bottom: unset;
-        position: sticky;
-        top: 0;
-        z-index: 9999;
-      }
     }
-  }
 }
 
 .pg-trading-wrap {
-  background: transparent;
+    background: transparent;
 }

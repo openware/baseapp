@@ -1,89 +1,89 @@
 .pg-sign-in-screen {
-  background: url(assets/images/background.svg);
-  background-size: cover;
-  display: flex;
-  height: calc(100vh - calc(var(--gap) * 9.84));
-  justify-content: center;
-  margin: 0 auto;
+    background: url(assets/images/background.svg);
+    background-size: cover;
+    display: flex;
+    height: calc(100vh - calc(var(--gap) * 9.84));
+    justify-content: center;
+    margin: 0 auto;
 
-  .pg-sign-in-screen__container {
-    background: transparent;
-    margin-top: calc(var(--gap) * 3.33);
-    width: calc(var(--gap) * 70.66);
-  }
-
-  .pg-2fa___form {
-    .cr-email-form {
-      background: var(--body-background-color);
-      min-height: calc(var(--big-gap) * 5);
-
-      &__option {
-        background: var(--subheader-background-color);
-      }
-
-      &__options-group {
-        border-bottom: 2px solid var(--divider-color-level-2);
-        color: var(--primary-text-color);
-        height: calc(var(--big-gap) * 0.97);
-        width: 100%;
-      }
-
-      &__label {
-        margin-top: -9px;
-      }
-
-      &__input {
-        input {
-          border: 1px solid var(--input-border-color);
-          border-radius: calc(var(--gap) * 0.66);
-          color: var(--input-text-color);
-          font-size: calc(var(--gap) * 2.33);
-        }
-      }
-
-      &__header {
-        color: var(--secondary-contrast-cta-color);
-        font-size: calc(var(--gap) * 2.33);
-        font-style: normal;
-        font-weight: normal;
-        height: calc(var(--gap) * 4.33);
-        line-height: calc(var(--gap) * 2.66);
-        margin: calc(var(--gap) * 0.83);
-        width: calc(var(--big-gap) * 6.3);
-      }
-
-      &__cros-icon {
-        cursor: pointer;
-        display: inline-block;
-        height: calc(var(--gap) * 2.5);
-        margin-top: calc(var(--gap) * 0.5);
-        position: absolute;
-        right: calc(var(--gap) * 3.3);
-        width: calc(var(--gap) * 2.5);
-      }
-
-      &__group--focused {
-        .cr-email-form__label {
-          color: var(--input-legend-color-active);
-        }
-
-        input {
-          border-color: var(--input-border-color-active) !important;
-        }
-      }
-
-      &__button-wrapper {
-        min-height: calc(var(--gap) * 10);
-      }
+    .pg-sign-in-screen__container {
+        background: transparent;
+        margin-top: calc(var(--gap) * 3.33);
+        width: calc(var(--gap) * 70.66);
     }
-  }
+
+    .pg-2fa___form {
+        .cr-email-form {
+            background: var(--body-background-color);
+            min-height: calc(var(--big-gap) * 5);
+
+            &__option {
+                background: var(--subheader-background-color);
+            }
+
+            &__options-group {
+                border-bottom: 2px solid var(--divider-color-level-2);
+                color: var(--primary-text-color);
+                height: calc(var(--big-gap) * 0.97);
+                width: 100%;
+            }
+
+            &__label {
+                margin-top: -9px;
+            }
+
+            &__input {
+                input {
+                    border: 1px solid var(--input-border-color);
+                    border-radius: calc(var(--gap) * 0.66);
+                    color: var(--input-text-color);
+                    font-size: calc(var(--gap) * 2.33);
+                }
+            }
+
+            &__header {
+                color: var(--secondary-contrast-cta-color);
+                font-size: calc(var(--gap) * 2.33);
+                font-style: normal;
+                font-weight: normal;
+                height: calc(var(--gap) * 4.33);
+                line-height: calc(var(--gap) * 2.66);
+                margin: calc(var(--gap) * 0.83);
+                width: calc(var(--big-gap) * 6.3);
+            }
+
+            &__cros-icon {
+                cursor: pointer;
+                display: inline-block;
+                height: calc(var(--gap) * 2.5);
+                margin-top: calc(var(--gap) * 0.5);
+                position: absolute;
+                right: calc(var(--gap) * 3.3);
+                width: calc(var(--gap) * 2.5);
+            }
+
+            &__group--focused {
+                .cr-email-form__label {
+                    color: var(--input-legend-color-active);
+                }
+
+                input {
+                    border-color: var(--input-border-color-active) !important;
+                }
+            }
+
+            &__button-wrapper {
+                min-height: calc(var(--gap) * 10);
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 768px) {
-  .pg-sign-in-screen {
-    .pg-sign-in-screen__container {
-      margin: calc(var(--gap) * 3.33) calc(var(--gap) * 1.66) 0;
-      width: 100%;
+    .pg-sign-in-screen {
+        .pg-sign-in-screen__container {
+            margin: calc(var(--gap) * 3.33) calc(var(--gap) * 1.66) 0;
+            width: 100%;
+        }
     }
-  }
 }

@@ -1,35 +1,35 @@
 .cr-search {
-  margin: var(--gap);
-  padding: var(--gap);
-  width: calc(100% - var(--gap) * 5);
-
-  &__icon {
+    margin: var(--gap);
     padding: var(--gap);
+    width: calc(100% - var(--gap) * 5);
 
-    img {
-      height: 17px;
-      width: 17px;
-    }
-  }
+    &__icon {
+        padding: var(--gap);
 
-  &__input {
-    border: none;
-    border-bottom: 1px solid var(--base-2);
-    color: var(--base-2);
-    padding: var(--gap);
-
-    &::placeholder {
-      color: var(--base-2);
+        img {
+            height: 17px;
+            width: 17px;
+        }
     }
 
-    &:focus {
-      outline: none;
-    }
-  }
+    &__input {
+        border: none;
+        border-bottom: 1px solid var(--base-2);
+        color: var(--base-2);
+        padding: var(--gap);
 
-  &__cancel {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
+        &::placeholder {
+            color: var(--base-2);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__cancel {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
 }

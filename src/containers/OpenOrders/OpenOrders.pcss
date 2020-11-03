@@ -1,128 +1,128 @@
 .pg-open-orders {
-  background: transparent;
-  width: 100%;
-
-  @media (max-width: 640px) {
-    margin-left: 0;
+    background: transparent;
     width: 100%;
-  }
 
-  @media (min-width: 768px) and (max-width: 992px) {
-    max-width: 100%;
-  }
-
-  .cr-table td:last-child {
-    width: 3.5%;
-  }
-
-  .cr-table-header {
-    &__content {
-      padding: 9px 9px 9px 12px;
-    }
-
-    &__cancel {
-      color: var(--secondary-contrast-cta-color);
-      cursor: pointer;
-      float: right;
-      transition: 0.2s;
-
-      &:hover {
-        color: var(--primary-text-color);
-        transition: 0.2s;
-
-        .cr-table-header__close {
-          &::before,
-          &::after {
-            background: var(--primary-text-color);
-            transition: 0.2s;
-          }
-        }
-      }
-    }
-
-    &__close {
-      cursor: pointer;
-      display: inline-block;
-      height: calc(var(--gap) * 2);
-      margin-left: calc(var(--gap) / 1.33);
-      position: relative;
-      width: calc(var(--gap) * 2);
-
-      &::before,
-      &::after {
-        background: var(--secondary-contrast-cta-color);
-        content: '';
-        height: 2px;
-        left: 0;
-        position: absolute;
-        top: 55%;
-        transition: 0.2s;
+    @media (max-width: 640px) {
+        margin-left: 0;
         width: 100%;
-      }
-
-      &::before {
-        transform: rotate(45deg);
-      }
-
-      &::after {
-        transform: rotate(-45deg);
-      }
     }
-  }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+        max-width: 100%;
+    }
+
+    .cr-table td:last-child {
+        width: 3.5%;
+    }
+
+    .cr-table-header {
+        &__content {
+            padding: 9px 9px 9px 12px;
+        }
+
+        &__cancel {
+            color: var(--secondary-contrast-cta-color);
+            cursor: pointer;
+            float: right;
+            transition: 0.2s;
+
+            &:hover {
+                color: var(--primary-text-color);
+                transition: 0.2s;
+
+                .cr-table-header__close {
+                    &::before,
+                    &::after {
+                        background: var(--primary-text-color);
+                        transition: 0.2s;
+                    }
+                }
+            }
+        }
+
+        &__close {
+            cursor: pointer;
+            display: inline-block;
+            height: calc(var(--gap) * 2);
+            margin-left: calc(var(--gap) / 1.33);
+            position: relative;
+            width: calc(var(--gap) * 2);
+
+            &::before,
+            &::after {
+                background: var(--secondary-contrast-cta-color);
+                content: "";
+                height: 2px;
+                left: 0;
+                position: absolute;
+                top: 55%;
+                transition: 0.2s;
+                width: 100%;
+            }
+
+            &::before {
+                transform: rotate(45deg);
+            }
+
+            &::after {
+                transform: rotate(-45deg);
+            }
+        }
+    }
 }
 
 .cr-open-orders .cr-table th,
 .cr-open-orders .cr-table td {
-  width: auto !important;
+    width: auto !important;
 
-  &:not(:first-child) {
-    text-align: right;
-  }
+    &:not(:first-child) {
+        text-align: right;
+    }
 
-  &:last-child {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-  }
+    &:last-child {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
 
-  svg {
-    cursor: pointer;
-  }
+    svg {
+        cursor: pointer;
+    }
 }
 
 .pg-open-orders--loading {
-  background: var(--body-background-color);
-  max-width: 100%;
+    background: var(--body-background-color);
+    max-width: 100%;
 
-  .open-order-loading {
-    align-items: center;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    left: 0;
-    padding-top: calc(var(--gap) * 4.5);
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+    .open-order-loading {
+        align-items: center;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        left: 0;
+        padding-top: calc(var(--gap) * 4.5);
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 }
 
 .pg-open-orders--empty {
-  .cr-table__body {
-    tr {
-      td:nth-child(3) {
-        text-align: center;
-      }
+    .cr-table__body {
+        tr {
+            td:nth-child(3) {
+                text-align: center;
+            }
 
-      td:last-child {
-        display: block;
-        font-size: 11px !important;
-        font-weight: bold;
-        margin-left: 10px;
-        padding: 20px 0 20px 0 !important;
-        width: 100%;
-      }
+            td:last-child {
+                display: block;
+                font-size: 11px !important;
+                font-weight: bold;
+                margin-left: 10px;
+                padding: 20px 0 20px 0 !important;
+                width: 100%;
+            }
+        }
     }
-  }
 }

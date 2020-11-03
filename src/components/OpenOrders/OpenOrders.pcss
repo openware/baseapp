@@ -1,58 +1,58 @@
 .cr-open-orders {
-  &__price {
-    background: transparent;
-    font-size: inherit;
+    &__price {
+        background: transparent;
+        font-size: inherit;
 
-    &--buy {
-      color: var(--open-orders-action-buy);
-    }
-
-    &--sell {
-      color: var(--open-orders-action-sell);
-    }
-  }
-
-  &__order {
-    &--buy {
-      color: var(--open-orders-order-buy);
-    }
-
-    &--sell {
-      color: var(--open-orders-order-sell);
-    }
-  }
-
-  .cr-table {
-    td:first-child {
-      color: var(--primary-text-color);
-    }
-
-    th,
-    td {
-      &:first-child {
-        text-align: left;
-      }
-
-      &:last-child {
-        width: 7%;
-      }
-
-      &:nth-last-child(2) {
-        text-align: right;
-      }
-
-      &:not(:last-child) {
-        width: 30%;
-      }
-
-      .close {
-        color: var(--secondary-contrast-cta-color);
-        transition: 0.2s;
-
-        &:hover {
-          color: var(--primary-text-color);
+        &--buy {
+            color: var(--open-orders-action-buy);
         }
-      }
+
+        &--sell {
+            color: var(--open-orders-action-sell);
+        }
     }
-  }
+
+    &__order {
+        &--buy {
+            color: var(--open-orders-order-buy);
+        }
+
+        &--sell {
+            color: var(--open-orders-order-sell);
+        }
+    }
+
+    .cr-table {
+        td:first-child {
+            color: var(--primary-text-color);
+        }
+
+        th,
+        td {
+            &:first-child {
+                text-align: left;
+            }
+
+            &:last-child {
+                width: 7%;
+            }
+
+            &:nth-last-child(2) {
+                text-align: right;
+            }
+
+            &:not(:last-child) {
+                width: 30%;
+            }
+
+            .close {
+                color: var(--secondary-contrast-cta-color);
+                transition: 0.2s;
+
+                &:hover {
+                    color: var(--primary-text-color);
+                }
+            }
+        }
+    }
 }

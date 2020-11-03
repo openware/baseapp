@@ -1,81 +1,81 @@
 .cr-tab-panel {
-  display: flex;
-  flex-direction: column;
-
-  .cr-tab {
-    color: var(--base-2);
-    font-size: 1.14em;
-    padding: var(--gap) calc(var(--gap) * 4);
-    position: relative;
-    text-align: center;
-    text-transform: uppercase;
-    transition: 0.1s;
-
-    &__fixed {
-      & .cr-tab {
-        flex: 1;
-      }
-    }
-
-    &:focus {
-      background-color: transparent;
-      outline: none;
-    }
-
-    &__active {
-      color: var(--base);
-    }
-
-    &__hidden {
-      display: none;
-    }
-
-    &:not(&__disabled) {
-      cursor: pointer;
-    }
-
-    &__disabled {
-      opacity: 0.2;
-    }
-
-    &__pointer {
-      background: var(--button-primary);
-      bottom: -2px;
-      height: 0.25em;
-      left: 0;
-      position: absolute;
-      width: 100%;
-      z-index: 1;
-    }
-  }
-
-  &__navigation-container {
-    display: flex;
-    margin-bottom: calc(var(--gap) * 5);
-
-    &-navigation {
-      box-shadow: inset 0 -1px var(--base);
-      display: flex;
-      padding-bottom: 1px;
-      position: relative;
-
-      .cr-tab-panel--fixed & {
-        flex: 1;
-      }
-    }
-  }
-
-  .cr-tab-content {
     display: flex;
     flex-direction: column;
-    position: relative;
 
-    &:not(.cr-tab-content__active) {
-      display: none;
+    .cr-tab {
+        color: var(--base-2);
+        font-size: 1.14em;
+        padding: var(--gap) calc(var(--gap) * 4);
+        position: relative;
+        text-align: center;
+        text-transform: uppercase;
+        transition: 0.1s;
+
+        &__fixed {
+            & .cr-tab {
+                flex: 1;
+            }
+        }
+
+        &:focus {
+            background-color: transparent;
+            outline: none;
+        }
+
+        &__active {
+            color: var(--base);
+        }
+
+        &__hidden {
+            display: none;
+        }
+
+        &:not(&__disabled) {
+            cursor: pointer;
+        }
+
+        &__disabled {
+            opacity: 0.2;
+        }
+
+        &__pointer {
+            background: var(--button-primary);
+            bottom: -2px;
+            height: 0.25em;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+        }
     }
 
-    &__active {
-      display: flex;
+    &__navigation-container {
+        display: flex;
+        margin-bottom: calc(var(--gap) * 5);
+
+        &-navigation {
+            box-shadow: inset 0 -1px var(--base);
+            display: flex;
+            padding-bottom: 1px;
+            position: relative;
+
+            .cr-tab-panel--fixed & {
+                flex: 1;
+            }
+        }
     }
-  }
+
+    .cr-tab-content {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        &:not(.cr-tab-content__active) {
+            display: none;
+        }
+
+        &__active {
+            display: flex;
+        }
+    }
 }

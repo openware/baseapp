@@ -1,55 +1,55 @@
 .cr-modal {
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.3);
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  left: 0;
-  padding: var(--gap);
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 99999;
-
-  &__container {
-    background-color: var(--background);
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    bottom: 0;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
-    min-width: 50% !important;
-    outline: 1px solid var(--base-3);
+    justify-content: center;
+    left: 0;
+    padding: var(--gap);
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 99999;
 
-    &-header {
-      color: var(--base);
-      font-size: var(--font-size-bigger);
-      margin-bottom: calc(var(--gap) * 3);
-      outline: 1px solid var(--base-3);
-      padding: calc(var(--gap) * 3);
+    &__container {
+        background-color: var(--background);
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        min-width: 50% !important;
+        outline: 1px solid var(--base-3);
+
+        &-header {
+            color: var(--base);
+            font-size: var(--font-size-bigger);
+            margin-bottom: calc(var(--gap) * 3);
+            outline: 1px solid var(--base-3);
+            padding: calc(var(--gap) * 3);
+        }
+
+        &-content {
+            color: var(--base-2);
+            flex: 1;
+            margin-bottom: calc(var(--gap) * 3);
+            padding: calc(var(--gap) * 3);
+
+            input {
+                color: var(--base-2);
+            }
+        }
+
+        &-footer {
+            outline: 1px solid var(--base-3);
+            padding: calc(var(--gap) * 3);
+        }
     }
 
-    &-content {
-      color: var(--base-2);
-      flex: 1;
-      margin-bottom: calc(var(--gap) * 3);
-      padding: calc(var(--gap) * 3);
+    .cr-email-form {
+        width: 100% !important;
 
-      input {
-        color: var(--base-2);
-      }
+        &__button {
+            max-width: 100%;
+        }
     }
-
-    &-footer {
-      outline: 1px solid var(--base-3);
-      padding: calc(var(--gap) * 3);
-    }
-  }
-
-  .cr-email-form {
-    width: 100% !important;
-
-    &__button {
-      max-width: 100%;
-    }
-  }
 }

@@ -1,243 +1,243 @@
 .pg-profile-page-verification {
-  &__title {
-    color: var(--primary-text-color);
-    font-size: 22px;
-    height: 30px;
-    line-height: 26px;
-    margin: 0 !important;
-  }
+    &__title {
+        color: var(--primary-text-color);
+        font-size: 22px;
+        height: 30px;
+        line-height: 26px;
+        margin: 0 !important;
+    }
 
-  &__progress-bar {
-    align-items: center;
-    display: flex;
-    height: 20px;
-    justify-content: flex-start;
-    margin-bottom: 30px;
-    width: 100%;
+    &__progress-bar {
+        align-items: center;
+        display: flex;
+        height: 20px;
+        justify-content: flex-start;
+        margin-bottom: 30px;
+        width: 100%;
+
+        &__step {
+            align-items: center;
+            border-radius: 1px;
+            cursor: default;
+            display: flex;
+            font-size: 11px;
+            font-weight: bold;
+            height: 100%;
+            justify-content: center;
+            line-height: 15px;
+            margin: 0 1px;
+            padding-top: 1px;
+            width: 100%;
+
+            svg {
+                margin-left: 5px;
+                max-height: 9px;
+                max-width: 9px;
+            }
+
+            &:first-child {
+                border-bottom-left-radius: 3px;
+                border-top-left-radius: 3px;
+            }
+
+            &:last-child {
+                border-bottom-right-radius: 3px;
+                border-top-right-radius: 3px;
+            }
+
+            &--verified {
+                background: var(--system-green);
+                color: var(--primary-text-color);
+            }
+
+            &--blocked {
+                background: var(--icons);
+                color: var(--contrast-cta-color-level-4);
+
+                span {
+                    color: var(--contrast-cta-color-level-4);
+                }
+            }
+
+            &--active {
+                background: var(--primary-cta-color);
+                color: var(--primary-text-color);
+                text-decoration: underline;
+
+                span {
+                    color: var(--primary-text-color);
+                }
+            }
+
+            &--pending {
+                background: var(--system-yellow);
+                color: var(--primary-text-color);
+
+                span {
+                    color: var(--primary-text-color);
+                }
+
+                svg > path {
+                    fill: var(--primary-text-color);
+                    stroke: var(--primary-text-color);
+                }
+            }
+
+            &--rejected {
+                background: var(--system-red);
+                color: var(--primary-text-color);
+                text-decoration: underline;
+
+                span {
+                    color: var(--primary-text-color);
+                    text-decoration: underline;
+                }
+
+                svg > path {
+                    fill: var(--primary-text-color);
+                    stroke: var(--primary-text-color);
+                }
+            }
+        }
+    }
 
     &__step {
-      align-items: center;
-      border-radius: 1px;
-      cursor: default;
-      display: flex;
-      font-size: 11px;
-      font-weight: bold;
-      height: 100%;
-      justify-content: center;
-      line-height: 15px;
-      margin: 0 1px;
-      padding-top: 1px;
-      width: 100%;
-
-      svg {
-        margin-left: 5px;
-        max-height: 9px;
-        max-width: 9px;
-      }
-
-      &:first-child {
-        border-bottom-left-radius: 3px;
-        border-top-left-radius: 3px;
-      }
-
-      &:last-child {
-        border-bottom-right-radius: 3px;
-        border-top-right-radius: 3px;
-      }
-
-      &--verified {
-        background: var(--system-green);
-        color: var(--primary-text-color);
-      }
-
-      &--blocked {
-        background: var(--icons);
-        color: var(--contrast-cta-color-level-4);
-
-        span {
-          color: var(--contrast-cta-color-level-4);
-        }
-      }
-
-      &--active {
-        background: var(--primary-cta-color);
-        color: var(--primary-text-color);
-        text-decoration: underline;
-
-        span {
-          color: var(--primary-text-color);
-        }
-      }
-
-      &--pending {
-        background: var(--system-yellow);
-        color: var(--primary-text-color);
-
-        span {
-          color: var(--primary-text-color);
-        }
-
-        svg > path {
-          fill: var(--primary-text-color);
-          stroke: var(--primary-text-color);
-        }
-      }
-
-      &--rejected {
-        background: var(--system-red);
-        color: var(--primary-text-color);
-        text-decoration: underline;
-
-        span {
-          color: var(--primary-text-color);
-          text-decoration: underline;
-        }
-
-        svg > path {
-          fill: var(--primary-text-color);
-          stroke: var(--primary-text-color);
-        }
-      }
-    }
-  }
-
-  &__step {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    height: 35px;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    width: 100%;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    &--blocked {
-      opacity: 0.36;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    &--rejected {
-      .pg-profile-page-verification__step__info__title {
-        color: var(--primary-text-color);
-      }
-    }
-
-    &__info {
-      align-items: flex-start;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-
-      &__title {
-        color: var(--primary-text-color);
-        font-size: 15px;
-        line-height: 15px;
-      }
-
-      &__subtitle {
-        font-size: 12px;
-        letter-spacing: 0.5px;
-        line-height: 12px;
-        margin-top: 8px;
-        opacity: 0.72;
-      }
-    }
-
-    &__label {
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      height: 30px;
-      justify-content: flex-end;
-      width: 100px;
-
-      a,
-      span {
-        font-size: 12px;
-        line-height: 15px;
-      }
-
-      svg {
-        margin-left: 9px;
-        max-height: 12px;
-        max-width: 12px;
-      }
-
-      &--pending {
-        color: var(--system-yellow);
-
-        span {
-          color: var(--system-yellow);
-        }
-      }
-
-      &--verified {
-        color: var(--system-green);
-
-        span {
-          color: var(--system-green);
-        }
-      }
-
-      &--rejected {
-        a {
-          color: var(--system-red);
-          text-decoration: underline;
-        }
-
-        span {
-          color: var(--system-red);
-          text-decoration: underline;
-        }
-      }
-    }
-
-    &__button {
-      align-items: center;
-      border-radius: 4px;
-      display: flex;
-      height: 30px;
-      justify-content: center;
-      width: 100px;
-
-      a,
-      span {
         align-items: center;
-        color: var(--system-green);
         display: flex;
-        font-size: 14px;
-        font-weight: var(--button-font-weight);
-        height: 100%;
-        justify-content: center;
-        letter-spacing: 1px;
-        line-height: 16px;
-        text-decoration: none;
-        text-transform: uppercase;
-        user-select: none;
+        flex-direction: row;
+        height: 35px;
+        justify-content: space-between;
+        margin-bottom: 24px;
         width: 100%;
-      }
 
-      &--active,
-      &--blocked {
-        background: var(--button-primary-cta-background-color);
-
-        a {
-          color: var(--primary-text-color);
-          font-weight: bold;
+        &:last-child {
+            margin-bottom: 0;
         }
 
-        span {
-          color: var(--primary-text-color);
+        &--blocked {
+            opacity: 0.36;
+            pointer-events: none;
+            user-select: none;
         }
-      }
 
-      &--active:hover {
-        background: var(--button-primary-cta-background-color-hover);
-      }
+        &--rejected {
+            .pg-profile-page-verification__step__info__title {
+                color: var(--primary-text-color);
+            }
+        }
+
+        &__info {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            &__title {
+                color: var(--primary-text-color);
+                font-size: 15px;
+                line-height: 15px;
+            }
+
+            &__subtitle {
+                font-size: 12px;
+                letter-spacing: 0.5px;
+                line-height: 12px;
+                margin-top: 8px;
+                opacity: 0.72;
+            }
+        }
+
+        &__label {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            height: 30px;
+            justify-content: flex-end;
+            width: 100px;
+
+            a,
+            span {
+                font-size: 12px;
+                line-height: 15px;
+            }
+
+            svg {
+                margin-left: 9px;
+                max-height: 12px;
+                max-width: 12px;
+            }
+
+            &--pending {
+                color: var(--system-yellow);
+
+                span {
+                    color: var(--system-yellow);
+                }
+            }
+
+            &--verified {
+                color: var(--system-green);
+
+                span {
+                    color: var(--system-green);
+                }
+            }
+
+            &--rejected {
+                a {
+                    color: var(--system-red);
+                    text-decoration: underline;
+                }
+
+                span {
+                    color: var(--system-red);
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        &__button {
+            align-items: center;
+            border-radius: 4px;
+            display: flex;
+            height: 30px;
+            justify-content: center;
+            width: 100px;
+
+            a,
+            span {
+                align-items: center;
+                color: var(--system-green);
+                display: flex;
+                font-size: 14px;
+                font-weight: var(--button-font-weight);
+                height: 100%;
+                justify-content: center;
+                letter-spacing: 1px;
+                line-height: 16px;
+                text-decoration: none;
+                text-transform: uppercase;
+                user-select: none;
+                width: 100%;
+            }
+
+            &--active,
+            &--blocked {
+                background: var(--button-primary-cta-background-color);
+
+                a {
+                    color: var(--primary-text-color);
+                    font-weight: bold;
+                }
+
+                span {
+                    color: var(--primary-text-color);
+                }
+            }
+
+            &--active:hover {
+                background: var(--button-primary-cta-background-color-hover);
+            }
+        }
     }
-  }
 }

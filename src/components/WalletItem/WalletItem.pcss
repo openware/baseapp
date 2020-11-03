@@ -1,65 +1,65 @@
 .cr-wallet-item {
-  align-items: center;
-  background-color: var(--background-wallet-item);
-  display: flex;
-  height: calc(var(--gap) * 8);
-  justify-content: space-between;
-
-  span {
-    background: transparent;
-  }
-
-  & > * {
-    background: var(--background-wallet-item);
-  }
-
-  &__info {
+    align-items: center;
+    background-color: var(--background-wallet-item);
     display: flex;
-    max-height: 100%;
-    width: auto;
-  }
+    height: calc(var(--gap) * 8);
+    justify-content: space-between;
 
-  &__description {
-    background: var(--background-wallet-item);
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-    padding-bottom: 15px;
-    padding-top: 15px;
-  }
-
-  &__image-icon {
-    background: transparent;
-    display: flex;
-    width: auto;
-  }
-
-  &__icon {
-    background: var(--background-wallet-item);
-    font-size: 1.5em !important;
-    margin-left: calc(var(--gap) * 4);
-    text-transform: uppercase;
+    span {
+        background: transparent;
+    }
 
     & > * {
-      background: var(--background-wallet-item);
+        background: var(--background-wallet-item);
     }
-  }
 
-  &__balance {
-    background: var(--background-wallet-item);
-    margin-right: calc(var(--gap) * 10);
-    text-align: right;
-
-    &-locked {
-      background: var(--background-wallet-item);
-      color: var(--placeholder-text);
-      font-size: 0.9em;
-      font-weight: 200;
-      padding-top: var(--gap);
+    &__info {
+        display: flex;
+        max-height: 100%;
+        width: auto;
     }
-  }
 
-  &__amount-locked {
-    background: var(--background-wallet-item);
-  }
+    &__description {
+        background: var(--background-wallet-item);
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+        padding-bottom: 15px;
+        padding-top: 15px;
+    }
+
+    &__image-icon {
+        background: transparent;
+        display: flex;
+        width: auto;
+    }
+
+    &__icon {
+        background: var(--background-wallet-item);
+        font-size: 1.5em !important;
+        margin-left: calc(var(--gap) * 4);
+        text-transform: uppercase;
+
+        & > * {
+            background: var(--background-wallet-item);
+        }
+    }
+
+    &__balance {
+        background: var(--background-wallet-item);
+        margin-right: calc(var(--gap) * 10);
+        text-align: right;
+
+        &-locked {
+            background: var(--background-wallet-item);
+            color: var(--placeholder-text);
+            font-size: 0.9em;
+            font-weight: 200;
+            padding-top: var(--gap);
+        }
+    }
+
+    &__amount-locked {
+        background: var(--background-wallet-item);
+    }
 }

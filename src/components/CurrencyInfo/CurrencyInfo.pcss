@@ -1,50 +1,50 @@
 .cr-wallet-item__single {
-  align-items: center;
-  background: transparent;
-  border-bottom: 1px solid var(--divider-color-level-2);
-  display: flex;
-  margin: 0 calc(var(--gap) * 3);
-  padding: 0 0 calc(var(--gap) * 4);
-
-  &-balance {
+    align-items: center;
+    background: transparent;
+    border-bottom: 1px solid var(--divider-color-level-2);
     display: flex;
-    flex-grow: 2;
-    justify-content: space-between;
-  }
+    margin: 0 calc(var(--gap) * 3);
+    padding: 0 0 calc(var(--gap) * 4);
 
-  &__image-icon {
-    margin-right: calc(var(--gap) * 7);
-    max-height: calc(var(--gap) * 8);
-  }
-
-  .cr-wallet-item {
-    &__icon-code {
-      background: transparent;
-      color: var(--primary-text-color);
-      font-size: calc(var(--gap) * 8);
+    &-balance {
+        display: flex;
+        flex-grow: 2;
+        justify-content: space-between;
     }
 
-    &__amount-locked {
-      margin-right: calc(var(--gap) * 8);
+    &__image-icon {
+        margin-right: calc(var(--gap) * 7);
+        max-height: calc(var(--gap) * 8);
     }
 
-    &__balance,
-    &__amount-locked {
-      background: transparent;
-      color: var(--table-text-color);
-      display: flex;
-      font-size: calc(var(--gap) * 3);
-      line-height: 1;
-      margin-bottom: calc(var(--gap) * 0.6);
-      padding-top: 0;
+    .cr-wallet-item {
+        &__icon-code {
+            background: transparent;
+            color: var(--primary-text-color);
+            font-size: calc(var(--gap) * 8);
+        }
 
-      &-amount,
-      &-locked {
-        background: transparent;
-        color: var(--wallets-balance-color);
-        font-size: calc(var(--gap) * 5);
-        font-weight: 300;
-      }
+        &__amount-locked {
+            margin-right: calc(var(--gap) * 8);
+        }
+
+        &__balance,
+        &__amount-locked {
+            background: transparent;
+            color: var(--table-text-color);
+            display: flex;
+            font-size: calc(var(--gap) * 3);
+            line-height: 1;
+            margin-bottom: calc(var(--gap) * 0.6);
+            padding-top: 0;
+
+            &-amount,
+            &-locked {
+                background: transparent;
+                color: var(--wallets-balance-color);
+                font-size: calc(var(--gap) * 5);
+                font-weight: 300;
+            }
+        }
     }
-  }
 }

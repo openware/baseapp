@@ -1,52 +1,52 @@
 .custom-input {
-  input {
-    border-color: var(--input-border-color);
-  }
-
-  label {
-    background: var(--input-background-color);
-    font-size: calc(var(--gap) * 2);
-    left: 5%;
-    margin-top: -8px;
-    padding: 0 calc(var(--gap) * 0.7);
-    position: absolute;
-    top: 0;
-    z-index: 5;
-  }
-
-  input,
-  input:focus {
-    background: var(--input-background-color) !important;
-    box-shadow: none;
-    color: var(--input-text-color);
-  }
-
-  input:focus-within {
-    border-color: var(--input-border-color-active);
+    input {
+        border-color: var(--input-border-color);
+    }
 
     label {
-      color: var(--input-label-color-active);
+        background: var(--input-background-color);
+        font-size: calc(var(--gap) * 2);
+        left: 5%;
+        margin-top: -8px;
+        padding: 0 calc(var(--gap) * 0.7);
+        position: absolute;
+        top: 0;
+        z-index: 5;
     }
-  }
 
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-    border: 1px solid var(--input-border-color);
-    -webkit-box-shadow: 0 0 0 1000px var(--input-background-color) inset;
-    -webkit-text-fill-color: var(--input-text-color);
-    transition: background-color 5000s ease-in-out 0s;
-  }
+    input,
+    input:focus {
+        background: var(--input-background-color) !important;
+        box-shadow: none;
+        color: var(--input-text-color);
+    }
+
+    input:focus-within {
+        border-color: var(--input-border-color-active);
+
+        label {
+            color: var(--input-label-color-active);
+        }
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        border: 1px solid var(--input-border-color);
+        -webkit-box-shadow: 0 0 0 1000px var(--input-background-color) inset;
+        -webkit-text-fill-color: var(--input-text-color);
+        transition: background-color 5000s ease-in-out 0s;
+    }
 }
 
 .pg-mobile-app .custom-input {
-  font-size: 12px;
+    font-size: 12px;
 
-  input {
-    font-size: 16px;
+    input {
+        font-size: 16px;
 
-    &::placeholder {
-      font-size: 14px;
+        &::placeholder {
+            font-size: 14px;
+        }
     }
-  }
 }

@@ -1,199 +1,199 @@
 .pg-mobile-charts {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 100%;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
 
-  .pg-trading-chart {
-    margin-bottom: 4px;
-  }
-
-  .cr-tab-panel__navigation-container-navigation {
-    width: 70% !important;
-  }
-
-  .pg-combined-order-book {
-    background: var(--body-background-color);
-    padding: 6px 20px;
-
-    &--no-data-first .cr-order-book:first-child {
-      .cr-table__body tr td {
-        height: 23px !important;
-        top: 50px;
-      }
+    .pg-trading-chart {
+        margin-bottom: 4px;
     }
 
-    &--no-data-second .cr-order-book:last-child {
-      .cr-table__body tr td {
-        height: 23px !important;
-        top: 50px;
-      }
+    .cr-tab-panel__navigation-container-navigation {
+        width: 70% !important;
     }
 
-    &--no-data-first.pg-combined-order-book--no-data-second .cr-order-book {
-      border: none !important;
+    .pg-combined-order-book {
+        background: var(--body-background-color);
+        padding: 6px 20px;
 
-      &:last-child {
-        height: 100px !important;
-        top: 23px;
-      }
+        &--no-data-first .cr-order-book:first-child {
+            .cr-table__body tr td {
+                height: 23px !important;
+                top: 50px;
+            }
+        }
 
-      .cr-table__body tr td {
-        height: 23px !important;
-        top: 50px;
-      }
-    }
+        &--no-data-second .cr-order-book:last-child {
+            .cr-table__body tr td {
+                height: 23px !important;
+                top: 50px;
+            }
+        }
 
-    .cr-order-book {
-      .cr-table thead {
-        display: flex;
-        height: 100%;
-        position: sticky;
-        top: 0;
-        width: 100%;
+        &--no-data-first.pg-combined-order-book--no-data-second .cr-order-book {
+            border: none !important;
 
-        tr {
-          align-items: center;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          padding: 0;
-          width: 100%;
+            &:last-child {
+                height: 100px !important;
+                top: 23px;
+            }
 
-          th {
-            align-items: center;
-            display: flex;
-            font-size: 12px !important;
-            font-weight: normal;
-            height: 23px;
-            line-height: 15px;
-            padding: 0 !important;
-            width: 100% !important;
+            .cr-table__body tr td {
+                height: 23px !important;
+                top: 50px;
+            }
+        }
+
+        .cr-order-book {
+            .cr-table thead {
+                display: flex;
+                height: 100%;
+                position: sticky;
+                top: 0;
+                width: 100%;
+
+                tr {
+                    align-items: center;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    padding: 0;
+                    width: 100%;
+
+                    th {
+                        align-items: center;
+                        display: flex;
+                        font-size: 12px !important;
+                        font-weight: normal;
+                        height: 23px;
+                        line-height: 15px;
+                        padding: 0 !important;
+                        width: 100% !important;
+
+                        &:first-child {
+                            justify-content: flex-start;
+                        }
+
+                        &:last-child {
+                            justify-content: flex-end;
+                        }
+                    }
+                }
+            }
+
+            .cr-table__body {
+                &::before {
+                    height: 0;
+                }
+
+                tr {
+                    align-items: center;
+                    display: flex;
+                    flex-direction: row;
+                    height: 27px;
+                    justify-content: space-between;
+                    padding: 0 1px;
+                    width: 100%;
+
+                    td {
+                        align-items: center;
+                        display: flex;
+                        font-size: 13px !important;
+                        font-style: normal;
+                        font-weight: 500;
+                        height: 100%;
+                        justify-content: center;
+                        letter-spacing: -0.02em;
+                        line-height: 15px;
+                        margin: 0;
+                        padding: 0 !important;
+                        width: 100% !important;
+
+                        &:first-child {
+                            justify-content: flex-start;
+                        }
+
+                        &:last-child {
+                            justify-content: flex-end;
+                        }
+                    }
+                }
+            }
+
+            .cr-table-background {
+                display: flex;
+                flex-direction: column;
+                height: calc(100% - 23px);
+                justify-content: flex-start;
+                overflow: visible;
+                top: 23px;
+                width: 100%;
+
+                &__row {
+                    display: flex;
+                    height: 26px !important;
+                    padding: 12px 0;
+                }
+            }
 
             &:first-child {
-              justify-content: flex-start;
+                .cr-table__body tr td:last-child {
+                    color: var(--bids);
+                }
             }
 
             &:last-child {
-              justify-content: flex-end;
+                .cr-table__body tr td:first-child {
+                    color: var(--asks);
+                }
             }
-          }
-        }
-      }
-
-      .cr-table__body {
-        &::before {
-          height: 0;
         }
 
-        tr {
-          align-items: center;
-          display: flex;
-          flex-direction: row;
-          height: 27px;
-          justify-content: space-between;
-          padding: 0 1px;
-          width: 100%;
+        .cr-combined-order-book__market {
+            display: none;
+        }
+    }
 
-          td {
-            align-items: center;
-            display: flex;
-            font-size: 13px !important;
-            font-style: normal;
-            font-weight: 500;
-            height: 100%;
-            justify-content: center;
-            letter-spacing: -0.02em;
-            line-height: 15px;
-            margin: 0;
-            padding: 0 !important;
-            width: 100% !important;
+    .pg-recent-trades {
+        .cr-tab-panel__optinal-head {
+            display: none;
+        }
 
-            &:first-child {
-              justify-content: flex-start;
+        .cr-table__noData {
+            .cr-table td,
+            .cr-table th {
+                text-align: right;
+
+                &:nth-child(2) {
+                    text-align: center;
+                    width: 100%;
+                }
+            }
+        }
+
+        .cr-table {
+            thead {
+                tr {
+                    th {
+                        font-size: 12px !important;
+                        font-weight: normal;
+                        line-height: 12px;
+                        padding: 12px 20px !important;
+                        top: 0;
+                    }
+                }
             }
 
-            &:last-child {
-              justify-content: flex-end;
+            tbody {
+                tr {
+                    td {
+                        font-size: 14px !important;
+                        font-weight: 500;
+                        line-height: 15px;
+                    }
+                }
             }
-          }
         }
-      }
-
-      .cr-table-background {
-        display: flex;
-        flex-direction: column;
-        height: calc(100% - 23px);
-        justify-content: flex-start;
-        overflow: visible;
-        top: 23px;
-        width: 100%;
-
-        &__row {
-          display: flex;
-          height: 26px !important;
-          padding: 12px 0;
-        }
-      }
-
-      &:first-child {
-        .cr-table__body tr td:last-child {
-          color: var(--bids);
-        }
-      }
-
-      &:last-child {
-        .cr-table__body tr td:first-child {
-          color: var(--asks);
-        }
-      }
     }
-
-    .cr-combined-order-book__market {
-      display: none;
-    }
-  }
-
-  .pg-recent-trades {
-    .cr-tab-panel__optinal-head {
-      display: none;
-    }
-
-    .cr-table__noData {
-      .cr-table td,
-      .cr-table th {
-        text-align: right;
-
-        &:nth-child(2) {
-          text-align: center;
-          width: 100%;
-        }
-      }
-    }
-
-    .cr-table {
-      thead {
-        tr {
-          th {
-            font-size: 12px !important;
-            font-weight: normal;
-            line-height: 12px;
-            padding: 12px 20px !important;
-            top: 0;
-          }
-        }
-      }
-
-      tbody {
-        tr {
-          td {
-            font-size: 14px !important;
-            font-weight: 500;
-            line-height: 15px;
-          }
-        }
-      }
-    }
-  }
 }

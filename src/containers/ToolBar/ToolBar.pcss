@@ -3,152 +3,152 @@
 @import "./MarketSelector/MarketSelector.pcss";
 
 .pg-trading-header-container {
-  align-items: center;
-  background-color: var(--trading-header-background);
-  border: none;
-  border-radius: calc(var(--big-gap) * 0.07);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: -5px;
-  position: sticky;
-  top: 0;
-  z-index: 2;
+    align-items: center;
+    background-color: var(--trading-header-background);
+    border: none;
+    border-radius: calc(var(--big-gap) * 0.07);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: -5px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
 
-  &-dropdown {
+    &-dropdown {
+        &-selector {
+            align-items: center;
+            background: var(--trading-header-btn-close);
+            border-radius: calc(var(--big-gap) * 0.07);
+            display: flex;
+            height: calc(var(--big-gap) * 0.77);
+            justify-content: center;
+            position: relative;
+            width: calc(var(--big-gap) * 0.8);
+
+            &-open {
+                align-items: center;
+                background: var(--trading-header-btn-open);
+                border-radius: calc(var(--big-gap) * 0.07);
+                display: flex;
+                height: calc(var(--big-gap) * 0.77);
+                justify-content: center;
+                width: calc(var(--big-gap) * 0.8);
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
     &-selector {
-      align-items: center;
-      background: var(--trading-header-btn-close);
-      border-radius: calc(var(--big-gap) * 0.07);
-      display: flex;
-      height: calc(var(--big-gap) * 0.77);
-      justify-content: center;
-      position: relative;
-      width: calc(var(--big-gap) * 0.8);
-
-      &-open {
-        align-items: center;
-        background: var(--trading-header-btn-open);
-        border-radius: calc(var(--big-gap) * 0.07);
         display: flex;
-        height: calc(var(--big-gap) * 0.77);
-        justify-content: center;
-        width: calc(var(--big-gap) * 0.8);
-      }
-
-      &:hover {
-        cursor: pointer;
-      }
+        height: 100%;
+        width: 0;
     }
-  }
 
-  &-selector {
-    display: flex;
-    height: 100%;
-    width: 0;
-  }
+    &-reset-button {
+        input {
+            background: var(--header);
+            color: var(--base);
+            font-size: var(--trading-header-font-size);
+            font-weight: normal;
+            height: 33px;
+            width: calc(var(--big-gap) * 2);
 
-  &-reset-button {
-    input {
-      background: var(--header);
-      color: var(--base);
-      font-size: var(--trading-header-font-size);
-      font-weight: normal;
-      height: 33px;
-      width: calc(var(--big-gap) * 2);
-
-      &:focus {
-        outline: none;
-      }
+            &:focus {
+                outline: none;
+            }
+        }
     }
-  }
 
-  &-stats {
-    color: var(--placeholder-text);
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  &-daily {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-left: 5px;
-    margin-right: calc(var(--big-gap) * 1);
-    width: calc(var(--big-gap) * 9);
-
-    &-last {
-      display: none;
+    &-stats {
+        color: var(--placeholder-text);
+        display: flex;
+        justify-content: flex-end;
     }
-  }
 
-  .pg-trading-header-selector-container {
-    box-shadow: 1px 1px 5px var(--shadow-color-level-2);
-  }
-
-  @media screen and (max-width: 996px) {
     &-daily {
-      width: calc(var(--big-gap) * 5);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-left: 5px;
+        margin-right: calc(var(--big-gap) * 1);
+        width: calc(var(--big-gap) * 9);
+
+        &-last {
+            display: none;
+        }
     }
 
-    &-daily-last {
-      display: block;
-    }
-  }
-
-  &-total {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-right: 1%;
-    width: calc(var(--big-gap) * 2.4);
-  }
-
-  @media screen and (max-width: 768px) {
-    &-total {
-      display: none;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
     .pg-trading-header-selector-container {
-      width: 100%;
+        box-shadow: 1px 1px 5px var(--shadow-color-level-2);
     }
 
-    height: 0;
+    @media screen and (max-width: 996px) {
+        &-daily {
+            width: calc(var(--big-gap) * 5);
+        }
 
-    .pg-trading-header-selector {
-      height: 43px !important;
-      width: 100%;
-
-      &-title {
-        padding-left: calc(100% - var(--big-gap) * 3.4);
-      }
-
-      .pg-trading-header-selector-icon-open {
-        height: 43px !important;
-      }
+        &-daily-last {
+            display: block;
+        }
     }
 
-    &-stats {
-      display: none;
-    }
-  }
-
-  @media screen and (max-width: 576px) {
-    height: 0;
-
-    &-selector {
-      height: 43px !important;
-      width: 100%;
-
-      .pg-trading-header-selector-icon-open {
-        height: 43px !important;
-      }
+    &-total {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-right: 1%;
+        width: calc(var(--big-gap) * 2.4);
     }
 
-    &-stats {
-      display: none;
+    @media screen and (max-width: 768px) {
+        &-total {
+            display: none;
+        }
     }
-  }
+
+    @media screen and (max-width: 480px) {
+        .pg-trading-header-selector-container {
+            width: 100%;
+        }
+
+        height: 0;
+
+        .pg-trading-header-selector {
+            height: 43px !important;
+            width: 100%;
+
+            &-title {
+                padding-left: calc(100% - var(--big-gap) * 3.4);
+            }
+
+            .pg-trading-header-selector-icon-open {
+                height: 43px !important;
+            }
+        }
+
+        &-stats {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        height: 0;
+
+        &-selector {
+            height: 43px !important;
+            width: 100%;
+
+            .pg-trading-header-selector-icon-open {
+                height: 43px !important;
+            }
+        }
+
+        &-stats {
+            display: none;
+        }
+    }
 }

@@ -1,70 +1,70 @@
 .pg-dropdown-markets-list-container {
-  height: calc(100% - var(--big-gap) * 2);
-  overflow-x: hidden;
-  overflow-y: scroll;
-  padding-right: 5px;
+    height: calc(100% - var(--big-gap) * 2);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-right: 5px;
 
-  .cr-table thead th {
-    top: 0;
-  }
-
-  .cr-table tbody td {
-    background-color: var(--market-selector-table-background-color);
-    color: var(--market-selector-table-text-color);
-    width: calc(100% / 4);
-  }
-
-  .cr-table tbody .cr-table__row--selected td {
-    background-color: var(--market-selector-table-row-selector);
-
-    &:first-child {
-      color: var(--market-selector-table-text-color-hover);
+    .cr-table thead th {
+        top: 0;
     }
-  }
 
-  th {
-    font-weight: 500 !important;
-    user-select: none;
-    white-space: nowrap;
-  }
-
-  th,
-  td {
-    text-align: right;
-  }
-
-  .cr-table tr {
-    cursor: pointer;
-
-    &:hover {
-      background: transparent;
-
-      td {
-        background-color: var(--market-selector-table-row-selector-hover);
-        color: var(--market-selector-table-text-color-hover);
-      }
+    .cr-table tbody td {
+        background-color: var(--market-selector-table-background-color);
+        color: var(--market-selector-table-text-color);
+        width: calc(100% / 4);
     }
-  }
 
-  &__positive {
-    color: var(--bids);
-  }
+    .cr-table tbody .cr-table__row--selected td {
+        background-color: var(--market-selector-table-row-selector);
 
-  &__negative {
-    color: var(--asks);
-  }
-
-  .sort-icon {
-    svg {
-      height: calc(var(--gap) * 1.67);
-      opacity: 1;
-      padding-left: calc(var(--gap) * 0.5);
-      vertical-align: middle;
-      width: calc(var(--gap) * 2);
-
-      path {
-        fill: var(--primary-text-color);
-      }
+        &:first-child {
+            color: var(--market-selector-table-text-color-hover);
+        }
     }
-  }
+
+    th {
+        font-weight: 500 !important;
+        user-select: none;
+        white-space: nowrap;
+    }
+
+    th,
+    td {
+        text-align: right;
+    }
+
+    .cr-table tr {
+        cursor: pointer;
+
+        &:hover {
+            background: transparent;
+
+            td {
+                background-color: var(--market-selector-table-row-selector-hover);
+                color: var(--market-selector-table-text-color-hover);
+            }
+        }
+    }
+
+    &__positive {
+        color: var(--bids);
+    }
+
+    &__negative {
+        color: var(--asks);
+    }
+
+    .sort-icon {
+        svg {
+            height: calc(var(--gap) * 1.67);
+            opacity: 1;
+            padding-left: calc(var(--gap) * 0.5);
+            vertical-align: middle;
+            width: calc(var(--gap) * 2);
+
+            path {
+                fill: var(--primary-text-color);
+            }
+        }
+    }
 }

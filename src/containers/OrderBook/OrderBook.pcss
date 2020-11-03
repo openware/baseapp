@@ -1,248 +1,248 @@
 .pg-combined-order-book {
-  height: 100%;
-  overflow: hidden;
-
-  &-loader {
-    align-items: center;
-    display: flex;
     height: 100%;
-    justify-content: center;
-    padding-bottom: calc(var(--gap) * 4.5);
-  }
+    overflow: hidden;
 
-  &--no-data-first {
-    .cr-order-book {
-      &:first-child {
-        .cr-table {
-          &__body {
-            tr {
-              td:nth-child(2) {
-                bottom: 0;
-                color: var(--secondary-contrast-cta-color);
-                left: 0;
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-                position: absolute;
-                right: 0;
-                text-align: center !important;
-                width: 100% !important;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  &--no-data-second {
-    .cr-order-book {
-      &:last-child {
-        .cr-table {
-          &__body {
-            tr {
-              td:nth-child(2) {
-                color: var(--secondary-contrast-cta-color);
-                left: 0;
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-                position: absolute;
-                right: 0;
-                text-align: center !important;
-                width: 100% !important;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .cr-table {
-    &__head {
-      th {
-        width: 33% !important;
-      }
-    }
-
-    &__body {
-      td {
-        color: var(--table-text-color);
-        width: 33% !important;
-
-        span:first-child.cr-decimal__opacity {
-          opacity: 0.6;
-        }
-      }
-    }
-  }
-
-  .cr-combined-order-book {
-    .cr-table {
-      &__head {
-        th:first-child {
-          text-align: right;
-        }
-
-        th:nth-child(2) {
-          text-align: right;
-        }
-      }
-
-      &__body {
-        td:first-child {
-          text-align: right;
-        }
-
-        td:nth-child(2) {
-          text-align: right;
-        }
-      }
-
-      &-background {
-        &__row {
-          min-width: 1px;
-          padding: 22px 0;
-        }
-      }
-    }
-
-    &__small {
-      height: 100%;
-      position: relative;
-
-      .cr-combined-order-book__market {
-        left: 0;
-        margin-top: 0;
-        position: absolute;
-        right: 0;
-        top: calc(50% - 25px) !important;
-      }
-
-      .cr-order-book {
-        border-bottom: 1px solid var(--order-book-last-market-price-border-color);
+    &-loader {
+        align-items: center;
         display: flex;
-        height: calc(50% - 25px) !important;
-        position: absolute;
+        height: 100%;
+        justify-content: center;
+        padding-bottom: calc(var(--gap) * 4.5);
+    }
 
-        .cr-table {
-          thead {
-            display: table;
-            position: fixed;
-            top: 32px;
-            width: 100%;
-            z-index: 2222;
-          }
+    &--no-data-first {
+        .cr-order-book {
+            &:first-child {
+                .cr-table {
+                    &__body {
+                        tr {
+                            td:nth-child(2) {
+                                bottom: 0;
+                                color: var(--secondary-contrast-cta-color);
+                                left: 0;
+                                padding-left: 0 !important;
+                                padding-right: 0 !important;
+                                position: absolute;
+                                right: 0;
+                                text-align: center !important;
+                                width: 100% !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-          &__body {
-            cursor: pointer;
-          }
+    &--no-data-second {
+        .cr-order-book {
+            &:last-child {
+                .cr-table {
+                    &__body {
+                        tr {
+                            td:nth-child(2) {
+                                color: var(--secondary-contrast-cta-color);
+                                left: 0;
+                                padding-left: 0 !important;
+                                padding-right: 0 !important;
+                                position: absolute;
+                                right: 0;
+                                text-align: center !important;
+                                width: 100% !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .cr-table {
+        &__head {
+            th {
+                width: 33% !important;
+            }
         }
 
-        &:first-child {
-          flex-direction: column-reverse;
-          left: 0;
-          overflow-x: hidden;
-          right: 0;
-          top: 0;
-
-          .cr-table {
+        &__body {
             td {
-              width: 33% !important;
+                color: var(--table-text-color);
+                width: 33% !important;
+
+                span:first-child.cr-decimal__opacity {
+                    opacity: 0.6;
+                }
+            }
+        }
+    }
+
+    .cr-combined-order-book {
+        .cr-table {
+            &__head {
+                th:first-child {
+                    text-align: right;
+                }
+
+                th:nth-child(2) {
+                    text-align: right;
+                }
+            }
+
+            &__body {
+                td:first-child {
+                    text-align: right;
+                }
+
+                td:nth-child(2) {
+                    text-align: right;
+                }
             }
 
             &-background {
-              left: 0;
-              right: 0;
-              top: calc(var(--gap) * 7);
+                &__row {
+                    min-width: 1px;
+                    padding: 22px 0;
+                }
             }
-
-            tbody::before {
-              content: '';
-              display: block;
-              height: calc(var(--gap) * 7);
-            }
-
-            &-container {
-              margin-top: auto;
-              width: 100%;
-            }
-          }
         }
 
-        &:last-child {
-          border-top: 1px solid var(--order-book-last-market-price-border-color);
-          left: 0;
-          right: 0;
-          top: calc(50% + 35px);
+        &__small {
+            height: 100%;
+            position: relative;
 
-          .cr-table {
-            &-container {
-              width: 100%;
+            .cr-combined-order-book__market {
+                left: 0;
+                margin-top: 0;
+                position: absolute;
+                right: 0;
+                top: calc(50% - 25px) !important;
             }
-          }
 
-          tbody::after {
-            content: '';
-            display: block;
-            height: calc(var(--gap) * 7);
-          }
-        }
-      }
+            .cr-order-book {
+                border-bottom: 1px solid var(--order-book-last-market-price-border-color);
+                display: flex;
+                height: calc(50% - 25px) !important;
+                position: absolute;
 
-      .cr-table-background {
-        &__row {
-          padding-bottom: calc(var(--gap) * 1.5);
+                .cr-table {
+                    thead {
+                        display: table;
+                        position: fixed;
+                        top: 32px;
+                        width: 100%;
+                        z-index: 2222;
+                    }
+
+                    &__body {
+                        cursor: pointer;
+                    }
+                }
+
+                &:first-child {
+                    flex-direction: column-reverse;
+                    left: 0;
+                    overflow-x: hidden;
+                    right: 0;
+                    top: 0;
+
+                    .cr-table {
+                        td {
+                            width: 33% !important;
+                        }
+
+                        &-background {
+                            left: 0;
+                            right: 0;
+                            top: calc(var(--gap) * 7);
+                        }
+
+                        tbody::before {
+                            content: "";
+                            display: block;
+                            height: calc(var(--gap) * 7);
+                        }
+
+                        &-container {
+                            margin-top: auto;
+                            width: 100%;
+                        }
+                    }
+                }
+
+                &:last-child {
+                    border-top: 1px solid var(--order-book-last-market-price-border-color);
+                    left: 0;
+                    right: 0;
+                    top: calc(50% + 35px);
+
+                    .cr-table {
+                        &-container {
+                            width: 100%;
+                        }
+                    }
+
+                    tbody::after {
+                        content: "";
+                        display: block;
+                        height: calc(var(--gap) * 7);
+                    }
+                }
+            }
+
+            .cr-table-background {
+                &__row {
+                    padding-bottom: calc(var(--gap) * 1.5);
+                }
+            }
         }
-      }
+
+        &__large {
+            height: 100%;
+            min-height: 150px;
+            overflow-y: scroll;
+
+            .cr-order-book {
+                padding-right: 0;
+            }
+
+            .cr-table {
+                &__head {
+                    display: table;
+                    position: fixed;
+                    width: 50%;
+                    z-index: 222;
+
+                    th:first-child {
+                        text-align: left;
+                    }
+                }
+
+                tbody {
+                    td:first-child {
+                        text-align: left;
+                    }
+
+                    &::before {
+                        content: "";
+                        display: block;
+                        height: calc(var(--gap) * 6);
+                    }
+                }
+            }
+
+            &-market {
+                border-top: 1px solid var(--order-book-last-market-price-border-color);
+                position: fixed;
+            }
+
+            .cr-table-background {
+                top: 36px;
+
+                &__row {
+                    margin-right: 1px;
+                    padding-bottom: calc(var(--gap) * 1.5);
+                }
+            }
+        }
     }
-
-    &__large {
-      height: 100%;
-      min-height: 150px;
-      overflow-y: scroll;
-
-      .cr-order-book {
-        padding-right: 0;
-      }
-
-      .cr-table {
-        &__head {
-          display: table;
-          position: fixed;
-          width: 50%;
-          z-index: 222;
-
-          th:first-child {
-            text-align: left;
-          }
-        }
-
-        tbody {
-          td:first-child {
-            text-align: left;
-          }
-
-          &::before {
-            content: '';
-            display: block;
-            height: calc(var(--gap) * 6);
-          }
-        }
-      }
-
-      &-market {
-        border-top: 1px solid var(--order-book-last-market-price-border-color);
-        position: fixed;
-      }
-
-      .cr-table-background {
-        top: 36px;
-
-        &__row {
-          margin-right: 1px;
-          padding-bottom: calc(var(--gap) * 1.5);
-        }
-      }
-    }
-  }
 }
