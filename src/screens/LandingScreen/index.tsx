@@ -7,28 +7,23 @@ import { IntlProps } from '../../';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { MarketsTable } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
-import {
-    RootState,
-    selectCurrentColorTheme,
-    selectUserLoggedIn,
-} from '../../modules';
+import { RootState, selectCurrentColorTheme, selectUserLoggedIn } from '../../modules';
 
-const FeaturesExchangeIcon = require('../../assets/images/landing/features/Exchange.svg');
-const FeaturesTypesIcon = require('../../assets/images/landing/features/Types.svg');
-const FeaturesCustomizeIcon = require('../../assets/images/landing/features/Customize.svg');
-const FeaturesSecurityIcon = require('../../assets/images/landing/features/Security.svg');
-const FeaturesCommunityIcon = require('../../assets/images/landing/features/Community.svg');
-const FeaturesAPIIcon = require('../../assets/images/landing/features/API.svg');
+import FeaturesExchangeIcon from 'src/assets/images/landing/features/Exchange.svg';
+import FeaturesTypesIcon from 'src/assets/images/landing/features/Types.svg';
+import FeaturesCustomizeIcon from 'src/assets/images/landing/features/Customize.svg';
+import FeaturesSecurityIcon from 'src/assets/images/landing/features/Security.svg';
+import FeaturesCommunityIcon from 'src/assets/images/landing/features/Community.svg';
+import FeaturesAPIIcon from 'src/assets/images/landing/features/API.svg';
 
-const TelegramIcon = require('../../assets/images/landing/social/Telegram.svg');
-const LinkedInIcon = require('../../assets/images/landing/social/LinkedIn.svg');
-const TwitterIcon = require('../../assets/images/landing/social/Twitter.svg');
-const YouTubeIcon = require('../../assets/images/landing/social/YouTube.svg');
-const RedditIcon = require('../../assets/images/landing/social/Reddit.svg');
-const FacebookIcon = require('../../assets/images/landing/social/Facebook.svg');
-const MediumIcon = require('../../assets/images/landing/social/Medium.svg');
-const CoinMarketIcon = require('../../assets/images/landing/social/CoinMarket.svg');
-
+import TelegramIcon from 'src/assets/images/landing/social/Telegram.svg';
+import LinkedInIcon from 'src/assets/images/landing/social/LinkedIn.svg';
+import TwitterIcon from 'src/assets/images/landing/social/Twitter.svg';
+import YouTubeIcon from 'src/assets/images/landing/social/YouTube.svg';
+import RedditIcon from 'src/assets/images/landing/social/Reddit.svg';
+import FacebookIcon from 'src/assets/images/landing/social/Facebook.svg';
+import MediumIcon from 'src/assets/images/landing/social/Medium.svg';
+import CoinMarketIcon from 'src/assets/images/landing/social/CoinMarket.svg';
 
 interface ReduxProps {
     isLoggedIn: boolean;
@@ -61,7 +56,7 @@ class Landing extends React.Component<Props> {
             return (
                 <div className="pg-landing-screen__header">
                     <div className="pg-landing-screen__header__wrap">
-                        <div className="pg-landing-screen__header__wrap__left" onClick={e => this.handleScrollTop()}>
+                        <div className="pg-landing-screen__header__wrap__left" onClick={(e) => this.handleScrollTop()}>
                             <LogoIcon />
                         </div>
                         <div className="pg-landing-screen__header__wrap__right">
@@ -77,7 +72,7 @@ class Landing extends React.Component<Props> {
         return (
             <div className="pg-landing-screen__header">
                 <div className="pg-landing-screen__header__wrap">
-                    <div className="pg-landing-screen__header__wrap__left" onClick={e => this.handleScrollTop()}>
+                    <div className="pg-landing-screen__header__wrap__left" onClick={(e) => this.handleScrollTop()}>
                         <LogoIcon />
                     </div>
                     <div className="pg-landing-screen__header__wrap__right">
@@ -217,7 +212,7 @@ class Landing extends React.Component<Props> {
         return (
             <div className="pg-landing-screen__trade-on-the-go">
                 <div className="pg-landing-screen__trade-on-the-go__wrap">
-                    <div className="pg-landing-screen__trade-on-the-go__wrap__image"/>
+                    <div className="pg-landing-screen__trade-on-the-go__wrap__image" />
                     <div className="pg-landing-screen__trade-on-the-go__wrap__content">
                         <h1>{this.translate('page.body.landing.tradeOnTheGo.item.title')}</h1>
                         <h2>{this.translate('page.body.landing.tradeOnTheGo.item.text1')}</h2>
@@ -254,7 +249,7 @@ class Landing extends React.Component<Props> {
         return (
             <div className="pg-landing-screen__footer">
                 <div className="pg-landing-screen__footer__wrap">
-                    <div className="pg-landing-screen__footer__wrap__left" onClick={e => this.handleScrollTop()}>
+                    <div className="pg-landing-screen__footer__wrap__left" onClick={(e) => this.handleScrollTop()}>
                         <LogoIcon />
                     </div>
                     <div className="pg-landing-screen__footer__wrap__navigation">
@@ -289,7 +284,9 @@ class Landing extends React.Component<Props> {
                         </div>
                     </div>
                 </div>
-                <span className="pg-landing-screen__footer__rights">{this.translate('page.body.landing.footer.rights')}</span>
+                <span className="pg-landing-screen__footer__rights">
+                    {this.translate('page.body.landing.footer.rights')}
+                </span>
             </div>
         );
     }
@@ -313,7 +310,7 @@ class Landing extends React.Component<Props> {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    private translate = (key: string) => this.props.intl.formatMessage({id: key});
+    private translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -324,5 +321,5 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 export const LandingScreen = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps, null),
+    connect(mapStateToProps, null)
 )(Landing) as React.ComponentClass;
