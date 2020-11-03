@@ -220,7 +220,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     changeLanguage: (payload) => dispatch(changeLanguage(payload)),
     toggleSidebar: (payload) => dispatch(toggleSidebar(payload)),
     logoutFetch: () => dispatch(logoutFetch()),

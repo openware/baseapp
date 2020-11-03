@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -9,7 +10,7 @@ const customizationUpdateOptions: RequestOptions = {
     apiVersion: 'applogic',
 };
 
-export function* customizationUpdateSaga(action: CustomizationUpdate) {
+export function* customizationUpdateSaga(action: CustomizationUpdate): SagaIterator {
     try {
         yield call(API.post(customizationUpdateOptions), '/customization', action.payload);
         yield put(customizationUpdateData(action.payload));

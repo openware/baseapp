@@ -203,7 +203,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         }
     }
 
-    public componentWillReceiveProps(nextProps: LayoutProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: LayoutProps) {
         if (
             !(
                 nextProps.location.pathname.includes('/magic-link') ||
@@ -574,7 +574,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     configsLoading: selectConfigsLoading(state),
     configsSuccess: selectConfigsSuccess(state),
     colorTheme: selectCurrentColorTheme(state),
@@ -587,7 +587,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => (
     platformAccessStatus: selectPlatformAccessStatus(state),
 });
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, unknown> = (dispatch) => ({
     fetchConfigs: () => dispatch(configsFetch()),
     fetchCustomization: () => dispatch(customizationFetch()),
     logout: () => dispatch(logoutFetch()),

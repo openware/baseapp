@@ -240,7 +240,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     verifyPhoneSuccess: selectVerifyPhoneSuccess(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     resendCode: (phone) => dispatch(resendCode(phone)),
     sendCode: (phone) => dispatch(sendCode(phone)),
     verifyPhone: (payload) => dispatch(verifyPhone(payload)),

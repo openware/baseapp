@@ -3,6 +3,7 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { WidthProvider, Responsive } from 'react-grid-layout';
 
 import { IntlProps } from '../../';
 import { incrementalOrderBook } from '../../api';
@@ -36,8 +37,6 @@ import { depthFetch } from '../../modules/public/orderBook';
 import { rangerConnectFetch, RangerConnectFetch } from '../../modules/public/ranger';
 import { RangerState } from '../../modules/public/ranger/reducer';
 import { selectRanger } from '../../modules/public/ranger/selectors';
-
-const { WidthProvider, Responsive } = require('react-grid-layout');
 
 const breakpoints = {
     lg: 1200,
@@ -179,7 +178,7 @@ class Trading extends React.Component<Props, StateProps> {
         this.props.setCurrentPrice(undefined);
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps) {
         const { history, markets, userLoggedIn } = this.props;
 
         if (userLoggedIn !== nextProps.userLoggedIn) {
@@ -262,7 +261,7 @@ class Trading extends React.Component<Props, StateProps> {
         }
     };
 
-    private handeDrag = (layout, oldItem, newItem) => {
+    private handeDrag = (layout: any) => {
         for (const elem of layout) {
             if (elem.y < 0) {
                 elem.y = 0;
@@ -271,7 +270,7 @@ class Trading extends React.Component<Props, StateProps> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     currentMarket: selectCurrentMarket(state),
     markets: selectMarkets(state),
     user: selectUserInfo(state),
@@ -281,7 +280,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => (
     tickers: selectMarketTickers(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     marketsFetch: () => dispatch(marketsFetch()),
     depthFetch: (payload) => dispatch(depthFetch(payload)),
     rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),

@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const ordersCancelOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* ordersHistoryCancelSaga(action: OrdersHistoryCancelFetch) {
+export function* ordersHistoryCancelSaga(action: OrdersHistoryCancelFetch): SagaIterator {
     try {
         const { id } = action.payload;
 

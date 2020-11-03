@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../../';
@@ -12,7 +13,7 @@ const sessionsConfig = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* sendAddressesSaga(action: SendAddressesFetch) {
+export function* sendAddressesSaga(action: SendAddressesFetch): SagaIterator {
     try {
         const response = yield call(API.post(sessionsConfig(getCsrfToken())), '/resource/addresses', action.payload);
         const defaultMessage = 'success.addresses.accepted';

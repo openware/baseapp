@@ -76,7 +76,7 @@ class EstimatedValueContainer extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         const { currencies, fetchCurrencies, fetchMarkets, fetchTickers, markets, tickers } = this.props;
 
         if (!markets.length && next.markets.length) {
@@ -140,7 +140,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     userLoggedIn: selectUserLoggedIn(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     fetchCurrencies: () => dispatch(currenciesFetch()),
     fetchMarkets: () => dispatch(marketsFetch()),
     fetchTickers: () => dispatch(marketsTickersFetch()),

@@ -450,7 +450,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     nextPageExists: selectApiKeysNextPageExists(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     toggleApiKeys2FAModal: (payload: ApiKeys2FAModal['payload']) => dispatch(apiKeys2FAModal(payload)),
     apiKeysFetch: (payload) => dispatch(apiKeysFetch(payload)),
     createApiKey: (payload) => dispatch(apiKeyCreateFetch(payload)),

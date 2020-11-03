@@ -86,7 +86,7 @@ class History extends React.Component<Props, State> {
     };
 }
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     fetchMarkets: () => dispatch(marketsFetch()),
     fetchWallets: () => dispatch(walletsFetch()),
     fetchHistory: (payload) => dispatch(fetchHistory(payload)),

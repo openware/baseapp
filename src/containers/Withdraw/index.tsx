@@ -53,7 +53,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         total: '',
     };
 
-    public componentWillReceiveProps(nextProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps) {
         const { currency, withdrawDone } = this.props;
 
         if (

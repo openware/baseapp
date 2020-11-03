@@ -161,7 +161,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     nextPageExists: selectUserActivityNextPageExists(state, paginationLimit),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     getUserActivity: (params) => dispatch(getUserActivity(params)),
 });
 

@@ -269,7 +269,7 @@ const mapStateToProps = (state) => ({
     labels: selectLabelData(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     labelFetch: () => dispatch(labelFetch()),
 });
 

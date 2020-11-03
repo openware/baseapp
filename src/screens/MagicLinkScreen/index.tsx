@@ -47,7 +47,7 @@ class MagicLinkScreen extends React.Component<MagicLinkProps, MagicLinkState> {
         }
     }
 
-    public componentWillReceiveProps(nextProps: MagicLinkProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: MagicLinkProps) {
         if (!this.props.success && nextProps.success) {
             this.props.history.replace('/');
         }
@@ -68,12 +68,12 @@ class MagicLinkScreen extends React.Component<MagicLinkProps, MagicLinkState> {
     }
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     success: selectBlocklistAccessLoading(state),
     loading: selectBlocklistAccessSuccess(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     sendAccessToken: (payload) => dispatch(sendAccessToken(payload)),
 });
 

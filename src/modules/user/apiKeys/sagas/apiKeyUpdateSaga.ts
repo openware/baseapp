@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const updateOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* apiKeyUpdateSaga(action: ApiKeyUpdateFetch) {
+export function* apiKeyUpdateSaga(action: ApiKeyUpdateFetch): SagaIterator {
     try {
         const { totp_code } = action.payload;
         const { kid, state } = action.payload.apiKey;

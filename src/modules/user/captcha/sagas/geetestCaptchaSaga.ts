@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const sessionsConfig: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* geetestCaptchaSaga(action: GeetestCaptchaFetch) {
+export function* geetestCaptchaSaga(): SagaIterator {
     try {
         const keys = yield call(API.get(sessionsConfig), '/identity/users/register_geetest');
         yield put(geetestCaptchaData(keys));

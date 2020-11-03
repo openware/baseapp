@@ -100,7 +100,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         }
     }
 
-    public componentWillReceiveProps(nextProps: Props) {
+    public UNSAFE_componentWillReceiveProps(nextProps: Props) {
         const { currency, beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess } = this.props;
 
         if (
@@ -552,7 +552,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
 });
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, unknown> = (dispatch) => ({
     deleteAddress: (payload) => dispatch(beneficiariesDelete(payload)),
     memberLevelsFetch: () => dispatch(memberLevelsFetch()),
     beneficiariesCreateData: (payload) => dispatch(beneficiariesCreateData(payload)),

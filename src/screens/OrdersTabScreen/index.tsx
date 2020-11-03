@@ -123,7 +123,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     userLoggedIn: selectUserLoggedIn(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     marketsFetch: () => dispatch(marketsFetch()),
     ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
     resetOrdersHistory: () => dispatch(resetOrdersHistory()),

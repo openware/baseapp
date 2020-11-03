@@ -55,7 +55,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
         }
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (!this.props.success && next.success) {
             this.handleNavigateToProfile();
         }
@@ -261,7 +261,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, Props, RootState> = (state) =
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, unknown> = (dispatch) => ({
     generateQR: () => dispatch(generate2faQRFetch()),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
     fetchSuccess: (payload) => dispatch(alertPush(payload)),

@@ -8,7 +8,7 @@ import { ConfirmScreen } from '../ConfirmScreen';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <ConfirmScreen />
+            <ConfirmScreen {...props} />
         </TestComponentWrapper>
     );
 

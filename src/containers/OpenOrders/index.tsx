@@ -46,7 +46,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         const { userLoggedIn, currentMarket } = next;
         const { userLoggedIn: prevUserLoggedIn, currentMarket: prevCurrentMarket } = this.props;
 
@@ -174,7 +174,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     userLoggedIn: selectUserLoggedIn(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     userOpenOrdersFetch: (payload) => dispatch(userOpenOrdersFetch(payload)),
     openOrdersCancelFetch: (payload) => dispatch(openOrdersCancelFetch(payload)),
     ordersCancelAll: (payload) => dispatch(ordersCancelAllFetch(payload)),

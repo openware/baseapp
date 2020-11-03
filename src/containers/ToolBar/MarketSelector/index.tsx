@@ -70,9 +70,9 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
     };
 }
 
-const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const reduxProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     currentMarket: selectCurrentMarket(state),
     isOpen: selectMarketSelectorState(state),
 });
 
-export const MarketSelector = connect<ReduxProps, {}, {}, RootState>(reduxProps)(MarketSelectorComponent);
+export const MarketSelector = connect<ReduxProps, unknown, {}, RootState>(reduxProps)(MarketSelectorComponent);

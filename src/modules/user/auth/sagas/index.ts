@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { takeEvery, takeLatest } from 'redux-saga/effects';
 
 import {
@@ -13,7 +14,7 @@ import { signInSaga } from './signInSaga';
 import { signUpSaga } from './signUpSaga';
 import { verificationSaga } from './verificationSaga';
 
-export function* rootAuthSaga() {
+export function* rootAuthSaga(): SagaIterator {
     yield takeEvery(AUTH_SIGN_IN_FETCH, signInSaga);
     yield takeEvery(AUTH_SIGN_UP_FETCH, signUpSaga);
     yield takeEvery(AUTH_VERIFICATION_FETCH, verificationSaga);

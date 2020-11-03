@@ -8,7 +8,7 @@ import { MaintenanceScreen } from '../MaintenanceScreen';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <MaintenanceScreen />
+            <MaintenanceScreen {...props} />
         </TestComponentWrapper>
     );
 

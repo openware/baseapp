@@ -8,7 +8,7 @@ import { RestrictedScreen } from '../RestrictedScreen';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <RestrictedScreen />
+            <RestrictedScreen {...props} />
         </TestComponentWrapper>
     );
 

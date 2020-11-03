@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../../';
@@ -13,7 +14,7 @@ const sessionsConfig = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* confirmPhoneSaga(action: SendCodeFetch) {
+export function* confirmPhoneSaga(action: SendCodeFetch): SagaIterator {
     try {
         yield call(API.post(sessionsConfig(getCsrfToken())), '/resource/phones/verify', action.payload);
         yield put(verifyPhoneData({ message: 'success.phone.confirmation.message' }));

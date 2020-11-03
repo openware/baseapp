@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const walletsAddressOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* walletsAddressSaga(action: WalletsAddressFetch) {
+export function* walletsAddressSaga(action: WalletsAddressFetch): SagaIterator {
     try {
         const currency = action.payload.currency.toLocaleLowerCase();
         const url = `/account/deposit_address/${currency}`;

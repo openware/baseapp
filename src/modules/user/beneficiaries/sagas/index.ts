@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { takeEvery, takeLatest } from 'redux-saga/effects';
 
 import {
@@ -13,7 +14,7 @@ import { beneficiariesDeleteSaga } from './beneficiariesDeleteSaga';
 import { beneficiariesResendPinSaga } from './beneficiariesResendPinSaga';
 import { beneficiariesSaga } from './beneficiariesSaga';
 
-export function* rootBeneficiariesSaga() {
+export function* rootBeneficiariesSaga(): SagaIterator {
     yield takeEvery(BENEFICIARIES_ACTIVATE, beneficiariesActivateSaga);
     yield takeEvery(BENEFICIARIES_CREATE, beneficiariesCreateSaga);
     yield takeEvery(BENEFICIARIES_DELETE, beneficiariesDeleteSaga);

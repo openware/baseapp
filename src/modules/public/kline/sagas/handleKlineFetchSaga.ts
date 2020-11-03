@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -9,7 +10,7 @@ const klineRequestOptions: RequestOptions = {
     apiVersion: isFinexEnabled() ? 'finex' : 'peatio',
 };
 
-export function* handleKlineFetchSaga(action: KlineFetch) {
+export function* handleKlineFetchSaga(action: KlineFetch): SagaIterator {
     try {
         const { market, resolution, from, to } = action.payload;
 

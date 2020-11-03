@@ -53,7 +53,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
 });
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, unknown> = (dispatch) => ({
     fetchSuccess: (payload) => dispatch(alertPush(payload)),
 });
 

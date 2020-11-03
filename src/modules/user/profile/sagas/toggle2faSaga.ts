@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const enable2faOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* toggle2faSaga(action: Toggle2FAFetch) {
+export function* toggle2faSaga(action: Toggle2FAFetch): SagaIterator {
     try {
         const enable = action.payload.enable;
         const code = { code: action.payload.code };

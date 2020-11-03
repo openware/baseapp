@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const requestOptions: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* blocklistAccessFetchSaga(action: SendAccessTokenFetch) {
+export function* blocklistAccessFetchSaga(action: SendAccessTokenFetch): SagaIterator {
     try {
         yield call(API.post(requestOptions), '/identity/users/access', action.payload);
         yield put(sendAccessTokenData());

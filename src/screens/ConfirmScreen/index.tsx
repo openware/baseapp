@@ -74,7 +74,7 @@ class ConfirmComponent extends React.Component<Props> {
                 </div>
                 <h3 className="pg-confirm__title">
                     <FormattedMessage id={`page.confirm.title.${step}`} />
-                    <CrossIcon className="pg-confirm__title__icon" onClick={(e) => history.push('/profile')} />
+                    <CrossIcon className="pg-confirm__title__icon" onClick={() => history.push('/profile')} />
                 </h3>
                 <div className="pg-confirm__content">{this.renderVerificationStep(step)}</div>
             </div>

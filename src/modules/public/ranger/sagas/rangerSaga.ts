@@ -1,4 +1,4 @@
-import { Channel, eventChannel, EventChannel } from 'redux-saga';
+import { Channel, eventChannel, EventChannel, SagaIterator } from 'redux-saga';
 import { all, call, cancel, delay, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 
 import { isFinexEnabled, rangerUrl } from '../../../../api';
@@ -232,7 +232,7 @@ const initRanger = (
     return [channel, ws];
 };
 
-function* writter(socket: WebSocket, buffer: { messages: object[] }) {
+function* writter(socket: WebSocket, buffer: { messages: object[] }): SagaIterator {
     while (true) {
         const data = yield take(RANGER_DIRECT_WRITE);
         if (socket.readyState === socket.OPEN) {
@@ -243,7 +243,7 @@ function* writter(socket: WebSocket, buffer: { messages: object[] }) {
     }
 }
 
-function* reader(channel) {
+function* reader(channel): SagaIterator {
     while (true) {
         const action = yield take(channel);
         yield put(action);
@@ -253,7 +253,7 @@ function* reader(channel) {
 let previousMarket: Market | undefined;
 
 const switchMarket = (subscribeOnInitOnly: boolean) => {
-    return function* (action: SetCurrentMarket) {
+    return function* (action: SetCurrentMarket): SagaIterator {
         if (subscribeOnInitOnly && previousMarket !== undefined) {
             return;
         }
@@ -267,16 +267,20 @@ const switchMarket = (subscribeOnInitOnly: boolean) => {
     };
 };
 
-function* watchDisconnect(socket: WebSocket, channel: Channel<{}>) {
+function* watchDisconnect(socket: WebSocket): SagaIterator {
     yield take(RANGER_DISCONNECT_FETCH);
     socket.close();
 }
 
-function* bindSocket(channel: Channel<{}>, socket: WebSocket, buffer: RangerBuffer) {
-    return yield all([call(reader, channel), call(writter, socket, buffer), call(watchDisconnect, socket, channel)]);
+function* bindSocket(channel: Channel<{}>, socket: WebSocket, buffer: RangerBuffer): SagaIterator {
+    return yield all([
+        call(reader, channel),
+        call(writter, socket, buffer),
+        call(watchDisconnect as any, socket, channel),
+    ]);
 }
 
-function* dispatchCurrentMarketOrderUpdates(action: UserOrderUpdate) {
+function* dispatchCurrentMarketOrderUpdates(action: UserOrderUpdate): SagaIterator {
     let market;
 
     try {
@@ -290,11 +294,11 @@ function* dispatchCurrentMarketOrderUpdates(action: UserOrderUpdate) {
     }
 }
 
-function* dispatchOrderHistoryUpdates(action: UserOrderUpdate) {
+function* dispatchOrderHistoryUpdates(action: UserOrderUpdate): SagaIterator {
     yield put(userOrdersHistoryRangerData(action.payload));
 }
 
-function* getSubscriptions() {
+function* getSubscriptions(): SagaIterator {
     try {
         return yield select(selectSubscriptions);
     } catch (error) {
@@ -302,7 +306,7 @@ function* getSubscriptions() {
     }
 }
 
-export function* rangerSagas() {
+export function* rangerSagas(): SagaIterator {
     let initialized = false;
     let connectFetchPayload: RangerConnectFetch['payload'] | undefined;
     const buffer: RangerBuffer = { messages: [] };
@@ -338,7 +342,7 @@ export function* rangerSagas() {
         }
 
         if (connectFetchPayload) {
-            const prevSubs = yield getSubscriptions();
+            const prevSubs = yield call(getSubscriptions);
             const [channel, socket] = yield call(initRanger, connectFetchPayload, market, prevSubs, buffer);
             initialized = true;
             if (pipes) {

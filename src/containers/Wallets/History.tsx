@@ -60,7 +60,7 @@ export class WalletTable extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps) {
         const { currencies, currency, type } = this.props;
         if (nextProps.currency !== currency || nextProps.type !== type) {
             this.props.resetHistory();
@@ -177,7 +177,7 @@ export const mapStateToProps = (state: RootState): ReduxProps => ({
     nextPageExists: selectNextPageExists(state, 6),
 });
 
-export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     fetchCurrencies: () => dispatch(currenciesFetch()),
     fetchHistory: (params) => dispatch(fetchHistory(params)),
     resetHistory: () => dispatch(resetHistory()),

@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { takeEvery, takeLeading } from 'redux-saga/effects';
 
 import {
@@ -13,7 +14,7 @@ import { generate2faQRSaga } from './generate2faQRSaga';
 import { toggle2faSaga } from './toggle2faSaga';
 import { userSaga } from './userSaga';
 
-export function* rootProfileSaga() {
+export function* rootProfileSaga(): SagaIterator {
     yield takeEvery(PROFILE_CHANGE_USER_FETCH, changeUserDataSaga);
     yield takeEvery(PROFILE_CHANGE_PASSWORD_FETCH, changePasswordSaga);
     yield takeEvery(PROFILE_GENERATE_2FA_QRCODE_FETCH, generate2faQRSaga);

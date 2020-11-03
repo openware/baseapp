@@ -44,7 +44,7 @@ class FooterComponent extends React.Component<FooterProps> {
     public translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     configsLoading: selectConfigsLoading(state),
 });
 

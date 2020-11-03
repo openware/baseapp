@@ -68,7 +68,7 @@ interface OwnProps {
 
 type Props = ReduxProps & DispatchProps & RouterProps & IntlProps & OwnProps;
 
-export const extractRefID = (props: RouterProps) => new URLSearchParams(props.location.search).get('refid');
+export const extractRefID = (props: RouterProps): string => new URLSearchParams(props.location.search).get('refid');
 
 class SignUp extends React.Component<Props> {
     public readonly state = {
@@ -110,7 +110,7 @@ class SignUp extends React.Component<Props> {
         document.addEventListener('click', this.handleOutsideClick, false);
     }
 
-    public componentWillReceiveProps(nextProps: Props) {
+    public UNSAFE_componentWillReceiveProps(nextProps: Props) {
         const { email } = this.state;
 
         if (nextProps.requireVerification) {
@@ -481,7 +481,7 @@ class SignUp extends React.Component<Props> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     configs: selectConfigs(state),
     i18n: selectCurrentLanguage(state),
     requireVerification: selectSignUpRequireVerification(state),
@@ -492,7 +492,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => (
     geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     signUp: (credentials) => dispatch(signUp(credentials)),
     fetchCurrentPasswordEntropy: (payload) => dispatch(entropyPasswordFetch(payload)),
     resetCaptchaState: () => dispatch(resetCaptchaState()),

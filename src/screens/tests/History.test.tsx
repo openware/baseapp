@@ -8,7 +8,7 @@ import { HistoryScreen } from '../History';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <HistoryScreen />
+            <HistoryScreen {...props} />
         </TestComponentWrapper>
     );
 

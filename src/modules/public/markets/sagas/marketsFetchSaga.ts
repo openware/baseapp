@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put, takeLeading } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -22,12 +23,12 @@ const tickersOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* rootMarketsSaga() {
+export function* rootMarketsSaga(): SagaIterator {
     yield takeLeading(MARKETS_FETCH, marketsFetchSaga);
     yield takeLeading(MARKETS_TICKERS_FETCH, tickersSaga);
 }
 
-export function* marketsFetchSaga(action: MarketsFetch) {
+export function* marketsFetchSaga(): SagaIterator {
     try {
         const markets = yield call(API.get(marketsRequestOptions), '/public/markets');
         yield put(marketsData(markets));
@@ -45,7 +46,7 @@ export function* marketsFetchSaga(action: MarketsFetch) {
     }
 }
 
-export function* tickersSaga(action: MarketsTickersFetch) {
+export function* tickersSaga(): SagaIterator {
     try {
         const tickers = yield call(API.get(tickersOptions), `/public/markets/tickers`);
 

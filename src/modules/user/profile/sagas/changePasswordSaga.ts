@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const changePasswordOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* changePasswordSaga(action: ChangePasswordFetch) {
+export function* changePasswordSaga(action: ChangePasswordFetch): SagaIterator {
     try {
         yield call(API.put(changePasswordOptions(getCsrfToken())), '/resource/users/password', action.payload);
         yield put(changePasswordData());

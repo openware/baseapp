@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const userOptions: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* userSaga(action: UserFetch) {
+export function* userSaga(): SagaIterator {
     try {
         const user = yield call(API.get(userOptions), '/resource/users/me');
         yield put(userData({ user }));

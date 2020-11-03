@@ -52,7 +52,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
     private datafeed = dataFeedObject(this, this.props.markets);
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.currentMarket && next.colorTheme && next.colorTheme !== this.props.colorTheme) {
             this.setChart(next.markets, next.currentMarket, next.colorTheme);
         }
@@ -251,7 +251,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     };
 }
 
-const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const reduxProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     markets: selectMarkets(state),
     colorTheme: selectCurrentColorTheme(state),
     chartRebuild: selectChartRebuildState(state),
@@ -262,7 +262,7 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     klineUpdateTimeRange: (payload) => dispatch(klineUpdateTimeRange(payload)),
     subscribeKline: (marketId: string, periodString: string) =>
         dispatch(rangerSubscribeKlineMarket(marketId, periodString)),

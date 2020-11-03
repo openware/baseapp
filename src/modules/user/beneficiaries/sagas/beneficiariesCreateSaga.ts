@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -17,7 +18,7 @@ const config = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* beneficiariesCreateSaga(action: BeneficiariesCreate) {
+export function* beneficiariesCreateSaga(action: BeneficiariesCreate): SagaIterator {
     try {
         const payload = yield call(API.post(config(getCsrfToken())), '/account/beneficiaries', action.payload);
         yield put(beneficiariesCreateData(payload));

@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const tradesOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* recentTradesFetchSaga(action: RecentTradesFetch) {
+export function* recentTradesFetchSaga(action: RecentTradesFetch): SagaIterator {
     try {
         const market = action.payload;
         if (!market.id) {

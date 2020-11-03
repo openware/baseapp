@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -8,7 +9,7 @@ const sessionsConfig: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* emailVerificationSaga(action: EmailVerificationFetch) {
+export function* emailVerificationSaga(action: EmailVerificationFetch): SagaIterator {
     try {
         yield call(API.post(sessionsConfig), '/identity/users/email/generate_code', action.payload);
         yield put(emailVerificationData());

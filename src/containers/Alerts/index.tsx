@@ -53,7 +53,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     alerts: selectAlertState(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     alertDelete: () => dispatch(alertDelete()),
     alertDeleteByIndex: (payload) => dispatch(alertDeleteByIndex(payload)),
 });

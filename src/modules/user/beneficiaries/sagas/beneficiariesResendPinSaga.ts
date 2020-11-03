@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const config = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* beneficiariesResendPinSaga(action: BeneficiariesResendPin) {
+export function* beneficiariesResendPinSaga(action: BeneficiariesResendPin): SagaIterator {
     try {
         const { id } = action.payload;
         yield call(API.patch(config(getCsrfToken())), `/account/beneficiaries/${id}/resend_pin`, action.payload);

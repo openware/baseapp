@@ -409,7 +409,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     fetchAlert: (payload) => dispatch(alertPush(payload)),
     sendDocuments: (payload) => dispatch(sendDocuments(payload)),
 });

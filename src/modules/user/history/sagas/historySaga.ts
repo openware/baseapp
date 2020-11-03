@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -9,7 +10,7 @@ const config: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* historySaga(action: HistoryFetch) {
+export function* historySaga(action: HistoryFetch): SagaIterator {
     try {
         const { type, limit, page } = action.payload;
         const coreEndpoint = {

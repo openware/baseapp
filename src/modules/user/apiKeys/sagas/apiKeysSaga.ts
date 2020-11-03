@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const apiKeysOptions: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* apiKeysSaga(action: ApiKeysFetch) {
+export function* apiKeysSaga(action: ApiKeysFetch): SagaIterator {
     try {
         const { pageIndex, limit } = action.payload;
         const apiKeys = yield call(API.get(apiKeysOptions), `/resource/api_keys?page=${pageIndex + 1}&limit=${limit}`);

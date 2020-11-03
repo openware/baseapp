@@ -206,7 +206,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     userLoggedIn: selectUserLoggedIn(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     customizationUpdate: (payload) => dispatch(customizationUpdate(payload)),
     customizationUpdateCurrent: (payload) => dispatch(customizationUpdateCurrent(payload)),
     toggleChartRebuild: () => dispatch(toggleChartRebuild()),

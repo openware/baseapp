@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const deleteOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* apiKeyDeleteSaga(action: ApiKeyDeleteFetch) {
+export function* apiKeyDeleteSaga(action: ApiKeyDeleteFetch): SagaIterator {
     try {
         const { kid, totp_code } = action.payload;
         yield call(API.delete(deleteOptions(getCsrfToken())), `/resource/api_keys/${kid}?totp_code=${totp_code}`);

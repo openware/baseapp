@@ -25,7 +25,7 @@ class Maintenance extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(nextProps: Props) {
+    public UNSAFE_componentWillReceiveProps(nextProps: Props) {
         if (!this.props.status.length && nextProps.status.length && nextProps.status !== 'maintenance') {
             this.props.history.replace('/');
         }
@@ -57,7 +57,7 @@ class Maintenance extends React.Component<Props> {
     private translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     status: selectPlatformAccessStatus(state),
 });
 

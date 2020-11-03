@@ -8,7 +8,7 @@ import { WalletsScreen } from '../WalletsScreen';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <WalletsScreen />
+            <WalletsScreen {...props} />
         </TestComponentWrapper>
     );
 

@@ -126,7 +126,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     tradesFetch: (market) => dispatch(recentTradesFetch(market)),
     setCurrentPrice: (payload) => dispatch(setCurrentPrice(payload)),
     resetHistory: () => dispatch(resetHistory()),

@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const ordersOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* userOpenOrdersFetchSaga(action: UserOpenOrdersFetch) {
+export function* userOpenOrdersFetchSaga(action: UserOpenOrdersFetch): SagaIterator {
     try {
         const { market } = action.payload;
         const list = yield call(API.get(ordersOptions), `/market/orders?market=${market.id}&state=wait`);

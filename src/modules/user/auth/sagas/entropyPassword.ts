@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const config: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* entropyPassword(action: EntropyPasswordFetch) {
+export function* entropyPassword(action: EntropyPasswordFetch): SagaIterator {
     try {
         const data = yield call(API.post(config), '/identity/password/validate', action.payload);
         yield put(entropyPasswordData(data));

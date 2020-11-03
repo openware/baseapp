@@ -41,7 +41,7 @@ class GeetestCaptchaComponent extends React.Component<Props> {
         this.props.geetestCaptchaFetch();
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (this.props.geetestCaptchaKeys !== next.geetestCaptchaKeys && next.geetestCaptchaKeys !== undefined) {
             const { geetestCaptchaKeys, lang } = next;
             // MUST BE REMOVED: Vadym P. responsibility
@@ -91,7 +91,7 @@ const mapDispatchProps = {
     geetestCaptchaFetch,
 };
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state: RootState): ReduxProps => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
     geetestCaptchaKeys: selectCaptchaKeys(state),
 });

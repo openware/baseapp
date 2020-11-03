@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -13,7 +14,7 @@ const executeOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* ordersExecuteSaga(action: OrderExecuteFetch) {
+export function* ordersExecuteSaga(action: OrderExecuteFetch): SagaIterator {
     try {
         const { market, side, volume, price, ord_type } = action.payload;
         const params = isFinexEnabled()

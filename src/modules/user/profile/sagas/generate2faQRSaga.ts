@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -19,7 +20,7 @@ interface GenerateQRResponse {
     };
 }
 
-export function* generate2faQRSaga(action: ChangePasswordFetch) {
+export function* generate2faQRSaga(): SagaIterator {
     try {
         const qrData: GenerateQRResponse = yield call(
             API.post(generate2faQROptions(getCsrfToken())),

@@ -165,7 +165,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         this.props.clearWallets();
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         const { wallets, beneficiariesActivateSuccess, beneficiariesDeleteSuccess, withdrawSuccess } = this.props;
 
         if (wallets.length === 0 && next.wallets.length > 0) {
@@ -526,7 +526,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     currencies: selectCurrencies(state),
 });
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, unknown> = (dispatch) => ({
     fetchBeneficiaries: () => dispatch(beneficiariesFetch()),
     fetchWallets: () => dispatch(walletsFetch()),
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),

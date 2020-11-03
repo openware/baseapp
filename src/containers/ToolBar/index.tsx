@@ -45,13 +45,13 @@ class ToolBarComponent extends React.Component<Props, State> {
     }
 }
 
-const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const reduxProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     markets: selectMarkets(state),
     currentMarket: selectCurrentMarket(state),
     marketTickers: selectMarketTickers(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     resetLayouts: (payload) => dispatch(resetLayouts(payload)),
 });
 

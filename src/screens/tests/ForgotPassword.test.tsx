@@ -8,7 +8,7 @@ import { ForgotPasswordScreen } from '../ForgotPassword';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <ForgotPasswordScreen />
+            <ForgotPasswordScreen {...props} />
         </TestComponentWrapper>
     );
 

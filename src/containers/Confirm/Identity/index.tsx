@@ -450,7 +450,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     editIdentity: (payload) => dispatch(editIdentity(payload)),
     sendIdentity: (payload) => dispatch(sendIdentity(payload)),
     labelFetch: () => dispatch(labelFetch()),

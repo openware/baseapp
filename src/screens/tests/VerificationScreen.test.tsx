@@ -9,7 +9,7 @@ import { extractToken } from '../VerificationScreen';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <VerificationScreen />
+            <VerificationScreen {...props} />
         </TestComponentWrapper>
     );
 

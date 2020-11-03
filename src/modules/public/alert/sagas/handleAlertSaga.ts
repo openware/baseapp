@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, delay, put, select } from 'redux-saga/effects';
 
 import { resetHistory, setBlocklistStatus, signInRequire2FA, userOpenOrdersReset, userReset } from '../../../';
@@ -5,7 +6,7 @@ import { msAlertDisplayTime } from '../../../../api';
 import { selectUserInfo } from '../../../user/profile';
 import { alertData, alertDelete, AlertPush } from '../actions';
 
-export function* handleAlertSaga(action: AlertPush) {
+export function* handleAlertSaga(action: AlertPush): SagaIterator {
     if (action.payload.type === 'error') {
         switch (action.payload.code) {
             case 401:
@@ -74,7 +75,7 @@ export function* handleAlertSaga(action: AlertPush) {
     }
 }
 
-function* callAlertData(action: AlertPush) {
+function* callAlertData(action: AlertPush): SagaIterator {
     yield put(alertData(action.payload));
     yield delay(parseFloat(msAlertDisplayTime()));
     yield put(alertDelete());

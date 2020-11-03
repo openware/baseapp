@@ -237,7 +237,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     cancelFetching: selectCancelFetching(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     ordersHistoryCancelFetch: (payload) => dispatch(ordersHistoryCancelFetch(payload)),
     userOrdersHistoryFetch: (payload) => dispatch(userOrdersHistoryFetch(payload)),
 });

@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -9,7 +10,7 @@ const userActivityOptions: RequestOptions = {
     withHeaders: true,
 };
 
-export function* userActivitySaga(action: UserActivityFetch) {
+export function* userActivitySaga(action: UserActivityFetch): SagaIterator {
     try {
         const { page, limit } = action.payload;
         const { data, headers } = yield call(

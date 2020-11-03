@@ -373,7 +373,7 @@ const mapStateToProps = (state: RootState) => ({
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     setCurrentPrice: (payload) => dispatch(setCurrentPrice(payload)),
 });
 

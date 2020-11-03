@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -12,7 +13,7 @@ const changeUserDataOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* changeUserDataSaga(action: ChangeUserDataFetch) {
+export function* changeUserDataSaga(action: ChangeUserDataFetch): SagaIterator {
     try {
         const user = yield call(
             API.put(changeUserDataOptions(getCsrfToken())),

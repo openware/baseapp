@@ -1,11 +1,12 @@
 import * as Sentry from '@sentry/browser';
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush } from '../../alert';
 import { ErrorHandlerFetch, getErrorData } from '../actions';
 import { getMetaMaskErrorMessage } from '../helpers/getMetaMaskErrorMessage';
 
-export function* handleErrorSaga(action: ErrorHandlerFetch) {
+export function* handleErrorSaga(action: ErrorHandlerFetch): SagaIterator {
     const { processingType, extraOptions, error } = action.payload;
     const { actionError } = extraOptions;
 
@@ -50,13 +51,13 @@ export function* handleErrorSaga(action: ErrorHandlerFetch) {
     yield put(getErrorData());
 }
 
-function* handleSentryError(error) {
+function* handleSentryError(error: any): SagaIterator {
     for (const item of error.message) {
         yield call(Sentry.captureException, item);
     }
 }
 
-function* handleAlertError(error) {
+function* handleAlertError(error: any): SagaIterator {
     yield put(
         alertPush({
             message: error.message,
@@ -66,6 +67,6 @@ function* handleAlertError(error) {
     );
 }
 
-function* handleConsoleError(error) {
+function* handleConsoleError(error: any): SagaIterator {
     yield call(window.console.error, error.message[0]);
 }

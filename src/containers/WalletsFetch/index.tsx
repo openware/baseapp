@@ -34,7 +34,7 @@ export class WalletsFetchComponent extends React.Component<WalletsFetchProps> {
     }
 }
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, unknown> = (dispatch) => ({
     walletsFetch: () => dispatch(walletsFetch()),
 });
 

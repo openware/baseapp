@@ -76,8 +76,11 @@
         "ws": "^7.2.0"
     },
     "scripts": {
-        "lint": "eslint --ext .ts,.tsx src",
-        "lint:fix": "eslint --ext .ts,.tsx src --fix",
+        "stylelint": "stylelint \"src/**/*.(scss|pcss)\"",
+        "stylelint:fix": "stylelint \"src/**/*.(scss|pcss)\" --fix",
+        "eslint": "eslint --ext .ts,.tsx src --fix",
+        "eslint:fix": "eslint --ext .ts,.tsx src --fix",
+        "lint": "npm-run-all stylelint eslint",
         "mockAPI": "node mocks/mockAPI.js",
         "mockWS": "node mocks/mockWS.js",
         "start": "cross-env NODE_OPTIONS=--max_old_space_size=2048 webpack-dev-server --config ./webpack/development.ts",
@@ -87,9 +90,7 @@
         "test:coverage": "jest --config jest.config.js --collectCoverage=true",
         "test:ci": "jest --config jest.config.js --silent --ci",
         "spec:integration": "cypress open",
-        "clean": "rimraf build",
-        "stylelint": "stylelint \"src/**/*.(scss|pcss)\"",
-        "stylelint:fix": "stylelint \"src/**/*.(scss|pcss)\" --fix"
+        "clean": "rimraf build"
     },
     "devDependencies": {
         "@openware/coding-standards": "2.3.0",

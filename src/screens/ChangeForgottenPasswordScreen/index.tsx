@@ -70,7 +70,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
         }
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.changeForgotPassword && !this.props.changeForgotPassword) {
             this.props.history.push('/signin');
         }
@@ -107,14 +107,14 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     changeForgotPassword: selectChangeForgotPasswordSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
     currentPasswordEntropy: selectCurrentPasswordEntropy(state),
     configs: selectConfigs(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     changeForgotPasswordFetch: (credentials) => dispatch(changeForgotPasswordFetch(credentials)),
     changeLanguage: (lang) => dispatch(changeLanguage(lang)),
     fetchCurrentPasswordEntropy: (payload) => dispatch(entropyPasswordFetch(payload)),

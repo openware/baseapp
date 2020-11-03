@@ -158,7 +158,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     success: selectForgotPasswordSuccess(state),
     error: selectForgotPasswordError(state),
     i18n: selectCurrentLanguage(state),
@@ -168,7 +168,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => (
     geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     forgotPassword: (credentials) => dispatch(forgotPassword(credentials)),
     resetCaptchaState: () => dispatch(resetCaptchaState()),
 });

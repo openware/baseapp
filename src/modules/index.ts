@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { SagaIterator } from 'redux-saga';
 import { all, call } from 'redux-saga/effects';
 
 import { publicReducer, userReducer } from './app';
@@ -117,7 +118,7 @@ export const rootReducer = combineReducers({
     user: userReducer,
 });
 
-export function* rootSaga() {
+export function* rootSaga(): SagaIterator {
     yield all([
         call(rootApiKeysSaga),
         call(rootAuthSaga),

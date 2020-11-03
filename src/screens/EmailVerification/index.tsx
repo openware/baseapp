@@ -159,7 +159,7 @@ class EmailVerificationComponent extends React.Component<Props> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     emailVerificationLoading: selectSendEmailVerificationLoading(state),
     i18n: selectCurrentLanguage(state),
     isMobileDevice: selectMobileDeviceState(state),

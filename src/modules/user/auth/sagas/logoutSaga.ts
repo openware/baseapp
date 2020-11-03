@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -12,7 +13,7 @@ const requestOptions: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* logoutSaga(action: LogoutFetch) {
+export function* logoutSaga(): SagaIterator {
     try {
         yield call(API.delete(requestOptions), '/identity/sessions');
         yield put(userReset());

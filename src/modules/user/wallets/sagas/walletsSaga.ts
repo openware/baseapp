@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -12,7 +13,7 @@ const currenciesOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* walletsSaga(action: WalletsFetch) {
+export function* walletsSaga(): SagaIterator {
     try {
         const accounts = yield call(API.get(walletsOptions), '/account/balances');
         const currencies = yield call(API.get(currenciesOptions), '/public/currencies');

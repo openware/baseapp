@@ -8,7 +8,7 @@ import { SignInScreen } from '../SignInScreen';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <SignInScreen />
+            <SignInScreen {...props} />
         </TestComponentWrapper>
     );
 

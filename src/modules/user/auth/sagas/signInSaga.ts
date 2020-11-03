@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -10,7 +11,7 @@ const sessionsConfig: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* signInSaga(action: SignInFetch) {
+export function* signInSaga(action: SignInFetch): SagaIterator {
     try {
         const user = yield call(API.post(sessionsConfig), '/identity/sessions', action.payload);
         if (user.data && JSON.parse(user.data).language) {

@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const ordersOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* ordersHistorySaga(action: UserOrdersHistoryFetch) {
+export function* ordersHistorySaga(action: UserOrdersHistoryFetch): SagaIterator {
     try {
         const { pageIndex, limit, type } = action.payload;
         const params = `${type === 'all' ? '' : '&state=wait'}`;

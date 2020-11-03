@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const orderBookOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* orderBookSaga(action: OrderBookFetch) {
+export function* orderBookSaga(action: OrderBookFetch): SagaIterator {
     try {
         const market = action.payload;
         if (!market.id) {

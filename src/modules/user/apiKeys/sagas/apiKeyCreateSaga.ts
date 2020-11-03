@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const createOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* apiKeyCreateSaga(action: ApiKeyCreateFetch) {
+export function* apiKeyCreateSaga(action: ApiKeyCreateFetch): SagaIterator {
     try {
         const apiKey = yield call(API.post(createOptions(getCsrfToken())), '/resource/api_keys', action.payload);
         yield put(apiKeyCreate(apiKey));

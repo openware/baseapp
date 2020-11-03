@@ -8,7 +8,7 @@ import { EmailVerificationScreen } from '../EmailVerification';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <EmailVerificationScreen />
+            <EmailVerificationScreen {...props} />
         </TestComponentWrapper>
     );
 

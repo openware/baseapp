@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const signUpConfig: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* signUpSaga(action: SignUpFetch) {
+export function* signUpSaga(action: SignUpFetch): SagaIterator {
     try {
         yield call(API.post(signUpConfig), '/identity/users', action.payload);
         yield put(signUpRequireVerification({ requireVerification: true }));

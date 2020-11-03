@@ -70,7 +70,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         };
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.passwordChangeSuccess) {
             this.setState({ showChangeModal: false });
         }

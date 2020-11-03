@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const depthOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* depthSaga(action: DepthFetch) {
+export function* depthSaga(action: DepthFetch): SagaIterator {
     try {
         const market = action.payload;
         const depth = yield call(API.get(depthOptions), `/public/markets/${market.id}/depth`);

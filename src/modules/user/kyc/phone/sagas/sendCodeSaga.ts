@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../../';
@@ -12,7 +13,7 @@ const sessionsConfig = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* sendCodeSaga(action: SendCodeFetch) {
+export function* sendCodeSaga(action: SendCodeFetch): SagaIterator {
     try {
         yield call(API.post(sessionsConfig(getCsrfToken())), '/resource/phones', action.payload);
         yield put(sendCodeData());

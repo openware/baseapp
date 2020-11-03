@@ -75,11 +75,11 @@ class NavBarComponent extends React.Component<Props> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state: RootState): ReduxProps => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state: RootState): ReduxProps => ({
     colorTheme: selectCurrentColorTheme(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     changeColorTheme: (payload) => dispatch(changeColorTheme(payload)),
 });
 

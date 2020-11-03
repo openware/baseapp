@@ -114,7 +114,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         };
     }
 
-    public componentWillReceiveProps(next: OrderFormProps) {
+    public UNSAFE_componentWillReceiveProps(next: OrderFormProps) {
         const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.props.currentMarketBidPrecision);
 
         if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {

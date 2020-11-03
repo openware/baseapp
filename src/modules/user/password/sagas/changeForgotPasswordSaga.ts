@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -8,7 +9,7 @@ const changeForgotPasswordConfig: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* changeForgotPasswordSaga(action: ChangeForgotPasswordFetch) {
+export function* changeForgotPasswordSaga(action: ChangeForgotPasswordFetch): SagaIterator {
     try {
         yield call(API.post(changeForgotPasswordConfig), '/identity/users/password/confirm_code', action.payload);
         yield put(changeForgotPasswordSuccess());

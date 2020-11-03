@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const ordersCancelAllOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* ordersCancelAllSaga(action: OrdersCancelAllFetch) {
+export function* ordersCancelAllSaga(action: OrdersCancelAllFetch): SagaIterator {
     try {
         yield call(API.post(ordersCancelAllOptions(getCsrfToken())), '/market/orders/cancel', action.payload);
         yield put(ordersCancelAllData());

@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -8,7 +9,7 @@ const config: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* beneficiariesSaga(action: BeneficiariesFetch) {
+export function* beneficiariesSaga(): SagaIterator {
     try {
         const beneficiaries = yield call(API.get(config), '/account/beneficiaries');
         yield put(beneficiariesData(beneficiaries));

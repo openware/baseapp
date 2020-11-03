@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const walletsWithdrawCcyOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* walletsWithdrawCcySaga(action: WalletsWithdrawCcyFetch) {
+export function* walletsWithdrawCcySaga(action: WalletsWithdrawCcyFetch): SagaIterator {
     try {
         yield call(API.post(walletsWithdrawCcyOptions(getCsrfToken())), '/account/withdraws', action.payload);
         yield put(walletsWithdrawCcyData());

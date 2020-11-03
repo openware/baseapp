@@ -8,7 +8,7 @@ import { IntlProps } from '../../';
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
-            <ProfileTwoFactorAuthScreen />
+            <ProfileTwoFactorAuthScreen {...props} />
         </TestComponentWrapper>
     );
 

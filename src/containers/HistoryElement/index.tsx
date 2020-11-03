@@ -65,7 +65,7 @@ class HistoryComponent extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(nextProps: Props) {
+    public UNSAFE_componentWillReceiveProps(nextProps: Props) {
         const { currencies } = this.props;
 
         if (!currencies.length && nextProps.currencies.length) {
@@ -274,7 +274,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     nextPageExists: selectNextPageExists(state, 25),
 });
 
-export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     fetchCurrencies: () => dispatch(currenciesFetch()),
     fetchHistory: (params) => dispatch(fetchHistory(params)),
 });

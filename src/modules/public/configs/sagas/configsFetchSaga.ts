@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
@@ -9,7 +10,7 @@ const configsOptions: RequestOptions = {
     apiVersion: 'barong',
 };
 
-export function* configsFetchSaga(action: ConfigsFetch) {
+export function* configsFetchSaga(): SagaIterator {
     try {
         const configs = yield call(API.get(configsOptions), '/identity/configs');
         yield put(configsData(configs));

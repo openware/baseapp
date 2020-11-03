@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
@@ -12,7 +13,7 @@ const config = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* beneficiariesDeleteSaga(action: BeneficiariesDelete) {
+export function* beneficiariesDeleteSaga(action: BeneficiariesDelete): SagaIterator {
     try {
         yield call(API.delete(config(getCsrfToken())), `/account/beneficiaries/${action.payload.id}`);
         yield put(beneficiariesDeleteData({ id: action.payload.id }));

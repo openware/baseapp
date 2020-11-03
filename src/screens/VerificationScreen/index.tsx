@@ -27,9 +27,9 @@ export interface RouterProps {
 
 type Props = DispatchProps & RouterProps & ReduxProps;
 
-export const extractToken = (props: RouterProps) =>
+export const extractToken = (props: RouterProps): string =>
     new URLSearchParams(props.location.search).get('confirmation_token');
-export const extractLang = (props: RouterProps) => new URLSearchParams(props.location.search).get('lang');
+export const extractLang = (props: RouterProps): string => new URLSearchParams(props.location.search).get('lang');
 
 class Verification extends React.Component<Props, IntlProps> {
     public componentDidMount() {
@@ -50,11 +50,11 @@ class Verification extends React.Component<Props, IntlProps> {
     }
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
+const mapStateToProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => ({
     isEmailVerified: selectEmailVerified(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     verification: (data) => dispatch(verificationFetch(data)),
     changeLanguage: (lang) => dispatch(changeLanguage(lang)),
 });

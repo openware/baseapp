@@ -160,7 +160,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     configsLoading: selectConfigsLoading(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({
     setMobileWalletUi: (payload) => dispatch(setMobileWalletUi(payload)),
     toggleSidebar: (payload) => dispatch(toggleSidebar(payload)),
     toggleMarketSelector: () => dispatch(toggleMarketSelector()),

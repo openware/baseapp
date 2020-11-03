@@ -40,7 +40,7 @@ class Landing extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.colorTheme === 'light') {
             toggleColorTheme('dark');
         }
@@ -57,7 +57,7 @@ class Landing extends React.Component<Props> {
             return (
                 <div className="pg-landing-screen__header">
                     <div className="pg-landing-screen__header__wrap">
-                        <div className="pg-landing-screen__header__wrap__left" onClick={(e) => this.handleScrollTop()}>
+                        <div className="pg-landing-screen__header__wrap__left" onClick={() => this.handleScrollTop()}>
                             <LogoIcon />
                         </div>
                         <div className="pg-landing-screen__header__wrap__right">
@@ -73,7 +73,7 @@ class Landing extends React.Component<Props> {
         return (
             <div className="pg-landing-screen__header">
                 <div className="pg-landing-screen__header__wrap">
-                    <div className="pg-landing-screen__header__wrap__left" onClick={(e) => this.handleScrollTop()}>
+                    <div className="pg-landing-screen__header__wrap__left" onClick={() => this.handleScrollTop()}>
                         <LogoIcon />
                     </div>
                     <div className="pg-landing-screen__header__wrap__right">
@@ -250,7 +250,7 @@ class Landing extends React.Component<Props> {
         return (
             <div className="pg-landing-screen__footer">
                 <div className="pg-landing-screen__footer__wrap">
-                    <div className="pg-landing-screen__footer__wrap__left" onClick={(e) => this.handleScrollTop()}>
+                    <div className="pg-landing-screen__footer__wrap__left" onClick={() => this.handleScrollTop()}>
                         <LogoIcon />
                     </div>
                     <div className="pg-landing-screen__footer__wrap__navigation">
