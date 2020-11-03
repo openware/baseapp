@@ -84,9 +84,9 @@
         "start": "cross-env NODE_OPTIONS=--max_old_space_size=2048 webpack-dev-server --config ./webpack/development.ts",
         "start-mock": "npm-run-all -p start mockAPI mockWS",
         "build": "cross-env NODE_ENV=production && cross-env NODE_OPTIONS=--max_old_space_size=4096 webpack --optimize-minimize --config ./webpack/production.ts",
-        "test": "jest --config jest.config.js --ci",
-        "test:coverage": "react-scripts test --collectCoverage=true",
-        "test:ci": "react-scripts test --ci",
+        "test": "jest --config jest.config.js",
+        "test:coverage": "jest --config jest.config.js --collectCoverage=true",
+        "test:ci": "jest --config jest.config.js --ci",
         "spec:integration": "cypress open",
         "clean": "rimraf build"
     },

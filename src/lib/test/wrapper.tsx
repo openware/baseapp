@@ -3,9 +3,10 @@ import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createStore } from 'redux';
+import { createBrowserHistory } from 'history';
+
 import { rootReducer } from 'src/modules';
 import { languageMap } from 'src/translations';
-import { createBrowserHistory } from 'history';
 
 const browserHistory = createBrowserHistory();
 const store = createStore(rootReducer);
@@ -21,11 +22,3 @@ export const TestComponentWrapper: React.FC = ({ children }) => {
         </Router>
     );
 };
-
-// export function wrapTestComponent<T extends React.ReactElement>(props: any) {
-//     return shallow(
-//         <TestComponentWrapper>
-//             <T {...props} />
-//         </TestComponentWrapper>
-//     );
-// }
