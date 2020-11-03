@@ -1,20 +1,12 @@
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-    MapStateToProps,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { Redirect } from 'react-router';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
 import { languages } from '../../api';
-import {
-    changeLanguage,
-    RootState,
-    selectEmailVerified,
-    verificationFetch,
-} from '../../modules';
+import { changeLanguage, RootState, selectEmailVerified, verificationFetch } from '../../modules';
 import { CommonError } from '../../modules/types';
 
 interface DispatchProps {
@@ -35,7 +27,8 @@ export interface RouterProps {
 
 type Props = DispatchProps & RouterProps & ReduxProps;
 
-export const extractToken = (props: RouterProps) => new URLSearchParams(props.location.search).get('confirmation_token');
+export const extractToken = (props: RouterProps) =>
+    new URLSearchParams(props.location.search).get('confirmation_token');
 export const extractLang = (props: RouterProps) => new URLSearchParams(props.location.search).get('lang');
 
 class Verification extends React.Component<Props, IntlProps> {
@@ -53,23 +46,20 @@ class Verification extends React.Component<Props, IntlProps> {
     }
 
     public render() {
-        return (
-            <Redirect to={'/signin'} />
-        );
+        return <Redirect to={'/signin'} />;
     }
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     isEmailVerified: selectEmailVerified(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        verification: data => dispatch(verificationFetch(data)),
-        changeLanguage: lang => dispatch(changeLanguage(lang)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    verification: (data) => dispatch(verificationFetch(data)),
+    changeLanguage: (lang) => dispatch(changeLanguage(lang)),
+});
 
 export const VerificationScreen = compose(
     injectIntl,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps)
 )(Verification) as React.ComponentClass;

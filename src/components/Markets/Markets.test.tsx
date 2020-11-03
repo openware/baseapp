@@ -1,7 +1,9 @@
 import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
+
 import * as React from 'react';
 import { spy } from 'sinon';
+
+import { TestComponentWrapper } from 'lib/test';
 import { Markets, MarketsProps } from '.';
 
 const data = [

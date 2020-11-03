@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+
 import { selectMobileDeviceState } from '../../modules';
 import { CopyableTextField } from '../CopyableTextField';
 import { MetaMaskButton } from '../MetaMaskButton';
@@ -49,7 +50,6 @@ export interface DepositCryptoProps {
     disabled?: boolean;
 }
 
-
 /**
  *  Component that displays wallet details that can be used to deposit cryptocurrency.
  */
@@ -69,14 +69,18 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const size = dimensions || QR_SIZE;
     const onCopy = !disabled ? handleOnCopy : undefined;
-    const className = classnames({'cr-copyable-text-field__disabled': data === ''});
+    const className = classnames({ 'cr-copyable-text-field__disabled': data === '' });
 
     return (
         <div className={className}>
             <div className="cr-deposit-crypto">
                 <div>
                     <p className="cr-deposit-info">{text}</p>
-                    {data ? <div className="d-none d-md-block qr-code-wrapper"><QRCode dimensions={size} data={data}/></div> : null}
+                    {data ? (
+                        <div className="d-none d-md-block qr-code-wrapper">
+                            <QRCode dimensions={size} data={data} />
+                        </div>
+                    ) : null}
                 </div>
                 <div className="cr-deposit-crypto__block">
                     {currency === 'eth' && !isMobileDevice ? <MetaMaskButton depositAddress={data} /> : null}
@@ -98,6 +102,4 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
     );
 };
 
-export {
-    DepositCrypto,
-};
+export { DepositCrypto };

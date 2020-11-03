@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -27,7 +28,7 @@ describe('Email Verification Saga', () => {
         message: ['Server error'],
     };
 
-    const fakePayload = {email: 'test@gmail.com'};
+    const fakePayload = { email: 'test@gmail.com' };
 
     const mockResendVerificationEmail = () => {
         mockAxios.onPost('/identity/users/email/generate_code').reply(201);
@@ -47,7 +48,7 @@ describe('Email Verification Saga', () => {
 
     it('should resend confirmation email in success flow', async () => {
         mockResendVerificationEmail();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -64,7 +65,7 @@ describe('Email Verification Saga', () => {
 
     it('should resend confirmation email an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

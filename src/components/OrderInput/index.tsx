@@ -1,5 +1,6 @@
 import cr from 'classnames';
 import * as React from 'react';
+
 import { CustomInput } from '../../components';
 
 export interface OrderInputProps {
@@ -53,15 +54,33 @@ export interface OrderInputProps {
  */
 
 export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((props: OrderInputProps) => {
-    const { currency, className, isFocused, label, placeholder, value, handleChangeValue, onKeyPress, handleFocusInput } = props;
+    const {
+        currency,
+        className,
+        isFocused,
+        label,
+        placeholder,
+        value,
+        handleChangeValue,
+        onKeyPress,
+        handleFocusInput,
+    } = props;
 
-    const fieldsetFocusedClass = React.useMemo(() => cr('cr-order-input__fieldset', {
-        'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
-    }), [isFocused]);
+    const fieldsetFocusedClass = React.useMemo(
+        () =>
+            cr('cr-order-input__fieldset', {
+                'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
+            }),
+        [isFocused]
+    );
 
-    const cryptoIconClass = React.useMemo(() => cr('cr-order-input__crypto-icon',{
-        'cr-order-input__fieldset--focused': isFocused,
-    }), [isFocused]);
+    const cryptoIconClass = React.useMemo(
+        () =>
+            cr('cr-order-input__crypto-icon', {
+                'cr-order-input__fieldset--focused': isFocused,
+            }),
+        [isFocused]
+    );
 
     return (
         <div className={cr('cr-order-input', className)}>
@@ -77,9 +96,7 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
                     handleFocusInput={() => handleFocusInput(props.label)}
                 />
             </fieldset>
-            <div className={cryptoIconClass}>
-                {currency.toUpperCase()}
-            </div>
+            <div className={cryptoIconClass}>{currency.toUpperCase()}</div>
         </div>
     );
 });

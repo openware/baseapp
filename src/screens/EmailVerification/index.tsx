@@ -1,12 +1,11 @@
 import { History } from 'history';
 import * as React from 'react';
-import {Button, Spinner} from 'react-bootstrap';
-import {
-    injectIntl,
-} from 'react-intl';
+import { Button, Spinner } from 'react-bootstrap';
+import { injectIntl } from 'react-intl';
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
 import { Captcha } from '../../components';
 import { EMAIL_REGEX, setDocumentTitle } from '../../helpers';
@@ -71,12 +70,7 @@ class EmailVerificationComponent extends React.Component<Props> {
     public renderCaptcha = () => {
         const { error, success } = this.props;
 
-        return (
-            <Captcha
-                error={error}
-                success={success}
-            />
-        );
+        return <Captcha error={error} success={success} />;
     };
 
     public render() {
@@ -93,28 +87,32 @@ class EmailVerificationComponent extends React.Component<Props> {
                     <div className="pg-emailverification-body">
                         <div className="pg-emailverification-body-text">{text}</div>
                         {this.renderCaptcha()}
-                        {
-                            !isMobileDevice && (
-                                <div className="pg-emailverification-body-container">
-                                    {emailVerificationLoading ? <Spinner animation="border" variant="primary"/> :
-                                        <button className="pg-emailverification-body-container-button"
-                                                onClick={this.handleClick}
-                                                disabled={this.disableButton()}>{button}</button>}
-                                </div>)
-                        }
-                        {isMobileDevice &&
-                            (<div className="pg-emailverification-body-container">
-                              <Button
-                                block={true}
-                                type="button"
-                                onClick={this.handleClick}
-                                size="lg"
-                                variant="primary"
-                              >
-                                  {this.props.intl.formatMessage({ id:  'page.mobile.reset.header' })}
-                              </Button>
-                            </div>)
-                        }
+                        {!isMobileDevice && (
+                            <div className="pg-emailverification-body-container">
+                                {emailVerificationLoading ? (
+                                    <Spinner animation="border" variant="primary" />
+                                ) : (
+                                    <button
+                                        className="pg-emailverification-body-container-button"
+                                        onClick={this.handleClick}
+                                        disabled={this.disableButton()}>
+                                        {button}
+                                    </button>
+                                )}
+                            </div>
+                        )}
+                        {isMobileDevice && (
+                            <div className="pg-emailverification-body-container">
+                                <Button
+                                    block={true}
+                                    type="button"
+                                    onClick={this.handleClick}
+                                    size="lg"
+                                    variant="primary">
+                                    {this.props.intl.formatMessage({ id: 'page.mobile.reset.header' })}
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -143,12 +141,7 @@ class EmailVerificationComponent extends React.Component<Props> {
     };
 
     private disableButton = (): boolean => {
-        const {
-            configs,
-            user,
-            geetestCaptchaSuccess,
-            reCaptchaSuccess,
-        } = this.props;
+        const { configs, user, geetestCaptchaSuccess, reCaptchaSuccess } = this.props;
 
         if (user.email && !user.email.match(EMAIL_REGEX)) {
             return true;
@@ -166,7 +159,7 @@ class EmailVerificationComponent extends React.Component<Props> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     emailVerificationLoading: selectSendEmailVerificationLoading(state),
     i18n: selectCurrentLanguage(state),
     isMobileDevice: selectMobileDeviceState(state),
@@ -187,5 +180,5 @@ const mapDispatchToProps = {
 export const EmailVerificationScreen = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps)
 )(EmailVerificationComponent) as React.ComponentClass;

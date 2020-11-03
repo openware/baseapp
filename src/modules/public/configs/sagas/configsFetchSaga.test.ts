@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -38,13 +39,10 @@ describe('Saga: configsFetchSaga', () => {
     };
 
     it('should fetch configs', async () => {
-        const expectedActions = [
-            configsFetch(),
-            configsData(fakeConfigs),
-        ];
+        const expectedActions = [configsFetch(), configsData(fakeConfigs)];
 
         mockConfigs();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -59,7 +57,6 @@ describe('Saga: configsFetchSaga', () => {
         return promise;
     });
 
-
     it('should trigger an error on configs fetch', async () => {
         const expectedActions = [
             configsFetch(),
@@ -73,7 +70,7 @@ describe('Saga: configsFetchSaga', () => {
         ];
 
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {

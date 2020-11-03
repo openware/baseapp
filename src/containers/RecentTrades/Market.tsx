@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Table } from '../../components';
 import { localeDate } from '../../helpers';
-import {
-    selectCurrentMarket,
-    selectCurrentPrice,
-    setCurrentPrice,
-} from '../../modules';
+import { selectCurrentMarket, selectCurrentPrice, setCurrentPrice } from '../../modules';
 import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modules/public/recentTrades';
 import { TradeTableCell } from './RecentTradesTableCell';
 
@@ -52,11 +49,14 @@ const RecentTradesMarket = () => {
 
         const renderRow = (item, i) => {
             const { created_at, taker_type, price, amount } = item;
-            const higlightedDate = handleHighlightValue(String(localeDate(recentTrades[i - 1] ? recentTrades[i - 1].created_at : '', 'time')), String(localeDate(created_at, 'time')));
+            const higlightedDate = handleHighlightValue(
+                String(localeDate(recentTrades[i - 1] ? recentTrades[i - 1].created_at : '', 'time')),
+                String(localeDate(created_at, 'time'))
+            );
 
             return [
-                <TradeTableCell higlightedDate={higlightedDate} takerType={taker_type} type="date"/>,
-                <TradeTableCell amount={amount} takerType={taker_type} amountFixed={amountFixed} type="amount"/>,
+                <TradeTableCell higlightedDate={higlightedDate} takerType={taker_type} type="date" />,
+                <TradeTableCell amount={amount} takerType={taker_type} amountFixed={amountFixed} type="amount" />,
                 <TradeTableCell
                     price={price}
                     priceFixed={priceFixed}
@@ -68,18 +68,19 @@ const RecentTradesMarket = () => {
             ];
         };
 
-        return (recentTrades.length > 0)
-            ? recentTrades.map(renderRow)
-            : [[]];
+        return recentTrades.length > 0 ? recentTrades.map(renderRow) : [[]];
     }, [currentMarket, recentTrades]);
 
-    const handleOnSelect = React.useCallback((index: string) => {
-        const priceToSet = recentTrades[Number(index)] ? Number(recentTrades[Number(index)].price) : 0;
+    const handleOnSelect = React.useCallback(
+        (index: string) => {
+            const priceToSet = recentTrades[Number(index)] ? Number(recentTrades[Number(index)].price) : 0;
 
-        if (currentPrice !== priceToSet) {
-            dispatch(setCurrentPrice(priceToSet));
-        }
-    }, [currentPrice, recentTrades, dispatch]);
+            if (currentPrice !== priceToSet) {
+                dispatch(setCurrentPrice(priceToSet));
+            }
+        },
+        [currentPrice, recentTrades, dispatch]
+    );
 
     React.useEffect(() => {
         if (currentMarket) {
@@ -89,16 +90,9 @@ const RecentTradesMarket = () => {
 
     return (
         <div className="pg-recent-trades__markets">
-            <Table
-                data={getTrades()}
-                header={headers}
-                onSelect={handleOnSelect}
-            />
+            <Table data={getTrades()} header={headers} onSelect={handleOnSelect} />
         </div>
     );
 };
 
-export {
-    RecentTradesMarket,
-    handleHighlightValue,
-};
+export { RecentTradesMarket, handleHighlightValue };

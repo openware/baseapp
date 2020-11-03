@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { getTimezone, setTimezone } from '../../../../helpers/timezone';
@@ -83,11 +84,8 @@ describe('Recent Trades module', () => {
 
     it('should fetch trades', async () => {
         mockOrders();
-        const expectedActions = [
-            recentTradesFetch(currentMarket),
-            recentTradesData(fakeTrades),
-        ];
-        const promise = new Promise(resolve => {
+        const expectedActions = [recentTradesFetch(currentMarket), recentTradesData(fakeTrades)];
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -114,7 +112,7 @@ describe('Recent Trades module', () => {
                 },
             }),
         ];
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

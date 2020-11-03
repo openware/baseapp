@@ -1,9 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga, sendError } from '../../../';
+
+import { rootSaga, sendError, Market } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { Market } from '../../../../modules';
+
 import { CommonError, OrderCommon } from '../../../types';
 import { userOpenOrdersData, userOpenOrdersError, userOpenOrdersFetch } from '../actions';
 
@@ -24,15 +25,15 @@ describe('Open Orders Fetch', () => {
     });
 
     const fakeMarket: Market = {
-        id:'ethusd',
-        name:'ETH/USD',
-        base_unit:'eth',
-        quote_unit:'usd',
-        min_price:'0.0',
-        max_price:'0.0',
-        min_amount:'0.0',
-        amount_precision:4,
-        price_precision:4,
+        id: 'ethusd',
+        name: 'ETH/USD',
+        base_unit: 'eth',
+        quote_unit: 'usd',
+        min_price: '0.0',
+        max_price: '0.0',
+        min_amount: '0.0',
+        amount_precision: 4,
+        price_precision: 4,
     };
 
     const fakeOpenOrders: OrderCommon[] = [
@@ -75,10 +76,7 @@ describe('Open Orders Fetch', () => {
         mockAxios.onGet(`/market/orders?market=ethusd&state=wait`).reply(200, fakeOpenOrders);
     };
 
-    const expectedActionsFetch = [
-        userOpenOrdersFetch(fakeFetchPayload),
-        userOpenOrdersData(fakeOpenOrders),
-    ];
+    const expectedActionsFetch = [userOpenOrdersFetch(fakeFetchPayload), userOpenOrdersData(fakeOpenOrders)];
     const expectedActionsError = [
         userOpenOrdersFetch(fakeFetchPayload),
         sendError({
@@ -92,7 +90,7 @@ describe('Open Orders Fetch', () => {
 
     it('should fetch open orders', async () => {
         mockGetOpenOrders();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -108,7 +106,7 @@ describe('Open Orders Fetch', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

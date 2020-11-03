@@ -5,7 +5,7 @@ import { customizationUpdateReducer, initialCustomizationUpdateState } from './r
 
 describe('customizationReducer', () => {
     const fakeCustomization: CustomizationDataInterface = {
-        settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
+        settings: '{"theme_id": "1","theme_colors":[]}',
     };
 
     const error: CommonError = {
@@ -20,7 +20,9 @@ describe('customizationReducer', () => {
         };
 
         const payload = fakeCustomization;
-        expect(customizationUpdateReducer(initialCustomizationUpdateState, actions.customizationUpdate(payload))).toEqual(expectedState);
+        expect(
+            customizationUpdateReducer(initialCustomizationUpdateState, actions.customizationUpdate(payload))
+        ).toEqual(expectedState);
     });
 
     it('should handle CUSTOMIZATION_UPDATE_DATA', () => {
@@ -32,7 +34,9 @@ describe('customizationReducer', () => {
         };
 
         const payload = fakeCustomization;
-        expect(customizationUpdateReducer(initialCustomizationUpdateState, actions.customizationUpdateData(payload))).toEqual(expectedState);
+        expect(
+            customizationUpdateReducer(initialCustomizationUpdateState, actions.customizationUpdateData(payload))
+        ).toEqual(expectedState);
     });
 
     it('should handle CUSTOMIZATION_UPDATE_ERROR', () => {
@@ -41,7 +45,9 @@ describe('customizationReducer', () => {
             loading: false,
             success: false,
             error: error,
-         };
-        expect(customizationUpdateReducer(initialCustomizationUpdateState, actions.customizationUpdateError(error))).toEqual(expectedState);
+        };
+        expect(
+            customizationUpdateReducer(initialCustomizationUpdateState, actions.customizationUpdateError(error))
+        ).toEqual(expectedState);
     });
 });

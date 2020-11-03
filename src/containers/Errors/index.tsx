@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
+
 import { IntlProps } from '../../';
 
 interface ErrorWrapperState {
@@ -29,10 +30,10 @@ class HandleErrorWrapper extends React.Component<ErrorProps, ErrorWrapperState> 
     }
 
     public componentDidCatch(error, info) {
-        Sentry.withScope(scope => {
+        Sentry.withScope((scope) => {
             scope.setExtras(info);
             const eventId = Sentry.captureException(error);
-            this.setState({eventId});
+            this.setState({ eventId });
         });
     }
 

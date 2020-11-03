@@ -103,7 +103,9 @@ describe('Markets reducer', () => {
                 ...initialMarketsState,
                 currentMarket: fakeMarkets[0],
             };
-            expect(marketsReducer(initialMarketsState, actions.setCurrentMarketIfUnset(fakeMarkets[0]))).toEqual(expectedState);
+            expect(marketsReducer(initialMarketsState, actions.setCurrentMarketIfUnset(fakeMarkets[0]))).toEqual(
+                expectedState
+            );
         });
 
         it('does not set current market when already defined', () => {
@@ -130,7 +132,9 @@ describe('Markets reducer', () => {
             ...initialMarketsState,
             tickers: marketsTickersList,
         };
-        expect(marketsReducer(initialMarketsState, actions.marketsTickersData(marketsTickersList))).toEqual(expectedState);
+        expect(marketsReducer(initialMarketsState, actions.marketsTickersData(marketsTickersList))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle MARKETS_TICKERS_ERROR', () => {

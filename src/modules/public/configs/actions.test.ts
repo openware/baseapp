@@ -1,10 +1,6 @@
 import { CommonError } from '../../types';
 import * as actions from './actions';
-import {
-    CONFIGS_DATA,
-    CONFIGS_ERROR,
-    CONFIGS_FETCH,
-} from './constants';
+import { CONFIGS_DATA, CONFIGS_ERROR, CONFIGS_FETCH } from './constants';
 import { Configs } from './types';
 
 describe('Configs actions', () => {

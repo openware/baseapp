@@ -4,6 +4,7 @@ import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
 import { setDocumentTitle } from '../../helpers';
 import { RootState, selectPlatformAccessStatus } from '../../modules';
@@ -29,27 +30,23 @@ class Restricted extends React.Component<Props> {
     }
 
     public render() {
-        return(
+        return (
             <div className="pg-restricted-screen">
-                <div className="pg-restricted-screen__title">
-                    404
-                </div>
-                <div className="pg-restricted-screen__content">
-                    {this.translate('page.body.restricted')}
-                </div>
+                <div className="pg-restricted-screen__title">404</div>
+                <div className="pg-restricted-screen__content">{this.translate('page.body.restricted')}</div>
             </div>
         );
     }
 
-    private translate = (key: string) => this.props.intl.formatMessage({id: key});
+    private translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     status: selectPlatformAccessStatus(state),
 });
 
 export const RestrictedScreen = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps),
+    connect(mapStateToProps)
 )(Restricted) as React.ComponentClass;

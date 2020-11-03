@@ -10,7 +10,9 @@ describe('Change color theme reducer', () => {
             marketSelectorActive: false,
             isMobileDevice: false,
         };
-        expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('light'))).toEqual(expectedState);
+        expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('light'))).toEqual(
+            expectedState
+        );
         expect(localStorage.getItem('colorTheme')).toEqual('light');
         expectedState = {
             color: 'dark',
@@ -19,7 +21,9 @@ describe('Change color theme reducer', () => {
             marketSelectorActive: false,
             isMobileDevice: false,
         };
-        expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('dark'))).toEqual(expectedState);
+        expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('dark'))).toEqual(
+            expectedState
+        );
         expect(localStorage.getItem('colorTheme')).toEqual('dark');
     });
 });

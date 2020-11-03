@@ -1,4 +1,4 @@
-import { LayoutGrid} from '../../../helpers/layout';
+import { LayoutGrid } from '../../../helpers/layout';
 import * as actions from './actions';
 import { gridLayoutReducer, GridLayoutState, initialLayoutState } from './reducer';
 
@@ -6,7 +6,7 @@ describe('Grid Layout reducer', () => {
     it('should handle SAVE_LAYOUTS', () => {
         const payload = {
             key: 'layouts',
-            layouts: {foo: 42} as unknown as LayoutGrid,
+            layouts: ({ foo: 42 } as unknown) as LayoutGrid,
         };
 
         const expectedState: GridLayoutState = {
@@ -14,10 +14,15 @@ describe('Grid Layout reducer', () => {
             layouts: payload.layouts,
         };
 
-        expect(gridLayoutReducer(initialLayoutState, actions.saveLayouts({
-            key: payload.key,
-            layouts: payload.layouts,
-        }))).toEqual(expectedState);
+        expect(
+            gridLayoutReducer(
+                initialLayoutState,
+                actions.saveLayouts({
+                    key: payload.key,
+                    layouts: payload.layouts,
+                })
+            )
+        ).toEqual(expectedState);
     });
 
     it('should handle RESET_LAYOUTS', () => {

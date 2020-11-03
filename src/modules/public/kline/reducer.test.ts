@@ -3,7 +3,14 @@ import { initialKlineState, klineReducer } from './reducer';
 
 describe('kline reducer', () => {
     it('supports kline push action with string kline', () => {
-        const kline = ['1549730700', '7.4794122620116195', '7.690157507290136', '7.396078928678286', '7.606824173956803', '36.98530655029049'];
+        const kline = [
+            '1549730700',
+            '7.4794122620116195',
+            '7.690157507290136',
+            '7.396078928678286',
+            '7.606824173956803',
+            '36.98530655029049',
+        ];
         const payload = {
             marketId: 'ethusd',
             period: '15m',
@@ -28,7 +35,14 @@ describe('kline reducer', () => {
     });
 
     it('supports kline push action with number kline', () => {
-        const kline = [1549730700, 7.4794122620116195, 7.690157507290136, 7.396078928678286, 7.606824173956803, 36.98530655029049];
+        const kline = [
+            1549730700,
+            7.4794122620116195,
+            7.690157507290136,
+            7.396078928678286,
+            7.606824173956803,
+            36.98530655029049,
+        ];
         const payload = {
             marketId: 'ethusd',
             period: '15m',

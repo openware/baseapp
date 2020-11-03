@@ -2,9 +2,9 @@ import '@openware/cryptofont';
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
+
 import { CustomInput } from '../';
 import { copy } from '../../helpers';
-
 
 export interface CopyableTextFieldProps {
     /**
@@ -44,14 +44,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
     }
 
     public render() {
-        const {
-            value,
-            className,
-            disabled,
-            fieldId,
-            copyButtonText,
-            label,
-        } = this.props;
+        const { value, className, disabled, fieldId, copyButtonText, label } = this.props;
         const doCopy = () => copy(fieldId);
         const cx = classnames('cr-copyable-text-field', className);
 
@@ -70,12 +63,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                         placeholder={label || ''}
                     />
                     <InputGroup.Append>
-                        <Button
-                            onClick={doCopy}
-                            disabled={disabled}
-                            size="lg"
-                            variant="primary"
-                        >
+                        <Button onClick={doCopy} disabled={disabled} size="lg" variant="primary">
                             {copyButtonText ? copyButtonText : 'Copy'}
                         </Button>
                     </InputGroup.Append>
@@ -85,7 +73,4 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
     }
 }
 
-export {
-    CopyableTextField,
-    copy,
-};
+export { CopyableTextField, copy };

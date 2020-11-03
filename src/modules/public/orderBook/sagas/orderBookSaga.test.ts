@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -81,7 +82,7 @@ describe('Saga: OrderBook', () => {
         mockAxios.onGet('/public/markets/btczar/order-book').reply(200, fakeOrderBook);
     };
 
-    const expectedActionsFetch = [ orderBookFetch(fakeMarket), orderBookData(fakeOrderBook) ];
+    const expectedActionsFetch = [orderBookFetch(fakeMarket), orderBookData(fakeOrderBook)];
 
     const expectedActionsError = [
         orderBookFetch(fakeMarket),
@@ -96,7 +97,7 @@ describe('Saga: OrderBook', () => {
 
     it('should fetch orderBook', async () => {
         mockOrderBook();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -112,7 +113,7 @@ describe('Saga: OrderBook', () => {
 
     it('should trigger an error (orderBook)', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

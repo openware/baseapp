@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+
 import { CopyableTextField } from '../../../components';
 import { copy } from '../../../helpers';
 import { WarningIcon } from '../../assets/images/WarningIcon';
 import { Modal } from '../../components/Modal';
 
-export const CreatedApiKeyModalComponent = props => {
+export const CreatedApiKeyModalComponent = (props) => {
     const [apiKey, setApiKey] = React.useState({ kid: '', secret: '' });
     const intl = useIntl();
 
@@ -62,13 +63,8 @@ export const CreatedApiKeyModalComponent = props => {
     const renderModalFooter = () => {
         return (
             <div className="cr-mobile-modal__footer">
-                <Button
-                    block={true}
-                    onClick={props.closeCreatedApiKeyModal}
-                    size="lg"
-                    variant="primary"
-                >
-                    {intl.formatMessage({id: 'page.mobile.createdApiKeyModal.confirm'})}
+                <Button block={true} onClick={props.closeCreatedApiKeyModal} size="lg" variant="primary">
+                    {intl.formatMessage({ id: 'page.mobile.createdApiKeyModal.confirm' })}
                 </Button>
             </div>
         );

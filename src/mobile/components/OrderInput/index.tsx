@@ -1,7 +1,8 @@
 import cr from 'classnames';
 import * as React from 'react';
+
 import { CustomInput } from '../../../components';
-import { areEqualProps} from '../../../helpers/areEqualProps';
+import { areEqualProps } from '../../../helpers/areEqualProps';
 
 /* Icons */
 import { MinusIcon } from '../../assets/images/MinusIcon';
@@ -42,12 +43,10 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
 
     const handleChangeValueByButton = (increase: boolean) => {
         let updatedValue = value;
-        const increasedValue = (+updatedValue + (10 ** -precision)).toFixed(precision);
-        const decreasedValue = (+updatedValue - (10 ** -precision)).toFixed(precision);
+        const increasedValue = (+updatedValue + 10 ** -precision).toFixed(precision);
+        const decreasedValue = (+updatedValue - 10 ** -precision).toFixed(precision);
 
-        updatedValue = increase ?
-            increasedValue :
-            +decreasedValue >= 0 ? decreasedValue : updatedValue;
+        updatedValue = increase ? increasedValue : +decreasedValue >= 0 ? decreasedValue : updatedValue;
 
         props.handleChangeValue(String(updatedValue));
     };

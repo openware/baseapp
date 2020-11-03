@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import {
-    injectIntl,
-} from 'react-intl';
+import { injectIntl } from 'react-intl';
+
 import { IntlProps } from '../../';
 import { Decimal, Modal } from '../../components';
 import { Modal as MobileModal } from '../../mobile/components/Modal';
@@ -22,26 +21,18 @@ type Props = ModalWithdrawConfirmationProps & IntlProps;
 
 class ModalWithdraw extends React.Component<Props> {
     public translate = (e: string) => {
-        return this.props.intl.formatMessage({id: e});
+        return this.props.intl.formatMessage({ id: e });
     };
     public render() {
         const { show, isMobileDevice } = this.props;
 
-        return isMobileDevice ?
+        return isMobileDevice ? (
             <MobileModal title={this.renderHeader()} onClose={this.props.onDismiss} isOpen={this.props.show}>
-                <div>
-                    {this.renderBody()}
-                </div>
-                <div>
-                    {this.renderFooter()}
-                </div>
-            </MobileModal> : (
-            <Modal
-                show={show}
-                header={this.renderHeader()}
-                content={this.renderBody()}
-                footer={this.renderFooter()}
-            />
+                <div>{this.renderBody()}</div>
+                <div>{this.renderFooter()}</div>
+            </MobileModal>
+        ) : (
+            <Modal show={show} header={this.renderHeader()} content={this.renderBody()} footer={this.renderFooter()} />
         );
     }
 
@@ -61,7 +52,7 @@ class ModalWithdraw extends React.Component<Props> {
             <div className="pg-exchange-modal-submit-body modal-body__withdraw-confirm">
                 <p>
                     {this.translate('page.body.wallets.tabs.withdraw.modal.message1')}
-                    {Decimal.format(amount, precision, ',')}  {formattedCurrency}
+                    {Decimal.format(amount, precision, ',')} {formattedCurrency}
                     {this.translate('page.body.wallets.tabs.withdraw.modal.message2')} {rid}
                 </p>
             </div>
@@ -76,8 +67,7 @@ class ModalWithdraw extends React.Component<Props> {
                     className="btn-block mr-1 mt-1 btn-lg"
                     onClick={this.props.onDismiss}
                     size="lg"
-                    variant="primary"
-                >
+                    variant="primary">
                     {this.translate('page.body.wallets.tabs.withdraw.modal.button.cancel')}
                 </Button>
                 <Button
@@ -85,8 +75,7 @@ class ModalWithdraw extends React.Component<Props> {
                     className="btn-block mr-1 mt-1 btn-lg"
                     onClick={this.props.onSubmit}
                     size="lg"
-                    variant="primary"
-                >
+                    variant="primary">
                     {this.translate('page.body.wallets.tabs.withdraw.modal.button.withdraw')}
                 </Button>
             </div>

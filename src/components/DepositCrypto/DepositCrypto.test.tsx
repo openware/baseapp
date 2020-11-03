@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+
 import { rootReducer } from '../../modules';
 import { CopyableTextField } from '../CopyableTextField';
 import { DepositCrypto } from './';
@@ -23,8 +24,9 @@ describe('DepositCrypto', () => {
                     error={'error123'}
                     disabled={false}
                     handleOnCopy={handleOnCopy}
-                />,
-            </Provider>,
+                />
+                ,
+            </Provider>
         );
     });
 

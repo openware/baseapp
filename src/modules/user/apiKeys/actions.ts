@@ -45,8 +45,8 @@ export interface ApiKeysData {
 export interface ApiKeyCreateFetch {
     type: typeof API_KEY_CREATE_FETCH;
     payload: {
-        totp_code: string,
-        algorithm?: string,
+        totp_code: string;
+        algorithm?: string;
     };
 }
 
@@ -59,7 +59,7 @@ export interface ApiKeyUpdateFetch {
     type: typeof API_KEY_UPDATE_FETCH;
     payload: {
         apiKey: ApiKeyDataInterface;
-        totp_code: string,
+        totp_code: string;
     };
 }
 
@@ -71,8 +71,8 @@ export interface ApiKeyUpdate {
 export interface ApiKeyDeleteFetch {
     type: typeof API_KEY_DELETE_FETCH;
     payload: {
-        totp_code: string,
-        kid: string,
+        totp_code: string;
+        kid: string;
     };
 }
 
@@ -93,7 +93,8 @@ export interface ApiKeysError {
     error: CommonError;
 }
 
-export type ApiKeysAction = ApiKeysFetch
+export type ApiKeysAction =
+    | ApiKeysFetch
     | ApiKeysData
     | ApiKeyCreateFetch
     | ApiKeyCreateData

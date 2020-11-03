@@ -1,4 +1,5 @@
 import { takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
+
 import { WALLETS_ADDRESS_FETCH, WALLETS_FETCH, WALLETS_WITHDRAW_CCY_FETCH } from '../constants';
 import { walletsAddressSaga } from './walletsAddressSaga';
 import { walletsSaga } from './walletsSaga';

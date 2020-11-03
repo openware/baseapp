@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { alertPush, sendError } from '../../../../';
 import { API, RequestOptions } from '../../../../../api';
 import { getCsrfToken } from '../../../../../helpers';
@@ -17,14 +18,16 @@ export function* sendAddressesSaga(action: SendAddressesFetch) {
         const defaultMessage = 'success.addresses.accepted';
         const { message = defaultMessage } = response;
         yield put(sendAddressesData({ message }));
-        yield put(alertPush({ message: [defaultMessage], type: 'success'}));
+        yield put(alertPush({ message: [defaultMessage], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: sendAddressesError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: sendAddressesError,
+                },
+            })
+        );
     }
 }

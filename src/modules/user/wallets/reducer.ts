@@ -67,12 +67,12 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
             let updatedList = state.list;
 
             if (state.list.length) {
-                updatedList = state.list.map(wallet => {
+                updatedList = state.list.map((wallet) => {
                     let updatedWallet = wallet;
                     const payloadCurrencies = Object.keys(action.payload.balances);
 
                     if (payloadCurrencies.length) {
-                        payloadCurrencies.some(value => {
+                        payloadCurrencies.some((value) => {
                             const targetWallet = action.payload.balances[value];
 
                             if (value === wallet.currency) {
@@ -101,7 +101,7 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
         }
         case WALLETS_ADDRESS_DATA: {
             const walletIndex = state.list.findIndex(
-                wallet => wallet.currency.toLowerCase() === action.payload.currency.toLowerCase(),
+                (wallet) => wallet.currency.toLowerCase() === action.payload.currency.toLowerCase()
             );
 
             if (walletIndex !== -1) {
@@ -137,7 +137,7 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 ...state,
                 loading: false,
             };
-            }
+        }
         case WALLETS_WITHDRAW_CCY_ERROR:
             return {
                 ...state,

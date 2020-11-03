@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
@@ -21,14 +22,16 @@ export function* beneficiariesCreateSaga(action: BeneficiariesCreate) {
         const payload = yield call(API.post(config(getCsrfToken())), '/account/beneficiaries', action.payload);
         yield put(beneficiariesCreateData(payload));
         yield put(beneficiariesDataUpdate(payload));
-        yield put(alertPush({message: ['success.beneficiaries.created'], type: 'success'}));
+        yield put(alertPush({ message: ['success.beneficiaries.created'], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: beneficiariesCreateError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: beneficiariesCreateError,
+                },
+            })
+        );
     }
 }

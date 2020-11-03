@@ -1,10 +1,4 @@
-import {
-    DarkBlueTheme,
-    DarkRedTheme,
-    GreenTheme,
-    PurpleTheme,
-    ThemeColorInterface,
-} from './templates';
+import { DarkBlueTheme, DarkRedTheme, GreenTheme, PurpleTheme, ThemeColorInterface } from './templates';
 
 export * from './templates';
 export * from './ColorTitles';

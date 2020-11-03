@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import {
-    FormattedMessage,
-    injectIntl,
-} from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
+
 import { IntlProps } from '../../';
 import { CustomInput } from '../../components';
 
@@ -64,9 +62,10 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
                     className="pg-profile-page__btn-secondary"
                     onClick={this.toggleShowForm}
                     size="lg"
-                    variant="primary"
-                >
-                    {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change'})}
+                    variant="primary">
+                    {this.props.intl.formatMessage({
+                        id: 'page.body.profile.header.account.content.password.button.change',
+                    })}
                 </Button>
             </React.Fragment>
         );
@@ -79,12 +78,17 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
             <div>
                 <div className="pg-change-password-form">
                     <div className="pg-change-password-form__group">
-                        <label className="pg-change-password-form__label">
-                        </label>
+                        <label className="pg-change-password-form__label"></label>
                         <CustomInput
-                            label={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.old'})}
-                            defaultLabel={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.old' })}
-                            placeholder={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.old' })}
+                            label={this.props.intl.formatMessage({
+                                id: 'page.body.profile.header.account.content.password.old',
+                            })}
+                            defaultLabel={this.props.intl.formatMessage({
+                                id: 'page.body.profile.header.account.content.password.old',
+                            })}
+                            placeholder={this.props.intl.formatMessage({
+                                id: 'page.body.profile.header.account.content.password.old',
+                            })}
                             type="password"
                             inputValue={oldPassword}
                             handleChangeInput={this.handleOldPasswordChange}
@@ -95,27 +99,29 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
                             <FormattedMessage id="page.body.profile.header.account.content.password.new" />
                         </label>
                         <CustomInput
-                            label={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.new'})}
-                            defaultLabel={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.new' })}
-                            placeholder={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.new' })}
+                            label={this.props.intl.formatMessage({
+                                id: 'page.body.profile.header.account.content.password.new',
+                            })}
+                            defaultLabel={this.props.intl.formatMessage({
+                                id: 'page.body.profile.header.account.content.password.new',
+                            })}
+                            placeholder={this.props.intl.formatMessage({
+                                id: 'page.body.profile.header.account.content.password.new',
+                            })}
                             type="password"
                             inputValue={newPassword}
                             handleChangeInput={this.handleNewPasswordChange}
                         />
                     </div>
-                    <Button
-                        onClick={this.handleSubmit}
-                        size="lg"
-                        variant="primary"
-                    >
-                        {this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.save'})}
+                    <Button onClick={this.handleSubmit} size="lg" variant="primary">
+                        {this.props.intl.formatMessage({
+                            id: 'page.body.profile.header.account.content.password.button.save',
+                        })}
                     </Button>
-                    <Button
-                        onClick={this.handleCancel}
-                        size="lg"
-                        variant="primary"
-                    >
-                        {this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.cancel'})}
+                    <Button onClick={this.handleCancel} size="lg" variant="primary">
+                        {this.props.intl.formatMessage({
+                            id: 'page.body.profile.header.account.content.password.button.cancel',
+                        })}
                     </Button>
                 </div>
             </div>

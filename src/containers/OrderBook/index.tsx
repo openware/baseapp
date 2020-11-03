@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+
 import { IntlProps } from '../../';
 import { CombinedOrderBook, Decimal } from '../../components';
 import { colors } from '../../constants';
@@ -81,7 +82,8 @@ class OrderBookContainer extends React.Component<Props, State> {
         const { asks, bids, currentMarket, openOrdersList, marketTickers, orderBookLoading, size } = this.props;
 
         const lastPrice = currentMarket && this.getTickerValue(currentMarket, marketTickers).last;
-        const nextLastPrice = nextProps.currentMarket && this.getTickerValue(nextProps.currentMarket, nextProps.marketTickers).last;
+        const nextLastPrice =
+            nextProps.currentMarket && this.getTickerValue(nextProps.currentMarket, nextProps.marketTickers).last;
 
         return (
             JSON.stringify(nextProps.asks) !== JSON.stringify(asks) ||
@@ -95,14 +97,9 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     public render() {
-        const {
-            asks,
-            bids,
-            forceLarge,
-            orderBookLoading,
-        } = this.props;
+        const { asks, bids, forceLarge, orderBookLoading } = this.props;
 
-        const isLarge = forceLarge || (this.state.width > breakpoint);
+        const isLarge = forceLarge || this.state.width > breakpoint;
 
         const cn = classNames('pg-combined-order-book ', {
             'cr-combined-order-book--data-loading': orderBookLoading,
@@ -113,19 +110,21 @@ class OrderBookContainer extends React.Component<Props, State> {
         return (
             <div className={cn} ref={this.orderRef}>
                 <div className={'cr-table-header__content'}>
-                    {this.props.intl.formatMessage({id: 'page.body.trade.orderbook'})}
+                    {this.props.intl.formatMessage({ id: 'page.body.trade.orderbook' })}
                 </div>
-                {orderBookLoading ? <div className="pg-combined-order-book-loader"><Spinner animation="border" variant="primary" /></div> : this.orderBook(bids, asks)}
+                {orderBookLoading ? (
+                    <div className="pg-combined-order-book-loader">
+                        <Spinner animation="border" variant="primary" />
+                    </div>
+                ) : (
+                    this.orderBook(bids, asks)
+                )}
             </div>
         );
     }
 
     private orderBook = (bids, asks) => {
-        const {
-            forceLarge,
-            colorTheme,
-            currentMarket,
-        } = this.props;
+        const { forceLarge, colorTheme, currentMarket } = this.props;
 
         const isLarge = forceLarge || this.state.width > breakpoint;
         const asksData = isLarge ? asks : asks.slice(0).reverse();
@@ -137,8 +136,18 @@ class OrderBookContainer extends React.Component<Props, State> {
                 orderBookEntryBids={accumulateVolume(bids)}
                 rowBackgroundColorAsks={colors[colorTheme].orderBook.asks}
                 rowBackgroundColorBids={colors[colorTheme].orderBook.bids}
-                dataAsks={this.renderOrderBook(asksData, 'asks', this.props.intl.formatMessage({id: 'page.noDataToShow'}), currentMarket)}
-                dataBids={this.renderOrderBook(bids, 'bids', this.props.intl.formatMessage({id: 'page.noDataToShow'}), currentMarket)}
+                dataAsks={this.renderOrderBook(
+                    asksData,
+                    'asks',
+                    this.props.intl.formatMessage({ id: 'page.noDataToShow' }),
+                    currentMarket
+                )}
+                dataBids={this.renderOrderBook(
+                    bids,
+                    'bids',
+                    this.props.intl.formatMessage({ id: 'page.noDataToShow' }),
+                    currentMarket
+                )}
                 headers={this.renderHeaders()}
                 lastPrice={this.lastPrice()}
                 onSelectAsks={this.handleOnSelectAsks}
@@ -161,37 +170,40 @@ class OrderBookContainer extends React.Component<Props, State> {
             return (
                 <React.Fragment>
                     <span className={cn}>
-                        {Decimal.format(+(currentTicker.last), currentMarket.price_precision, ',')}&nbsp;
+                        {Decimal.format(+currentTicker.last, currentMarket.price_precision, ',')}&nbsp;
                         {isMobileDevice ? null : currentMarket.quote_unit.toUpperCase()}
                     </span>
-                    <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
+                    <span>{this.props.intl.formatMessage({ id: 'page.body.trade.orderbook.lastMarket' })}</span>
                 </React.Fragment>
             );
         } else {
-          return <React.Fragment><span className={'cr-combined-order-book__market-negative'}>0</span><span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span></React.Fragment>;
+            return (
+                <React.Fragment>
+                    <span className={'cr-combined-order-book__market-negative'}>0</span>
+                    <span>{this.props.intl.formatMessage({ id: 'page.body.trade.orderbook.lastMarket' })}</span>
+                </React.Fragment>
+            );
         }
     };
 
     private renderHeaders = () => {
-        const {
-            currentMarket,
-            intl,
-            isMobileDevice,
-        } = this.props;
-        const formattedBaseUnit = (currentMarket && currentMarket.base_unit) ? `(${currentMarket.base_unit.toUpperCase()})` : '';
-        const formattedQuoteUnit = (currentMarket && currentMarket.quote_unit) ? `(${currentMarket.quote_unit.toUpperCase()})` : '';
+        const { currentMarket, intl, isMobileDevice } = this.props;
+        const formattedBaseUnit =
+            currentMarket && currentMarket.base_unit ? `(${currentMarket.base_unit.toUpperCase()})` : '';
+        const formattedQuoteUnit =
+            currentMarket && currentMarket.quote_unit ? `(${currentMarket.quote_unit.toUpperCase()})` : '';
 
         if (isMobileDevice) {
             return [
-                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
-                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
+                `${intl.formatMessage({ id: 'page.body.trade.orderbook.header.price' })}\n${formattedQuoteUnit}`,
+                `${intl.formatMessage({ id: 'page.body.trade.orderbook.header.amount' })}\n${formattedBaseUnit}`,
             ];
         }
 
         return [
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})}\n${formattedBaseUnit}`,
+            `${intl.formatMessage({ id: 'page.body.trade.orderbook.header.price' })}\n${formattedQuoteUnit}`,
+            `${intl.formatMessage({ id: 'page.body.trade.orderbook.header.amount' })}\n${formattedBaseUnit}`,
+            `${intl.formatMessage({ id: 'page.body.trade.orderbook.header.volume' })}\n${formattedBaseUnit}`,
         ];
     };
 
@@ -202,66 +214,118 @@ class OrderBookContainer extends React.Component<Props, State> {
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
 
-        return (array.length > 0) ? array.map((item, i) => {
-            const [price, volume] = item;
-            switch (side) {
-                case 'asks':
-                    total = isLarge ? accumulateVolume(array) : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
+        return array.length > 0
+            ? array.map((item, i) => {
+                  const [price, volume] = item;
+                  switch (side) {
+                      case 'asks':
+                          total = isLarge
+                              ? accumulateVolume(array)
+                              : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
 
-                    if (isMobileDevice) {
-                        return [
-                            <span key={i}>
-                                <Decimal fixed={priceFixed} thousSep="," prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal>
-                            </span>,
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                        ];
-                    }
+                          if (isMobileDevice) {
+                              return [
+                                  <span key={i}>
+                                      <Decimal
+                                          fixed={priceFixed}
+                                          thousSep=","
+                                          prevValue={array[i + 1] ? array[i + 1][0] : 0}>
+                                          {price}
+                                      </Decimal>
+                                  </span>,
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {total[i]}
+                                  </Decimal>,
+                              ];
+                          }
 
-                    return [
-                        <span key={i}>
-                            <Decimal fixed={priceFixed} thousSep="," prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal>
-                        </span>,
-                        <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
-                        <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                    ];
-                default:
-                    if (isLarge) {
-                        if (isMobileDevice) {
-                            return [
-                                <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
-                                <span key={i}>
-                                    <Decimal fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>
-                                </span>,
-                            ];
-                        }
+                          return [
+                              <span key={i}>
+                                  <Decimal
+                                      fixed={priceFixed}
+                                      thousSep=","
+                                      prevValue={array[i + 1] ? array[i + 1][0] : 0}>
+                                      {price}
+                                  </Decimal>
+                              </span>,
+                              <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                  {volume}
+                              </Decimal>,
+                              <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                  {total[i]}
+                              </Decimal>,
+                          ];
+                      default:
+                          if (isLarge) {
+                              if (isMobileDevice) {
+                                  return [
+                                      <Decimal key={i} fixed={amountFixed}>
+                                          {total[i]}
+                                      </Decimal>,
+                                      <span key={i}>
+                                          <Decimal
+                                              fixed={priceFixed}
+                                              thousSep=","
+                                              prevValue={array[i - 1] ? array[i - 1][0] : 0}>
+                                              {price}
+                                          </Decimal>
+                                      </span>,
+                                  ];
+                              }
 
-                        return [
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
-                            <span key={i}>
-                                <Decimal fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>
-                            </span>,
-                        ];
-                    } else {
-                        if (isMobileDevice) {
-                            return [
-                                <span key={i}>
-                                    <Decimal fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>
-                                </span>,
-                                <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                            ];
-                        }
+                              return [
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {total[i]}
+                                  </Decimal>,
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {volume}
+                                  </Decimal>,
+                                  <span key={i}>
+                                      <Decimal
+                                          fixed={priceFixed}
+                                          thousSep=","
+                                          prevValue={array[i - 1] ? array[i - 1][0] : 0}>
+                                          {price}
+                                      </Decimal>
+                                  </span>,
+                              ];
+                          } else {
+                              if (isMobileDevice) {
+                                  return [
+                                      <span key={i}>
+                                          <Decimal
+                                              fixed={priceFixed}
+                                              thousSep=","
+                                              prevValue={array[i - 1] ? array[i - 1][0] : 0}>
+                                              {price}
+                                          </Decimal>
+                                      </span>,
+                                      <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                          {total[i]}
+                                      </Decimal>,
+                                  ];
+                              }
 
-                        return [
-                            <span key={i}>
-                                <Decimal fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>
-                            </span>,
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                        ];
-                    }
-            }
-        }) : [[[''], message, ['']]];
+                              return [
+                                  <span key={i}>
+                                      <Decimal
+                                          fixed={priceFixed}
+                                          thousSep=","
+                                          prevValue={array[i - 1] ? array[i - 1][0] : 0}>
+                                          {price}
+                                      </Decimal>
+                                  </span>,
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {volume}
+                                  </Decimal>,
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {total[i]}
+                                  </Decimal>,
+                              ];
+                          }
+                  }
+              })
+            : [[[''], message, ['']]];
     };
 
     private handleOnSelectBids = (index: string) => {
@@ -283,7 +347,15 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private getTickerValue = (currentMarket: Market, tickers: { [key: string]: Ticker }) => {
-        const defaultTicker = { amount: 0, low: 0, last: 0, high: 0, volume: 0, open: 0, price_change_percent: '+0.00%' };
+        const defaultTicker = {
+            amount: 0,
+            low: 0,
+            last: 0,
+            high: 0,
+            volume: 0,
+            open: 0,
+            price_change_percent: '+0.00%',
+        };
 
         return tickers[currentMarket.id] || defaultTicker;
     };
@@ -301,10 +373,9 @@ const mapStateToProps = (state: RootState) => ({
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    setCurrentPrice: (payload) => dispatch(setCurrentPrice(payload)),
+});
 
 export const OrderBook = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer)) as any;
 export type OrderBookProps = ReduxProps;

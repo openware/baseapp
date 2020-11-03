@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+
 import { languages } from '../../../api/config';
 import { getLanguageName } from '../../../helpers';
 import {
@@ -49,11 +50,7 @@ const ProfileLanguageMobileScreenComponent: React.FC = () => {
         });
 
         return (
-            <div
-                key={index}
-                className={listItemClassName}
-                onClick={() => handleChangeLanguage(language)}
-            >
+            <div key={index} className={listItemClassName} onClick={() => handleChangeLanguage(language)}>
                 <span>{getLanguageName(language)}</span>
                 <CheckIcon />
             </div>
@@ -62,15 +59,13 @@ const ProfileLanguageMobileScreenComponent: React.FC = () => {
 
     return (
         <React.Fragment>
-          <Subheader
-            title={intl.formatMessage({ id: 'page.mobile.profile.language.title' })}
-            backTitle={intl.formatMessage({ id: 'page.body.profile.header.account' })}
-            onGoBack={() => history.push('/profile')}
-          />
+            <Subheader
+                title={intl.formatMessage({ id: 'page.mobile.profile.language.title' })}
+                backTitle={intl.formatMessage({ id: 'page.body.profile.header.account' })}
+                onGoBack={() => history.push('/profile')}
+            />
             <div className="pg-mobile-profile-language-screen">
-                <div className="pg-mobile-profile-language-screen__list">
-                    {languages.map(renderLanguageListItem)}
-                </div>
+                <div className="pg-mobile-profile-language-screen__list">{languages.map(renderLanguageListItem)}</div>
             </div>
         </React.Fragment>
     );

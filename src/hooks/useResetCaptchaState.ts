@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { resetCaptchaState } from '../modules';
 
 export const useResetCaptchaState = () => {

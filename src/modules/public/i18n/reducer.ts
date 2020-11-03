@@ -23,7 +23,7 @@ export const changeLanguageReducer = (state = initialChangeLanguageState, action
 
             return {
                 lang: action.payload,
-             };
+            };
         default:
             return state;
     }

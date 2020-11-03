@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { userOpenOrdersData, userOpenOrdersError, UserOpenOrdersFetch } from '../actions';
@@ -14,12 +15,14 @@ export function* userOpenOrdersFetchSaga(action: UserOpenOrdersFetch) {
 
         yield put(userOpenOrdersData(list));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: userOpenOrdersError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: userOpenOrdersError,
+                },
+            })
+        );
     }
 }

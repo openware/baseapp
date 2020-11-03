@@ -1,10 +1,11 @@
 import { Channel, eventChannel, EventChannel } from 'redux-saga';
 import { all, call, cancel, delay, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
+
 import { isFinexEnabled, rangerUrl } from '../../../../api';
 import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
 import { selectOpenOrdersList, userOpenOrdersUpdate } from '../../../user/openOrders';
-import { userOrdersHistoryRangerData} from '../../../user/ordersHistory';
+import { userOrdersHistoryRangerData } from '../../../user/ordersHistory';
 import { updateWalletsDataByRanger, walletsAddressDataWS } from '../../../user/wallets';
 import { alertPush } from '../../alert';
 import { klinePush } from '../../kline';
@@ -41,13 +42,13 @@ const initRanger = (
     { withAuth }: RangerConnectFetch['payload'],
     market: Market | undefined,
     prevSubs: string[],
-    buffer: RangerBuffer,
+    buffer: RangerBuffer
 ): [EventChannel<any>, WebSocket] => {
     const baseUrl = `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
     const streams = streamsBuilder(withAuth, prevSubs, market);
 
     const ws = new WebSocket(generateSocketURI(baseUrl, streams));
-    const channel = eventChannel(emitter => {
+    const channel = eventChannel((emitter) => {
         ws.onopen = () => {
             emitter({ type: RANGER_CONNECT_DATA });
             while (buffer.messages.length > 0) {
@@ -55,11 +56,11 @@ const initRanger = (
                 ws.send(JSON.stringify(message));
             }
         };
-        ws.onerror = error => {
+        ws.onerror = (error) => {
             window.console.log(`WebSocket error ${error}`);
             window.console.dir(error);
         };
-        ws.onclose = event => {
+        ws.onclose = (event) => {
             channel.close();
         };
         ws.onmessage = ({ data }) => {
@@ -108,7 +109,9 @@ const initRanger = (
                                 return;
                             }
                             if (previousSequence + 1 !== event.sequence) {
-                                window.console.log(`Bad sequence detected in incremental orderbook previous: ${previousSequence}, event: ${event.sequence}`);
+                                window.console.log(
+                                    `Bad sequence detected in incremental orderbook previous: ${previousSequence}, event: ${event.sequence}`
+                                );
                                 emitter(rangerDisconnectFetch());
 
                                 return;
@@ -127,7 +130,7 @@ const initRanger = (
                                 marketId: klineMatch[1],
                                 kline: event,
                                 period: klineMatch[2],
-                            }),
+                            })
                         );
 
                         return;
@@ -140,7 +143,7 @@ const initRanger = (
                             recentTradesPush({
                                 trades: event.trades,
                                 market: tradesMatch[1],
-                            }),
+                            })
                         );
 
                         return;
@@ -173,16 +176,18 @@ const initRanger = (
                                     case 'wait':
                                     case 'pending':
                                         const orders = selectOpenOrdersList(store.getState());
-                                        const updatedOrder = orders.length && orders.find(order => event.uuid && order.uuid === event.uuid);
+                                        const updatedOrder =
+                                            orders.length &&
+                                            orders.find((order) => event.uuid && order.uuid === event.uuid);
                                         if (!updatedOrder) {
-                                            emitter(alertPush({ message: ['success.order.created'], type: 'success'}));
+                                            emitter(alertPush({ message: ['success.order.created'], type: 'success' }));
                                         }
                                         break;
                                     case 'done':
-                                        emitter(alertPush({ message: ['success.order.done'], type: 'success'}));
+                                        emitter(alertPush({ message: ['success.order.done'], type: 'success' }));
                                         break;
                                     case 'reject':
-                                        emitter(alertPush({ message: ['error.order.rejected'], type: 'error'}));
+                                        emitter(alertPush({ message: ['error.order.rejected'], type: 'error' }));
                                         break;
                                     default:
                                         break;
@@ -248,7 +253,7 @@ function* reader(channel) {
 let previousMarket: Market | undefined;
 
 const switchMarket = (subscribeOnInitOnly: boolean) => {
-    return function*(action: SetCurrentMarket) {
+    return function* (action: SetCurrentMarket) {
         if (subscribeOnInitOnly && previousMarket !== undefined) {
             return;
         }

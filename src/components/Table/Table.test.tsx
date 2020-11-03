@@ -1,8 +1,12 @@
 import { mount, ReactWrapper, shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
+
 import * as React from 'react';
-import { start } from 'repl';
+
 import { spy } from 'sinon';
+
+import { start } from 'repl';
+
+import { TestComponentWrapper } from 'lib/test';
 import { CellData, Filter, Table, TableProps, TableState } from '.';
 
 const setup = (props: TableProps) =>
@@ -73,7 +77,7 @@ describe('Table render', () => {
             rowKeyIndex: keyIndex,
             selectedKey: selectedKey,
         });
-        let renderedComponent = component.render();
+        const renderedComponent = component.render();
         const expected = `${selectedKey}`;
         const result = renderedComponent.find('.cr-table__row--selected').first().children().first().html();
         // expect((component.state() as TableState).selectedRowKey).toEqual(selectedKey);

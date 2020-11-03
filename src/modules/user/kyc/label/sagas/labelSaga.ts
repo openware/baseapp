@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../../';
 import { API, RequestOptions } from '../../../../../api';
 import { labelData, labelError, LabelFetch } from '../actions';
@@ -12,12 +13,14 @@ export function* labelSaga(action: LabelFetch) {
         const payload = yield call(API.get(userOptions), '/resource/labels');
         yield put(labelData(payload));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'console',
-            extraOptions: {
-                actionError: labelError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'console',
+                extraOptions: {
+                    actionError: labelError,
+                },
+            })
+        );
     }
 }

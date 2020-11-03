@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { ChevronIcon } from '../../../assets/images/ChevronIcon';
 import { copy, getLanguageName } from '../../../helpers';
-import {
-    alertPush,
-    selectCurrentColorTheme,
-    selectCurrentLanguage,
-    selectUserInfo,
-} from '../../../modules';
+import { alertPush, selectCurrentColorTheme, selectCurrentLanguage, selectUserInfo } from '../../../modules';
 import { ProfileLinks, UserInfo } from '../../components';
 
 const ProfileMobileScreenComponent: React.FC = () => {
@@ -29,7 +25,12 @@ const ProfileMobileScreenComponent: React.FC = () => {
             route: '/profile/verification',
             children: (
                 <div>
-                    <span className="color-accent">{intl.formatMessage({id: 'page.mobile.profileLinks.link.verification'}, {level: user.level})}</span>
+                    <span className="color-accent">
+                        {intl.formatMessage(
+                            { id: 'page.mobile.profileLinks.link.verification' },
+                            { level: user.level }
+                        )}
+                    </span>
                     <ChevronIcon />
                 </div>
             ),
@@ -43,9 +44,13 @@ const ProfileMobileScreenComponent: React.FC = () => {
             children: (
                 <div>
                     {user.otp ? (
-                        <span className="color-green">{intl.formatMessage({id: 'page.mobile.profileLinks.link.2fa.enabled'})}</span>
+                        <span className="color-green">
+                            {intl.formatMessage({ id: 'page.mobile.profileLinks.link.2fa.enabled' })}
+                        </span>
                     ) : (
-                        <span className="color-red">{intl.formatMessage({id: 'page.mobile.profileLinks.link.2fa.disabled'})}</span>
+                        <span className="color-red">
+                            {intl.formatMessage({ id: 'page.mobile.profileLinks.link.2fa.disabled' })}
+                        </span>
                     )}
                     <ChevronIcon />
                 </div>
@@ -91,7 +96,7 @@ const ProfileMobileScreenComponent: React.FC = () => {
                         value={`${window.document.location.origin}/signup?refid=${user.uid}`}
                         readOnly={true}
                     />
-                    <span>{intl.formatMessage({id: 'page.mobile.profileLinks.link.referral'})}</span>
+                    <span>{intl.formatMessage({ id: 'page.mobile.profileLinks.link.referral' })}</span>
                 </div>
             ),
         },

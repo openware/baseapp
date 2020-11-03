@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { SignInComponent, SignInProps } from './';
 
 import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
+
 import { Button } from 'react-bootstrap';
+
+import { SignInComponent, SignInProps } from './';
+
+import { TestComponentWrapper } from 'lib/test';
 
 const defaults: SignInProps = {
     onForgotPassword: jest.fn(),

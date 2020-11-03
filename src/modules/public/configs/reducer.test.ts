@@ -18,7 +18,7 @@ describe('configsReducer', () => {
         const expectedState = {
             ...initialConfigsState,
             loading: true,
-         };
+        };
         expect(configsReducer(initialConfigsState, actions.configsFetch())).toEqual(expectedState);
     });
 
@@ -40,7 +40,7 @@ describe('configsReducer', () => {
             loading: false,
             success: false,
             error: error,
-         };
+        };
         expect(configsReducer(initialConfigsState, actions.configsError(error))).toEqual(expectedState);
     });
 });

@@ -1,7 +1,7 @@
+// eslint-disable
+
 const areEqualSelectedProps = (key, props) => (prevProps, nextProps) => {
-    return props.every(prop => prevProps[key][prop] === nextProps[key][prop]);
+    return props.every((prop) => prevProps[key][prop] === nextProps[key][prop]);
 };
 
-export {
-    areEqualSelectedProps,
-};
+export { areEqualSelectedProps };

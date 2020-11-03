@@ -1,9 +1,9 @@
 import { shallow } from 'enzyme';
 import React from 'react';
+
 import { TestComponentWrapper } from 'lib/test';
 import { IntlProps } from '../../';
 import { ChangeForgottenPasswordScreen } from '../ChangeForgottenPasswordScreen';
-
 
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(

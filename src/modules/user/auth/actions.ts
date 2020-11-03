@@ -28,7 +28,7 @@ export interface GeetestCaptchaResponse {
 export interface EntropyPasswordFetch {
     type: typeof AUTH_ENTROPY_PASSWORD_FETCH;
     payload: {
-        password: string,
+        password: string;
     };
 }
 
@@ -191,7 +191,9 @@ export const signUpError = (error: CommonError): SignUpError => ({
     error,
 });
 
-export const signUpRequireVerification = (payload: SignUpRequireVerification['payload']): SignUpRequireVerification => ({
+export const signUpRequireVerification = (
+    payload: SignUpRequireVerification['payload']
+): SignUpRequireVerification => ({
     type: AUTH_SIGN_UP_REQUIRE_VERIFICATION,
     payload,
 });

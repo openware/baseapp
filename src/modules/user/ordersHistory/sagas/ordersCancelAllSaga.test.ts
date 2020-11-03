@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { alertPush, rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -34,7 +35,7 @@ describe('Orders Cancel All', () => {
     const expectedActionsSuccess = [
         ordersCancelAllFetch(),
         ordersCancelAllData(),
-        alertPush({ message: ['success.order.cancelling.all'], type: 'success'}),
+        alertPush({ message: ['success.order.cancelling.all'], type: 'success' }),
     ];
 
     const expectedActionsError = [
@@ -50,7 +51,7 @@ describe('Orders Cancel All', () => {
 
     it('should cancel all open orders', async () => {
         mockCancelAllOrders();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsSuccess.length) {
@@ -66,7 +67,7 @@ describe('Orders Cancel All', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import { TipIcon } from '../../assets/images/TipIcon';
 import { changeElementPosition } from '../../helpers';
 

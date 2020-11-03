@@ -1,5 +1,6 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
+
 import { History, HistoryProps } from '.';
 import { CellData } from '../';
 
@@ -13,14 +14,13 @@ const defaultProps: HistoryProps = {
     data,
 };
 
-const setup = (props: Partial<HistoryProps> = {}) =>
-    shallow(<History {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<HistoryProps> = {}) => shallow(<History {...{ ...defaultProps, ...props }} />);
 
 describe('History', () => {
     let wrapper: ShallowWrapper<History>;
 
     beforeEach(() => {
-       wrapper = setup();
+        wrapper = setup();
     });
 
     it('should render', () => {
@@ -28,13 +28,9 @@ describe('History', () => {
     });
 
     it('should render custom action cell', () => {
-        const renderedBuyAction = (
-            <span className="cr-history-action cr-history-action--buy">bid</span>
-        );
+        const renderedBuyAction = <span className="cr-history-action cr-history-action--buy">bid</span>;
 
-        const renderedSellAction = (
-            <span className="cr-history-action cr-history-action--sell">ask</span>
-        );
+        const renderedSellAction = <span className="cr-history-action cr-history-action--sell">ask</span>;
 
         const instance = wrapper.instance() as History;
 

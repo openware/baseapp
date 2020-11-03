@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { MarketsTable } from '../../../containers';
 
 const LandingComponent: React.FC = () => {

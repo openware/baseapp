@@ -1,14 +1,10 @@
 import axios from 'axios';
+
 import { TradingChartComponent } from '.';
 import { finexUrl, isFinexEnabled, tradeUrl } from '../../api/config';
 import { LibrarySymbolInfo } from '../../charting_library/datafeed-api';
 import { buildQueryString, getTimestampPeriod } from '../../helpers';
-import {
-    klineArrayToObject,
-    KlineState,
-    klineUpdatePeriod,
-    klineUpdateTimeRange,
-} from '../../modules';
+import { klineArrayToObject, KlineState, klineUpdatePeriod, klineUpdateTimeRange } from '../../modules';
 import { Market } from '../../modules/public/markets';
 import { periodMinutesToString } from '../../modules/public/ranger/helpers';
 import { store } from '../../store';
@@ -19,7 +15,7 @@ export interface CurrentKlineSubscription {
     periodString?: string;
 }
 
-const getHistoryApi = (): string => isFinexEnabled() ? finexUrl() : tradeUrl();
+const getHistoryApi = (): string => (isFinexEnabled() ? finexUrl() : tradeUrl());
 
 const makeHistoryUrl = (market: string, resolution: number, from: number, to: number) => {
     const payload = {
@@ -57,11 +53,11 @@ const config = {
 
 export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Market[]) => {
     const dataFeed = {
-        onReady: cb => {
+        onReady: (cb) => {
             setTimeout(() => cb(config), 0);
         },
         searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
-            const symbols = markets.map(m => ({
+            const symbols = markets.map((m) => ({
                 symbol: m.id,
                 full_name: m.name,
                 description: m.name,
@@ -73,7 +69,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             setTimeout(() => onResultReadyCallback(symbols), 0);
         },
         resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) => {
-            const symbol = markets.find(m => m.id === symbolName || m.name === symbolName);
+            const symbol = markets.find((m) => m.id === symbolName || m.name === symbolName);
 
             if (!symbol) {
                 return setTimeout(() => onResolveErrorCallback('Symbol not found'), 0);
@@ -98,13 +94,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
 
             return setTimeout(() => onSymbolResolvedCallback(symbolStub), 0);
         },
-        getTimescaleMarks: async (
-            symbolInfo: LibrarySymbolInfo,
-            from,
-            to,
-            onDataCallback,
-            resolution,
-        ) => {
+        getTimescaleMarks: async (symbolInfo: LibrarySymbolInfo, from, to, onDataCallback, resolution) => {
             const range = tradingChart.tvWidget!.activeChart().getVisibleRange();
             const period = tradingChart.tvWidget!.activeChart().resolution();
             store.dispatch(klineUpdateTimeRange(range));
@@ -117,13 +107,13 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             to,
             onHistoryCallback,
             onErrorCallback,
-            firstDataRequest,
+            firstDataRequest
         ) => {
             const url = makeHistoryUrl(
                 symbolInfo.ticker || symbolInfo.name.toLowerCase(),
                 resolutionToSeconds(resolution),
                 from,
-                to,
+                to
             );
 
             return axios
@@ -136,7 +126,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
 
                     return onHistoryCallback(bars, { noData: false });
                 })
-                .catch(e => {
+                .catch((e) => {
                     return onHistoryCallback([], { noData: true });
                 });
         },
@@ -145,7 +135,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             resolution,
             onRealtimeCallback,
             subscribeUID: string,
-            onResetCacheNeededCallback,
+            onResetCacheNeededCallback
         ) => {
             dataFeed.onRealtimeCallback = (kline: KlineState) => {
                 if (

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { selectMobileDeviceState, setMobileDevice } from '../modules';
 
 export const useSetMobileDevice = () => {
@@ -8,7 +9,7 @@ export const useSetMobileDevice = () => {
 
     React.useEffect(() => {
         const handleResize = () => {
-            const isMobileDeviceCurrent = (window.innerWidth < 768) || (window.innerHeight < 600);
+            const isMobileDeviceCurrent = window.innerWidth < 768 || window.innerHeight < 600;
 
             if (isMobileDevice !== isMobileDeviceCurrent) {
                 dispatch(setMobileDevice(isMobileDeviceCurrent));

@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {
-    connect,
-    MapStateToProps,
-} from 'react-redux';
+import { connect, MapStateToProps } from 'react-redux';
+
 // MUST BE REMOVED: Vadym P. responsibility
 // import { initGeetest } from '../../helpers/geetest.js.txt';
 import {
@@ -31,7 +29,6 @@ interface DispatchProps {
 type Props = ReduxProps & DispatchProps & OwnProps;
 
 class GeetestCaptchaComponent extends React.Component<Props> {
-
     public constructor(props) {
         super(props);
         this.captchaContainerRef = React.createRef();
@@ -46,10 +43,7 @@ class GeetestCaptchaComponent extends React.Component<Props> {
 
     public componentWillReceiveProps(next: Props) {
         if (this.props.geetestCaptchaKeys !== next.geetestCaptchaKeys && next.geetestCaptchaKeys !== undefined) {
-            const {
-                geetestCaptchaKeys,
-                lang,
-            } = next;
+            const { geetestCaptchaKeys, lang } = next;
             // MUST BE REMOVED: Vadym P. responsibility
             // initGeetest({
             //     gt: geetestCaptchaKeys.gt,
@@ -80,7 +74,7 @@ class GeetestCaptchaComponent extends React.Component<Props> {
         return <div ref={this.captchaContainerRef} />;
     }
 
-    private captchaComingHandler = captcha => {
+    private captchaComingHandler = (captcha) => {
         this.captcha = captcha;
         this.captcha.appendTo(this.captchaContainerRef.current);
         this.captcha.onSuccess(this.captchaSuccessHandler);
@@ -97,10 +91,9 @@ const mapDispatchProps = {
     geetestCaptchaFetch,
 };
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
-    (state: RootState): ReduxProps => ({
-        lang: selectCurrentLanguage(state),
-        geetestCaptchaKeys: selectCaptchaKeys(state),
-    });
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state: RootState): ReduxProps => ({
+    lang: selectCurrentLanguage(state),
+    geetestCaptchaKeys: selectCaptchaKeys(state),
+});
 
 export const GeetestCaptcha = connect(mapStateToProps, mapDispatchProps)(GeetestCaptchaComponent);

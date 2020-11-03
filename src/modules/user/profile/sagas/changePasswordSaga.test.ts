@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -27,7 +28,7 @@ describe('Module: Change password', () => {
         message: ['Server error'],
     };
 
-    const fakePassword =  {
+    const fakePassword = {
         old_password: '123123',
         new_password: '123',
         confirm_password: '123',
@@ -37,10 +38,7 @@ describe('Module: Change password', () => {
         mockAxios.onPut('/resource/users/password').reply(200);
     };
 
-    const expectedActionsFetch = [
-        changePasswordFetch(fakePassword),
-        changePasswordData(),
-    ];
+    const expectedActionsFetch = [changePasswordFetch(fakePassword), changePasswordData()];
 
     const expectedActionsError = [
         changePasswordFetch(fakePassword),
@@ -55,7 +53,7 @@ describe('Module: Change password', () => {
 
     it('should change password in success flow', async () => {
         mockChangePassword();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -72,7 +70,7 @@ describe('Module: Change password', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

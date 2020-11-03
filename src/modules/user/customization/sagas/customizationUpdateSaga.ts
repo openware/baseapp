@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { customizationData } from '../../../public/customization';
@@ -14,12 +15,14 @@ export function* customizationUpdateSaga(action: CustomizationUpdate) {
         yield put(customizationUpdateData(action.payload));
         yield put(customizationData(action.payload));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: customizationUpdateError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: customizationUpdateError,
+                },
+            })
+        );
     }
 }

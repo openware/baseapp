@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -38,10 +39,7 @@ describe('Module: WithdrawLimit', () => {
         mockAxios.onGet('/private/withdraws').reply(200, fakeData);
     };
 
-    const expectedActionsFetch = [
-        withdrawLimitFetch(),
-        withdrawLimitData(fakeData),
-    ];
+    const expectedActionsFetch = [withdrawLimitFetch(), withdrawLimitData(fakeData)];
 
     const expectedActionsError = [
         withdrawLimitFetch(),
@@ -56,7 +54,7 @@ describe('Module: WithdrawLimit', () => {
 
     it('should fetch wallets in success flow', async () => {
         mockWithdrawLimit();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -73,7 +71,7 @@ describe('Module: WithdrawLimit', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

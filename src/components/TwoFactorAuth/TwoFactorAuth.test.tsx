@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { TwoFactorAuth, TwoFactorAuthProps } from './';
 
 import { shallow } from 'enzyme';
+
+import { TwoFactorAuth, TwoFactorAuthProps } from './';
 
 const defaults: TwoFactorAuthProps = {
     onSubmit: jest.fn(),
@@ -17,8 +18,7 @@ const defaults: TwoFactorAuthProps = {
     handleClose2fa: jest.fn(),
 };
 
-const setup = (props: Partial<TwoFactorAuthProps> = {}) =>
-    shallow(<TwoFactorAuth {...{ ...defaults, ...props }} />);
+const setup = (props: Partial<TwoFactorAuthProps> = {}) => shallow(<TwoFactorAuth {...{ ...defaults, ...props }} />);
 
 describe('TwoFactorAuth component', () => {
     it('should render', () => {

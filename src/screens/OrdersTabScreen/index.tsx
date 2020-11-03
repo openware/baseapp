@@ -1,10 +1,8 @@
 import * as React from 'react';
-import {
-    FormattedMessage,
-    injectIntl,
-} from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
 import { TabPanel } from '../../components';
 import { OrdersElement } from '../../containers/OrdersElement';
@@ -17,9 +15,9 @@ import {
     selectOrdersHistory,
     selectUserLoggedIn,
 } from '../../modules';
-import {RangerConnectFetch, rangerConnectFetch} from '../../modules/public/ranger';
-import {RangerState} from '../../modules/public/ranger/reducer';
-import {selectRanger} from '../../modules/public/ranger/selectors';
+import { RangerConnectFetch, rangerConnectFetch } from '../../modules/public/ranger';
+import { RangerState } from '../../modules/public/ranger/reducer';
+import { selectRanger } from '../../modules/public/ranger/selectors';
 import { OrderCommon } from '../../modules/types';
 
 interface ReduxProps {
@@ -43,13 +41,13 @@ interface State {
 }
 
 class Orders extends React.PureComponent<Props, State> {
-    public state = { tab: 'open', currentTabIndex: 0};
+    public state = { tab: 'open', currentTabIndex: 0 };
 
     public tabMapping = ['open', 'all'];
 
     public componentDidMount() {
         const {
-            rangerState: {connected},
+            rangerState: { connected },
             userLoggedIn,
         } = this.props;
 
@@ -57,7 +55,7 @@ class Orders extends React.PureComponent<Props, State> {
         this.props.marketsFetch();
 
         if (!connected) {
-            this.props.rangerConnect({withAuth: userLoggedIn});
+            this.props.rangerConnect({ withAuth: userLoggedIn });
         }
     }
 
@@ -90,7 +88,7 @@ class Orders extends React.PureComponent<Props, State> {
         );
     }
 
-    private onCurrentTabChange = index => this.setState({ currentTabIndex: index });
+    private onCurrentTabChange = (index) => this.setState({ currentTabIndex: index });
 
     private handleMakeRequest = (index: number) => {
         this.renderTabs();
@@ -106,12 +104,12 @@ class Orders extends React.PureComponent<Props, State> {
 
         return [
             {
-                content: tab === 'open' ? <OrdersElement type="open"/> : null,
-                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.open'}),
+                content: tab === 'open' ? <OrdersElement type="open" /> : null,
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.open' }),
             },
             {
                 content: tab === 'all' ? <OrdersElement type="all" /> : null,
-                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.all'}),
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.all' }),
             },
         ];
     };
@@ -125,15 +123,14 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     userLoggedIn: selectUserLoggedIn(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        marketsFetch: () => dispatch(marketsFetch()),
-        ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
-        resetOrdersHistory: () => dispatch(resetOrdersHistory()),
-        rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    marketsFetch: () => dispatch(marketsFetch()),
+    ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
+    resetOrdersHistory: () => dispatch(resetOrdersHistory()),
+    rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
+});
 
 export const OrdersTabScreen = compose(
     injectIntl,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps)
 )(Orders) as React.ComponentClass;

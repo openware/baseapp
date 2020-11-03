@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+
 import { Blur } from '../../../components/Blur';
 import { ModalWithdrawSubmit, Withdraw } from '../../../containers';
 import { useBeneficiariesFetch, useCurrenciesFetch, useWalletsAddressFetch } from '../../../hooks';
@@ -23,7 +24,7 @@ const defaultBeneficiary: Beneficiary = {
     },
 };
 
-const WalletWithdrawBodyComponent = props => {
+const WalletWithdrawBodyComponent = (props) => {
     const [withdrawSubmitModal, setWithdrawSubmitModal] = React.useState(false);
     const [withdrawData, setWithdrawData] = React.useState({
         amount: '',
@@ -42,12 +43,27 @@ const WalletWithdrawBodyComponent = props => {
     const withdrawSuccess = useSelector(selectWithdrawSuccess);
     const { currency, fee, type } = props.wallet;
     const fixed = (props.wallet || { fixed: 0 }).fixed;
-    const withdrawAmountLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }), [intl]);
-    const withdraw2faLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' }), [intl]);
-    const withdrawFeeLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }), [intl]);
-    const withdrawTotalLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }), [intl]);
-    const withdrawButtonLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }), [intl]);
-    const currencyItem = (currencies && currencies.find(item => item.id === currency));
+    const withdrawAmountLabel = React.useMemo(
+        () => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }),
+        [intl]
+    );
+    const withdraw2faLabel = React.useMemo(
+        () => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' }),
+        [intl]
+    );
+    const withdrawFeeLabel = React.useMemo(
+        () => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }),
+        [intl]
+    );
+    const withdrawTotalLabel = React.useMemo(
+        () => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }),
+        [intl]
+    );
+    const withdrawButtonLabel = React.useMemo(
+        () => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
+        [intl]
+    );
+    const currencyItem = currencies && currencies.find((item) => item.id === currency);
 
     const isTwoFactorAuthRequired = (level: number, is2faEnabled: boolean) => {
         return level > 1 || (level === 1 && is2faEnabled);
@@ -57,11 +73,12 @@ const WalletWithdrawBodyComponent = props => {
         let confirmationAddress = '';
 
         if (props.wallet) {
-            confirmationAddress = props.wallet.type === 'fiat' ? (
-                withdrawData.beneficiary.name
-            ) : (
-                withdrawData.beneficiary.data ? (withdrawData.beneficiary.data.address as string) : ''
-            );
+            confirmationAddress =
+                props.wallet.type === 'fiat'
+                    ? withdrawData.beneficiary.name
+                    : withdrawData.beneficiary.data
+                    ? (withdrawData.beneficiary.data.address as string)
+                    : '';
         }
 
         return confirmationAddress;
@@ -79,8 +96,8 @@ const WalletWithdrawBodyComponent = props => {
     };
 
     const toggleSubmitModal = () => {
-        setWithdrawSubmitModal(state => !state);
-        setWithdrawData(state => ({ ...state, withdrawDone: true }));
+        setWithdrawSubmitModal((state) => !state);
+        setWithdrawData((state) => ({ ...state, withdrawDone: true }));
     };
 
     const handleWithdraw = () => {
@@ -105,13 +122,8 @@ const WalletWithdrawBodyComponent = props => {
                 <span className="cr-mobile-wallet-withdraw__otp-disabled__text">
                     {intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.enable2fa' })}
                 </span>
-                <Button
-                    block={true}
-                    onClick={() => history.push('/profile/2fa')}
-                    size="lg"
-                    variant="primary"
-                >
-                    {intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.enable2faButton'})}
+                <Button block={true} onClick={() => history.push('/profile/2fa')} size="lg" variant="primary">
+                    {intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.enable2faButton' })}
                 </Button>
             </div>
         );
@@ -138,11 +150,11 @@ const WalletWithdrawBodyComponent = props => {
     return (
         <div className={className}>
             {currencyItem && !currencyItem.withdrawal_enabled ? (
-                    <Blur
-                        className="pg-blur-withdraw"
-                        text={intl.formatMessage({id: 'page.body.wallets.tabs.withdraw.disabled.message'})}
-                    />
-                ) :
+                <Blur
+                    className="pg-blur-withdraw"
+                    text={intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.disabled.message' })}
+                />
+            ) : (
                 <Withdraw
                     isMobileDevice
                     fee={fee}
@@ -158,7 +170,7 @@ const WalletWithdrawBodyComponent = props => {
                     withdrawButtonLabel={withdrawButtonLabel}
                     twoFactorAuthRequired={isTwoFactorAuthRequired(user.level, user.otp)}
                 />
-            }
+            )}
             <div className="cr-mobile-wallet-withdraw-body__submit">
                 <ModalWithdrawSubmit
                     isMobileDevice
@@ -184,6 +196,4 @@ const WalletWithdrawBodyComponent = props => {
 
 const WalletWithdrawBody = React.memo(WalletWithdrawBodyComponent);
 
-export {
-    WalletWithdrawBody,
-};
+export { WalletWithdrawBody };

@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
+
 import { IntlProps } from '../../';
 import { rootReducer } from '../../modules';
 import { WalletsFetch } from './';
@@ -13,7 +14,7 @@ const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <Provider store={store}>
             <Wallets />
-        </Provider>,
+        </Provider>
     );
 
 describe('WalletsFetch component', () => {
@@ -24,7 +25,6 @@ describe('WalletsFetch component', () => {
     });
     it('should render', () => {
         expect(wrapper).toBeDefined();
-
     });
 
     it('should match snapshot', () => {

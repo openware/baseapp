@@ -1,18 +1,10 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { connect, MapStateToProps } from 'react-redux';
-import {
-    Market,
-    RootState,
-    selectCurrentMarket,
-    selectMarketSelectorState,
-} from '../../../modules';
-import {
-    MarketsList,
-} from './MarketsList';
-import {
-    MarketsTabs,
-} from './MarketsTabs';
+
+import { Market, RootState, selectCurrentMarket, selectMarketSelectorState } from '../../../modules';
+import { MarketsList } from './MarketsList';
+import { MarketsTabs } from './MarketsTabs';
 
 interface ReduxProps {
     currentMarket?: Market;
@@ -46,8 +38,8 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
         return (
             <div className="pg-trading-header-selector-container">
                 <div className={listClassName}>
-                    <MarketsTabs onSelect={this.marketsTabsSelectHandler}/>
-                    <MarketsList search={searchFieldValue} currencyQuote={marketsTabsSelectedValue}/>
+                    <MarketsTabs onSelect={this.marketsTabsSelectHandler} />
+                    <MarketsList search={searchFieldValue} currencyQuote={marketsTabsSelectedValue} />
                     <div className={'pg-trading-header-selector-search-wrapper'}>
                         <div className={searchSelectorClassName}>
                             <div className="pg-trading-header-selector-search-icon">
@@ -65,20 +57,20 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
         );
     }
 
-    private searchFieldChangeHandler = e => {
+    private searchFieldChangeHandler = (e) => {
         this.setState({
             searchFieldValue: e.target.value,
         });
     };
 
-    private marketsTabsSelectHandler = value => {
+    private marketsTabsSelectHandler = (value) => {
         this.setState({
             marketsTabsSelectedValue: value,
         });
     };
 }
 
-const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     currentMarket: selectCurrentMarket(state),
     isOpen: selectMarketSelectorState(state),
 });

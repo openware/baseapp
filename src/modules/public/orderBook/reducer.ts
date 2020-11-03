@@ -12,11 +12,7 @@ import {
     ORDER_BOOK_ERROR,
     ORDER_BOOK_FETCH,
 } from './constants';
-import {
-    DepthIncrementState,
-    DepthState,
-    OrderBookState,
-} from './types';
+import { DepthIncrementState, DepthState, OrderBookState } from './types';
 
 // TODO: Move market depth to his own module
 
@@ -115,19 +111,27 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
             };
 
             if (action.payload.asks) {
-                payload.asks = Array.isArray(action.payload.asks[0]) ? (
-                    handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(0, orderBookSideLimit())
-                ) : (
-                    handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(0, orderBookSideLimit())
-                );
+                payload.asks = Array.isArray(action.payload.asks[0])
+                    ? handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(
+                          0,
+                          orderBookSideLimit()
+                      )
+                    : handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(
+                          0,
+                          orderBookSideLimit()
+                      );
             }
 
             if (action.payload.bids) {
-                payload.bids = Array.isArray(action.payload.bids[0]) ? (
-                    handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(0, orderBookSideLimit())
-                ) : (
-                    handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(0, orderBookSideLimit())
-                );
+                payload.bids = Array.isArray(action.payload.bids[0])
+                    ? handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(
+                          0,
+                          orderBookSideLimit()
+                      )
+                    : handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(
+                          0,
+                          orderBookSideLimit()
+                      );
             }
 
             return payload;

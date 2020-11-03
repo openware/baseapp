@@ -1,11 +1,6 @@
 import { call, delay, put, select } from 'redux-saga/effects';
-import {
-    resetHistory,
-    setBlocklistStatus,
-    signInRequire2FA,
-    userOpenOrdersReset,
-    userReset,
-} from '../../../';
+
+import { resetHistory, setBlocklistStatus, signInRequire2FA, userOpenOrdersReset, userReset } from '../../../';
 import { msAlertDisplayTime } from '../../../../api';
 import { selectUserInfo } from '../../../user/profile';
 import { alertData, alertDelete, AlertPush } from '../actions';
@@ -27,24 +22,26 @@ export function* handleAlertSaga(action: AlertPush) {
                     yield put(resetHistory());
                 }
 
-                if (action.payload.message.indexOf('identity.session.not_active') > -1){
+                if (action.payload.message.indexOf('identity.session.not_active') > -1) {
                     yield put(alertData(action.payload));
 
                     return;
                 } else {
-                    if (action.payload.message.indexOf('authz.client_session_mismatch') > -1 ||
-                        action.payload.message.indexOf('authz.csrf_token_mismatch') > -1) {
-                            yield call(callAlertData, action);
-                        } else {
-                            const user = yield select(selectUserInfo);
+                    if (
+                        action.payload.message.indexOf('authz.client_session_mismatch') > -1 ||
+                        action.payload.message.indexOf('authz.csrf_token_mismatch') > -1
+                    ) {
+                        yield call(callAlertData, action);
+                    } else {
+                        const user = yield select(selectUserInfo);
 
-                            if (!user.email.length && action.payload.message.indexOf('authz.invalid_session') > -1) {
-                                break;
-                            } else {
-                                yield call(callAlertData, action);
-                                break;
-                            }
+                        if (!user.email.length && action.payload.message.indexOf('authz.invalid_session') > -1) {
+                            break;
+                        } else {
+                            yield call(callAlertData, action);
+                            break;
                         }
+                    }
                 }
                 break;
             case 403:

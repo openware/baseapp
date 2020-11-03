@@ -1,6 +1,16 @@
 import { CommonError, OrderCommon, OrderEvent } from '../../types';
 import * as actions from './actions';
-import { OPEN_ORDERS_APPEND, OPEN_ORDERS_CANCEL_DATA, OPEN_ORDERS_CANCEL_ERROR, OPEN_ORDERS_CANCEL_FETCH, OPEN_ORDERS_DATA, OPEN_ORDERS_ERROR, OPEN_ORDERS_FETCH, OPEN_ORDERS_RESET, OPEN_ORDERS_UPDATE } from './constants';
+import {
+    OPEN_ORDERS_APPEND,
+    OPEN_ORDERS_CANCEL_DATA,
+    OPEN_ORDERS_CANCEL_ERROR,
+    OPEN_ORDERS_CANCEL_FETCH,
+    OPEN_ORDERS_DATA,
+    OPEN_ORDERS_ERROR,
+    OPEN_ORDERS_FETCH,
+    OPEN_ORDERS_RESET,
+    OPEN_ORDERS_UPDATE,
+} from './constants';
 
 describe('Open Orders actions', () => {
     const error: CommonError = {
@@ -101,7 +111,7 @@ describe('Open Orders actions', () => {
             id: 162,
             side: 'buy',
             price: '0.3',
-            state:'wait',
+            state: 'wait',
             created_at: '2018-11-29T16:54:46+01:00',
             remaining_volume: '123.1234',
             origin_volume: '123.1234',

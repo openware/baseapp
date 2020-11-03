@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
+
 import { OrderInput, OrderInputProps } from '.';
 
 const defaultProps: OrderInputProps = {
@@ -11,8 +12,7 @@ const defaultProps: OrderInputProps = {
     onKeyPress: jest.fn(),
 };
 
-const setup = (props: Partial<OrderInputProps> = {}) =>
-    shallow(<OrderInput {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<OrderInputProps> = {}) => shallow(<OrderInput {...{ ...defaultProps, ...props }} />);
 
 describe('InputBlock', () => {
     it('should render', () => {

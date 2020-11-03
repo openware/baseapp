@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+
 import { IntlProps } from '../../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { Decimal, OpenOrders } from '../../components';
@@ -74,25 +75,26 @@ export class OpenOrdersContainer extends React.Component<Props> {
                         </span>
                     </div>
                 </div>
-                {fetching ? <div className="open-order-loading"><Spinner animation="border" variant="primary" /></div> : this.openOrders()}
+                {fetching ? (
+                    <div className="open-order-loading">
+                        <Spinner animation="border" variant="primary" />
+                    </div>
+                ) : (
+                    this.openOrders()
+                )}
             </div>
         );
     }
 
     private renderHeadersKeys = () => {
-        return [
-            'Date',
-            'Price',
-            'Amount',
-            'Total',
-            'Filled',
-            '',
-        ];
+        return ['Date', 'Price', 'Amount', 'Total', 'Filled', ''];
     };
 
     private renderHeaders = () => {
         const currentAskUnit = this.props.currentMarket ? ` (${this.props.currentMarket.base_unit.toUpperCase()})` : '';
-        const currentBidUnit = this.props.currentMarket ? ` (${this.props.currentMarket.quote_unit.toUpperCase()})` : '';
+        const currentBidUnit = this.props.currentMarket
+            ? ` (${this.props.currentMarket.quote_unit.toUpperCase()})`
+            : '';
 
         return [
             this.translate('page.body.trade.header.openOrders.content.date'),
@@ -133,10 +135,18 @@ export class OpenOrdersContainer extends React.Component<Props> {
 
             return [
                 localeDate(created_at, 'fullDate'),
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(price, priceFixed, ',')}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(remainingAmount, amountFixed, ',')}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(total, amountFixed, ',')}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{filled}%</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>
+                    {Decimal.format(price, priceFixed, ',')}
+                </span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>
+                    {Decimal.format(remainingAmount, amountFixed, ',')}
+                </span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>
+                    {Decimal.format(total, amountFixed, ',')}
+                </span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>
+                    {filled}%
+                </span>,
                 side,
             ];
         });
@@ -164,17 +174,14 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     userLoggedIn: selectUserLoggedIn(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    userOpenOrdersFetch: payload => dispatch(userOpenOrdersFetch(payload)),
-    openOrdersCancelFetch: payload => dispatch(openOrdersCancelFetch(payload)),
-    ordersCancelAll: payload => dispatch(ordersCancelAllFetch(payload)),
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    userOpenOrdersFetch: (payload) => dispatch(userOpenOrdersFetch(payload)),
+    openOrdersCancelFetch: (payload) => dispatch(openOrdersCancelFetch(payload)),
+    ordersCancelAll: (payload) => dispatch(ordersCancelAllFetch(payload)),
 });
 
 export type OpenOrdersProps = ReduxProps;
 
 export const OpenOrdersComponent = injectIntl(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps,
-    )(OpenOrdersContainer),
+    connect(mapStateToProps, mapDispatchToProps)(OpenOrdersContainer)
 ) as React.FunctionComponent;

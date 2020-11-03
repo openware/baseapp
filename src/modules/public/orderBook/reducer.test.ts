@@ -1,18 +1,7 @@
 import { Market, MarketId } from '../markets';
 import * as actions from './actions';
-import {
-    depthReducer,
-    incrementDepthReducer,
-    initialDepth,
-    initialOrderBook,
-    orderBookReducer,
-} from './reducer';
-import {
-    DepthIncrementState,
-    DepthIncrementUpdateData,
-    DepthState,
-    OrderBookState,
-} from './types';
+import { depthReducer, incrementDepthReducer, initialDepth, initialOrderBook, orderBookReducer } from './reducer';
+import { DepthIncrementState, DepthIncrementUpdateData, DepthState, OrderBookState } from './types';
 
 describe('orderBook reducer', () => {
     const fakeMarket: Market = {
@@ -128,7 +117,9 @@ describe('orderBook reducer', () => {
         };
 
         const expectedState = { ...fakeUpdatedDepth };
-        expect(incrementDepthReducer(fakeInitialState, actions.depthDataSnapshot(fakeUpdatedDepth))).toEqual(expectedState);
+        expect(incrementDepthReducer(fakeInitialState, actions.depthDataSnapshot(fakeUpdatedDepth))).toEqual(
+            expectedState
+        );
     });
 
     it('creates bids price level by DEPTH_DATA_INCREMENT', () => {
@@ -289,7 +280,9 @@ describe('orderBook reducer', () => {
         };
 
         const expectedState = { ...fakeUpdatedDepth };
-        expect(incrementDepthReducer(fakeInitialState, actions.depthDataIncrement(fakeOrderArray))).toEqual(expectedState);
+        expect(incrementDepthReducer(fakeInitialState, actions.depthDataIncrement(fakeOrderArray))).toEqual(
+            expectedState
+        );
     });
 
     it('updates bids price level by DEPTH_DATA_INCREMENT', () => {
@@ -466,7 +459,9 @@ describe('orderBook reducer', () => {
             timestamp: Math.floor(Date.now() / 1000),
         };
 
-        expect(incrementDepthReducer(fakeInitialState, actions.depthIncrementSubscribe(marketId))).toEqual(expectedState);
+        expect(incrementDepthReducer(fakeInitialState, actions.depthIncrementSubscribe(marketId))).toEqual(
+            expectedState
+        );
     });
 
     it('does not set loading true on DEPTH_INCREMENT_SUBSCRIBE from the same market', () => {
@@ -488,6 +483,8 @@ describe('orderBook reducer', () => {
             timestamp: Math.floor(Date.now() / 1000),
         };
 
-        expect(incrementDepthReducer(fakeInitialState, actions.depthIncrementSubscribe(marketId))).toEqual(expectedState);
+        expect(incrementDepthReducer(fakeInitialState, actions.depthIncrementSubscribe(marketId))).toEqual(
+            expectedState
+        );
     });
 });

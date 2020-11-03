@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
+
 import { OpenOrdersComponent, OpenOrdersProps } from '..';
 import { Market, rootReducer } from '../../modules';
 import { OrderCommon } from '../../modules/types';
@@ -48,7 +49,7 @@ const setup = (props: Partial<OpenOrdersProps> = {}) =>
         <Provider store={store}>
             // @ts-ignore
             <OpenOrders {...{ ...defaultProps, ...props }} />
-        </Provider>,
+        </Provider>
     );
 
 describe('OpenOrders', () => {

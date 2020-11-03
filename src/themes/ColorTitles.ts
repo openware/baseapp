@@ -12,7 +12,10 @@ export const AVAILABLE_COLORS_TITLES: ThemeColorTitleInterface[] = [
     { key: '--rgb-icons', title: 'page.body.customization.themes.color.icon' },
     { key: '--rgb-primary-cta-color', title: 'page.body.customization.themes.color.primaryCtaColor' },
     { key: '--rgb-contrast-cta-color', title: 'page.body.customization.themes.color.contrastCtaColor' },
-    { key: '--rgb-secondary-contrast-cta-color', title: 'page.body.customization.themes.color.secondaryContrastCtaColor' },
+    {
+        key: '--rgb-secondary-contrast-cta-color',
+        title: 'page.body.customization.themes.color.secondaryContrastCtaColor',
+    },
     { key: '--rgb-cta-layer-color', title: 'page.body.customization.themes.color.ctaLayerColor' },
     { key: '--rgb-system-green', title: 'page.body.customization.themes.color.systemGreen' },
     { key: '--rgb-system-red', title: 'page.body.customization.themes.color.systemRed' },

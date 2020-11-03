@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -24,7 +25,7 @@ describe('Saga: customizationFetchSaga', () => {
     });
 
     const fakeCustomization: CustomizationDataInterface = {
-        settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
+        settings: '{"theme_id": "1","theme_colors":[]}',
     };
 
     const mockCustomization = () => {
@@ -37,13 +38,10 @@ describe('Saga: customizationFetchSaga', () => {
     };
 
     it('should fetch customization', async () => {
-        const expectedActions = [
-            customizationFetch(),
-            customizationData(fakeCustomization),
-        ];
+        const expectedActions = [customizationFetch(), customizationData(fakeCustomization)];
 
         mockCustomization();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -58,7 +56,6 @@ describe('Saga: customizationFetchSaga', () => {
         return promise;
     });
 
-
     it('should trigger an error on customization fetch', async () => {
         const expectedActions = [
             customizationFetch(),
@@ -72,7 +69,7 @@ describe('Saga: customizationFetchSaga', () => {
         ];
 
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {

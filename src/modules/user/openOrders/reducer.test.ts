@@ -3,7 +3,6 @@ import * as actions from './actions';
 import { convertOrderEvent, insertOrUpdate } from './helpers';
 import { initialOpenOrdersState, openOrdersReducer, OpenOrdersState } from './reducer';
 
-
 describe('Open Orders reducer', () => {
     const error: CommonError = {
         code: 500,
@@ -25,21 +24,14 @@ describe('Open Orders reducer', () => {
                 price_precision: 4,
             },
         };
-        expect(
-            openOrdersReducer(
-                initialOpenOrdersState,
-                actions.userOpenOrdersFetch(payload),
-            ),
-        ).toEqual(expectedState);
+        expect(openOrdersReducer(initialOpenOrdersState, actions.userOpenOrdersFetch(payload))).toEqual(expectedState);
     });
 
     it('should handle USER_OPEN_ORDERS_DATA', () => {
         const initialState = { ...initialOpenOrdersState, fetching: true };
         const payload = [];
         const expectedState = { ...initialState, ...payload, fetching: false };
-        expect(
-            openOrdersReducer(initialState, actions.userOpenOrdersData(payload)),
-        ).toEqual(expectedState);
+        expect(openOrdersReducer(initialState, actions.userOpenOrdersData(payload))).toEqual(expectedState);
     });
 
     it('should handle USER_OPEN_ORDERS_ERROR', () => {
@@ -50,9 +42,7 @@ describe('Open Orders reducer', () => {
             fetching: false,
         };
 
-        expect(
-            openOrdersReducer(initialState, actions.userOpenOrdersError(error)),
-        ).toEqual(expectedState);
+        expect(openOrdersReducer(initialState, actions.userOpenOrdersError(error))).toEqual(expectedState);
     });
 
     describe('USER_OPEN_ORDERS_APPEND', () => {
@@ -62,7 +52,7 @@ describe('Open Orders reducer', () => {
             side: 'buy',
             price: '0.3',
             ord_type: 'limit',
-            state:'wait',
+            state: 'wait',
             created_at: '2018-11-29T16:54:46+01:00',
             remaining_volume: '123.1234',
             origin_volume: '123.1234',
@@ -76,12 +66,9 @@ describe('Open Orders reducer', () => {
                 ...initialOpenOrdersState,
                 list: [newOrder],
             };
-            expect(
-                openOrdersReducer(
-                    initialOpenOrdersState,
-                    actions.userOpenOrdersAppend(newOrder),
-                ),
-            ).toEqual(expectedState);
+            expect(openOrdersReducer(initialOpenOrdersState, actions.userOpenOrdersAppend(newOrder))).toEqual(
+                expectedState
+            );
         });
     });
 
@@ -92,7 +79,7 @@ describe('Open Orders reducer', () => {
             side: 'buy',
             price: '0.3',
             ord_type: 'limit',
-            state:'wait',
+            state: 'wait',
             created_at: '2018-11-29T16:54:46+01:00',
             remaining_volume: '123.1234',
             origin_volume: '123.1234',
@@ -106,15 +93,11 @@ describe('Open Orders reducer', () => {
                 ...initialOpenOrdersState,
                 list: [newOrder],
             };
-            expect(
-                openOrdersReducer(
-                    initialOpenOrdersState,
-                    actions.userOpenOrdersAppend(newOrder),
-                ),
-            ).toEqual(expectedState);
+            expect(openOrdersReducer(initialOpenOrdersState, actions.userOpenOrdersAppend(newOrder))).toEqual(
+                expectedState
+            );
         });
     });
-
 
     describe('USER_OPEN_ORDERS_UPDATE', () => {
         const newOrderEvent: OrderEvent = {
@@ -145,7 +128,7 @@ describe('Open Orders reducer', () => {
             id: 162,
             side: 'buy',
             price: '0.3',
-            state:'wait',
+            state: 'wait',
             created_at: '2018-11-29T16:54:46+01:00',
             remaining_volume: '123.1234',
             origin_volume: '123.1234',
@@ -156,22 +139,16 @@ describe('Open Orders reducer', () => {
         it('insert new order by ID', () => {
             const list = insertOrUpdate([], convertOrderEvent(newOrderEvent));
             const expectedState: OpenOrdersState = { ...initialOpenOrdersState, list };
-            expect(
-                openOrdersReducer(
-                    initialOpenOrdersState,
-                    actions.userOpenOrdersUpdate(newOrderEvent),
-                ),
-            ).toEqual(expectedState);
+            expect(openOrdersReducer(initialOpenOrdersState, actions.userOpenOrdersUpdate(newOrderEvent))).toEqual(
+                expectedState
+            );
         });
 
         it('insert new order by UUID', () => {
             const list = insertOrUpdate([], convertOrderEvent(newOrderWithUUIDEvent));
             const expectedState: OpenOrdersState = { ...initialOpenOrdersState, list };
             expect(
-                openOrdersReducer(
-                    initialOpenOrdersState,
-                    actions.userOpenOrdersUpdate(newOrderWithUUIDEvent),
-                ),
+                openOrdersReducer(initialOpenOrdersState, actions.userOpenOrdersUpdate(newOrderWithUUIDEvent))
             ).toEqual(expectedState);
         });
 
@@ -180,8 +157,8 @@ describe('Open Orders reducer', () => {
             expect(
                 openOrdersReducer(
                     initialOpenOrdersState,
-                    actions.userOpenOrdersUpdate({...newOrderEvent, state: 'done'}),
-                ),
+                    actions.userOpenOrdersUpdate({ ...newOrderEvent, state: 'done' })
+                )
             ).toEqual(expectedState);
         });
 
@@ -190,8 +167,8 @@ describe('Open Orders reducer', () => {
             expect(
                 openOrdersReducer(
                     initialOpenOrdersState,
-                    actions.userOpenOrdersUpdate({...newOrderEvent, state: 'cancel'}),
-                ),
+                    actions.userOpenOrdersUpdate({ ...newOrderEvent, state: 'cancel' })
+                )
             ).toEqual(expectedState);
         });
 
@@ -210,8 +187,8 @@ describe('Open Orders reducer', () => {
             expect(
                 openOrdersReducer(
                     { ...initialOpenOrdersState, list: [newOrderCommon] },
-                    actions.userOpenOrdersUpdate(updatedOrderEvent),
-                ),
+                    actions.userOpenOrdersUpdate(updatedOrderEvent)
+                )
             ).toEqual(expectedState);
         });
 
@@ -230,8 +207,8 @@ describe('Open Orders reducer', () => {
             expect(
                 openOrdersReducer(
                     { ...initialOpenOrdersState, list: [newOrderCommon] },
-                    actions.userOpenOrdersUpdate(updatedOrderEvent),
-                ),
+                    actions.userOpenOrdersUpdate(updatedOrderEvent)
+                )
             ).toEqual(expectedState);
         });
 
@@ -247,19 +224,16 @@ describe('Open Orders reducer', () => {
             expect(
                 openOrdersReducer(
                     { ...initialOpenOrdersState, list: [] },
-                    actions.userOpenOrdersUpdate(updatedOrderEvent),
-                ),
+                    actions.userOpenOrdersUpdate(updatedOrderEvent)
+                )
             ).toEqual(expectedState);
         });
     });
 
     it('should handle USER_OPEN_ORDERS_RESET', () => {
-        expect(
-            openOrdersReducer(
-                initialOpenOrdersState,
-                actions.userOpenOrdersReset(),
-            ),
-        ).toEqual(initialOpenOrdersState);
+        expect(openOrdersReducer(initialOpenOrdersState, actions.userOpenOrdersReset())).toEqual(
+            initialOpenOrdersState
+        );
     });
 
     it('should handle OPEN_ORDERS_CANCEL_FETCH', () => {
@@ -267,7 +241,7 @@ describe('Open Orders reducer', () => {
             id: 162,
             side: 'buy',
             price: '0.3',
-            state:'wait',
+            state: 'wait',
             created_at: '2018-11-29T16:54:46+01:00',
             remaining_volume: '123.1234',
             origin_volume: '123.1234',
@@ -282,12 +256,7 @@ describe('Open Orders reducer', () => {
             list: [],
             cancelFetching: true,
         };
-        expect(
-            openOrdersReducer(
-                initialState,
-                actions.openOrdersCancelFetch(payload),
-            ),
-        ).toEqual(expectedState);
+        expect(openOrdersReducer(initialState, actions.openOrdersCancelFetch(payload))).toEqual(expectedState);
     });
 
     it('should handle OPEN_ORDERS_CANCEL_DATA', () => {
@@ -302,12 +271,7 @@ describe('Open Orders reducer', () => {
             cancelFetching: false,
             list: [],
         };
-        expect(
-            openOrdersReducer(
-                initialState,
-                actions.openOrdersCancelData(payload),
-            ),
-        ).toEqual(expectedState);
+        expect(openOrdersReducer(initialState, actions.openOrdersCancelData(payload))).toEqual(expectedState);
     });
 
     it('should handle OPEN_ORDERS_CANCEL_ERROR', () => {
@@ -320,8 +284,6 @@ describe('Open Orders reducer', () => {
             cancelError: true,
             cancelFetching: false,
         };
-        expect(
-            openOrdersReducer(initialState, actions.openOrdersCancelError(error)),
-        ).toEqual(expectedState);
+        expect(openOrdersReducer(initialState, actions.openOrdersCancelError(error))).toEqual(expectedState);
     });
 });

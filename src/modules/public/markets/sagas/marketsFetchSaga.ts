@@ -1,4 +1,5 @@
 import { call, put, takeLeading } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getOrderAPI } from '../../../../helpers';
@@ -32,13 +33,15 @@ export function* marketsFetchSaga(action: MarketsFetch) {
         yield put(marketsData(markets));
         yield put(setCurrentMarketIfUnset(markets[0]));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: marketsError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: marketsError,
+                },
+            })
+        );
     }
 }
 
@@ -57,12 +60,14 @@ export function* tickersSaga(action: MarketsTickersFetch) {
             yield put(marketsTickersData(convertedTickers));
         }
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: marketsTickersError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: marketsTickersError,
+                },
+            })
+        );
     }
 }

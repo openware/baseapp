@@ -12,11 +12,10 @@ import {
     OPEN_ORDERS_UPDATE,
 } from './constants';
 
-
 export interface UserOpenOrdersFetch {
     type: typeof OPEN_ORDERS_FETCH;
     payload: {
-        market: Market,
+        market: Market;
     };
 }
 
@@ -63,7 +62,7 @@ export interface OpenOrdersCancelError {
 }
 
 export type OpenOrdersAction =
-    UserOpenOrdersFetch
+    | UserOpenOrdersFetch
     | UserOpenOrdersData
     | UserOpenOrdersError
     | UserOpenOrdersUpdate

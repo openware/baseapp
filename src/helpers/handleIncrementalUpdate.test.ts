@@ -353,7 +353,10 @@ describe('Describe incremental array update of order book asks', () => {
             ['0.95', '0.5'],
         ];
 
-        const newAsksOrderArray: string[][] = [['0.50', '0.7'], ['0.40', '0.8']];
+        const newAsksOrderArray: string[][] = [
+            ['0.50', '0.7'],
+            ['0.40', '0.8'],
+        ];
 
         const updatedAsks: string[][] = [
             ['0.40', '0.8'],
@@ -380,7 +383,10 @@ describe('Describe incremental array update of order book asks', () => {
             ['0.95', '0.5'],
         ];
 
-        const newAsksOrderArray: string[][] = [['0.71', '0.7'], ['0.85', '0.1']];
+        const newAsksOrderArray: string[][] = [
+            ['0.71', '0.7'],
+            ['0.85', '0.1'],
+        ];
 
         const updatedAsks: string[][] = [
             ['0.60', '0.1'],
@@ -407,7 +413,10 @@ describe('Describe incremental array update of order book asks', () => {
             ['0.95', '0.5'],
         ];
 
-        const newAsksOrderArray: string[][] = [['0.99', '0.7'], ['1.0', '1.0']];
+        const newAsksOrderArray: string[][] = [
+            ['0.99', '0.7'],
+            ['1.0', '1.0'],
+        ];
 
         const updatedAsks: string[][] = [
             ['0.60', '0.1'],
@@ -426,8 +435,14 @@ describe('Describe incremental array update of order book asks', () => {
 
     it('should add values to empty order book', () => {
         const asks: string[][] = [];
-        const newAsksOrderArray: string[][] = [['0.71', '0.7'], ['0.85', '0.1']];
-        const updatedAsks: string[][] = [['0.71', '0.7'], ['0.85', '0.1']];
+        const newAsksOrderArray: string[][] = [
+            ['0.71', '0.7'],
+            ['0.85', '0.1'],
+        ];
+        const updatedAsks: string[][] = [
+            ['0.71', '0.7'],
+            ['0.85', '0.1'],
+        ];
 
         const result = handleIncrementalUpdateArray(asks, newAsksOrderArray, 'asks');
         expect(result).toEqual(updatedAsks);
@@ -443,7 +458,10 @@ describe('Describe incremental array update of order book asks', () => {
             ['0.95', '0.5'],
         ];
 
-        const newAsksOrderArray: string[][] = [['0.70', '0.2'], ['0.80', '20.0']];
+        const newAsksOrderArray: string[][] = [
+            ['0.70', '0.2'],
+            ['0.80', '20.0'],
+        ];
 
         const updatedAsks: string[][] = [
             ['0.60', '0.1'],
@@ -468,7 +486,11 @@ describe('Describe incremental array update of order book asks', () => {
             ['0.95', '0.5'],
         ];
 
-        const newAsksOrderArray: string[][] = [['0.60', '0.0'], ['0.75', '0.0'], ['0.95', '0.0']];
+        const newAsksOrderArray: string[][] = [
+            ['0.60', '0.0'],
+            ['0.75', '0.0'],
+            ['0.95', '0.0'],
+        ];
 
         const updatedAsks: string[][] = [
             ['0.70', '1.5'],

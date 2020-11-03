@@ -60,7 +60,7 @@ export interface MarketsTickersError {
 }
 
 export type MarketsAction =
-    MarketsFetch
+    | MarketsFetch
     | MarketsData
     | MarketsError
     | MarketsTickersFetch
@@ -83,17 +83,15 @@ export const marketsError = (error: CommonError): MarketsError => ({
     error,
 });
 
-export const setCurrentMarket =
-    (payload: SetCurrentMarket['payload']): SetCurrentMarket => ({
-        type: MARKETS_SET_CURRENT_MARKET,
-        payload,
-    });
+export const setCurrentMarket = (payload: SetCurrentMarket['payload']): SetCurrentMarket => ({
+    type: MARKETS_SET_CURRENT_MARKET,
+    payload,
+});
 
-export const setCurrentMarketIfUnset =
-    (payload: SetCurrentMarketIfUnset['payload']): SetCurrentMarketIfUnset => ({
-        type: MARKETS_SET_CURRENT_MARKET_IFUNSET,
-        payload,
-    });
+export const setCurrentMarketIfUnset = (payload: SetCurrentMarketIfUnset['payload']): SetCurrentMarketIfUnset => ({
+    type: MARKETS_SET_CURRENT_MARKET_IFUNSET,
+    payload,
+});
 
 export const marketsTickersFetch = (): MarketsTickersFetch => ({
     type: MARKETS_TICKERS_FETCH,

@@ -66,11 +66,12 @@ export interface UserOrderUpdate {
     payload: OrderEvent;
 }
 
-export type RangerAction = RangerConnectFetch |
-    RangerConnectData |
-    RangerConnectError |
-    RangerDisconnectData |
-    SubscriptionsUpdate;
+export type RangerAction =
+    | RangerConnectFetch
+    | RangerConnectData
+    | RangerConnectError
+    | RangerDisconnectData
+    | SubscriptionsUpdate;
 
 export type RangerErrorType = typeof RANGER_CONNECT_ERROR;
 
@@ -113,26 +114,18 @@ export const rangerUserOrderUpdate = (payload: UserOrderUpdate['payload']): User
 });
 
 export const marketStreams = (market: Market) => {
-    const channels = [
-        `${market.id}.trades`,
-    ];
+    const channels = [`${market.id}.trades`];
 
     if (incrementalOrderBook()) {
         store.dispatch(depthIncrementSubscribe(market.id));
 
         return {
-            channels: [
-                ...channels,
-                `${market.id}.ob-inc`,
-            ],
+            channels: [...channels, `${market.id}.ob-inc`],
         };
     }
 
     return {
-        channels: [
-            ...channels,
-            `${market.id}.update`,
-        ],
+        channels: [...channels, `${market.id}.update`],
     };
 };
 
@@ -142,9 +135,12 @@ export const subscriptionsUpdate = (payload: SubscriptionsUpdate['payload']): Su
 });
 
 export const rangerSubscribeMarket = (market: Market): RangerDirectMessage => rangerSubscribe(marketStreams(market));
-export const rangerUnsubscribeMarket = (market: Market): RangerDirectMessage => rangerUnsubscribe(marketStreams(market));
-export const rangerSubscribeKlineMarket = (marketId: string, periodString: string): RangerDirectMessage => rangerSubscribe(marketKlineStreams(marketId, periodString));
-export const rangerUnsubscribeKlineMarket = (marketId: string, periodString: string): RangerDirectMessage => rangerUnsubscribe(marketKlineStreams(marketId, periodString));
+export const rangerUnsubscribeMarket = (market: Market): RangerDirectMessage =>
+    rangerUnsubscribe(marketStreams(market));
+export const rangerSubscribeKlineMarket = (marketId: string, periodString: string): RangerDirectMessage =>
+    rangerSubscribe(marketKlineStreams(marketId, periodString));
+export const rangerUnsubscribeKlineMarket = (marketId: string, periodString: string): RangerDirectMessage =>
+    rangerUnsubscribe(marketKlineStreams(marketId, periodString));
 
 export const rangerDisconnectFetch = (): RangerDisconnectFetch => ({
     type: RANGER_DISCONNECT_FETCH,

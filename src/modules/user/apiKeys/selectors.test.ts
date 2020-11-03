@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+
 import { rootReducer } from '../../';
 import {
     selectApiKeys,
@@ -30,11 +31,13 @@ describe('Api Keys selectors', () => {
     });
 
     it('should select selectApiKeysFirstElemIndex', () => {
-        expect(selectApiKeysFirstElemIndex(state, 4)).toEqual((state.user.apiKeys.pageIndex * 4) + 1);
+        expect(selectApiKeysFirstElemIndex(state, 4)).toEqual(state.user.apiKeys.pageIndex * 4 + 1);
     });
 
     it('should select selectApiKeysLastElemIndex', () => {
-        expect(selectApiKeysLastElemIndex(state, 4)).toEqual((state.user.apiKeys.pageIndex * 4) + state.user.apiKeys.apiKeys.length);
+        expect(selectApiKeysLastElemIndex(state, 4)).toEqual(
+            state.user.apiKeys.pageIndex * 4 + state.user.apiKeys.apiKeys.length
+        );
     });
 
     it('should select selectApiKeysNextPageExists', () => {

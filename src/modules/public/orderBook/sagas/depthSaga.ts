@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { depthData, depthError, DepthFetch } from '../actions';
@@ -13,12 +14,14 @@ export function* depthSaga(action: DepthFetch) {
         const depth = yield call(API.get(depthOptions), `/public/markets/${market.id}/depth`);
         yield put(depthData(depth));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'console',
-            extraOptions: {
-                actionError: depthError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'console',
+                extraOptions: {
+                    actionError: depthError,
+                },
+            })
+        );
     }
 }

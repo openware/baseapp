@@ -1,6 +1,7 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { spy } from 'sinon';
+
 import { PercentageButton, PercentageButtonProps } from '.';
 
 const onClickSpy = spy();
@@ -22,11 +23,11 @@ describe('Close Button', () => {
     });
 
     it('should render', () => {
-       expect(wrapper).toMatchSnapshot();
+        expect(wrapper).toMatchSnapshot();
     });
 
     it('should call onClick callback', () => {
-       wrapper.find('.cr-button-percentage-100').simulate('click');
-       expect(onClickSpy.calledOnce).toBeTruthy();
+        wrapper.find('.cr-button-percentage-100').simulate('click');
+        expect(onClickSpy.calledOnce).toBeTruthy();
     });
 });

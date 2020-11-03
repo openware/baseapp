@@ -1,15 +1,7 @@
 import { CommonError, CommonState } from '../../types';
 import { CustomizationAction } from './actions';
-import {
-    CUSTOMIZATION_CURRENT,
-    CUSTOMIZATION_DATA,
-    CUSTOMIZATION_ERROR,
-    CUSTOMIZATION_FETCH,
-} from './constants';
-import {
-    CustomizationCurrentDataInterface,
-    CustomizationDataInterface,
-} from './types';
+import { CUSTOMIZATION_CURRENT, CUSTOMIZATION_DATA, CUSTOMIZATION_ERROR, CUSTOMIZATION_FETCH } from './constants';
+import { CustomizationCurrentDataInterface, CustomizationDataInterface } from './types';
 
 export interface CustomizationState extends CommonState {
     currentData?: CustomizationCurrentDataInterface;

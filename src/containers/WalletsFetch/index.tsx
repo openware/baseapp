@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'redux';
+
 import { balancesFetchInterval, isFinexEnabled } from '../../api';
 import { walletsFetch } from '../../modules/user/wallets';
 
@@ -33,11 +34,11 @@ export class WalletsFetchComponent extends React.Component<WalletsFetchProps> {
     }
 }
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({
     walletsFetch: () => dispatch(walletsFetch()),
 });
 
 export const WalletsFetch = compose(
     withRouter,
-    connect(null, mapDispatchToProps),
+    connect(null, mapDispatchToProps)
 )(WalletsFetchComponent) as React.ComponentClass;

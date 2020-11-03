@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { signInRequire2FA } from '../../auth';
@@ -20,12 +21,14 @@ export function* logoutSaga(action: LogoutFetch) {
         yield put(signInRequire2FA({ require2fa: false }));
         yield put(resetHistory());
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: logoutError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: logoutError,
+                },
+            })
+        );
     }
 }

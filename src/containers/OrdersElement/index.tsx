@@ -3,6 +3,7 @@ import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { History, Pagination } from '../../components';
@@ -50,10 +51,9 @@ interface OrdersState {
     orderType: boolean;
 }
 
-
 type Props = OrdersProps & ReduxProps & DispatchProps & IntlProps;
 
-class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
+class OrdersComponent extends React.PureComponent<Props, OrdersState> {
     public componentDidMount() {
         const { type } = this.props;
         this.props.userOrdersHistoryFetch({ pageIndex: 0, type, limit: 25 });
@@ -64,26 +64,30 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         let updateList = list;
 
         if (type === 'open') {
-            updateList = list.filter(o => o.state === 'wait');
+            updateList = list.filter((o) => o.state === 'wait');
         }
 
-        const emptyMsg = this.props.intl.formatMessage({id: 'page.noDataToShow'});
+        const emptyMsg = this.props.intl.formatMessage({ id: 'page.noDataToShow' });
 
         return (
             <div className={`pg-history-elem ${updateList.length ? '' : 'pg-history-elem-empty'}`}>
-                {fetching && <div className="text-center"><Spinner animation="border" variant="primary" /></div>}
+                {fetching && (
+                    <div className="text-center">
+                        <Spinner animation="border" variant="primary" />
+                    </div>
+                )}
                 {updateList.length ? this.renderContent(updateList) : null}
                 {!updateList.length && !fetching ? <p className="pg-history-elem__empty">{emptyMsg}</p> : null}
             </div>
         );
     }
 
-    public renderContent = list => {
+    public renderContent = (list) => {
         const { firstElemIndex, lastElemIndex, pageIndex, nextPageExists } = this.props;
 
         return (
             <React.Fragment>
-                <History headers={this.renderHeaders()} data={this.retrieveData(list)}/>
+                <History headers={this.renderHeaders()} data={this.retrieveData(list)} />
                 <Pagination
                     firstElemIndex={firstElemIndex}
                     lastElemIndex={lastElemIndex}
@@ -121,11 +125,11 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         ];
     };
 
-    private retrieveData = list => {
-        return list.map(item => this.renderOrdersHistoryRow(item));
+    private retrieveData = (list) => {
+        return list.map((item) => this.renderOrdersHistoryRow(item));
     };
 
-    private renderOrdersHistoryRow = item => {
+    private renderOrdersHistoryRow = (item) => {
         const {
             id,
             executed_volume,
@@ -140,8 +144,11 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             updated_at,
             created_at,
         } = item;
-        const currentMarket = this.props.marketsData.find(m => m.id === market)
-            || { name: '', price_precision: 0, amount_precision: 0 };
+        const currentMarket = this.props.marketsData.find((m) => m.id === market) || {
+            name: '',
+            price_precision: 0,
+            amount_precision: 0,
+        };
 
         const orderType = this.getType(side, ord_type);
         const marketName = currentMarket ? currentMarket.name : market;
@@ -152,13 +159,25 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
 
         return [
             date,
-            <span style={{ color: setTradeColor(side).color }} key={id}>{orderType}</span>,
+            <span style={{ color: setTradeColor(side).color }} key={id}>
+                {orderType}
+            </span>,
             marketName,
-            <Decimal key={id} fixed={currentMarket.price_precision} thousSep=",">{actualPrice}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{origin_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{executed_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{remaining_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{costRemaining.toString()}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.price_precision} thousSep=",">
+                {actualPrice}
+            </Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">
+                {origin_volume}
+            </Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">
+                {executed_volume}
+            </Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">
+                {remaining_volume}
+            </Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">
+                {costRemaining.toString()}
+            </Decimal>,
             status,
             state === 'wait' && <CloseIcon key={id} onClick={this.handleCancel(id)} />,
         ];
@@ -218,13 +237,9 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     cancelFetching: selectCancelFetching(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        ordersHistoryCancelFetch: payload => dispatch(ordersHistoryCancelFetch(payload)),
-        userOrdersHistoryFetch: payload => dispatch(userOrdersHistoryFetch(payload)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    ordersHistoryCancelFetch: (payload) => dispatch(ordersHistoryCancelFetch(payload)),
+    userOrdersHistoryFetch: (payload) => dispatch(userOrdersHistoryFetch(payload)),
+});
 
-export const OrdersElement = compose(
-    injectIntl,
-    connect(mapStateToProps, mapDispatchToProps),
-)(OrdersComponent) as any; // tslint:disable-line
+export const OrdersElement = compose(injectIntl, connect(mapStateToProps, mapDispatchToProps))(OrdersComponent) as any; // tslint:disable-line

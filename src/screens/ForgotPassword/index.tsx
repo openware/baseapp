@@ -1,22 +1,13 @@
 import * as React from 'react';
-import {
-    injectIntl,
-} from 'react-intl';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-    MapStateToProps,
-} from 'react-redux';
+import { injectIntl } from 'react-intl';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
 import { Captcha, EmailForm } from '../../components';
-import {
-    EMAIL_REGEX,
-    ERROR_INVALID_EMAIL,
-    setDocumentTitle,
-} from '../../helpers';
+import { EMAIL_REGEX, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
 import {
     Configs,
     forgotPassword,
@@ -73,26 +64,12 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
     public renderCaptcha = () => {
         const { error, success } = this.props;
 
-        return (
-            <Captcha
-                error={error}
-                success={success}
-            />
-        );
+        return <Captcha error={error} success={success} />;
     };
 
     public render() {
-        const {
-            email,
-            emailFocused,
-            emailError,
-        } = this.state;
-        const {
-            configs,
-            captcha_response,
-            reCaptchaSuccess,
-            geetestCaptchaSuccess,
-        } = this.props;
+        const { email, emailFocused, emailError } = this.state;
+        const { configs, captcha_response, reCaptchaSuccess, geetestCaptchaSuccess } = this.props;
 
         return (
             <div className="pg-forgot-password-screen" onKeyPress={this.handleEnterPress}>
@@ -100,13 +77,13 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
                     <div className="pg-forgot-password___form">
                         <EmailForm
                             OnSubmit={this.handleChangePassword}
-                            title={this.props.intl.formatMessage({id: 'page.forgotPassword'})}
-                            emailLabel={this.props.intl.formatMessage({id: 'page.forgotPassword.email'})}
-                            buttonLabel={this.props.intl.formatMessage({id: 'page.forgotPassword.send'})}
+                            title={this.props.intl.formatMessage({ id: 'page.forgotPassword' })}
+                            emailLabel={this.props.intl.formatMessage({ id: 'page.forgotPassword.email' })}
+                            buttonLabel={this.props.intl.formatMessage({ id: 'page.forgotPassword.send' })}
                             email={email}
                             emailFocused={emailFocused}
                             emailError={emailError}
-                            message={this.props.intl.formatMessage({id: 'page.forgotPassword.message'})}
+                            message={this.props.intl.formatMessage({ id: 'page.forgotPassword.message' })}
                             validateForm={this.validateForm}
                             handleInputEmail={this.handleInputEmail}
                             handleFieldFocus={this.handleFocusEmail}
@@ -181,7 +158,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     success: selectForgotPasswordSuccess(state),
     error: selectForgotPasswordError(state),
     i18n: selectCurrentLanguage(state),
@@ -191,14 +168,13 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        forgotPassword: credentials => dispatch(forgotPassword(credentials)),
-        resetCaptchaState: () => dispatch(resetCaptchaState()),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    forgotPassword: (credentials) => dispatch(forgotPassword(credentials)),
+    resetCaptchaState: () => dispatch(resetCaptchaState()),
+});
 
 export const ForgotPasswordScreen = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps)
 )(ForgotPasswordComponent) as React.ComponentClass;

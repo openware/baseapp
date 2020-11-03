@@ -1,4 +1,5 @@
 import { takeLatest } from 'redux-saga/effects';
+
 import { DEPTH_FETCH, ORDER_BOOK_FETCH } from '../constants';
 import { depthSaga } from './depthSaga';
 import { orderBookSaga } from './orderBookSaga';

@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { signUpData, signUpError, SignUpFetch, signUpRequireVerification } from '../actions';
@@ -13,12 +14,14 @@ export function* signUpSaga(action: SignUpFetch) {
         yield put(signUpRequireVerification({ requireVerification: true }));
         yield put(signUpData());
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: signUpError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: signUpError,
+                },
+            })
+        );
     }
 }

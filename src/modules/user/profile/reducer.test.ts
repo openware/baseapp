@@ -30,7 +30,7 @@ describe('Profile reducer', () => {
             state: 'active',
             csrf_token: '31415926535897932384626433832795028841971',
             profiles: fakeProfiles,
-            data: '{\"language\":\"en\"}',
+            data: '{"language":"en"}',
             referal_uid: '',
             labels: [],
             phone: [],
@@ -254,7 +254,9 @@ describe('Profile reducer', () => {
                 success: false,
             },
         };
-        expect(profileReducer(actualState, actions.changeUserDataFetch({ user: userData.user }))).toEqual(expectedState);
+        expect(profileReducer(actualState, actions.changeUserDataFetch({ user: userData.user }))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle CHANGE_USER_DATA', () => {

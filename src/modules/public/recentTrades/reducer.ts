@@ -28,8 +28,7 @@ export const convertTradeEventToTrade = (market: string, trade: PublicTradeEvent
 });
 
 export const convertTradeEventList = (market: string, trades: PublicTradeEvent[]): PublicTrade[] =>
-    trades.map(trade => convertTradeEventToTrade(market, trade));
-
+    trades.map((trade) => convertTradeEventToTrade(market, trade));
 
 export const recentTradesReducer = (state = initialState, action: RecentTradesActions) => {
     switch (action.type) {
@@ -54,10 +53,7 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
         }
         case RECENT_TRADES_PUSH: {
             const lastTrades = convertTradeEventList(action.payload.market, action.payload.trades);
-            const updatedList = [
-                ...lastTrades,
-                ...state.list,
-            ];
+            const updatedList = [...lastTrades, ...state.list];
 
             return {
                 ...state,

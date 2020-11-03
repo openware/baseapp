@@ -1,8 +1,9 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { spy } from 'sinon';
+
 import { CellData } from '../Table';
-import {  CombinedOrderBook, CombinedOrderBookProps } from './';
+import { CombinedOrderBook, CombinedOrderBookProps } from './';
 
 const dataAsks: CellData[][] = [
     ['123', '14', '121'],
@@ -31,7 +32,12 @@ const onSelectBids = spy();
 
 const isLarge = false;
 
-const lastPrice = <React.Fragment><span className={'pg-order-book__market-negative'}>123</span><span>Last Market Price</span></React.Fragment>;
+const lastPrice = (
+    <React.Fragment>
+        <span className={'pg-order-book__market-negative'}>123</span>
+        <span>Last Market Price</span>
+    </React.Fragment>
+);
 
 const defaultProps: CombinedOrderBookProps = {
     dataAsks,

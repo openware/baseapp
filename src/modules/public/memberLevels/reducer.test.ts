@@ -29,7 +29,9 @@ describe('MemberLevels reducer', () => {
             loading: false,
             levels: fakeMemberLevels,
         };
-        expect(memberLevelsReducer(initialMemberLevelsState, actions.memberLevelsData(fakeMemberLevels))).toEqual(expectedState);
+        expect(memberLevelsReducer(initialMemberLevelsState, actions.memberLevelsData(fakeMemberLevels))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle MEMBER_LEVELS_ERROR', () => {

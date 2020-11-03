@@ -18,9 +18,7 @@ export interface SendAddressesError {
     error: CommonError;
 }
 
-export type AddressesAction = SendAddressesFetch
-    | SendAddressesData
-    | SendAddressesError;
+export type AddressesAction = SendAddressesFetch | SendAddressesData | SendAddressesError;
 
 export const sendAddresses = (payload: SendAddressesFetch['payload']): SendAddressesFetch => ({
     type: SEND_ADDRESSES_FETCH,

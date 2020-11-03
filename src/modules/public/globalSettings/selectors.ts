@@ -1,8 +1,7 @@
 import { RootState } from '../../../modules';
 import { ColorThemeState } from './reducer';
 
-export const selectCurrentColorTheme = (state: RootState): ColorThemeState['color'] =>
-    state.public.colorTheme.color;
+export const selectCurrentColorTheme = (state: RootState): ColorThemeState['color'] => state.public.colorTheme.color;
 
 export const selectChartRebuildState = (state: RootState): ColorThemeState['chartRebuild'] =>
     state.public.colorTheme.chartRebuild;

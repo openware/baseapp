@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { SketchPicker } from 'react-color';
+
 import { handleConvertColorCode } from '../';
 import { ArrowIcon } from '../../../../assets/images/customization/ArrowIcon';
 import { ThemeColorTitleInterface } from '../../../../themes';
@@ -32,11 +33,7 @@ export class ColorSettings extends React.Component<Props, State> {
     }
 
     public render() {
-        const {
-            handleCloseColorSettings,
-            item,
-            translate,
-        } = this.props;
+        const { handleCloseColorSettings, item, translate } = this.props;
 
         const settingsClass = classnames('pg-customization-color-settings', {
             'pg-customization-color-settings--open': item.key,
@@ -47,17 +44,13 @@ export class ColorSettings extends React.Component<Props, State> {
                 <div className="pg-customization-color-settings__header">
                     <div
                         className="pg-customization-color-settings__header__chevron"
-                        onClick={e => handleCloseColorSettings()}
-                    >
+                        onClick={(e) => handleCloseColorSettings()}>
                         <ArrowIcon />
                     </div>
                     {item.title ? <span>{translate(item.title)}</span> : null}
                 </div>
                 <div className="pg-customization-color-settings__body">
-                    <SketchPicker
-                        color={ this.getCurrentItemColor(item) }
-                        onChangeComplete={ this.setCurrentItemColor }
-                    />
+                    <SketchPicker color={this.getCurrentItemColor(item)} onChangeComplete={this.setCurrentItemColor} />
                 </div>
             </div>
         );
@@ -71,7 +64,7 @@ export class ColorSettings extends React.Component<Props, State> {
         return currentItemColor || bodyStyles.getPropertyValue(grbItemColor);
     };
 
-    private setCurrentItemColor = color => {
+    private setCurrentItemColor = (color) => {
         const { handleTriggerChartRebuild, item } = this.props;
         const rootElement = document.documentElement;
         const newItemColor = color && color.rgb && `${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}`;

@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { apiKeys2FAModal, apiKeysData, apiKeysError, ApiKeysFetch } from '../actions';
@@ -14,7 +15,10 @@ export function* apiKeysSaga(action: ApiKeysFetch) {
         let nextPageExists = false;
 
         if (apiKeys.length === limit) {
-            const checkData = yield call(API.get(apiKeysOptions), `/resource/api_keys?page=${(pageIndex + 1) * limit + 1}&limit=${1}`);
+            const checkData = yield call(
+                API.get(apiKeysOptions),
+                `/resource/api_keys?page=${(pageIndex + 1) * limit + 1}&limit=${1}`
+            );
 
             if (checkData.length === 1) {
                 nextPageExists = true;
@@ -23,12 +27,14 @@ export function* apiKeysSaga(action: ApiKeysFetch) {
         yield put(apiKeysData({ apiKeys, pageIndex, nextPageExists }));
         yield put(apiKeys2FAModal({ active: false }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: apiKeysError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: apiKeysError,
+                },
+            })
+        );
     }
 }

@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
+
 import { DEFAULT_MARKET_HEADERS } from '../../constants';
 import { hasDuplicates } from '../../helpers';
 import { FilterInput } from '../FilterInput';

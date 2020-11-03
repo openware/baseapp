@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -34,13 +35,10 @@ describe('blacklistAccessFetchSaga test', () => {
     };
 
     it('should send access token', async () => {
-        const expectedActions = [
-            sendAccessToken({ whitelink_token: '' }),
-            sendAccessTokenData(),
-        ];
+        const expectedActions = [sendAccessToken({ whitelink_token: '' }), sendAccessTokenData()];
         mockRequest();
 
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -53,7 +51,6 @@ describe('blacklistAccessFetchSaga test', () => {
 
         return promise;
     });
-
 
     it('should trigger an error', async () => {
         const expectedActions = [
@@ -68,7 +65,7 @@ describe('blacklistAccessFetchSaga test', () => {
         ];
         mockNetworkError(mockAxios);
 
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {

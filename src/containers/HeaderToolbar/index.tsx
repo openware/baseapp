@@ -2,22 +2,16 @@ import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
 import { IntlProps } from '../../';
 import { Decimal } from '../../components/Decimal';
-import {
-    Market,
-    RootState,
-    selectCurrentMarket,
-    selectMarkets,
-    selectMarketTickers, Ticker,
-} from '../../modules';
-
+import { Market, RootState, selectCurrentMarket, selectMarkets, selectMarketTickers, Ticker } from '../../modules';
 
 interface ReduxProps {
     currentMarket?: Market;
     markets: Market[];
     marketTickers: {
-        [key: string]: Ticker,
+        [key: string]: Ticker;
     };
 }
 
@@ -38,15 +32,21 @@ class HeaderToolbarContainer extends React.Component<Props> {
             <div className="pg-header__toolbar">
                 <div className="pg-header__toolbar-item">
                     <p className="pg-header__toolbar-item-value pg-header__toolbar-item-value-positive">
-                        {currentMarket && Decimal.format(Number(this.getTickerValue('low')), currentMarket.price_precision, ',')} {bidUnit}
+                        {currentMarket &&
+                            Decimal.format(Number(this.getTickerValue('low')), currentMarket.price_precision, ',')}{' '}
+                        {bidUnit}
                     </p>
-                    <p className="pg-header__toolbar-item-text">
-                        {this.translate('page.body.trade.toolBar.lowest')}
-                    </p>
+                    <p className="pg-header__toolbar-item-text">{this.translate('page.body.trade.toolBar.lowest')}</p>
                 </div>
                 <div className="pg-header__toolbar-item">
                     <p className="pg-header__toolbar-item-value pg-header__toolbar-item-value-negative">
-                        {currentMarket && Decimal.format(Number(this.getTickerValue('last')), currentMarket.price_precision, ',')} {bidUnit}
+                        {currentMarket &&
+                            Decimal.format(
+                                Number(this.getTickerValue('last')),
+                                currentMarket.price_precision,
+                                ','
+                            )}{' '}
+                        {bidUnit}
                     </p>
                     <p className="pg-header__toolbar-item-text">
                         {this.translate('page.body.trade.toolBar.lastPrice')}
@@ -54,27 +54,33 @@ class HeaderToolbarContainer extends React.Component<Props> {
                 </div>
                 <div className="pg-header__toolbar-item">
                     <p className="pg-header__toolbar-item-value pg-header__toolbar-item-value-negative">
-                        {currentMarket && Decimal.format(Number(this.getTickerValue('high')), currentMarket.price_precision, ',')} {bidUnit}
+                        {currentMarket &&
+                            Decimal.format(
+                                Number(this.getTickerValue('high')),
+                                currentMarket.price_precision,
+                                ','
+                            )}{' '}
+                        {bidUnit}
                     </p>
-                    <p className="pg-header__toolbar-item-text">
-                        {this.translate('page.body.trade.toolBar.highest')}
-                    </p>
+                    <p className="pg-header__toolbar-item-text">{this.translate('page.body.trade.toolBar.highest')}</p>
                 </div>
                 <div className="pg-header__toolbar-item">
                     <p className="pg-header__toolbar-item-value pg-header__toolbar-item-value-positive">
-                        {currentMarket && Decimal.format(Number(this.getTickerValue('volume')), currentMarket.price_precision, ',')} {bidUnit}
+                        {currentMarket &&
+                            Decimal.format(
+                                Number(this.getTickerValue('volume')),
+                                currentMarket.price_precision,
+                                ','
+                            )}{' '}
+                        {bidUnit}
                     </p>
-                    <p className="pg-header__toolbar-item-text">
-                        {this.translate('page.body.trade.toolBar.volume')}
-                    </p>
+                    <p className="pg-header__toolbar-item-text">{this.translate('page.body.trade.toolBar.volume')}</p>
                 </div>
                 <div className="pg-header__toolbar-item">
                     <p className={`pg-header__toolbar-item-value pg-header__toolbar-item-value-${cls}`}>
                         {currentMarket && (marketTickers[currentMarket.id] || defaultTicker).price_change_percent}
                     </p>
-                    <p className="pg-header__toolbar-item-text">
-                        {this.translate('page.body.trade.toolBar.change')}
-                    </p>
+                    <p className="pg-header__toolbar-item-text">{this.translate('page.body.trade.toolBar.change')}</p>
                 </div>
             </div>
         );
@@ -82,7 +88,7 @@ class HeaderToolbarContainer extends React.Component<Props> {
 
     private getTickerValue = (value: string) => {
         const { marketTickers, currentMarket } = this.props;
-        const defaultTicker = { amount: 0, low: 0, last: 0, high: 0, volume: 0, price_change_percent: '+0.00%'};
+        const defaultTicker = { amount: 0, low: 0, last: 0, high: 0, volume: 0, price_change_percent: '+0.00%' };
 
         return currentMarket && (marketTickers[currentMarket.id] || defaultTicker)[value];
     };
@@ -98,9 +104,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     marketTickers: selectMarketTickers(state),
 });
 
-
 const HeaderToolbar = injectIntl(withRouter(connect(mapStateToProps, {})(HeaderToolbarContainer) as any) as any);
 
-export {
-    HeaderToolbar,
-};
+export { HeaderToolbar };

@@ -27,7 +27,9 @@ describe('Documents reducer', () => {
             ...initialDocumentsState,
             success: confirmDocumentsResponse.message,
         };
-        expect(documentsReducer(initialDocumentsState, actions.sendDocumentsData(confirmDocumentsResponse))).toEqual(expectedState);
+        expect(documentsReducer(initialDocumentsState, actions.sendDocumentsData(confirmDocumentsResponse))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle SEND_DOCUMENTS_ERROR', () => {

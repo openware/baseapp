@@ -8,6 +8,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../../';
 import { languages } from '../../../api/config';
 import { CustomInput, DropdownComponent, UploadFile } from '../../../components';

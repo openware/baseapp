@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+
 import { Decimal } from '../../../components';
 import { Modal } from '../../components';
 
@@ -16,14 +17,7 @@ interface ModalWithdrawConfirmationProps {
 
 const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
     const { formatMessage } = useIntl();
-    const {
-        amount,
-        currency,
-        precision,
-        rid,
-        onDismiss,
-        onSubmit,
-    } = props;
+    const { amount, currency, precision, rid, onDismiss, onSubmit } = props;
 
     const renderHeader = React.useCallback(() => {
         return (
@@ -46,7 +40,7 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                         {formatMessage({ id: 'page.mobile.wallet.withdraw.modal.confirmation.message1' })}
                     </span>
                     <span className="mobile-modal-body__withdraw-confirm--light">
-                        {Decimal.format(amount, precision, ',')}  {currency.toUpperCase()}
+                        {Decimal.format(amount, precision, ',')} {currency.toUpperCase()}
                     </span>
                 </div>
                 <div className="mobile-modal-body__withdraw-confirm--block">
@@ -62,8 +56,7 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                     className="btn-block mr-1 mt-1 btn-lg"
                     onClick={onDismiss}
                     size="lg"
-                    variant="danger"
-                >
+                    variant="danger">
                     {formatMessage({ id: 'page.body.wallets.tabs.withdraw.modal.button.cancel' })}
                 </Button>
                 <Button
@@ -71,8 +64,7 @@ const ModalWithdraw = (props: ModalWithdrawConfirmationProps) => {
                     className="btn-block mr-1 mt-1 btn-lg"
                     onClick={onSubmit}
                     size="lg"
-                    variant="primary"
-                >
+                    variant="primary">
                     {formatMessage({ id: 'page.body.wallets.tabs.withdraw.modal.button.withdraw' })}
                 </Button>
             </div>

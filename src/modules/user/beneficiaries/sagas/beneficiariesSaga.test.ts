@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga, sendError } from '../../../../modules';
 import { CommonError } from '../../../types';
@@ -61,10 +62,7 @@ describe('Beneficiaries Fetch', () => {
         message: ['Server error'],
     };
 
-    const expectedBeneficiariesActionsFetch = [
-        beneficiariesFetch(),
-        beneficiariesData(fakeBeneficiaries),
-    ];
+    const expectedBeneficiariesActionsFetch = [beneficiariesFetch(), beneficiariesData(fakeBeneficiaries)];
 
     const expectedBeneficiariesActionsError = [
         beneficiariesFetch(),
@@ -79,7 +77,7 @@ describe('Beneficiaries Fetch', () => {
 
     it('should fetch benefciiaries in success flow', async () => {
         mockBeneficiaries();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedBeneficiariesActionsFetch.length) {
@@ -95,7 +93,7 @@ describe('Beneficiaries Fetch', () => {
 
     it('should trigger fetch benefciiaries error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedBeneficiariesActionsError.length) {

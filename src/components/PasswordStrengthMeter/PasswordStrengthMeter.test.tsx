@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
+
 import { PasswordStrengthMeter, PasswordStrengthMeterProps } from './';
 
 const defaults: PasswordStrengthMeterProps = {
@@ -14,7 +15,7 @@ const defaults: PasswordStrengthMeterProps = {
 };
 
 const setup = (props: Partial<PasswordStrengthMeterProps> = {}) =>
-    shallow(<PasswordStrengthMeter {...{...defaults, ...props }} />);
+    shallow(<PasswordStrengthMeter {...{ ...defaults, ...props }} />);
 
 describe('PasswordStrengthMeter component', () => {
     it('should render', () => {

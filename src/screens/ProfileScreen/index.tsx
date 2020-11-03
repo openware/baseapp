@@ -3,6 +3,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
 import { ProfileApiKeys, ProfileVerification } from '../../containers';
 import { ProfileAccountActivity } from '../../containers/ProfileAccountActivity';
@@ -11,7 +12,6 @@ import { ReferralProgram } from '../../containers/ReferralProgram';
 import { setDocumentTitle } from '../../helpers';
 
 class ProfileComponent extends React.Component<RouterProps, IntlProps> {
-
     public componentDidMount() {
         setDocumentTitle('Profile');
     }
@@ -26,27 +26,27 @@ class ProfileComponent extends React.Component<RouterProps, IntlProps> {
                 <div className="pg-profile-page__details">
                     <div className="row pg-profile-page-header pg-profile-page-header-first">
                         <h3 className="col-12">
-                            <FormattedMessage id="page.body.profile.header.account"/>
+                            <FormattedMessage id="page.body.profile.header.account" />
                         </h3>
                     </div>
                     <div className="row">
                         <div className="col-12 col-md-6 mx-0">
                             <div className="row col-12 mx-0">
-                                <ProfileAuthDetails/>
-                                <ReferralProgram/>
+                                <ProfileAuthDetails />
+                                <ReferralProgram />
                             </div>
                         </div>
                         <div className="col-12 col-md-6">
-                            <ProfileVerification/>
+                            <ProfileVerification />
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        <ProfileApiKeys/>
+                        <ProfileApiKeys />
                     </div>
                     <div className="col-12">
-                        <ProfileAccountActivity/>
+                        <ProfileAccountActivity />
                     </div>
                 </div>
             </div>
@@ -54,7 +54,4 @@ class ProfileComponent extends React.Component<RouterProps, IntlProps> {
     }
 }
 
-export const ProfileScreen = compose(
-    injectIntl,
-    withRouter,
-)(ProfileComponent as any) as React.ComponentClass;
+export const ProfileScreen = compose(injectIntl, withRouter)(ProfileComponent as any) as React.ComponentClass;

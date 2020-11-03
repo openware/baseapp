@@ -1,4 +1,4 @@
-import { LayoutGrid} from '../../../helpers/layout';
+import { LayoutGrid } from '../../../helpers/layout';
 import * as actions from './actions';
 
 describe('Grid Layout actions', () => {
@@ -7,7 +7,7 @@ describe('Grid Layout actions', () => {
             type: 'layouts/SAVE_LAYOUTS',
             payload: {
                 key: 'layouts',
-                layouts: {foo: 42} as unknown as LayoutGrid,
+                layouts: ({ foo: 42 } as unknown) as LayoutGrid,
             },
         };
 

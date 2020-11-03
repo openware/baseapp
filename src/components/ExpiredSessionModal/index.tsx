@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
+
 import { ClockIcon } from '../../assets/images/ClockIcon';
 
 export interface ExpiredSessionModalProps {
@@ -20,7 +21,8 @@ export class ExpiredSessionModal extends React.Component<ExpiredSessionModalProp
                         <div className="cr-email-form__options-group">
                             <div className="cr-email-form__option">
                                 <div className="cr-email-form__option-inner">
-                                    <ClockIcon className="clock-icon" />&nbsp;&nbsp;{title}
+                                    <ClockIcon className="clock-icon" />
+                                    &nbsp;&nbsp;{title}
                                     <span
                                         className="cr-email-form__close"
                                         onClick={this.props.handleChangeExpSessionModalState}
@@ -35,8 +37,7 @@ export class ExpiredSessionModal extends React.Component<ExpiredSessionModalProp
                                     type="button"
                                     onClick={this.props.handleSubmitExpSessionModal}
                                     size="lg"
-                                    variant="primary"
-                                >
+                                    variant="primary">
                                     {buttonLabel}
                                 </Button>
                             </div>

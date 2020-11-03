@@ -1,14 +1,21 @@
 import { Cryptobase, defaultConfig } from '../../../api';
 import { DEFAULT_TRADING_VIEW_INTERVAL } from '../../../constants';
 import { Market, Ticker, TickerEvent } from '../markets';
-import { formatTicker, generateSocketURI, marketKlineStreams, periodMinutesToString, periodStringToMinutes, streamsBuilder } from './helpers';
+import {
+    formatTicker,
+    generateSocketURI,
+    marketKlineStreams,
+    periodMinutesToString,
+    periodStringToMinutes,
+    streamsBuilder,
+} from './helpers';
 
 describe('ranger helpers', () => {
     describe('generateSocketURI', () => {
         it('build docker URI with streams', () => {
-            expect(
-                generateSocketURI('ws://example.com/public', ['aaa', 'bbb']),
-            ).toEqual('ws://example.com/public/?stream=aaa&stream=bbb');
+            expect(generateSocketURI('ws://example.com/public', ['aaa', 'bbb'])).toEqual(
+                'ws://example.com/public/?stream=aaa&stream=bbb'
+            );
         });
     });
 
@@ -109,9 +116,7 @@ describe('ranger helpers', () => {
         };
 
         it('returns public streams without market', () => {
-            expect(streamsBuilder(false, [], undefined)).toEqual([
-                'global.tickers',
-            ]);
+            expect(streamsBuilder(false, [], undefined)).toEqual(['global.tickers']);
         });
 
         it('returns public streams with market', () => {
@@ -143,9 +148,7 @@ describe('ranger helpers', () => {
         });
 
         it('includes previous subscriptions in the list', () => {
-            expect(
-                streamsBuilder(true, ['some subscription'], marketExample),
-            ).toEqual([
+            expect(streamsBuilder(true, ['some subscription'], marketExample)).toEqual([
                 'global.tickers',
                 'order',
                 'trade',
@@ -157,9 +160,7 @@ describe('ranger helpers', () => {
         });
 
         it('do not duplicates previous subscriptions', () => {
-            expect(
-                streamsBuilder(true, ['global.tickers'], marketExample),
-            ).toEqual([
+            expect(streamsBuilder(true, ['global.tickers'], marketExample)).toEqual([
                 'global.tickers',
                 'order',
                 'trade',
@@ -186,23 +187,7 @@ describe('ranger helpers', () => {
     });
 
     describe('periodMinutesToString', () => {
-        const periods = [
-            1,
-            5,
-            15,
-            30,
-            60,
-            120,
-            240,
-            360,
-            720,
-            1440,
-            4320,
-            10080,
-            666,
-            0,
-            100500,
-        ];
+        const periods = [1, 5, 15, 30, 60, 120, 240, 360, 720, 1440, 4320, 10080, 666, 0, 100500];
 
         const expectedResult = [
             '1m',
@@ -230,23 +215,7 @@ describe('ranger helpers', () => {
     });
 
     describe('periodStringToMinutes', () => {
-        const periods = [
-            '1m',
-            '5m',
-            '15m',
-            '30m',
-            '1h',
-            '2h',
-            '4h',
-            '6h',
-            '12h',
-            '1d',
-            '3d',
-            '1w',
-            '',
-            'hello',
-            'D',
-        ];
+        const periods = ['1m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '12h', '1d', '3d', '1w', '', 'hello', 'D'];
 
         const expectedResult = [
             1,
@@ -264,7 +233,6 @@ describe('ranger helpers', () => {
             +DEFAULT_TRADING_VIEW_INTERVAL,
             +DEFAULT_TRADING_VIEW_INTERVAL,
             +DEFAULT_TRADING_VIEW_INTERVAL,
-
         ];
 
         periods.map((period, index) => {
@@ -277,9 +245,7 @@ describe('ranger helpers', () => {
     describe('marketKlineStreams', () => {
         it('', () => {
             expect(marketKlineStreams('abc', '18m')).toEqual({
-                channels: [
-                    'abc.kline-18m',
-                ],
+                channels: ['abc.kline-18m'],
             });
         });
     });

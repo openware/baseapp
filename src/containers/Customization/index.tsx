@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+
 import { IntlProps } from '../../';
 import { PaletteIcon } from '../../assets/images/customization/PaletteIcon';
 import {
@@ -59,16 +60,17 @@ class CustomizationContainer extends React.Component<Props, State> {
 
         return [
             {
-                content: currentTabIndex === 0 ? (
-                    <CustomizationThemes
-                        translate={this.translate}
-                        customization={customization}
-                        resetToDefault={resetToDefault}
-                        handleTriggerChartRebuild={this.handleTriggerChartRebuild}
-                        handleSetCurrentCustomization={this.handleSetCurrentCustomization}
-                        currentCustomization={currentCustomization}
-                    />
-                ) : null,
+                content:
+                    currentTabIndex === 0 ? (
+                        <CustomizationThemes
+                            translate={this.translate}
+                            customization={customization}
+                            resetToDefault={resetToDefault}
+                            handleTriggerChartRebuild={this.handleTriggerChartRebuild}
+                            handleSetCurrentCustomization={this.handleSetCurrentCustomization}
+                            currentCustomization={currentCustomization}
+                        />
+                    ) : null,
                 label: this.translate('page.body.customization.tabs.themes'),
             },
             {
@@ -113,7 +115,7 @@ class CustomizationContainer extends React.Component<Props, State> {
 
         return (
             <div className={customizationClassName}>
-                <div className="pg-customization__toggler" onClick={e => this.handleToggleIsOpen()}>
+                <div className="pg-customization__toggler" onClick={(e) => this.handleToggleIsOpen()}>
                     <PaletteIcon />
                 </div>
                 <TabPanel
@@ -127,7 +129,7 @@ class CustomizationContainer extends React.Component<Props, State> {
     }
 
     private handleClickResetButton = () => {
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
             resetToDefault: !prevState.resetToDefault,
         }));
     };
@@ -139,16 +141,16 @@ class CustomizationContainer extends React.Component<Props, State> {
 
         if (bodyStyles) {
             AVAILABLE_COLORS_TITLES.reduce((result, item) => {
-               const itemColor = bodyStyles.getPropertyValue(item.key);
+                const itemColor = bodyStyles.getPropertyValue(item.key);
 
-               if (itemColor) {
+                if (itemColor) {
                     currentColors.push({
                         key: item.key,
                         value: itemColor,
                     });
                 }
 
-               return result;
+                return result;
             }, {});
         }
 
@@ -159,7 +161,6 @@ class CustomizationContainer extends React.Component<Props, State> {
 
         this.props.customizationUpdate({ settings: JSON.stringify(payload) });
     };
-
 
     private handleChangeTab = (index: number) => {
         this.setState({
@@ -187,7 +188,7 @@ class CustomizationContainer extends React.Component<Props, State> {
     };
 
     private handleToggleIsOpen = () => {
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
             isOpen: !prevState.isOpen,
         }));
     };
@@ -196,7 +197,7 @@ class CustomizationContainer extends React.Component<Props, State> {
         this.props.toggleChartRebuild();
     };
 
-    private translate = (key: string) => this.props.intl.formatMessage({id: key});
+    private translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -205,12 +206,13 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     userLoggedIn: selectUserLoggedIn(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        customizationUpdate: payload => dispatch(customizationUpdate(payload)),
-        customizationUpdateCurrent: payload => dispatch(customizationUpdateCurrent(payload)),
-        toggleChartRebuild: () => dispatch(toggleChartRebuild()),
-    });
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    customizationUpdate: (payload) => dispatch(customizationUpdate(payload)),
+    customizationUpdateCurrent: (payload) => dispatch(customizationUpdateCurrent(payload)),
+    toggleChartRebuild: () => dispatch(toggleChartRebuild()),
+});
 
 // tslint:disable no-any
-export const Customization = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(CustomizationContainer) as any) as any);
+export const Customization = injectIntl(
+    withRouter(connect(mapStateToProps, mapDispatchProps)(CustomizationContainer) as any) as any
+);

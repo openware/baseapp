@@ -30,7 +30,7 @@ export const klineArrayToObject = (el: KlineRawElement[]): KlineEvent => {
             case 'string':
                 return Number.parseFloat(e);
             default:
-                throw (new Error(`unexpected type ${typeof e} in kline: ${el}`));
+                throw new Error(`unexpected type ${typeof e} in kline: ${el}`);
         }
     });
 

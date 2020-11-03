@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga } from '../../../';
 import { Cryptobase, defaultConfig } from '../../../../api';
 import { setupMockAxios, setupMockStore } from '../../../../helpers/jest';
@@ -77,7 +78,7 @@ describe('Alert error handler', () => {
     };
 
     it('should handle error alert fo 401', async () => {
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 switch (actions.length) {
@@ -161,7 +162,7 @@ describe('Alert error handler', () => {
     };
 
     it('should skip 403 error', async () => {
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === 1) {
@@ -198,7 +199,7 @@ describe('Alert error handler', () => {
     };
 
     it('should handle error alert', async () => {
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 switch (actions.length) {
@@ -211,7 +212,11 @@ describe('Alert error handler', () => {
                         setTimeout(resolve, 0.01);
                         break;
                     case 3:
-                        expect(actions).toEqual([expectedErrorAlertPushAction, expectedErrorAlertDataAction, expectedErrorAlertDeleteAction]);
+                        expect(actions).toEqual([
+                            expectedErrorAlertPushAction,
+                            expectedErrorAlertDataAction,
+                            expectedErrorAlertDeleteAction,
+                        ]);
                         setTimeout(resolve, 0.01);
                         break;
                     default:

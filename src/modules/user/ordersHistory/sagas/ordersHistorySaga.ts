@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { userOrdersHistoryData, userOrdersHistoryError, UserOrdersHistoryFetch } from '../actions';
@@ -15,7 +16,10 @@ export function* ordersHistorySaga(action: UserOrdersHistoryFetch) {
         let nextPageExists = false;
 
         if (data.length === limit) {
-            const checkData = yield call(API.get(ordersOptions), `/market/orders?page=${(pageIndex + 1) * limit + 1}&limit=${1}${params}`);
+            const checkData = yield call(
+                API.get(ordersOptions),
+                `/market/orders?page=${(pageIndex + 1) * limit + 1}&limit=${1}${params}`
+            );
 
             if (checkData.length === 1) {
                 nextPageExists = true;
@@ -24,12 +28,14 @@ export function* ordersHistorySaga(action: UserOrdersHistoryFetch) {
 
         yield put(userOrdersHistoryData({ list: data, nextPageExists, pageIndex }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: userOrdersHistoryError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: userOrdersHistoryError,
+                },
+            })
+        );
     }
 }

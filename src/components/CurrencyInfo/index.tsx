@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
 import { WalletItemProps } from '../WalletItem';
@@ -14,9 +15,11 @@ interface CurrencyIconProps {
 }
 
 const CurrencyIcon: React.FunctionComponent<CurrencyIconProps> = (props: CurrencyIconProps) => {
-    return props.icon ?
-        <img alt="" className="cr-wallet-item__single__image-icon" src={props.icon} /> :
-        <CryptoIcon code={props.currency} />;
+    return props.icon ? (
+        <img alt="" className="cr-wallet-item__single__image-icon" src={props.icon} />
+    ) : (
+        <CryptoIcon code={props.currency} />
+    );
 };
 
 const CurrencyInfo: React.FunctionComponent<CurrencyInfoProps> = (props: CurrencyInfoProps) => {
@@ -28,33 +31,35 @@ const CurrencyInfo: React.FunctionComponent<CurrencyInfoProps> = (props: Currenc
     const stringLocked = lockedAmount ? lockedAmount.toString() : undefined;
     const iconUrl = props.wallet ? props.wallet.iconUrl : null;
 
-
     return (
         <div className="cr-wallet-item__single">
-            <CurrencyIcon icon={iconUrl} currency={currency}/>
+            <CurrencyIcon icon={iconUrl} currency={currency} />
             <div className="cr-wallet-item__single-balance">
                 <div>
                     <div className="cr-wallet-item__amount-locked">
                         <FormattedMessage id="page.body.wallets.locked" />
                     </div>
                     <span className="cr-wallet-item__balance-locked">
-                    <Decimal fixed={selectedFixed} thousSep=",">{stringLocked}</Decimal>
-                </span>
+                        <Decimal fixed={selectedFixed} thousSep=",">
+                            {stringLocked}
+                        </Decimal>
+                    </span>
                 </div>
                 <div>
-                <span className="cr-wallet-item__balance">
-                    {currency}&nbsp;<FormattedMessage id="page.body.wallets.balance"/>
-                </span>
-                &nbsp;
-                <span className="cr-wallet-item__balance-amount">
-                    <Decimal fixed={selectedFixed} thousSep=",">{balance}</Decimal>
-                </span>
+                    <span className="cr-wallet-item__balance">
+                        {currency}&nbsp;
+                        <FormattedMessage id="page.body.wallets.balance" />
+                    </span>
+                    &nbsp;
+                    <span className="cr-wallet-item__balance-amount">
+                        <Decimal fixed={selectedFixed} thousSep=",">
+                            {balance}
+                        </Decimal>
+                    </span>
                 </div>
             </div>
         </div>
     );
 };
 
-export {
-    CurrencyInfo,
-};
+export { CurrencyInfo };

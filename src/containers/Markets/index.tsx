@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { Markets } from '../../components/Markets';
@@ -18,7 +19,6 @@ import {
 } from '../../modules/public/markets';
 import { depthFetch } from '../../modules/public/orderBook';
 
-
 export const MarketsComponent = () => {
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
@@ -27,12 +27,14 @@ export const MarketsComponent = () => {
     const marketTickers = useSelector(selectMarketTickers);
     const currentMarket = useSelector(selectCurrentMarket);
 
-    const headers = React.useMemo(() => ([
-        formatMessage({ id: 'page.body.trade.header.markets.content.pair' }),
-        formatMessage({ id: 'page.body.trade.header.markets.content.price' }),
-        formatMessage({ id: 'page.body.trade.header.markets.content.change' }),
-    ]), [formatMessage]);
-
+    const headers = React.useMemo(
+        () => [
+            formatMessage({ id: 'page.body.trade.header.markets.content.pair' }),
+            formatMessage({ id: 'page.body.trade.header.markets.content.price' }),
+            formatMessage({ id: 'page.body.trade.header.markets.content.change' }),
+        ],
+        [formatMessage]
+    );
 
     const mapMarkets = React.useCallback(() => {
         const defaultTicker = {
@@ -40,26 +42,27 @@ export const MarketsComponent = () => {
             price_change_percent: '+0.00%',
         };
 
-        return marketsData.map((market: Market) =>
-            ([
-                market.name,
-                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision, ','),
-                (marketTickers[market.id] || defaultTicker).price_change_percent,
-            ]),
-        );
+        return marketsData.map((market: Market) => [
+            market.name,
+            Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision, ','),
+            (marketTickers[market.id] || defaultTicker).price_change_percent,
+        ]);
     }, [marketTickers, marketsData]);
 
-    const handleOnSelect = React.useCallback((index: string) => {
-        const marketToSet = marketsData && marketsData.find(el => el.name === index);
-        dispatch(setCurrentPrice(0));
+    const handleOnSelect = React.useCallback(
+        (index: string) => {
+            const marketToSet = marketsData && marketsData.find((el) => el.name === index);
+            dispatch(setCurrentPrice(0));
 
-        if (marketToSet && (!currentMarket || currentMarket.id !== marketToSet.id)) {
-            dispatch(setCurrentMarket(marketToSet));
-            if (!incrementalOrderBook()) {
-                dispatch(depthFetch(marketToSet));
+            if (marketToSet && (!currentMarket || currentMarket.id !== marketToSet.id)) {
+                dispatch(setCurrentMarket(marketToSet));
+                if (!incrementalOrderBook()) {
+                    dispatch(depthFetch(marketToSet));
+                }
             }
-        }
-    }, [currentMarket, dispatch, marketsData]);
+        },
+        [currentMarket, dispatch, marketsData]
+    );
 
     const renderMarkets = React.useCallback(() => {
         const key = currentMarket && currentMarket.name;
@@ -72,21 +75,31 @@ export const MarketsComponent = () => {
                 onSelect={handleOnSelect}
                 selectedKey={key}
                 headers={headers}
-                title={formatMessage({id: 'page.body.trade.header.markets'})}
-                filterPlaceholder={formatMessage({ id: 'page.body.trade.header.markets.content.search'})}
+                title={formatMessage({ id: 'page.body.trade.header.markets' })}
+                filterPlaceholder={formatMessage({ id: 'page.body.trade.header.markets.content.search' })}
             />
         );
     }, [currentMarket, formatMessage, handleOnSelect, headers, mapMarkets]);
 
-    const className = React.useMemo(() => classnames('pg-markets', {
-        'pg-markets--loading': marketsLoading,
-    }), [marketsLoading]);
+    const className = React.useMemo(
+        () =>
+            classnames('pg-markets', {
+                'pg-markets--loading': marketsLoading,
+            }),
+        [marketsLoading]
+    );
 
     useMarketsTickersFetch();
 
     return (
         <div className={className}>
-            {marketsLoading ? <div><Spinner animation="border" variant="primary" /></div> : renderMarkets()}
+            {marketsLoading ? (
+                <div>
+                    <Spinner animation="border" variant="primary" />
+                </div>
+            ) : (
+                renderMarkets()
+            )}
         </div>
     );
 };

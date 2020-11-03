@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+
 import { Decimal } from '../../components/Decimal';
 import { MarketDepths } from '../../components/MarketDepths';
 import {
@@ -31,17 +32,12 @@ const settings = {
 
 class MarketDepthContainer extends React.Component<Props> {
     public shouldComponentUpdate(nextProps: Props) {
-        const {
-            asksItems,
-            bidsItems,
-            chartRebuild,
-            colorTheme,
-            currentMarket,
-        } = this.props;
+        const { asksItems, bidsItems, chartRebuild, colorTheme, currentMarket } = this.props;
         const colorThemeChanged = nextProps.colorTheme !== colorTheme;
         const currentMarketChanged = nextProps.currentMarket ? nextProps.currentMarket !== currentMarket : false;
         const chartRebuildTriggered = nextProps.chartRebuild !== chartRebuild;
-        const ordersChanged = JSON.stringify(nextProps.asksItems) !== JSON.stringify(asksItems) ||
+        const ordersChanged =
+            JSON.stringify(nextProps.asksItems) !== JSON.stringify(asksItems) ||
             JSON.stringify(nextProps.bidsItems) !== JSON.stringify(bidsItems);
 
         return ordersChanged || currentMarketChanged || chartRebuildTriggered || colorThemeChanged;
@@ -57,7 +53,7 @@ class MarketDepthContainer extends React.Component<Props> {
                         <FormattedMessage id="page.body.trade.header.marketDepths" />
                     </div>
                 </div>
-                {(asksItems.length || bidsItems.length) ? this.renderMarketDepth() : null}
+                {asksItems.length || bidsItems.length ? this.renderMarketDepth() : null}
             </div>
         );
     }
@@ -71,7 +67,8 @@ class MarketDepthContainer extends React.Component<Props> {
                 className={'pg-market-depth'}
                 data={this.convertToDepthFormat()}
                 colorTheme={colorTheme}
-            />);
+            />
+        );
     }
 
     private convertToCumulative = (data, type) => {
@@ -81,13 +78,28 @@ class MarketDepthContainer extends React.Component<Props> {
             return;
         }
 
-        const [askCurrency, bidCurrency] = [currentMarket.base_unit.toUpperCase(), currentMarket.quote_unit.toUpperCase()];
+        const [askCurrency, bidCurrency] = [
+            currentMarket.base_unit.toUpperCase(),
+            currentMarket.quote_unit.toUpperCase(),
+        ];
         const tipLayout = ({ volume, price, cumulativeVolume, cumulativePrice }) => (
             <span className={'pg-market-depth__tooltip'}>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.price" /> : {Decimal.format(price, currentMarket.price_precision)} {bidCurrency}</span>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.volume" /> : {Decimal.format(volume, currentMarket.amount_precision)} {askCurrency}</span>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeVolume" /> : {Decimal.format(cumulativeVolume, currentMarket.amount_precision)} {askCurrency}</span>
-                <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeValue" /> : {Decimal.format(cumulativePrice, currentMarket.price_precision)} {bidCurrency}</span>
+                <span>
+                    <FormattedMessage id="page.body.trade.header.marketDepths.content.price" /> :{' '}
+                    {Decimal.format(price, currentMarket.price_precision)} {bidCurrency}
+                </span>
+                <span>
+                    <FormattedMessage id="page.body.trade.header.marketDepths.content.volume" /> :{' '}
+                    {Decimal.format(volume, currentMarket.amount_precision)} {askCurrency}
+                </span>
+                <span>
+                    <FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeVolume" /> :{' '}
+                    {Decimal.format(cumulativeVolume, currentMarket.amount_precision)} {askCurrency}
+                </span>
+                <span>
+                    <FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeValue" /> :{' '}
+                    {Decimal.format(cumulativePrice, currentMarket.price_precision)} {bidCurrency}
+                </span>
             </span>
         );
 
@@ -99,7 +111,7 @@ class MarketDepthContainer extends React.Component<Props> {
             const numberVolume = Decimal.format(volume, currentMarket.amount_precision);
             const numberPrice = Decimal.format(price, currentMarket.price_precision);
             cumulativeVolumeData = +numberVolume + cumulativeVolumeData;
-            cumulativePriceData = cumulativePriceData + (+numberPrice * +numberVolume);
+            cumulativePriceData = cumulativePriceData + +numberPrice * +numberVolume;
 
             return {
                 [type]: Decimal.format(cumulativeVolumeData, currentMarket.amount_precision),
@@ -107,20 +119,22 @@ class MarketDepthContainer extends React.Component<Props> {
                 cumulativeVolume: +Decimal.format(cumulativeVolumeData, currentMarket.amount_precision),
                 volume: Decimal.format(+volume, currentMarket.amount_precision),
                 price: Decimal.format(+numberPrice, currentMarket.price_precision),
-                name: tipLayout({ volume, price, cumulativeVolume: cumulativeVolumeData, cumulativePrice: cumulativePriceData }),
+                name: tipLayout({
+                    volume,
+                    price,
+                    cumulativeVolume: cumulativeVolumeData,
+                    cumulativePrice: cumulativePriceData,
+                }),
             };
         });
 
-        return type === 'bid' ? cumulative
-            .sort((a, b) => b.bid - a.bid) :
-            cumulative.sort((a, b) => a.ask - b.ask);
+        return type === 'bid' ? cumulative.sort((a, b) => b.bid - a.bid) : cumulative.sort((a, b) => a.ask - b.ask);
     };
 
     private convertToDepthFormat() {
         const { asksItems, bidsItems } = this.props;
         const asksItemsLength = asksItems.length;
         const bidsItemsLength = bidsItems.length;
-
 
         const resultLength = asksItemsLength > bidsItemsLength ? bidsItemsLength : asksItemsLength;
         const asks = asksItems.slice(0, resultLength);

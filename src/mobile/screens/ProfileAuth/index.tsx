@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+
 import { ProfileTwoFactorAuth } from '../../../containers/ProfileTwoFactorAuth';
 import { selectUserInfo, toggle2faFetch } from '../../../modules/user/profile';
 import { ProfileTwoFactorAuthScreen } from '../../../screens/ProfileTwoFactorAuthScreen';
@@ -17,10 +18,12 @@ export const ProfileAuthMobileScreen: React.FC = React.memo(() => {
 
     const handleToggle2FA = (code2FA, shouldFetch) => {
         if (shouldFetch) {
-            dispatch(toggle2faFetch({
-                code: code2FA,
-                enable: false,
-            }));
+            dispatch(
+                toggle2faFetch({
+                    code: code2FA,
+                    enable: false,
+                })
+            );
             history.push('/profile');
         }
         setShowModal(false);
@@ -28,7 +31,7 @@ export const ProfileAuthMobileScreen: React.FC = React.memo(() => {
 
     const handleNavigateTo2fa = React.useCallback((enable2fa: boolean) => {
         if (!enable2fa) {
-            setShowModal(state => !state);
+            setShowModal((state) => !state);
         }
     }, []);
 
@@ -42,17 +45,11 @@ export const ProfileAuthMobileScreen: React.FC = React.memo(() => {
             <div className="cr-mobile-profile-auth">
                 <div className="cr-mobile-profile-auth__enable">
                     <div className="cr-mobile-profile-auth__enable-label">
-                        <ProfileTwoFactorAuth
-                            is2faEnabled={user.otp}
-                            navigateTo2fa={handleNavigateTo2fa}
-                        />
+                        <ProfileTwoFactorAuth is2faEnabled={user.otp} navigateTo2fa={handleNavigateTo2fa} />
                     </div>
-                    {!user.otp ? <ProfileTwoFactorAuthScreen/> : null}
+                    {!user.otp ? <ProfileTwoFactorAuthScreen /> : null}
                 </div>
-                <TwoFactorModal
-                    showModal={showModal}
-                    handleToggle2FA={handleToggle2FA}
-                />
+                <TwoFactorModal showModal={showModal} handleToggle2FA={handleToggle2FA} />
             </div>
         </React.Fragment>
     );

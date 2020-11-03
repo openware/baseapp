@@ -1,9 +1,5 @@
 import { CommonError } from '../../types';
-import {
-    CONFIGS_DATA,
-    CONFIGS_ERROR,
-    CONFIGS_FETCH,
-} from './constants';
+import { CONFIGS_DATA, CONFIGS_ERROR, CONFIGS_FETCH } from './constants';
 import { Configs } from './types';
 
 export interface ConfigsFetch {
@@ -20,10 +16,7 @@ export interface ConfigsError {
     error: CommonError;
 }
 
-export type ConfigsAction =
-    ConfigsFetch
-    | ConfigsData
-    | ConfigsError;
+export type ConfigsAction = ConfigsFetch | ConfigsData | ConfigsError;
 
 export const configsFetch = (): ConfigsFetch => ({
     type: CONFIGS_FETCH,

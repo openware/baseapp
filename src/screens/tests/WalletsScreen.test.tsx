@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
+
 import { TestComponentWrapper } from 'lib/test';
 import { IntlProps } from '../../';
 import { WalletsScreen } from '../WalletsScreen';

@@ -1,9 +1,5 @@
 import * as actions from './actions';
-import {
-    alertReducer,
-    AlertState,
-    initialAlertState,
-} from './reducer';
+import { alertReducer, AlertState, initialAlertState } from './reducer';
 
 describe('Alerts reducer', () => {
     it('should handle ALERT_DATA', () => {

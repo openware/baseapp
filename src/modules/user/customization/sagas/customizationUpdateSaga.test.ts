@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CustomizationDataInterface } from '../../../public/customization';
@@ -24,7 +25,7 @@ describe('Saga: customizationUpdateSaga', () => {
     });
 
     const fakeCustomization: CustomizationDataInterface = {
-        settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
+        settings: '{"theme_id": "1","theme_colors":[]}',
     };
 
     const mockCustomizationUpdate = () => {
@@ -37,13 +38,10 @@ describe('Saga: customizationUpdateSaga', () => {
     };
 
     it('should update customization', async () => {
-        const expectedActions = [
-            customizationUpdate(fakeCustomization),
-            customizationUpdateData(fakeCustomization),
-        ];
+        const expectedActions = [customizationUpdate(fakeCustomization), customizationUpdateData(fakeCustomization)];
 
         mockCustomizationUpdate();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -58,7 +56,6 @@ describe('Saga: customizationUpdateSaga', () => {
         return promise;
     });
 
-
     it('should trigger an error on customization update', async () => {
         const expectedActions = [
             customizationUpdate(fakeCustomization),
@@ -72,7 +69,7 @@ describe('Saga: customizationUpdateSaga', () => {
         ];
 
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {

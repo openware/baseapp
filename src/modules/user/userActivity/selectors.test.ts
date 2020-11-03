@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+
 import { rootReducer } from '../../';
 import {
     selectTotalNumber,
@@ -32,17 +33,21 @@ describe('User activity selectors', () => {
     });
 
     it('should select User Activity First Elem Index', () => {
-        expect(selectUserActivityFirstElemIndex(state, limit)).toEqual((state.user.userActivity.page * limit) + 1);
+        expect(selectUserActivityFirstElemIndex(state, limit)).toEqual(state.user.userActivity.page * limit + 1);
     });
 
     it('should select User Activity Last Elem Index', () => {
         expect(selectUserActivityLastElemIndex(state, limit)).toEqual(
-            ((state.user.userActivity.page * limit) + limit > selectTotalNumber(state)) ? selectTotalNumber(state) :
-            (state.user.userActivity.page * limit) + limit);
+            state.user.userActivity.page * limit + limit > selectTotalNumber(state)
+                ? selectTotalNumber(state)
+                : state.user.userActivity.page * limit + limit
+        );
     });
 
     it('should select User Activity Next Page Exists', () => {
-        expect(selectUserActivityNextPageExists(state, limit)).toEqual((state.user.userActivity.page + 1) < selectUserActivityPageCount(state, limit));
+        expect(selectUserActivityNextPageExists(state, limit)).toEqual(
+            state.user.userActivity.page + 1 < selectUserActivityPageCount(state, limit)
+        );
     });
 
     it('should select User Activity Loading', () => {

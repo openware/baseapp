@@ -2,10 +2,11 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+
 import { CloseIcon } from '../../../../assets/images/CloseIcon';
 import { localeDate } from '../../../../helpers';
 
-const ApiKeysItemComponent = props => {
+const ApiKeysItemComponent = (props) => {
     const { index, item } = props;
     const intl = useIntl();
 
@@ -14,7 +15,7 @@ const ApiKeysItemComponent = props => {
 
     const statusClassName = classnames({
         'color-green': item.state === 'active',
-        'color-red':  item.state !== 'active',
+        'color-red': item.state !== 'active',
     });
 
     return (
@@ -35,8 +36,7 @@ const ApiKeysItemComponent = props => {
                 <div className="pg-mobile-profile-api-keys-item__row__block">
                     <div
                         className="pg-mobile-profile-api-keys-item__row__block__button"
-                        onClick={() => props.handleDeleteKey(item)}
-                    >
+                        onClick={() => props.handleDeleteKey(item)}>
                         <span>{intl.formatMessage({ id: 'page.mobile.profile.apiKeys.item.delete' })}</span>
                         <CloseIcon />
                     </div>

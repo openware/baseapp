@@ -1,8 +1,8 @@
 import { Timezone } from '../../charting_library/datafeed-api';
 
 /*
-** TimeZones for Daylight Saving Time (Summer time)
-*/
+ ** TimeZones for Daylight Saving Time (Summer time)
+ */
 const zonesDST: { [key: string]: Timezone } = {
     '-780': 'Pacific/Fakaofo',
     '-765': 'Pacific/Chatham',
@@ -28,8 +28,8 @@ const zonesDST: { [key: string]: Timezone } = {
 };
 
 /*
-** TimeZones for Standart Time (Winter time)
-*/
+ ** TimeZones for Standart Time (Winter time)
+ */
 const zonesSTD: { [key: string]: Timezone } = {
     '-825': 'Pacific/Chatham',
     '-780': 'Pacific/Auckland',

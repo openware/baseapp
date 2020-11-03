@@ -14,7 +14,7 @@ describe('Blacklist country actions', () => {
     };
 
     it('should check sendAccessToken action creator', () => {
-        const expectedAction = { type: SEND_BLOCKLIST_ACCESS_TOKEN_FETCH, payload: { whitelink_token: '' }};
+        const expectedAction = { type: SEND_BLOCKLIST_ACCESS_TOKEN_FETCH, payload: { whitelink_token: '' } };
         expect(actions.sendAccessToken({ whitelink_token: '' })).toEqual(expectedAction);
     });
 

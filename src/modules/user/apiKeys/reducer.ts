@@ -1,4 +1,5 @@
 import update from 'immutability-helper';
+
 import { defaultStorageLimit } from '../../../api';
 import { sliceArray } from '../../../helpers';
 import { ApiKeyDataInterface, ApiKeysAction } from './actions';
@@ -51,11 +52,11 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
                 apiKeys: state.apiKeys.concat(action.payload),
             };
         case API_KEY_UPDATE:
-            const apiKeyIndex = state.apiKeys.findIndex(e => e.kid === action.payload.kid);
+            const apiKeyIndex = state.apiKeys.findIndex((e) => e.kid === action.payload.kid);
             const apiKeys = update(state.apiKeys, {
                 [apiKeyIndex]: {
-                    state: {$set: action.payload.state},
-                    updated_at: {$set: action.payload.updated_at},
+                    state: { $set: action.payload.state },
+                    updated_at: { $set: action.payload.updated_at },
                 },
             });
 
@@ -66,7 +67,7 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
         case API_KEY_DELETE:
             return {
                 ...state,
-                apiKeys: state.apiKeys.filter(apiKey => apiKey.kid !== action.payload.kid),
+                apiKeys: state.apiKeys.filter((apiKey) => apiKey.kid !== action.payload.kid),
             };
         case API_KEYS_2FA_MODAL:
             return {

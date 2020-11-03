@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
+
 import { CellData, Table } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 
@@ -26,7 +27,6 @@ export interface OpenOrdersProps {
     function?: () => void;
 }
 
-
 export class OpenOrders extends React.Component<OpenOrdersProps> {
     private defaultHeaders = ['Date', 'Action', 'Price', 'Amount', ''];
     private defaultHeadersKeys = ['Date', 'Action', 'Price', 'Amount', ''];
@@ -35,27 +35,24 @@ export class OpenOrders extends React.Component<OpenOrdersProps> {
         const { headers = this.defaultHeaders } = this.props;
         const { headersKeys = this.defaultHeadersKeys } = this.props;
         const tableData = this.props.data.map(this.renderRow);
-        const orderIndex = headersKeys.findIndex(header => header === 'Order Type');
+        const orderIndex = headersKeys.findIndex((header) => header === 'Order Type');
 
-        if (headersKeys[orderIndex] === 'Order Type'){
-           headers[orderIndex] = <span onClick={this.props.function}>Order Type</span>;
+        if (headersKeys[orderIndex] === 'Order Type') {
+            headers[orderIndex] = <span onClick={this.props.function}>Order Type</span>;
         }
 
         return (
             <div className="cr-open-orders">
-                <Table
-                    header={headers}
-                    data={tableData as CellData[][]}
-                />
+                <Table header={headers} data={tableData as CellData[][]} />
             </div>
         );
     }
 
     public renderCell = (rowIndex: number) => (cell: CellData, index: number, row: CellData[]) => {
         const { headersKeys = this.defaultHeadersKeys } = this.props;
-        const actionIndex = headersKeys.findIndex(header => header === 'Action');
-        const orderIndex = headersKeys.findIndex(header => header === 'Order Type');
-        const buySellIndex = headersKeys.findIndex(header => header === '');
+        const actionIndex = headersKeys.findIndex((header) => header === 'Action');
+        const orderIndex = headersKeys.findIndex((header) => header === 'Order Type');
+        const buySellIndex = headersKeys.findIndex((header) => header === '');
         switch (index) {
             case actionIndex:
                 return this.renderAction(row[actionIndex] as string, row[buySellIndex] as string);
@@ -84,7 +81,7 @@ export class OpenOrders extends React.Component<OpenOrdersProps> {
 
     public renderOrder(orderType: string) {
         // tslint:disable-next-line:no-magic-numbers
-        const type = orderType ? orderType.toLowerCase().slice(0,3) : orderType;
+        const type = orderType ? orderType.toLowerCase().slice(0, 3) : orderType;
         const classNames = classnames('cr-open-orders__order', {
             'cr-open-orders__order--buy': type === 'buy',
             'cr-open-orders__order--sell': type === 'sel',

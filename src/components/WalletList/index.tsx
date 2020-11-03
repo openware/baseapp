@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+
 import { WalletItem, WalletItemProps } from '../WalletItem';
 
 export interface WalletListProps {

@@ -16,10 +16,7 @@ export interface CurrenciesError {
     error: CommonError;
 }
 
-export type CurrenciesAction =
-    CurrenciesFetch
-    | CurrenciesData
-    | CurrenciesError;
+export type CurrenciesAction = CurrenciesFetch | CurrenciesData | CurrenciesError;
 
 export const currenciesFetch = (): CurrenciesFetch => ({
     type: CURRENCIES_FETCH,

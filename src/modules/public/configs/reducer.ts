@@ -1,10 +1,6 @@
 import { CommonError, CommonState } from '../../types';
 import { ConfigsAction } from './actions';
-import {
-    CONFIGS_DATA,
-    CONFIGS_ERROR,
-    CONFIGS_FETCH,
-} from './constants';
+import { CONFIGS_DATA, CONFIGS_ERROR, CONFIGS_FETCH } from './constants';
 import { Configs } from './types';
 
 export interface ConfigsState extends CommonState {

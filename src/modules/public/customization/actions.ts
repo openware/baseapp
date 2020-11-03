@@ -1,14 +1,6 @@
 import { CommonError } from '../../types';
-import {
-    CUSTOMIZATION_CURRENT,
-    CUSTOMIZATION_DATA,
-    CUSTOMIZATION_ERROR,
-    CUSTOMIZATION_FETCH,
-} from './constants';
-import {
-    CustomizationCurrentDataInterface,
-    CustomizationDataInterface,
-} from './types';
+import { CUSTOMIZATION_CURRENT, CUSTOMIZATION_DATA, CUSTOMIZATION_ERROR, CUSTOMIZATION_FETCH } from './constants';
+import { CustomizationCurrentDataInterface, CustomizationDataInterface } from './types';
 
 export interface CustomizationUpdateCurrent {
     type: typeof CUSTOMIZATION_CURRENT;
@@ -30,12 +22,14 @@ export interface CustomizationError {
 }
 
 export type CustomizationAction =
-    CustomizationUpdateCurrent
+    | CustomizationUpdateCurrent
     | CustomizationFetch
     | CustomizationData
     | CustomizationError;
 
-export const customizationUpdateCurrent = (payload: CustomizationUpdateCurrent['payload']): CustomizationUpdateCurrent => ({
+export const customizationUpdateCurrent = (
+    payload: CustomizationUpdateCurrent['payload']
+): CustomizationUpdateCurrent => ({
     type: CUSTOMIZATION_CURRENT,
     payload,
 });

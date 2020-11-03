@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga, sendError } from '../../../../modules/index';
 import { CommonError } from '../../../types';
@@ -61,7 +62,7 @@ describe('Beneficiaries Delete', () => {
         it('should delete beneficiary in success flow', async () => {
             mockBeneficiariesDelete();
 
-            const promise = new Promise(resolve => {
+            const promise = new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesDeleteSuccess.length) {
@@ -77,7 +78,7 @@ describe('Beneficiaries Delete', () => {
 
         it('should handle delete beneficiary error', async () => {
             mockNetworkError(mockAxios);
-            const promise = new Promise(resolve => {
+            const promise = new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesDeleteError.length) {

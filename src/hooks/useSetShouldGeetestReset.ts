@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { setShouldGeetestReset } from '../modules';
 
 export const useSetShouldGeetestReset = (error, success, geetestCaptchaRef) => {

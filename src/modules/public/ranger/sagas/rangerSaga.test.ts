@@ -1,5 +1,6 @@
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rangerSagas } from '.';
 import { Cryptobase, defaultConfig } from '../../../../api';
 import { createEchoServer, setupMockStore } from '../../../../helpers/jest';
@@ -61,7 +62,10 @@ describe('Ranger module', () => {
 
     beforeEach(() => {
         sagaMiddleware = createSagaMiddleware();
-        store = setupMockStore(sagaMiddleware, debug)({
+        store = setupMockStore(
+            sagaMiddleware,
+            debug
+        )({
             app: {
                 ranger: {
                     withAuth: false,
@@ -87,7 +91,7 @@ describe('Ranger module', () => {
 
     describe('automatically reconnect when connection is lost', async () => {
         it('reconnects after some time', async () => {
-            return new Promise(resolve => {
+            return new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     const lastAction = actions.slice(-1)[0];
@@ -123,7 +127,7 @@ describe('Ranger module', () => {
         });
 
         it('bufferizes messages sent while the connection was not ready and send them once connection is back', async () => {
-            return new Promise(resolve => {
+            return new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     const lastAction = actions.slice(-1)[0];
@@ -227,7 +231,7 @@ describe('Ranger module', () => {
 
     describe('support disconnect action', () => {
         it('disconnects and trigger disconnect action', async () => {
-            return new Promise(resolve => {
+            return new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     const lastAction = actions.slice(-1)[0];
@@ -300,7 +304,7 @@ describe('Ranger module', () => {
                     },
                 };
                 it(`should push ${description} update`, async () => {
-                    return new Promise(resolve => {
+                    return new Promise((resolve) => {
                         store.dispatch(rangerConnectFetch({ withAuth: false }));
                         store.subscribe(() => {
                             const actions = store.getActions();
@@ -426,7 +430,7 @@ describe('Ranger module', () => {
             };
 
             it('should push market tickers', async () => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     store.dispatch(rangerConnectFetch({ withAuth: false }));
                     store.subscribe(() => {
                         const actions = store.getActions();
@@ -468,13 +472,21 @@ describe('Ranger module', () => {
 
         describe('market depth update', () => {
             const data = {
-                asks: [['0.0005', '97.4'], ['2.0', '0.8569'], ['2.5', '1.0'], ['3.0', '1.0']],
-                bids: [['0.0001', '10.0'], ['0.0000008', '8.9']],
+                asks: [
+                    ['0.0005', '97.4'],
+                    ['2.0', '0.8569'],
+                    ['2.5', '1.0'],
+                    ['3.0', '1.0'],
+                ],
+                bids: [
+                    ['0.0001', '10.0'],
+                    ['0.0000008', '8.9'],
+                ],
             };
             const mockOrderBookUpdate = { 'eurbtc.update': data };
 
             it('should not push order book if market is not selected', async () => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     store.dispatch(rangerConnectFetch({ withAuth: false }));
                     store.subscribe(() => {
                         const actions = store.getActions();
@@ -488,7 +500,7 @@ describe('Ranger module', () => {
 
                                 return;
 
-                           case 2:
+                            case 2:
                                 expect(lastAction).toEqual({ type: RANGER_CONNECT_DATA });
                                 store.dispatch(rangerDirectMessage(mockOrderBookUpdate));
 
@@ -529,7 +541,7 @@ describe('Ranger module', () => {
                 },
             };
             it('should push trades', async () => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     store.subscribe(() => {
                         const actions = store.getActions();
                         const lastAction = actions.slice(-1)[0];
@@ -592,7 +604,7 @@ describe('Ranger module', () => {
                 payload: data,
             };
             it('should push user order', async () => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     store.subscribe(() => {
                         const actions = store.getActions();
                         const lastAction = actions.slice(-1)[0];
@@ -621,17 +633,16 @@ describe('Ranger module', () => {
                             case 5:
                                 expect(lastAction).toEqual({
                                     type: 'ordersHistory/RANGER_DATA',
-                                    payload:
-                                        {
-                                            id: 758,
-                                            at: 1546605232,
-                                            market: 'eurbtc',
-                                            kind: 'bid',
-                                            price: '1.17',
-                                            state: 'wait',
-                                            remaining_volume: '0.1',
-                                            origin_volume: '0.1',
-                                        },
+                                    payload: {
+                                        id: 758,
+                                        at: 1546605232,
+                                        market: 'eurbtc',
+                                        kind: 'bid',
+                                        price: '1.17',
+                                        state: 'wait',
+                                        remaining_volume: '0.1',
+                                        origin_volume: '0.1',
+                                    },
                                 });
 
                                 return;
@@ -663,7 +674,7 @@ describe('Ranger module', () => {
                 payload: data,
             };
             it('should push user order', async () => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     store.subscribe(() => {
                         const actions = store.getActions();
                         const lastAction = actions.slice(-1)[0];
@@ -692,17 +703,16 @@ describe('Ranger module', () => {
                             case 5:
                                 expect(lastAction).toEqual({
                                     type: 'ordersHistory/RANGER_DATA',
-                                    payload:
-                                        {
-                                            id: 758,
-                                            at: 1546605232,
-                                            market: 'eurbtc',
-                                            kind: 'bid',
-                                            price: '1.17',
-                                            state: 'done',
-                                            remaining_volume: '0.0',
-                                            origin_volume: '0.1',
-                                        },
+                                    payload: {
+                                        id: 758,
+                                        at: 1546605232,
+                                        market: 'eurbtc',
+                                        kind: 'bid',
+                                        price: '1.17',
+                                        state: 'done',
+                                        remaining_volume: '0.0',
+                                        origin_volume: '0.1',
+                                    },
                                 });
 
                                 return;
@@ -732,7 +742,7 @@ describe('Ranger module', () => {
                 payload: privateTradeEvent,
             };
             it('should push trades', async () => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     store.subscribe(() => {
                         const actions = store.getActions();
                         const lastAction = actions.slice(-1)[0];

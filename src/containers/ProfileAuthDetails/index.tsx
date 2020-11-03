@@ -2,12 +2,10 @@ import cr from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import {
-    FormattedMessage,
-    injectIntl,
-} from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
 import { ProfileTwoFactorAuth } from '../';
 import { IntlProps } from '../../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
@@ -21,12 +19,7 @@ import {
     selectUserInfo,
     User,
 } from '../../modules';
-import {
-    changePasswordFetch,
-    selectChangePasswordSuccess,
-    toggle2faFetch,
-} from '../../modules/user/profile';
-
+import { changePasswordFetch, selectChangePasswordSuccess, toggle2faFetch } from '../../modules/user/profile';
 
 interface ReduxProps {
     user: User;
@@ -84,26 +77,24 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const {
-            user,
-            configs,
-            currentPasswordEntropy,
-        } = this.props;
+        const { user, configs, currentPasswordEntropy } = this.props;
 
         const modal = this.state.showChangeModal ? (
             <div className="cr-modal">
-              <form className="cr-email-form">
-                <div className="pg-change-password-screen">
-                   <ChangePassword
-                        handleChangePassword={this.props.changePassword}
-                        title={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.change' })}
-                        closeModal={this.toggleChangeModal}
-                        configs={configs}
-                        currentPasswordEntropy={currentPasswordEntropy}
-                        fetchCurrentPasswordEntropy={this.props.fetchCurrentPasswordEntropy}
-                    />
-                </div>
-              </form>
+                <form className="cr-email-form">
+                    <div className="pg-change-password-screen">
+                        <ChangePassword
+                            handleChangePassword={this.props.changePassword}
+                            title={this.props.intl.formatMessage({
+                                id: 'page.body.profile.header.account.content.password.change',
+                            })}
+                            closeModal={this.toggleChangeModal}
+                            configs={configs}
+                            currentPasswordEntropy={currentPasswordEntropy}
+                            fetchCurrentPasswordEntropy={this.props.fetchCurrentPasswordEntropy}
+                        />
+                    </div>
+                </form>
             </div>
         ) : null;
 
@@ -122,19 +113,18 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                 <div className="pg-profile-page__row">
                     <div>
                         <div className="pg-profile-page__label">
-                            {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password'})}
+                            {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password' })}
                         </div>
-                        <div>
-                            ************
-                        </div>
+                        <div>************</div>
                     </div>
                     <Button
                         className="btn-block mt-3 mb-3 btn-lg btn btn-primary w-25"
                         onClick={this.toggleChangeModal}
                         size="lg"
-                        variant="primary"
-                    >
-                        {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change'})}
+                        variant="primary">
+                        {this.props.intl.formatMessage({
+                            id: 'page.body.profile.header.account.content.password.button.change',
+                        })}
                     </Button>
                     {modal}
                 </div>
@@ -154,7 +144,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         return (
             <React.Fragment>
                 <div className="pg-profile-page__row">
-                    <ProfileTwoFactorAuth is2faEnabled={this.props.user.otp} navigateTo2fa={this.handleNavigateTo2fa}/>
+                    <ProfileTwoFactorAuth is2faEnabled={this.props.user.otp} navigateTo2fa={this.handleNavigateTo2fa} />
                 </div>
             </React.Fragment>
         );
@@ -165,7 +155,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             <div className="cr-email-form__options-group">
                 <div className="cr-email-form__option">
                     <div className="cr-email-form__option-inner">
-                        <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalHeader"/>
+                        <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalHeader" />
                         <div className="cr-email-form__cros-icon" onClick={this.closeModal}>
                             <CloseIcon className="close-icon" />
                         </div>
@@ -208,14 +198,10 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
 
         return (
             <div className="pg-exchange-modal-submit-footer">
-                <Button
-                    block={true}
-                    disabled={!isValid2FA}
-                    onClick={this.handleDisable2FA}
-                    size="lg"
-                    variant="primary"
-                >
-                    {this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.twoFactorAuthentication.disable'})}
+                <Button block={true} disabled={!isValid2FA} onClick={this.handleDisable2FA} size="lg" variant="primary">
+                    {this.props.intl.formatMessage({
+                        id: 'page.body.profile.header.account.content.twoFactorAuthentication.disable',
+                    })}
                 </Button>
             </div>
         );
@@ -240,7 +226,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
         this.setState({
             showModal: false,
         });
-      };
+    };
 
     private toggleChangeModal = () => {
         this.setState({
@@ -264,7 +250,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
 
     private handleFieldFocus = (field: string) => {
         // @ts-ignore
-        this.setState(prev => ({
+        this.setState((prev) => ({
             [field]: !prev[field],
         }));
     };
@@ -277,17 +263,17 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     configs: selectConfigs(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     changePassword: ({ old_password, new_password, confirm_password }) =>
         dispatch(changePasswordFetch({ old_password, new_password, confirm_password })),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
-    fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
+    fetchCurrentPasswordEntropy: (payload) => dispatch(entropyPasswordFetch(payload)),
 });
 
-const ProfileAuthDetailsConnected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent));
+const ProfileAuthDetailsConnected = injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent)
+);
 // tslint:disable-next-line:no-any
 const ProfileAuthDetails = withRouter(ProfileAuthDetailsConnected as any);
 
-export {
-    ProfileAuthDetails,
-};
+export { ProfileAuthDetails };

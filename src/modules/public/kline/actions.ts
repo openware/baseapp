@@ -52,13 +52,7 @@ export interface KlineError {
     error: CommonError;
 }
 
-export type KlineActions = KlinePush
-    | KlineFetch
-    | KlineData
-    | KlineUpdateTimeRange
-    | KlineUpdatePeriod
-    | KlineError;
-
+export type KlineActions = KlinePush | KlineFetch | KlineData | KlineUpdateTimeRange | KlineUpdatePeriod | KlineError;
 
 export const klinePush = (payload: KlinePush['payload']): KlinePush => ({
     type: KLINE_PUSH,

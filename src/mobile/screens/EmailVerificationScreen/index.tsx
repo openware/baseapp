@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
+
 import { EmailVerificationScreen } from '../../../screens/EmailVerification';
 import { Modal } from '../../components';
 
@@ -14,7 +15,7 @@ export const EmailVerificationMobileScreen: React.FC = () => {
                 isOpen={true}
                 onClose={() => history.push('/trading')}
                 title={intl.formatMessage({ id: 'page.header.signUp.modal.header' })}>
-                <EmailVerificationScreen/>
+                <EmailVerificationScreen />
             </Modal>
         </div>
     );

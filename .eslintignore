@@ -5,25 +5,25 @@
 /scripts
 /spec
 
-/src/api
-/src/app
-/src/assets
+# /src/api
+# /src/app
+# /src/assets
 /src/charting_library
-/src/components
+# /src/components
 # /src/constants
-/src/containers
-/src/custom
-/src/filters
-/src/helpers
-/src/hooks
-/src/mobile
-/src/modules
-/src/routes
-/src/screens
-/src/styles
-/src/themes
-/src/translations
+# /src/containers
+# /src/custom
+# /src/filters
+# /src/helpers
+# /src/hooks
+# /src/mobile
+# /src/modules
+# /src/routes
+# /src/screens
+# /src/styles
+# /src/themes
+# /src/translations
 
-/src/App.test.tsx
-/src/App.tsx
-/src/index.tsx
+# /src/App.test.tsx
+# /src/App.tsx
+# /src/index.tsx

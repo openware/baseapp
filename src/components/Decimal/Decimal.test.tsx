@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
+
 import { Decimal, DecimalProps } from '.';
 
 const defaultProps: DecimalProps = {
@@ -191,7 +192,13 @@ describe('Decimal', () => {
     });
 
     it('should handle separators formatted prevValue prop', () => {
-        const wrapper = setup({ fixed: 4, prevValue: '12345678.1234', children: '12346789.1234', thousSep: ' ', floatSep: ',' });
+        const wrapper = setup({
+            fixed: 4,
+            prevValue: '12345678.1234',
+            children: '12346789.1234',
+            thousSep: ' ',
+            floatSep: ',',
+        });
         const spans = wrapper.find('span');
         expect(spans.length).toEqual(2);
         // first span - non-ighlighted

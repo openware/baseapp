@@ -4,6 +4,7 @@ import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
 import { BackgroundMaintenance } from '../../assets/images/BackgroundMaintenance';
 import { LogoIcon } from '../../assets/images/LogoIcon';
@@ -53,15 +54,15 @@ class Maintenance extends React.Component<Props> {
         );
     }
 
-    private translate = (key: string) => this.props.intl.formatMessage({id: key});
+    private translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     status: selectPlatformAccessStatus(state),
 });
 
 export const MaintenanceScreen = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps),
+    connect(mapStateToProps)
 )(Maintenance) as React.ComponentClass;

@@ -2,6 +2,7 @@ import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+
 import { PasswordStrengthMeter } from '..';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import {
@@ -12,7 +13,7 @@ import {
 } from '../../helpers';
 import { CustomInput } from '../CustomInput';
 
-export const ChangePasswordComponent = props => {
+export const ChangePasswordComponent = (props) => {
     const [oldPassword, setOldPassword] = React.useState('');
     const [newPassword, setNewPassword] = React.useState('');
     const [confirmationPassword, setConfirmationPassword] = React.useState('');
@@ -28,14 +29,15 @@ export const ChangePasswordComponent = props => {
 
     const handleChangePassword = () => {
         const payload = props.hideOldPassword
-        ? {
-            password: newPassword,
-            confirm_password: confirmationPassword,
-        } : {
-            old_password: oldPassword,
-            new_password: newPassword,
-            confirm_password: confirmationPassword,
-        };
+            ? {
+                  password: newPassword,
+                  confirm_password: confirmationPassword,
+              }
+            : {
+                  old_password: oldPassword,
+                  new_password: newPassword,
+                  confirm_password: confirmationPassword,
+              };
 
         props.handleChangePassword(payload);
 
@@ -87,7 +89,7 @@ export const ChangePasswordComponent = props => {
         setPasswordPopUp(!passwordPopUp);
     };
 
-    const translate = (key: string) => intl.formatMessage({id: key});
+    const translate = (key: string) => intl.formatMessage({ id: key });
 
     const isValidForm = () => {
         const isNewPasswordValid = newPassword.match(PASSWORD_REGEX);
@@ -127,12 +129,14 @@ export const ChangePasswordComponent = props => {
 
         return (
             <div className="pg-mobile-change-password__body" onKeyPress={handleEnterPress}>
-                {!props.hideOldPassword &&
+                {!props.hideOldPassword && (
                     <div className={oldPasswordClass}>
                         <CustomInput
                             type="password"
-                            label={intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
-                            placeholder={intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
+                            label={intl.formatMessage({ id: 'page.body.profile.header.account.content.password.old' })}
+                            placeholder={intl.formatMessage({
+                                id: 'page.body.profile.header.account.content.password.old',
+                            })}
                             defaultLabel="Old password"
                             handleChangeInput={setOldPassword}
                             inputValue={oldPassword}
@@ -142,12 +146,14 @@ export const ChangePasswordComponent = props => {
                             autoFocus={true}
                         />
                     </div>
-                }
+                )}
                 <div className={newPasswordClass}>
                     <CustomInput
                         type="password"
-                        label={intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
-                        placeholder={intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
+                        label={intl.formatMessage({ id: 'page.body.profile.header.account.content.password.new' })}
+                        placeholder={intl.formatMessage({
+                            id: 'page.body.profile.header.account.content.password.new',
+                        })}
                         defaultLabel="New password"
                         handleChangeInput={handleChangeNewPassword}
                         inputValue={newPassword}
@@ -156,7 +162,7 @@ export const ChangePasswordComponent = props => {
                         classNameInput="cr-email-form__input"
                         autoFocus={false}
                     />
-                    {newPassword ?
+                    {newPassword ? (
                         <PasswordStrengthMeter
                             minPasswordEntropy={props.configs.password_min_entropy}
                             currentPasswordEntropy={props.currentPasswordEntropy}
@@ -166,13 +172,16 @@ export const ChangePasswordComponent = props => {
                             passwordErrorThirdSolved={passwordErrorThirdSolved}
                             passwordPopUp={passwordPopUp}
                             translate={translate}
-                        /> : null}
+                        />
+                    ) : null}
                 </div>
                 <div className={confirmPasswordClass}>
                     <CustomInput
                         type="password"
-                        label={intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}
-                        placeholder={intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}
+                        label={intl.formatMessage({ id: 'page.body.profile.header.account.content.password.conf' })}
+                        placeholder={intl.formatMessage({
+                            id: 'page.body.profile.header.account.content.password.conf',
+                        })}
                         defaultLabel="Password confirmation"
                         handleChangeInput={setConfirmationPassword}
                         inputValue={confirmationPassword}
@@ -194,9 +203,8 @@ export const ChangePasswordComponent = props => {
                     disabled={!isValidForm()}
                     onClick={handleChangePassword}
                     size="lg"
-                    variant="primary"
-                >
-                    {intl.formatMessage({id: 'page.body.profile.header.account.content.password.button.change'})}
+                    variant="primary">
+                    {intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change' })}
                 </Button>
             </div>
         );

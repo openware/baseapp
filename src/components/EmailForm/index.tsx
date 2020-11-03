@@ -2,6 +2,7 @@ import cr from 'classnames';
 import React, { FormEvent } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+
 import { CustomInput } from '../CustomInput';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { EMAIL_REGEX } from '../../helpers';

@@ -2,9 +2,8 @@ import { rangerConnectData, rangerConnectFetch, rangerDisconnectData } from './a
 import { rangerReducer, RangerState } from './reducer';
 
 describe('Ranger reducer', () => {
-
     it('supports rangerConnectFetch', () => {
-        expect(rangerReducer(undefined, rangerConnectFetch({withAuth: false}))).toEqual({
+        expect(rangerReducer(undefined, rangerConnectFetch({ withAuth: false }))).toEqual({
             withAuth: false,
             connected: false,
             connecting: true,
@@ -12,7 +11,7 @@ describe('Ranger reducer', () => {
             subscriptions: [],
         });
 
-        expect(rangerReducer(undefined, rangerConnectFetch({withAuth: true}))).toEqual({
+        expect(rangerReducer(undefined, rangerConnectFetch({ withAuth: true }))).toEqual({
             withAuth: true,
             connected: false,
             connecting: true,
@@ -44,5 +43,4 @@ describe('Ranger reducer', () => {
             subscriptions: [],
         });
     });
-
 });

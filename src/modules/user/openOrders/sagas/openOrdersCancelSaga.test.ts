@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { alertPush } from '../../../public/alert';
@@ -88,13 +89,13 @@ describe('Open Orders Cancel', () => {
         message: ['Server error'],
     };
 
-    const mockOrderCancel = id => {
+    const mockOrderCancel = (id) => {
         mockAxios.onPost(`/market/orders/${id}/cancel`).reply(200);
     };
 
     const expectedActionsFetch = [
         openOrdersCancelFetch(fakeFetchPayload),
-        alertPush({ message: ['success.order.cancelling'], type: 'success'}),
+        alertPush({ message: ['success.order.cancelling'], type: 'success' }),
     ];
 
     const expectedActionsError = [
@@ -110,12 +111,12 @@ describe('Open Orders Cancel', () => {
 
     const expectedActionsFinexFetch = [
         openOrdersCancelFetch(fakeFetchFinexPayload),
-        alertPush({ message: ['success.order.cancelling'], type: 'success'}),
+        alertPush({ message: ['success.order.cancelling'], type: 'success' }),
     ];
 
     it('should cancel order', async () => {
         mockOrderCancel(fakeOrder.id);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -131,7 +132,7 @@ describe('Open Orders Cancel', () => {
 
     it('should cancel order with UUID', async () => {
         mockOrderCancel(fakeFinexOrder.uuid);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFinexFetch.length) {
@@ -147,7 +148,7 @@ describe('Open Orders Cancel', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

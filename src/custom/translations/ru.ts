@@ -77,7 +77,6 @@ export const ru: LangType = {
     'page.body.trade.header.openOrders.content.total': 'Всего',
     'page.body.trade.header.openOrders.content.filled': 'Заполненный',
 
-
     /* Markets Table */
     'page.body.marketsTable.filter.all': 'All',
     'page.body.marketsTable.header.pair': 'Market',
@@ -86,7 +85,6 @@ export const ru: LangType = {
     'page.body.marketsTable.header.high': '24  high',
     'page.body.marketsTable.header.low': '24 low',
     'page.body.marketsTable.header.volume': '24 Volume',
-
 
     /* Landing */
     'page.body.landing.header.button1': 'profile',
@@ -105,7 +103,8 @@ export const ru: LangType = {
     'page.body.landing.platformInfo.item.third.title': 'Countries supported',
 
     'page.body.landing.register.item.title': 'No matter your experience level',
-    'page.body.landing.register.item.text': 'Baseapp offers an intuitive interface with real time orderbooks, charting tools, trade history, and a simple order process so you can trade from day one.',
+    'page.body.landing.register.item.text':
+        'Baseapp offers an intuitive interface with real time orderbooks, charting tools, trade history, and a simple order process so you can trade from day one.',
     'page.body.landing.register.item.button': 'register',
 
     'page.body.landing.features.title': 'Baseapp platform features',
@@ -115,17 +114,23 @@ export const ru: LangType = {
     'page.body.landing.features.features.item4.title': 'Security',
     'page.body.landing.features.features.item5.title': 'Community',
     'page.body.landing.features.features.item6.title': 'Industry leading API',
-    'page.body.landing.features.features.item1.text': 'Baseapp offers the most liquid order book in the world, allowing users to easily exchange Bitcoin, Ethereum, EOS, Litecoin, Ripple, NEO and many other digital assets with minimal slippage.',
-    'page.body.landing.features.features.item2.text': 'Baseapp offers a suite of order types to give traders the tools they need for every scenario. Discover more about our most advanced Algorithmic orders types.',
-    'page.body.landing.features.features.item3.text': 'Organize your workspace according to your needs: compose your layout, choose between themes, set up notifications and data preferences.',
-    'page.body.landing.features.features.item4.text': 'Security of user information and funds is our first priority. Contact us to learn more about our security features and integrations.',
+    'page.body.landing.features.features.item1.text':
+        'Baseapp offers the most liquid order book in the world, allowing users to easily exchange Bitcoin, Ethereum, EOS, Litecoin, Ripple, NEO and many other digital assets with minimal slippage.',
+    'page.body.landing.features.features.item2.text':
+        'Baseapp offers a suite of order types to give traders the tools they need for every scenario. Discover more about our most advanced Algorithmic orders types.',
+    'page.body.landing.features.features.item3.text':
+        'Organize your workspace according to your needs: compose your layout, choose between themes, set up notifications and data preferences.',
+    'page.body.landing.features.features.item4.text':
+        'Security of user information and funds is our first priority. Contact us to learn more about our security features and integrations.',
     'page.body.landing.features.features.item5.text': 'Join a global community that believes in the power of crypto.',
-    'page.body.landing.features.features.item6.text': 'Our Websocket feed lets you easily gain access to real-time market data, while our trading API lets you develop secure, programmatic trading bots.',
+    'page.body.landing.features.features.item6.text':
+        'Our Websocket feed lets you easily gain access to real-time market data, while our trading API lets you develop secure, programmatic trading bots.',
 
     'page.body.landing.tradeOnTheGo.item.title': 'Trade on the go',
     'page.body.landing.tradeOnTheGo.item.text1': 'Our platform is optimized for trading on any device.',
     'page.body.landing.tradeOnTheGo.item.text2': 'And you don’t need to download any additional applications.',
-    'page.body.landing.tradeOnTheGo.item.text3': 'All the power of Baseapp cryptocurrency exchange, in the palm of your hand.',
+    'page.body.landing.tradeOnTheGo.item.text3':
+        'All the power of Baseapp cryptocurrency exchange, in the palm of your hand.',
     'page.body.landing.tradeOnTheGo.item.button': 'let’s try',
 
     'page.body.landing.startTrading.title': 'Start trading now',
@@ -151,7 +156,6 @@ export const ru: LangType = {
     'page.body.500.maintenance': 'Платформа находится на обслуживании',
     'page.body.500.availableSoon': 'Платформа будет доступна как можно скорее',
 
-
     /* Wallets */
     'page.body.wallets.estimated_value': 'Оценочная стоимость',
 
@@ -159,7 +163,8 @@ export const ru: LangType = {
     'page.body.wallets.balance': 'Баланс',
     'page.body.wallets.tabs.deposit': 'Пополнить',
     'page.body.wallets.tabs.deposit.disabled.message': 'Депозит был отключен администрацией',
-    'page.body.wallets.tabs.deposit.ccy.message.submit': 'Пожалуйста, внесите депозитный платеж. Ваш депозит будет доступен после 6 подтверждений',
+    'page.body.wallets.tabs.deposit.ccy.message.submit':
+        'Пожалуйста, внесите депозитный платеж. Ваш депозит будет доступен после 6 подтверждений',
     'page.body.wallets.tabs.deposit.ccy.message.address': 'Пополнить кошелек',
     'page.body.wallets.tabs.deposit.ccy.message.button': 'Копировать',
     'page.body.wallets.tabs.deposit.ccy.message.success': 'Адрес скопирован',
@@ -169,7 +174,8 @@ export const ru: LangType = {
     'page.body.wallets.tabs.deposit.ccy.message.error': 'Генерация адреса',
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Вы можете внести депозит в банке, используя следующие реквизиты',
-    'page.body.wallets.tabs.deposit.fiat.message2': 'Пожалуйста, используйте предоставленную информацию для завершения банковского платежа. Ваш депозит станет доступным на протяжении 2-х рабочих дней.',
+    'page.body.wallets.tabs.deposit.fiat.message2':
+        'Пожалуйста, используйте предоставленную информацию для завершения банковского платежа. Ваш депозит станет доступным на протяжении 2-х рабочих дней.',
     'page.body.wallets.tabs.deposit.fiat.bankName': 'Название банка',
     'page.body.wallets.tabs.deposit.fiat.accountNumber': 'Номер счета',
     'page.body.wallets.tabs.deposit.fiat.accountName': 'Имя счета',
@@ -194,7 +200,8 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Отменить',
     'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Вывести',
 
-    'page.body.wallets.tabs.withdraw.content.enable2fa': 'Вам нужно активировать 2FA, чтобы получить возможность выводить Ваши валюты!',
+    'page.body.wallets.tabs.withdraw.content.enable2fa':
+        'Вам нужно активировать 2FA, чтобы получить возможность выводить Ваши валюты!',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Активировать 2FA',
 
     'success.beneficiaries.created': 'Beneficiaries: successfully created',
@@ -228,13 +235,16 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatAccountNumber': 'Account Number',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankName': 'Bank Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankSwiftCode': 'Bank Swift Code (optional)',
-    'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankName': 'Intermediary Bank Name (optional)',
-    'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode': 'Intermediary Bank Swift Code (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankName':
+        'Intermediary Bank Name (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode':
+        'Intermediary Bank Swift Code (optional)',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.button': 'Submit for confirmation',
 
     'page.body.wallets.beneficiaries.confirmationModal.header': 'Confirm new address',
-    'page.body.wallets.beneficiaries.confirmationModal.body.text': 'We have sent you an email containing a confirmation code pin, please enter it below to save the new address:',
+    'page.body.wallets.beneficiaries.confirmationModal.body.text':
+        'We have sent you an email containing a confirmation code pin, please enter it below to save the new address:',
     'page.body.wallets.beneficiaries.confirmationModal.body.confirmationModalCode': 'Pin code',
     'page.body.wallets.beneficiaries.confirmationModal.body.resendButton': 'Resend pin',
     'page.body.wallets.beneficiaries.confirmationModal.body.button': 'Confirm',
@@ -331,17 +341,22 @@ export const ru: LangType = {
     'page.body.profile.header.account.content.twoFactorAuthentication.message.enable': 'Включен',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.disable': 'Отключен',
     'page.body.profile.header.account.content.twoFactorAuthentication.header': 'Google Authenticator',
-    'page.body.profile.header.account.content.twoFactorAuthentication.message.1': 'Скачайте и установите приложение Google Authenticator с ',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.1':
+        'Скачайте и установите приложение Google Authenticator с ',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.or': 'или ',
-    'page.body.profile.header.account.content.twoFactorAuthentication.message.2': 'Отсканируйте QR код или используйте код MFA:',
-    'page.body.profile.header.account.content.twoFactorAuthentication.message.3': '* Сохраните этот код в надежном месте. Он может быть использован для доступа 2FA кода с разных устройств.',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.2':
+        'Отсканируйте QR код или используйте код MFA:',
+    'page.body.profile.header.account.content.twoFactorAuthentication.message.3':
+        '* Сохраните этот код в надежном месте. Он может быть использован для доступа 2FA кода с разных устройств.',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.mfa': 'MFA код',
     'page.body.profile.header.account.content.twoFactorAuthentication.message.4': 'Введите 2FA код с приложения',
     'page.body.profile.header.account.content.twoFactorAuthentication.subHeader': '6-ти значный код GAuthenticator',
     'page.body.profile.header.account.content.twoFactorAuthentication.enable': 'ВКЛЮЧИТЬ',
     'page.body.profile.header.account.content.twoFactorAuthentication.disable': 'ОТКЛЮЧИТЬ 2FA',
-    'page.body.profile.header.account.content.twoFactorAuthentication.modalBody': 'Пожалуйста, обратитесь с администратором, чтобы отключить 2FA',
-    'page.body.profile.header.account.content.twoFactorAuthentication.modalHeader': 'Двухфакторная аутентификация включена',
+    'page.body.profile.header.account.content.twoFactorAuthentication.modalBody':
+        'Пожалуйста, обратитесь с администратором, чтобы отключить 2FA',
+    'page.body.profile.header.account.content.twoFactorAuthentication.modalHeader':
+        'Двухфакторная аутентификация включена',
 
     'page.body.profile.header.account.profile': 'Верификация Вашего профиля',
     'page.body.profile.header.account.profile.email.title': 'Почта - подтверждено',
@@ -373,7 +388,8 @@ export const ru: LangType = {
     'page.body.profile.apiKeys.modal.created_header': 'Создано',
     'page.body.profile.apiKeys.modal.access_key': 'Ключ доступа',
     'page.body.profile.apiKeys.modal.secret_key': 'Секретный ключ',
-    'page.body.profile.apiKeys.modal.secret_key_info': 'Эта информация видна только один раз и не сможет быть восстановлена',
+    'page.body.profile.apiKeys.modal.secret_key_info':
+        'Эта информация видна только один раз и не сможет быть восстановлена',
     'page.body.profile.apiKeys.modal.secret_key_store': 'Пожалуйста, сохраните это надежно',
     'page.body.profile.apiKeys.modal.note': 'Внимание',
     'page.body.profile.apiKeys.modal.note_content': `Для сохранности средств, не сообщайте свой Секретный и ключ Доступа другим.
@@ -414,7 +430,6 @@ export const ru: LangType = {
     'page.body.profile.content.result.failed': 'Ошибка',
     'page.body.profile.content.result.denied': 'Отказано',
 
-
     /* Profile - verification */
     'page.body.profile.verification.email.title': 'Email address',
     'page.body.profile.verification.email.subtitle': 'Withdrawal allowed',
@@ -436,22 +451,31 @@ export const ru: LangType = {
     'page.body.profile.verification.verify': 'Verify',
     'page.body.profile.verification.verified': 'Verified',
     'page.body.profile.verification.progress.level': 'Level',
-    'page.body.profile.verification.progress.tooltip.email.default': 'Email address to to get level 1 and allow Withdrawal',
+    'page.body.profile.verification.progress.tooltip.email.default':
+        'Email address to to get level 1 and allow Withdrawal',
     'page.body.profile.verification.progress.tooltip.email.rejected': 'Your email was rejected',
-    'page.body.profile.verification.progress.tooltip.email.pending': 'Email address verification may take 1-3 business days.',
-    'page.body.profile.verification.progress.tooltip.phone.default': 'Verify Phone number to get level 2 and allow Deposits and Trades',
+    'page.body.profile.verification.progress.tooltip.email.pending':
+        'Email address verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.phone.default':
+        'Verify Phone number to get level 2 and allow Deposits and Trades',
     'page.body.profile.verification.progress.tooltip.phone.rejected': 'Your phone was rejected',
-    'page.body.profile.verification.progress.tooltip.phone.pending': 'Phone number verification may take 1-3 business days.',
-    'page.body.profile.verification.progress.tooltip.profile.default': 'Complete your profile to get level 3 and Increase Withdrawal limit to 1 BTC',
+    'page.body.profile.verification.progress.tooltip.phone.pending':
+        'Phone number verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.profile.default':
+        'Complete your profile to get level 3 and Increase Withdrawal limit to 1 BTC',
     'page.body.profile.verification.progress.tooltip.profile.rejected': 'Your profile was rejected',
-    'page.body.profile.verification.progress.tooltip.profile.pending': 'Profile verification may take 1-3 business days.',
-    'page.body.profile.verification.progress.tooltip.document.default': 'Verify you identity to get level 4 and Increase Withdrawal limit to 10 BTC',
+    'page.body.profile.verification.progress.tooltip.profile.pending':
+        'Profile verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.document.default':
+        'Verify you identity to get level 4 and Increase Withdrawal limit to 10 BTC',
     'page.body.profile.verification.progress.tooltip.document.rejected': 'Your identity was rejected',
-    'page.body.profile.verification.progress.tooltip.document.pending': 'Identity verification may take 1-3 business days.',
-    'page.body.profile.verification.progress.tooltip.address.default': 'Verify Proof of residence to get level 5 and Increase Withdrawal limit to 100 BTC',
+    'page.body.profile.verification.progress.tooltip.document.pending':
+        'Identity verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.address.default':
+        'Verify Proof of residence to get level 5 and Increase Withdrawal limit to 100 BTC',
     'page.body.profile.verification.progress.tooltip.address.rejected': 'Your proof of residence was rejected',
-    'page.body.profile.verification.progress.tooltip.address.pending': 'Proof of residence verification may take 1-3 business days.',
-
+    'page.body.profile.verification.progress.tooltip.address.pending':
+        'Proof of residence verification may take 1-3 business days.',
 
     /* KYC */
     'page.confirm.title.email': 'Get Verified your email',
@@ -503,7 +527,8 @@ export const ru: LangType = {
     'page.body.kyc.address.uploadFile.button': 'Upload',
     'page.body.kyc.address.uploadFile.sizes': 'Maximum file size is 20MB',
     'page.body.kyc.address.uploadFile.formats': 'JPG, BMP, PNG formats',
-    'page.body.kyc.address.uploadFile.tip': 'Please take a photo or scan of a utility bill showing your name/surname and your address. For the verification to work, the bill must be issued in your name and less than a 3 months ago',
+    'page.body.kyc.address.uploadFile.tip':
+        'Please take a photo or scan of a utility bill showing your name/surname and your address. For the verification to work, the bill must be issued in your name and less than a 3 months ago',
 
     'page.body.kyc.phone.head': 'Подтверждение телефона',
     'page.body.kyc.phone.enterPhone': 'Введите свой номер телефона',
@@ -557,16 +582,18 @@ export const ru: LangType = {
     'page.header.signUp.email': 'Почта',
     'page.header.signUp.email.message.error': 'Почта недействительная',
     'page.header.signUp.password': 'Пароль',
-    'page.header.signUp.password.message.error': 'Пароль должен содержать не менее 8 символов и не менее одной заглавной буквы и цифры',
+    'page.header.signUp.password.message.error':
+        'Пароль должен содержать не менее 8 символов и не менее одной заглавной буквы и цифры',
     'page.header.signUp.confirmPassword': 'Подтвердить пароль',
     'page.header.signUp.confirmPassword.message.error': 'Пароли не совпадают',
     'page.header.signUp.referalCode': 'Промо-код',
     'page.header.signUp.terms': 'Я согласен со всеми заявлениями с точки зрения обслуживания',
     'page.header.signUp.modal.header': 'ПРОВЕРЬТЕ СВОЙ АДРЕС ЭЛЕКТРОННОЙ ПОЧТЫ',
-    'page.header.signUp.modal.body': 'Чтобы завершить регистрацию, найдите в своем' +
-                                     ' почтовом ящике электронное письмо с дальнейшими инструкциями. ' +
-                                     'Если вы не можете найти адрес электронной почты, проверьте свою' +
-                                     ' электронную почту со спамом.',
+    'page.header.signUp.modal.body':
+        'Чтобы завершить регистрацию, найдите в своем' +
+        ' почтовом ящике электронное письмо с дальнейшими инструкциями. ' +
+        'Если вы не можете найти адрес электронной почты, проверьте свою' +
+        ' электронную почту со спамом.',
     'page.header.signUp.modal.footer': 'OK',
     'page.header.signUp.strength.password': 'Password Strength',
     'page.header.signUp.password.too.weak': 'Too weak',
@@ -584,13 +611,13 @@ export const ru: LangType = {
     'page.noDataToShow': 'Нет данных для отображения',
 
     'page.modal.withdraw.success': 'Успешно!',
-    'page.modal.withdraw.success.message.content': 'Ваш вывод был успешно подтвержден. Пожалуйста, подождите, чтобы получить ' +
-                                                   'несколько обязательных подтверждений для завершения этой транзакции.',
+    'page.modal.withdraw.success.message.content':
+        'Ваш вывод был успешно подтвержден. Пожалуйста, подождите, чтобы получить ' +
+        'несколько обязательных подтверждений для завершения этой транзакции.',
     'page.modal.withdraw.success.button': 'OK',
 
     'page.modal.expired.title': 'Ваша сессия истекла',
     'page.modal.expired.submit': 'Обновить сессию',
-
 
     /* Customization */
     'page.body.customization.tabs.themes': 'Colors',
@@ -630,7 +657,6 @@ export const ru: LangType = {
     'page.body.customization.themes.theme.darkRed.title': 'Dark red',
     'page.body.customization.themes.theme.purple.title': 'Purple',
     'page.body.customization.themes.theme.green.title': 'Green',
-
 
     // success messages
     'success.addresses.accepted': 'Ваш адрес успешно приняты',
@@ -725,7 +751,7 @@ export const ru: LangType = {
     'jwt.decode_and_verify': 'Не удалось декодировать и проверить JWT',
     'authz.invalid_session': 'Не удалось расшифровать куки',
     'authz.user_not_active': 'Пользователь не активен',
-    'authz.invalid_signature': 'Заголовок API-ключа \'signature\' недействителен',
+    'authz.invalid_signature': "Заголовок API-ключа 'signature' недействителен",
     'authz.apikey_not_active': 'Состояние ключа API «неактивно»',
     'authz.disabled_2fa': 'Владелец ключа API отключил 2FA',
     'authz.invalid_api_key_headers': 'Пустые или отсутствующие заголовки ключей API',
@@ -768,7 +794,6 @@ export const ru: LangType = {
     'resource.documents.empty_doc_number': 'Номер документа отсутствует',
     'resource.documents.missing_upload': 'Фотография документа отсутствует',
 
-
     'resource.user.missing_topic': 'Тема отсутствует',
     'resource.user.empty_topic': 'Тема отсутствует',
     'resource.user.missing_old_password': 'Старый пароль отсутствует',
@@ -809,13 +834,15 @@ export const ru: LangType = {
     'account.deposit.empty_txid': 'Txid отсутствует, Txid пуст',
     'account.deposit_address.invalid_address_format': 'Неверный формат адреса депозита',
     'account.deposit_address.doesnt_support_cash_address_format': 'Валюта не поддерживает формат денежных адресов',
-    'account.withdraw.non_integer_limit': 'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
+    'account.withdraw.non_integer_limit':
+        'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
     'account.withdraw.invalid_limit': 'Неверный лимит',
     'account.withdraw.non_positive_page': 'Значение страницы должно быть положительным',
     'account.withdraw.non_integer_otp': 'Значение 2FA не может быть проанализировано в тип Integer',
     'account.withdraw.empty_otp': '2FA отсутствует, 2FA пуст',
     'account.withdraw.empty_rid': 'Rid отсутствует, rid пуст',
-    'account.withdraw.non_decimal_amount': 'Значение суммы, которую вы отправили, не может быть проанализировано в десятичном виде',
+    'account.withdraw.non_decimal_amount':
+        'Значение суммы, которую вы отправили, не может быть проанализировано в десятичном виде',
     'account.withdraw.non_positive_amount': 'Значение суммы должно быть положительным',
     'account.deposit.not_permitted': 'Депозиты разрешены после подтверждения телефона',
     'account.withdraw.not_permitted': 'Пожалуйста, пройдите соответствующие шаги проверки для вывода средств',
@@ -826,7 +853,7 @@ export const ru: LangType = {
     'account.withdraw.disabled_api': 'Снятие API отключено',
 
     'account.beneficiary.invalid_pin': 'Invalid beneficiary activation pin',
-    'account.beneficiary.cant_resend_within_1_minute': 'Can\'t resend activation pin within 1 minute',
+    'account.beneficiary.cant_resend_within_1_minute': "Can't resend activation pin within 1 minute",
 
     'market.market.doesnt_exist': 'Рынок не существует',
     'market.order.invalid_state': 'Неверное состояние депозита',
@@ -835,12 +862,15 @@ export const ru: LangType = {
     'market.trade.empty_page': 'Страница отсутствует или пуста',
     'market.order.invalid_order_by': 'Неверный заказ',
     'market.order.invalid_side': 'Неверная сторона заказа',
-    'market.order.non_decimal_volume': 'Невозможно проанализировать значение тома, которое вы отправили, в десятичный тип',
+    'market.order.non_decimal_volume':
+        'Невозможно проанализировать значение тома, которое вы отправили, в десятичный тип',
     'market.order.non_positive_volume': 'Значение объема должно быть положительным',
     'market.order.invalid_type': 'Неверный тип заказа',
-    'market.order.non_decimal_price': 'Невозможно проанализировать значение тома, которое вы отправили, в десятичный тип',
+    'market.order.non_decimal_price':
+        'Невозможно проанализировать значение тома, которое вы отправили, в десятичный тип',
     'market.order.non_positive_price': 'Значение объема должно быть положительным',
-    'market.order.non_integer_id': 'Невозможно проанализировать отправленное вами значение идентификатора в целочисленный тип',
+    'market.order.non_integer_id':
+        'Невозможно проанализировать отправленное вами значение идентификатора в целочисленный тип',
     'market.order.empty_id': 'Идентификатор отсутствует или пуст',
     'market.trade.non_integer_limit': 'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
     'market.trade.invalid_limit': 'Неверный лимит',
@@ -858,24 +888,31 @@ export const ru: LangType = {
     'public.currency.doesnt_exist': 'Валюта не существует',
     'public.currency.invalid_type': 'Неверный тип валюты',
     'public.market.doesnt_exist': 'Рынок не существует',
-    'public.order_book.non_integer_ask_limit': 'Не удалось проанализировать отправляемое вами предельное значение в тип Integer',
+    'public.order_book.non_integer_ask_limit':
+        'Не удалось проанализировать отправляемое вами предельное значение в тип Integer',
     'public.order_book.invalid_ask_limit': 'Неверный лимит спроса',
-    'public.order_book.non_integer_bid_limit': 'Отправленное вами предельное значение ставки не может быть проанализировано в типе Integer',
+    'public.order_book.non_integer_bid_limit':
+        'Отправленное вами предельное значение ставки не может быть проанализировано в типе Integer',
     'public.order_book.invalid_bid_limit': 'Неверный лимит ставок',
     'public.trade.non_integer_limit': 'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
     'public.trade.invalid_limit': 'Неверный лимит',
     'public.trade.non_positive_page': 'Значение страницы должно быть положительным',
     'public.trade.non_integer_timestamp': 'Отправленное вами время не может быть проанализировано в типе Integer',
     'public.trade.invalid_order_by': 'Неверный заказ',
-    'public.market_depth.non_integer_limit': 'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
+    'public.market_depth.non_integer_limit':
+        'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
     'public.market_depth.invalid_limit': 'Неверный лимит',
-    'public.k_line.non_integer_period': 'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
+    'public.k_line.non_integer_period':
+        'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
     'public.k_line.invalid_period': 'Неверный период',
-    'public.k_line.non_integer_time_from': 'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
+    'public.k_line.non_integer_time_from':
+        'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
     'public.k_line.empty_time_from': 'Параметр Time_from отсутствует или пуст',
-    'public.k_line.non_integer_time_to': 'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
+    'public.k_line.non_integer_time_to':
+        'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
     'public.k_line.empty_time_to': 'Параметр Time_to отсутствует или пуст',
-    'public.k_line.non_integer_limit': 'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
+    'public.k_line.non_integer_limit':
+        'Не удается проанализировать отправляемое вами предельное значение в тип Integer',
     'public.k_line.invalid_limit': 'Неверный лимит',
 
     'server.internal_error': 'Внутренняя ошибка сервера',
@@ -890,8 +927,10 @@ export const ru: LangType = {
 
     'metamask.error.noExtension': '[MetaMask] Расширение браузера для Ethereum не было обнаружено, установите MetaMask',
     'metamask.error.unsupportedNetwork': '[MetaMask] Вы подключены к неподдерживаемой сети',
-    'metamask.error.unauthorized': '[MetaMask] Пожалуйста, авторизуйте этот сайт для доступа к вашей учетной записи Ethereum',
-    'metamask.error.unknown': '[MetaMask] Произошла неизвестная ошибка. Проверьте консоль для получения дополнительных сведений',
+    'metamask.error.unauthorized':
+        '[MetaMask] Пожалуйста, авторизуйте этот сайт для доступа к вашей учетной записи Ethereum',
+    'metamask.error.unknown':
+        '[MetaMask] Произошла неизвестная ошибка. Проверьте консоль для получения дополнительных сведений',
 
     ...nationalitiesNames,
     ...mobileTranslationsRu,

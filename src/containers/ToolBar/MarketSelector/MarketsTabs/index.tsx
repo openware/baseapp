@@ -1,11 +1,9 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { connect } from 'react-redux';
+
 import { RootState } from '../../../../modules';
-import {
-    Market,
-    selectMarkets,
-} from '../../../../modules/public/markets';
+import { Market, selectMarkets } from '../../../../modules/public/markets';
 
 interface ReduxProps {
     markets: Market[];
@@ -23,7 +21,6 @@ interface State {
 type Props = ReduxProps & OwnProps;
 
 export class MarketsTabsComponent extends React.Component<Props, State> {
-
     public readonly state = {
         selectedItem: 0,
         scrollLeft: 0,
@@ -48,7 +45,10 @@ export class MarketsTabsComponent extends React.Component<Props, State> {
         }
 
         return (
-            <div className="pg-trading-header-fast-search-container" onWheel={this.handleOnMouseWheel} ref={this.tabsRef}>
+            <div
+                className="pg-trading-header-fast-search-container"
+                onWheel={this.handleOnMouseWheel}
+                ref={this.tabsRef}>
                 {listOfQuote.map(this.renderFastSearchButton)}
             </div>
         );
@@ -72,18 +72,21 @@ export class MarketsTabsComponent extends React.Component<Props, State> {
     };
 
     private handleSelectButton = (index: number) => {
-        this.setState({
-            selectedItem: index,
-        }, () => {
-            if (this.props.onSelect) {
-                const { markets } = this.props;
-                let listOfQuote: string[] = ['All'];
-                if (markets.length > 0) {
-                    listOfQuote = markets.reduce(this.quoteCurrencies, listOfQuote);
+        this.setState(
+            {
+                selectedItem: index,
+            },
+            () => {
+                if (this.props.onSelect) {
+                    const { markets } = this.props;
+                    let listOfQuote: string[] = ['All'];
+                    if (markets.length > 0) {
+                        listOfQuote = markets.reduce(this.quoteCurrencies, listOfQuote);
+                    }
+                    this.props.onSelect(listOfQuote[this.state.selectedItem]);
                 }
-                this.props.onSelect(listOfQuote[this.state.selectedItem]);
             }
-        });
+        );
     };
 
     private quoteCurrencies = (pV: string[], cV: Market) => {

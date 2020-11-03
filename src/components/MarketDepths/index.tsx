@@ -1,16 +1,8 @@
 import classnames from 'classnames';
 import * as React from 'react';
 
-import {
-    Area,
-    AreaChart,
-    CartesianGrid,
-    ResponsiveContainer,
-    Tooltip,
-    TooltipPayload,
-    XAxis,
-    YAxis,
-} from 'recharts';
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipPayload, XAxis, YAxis } from 'recharts';
+
 import { colors } from '../../constants';
 import { convertRgbToHex, getStylesValueByKey } from '../../helpers';
 
@@ -85,7 +77,19 @@ export interface MarketDepthsProps {
      * Chart type
      * @default 'step'
      */
-    chartType?: 'basis' | 'basisClosed' | 'basisOpen' | 'linear' | 'linearClosed' | 'natural' | 'monotoneX' | 'monotoneY' | 'monotone' | 'step' | 'stepBefore' | 'stepAfter';
+    chartType?:
+        | 'basis'
+        | 'basisClosed'
+        | 'basisOpen'
+        | 'linear'
+        | 'linearClosed'
+        | 'natural'
+        | 'monotoneX'
+        | 'monotoneY'
+        | 'monotone'
+        | 'step'
+        | 'stepBefore'
+        | 'stepAfter';
     /**
      * Property for gradient of background of ask or bid
      * @default false
@@ -155,7 +159,7 @@ const CustomTooltip = (props: CustomToolTipProps) => {
         color: 'black',
         border: '1px solid #ccc',
     };
-    const { active, payload, external, toolTipColors = defaultToolTipColors} = props;
+    const { active, payload, external, toolTipColors = defaultToolTipColors } = props;
     const { backgroundColor, color, border } = toolTipColors;
     const renderPayload = () => {
         if (!payload || !payload[0]) {
@@ -164,7 +168,12 @@ const CustomTooltip = (props: CustomToolTipProps) => {
 
         const { name, value } = payload[0];
 
-        return <p>{`${name} : `}<em>{value}</em></p>;
+        return (
+            <p>
+                {`${name} : `}
+                <em>{value}</em>
+            </p>
+        );
     };
 
     if (active) {
@@ -177,9 +186,9 @@ const CustomTooltip = (props: CustomToolTipProps) => {
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
         };
         const payloadData = payload && payload[0] ? payload[0].payload : null;
-        const currData = payloadData ?
-            external.find((entry: KeyValuePairMarketDepths) => (entry.name === payloadData.name)) :
-            null;
+        const currData = payloadData
+            ? external.find((entry: KeyValuePairMarketDepths) => entry.name === payloadData.name)
+            : null;
 
         return (
             <div className="area-chart-tooltip" style={style}>
@@ -229,16 +238,16 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
 
         return (
             <div className={cx}>
-                <ResponsiveContainer
-                    width="100%"
-                    height={settings.height}
-                >
-                    <AreaChart
-                        data={data}
-                        margin={{ top: 20, right: 30, left: 0, bottom: 20 }}
-                    >
+                <ResponsiveContainer width="100%" height={settings.height}>
+                    <AreaChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
                         {this.defineGradient(colorSettings, gradientHide)}
-                        {hideCartesianGrid ? null : (<CartesianGrid stroke={colorSettings.strokeGridColor} strokeDasharray="1 1" fill="url(#fillGrid)" />)}
+                        {hideCartesianGrid ? null : (
+                            <CartesianGrid
+                                stroke={colorSettings.strokeGridColor}
+                                strokeDasharray="1 1"
+                                fill="url(#fillGrid)"
+                            />
+                        )}
                         <XAxis
                             dataKey={settings.dataKeyX || 'ask'}
                             interval={intervalX || 'preserveStartEnd'}
@@ -250,10 +259,9 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
                             interval={intervalY || 'preserveStartEnd'}
                             stroke={colorSettings.strokeAxisColor}
                         />
-                        {settings.tooltip ?
-                            <Tooltip
-                                content={<CustomTooltip toolTipColors={toolTipColors} external={data} />}
-                            /> : null}
+                        {settings.tooltip ? (
+                            <Tooltip content={<CustomTooltip toolTipColors={toolTipColors} external={data} />} />
+                        ) : null}
                         <Area
                             type={chartType ? chartType : 'step'}
                             dataKey="bid"
@@ -310,4 +318,3 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
         );
     };
 }
-

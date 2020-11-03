@@ -2,13 +2,7 @@ import { defaultStorageLimit } from '../../../api';
 import { sliceArray } from '../../../helpers';
 import { getUnique } from '../../../helpers/getUnique';
 import { HistoryActions } from './actions';
-import {
-    HISTORY_DATA,
-    HISTORY_ERROR,
-    HISTORY_FETCH,
-    HISTORY_PUSH_FINISH,
-    HISTORY_RESET,
-} from './constants';
+import { HISTORY_DATA, HISTORY_ERROR, HISTORY_FETCH, HISTORY_PUSH_FINISH, HISTORY_RESET } from './constants';
 import { WalletHistoryList } from './types';
 
 export interface HistoryState {
@@ -24,7 +18,6 @@ const initialState: HistoryState = {
     page: 0,
     nextPageExists: false,
 };
-
 
 export const historyReducer = (state = initialState, action: HistoryActions) => {
     switch (action.type) {

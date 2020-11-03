@@ -5,7 +5,7 @@ import { CustomizationDataInterface } from './types';
 
 describe('customizationReducer', () => {
     const fakeCustomization: CustomizationDataInterface = {
-        settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
+        settings: '{"theme_id": "1","theme_colors":[]}',
     };
 
     const error: CommonError = {
@@ -17,7 +17,7 @@ describe('customizationReducer', () => {
         const expectedState = {
             ...initialCustomizationState,
             loading: true,
-         };
+        };
         expect(customizationReducer(initialCustomizationState, actions.customizationFetch())).toEqual(expectedState);
     });
 
@@ -30,7 +30,9 @@ describe('customizationReducer', () => {
         };
 
         const payload = fakeCustomization;
-        expect(customizationReducer(initialCustomizationState, actions.customizationData(payload))).toEqual(expectedState);
+        expect(customizationReducer(initialCustomizationState, actions.customizationData(payload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle CUSTOMIZATION_ERROR', () => {
@@ -39,7 +41,9 @@ describe('customizationReducer', () => {
             loading: false,
             success: false,
             error: error,
-         };
-        expect(customizationReducer(initialCustomizationState, actions.customizationError(error))).toEqual(expectedState);
+        };
+        expect(customizationReducer(initialCustomizationState, actions.customizationError(error))).toEqual(
+            expectedState
+        );
     });
 });

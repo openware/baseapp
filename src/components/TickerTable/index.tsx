@@ -1,5 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+
 import { Market } from '../../modules';
 import { Decimal } from '../Decimal';
 

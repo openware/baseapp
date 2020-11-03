@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { passwordEntropyStep } from '../../api';
 import { PasswordStrengthTip } from '../PasswordStrengthTip';
 

@@ -1,4 +1,5 @@
 import { takeLatest } from 'redux-saga/effects';
+
 import { HISTORY_FETCH, HISTORY_PUSH_EMIT } from '../constants';
 import { historyPushSaga } from './historyPushSaga';
 import { historySaga } from './historySaga';

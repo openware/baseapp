@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { SignUpForm, SignUpFormProps } from './';
 
 import { shallow } from 'enzyme';
+
+import { SignUpForm, SignUpFormProps } from './';
+
 import { TestComponentWrapper } from 'lib/test';
 
 const defaults: SignUpFormProps = {

@@ -68,7 +68,9 @@ describe('Currencies reducer', () => {
             loading: false,
             list: fakeCurrencies,
         };
-        expect(currenciesReducer(initialCurrenciesState, actions.currenciesData(fakeCurrencies))).toEqual(expectedState);
+        expect(currenciesReducer(initialCurrenciesState, actions.currenciesData(fakeCurrencies))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle MARKETS_ERROR', () => {

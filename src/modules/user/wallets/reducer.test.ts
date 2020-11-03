@@ -71,7 +71,7 @@ describe('walletsList reducer', () => {
                 selectedWalletAddress: '',
                 timestamp: Math.floor(Date.now() / 1000),
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsFetch())).toEqual(expectedState);
     });
 
@@ -85,7 +85,7 @@ describe('walletsList reducer', () => {
                 selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsData(wallets))).toEqual(expectedState);
     });
 
@@ -100,7 +100,7 @@ describe('walletsList reducer', () => {
                 selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsError(error))).toEqual(expectedState);
     });
 
@@ -115,8 +115,10 @@ describe('walletsList reducer', () => {
                 selectedWalletAddress: '',
                 timestamp: Math.floor(Date.now() / 1000),
             },
-         };
-        expect(walletsReducer(initialWalletsState, actions.walletsAddressFetch(addressFetchPayload))).toEqual(expectedState);
+        };
+        expect(walletsReducer(initialWalletsState, actions.walletsAddressFetch(addressFetchPayload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle WALLETS_ADDRESS_DATA', () => {
@@ -140,7 +142,7 @@ describe('walletsList reducer', () => {
                 selectedWalletCurrency: 'btc',
                 selectedWalletAddress: 'address',
             },
-         };
+        };
         expect(walletsReducer(initialState, actions.walletsAddressData(addressDataPayload))).toEqual(expectedState);
     });
 
@@ -155,7 +157,7 @@ describe('walletsList reducer', () => {
                 selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressError(error))).toEqual(expectedState);
     });
 
@@ -169,8 +171,10 @@ describe('walletsList reducer', () => {
                 selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
-         };
-        expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyFetch(withdrawCcyFetchPayload))).toEqual(expectedState);
+        };
+        expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyFetch(withdrawCcyFetchPayload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle WALLETS_WITHDRAW_CCY_DATA', () => {
@@ -183,7 +187,7 @@ describe('walletsList reducer', () => {
                 selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyData())).toEqual(expectedState);
     });
 
@@ -198,7 +202,7 @@ describe('walletsList reducer', () => {
                 selectedWalletCurrency: '',
                 selectedWalletAddress: '',
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyError(error))).toEqual(expectedState);
     });
 });

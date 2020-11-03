@@ -15,7 +15,10 @@ export const initialCustomizationUpdateState: CustomizationUpdateState = {
     success: false,
 };
 
-export const customizationUpdateReducer = (state = initialCustomizationUpdateState, action: CustomizationUpdateAction) => {
+export const customizationUpdateReducer = (
+    state = initialCustomizationUpdateState,
+    action: CustomizationUpdateAction
+) => {
     switch (action.type) {
         case CUSTOMIZATION_UPDATE:
             return {

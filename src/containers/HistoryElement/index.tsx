@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
-import {
-    injectIntl,
-} from 'react-intl';
-import {connect, MapDispatchToPropsFunction} from 'react-redux';
+import { injectIntl } from 'react-intl';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
 import { Decimal, History, Pagination } from '../../components';
 import {
@@ -78,11 +77,19 @@ class HistoryComponent extends React.Component<Props> {
         const { list, fetching } = this.props;
 
         return (
-          <div className={`pg-history-elem ${list.length ? '' : 'pg-history-elem-empty'}`}>
-              {fetching && <div className="text-center"><Spinner animation="border" variant="primary" /></div>}
-              {list.length ? this.renderContent() : null}
-              {!list.length && !fetching ? <p className="pg-history-elem__empty">{this.props.intl.formatMessage({id: 'page.noDataToShow'})}</p> : null}
-          </div>
+            <div className={`pg-history-elem ${list.length ? '' : 'pg-history-elem-empty'}`}>
+                {fetching && (
+                    <div className="text-center">
+                        <Spinner animation="border" variant="primary" />
+                    </div>
+                )}
+                {list.length ? this.renderContent() : null}
+                {!list.length && !fetching ? (
+                    <p className="pg-history-elem__empty">
+                        {this.props.intl.formatMessage({ id: 'page.noDataToShow' })}
+                    </p>
+                ) : null}
+            </div>
         );
     }
 
@@ -91,7 +98,7 @@ class HistoryComponent extends React.Component<Props> {
 
         return (
             <React.Fragment>
-                <History headers={this.renderHeaders(type)} data={this.retrieveData()}/>
+                <History headers={this.renderHeaders(type)} data={this.retrieveData()} />
                 <Pagination
                     firstElemIndex={firstElemIndex}
                     lastElemIndex={lastElemIndex}
@@ -116,64 +123,56 @@ class HistoryComponent extends React.Component<Props> {
 
     private renderHeaders = (type: string) => {
         switch (type) {
-          case 'deposits':
-              return [
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.txid'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.date'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.currency'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.amount'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.status'}),
-              ];
-          case 'withdraws':
-              return [
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.address'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.date'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.currency'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.amount'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.fee'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.status'}),
-              ];
-          case 'trades':
-              return [
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.date'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.side'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.market'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.price'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.amount'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.total'}),
-              ];
-          default:
-              return [];
+            case 'deposits':
+                return [
+                    this.props.intl.formatMessage({ id: 'page.body.history.deposit.header.txid' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.deposit.header.date' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.deposit.header.currency' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.deposit.header.amount' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.deposit.header.status' }),
+                ];
+            case 'withdraws':
+                return [
+                    this.props.intl.formatMessage({ id: 'page.body.history.withdraw.header.address' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.withdraw.header.date' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.withdraw.header.currency' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.withdraw.header.amount' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.withdraw.header.fee' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.withdraw.header.status' }),
+                ];
+            case 'trades':
+                return [
+                    this.props.intl.formatMessage({ id: 'page.body.history.trade.header.date' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.trade.header.side' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.trade.header.market' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.trade.header.price' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.trade.header.amount' }),
+                    this.props.intl.formatMessage({ id: 'page.body.history.trade.header.total' }),
+                ];
+            default:
+                return [];
         }
     };
-
 
     private retrieveData = () => {
         const { type, list } = this.props;
 
-        return [...list]
-            .map(item => this.renderTableRow(type, item));
+        return [...list].map((item) => this.renderTableRow(type, item));
     };
 
     private renderTableRow = (type, item) => {
-        const {
-            currencies,
-            intl,
-            marketsData,
-            wallets,
-        } = this.props;
+        const { currencies, intl, marketsData, wallets } = this.props;
         switch (type) {
             case 'deposits': {
                 const { amount, confirmations, created_at, currency, txid } = item;
                 const blockchainLink = this.getBlockchainLink(currency, txid);
-                const wallet = wallets.find(obj => obj.currency === currency);
-                const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
+                const wallet = wallets.find((obj) => obj.currency === currency);
+                const itemCurrency = currencies && currencies.find((cur) => cur.id === currency);
                 const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
-                const state = (item.state === 'submitted' && confirmations !== undefined && minConfirmations !== undefined) ? (
-                    `${confirmations}/${minConfirmations}`
-                ) : (
-                    intl.formatMessage({id: `page.body.history.deposit.content.status.${item.state}`})
-                );
+                const state =
+                    item.state === 'submitted' && confirmations !== undefined && minConfirmations !== undefined
+                        ? `${confirmations}/${minConfirmations}`
+                        : intl.formatMessage({ id: `page.body.history.deposit.content.status.${item.state}` });
 
                 return [
                     <div className="pg-history-elem__hide" key={txid}>
@@ -184,14 +183,16 @@ class HistoryComponent extends React.Component<Props> {
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
-                    <span style={{ color: setDepositStatusColor(item.state) }} key={txid}>{state}</span>,
+                    <span style={{ color: setDepositStatusColor(item.state) }} key={txid}>
+                        {state}
+                    </span>,
                 ];
             }
             case 'withdraws': {
                 const { txid, created_at, currency, amount, fee, rid } = item;
                 const state = intl.formatMessage({ id: `page.body.history.withdraw.content.status.${item.state}` });
                 const blockchainLink = this.getBlockchainLink(currency, txid, rid);
-                const wallet = wallets.find(obj => obj.currency === currency);
+                const wallet = wallets.find((obj) => obj.currency === currency);
 
                 return [
                     <div className="pg-history-elem__hide" key={txid || rid}>
@@ -203,23 +204,40 @@ class HistoryComponent extends React.Component<Props> {
                     currency && currency.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
                     wallet && Decimal.format(fee, wallet.fixed, ','),
-                    <span style={{ color: setWithdrawStatusColor(item.state) }} key={txid || rid}>{state}</span>,
+                    <span style={{ color: setWithdrawStatusColor(item.state) }} key={txid || rid}>
+                        {state}
+                    </span>,
                 ];
             }
             case 'trades': {
                 const { id, created_at, side, market, price, amount, total } = item;
-                const marketToDisplay = marketsData.find(m => m.id === market) ||
-                    { name: '', price_precision: 0, amount_precision: 0 };
+                const marketToDisplay = marketsData.find((m) => m.id === market) || {
+                    name: '',
+                    price_precision: 0,
+                    amount_precision: 0,
+                };
                 const marketName = marketToDisplay ? marketToDisplay.name : market;
-                const sideText = setTradesType(side).text.toLowerCase() ? intl.formatMessage({id: `page.body.history.trade.content.side.${setTradesType(side).text.toLowerCase()}`}) : '';
+                const sideText = setTradesType(side).text.toLowerCase()
+                    ? intl.formatMessage({
+                          id: `page.body.history.trade.content.side.${setTradesType(side).text.toLowerCase()}`,
+                      })
+                    : '';
 
                 return [
                     localeDate(created_at, 'fullDate'),
-                    <span style={{ color: setTradesType(side).color }} key={id}>{sideText}</span>,
+                    <span style={{ color: setTradesType(side).color }} key={id}>
+                        {sideText}
+                    </span>,
                     marketName,
-                    <Decimal key={id} fixed={marketToDisplay.price_precision} thousSep=",">{price}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{amount}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{total}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.price_precision} thousSep=",">
+                        {price}
+                    </Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">
+                        {amount}
+                    </Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">
+                        {total}
+                    </Decimal>,
                 ];
             }
             default: {
@@ -230,7 +248,7 @@ class HistoryComponent extends React.Component<Props> {
 
     private getBlockchainLink = (currency: string, txid: string, rid?: string) => {
         const { wallets } = this.props;
-        const currencyInfo = wallets && wallets.find(wallet => wallet.currency === currency);
+        const currencyInfo = wallets && wallets.find((wallet) => wallet.currency === currency);
         if (currencyInfo) {
             if (txid && currencyInfo.explorerTransaction) {
                 return currencyInfo.explorerTransaction.replace('#{txid}', txid);
@@ -244,7 +262,6 @@ class HistoryComponent extends React.Component<Props> {
     };
 }
 
-
 const mapStateToProps = (state: RootState): ReduxProps => ({
     currencies: selectCurrencies(state),
     marketsData: selectMarkets(state),
@@ -257,14 +274,12 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     nextPageExists: selectNextPageExists(state, 25),
 });
 
-
-export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        fetchCurrencies: () => dispatch(currenciesFetch()),
-        fetchHistory: params => dispatch(fetchHistory(params)),
-    });
+export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    fetchCurrencies: () => dispatch(currenciesFetch()),
+    fetchHistory: (params) => dispatch(fetchHistory(params)),
+});
 
 export const HistoryElement = compose(
     injectIntl,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps)
 )(HistoryComponent) as any; // tslint:disable-line

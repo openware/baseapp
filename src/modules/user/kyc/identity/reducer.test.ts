@@ -30,7 +30,9 @@ describe('Identity reducer', () => {
                 ...initialIdentityState.send,
             },
         };
-        expect(identityReducer(initialIdentityState, actions.sendIdentity(confirmIdentityPayload))).toEqual(expectedState);
+        expect(identityReducer(initialIdentityState, actions.sendIdentity(confirmIdentityPayload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle SEND_IDENTITY_DATA', () => {
@@ -41,7 +43,9 @@ describe('Identity reducer', () => {
                 success: confirmIdentityResponse.message,
             },
         };
-        expect(identityReducer(initialIdentityState, actions.sendIdentityData(confirmIdentityResponse))).toEqual(expectedState);
+        expect(identityReducer(initialIdentityState, actions.sendIdentityData(confirmIdentityResponse))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle SEND_IDENTITY_ERROR', () => {
@@ -51,7 +55,7 @@ describe('Identity reducer', () => {
                 ...initialIdentityState.send,
                 error: error,
             },
-         };
+        };
         expect(identityReducer(initialIdentityState, actions.sendIdentityError(error))).toEqual(expectedState);
     });
 
@@ -62,7 +66,9 @@ describe('Identity reducer', () => {
                 ...initialIdentityState.edit,
             },
         };
-        expect(identityReducer(initialIdentityState, actions.editIdentity(confirmIdentityPayload))).toEqual(expectedState);
+        expect(identityReducer(initialIdentityState, actions.editIdentity(confirmIdentityPayload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle EDIT_IDENTITY_DATA', () => {
@@ -73,7 +79,9 @@ describe('Identity reducer', () => {
                 success: confirmIdentityResponse.message,
             },
         };
-        expect(identityReducer(initialIdentityState, actions.editIdentityData(confirmIdentityResponse))).toEqual(expectedState);
+        expect(identityReducer(initialIdentityState, actions.editIdentityData(confirmIdentityResponse))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle EDIT_IDENTITY_ERROR', () => {
@@ -83,7 +91,7 @@ describe('Identity reducer', () => {
                 ...initialIdentityState.edit,
                 error: error,
             },
-         };
+        };
         expect(identityReducer(initialIdentityState, actions.editIdentityError(error))).toEqual(expectedState);
     });
 });

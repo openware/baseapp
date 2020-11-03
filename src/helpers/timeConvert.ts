@@ -1,5 +1,5 @@
 export const timeTo12HFormat = (timeInput: string) => {
-    let time = timeInput.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeInput];
+    let time = timeInput.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [timeInput];
 
     if (time.length > 1) {
         time = time.slice(1);

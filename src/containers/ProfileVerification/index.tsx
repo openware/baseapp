@@ -3,6 +3,7 @@ import { OverlayTrigger } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { kycSteps } from '../../api';
 import { Tooltip } from '../../components';
 import { Label, labelFetch, selectLabelData, selectUserInfo, User } from '../../modules';

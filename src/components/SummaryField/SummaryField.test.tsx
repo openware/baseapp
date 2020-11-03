@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
+
 import { SummaryField, SummaryFieldProps } from './';
 
 const defaultProps: SummaryFieldProps = {
@@ -7,8 +8,7 @@ const defaultProps: SummaryFieldProps = {
     content: <div>Content</div>,
 };
 
-const setup = (props: Partial<SummaryFieldProps> = {}) =>
-    shallow(<SummaryField {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<SummaryFieldProps> = {}) => shallow(<SummaryField {...{ ...defaultProps, ...props }} />);
 
 describe('SummaryField', () => {
     it('should render', () => {

@@ -1,10 +1,6 @@
 import * as React from 'react';
-import {
-    useDepthFetch,
-    useMarketsFetch,
-    useMarketsTickersFetch,
-    useRangerConnectFetch,
-} from '../../../hooks';
+
+import { useDepthFetch, useMarketsFetch, useMarketsTickersFetch, useRangerConnectFetch } from '../../../hooks';
 import { CurrentMarketInfo, TradingTabs } from '../../components';
 
 const TradingComponent: React.FC = () => {

@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -40,11 +41,8 @@ describe('Saga: memberLevelsFetchSaga', () => {
 
     it('should fetch memberLevels in success flow', async () => {
         mockMemberLevels();
-        const expectedMemberLevelsActionsFetch = [
-            memberLevelsFetch(),
-            memberLevelsData(fakeMemberLevels),
-        ];
-        const promise = new Promise(resolve => {
+        const expectedMemberLevelsActionsFetch = [memberLevelsFetch(), memberLevelsData(fakeMemberLevels)];
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedMemberLevelsActionsFetch.length) {
@@ -70,7 +68,7 @@ describe('Saga: memberLevelsFetchSaga', () => {
                 },
             }),
         ];
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedMemberLevelsActionsError.length) {

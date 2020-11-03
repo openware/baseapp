@@ -17,10 +17,7 @@ export interface CustomizationUpdateError {
     error: CommonError;
 }
 
-export type CustomizationUpdateAction =
-    CustomizationUpdate
-    | CustomizationUpdateData
-    | CustomizationUpdateError;
+export type CustomizationUpdateAction = CustomizationUpdate | CustomizationUpdateData | CustomizationUpdateError;
 
 export const customizationUpdate = (payload: CustomizationUpdate['payload']): CustomizationUpdate => ({
     type: CUSTOMIZATION_UPDATE,

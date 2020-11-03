@@ -1,13 +1,13 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { DepositFiat } from './';
 
+import { DepositFiat } from './';
 
 describe('DepositFiat', () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = shallow(<DepositFiat title={'text123'} description={'123123'} uid={'42389734'}/>);
+        wrapper = shallow(<DepositFiat title={'text123'} description={'123123'} uid={'42389734'} />);
     });
 
     it('should contains title', () => {

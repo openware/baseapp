@@ -1,8 +1,4 @@
-import {
-    DEFAULT_KYC_STEPS,
-    ORDER_BOOK_DEFAULT_SIDE_LIMIT,
-    STORAGE_DEFAULT_LIMIT,
-} from '../constants';
+import { DEFAULT_KYC_STEPS, ORDER_BOOK_DEFAULT_SIDE_LIMIT, STORAGE_DEFAULT_LIMIT } from '../constants';
 import { Config } from './types';
 
 export const defaultConfig: Config = {
@@ -29,13 +25,7 @@ export const defaultConfig: Config = {
     passwordEntropyStep: 0,
     showLanding: true,
     sentryEnabled: false,
-    kycSteps: [
-        'email',
-        'phone',
-        'profile',
-        'document',
-        'address',
-    ],
+    kycSteps: ['email', 'phone', 'profile', 'document', 'address'],
 };
 
 export const Cryptobase = {
@@ -63,11 +53,13 @@ export const defaultStorageLimit = () => Cryptobase.config.storage.defaultStorag
 export const orderBookSideLimit = () => Cryptobase.config.storage.orderBookSideLimit || ORDER_BOOK_DEFAULT_SIDE_LIMIT;
 export const gaTrackerKey = (): string => Cryptobase.config.gaTrackerKey || '';
 export const msAlertDisplayTime = (): string => Cryptobase.config.msAlertDisplayTime || '5000';
-export const rangerReconnectPeriod = (): number => Cryptobase.config.rangerReconnectPeriod ? Number(Cryptobase.config.rangerReconnectPeriod) : 1;
+export const rangerReconnectPeriod = (): number =>
+    Cryptobase.config.rangerReconnectPeriod ? Number(Cryptobase.config.rangerReconnectPeriod) : 1;
 export const incrementalOrderBook = (): boolean => Cryptobase.config.incrementalOrderBook || false;
 export const isResizableGrid = (): boolean => Cryptobase.config.isResizable || false;
 export const isDraggableGrid = (): boolean => Cryptobase.config.isDraggable || false;
-export const languages = Cryptobase.config.languages && Cryptobase.config.languages.length > 0 ? Cryptobase.config.languages : ['en'];
+export const languages =
+    Cryptobase.config.languages && Cryptobase.config.languages.length > 0 ? Cryptobase.config.languages : ['en'];
 export const sessionCheckInterval = (): string => Cryptobase.config.sessionCheckInterval || '15000';
 export const balancesFetchInterval = (): string => Cryptobase.config.balancesFetchInterval || '3000';
 export const isFinexEnabled = (): boolean => Cryptobase.config.finex || false;

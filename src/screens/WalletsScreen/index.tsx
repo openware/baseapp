@@ -6,8 +6,17 @@ import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+
 import { IntlProps } from '../../';
-import { Blur, CurrencyInfo, DepositCrypto, DepositFiat, TabPanel, WalletItemProps, WalletList } from '../../components';
+import {
+    Blur,
+    CurrencyInfo,
+    DepositCrypto,
+    DepositFiat,
+    TabPanel,
+    WalletItemProps,
+    WalletList,
+} from '../../components';
 import { DEFAULT_CCY_PRECISION } from '../../constants';
 import { Withdraw, WithdrawProps } from '../../containers';
 import { ModalWithdrawConfirmation } from '../../containers/ModalWithdrawConfirmation';
@@ -43,7 +52,6 @@ import {
     walletsWithdrawCcyFetch,
 } from '../../modules';
 import { CommonError } from '../../modules/types';
-
 
 interface ReduxProps {
     user: User;
@@ -158,27 +166,26 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     }
 
     public componentWillReceiveProps(next: Props) {
-        const {
-            wallets,
-            beneficiariesActivateSuccess,
-            beneficiariesDeleteSuccess,
-            withdrawSuccess,
-        } = this.props;
+        const { wallets, beneficiariesActivateSuccess, beneficiariesDeleteSuccess, withdrawSuccess } = this.props;
 
         if (wallets.length === 0 && next.wallets.length > 0) {
             this.setState({
                 selectedWalletIndex: 0,
             });
             this.props.fetchBeneficiaries();
-            next.wallets[0].type === 'coin' && next.wallets[0].balance && this.props.fetchAddress({ currency: next.wallets[0].currency });
+            next.wallets[0].type === 'coin' &&
+                next.wallets[0].balance &&
+                this.props.fetchAddress({ currency: next.wallets[0].currency });
         }
 
         if (!withdrawSuccess && next.withdrawSuccess) {
             this.toggleSubmitModal();
         }
 
-        if ((next.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) ||
-            (next.beneficiariesDeleteSuccess && !beneficiariesDeleteSuccess)) {
+        if (
+            (next.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) ||
+            (next.beneficiariesDeleteSuccess && !beneficiariesDeleteSuccess)
+        ) {
             this.props.fetchBeneficiaries();
         }
     }
@@ -205,11 +212,12 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         if (wallets[selectedWalletIndex]) {
             selectedWalletPrecision = wallets[selectedWalletIndex].fixed;
-            confirmationAddress = wallets[selectedWalletIndex].type === 'fiat' ? (
-                beneficiary.name
-            ) : (
-                beneficiary.data ? (beneficiary.data.address as string) : ''
-            );
+            confirmationAddress =
+                wallets[selectedWalletIndex].type === 'fiat'
+                    ? beneficiary.name
+                    : beneficiary.data
+                    ? (beneficiary.data.address as string)
+                    : '';
         }
 
         return (
@@ -219,7 +227,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                     <div className="text-center">
                         {walletsLoading && <Spinner animation="border" variant="primary" />}
                     </div>
-                    <div className={`row no-gutters pg-wallet__tabs-content ${!historyList.length && 'pg-wallet__tabs-content-height'}`}>
+                    <div
+                        className={`row no-gutters pg-wallet__tabs-content ${
+                            !historyList.length && 'pg-wallet__tabs-content-height'
+                        }`}>
                         <div className={`col-md-5 col-sm-12 col-12 ${mobileWalletChosen && 'd-none d-md-block'}`}>
                             <WalletList
                                 onWalletSelectionChange={this.onWalletSelectionChange}
@@ -228,7 +239,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                                 onActiveIndexChange={this.onActiveIndexChange}
                             />
                         </div>
-                        <div className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${!mobileWalletChosen && 'd-none d-md-block'}`}>
+                        <div
+                            className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${
+                                !mobileWalletChosen && 'd-none d-md-block'
+                            }`}>
                             <TabPanel
                                 panels={this.renderTabs()}
                                 onTabChange={this.onTabChange}
@@ -258,9 +272,9 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     private onTabChange = (index, label) => this.setState({ tab: label });
 
-    private onActiveIndexChange = index => this.setState({ activeIndex: index });
+    private onActiveIndexChange = (index) => this.setState({ activeIndex: index });
 
-    private onCurrentTabChange = index => this.setState({ currentTabIndex: index });
+    private onCurrentTabChange = (index) => this.setState({ currentTabIndex: index });
 
     private toggleSubmitModal = () => {
         this.setState((state: WalletsState) => ({
@@ -292,7 +306,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         return [
             {
-                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit(!!showWithdraw) : null,
+                content:
+                    tab === this.translate('page.body.wallets.tabs.deposit')
+                        ? this.renderDeposit(!!showWithdraw)
+                        : null,
                 label: this.translate('page.body.wallets.tabs.deposit'),
             },
             {
@@ -321,7 +338,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     };
 
     private handleOnCopy = () => {
-        this.props.fetchSuccess({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
+        this.props.fetchSuccess({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success' });
     };
 
     private renderDeposit = (isAccountActivated: boolean) => {
@@ -335,14 +352,20 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-        const currencyItem = (currencies && currencies.find(item => item.id === currency)) || { min_confirmations: 6, deposit_enabled: false };
-        const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
-                                                   { confirmations: currencyItem.min_confirmations });
-        const error = addressDepositError ?
-            this.props.intl.formatMessage({id: addressDepositError.message[0]}) :
-            this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
+        const currencyItem = (currencies && currencies.find((item) => item.id === currency)) || {
+            min_confirmations: 6,
+            deposit_enabled: false,
+        };
+        const text = this.props.intl.formatMessage(
+            { id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
+            { confirmations: currencyItem.min_confirmations }
+        );
+        const error = addressDepositError
+            ? this.props.intl.formatMessage({ id: addressDepositError.message[0] })
+            : this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.error' });
 
-        const walletAddress = (selectedWalletCurrency === currency) ? formatCCYAddress(currency, selectedWalletAddress) : '';
+        const walletAddress =
+            selectedWalletCurrency === currency ? formatCCYAddress(currency, selectedWalletAddress) : '';
         const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
             'pg-blur-deposit-crypto--active': isAccountActivated,
         });
@@ -350,7 +373,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         if (wallets[selectedWalletIndex].type === 'coin') {
             return (
                 <React.Fragment>
-                    <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
+                    <CurrencyInfo wallet={wallets[selectedWalletIndex]} />
                     {currencyItem && !currencyItem.deposit_enabled ? (
                         <Blur
                             className={blurCryptoClassName}
@@ -373,14 +396,14 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         } else {
             return (
                 <React.Fragment>
-                    <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
+                    <CurrencyInfo wallet={wallets[selectedWalletIndex]} />
                     {currencyItem && !currencyItem.deposit_enabled ? (
                         <Blur
                             className="pg-blur-deposit-fiat"
                             text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
                         />
                     ) : null}
-                    <DepositFiat title={this.title} description={this.description} uid={user ? user.uid : ''}/>
+                    <DepositFiat title={this.title} description={this.description} uid={user ? user.uid : ''} />
                     {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
                 </React.Fragment>
             );
@@ -391,11 +414,11 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { currencies, user, wallets, walletsError } = this.props;
         const { selectedWalletIndex } = this.state;
         const currency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
-        const currencyItem = (currencies && currencies.find(item => item.id === currency));
+        const currencyItem = currencies && currencies.find((item) => item.id === currency);
 
         return (
             <React.Fragment>
-                <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
+                <CurrencyInfo wallet={wallets[selectedWalletIndex]} />
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
                 {currencyItem && !currencyItem.withdrawal_enabled ? (
                     <Blur
@@ -415,7 +438,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         if (selectedWalletIndex === -1) {
             return [{ content: null, label: '' }];
         }
-        const { user: { level, otp }, wallets } = this.props;
+        const {
+            user: { level, otp },
+            wallets,
+        } = this.props;
         const wallet = wallets[selectedWalletIndex];
         const { currency, fee, type } = wallet;
         const fixed = (wallet || { fixed: 0 }).fixed;
@@ -428,16 +454,19 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,
             type,
-            withdrawAmountLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }),
+            withdrawAmountLabel: this.props.intl.formatMessage({
+                id: 'page.body.wallets.tabs.withdraw.content.amount',
+            }),
             withdraw2faLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' }),
             withdrawFeeLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }),
             withdrawTotalLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }),
-            withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
+            withdrawButtonLabel: this.props.intl.formatMessage({
+                id: 'page.body.wallets.tabs.withdraw.content.button',
+            }),
         };
 
         return otp ? <Withdraw {...withdrawProps} /> : this.isOtpDisabled();
     };
-
 
     private isOtpDisabled = () => {
         return (
@@ -445,21 +474,14 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                 <p className="pg-wallet__enable-2fa-message">
                     {this.translate('page.body.wallets.tabs.withdraw.content.enable2fa')}
                 </p>
-                <Button
-                    block={true}
-                    onClick={this.redirectToEnable2fa}
-                    size="lg"
-                    variant="primary"
-                >
+                <Button block={true} onClick={this.redirectToEnable2fa} size="lg" variant="primary">
                     {this.translate('page.body.wallets.tabs.withdraw.content.enable2faButton')}
                 </Button>
             </React.Fragment>
         );
     };
 
-
     private redirectToEnable2fa = () => this.props.history.push('/security/2fa', { enable2fa: true });
-
 
     private isTwoFactorAuthRequired(level: number, is2faEnabled: boolean) {
         return level > 1 || (level === 1 && is2faEnabled);
@@ -478,7 +500,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }
 
         const nextWalletIndex = this.props.wallets.findIndex(
-            wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase(),
+            (wallet) => wallet.currency.toLowerCase() === value.currency.toLowerCase()
         );
 
         this.setState({
@@ -504,19 +526,19 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     currencies: selectCurrencies(state),
 });
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({
     fetchBeneficiaries: () => dispatch(beneficiariesFetch()),
     fetchWallets: () => dispatch(walletsFetch()),
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
-    walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
+    walletsWithdrawCcy: (params) => dispatch(walletsWithdrawCcyFetch(params)),
     clearWallets: () => dispatch(walletsData([])),
-    fetchSuccess: payload => dispatch(alertPush(payload)),
-    setMobileWalletUi: payload => dispatch(setMobileWalletUi(payload)),
+    fetchSuccess: (payload) => dispatch(alertPush(payload)),
+    setMobileWalletUi: (payload) => dispatch(setMobileWalletUi(payload)),
     currenciesFetch: () => dispatch(currenciesFetch()),
 });
 
 export const WalletsScreen = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps)
 )(WalletsComponent) as React.ComponentClass;

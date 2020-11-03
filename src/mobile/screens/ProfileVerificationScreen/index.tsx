@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
+
 import { ProfileVerification } from '../../../containers/ProfileVerification';
 import { Subheader } from '../../components/Subheader';
 

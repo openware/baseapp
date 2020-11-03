@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { GeetestCaptcha } from '../../containers';
 import { useSetShouldGeetestReset } from '../../hooks';
 import {
@@ -11,7 +12,7 @@ import {
     setRecaptchaSuccess,
 } from '../../modules';
 
-export const CaptchaComponent = props => {
+export const CaptchaComponent = (props) => {
     const dispatch = useDispatch();
     const configs = useSelector(selectConfigs);
     const shouldGeetestReset = useSelector(selectShouldGeetestReset);
@@ -44,11 +45,7 @@ export const CaptchaComponent = props => {
             case 'recaptcha':
                 return (
                     <div className="pg-captcha--recaptcha">
-                        <ReCAPTCHA
-                            ref={reCaptchaRef}
-                            sitekey={configs.captcha_id}
-                            onChange={handleRecaptchaChange}
-                        />
+                        <ReCAPTCHA ref={reCaptchaRef} sitekey={configs.captcha_id} onChange={handleRecaptchaChange} />
                     </div>
                 );
             case 'geetest':

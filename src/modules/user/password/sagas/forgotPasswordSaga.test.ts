@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -24,7 +25,7 @@ describe('FORGOT PASSWORD SAGA', () => {
 
     const fakeError: CommonError = {
         code: 422,
-        message: ['User doesn\'t exist or has already been activated'],
+        message: ["User doesn't exist or has already been activated"],
     };
 
     const fakeNetworkError: CommonError = {
@@ -32,7 +33,7 @@ describe('FORGOT PASSWORD SAGA', () => {
         message: ['Server error'],
     };
 
-    const fakeRequest =  {
+    const fakeRequest = {
         email: 'test@test.com',
     };
 
@@ -42,7 +43,7 @@ describe('FORGOT PASSWORD SAGA', () => {
 
     const mockForgotPasswordError = () => {
         mockAxios.onPost('/identity/users/password/generate_code').reply(422, {
-            error: 'User doesn\'t exist or has already been activated',
+            error: "User doesn't exist or has already been activated",
         });
     };
 
@@ -70,7 +71,7 @@ describe('FORGOT PASSWORD SAGA', () => {
 
     it('should request forgotten password in success flow', async () => {
         mockForgotPassword();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -87,7 +88,7 @@ describe('FORGOT PASSWORD SAGA', () => {
 
     it('should request forgotten password in error flow', async () => {
         mockForgotPasswordError();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {
@@ -104,7 +105,7 @@ describe('FORGOT PASSWORD SAGA', () => {
 
     it('should request forgotten password in network error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsNetworkError.length) {

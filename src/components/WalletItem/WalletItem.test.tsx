@@ -1,6 +1,8 @@
 import { mount, shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
+
 import React from 'react';
+
+import { TestComponentWrapper } from 'lib/test';
 import { WalletItem, WalletItemProps } from './';
 
 const setup = (props: WalletItemProps) =>

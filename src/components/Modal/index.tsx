@@ -24,7 +24,7 @@ export interface ModalProps {
     className?: string;
 }
 
-export const Modal: React.FunctionComponent<ModalProps> = props => {
+export const Modal: React.FunctionComponent<ModalProps> = (props) => {
     const { className } = props;
     const cx = classnames('cr-modal', className);
 
@@ -35,15 +35,9 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
     return (
         <div className={cx}>
             <div className="cr-modal__container">
-                <div className="cr-modal__container-header">
-                    {props.header}
-                </div>
-                <div className="cr-modal__container-content">
-                    {props.content}
-                </div>
-                <div className="cr-modal__container-footer">
-                    {props.footer}
-                </div>
+                <div className="cr-modal__container-header">{props.header}</div>
+                <div className="cr-modal__container-content">{props.content}</div>
+                <div className="cr-modal__container-footer">{props.footer}</div>
             </div>
         </div>
     );

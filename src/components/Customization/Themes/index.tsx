@@ -1,21 +1,14 @@
 import * as React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+
 import { SettingsIcon } from '../../../assets/images/customization/SettingsIcon';
 import { DropdownComponent } from '../../../components';
-import {
-    CustomizationCurrentDataInterface,
-    CustomizationDataInterface,
-} from '../../../modules';
-import {
-    AVAILABLE_COLOR_THEMES,
-    AVAILABLE_COLORS_TITLES,
-    ThemeColorTitleInterface,
-} from '../../../themes';
+import { CustomizationCurrentDataInterface, CustomizationDataInterface } from '../../../modules';
+import { AVAILABLE_COLOR_THEMES, AVAILABLE_COLORS_TITLES, ThemeColorTitleInterface } from '../../../themes';
 import { ColorSettings } from './ColorSettings';
 
-export const handleConvertColorCode = (value: string, fromRGB?: boolean) => (
-    fromRGB ? `--grb-${value.slice(2)}` :  `--${value.slice(6)}`
-);
+export const handleConvertColorCode = (value: string, fromRGB?: boolean) =>
+    fromRGB ? `--grb-${value.slice(2)}` : `--${value.slice(6)}`;
 
 interface OwnProps {
     translate: (key: string) => string;
@@ -45,13 +38,12 @@ export class CustomizationThemes extends React.Component<Props, State> {
     };
 
     public componentDidMount() {
-        const {
-            currentCustomization,
-            customization,
-        } = this.props;
+        const { currentCustomization, customization } = this.props;
 
         if (currentCustomization && currentCustomization.theme_id >= 0) {
-            const themeIndexToSet = AVAILABLE_COLOR_THEMES.findIndex(item => item.id === currentCustomization.theme_id);
+            const themeIndexToSet = AVAILABLE_COLOR_THEMES.findIndex(
+                (item) => item.id === currentCustomization.theme_id
+            );
 
             if (themeIndexToSet >= 0) {
                 this.handleSetCurrentTheme(themeIndexToSet);
@@ -103,13 +95,18 @@ export class CustomizationThemes extends React.Component<Props, State> {
         const grbItemKey = handleConvertColorCode(item.key);
 
         return (
-            <div key={index} className="pg-customization-themes__colors__item" onClick={e => this.handleSetColorSettingsItem(item)}>
+            <div
+                key={index}
+                className="pg-customization-themes__colors__item"
+                onClick={(e) => this.handleSetColorSettingsItem(item)}>
                 <div className="pg-customization-themes__colors__item__content">
                     <span
                         className="pg-customization-themes__colors__item__content__circle"
-                        style={{backgroundColor: `var(${grbItemKey})`}}
+                        style={{ backgroundColor: `var(${grbItemKey})` }}
                     />
-                    <span className="pg-customization-themes__colors__item__content__title">{translate(item.title)}</span>
+                    <span className="pg-customization-themes__colors__item__content__title">
+                        {translate(item.title)}
+                    </span>
                 </div>
                 <div className="pg-customization-themes__colors__item__settings-icon">
                     <SettingsIcon />
@@ -149,7 +146,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
     private handleGetThemesTitlesList = () => {
         const { translate } = this.props;
 
-        return AVAILABLE_COLOR_THEMES.map(item => translate(item.title));
+        return AVAILABLE_COLOR_THEMES.map((item) => translate(item.title));
     };
 
     private handleSetColorSettingsItem = (item?: ThemeColorTitleInterface) => {
@@ -162,7 +159,6 @@ export class CustomizationThemes extends React.Component<Props, State> {
         this.setState({ colorSettingsItem: newSettings });
     };
 
-
     private handleChangeCurrentTheme = (index: number) => {
         const { handleTriggerChartRebuild } = this.props;
         const rootElement = document.documentElement;
@@ -170,7 +166,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
 
         if (rootElement) {
             AVAILABLE_COLORS_TITLES.reduce((result, item) => {
-                const newItemColor = AVAILABLE_COLOR_THEMES[index].theme.find(theme => theme.key === item.key);
+                const newItemColor = AVAILABLE_COLOR_THEMES[index].theme.find((theme) => theme.key === item.key);
 
                 if (newItemColor) {
                     rootElement.style.setProperty(item.key, newItemColor.value);
@@ -197,7 +193,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
         const parsedSettings = customization.settings ? JSON.parse(customization.settings) : null;
 
         if (parsedSettings && parsedSettings.theme_id) {
-            const themeIndexToSet = AVAILABLE_COLOR_THEMES.findIndex(theme => theme.id === +parsedSettings.theme_id);
+            const themeIndexToSet = AVAILABLE_COLOR_THEMES.findIndex((theme) => theme.id === +parsedSettings.theme_id);
 
             if (themeIndexToSet >= 0) {
                 this.handleSetCurrentTheme(themeIndexToSet);

@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { orderBookData, orderBookError, OrderBookFetch } from '../actions';
@@ -17,12 +18,14 @@ export function* orderBookSaga(action: OrderBookFetch) {
         const orderBook = yield call(API.get(orderBookOptions), `/public/markets/${market.id}/order-book`);
         yield put(orderBookData(orderBook));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'console',
-            extraOptions: {
-                actionError: orderBookError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'console',
+                extraOptions: {
+                    actionError: orderBookError,
+                },
+            })
+        );
     }
 }

@@ -1,14 +1,11 @@
 import * as React from 'react';
+
 import { Modal, TabPanel } from '../../components';
 
 const panels = [
     {
         label: 'LEGAL NOTES',
-        content: (
-            <div className={'tabs-content'}>
-                LEGAL NOTES
-            </div>
-        ),
+        content: <div className={'tabs-content'}>LEGAL NOTES</div>,
     },
     {
         label: 'PRIVACY POLICY',
@@ -20,11 +17,7 @@ const panels = [
     },
     {
         label: 'TERM OF SERVICE',
-        content: (
-            <div className={'tabs-content'}>
-                TERM OF SERVICE
-            </div>
-        ),
+        content: <div className={'tabs-content'}>TERM OF SERVICE</div>,
     },
 ];
 
@@ -43,28 +36,30 @@ class LegalDocuments extends React.Component<LegalDocumentsProps, State> {
     };
 
     public render() {
-      return(
-          <Modal
-              className={'pg-legal-docs-modal'}
-              show={this.props.isOpen}
-              header={<h3>Title</h3>}
-              content={this.renderModalBody()}
-              footer={this.props.footer}
-          />
-      );
+        return (
+            <Modal
+                className={'pg-legal-docs-modal'}
+                show={this.props.isOpen}
+                header={<h3>Title</h3>}
+                content={this.renderModalBody()}
+                footer={this.props.footer}
+            />
+        );
     }
 
-    private onCurrentTabChange = index => this.setState({ currentTabIndex: index });
+    private onCurrentTabChange = (index) => this.setState({ currentTabIndex: index });
 
     private renderModalBody = () => {
-        return(
+        return (
             <div>
-                <TabPanel panels={panels} currentTabIndex={this.state.currentTabIndex} onCurrentTabChange={this.onCurrentTabChange}/>
+                <TabPanel
+                    panels={panels}
+                    currentTabIndex={this.state.currentTabIndex}
+                    onCurrentTabChange={this.onCurrentTabChange}
+                />
             </div>
         );
     };
 }
 
-export {
-    LegalDocuments,
-};
+export { LegalDocuments };

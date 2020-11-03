@@ -1,15 +1,10 @@
 import { call, put } from 'redux-saga/effects';
+
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { changeLanguage } from '../../../public/i18n';
 import { userData } from '../../profile';
-import {
-    signInData,
-    signInError,
-    SignInFetch,
-    signInRequire2FA,
-    signUpRequireVerification,
-} from '../actions';
+import { signInData, signInError, SignInFetch, signInRequire2FA, signUpRequireVerification } from '../actions';
 
 const sessionsConfig: RequestOptions = {
     apiVersion: 'barong',
@@ -35,13 +30,15 @@ export function* signInSaga(action: SignInFetch) {
             yield put(signInRequire2FA({ require2fa: true }));
             yield put(signInData());
         } else {
-          yield put(sendError({
-              error: error,
-              processingType: 'alert',
-              extraOptions: {
-                  actionError: signInError,
-              },
-          }));
+            yield put(
+                sendError({
+                    error: error,
+                    processingType: 'alert',
+                    extraOptions: {
+                        actionError: signInError,
+                    },
+                })
+            );
         }
     }
 }

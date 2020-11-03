@@ -59,9 +59,11 @@ describe('Beneficiaries reducer', () => {
                 fetching: false,
                 success: true,
             },
-         };
+        };
 
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesData(fakeBeneficiaries))).toEqual(expectedState);
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesData(fakeBeneficiaries))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesDataUpdate', () => {
@@ -123,7 +125,9 @@ describe('Beneficiaries reducer', () => {
             },
         };
 
-        expect(beneficiariesReducer(initialState, actions.beneficiariesDataUpdate(fakeBeneficiary))).toEqual(expectedState);
+        expect(beneficiariesReducer(initialState, actions.beneficiariesDataUpdate(fakeBeneficiary))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesError', () => {
@@ -138,7 +142,9 @@ describe('Beneficiaries reducer', () => {
             },
         };
 
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesError(error))).toEqual(expectedState);
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesError(error))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesActivate', () => {
@@ -155,7 +161,9 @@ describe('Beneficiaries reducer', () => {
             id: 1,
         };
 
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesActivate(fakePayload))).toEqual(expectedState);
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesActivate(fakePayload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesActivateData', () => {
@@ -177,9 +185,11 @@ describe('Beneficiaries reducer', () => {
                 fetching: false,
                 success: true,
             },
-         };
+        };
 
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesActivateData(fakeActiveBeneficiary))).toEqual(expectedState);
+        expect(
+            beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesActivateData(fakeActiveBeneficiary))
+        ).toEqual(expectedState);
     });
 
     it('should handle beneficiariesActivateError', () => {
@@ -191,8 +201,10 @@ describe('Beneficiaries reducer', () => {
                 success: false,
                 error: error,
             },
-         };
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesActivateError(error))).toEqual(expectedState);
+        };
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesActivateError(error))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesCreate', () => {
@@ -211,7 +223,9 @@ describe('Beneficiaries reducer', () => {
             data: '{"address": "0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a"}',
         };
 
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesCreate(fakePayload))).toEqual(expectedState);
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesCreate(fakePayload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesCreateData', () => {
@@ -233,9 +247,11 @@ describe('Beneficiaries reducer', () => {
                 fetching: false,
                 success: true,
             },
-         };
+        };
 
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesCreateData(fakeBeneficiary))).toEqual(expectedState);
+        expect(
+            beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesCreateData(fakeBeneficiary))
+        ).toEqual(expectedState);
     });
 
     it('should handle beneficiariesCreateError', () => {
@@ -247,8 +263,10 @@ describe('Beneficiaries reducer', () => {
                 success: false,
                 error: error,
             },
-         };
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesCreateError(error))).toEqual(expectedState);
+        };
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesCreateError(error))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesDelete', () => {
@@ -264,8 +282,9 @@ describe('Beneficiaries reducer', () => {
             id: 1,
         };
 
-
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesDelete(fakePayload))).toEqual(expectedState);
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesDelete(fakePayload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesDeleteData', () => {
@@ -281,9 +300,11 @@ describe('Beneficiaries reducer', () => {
                 fetching: false,
                 success: true,
             },
-         };
+        };
 
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesDeleteData(fakeSuccessPayload))).toEqual(expectedState);
+        expect(
+            beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesDeleteData(fakeSuccessPayload))
+        ).toEqual(expectedState);
     });
 
     it('should handle beneficiariesDeleteError', () => {
@@ -295,8 +316,10 @@ describe('Beneficiaries reducer', () => {
                 success: false,
                 error: error,
             },
-         };
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesDeleteError(error))).toEqual(expectedState);
+        };
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesDeleteError(error))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesResendPin', () => {
@@ -312,7 +335,9 @@ describe('Beneficiaries reducer', () => {
             id: 1,
         };
 
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPin(fakePayload))).toEqual(expectedState);
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPin(fakePayload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle beneficiariesResendPinData', () => {
@@ -328,9 +353,11 @@ describe('Beneficiaries reducer', () => {
                 fetching: false,
                 success: true,
             },
-         };
+        };
 
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPinData(fakePayload))).toEqual(expectedState);
+        expect(
+            beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPinData(fakePayload))
+        ).toEqual(expectedState);
     });
 
     it('should handle beneficiariesResendPinError', () => {
@@ -342,7 +369,9 @@ describe('Beneficiaries reducer', () => {
                 success: false,
                 error: error,
             },
-         };
-        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPinError(error))).toEqual(expectedState);
+        };
+        expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesResendPinError(error))).toEqual(
+            expectedState
+        );
     });
 });

@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { EmailForm, EmailFormProps } from './index';
 
 import { shallow } from 'enzyme';
+
+import { EmailForm, EmailFormProps } from './index';
+
 import { TestComponentWrapper } from 'lib/test';
 
 const defaults: EmailFormProps = {

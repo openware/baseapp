@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
@@ -73,13 +74,13 @@ describe('Change Forgot Password Saga', () => {
 
     it('should change forgotten password in success flow', async () => {
         mockChangeForgotPassword();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
-              const actions = store.getActions();
-              if (actions.length === expectedActionsFetch.length) {
-                  expect(actions).toEqual(expectedActionsFetch);
-                  resolve();
-              }
+                const actions = store.getActions();
+                if (actions.length === expectedActionsFetch.length) {
+                    expect(actions).toEqual(expectedActionsFetch);
+                    resolve();
+                }
             });
         });
 
@@ -90,7 +91,7 @@ describe('Change Forgot Password Saga', () => {
 
     it('should change forgotten password in error flow', async () => {
         mockChangeForgotPasswordError();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {
@@ -107,7 +108,7 @@ describe('Change Forgot Password Saga', () => {
 
     it('should request forgotten password in network error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsNetworkError.length) {

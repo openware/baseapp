@@ -18,7 +18,9 @@ describe('Orders History reducer', () => {
     it('should handle USER_ORDERS_HISTORY_FETCH', () => {
         const expectedState = { ...initialOrdersHistoryState, fetching: true };
         const payload = { pageIndex: 0, type: 'all', limit: 25 };
-        expect(ordersHistoryReducer(initialOrdersHistoryState, actions.userOrdersHistoryFetch(payload))).toEqual(expectedState);
+        expect(ordersHistoryReducer(initialOrdersHistoryState, actions.userOrdersHistoryFetch(payload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle USER_ORDERS_HISTORY_DATA', () => {
@@ -28,7 +30,7 @@ describe('Orders History reducer', () => {
                 id: 162,
                 side: 'buy',
                 price: '0.3',
-                state:'wait',
+                state: 'wait',
                 created_at: '2018-11-29T16:54:46+01:00',
                 origin_volume: '123.1234',
                 remaining_volume: '123.1234',
@@ -69,7 +71,9 @@ describe('Orders History reducer', () => {
     it('should handle ORDERS_CANCEL_ALL_FETCH', () => {
         const expectedState = { ...initialOrdersHistoryState, cancelAllFetching: true };
         const payload = { market: 'btcusdt' };
-        expect(ordersHistoryReducer(initialOrdersHistoryState, actions.ordersCancelAllFetch(payload))).toEqual(expectedState);
+        expect(ordersHistoryReducer(initialOrdersHistoryState, actions.ordersCancelAllFetch(payload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle ORDERS_CANCEL_ALL_DATA', () => {
@@ -87,7 +91,9 @@ describe('Orders History reducer', () => {
     it('should handle ORDERS_HISTORY_CANCEL_FETCH', () => {
         const expectedState = { ...initialOrdersHistoryState, cancelFetching: true };
         const payload = { id: 8, type: 'open', list: [] };
-        expect(ordersHistoryReducer(initialOrdersHistoryState, actions.ordersHistoryCancelFetch(payload))).toEqual(expectedState);
+        expect(ordersHistoryReducer(initialOrdersHistoryState, actions.ordersHistoryCancelFetch(payload))).toEqual(
+            expectedState
+        );
     });
 
     it('should handle ORDERS_HISTORY_CANCEL_DATA', () => {
@@ -125,7 +131,7 @@ describe('Orders History reducer', () => {
             id: 162,
             side: 'buy',
             price: '0.3',
-            state:'wait',
+            state: 'wait',
             created_at: '2018-11-29T16:54:46+01:00',
             remaining_volume: '123.1234',
             origin_volume: '123.1234',
@@ -137,10 +143,7 @@ describe('Orders History reducer', () => {
             const list = insertOrUpdate([], convertOrderEvent(newOrderEvent));
             const expectedState: OrdersHistoryState = { ...initialOrdersHistoryState, list };
             expect(
-                ordersHistoryReducer(
-                    initialOrdersHistoryState,
-                    actions.userOrdersHistoryRangerData(newOrderEvent),
-                ),
+                ordersHistoryReducer(initialOrdersHistoryState, actions.userOrdersHistoryRangerData(newOrderEvent))
             ).toEqual(expectedState);
         });
 
@@ -159,8 +162,8 @@ describe('Orders History reducer', () => {
             expect(
                 ordersHistoryReducer(
                     { ...initialOrdersHistoryState, list: [newOrderCommon] },
-                    actions.userOrdersHistoryRangerData(updatedOrderEvent),
-                ),
+                    actions.userOrdersHistoryRangerData(updatedOrderEvent)
+                )
             ).toEqual(expectedState);
         });
     });

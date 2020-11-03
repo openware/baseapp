@@ -40,10 +40,9 @@ export const initialOrdersHistoryState: OrdersHistoryState = {
     nextPageExists: false,
 };
 
-
 export const ordersHistoryReducer = (
     state = initialOrdersHistoryState,
-    action: OrdersHistoryAction,
+    action: OrdersHistoryAction
 ): OrdersHistoryState => {
     switch (action.type) {
         case ORDERS_HISTORY_FETCH:
@@ -57,7 +56,11 @@ export const ordersHistoryReducer = (
                 nextPageExists: action.payload.nextPageExists,
             };
         case ORDERS_HISTORY_RANGER_DATA:
-            return { ...state, cancelFetching: false, list: sliceArray(insertOrUpdate(state.list, convertOrderEvent(action.payload)), defaultStorageLimit()) };
+            return {
+                ...state,
+                cancelFetching: false,
+                list: sliceArray(insertOrUpdate(state.list, convertOrderEvent(action.payload)), defaultStorageLimit()),
+            };
         case ORDERS_HISTORY_ERROR:
             return { ...state, list: [], pageIndex: 0, fetching: false };
         case ORDERS_CANCEL_ALL_FETCH:

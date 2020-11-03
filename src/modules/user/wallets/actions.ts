@@ -83,7 +83,8 @@ export interface SetMobileWalletUi {
     payload: string;
 }
 
-export type WalletsAction = WalletsFetch
+export type WalletsAction =
+    | WalletsFetch
     | WalletsData
     | WalletsDataByRanger
     | WalletsError

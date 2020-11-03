@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { Pagination } from '.';
 
+import { Pagination } from '.';
 
 describe('Pagination', () => {
     const props = {
@@ -15,23 +15,23 @@ describe('Pagination', () => {
     };
 
     it('renders without crashing', () => {
-        const wrapper = shallow(<Pagination {...props}/>);
+        const wrapper = shallow(<Pagination {...props} />);
         expect(wrapper).toBeDefined();
     });
 
     it('should have correct className', () => {
-        const wrapper = shallow(<Pagination {...props}/>);
+        const wrapper = shallow(<Pagination {...props} />);
         expect(wrapper.hasClass('pg-history-elem__pagination'));
     });
 
     it('has pagination info with right text', () => {
-        const wrapper = shallow(<Pagination {...props}/>);
+        const wrapper = shallow(<Pagination {...props} />);
         expect(wrapper.find('p').text()).toEqual('1 - 6 of 30');
     });
 
     it('should test click on prev page', () => {
         const spyClickPrev = jest.fn();
-        const wrapper = shallow(<Pagination {...{...props, ...{ onClickPrevPage: spyClickPrev }}}/>);
+        const wrapper = shallow(<Pagination {...{ ...props, ...{ onClickPrevPage: spyClickPrev } }} />);
         const prevButton = wrapper.find('.pg-history__pagination-prev');
 
         prevButton.simulate('click');
@@ -44,7 +44,7 @@ describe('Pagination', () => {
 
     it('should test click on next page', () => {
         const spyClickNext = jest.fn();
-        const wrapper = shallow(<Pagination {...{...props, ...{ onClickNextPage: spyClickNext }}}/>);
+        const wrapper = shallow(<Pagination {...{ ...props, ...{ onClickNextPage: spyClickNext } }} />);
         const prevButton = wrapper.find('.pg-history__pagination-next');
 
         prevButton.simulate('click');
@@ -56,7 +56,7 @@ describe('Pagination', () => {
     });
 
     it('should matches snapshot', () => {
-        const wrapper = shallow(<Pagination {...props}/>);
+        const wrapper = shallow(<Pagination {...props} />);
         expect(wrapper).toMatchSnapshot();
     });
 });

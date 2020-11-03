@@ -10,16 +10,7 @@ export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: 
     for (const market in events) {
         if (events.hasOwnProperty(market)) {
             const event: TickerEvent = events[market];
-            const {
-                amount,
-                avg_price,
-                high,
-                last,
-                low,
-                open,
-                price_change_percent,
-                volume,
-            } = event;
+            const { amount, avg_price, high, last, low, open, price_change_percent, volume } = event;
             tickers[market] = {
                 amount,
                 avg_price,
@@ -40,25 +31,14 @@ export const streamsBuilder = (withAuth: boolean, prevSubscriptions: string[], m
     let streams: string[] = ['global.tickers'];
 
     if (withAuth) {
-        streams = [
-            ...streams,
-            'order',
-            'trade',
-            'deposit_address',
-        ];
+        streams = [...streams, 'order', 'trade', 'deposit_address'];
 
         if (isFinexEnabled()) {
-            streams = [
-                ...streams,
-                'balances',
-            ];
+            streams = [...streams, 'balances'];
         }
     }
     if (market) {
-        streams = [
-            ...streams,
-            ...(marketStreams(market).channels),
-        ];
+        streams = [...streams, ...marketStreams(market).channels];
     }
     for (const stream of prevSubscriptions) {
         if (streams.indexOf(stream) < 0) {
@@ -99,11 +79,11 @@ export const periodsMapString: { [pair: number]: string } = {
     10080: '1w',
 };
 
-export const periodStringToMinutes = (period: string): number => periodsMapNumber[period] || +DEFAULT_TRADING_VIEW_INTERVAL;
-export const periodMinutesToString = (period: number): string => periodsMapString[period] || periodsMapString[+DEFAULT_TRADING_VIEW_INTERVAL];
+export const periodStringToMinutes = (period: string): number =>
+    periodsMapNumber[period] || +DEFAULT_TRADING_VIEW_INTERVAL;
+export const periodMinutesToString = (period: number): string =>
+    periodsMapString[period] || periodsMapString[+DEFAULT_TRADING_VIEW_INTERVAL];
 
 export const marketKlineStreams = (marketId: string, periodString: string) => ({
-    channels: [
-        `${marketId}.kline-${periodString}`,
-    ],
+    channels: [`${marketId}.kline-${periodString}`],
 });

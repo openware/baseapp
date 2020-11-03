@@ -70,7 +70,6 @@ describe('Orders History actions', () => {
         expect(actions.ordersHistoryCancelError(error)).toEqual(expectedAction);
     });
 
-
     it('should check resetOrdersHistory action creator', () => {
         const expectedAction = { type: ORDERS_HISTORY_RESET };
         expect(actions.resetOrdersHistory()).toEqual(expectedAction);

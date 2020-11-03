@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga, sendError } from '../../../../modules/index';
 import { CommonError } from '../../../types';
@@ -51,10 +52,7 @@ describe('api keys saga', () => {
         mockAxios.onPost(`/resource/api_keys`).reply(200, fakeCreatedApiKey);
     };
 
-    const expectedUpdateApiKeyFetchSuccess = [
-        apiKeyCreateFetch(fakePayload),
-        apiKeyCreate(fakeCreatedApiKey),
-    ];
+    const expectedUpdateApiKeyFetchSuccess = [apiKeyCreateFetch(fakePayload), apiKeyCreate(fakeCreatedApiKey)];
 
     const expectedpdateApiKeyFetchError = [
         apiKeyCreateFetch(fakePayload),
@@ -69,7 +67,7 @@ describe('api keys saga', () => {
 
     it('should create api key', async () => {
         mockCreateApiKey();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedUpdateApiKeyFetchSuccess.length) {
@@ -85,7 +83,7 @@ describe('api keys saga', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedpdateApiKeyFetchError.length) {

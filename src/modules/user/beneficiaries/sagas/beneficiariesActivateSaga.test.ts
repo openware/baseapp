@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga, sendError } from '../../../../modules/index';
 import { CommonError } from '../../../types';
@@ -75,7 +76,7 @@ describe('Beneficiaries Activate', () => {
         it('should activate beneficiaries in success flow', async () => {
             mockBeneficiariesActivate();
 
-            const promise = new Promise(resolve => {
+            const promise = new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesActivateSuccess.length) {
@@ -91,7 +92,7 @@ describe('Beneficiaries Activate', () => {
 
         it('should handle activate beneficiaries error', async () => {
             mockNetworkError(mockAxios);
-            const promise = new Promise(resolve => {
+            const promise = new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesActivateError.length) {
