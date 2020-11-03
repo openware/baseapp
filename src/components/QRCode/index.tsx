@@ -2,7 +2,7 @@
 import QRCodeGenerator from 'qrcode.react';
 import React from 'react';
 
-interface QRCodeProps {
+export interface QRCodeProps {
     /**
      * Data which is used to generate QR code(e.g. wallet address).
      * @default Required

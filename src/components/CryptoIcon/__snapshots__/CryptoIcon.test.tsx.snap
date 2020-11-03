@@ -2,11 +2,10 @@
 
 exports[`CryptoIcon should render 1`] = `
 <span
-  className="cr-crypto-icon"
+  class="cr-crypto-icon"
 >
   <img
     alt="crypto-icon"
-    src="test-file-stub"
   />
    
 </span>
