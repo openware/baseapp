@@ -172,7 +172,7 @@ class MarketsListComponent extends React.Component<Props, State> {
 
                 return pV;
             }, arr)
-            .map((market: any) => {
+            .map((market: any, i) => {
                 const isPositive = /\+/.test((marketTickers[market.id] || defaultTicker).price_change_percent);
                 const classname = classnames({
                     'pg-dropdown-markets-list-container__positive': isPositive,
@@ -181,13 +181,15 @@ class MarketsListComponent extends React.Component<Props, State> {
 
                 return [
                     market.name,
-                    <span className={classname}>
+                    <span className={classname} key={`1-${i}`}>
                         {Decimal.format(Number(market.last), market.price_precision, ',')}
                     </span>,
-                    <span className={classname}>
+                    <span className={classname} key={`2-${i}`}>
                         {Decimal.format(Number(market.volume), market.price_precision, ',')}
                     </span>,
-                    <span className={classname}>{market.price_change_percent}</span>,
+                    <span className={classname} key={`3-${i}`}>
+                        {market.price_change_percent}
+                    </span>,
                 ];
             });
     }

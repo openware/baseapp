@@ -115,7 +115,7 @@ class CustomizationContainer extends React.Component<Props, State> {
 
         return (
             <div className={customizationClassName}>
-                <div className="pg-customization__toggler" onClick={(e) => this.handleToggleIsOpen()}>
+                <div className="pg-customization__toggler" onClick={() => this.handleToggleIsOpen()}>
                     <PaletteIcon />
                 </div>
                 <TabPanel
@@ -183,8 +183,9 @@ class CustomizationContainer extends React.Component<Props, State> {
             [key]: value,
         };
 
-        // @ts-ignore
+        /* eslint-disable */
         this.props.customizationUpdateCurrent(updatedCustomization);
+        /* eslint-enable */
     };
 
     private handleToggleIsOpen = () => {

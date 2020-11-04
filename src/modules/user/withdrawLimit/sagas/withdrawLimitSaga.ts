@@ -3,13 +3,13 @@ import { call, put } from 'redux-saga/effects';
 
 import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { withdrawLimitData, withdrawLimitError, WithdrawLimitFetch } from '../actions';
+import { withdrawLimitData, withdrawLimitError } from '../actions';
 
 const withdrawOption: RequestOptions = {
     apiVersion: 'applogic',
 };
 
-export function* withdrawLimitSaga(action: WithdrawLimitFetch): SagaIterator {
+export function* withdrawLimitSaga(): SagaIterator {
     try {
         const withdrawLimit = yield call(API.get(withdrawOption), '/private/withdraws');
         yield put(withdrawLimitData(withdrawLimit));

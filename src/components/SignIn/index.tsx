@@ -1,5 +1,5 @@
 import cr from 'classnames';
-import React from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -68,43 +68,43 @@ const SignIn: React.FC<SignInProps> = ({
     const history = useHistory();
     const { formatMessage } = useIntl();
 
-    const isValidForm = React.useCallback(() => {
+    const isValidForm = useCallback(() => {
         const isEmailValid = email.match(EMAIL_REGEX);
 
         return email && isEmailValid && password;
     }, [email, password]);
 
-    const handleChangeEmail = React.useCallback(
+    const handleChangeEmail = useCallback(
         (value: string) => {
             changeEmail(value);
         },
         [changeEmail]
     );
 
-    const handleChangePassword = React.useCallback(
+    const handleChangePassword = useCallback(
         (value: string) => {
             changePassword(value);
         },
         [changePassword]
     );
 
-    const handleFieldFocus = React.useCallback(
+    const handleFieldFocus = useCallback(
         (field: string) => {
             handleChangeFocusField(field);
         },
         [handleChangeFocusField]
     );
 
-    const handleSubmitForm = React.useCallback(() => {
+    const handleSubmitForm = useCallback(() => {
         refreshError();
         onSignIn();
     }, [onSignIn, refreshError]);
 
-    const handleValidateForm = React.useCallback(() => {
+    const handleValidateForm = useCallback(() => {
         isFormValid();
     }, [isFormValid]);
 
-    const handleClick = React.useCallback(
+    const handleClick = useCallback(
         (e?: MouseEvent) => {
             if (e) {
                 e.preventDefault();
@@ -118,7 +118,7 @@ const SignIn: React.FC<SignInProps> = ({
         [handleSubmitForm, handleValidateForm, isValidForm]
     );
 
-    const handleEnterPress = React.useCallback(
+    const handleEnterPress = useCallback(
         (event: React.KeyboardEvent<HTMLInputElement>) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
@@ -129,7 +129,7 @@ const SignIn: React.FC<SignInProps> = ({
         [handleClick]
     );
 
-    const renderForgotButton = React.useMemo(
+    const renderForgotButton = useMemo(
         () => (
             <div className="cr-sign-in-form__bottom-section">
                 <div className="cr-sign-in-form__bottom-section-password" onClick={() => onForgotPassword(email)}>
@@ -140,7 +140,7 @@ const SignIn: React.FC<SignInProps> = ({
         [forgotPasswordLabel, onForgotPassword, email]
     );
 
-    const renderRegister = React.useMemo(
+    const renderRegister = useMemo(
         () => (
             <div className="pg-sign-in-screen__register">
                 <span>
@@ -233,4 +233,4 @@ const SignIn: React.FC<SignInProps> = ({
     );
 };
 
-export const SignInComponent = React.memo(SignIn);
+export const SignInComponent = memo(SignIn);

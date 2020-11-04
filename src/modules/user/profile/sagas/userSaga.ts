@@ -3,7 +3,7 @@ import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { userData, userError, UserFetch } from '../actions';
+import { userData, userError } from '../actions';
 
 const userOptions: RequestOptions = {
     apiVersion: 'barong',

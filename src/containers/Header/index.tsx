@@ -78,7 +78,7 @@ class Head extends React.Component<Props> {
                         <span className="pg-sidebar__toggler-item" />
                         <span className="pg-sidebar__toggler-item" />
                     </div>
-                    <div onClick={(e) => this.redirectToLanding()} className="pg-header__logo">
+                    <div onClick={() => this.redirectToLanding()} className="pg-header__logo">
                         <div className="pg-logo">
                             <LogoIcon className="pg-logo__img" />
                         </div>
@@ -148,7 +148,7 @@ class Head extends React.Component<Props> {
 
     private backWallets = () => this.props.setMobileWalletUi('');
 
-    private closeMenu = (e: any) => this.props.setMobileWalletUi('');
+    private closeMenu = () => this.props.setMobileWalletUi('');
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({

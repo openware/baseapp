@@ -106,7 +106,7 @@ class MarketDepthContainer extends React.Component<Props> {
         let cumulativeVolumeData = 0;
         let cumulativePriceData = 0;
 
-        const cumulative = data.map((item, index) => {
+        const cumulative = data.map((item) => {
             const [price, volume] = item;
             const numberVolume = Decimal.format(volume, currentMarket.amount_precision);
             const numberPrice = Decimal.format(price, currentMarket.price_precision);

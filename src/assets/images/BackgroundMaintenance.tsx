@@ -4,7 +4,7 @@ interface BackgroundMaintenanceProps {
     className?: string;
 }
 
-export const BackgroundMaintenance: React.FC<BackgroundMaintenanceProps> = (props: BackgroundMaintenanceProps) => (
+export const BackgroundMaintenance: React.FC<BackgroundMaintenanceProps> = () => (
     <svg width="514" height="486" viewBox="0 0 514 486" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g opacity="0.08">
             <path

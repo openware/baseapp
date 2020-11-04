@@ -47,11 +47,15 @@ module.exports = {
         '@typescript-eslint/no-useless-constructor': 'error',
         'import/no-default-export': 'error',
         'import/named': 'off',
+        'import/namespace': 'off',
         'import/order': ['error', { groups: ['external', 'builtin'], 'newlines-between': 'always-and-inside-groups' }],
         'import/first': 'error',
+        'import/no-named-as-default': 'off',
         'no-console': ['error', { allow: ['warn', 'error'] }],
         'react/prop-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-use-before-define': 'off',
     },
     overrides: [
         {

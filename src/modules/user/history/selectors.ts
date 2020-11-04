@@ -10,6 +10,6 @@ export const selectFirstElemIndex = (state: RootState, limit): number => state.u
 export const selectLastElemIndex = (state: RootState, limit: number): number =>
     state.user.history.page * limit + state.user.history.list.length;
 
-export const selectNextPageExists = (state: RootState, limit: number): boolean => state.user.history.nextPageExists;
+export const selectNextPageExists = (state: RootState): boolean => state.user.history.nextPageExists;
 
 export const selectHistoryLoading = (state: RootState): boolean => state.user.history.fetching;

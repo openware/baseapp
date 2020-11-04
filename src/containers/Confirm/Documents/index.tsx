@@ -103,9 +103,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             idNumberFocused,
         }: DocumentsState = this.state;
 
-        /* tslint:disable */
+        /* eslint-disable @typescript-eslint/no-var-requires */
         languages.map((l: string) => countries.registerLocale(require(`i18n-iso-countries/langs/${l}.json`)));
-        /* tslint:enable */
+        /* eslint-enable @typescript-eslint/no-var-requires */
 
         const issuedDateFocusedClass = cr('pg-confirm__content-documents__row__content', {
             'pg-confirm__content-documents__row__content--focused': issuedDateFocused,

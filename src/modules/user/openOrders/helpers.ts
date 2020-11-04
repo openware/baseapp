@@ -1,11 +1,9 @@
 import { OrderCommon, OrderEvent } from '../../types';
 
 export const convertOrderEvent = (orderEvent: OrderEvent): OrderCommon => {
-    const { at, ...order } = orderEvent;
-
     return {
-        ...order,
-        ord_type: order.order_type || order.ord_type,
+        ...orderEvent,
+        ord_type: orderEvent.order_type || orderEvent.ord_type,
     };
 };
 

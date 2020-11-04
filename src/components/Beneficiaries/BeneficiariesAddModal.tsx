@@ -66,7 +66,6 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         setFiatBankSwiftCodeFocused(false);
         setFiatIntermediaryBankNameFocused(false);
         setFiatIntermediaryBankSwiftCodeFocused(false);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleClickToggleAddAddressModal = React.useCallback(
@@ -279,7 +278,6 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                         })}
                         defaultLabel={field}
                         handleChangeInput={(value) => handleChangeFieldValue(field, value)}
-                        // @ts-ignore
                         inputValue={getState(field)}
                         handleFocusInput={() => handleChangeFieldFocus(`${field}Focused`)}
                         classNameLabel="cr-email-form__label"

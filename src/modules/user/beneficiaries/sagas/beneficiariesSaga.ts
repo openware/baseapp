@@ -3,7 +3,7 @@ import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { beneficiariesData, beneficiariesError, BeneficiariesFetch } from '../actions';
+import { beneficiariesData, beneficiariesError } from '../actions';
 
 const config: RequestOptions = {
     apiVersion: 'peatio',

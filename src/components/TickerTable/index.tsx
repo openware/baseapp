@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 
 import { Market } from '../../modules';
@@ -21,7 +21,7 @@ export const TickerTable: React.FC<Props> = ({
 }) => {
     const { formatMessage } = useIntl();
 
-    const renderItem = React.useCallback(
+    const renderItem = useCallback(
         (market, index: number) => {
             const marketChangeColor = +(market.change || 0) < 0 ? 'negative' : 'positive';
 

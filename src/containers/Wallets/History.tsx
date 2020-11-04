@@ -174,7 +174,7 @@ export const mapStateToProps = (state: RootState): ReduxProps => ({
     page: selectCurrentPage(state),
     firstElemIndex: selectFirstElemIndex(state, 6),
     lastElemIndex: selectLastElemIndex(state, 6),
-    nextPageExists: selectNextPageExists(state, 6),
+    nextPageExists: selectNextPageExists(state),
 });
 
 export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, unknown> = (dispatch) => ({

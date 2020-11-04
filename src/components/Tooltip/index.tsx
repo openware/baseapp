@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Tooltip as BootstrapTooltip } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 
@@ -16,4 +16,4 @@ const TooltipComponent = ({ id = 'tooltip', ...rest }: Props) => (
     </BootstrapTooltip>
 );
 
-export const Tooltip = React.memo(TooltipComponent);
+export const Tooltip = memo(TooltipComponent);

@@ -3,7 +3,7 @@ import { call, put } from 'redux-saga/effects';
 
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { geetestCaptchaData, geetestCaptchaError, GeetestCaptchaFetch } from '../actions';
+import { geetestCaptchaData, geetestCaptchaError } from '../actions';
 
 const sessionsConfig: RequestOptions = {
     apiVersion: 'barong',

@@ -16,7 +16,7 @@ type Props = OwnProps;
 
 export const injected = new InjectedConnector({ supportedChainIds: [1] });
 
-export const MetaMaskButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
+export const MetaMaskButtonComponent: React.FunctionComponent<Props> = () => {
     const { account, activate, connector, error } = useWeb3ReactCore<Web3Provider>();
     const [activatingConnector, setActivatingConnector] = React.useState<any>();
     const dispatch = useDispatch();
@@ -50,8 +50,6 @@ export const MetaMaskButtonComponent: React.FunctionComponent<Props> = (props: P
                 })
             );
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [!!error, dispatch]);
 
     return (

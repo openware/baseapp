@@ -4,7 +4,7 @@ import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import { ChangePasswordFetch, generate2faQRData, generate2faQRError } from '../actions';
+import { generate2faQRData, generate2faQRError } from '../actions';
 
 const generate2faQROptions = (csrfToken?: string): RequestOptions => {
     return {

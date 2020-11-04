@@ -75,4 +75,4 @@ const reduxProps: MapStateToProps<ReduxProps, unknown, RootState> = (state) => (
     isOpen: selectMarketSelectorState(state),
 });
 
-export const MarketSelector = connect<ReduxProps, unknown, {}, RootState>(reduxProps)(MarketSelectorComponent);
+export const MarketSelector = connect<ReduxProps, unknown, unknown, RootState>(reduxProps)(MarketSelectorComponent);

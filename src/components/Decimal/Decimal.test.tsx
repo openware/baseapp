@@ -28,52 +28,52 @@ describe('Decimal', () => {
     });
 
     it('should handle empty string child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={''} />);
+        const wrapper = shallow(<Decimal fixed={8} />);
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle string child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={'123.3203020023'} />);
+        const wrapper = shallow(<Decimal fixed={8}>123.3203020023</Decimal>);
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle small string child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={'0.00000007'} />);
+        const wrapper = shallow(<Decimal fixed={8}>0.00000007</Decimal>);
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle small exponential string child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={'3e-8'} />);
+        const wrapper = shallow(<Decimal fixed={8}>3e-8</Decimal>);
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle zero number value child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={0} />);
+        const wrapper = shallow(<Decimal fixed={8}>0</Decimal>);
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle number child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={123.3203020023} />);
+        const wrapper = shallow(<Decimal fixed={8}>123.3203020023</Decimal>);
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle small number child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={0.00000007} />);
+        const wrapper = shallow(<Decimal fixed={8}>0.00000007</Decimal>);
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle smallest number child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={0.000000001} />);
+        const wrapper = shallow(<Decimal fixed={8}>0.000000001</Decimal>);
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle large number child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={12345678.01234567} />);
+        const wrapper = shallow(<Decimal fixed={8}>12345678.01234567</Decimal>);
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle extremly large number child', () => {
-        const wrapper = shallow(<Decimal fixed={4} children={0.12345678} />);
+        const wrapper = shallow(<Decimal fixed={4}>0.12345678</Decimal>);
         expect(wrapper).toMatchSnapshot();
     });
 

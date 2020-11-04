@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Channel, eventChannel, EventChannel, SagaIterator } from 'redux-saga';
 import { all, call, cancel, delay, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
 

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { TipIcon } from '../../assets/images/TipIcon';
@@ -122,4 +122,4 @@ const UploadFileComponent: React.FC<Props> = ({
     );
 };
 
-export const UploadFile = React.memo(UploadFileComponent);
+export const UploadFile = memo(UploadFileComponent);

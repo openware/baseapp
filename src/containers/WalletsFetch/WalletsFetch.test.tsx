@@ -1,33 +1,20 @@
 import { shallow } from 'enzyme';
-import * as React from 'react';
-import { connect, Provider } from 'react-redux';
-import { createStore } from 'redux';
 
-import { IntlProps } from '../../';
-import { rootReducer } from '../../modules';
-import { WalletsFetch } from './';
+import React from 'react';
 
-const store = createStore(rootReducer);
-const Wallets = connect()(WalletsFetch);
+import { TestComponentWrapper } from 'lib/test';
 
-const setup = (props: Partial<IntlProps> = {}) =>
+import { WalletsFetch, WalletsFetchProps } from './';
+const setup = (props: Partial<WalletsFetchProps> = {}) =>
     shallow(
-        <Provider store={store}>
-            <Wallets />
-        </Provider>
+        <TestComponentWrapper>
+            <WalletsFetch {...props} />
+        </TestComponentWrapper>
     );
 
 describe('WalletsFetch component', () => {
-    let wrapper;
-
-    beforeEach(() => {
-        wrapper = setup();
-    });
-    it('should render', () => {
-        expect(wrapper).toBeDefined();
-    });
-
     it('should match snapshot', () => {
+        const wrapper = setup();
         expect(wrapper).toMatchSnapshot();
     });
 });

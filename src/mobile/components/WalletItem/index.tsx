@@ -24,16 +24,14 @@ const WalletItemComponent = (props: Props) => {
             </div>
             <div className="cr-mobile-wallet-item__balance">
                 <span>
-                    <Decimal fixed={fixed} children={balance || 0} />
+                    <Decimal fixed={fixed}>{balance || 0}</Decimal>
                 </span>
             </div>
         </div>
     );
 };
 
-const WalletItem = React.memo(
+export const WalletItem = React.memo(
     WalletItemComponent,
     areEqualSelectedProps('wallet', ['currency', 'name', 'balance', 'fixed'])
 );
-
-export { WalletItem };

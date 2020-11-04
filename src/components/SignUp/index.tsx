@@ -1,5 +1,5 @@
 import cr from 'classnames';
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -111,7 +111,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     const history = useHistory();
     const { formatMessage } = useIntl();
 
-    const disableButton = React.useCallback((): boolean => {
+    const disableButton = useCallback((): boolean => {
         if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {
             return true;
         }
@@ -134,7 +134,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
         reCaptchaSuccess,
     ]);
 
-    const renderPasswordInput = React.useCallback(() => {
+    const renderPasswordInput = useCallback(() => {
         const passwordGroupClass = cr('cr-sign-up-form__group', {
             'cr-sign-up-form__group--focused': passwordFocused,
         });
@@ -182,11 +182,11 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
         translate,
     ]);
 
-    const handleSubmitForm = React.useCallback(() => {
+    const handleSubmitForm = useCallback(() => {
         onSignUp();
     }, [onSignUp]);
 
-    const isValidForm = React.useCallback(() => {
+    const isValidForm = useCallback(() => {
         const isEmailValid = email.match(EMAIL_REGEX);
         const isPasswordValid = password.match(PASSWORD_REGEX);
         const isConfirmPasswordValid = password === confirmPassword;
@@ -194,7 +194,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
         return email && isEmailValid && password && isPasswordValid && confirmPassword && isConfirmPasswordValid;
     }, [confirmPassword, email, password]);
 
-    const handleClick = React.useCallback(
+    const handleClick = useCallback(
         (e?: React.FormEvent<HTMLInputElement>) => {
             if (e) {
                 e.preventDefault();
@@ -209,7 +209,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
         [handleSubmitForm, isValidForm, validateForm]
     );
 
-    const handleEnterPress = React.useCallback(
+    const handleEnterPress = useCallback(
         (event: React.KeyboardEvent<HTMLInputElement>) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
@@ -220,7 +220,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
         [handleClick]
     );
 
-    const renderLogIn = React.useCallback(() => {
+    const renderLogIn = useCallback(() => {
         return (
             <div className="pg-sign-up-screen__login">
                 <span>
@@ -338,4 +338,4 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     );
 };
 
-export const SignUpForm = React.memo(SignUpFormComponent);
+export const SignUpForm = memo(SignUpFormComponent);

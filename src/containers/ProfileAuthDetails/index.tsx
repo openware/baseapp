@@ -249,10 +249,11 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
     };
 
     private handleFieldFocus = (field: string) => {
-        // @ts-ignore
+        /* eslint-disable */
         this.setState((prev) => ({
             [field]: !prev[field],
         }));
+        /* eslint-enable */
     };
 }
 

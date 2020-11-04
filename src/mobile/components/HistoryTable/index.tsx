@@ -23,7 +23,7 @@ const HistoryTable = (props: any) => {
     const currencies = useSelector(selectCurrencies);
     const firstElemIndex = useSelector((state: RootState) => selectFirstElemIndex(state, DEFAULT_LIMIT));
     const lastElemIndex = useSelector((state: RootState) => selectLastElemIndex(state, DEFAULT_LIMIT));
-    const nextPageExists = useSelector((state: RootState) => selectNextPageExists(state, DEFAULT_LIMIT));
+    const nextPageExists = useSelector((state: RootState) => selectNextPageExists(state));
 
     useWalletsFetch();
     useCurrenciesFetch();
@@ -112,16 +112,26 @@ const HistoryTable = (props: any) => {
                 const state = 'state' in item ? formatTxState(item.state, confirmations, minConfirmations) : '';
 
                 return [
-                    <RowItem amount={amount} fixed={fixed} currency={currency} createdAt={item.created_at} />,
+                    <RowItem
+                        amount={amount}
+                        fixed={fixed}
+                        currency={currency}
+                        createdAt={item.created_at}
+                        key={index}
+                    />,
                     state,
                 ];
             });
     };
-    const mapRows = (row) => {
-        return <div className="cr-mobile-history-table__row">{row}</div>;
+    const mapRows = (row: any, i: number) => {
+        return (
+            <div className="cr-mobile-history-table__row" key={i}>
+                {row}
+            </div>
+        );
     };
 
-    const tableData = retrieveData().map((row) => row.map(mapRows));
+    const tableData = retrieveData().map((row, i) => row.map(mapRows, i));
 
     return (
         <div className="cr-mobile-history-table">

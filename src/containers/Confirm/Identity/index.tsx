@@ -150,10 +150,9 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 postcode && !this.handleValidateInput('postcode', postcode),
         });
 
-        /* tslint:disable */
+        /* eslint-disable @typescript-eslint/no-var-requires */
         languages.map((l: string) => countries.registerLocale(require(`i18n-iso-countries/langs/${l}.json`)));
-
-        /* tslint:enable */
+        /* eslint-enable @typescript-eslint/no-var-requires */
 
         const dataCountries = Object.values(countries.getNames(lang));
         const onSelectCountry = (value) => this.selectCountry(dataCountries[value]);
@@ -336,10 +335,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     };
 
     private handleChange = (value: string, key: string) => {
-        // @ts-ignore
+        /* eslint-disable */
         this.setState({
             [key]: value,
         });
+        /* eslint-enable */
     };
 
     private handleConfirmEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {

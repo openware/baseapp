@@ -1,8 +1,8 @@
 import * as Sentry from '@sentry/browser';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
 import { WrappedComponentProps } from 'react-intl';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
@@ -19,8 +19,8 @@ if (!Intl.PluralRules) {
     require('@formatjs/intl-pluralrules/locale-data/en');
     require('@formatjs/intl-pluralrules/locale-data/ru');
 }
-// @ts-ignore
-if (!Intl.RelativeTimeFormat) {
+
+if (!(Intl as any).RelativeTimeFormat) {
     require('@formatjs/intl-relativetimeformat/polyfill');
     require('@formatjs/intl-relativetimeformat/locale-data/en');
     require('@formatjs/intl-relativetimeformat/locale-data/ru');
@@ -41,12 +41,9 @@ if (sentryEnabled()) {
     }
 }
 
-const render = () =>
-    ReactDOM.render(
-        <Provider store={store}>
-            <App />
-        </Provider>,
-        document.getElementById('root') as HTMLElement
-    );
-
-render();
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root') as HTMLElement
+);

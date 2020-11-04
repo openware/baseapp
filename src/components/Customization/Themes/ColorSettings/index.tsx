@@ -44,7 +44,7 @@ export class ColorSettings extends React.Component<Props, State> {
                 <div className="pg-customization-color-settings__header">
                     <div
                         className="pg-customization-color-settings__header__chevron"
-                        onClick={(e) => handleCloseColorSettings()}>
+                        onClick={() => handleCloseColorSettings()}>
                         <ArrowIcon />
                     </div>
                     {item.title ? <span>{translate(item.title)}</span> : null}

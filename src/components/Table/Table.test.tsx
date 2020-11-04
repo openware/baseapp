@@ -1,10 +1,8 @@
-import { mount, ReactWrapper, shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import * as React from 'react';
 
 import { spy } from 'sinon';
-
-import { start } from 'repl';
 
 import { TestComponentWrapper } from 'lib/test';
 import { CellData, Filter, Table, TableProps, TableState } from '.';

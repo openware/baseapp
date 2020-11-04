@@ -16,7 +16,7 @@ const randomCode = () => {
 export const walletItems = (count: number) =>
     Array(count)
         .fill(0)
-        .map((_, i) => ({
+        .map(() => ({
             active: false,
             name: `${randomCode()}-Coin`,
             address: randomAddress(),

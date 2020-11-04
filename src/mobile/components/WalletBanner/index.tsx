@@ -22,7 +22,7 @@ const WalletBannerComponent = (props: Props) => {
                     {intl.formatMessage({ id: 'page.mobile.wallets.banner.total' })}
                 </span>
                 <div className="cr-wallet-banner-mobile__item-info">
-                    <Decimal fixed={fixed} children={+(balance || 0) + +(locked || 0)} />
+                    <Decimal fixed={fixed}>{+(balance || 0) + +(locked || 0)}</Decimal>
                     <span className="cr-wallet-banner-mobile__item-info-currency">{currency}</span>
                 </div>
             </div>
@@ -31,7 +31,7 @@ const WalletBannerComponent = (props: Props) => {
                     {intl.formatMessage({ id: 'page.mobile.wallets.banner.available' })}
                 </span>
                 <div className="cr-wallet-banner-mobile__item-info">
-                    <Decimal fixed={fixed} children={balance || 0} />
+                    <Decimal fixed={fixed}>{balance || 0}</Decimal>
                     <span className="cr-wallet-banner-mobile__item-info-currency">{currency}</span>
                 </div>
             </div>

@@ -171,7 +171,7 @@ class SidebarContainer extends React.Component<Props, State> {
 
     public getLanguageDropdownItems = () => {
         return languages.map((l: string, index: number) => (
-            <Dropdown.Item key={index} onClick={(e) => this.handleChangeLanguage(l)}>
+            <Dropdown.Item key={index} onClick={() => this.handleChangeLanguage(l)}>
                 <div className="dropdown-row">
                     <img src={this.getLanguageIcon(l)} alt={l} />
                     <span>{l.toUpperCase()}</span>

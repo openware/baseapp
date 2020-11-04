@@ -12,8 +12,7 @@ export class PriceBar extends React.Component<Props> {
         const { percentage, lastPrice, bidUnit } = this.props;
         const gap = 18;
         const position = percentage > 50 ? 'right' : 'left';
-        let positionValue;
-        positionValue =
+        const positionValue =
             position === 'left'
                 ? percentage < gap
                     ? '0'

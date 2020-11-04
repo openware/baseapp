@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,12 +17,10 @@ export const CaptchaComponent = (props) => {
     const configs = useSelector(selectConfigs);
     const shouldGeetestReset = useSelector(selectShouldGeetestReset);
 
-    let reCaptchaRef;
+    const reCaptchaRef = useRef<any>();
+    const geetestCaptchaRef = useRef<any>(null);
 
-    reCaptchaRef = React.useRef();
-    const geetestCaptchaRef = React.useRef(null);
-
-    React.useEffect(() => {
+    useEffect(() => {
         if (props.error || props.success) {
             if (reCaptchaRef.current) {
                 reCaptchaRef.current.reset();
@@ -66,4 +64,4 @@ export const CaptchaComponent = (props) => {
     return renderCaptcha();
 };
 
-export const Captcha = React.memo(CaptchaComponent);
+export const Captcha = memo(CaptchaComponent);

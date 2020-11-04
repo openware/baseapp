@@ -7,6 +7,7 @@ export interface CryptoIconProps {
     children?: React.ReactNode;
 }
 
+/* eslint-disable @typescript-eslint/no-var-requires */
 const findIcon = (code: string): string => {
     try {
         return require(`cryptocurrency-icons/svg/color/${code.toLowerCase()}.svg`).default as string;
@@ -14,6 +15,7 @@ const findIcon = (code: string): string => {
         return require('cryptocurrency-icons/svg/color/generic.svg').default as string;
     }
 };
+/* eslint-enable @typescript-eslint/no-var-requires */
 
 export const CryptoIcon: React.FunctionComponent<CryptoIconProps> = (props) => {
     const { code, className = '', children } = props;

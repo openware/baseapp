@@ -98,7 +98,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
             <div
                 key={index}
                 className="pg-customization-themes__colors__item"
-                onClick={(e) => this.handleSetColorSettingsItem(item)}>
+                onClick={() => this.handleSetColorSettingsItem(item)}>
                 <div className="pg-customization-themes__colors__item__content">
                     <span
                         className="pg-customization-themes__colors__item__content__circle"

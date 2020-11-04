@@ -1,6 +1,5 @@
-import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
-
-import * as React from 'react';
+import { shallow, ShallowWrapper } from 'enzyme';
+import React from 'react';
 import { spy } from 'sinon';
 
 import { TestComponentWrapper } from 'lib/test';
@@ -54,7 +53,6 @@ describe('Markets', () => {
 
         const resultSelectedRow = '<td>ETH/LTC</td><td>0.223100</td><td><span class="__positive">+25.00%</span></td>';
         const expectedSelectedRow = component.find('.cr-table__row--selected').first().html();
-        console.log(expectedSelectedRow);
         expect(resultSelectedRow).toBe(expectedSelectedRow);
     });
 });

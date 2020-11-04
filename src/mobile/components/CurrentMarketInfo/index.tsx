@@ -36,7 +36,7 @@ const CurrentMarketInfoComponent: React.FC = () => {
         return row ? (row.name as string).toLowerCase().includes(searchKey.toLowerCase()) : false;
     };
 
-    const handleFilter = (result: object[]) => {
+    const handleFilter = (result: any[]) => {
         setFilteredMarkets(result as Market[]);
     };
 

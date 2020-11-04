@@ -55,9 +55,16 @@ const RecentTradesMarket = () => {
             );
 
             return [
-                <TradeTableCell higlightedDate={higlightedDate} takerType={taker_type} type="date" />,
-                <TradeTableCell amount={amount} takerType={taker_type} amountFixed={amountFixed} type="amount" />,
+                <TradeTableCell higlightedDate={higlightedDate} takerType={taker_type} type="date" key={`1-${i}`} />,
                 <TradeTableCell
+                    amount={amount}
+                    takerType={taker_type}
+                    amountFixed={amountFixed}
+                    type="amount"
+                    key={`2-${i}`}
+                />,
+                <TradeTableCell
+                    key={`3-${i}`}
                     price={price}
                     priceFixed={priceFixed}
                     takerType={taker_type}

@@ -4,7 +4,7 @@ import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { setBlocklistStatus } from '../../blocklistAccess';
-import { configsData, configsError, ConfigsFetch } from '../actions';
+import { configsData, configsError } from '../actions';
 
 const configsOptions: RequestOptions = {
     apiVersion: 'barong',

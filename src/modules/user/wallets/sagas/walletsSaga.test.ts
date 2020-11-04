@@ -204,11 +204,11 @@ describe('Module: Wallets', () => {
         return {
             ...walletInfo,
             name: currencyInfo ? currencyInfo.name : '',
-            explorerTransaction: currencyInfo!.explorer_transaction,
-            explorerAddress: currencyInfo!.explorer_address,
-            fee: currencyInfo!.withdraw_fee,
-            type: currencyInfo!.type,
-            fixed: currencyInfo!.precision,
+            explorerTransaction: currencyInfo?.explorer_transaction,
+            explorerAddress: currencyInfo?.explorer_address,
+            fee: currencyInfo?.withdraw_fee,
+            type: currencyInfo?.type,
+            fixed: currencyInfo?.precision,
             iconUrl: currencyInfo ? currencyInfo.icon_url : '',
         };
     });

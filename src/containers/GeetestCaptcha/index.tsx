@@ -43,8 +43,8 @@ class GeetestCaptchaComponent extends React.Component<Props> {
 
     public UNSAFE_componentWillReceiveProps(next: Props) {
         if (this.props.geetestCaptchaKeys !== next.geetestCaptchaKeys && next.geetestCaptchaKeys !== undefined) {
-            const { geetestCaptchaKeys, lang } = next;
             // MUST BE REMOVED: Vadym P. responsibility
+            // const { geetestCaptchaKeys, lang } = next;
             // initGeetest({
             //     gt: geetestCaptchaKeys.gt,
             //     challenge: geetestCaptchaKeys.challenge,

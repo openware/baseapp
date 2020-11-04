@@ -157,10 +157,10 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
     };
 
     private getTableData(apiKeysData: ApiKeyDataInterface[]) {
-        return apiKeysData.map((item) => [
+        return apiKeysData.map((item, i) => [
             item.kid,
             item.algorithm,
-            <div className="pg-profile-page__api-keys__state">
+            <div className="pg-profile-page__api-keys__state" key={`1-${i}`}>
                 <span
                     className={
                         item.state === 'active'
@@ -170,7 +170,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                     {item.state}
                 </span>
             </div>,
-            <div className="pg-profile-page__api-keys__status">
+            <div className="pg-profile-page__api-keys__status" key={`2-${i}`}>
                 <Form>
                     <Form.Check
                         type="switch"

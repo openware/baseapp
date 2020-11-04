@@ -29,7 +29,7 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
         setConfirmationModalCode(value);
     }, []);
 
-    const handleChangeFieldFocus = React.useCallback((key: string) => {
+    const handleChangeFieldFocus = React.useCallback(() => {
         setConfirmationModalCodeFocused((v) => !v);
     }, []);
 

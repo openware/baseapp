@@ -7,10 +7,8 @@ import { getOrderAPI } from '../../../../helpers';
 import {
     marketsData,
     marketsError,
-    MarketsFetch,
     marketsTickersData,
     marketsTickersError,
-    MarketsTickersFetch,
     setCurrentMarketIfUnset,
 } from '../actions';
 import { MARKETS_FETCH, MARKETS_TICKERS_FETCH } from '../constants';

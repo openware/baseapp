@@ -3,14 +3,13 @@ import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Route, Router, Switch } from 'react-router';
+import { Router } from 'react-router';
 
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
 import { useSetMobileDevice } from './hooks';
 import * as mobileTranslations from './mobile/translations';
 import { selectCurrentLanguage, selectMobileDeviceState } from './modules';
-import { SignInScreen } from './screens';
 import { languageMap } from './translations';
 
 const gaKey = gaTrackerKey();
@@ -75,7 +74,7 @@ const RenderDeviceContainers = () => {
     );
 };
 
-export const App = () => {
+export const App: React.FC = () => {
     // const lang = useSelector(selectCurrentLanguage);
     // const isMobileDevice = useSelector(selectMobileDeviceState);
     // return (

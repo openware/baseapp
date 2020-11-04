@@ -66,9 +66,9 @@ class AddressComponent extends React.Component<Props, State> {
         const { lang, isMobileDevice } = this.props;
         const { address, addressFocused, city, cityFocused, postcode, postcodeFocused, fileScan } = this.state;
 
-        /* tslint:disable */
+        /* eslint-disable @typescript-eslint/no-var-requires */
         languages.map((l: string) => countries.registerLocale(require(`i18n-iso-countries/langs/${l}.json`)));
-        /* tslint:enable */
+        /* eslint-enable @typescript-eslint/no-var-requires */
 
         const addressFocusedClass = cr('pg-confirm__content-address__row__content', {
             'pg-confirm__content-address__row__content--focused': addressFocused,
@@ -173,10 +173,11 @@ class AddressComponent extends React.Component<Props, State> {
     }
 
     private handleChange = (value: string, key: string) => {
-        // @ts-ignore
+        /* eslint-disable */
         this.setState({
             [key]: value,
         });
+        /* eslint-enable */
     };
 
     private handleFieldFocus = (field: string) => {

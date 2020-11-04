@@ -14,7 +14,7 @@ export interface FilterInputProps {
     /**
      * Data on which the search will be performed
      */
-    data: object[];
+    data: any[];
     /**
      * filter function prop is used to filter data
      */
@@ -23,7 +23,7 @@ export interface FilterInputProps {
     /**
      * onFilter prop is called whenever input value changes
      */
-    onFilter?: (items: object[]) => void;
+    onFilter?: (items: any[]) => void;
     /**
      * Additional class name for styling (by default `cr-search`)
      */
@@ -78,7 +78,7 @@ export class FilterInput extends React.Component<FilterInputProps, SearchInputSt
                     onChange={this.filterList}
                 />
                 <span className="cr-search__cancel">
-                    <SearchFieldCloseIcon onClick={(e) => this.filterList()} />
+                    <SearchFieldCloseIcon onClick={() => this.filterList()} />
                 </span>
             </div>
         );

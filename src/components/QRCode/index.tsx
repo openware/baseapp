@@ -1,6 +1,5 @@
-//tslint:disable-next-line
 import QRCodeGenerator from 'qrcode.react';
-import React from 'react';
+import React, { memo } from 'react';
 
 export interface QRCodeProps {
     /**
@@ -26,4 +25,4 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({ data = '', dimensions = 0 }) =
     );
 };
 
-export const QRCode = React.memo(QRCodeComponent);
+export const QRCode = memo(QRCodeComponent);

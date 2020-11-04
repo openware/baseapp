@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 export interface PercentageButtonProps {
     /**
@@ -24,4 +24,4 @@ export const PercentageButtonComponent: React.FC<PercentageButtonProps> = ({ cla
     );
 };
 
-export const PercentageButton = React.memo(PercentageButtonComponent);
+export const PercentageButton = memo(PercentageButtonComponent);

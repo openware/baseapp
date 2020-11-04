@@ -8,7 +8,7 @@ exports[`Decimal should handle empty string child 1`] = `
   <span
     className="cr-decimal__opacity"
   >
-    .00000000
+    0
   </span>
 </Fragment>
 `;

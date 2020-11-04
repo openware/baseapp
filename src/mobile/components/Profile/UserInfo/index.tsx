@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { logoutFetch, selectUserInfo } from '../../../../modules';
 
-const UserInfoComponent = (props) => {
+const UserInfoComponent: React.FC = () => {
     const intl = useIntl();
     const user = useSelector(selectUserInfo);
     const dispatch = useDispatch();
