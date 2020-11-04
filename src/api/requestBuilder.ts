@@ -1,23 +1,7 @@
-import axios, {
-    AxiosError,
-    AxiosPromise,
-    AxiosRequestConfig,
-    AxiosResponse,
-} from 'axios';
-import {
-    applogicUrl,
-    authUrl,
-    finexUrl,
-    tradeUrl,
-    withCredentials,
-} from './config';
+import axios, { AxiosError, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { applogicUrl, authUrl, finexUrl, tradeUrl, withCredentials } from './config';
 
-export type HTTPMethod =
-    'get'
-    | 'post'
-    | 'delete'
-    | 'put'
-    | 'patch';
+export type HTTPMethod = 'get' | 'post' | 'delete' | 'put' | 'patch';
 
 export interface JsonBody {
     // tslint:disable-next-line no-any
@@ -27,7 +11,7 @@ export interface JsonBody {
 export interface RequestOptions {
     apiVersion: 'applogic' | 'peatio' | 'barong' | 'finex';
     withHeaders?: boolean;
-    headers?: Object;
+    headers?: object;
 }
 
 export interface Request {
@@ -54,9 +38,7 @@ const buildRequest = (request: Request, configData: RequestOptions) => {
     const { apiVersion, headers } = configData;
     const api = getAPI();
 
-    const contentType = body instanceof FormData
-        ? 'multipart/form-data'
-        : 'application/json';
+    const contentType = body instanceof FormData ? 'multipart/form-data' : 'application/json';
 
     const defaultHeaders = {
         'content-type': contentType,
