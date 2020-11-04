@@ -1,4 +1,6 @@
 {
     "hooks": {
+        "commit-msg": "yarn lint",
+        "pre-push": "yarn test --no-watch"
     }
 }
