@@ -278,7 +278,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                         })}
                         defaultLabel={field}
                         handleChangeInput={(value) => handleChangeFieldValue(field, value)}
-                        inputValue={getState(field)}
+                        inputValue={getState(field) as any}
                         handleFocusInput={() => handleChangeFieldFocus(`${field}Focused`)}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"

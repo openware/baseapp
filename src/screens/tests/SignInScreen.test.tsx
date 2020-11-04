@@ -2,13 +2,12 @@ import { shallow } from 'enzyme';
 import React from 'react';
 
 import { TestComponentWrapper } from 'lib/test';
-import { IntlProps } from '../../';
 import { SignInScreen } from '../SignInScreen';
 
-const setup = (props: Partial<IntlProps> = {}) =>
+const setup = () =>
     shallow(
         <TestComponentWrapper>
-            <SignInScreen {...props} />
+            <SignInScreen />
         </TestComponentWrapper>
     );
 

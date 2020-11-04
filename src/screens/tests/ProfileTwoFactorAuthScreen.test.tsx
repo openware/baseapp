@@ -3,12 +3,11 @@ import React from 'react';
 
 import { TestComponentWrapper } from 'lib/test';
 import { ProfileTwoFactorAuthScreen } from '../';
-import { IntlProps } from '../../';
 
-const setup = (props: Partial<IntlProps> = {}) =>
+const setup = () =>
     shallow(
         <TestComponentWrapper>
-            <ProfileTwoFactorAuthScreen {...props} />
+            <ProfileTwoFactorAuthScreen />
         </TestComponentWrapper>
     );
 

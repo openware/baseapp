@@ -54,6 +54,7 @@ interface State {
     showModal: boolean;
     code2FA: string;
     code2FAFocus: boolean;
+    [key: string]: any;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & ProfileProps & IntlProps & OnChangeEvent;

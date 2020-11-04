@@ -64,6 +64,7 @@ interface IdentityState {
     lastNameFocused: boolean;
     postcodeFocused: boolean;
     residentialAddressFocused: boolean;
+    [key: string]: any;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;

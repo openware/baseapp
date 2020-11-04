@@ -30,7 +30,6 @@ exports[`OpenOrders should render 1`] = `
     }
   }
 >
-  // @ts-ignore
   <Connect(injectIntl(Connect(OpenOrdersContainer)))
     cancelFetching={false}
     currentMarket={

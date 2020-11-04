@@ -40,6 +40,7 @@ interface State {
     postcode: string;
     postcodeFocused: boolean;
     fileScan: File[];
+    [key: string]: any;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;

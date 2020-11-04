@@ -90,7 +90,7 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
                         defaultLabel={field}
                         handleChangeInput={(value) => handleChangeFieldValue(field, value)}
                         inputValue={confirmationModalCode}
-                        handleFocusInput={() => handleChangeFieldFocus(`${field}Focused`)}
+                        handleFocusInput={() => handleChangeFieldFocus()}
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
                         autoFocus={true}
