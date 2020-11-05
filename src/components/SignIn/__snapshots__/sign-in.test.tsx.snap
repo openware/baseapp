@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignInComponent /> should render 1`] = `
+<form>
+  <div
+    class="cr-sign-in-form"
+  >
+    <div
+      class="cr-sign-in-form__options-group"
+    >
+      <div
+        class="cr-sign-in-form__option"
+      >
+        <div
+          class="cr-sign-in-form__option-inner __selected"
+        >
+          Sign In
+        </div>
+      </div>
+      <div
+        class="cr-sign-in-form__option"
+      >
+        <div
+          class="cr-sign-in-form__option-inner cr-sign-in-form__tab-signup"
+        >
+          Sign Up
+        </div>
+      </div>
+    </div>
+    <div
+      class="cr-sign-in-form__form-content"
+    >
+      <div
+        class="cr-sign-in-form__group"
+      >
+        <div
+          class="custom-input"
+        >
+          <label
+            class="cr-sign-in-form__label"
+          />
+          <div
+            class="input-group input-group-lg"
+          >
+            <input
+              autofocus=""
+              class="form-control form-control-lg"
+              placeholder=""
+              type="email"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cr-sign-in-form__group"
+      >
+        <div
+          class="custom-input"
+        >
+          <label
+            class="cr-sign-in-form__label"
+          />
+          <div
+            class="input-group input-group-lg"
+          >
+            <input
+              class="form-control form-control-lg"
+              placeholder=""
+              type="password"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cr-sign-in-form__button-wrapper"
+      >
+        <button
+          class="btn btn-primary btn-block btn-lg"
+          disabled=""
+          type="button"
+        >
+          Sign in
+        </button>
+      </div>
+      <div
+        class="cr-sign-in-form__bottom-section"
+      >
+        <div
+          class="cr-sign-in-form__bottom-section-password"
+        >
+          Forgot your password?
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;

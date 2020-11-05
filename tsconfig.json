@@ -25,7 +25,6 @@
         "node_modules",
         "public",
         "mocks",
-        "__mocks__",
         "scripts",
         "spec",
         "jest.config.js",
