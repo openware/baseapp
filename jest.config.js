@@ -22,7 +22,7 @@ module.exports = {
         '^.+\\.(jsx|js)$': 'babel-jest',
         '^.+\\.svg$': '<rootDir>/jest/svg-transform.js',
     },
-    testRegex: '.src/.*.(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx|jsx)?$',
+    testRegex: '.src/.*.(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx|ts)?$',
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node', 'css', 'scss'],
     snapshotSerializers: ['enzyme-to-json/serializer'],
     transformIgnorePatterns: ['<rootDir>/node_modules/(?!lodash-es)'],
@@ -30,9 +30,3 @@ module.exports = {
     collectCoverageFrom: ['<rootDir>/src/units/**/*.{ts,tsx,js,jsx}'],
     coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/charting_library/'],
 };
-
-// moduleNameMapper: {
-//     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-//         '<rootDir>/__mocks__/fileMock.js',
-//     '\\.(css|scss|pcss)$': '<rootDir>/__mocks__/styleMock.js',
-// },

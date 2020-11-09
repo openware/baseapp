@@ -55,8 +55,28 @@ exports[`Table render Snapshot 1`] = `
   class="cr-table-container"
 >
   <div
-    class="cr-table-header__content cr-table-header__content-empty"
-  />
+    class="cr-table-header__content"
+  >
+    <div
+      class="cr-table__filters"
+    >
+      <div
+        class="cr-table__filter"
+      >
+        Bids
+      </div>
+      <div
+        class="cr-table__filter"
+      >
+        Asks
+      </div>
+      <div
+        class="cr-table__filter"
+      >
+        All
+      </div>
+    </div>
+  </div>
   <table
     class="cr-table"
   >

@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import { SignUpForm, SignUpFormProps } from './';
-
 import { TestComponentWrapper } from 'lib/test';
 
 const defaults: SignUpFormProps = {
@@ -49,6 +47,13 @@ const defaults: SignUpFormProps = {
 
 const setup = (props: Partial<SignUpFormProps> = {}) =>
     shallow(
+        <TestComponentWrapper>
+            <SignUpForm {...{ ...defaults, ...props }} />
+        </TestComponentWrapper>
+    );
+
+const setupMount = (props: Partial<SignUpFormProps> = {}) =>
+    mount(
         <TestComponentWrapper>
             <SignUpForm {...{ ...defaults, ...props }} />
         </TestComponentWrapper>
@@ -99,50 +104,55 @@ describe('SignUp component', () => {
         expect(wrapper.find('.cr-sign-up-form__error').last().text()).toBe('error refid');
     });
 
-    it.skip('should send request', () => {
+    it('should send request', () => {
         const spyOnValidateForm = jest.fn();
         const spyOnSignUp = jest.fn();
-        const wrapper = setup({
+        const wrapper = setupMount({
             email: 'email@email.com',
             password: 'Qwerty123',
             confirmPassword: 'Qwerty123',
+            hasConfirmed: true,
             validateForm: spyOnValidateForm,
             onSignUp: spyOnSignUp,
         });
         const button = wrapper.find(Button);
         button.simulate('click');
         expect(spyOnValidateForm).toHaveBeenCalledTimes(0);
-        expect(spyOnSignUp).toHaveBeenCalled();
         expect(spyOnSignUp).toHaveBeenCalledTimes(1);
     });
 
+    // Skipped reason: imposible test valicateion case due to incorect form handling realization
     it.skip('should validate form', () => {
         const spyOnValidateForm = jest.fn();
         const spyOnSignUp = jest.fn();
-        let wrapper = setup({
+
+        const wrapper = setupMount({
             email: 'email',
             password: 'Qwerty123',
             confirmPassword: 'Qwerty123',
+            hasConfirmed: true,
             validateForm: spyOnValidateForm,
             onSignUp: spyOnSignUp,
         });
         const button = wrapper.find(Button);
         button.simulate('click');
-        expect(spyOnValidateForm).toHaveBeenCalled();
+
         expect(spyOnValidateForm).toHaveBeenCalledTimes(1);
         expect(spyOnSignUp).toHaveBeenCalledTimes(0);
+
         spyOnValidateForm.mockClear();
         spyOnSignUp.mockClear();
 
-        wrapper = setup({
+        wrapper.setProps({
             email: 'email@email.com',
             password: 'Qwerty123',
             confirmPassword: 'Qwerty',
+            hasConfirmed: true,
             validateForm: spyOnValidateForm,
             onSignUp: spyOnSignUp,
         });
         button.simulate('click');
-        expect(spyOnValidateForm).toHaveBeenCalled();
+
         expect(spyOnValidateForm).toHaveBeenCalledTimes(1);
         expect(spyOnSignUp).toHaveBeenCalledTimes(0);
     });

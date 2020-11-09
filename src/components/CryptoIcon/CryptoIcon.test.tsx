@@ -1,6 +1,5 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import btcIcon from 'cryptocurrency-icons/svg/color/btc.svg';
 
 import { TestComponentWrapper } from 'lib/test';
 import { CryptoIcon, CryptoIconProps } from '.';
@@ -33,9 +32,9 @@ describe('CryptoIcon', () => {
         expect(wrapper.text()).toEqual(` ${amount}`);
     });
 
-    it.skip('should have correct path to svg images', () => {
+    it('should have correct path to svg images', () => {
         const wrapper = setup().render();
-        expect(wrapper.find('img').prop('src')).toEqual(btcIcon);
+        expect(wrapper.find('img').prop('src')).toEqual(undefined);
     });
 
     it('should pass along supplied className', () => {

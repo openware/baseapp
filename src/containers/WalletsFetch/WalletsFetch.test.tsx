@@ -5,6 +5,14 @@ import React from 'react';
 import { TestComponentWrapper } from 'lib/test';
 
 import { WalletsFetch, WalletsFetchProps } from './';
+
+// jest.mock('react-redux', () => {
+//     const ActualReactRedux = jest.requireActual('react-redux');
+//     return {
+//         ...ActualReactRedux,
+//     };
+// });
+
 const setup = (props: Partial<WalletsFetchProps> = {}) =>
     shallow(
         <TestComponentWrapper>
@@ -14,7 +22,7 @@ const setup = (props: Partial<WalletsFetchProps> = {}) =>
 
 describe('WalletsFetch component', () => {
     it('should match snapshot', () => {
-        const wrapper = setup();
+        const wrapper = setup().render();
         expect(wrapper).toMatchSnapshot();
     });
 });
