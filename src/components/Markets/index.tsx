@@ -105,7 +105,7 @@ export const Markets = (props: MarketsProps) => {
         ] : [];
     }, [createUniqueCurrencies, filterType, transformCurrencyToFilter, data, filters]);
 
-    const getTableData = React.useCallback(() => {
+    const getTableData = React.useMemo(() => {
         const fd = data.filter(w => (w[0] as string).toLowerCase().includes(searchKey.toLowerCase()));
 
         return fd.map(row => row.map(mapRows));
@@ -114,7 +114,7 @@ export const Markets = (props: MarketsProps) => {
     return (
         <div className="cr-markets">
             <Table
-                data={getTableData()}
+                data={getTableData}
                 rowKeyIndex={rowKeyIndex}
                 selectedKey={selectedKey}
                 filters={getFilters()}
