@@ -1,0 +1,19 @@
+.n-wallet-list {
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+
+    &__item {
+        padding: calc(var(--gap) * 0.5) calc(var(--gap));
+        color: var(--primary-text-color);
+
+        &:not(:first-child) {
+            border-top: 1px solid var(--wallets-item-border-color);
+        }
+
+        &:hover {
+            text-decoration: none;
+            color: var(--primary-text-color);
+        }
+    }
+}

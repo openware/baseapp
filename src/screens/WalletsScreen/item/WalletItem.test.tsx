@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 
 import { TestComponentWrapper } from 'lib/test';
-import { WalletItem, WalletItemProps } from './';
+import { WalletItem, WalletItemProps } from '.';
 
 const setup = (props: WalletItemProps) =>
     shallow(

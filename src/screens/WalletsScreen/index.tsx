@@ -1,8 +1,9 @@
 import classnames from 'classnames';
+import { WalletRouteParams } from 'lib/url';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { useLocalization, useReduxSelector } from 'src/hooks';
 
 import {
@@ -44,7 +45,6 @@ import {
     walletsFetch,
     walletsWithdrawCcyFetch,
 } from '../../modules';
-import { CommonError } from '../../modules/types';
 
 const defaultBeneficiary: Beneficiary = {
     id: 0,
@@ -66,6 +66,7 @@ export const WalletsScreen: React.FC<Props> = ({ walletsError }) => {
     const getText = useLocalization();
     const dispatch = useDispatch();
     const history = useHistory();
+    const { currency } = useParams<WalletRouteParams>();
 
     const [activeIndex, setActiveIndex] = useState(0);
     const [selectedWalletIndex, setSelectedWalletIndex] = useState(-1);
@@ -92,9 +93,6 @@ export const WalletsScreen: React.FC<Props> = ({ walletsError }) => {
     const beneficiariesActivateSuccess = useReduxSelector(selectBeneficiariesActivateSuccess);
     const beneficiariesDeleteSuccess = useReduxSelector(selectBeneficiariesDeleteSuccess);
     const currencies = useReduxSelector(selectCurrencies);
-
-    const title = getText('page.body.wallets.tabs.deposit.fiat.message1');
-    const description = getText('page.body.wallets.tabs.deposit.fiat.message2');
 
     useEffect(() => {
         if (wallets.length === 0) {
@@ -257,7 +255,11 @@ export const WalletsScreen: React.FC<Props> = ({ walletsError }) => {
                                 text={getText('page.body.wallets.tabs.deposit.disabled.message')}
                             />
                         ) : null}
-                        <DepositFiat title={title} description={description} uid={user ? user.uid : ''} />
+                        <DepositFiat
+                            title={getText('page.body.wallets.tabs.deposit.fiat.message1')}
+                            description={getText('page.body.wallets.tabs.deposit.fiat.message2')}
+                            uid={user ? user.uid : ''}
+                        />
                         {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
                     </React.Fragment>
                 );

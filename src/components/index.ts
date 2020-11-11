@@ -38,6 +38,6 @@ export * from './TickerTable';
 export * from './Tooltip';
 export * from './TwoFactorAuth';
 export * from './UploadFile';
-export * from './WalletItem';
-export * from './WalletList';
+export * from '../screens/WalletsScreen/item';
+export * from '../screens/WalletsScreen/list';
 export * from './MetaMaskButton';

@@ -1,4 +1,4 @@
-import { WalletItemProps } from '../components/WalletItem';
+import { WalletItemProps } from '../screens/WalletsScreen/item';
 import { Currency } from '../modules/public/currencies';
 import { Market } from '../modules/public/markets';
 import { estimateUnitValue, estimateValue, findPrecision, MarketTicker } from './estimateValue';

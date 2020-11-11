@@ -1,7 +1,10 @@
-import * as React from 'react';
+import React from 'react';
+import classNames from 'classnames';
 
-import { CryptoIcon } from '../CryptoIcon';
-import { Decimal } from '../Decimal';
+import './index.scss';
+
+import { CryptoIcon } from '../../../components/CryptoIcon';
+import { Decimal } from '../../../components/Decimal';
 
 export interface WalletItemProps {
     /**
@@ -67,42 +70,36 @@ const LockIcon = () => {
 /**
  * Component for displaying information about wallet, including address and amount of currency.
  */
-export const WalletItem: React.FunctionComponent<WalletItemProps> = (props: WalletItemProps) => {
-    const { currency, name, balance, locked, active, fixed, iconUrl } = props;
-    const cName = `cr-wallet-item ${active ? 'cr-wallet-item--active' : ''}`;
-
+export const WalletItem: React.FC<WalletItemProps> = ({ currency, name, balance, locked, active, fixed, iconUrl }) => {
     return (
-        <div style={style} className={cName}>
-            <div className="cr-wallet-item__info">
+        <div style={style} className={classNames('n-wallet-item', { 'n-wallet-item--active': active })}>
+            <div className="n-wallet-item__logo">
                 {iconUrl ? (
-                    <img alt="" className="cr-wallet-item__image-icon" src={iconUrl} />
+                    <img alt={currency} className="n-wallet-item__image" src={iconUrl} />
                 ) : (
-                    <CryptoIcon className="cr-wallet-item__icon" code={currency.toUpperCase()} />
+                    <CryptoIcon className="n-wallet-item__icon" code={currency} />
                 )}
-                <div className="cr-wallet-item__description">
-                    <span>{currency}</span>
-                    <span>{name}</span>
-                </div>
             </div>
-            <span className="cr-wallet-item__balance">
+            <div className="n-wallet-item__description">
+                <div>{currency}</div>
+                <div>{name}</div>
+            </div>
+            <div className="n-wallet-item__balance">
                 <Decimal fixed={fixed} thousSep=",">
                     {balance ? balance.toString() : '0'}
                 </Decimal>
-                &nbsp;
-                <span className="cr-wallet-item__currency">{currency}</span>
-                <span className="cr-wallet-item__balance-locked">
+                <div className="n-wallet-item__currency">{currency}</div>
+                <div className="n-wallet-item__balance-locked">
                     {locked ? (
-                        <div className="cr-wallet-item__amount-locked">
+                        <div className="n-wallet-item__amount-locked">
                             <LockIcon />{' '}
                             <Decimal fixed={fixed} thousSep=",">
                                 {locked.toString()}
                             </Decimal>
                         </div>
-                    ) : (
-                        ''
-                    )}
-                </span>
-            </span>
+                    ) : null}
+                </div>
+            </div>
         </div>
     );
 };

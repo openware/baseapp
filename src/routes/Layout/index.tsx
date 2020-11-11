@@ -1,3 +1,4 @@
+import { AppUrl } from 'lib/url';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
@@ -470,7 +471,8 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute
                         loading={userLoading}
                         isLogged={isLoggedIn}
-                        path="/wallets"
+                        path={AppUrl.wallet.path}
+                        //path={"/wallets"}
                         component={WalletsScreen}
                     />
                     <PrivateRoute

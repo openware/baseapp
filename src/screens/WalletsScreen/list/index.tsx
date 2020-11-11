@@ -1,6 +1,10 @@
+import { AppUrl, WalletRouteParams } from 'lib/url';
 import React, { useCallback } from 'react';
+import { useParams } from 'react-router';
 
-import { WalletItem, WalletItemProps } from '../WalletItem';
+import './index.scss';
+
+import { WalletItem, WalletItemProps } from '../item';
 
 export interface WalletListProps {
     walletItems: WalletItemProps[];
@@ -17,11 +21,6 @@ export interface WalletListProps {
 
 const removeAlt = (str: string): string => str.replace('-alt', '');
 
-const style: React.CSSProperties = {
-    listStyleType: 'none',
-    padding: 'calc(var(--gap) * 0.5) calc(var(--gap))',
-};
-
 /**
  * Component to display list of user wallets. It is scrollable and reacts on WalletItem click.
  */
@@ -31,6 +30,8 @@ export const WalletList: React.FC<WalletListProps> = ({
     activeIndex,
     walletItems,
 }) => {
+    const { currency: activeCurrency } = useParams<WalletRouteParams>();
+
     const handleClick = useCallback(
         (i: number, p: WalletItemProps) => {
             if (onWalletSelectionChange) {
@@ -44,19 +45,19 @@ export const WalletList: React.FC<WalletListProps> = ({
     );
 
     return (
-        <ul className="cr-wallet-list">
-            {walletItems.map((p: WalletItemProps, i: number) => (
-                <li key={i} style={style} onClick={() => handleClick(i, p)}>
+        <div className="n-wallet-list">
+            {walletItems.map(({ currency, ...rest }: WalletItemProps, i: number) => (
+                <a key={i} className="n-wallet-list__item" href={AppUrl.wallet.url({ currency: currency.toLowerCase() })}>
                     <WalletItem
                         key={i}
                         {...{
-                            ...p,
-                            active: activeIndex === i,
-                            currency: removeAlt(p.currency),
+                            ...rest,
+                            active: activeCurrency ? currency === activeCurrency : i === 0,
+                            currency: removeAlt(currency),
                         }}
                     />
-                </li>
+                </a>
             ))}
-        </ul>
+        </div>
     );
 };

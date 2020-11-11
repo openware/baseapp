@@ -1,0 +1,32 @@
+/* @include "~lib/styles/base.pcss"; */
+/* @import "~src/lib/style/base.pcss"; */
+
+.n-wallet-item {
+    background-color: var(--background-wallet-item);
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    &__logo {
+    }
+
+    &__description {
+    }
+
+    &__image-icon {
+    }
+
+    &__icon {
+        font-size: 1.5em !important;
+        /* margin-left: calc(var(--gap) * 4); */
+    }
+
+    &__balance {
+        &-locked {
+            color: var(--placeholder-text);
+            font-size: 0.9em;
+            font-weight: 200;
+            padding-top: var(--gap);
+        }
+    }
+}

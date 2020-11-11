@@ -1,6 +1,6 @@
 // eslint-disable
 import { Decimal } from '../components/Decimal';
-import { WalletItemProps } from '../components/WalletItem';
+import { WalletItemProps } from '../screens/WalletsScreen/item';
 import { DEFAULT_CCY_PRECISION } from '../constants';
 import { Currency } from '../modules/public/currencies';
 import { Market, Ticker } from '../modules/public/markets';

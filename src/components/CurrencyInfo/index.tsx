@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
-import { WalletItemProps } from '../WalletItem';
+import { WalletItemProps } from '../../screens/WalletsScreen/item';
 
 export interface CurrencyInfoProps {
     wallet: WalletItemProps;
