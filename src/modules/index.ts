@@ -6,18 +6,14 @@ import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklis
 import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
 import { CustomizationState, rootCustomizationSaga } from './public/customization';
+import { ErrorHandlerState, rootErrorHandlerSaga } from './public/errorHandler';
 import { ColorThemeState } from './public/globalSettings';
 import { GridLayoutState } from './public/gridLayout';
 import { LanguageState } from './public/i18n';
 import { KlineState, rootKlineFetchSaga } from './public/kline';
 import { MarketsState, rootMarketsSaga } from './public/markets';
 import { MemberLevelsState, rootMemberLevelsSaga } from './public/memberLevels';
-import {
-    DepthIncrementState,
-    DepthState,
-    OrderBookState,
-    rootOrderBookSaga,
-} from './public/orderBook';
+import { DepthIncrementState, DepthState, OrderBookState, rootOrderBookSaga } from './public/orderBook';
 import { RangerState } from './public/ranger/reducer';
 import { RecentTradesState, rootRecentTradesSaga } from './public/recentTrades';
 import { ApiKeysState } from './user/apiKeys';
@@ -33,7 +29,6 @@ import { DocumentsState, rootSendDocumentsSaga } from './user/kyc/documents';
 import { IdentityState, rootSendIdentitySaga } from './user/kyc/identity';
 import { LabelState, rootLabelSaga } from './user/kyc/label';
 import { PhoneState, rootSendCodeSaga } from './user/kyc/phone';
-import { NewHistoryState, rootNewHistorySaga } from './user/newHistory';
 import { OpenOrdersState, rootOpenOrdersSaga } from './user/openOrders';
 import { OrdersState, rootOrdersSaga } from './user/orders';
 import { OrdersHistoryState, rootOrdersHistorySaga } from './user/ordersHistory';
@@ -49,6 +44,7 @@ export * from './public/globalSettings';
 export * from './public/configs';
 export * from './public/currencies';
 export * from './public/customization';
+export * from './public/errorHandler';
 export * from './public/i18n';
 export * from './public/kline';
 export * from './public/alert';
@@ -65,7 +61,6 @@ export * from './user/ordersHistory';
 export * from './user/password';
 export * from './user/userActivity';
 export * from './user/history';
-export * from './user/newHistory';
 export * from './user/kyc';
 export * from './user/emailVerification';
 export * from './user/withdrawLimit';
@@ -83,6 +78,7 @@ export interface RootState {
         rgl: GridLayoutState;
         i18n: LanguageState;
         kline: KlineState;
+        errorHandler: ErrorHandlerState;
         markets: MarketsState;
         memberLevels: MemberLevelsState;
         orderBook: OrderBookState;
@@ -95,21 +91,20 @@ export interface RootState {
         apiKeys: ApiKeysState;
         auth: AuthState;
         beneficiaries: BeneficiariesState;
-        captchaKeys: GeetestCaptchaState;
+        captcha: GeetestCaptchaState;
         customizationUpdate: CustomizationUpdateState;
-        sendEmailVerification: EmailVerificationState;
         history: HistoryState;
         documents: DocumentsState;
         addresses: AddressesState;
         identity: IdentityState;
         label: LabelState;
         phone: PhoneState;
-        newHistory: NewHistoryState;
         openOrders: OpenOrdersState;
         orders: OrdersState;
         ordersHistory: OrdersHistoryState;
         password: PasswordState;
         profile: ProfileState;
+        sendEmailVerification: EmailVerificationState;
         userActivity: UserActivityState;
         wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
@@ -131,6 +126,7 @@ export function* rootSaga() {
         call(rootCurrenciesSaga),
         call(rootCustomizationSaga),
         call(rootCustomizationUpdateSaga),
+        call(rootErrorHandlerSaga),
         call(rootEmailVerificationSaga),
         call(rootGeetestCaptchaSaga),
         call(rootHandleAlertSaga),
@@ -139,7 +135,6 @@ export function* rootSaga() {
         call(rootLabelSaga),
         call(rootMarketsSaga),
         call(rootMemberLevelsSaga),
-        call(rootNewHistorySaga),
         call(rootOpenOrdersSaga),
         call(rootOrderBookSaga),
         call(rootOrdersHistorySaga),

@@ -139,4 +139,48 @@
       width: 100%;
     }
   }
+
+  &__recaptcha {
+    display: flex;
+    justify-content: center;
+  }
+
+  &--extended {
+    min-height: calc(var(--big-gap) * 5.75) !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cr-email-form {
+    &--extended {
+      min-height: calc(var(--big-gap) * 6.45) !important;
+    }
+  }
+}
+
+@media screen and (max-width: 767px), (max-height: 599px) {
+  .cr-email-form {
+    background: unset;
+    margin: 0 auto;
+  }
+
+  .cr-email-form__form-content {
+    background: var(--body-background-color);
+    position: static;
+  }
+
+  .cr-email-form__button-wrapper {
+    position: static;
+
+    button {
+      font-size: 14px;
+      height: 41px;
+      text-transform: uppercase;
+    }
+  }
+
+  .cr-email-form__group--focused input:focus {
+    border-color: var(--button-primary-cta-background-color);
+    border-width: 2px;
+  }
 }

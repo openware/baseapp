@@ -1,22 +1,25 @@
 import * as actions from './actions';
 import {
     API_KEY_CREATE,
-    API_KEY_CREATE_FETCH, API_KEY_DELETE, API_KEY_DELETE_FETCH,
+    API_KEY_CREATE_FETCH,
+    API_KEY_DELETE,
+    API_KEY_DELETE_FETCH,
     API_KEY_UPDATE,
-    API_KEY_UPDATE_FETCH, API_KEYS_2FA_MODAL,
+    API_KEY_UPDATE_FETCH,
+    API_KEYS_2FA_MODAL,
     API_KEYS_DATA,
     API_KEYS_FETCH,
 } from './constants';
 
-// tslint:disable no-object-literal-type-assertion
 describe('Api Keys actions', () => {
     it('should check apiKeysFetch action creator', () => {
-        const expectedAction = {type: API_KEYS_FETCH};
-        expect(actions.apiKeysFetch()).toEqual(expectedAction);
+        const payload = { pageIndex: 0, limit: 25 };
+        const expectedAction = {type: API_KEYS_FETCH, payload};
+        expect(actions.apiKeysFetch(payload)).toEqual(expectedAction);
     });
 
     it('should check apiKeysData action creator', () => {
-        const payload: actions.ApiKeyDataInterface[] = [];
+        const payload = { apiKeys: [], pageIndex: 0, nextPageExists: false };
         const expectedAction = {type: API_KEYS_DATA, payload};
         expect(actions.apiKeysData(payload)).toEqual(expectedAction);
     });

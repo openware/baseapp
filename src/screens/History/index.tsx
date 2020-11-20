@@ -7,10 +7,10 @@ import {
     MapDispatchToPropsFunction,
 } from 'react-redux';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { TabPanel } from '../../components';
 import { HistoryElement } from '../../containers/HistoryElement';
 import { setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     fetchHistory,
     marketsFetch,

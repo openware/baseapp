@@ -1,9 +1,15 @@
 import { call, put } from 'redux-saga/effects';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../public/alert';
 import { changeLanguage } from '../../../public/i18n';
 import { userData } from '../../profile';
-import { signInError, SignInFetch, signInRequire2FA, signUpRequireVerification } from '../actions';
+import {
+    signInData,
+    signInError,
+    SignInFetch,
+    signInRequire2FA,
+    signUpRequireVerification,
+} from '../actions';
 
 const sessionsConfig: RequestOptions = {
     apiVersion: 'barong',
@@ -23,18 +29,19 @@ export function* signInSaga(action: SignInFetch) {
             localStorage.setItem('csrfToken', user.csrf_token);
             yield put(signInRequire2FA({ require2fa: user.otp }));
         }
+        yield put(signInData());
     } catch (error) {
-        switch (error.code) {
-            case 401:
-                if (error.message.indexOf('identity.session.missing_otp') > -1) {
-                    yield put(signInRequire2FA({ require2fa: true }));
-                } else {
-                    yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
-                }
-                break;
-            default:
-                yield put(signInError(error));
-                yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        if (error.code === 401 && error.message.indexOf('identity.session.missing_otp') > -1) {
+            yield put(signInRequire2FA({ require2fa: true }));
+            yield put(signInData());
+        } else {
+          yield put(sendError({
+              error: error,
+              processingType: 'alert',
+              extraOptions: {
+                  actionError: signInError,
+              },
+          }));
         }
     }
 }

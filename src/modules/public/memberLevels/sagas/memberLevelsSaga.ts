@@ -1,19 +1,23 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../alert';
-import { memberLevelsData, memberLevelsError } from '../actions';
+import { memberLevelsData, memberLevelsError, MemberLevelsFetch } from '../actions';
 
 const requestOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* memberLevelsSaga() {
+export function* memberLevelsSaga(action: MemberLevelsFetch) {
     try {
         const data = yield call(API.get(requestOptions), '/public/member-levels');
         yield put(memberLevelsData(data));
     } catch (error) {
-        yield put(memberLevelsError());
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: memberLevelsError,
+            },
+        }));
     }
 }

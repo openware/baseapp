@@ -1,18 +1,14 @@
 import update from 'immutability-helper';
+import { defaultStorageLimit } from '../../../api';
+import { sliceArray } from '../../../helpers';
+import { ApiKeyDataInterface, ApiKeysAction } from './actions';
 import {
-    ApiKeyCreateData,
-    ApiKeyCreateFetch,
-    ApiKeyDataInterface,
-    ApiKeyDelete,
-    ApiKeyDeleteFetch,
-    ApiKeys2FAModal,
-    ApiKeysData,
-    ApiKeysFetch, ApiKeyUpdate, ApiKeyUpdateFetch,
-} from './actions';
-import {
-    API_KEY_CREATE, API_KEY_DELETE, API_KEY_UPDATE,
+    API_KEY_CREATE,
+    API_KEY_DELETE,
+    API_KEY_UPDATE,
     API_KEYS_2FA_MODAL,
     API_KEYS_DATA,
+    API_KEYS_ERROR,
 } from './constants';
 
 export interface ApiKeyStateModal {
@@ -25,6 +21,8 @@ export interface ApiKeysState {
     apiKeys: ApiKeyDataInterface[];
     dataLoaded: boolean;
     modal: ApiKeyStateModal;
+    pageIndex: number;
+    nextPageExists: boolean;
 }
 
 export const initialApiKeysState: ApiKeysState = {
@@ -33,25 +31,19 @@ export const initialApiKeysState: ApiKeysState = {
     modal: {
         active: false,
     },
+    pageIndex: 0,
+    nextPageExists: false,
 };
-
-export type ApiKeysAction = ApiKeysFetch |
-    ApiKeysData |
-    ApiKeyCreateFetch |
-    ApiKeyCreateData |
-    ApiKeyUpdateFetch |
-    ApiKeyUpdate |
-    ApiKeyDeleteFetch |
-    ApiKeyDelete |
-    ApiKeys2FAModal;
 
 export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysAction): ApiKeysState => {
     switch (action.type) {
         case API_KEYS_DATA:
             return {
                 ...state,
-                apiKeys: action.payload,
+                apiKeys: sliceArray(action.payload.apiKeys, defaultStorageLimit()),
                 dataLoaded: true,
+                pageIndex: action.payload.pageIndex,
+                nextPageExists: action.payload.nextPageExists,
             };
         case API_KEY_CREATE:
             return {
@@ -81,6 +73,8 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
                 ...state,
                 modal: action.payload,
             };
+        case API_KEYS_ERROR:
+            return initialApiKeysState;
         default:
             return state;
     }

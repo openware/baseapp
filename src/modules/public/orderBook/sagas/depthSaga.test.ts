@@ -1,12 +1,12 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { CommonError } from '../../../types';
 import { Market } from '../../markets';
 import { depthData, depthError, depthFetch } from '../actions';
 
-// tslint:disable no-any no-magic-numbers
 describe('Saga: depth', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
@@ -33,9 +33,9 @@ describe('Saga: depth', () => {
         min_amount: '0.0',
         amount_precision: 4,
         price_precision: 4,
-};
+    };
 
-    const fakeError = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -67,11 +67,12 @@ describe('Saga: depth', () => {
         mockAxios.onGet('/public/markets/btczar/depth').reply(200, fakeDepth);
     };
 
-    const expectedActionsFetch = [depthFetch(fakeMarket), depthData(fakeDepth)];
-    const expectedActionsError = [depthFetch(fakeMarket), depthError(fakeError)];
-
     it('should fetch depth', async () => {
         mockDepth();
+        const expectedActionsFetch = [
+            depthFetch(fakeMarket),
+            depthData(fakeDepth),
+        ];
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
@@ -89,6 +90,16 @@ describe('Saga: depth', () => {
 
     it('should trigger an error (marketDepth)', async () => {
         mockNetworkError(mockAxios);
+        const expectedActionsError = [
+            depthFetch(fakeMarket),
+            sendError({
+                error,
+                processingType: 'console',
+                extraOptions: {
+                    actionError: depthError,
+                },
+            }),
+        ];
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();

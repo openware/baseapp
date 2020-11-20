@@ -23,7 +23,11 @@ const initialState: PasswordState = {
 export const passwordReducer = (state = initialState, action: PasswordAction) => {
     switch (action.type) {
         case PASSWORD_FORGOT_FETCH:
-            return { ...state, loading: true };
+            return {
+                ...state,
+                loading: true,
+                forgotPasswordRequested: false,
+            };
         case PASSWORD_FORGOT_SUCCESS:
             return {
                 ...state,
@@ -33,11 +37,15 @@ export const passwordReducer = (state = initialState, action: PasswordAction) =>
         case PASSWORD_FORGOT_ERROR:
             return {
                 ...state,
-                forgotPasswordError: action.payload,
+                forgotPasswordError: action.error,
                 loading: false,
             };
         case PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH:
-            return { ...state, loading: true };
+            return {
+                ...state,
+                loading: true,
+                forgotPasswordChanged: false,
+            };
         case PASSWORD_CHANGE_FORGOT_PASSWORD_SUCCESS:
             return {
                 ...state,

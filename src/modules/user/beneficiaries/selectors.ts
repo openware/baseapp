@@ -2,7 +2,6 @@ import { RootState } from '../../../modules';
 import { CommonError } from '../../../modules/types';
 import { Beneficiary } from './types';
 
-
 /* Beneficiaries fetch */
 export const selectBeneficiaries = (state: RootState): Beneficiary[] =>
     state.user.beneficiaries.fetch.data;
@@ -43,7 +42,6 @@ export const selectBeneficiariesCreateError = (state: RootState): CommonError | 
     state.user.beneficiaries.create.error;
 
 /* Beneficiaries delete */
-
 export const selectBeneficiariesDeleteLoading = (state: RootState): boolean =>
     state.user.beneficiaries.delete.fetching;
 
@@ -52,3 +50,13 @@ export const selectBeneficiariesDeleteSuccess = (state: RootState): boolean =>
 
 export const selectBeneficiariesDeleteError = (state: RootState): CommonError | undefined =>
     state.user.beneficiaries.delete.error;
+
+/* Beneficiaries resend pin */
+export const selectBeneficiariesResendPinLoading = (state: RootState): boolean =>
+    state.user.beneficiaries.resendPin.fetching;
+
+export const selectBeneficiariesResendPinSuccess = (state: RootState): boolean =>
+    state.user.beneficiaries.resendPin.success;
+
+export const selectBeneficiariesResendPinError = (state: RootState): CommonError | undefined =>
+    state.user.beneficiaries.resendPin.error;

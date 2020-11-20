@@ -3,11 +3,11 @@ import { Spinner } from 'react-bootstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate, setTradeColor } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Market,
     ordersHistoryCancelFetch,
@@ -154,11 +154,11 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
             date,
             <span style={{ color: setTradeColor(side).color }} key={id}>{orderType}</span>,
             marketName,
-            <Decimal key={id} fixed={currentMarket.price_precision}>{actualPrice}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision}>{origin_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision}>{executed_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision}>{remaining_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision}>{costRemaining.toString()}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.price_precision} thousSep=",">{actualPrice}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{origin_volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{executed_volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{remaining_volume}</Decimal>,
+            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{costRemaining.toString()}</Decimal>,
             status,
             state === 'wait' && <CloseIcon key={id} onClick={this.handleCancel(id)} />,
         ];

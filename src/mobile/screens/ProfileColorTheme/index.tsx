@@ -10,7 +10,7 @@ import {
 import { CheckIcon } from '../../assets/images/CheckIcon';
 import { Subheader } from '../../components/Subheader';
 
-const COLOR_THEMES = ['basic', 'light'];
+const COLOR_THEMES = ['dark', 'light'];
 
 const ProfileThemeMobileScreenComponent: React.FC = () => {
     const intl = useIntl();

@@ -1,12 +1,12 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { changeLanguage } from '../../../public/i18n';
+import { CommonError } from '../../../types';
 import { userData } from '../../profile';
 import { signIn, signInError, signInRequire2FA } from '../actions';
-
 
 describe('SignIn saga', () => {
     let store: MockStoreEnhanced;
@@ -23,8 +23,6 @@ describe('SignIn saga', () => {
     afterEach(() => {
         mockAxios.reset();
     });
-
-    const fake2FAError = { code: 401, message: ['Require 2fa'] };
 
     const fakeCredentials = { email: 'john.barong@gmail.com', password: '123123' };
 
@@ -48,8 +46,9 @@ describe('SignIn saga', () => {
         mockAxios.onPost('/identity/sessions').reply(200, fakeUser);
     };
 
-    const mockSignInError = () => {
-        mockAxios.onPost('/identity/sessions').reply(401, fake2FAError);
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
     };
 
     const expectedActionsFetch = [
@@ -58,12 +57,16 @@ describe('SignIn saga', () => {
         userData({user: fakeUser}),
         signInRequire2FA({ require2fa: false }),
     ];
-    const expectedActions2FAError = [
-        signIn(fakeCredentials),
-    ];
+
     const expectedActionsNetworkError = [
         signIn(fakeCredentials),
-        signInError({ code: 500, message: ['Server error'] }),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: signInError,
+            },
+        }),
     ];
 
     it('should signin user in success flow', async () => {
@@ -78,22 +81,6 @@ describe('SignIn saga', () => {
             });
         });
 
-        store.dispatch(signIn(fakeCredentials));
-
-        return promise;
-    });
-
-    it('should trigger 2fa error', async () => {
-        mockSignInError();
-        const promise = new Promise(resolve => {
-            store.subscribe(() => {
-                const actions = store.getActions();
-                if (actions.length === expectedActions2FAError.length) {
-                    expect(actions).toEqual(expectedActions2FAError);
-                    resolve();
-                }
-            });
-        });
         store.dispatch(signIn(fakeCredentials));
 
         return promise;

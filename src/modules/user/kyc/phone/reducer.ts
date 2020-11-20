@@ -39,7 +39,7 @@ export const phoneReducer = (state = initialPhoneState, action: PhoneAction) => 
         case PHONE_SEND_CODE_ERROR:
             return {
                 codeSend: false,
-                error: action.payload,
+                error: action.error,
             };
         case PHONE_VERIFY_DATA:
             return {
@@ -50,7 +50,7 @@ export const phoneReducer = (state = initialPhoneState, action: PhoneAction) => 
         case PHONE_VERIFY_ERROR:
             return {
                 codeSend: false,
-                error: action.payload,
+                error: action.error,
             };
         case PHONE_VERIFY_FETCH:
         case PHONE_RESEND_CODE_FETCH:
@@ -69,7 +69,7 @@ export const phoneReducer = (state = initialPhoneState, action: PhoneAction) => 
         case PHONE_RESEND_CODE_ERROR:
             return {
                 codeSend: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;

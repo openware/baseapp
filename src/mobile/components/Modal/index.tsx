@@ -67,7 +67,9 @@ const ModalComponent = props => {
         <div className={modalClassName} onClick={e => handleOnClose(e, true)}>
             <div className={bodyClassName}>
                 {props.header || renderDefaultHeader}
-                {props.children}
+                <div className="cr-mobile-modal__body">
+                    {props.children}
+                </div>
             </div>
         </div>
     );

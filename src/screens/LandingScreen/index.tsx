@@ -3,11 +3,13 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { MarketsTable } from '../../containers';
-import { IntlProps } from '../../index';
+import { toggleColorTheme } from '../../helpers';
 import {
     RootState,
+    selectCurrentColorTheme,
     selectUserLoggedIn,
 } from '../../modules';
 
@@ -30,11 +32,30 @@ const CoinMarketIcon = require('../../assets/images/landing/social/CoinMarket.sv
 
 interface ReduxProps {
     isLoggedIn: boolean;
+    colorTheme: string;
 }
 
 type Props = ReduxProps & RouteProps & IntlProps;
 
 class Landing extends React.Component<Props> {
+    public componentDidMount() {
+        if (this.props.colorTheme === 'light') {
+            toggleColorTheme('dark');
+        }
+    }
+
+    public componentWillReceiveProps(next: Props) {
+        if (next.colorTheme === 'light') {
+            toggleColorTheme('dark');
+        }
+    }
+
+    public componentWillUnmount() {
+        if (this.props.colorTheme === 'light') {
+            toggleColorTheme(this.props.colorTheme);
+        }
+    }
+
     public renderHeader() {
         if (this.props.isLoggedIn) {
             return (
@@ -297,6 +318,7 @@ class Landing extends React.Component<Props> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     isLoggedIn: selectUserLoggedIn(state),
+    colorTheme: selectCurrentColorTheme(state),
 });
 
 export const LandingScreen = compose(

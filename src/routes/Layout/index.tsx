@@ -5,11 +5,11 @@ import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     ChangeForgottenPasswordMobileScreen,
     ConfirmMobileScreen,
@@ -229,9 +229,9 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     }
 
     public componentDidUpdate(prevProps: LayoutProps) {
-        const { customization, isLoggedIn } = this.props;
+        const { customization, isLoggedIn, userLoading } = this.props;
 
-        if (!isLoggedIn && prevProps.isLoggedIn) {
+        if (!isLoggedIn && prevProps.isLoggedIn && !userLoading) {
             this.props.walletsReset();
 
             if (!this.props.location.pathname.includes('/trading')) {

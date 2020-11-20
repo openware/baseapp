@@ -1,6 +1,12 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 
 describe('MemberLevels actions', () => {
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     it('should check membersFetch action creator', () => {
         const expectedAction = { type: 'memberLevels/FETCH' };
         expect(actions.memberLevelsFetch()).toEqual(expectedAction);
@@ -17,7 +23,7 @@ describe('MemberLevels actions', () => {
     });
 
     it('should check memberLevelsError action creator', () => {
-        const expectedAction = { type: 'memberLevels/ERROR' };
-        expect(actions.memberLevelsError()).toEqual(expectedAction);
+        const expectedAction = { type: 'memberLevels/ERROR', error };
+        expect(actions.memberLevelsError(error)).toEqual(expectedAction);
     });
 });

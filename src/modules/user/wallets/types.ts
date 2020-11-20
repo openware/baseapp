@@ -14,7 +14,9 @@ export interface Wallet {
 
 export interface WalletAddress {
     address: string;
+    currencies: string[];
     currency: string;
+    state?: string;
 }
 
 export interface WalletWithdrawCCY {

@@ -1,4 +1,5 @@
 import { en as customTranslations } from '../custom/translations/en';
+import { en as mobileTranslations } from '../mobile/translations/en';
 import { nationalitiesNames } from './nationalities';
 
 export const en = {
@@ -189,9 +190,10 @@ export const en = {
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'To withdraw you have to enable 2FA',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2FA',
 
-    'success.beneficiaries.created': 'Beficiaries: successfully created',
-    'success.beneficiaries.activated': 'Beficiaries: successfully activated',
-    'success.beneficiaries.deleted': 'Beficiaries: successfully deleted',
+    'success.beneficiaries.created': 'Beneficiaries: successfully created',
+    'success.beneficiaries.activated': 'Beneficiaries: successfully activated',
+    'success.beneficiaries.deleted': 'Beneficiaries: successfully deleted',
+    'success.beneficiaries.resent_pin': 'Beneficiaries: pin resent',
 
     'page.body.wallets.beneficiaries.title': 'Withdraw address',
     'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',
@@ -228,6 +230,7 @@ export const en = {
     'page.body.wallets.beneficiaries.confirmationModal.header': 'Confirm new address',
     'page.body.wallets.beneficiaries.confirmationModal.body.text': 'We have sent you an email containing a confirmation code pin, please enter it below to save the new address:',
     'page.body.wallets.beneficiaries.confirmationModal.body.confirmationModalCode': 'Pin code',
+    'page.body.wallets.beneficiaries.confirmationModal.body.resendButton': 'Resend pin',
     'page.body.wallets.beneficiaries.confirmationModal.body.button': 'Confirm',
 
     'page.body.wallets.beneficiaries.tipAddress': 'Address',
@@ -426,6 +429,21 @@ export const en = {
     'page.body.profile.verification.verify': 'Verify',
     'page.body.profile.verification.verified': 'Verified',
     'page.body.profile.verification.progress.level': 'Level',
+    'page.body.profile.verification.progress.tooltip.email.default': 'Email address to to get level 1 and allow Withdrawal',
+    'page.body.profile.verification.progress.tooltip.email.rejected': 'Your email was rejected',
+    'page.body.profile.verification.progress.tooltip.email.pending': 'Email address verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.phone.default': 'Verify Phone number to get level 2 and allow Deposits and Trades',
+    'page.body.profile.verification.progress.tooltip.phone.rejected': 'Your phone was rejected',
+    'page.body.profile.verification.progress.tooltip.phone.pending': 'Phone number verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.profile.default': 'Complete your profile to get level 3 and Increase Withdrawal limit to 1 BTC',
+    'page.body.profile.verification.progress.tooltip.profile.rejected': 'Your profile was rejected',
+    'page.body.profile.verification.progress.tooltip.profile.pending': 'Profile verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.document.default': 'Verify you identity to get level 4 and Increase Withdrawal limit to 10 BTC',
+    'page.body.profile.verification.progress.tooltip.document.rejected': 'Your identity was rejected',
+    'page.body.profile.verification.progress.tooltip.document.pending': 'Identity verification may take 1-3 business days.',
+    'page.body.profile.verification.progress.tooltip.address.default': 'Verify Proof of residence to get level 5 and Increase Withdrawal limit to 100 BTC',
+    'page.body.profile.verification.progress.tooltip.address.rejected': 'Your proof of residence was rejected',
+    'page.body.profile.verification.progress.tooltip.address.pending': 'Proof of residence verification may take 1-3 business days.',
 
 
     /* KYC */
@@ -804,6 +822,9 @@ export const en = {
     'account.withdraw.invalid_otp': 'Invalid otp',
     'account.withdraw.disabled_api': 'Withdrawal API is disabled',
 
+    'account.beneficiary.invalid_pin': 'Invalid beneficiary activation pin',
+    'account.beneficiary.cant_resend_within_1_minute': 'Can\'t resend activation pin within 1 minute',
+
     'market.market.doesnt_exist': 'Market doesn\'t exist',
     'market.order.invalid_state': 'Invalid deposit state',
     'market.order.invalid_limit': 'Invalid limit',
@@ -863,4 +884,5 @@ export const en = {
 
     ...nationalitiesNames,
     ...customTranslations,
+    ...mobileTranslations,
 };

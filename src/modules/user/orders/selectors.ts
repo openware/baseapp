@@ -1,4 +1,4 @@
-import { RootState } from '../../index';
+import { RootState } from '../../';
 
 const selectOrdersState = (state: RootState): RootState['user']['orders'] =>
     state.user.orders;

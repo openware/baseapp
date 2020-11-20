@@ -1,5 +1,7 @@
 .cr-table__noData {
   .pg-recent-trades {
+    width: fit-content;
+
     .cr-table td,
     .cr-table th {
       text-align: right;
@@ -125,6 +127,12 @@
         padding-left: calc(var(--gap) * 1.5);
         padding-right: calc(var(--gap) * 1.5);
       }
+    }
+  }
+
+  .cr-table {
+    thead th {
+      z-index: 1 !important;
     }
   }
 }

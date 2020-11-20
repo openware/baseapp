@@ -1,8 +1,6 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
-import {
-  initialWalletsState,
-  walletsReducer,
-} from './reducer';
+import { initialWalletsState, walletsReducer } from './reducer';
 import { Wallet } from './types';
 
 describe('walletsList reducer', () => {
@@ -39,7 +37,7 @@ describe('walletsList reducer', () => {
         },
     ];
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };
@@ -56,8 +54,10 @@ describe('walletsList reducer', () => {
     };
 
     const addressDataPayload = {
+        currencies: ['btc', 'tbtc'],
         currency: 'btc',
         address: 'address',
+        state: 'active',
     };
 
     it('should handle WALLETS_FETCH', () => {

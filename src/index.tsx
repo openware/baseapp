@@ -37,7 +37,7 @@ if (sentryEnabled()) {
     const project = process.env.REACT_APP_SENTRY_PROJECT;
 
     if (key && key.length && organization && organization.length && project && project.length) {
-        Sentry.init({dsn: `https://${key}@${organization}.ingest.sentry.io/${project}`});
+        Sentry.init({ dsn: `https://${key}@${organization}.ingest.sentry.io/${project}` });
     }
 }
 

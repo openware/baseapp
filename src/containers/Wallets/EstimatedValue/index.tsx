@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../../';
+import { formatWithSeparators } from '../../../components';
 import { WalletItemProps } from '../../../components/WalletItem';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
-import { IntlProps } from '../../../index';
 import {
     currenciesFetch,
     Currency,
@@ -23,7 +24,6 @@ import { selectRanger } from '../../../modules/public/ranger/selectors';
 
 interface EstimatedValueProps {
     wallets: WalletItemProps[];
-    hello: string;
 }
 
 interface ReduxProps {
@@ -54,15 +54,19 @@ class EstimatedValueContainer extends React.Component<Props> {
             fetchTickers,
             markets,
             rangerState: {connected},
+            tickers,
             userLoggedIn,
         } = this.props;
 
-        if (markets.length === 0) {
+        if (!markets.length) {
             fetchMarkets();
+        }
+
+        if (!tickers.length) {
             fetchTickers();
         }
 
-        if (currencies.length === 0) {
+        if (!currencies.length) {
             fetchCurrencies();
         }
 
@@ -78,14 +82,18 @@ class EstimatedValueContainer extends React.Component<Props> {
             fetchMarkets,
             fetchTickers,
             markets,
+            tickers,
         } = this.props;
 
-        if (next.markets.length === 0 && next.markets !== markets) {
+        if (!markets.length && next.markets.length) {
             fetchMarkets();
+        }
+
+        if (!tickers.length && next.tickers.length) {
             fetchTickers();
         }
 
-        if (next.currencies.length === 0 && next.currencies !== currencies) {
+        if (!currencies.length && next.currencies.length) {
             fetchCurrencies();
         }
     }
@@ -105,7 +113,7 @@ class EstimatedValueContainer extends React.Component<Props> {
                     {this.translate('page.body.wallets.estimated_value')}
                     <span className="value-container">
                         <span className="value">
-                            {estimatedValue}
+                            {formatWithSeparators(estimatedValue, ',')}
                         </span>
                         <span className="value-sign">{VALUATION_PRIMARY_CURRENCY.toUpperCase()}</span>
                     </span>
@@ -128,7 +136,7 @@ class EstimatedValueContainer extends React.Component<Props> {
         return (
             <span className="value-container">
                 <span className="value">
-                    {estimatedValueSecondary}
+                    {formatWithSeparators(estimatedValueSecondary, ',')}
                 </span>
                 <span className="value-sign">{VALUATION_SECONDARY_CURRENCY.toUpperCase()}</span>
             </span>

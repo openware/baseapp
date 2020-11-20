@@ -13,6 +13,9 @@ import {
     BENEFICIARIES_DELETE_ERROR,
     BENEFICIARIES_ERROR,
     BENEFICIARIES_FETCH,
+    BENEFICIARIES_RESEND_PIN,
+    BENEFICIARIES_RESEND_PIN_DATA,
+    BENEFICIARIES_RESEND_PIN_ERROR,
 } from './constants';
 import { Beneficiary } from './types';
 
@@ -32,7 +35,7 @@ export interface BeneficiariesDataUpdate {
 
 export interface BeneficiariesError {
     type: typeof BENEFICIARIES_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface BeneficiariesActivate {
@@ -50,7 +53,26 @@ export interface BeneficiariesActivateData {
 
 export interface BeneficiariesActivateError {
     type: typeof BENEFICIARIES_ACTIVATE_ERROR;
-    payload: CommonError;
+    error: CommonError;
+}
+
+export interface BeneficiariesResendPin {
+    type: typeof BENEFICIARIES_RESEND_PIN;
+    payload: {
+        id: number;
+    };
+}
+
+export interface BeneficiariesResendPinData {
+    type: typeof BENEFICIARIES_RESEND_PIN_DATA;
+    payload: {
+        id: number;
+    };
+}
+
+export interface BeneficiariesResendPinError {
+    type: typeof BENEFICIARIES_RESEND_PIN_ERROR;
+    error: CommonError;
 }
 
 export interface BeneficiariesCreate {
@@ -58,8 +80,8 @@ export interface BeneficiariesCreate {
     payload: {
         currency: string;
         name: string;
-        description?: string;
         data: string;
+        description?: string;
     };
 }
 
@@ -70,7 +92,7 @@ export interface BeneficiariesCreateData {
 
 export interface BeneficiariesCreateError {
     type: typeof BENEFICIARIES_CREATE_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface BeneficiariesDelete {
@@ -89,7 +111,7 @@ export interface BeneficiariesDeleteData {
 
 export interface BeneficiariesDeleteError {
     type: typeof BENEFICIARIES_DELETE_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export type BeneficiariesActions =
@@ -105,7 +127,10 @@ export type BeneficiariesActions =
     | BeneficiariesCreateError
     | BeneficiariesDelete
     | BeneficiariesDeleteData
-    | BeneficiariesDeleteError;
+    | BeneficiariesDeleteError
+    | BeneficiariesResendPin
+    | BeneficiariesResendPinData
+    | BeneficiariesResendPinError;
 
 export const beneficiariesFetch = (): BeneficiariesFetch => ({
     type: BENEFICIARIES_FETCH,
@@ -121,9 +146,9 @@ export const beneficiariesDataUpdate = (payload: BeneficiariesDataUpdate['payloa
     payload,
 });
 
-export const beneficiariesError = (payload: BeneficiariesError['payload']): BeneficiariesError => ({
+export const beneficiariesError = (error: CommonError): BeneficiariesError => ({
     type: BENEFICIARIES_ERROR,
-    payload,
+    error,
 });
 
 export const beneficiariesActivate = (payload: BeneficiariesActivate['payload']): BeneficiariesActivate => ({
@@ -136,9 +161,9 @@ export const beneficiariesActivateData = (payload: BeneficiariesActivateData['pa
     payload,
 });
 
-export const beneficiariesActivateError = (payload: BeneficiariesActivateError['payload']): BeneficiariesActivateError => ({
+export const beneficiariesActivateError = (error: CommonError): BeneficiariesActivateError => ({
     type: BENEFICIARIES_ACTIVATE_ERROR,
-    payload,
+    error,
 });
 
 export const beneficiariesCreate = (payload: BeneficiariesCreate['payload']): BeneficiariesCreate => ({
@@ -151,9 +176,9 @@ export const beneficiariesCreateData = (payload: BeneficiariesCreateData['payloa
     payload,
 });
 
-export const beneficiariesCreateError = (payload: BeneficiariesCreateError['payload']): BeneficiariesCreateError => ({
+export const beneficiariesCreateError = (error: CommonError): BeneficiariesCreateError => ({
     type: BENEFICIARIES_CREATE_ERROR,
-    payload,
+    error,
 });
 
 export const beneficiariesDelete = (payload: BeneficiariesDelete['payload']): BeneficiariesDelete => ({
@@ -166,7 +191,22 @@ export const beneficiariesDeleteData = (payload: BeneficiariesDeleteData['payloa
     payload,
 });
 
-export const beneficiariesDeleteError = (payload: BeneficiariesDeleteError['payload']): BeneficiariesDeleteError => ({
+export const beneficiariesDeleteError = (error: CommonError): BeneficiariesDeleteError => ({
     type: BENEFICIARIES_DELETE_ERROR,
+    error,
+});
+
+export const beneficiariesResendPin = (payload: BeneficiariesResendPin['payload']): BeneficiariesResendPin => ({
+    type: BENEFICIARIES_RESEND_PIN,
     payload,
+});
+
+export const beneficiariesResendPinData = (payload: BeneficiariesResendPinData['payload']): BeneficiariesResendPinData => ({
+    type: BENEFICIARIES_RESEND_PIN_DATA,
+    payload,
+});
+
+export const beneficiariesResendPinError = (error: CommonError): BeneficiariesResendPinError => ({
+    type: BENEFICIARIES_RESEND_PIN_ERROR,
+    error,
 });

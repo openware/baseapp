@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { OrdersTabScreen } from '../';
-import { IntlProps } from '../../index';
+import { IntlProps } from '../../';
 import { rootReducer } from '../../modules';
 
 const store = createStore(rootReducer);

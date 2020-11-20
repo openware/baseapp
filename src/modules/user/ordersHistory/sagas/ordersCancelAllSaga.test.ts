@@ -1,13 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+import { alertPush, rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { alertPush, rootSaga } from '../../../index';
-import {
-    ordersCancelAllData,
-    ordersCancelAllError,
-    ordersCancelAllFetch,
-} from '../actions';
+import { CommonError } from '../../../types';
+import { ordersCancelAllData, ordersCancelAllError, ordersCancelAllFetch } from '../actions';
 
 describe('Orders Cancel All', () => {
     let store: MockStoreEnhanced;
@@ -25,14 +22,13 @@ describe('Orders Cancel All', () => {
         mockAxios.reset();
     });
 
-    const fakeError = {
-        type: 'error',
-        code: 500,
-        message: ['Server error'],
-    };
-
     const mockCancelAllOrders = () => {
         mockAxios.onPost('/market/orders/cancel').reply(200);
+    };
+
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
     };
 
     const expectedActionsSuccess = [
@@ -40,10 +36,16 @@ describe('Orders Cancel All', () => {
         ordersCancelAllData(),
         alertPush({ message: ['success.order.cancelling.all'], type: 'success'}),
     ];
+
     const expectedActionsError = [
         ordersCancelAllFetch(),
-        ordersCancelAllError(),
-        alertPush(fakeError),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: ordersCancelAllError,
+            },
+        }),
     ];
 
     it('should cancel all open orders', async () => {

@@ -1,17 +1,15 @@
-import { OrderCommon, OrderEvent } from '../../types';
+import { CommonError, OrderCommon, OrderEvent } from '../../types';
 import * as actions from './actions';
-import {
-    convertOrderEvent,
-    insertOrUpdate,
-} from './helpers';
-import {
-    initialOpenOrdersState,
-    openOrdersReducer,
-    OpenOrdersState,
-} from './reducer';
+import { convertOrderEvent, insertOrUpdate } from './helpers';
+import { initialOpenOrdersState, openOrdersReducer, OpenOrdersState } from './reducer';
 
 
 describe('Open Orders reducer', () => {
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     it('should handle USER_OPEN_ORDERS_FETCH', () => {
         const expectedState = { ...initialOpenOrdersState, fetching: true };
         const payload: actions.UserOpenOrdersFetch['payload'] = {
@@ -51,8 +49,9 @@ describe('Open Orders reducer', () => {
             list: [],
             fetching: false,
         };
+
         expect(
-            openOrdersReducer(initialState, actions.userOpenOrdersError()),
+            openOrdersReducer(initialState, actions.userOpenOrdersError(error)),
         ).toEqual(expectedState);
     });
 
@@ -322,7 +321,7 @@ describe('Open Orders reducer', () => {
             cancelFetching: false,
         };
         expect(
-            openOrdersReducer(initialState, actions.openOrdersCancelError()),
+            openOrdersReducer(initialState, actions.openOrdersCancelError(error)),
         ).toEqual(expectedState);
     });
 });

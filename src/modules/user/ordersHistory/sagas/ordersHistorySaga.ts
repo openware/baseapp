@@ -1,11 +1,7 @@
 import { call, put } from 'redux-saga/effects';
-import { alertPush } from '../../..';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import {
-    userOrdersHistoryData,
-    userOrdersHistoryError,
-    UserOrdersHistoryFetch,
-} from '../actions';
+import { userOrdersHistoryData, userOrdersHistoryError, UserOrdersHistoryFetch } from '../actions';
 
 const ordersOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -28,7 +24,12 @@ export function* ordersHistorySaga(action: UserOrdersHistoryFetch) {
 
         yield put(userOrdersHistoryData({ list: data, nextPageExists, pageIndex }));
     } catch (error) {
-        yield put(userOrdersHistoryError());
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: userOrdersHistoryError,
+            },
+        }));
     }
 }

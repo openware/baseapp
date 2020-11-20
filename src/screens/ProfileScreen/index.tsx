@@ -3,12 +3,12 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { ProfileApiKeys, ProfileVerification } from '../../containers';
 import { ProfileAccountActivity } from '../../containers/ProfileAccountActivity';
 import { ProfileAuthDetails } from '../../containers/ProfileAuthDetails';
 import { ReferralProgram } from '../../containers/ReferralProgram';
 import { setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 
 class ProfileComponent extends React.Component<RouterProps, IntlProps> {
 
@@ -33,15 +33,11 @@ class ProfileComponent extends React.Component<RouterProps, IntlProps> {
                         <div className="col-12 col-md-6 mx-0">
                             <div className="row col-12 mx-0">
                                 <ProfileAuthDetails/>
+                                <ReferralProgram/>
                             </div>
                         </div>
                         <div className="col-12 col-md-6">
                             <ProfileVerification/>
-                        </div>
-                    </div>
-                    <div className="row px-4">
-                        <div className="col-12 mx-0">
-                            <ReferralProgram/>
                         </div>
                     </div>
                 </div>

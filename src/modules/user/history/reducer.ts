@@ -39,7 +39,13 @@ export const historyReducer = (state = initialState, action: HistoryActions) => 
                 nextPageExists: action.payload.nextPageExists,
             };
         case HISTORY_ERROR: {
-            return { ...state, list: [], fetching: false, nextPageExists: false, page: 0 };
+            return {
+                ...state,
+                list: [],
+                fetching: false,
+                nextPageExists: false,
+                page: 0,
+            };
         }
         case HISTORY_RESET: {
             return { ...state, list: [], page: 0, nextPageExists: false };

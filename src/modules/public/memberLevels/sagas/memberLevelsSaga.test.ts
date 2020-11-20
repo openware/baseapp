@@ -1,13 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../..';
+import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import {
-    memberLevelsData,
-    memberLevelsError,
-    memberLevelsFetch,
-} from '../actions';
+import { CommonError } from '../../../types';
+import { memberLevelsData, memberLevelsError, memberLevelsFetch } from '../actions';
 import { MemberLevels } from '../types';
 
 describe('Saga: memberLevelsFetchSaga', () => {
@@ -36,24 +33,22 @@ describe('Saga: memberLevelsFetchSaga', () => {
         mockAxios.onGet('/public/member-levels').reply(200, fakeMemberLevels);
     };
 
-    const expectedBeneficiariesActionsFetch = [
-        memberLevelsFetch(),
-        memberLevelsData(fakeMemberLevels),
-    ];
-
-    const expectedBeneficiariesActionsError = [
-        memberLevelsFetch(),
-        memberLevelsError(),
-    ];
-
+    const error: CommonError = {
+        message: ['Server error'],
+        code: 500,
+    };
 
     it('should fetch memberLevels in success flow', async () => {
         mockMemberLevels();
+        const expectedMemberLevelsActionsFetch = [
+            memberLevelsFetch(),
+            memberLevelsData(fakeMemberLevels),
+        ];
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === expectedBeneficiariesActionsFetch.length) {
-                    expect(actions).toEqual(expectedBeneficiariesActionsFetch);
+                if (actions.length === expectedMemberLevelsActionsFetch.length) {
+                    expect(actions).toEqual(expectedMemberLevelsActionsFetch);
                     resolve();
                 }
             });
@@ -65,11 +60,21 @@ describe('Saga: memberLevelsFetchSaga', () => {
 
     it('should trigger fetch memberLevels error', async () => {
         mockNetworkError(mockAxios);
+        const expectedMemberLevelsActionsError = [
+            memberLevelsFetch(),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: memberLevelsError,
+                },
+            }),
+        ];
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === expectedBeneficiariesActionsError.length) {
-                    expect(actions).toEqual(expectedBeneficiariesActionsError);
+                if (actions.length === expectedMemberLevelsActionsError.length) {
+                    expect(actions).toEqual(expectedMemberLevelsActionsError);
                     resolve();
                 }
             });

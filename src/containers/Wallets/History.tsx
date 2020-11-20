@@ -3,10 +3,10 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../';
 import { History, Pagination, WalletItemProps } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     currenciesFetch,
     Currency,
@@ -60,7 +60,7 @@ export class WalletTable extends React.Component<Props> {
         } = this.props;
         this.props.fetchHistory({ page: 0, currency, type, limit: 6 });
 
-        if (currencies.length === 0) {
+        if (!currencies.length) {
             this.props.fetchCurrencies();
         }
     }
@@ -76,7 +76,7 @@ export class WalletTable extends React.Component<Props> {
             this.props.fetchHistory({ page: 0, currency: nextProps.currency, type, limit: 6 });
         }
 
-        if (nextProps.currencies.length === 0 && nextProps.currencies !== currencies) {
+        if (!currencies.length && nextProps.currencies.length) {
             this.props.fetchCurrencies();
         }
     }
@@ -151,7 +151,7 @@ export class WalletTable extends React.Component<Props> {
             return [
                 localeDate(item.created_at, 'fullDate'),
                 state,
-                <Decimal key={index} fixed={fixed}>{amount}</Decimal>,
+                <Decimal key={index} fixed={fixed} thousSep=",">{amount}</Decimal>,
             ];
         });
     };

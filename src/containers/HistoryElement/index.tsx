@@ -5,16 +5,15 @@ import {
 } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
 import { compose } from 'redux';
-import { History, Pagination } from '../../components';
-import { Decimal } from '../../components/Decimal';
+import { IntlProps } from '../../';
+import { Decimal, History, Pagination } from '../../components';
 import {
     localeDate,
-    preciseData,
     setDepositStatusColor,
     setTradesType,
     setWithdrawStatusColor,
+    truncateMiddle,
 } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     currenciesFetch,
     Currency,
@@ -67,10 +66,10 @@ class HistoryComponent extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public componentWillReceiveProps(nextProps: Props) {
         const { currencies } = this.props;
 
-        if (nextProps.currencies.length === 0 && nextProps.currencies !== currencies) {
+        if (!currencies.length && nextProps.currencies.length) {
             this.props.fetchCurrencies();
         }
     }
@@ -177,10 +176,14 @@ class HistoryComponent extends React.Component<Props> {
                 );
 
                 return [
-                    <div className="pg-history-elem__hide" key={txid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid}</a></div>,
+                    <div className="pg-history-elem__hide" key={txid}>
+                        <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
+                            {truncateMiddle(txid, 30)}
+                        </a>
+                    </div>,
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
-                    wallet && preciseData(amount, wallet.fixed),
+                    wallet && Decimal.format(amount, wallet.fixed, ','),
                     <span style={{ color: setDepositStatusColor(item.state) }} key={txid}>{state}</span>,
                 ];
             }
@@ -191,11 +194,15 @@ class HistoryComponent extends React.Component<Props> {
                 const wallet = wallets.find(obj => obj.currency === currency);
 
                 return [
-                    <div className="pg-history-elem__hide" key={txid || rid}><a href={blockchainLink} target="_blank" rel="noopener noreferrer">{txid || rid}</a></div>,
+                    <div className="pg-history-elem__hide" key={txid || rid}>
+                        <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
+                            {truncateMiddle(txid || rid, 30)}
+                        </a>
+                    </div>,
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
-                    wallet && preciseData(amount, wallet.fixed),
-                    fee,
+                    wallet && Decimal.format(amount, wallet.fixed, ','),
+                    wallet && Decimal.format(fee, wallet.fixed, ','),
                     <span style={{ color: setWithdrawStatusColor(item.state) }} key={txid || rid}>{state}</span>,
                 ];
             }
@@ -210,9 +217,9 @@ class HistoryComponent extends React.Component<Props> {
                     localeDate(created_at, 'fullDate'),
                     <span style={{ color: setTradesType(side).color }} key={id}>{sideText}</span>,
                     marketName,
-                    <Decimal key={id} fixed={marketToDisplay.price_precision}>{price}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{amount}</Decimal>,
-                    <Decimal key={id} fixed={marketToDisplay.amount_precision}>{total}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.price_precision} thousSep=",">{price}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{amount}</Decimal>,
+                    <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{total}</Decimal>,
                 ];
             }
             default: {

@@ -1,0 +1,10 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+
+{
+  "gt": "0c4ab8ac2ed12c1c3f4a023dff99cd87",
+  "challenge": "25e8fe07feed0b02eb88634a7b052be4"
+}

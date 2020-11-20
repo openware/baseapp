@@ -4,8 +4,8 @@ import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { setDocumentTitle } from '../../helpers';
-import { IntlProps } from '../../index';
 import { RootState, selectPlatformAccessStatus } from '../../modules';
 
 interface ReduxProps {

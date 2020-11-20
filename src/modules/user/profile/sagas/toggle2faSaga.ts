@@ -1,14 +1,8 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import { alertPush } from '../../../index';
-import {
-    toggle2faData,
-    toggle2faError,
-    Toggle2FAFetch,
-    toggleUser2fa,
-} from '../actions';
+import { toggle2faData, toggle2faError, Toggle2FAFetch, toggleUser2fa } from '../actions';
 
 const enable2faOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -27,7 +21,12 @@ export function* toggle2faSaga(action: Toggle2FAFetch) {
         yield put(toggleUser2fa());
         yield put(alertPush({message: [`success.otp.${enable ? 'enabled' : 'disabled'}`], type: 'success'}));
     } catch (error) {
-        yield put(toggle2faError(error));
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: toggle2faError,
+            },
+        }));
     }
 }

@@ -13,8 +13,8 @@
     display: flex;
     flex-direction: row;
     font-size: 12px;
-    height: 24px;
-    margin-top: 80px;
+    height: 0;
+    margin-top: 68px;
     opacity: 0;
     padding: 0 14px;
     position: fixed;
@@ -24,6 +24,8 @@
     z-index: 10;
 
     &--visible {
+      height: 24px;
+      margin-top: 80px;
       opacity: 1;
     }
   }

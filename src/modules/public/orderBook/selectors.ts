@@ -1,5 +1,5 @@
+import { RootState } from '../../';
 import { incrementalOrderBook } from '../../../api';
-import { RootState } from '../../index';
 import { DepthIncrementState, DepthState } from './types';
 
 export const selectOrderBookLoading = (state: RootState): boolean =>
@@ -22,6 +22,3 @@ export const selectDepthTimestamp = incrementalOrderBook() ?
     (state: RootState): number | undefined => state.public.depth.timestamp;
 
 export const selectOrderBookSequence = (state: RootState): number | null => state.public.incrementDepth.sequence;
-
-export const selectShouldFetchDepth = (state: RootState): boolean =>
-    !selectDepthTimestamp(state) && !selectDepthLoading(state);

@@ -1,10 +1,11 @@
 import cr from 'classnames';
-import * as React from 'react';
+import React, { FormEvent } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { CustomInput } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { EMAIL_REGEX } from '../../helpers';
+import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
 
 export interface EmailFormProps {
@@ -24,6 +25,11 @@ export interface EmailFormProps {
     handleInputEmail: (value: string) => void;
     handleFieldFocus: () => void;
     handleReturnBack: () => void;
+    captchaType?: 'recaptcha' | 'geetest' | 'none';
+    renderCaptcha?: JSX.Element | null;
+    reCaptchaSuccess?: boolean;
+    geetestCaptchaSuccess?: boolean;
+    captcha_response?: string | GeetestCaptchaResponse;
 }
 
 const EmailForm = React.memo((props: EmailFormProps) => {
@@ -38,6 +44,9 @@ const EmailForm = React.memo((props: EmailFormProps) => {
         email,
         emailFocused,
         emailError,
+        captchaType,
+        geetestCaptchaSuccess,
+        reCaptchaSuccess,
     } = props;
 
     const handleCancel = () => {
@@ -54,7 +63,23 @@ const EmailForm = React.memo((props: EmailFormProps) => {
         return email && isEmailValid;
     };
 
-    const handleClick = (label?: string, e?: React.FormEvent<HTMLInputElement>) => {
+    const isButtonDisabled = (): boolean => {
+        if (isLoading || !email.match(EMAIL_REGEX)) {
+            return true;
+        }
+
+        if (captchaType === 'recaptcha' && !reCaptchaSuccess) {
+            return true;
+        }
+
+        if (captchaType === 'geetest' && !geetestCaptchaSuccess) {
+            return true;
+        }
+
+        return false;
+    };
+
+    const handleClick = (e: FormEvent<HTMLInputElement>) => {
         if (e) {
             e.preventDefault();
         }
@@ -65,6 +90,9 @@ const EmailForm = React.memo((props: EmailFormProps) => {
         }
     };
 
+    const emailFormClass = cr('cr-email-form', {
+        'cr-email-form--extended': captchaType && captchaType !== 'none',
+    });
 
     const emailGroupClass = cr('cr-email-form__group', {
         'cr-email-form__group--focused': emailFocused,
@@ -72,22 +100,21 @@ const EmailForm = React.memo((props: EmailFormProps) => {
 
     return (
         <form>
-            <div className="cr-email-form">
-                {!isMobileDevice && <div className="cr-email-form__options-group">
-                  <div className="cr-email-form__option">
-                    <div className="cr-email-form__option-inner">
-                        {title || 'Forgot password'}
-                      <div className="cr-email-form__cros-icon" onClick={handleCancel}>
-                        <CloseIcon className="close-icon"/>
-                      </div>
+            <div className={emailFormClass}>
+                {!isMobileDevice && (
+                    <div className="cr-email-form__options-group">
+                        <div className="cr-email-form__option">
+                            <div className="cr-email-form__option-inner">
+                                {title || 'Forgot password'}
+                                <div className="cr-email-form__cros-icon" onClick={handleCancel}>
+                                    <CloseIcon className="close-icon" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-                }
+                )}
                 <div className="cr-email-form__form-content">
-                    <div className="cr-email-form__header">
-                        {message}
-                    </div>
+                    <div className="cr-email-form__header">{message}</div>
                     <div className={emailGroupClass}>
                         <CustomInput
                             type="email"
@@ -99,19 +126,19 @@ const EmailForm = React.memo((props: EmailFormProps) => {
                             handleFocusInput={props.handleFieldFocus}
                             classNameLabel="cr-email-form__label"
                             classNameInput="cr-email-form__input"
-                            autoFocus={true}
+                            autoFocus={!isMobileDevice}
                         />
                         {emailError && <div className="cr-email-form__error">{emailError}</div>}
                     </div>
+                    {props.renderCaptcha}
                     <div className="cr-email-form__button-wrapper">
                         <Button
                             block={true}
                             type="button"
-                            disabled={isLoading || !email.match(EMAIL_REGEX)}
-                            onClick={e => handleClick(undefined, e)}
+                            disabled={isButtonDisabled()}
+                            onClick={e => handleClick(e as any)}
                             size="lg"
-                            variant="primary"
-                        >
+                            variant="primary">
                             {isLoading ? 'Loading...' : buttonLabel ? buttonLabel : 'Send'}
                         </Button>
                     </div>
@@ -121,7 +148,4 @@ const EmailForm = React.memo((props: EmailFormProps) => {
     );
 });
 
-export {
-    EmailForm,
-};
-
+export { EmailForm };

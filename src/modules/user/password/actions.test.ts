@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 
 describe('Password actions', () => {
@@ -11,7 +12,7 @@ describe('Password actions', () => {
         confirm_password: 'password',
     };
 
-    const fakeError = {
+    const fakeError: CommonError = {
         code: 422,
         message: ['Unknown email'],
     };
@@ -34,7 +35,7 @@ describe('Password actions', () => {
     it('should check forgot password error action', () => {
         const expectedAction = {
             type: 'password/FORGOT_PASSWORD_ERROR',
-            payload: fakeError,
+            error: fakeError,
         };
         expect(actions.forgotPasswordError(fakeError)).toEqual(expectedAction);
     });

@@ -1,7 +1,6 @@
+import { buildFilterPrice, validatePriceStep } from './';
 import { countDecimals } from './FilterPriceCustomStep';
 import { countMinValidPriceStep, countSignificantDigits } from './FilterPriceSignificantDigit';
-import { buildFilterPrice, validatePriceStep } from './index';
-
 
 describe('Describe countDecimals helper', () => {
     it('should count number of decimal digits', () => {

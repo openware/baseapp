@@ -5,10 +5,10 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../';
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { Markets } from '../../components/Markets';
-import { IntlProps } from '../../index';
 import { RootState, selectUserInfo, setCurrentPrice, User } from '../../modules';
 import {
     Market,
@@ -95,7 +95,7 @@ class MarketsContainer extends React.Component<Props> {
         return markets.map((market: Market) =>
             ([
                 market.name,
-                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision),
+                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision, ','),
                 (marketTickers[market.id] || defaultTicker).price_change_percent,
             ]),
         );

@@ -1,8 +1,5 @@
 import * as actions from './actions';
-import {
-    changeLanguageReducer,
-    initialChangeLanguageState,
-} from './reducer';
+import { changeLanguageReducer, initialChangeLanguageState } from './reducer';
 
 describe('ChangeLanguage reducer', () => {
     it('should handle CHANGE_LANGUAGE', () => {

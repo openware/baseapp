@@ -1,0 +1,39 @@
+HTTP/2 200
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+
+[
+    {
+        "algorithm": "HS256",
+        "created_at": "2019-02-14T15:56:57Z",
+        "kid": "5c3933e8c8f97071",
+        "scope": [],
+        "state": "active",
+        "updated_at": "2019-02-14T15:56:57Z"
+    },
+    {
+        "algorithm": "HS256",
+        "created_at": "2019-02-14T15:58:06Z",
+        "kid": "16da7aa20353e449",
+        "scope": [],
+        "state": "active",
+        "updated_at": "2019-02-14T15:58:06Z"
+    },
+    {
+        "algorithm": "HS256",
+        "created_at": "2019-02-14T15:58:06Z",
+        "kid": "26da7aa20353e449",
+        "scope": [],
+        "state": "active",
+        "updated_at": "2019-02-14T15:58:06Z"
+    },
+    {
+        "algorithm": "HS256",
+        "created_at": "2019-02-14T15:58:06Z",
+        "kid": "36da7aa20353e449",
+        "scope": [],
+        "state": "active",
+        "updated_at": "2019-02-14T15:58:06Z"
+    }
+]

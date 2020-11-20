@@ -53,7 +53,7 @@ input[type=button] {
     background: var(--subheader-background-color);
     box-shadow: inset 0 -1px 0 var(--divider-color-level-1);
     color: var(--primary-text-color);
-    cursor: move;
+    cursor: default;
     height: auto;
     padding: 9px 12px 9px;
     position: sticky;
@@ -95,7 +95,7 @@ input[type=button] {
   td,
   th {
     font-size: 0.8em !important;
-    padding: 6px 12px !important;
+    padding: 6px 12px;
   }
 
   td:first-child,
@@ -220,24 +220,53 @@ body {
   }
 }
 
-.react-resizable-handle .react-resizable-handle-se {
-  border: 5px solid var(--grid-resizable-border-color) !important;
-  border-left-color: var(--transparent) !important;
-  border-top-color: var(--transparent) !important;
-  cursor: nwse-resize !important;
-
-  /* opacity: 0.5 !important; */
-  z-index: 9999;
-
-  &::before {
-    bottom: calc(var(--gap) * 0.1) !important;
-    right: calc(var(--gap) * (-1.2)) !important;
-    width: calc(var(--gap) * 3.4) !important;
+.react-draggable {
+  &-dragging {
+    margin-top: -68px;
   }
 
+  .cr-table-header__content {
+    cursor: move;
+  }
+}
+
+.react-resizable-hide .react-resizable-handle {
+  display: none;
+}
+
+.react-resizable-handle {
+  border: none;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  bottom: 0;
+  cursor: se-resize !important;
+  display: block;
+  height: 14px;
+  position: fixed;
+  right: 0;
+  width: 14px;
+  z-index: 9999;
+
   &::after {
-    right: calc(var(--gap) * (-1.4)) !important;
-    width: calc(var(--gap) * 4.6) !important;
+    border-bottom: 1px solid var(--icons);
+    bottom: calc(var(--gap) * 0.7);
+    content: '';
+    opacity: 0.8;
+    position: absolute;
+    right: calc(var(--gap) * (-2.7));
+    transform: rotate(-45deg);
+    width: calc(var(--gap) * 8);
+  }
+
+  &::before {
+    border-bottom: 1px solid var(--icons);
+    bottom: calc(var(--gap) * 1);
+    content: '';
+    opacity: 0.8;
+    position: absolute;
+    right: calc(var(--gap) * (-2.7));
+    transform: rotate(-45deg);
+    width: calc(var(--gap) * 5);
   }
 }
 

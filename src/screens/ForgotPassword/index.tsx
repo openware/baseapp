@@ -10,26 +10,41 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { EmailForm } from '../../components';
+import { IntlProps } from '../../';
+import { Captcha, EmailForm } from '../../components';
 import {
     EMAIL_REGEX,
     ERROR_INVALID_EMAIL,
     setDocumentTitle,
 } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
+    Configs,
     forgotPassword,
+    GeetestCaptchaResponse,
+    resetCaptchaState,
     RootState,
+    selectCaptchaResponse,
+    selectConfigs,
     selectCurrentLanguage,
+    selectForgotPasswordError,
     selectForgotPasswordSuccess,
+    selectGeetestCaptchaSuccess,
+    selectRecaptchaSuccess,
 } from '../../modules';
+import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
     success: boolean;
+    error?: CommonError;
+    configs: Configs;
+    captcha_response?: string | GeetestCaptchaResponse;
+    reCaptchaSuccess: boolean;
+    geetestCaptchaSuccess: boolean;
 }
 
 interface DispatchProps {
     forgotPassword: typeof forgotPassword;
+    resetCaptchaState: typeof resetCaptchaState;
 }
 
 interface ForgotPasswordState {
@@ -55,19 +70,36 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
         setDocumentTitle('Forgot password');
     }
 
+    public renderCaptcha = () => {
+        const { error, success } = this.props;
+
+        return (
+            <Captcha
+                error={error}
+                success={success}
+            />
+        );
+    };
+
     public render() {
         const {
             email,
             emailFocused,
             emailError,
         } = this.state;
+        const {
+            configs,
+            captcha_response,
+            reCaptchaSuccess,
+            geetestCaptchaSuccess,
+        } = this.props;
 
         return (
             <div className="pg-forgot-password-screen" onKeyPress={this.handleEnterPress}>
                 <div className="pg-forgot-password-screen__container">
                     <div className="pg-forgot-password___form">
                         <EmailForm
-                            OnSubmit={this.handleChangeEmail}
+                            OnSubmit={this.handleChangePassword}
                             title={this.props.intl.formatMessage({id: 'page.forgotPassword'})}
                             emailLabel={this.props.intl.formatMessage({id: 'page.forgotPassword.email'})}
                             buttonLabel={this.props.intl.formatMessage({id: 'page.forgotPassword.send'})}
@@ -79,6 +111,11 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
                             handleInputEmail={this.handleInputEmail}
                             handleFieldFocus={this.handleFocusEmail}
                             handleReturnBack={this.handleComeBack}
+                            captchaType={configs.captcha_type}
+                            renderCaptcha={this.renderCaptcha()}
+                            reCaptchaSuccess={reCaptchaSuccess}
+                            geetestCaptchaSuccess={geetestCaptchaSuccess}
+                            captcha_response={captcha_response}
                         />
                     </div>
                 </div>
@@ -86,11 +123,23 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
         );
     }
 
-    private handleChangeEmail = () => {
+    private handleChangePassword = () => {
         const { email } = this.state;
-        this.props.forgotPassword({
-            email,
-        });
+        const { configs, captcha_response } = this.props;
+
+        switch (configs.captcha_type) {
+            case 'recaptcha':
+            case 'geetest':
+                this.props.forgotPassword({ email, captcha_response });
+                break;
+            default:
+                this.props.forgotPassword({ email });
+                break;
+        }
+
+        this.setState({ email: '' });
+
+        this.props.resetCaptchaState();
     };
 
     private handleFocusEmail = () => {
@@ -127,19 +176,25 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
         if (event.key === 'Enter') {
             event.preventDefault();
 
-            this.handleChangeEmail();
+            this.handleChangePassword();
         }
     };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     success: selectForgotPasswordSuccess(state),
+    error: selectForgotPasswordError(state),
     i18n: selectCurrentLanguage(state),
+    configs: selectConfigs(state),
+    captcha_response: selectCaptchaResponse(state),
+    reCaptchaSuccess: selectRecaptchaSuccess(state),
+    geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         forgotPassword: credentials => dispatch(forgotPassword(credentials)),
+        resetCaptchaState: () => dispatch(resetCaptchaState()),
     });
 
 export const ForgotPasswordScreen = compose(

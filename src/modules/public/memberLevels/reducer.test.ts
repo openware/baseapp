@@ -1,9 +1,6 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
-import {
-    initialMemberLevelsState,
-    memberLevelsReducer,
-    MemberLevelsState,
-} from './reducer';
+import { initialMemberLevelsState, memberLevelsReducer, MemberLevelsState } from './reducer';
 import { MemberLevels } from './types';
 
 describe('MemberLevels reducer', () => {
@@ -11,6 +8,11 @@ describe('MemberLevels reducer', () => {
         deposit: { minimum_level: 1 },
         withdraw: { minimum_level: 1 },
         trading: { minimum_level: 1 },
+    };
+
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
     };
 
     it('should handle MEMBER_LEVELS_FETCH', () => {
@@ -35,6 +37,6 @@ describe('MemberLevels reducer', () => {
             ...initialMemberLevelsState,
             loading: false,
         };
-        expect(memberLevelsReducer(initialMemberLevelsState, actions.memberLevelsError())).toEqual(expectedState);
+        expect(memberLevelsReducer(initialMemberLevelsState, actions.memberLevelsError(error))).toEqual(expectedState);
     });
 });

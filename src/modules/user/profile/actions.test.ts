@@ -1,8 +1,8 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 
-
 describe('Profile actions', () => {
-    const error = {
+    const error: CommonError = {
         code: 401,
         message: ['Invalid Session'],
     };
@@ -36,7 +36,7 @@ describe('Profile actions', () => {
         });
 
         it('should check userError action creator', () => {
-            const expectedAction = { type: 'profile/GET_USER_ERROR', payload: error };
+            const expectedAction = { type: 'profile/GET_USER_ERROR', error };
             expect(actions.userError(error)).toEqual(expectedAction);
         });
 
@@ -73,7 +73,7 @@ describe('Profile actions', () => {
         });
 
         it('should check changePasswordError action creator', () => {
-            const expectedAction = { type: 'profile/CHANGE_PASSWORD_ERROR', payload: error };
+            const expectedAction = { type: 'profile/CHANGE_PASSWORD_ERROR', error };
             expect(actions.changePasswordError(error)).toEqual(expectedAction);
         });
     });
@@ -94,7 +94,7 @@ describe('Profile actions', () => {
         });
 
         it('should check toggle2faError action creator', () => {
-            const expectedAction = { type: 'profile/TOGGLE_2FA_ERROR', payload: error };
+            const expectedAction = { type: 'profile/TOGGLE_2FA_ERROR', error };
             expect(actions.toggle2faError(error)).toEqual(expectedAction);
         });
 
@@ -113,7 +113,7 @@ describe('Profile actions', () => {
         });
 
         it('should check generate2faQRError action creator', () => {
-            const expectedAction = { type: 'profile/GENERATE_2FA_QRCODE_ERROR', payload: error };
+            const expectedAction = { type: 'profile/GENERATE_2FA_QRCODE_ERROR', error };
             expect(actions.generate2faQRError(error)).toEqual(expectedAction);
         });
 

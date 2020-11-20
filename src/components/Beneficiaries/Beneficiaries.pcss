@@ -465,6 +465,23 @@
       margin-top: 10px;
       outline: none;
 
+      &-wrapper {
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+
+        button {
+          width: 100%;
+        }
+
+        &--double {
+          button {
+            width: calc(50% - 5px);
+          }
+        }
+      }
+
       &--disabled {
         color: var(--beneficiaries-primary-0-8) !important;
       }

@@ -1,9 +1,5 @@
 import { CommonError } from '../../types';
-import {
-    USER_ACTIVITY_DATA,
-    USER_ACTIVITY_ERROR,
-    USER_ACTIVITY_FETCH,
-} from './constants';
+import { USER_ACTIVITY_DATA, USER_ACTIVITY_ERROR, USER_ACTIVITY_FETCH } from './constants';
 
 interface UserActivityFetchPayload {
     page: number;
@@ -40,7 +36,7 @@ export interface UserActivityData {
 
 export interface UserActivityError {
     type: typeof USER_ACTIVITY_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export type UserActivityAction =
@@ -58,7 +54,7 @@ export const userActivityData = (payload: UserActivityData['payload']): UserActi
     payload,
 });
 
-export const userActivityError = (payload: UserActivityError['payload']): UserActivityError => ({
+export const userActivityError = (error: CommonError): UserActivityError => ({
     type: USER_ACTIVITY_ERROR,
-    payload,
+    error,
 });

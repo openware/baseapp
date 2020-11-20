@@ -5,4 +5,8 @@ Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
 Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
-{"currency":"dash","address":"XpESxaUmonkq8RaLLp46Brx2K39ggQe226"}
+{
+    "currencies": ["dash"],
+    "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
+    "state": "active"
+}

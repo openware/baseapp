@@ -1,8 +1,7 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { alertPush } from '../../../public/alert';
-import { walletsData, walletsError } from '../actions';
+import { walletsData, walletsError, WalletsFetch } from '../actions';
 
 const walletsOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -12,7 +11,7 @@ const currenciesOptions: RequestOptions = {
     apiVersion: 'peatio',
 };
 
-export function* walletsSaga() {
+export function* walletsSaga(action: WalletsFetch) {
     try {
         const accounts = yield call(API.get(walletsOptions), '/account/balances');
         const currencies = yield call(API.get(currenciesOptions), '/public/currencies');
@@ -40,7 +39,12 @@ export function* walletsSaga() {
 
         yield put(walletsData(accountsByCurrencies));
     } catch (error) {
-        yield put(walletsError(error));
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: walletsError,
+            },
+        }));
     }
 }

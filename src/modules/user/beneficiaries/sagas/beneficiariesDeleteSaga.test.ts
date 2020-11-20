@@ -2,12 +2,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { rootSaga } from '../../../../modules/index';
-import {
-    beneficiariesDelete,
-    beneficiariesDeleteData,
-    beneficiariesDeleteError,
-} from '../actions';
+import { rootSaga, sendError } from '../../../../modules/index';
+import { CommonError } from '../../../types';
+import { beneficiariesDelete, beneficiariesDeleteData, beneficiariesDeleteError } from '../actions';
 
 const debug = false;
 
@@ -40,6 +37,11 @@ describe('Beneficiaries Delete', () => {
             mockAxios.onDelete(`/account/beneficiaries/${fakePayload.id}`).reply(200, fakeSuccessPayload);
         };
 
+        const error: CommonError = {
+            code: 500,
+            message: ['Server error'],
+        };
+
         const expectedBeneficiariesDeleteSuccess = [
             beneficiariesDelete(fakePayload),
             beneficiariesDeleteData(fakeSuccessPayload),
@@ -47,7 +49,13 @@ describe('Beneficiaries Delete', () => {
 
         const expectedBeneficiariesDeleteError = [
             beneficiariesDelete(fakePayload),
-            beneficiariesDeleteError({ code: 500, message: ['Server error'] }),
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: beneficiariesDeleteError,
+                },
+            }),
         ];
 
         it('should delete beneficiary in success flow', async () => {

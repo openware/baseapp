@@ -3,10 +3,10 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { IntlProps } from '../../';
 import { CombinedOrderBook, Decimal } from '../../components';
 import { colors } from '../../constants';
 import { accumulateVolume, calcMaxVolume } from '../../helpers';
-import { IntlProps } from '../../index';
 import {
     Market,
     RootState,
@@ -48,12 +48,13 @@ interface OwnProps {
         [key: string]: Ticker;
     };
     forceLarge?: boolean;
+    size: number;
 }
 
 type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
 
 // render big/small breakpoint
-const breakpoint = 448;
+const breakpoint = 634;
 
 class OrderBookContainer extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -77,7 +78,7 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     public shouldComponentUpdate(nextProps: Props) {
-        const { asks, bids, currentMarket, openOrdersList, marketTickers, orderBookLoading } = this.props;
+        const { asks, bids, currentMarket, openOrdersList, marketTickers, orderBookLoading, size } = this.props;
 
         const lastPrice = currentMarket && this.getTickerValue(currentMarket, marketTickers).last;
         const nextLastPrice = nextProps.currentMarket && this.getTickerValue(nextProps.currentMarket, nextProps.marketTickers).last;
@@ -88,7 +89,8 @@ class OrderBookContainer extends React.Component<Props, State> {
             (nextProps.currentMarket && nextProps.currentMarket.id) !== (currentMarket && currentMarket.id) ||
             nextLastPrice !== lastPrice ||
             nextProps.openOrdersList !== openOrdersList ||
-            nextProps.orderBookLoading !== orderBookLoading
+            nextProps.orderBookLoading !== orderBookLoading ||
+            nextProps.size !== size
         );
     }
 
@@ -159,7 +161,7 @@ class OrderBookContainer extends React.Component<Props, State> {
             return (
                 <React.Fragment>
                     <span className={cn}>
-                        {Decimal.format(+(currentTicker.last), currentMarket.price_precision)}&nbsp;
+                        {Decimal.format(+(currentTicker.last), currentMarket.price_precision, ',')}&nbsp;
                         {isMobileDevice ? null : currentMarket.quote_unit.toUpperCase()}
                     </span>
                     <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
@@ -208,42 +210,54 @@ class OrderBookContainer extends React.Component<Props, State> {
 
                     if (isMobileDevice) {
                         return [
-                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal></span>,
-                            <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                            <span key={i}>
+                                <Decimal fixed={priceFixed} thousSep="," prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal>
+                            </span>,
+                            <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
                         ];
                     }
 
                     return [
-                        <span key={i}><Decimal fixed={priceFixed} prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal></span>,
-                        <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
-                        <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                        <span key={i}>
+                            <Decimal fixed={priceFixed} thousSep="," prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal>
+                        </span>,
+                        <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
+                        <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
                     ];
                 default:
                     if (isLarge) {
                         if (isMobileDevice) {
                             return [
                                 <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
-                                <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
+                                <span key={i}>
+                                    <Decimal fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>
+                                </span>,
                             ];
                         }
 
                         return [
-                            <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
-                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
+                            <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
+                            <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
+                            <span key={i}>
+                                <Decimal fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>
+                            </span>,
                         ];
                     } else {
                         if (isMobileDevice) {
                             return [
-                                <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
-                                <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                                <span key={i}>
+                                    <Decimal fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>
+                                </span>,
+                                <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
                             ];
                         }
 
                         return [
-                            <span key={i}><Decimal fixed={priceFixed} prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal></span>,
-                            <Decimal key={i} fixed={amountFixed}>{volume}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
+                            <span key={i}>
+                                <Decimal fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>
+                            </span>,
+                            <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
+                            <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
                         ];
                     }
             }

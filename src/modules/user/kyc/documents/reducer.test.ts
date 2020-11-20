@@ -1,8 +1,6 @@
+import { CommonError } from '../../../types';
 import * as actions from './actions';
-import {
-    documentsReducer,
-    initialDocumentsState,
-} from './reducer';
+import { documentsReducer, initialDocumentsState } from './reducer';
 
 describe('Documents reducer', () => {
     const payloadFormData = new FormData();
@@ -11,7 +9,7 @@ describe('Documents reducer', () => {
         message: 'Success',
     };
 
-    const error = {
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
     };

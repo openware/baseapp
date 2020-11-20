@@ -1,15 +1,10 @@
-
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { rootSaga } from '../../../index';
-import {
-    failHistory,
-    fetchHistory,
-    successHistory,
-} from '../actions';
-
+import { CommonError } from '../../../types';
+import { failHistory, fetchHistory, successHistory } from '../actions';
 
 describe('CurrencyHistory', () => {
     let store: MockStoreEnhanced;
@@ -52,6 +47,11 @@ describe('CurrencyHistory', () => {
         },
     ];
 
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     const fakeSuccessPayloadFirstPage = { list: fakeHistory, page: 0, nextPageExists: false };
     const fakeFetchPayloadFirstPage = { page: 0, currency: 'btc', type: 'deposits', limit: 6 };
 
@@ -63,9 +63,16 @@ describe('CurrencyHistory', () => {
         fetchHistory(fakeFetchPayloadFirstPage),
         successHistory(fakeSuccessPayloadFirstPage),
     ];
+
     const expectedActionsError = [
         fetchHistory(fakeFetchPayloadFirstPage),
-        failHistory([]),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: failHistory,
+            },
+        }),
     ];
 
     it('should fetch currency deposit history for 1 page in success flow', async () => {

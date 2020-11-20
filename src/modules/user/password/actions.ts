@@ -1,24 +1,24 @@
 import { CommonError } from '../../types';
-
+import { GeetestCaptchaResponse } from '../auth';
 import {
     PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH,
     PASSWORD_CHANGE_FORGOT_PASSWORD_SUCCESS,
     PASSWORD_FORGOT_ERROR,
     PASSWORD_FORGOT_FETCH,
     PASSWORD_FORGOT_SUCCESS,
-    PASSWORD_TEST_FORGOT_PASSWORD,
 } from './constants';
 
 export interface ForgotPasswordFetch {
     type: typeof PASSWORD_FORGOT_FETCH;
     payload: {
         email: string;
+        captcha_response?: string | GeetestCaptchaResponse;
     };
 }
 
 export interface ForgotPasswordError {
     type: typeof PASSWORD_FORGOT_ERROR;
-    payload: CommonError;
+    error: CommonError;
 }
 
 export interface ForgotPasswordSuccess {
@@ -38,25 +38,20 @@ export interface ChangeForgotPasswordSuccess {
     type: typeof PASSWORD_CHANGE_FORGOT_PASSWORD_SUCCESS;
 }
 
-export interface TestForgotPassword {
-    type: typeof PASSWORD_TEST_FORGOT_PASSWORD;
-}
-
 export type PasswordAction = ForgotPasswordFetch
     | ForgotPasswordError
     | ForgotPasswordSuccess
     | ChangeForgotPasswordFetch
-    | ChangeForgotPasswordSuccess
-    | TestForgotPassword;
+    | ChangeForgotPasswordSuccess;
 
 export const forgotPassword = (payload: ForgotPasswordFetch['payload']): ForgotPasswordFetch => ({
    type: PASSWORD_FORGOT_FETCH,
    payload,
 });
 
-export const forgotPasswordError = (payload: ForgotPasswordError['payload']): ForgotPasswordError => ({
+export const forgotPasswordError = (error: CommonError): ForgotPasswordError => ({
     type: PASSWORD_FORGOT_ERROR,
-    payload,
+    error,
 });
 
 export const forgotPasswordSuccess = (): ForgotPasswordSuccess => ({

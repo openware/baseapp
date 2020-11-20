@@ -14,6 +14,9 @@ import {
     BENEFICIARIES_DELETE_ERROR,
     BENEFICIARIES_ERROR,
     BENEFICIARIES_FETCH,
+    BENEFICIARIES_RESEND_PIN,
+    BENEFICIARIES_RESEND_PIN_DATA,
+    BENEFICIARIES_RESEND_PIN_ERROR,
 } from './constants';
 import { Beneficiary } from './types';
 
@@ -54,6 +57,14 @@ export interface BeneficiariesState {
         success: boolean;
         error?: CommonError;
     };
+    resendPin: {
+        data: {
+            id: number;
+        }
+        fetching: boolean;
+        success: boolean;
+        error?: CommonError;
+    };
 }
 
 export const initialBeneficiariesState: BeneficiariesState = {
@@ -73,6 +84,13 @@ export const initialBeneficiariesState: BeneficiariesState = {
         success: false,
     },
     delete: {
+        data: {
+            id: 0,
+        },
+        fetching: false,
+        success: false,
+    },
+    resendPin: {
         data: {
             id: 0,
         },
@@ -120,7 +138,7 @@ export const beneficiariesFetchReducer = (state: BeneficiariesState['fetch'], ac
                 ...state,
                 fetching: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -149,7 +167,7 @@ const beneficiariesActivateReducer = (state: BeneficiariesState['activate'], act
                 ...state,
                 fetching: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -178,7 +196,7 @@ const beneficiariesCreateReducer = (state: BeneficiariesState['create'], action:
                 ...state,
                 fetching: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
             };
         default:
             return state;
@@ -207,7 +225,36 @@ const beneficiariesDeleteReducer = (state: BeneficiariesState['delete'], action:
                 ...state,
                 fetching: false,
                 success: false,
-                error: action.payload,
+                error: action.error,
+            };
+        default:
+            return state;
+    }
+};
+
+const beneficiariesResendPinReducer = (state: BeneficiariesState['resendPin'], action: BeneficiariesActions) => {
+    switch (action.type) {
+        case BENEFICIARIES_RESEND_PIN:
+            return {
+                ...state,
+                fetching: true,
+                success: false,
+                error: undefined,
+            };
+        case BENEFICIARIES_RESEND_PIN_DATA:
+            return {
+                ...state,
+                data: action.payload,
+                fetching: false,
+                success: true,
+                error: undefined,
+            };
+        case BENEFICIARIES_RESEND_PIN_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                success: false,
+                error: action.error,
             };
         default:
             return state;
@@ -253,8 +300,16 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
                 ...state,
                 delete: beneficiariesDeleteReducer(beneficiariesDeleteState, action),
             };
+        case BENEFICIARIES_RESEND_PIN:
+        case BENEFICIARIES_RESEND_PIN_DATA:
+        case BENEFICIARIES_RESEND_PIN_ERROR:
+            const beneficiariesResendPinState = { ...state.resendPin };
+
+            return {
+                ...state,
+                resendPin: beneficiariesResendPinReducer(beneficiariesResendPinState, action),
+            };
         default:
             return state;
     }
 };
-

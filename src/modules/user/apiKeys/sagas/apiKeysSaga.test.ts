@@ -2,14 +2,11 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { alertPush, rootSaga } from '../../../../modules/index';
-import {
-    ApiKeyDataInterface,
-    apiKeysData,
-    apiKeysFetch,
-} from '../actions';
+import { rootSaga, sendError } from '../../../../modules/index';
+import { CommonError } from '../../../types';
+import { ApiKeyDataInterface, apiKeysData, apiKeysError, apiKeysFetch } from '../actions';
 
-describe('api keys saga', () => {
+describe('API - Keys saga', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
@@ -30,7 +27,6 @@ describe('api keys saga', () => {
             algorithm: 'HS256',
             created_at: '2019-02-14T15:56:57Z',
             kid: '5c3933e8c8f97071',
-            scope: Array,
             state: 'active',
             updated_at: '2019-02-14T15:56:57Z',
         },
@@ -38,30 +34,45 @@ describe('api keys saga', () => {
             algorithm: 'HS256',
             created_at: '2019-02-14T15:58:06Z',
             kid: 'c6da7aa20353e449',
-            scope: Array,
             state: 'active',
             updated_at: '2019-02-14T15:58:06Z',
         },
     ];
 
-    const fakeError = {
+    const fakeFetchPayloadFirstPage = {
+        pageIndex: 0,
+        limit: 25,
+    };
+
+    const fakeSuccessPayloadFirstPage = {
+        apiKeys: fakeApiKeys,
+        pageIndex: 0,
+        nextPageExists: false,
+    };
+
+    const error: CommonError = {
         code: 500,
         message: ['Server error'],
-        type: 'error',
     };
 
     const mockApiKeys = () => {
-        mockAxios.onGet(`/resource/api_keys`).reply(200, fakeApiKeys);
+        mockAxios.onGet(`/resource/api_keys?page=1&limit=25`).reply(200, fakeApiKeys);
     };
 
     const expectedApiKeysFetchSuccess = [
-        apiKeysFetch(),
-        apiKeysData(fakeApiKeys),
+        apiKeysFetch(fakeFetchPayloadFirstPage),
+        apiKeysData(fakeSuccessPayloadFirstPage),
     ];
 
     const expectedApiKeysFetchError = [
-        apiKeysFetch(),
-        alertPush(fakeError),
+        apiKeysFetch(fakeFetchPayloadFirstPage),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: apiKeysError,
+            },
+        }),
     ];
 
     it('should fetch api keys', async () => {
@@ -75,7 +86,7 @@ describe('api keys saga', () => {
                 }
             });
         });
-        store.dispatch(apiKeysFetch());
+        store.dispatch(apiKeysFetch(fakeFetchPayloadFirstPage));
 
         return promise;
     });
@@ -91,9 +102,8 @@ describe('api keys saga', () => {
                 }
             });
         });
-        store.dispatch(apiKeysFetch());
+        store.dispatch(apiKeysFetch(fakeFetchPayloadFirstPage));
 
         return promise;
     });
 });
-

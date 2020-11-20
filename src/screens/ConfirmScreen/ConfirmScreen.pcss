@@ -24,6 +24,7 @@
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
+    justify-content: center;
     letter-spacing: 0.25px;
     line-height: 30px;
     margin: 0;
@@ -33,6 +34,17 @@
     margin-inline-end: 0;
     margin-inline-start: 0;
     text-align: center;
+
+    &__icon {
+      cursor: pointer;
+      height: 15px;
+      margin-left: 10px;
+      width: 15px;
+
+      path {
+        fill: var(--icons);
+      }
+    }
   }
 
   &__content {
@@ -126,6 +138,12 @@
           .custom-input {
             width: calc(100% - 150px) !important;
           }
+
+          input:-webkit-autofill,
+          input:-webkit-autofill:hover,
+          input:-webkit-autofill:focus {
+            border: none;
+          }
         }
 
         .custom-input {
@@ -217,6 +235,10 @@
           overflow-y: auto;
         }
       }
+    }
+
+    &-address__row__content-label {
+      margin-top: -7px;
     }
   }
 

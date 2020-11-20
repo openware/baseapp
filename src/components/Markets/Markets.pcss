@@ -1,5 +1,6 @@
 .cr-markets {
   background: var(--body-background-color);
+  overflow: hidden;
   padding-bottom: 0;
 
   .cr-title-component {
@@ -27,13 +28,14 @@
       color: var(--table-text-color);
       font-size: 0.83em;
       font-weight: lighter;
-      padding-bottom: 12px;
-      padding-top: 2px;
+      padding: 6px 0;
     }
 
     td {
       color: var(--table-text-color);
       font-size: 0.83em;
+      padding: 6px 0;
+      width: 33%;
     }
 
     .__positive {
@@ -48,13 +50,13 @@
 
     th:first-child,
     td:first-child {
-      padding-left: calc(var(--gap) * 2);
+      padding-left: 12px;
       text-align: left;
     }
 
     th:last-child,
     td:last-child {
-      padding-right: calc(var(--gap) * 2);
+      padding-right: 12px;
       text-align: right;
     }
 

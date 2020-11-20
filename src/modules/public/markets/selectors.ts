@@ -1,5 +1,5 @@
+import { RootState } from '../../';
 import { FilterPrice } from '../../../filters';
-import { RootState } from '../../index';
 import { MarketsState } from './reducer';
 import { Market } from './types';
 

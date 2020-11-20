@@ -2,14 +2,10 @@ import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
-import { rootSaga } from '../../../../modules';
-import {
-    beneficiariesData,
-    beneficiariesError,
-    beneficiariesFetch,
-} from '../actions';
+import { rootSaga, sendError } from '../../../../modules';
+import { CommonError } from '../../../types';
+import { beneficiariesData, beneficiariesError, beneficiariesFetch } from '../actions';
 import { Beneficiary } from '../types';
-
 
 describe('Beneficiaries Fetch', () => {
     let store: MockStoreEnhanced;
@@ -60,13 +56,25 @@ describe('Beneficiaries Fetch', () => {
         mockAxios.onGet(`/account/beneficiaries`).reply(200, fakeBeneficiaries);
     };
 
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
     const expectedBeneficiariesActionsFetch = [
         beneficiariesFetch(),
         beneficiariesData(fakeBeneficiaries),
     ];
+
     const expectedBeneficiariesActionsError = [
         beneficiariesFetch(),
-        beneficiariesError({ code: 500, message: ['Server error'] }),
+        sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: beneficiariesError,
+            },
+        }),
     ];
 
     it('should fetch benefciiaries in success flow', async () => {

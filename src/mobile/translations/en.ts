@@ -13,6 +13,9 @@ export const en = {
     'page.mobile.charts.label.orderBook': 'Order book',
     'page.mobile.charts.label.trades': 'Trades',
 
+    'page.mobile.order.price.placeholder': 'Price ({currency})',
+    'page.mobile.order.amount.placeholder': 'Amount ({currency})',
+
     'page.mobile.orderButtons.buy': 'Buy {base_unit}',
     'page.mobile.orderButtons.sell': 'Sell {base_unit}',
 
@@ -53,6 +56,10 @@ export const en = {
     'page.mobile.wallet.deposit.generating': 'Generating address...',
 
     'page.mobile.wallet.withdraw.modal.new.account': 'Confirm new account',
+    'page.mobile.wallet.withdraw.modal.confirmation': 'Withdraw confirmation',
+    'page.mobile.wallet.withdraw.modal.confirmation.warning': 'Please check the target address carefully before confirming the withdrawal.',
+    'page.mobile.wallet.withdraw.modal.confirmation.message1': 'You\'ve requested to withdraw',
+    'page.mobile.wallet.withdraw.modal.confirmation.message2': 'To this address',
 
     'page.mobile.userInfo.details.uid': 'UID: {uid}',
     'page.mobile.userInfo.logout.button': 'Logout',
@@ -73,7 +80,7 @@ export const en = {
     'page.mobile.profileLinks.link.2fa.disabled': 'Disabled',
     'page.mobile.profileLinks.link.referral': 'Copy Link',
 
-    'page.mobile.profileColorTheme.theme.basic': 'Basic',
+    'page.mobile.profileColorTheme.theme.dark': 'Dark',
     'page.mobile.profileColorTheme.theme.light': 'Light',
 
     'page.mobile.wallets.title': 'Wallets',

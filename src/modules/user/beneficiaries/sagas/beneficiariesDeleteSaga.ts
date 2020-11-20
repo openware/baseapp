@@ -1,13 +1,8 @@
-// tslint:disable-next-line
 import { call, put } from 'redux-saga/effects';
+import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import { alertPush } from '../../../index';
-import {
-    BeneficiariesDelete,
-    beneficiariesDeleteData,
-    beneficiariesDeleteError,
-} from '../actions';
+import { BeneficiariesDelete, beneficiariesDeleteData, beneficiariesDeleteError } from '../actions';
 
 const config = (csrfToken?: string): RequestOptions => {
     return {
@@ -22,7 +17,12 @@ export function* beneficiariesDeleteSaga(action: BeneficiariesDelete) {
         yield put(beneficiariesDeleteData({ id: action.payload.id }));
         yield put(alertPush({message: ['success.beneficiaries.deleted'], type: 'success'}));
     } catch (error) {
-        yield put(beneficiariesDeleteError(error));
-        yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: beneficiariesDeleteError,
+            },
+        }));
     }
 }

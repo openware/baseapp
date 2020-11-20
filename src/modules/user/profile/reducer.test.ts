@@ -1,3 +1,4 @@
+import { CommonError } from '../../types';
 import * as actions from './actions';
 import { initialStateProfile, profileReducer } from './reducer';
 import { UserProfile } from './types';
@@ -38,7 +39,7 @@ describe('Profile reducer', () => {
         },
     };
 
-    const error = {
+    const error: CommonError = {
         code: 401,
         message: ['Invalid Session'],
     };

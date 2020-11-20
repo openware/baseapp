@@ -1,9 +1,5 @@
 .cr-mobile-two-fa-modal {
   .cr-mobile-modal {
-    &__block--open {
-      top: 200px;
-    }
-
     .custom-input {
       margin: 24px 14px;
     }
@@ -39,5 +35,11 @@
       padding: 24px 14px 0 14px;
       position: relative;
     }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .cr-mobile-two-fa-modal .cr-mobile-modal__block--open {
+    top: 200px;
   }
 }

@@ -43,7 +43,6 @@ export interface RangerSubscribe {
 
 export interface RangerDirectMessage {
     type: typeof RANGER_DIRECT_WRITE;
-    // tslint:disable-next-line no-any
     payload: { [pair: string]: any };
 }
 
@@ -150,4 +149,3 @@ export const rangerUnsubscribeKlineMarket = (marketId: string, periodString: str
 export const rangerDisconnectFetch = (): RangerDisconnectFetch => ({
     type: RANGER_DISCONNECT_FETCH,
 });
-

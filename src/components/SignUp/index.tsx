@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { CustomInput, PasswordStrengthMeter } from '../';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../../helpers';
+import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
 
 export interface SignUpFormProps {
@@ -48,7 +49,7 @@ export interface SignUpFormProps {
     renderCaptcha: JSX.Element | null;
     reCaptchaSuccess: boolean;
     geetestCaptchaSuccess: boolean;
-    captcha_response: string;
+    captcha_response?: string | GeetestCaptchaResponse;
     currentPasswordEntropy: number;
     minPasswordEntropy: number;
     passwordErrorFirstSolved: boolean;
@@ -157,7 +158,7 @@ export const SignUpForm = (props: SignUpFormProps) => {
             (confirmPassword && isConfirmPasswordValid);
     };
 
-    const handleClick = (label?: string, e?: React.FormEvent<HTMLInputElement>) => {
+    const handleClick = (e?: React.FormEvent<HTMLInputElement>) => {
         if (e) {
             e.preventDefault();
         }
@@ -235,7 +236,7 @@ export const SignUpForm = (props: SignUpFormProps) => {
                             handleFocusInput={props.handleFocusEmail}
                             classNameLabel="cr-sign-up-form__label"
                             classNameInput="cr-sign-up-form__input"
-                            autoFocus={true}
+                            autoFocus={!isMobileDevice}
                         />
                         {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
                     </div>
@@ -284,7 +285,7 @@ export const SignUpForm = (props: SignUpFormProps) => {
                             block={true}
                             type="button"
                             disabled={disableButton()}
-                            onClick={e => handleClick(undefined, e)}
+                            onClick={e => handleClick(e as any)}
                             size="lg"
                             variant="primary"
                         >

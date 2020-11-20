@@ -14,7 +14,7 @@ export interface ColorThemeState {
     sideBarActive: boolean;
 }
 
-const currentColorTheme: string = localStorage.getItem('colorTheme') || 'basic';
+const currentColorTheme: string = localStorage.getItem('colorTheme') || 'dark';
 
 export const initialChangeColorThemeState: ColorThemeState = {
     color: currentColorTheme,
