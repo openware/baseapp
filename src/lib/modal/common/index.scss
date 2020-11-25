@@ -1,0 +1,14 @@
+@import "../../style/base.scss";
+
+.n-base-dialog {
+    &__content {
+        text-align: center;
+    }
+
+    &__footer {
+        @include children-row-margin(1em);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+}

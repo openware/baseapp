@@ -1,4 +1,4 @@
 export interface WalletRouteParams {
     currency?: string;
-    tab?: string;
+    tab?: 'withdraw' | 'deposit';
 }

@@ -257,6 +257,7 @@ export const TEST_STATE: RootState = {
             wallets: {
                 list: [],
                 loading: false,
+                // deprecated
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
                 selectedWalletCurrency: '',

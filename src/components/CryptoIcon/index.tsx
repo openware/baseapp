@@ -1,8 +1,11 @@
-import cx from 'classnames';
+import classNames from 'classnames';
 import React from 'react';
+
+import './index.pcss';
 
 export interface CryptoIconProps {
     code: string;
+    imageUrl?: string;
     className?: string;
     children?: React.ReactNode;
 }
@@ -17,14 +20,8 @@ const findIcon = (code: string): string => {
 };
 /* eslint-enable @typescript-eslint/no-var-requires */
 
-export const CryptoIcon: React.FunctionComponent<CryptoIconProps> = (props) => {
-    const { code, className = '', children } = props;
-
-    const icon = findIcon(code);
-
+export const CryptoIcon: React.FC<CryptoIconProps> = ({ code, className, imageUrl }) => {
     return (
-        <span className={cx('cr-crypto-icon', className)}>
-            <img src={icon} alt="crypto-icon" /> {children}
-        </span>
+        <img className={classNames('n-crypto-icon', className)} src={imageUrl || findIcon(code)} alt="crypto-icon" />
     );
 };

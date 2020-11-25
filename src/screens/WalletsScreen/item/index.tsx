@@ -1,10 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import './index.scss';
 
 import { CryptoIcon } from '../../../components/CryptoIcon';
-import { Decimal } from '../../../components/Decimal';
+import { AppUrl } from 'lib/url';
+import { NDecimal } from 'lib/ndecimal';
 
 export interface WalletItemProps {
     /**
@@ -44,6 +46,7 @@ export interface WalletItemProps {
      * Value for url for wallet icon. If empty string, then there will be icon displayed from @openware/cryptoicon
      */
     iconUrl?: string;
+    className?: string;
 }
 
 const style: React.CSSProperties = {
@@ -56,7 +59,7 @@ const style: React.CSSProperties = {
  */
 const LockIcon = () => {
     return (
-        <svg width="11" height="13" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="10" height="12" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -70,36 +73,40 @@ const LockIcon = () => {
 /**
  * Component for displaying information about wallet, including address and amount of currency.
  */
-export const WalletItem: React.FC<WalletItemProps> = ({ currency, name, balance, locked, active, fixed, iconUrl }) => {
+export const WalletItem: React.FC<WalletItemProps> = ({
+    currency,
+    name,
+    balance,
+    locked,
+    active,
+    fixed,
+    iconUrl,
+    className,
+}) => {
     return (
-        <div style={style} className={classNames('n-wallet-item', { 'n-wallet-item--active': active })}>
+        <Link
+            to={AppUrl.wallet.url({ currency: currency.toLowerCase() })}
+            style={style}
+            className={classNames('n-wallet-item', { 'n-wallet-item--active': active }, className)}>
             <div className="n-wallet-item__logo">
-                {iconUrl ? (
-                    <img alt={currency} className="n-wallet-item__image" src={iconUrl} />
-                ) : (
-                    <CryptoIcon className="n-wallet-item__icon" code={currency} />
-                )}
+                <CryptoIcon className="n-wallet-item__icon" code={currency} imageUrl={iconUrl || ''} />
             </div>
             <div className="n-wallet-item__description">
                 <div>{currency}</div>
                 <div>{name}</div>
             </div>
             <div className="n-wallet-item__balance">
-                <Decimal fixed={fixed} thousSep=",">
-                    {balance ? balance.toString() : '0'}
-                </Decimal>
-                <div className="n-wallet-item__currency">{currency}</div>
+                <div>
+                    <NDecimal fixed={fixed} showGroup={true} ending={currency}>
+                        {balance || '0'}
+                    </NDecimal>
+                </div>
                 <div className="n-wallet-item__balance-locked">
-                    {locked ? (
-                        <div className="n-wallet-item__amount-locked">
-                            <LockIcon />{' '}
-                            <Decimal fixed={fixed} thousSep=",">
-                                {locked.toString()}
-                            </Decimal>
-                        </div>
-                    ) : null}
+                    <NDecimal fixed={fixed} showGroup={true} prefix={<LockIcon />}>
+                        {locked}
+                    </NDecimal>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };

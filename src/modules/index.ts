@@ -3,6 +3,7 @@ import { SagaIterator } from 'redux-saga';
 import { all, call } from 'redux-saga/effects';
 
 import { publicReducer, userReducer } from './app';
+import { generalReducer, GeneralState } from './general';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
 import { ConfigsState, rootConfigsSaga } from './public/configs';
@@ -70,6 +71,7 @@ export * from './public/memberLevels';
 export * from './public/blocklistAccess';
 
 export interface RootState {
+    general: GeneralState; 
     public: {
         alerts: AlertState;
         blocklistAccess: BlocklistAccessState;
@@ -114,6 +116,7 @@ export interface RootState {
 }
 
 export const rootReducer = combineReducers({
+    general: generalReducer,
     public: publicReducer,
     user: userReducer,
 });

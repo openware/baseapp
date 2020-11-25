@@ -1,28 +1,56 @@
-/* @include "~lib/styles/base.pcss"; */
-/* @import "~src/lib/style/base.pcss"; */
+@import "../../../lib/style/base.scss";
+
+$iconSize: 30px;
+$space: 20px;
 
 .n-wallet-item {
     background-color: var(--background-wallet-item);
     display: flex;
     align-items: center;
     flex-direction: row;
+    color: var(--secondary-contrast-cta-color);
+    text-decoration: none;
+    padding: calc(var(--gap)) calc(var(--gap) * 3);
+    border-left: 4px solid transparent;
+    @include children-row-margin($space);
+    font-weight: bold;
+
+    &:hover {
+        text-decoration: none;
+        background: var(--wallets-item-background-color-hover);
+        color: var(--secondary-contrast-cta-color);
+    }
+
+    &--active {
+        background-color: var(--wallets-item-background-color-active);
+        color: var(--wallets-item-font-active);
+        border-left-color: var(--primary-cta-color);
+
+        &:hover {
+            color: var(--wallets-item-font-active);
+        }
+    }
 
     &__logo {
-    }
-
-    &__description {
-    }
-
-    &__image-icon {
+        display: flex;
+        justify-content: center;
     }
 
     &__icon {
-        font-size: 1.5em !important;
-        /* margin-left: calc(var(--gap) * 4); */
+        width: $iconSize;
+        height: $iconSize;
+    }
+
+    &__description {
+        flex: 1;
     }
 
     &__balance {
+        align-self: flex-end;
+        flex-basis: 130px;
         &-locked {
+            display: flex;
+            align-items: center;
             color: var(--placeholder-text);
             font-size: 0.9em;
             font-weight: 200;

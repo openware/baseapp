@@ -21,7 +21,11 @@ export interface DecimalProps {
      * Children's previous value.
      * If undefined, only integer part of the number is highlighted
      */
-    prevValue?: string | number;
+    prevValue?: string | number;    
+    /**
+     * Content placed at the end.
+     */
+    end?: string;
 }
 
 const handleRemoveExponent = (value: DecimalProps['children']) => {
