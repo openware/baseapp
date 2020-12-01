@@ -1,61 +1,40 @@
-import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React from 'react';
 
 import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
 import { WalletItemProps } from '../../screens/WalletsScreen/item';
+import { useLocalization } from 'src/hooks';
 
-export interface CurrencyInfoProps {
+import './index.scss';
+
+interface CurrencyInfoProps {
     wallet: WalletItemProps;
 }
 
-interface CurrencyIconProps {
-    icon?: string | null;
-    currency: string;
-}
-
-const CurrencyIcon: React.FunctionComponent<CurrencyIconProps> = (props: CurrencyIconProps) => {
-    return props.icon ? (
-        <img alt="" className="cr-wallet-item__single__image-icon" src={props.icon} />
-    ) : (
-        <CryptoIcon code={props.currency} />
-    );
-};
-
-const CurrencyInfo: React.FunctionComponent<CurrencyInfoProps> = (props: CurrencyInfoProps) => {
-    const balance = props.wallet && props.wallet.balance ? props.wallet.balance.toString() : '0';
-    const lockedAmount = props.wallet && props.wallet.locked ? props.wallet.locked.toString() : '0';
-    const currency = (props.wallet || { currency: '' }).currency.toUpperCase();
-    const selectedFixed = (props.wallet || { fixed: 0 }).fixed;
-
-    const stringLocked = lockedAmount ? lockedAmount.toString() : undefined;
-    const iconUrl = props.wallet ? props.wallet.iconUrl : null;
+const CurrencyInfo: React.FC<CurrencyInfoProps> = ({ wallet: { balance, locked, currency, fixed, iconUrl } }) => {
+    const getText = useLocalization();
 
     return (
-        <div className="cr-wallet-item__single">
-            <CurrencyIcon icon={iconUrl} currency={currency} />
-            <div className="cr-wallet-item__single-balance">
+        <div className="n-currency-info">
+            <CryptoIcon imageUrl={iconUrl} code={currency} className="n-currency-info__currency" />
+            <div className="n-currency-info__balance">
                 <div>
-                    <div className="cr-wallet-item__amount-locked">
-                        <FormattedMessage id="page.body.wallets.locked" />
-                    </div>
-                    <span className="cr-wallet-item__balance-locked">
-                        <Decimal fixed={selectedFixed} thousSep=",">
-                            {stringLocked}
+                    <div className="n-currency-info__balance-label">{getText('page.body.wallets.locked')}</div>
+                    <div className="n-currency-info__balance-value">
+                        <Decimal fixed={fixed} thousSep=",">
+                            {locked}
                         </Decimal>
-                    </span>
+                    </div>
                 </div>
                 <div>
-                    <span className="cr-wallet-item__balance">
-                        {currency}&nbsp;
-                        <FormattedMessage id="page.body.wallets.balance" />
-                    </span>
-                    &nbsp;
-                    <span className="cr-wallet-item__balance-amount">
-                        <Decimal fixed={selectedFixed} thousSep=",">
+                    <div className="n-currency-info__balance-label">{`${currency.toUpperCase()} ${getText(
+                        'page.body.wallets.balance'
+                    )}`}</div>
+                    <div className="n-currency-info__balance-value">
+                        <Decimal fixed={fixed} thousSep=",">
                             {balance}
                         </Decimal>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>

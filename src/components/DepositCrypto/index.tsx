@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import * as React from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectMobileDeviceState } from '../../modules';
@@ -7,7 +7,9 @@ import { CopyableTextField } from '../CopyableTextField';
 import { MetaMaskButton } from '../MetaMaskButton';
 import { QRCode } from '../QRCode';
 
-export interface DepositCryptoProps {
+import './index.scss';
+
+interface Props {
     /**
      * Current deposit crypto currency
      */
@@ -50,35 +52,33 @@ export interface DepositCryptoProps {
     disabled?: boolean;
 }
 
+const QR_SIZE = 118;
 /**
  *  Component that displays wallet details that can be used to deposit cryptocurrency.
  */
-const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: DepositCryptoProps) => {
-    const QR_SIZE = 118;
-    const {
-        copiableTextFieldText,
-        copyButtonText,
-        currency,
-        data,
-        dimensions,
-        disabled,
-        error,
-        handleOnCopy,
-        text,
-    } = props;
+const DepositCrypto: React.FC<Props> = ({
+    copiableTextFieldText,
+    copyButtonText,
+    currency,
+    data,
+    dimensions = QR_SIZE,
+    disabled,
+    error,
+    handleOnCopy,
+    text,
+}) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
-    const size = dimensions || QR_SIZE;
+
     const onCopy = !disabled ? handleOnCopy : undefined;
-    const className = classnames({ 'cr-copyable-text-field__disabled': data === '' });
 
     return (
-        <div className={className}>
+        <div className={classnames({ 'cr-copyable-text-field__disabled': data === '' })}>
             <div className="cr-deposit-crypto">
                 <div>
                     <p className="cr-deposit-info">{text}</p>
                     {data ? (
                         <div className="d-none d-md-block qr-code-wrapper">
-                            <QRCode dimensions={size} data={data} />
+                            <QRCode dimensions={dimensions} data={data} />
                         </div>
                     ) : null}
                 </div>

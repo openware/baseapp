@@ -1,10 +1,46 @@
+@import "../../lib/style/base.scss";
+
+.n-currency-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 calc(var(--gap) * 3);
+    padding: 0 0 calc(var(--gap) * 4);
+    border-bottom: 1px solid var(--divider-color-level-2);
+    @include children-row-margin(calc(var(--gap) * 3));
+
+    &__currency {
+        background: transparent;
+        width: 64px;
+        height: 64px;
+        display: inline-block;
+    }
+
+    &__balance {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        @include children-row-margin();
+
+        &-label {
+            font-size: calc(var(--gap) * 3);
+            color: var(--table-text-color);
+        }
+
+        &-value {
+            color: var(--wallets-balance-color);
+            font-size: calc(var(--gap) * 5);
+            font-weight: 300;
+        }
+    }
+}
+
 .cr-wallet-item__single {
     align-items: center;
     background: transparent;
     border-bottom: 1px solid var(--divider-color-level-2);
     display: flex;
-    margin: 0 calc(var(--gap) * 3);
-    padding: 0 0 calc(var(--gap) * 4);
 
     &-balance {
         display: flex;

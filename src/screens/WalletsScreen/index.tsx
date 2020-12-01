@@ -6,11 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { useLocalization, useReduxSelector } from 'src/hooks';
 
-import {
-    Tab,
-    TabPanel,
-    WalletList,
-} from '../../components';
+import { Tab, TabPanel, WalletList } from '../../components';
 import { EstimatedValue } from '../../containers/Wallets/EstimatedValue';
 import {
     beneficiariesFetch,
@@ -51,7 +47,6 @@ export const WalletsScreen: React.FC<Props> = ({ walletsError }) => {
     const dispatch = useDispatch();
     const { currency: activeCurrency } = useParams<WalletRouteParams>();
 
-    const [selectedWalletIndex, setSelectedWalletIndex] = useState(-1);
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
     const [tab, setTab] = useState(getText('page.body.wallets.tabs.deposit'));
 
@@ -81,15 +76,15 @@ export const WalletsScreen: React.FC<Props> = ({ walletsError }) => {
         };
     }, []);
 
-    useEffect(() => {
-        if (wallets.length) {
-            const index = selectedWalletIndex >= 0 ? selectedWalletIndex : 0;
-            const { type, balance, currency } = wallets[0];
-            if (type === 'coin' && balance) {
-                dispatch(walletsAddressFetch({ currency }));
-            }
-        }
-    }, [wallets, selectedWalletIndex]);
+    // useEffect(() => {
+    //     if (wallets.length) {
+    //         const index = selectedWalletIndex >= 0 ? selectedWalletIndex : 0;
+    //         const { type, balance, currency } = wallets[0];
+    //         if (type === 'coin' && balance) {
+    //             dispatch(walletsAddressFetch({ currency }));
+    //         }
+    //     }
+    // }, [wallets, activeCurrency]);
 
     useEffect(() => {
         if (beneficiariesActivateSuccess && beneficiariesDeleteSuccess) {
@@ -132,7 +127,7 @@ export const WalletsScreen: React.FC<Props> = ({ walletsError }) => {
         } else {
             return [];
         }
-    }, [wallets, currencies]);
+    }, [wallets, currencies, activeCurrency]);
 
     return (
         <React.Fragment>
@@ -144,9 +139,7 @@ export const WalletsScreen: React.FC<Props> = ({ walletsError }) => {
                         !historyList.length && 'pg-wallet__tabs-content-height'
                     }`}>
                     <div className={`col-md-5 col-sm-12 col-12 ${mobileWalletChosen && 'd-none d-md-block'}`}>
-                        <WalletList
-                            items={wallets}
-                        />
+                        <WalletList items={wallets} />
                     </div>
                     <div
                         className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${

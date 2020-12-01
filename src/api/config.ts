@@ -9,7 +9,8 @@ export const defaultConfig: Config = {
         rangerUrl: '',
         finexUrl: '',
     },
-    minutesUntilAutoLogout: '5',
+    // Test value
+    minutesUntilAutoLogout: '555',
     rangerReconnectPeriod: '1',
     withCredentials: true,
     storage: {},

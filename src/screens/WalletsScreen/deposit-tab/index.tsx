@@ -1,8 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Blur, CurrencyInfo, DepositCrypto, DepositFiat } from 'src/components';
 import { formatCCYAddress } from 'src/helpers';
 import { useLocalization, useReduxSelector } from 'src/hooks';
-import { alertPush, Currency, selectUserInfo, selectWalletsAddressError, Wallet } from 'src/modules';
+import {
+    alertPush,
+    Currency,
+    selectUserInfo,
+    selectWalletAddress,
+    selectWalletsAddressError,
+    Wallet,
+    walletsAddressFetch,
+} from 'src/modules';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { WalletHistory } from 'src/containers/Wallets/History';
@@ -17,11 +25,11 @@ export const WalletDepositTab: React.FC<Props> = ({ wallet, currency }) => {
     const getText = useLocalization();
     const user = useReduxSelector(selectUserInfo);
     const addressDepositError = useReduxSelector(selectWalletsAddressError);
+    const selectedWalletAddress = useReduxSelector(selectWalletAddress);
 
     const handleOnCopy = useCallback(() => {
         dispatch(alertPush({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success' }));
     }, []);
-    
 
     const text = getText('page.body.wallets.tabs.deposit.ccy.message.submit', {
         confirmations: currency.min_confirmations,
@@ -31,7 +39,11 @@ export const WalletDepositTab: React.FC<Props> = ({ wallet, currency }) => {
         ? getText(addressDepositError.message[0])
         : getText('page.body.wallets.tabs.deposit.ccy.message.error');
 
-    const walletAddress = formatCCYAddress(currency.name, wallet.address);
+    const walletAddress = formatCCYAddress(currency.name, selectedWalletAddress);
+
+    useEffect(() => {
+        dispatch(walletsAddressFetch({ currency: currency.id }));
+    }, [currency]);
 
     if (wallet.type === 'coin') {
         return (
@@ -40,7 +52,7 @@ export const WalletDepositTab: React.FC<Props> = ({ wallet, currency }) => {
                 {!currency.deposit_enabled ? (
                     <Blur
                         className={classNames('pg-blur-deposit-crypto', {
-                            'pg-blur-deposit-crypto--active':!!wallet.balance,
+                            'pg-blur-deposit-crypto--active': !!wallet.balance,
                         })}
                         text={getText('page.body.wallets.tabs.deposit.disabled.message')}
                     />
