@@ -21,7 +21,7 @@ const WalletDepositBodyComponent = (props) => {
         () => intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.address' }),
         [intl]
     );
-    const handleOnCopy = () => ({});
+    
     const renderDeposit = (isAccountActivated: boolean) => {
         const { addressDepositError, wallet } = props;
         const currencyItem = (currencies && currencies.find((item) => item.id === wallet.currency)) || {
@@ -57,10 +57,8 @@ const WalletDepositBodyComponent = (props) => {
                     <DepositCrypto
                         currency={wallet.currency as string}
                         data={walletAddress}
-                        handleOnCopy={handleOnCopy}
                         error={error}
                         text={text}
-                        disabled={walletAddress === ''}
                         copiableTextFieldText={`${wallet.currency.toUpperCase()} ${label}`}
                         copyButtonText={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.button' })}
                     />

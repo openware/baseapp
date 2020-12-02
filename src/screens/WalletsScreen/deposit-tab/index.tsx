@@ -27,14 +27,6 @@ export const WalletDepositTab: React.FC<Props> = ({ wallet, currency }) => {
     const addressDepositError = useReduxSelector(selectWalletsAddressError);
     const selectedWalletAddress = useReduxSelector(selectWalletAddress);
 
-    const handleOnCopy = useCallback(() => {
-        dispatch(alertPush({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success' }));
-    }, []);
-
-    const text = getText('page.body.wallets.tabs.deposit.ccy.message.submit', {
-        confirmations: currency.min_confirmations,
-    });
-
     const error = addressDepositError
         ? getText(addressDepositError.message[0])
         : getText('page.body.wallets.tabs.deposit.ccy.message.error');
@@ -49,25 +41,22 @@ export const WalletDepositTab: React.FC<Props> = ({ wallet, currency }) => {
         return (
             <React.Fragment>
                 <CurrencyInfo wallet={wallet} />
-                {!currency.deposit_enabled ? (
-                    <Blur
-                        className={classNames('pg-blur-deposit-crypto', {
-                            'pg-blur-deposit-crypto--active': !!wallet.balance,
-                        })}
-                        text={getText('page.body.wallets.tabs.deposit.disabled.message')}
-                    />
-                ) : null}
                 <DepositCrypto
                     currency={wallet.currency}
                     data={walletAddress}
-                    handleOnCopy={handleOnCopy}
                     error={error}
-                    text={text}
-                    disabled={walletAddress === ''}
+                    text={getText('page.body.wallets.tabs.deposit.ccy.message.submit', {
+                        confirmations: currency.min_confirmations,
+                    })}
                     copiableTextFieldText={getText('page.body.wallets.tabs.deposit.ccy.message.address')}
                     copyButtonText={getText('page.body.wallets.tabs.deposit.ccy.message.button')}
+                    blur={
+                        currency.deposit_enabled ? null : (
+                            <Blur text={getText('page.body.wallets.tabs.deposit.disabled.message')} />
+                        )
+                    }
                 />
-                {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
+                {currency && <WalletHistory label="deposit" type="deposits" currency={currency.id} />}
             </React.Fragment>
         );
     } else {
@@ -85,7 +74,7 @@ export const WalletDepositTab: React.FC<Props> = ({ wallet, currency }) => {
                     description={getText('page.body.wallets.tabs.deposit.fiat.message2')}
                     uid={user ? user.uid : ''}
                 />
-                {currency && <WalletHistory label="deposit" type="deposits" currency={currency} />}
+                {currency && <WalletHistory label="deposit" type="deposits" currency={currency.id} />}
             </React.Fragment>
         );
     }

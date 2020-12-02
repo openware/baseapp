@@ -521,6 +521,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     };
 
     private check = () => {
+        return;
         const { user } = this.props;
         const now = Date.now();
         const timeleft = this.getLastAction() + parseFloat(minutesUntilAutoLogout()) * 60 * 1000;

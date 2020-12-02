@@ -1,8 +1,7 @@
-import classnames from 'classnames';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { selectMobileDeviceState } from '../../modules';
+import { alertPush, selectMobileDeviceState } from '../../modules';
 import { CopyableTextField } from '../CopyableTextField';
 import { MetaMaskButton } from '../MetaMaskButton';
 import { QRCode } from '../QRCode';
@@ -41,15 +40,8 @@ interface Props {
      *  Renders text of the label of copy button component
      */
     copyButtonText?: string;
-    /**
-     * Renders text alert about success copy address
-     */
-    handleOnCopy: () => void;
-    /**
-     * @default 'false'
-     * If true, Button in CopyableTextField will be disabled.
-     */
-    disabled?: boolean;
+
+    blur?: React.ReactNode;
 }
 
 const QR_SIZE = 118;
@@ -62,41 +54,40 @@ const DepositCrypto: React.FC<Props> = ({
     currency,
     data,
     dimensions = QR_SIZE,
-    disabled,
     error,
-    handleOnCopy,
     text,
+    blur,
 }) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
+    const dispatch = useDispatch();
 
-    const onCopy = !disabled ? handleOnCopy : undefined;
+    const handleOnCopy = useCallback(() => {
+        dispatch(alertPush({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success' }));
+    }, []);
 
     return (
-        <div className={classnames({ 'cr-copyable-text-field__disabled': data === '' })}>
-            <div className="cr-deposit-crypto">
-                <div>
-                    <p className="cr-deposit-info">{text}</p>
-                    {data ? (
-                        <div className="d-none d-md-block qr-code-wrapper">
-                            <QRCode dimensions={dimensions} data={data} />
-                        </div>
-                    ) : null}
-                </div>
-                <div className="cr-deposit-crypto__block">
-                    {currency === 'eth' && !isMobileDevice ? <MetaMaskButton depositAddress={data} /> : null}
-                    <form className="cr-deposit-crypto__copyable">
-                        <fieldset className="cr-copyable-text-field" onClick={onCopy}>
-                            <CopyableTextField
-                                className="cr-deposit-crypto__copyable-area"
-                                value={data ? data : error}
-                                fieldId={data ? 'copy_deposit_1' : 'copy_deposit_2'}
-                                copyButtonText={copyButtonText}
-                                disabled={disabled}
-                                label={copiableTextFieldText ? copiableTextFieldText : 'Deposit by Wallet Address'}
-                            />
-                        </fieldset>
-                    </form>
-                </div>
+        <div className="n-deposit-crypto">
+            {blur ? <div className="n-deposit-crypto__blur">{blur}</div> : null}
+            <div className="n-deposit-crypto__qa">
+                <div className="n-deposit-crypto__qa-text">{text}</div>
+                {data ? (
+                    <div className="n-deposit-crypto__qa-code">
+                        <QRCode dimensions={dimensions} data={data} />
+                    </div>
+                ) : null}
+            </div>
+            <div className="n-deposit-crypto__address">
+                {currency === 'eth' && !isMobileDevice ? (
+                    <MetaMaskButton className="n-deposit-crypto__metamask" depositAddress={data} />
+                ) : null}
+                <CopyableTextField
+                    className="n-deposit-crypto__copy"
+                    value={data ? data : error}
+                    copyButtonText={copyButtonText}
+                    disabled={!data}
+                    label={copiableTextFieldText ? copiableTextFieldText : 'Deposit by Wallet Address'}
+                    afterCopy={handleOnCopy}
+                />
             </div>
         </div>
     );

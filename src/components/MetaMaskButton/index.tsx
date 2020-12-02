@@ -3,6 +3,7 @@ import { useWeb3React as useWeb3ReactCore } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
 import { MetaMaskLogo } from '../../assets/images/MetaMaskLogo';
 import { Web3ProviderWrapper } from '../../helpers';
@@ -10,13 +11,14 @@ import { alertPush, sendError } from '../../modules';
 
 interface OwnProps {
     depositAddress: string;
+    className?: string;
 }
 
 type Props = OwnProps;
 
 export const injected = new InjectedConnector({ supportedChainIds: [1] });
 
-export const MetaMaskButtonComponent: React.FunctionComponent<Props> = () => {
+export const MetaMaskButtonComponent: React.FunctionComponent<Props> = ({ className }) => {
     const { account, activate, connector, error } = useWeb3ReactCore<Web3Provider>();
     const [activatingConnector, setActivatingConnector] = React.useState<any>();
     const dispatch = useDispatch();
@@ -53,7 +55,7 @@ export const MetaMaskButtonComponent: React.FunctionComponent<Props> = () => {
     }, [!!error, dispatch]);
 
     return (
-        <div className="pg-metamask">
+        <div className={classNames('pg-metamask', className)}>
             <MetaMaskLogo className="pg-metamask__logo-icon" onClick={handleConnectWallet} />
         </div>
     );

@@ -1,115 +1,52 @@
-.cr-deposit-crypto {
-    background: transparent;
-    color: var(--table-text-color);
+@import "../../lib/style/base.scss";
+
+.n-deposit-crypto {
     display: flex;
     flex-direction: column;
-    font-size: var(--font-size);
+    @include children-column-margin(calc(var(--gap) * 3));
     padding: calc(var(--gap) * 3);
+    position: relative;
 
-    div:nth-child(1) {
+    &__blur {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         display: flex;
-        justify-content: space-between;
     }
 
-    &__create {
-        align-items: center;
-        justify-content: center !important;
-        padding-top: calc(var(--gap) * 2);
-    }
-
-    .cr-deposit-info {
-        background-color: inherit;
-        font-size: calc(var(--gap) * 2.3);
-        line-height: 25px;
-        margin-bottom: calc(var(--gap) * 3);
-        width: 56%;
-    }
-
-    &__block {
-        align-items: center;
+    &__qa {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
+        @include children-row-margin(calc(var(--gap) * 2));
 
-        .cr-deposit-crypto__copyable {
-            width: 100%;
-        }
-
-        .pg-metamask {
-            width: 60px;
+        &-text {
+            flex: 1;
+            font-size: calc(var(--gap) * 2.3);
         }
     }
 
-    &__copyable {
-        align-items: center;
+    &__address {
         display: flex;
-        justify-content: space-between;
-        margin-top: calc(var(--gap) * 6);
-
-        fieldset {
-            &:focus,
-            &:focus-within {
-                .cr-deposit-crypto__copyable-area {
-                    border-color: var(--input-border-color-active);
-                }
-            }
-        }
-
-        .custom-input {
-            width: 75%;
-        }
-
-        &-title {
-            background-color: inherit;
-            color: var(--table-text-color);
-            font-size: calc(var(--gap) * 2);
-            margin-left: var(--gap);
-        }
-
-        &-area {
-            border: 1px solid var(--input-border-color);
-            margin-top: calc(var(--gap) * -1.1);
-
-            .input-group {
-                &:first-child {
-                    border-radius: 0.3rem;
-
-                    &:focus-within {
-                        label,
-                        legend {
-                            color: var(--input-legend-color-active);
-                        }
-
-                        border-color: var(--input-border-color-active);
-                    }
-                }
-            }
-        }
-
-        .cr-copyable-text-field {
-            &__input {
-                background: inherit;
-                padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
-
-                input {
-                    background: unset;
-                    color: var(--input-background-color);
-                }
-            }
-        }
+        flex-direction: row;
+        @include children-row-margin(calc(var(--gap) * 3));
+        align-items: center;
     }
 
-    .qr-code {
-        margin-left: calc(var(--gap) * 3);
-        margin-top: calc(var(--gap) * 3);
+    &__metamask {
+        margin-top: 0 !important;
+    }
 
-        svg {
-            border: 1px solid var(--primary-text-color);
+    &__copy {
+        border: 1px solid var(--input-border-color);
+        &:focus-within {
+            border-color: var(--input-border-color-active);
         }
     }
 }
 
+/*
 @media screen and (max-width: 768px) {
     .cr-deposit-crypto {
         padding: 0;
@@ -124,3 +61,4 @@
         }
     }
 }
+*/

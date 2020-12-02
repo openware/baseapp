@@ -1,20 +1,21 @@
-import * as React from 'react';
+import React from 'react';
+import classNames from 'classnames';
 
 import { LockIcon } from '../../assets/images/LockIcon';
+
+import './index.scss';
 
 export interface Props {
     className?: string;
     text?: string;
 }
 
-export const Blur: React.FC<Props> = (props) => {
-    const { text, className } = props;
-
+export const Blur: React.FC<Props> = ({ text, className }) => {
     return (
-        <div className={`pg-blur ${className ? className : ''}`}>
+        <div className={classNames('pg-blur', className)}>
             <div className="pg-blur__content">
-                <LockIcon className="pg-blur__content__icon" />
-                <span className="pg-blur__content__text">{text}</span>
+                <LockIcon className="pg-blur__content-icon" />
+                <div className="pg-blur__content-text">{text}</div>
             </div>
         </div>
     );
