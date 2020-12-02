@@ -26,4 +26,5 @@ export interface Config {
     showLanding: boolean;
     sentryEnabled?: boolean;
     kycSteps?: string[];
+    captchaLogin: boolean;
 }

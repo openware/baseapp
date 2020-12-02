@@ -5,7 +5,9 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { CustomInput } from '../';
+import { captchaLogin } from '../../api';
 import { EMAIL_REGEX } from '../../helpers';
+import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
 
 export interface SignInProps {
@@ -36,6 +38,11 @@ export interface SignInProps {
     handleChangeFocusField: (value: string) => void;
     changePassword: (value: string) => void;
     changeEmail: (value: string) => void;
+    captchaType?: 'recaptcha' | 'geetest' | 'none';
+    renderCaptcha?: JSX.Element | null;
+    reCaptchaSuccess?: boolean;
+    geetestCaptchaSuccess?: boolean;
+    captcha_response?: string | GeetestCaptchaResponse;
 }
 
 const SignIn: React.FC<SignInProps> = ({
@@ -62,6 +69,10 @@ const SignIn: React.FC<SignInProps> = ({
     handleChangeFocusField,
     changePassword,
     changeEmail,
+    captchaType,
+    geetestCaptchaSuccess,
+    reCaptchaSuccess,
+    renderCaptcha,
 }) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const history = useHistory();
@@ -93,6 +104,11 @@ const SignIn: React.FC<SignInProps> = ({
         },
         [handleChangeFocusField]
     );
+
+    const isButtonDisabled = (): boolean => {
+        return (((captchaType === 'recaptcha' && !reCaptchaSuccess) ||
+        (captchaType === 'geetest' && !geetestCaptchaSuccess)) && captchaLogin()) ? true : false;
+    };
 
     const handleSubmitForm = React.useCallback(() => {
         refreshError();
@@ -212,12 +228,13 @@ const SignIn: React.FC<SignInProps> = ({
                         />
                         {passwordError && <div className={'cr-sign-in-form__error'}>{passwordError}</div>}
                     </div>
+                    {captchaLogin() && renderCaptcha}
                     {isMobileDevice && renderForgotButton}
                     <div className="cr-sign-in-form__button-wrapper">
                         <Button
                             block={true}
                             type="button"
-                            disabled={isLoading || !email.match(EMAIL_REGEX) || !password}
+                            disabled={isLoading || !email.match(EMAIL_REGEX) || !password || isButtonDisabled()}
                             onClick={handleClick as any}
                             size="lg"
                             variant="primary">

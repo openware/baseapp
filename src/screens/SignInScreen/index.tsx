@@ -6,11 +6,20 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
-import { SignInComponent, TwoFactorAuth } from '../../components';
+import { captchaLogin } from '../../api';
+import { Captcha, SignInComponent, TwoFactorAuth } from '../../components';
 import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
 import {
+    Configs,
+    GeetestCaptchaResponse,
+    resetCaptchaState,
     RootState,
     selectAlertState,
+    selectCaptchaResponse,
+    selectConfigs,
+    selectGeetestCaptchaSuccess,
+    selectRecaptchaSuccess,
+    selectSignInError,
     selectSignInRequire2FA,
     selectSignUpRequireVerification,
     selectUserFetching,
@@ -20,12 +29,18 @@ import {
     signInRequire2FA,
     signUpRequireVerification,
 } from '../../modules';
+import { CommonError } from '../../modules/types';
 
 interface ReduxProps {
+    error?: CommonError;
     isLoggedIn: boolean;
     loading?: boolean;
     require2FA?: boolean;
     requireEmailVerification?: boolean;
+    configs: Configs;
+    captcha_response?: string | GeetestCaptchaResponse;
+    reCaptchaSuccess: boolean;
+    geetestCaptchaSuccess: boolean;
 }
 
 interface DispatchProps {
@@ -33,6 +48,7 @@ interface DispatchProps {
     signInError: typeof signInError;
     signInRequire2FA: typeof signInRequire2FA;
     signUpRequireVerification: typeof signUpRequireVerification;
+    resetCaptchaState: typeof resetCaptchaState;
 }
 
 interface SignInState {
@@ -70,12 +86,25 @@ class SignIn extends React.Component<Props, SignInState> {
 
     public componentWillReceiveProps(nextProps: Props) {
         if (!this.props.isLoggedIn && nextProps.isLoggedIn) {
+            this.props.resetCaptchaState();
             this.props.history.push('/wallets');
         }
         if (this.props.requireEmailVerification) {
             this.props.history.push('/email-verification');
         }
     }
+
+    public componentWillUnmount() {
+        this.props.resetCaptchaState();
+    }
+
+    public renderCaptcha = () => {
+        const { error } = this.props;
+
+        return (
+            <Captcha error={error} />
+        );
+    };
 
     public render() {
         const { loading, require2FA } = this.props;
@@ -90,7 +119,13 @@ class SignIn extends React.Component<Props, SignInState> {
     }
 
     private renderSignInForm = () => {
-        const { loading } = this.props;
+        const {
+            configs,
+            loading,
+            captcha_response,
+            reCaptchaSuccess,
+            geetestCaptchaSuccess,
+        } = this.props;
         const { email, emailError, emailFocused, password, passwordError, passwordFocused } = this.state;
 
         return (
@@ -118,6 +153,11 @@ class SignIn extends React.Component<Props, SignInState> {
                 refreshError={this.refreshError}
                 changeEmail={this.handleChangeEmailValue}
                 changePassword={this.handleChangePasswordValue}
+                captchaType={configs.captcha_type}
+                renderCaptcha={this.renderCaptcha()}
+                reCaptchaSuccess={reCaptchaSuccess}
+                geetestCaptchaSuccess={geetestCaptchaSuccess}
+                captcha_response={captcha_response}
             />
         );
     };
@@ -160,26 +200,29 @@ class SignIn extends React.Component<Props, SignInState> {
 
     private handleSignIn = () => {
         const { email, password } = this.state;
+        const { configs: { captcha_type }, captcha_response } = this.props;
 
-        this.props.signIn({
-            email,
-            password,
-        });
+        if ((captcha_type === 'recaptcha' || captcha_type === 'geetest') && captchaLogin()) {
+                this.props.signIn({ email, password, captcha_response });
+        } else {
+            this.props.signIn({ email, password });
+        }
     };
 
     private handle2FASignIn = () => {
         const { email, password, otpCode } = this.state;
+        const { configs: { captcha_type }, captcha_response } = this.props;
 
         if (!otpCode) {
             this.setState({
                 error2fa: 'Please enter 2fa code',
             });
         } else {
-            this.props.signIn({
-                email,
-                password,
-                otp_code: otpCode,
-            });
+            if ((captcha_type === 'recaptcha' || captcha_type === 'geetest') && captchaLogin()) {
+                this.props.signIn({ email, password, captcha_response, otp_code: otpCode });
+            } else {
+                this.props.signIn({ email, password, otp_code: otpCode });
+            }
         }
     };
 
@@ -255,10 +298,15 @@ class SignIn extends React.Component<Props, SignInState> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     alert: selectAlertState(state),
+    error: selectSignInError(state),
     isLoggedIn: selectUserLoggedIn(state),
     loading: selectUserFetching(state),
     require2FA: selectSignInRequire2FA(state),
     requireEmailVerification: selectSignUpRequireVerification(state),
+    configs: selectConfigs(state),
+    captcha_response: selectCaptchaResponse(state),
+    reCaptchaSuccess: selectRecaptchaSuccess(state),
+    geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
@@ -266,6 +314,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     signInError: error => dispatch(signInError(error)),
     signInRequire2FA: payload => dispatch(signInRequire2FA(payload)),
     signUpRequireVerification: data => dispatch(signUpRequireVerification(data)),
+    resetCaptchaState: () => dispatch(resetCaptchaState()),
 });
 
 export const SignInScreen = compose(
