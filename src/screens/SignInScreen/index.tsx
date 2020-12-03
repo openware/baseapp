@@ -202,8 +202,6 @@ class SignIn extends React.Component<Props, SignInState> {
         const { email, password } = this.state;
         const { configs: { captcha_type }, captcha_response } = this.props;
 
-        // tslint:disable-next-line:no-console
-        console.log(captchaLogin(), captcha_type);
         if ((captcha_type === 'recaptcha' || captcha_type === 'geetest') && captchaLogin()) {
             this.props.signIn({ email, password, captcha_response });
         } else {
