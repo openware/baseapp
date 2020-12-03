@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
+import { captchaLogin } from '../../api';
 import { SignInComponent, SignInProps } from './';
 
 import { shallow } from 'enzyme';
@@ -21,6 +22,11 @@ const defaults: SignInProps = {
     handleChangeFocusField: jest.fn(),
     changePassword: jest.fn(),
     changeEmail: jest.fn(),
+    captchaType: 'none',
+    renderCaptcha: null,
+    reCaptchaSuccess: false,
+    geetestCaptchaSuccess: false,
+    captcha_response: '',
 };
 
 const setup = (props: Partial<SignInProps> = {}) =>
@@ -109,5 +115,12 @@ describe.skip('SignIn component', () => {
         expect(wrapper.find('.cr-sign-in-form__bottom-section-password').text()).toBe('Forgot your password?');
         wrapper = setup({forgotPasswordLabel: 'label forgot password'});
         expect(wrapper.find('.cr-sign-in-form__bottom-section-password').text()).toBe('label forgot password');
+    });
+
+    it('should render captcha block', () => {
+        const wrapper = setup({captchaType: 'recaptcha', renderCaptcha: <div className="cr-sign-in-form__recaptcha">Content</div>});
+        captchaLogin() ?
+        expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(true) :
+        expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(false);
     });
 });
