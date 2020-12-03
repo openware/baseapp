@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Blur, CurrencyInfo, DepositCrypto, DepositFiat } from 'src/components';
 import { formatCCYAddress } from 'src/helpers';
 import { useLocalization, useReduxSelector } from 'src/hooks';
 import {
-    alertPush,
     Currency,
     selectUserInfo,
     selectWalletAddress,
@@ -11,7 +10,6 @@ import {
     Wallet,
     walletsAddressFetch,
 } from 'src/modules';
-import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { WalletHistory } from 'src/containers/Wallets/History';
 
@@ -27,9 +25,9 @@ export const WalletDepositTab: React.FC<Props> = ({ wallet, currency }) => {
     const addressDepositError = useReduxSelector(selectWalletsAddressError);
     const selectedWalletAddress = useReduxSelector(selectWalletAddress);
 
-    const error = addressDepositError
-        ? getText(addressDepositError.message[0])
-        : getText('page.body.wallets.tabs.deposit.ccy.message.error');
+    const error = getText(
+        addressDepositError ? addressDepositError.message[0] : 'page.body.wallets.tabs.deposit.ccy.message.error'
+    );
 
     const walletAddress = formatCCYAddress(currency.name, selectedWalletAddress);
 
@@ -37,10 +35,16 @@ export const WalletDepositTab: React.FC<Props> = ({ wallet, currency }) => {
         dispatch(walletsAddressFetch({ currency: currency.id }));
     }, [currency]);
 
-    if (wallet.type === 'coin') {
-        return (
-            <React.Fragment>
-                <CurrencyInfo wallet={wallet} />
+    const blur = useMemo(() => {
+        return currency.deposit_enabled ? null : (
+            <Blur text={getText('page.body.wallets.tabs.deposit.disabled.message')} />
+        );
+    }, [currency]);
+
+    return (
+        <React.Fragment>
+            <CurrencyInfo wallet={wallet} />
+            {wallet.type === 'coin' ? (
                 <DepositCrypto
                     currency={wallet.currency}
                     data={walletAddress}
@@ -50,32 +54,17 @@ export const WalletDepositTab: React.FC<Props> = ({ wallet, currency }) => {
                     })}
                     copiableTextFieldText={getText('page.body.wallets.tabs.deposit.ccy.message.address')}
                     copyButtonText={getText('page.body.wallets.tabs.deposit.ccy.message.button')}
-                    blur={
-                        currency.deposit_enabled ? null : (
-                            <Blur text={getText('page.body.wallets.tabs.deposit.disabled.message')} />
-                        )
-                    }
+                    blur={blur}
                 />
-                {currency && <WalletHistory label="deposit" type="deposits" currency={currency.id} />}
-            </React.Fragment>
-        );
-    } else {
-        return (
-            <React.Fragment>
-                <CurrencyInfo wallet={wallet} />
-                {currency.deposit_enabled ? (
-                    <Blur
-                        className="pg-blur-deposit-fiat"
-                        text={getText('page.body.wallets.tabs.deposit.disabled.message')}
-                    />
-                ) : null}
+            ) : (
                 <DepositFiat
                     title={getText('page.body.wallets.tabs.deposit.fiat.message1')}
                     description={getText('page.body.wallets.tabs.deposit.fiat.message2')}
                     uid={user ? user.uid : ''}
+                    blur={blur}
                 />
-                {currency && <WalletHistory label="deposit" type="deposits" currency={currency.id} />}
-            </React.Fragment>
-        );
-    }
+            )}
+            <WalletHistory label="deposit" type="deposits" currency={currency.id} />
+        </React.Fragment>
+    );
 };

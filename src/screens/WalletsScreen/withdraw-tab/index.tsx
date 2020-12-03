@@ -77,13 +77,13 @@ export const WalletWithdrawTab: React.FC<Props> = ({ wallet }) => {
             <WithdrawSubmitModal />
         </>
     ) : (
-        <React.Fragment>
+        <>
             <p className="pg-wallet__enable-2fa-message">
                 {getText('page.body.wallets.tabs.withdraw.content.enable2fa')}
             </p>
             <Button block={true} onClick={redirectToEnable2fa} size="lg" variant="primary">
                 {getText('page.body.wallets.tabs.withdraw.content.enable2faButton')}
             </Button>
-        </React.Fragment>
+        </>
     );
 };

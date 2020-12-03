@@ -1,5 +1,7 @@
-import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { useMemo } from 'react';
+import { useLocalization } from 'src/hooks';
+
+import './index.scss';
 
 export interface DepositFiatProps {
     /**
@@ -11,54 +13,56 @@ export interface DepositFiatProps {
      */
     title: string;
     uid: string;
+    blur?: React.ReactNode;
 }
-
-const bankData = (uid) => [
-    {
-        key: <FormattedMessage id="page.body.wallets.tabs.deposit.fiat.bankName" />,
-        value: 'Diamant Bank',
-    },
-    {
-        key: <FormattedMessage id="page.body.wallets.tabs.deposit.fiat.accountNumber" />,
-        value: '10120212',
-    },
-    {
-        key: <FormattedMessage id="page.body.wallets.tabs.deposit.fiat.accountName" />,
-        value: 'name',
-    },
-    {
-        key: <FormattedMessage id="page.body.wallets.tabs.deposit.fiat.phoneNumber" />,
-        value: '+3 8093 1212 12 12',
-    },
-    {
-        key: <FormattedMessage id="page.body.wallets.tabs.deposit.fiat.referenceCode" />,
-        value: uid,
-    },
-];
 
 /**
  * Component to display bank account details which can be used for a
  * deposit
  */
-const DepositFiat: React.FunctionComponent<DepositFiatProps> = (props: DepositFiatProps) => {
-    const { description, title, uid } = props;
+export const DepositFiat: React.FC<DepositFiatProps> = ({ description, title, uid, blur }) => {
+    const getText = useLocalization();
 
-    const renderDetails = (detail, index: number) => {
-        return (
-            <div className="cr-deposit-fiat-detail" key={index}>
-                <p className="cr-deposit-fiat-detail__label">{detail.key}:</p>
-                <p className="cr-deposit-fiat-detail__value">{detail.value}</p>
-            </div>
-        );
-    };
+    const bankData = useMemo(() => {
+        return [
+            {
+                key: getText('page.body.wallets.tabs.deposit.fiat.bankName'),
+                value: 'Diamant Bank',
+            },
+            {
+                key: getText('page.body.wallets.tabs.deposit.fiat.accountNumber'),
+                value: '10120212',
+            },
+            {
+                key: getText('page.body.wallets.tabs.deposit.fiat.accountName'),
+                value: 'name',
+            },
+            {
+                key: getText('page.body.wallets.tabs.deposit.fiat.phoneNumber'),
+                value: '+3 8093 1212 12 12',
+            },
+            {
+                key: getText('page.body.wallets.tabs.deposit.fiat.referenceCode'),
+                value: uid,
+            },
+        ];
+    }, [uid]);
 
     return (
-        <div className="cr-deposit-fiat">
-            <p className="cr-deposit-fiat__title">{title}</p>
-            <p className="cr-deposit-fiat__description">{description}</p>
-            <div className="cr-deposit-fiat-credentials">{bankData(uid).map(renderDetails)}</div>
+        <div className="n-deposit-fiat">
+            {blur ? <div className="n-deposit-fiat__blur">{blur}</div> : null}
+            <div>{title}</div>
+            <div>{description}</div>
+            <div className="n-deposit-fiat-credentials">
+                {bankData.map((detail, index: number) => {
+                    return (
+                        <div className="n-deposit-fiat-detail" key={index}>
+                            <div className="n-deposit-fiat-detail__label">{detail.key}:</div>
+                            <div className="n-deposit-fiat-detail__value">{detail.value}</div>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 };
-
-export { DepositFiat };

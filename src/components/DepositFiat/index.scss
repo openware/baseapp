@@ -1,0 +1,36 @@
+@import "../../lib/style/base.scss";
+
+.n-deposit-fiat {
+    position: relative;
+    padding: calc(var(--gap) * 3) calc(var(--gap) * 3);
+
+    @include children-column-margin(calc(var(--gap) * 3));
+
+    &__blur {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        display: flex;
+    }
+
+    &-credentials {
+        position: relative;
+        @include children-column-margin(calc(var(--gap) * 2));
+    }
+
+    &-detail {
+        display: flex;
+
+        &__value {
+            flex: 1;
+        }
+
+        &__label {
+            flex-basis: 120px;
+            color: var(--base-2);
+            margin-right: calc(var(--gap) * 2);
+        }
+    }
+}
