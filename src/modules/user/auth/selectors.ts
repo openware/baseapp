@@ -20,5 +20,8 @@ export const selectCurrentPasswordEntropy = (state: RootState): AuthState['curre
 export const selectSignInLoading = (state: RootState): AuthState['signInLoading'] =>
     state.user.auth.signInLoading;
 
+export const selectSignInError = (state: RootState): AuthState['authError'] =>
+    state.user.auth.authError;
+
 export const selectSignUpLoading = (state: RootState): AuthState['signUpLoading'] =>
     state.user.auth.signUpLoading;

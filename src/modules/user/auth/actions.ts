@@ -50,6 +50,7 @@ export interface SignInFetch {
         password: string;
         data?: string;
         otp_code?: string;
+        captcha_response?: string | GeetestCaptchaResponse;
     };
 }
 
