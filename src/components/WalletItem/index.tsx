@@ -1,46 +1,8 @@
 import * as React from 'react';
 import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
+import { Wallet } from '../../modules';
 
-export interface WalletItemProps {
-    /**
-     * Wallet address
-     */
-    address?: string;
-    /**
-     * Crypto currency code
-     */
-    currency: string;
-    /**
-     * Crypto currency name
-     */
-    name: string;
-    /**
-     * Amount of currency
-     */
-    balance?: string;
-    /**
-     * Locked amount of currency
-     */
-    locked?: string;
-    /**
-     * type of a currency (fiat or coin)
-     */
-    type: 'fiat' | 'coin';
-    /**
-     * Fee of a currency
-     */
-    fee: number;
-    /**
-     * true if a wallet
-     */
-    active?: boolean;
-    fixed: number;
-    /**
-     * Value for url for wallet icon. If empty string, then there will be icon displayed from @openware/cryptoicon
-     */
-    iconUrl?: string;
-}
 
 const style: React.CSSProperties = {
     display: 'flex',
@@ -67,7 +29,7 @@ const LockIcon = () => {
 /**
  * Component for displaying information about wallet, including address and amount of currency.
  */
-export const WalletItem: React.FunctionComponent<WalletItemProps> = (props: WalletItemProps) => {
+export const WalletItem: React.FunctionComponent<Wallet> = (props: Wallet) => {
     const {
         currency,
         name,

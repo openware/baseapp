@@ -6,7 +6,12 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-  "currency":"dash",
-  "balance":"5.0",
-  "locked":"0.0"
+    "currency":"dash",
+    "balance":"0",
+    "locked":"0",
+    "deposit_address": {
+        "currencies": ["dash"],
+        "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
+        "state": "active"
+    }
 }

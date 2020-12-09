@@ -6,7 +6,12 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-  "currency":"ltc",
-  "balance":"6.0",
-  "locked":"0.0"
+    "currency":"ltc",
+    "balance":"0.0",
+    "locked":"0.0",
+    "deposit_address": {
+        "currencies": ["eth", "ltc"],
+        "address":"0x00eec1e95026faf0412d7a29b94d514d31446141",
+        "state":"active"
+    }
 }

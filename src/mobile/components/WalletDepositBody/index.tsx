@@ -9,13 +9,12 @@ import { DepositFiat } from '../../../components/DepositFiat';
 import { formatCCYAddress } from '../../../helpers';
 import { selectCurrencies } from '../../../modules/public/currencies';
 import { selectUserInfo } from '../../../modules/user/profile';
-import { selectWalletAddress } from '../../../modules/user/wallets';
+
 
 const WalletDepositBodyComponent = props => {
     const intl = useIntl();
     const currencies = useSelector(selectCurrencies);
     const user = useSelector(selectUserInfo);
-    const selectedWalletAddress = useSelector(selectWalletAddress);
     const label = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.address' }), [intl]);
     const handleOnCopy = () => ({});
     const renderDeposit = (isAccountActivated: boolean) => {
@@ -30,7 +29,8 @@ const WalletDepositBodyComponent = props => {
             intl.formatMessage({id: addressDepositError.message[0]}) :
             intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
 
-        const walletAddress = formatCCYAddress(wallet.currency, selectedWalletAddress) || '';
+        const walletAddress = wallet.deposit_address && wallet.deposit_address.address ?
+            formatCCYAddress(wallet.currency, wallet.deposit_address.address) : '';
 
         const title = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message1' });
         const description = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message2' });

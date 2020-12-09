@@ -2,7 +2,12 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
-import { selectWallets, walletsAddressFetch, walletsFetch } from '../../../modules/user/wallets';
+import {
+    selectWallets,
+    Wallet,
+    walletsAddressFetch,
+    walletsFetch,
+} from '../../../modules/user/wallets';
 import { Subheader, WalletDepositBody, WalletHeader } from '../../components';
 
 const WalletDeposit: React.FC = () => {
@@ -10,15 +15,24 @@ const WalletDeposit: React.FC = () => {
     const dispatch = useDispatch();
     const intl = useIntl();
     const history = useHistory();
-    const { currency = '' } = useParams();
+    const { currency = '' } = useParams<{ currency?: string }>();
     const wallets = useSelector(selectWallets) || [];
 
-    const wallet = wallets.find(item => item.currency === currency) || { name: '', currency: '', balance: '', type: '', address: '' };
+    const defaultWallet: Wallet = {
+        name: '',
+        currency: '',
+        balance: '',
+        type: 'coin',
+        fixed: 0,
+        fee: 0,
+    }
+
+    const wallet: Wallet = wallets.find(item => item.currency === currency) || defaultWallet;
     const isAccountActivated = wallet.type === 'fiat' || wallet.balance;
 
 
     const handleGenerateAddress = () => {
-        if (!wallet.address && wallets.length && wallet.type !== 'fiat') {
+        if (!wallet.deposit_address && wallets.length && wallet.type !== 'fiat') {
             dispatch(walletsAddressFetch({ currency }));
             dispatch(walletsFetch());
             setGenerateAddressTriggered(true);

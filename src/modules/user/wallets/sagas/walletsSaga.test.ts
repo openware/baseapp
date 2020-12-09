@@ -32,6 +32,11 @@ describe('Module: Wallets', () => {
             currency: 'eth',
             balance: '0',
             locked: '0',
+            deposit_address: {
+                currencies: ['eth', 'trst'],
+                address: '0x00eec1e95026faf0412d7a29b94d514d31446141',
+                state: 'active',
+            },
         },
         {
             currency: 'fth',
@@ -201,13 +206,13 @@ describe('Module: Wallets', () => {
 
         return ({
             ...walletInfo,
-            name: currencyInfo ? currencyInfo.name : '',
-            explorerTransaction: currencyInfo!.explorer_transaction,
-            explorerAddress: currencyInfo!.explorer_address,
-            fee: currencyInfo!.withdraw_fee,
-            type: currencyInfo!.type,
-            fixed: currencyInfo!.precision,
-            iconUrl: currencyInfo ? currencyInfo.icon_url : '',
+            name: currencyInfo?.name,
+            explorerTransaction: currencyInfo?.explorer_transaction,
+            explorerAddress: currencyInfo?.explorer_address,
+            fee: currencyInfo?.withdraw_fee,
+            type: currencyInfo?.type,
+            fixed: currencyInfo?.precision,
+            iconUrl: currencyInfo.icon_url,
         });
     });
 
