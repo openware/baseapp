@@ -211,7 +211,7 @@ class Table extends React.Component<TableProps, TableState> {
     }
 
     private renderHead(row: CellData[]) {
-        const cells = row.map((c, index) => <th key={index}>{c}</th>);
+        const cells = row.map((c, index) => c ?  <th key={index}>{c}</th> : <th key={index}>&nbsp;</th>);
 
         return (
             <thead className={'cr-table__head'}>
