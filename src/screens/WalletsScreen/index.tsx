@@ -21,7 +21,7 @@ import { ModalWithdrawConfirmation } from '../../containers/ModalWithdrawConfirm
 import { ModalWithdrawSubmit } from '../../containers/ModalWithdrawSubmit';
 import { EstimatedValue } from '../../containers/Wallets/EstimatedValue';
 import { WalletHistory } from '../../containers/Wallets/History';
-import { formatCCYAddress, setDocumentTitle } from '../../helpers';
+import { setDocumentTitle } from '../../helpers';
 import {
     alertPush,
     beneficiariesFetch,
@@ -42,6 +42,7 @@ import {
     User,
     Wallet,
     WalletHistoryList,
+    walletsAddressFetch,
     walletsData,
     walletsFetch,
     walletsWithdrawCcyFetch,
@@ -62,6 +63,7 @@ interface ReduxProps {
 
 interface DispatchProps {
     fetchBeneficiaries: typeof beneficiariesFetch;
+    fetchAddress: typeof walletsAddressFetch;
     fetchWallets: typeof walletsFetch;
     clearWallets: () => void;
     walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
@@ -78,6 +80,15 @@ const defaultBeneficiary: Beneficiary = {
     data: {
         address: '',
     },
+};
+
+const defaultWallet: Wallet = {
+    name: '',
+    currency: '',
+    balance: '',
+    type: 'coin',
+    fixed: 0,
+    fee: 0,
 };
 
 interface WalletsState {
@@ -321,6 +332,18 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         this.props.fetchSuccess({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
     };
 
+    private handleGenerateAddress = () => {
+        const { selectedWalletIndex } = this.state;
+        const { wallets } = this.props;
+
+        const wallet: Wallet = wallets[selectedWalletIndex] || defaultWallet;
+
+        if (!wallet.deposit_address && wallets.length && wallet.type !== 'fiat') {
+            this.props.fetchAddress({ currency: wallets[selectedWalletIndex].currency });
+            this.props.fetchWallets();
+        }
+    };
+
     private renderDeposit = (isAccountActivated: boolean) => {
         const {
             currencies,
@@ -328,17 +351,19 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             wallets,
         } = this.props;
         const { selectedWalletIndex } = this.state;
-        const wallet = (wallets[selectedWalletIndex] || { currency: '' });
+        const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
         const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
                                                    { confirmations: currencyItem.min_confirmations });
-        const error = this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
+        const error = this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.pending'});
 
-        const walletAddress = wallet.deposit_address && wallet.deposit_address.address ?
-            formatCCYAddress(wallet.currency, wallet.deposit_address.address) : '';
         const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
             'pg-blur-deposit-crypto--active': isAccountActivated,
         });
+
+        const buttonLabel = `
+            ${this.translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${this.translate('page.body.wallets.tabs.deposit.ccy.button.address')}
+        `;
 
         if (wallets[selectedWalletIndex].type === 'coin') {
             return (
@@ -351,14 +376,14 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         />
                     ) : null}
                     <DepositCrypto
-                        currency={wallet.currency}
-                        data={walletAddress}
-                        handleOnCopy={this.handleOnCopy}
-                        error={error}
-                        text={text}
-                        disabled={walletAddress === ''}
+                        buttonLabel={buttonLabel}
                         copiableTextFieldText={this.translate('page.body.wallets.tabs.deposit.ccy.message.address')}
                         copyButtonText={this.translate('page.body.wallets.tabs.deposit.ccy.message.button')}
+                        error={error}
+                        handleGenerateAddress={this.handleGenerateAddress}
+                        handleOnCopy={this.handleOnCopy}
+                        text={text}
+                        wallet={wallet}
                     />
                     {wallet.currency && <WalletHistory label="deposit" type="deposits" currency={wallet.currency} />}
                 </React.Fragment>
@@ -494,6 +519,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchBeneficiaries: () => dispatch(beneficiariesFetch()),
+    fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     fetchWallets: () => dispatch(walletsFetch()),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
     clearWallets: () => dispatch(walletsData([])),

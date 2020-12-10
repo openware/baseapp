@@ -7,7 +7,6 @@ describe('WalletItem', () => {
         it('uses styles by default', () => {
             const wrapper = mount(
                 <WalletItem
-                    address={'aevrv'}
                     currency={'BTC'}
                     name={'Bitcoin'}
                     // tslint:disable-next-line:no-magic-numbers
@@ -29,7 +28,6 @@ describe('WalletItem', () => {
         it('displays codes, balances and locked', () => {
             const wrapper = mount(
                 <WalletItem
-                    address={'aevrv'}
                     currency={'BTC'}
                     name={'Bitcoin'}
                     balance={'45'}
@@ -48,7 +46,6 @@ describe('WalletItem', () => {
         it('should not display locked balance if wallet does not have one', () => {
             const wrapper = shallow(
                 <WalletItem
-                    address={'aevrv'}
                     currency={'BTC'}
                     name={'Bitcoin'}
                     balance={'45'}
@@ -68,7 +65,6 @@ describe('WalletItem', () => {
         it('shows locked amount', () => {
             const wrapper = mount(
                 <WalletItem
-                    address={'aevrv'}
                     currency={'BTC'}
                     name={'Bitcoin'}
                     balance={'45'}
@@ -90,7 +86,6 @@ describe('WalletItem', () => {
             const wrapper = mount(
                 <WalletItem
                     name={'Bitcoin'}
-                    address={'aevrv'}
                     currency={'BTC'}
                     balance={'45'}
                     locked={''}
@@ -108,7 +103,6 @@ describe('WalletItem', () => {
         it('should match snapshot', () => {
             const wrapper = mount(
                 <WalletItem
-                    address={'aevrv'}
                     currency={'BTC'}
                     name={'Bitcoin'}
                     balance={'45'}

@@ -6,7 +6,6 @@ import { Blur } from '../../../components/Blur';
 import { CurrencyInfo } from '../../../components/CurrencyInfo';
 import { DepositCrypto } from '../../../components/DepositCrypto';
 import { DepositFiat } from '../../../components/DepositFiat';
-import { formatCCYAddress } from '../../../helpers';
 import { selectCurrencies } from '../../../modules/public/currencies';
 import { selectUserInfo } from '../../../modules/user/profile';
 
@@ -17,26 +16,23 @@ const WalletDepositBodyComponent = props => {
     const user = useSelector(selectUserInfo);
     const label = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.address' }), [intl]);
     const handleOnCopy = () => ({});
-    const renderDeposit = (isAccountActivated: boolean) => {
-        const {
-            addressDepositError,
-            wallet,
-        } = props;
+    const renderDeposit = () => {
+        const { wallet } = props;
+        const isAccountActivated = wallet.type === 'fiat' || wallet.balance;
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
         const text = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
             { confirmations: currencyItem.min_confirmations });
-        const error = addressDepositError ?
-            intl.formatMessage({id: addressDepositError.message[0]}) :
-            intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.error'});
-
-        const walletAddress = wallet.deposit_address && wallet.deposit_address.address ?
-            formatCCYAddress(wallet.currency, wallet.deposit_address.address) : '';
+        const error = intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.pending'});
 
         const title = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message1' });
         const description = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message2' });
         const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
             'pg-blur-deposit-crypto--active': isAccountActivated,
         });
+
+        const buttonLabel = `
+            ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.generate' })} ${wallet.currency.toUpperCase()} ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.address' })}
+        `;
 
         if (wallet.type === 'coin') {
             return (
@@ -49,14 +45,14 @@ const WalletDepositBodyComponent = props => {
                         />
                     ) : null}
                     <DepositCrypto
-                        currency={wallet.currency as string}
-                        data={walletAddress}
-                        handleOnCopy={handleOnCopy}
-                        error={error}
-                        text={text}
-                        disabled={walletAddress === ''}
+                        buttonLabel={buttonLabel}
                         copiableTextFieldText={`${wallet.currency.toUpperCase()} ${label}`}
                         copyButtonText={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.button'} )}
+                        error={error}
+                        handleGenerateAddress={props.handleGenerateAddress}
+                        handleOnCopy={handleOnCopy}
+                        text={text}
+                        wallet={wallet}
                     />
                 </React.Fragment>
             );
@@ -78,7 +74,7 @@ const WalletDepositBodyComponent = props => {
 
     return (
         <div className="cr-mobile-wallet-deposit-body">
-            {renderDeposit(props.isAccountActivated)}
+            {renderDeposit()}
         </div>
     );
 };

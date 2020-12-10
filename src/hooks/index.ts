@@ -13,5 +13,4 @@ export * from './useSetShouldGeetestReset';
 export * from './useTickersFetch';
 export * from './useUserActivityFetch';
 export * from './useUserOrdersHistoryFetch';
-export * from './useWalletsAddressFetch';
 export * from './useWalletsFetch';

@@ -158,7 +158,7 @@ export const en = {
     'page.body.wallets.tabs.deposit.ccy.message.address': 'Deposit Address',
     'page.body.wallets.tabs.deposit.ccy.message.button': 'COPY',
     'page.body.wallets.tabs.deposit.ccy.message.success': 'Address copied',
-    'page.body.wallets.tabs.deposit.ccy.message.error': 'Generating deposit address',
+    'page.body.wallets.tabs.deposit.ccy.message.pending': 'Generating deposit address',
     'page.body.wallets.tabs.deposit.ccy.button.generate': 'Generate',
     'page.body.wallets.tabs.deposit.ccy.button.address': 'address',
 

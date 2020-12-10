@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { Wallet } from '../../modules';
 import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
-import { Wallet } from '../../modules';
 
 
 const style: React.CSSProperties = {
