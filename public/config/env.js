@@ -28,4 +28,5 @@ window.env = {
         'document',
         'address',
     ],
+    captchaLogin: false,
 };
