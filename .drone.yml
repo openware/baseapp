@@ -125,7 +125,7 @@ steps:
         - master
 
   - name: "Push and Notify"
-    image: quay.io/openware/sdk-citools:2.6.4
+    image: quay.io/openware/sdk-citools:2.6.5
     environment:
       BOT_USERNAME: kite-bot
       BOT_NAME: Kite Bot
