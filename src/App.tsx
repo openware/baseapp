@@ -75,22 +75,6 @@ const RenderDeviceContainers = () => {
 };
 
 export const App = () => {
-    // const lang = useSelector(selectCurrentLanguage);
-    // const isMobileDevice = useSelector(selectMobileDeviceState);
-    // return (
-    //     <IntlProvider
-    //         {...{ locale: lang }}
-    //         defaultLocale={lang}
-    //         messages={getTranslations(lang, isMobileDevice)}
-    //         key={lang}>
-    //         <Router history={browserHistory}>
-    //             <Switch>
-    //                 <Route exact={true} path="/" component={SignInScreen} />
-    //             </Switch>
-    //         </Router>
-    //     </IntlProvider>
-    // );
-
     useSetMobileDevice();
     const lang = useSelector(selectCurrentLanguage);
     const isMobileDevice = useSelector(selectMobileDeviceState);
