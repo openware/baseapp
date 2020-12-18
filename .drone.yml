@@ -101,7 +101,7 @@ steps:
       - yarn test:ci --collectCoverage=true
 
   - name: "Bump & Tag"
-    image: quay.io/openware/sdk-citools:2.3.0
+    image: quay.io/openware/sdk-citools:2.6.7
     environment:
       BRANCH_NAME: ${DRONE_BRANCH}
       REPO_NAME: ${DRONE_REPO}
@@ -134,7 +134,7 @@ steps:
       - bundle exec rake payload:send[frontend,$latest_image,http://www.devkube.com:1337]
 
   - name: "Push and Notify"
-    image: quay.io/openware/sdk-citools:2.3.0
+    image: quay.io/openware/sdk-citools:2.6.7
     environment:
       BOT_USERNAME: kite-bot
       BOT_NAME: Kite Bot
