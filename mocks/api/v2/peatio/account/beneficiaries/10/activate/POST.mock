@@ -6,4 +6,15 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Headers: content-type, x-csrf-token
 
-201
+{
+    "id": 10,
+    "currency": "btc",
+    "uid": "IDE7FE1E3BE3",
+    "name": "Test",
+    "description": null,
+    "data": {
+      "address": "wueieuiwue"
+    },
+    "state": "active",
+    "sent_at": "2020-12-17T09:55:42Z"
+}

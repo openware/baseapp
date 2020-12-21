@@ -8,6 +8,7 @@ import { PlusIcon } from '../../assets/images/PlusIcon';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { TrashBin } from '../../assets/images/TrashBin';
 import {
+    alertPush,
     beneficiariesCreateData,
     beneficiariesDelete,
     Beneficiary,
@@ -45,6 +46,7 @@ interface DispatchProps {
     deleteAddress: typeof beneficiariesDelete;
     memberLevelsFetch: typeof memberLevelsFetch;
     beneficiariesCreateData: typeof beneficiariesCreateData;
+    alertPush: typeof alertPush;
 }
 
 interface OwnProps {
@@ -136,7 +138,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             isOpenConfirmationModal,
             isOpenFailModal,
         } = this.state;
-        const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(beneficiaries, currency), ['active', 'pending']);
+        const filtredBeneficiaries = this.handleFilterByState(beneficiaries, ['active', 'pending']);
 
         return (
             <div className="pg-beneficiaries">
@@ -366,10 +368,12 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     };
 
     private handleClickToggleAddAddressModal = () => () => {
-        const { memberLevels, userData } = this.props;
+        const { memberLevels, userData, beneficiaries } = this.props;
 
         if (memberLevels && (userData.level < memberLevels.withdraw.minimum_level)) {
             this.handleToggleFailModal();
+        } else if (beneficiaries && beneficiaries.length >= 10) {
+            this.props.alertPush({ message: ['error.beneficiaries.max10.addresses'], type: 'error'});
         } else {
             this.handleToggleAddAddressModal();
         }
@@ -381,14 +385,6 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         };
 
         this.props.deleteAddress(payload);
-    };
-
-    private handleFilterByCurrency = (beneficiaries: Beneficiary[], currency: string) => {
-        if (beneficiaries.length && currency) {
-            return beneficiaries.filter(item => item.currency.toLowerCase() === currency.toLowerCase());
-        }
-
-        return [];
     };
 
     private handleFilterByState = (beneficiaries: Beneficiary[], filter: string | string[]) => {
@@ -410,11 +406,10 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     };
 
     private handleSetCurrentAddressOnUpdate = (beneficiaries: Beneficiary[], currency: string) => {
-        const filteredByCurrency = this.handleFilterByCurrency(beneficiaries, currency);
-        let filteredByState = this.handleFilterByState(filteredByCurrency, 'active');
+        let filteredByState = this.handleFilterByState(beneficiaries, 'active');
 
         if (!filteredByState.length) {
-            filteredByState = this.handleFilterByState(filteredByCurrency, 'pending');
+            filteredByState = this.handleFilterByState(beneficiaries, 'pending');
         }
 
         if (filteredByState.length) {
@@ -469,6 +464,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     deleteAddress: payload => dispatch(beneficiariesDelete(payload)),
     memberLevelsFetch: () => dispatch(memberLevelsFetch()),
     beneficiariesCreateData: payload => dispatch(beneficiariesCreateData(payload)),
+    alertPush: payload => dispatch(alertPush(payload)),
 });
 
 // tslint:disable-next-line:no-any
