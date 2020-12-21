@@ -21,6 +21,9 @@ import { Beneficiary } from './types';
 
 export interface BeneficiariesFetch {
     type: typeof BENEFICIARIES_FETCH;
+    payload?: {
+        currency_id: string;
+    };
 }
 
 export interface BeneficiariesData {
@@ -132,8 +135,9 @@ export type BeneficiariesActions =
     | BeneficiariesResendPinData
     | BeneficiariesResendPinError;
 
-export const beneficiariesFetch = (): BeneficiariesFetch => ({
+export const beneficiariesFetch = (payload?: BeneficiariesFetch['payload']): BeneficiariesFetch => ({
     type: BENEFICIARIES_FETCH,
+    payload,
 });
 
 export const beneficiariesData = (payload: BeneficiariesData['payload']): BeneficiariesData => ({
