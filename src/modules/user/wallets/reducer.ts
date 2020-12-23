@@ -38,7 +38,7 @@ export const initialWalletsState: WalletsState = {
 };
 
 const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
-    if (list.length && payload.currencies && payload.currencies.length) {
+    if (list.length && payload.currencies?.length) {
         return list.map(wallet => {
             if (payload.currencies.includes(wallet.currency)) {
                 let depositAddress: WalletAddress = {

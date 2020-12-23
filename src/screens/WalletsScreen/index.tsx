@@ -361,9 +361,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             'pg-blur-deposit-crypto--active': isAccountActivated,
         });
 
-        const buttonLabel = `
-            ${this.translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${this.translate('page.body.wallets.tabs.deposit.ccy.button.address')}
-        `;
+        const buttonLabel = `${this.translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${this.translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
 
         if (wallets[selectedWalletIndex].type === 'coin') {
             return (
@@ -408,7 +406,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     private renderWithdraw = () => {
         const { currencies, user, wallets, walletsError } = this.props;
         const { selectedWalletIndex } = this.state;
-        const wallet = (wallets[selectedWalletIndex] || { currency: '' });
+        const wallet = (wallets[selectedWalletIndex] || defaultWallet);
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
 
         return (

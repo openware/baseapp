@@ -9,7 +9,6 @@ import { DepositFiat } from '../../../components/DepositFiat';
 import { selectCurrencies } from '../../../modules/public/currencies';
 import { selectUserInfo } from '../../../modules/user/profile';
 
-
 const WalletDepositBodyComponent = props => {
     const intl = useIntl();
     const currencies = useSelector(selectCurrencies);
@@ -30,9 +29,7 @@ const WalletDepositBodyComponent = props => {
             'pg-blur-deposit-crypto--active': isAccountActivated,
         });
 
-        const buttonLabel = `
-            ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.generate' })} ${wallet.currency.toUpperCase()} ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.address' })}
-        `;
+        const buttonLabel = `${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.generate' })} ${wallet.currency.toUpperCase()} ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.address' })}`;
 
         if (wallet.type === 'coin') {
             return (
