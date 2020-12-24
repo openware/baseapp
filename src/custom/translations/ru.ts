@@ -166,7 +166,7 @@ export const ru: LangType = {
     'page.body.wallets.tabs.deposit.ccy.button.generate': 'Сгенерировать',
     'page.body.wallets.tabs.deposit.ccy.button.address': 'адресс',
 
-    'page.body.wallets.tabs.deposit.ccy.message.error': 'Генерация адреса',
+    'page.body.wallets.tabs.deposit.ccy.message.pending': 'Генерация адреса',
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Вы можете внести депозит в банке, используя следующие реквизиты',
     'page.body.wallets.tabs.deposit.fiat.message2': 'Пожалуйста, используйте предоставленную информацию для завершения банковского платежа. Ваш депозит станет доступным на протяжении 2-х рабочих дней.',

@@ -6,7 +6,12 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-  "currency":"btc",
-  "balance":"0.21026373",
-  "locked":"0.0"
+    "currency": "btc",
+    "balance": "0.21026373",
+    "locked": "0.0",
+    "deposit_address": {
+        "currencies": ["btc"],
+        "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
+        "state": "active"
+    }
 }

@@ -6,7 +6,7 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-  "currency":"xrp",
-  "balance":"1234",
-  "locked":"0.0"
+    "currency":"xrp",
+    "balance":"0",
+    "locked":"0"
 }

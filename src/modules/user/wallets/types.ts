@@ -1,21 +1,21 @@
 export interface Wallet {
-    balance?: string;
     currency: string;
     name: string;
     type: 'fiat' | 'coin';
     fee: number;
-    address?: string;
-    locked?: string;
-    explorerTransaction: string;
-    explorerAddress: string;
     fixed: number;
+    balance?: string;
+    locked?: string;
     iconUrl?: string;
+    explorerTransaction?: string;
+    explorerAddress?: string;
+    deposit_address?: WalletAddress;
+    active?: boolean;
 }
 
 export interface WalletAddress {
     address: string;
     currencies: string[];
-    currency: string;
     state?: string;
 }
 
@@ -38,4 +38,5 @@ export interface AccountInterface {
     currency: string;
     balance?: string;
     locked?: string;
+    deposit_address?: WalletAddress;
 }

@@ -6,7 +6,7 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-  "currency":"usd",
-  "balance":"1000.0",
-  "locked":"0.0"
+    "currency":"usd",
+    "balance":"1000.0",
+    "locked":"0.0"
 }

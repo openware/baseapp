@@ -1,16 +1,15 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import {
-    WalletItemProps,
     WalletList,
     WalletListProps,
 } from '../../components';
+import { Wallet } from '../../modules';
 
 const onWalletSelectionChange = jest.fn();
-const walletItems: WalletItemProps[] = [
+const walletItems: Wallet[] = [
     {
         active: false,
-        address: 'something-0',
         locked: '1',
         fee: 0.123,
         currency: 'BTC',
@@ -18,9 +17,10 @@ const walletItems: WalletItemProps[] = [
         balance: '456',
         type: 'fiat',
         fixed: 8,
+        explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
+        explorerAddress: 'https://testnet.blockchain.info/address/#{address}'
     }, {
         active: false,
-        address: 'something-1',
         fee: 0.123,
         locked: '100',
         currency: 'USD',
@@ -30,7 +30,6 @@ const walletItems: WalletItemProps[] = [
         fixed: 8,
     }, {
         active: false,
-        address: 'something-2',
         fee: 0.3,
         locked: '0.4',
         currency: 'BTC',

@@ -6,7 +6,12 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-  "currency":"bch",
-  "balance":"10.12",
-  "locked":"0.1"
+    "currency":"bch",
+    "balance":"10.12",
+    "locked":"0.1",
+    "deposit_address": {
+        "currencies": ["bch"],
+        "address": null,
+        "state": "pending"
+    }
 }

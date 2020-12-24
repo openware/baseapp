@@ -1,7 +1,7 @@
 import { CommonError } from '../../types';
 import * as actions from './actions';
 import { initialWalletsState, walletsReducer } from './reducer';
-import { Wallet } from './types';
+import { Wallet, WalletAddress } from './types';
 
 describe('walletsList reducer', () => {
     const wallets: Wallet[] = [
@@ -53,13 +53,6 @@ describe('walletsList reducer', () => {
         currency: 'btc',
     };
 
-    const addressDataPayload = {
-        currencies: ['btc', 'tbtc'],
-        currency: 'btc',
-        address: 'address',
-        state: 'active',
-    };
-
     it('should handle WALLETS_FETCH', () => {
         const expectedState = {
             wallets: {
@@ -67,8 +60,6 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: '',
-                selectedWalletAddress: '',
                 timestamp: Math.floor(Date.now() / 1000),
             },
          };
@@ -82,8 +73,6 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: '',
-                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsData(wallets))).toEqual(expectedState);
@@ -97,8 +86,6 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: '',
-                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsError(error))).toEqual(expectedState);
@@ -111,8 +98,6 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: '',
-                selectedWalletAddress: '',
                 timestamp: Math.floor(Date.now() / 1000),
             },
          };
@@ -126,19 +111,59 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: '',
-                selectedWalletAddress: '',
             },
         };
 
+        const addressDataPayload: WalletAddress = {
+            currencies: ['btc', 'tbtc'],
+            address: 'address',
+            state: 'active',
+        };
+
+        const updatedWallets: Wallet[] = [
+            {
+                balance: '0',
+                currency: 'btc',
+                name: 'Bitcoin',
+                explorerAddress: 'https://testnet.blockchain.info/address/#{address}',
+                explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
+                fee: 0,
+                type: 'coin',
+                fixed: 8,
+                deposit_address: {
+                    currencies: ['btc', 'tbtc'],
+                    address: 'address',
+                    state: 'active',
+                },
+            },
+            {
+                balance: '0',
+                currency: 'bch',
+                name: 'Bitcoin Cash',
+                explorerAddress: 'https://www.blocktrail.com/tBCC/address/#{address}',
+                explorerTransaction: 'https://www.blocktrail.com/tBCC/tx/#{txid}',
+                fee: 0,
+                type: 'coin',
+                fixed: 8,
+            },
+            {
+                balance: '0',
+                currency: 'eth',
+                name: 'Ethereum',
+                explorerAddress: 'https://rinkeby.etherscan.io/address/#{address}',
+                explorerTransaction: 'https://rinkeby.etherscan.io/tx/#{txid}',
+                fee: 0,
+                type: 'coin',
+                fixed: 8,
+            },
+        ];
+
         const expectedState = {
             wallets: {
-                list: wallets,
+                list: updatedWallets,
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: 'btc',
-                selectedWalletAddress: 'address',
             },
          };
         expect(walletsReducer(initialState, actions.walletsAddressData(addressDataPayload))).toEqual(expectedState);
@@ -152,8 +177,6 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: '',
-                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressError(error))).toEqual(expectedState);
@@ -166,8 +189,6 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: '',
-                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyFetch(withdrawCcyFetchPayload))).toEqual(expectedState);
@@ -180,8 +201,6 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: true,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: '',
-                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyData())).toEqual(expectedState);
@@ -195,8 +214,6 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
-                selectedWalletCurrency: '',
-                selectedWalletAddress: '',
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyError(error))).toEqual(expectedState);
