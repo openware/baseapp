@@ -1,30 +1,37 @@
-export interface Config {
-    api: {
-        authUrl: string;
-        tradeUrl: string;
-        applogicUrl: string;
-        rangerUrl: string;
-        finexUrl: string;
-    };
-    minutesUntilAutoLogout?: string;
-    rangerReconnectPeriod?: string;
-    withCredentials: boolean;
-    storage: {
-        defaultStorageLimit?: number;
-        orderBookSideLimit?: number;
-    };
-    gaTrackerKey?: string;
-    msAlertDisplayTime?: string;
-    incrementalOrderBook: boolean;
-    finex: boolean;
-    isResizable: boolean;
-    isDraggable: boolean;
-    languages: string[];
-    sessionCheckInterval: string;
-    balancesFetchInterval: string;
-    passwordEntropyStep: number;
-    showLanding: boolean;
-    sentryEnabled?: boolean;
-    kycSteps?: string[];
-    captchaLogin?: boolean;
+declare global {
+    interface Config {
+        api: {
+            authUrl: string;
+            tradeUrl: string;
+            applogicUrl: string;
+            rangerUrl: string;
+            finexUrl: string;
+        };
+        finex: boolean;
+        withCredentials: boolean;
+        incrementalOrderBook: boolean;
+        isResizable: boolean;
+        isDraggable: boolean;
+        showLanding: boolean;
+        sentryEnabled: boolean;
+        captchaLogin: boolean;
+        gaTrackerKey: string;
+        minutesUntilAutoLogout: string;
+        msAlertDisplayTime: string;
+        sessionCheckInterval: string;
+        balancesFetchInterval: string;
+        passwordEntropyStep: string | number;
+        storage: {
+            defaultStorageLimit: string | number;
+            orderBookSideLimit: string | number;
+        };
+        languages: string[];
+        kycSteps: string[];
+    }
+
+    interface Window {
+        env: Config;
+    }
 }
+
+export {};

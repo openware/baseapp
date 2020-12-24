@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { JsonBody, makeRequest } from './requestBuilder';
 
-export * from './types';
 export * from './config';
 
 export interface RequestOptions {
