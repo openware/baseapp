@@ -6,7 +6,7 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-    "currencies": ["bch", "ada"],
-    "address": "2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL",
-    "state": "active"
+    "currencies": ["bch"],
+    "address": null,
+    "state": "pending"
 }

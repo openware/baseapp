@@ -3,7 +3,6 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { IntlProps } from '../../../';
 import { formatWithSeparators } from '../../../components';
-import { WalletItemProps } from '../../../components/WalletItem';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
 import {
@@ -16,6 +15,7 @@ import {
     selectMarkets,
     selectMarketTickers,
     selectUserLoggedIn,
+    Wallet,
 } from '../../../modules';
 import { Market, Ticker } from '../../../modules/public/markets';
 import { rangerConnectFetch, RangerConnectFetch } from '../../../modules/public/ranger';
@@ -23,7 +23,7 @@ import { RangerState } from '../../../modules/public/ranger/reducer';
 import { selectRanger } from '../../../modules/public/ranger/selectors';
 
 interface EstimatedValueProps {
-    wallets: WalletItemProps[];
+    wallets: Wallet[];
 }
 
 interface ReduxProps {

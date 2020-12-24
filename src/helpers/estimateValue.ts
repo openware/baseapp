@@ -1,9 +1,12 @@
 // eslint-disable
 import { Decimal } from '../components/Decimal';
-import { WalletItemProps } from '../components/WalletItem';
 import { DEFAULT_CCY_PRECISION } from '../constants';
-import { Currency } from '../modules/public/currencies';
-import { Market, Ticker } from '../modules/public/markets';
+import {
+    Currency,
+    Market,
+    Ticker,
+    Wallet,
+} from '../modules';
 import { handleCCYPrecision } from './';
 
 export interface MarketTicker {
@@ -29,7 +32,7 @@ const findMarketTicker = (marketPair: string, marketTickers: MarketTicker) => {
     return marketTickers[marketPair];
 };
 
-const getWalletTotal = (wallet: WalletItemProps): number => {
+const getWalletTotal = (wallet: Wallet): number => {
     return (Number(wallet.balance) || 0) + (Number(wallet.locked) || 0);
 };
 
@@ -96,7 +99,7 @@ const estimateWithoutMarket = (targetCurrency: string, walletCurrency: string, w
     return 0;
 };
 
-export const estimateValue = (targetCurrency: string, currencies: Currency[], wallets: WalletItemProps[], markets: Market[], marketTickers: MarketTicker): string => {
+export const estimateValue = (targetCurrency: string, currencies: Currency[], wallets: Wallet[], markets: Market[], marketTickers: MarketTicker): string => {
     const formattedTargetCurrency = targetCurrency.toLowerCase();
     let estimatedValue = 0;
 

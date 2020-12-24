@@ -10,7 +10,6 @@ import {
     formatWithSeparators,
     Order,
     OrderProps,
-    WalletItemProps,
     Decimal,
 } from '../../components';
 import { FilterPrice } from '../../filters';
@@ -50,7 +49,7 @@ interface ReduxProps {
     };
     bids: string[][];
     asks: string[][];
-    wallets: WalletItemProps[];
+    wallets: Wallet[];
     currentPrice: number | undefined;
     isMobileDevice: boolean;
 }
@@ -276,7 +275,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         }
     };
 
-    private getWallet(currency: string, wallets: WalletItemProps[]) {
+    private getWallet(currency: string, wallets: Wallet[]) {
         const currencyLower = currency.toLowerCase();
 
         return wallets.find(w => w.currency === currencyLower) as Wallet;

@@ -4,7 +4,7 @@ import {
 } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { IntlProps } from '../../';
-import { History, Pagination, WalletItemProps } from '../../components';
+import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate } from '../../helpers';
 import {
@@ -21,6 +21,7 @@ import {
     selectLastElemIndex,
     selectNextPageExists,
     selectWallets,
+    Wallet,
     WalletHistoryList,
 } from '../../modules';
 import { FailIcon } from './FailIcon';
@@ -35,7 +36,7 @@ export interface HistoryProps {
 export interface ReduxProps {
     currencies: Currency[];
     list: WalletHistoryList;
-    wallets: WalletItemProps[];
+    wallets: Wallet[];
     fetching: boolean;
     page: number;
     firstElemIndex: number;

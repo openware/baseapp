@@ -1,13 +1,14 @@
 import React, { useCallback } from 'react';
-import { WalletItem, WalletItemProps } from '../WalletItem';
+import { Wallet } from '../../modules';
+import { WalletItem } from '../WalletItem';
 
 export interface WalletListProps {
-    walletItems: WalletItemProps[];
+    walletItems: Wallet[];
     activeIndex: number;
     /**
      * Callback function which is invoked whenever wallet item is clicked
      */
-    onWalletSelectionChange(item: WalletItemProps): void;
+    onWalletSelectionChange(item: Wallet): void;
     /**
      * Callback function which is invoked whenever wallet item is clicked
      */
@@ -31,7 +32,7 @@ export const WalletList: React.FC<WalletListProps> = ({
     walletItems,
 }) => {
     const handleClick = useCallback(
-        (i: number, p: WalletItemProps) => {
+        (i: number, p: Wallet) => {
             if (onWalletSelectionChange) {
                 onWalletSelectionChange(p);
             }
@@ -44,7 +45,7 @@ export const WalletList: React.FC<WalletListProps> = ({
 
     return (
         <ul className="cr-wallet-list">
-            {walletItems.map((p: WalletItemProps, i: number) => (
+            {walletItems.map((p: Wallet, i: number) => (
                 <li key={i} style={style} onClick={() => handleClick(i, p)}>
                     <WalletItem
                         key={i}

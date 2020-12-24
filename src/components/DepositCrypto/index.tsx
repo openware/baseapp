@@ -1,20 +1,18 @@
 import classnames from 'classnames';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { selectMobileDeviceState } from '../../modules';
+import { formatCCYAddress } from '../../helpers';
+import { selectMobileDeviceState, Wallet } from '../../modules';
 import { CopyableTextField } from '../CopyableTextField';
 import { MetaMaskButton } from '../MetaMaskButton';
 import { QRCode } from '../QRCode';
 
 export interface DepositCryptoProps {
     /**
-     * Current deposit crypto currency
+     * Wallet
      */
-    currency: string;
-    /**
-     * Data which is used to generate QR code
-     */
-    data: string;
+    wallet: Wallet;
     /**
      * Data which is used to display error if data is undefined
      */
@@ -43,10 +41,13 @@ export interface DepositCryptoProps {
      */
     handleOnCopy: () => void;
     /**
-     * @default 'false'
-     * If true, Button in CopyableTextField will be disabled.
+     * Generate wallet address for selected wallet
      */
-    disabled?: boolean;
+    handleGenerateAddress: () => void;
+    /**
+     * Generate address button label
+     */
+    buttonLabel?: string;
 }
 
 
@@ -56,43 +57,71 @@ export interface DepositCryptoProps {
 const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: DepositCryptoProps) => {
     const QR_SIZE = 118;
     const {
+        buttonLabel,
         copiableTextFieldText,
         copyButtonText,
-        currency,
-        data,
         dimensions,
-        disabled,
         error,
+        handleGenerateAddress,
         handleOnCopy,
         text,
+        wallet,
     } = props;
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const size = dimensions || QR_SIZE;
+    const disabled = !wallet.deposit_address?.address;
     const onCopy = !disabled ? handleOnCopy : undefined;
-    const className = classnames({'cr-copyable-text-field__disabled': data === ''});
+    const className = classnames('cr-deposit-crypto', {'cr-copyable-text-field__disabled': disabled});
+
+    if (!wallet.deposit_address) {
+        return (
+            <div className={className}>
+                <div className="cr-deposit-crypto__create">
+                    <div className="cr-deposit-crypto__create-btn">
+                        <Button
+                            block={true}
+                            type="button"
+                            onClick={handleGenerateAddress}
+                            size="lg"
+                            variant="primary"
+                        >
+                            {buttonLabel ? buttonLabel : 'Generate deposit address'}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const walletAddress = wallet.deposit_address && wallet.deposit_address.address ?
+        formatCCYAddress(wallet.currency, wallet.deposit_address.address) : '';
 
     return (
         <div className={className}>
-            <div className="cr-deposit-crypto">
-                <div>
-                    <p className="cr-deposit-info">{text}</p>
-                    {data ? <div className="d-none d-md-block qr-code-wrapper"><QRCode dimensions={size} data={data}/></div> : null}
-                </div>
-                <div className="cr-deposit-crypto__block">
-                    {currency === 'eth' && !isMobileDevice ? <MetaMaskButton depositAddress={data} /> : null}
-                    <form className="cr-deposit-crypto__copyable">
-                        <fieldset className="cr-copyable-text-field" onClick={onCopy}>
-                            <CopyableTextField
-                                className="cr-deposit-crypto__copyable-area"
-                                value={data ? data : error}
-                                fieldId={data ? 'copy_deposit_1' : 'copy_deposit_2'}
-                                copyButtonText={copyButtonText}
-                                disabled={disabled}
-                                label={copiableTextFieldText ? copiableTextFieldText : 'Deposit by Wallet Address'}
-                            />
-                        </fieldset>
-                    </form>
-                </div>
+            <div>
+                <p className="cr-deposit-info">{text}</p>
+                {walletAddress ? (
+                    <div className="d-none d-md-block qr-code-wrapper">
+                        <QRCode dimensions={size} data={walletAddress}/>
+                    </div>
+                ) : null}
+            </div>
+            <div className="cr-deposit-crypto__block">
+                {wallet.currency === 'eth' && !isMobileDevice && walletAddress ? (
+                    <MetaMaskButton depositAddress={walletAddress} />
+                ) : null}
+                <form className="cr-deposit-crypto__copyable">
+                    <fieldset className="cr-copyable-text-field" onClick={onCopy}>
+                        <CopyableTextField
+                            className="cr-deposit-crypto__copyable-area"
+                            value={walletAddress || error}
+                            fieldId={walletAddress ? 'copy_deposit_1' : 'copy_deposit_2'}
+                            copyButtonText={copyButtonText}
+                            disabled={disabled}
+                            label={copiableTextFieldText ? copiableTextFieldText : 'Deposit by Wallet Address'}
+                        />
+                    </fieldset>
+                </form>
             </div>
         </div>
     );

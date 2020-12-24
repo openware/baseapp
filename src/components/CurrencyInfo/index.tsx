@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Wallet } from '../../modules';
 import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
-import { WalletItemProps } from '../WalletItem';
 
 export interface CurrencyInfoProps {
-    wallet: WalletItemProps;
+    wallet: Wallet;
 }
 
 interface CurrencyIconProps {

@@ -1,6 +1,4 @@
-import { WalletItemProps } from '../components/WalletItem';
-import { Currency } from '../modules/public/currencies';
-import { Market } from '../modules/public/markets';
+import { Currency, Market, Wallet } from '../modules';
 import {
     estimateUnitValue,
     estimateValue,
@@ -14,7 +12,7 @@ describe('estimateValue', () => {
 
     it('should return 0 if no data', () => {
         const targetCurrency = 'btc';
-        const wallets = [] as WalletItemProps[];
+        const wallets = [] as Wallet[];
         const markets = [] as Market[];
         const marketTickers = {} as MarketTicker;
 
@@ -23,7 +21,7 @@ describe('estimateValue', () => {
 
     it('should return wallet total for target currency', () => {
         const targetCurrency = 'btc';
-        const wallets = [{currency: 'btc', balance: '95.1001', locked: '10.1234'}] as unknown as WalletItemProps[];
+        const wallets = [{currency: 'btc', balance: '95.1001', locked: '10.1234'}] as unknown as Wallet[];
         const markets = [] as Market[];
         const marketTickers = {} as MarketTicker;
 
@@ -32,7 +30,7 @@ describe('estimateValue', () => {
 
     it('should convert using market ask unit', () => {
         const targetCurrency = 'btc';
-        const wallets = [{currency: 'usd', balance: '903.0008', locked: '100.12345'}] as unknown as WalletItemProps[];
+        const wallets = [{currency: 'usd', balance: '903.0008', locked: '100.12345'}] as unknown as Wallet[];
         const markets = [{id: 'btcusd', name: 'BTC/USD', base_unit: 'btc', quote_unit: 'usd'}] as Market[];
         const marketTickers = {btcusd: {last: '1.0001'}} as unknown as MarketTicker;
 
@@ -41,7 +39,7 @@ describe('estimateValue', () => {
 
     it('should convert using market bid unit', () => {
         const targetCurrency = 'btc';
-        const wallets = [{currency: 'usd', balance: '903.0008', locked: '100.12345'}] as unknown as WalletItemProps[];
+        const wallets = [{currency: 'usd', balance: '903.0008', locked: '100.12345'}] as unknown as Wallet[];
         const markets = [{id: 'usdbtc', name: 'USD/BTC', base_unit: 'usd', quote_unit: 'btc'}] as Market[];
         const marketTickers = {usdbtc: {last: '0.9999'}} as unknown as MarketTicker;
 
@@ -50,7 +48,7 @@ describe('estimateValue', () => {
 
     it('should convert using secondary market #1', () => {
         const targetCurrency = 'btc';
-        const wallets = [{currency: 'bch', balance: '900.0', locked: '100.0'}] as unknown as WalletItemProps[];
+        const wallets = [{currency: 'bch', balance: '900.0', locked: '100.0'}] as unknown as Wallet[];
         const markets = [
             {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
             {id: 'bchzar', name: 'BCH/ZAR', base_unit: 'bch', quote_unit: 'zar'},
@@ -62,7 +60,7 @@ describe('estimateValue', () => {
 
     it('should convert using secondary market #2', () => {
         const targetCurrency = 'btc';
-        const wallets = [{currency: 'bch', balance: '0.9', locked: '0.1'}] as unknown as WalletItemProps[];
+        const wallets = [{currency: 'bch', balance: '0.9', locked: '0.1'}] as unknown as Wallet[];
         const markets = [
             {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
             {id: 'bchzar', name: 'BCH/ZAR', base_unit: 'bch', quote_unit: 'zar'},
@@ -74,7 +72,7 @@ describe('estimateValue', () => {
 
     it('should convert using secondary market #3', () => {
         const targetCurrency = 'btc';
-        const wallets = [{currency: 'bch', balance: '2.004', locked: '0.001'}] as unknown as WalletItemProps[];
+        const wallets = [{currency: 'bch', balance: '2.004', locked: '0.001'}] as unknown as Wallet[];
         const markets = [
             {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
             {id: 'bchzar', name: 'BCH/ZAR', base_unit: 'bch', quote_unit: 'zar'},
@@ -86,7 +84,7 @@ describe('estimateValue', () => {
 
     it('should NOT convert using tertiary market', () => {
         const targetCurrency = 'btc';
-        const wallets = [{currency: 'bch', balance: '1.9', locked: '0.1'}] as unknown as WalletItemProps[];
+        const wallets = [{currency: 'bch', balance: '1.9', locked: '0.1'}] as unknown as Wallet[];
         const markets = [
             {id: 'btczar', name: 'BTC/ZAR', base_unit: 'btc', quote_unit: 'zar'},
             {id: 'ltczar', name: 'LTC/ZAR', base_unit: 'ltc', quote_unit: 'zar'},

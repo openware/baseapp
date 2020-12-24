@@ -15,7 +15,7 @@ import {
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
 } from './constants';
-import { Wallet } from './types';
+import { Wallet, WalletAddress } from './types';
 
 export interface WalletsState {
     wallets: {
@@ -24,8 +24,6 @@ export interface WalletsState {
         withdrawSuccess: boolean;
         error?: CommonError;
         mobileWalletChosen: string;
-        selectedWalletCurrency: string;
-        selectedWalletAddress: string;
         timestamp?: number;
     };
 }
@@ -36,9 +34,36 @@ export const initialWalletsState: WalletsState = {
         loading: false,
         withdrawSuccess: false,
         mobileWalletChosen: '',
-        selectedWalletCurrency: '',
-        selectedWalletAddress: '',
     },
+};
+
+const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
+    if (list.length && payload.currencies?.length) {
+        return list.map(wallet => {
+            if (payload.currencies.includes(wallet.currency)) {
+                let depositAddress: WalletAddress = {
+                    address: payload.address,
+                    currencies: payload.currencies,
+                };
+
+                if (payload.state) {
+                    depositAddress = {
+                        ...depositAddress,
+                        state: payload.state,
+                    };
+                }
+
+                return {
+                    ...wallet,
+                    deposit_address: depositAddress,
+                };
+            }
+
+            return wallet;
+        });
+    }
+
+    return list;
 };
 
 const walletsListReducer = (state: WalletsState['wallets'], action: WalletsAction): WalletsState['wallets'] => {
@@ -100,21 +125,9 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
             };
         }
         case WALLETS_ADDRESS_DATA: {
-            const walletIndex = state.list.findIndex(
-                wallet => wallet.currency.toLowerCase() === action.payload.currency.toLowerCase(),
-            );
-
-            if (walletIndex !== -1) {
-                return {
-                    ...state,
-                    loading: false,
-                    selectedWalletCurrency: action.payload.currency,
-                    selectedWalletAddress: action.payload.address,
-                };
-            }
-
             return {
                 ...state,
+                list: getUpdatedWalletsList(state.list, action.payload),
                 loading: false,
             };
         }
@@ -125,19 +138,12 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 withdrawSuccess: true,
             };
         case WALLETS_ADDRESS_DATA_WS: {
-            if (action.payload.currencies.includes(state.selectedWalletCurrency)) {
-                return {
-                    ...state,
-                    loading: false,
-                    selectedWalletAddress: action.payload.address,
-                };
-            }
-
             return {
                 ...state,
+                list: getUpdatedWalletsList(state.list, action.payload),
                 loading: false,
             };
-            }
+        }
         case WALLETS_WITHDRAW_CCY_ERROR:
             return {
                 ...state,
@@ -188,8 +194,6 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
                     loading: false,
                     withdrawSuccess: false,
                     mobileWalletChosen: '',
-                    selectedWalletCurrency: '',
-                    selectedWalletAddress: '',
                 },
             };
         default:

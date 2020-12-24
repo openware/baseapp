@@ -6,49 +6,74 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 [
-  {
-    "currency":"bch",
-    "balance":"10.12",
-    "locked":"0.1"
-  },
-  {
-    "currency":"btc",
-    "balance":"0.21026373",
-    "locked":"0.0"
-  },
-  {
-    "currency":"eth",
-    "balance":"5.0",
-    "locked":"0.0"
-  },
-  {
-    "currency":"dash",
-    "balance":"5.0",
-    "locked":"0.0"
-  },
-  {
-    "currency":"ltc",
-    "balance":"6.0",
-    "locked":"0.0"
-  },
-  {
-    "currency":"xrp",
-    "balance":null,
-    "locked":"0.0"
-  },
-  {
-    "currency":"zar",
-    "balance":"1000.0",
-    "locked":"0.0"
-  },
-  {
-    "currency":"usd",
-    "balance":"1000.0",
-    "locked":"0.0"
-  },
-  {
-    "currency":"eur",
-    "balance":"1000.0",
-    "locked":"0.0"
-  }
+    {
+        "currency":"bch",
+        "balance":"0",
+        "locked":"0",
+        "deposit_address": {
+            "currencies": ["bch"],
+            "address": null,
+            "state": "pending"
+        }
+    },
+    {
+        "currency": "btc",
+        "balance": "0.21026373",
+        "locked": "0.0",
+        "deposit_address": {
+            "currencies": ["btc"],
+            "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
+            "state": "active"
+        }
+    },
+    {
+        "currency": "eth",
+        "balance": "1.5",
+        "locked": "0.05",
+        "deposit_address": {
+            "currencies": ["eth", "trst"],
+            "address": "0x00eec1e95026faf0412d7a29b94d514d31446141",
+            "state": "active"
+        }
+    },
+    {
+        "currency":"ltc",
+        "balance":"0.0",
+        "locked":"0.0",
+        "deposit_address": {
+            "currencies": ["eth", "ltc"],
+            "address":"0x00eec1e95026faf0412d7a29b94d514d31446141",
+            "state":"active"
+        }
+    },
+    {
+        "currency":"dash",
+        "balance":"0",
+        "locked":"0",
+        "deposit_address": {
+            "currencies": ["dash"],
+            "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
+            "state": "active"
+        }
+    },
+    {
+        "currency":"xrp",
+        "balance":"0",
+        "locked":"0"
+    },
+    {
+        "currency":"krw",
+        "balance":"548000",
+        "locked":"2000"
+    },
+    {
+        "currency":"usd",
+        "balance":"1000.0",
+        "locked":"0.0"
+    },
+    {
+        "currency":"eur",
+        "balance":"1000.0",
+        "locked":"0.0"
+    }
 ]
