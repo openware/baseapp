@@ -114,19 +114,21 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
                 sequence: action.payload.sequence,
             };
 
+            const orderBookIncSideLimit = orderBookSideLimit() * 2;
+
             if (action.payload.asks) {
                 payload.asks = Array.isArray(action.payload.asks[0]) ? (
-                    handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(0, orderBookSideLimit())
+                    handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(0, orderBookIncSideLimit)
                 ) : (
-                    handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(0, orderBookSideLimit())
+                    handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(0, orderBookIncSideLimit)
                 );
             }
 
             if (action.payload.bids) {
                 payload.bids = Array.isArray(action.payload.bids[0]) ? (
-                    handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(0, orderBookSideLimit())
+                    handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(0, orderBookIncSideLimit)
                 ) : (
-                    handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(0, orderBookSideLimit())
+                    handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(0, orderBookIncSideLimit)
                 );
             }
 
