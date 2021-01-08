@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { DocumentationHeader } from '../../components';
+import {
+    DocumentationEndpoints,
+    DocumentationHeader,
+    DocumentationModels,
+} from '../../components';
 import { useDocumentationFetch } from '../../hooks';
 
 export const DocumentationScreen: React.FC = () => {
@@ -9,6 +13,8 @@ export const DocumentationScreen: React.FC = () => {
         <div className="pg-documentation">
             <div className="pg-documentation__content">
                 <DocumentationHeader />
+                <DocumentationEndpoints />
+                <DocumentationModels />
             </div>
         </div>
     );

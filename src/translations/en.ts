@@ -628,6 +628,12 @@ export const en = {
     'page.documentation.header.version.title': 'Version:',
     'page.documentation.header.contactInfo.title': 'Contact information:',
     'page.documentation.header.license.title': 'License:',
+    'page.documentation.models.title': 'Models',
+    'page.documentation.models.item.table.header.name': 'Name',
+    'page.documentation.models.item.table.header.type': 'Type',
+    'page.documentation.models.item.table.header.description': 'Description',
+    'page.documentation.models.item.table.header.required': 'Required',
+    'page.documentation.models.item.table.data.required.default': 'No',
 
     /* Error pages */
 

@@ -1,6 +1,6 @@
 export interface DocTradeUserApiDataInterface {
     basePath: string;
-    definitions: Object;
+    definitions: any;
     host: string;
     info: {
         contact: {
@@ -15,9 +15,9 @@ export interface DocTradeUserApiDataInterface {
         title: string;
         version: string;
     };
-    paths: Object;
+    paths: any;
     produces: string[];
-    securityDefinitions:  Object;
+    securityDefinitions: any;
     swagger: string;
-    tags: Object[];
+    tags: any[];
 }
