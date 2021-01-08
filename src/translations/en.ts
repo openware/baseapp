@@ -622,6 +622,12 @@ export const en = {
     'page.body.customization.themes.theme.purple.title': 'Purple',
     'page.body.customization.themes.theme.green.title': 'Green',
 
+
+    /* Documentation */
+    'page.documentation.header.version.title': 'Version:',
+    'page.documentation.header.contactInfo.title': 'Contact information:',
+    'page.documentation.header.license.title': 'License:',
+
     /* Error pages */
 
     'page.body.restricted': 'Page not found',

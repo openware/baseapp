@@ -632,6 +632,12 @@ export const ru: LangType = {
     'page.body.customization.themes.theme.green.title': 'Green',
 
 
+    /* Documentation */
+    'page.documentation.header.version.title': 'Version:',
+    'page.documentation.header.contactInfo.title': 'Contact information:',
+    'page.documentation.header.license.title': 'License:',
+
+
     // success messages
     'success.addresses.accepted': 'Ваш адрес успешно приняты',
     'success.documents.accepted': 'Ваши документы успешно приняты',
