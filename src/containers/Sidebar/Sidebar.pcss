@@ -134,6 +134,12 @@
     .pg-sidebar-wrapper-nav-item,
     .pg-sidebar-wrapper-profile-link {
       background-color: var(--sidebar-item-background-color-active);
+
+      .fill-stroke {
+        path {
+          stroke: var(--sidebar-item-text-color-hover);
+        }
+      }
     }
   }
 
@@ -154,6 +160,12 @@
         .pg-sidebar-wrapper-nav-item-img {
           path {
             fill: var(--sidebar-item-text-color-hover);
+          }
+
+          &-wrapper .fill-stroke {
+            path {
+              stroke: var(--sidebar-item-text-color-hover);
+            }
           }
         }
       }

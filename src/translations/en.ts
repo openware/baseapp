@@ -8,6 +8,7 @@ export const en = {
     'page.header.navbar.wallets': 'Wallets',
     'page.header.navbar.openOrders': 'Orders',
     'page.header.navbar.history': 'History',
+    'page.header.navbar.api': 'API Documentation',
 
     'page.header.navbar.profile': 'Profile',
     'page.header.navbar.logout': 'Logout',

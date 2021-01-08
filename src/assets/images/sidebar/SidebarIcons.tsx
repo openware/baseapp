@@ -64,6 +64,14 @@ export const SidebarIcons: React.FC<SidebarIconsProps> = (props: SidebarIconsPro
                     <path fillRule="evenodd" clipRule="evenodd" d="M22.9273 16.3563C23.5198 16.3563 24 15.8761 24 15.2838C24 14.6913 23.5198 14.2112 22.9273 14.2112H19.9779V11.2617C19.9779 10.6694 19.4977 10.1892 18.9054 10.1892C18.3129 10.1892 17.8327 10.6694 17.8327 11.2617V14.2112H14.8833C14.291 14.2112 13.8108 14.6913 13.8108 15.2838C13.8108 15.8761 14.291 16.3563 14.8833 16.3563H17.8327V19.3057C17.8327 19.8982 18.3129 20.3784 18.9054 20.3784C19.4977 20.3784 19.9779 19.8982 19.9779 19.3057V16.3563H22.9273Z" fill="var(--icons)"/>
                 </svg>
             );
+        case 'api':
+            return (
+                <svg width="20" height="20" viewBox="0 0 75 75" className="fill-stroke" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21.875 51.5625L6.25 37.5L21.875 23.4375" stroke="var(--icons)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M53.125 51.5625L68.75 37.5L53.125 23.4375" stroke="var(--icons)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M42.6682 19.4763L32.3318 55.5236" stroke="var(--icons)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+            );
         default:
             return null;
     }
