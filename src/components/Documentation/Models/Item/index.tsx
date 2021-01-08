@@ -3,12 +3,12 @@ import { useIntl } from 'react-intl';
 import { Link } from 'react-scroll';
 import { Table } from '../../../../components';
 
-interface DocumentationModelsItemInterface {
+interface ItemInterface {
     item: any;
     title: string;
 }
 
-export const DocumentationModelsItem: React.FC<DocumentationModelsItemInterface> = (props: DocumentationModelsItemInterface) => {
+export const DocumentationModelsItem: React.FC<ItemInterface> = (props: ItemInterface) => {
     const { title, item } = props;
     const intl = useIntl();
 
@@ -67,13 +67,17 @@ export const DocumentationModelsItem: React.FC<DocumentationModelsItemInterface>
                 key,
                 getFormattedType(),
                 property.description,
-                !!property.required || intl.formatMessage({ id: 'page.documentation.models.item.table.data.required.default' }),
+                !!property.required ? (
+                    intl.formatMessage({ id: 'page.documentation.models.item.table.data.required.true' })
+                ) : (
+                    intl.formatMessage({ id: 'page.documentation.models.item.table.data.required.false' })
+                ),
             ];
         });
-    }, [item.properties]);
+    }, [item.properties, intl]);
 
     return (
-        <div className="pg-documentation-models-item" id={`models/${title}`}>
+        <div className="pg-documentation-item pg-documentation-models-item" id={`models/${title}`}>
             <h5>{title}</h5>
             <span>{item.description}</span>
             {item.properties && Object.keys(item.properties).length ? (

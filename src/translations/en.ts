@@ -628,12 +628,31 @@ export const en = {
     'page.documentation.header.version.title': 'Version:',
     'page.documentation.header.contactInfo.title': 'Contact information:',
     'page.documentation.header.license.title': 'License:',
+
+    'page.documentation.endpoints.requestTypeItem.description.title': 'Description',
+    'page.documentation.endpoints.requestTypeItem.parameters.title': 'Parameters',
+    'page.documentation.endpoints.requestTypeItem.responses.title': 'Responses',
+
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.name': 'Name',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.location': 'Located in',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.description': 'Description',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.required': 'Required',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.schema': 'Schema',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.data.required.true': 'Yes',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.data.required.false': 'No',
+
+    'page.documentation.endpoints.requestTypeItem.responses.table.header.code': 'Code',
+    'page.documentation.endpoints.requestTypeItem.responses.table.header.description': 'Description',
+    'page.documentation.endpoints.requestTypeItem.responses.table.header.schema': 'Schema',
+    'page.documentation.endpoints.requestTypeItem.responses.table.data.noSchema': 'no',
+
     'page.documentation.models.title': 'Models',
     'page.documentation.models.item.table.header.name': 'Name',
     'page.documentation.models.item.table.header.type': 'Type',
     'page.documentation.models.item.table.header.description': 'Description',
     'page.documentation.models.item.table.header.required': 'Required',
-    'page.documentation.models.item.table.data.required.default': 'No',
+    'page.documentation.models.item.table.data.required.true': 'Yes',
+    'page.documentation.models.item.table.data.required.false': 'No',
 
     /* Error pages */
 

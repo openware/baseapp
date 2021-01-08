@@ -8,14 +8,13 @@ export const DocumentationHeader: React.FC = () => {
     const documentation = useSelector(selectDocumentationData);
 
     return (
-        <div className="pg-documentation-header">
+        <div className="pg-documentation-item pg-documentation-header">
             <h3>{documentation?.info?.title}</h3>
             <div className="pg-documentation-header__description">
                 <span>{documentation?.info?.description}</span>
             </div>
             <div className="pg-documentation-header__version">
-                <span>{intl.formatMessage({ id: 'page.documentation.header.version.title' })}&nbsp;</span>
-                <span>{documentation?.info?.version}</span>
+                <h4>{intl.formatMessage({ id: 'page.documentation.header.version.title' })}&nbsp;{documentation?.info?.version}</h4>
             </div>
             <div className="pg-documentation-header__contact-info">
                 <span>{intl.formatMessage({ id: 'page.documentation.header.contactInfo.title' })}</span>
