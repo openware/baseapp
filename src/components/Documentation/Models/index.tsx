@@ -13,7 +13,7 @@ export const DocumentationModels: React.FC = () => {
     }
 
     return (
-        <div className="pg-documentation-models">
+        <div className="pg-documentation-models" id="models">
             <h4>{intl.formatMessage({ id: 'page.documentation.models.title' })}</h4>
             {Object.keys(documentation?.definitions).map((key, index) => (
                 <DocumentationModelsItem

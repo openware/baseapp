@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
+import { Link } from 'react-scroll';
 import { Table } from '../../../../components';
 
 interface DocumentationModelsItemInterface {
@@ -27,6 +28,36 @@ export const DocumentationModelsItem: React.FC<DocumentationModelsItemInterface>
                 switch (property.type) {
                     case 'number':
                         return property.format;
+                    case 'array':
+                        if (property.items && property.items.$ref) {
+                            const refElements = property.items.$ref.split('/');
+                            const linkTitle = refElements[refElements.length - 1];
+
+                            return (
+                                <div>
+                                    <span>[&nbsp;</span>
+                                    <Link smooth to={`models/${linkTitle}`}>
+                                        {linkTitle}
+                                    </Link>
+                                    <span>&nbsp;]</span>
+                                </div>
+                            );
+                        } else {
+                            return property.type;
+                        }
+                    case undefined:
+                        if (property.$ref) {
+                            const refElements = property.$ref.split('/');
+                            const linkTitle = refElements[refElements.length - 1];
+
+                            return (
+                                <Link smooth to={`models/${linkTitle}`}>
+                                    {linkTitle}
+                                </Link>
+                            );
+                        } else {
+                            return property.type;
+                        }
                     default:
                         return property.type;
                 }
@@ -42,7 +73,7 @@ export const DocumentationModelsItem: React.FC<DocumentationModelsItemInterface>
     }, [item.properties]);
 
     return (
-        <div className="pg-documentation-models-item">
+        <div className="pg-documentation-models-item" id={`models/${title}`}>
             <h5>{title}</h5>
             <span>{item.description}</span>
             {item.properties && Object.keys(item.properties).length ? (
