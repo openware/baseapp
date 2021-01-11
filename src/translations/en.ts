@@ -8,6 +8,7 @@ export const en = {
     'page.header.navbar.wallets': 'Wallets',
     'page.header.navbar.openOrders': 'Orders',
     'page.header.navbar.history': 'History',
+    'page.header.navbar.api': 'API Documentation',
 
     'page.header.navbar.profile': 'Profile',
     'page.header.navbar.logout': 'Logout',
@@ -621,6 +622,37 @@ export const en = {
     'page.body.customization.themes.theme.darkRed.title': 'Dark red',
     'page.body.customization.themes.theme.purple.title': 'Purple',
     'page.body.customization.themes.theme.green.title': 'Green',
+
+
+    /* Documentation */
+    'page.documentation.header.version.title': 'Version:',
+    'page.documentation.header.contactInfo.title': 'Contact information:',
+    'page.documentation.header.license.title': 'License:',
+
+    'page.documentation.endpoints.requestTypeItem.description.title': 'Description',
+    'page.documentation.endpoints.requestTypeItem.parameters.title': 'Parameters',
+    'page.documentation.endpoints.requestTypeItem.responses.title': 'Responses',
+
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.name': 'Name',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.location': 'Located in',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.description': 'Description',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.required': 'Required',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.header.schema': 'Schema',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.data.required.true': 'Yes',
+    'page.documentation.endpoints.requestTypeItem.parameters.table.data.required.false': 'No',
+
+    'page.documentation.endpoints.requestTypeItem.responses.table.header.code': 'Code',
+    'page.documentation.endpoints.requestTypeItem.responses.table.header.description': 'Description',
+    'page.documentation.endpoints.requestTypeItem.responses.table.header.schema': 'Schema',
+    'page.documentation.endpoints.requestTypeItem.responses.table.data.noSchema': 'no',
+
+    'page.documentation.models.title': 'Models',
+    'page.documentation.models.item.table.header.name': 'Name',
+    'page.documentation.models.item.table.header.type': 'Type',
+    'page.documentation.models.item.table.header.description': 'Description',
+    'page.documentation.models.item.table.header.required': 'Required',
+    'page.documentation.models.item.table.data.required.true': 'Yes',
+    'page.documentation.models.item.table.data.required.false': 'No',
 
     /* Error pages */
 

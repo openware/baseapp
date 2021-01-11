@@ -1,0 +1,30 @@
+.pg-documentation-header {
+  &__description,
+  &__version,
+  &__contact-info,
+  &__license {
+    padding: 0 20px;
+  }
+
+  &__description {
+    color: var(--secondary-text-color);
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  &__contact-info,
+  &__license {
+    align-items: flex-start;
+    color: var(--secondary-text-color);
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    justify-content: flex-start;
+    line-height: 20px;
+    margin-bottom: 20px;
+
+    span {
+      font-weight: bold;
+    }
+  }
+}

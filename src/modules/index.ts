@@ -22,6 +22,7 @@ import { AuthState, rootAuthSaga } from './user/auth';
 import { BeneficiariesState, rootBeneficiariesSaga } from './user/beneficiaries';
 import { GeetestCaptchaState, rootGeetestCaptchaSaga } from './user/captcha';
 import { CustomizationUpdateState, rootCustomizationUpdateSaga } from './user/customization';
+import { DocumentationState, rootDocumentationSaga } from './user/documentation';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
 import { HistoryState, rootHistorySaga } from './user/history';
 import { AddressesState, rootSendAddressesSaga } from './user/kyc/addresses';
@@ -53,6 +54,7 @@ export * from './user/auth';
 export * from './user/beneficiaries';
 export * from './user/captcha';
 export * from './user/customization';
+export * from './user/documentation';
 export * from './user/wallets';
 export * from './user/profile';
 export * from './user/openOrders';
@@ -93,6 +95,7 @@ export interface RootState {
         beneficiaries: BeneficiariesState;
         captcha: GeetestCaptchaState;
         customizationUpdate: CustomizationUpdateState;
+        documentation: DocumentationState;
         history: HistoryState;
         documents: DocumentsState;
         addresses: AddressesState;
@@ -126,6 +129,7 @@ export function* rootSaga() {
         call(rootCurrenciesSaga),
         call(rootCustomizationSaga),
         call(rootCustomizationUpdateSaga),
+        call(rootDocumentationSaga),
         call(rootErrorHandlerSaga),
         call(rootEmailVerificationSaga),
         call(rootGeetestCaptchaSaga),
