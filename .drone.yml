@@ -11,7 +11,7 @@ steps:
     commands:
       - export REACT_APP_GIT_SHA=$(git rev-parse --short HEAD)
       - echo $REACT_APP_GIT_SHA > .tags
-      - export BUILD_DOMAIN=$(cat .domains)
+      - export BUILD_DOMAIN=$(test -e .domains && cat .domains)
       - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
       - npm -g install yarn
       - yarn install
