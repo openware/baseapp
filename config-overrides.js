@@ -26,11 +26,13 @@ module.exports = function override(config, env) {
             }
         }
 
-        const domain = process.env.BUILD_DOMAIN ? process.env.BUILD_DOMAIN.split(',') : [];
+        const domain = process.env.BUILD_DOMAIN ? process.env.BUILD_DOMAIN.split(',') : null;
 
-        config.plugins.push(
-            new JavaScriptObfuscator({ rotateUnicodeArray: true, domainLock: domain }, [commonJSFilename])
-        );
+        if (domain !== null) {
+            config.plugins.push(
+                new JavaScriptObfuscator({ rotateUnicodeArray: true, domainLock: domain }, [commonJSFilename])
+            );
+        }
 
         config.plugins.push(
             new CompressionPlugin({
