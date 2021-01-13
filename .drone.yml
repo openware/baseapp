@@ -150,6 +150,23 @@ steps:
         - master
         - "2-*-stable"
 
+  - name: "Update opendax baseapp meta version"
+    image: quay.io/openware/goci
+    environment:
+      BOT_USERNAME: kite-bot
+      BOT_NAME: Kite Bot
+      BOT_EMAIL: kite-bot@heliostech.fr
+      BRANCH_NAME: ${DRONE_BRANCH}
+      SDK_BRANCH: ${DRONE_BRANCH}
+      REPO_NAME: ${DRONE_REPO}
+      GITHUB_API_KEY:
+        from_secret: kite_bot_key
+    commands:
+      - ./goci versions frontend
+    when:
+      branch:
+        - "2-6-stable"
+
 trigger:
   branch:
   - master
