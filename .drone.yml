@@ -165,7 +165,7 @@ steps:
       - ./goci versions frontend
     when:
       branch:
-        - "2-6-stable"
+        - "*-stable"
 
 trigger:
   branch:
