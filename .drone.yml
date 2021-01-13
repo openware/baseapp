@@ -150,6 +150,23 @@ steps:
         - master
         - "2-*-stable"
 
+  - name: "Update global OpenDAX version"
+    image: quay.io/openware/goci:0.0.4
+    environment:
+      GITHUB_API_KEY:
+        from_secret: kite_bot_key
+    commands:
+      - git config --global user.name "Kite Bot"
+      - git config --global user.email "kite-bot@heliostech.fr"
+      - git clone https://kite-bot:$GITHUB_API_KEY@github.com/openware/versions
+      - cd versions
+      - /app/goci -tag=$(cat ../.tags) -component=frontend -path opendax/${DRONE_BRANCH::-7}/versions.yaml versions
+      - git commit -am 'OpenDAX frontend tag update'
+      - git push origin master -f
+    when:
+      branch:
+        - "*-stable"
+
 trigger:
   branch:
   - master
