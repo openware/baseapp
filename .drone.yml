@@ -35,7 +35,7 @@ steps:
   #     - rsync -avzhre "ssh -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" coverage/ mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}-coverage
   #     - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work"
   #     - echo "http://${DRONE_COMMIT_SHA:0:7}-coverage.mock.openware.work"
-  
+
   # - name: "Notify staging"
   #   image: plugins/slack
   #   settings:
@@ -174,8 +174,6 @@ steps:
 
 trigger:
   branch:
-    - master
-    - "2-*-stable"
     - fix/test-ci
   event:
     - push
