@@ -63,7 +63,6 @@ trigger:
     exclude:
       - master
       - "2-*-stable"
-      - fix/test-ci
 
 ---
 kind: pipeline
@@ -108,9 +107,6 @@ steps:
         repo:
           from_secret: quay_repo
         registry: quay.io
-    when:
-      branch:
-        - master
 
   - name: "Redeploy on master.devkube.com"
     image: rubykube/microkube:0.2.0
@@ -165,18 +161,16 @@ steps:
       - cd versions
       - /app/goci -tag=$(cat ../.tags) -component=frontend -path opendax/$${DRONE_BRANCH::-7}/versions.yaml versions
       - cat opendax/$${DRONE_BRANCH::-7}/versions.yaml
-      # - git commit -am 'OpenDAX frontend tag update'
-      # - git push origin master -f
+      - git commit -am 'OpenDAX frontend tag update'
+      - git push origin master -f
     when:
       branch:
         - "*-stable"
-        - fix/test-ci
 
 trigger:
   branch:
     - master
     - "2-*-stable"
-    - fix/test-ci
   event:
     - push
 
