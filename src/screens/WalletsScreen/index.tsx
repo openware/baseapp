@@ -340,7 +340,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         if (!wallet.deposit_address && wallets.length && wallet.type !== 'fiat') {
             this.props.fetchAddress({ currency: wallets[selectedWalletIndex].currency });
-            this.props.fetchWallets();
         }
     };
 
