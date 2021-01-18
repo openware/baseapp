@@ -93,6 +93,13 @@ steps:
   - name: "Build Docker image"
     image: plugins/docker
     settings:
+      username:
+        from_secret: quay_username
+      password:
+        from_secret: quay_password
+      repo:
+        from_secret: quay_repo
+      registry: quay.io
       environment:
         REACT_APP_SENTRY_KEY:
           from_secret: master_sentry_key
@@ -100,13 +107,6 @@ steps:
           from_secret: master_sentry_organization
         REACT_APP_SENTRY_PROJECT:
           from_secret: master_sentry_project
-        username:
-          from_secret: quay_username
-        password:
-          from_secret: quay_password
-        repo:
-          from_secret: quay_repo
-        registry: quay.io
 
   - name: "Redeploy on master.devkube.com"
     image: rubykube/microkube:0.2.0
@@ -150,19 +150,12 @@ steps:
         - "2-*-stable"
 
   - name: "Update global OpenDAX version"
-    image: quay.io/openware/goci:0.0.4
+    image: quay.io/openware/goci:0.0.6
     environment:
-      GITHUB_API_KEY:
+      GIT_TOKEN:
         from_secret: kite_bot_key
     commands:
-      - git config --global user.name "Kite Bot"
-      - git config --global user.email "kite-bot@heliostech.fr"
-      - git clone https://kite-bot:$GITHUB_API_KEY@github.com/openware/versions
-      - cd versions
-      - /app/goci -tag=$(cat ../.tags) -component=frontend -path opendax/$${DRONE_BRANCH::-7}/versions.yaml versions
-      - cat opendax/$${DRONE_BRANCH::-7}/versions.yaml
-      - git commit -am 'OpenDAX frontend tag update'
-      - git push origin master -f
+      - /app/goci -component=frontend versions
     when:
       branch:
         - "*-stable"
