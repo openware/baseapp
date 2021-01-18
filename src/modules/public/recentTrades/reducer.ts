@@ -24,7 +24,7 @@ export const convertTradeEventToTrade = (market: string, trade: PublicTradeEvent
     taker_type: trade.taker_type,
     price: String(trade.price),
     amount: String(trade.amount),
-    total: String(trade.total),
+    total: trade.total && String(trade.total),
 });
 
 export const convertTradeEventList = (market: string, trades: PublicTradeEvent[]): PublicTrade[] =>
