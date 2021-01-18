@@ -85,12 +85,15 @@ class SignIn extends React.Component<Props, SignInState> {
     }
 
     public componentWillReceiveProps(nextProps: Props) {
+        const { email } = this.state;
+
         if (!this.props.isLoggedIn && nextProps.isLoggedIn) {
             this.props.resetCaptchaState();
             this.props.history.push('/wallets');
         }
-        if (this.props.requireEmailVerification) {
-            this.props.history.push('/email-verification');
+
+        if (nextProps.requireEmailVerification) {
+            this.props.history.push('/email-verification', { email: email });
         }
     }
 
