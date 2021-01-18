@@ -61,7 +61,8 @@ type Props = DispatchProps & ReduxProps & OwnProps & IntlProps;
 class EmailVerificationComponent extends React.Component<Props> {
     public componentDidMount() {
         setDocumentTitle('Email verification');
-        if (!this.props.user.email.length && !this.props.emailVerificationLoading) {
+
+        if (!this.props.location.state || !this.props.location.state.email) {
             this.props.history.push('/signin');
         }
     }
@@ -128,13 +129,13 @@ class EmailVerificationComponent extends React.Component<Props> {
             case 'recaptcha':
             case 'geetest':
                 this.props.emailVerificationFetch({
-                    email: this.props.user.email,
+                    email: this.props.location.state.email,
                     captcha_response,
                 });
                 break;
             default:
                 this.props.emailVerificationFetch({
-                    email: this.props.user.email,
+                    email: this.props.location.state.email,
                 });
                 break;
         }
@@ -145,12 +146,12 @@ class EmailVerificationComponent extends React.Component<Props> {
     private disableButton = (): boolean => {
         const {
             configs,
-            user,
+            location,
             geetestCaptchaSuccess,
             reCaptchaSuccess,
         } = this.props;
 
-        if (user.email && !user.email.match(EMAIL_REGEX)) {
+        if (location.state.email && !location.state.email.match(EMAIL_REGEX)) {
             return true;
         }
 
