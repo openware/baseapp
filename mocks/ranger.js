@@ -156,8 +156,7 @@ const matchedTradesMock = (ws, marketId) => {
             "date": at,
             "taker_type": takerType,
             "price": price,
-            "amount": volume,
-            "total": (volume * price).toFixed(4)
+            "amount": volume
         };
 
         if (ws.authenticated && shouldPushOrder) {
