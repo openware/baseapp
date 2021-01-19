@@ -1,6 +1,7 @@
 import update from 'immutability-helper';
 import { defaultStorageLimit } from '../../../api';
 import { sliceArray } from '../../../helpers';
+import { CommonError } from '../../types';
 import { ApiKeyDataInterface, ApiKeysAction } from './actions';
 import {
     API_KEY_CREATE,
@@ -23,6 +24,7 @@ export interface ApiKeysState {
     modal: ApiKeyStateModal;
     pageIndex: number;
     nextPageExists: boolean;
+    error?: CommonError;
 }
 
 export const initialApiKeysState: ApiKeysState = {
@@ -42,6 +44,7 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
                 ...state,
                 apiKeys: sliceArray(action.payload.apiKeys, defaultStorageLimit()),
                 dataLoaded: true,
+                error: undefined,
                 pageIndex: action.payload.pageIndex,
                 nextPageExists: action.payload.nextPageExists,
             };
@@ -49,6 +52,7 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
             return {
                 ...state,
                 apiKeys: state.apiKeys.concat(action.payload),
+                error: undefined,
             };
         case API_KEY_UPDATE:
             const apiKeyIndex = state.apiKeys.findIndex(e => e.kid === action.payload.kid);
@@ -62,19 +66,25 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
             return {
                 ...state,
                 apiKeys,
+                error: undefined,
             };
         case API_KEY_DELETE:
             return {
                 ...state,
                 apiKeys: state.apiKeys.filter(apiKey => apiKey.kid !== action.payload.kid),
+                error: undefined,
             };
         case API_KEYS_2FA_MODAL:
             return {
                 ...state,
                 modal: action.payload,
+                error: undefined,
             };
         case API_KEYS_ERROR:
-            return initialApiKeysState;
+            return {
+                ...state,
+                error: action.error,
+            };
         default:
             return state;
     }
