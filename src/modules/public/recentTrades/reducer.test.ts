@@ -46,7 +46,6 @@ describe('recentTrade reducer', () => {
             date: 1547464388,
             price: '0.01',
             amount: '0.059',
-            total: '0.00059',
         },
         {
             tid: 162414,
@@ -54,7 +53,6 @@ describe('recentTrade reducer', () => {
             date: 1547464388,
             price: '0.01',
             amount: '0.01',
-            total: '0.0001',
         },
     ];
 
