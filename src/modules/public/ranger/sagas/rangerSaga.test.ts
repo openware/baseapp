@@ -515,7 +515,6 @@ describe('Ranger module', () => {
                 date: 1547464388,
                 price: '0.0002',
                 amount: '0.00015',
-                total: '0.00000003',
             };
             const mockTrades = {
                 trades: [tradeEvent],
