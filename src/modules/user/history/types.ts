@@ -3,7 +3,7 @@ import { CommonState } from '../../types';
 export interface PublicTrade {
     id: number;
     price: string;
-    total: string;
+    total?: string;
     amount: string;
     market: string;
     created_at: string;
