@@ -5,18 +5,21 @@ import { CommonError } from '../../types';
 import { ApiKeyDataInterface, ApiKeysAction } from './actions';
 import {
     API_KEY_CREATE,
+    API_KEY_CREATE_FETCH,
     API_KEY_DELETE,
+    API_KEY_DELETE_FETCH,
     API_KEY_UPDATE,
+    API_KEY_UPDATE_FETCH,
     API_KEYS_2FA_MODAL,
     API_KEYS_DATA,
     API_KEYS_ERROR,
+    API_KEYS_FETCH,
 } from './constants';
 
 export interface ApiKeyStateModal {
     active: boolean;
     action?: 'getKeys' | 'createKey' | 'createSuccess' | 'updateKey' | 'deleteKey';
     apiKey?: ApiKeyDataInterface;
-    success?: boolean;
 }
 
 export interface ApiKeysState {
@@ -33,7 +36,6 @@ export const initialApiKeysState: ApiKeysState = {
     dataLoaded: false,
     modal: {
         active: false,
-        success: false,
     },
     pageIndex: 0,
     nextPageExists: false,
@@ -41,20 +43,32 @@ export const initialApiKeysState: ApiKeysState = {
 
 export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysAction): ApiKeysState => {
     switch (action.type) {
+        case API_KEYS_FETCH:
+            return {
+                ...state,
+                error: undefined,
+            };
         case API_KEYS_DATA:
             return {
                 ...state,
                 apiKeys: sliceArray(action.payload.apiKeys, defaultStorageLimit()),
                 dataLoaded: true,
-                error: undefined,
                 pageIndex: action.payload.pageIndex,
                 nextPageExists: action.payload.nextPageExists,
+            };
+        case API_KEY_CREATE_FETCH:
+            return {
+                ...state,
+                error: undefined,
             };
         case API_KEY_CREATE:
             return {
                 ...state,
                 apiKeys: state.apiKeys.concat(action.payload),
-                modal: {...state.modal, success: true},
+            };
+        case API_KEY_UPDATE_FETCH:
+            return {
+                ...state,
                 error: undefined,
             };
         case API_KEY_UPDATE:
@@ -69,26 +83,25 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
             return {
                 ...state,
                 apiKeys,
-                modal: {...state.modal, success: true},
+            };
+        case API_KEY_DELETE_FETCH:
+            return {
+                ...state,
                 error: undefined,
             };
         case API_KEY_DELETE:
             return {
                 ...state,
                 apiKeys: state.apiKeys.filter(apiKey => apiKey.kid !== action.payload.kid),
-                modal: {...state.modal, success: true},
-                error: undefined,
             };
         case API_KEYS_2FA_MODAL:
             return {
                 ...state,
-                modal: {...action.payload, success: true},
-                error: undefined,
+                modal: action.payload,
             };
         case API_KEYS_ERROR:
             return {
                 ...state,
-                modal: {...state.modal, success: false},
                 error: action.error,
             };
         default:
