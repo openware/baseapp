@@ -32,6 +32,11 @@ export interface DropdownComponentProps {
      * @default false
      */
     disableContentEditable?: boolean;
+    /**
+     * Value for clear selected item
+     * @default false
+     */
+    clear?: boolean;
 }
 
 

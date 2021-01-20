@@ -18,3 +18,4 @@ export * from './RestrictedScreen';
 export * from './MaintenanceScreen';
 
 export * from './SetupScreen';
+export * from './InternalTransfer';

@@ -9,6 +9,7 @@ export const en = {
     'page.header.navbar.openOrders': 'Orders',
     'page.header.navbar.history': 'History',
     'page.header.navbar.api': 'API Documentation',
+    'page.header.navbar.internal.transfer': 'Internal transfer',
 
     'page.header.navbar.profile': 'Profile',
     'page.header.navbar.logout': 'Logout',
@@ -935,6 +936,40 @@ export const en = {
     'metamask.error.unsupportedNetwork': '[MetaMask] You\'re connected to an unsupported network',
     'metamask.error.unauthorized': '[MetaMask] Please authorize this website to access your Ethereum account',
     'metamask.error.unknown': '[MetaMask] An unknown error occurred. Check the console for more details',
+
+    // internal transfer
+    'page.body.internal.transfer.header': 'Internal transfer',
+
+    'page.body.internal.transfer.header.input.uid': '1. Enter a valid UID of a user whom you want to transfer money',
+    'page.body.internal.transfer.header.input.amount': '2. Select currency and enter amount that you want to transfer',
+    'page.body.internal.transfer.header.input.otp': '3. Enter 2FA code from the Google Authenticator app ',
+
+    'page.body.internal.transfer.label.uid': 'Send to account (UID)',
+    'page.body.internal.transfer.label.amount': 'Amount to send',
+    'page.body.internal.transfer.label.otp': 'Enter 2FA code',
+
+    'page.body.internal.transfer.placeholder.uid': 'Send to account (UID)',
+    'page.body.internal.transfer.placeholder.amount': 'Amount to send',
+    'page.body.internal.transfer.placeholder.otp': 'Enter 2FA code',
+
+    'page.body.internal.transfer.continue': 'Continue',
+
+    'page.body.internal.transfer.please.enable.2fa': 'Please, enable 2FA to be able to use internal transfers functionality',
+    'page.body.internal.transfer.enable': 'Enable',
+
+    'page.body.internal.transfer.notice.uid': `All transactions are final! Please, double check receiver's uid before sending.`,
+    'page.body.internal.transfer.modal.content.transfer': 'You are going to transfer ',
+    'page.body.internal.transfer.modal.content.to': 'to ',
+    'page.body.internal.transfer.modal.content.account': 'account.',
+
+    'page.body.internal.transfer.account.balance': 'Available balance: ',
+    'page.body.internal.transfer.insufficient.balance': ' - Insufficient balance',
+
+    'page.body.internal.transfer.header.input.username': '1. Enter a valid nickname of a user whom you want to transfer money',
+    'page.body.internal.transfer.label.username': 'Send to account (nickname)',
+    'page.body.internal.transfer.placeholder.username': 'Send to account (nickname)',
+    'page.body.internal.transfer.notice.username': `All transactions are final! Please, double check receiver's nickname before sending.`,
+
 
     ...nationalitiesNames,
     ...customTranslations,
