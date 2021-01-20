@@ -1,4 +1,3 @@
-import { ru as mobileTranslationsRu } from '../../mobile/translations';
 import { LangType } from '../../translations';
 import { nationalitiesNames } from '../../translations/nationalities';
 
@@ -926,5 +925,4 @@ export const ru: LangType = {
     'metamask.error.unknown': '[MetaMask] Произошла неизвестная ошибка. Проверьте консоль для получения дополнительных сведений',
 
     ...nationalitiesNames,
-    ...mobileTranslationsRu,
 };

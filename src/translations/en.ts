@@ -1,5 +1,3 @@
-import { en as customTranslations } from '../custom/translations/en';
-import { en as mobileTranslations } from '../mobile/translations/en';
 import { nationalitiesNames } from './nationalities';
 
 export const en = {
@@ -923,6 +921,4 @@ export const en = {
     'metamask.error.unknown': '[MetaMask] An unknown error occurred. Check the console for more details',
 
     ...nationalitiesNames,
-    ...customTranslations,
-    ...mobileTranslations,
 };
