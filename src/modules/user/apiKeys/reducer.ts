@@ -16,6 +16,7 @@ export interface ApiKeyStateModal {
     active: boolean;
     action?: 'getKeys' | 'createKey' | 'createSuccess' | 'updateKey' | 'deleteKey';
     apiKey?: ApiKeyDataInterface;
+    success?: boolean;
 }
 
 export interface ApiKeysState {
@@ -32,6 +33,7 @@ export const initialApiKeysState: ApiKeysState = {
     dataLoaded: false,
     modal: {
         active: false,
+        success: false,
     },
     pageIndex: 0,
     nextPageExists: false,
@@ -52,6 +54,7 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
             return {
                 ...state,
                 apiKeys: state.apiKeys.concat(action.payload),
+                modal: {...state.modal, success: true},
                 error: undefined,
             };
         case API_KEY_UPDATE:
@@ -66,23 +69,26 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
             return {
                 ...state,
                 apiKeys,
+                modal: {...state.modal, success: true},
                 error: undefined,
             };
         case API_KEY_DELETE:
             return {
                 ...state,
                 apiKeys: state.apiKeys.filter(apiKey => apiKey.kid !== action.payload.kid),
+                modal: {...state.modal, success: true},
                 error: undefined,
             };
         case API_KEYS_2FA_MODAL:
             return {
                 ...state,
-                modal: action.payload,
+                modal: {...action.payload, success: true},
                 error: undefined,
             };
         case API_KEYS_ERROR:
             return {
                 ...state,
+                modal: {...state.modal, success: false},
                 error: action.error,
             };
         default:
