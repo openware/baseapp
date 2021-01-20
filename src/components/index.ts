@@ -32,6 +32,7 @@ export * from './PercentageButton';
 export * from './QRCode';
 export * from './SignIn';
 export * from './SignUp';
+export * from './SearchDropdown';
 export * from './SummaryField';
 export * from './Table';
 export * from './TabPanel';
