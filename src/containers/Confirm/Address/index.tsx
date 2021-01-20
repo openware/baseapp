@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../../';
 import { languages } from '../../../api/config';
-import { CustomInput, DropdownComponent, UploadFile } from '../../../components';
+import { CustomInput, SearchDropdown, UploadFile } from '../../../components';
 import {
     alertPush,
     RootState,
@@ -92,8 +92,9 @@ class AddressComponent extends React.Component<Props, State> {
             'pg-confirm__content-address__row__content--wrong': postcode && !this.handleValidateInput('postcode', postcode),
         });
 
-        const dataCountries = Object.values(countries.getNames(lang));
-        const onSelectCountry = value => this.selectCountry(dataCountries[value]);
+        const dataCountries = Object.values(countries.getNames(lang)).map(item => {
+            return { label: item, value: item };
+        });
 
         return (
             <React.Fragment>
@@ -142,10 +143,10 @@ class AddressComponent extends React.Component<Props, State> {
                         <div className="pg-confirm__content-address__row__content-label">
                             {this.translate('page.body.kyc.documents.country')}
                         </div>
-                        <DropdownComponent
+                        <SearchDropdown
                             className="pg-confirm__content-address__row__content-number-dropdown"
-                            list={dataCountries}
-                            onSelect={onSelectCountry}
+                            options={dataCountries}
+                            onSelect={this.selectCountry}
                             placeholder={this.translate('page.body.kyc.documents.country.placeholder')}
                         />
                     </div>
@@ -242,9 +243,9 @@ class AddressComponent extends React.Component<Props, State> {
         }
     };
 
-    private selectCountry = (value: string) => {
+    private selectCountry = option => {
         this.setState({
-            country: countries.getAlpha2Code(value, this.props.lang),
+            country: countries.getAlpha2Code(option.value, this.props.lang),
         });
     };
 
