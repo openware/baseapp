@@ -73,6 +73,7 @@ export interface SignInData {
 export interface SignUpFetch {
     type: typeof AUTH_SIGN_UP_FETCH;
     payload: {
+        nickname?: string;
         email: string;
         password: string;
         data: string;

@@ -23,6 +23,7 @@ const mockConfig: Config = {
     showLanding: true,
     sentryEnabled: false,
     captchaLogin: false,
+    nicknamesEnabled: false,
     gaTrackerKey: '',
     minutesUntilAutoLogout: '5',
     msAlertDisplayTime: '5000',
