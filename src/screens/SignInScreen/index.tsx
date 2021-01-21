@@ -47,8 +47,8 @@ interface DispatchProps {
     signIn: typeof signIn;
     signInError: typeof signInError;
     signInRequire2FA: typeof signInRequire2FA;
-    signUpRequireVerification: typeof signUpRequireVerification;
     resetCaptchaState: typeof resetCaptchaState;
+    signUpRequireVerification: typeof signUpRequireVerification;
 }
 
 interface SignInState {
@@ -316,8 +316,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     signIn: data => dispatch(signIn(data)),
     signInError: error => dispatch(signInError(error)),
     signInRequire2FA: payload => dispatch(signInRequire2FA(payload)),
-    signUpRequireVerification: data => dispatch(signUpRequireVerification(data)),
     resetCaptchaState: () => dispatch(resetCaptchaState()),
+    signUpRequireVerification: data => dispatch(signUpRequireVerification(data)),
 });
 
 export const SignInScreen = compose(
