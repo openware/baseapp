@@ -62,7 +62,7 @@ class EmailVerificationComponent extends React.Component<Props> {
     public componentDidMount() {
         setDocumentTitle('Email verification');
 
-        if (!this.props.location.state || !this.props.location.state.email) {
+        if (!this.props.location.state) {
             this.props.history.push('/signin');
         }
     }
@@ -151,7 +151,7 @@ class EmailVerificationComponent extends React.Component<Props> {
             reCaptchaSuccess,
         } = this.props;
 
-        if (location.state.email && !location.state.email.match(EMAIL_REGEX)) {
+        if (location.state && location.state.email && !location.state.email.match(EMAIL_REGEX)) {
             return true;
         }
 
