@@ -8,7 +8,6 @@ import { PlusIcon } from '../../assets/images/PlusIcon';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { TrashBin } from '../../assets/images/TrashBin';
 import {
-    alertPush,
     beneficiariesCreateData,
     beneficiariesDelete,
     Beneficiary,
@@ -23,6 +22,7 @@ import {
     selectMemberLevels,
     selectMobileDeviceState,
     selectUserInfo,
+    sendError,
     User,
 } from '../../modules';
 import { CommonError } from '../../modules/types';
@@ -46,7 +46,7 @@ interface DispatchProps {
     deleteAddress: typeof beneficiariesDelete;
     memberLevelsFetch: typeof memberLevelsFetch;
     beneficiariesCreateData: typeof beneficiariesCreateData;
-    alertPush: typeof alertPush;
+    sendError: typeof sendError;
 }
 
 interface OwnProps {
@@ -93,7 +93,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     public componentDidMount() {
         const { currency, beneficiaries, memberLevels } = this.props;
         if (currency && beneficiaries.length) {
-            this.handleSetCurrentAddressOnUpdate(beneficiaries, currency);
+            this.handleSetCurrentAddressOnUpdate(beneficiaries);
         }
 
         if (!memberLevels) {
@@ -111,7 +111,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
 
         if ((nextProps.currency && nextProps.currency !== currency) ||
             (nextProps.beneficiaries.length && nextProps.beneficiaries !== beneficiaries)) {
-            this.handleSetCurrentAddressOnUpdate(nextProps.beneficiaries, nextProps.currency);
+            this.handleSetCurrentAddressOnUpdate(nextProps.beneficiaries);
         }
 
         if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
@@ -373,7 +373,10 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         if (memberLevels && (userData.level < memberLevels.withdraw.minimum_level)) {
             this.handleToggleFailModal();
         } else if (beneficiaries && beneficiaries.length >= 10) {
-            this.props.alertPush({ message: ['error.beneficiaries.max10.addresses'], type: 'error'});
+            this.props.sendError({
+                error: { message: ['error.beneficiaries.max10.addresses'] },
+                processingType: 'alert',
+            });
         } else {
             this.handleToggleAddAddressModal();
         }
@@ -405,7 +408,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         }
     };
 
-    private handleSetCurrentAddressOnUpdate = (beneficiaries: Beneficiary[], currency: string) => {
+    private handleSetCurrentAddressOnUpdate = (beneficiaries: Beneficiary[]) => {
         let filteredByState = this.handleFilterByState(beneficiaries, 'active');
 
         if (!filteredByState.length) {
@@ -464,7 +467,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     deleteAddress: payload => dispatch(beneficiariesDelete(payload)),
     memberLevelsFetch: () => dispatch(memberLevelsFetch()),
     beneficiariesCreateData: payload => dispatch(beneficiariesCreateData(payload)),
-    alertPush: payload => dispatch(alertPush(payload)),
+    sendError: payload => dispatch(sendError(payload)),
 });
 
 // tslint:disable-next-line:no-any

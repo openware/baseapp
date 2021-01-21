@@ -6,16 +6,14 @@ import { getMetaMaskErrorMessage } from '../helpers/getMetaMaskErrorMessage';
 
 export function* handleErrorSaga(action: ErrorHandlerFetch) {
     const { processingType, extraOptions, error } = action.payload;
-    const { actionError } = extraOptions;
 
     if (extraOptions) {
-        const { params, type } = extraOptions;
+        const { params, type, actionError } = extraOptions;
 
         if (type) {
             switch (type) {
                 case 'METAMASK_HANDLE_ERROR':
                     error.message = [getMetaMaskErrorMessage(error)];
-
 
                     if (error.message[0] === 'metamask.error.unknown') {
                         yield call(handleConsoleError, error);

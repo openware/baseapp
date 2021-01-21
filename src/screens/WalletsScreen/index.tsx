@@ -237,7 +237,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         <div className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${!mobileWalletChosen && 'd-none d-md-block'}`}>
                             <TabPanel
                                 panels={this.renderTabs()}
-                                onTabChange={this.onTabChange}
+                                onTabChange={(_, label) => this.onTabChange(label)}
                                 currentTabIndex={currentTabIndex}
                                 onCurrentTabChange={this.onCurrentTabChange}
                             />
@@ -262,7 +262,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         );
     }
 
-    private onTabChange = (index, label) => {
+    private onTabChange = label => {
         const { selectedWalletIndex } = this.state;
         const { wallets } = this.props;
 
@@ -493,19 +493,14 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { wallets } = this.props;
         const { tab } = this.state;
         const depositTab = { label: this.renderTabs()[0].label, index: 0 };
-        const withdrawTab = { label: this.renderTabs()[1].label, index: 1 };
 
         if (tab !== depositTab.label && value.type !== 'fiat') {
-            this.onTabChange(depositTab.index, depositTab.label);
+            this.onTabChange(depositTab.label);
             this.onCurrentTabChange(depositTab.index);
         }
 
-        if (tab === withdrawTab.label) {
-            this.props.fetchBeneficiaries({ currency_id: value.currency.toLowerCase() });
-        }
-
         const nextWalletIndex = this.props.wallets.findIndex(
-            wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase(),
+            wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase()
         );
 
         this.setState({
