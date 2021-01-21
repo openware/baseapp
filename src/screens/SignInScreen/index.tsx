@@ -27,6 +27,7 @@ import {
     signIn,
     signInError,
     signInRequire2FA,
+    signUpRequireVerification,
 } from '../../modules';
 import { CommonError } from '../../modules/types';
 
@@ -47,6 +48,7 @@ interface DispatchProps {
     signInError: typeof signInError;
     signInRequire2FA: typeof signInRequire2FA;
     resetCaptchaState: typeof resetCaptchaState;
+    signUpRequireVerification: typeof signUpRequireVerification;
 }
 
 interface SignInState {
@@ -79,6 +81,7 @@ class SignIn extends React.Component<Props, SignInState> {
     public componentDidMount() {
         setDocumentTitle('Sign In');
         this.props.signInError({ code: 0, message: [''] });
+        this.props.signUpRequireVerification({requireVerification: false});
     }
 
     public componentWillReceiveProps(nextProps: Props) {
@@ -314,6 +317,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     signInError: error => dispatch(signInError(error)),
     signInRequire2FA: payload => dispatch(signInRequire2FA(payload)),
     resetCaptchaState: () => dispatch(resetCaptchaState()),
+    signUpRequireVerification: data => dispatch(signUpRequireVerification(data)),
 });
 
 export const SignInScreen = compose(
