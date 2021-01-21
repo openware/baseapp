@@ -266,9 +266,9 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const { selectedWalletIndex } = this.state;
         const { wallets } = this.props;
 
-        const selectedCurrency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
+        const selectedCurrency = wallets[selectedWalletIndex]?.currency;
 
-        if (label === this.renderTabs()[1].label) {
+        if (label === this.renderTabs()[1].label && selectedCurrency) {
             this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase() });
         }
 
