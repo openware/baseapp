@@ -22,6 +22,7 @@ describe('Profile reducer', () => {
 
     const userData = {
         user: {
+            nickname: 'johnny1337',
             email: 'admin@barong.io',
             uid: 'ID26C901376F',
             role: 'admin',

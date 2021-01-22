@@ -28,6 +28,7 @@ describe('Module: User', () => {
     };
 
     const fakeUser = {
+        nickname: 'johnny1337',
         email: 'admin@barong.io',
         uid: 'ID26C901376F',
         role: 'admin',
