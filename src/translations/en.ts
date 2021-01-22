@@ -193,6 +193,7 @@ export const en = {
     'success.beneficiaries.activated': 'Beneficiaries: successfully activated',
     'success.beneficiaries.deleted': 'Beneficiaries: successfully deleted',
     'success.beneficiaries.resent_pin': 'Beneficiaries: pin resent',
+    'error.beneficiaries.max10.addresses': 'You can register up to 10 withdrawal addresses',
 
     'page.body.wallets.beneficiaries.title': 'Withdraw address',
     'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',

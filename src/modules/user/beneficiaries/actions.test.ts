@@ -142,8 +142,8 @@ describe('Beneficiaries actions', () => {
     });
 
     it('should check beneficiariesFetch action creator', () => {
-        const expectedAction = { type: BENEFICIARIES_FETCH };
-        expect(actions.beneficiariesFetch()).toEqual(expectedAction);
+        const expectedAction = { type: BENEFICIARIES_FETCH, payload: { currency_id: 'btc'} };
+        expect(actions.beneficiariesFetch({ currency_id: 'btc' })).toEqual(expectedAction);
     });
 
     it('should check beneficiariesData action creator', () => {

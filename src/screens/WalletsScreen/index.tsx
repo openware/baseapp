@@ -149,10 +149,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             this.props.fetchWallets();
         }
 
-        if (wallets.length > 0) {
-            this.props.fetchBeneficiaries();
-        }
-
         if (selectedWalletIndex === -1 && wallets.length) {
             this.setState({ selectedWalletIndex: 0 });
         }
@@ -173,12 +169,12 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             beneficiariesDeleteSuccess,
             withdrawSuccess,
         } = this.props;
+        const { selectedWalletIndex } = this.state;
 
         if (wallets.length === 0 && next.wallets.length > 0) {
             this.setState({
                 selectedWalletIndex: 0,
             });
-            this.props.fetchBeneficiaries();
         }
 
         if (!withdrawSuccess && next.withdrawSuccess) {
@@ -187,7 +183,9 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         if ((next.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) ||
             (next.beneficiariesDeleteSuccess && !beneficiariesDeleteSuccess)) {
-            this.props.fetchBeneficiaries();
+            const selectedCurrency = (next.wallets[selectedWalletIndex] || { currency: '' }).currency;
+
+            this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase() });
         }
     }
 
@@ -239,7 +237,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         <div className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${!mobileWalletChosen && 'd-none d-md-block'}`}>
                             <TabPanel
                                 panels={this.renderTabs()}
-                                onTabChange={this.onTabChange}
+                                onTabChange={(_, label) => this.onTabChange(label)}
                                 currentTabIndex={currentTabIndex}
                                 onCurrentTabChange={this.onCurrentTabChange}
                             />
@@ -264,7 +262,18 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         );
     }
 
-    private onTabChange = (index, label) => this.setState({ tab: label });
+    private onTabChange = label => {
+        const { selectedWalletIndex } = this.state;
+        const { wallets } = this.props;
+
+        const selectedCurrency = wallets[selectedWalletIndex]?.currency;
+
+        if (label === this.renderTabs()[1].label && selectedCurrency) {
+            this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase() });
+        }
+
+        this.setState({ tab: label });
+    };
 
     private onActiveIndexChange = index => this.setState({ activeIndex: index });
 
@@ -486,12 +495,12 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         const depositTab = { label: this.renderTabs()[0].label, index: 0 };
 
         if (tab !== depositTab.label && value.type !== 'fiat') {
-            this.onTabChange(depositTab.index, depositTab.label);
+            this.onTabChange(depositTab.label);
             this.onCurrentTabChange(depositTab.index);
         }
 
         const nextWalletIndex = this.props.wallets.findIndex(
-            wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase(),
+            wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase()
         );
 
         this.setState({
@@ -515,9 +524,9 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
-    fetchBeneficiaries: () => dispatch(beneficiariesFetch()),
-    fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
+    fetchBeneficiaries: params => dispatch(beneficiariesFetch(params)),
     fetchWallets: () => dispatch(walletsFetch()),
+    fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
     clearWallets: () => dispatch(walletsData([])),
     fetchSuccess: payload => dispatch(alertPush(payload)),

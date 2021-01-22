@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
+import { buildQueryString } from '../../../../helpers';
 import { beneficiariesData, beneficiariesError, BeneficiariesFetch } from '../actions';
 
 const config: RequestOptions = {
@@ -9,7 +10,12 @@ const config: RequestOptions = {
 
 export function* beneficiariesSaga(action: BeneficiariesFetch) {
     try {
-        const beneficiaries = yield call(API.get(config), '/account/beneficiaries');
+        let params = '';
+        if (action.payload) {
+            params = `?${buildQueryString(action.payload)}`;
+        }
+        const beneficiaries = yield call(API.get(config), `/account/beneficiaries${params}`);
+
         yield put(beneficiariesData(beneficiaries));
     } catch (error) {
         yield put(sendError({
