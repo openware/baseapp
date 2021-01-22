@@ -67,7 +67,7 @@
     "watch:css": "postcss src/index.pcss -o src/index.css -w",
     "lint": "yarn style:lint && tsc --noEmit && tslint --project .",
     "lint:fix": "tslint --project . --fix",
-    "style:lint": "npx stylelint '**/*.pcss' --fix",
+    "style:lint": "npx stylelint '**/*.pcss'",
     "mockAPI": "node mocks/mockAPI.js",
     "mockWS": "node mocks/mockWS.js",
     "start": "npm-run-all -p watch:css start-js",
@@ -139,6 +139,12 @@
     "typescript": "3.8.2",
     "webpack": "4.42.0",
     "webpack-obfuscator": "^2.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "./scripts/validate_commit.js $HUSKY_GIT_PARAMS && (cd \"./$GIT_PREFIX\"; yarn lint)",
+      "pre-push": "yarn lint && CI=true yarn test --no-watch"
+    }
   },
   "browserslist": [
     ">0.2%",
