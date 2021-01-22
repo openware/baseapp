@@ -5,7 +5,15 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { CustomInput, PasswordStrengthMeter } from '../';
-import { EMAIL_REGEX, PASSWORD_REGEX } from '../../helpers';
+import { isNicknamesEnabled } from '../../api';
+import {
+    EMAIL_REGEX,
+    ERROR_FORBIDDEN_SYMBOL,
+    ERROR_LONG_NICKNAME,
+    ERROR_SHORT_NICKNAME,
+    NICKNAME_REGEX,
+    PASSWORD_REGEX,
+} from '../../helpers';
 import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
 
@@ -18,6 +26,7 @@ export interface SignUpFormProps {
     image?: string;
     labelSignIn?: string;
     labelSignUp?: string;
+    nicknameLabel?: string;
     emailLabel?: string;
     passwordLabel?: string;
     confirmPasswordLabel?: string;
@@ -25,8 +34,10 @@ export interface SignUpFormProps {
     termsMessage?: string;
     refId: string;
     password: string;
+    nickname: string;
     email: string;
     confirmPassword: string;
+    handleChangeNickname: (value: string) => void;
     handleChangeEmail: (value: string) => void;
     handleChangePassword: (value: string) => void;
     handleChangeConfirmPassword: (value: string) => void;
@@ -37,12 +48,14 @@ export interface SignUpFormProps {
     emailError: string;
     passwordError: string;
     confirmationError: string;
+    handleFocusNickname: () => void;
     handleFocusEmail: () => void;
     handleFocusPassword: () => void;
     handleFocusConfirmPassword: () => void;
     handleFocusRefId: () => void;
     confirmPasswordFocused: boolean;
     refIdFocused: boolean;
+    nicknameFocused: boolean;
     emailFocused: boolean;
     passwordFocused: boolean;
     captchaType: 'recaptcha' | 'geetest' | 'none';
@@ -62,6 +75,7 @@ export interface SignUpFormProps {
 }
 
 const SignUpFormComponent: React.FC<SignUpFormProps> = ({
+    nickname,
     email,
     confirmPassword,
     refId,
@@ -70,6 +84,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     isLoading,
     labelSignIn,
     labelSignUp,
+    nicknameLabel,
     emailLabel,
     confirmPasswordLabel,
     passwordFocused,
@@ -86,6 +101,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     emailError,
     translate,
     confirmationError,
+    nicknameFocused,
     emailFocused,
     passwordErrorFirstSolved,
     passwordErrorSecondSolved,
@@ -97,6 +113,8 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     refIdFocused,
     validateForm,
     onSignUp,
+    handleChangeNickname,
+    handleFocusNickname,
     handleChangeEmail,
     handleFocusEmail,
     handleChangeConfirmPassword,
@@ -112,6 +130,10 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
 
     const disableButton = React.useCallback((): boolean => {
         if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {
+            if (isNicknamesEnabled() && !nickname.match(NICKNAME_REGEX)) {
+                return false;
+            }
+
             return true;
         }
         if (captchaType === 'recaptcha' && !reCaptchaSuccess) {
@@ -125,6 +147,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     }, [
         captchaType,
         confirmPassword,
+        nickname,
         email,
         geetestCaptchaSuccess,
         hasConfirmed,
@@ -219,6 +242,16 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
         [handleClick]
     );
 
+    const renderNicknameError = (nick: string) => {
+        if (nick.length < 4) {
+            return translate(ERROR_SHORT_NICKNAME);
+        } else if (nick.match(/^[a-zA-Z0-9]*$/)) {
+            return translate(ERROR_FORBIDDEN_SYMBOL);
+        } else {
+            return translate(ERROR_LONG_NICKNAME);
+        }
+    };
+
     const renderLogIn = React.useCallback(() => {
         return (
             <div className="pg-sign-up-screen__login">
@@ -255,6 +288,30 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                             <img className="cr-sign-up-form__image" src={image} alt="logo" />
                         </h1>
                     ) : null}
+                    {isNicknamesEnabled() ? (
+                        <div
+                            className={cr('cr-sign-up-form__group', {
+                                'cr-sign-up-form__group--focused': nicknameFocused,
+                            })}>
+                            <CustomInput
+                                type="text"
+                                label={nicknameLabel || 'Nickname'}
+                                placeholder={nicknameLabel || 'Nickname'}
+                                defaultLabel="Nickname"
+                                handleChangeInput={handleChangeNickname}
+                                inputValue={nickname}
+                                handleFocusInput={handleFocusNickname}
+                                classNameLabel="cr-sign-up-form__label"
+                                classNameInput="cr-sign-up-form__input"
+                                autoFocus={!isMobileDevice}
+                            />
+                            {!nickname.match(NICKNAME_REGEX) && !nicknameFocused ? (
+                                <div className="cr-sign-up-form__error">
+                                    {renderNicknameError(nickname)}
+                                </div>
+                            ) : null}
+                        </div>
+                    ) : null}
                     <div
                         className={cr('cr-sign-up-form__group', {
                             'cr-sign-up-form__group--focused': emailFocused,
@@ -269,7 +326,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                             handleFocusInput={handleFocusEmail}
                             classNameLabel="cr-sign-up-form__label"
                             classNameInput="cr-sign-up-form__input"
-                            autoFocus={!isMobileDevice}
+                            autoFocus={!isNicknamesEnabled() && !isMobileDevice}
                         />
                         {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
                     </div>
