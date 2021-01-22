@@ -13,6 +13,7 @@ import {
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
+import { isNicknamesEnabled } from '../../api';
 import { Captcha, Modal, SignUpForm } from '../../components';
 import {
     EMAIL_REGEX,
@@ -77,6 +78,7 @@ export const extractRefID = (props: RouterProps) => new URLSearchParams(props.lo
 class SignUp extends React.Component<Props> {
     public readonly state = {
         showModal: false,
+        nickname: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -85,6 +87,7 @@ class SignUp extends React.Component<Props> {
         emailError: '',
         passwordError: '',
         confirmationError: '',
+        nicknameFocused: false,
         emailFocused: false,
         passwordFocused: false,
         confirmPasswordFocused: false,
@@ -145,6 +148,7 @@ class SignUp extends React.Component<Props> {
             geetestCaptchaSuccess,
         } = this.props;
         const {
+            nickname,
             email,
             password,
             confirmPassword,
@@ -153,6 +157,7 @@ class SignUp extends React.Component<Props> {
             emailError,
             passwordError,
             confirmationError,
+            nicknameFocused,
             emailFocused,
             passwordFocused,
             confirmPasswordFocused,
@@ -181,6 +186,8 @@ class SignUp extends React.Component<Props> {
                         isLoading={loading}
                         onSignIn={this.handleSignIn}
                         onSignUp={this.handleSignUp}
+                        nickname={nickname}
+                        handleChangeNickname={this.handleChangeNickname}
                         email={email}
                         handleChangeEmail={this.handleChangeEmail}
                         password={password}
@@ -195,8 +202,10 @@ class SignUp extends React.Component<Props> {
                         confirmationError={confirmationError}
                         confirmPasswordFocused={confirmPasswordFocused}
                         refIdFocused={refIdFocused}
+                        nicknameFocused={nicknameFocused}
                         emailFocused={emailFocused}
                         passwordFocused={passwordFocused}
+                        handleFocusNickname={this.handleFocusNickname}
                         handleFocusEmail={this.handleFocusEmail}
                         handleFocusPassword={this.handleFocusPassword}
                         handleFocusConfirmPassword={this.handleFocusConfirmPassword}
@@ -247,6 +256,12 @@ class SignUp extends React.Component<Props> {
                 hasConfirmed: !this.state.hasConfirmed,
             });
         }
+    };
+
+    private handleChangeNickname = (value: string) => {
+        this.setState({
+            nickname: value.toLowerCase(),
+        });
     };
 
     private handleChangeEmail = (value: string) => {
@@ -312,6 +327,12 @@ class SignUp extends React.Component<Props> {
         });
     };
 
+    private handleFocusNickname = () => {
+        this.setState({
+            nicknameFocused: !this.state.nicknameFocused,
+        });
+    };
+
     private handleFocusEmail = () => {
         this.setState({
             emailFocused: !this.state.emailFocused,
@@ -344,59 +365,37 @@ class SignUp extends React.Component<Props> {
     private handleSignUp = () => {
         const { configs, i18n, captcha_response } = this.props;
         const {
+            nickname,
             email,
             password,
             refId,
         } = this.state;
+        let payload: any = {
+            email,
+            password,
+            data: JSON.stringify({
+                language: i18n,
+            }),
+        };
+
+        if (isNicknamesEnabled()) {
+            payload = { ...payload, nickname };
+        }
 
         if (refId) {
-            switch (configs.captcha_type) {
-                case 'recaptcha':
-                case 'geetest':
-                    this.props.signUp({
-                        email,
-                        password,
-                        captcha_response,
-                        refid: refId,
-                        data: JSON.stringify({
-                            language: i18n,
-                        }),
-                    } as any);
-                    break;
-                default:
-                    this.props.signUp({
-                        email,
-                        password,
-                        refid: refId,
-                        data: JSON.stringify({
-                            language: i18n,
-                        }),
-                    });
-                    break;
-            }
-        } else {
-            switch (configs.captcha_type) {
-                case 'recaptcha':
-                case 'geetest':
-                    this.props.signUp({
-                        email,
-                        password,
-                        captcha_response,
-                        data: JSON.stringify({
-                            language: i18n,
-                        }),
-                    });
-                    break;
-                default:
-                    this.props.signUp({
-                        email,
-                        password,
-                        data: JSON.stringify({
-                            language: i18n,
-                        }),
-                    });
-                    break;
-            }
+            payload = { ...payload, refId };
+        }
+
+        switch (configs.captcha_type) {
+            case 'recaptcha':
+            case 'geetest':
+                payload = { ...payload, captcha_response };
+
+                this.props.signUp(payload);
+                break;
+            default:
+                this.props.signUp(payload);
+                break;
         }
 
         this.props.resetCaptchaState();

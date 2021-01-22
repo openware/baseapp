@@ -16,6 +16,7 @@ describe('Profile actions', () => {
         it('should check userData action creator', () => {
             const payload = {
                 user: {
+                    nickname: 'johnny1337',
                     email: 'admin@barong.io',
                     uid: 'ID26C901376F',
                     role: 'admin',
@@ -120,6 +121,7 @@ describe('Profile actions', () => {
         it('should check changeUserDataFetch action creator', () => {
             const payload = {
                 user: {
+                    nickname: 'johnny1337',
                     email: 'admin@barong.io',
                     uid: 'ID26C901376F',
                     role: 'admin',
@@ -143,6 +145,7 @@ describe('Profile actions', () => {
         it('should check changeUserData action creator', () => {
             const payload = {
                 user: {
+                    nickname: 'johnny1337',
                     email: 'admin@barong.io',
                     uid: 'ID26C901376F',
                     role: 'admin',

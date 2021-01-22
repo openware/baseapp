@@ -53,6 +53,7 @@ const ifUserIsLoggedIn = () => {
 
 
 export const defaultUser = {
+    nickname: '',
     email: '',
     level: 0,
     otp: false,

@@ -4,6 +4,7 @@ access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
 access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
 
 {
+    "nickname": "Turbo3000",
     "email": "john@barong.io",
     "level": 2,
     "otp": true,
