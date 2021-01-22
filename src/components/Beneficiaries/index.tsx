@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
@@ -471,4 +472,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
 });
 
 // tslint:disable-next-line:no-any
-export const Beneficiaries = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesComponent) as any) as any;
+export const Beneficiaries = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(BeneficiariesComponent) as any; // tslint:disable-line
