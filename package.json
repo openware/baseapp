@@ -12,6 +12,7 @@
     "@formatjs/intl-relativetimeformat": "^7.0.0",
     "@ionic/cli": "^6.11.11",
     "@openware/cryptofont": "2.3.0",
+    "@openware/react-components": "^0.0.5",
     "@sentry/browser": "^5.17.0",
     "@types/compression-webpack-plugin": "^2.0.1",
     "@types/react-select": "^3.1.2",
