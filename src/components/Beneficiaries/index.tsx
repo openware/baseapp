@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
+import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
@@ -22,6 +23,7 @@ import {
     selectMemberLevels,
     selectMobileDeviceState,
     selectUserInfo,
+    sendError,
     User,
 } from '../../modules';
 import { CommonError } from '../../modules/types';
@@ -45,6 +47,7 @@ interface DispatchProps {
     deleteAddress: typeof beneficiariesDelete;
     memberLevelsFetch: typeof memberLevelsFetch;
     beneficiariesCreateData: typeof beneficiariesCreateData;
+    sendError: typeof sendError;
 }
 
 interface OwnProps {
@@ -91,7 +94,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     public componentDidMount() {
         const { currency, beneficiaries, memberLevels } = this.props;
         if (currency && beneficiaries.length) {
-            this.handleSetCurrentAddressOnUpdate(beneficiaries, currency);
+            this.handleSetCurrentAddressOnUpdate(beneficiaries);
         }
 
         if (!memberLevels) {
@@ -109,7 +112,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
 
         if ((nextProps.currency && nextProps.currency !== currency) ||
             (nextProps.beneficiaries.length && nextProps.beneficiaries !== beneficiaries)) {
-            this.handleSetCurrentAddressOnUpdate(nextProps.beneficiaries, nextProps.currency);
+            this.handleSetCurrentAddressOnUpdate(nextProps.beneficiaries);
         }
 
         if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
@@ -136,7 +139,7 @@ class BeneficiariesComponent extends React.Component<Props, State> {
             isOpenConfirmationModal,
             isOpenFailModal,
         } = this.state;
-        const filtredBeneficiaries = this.handleFilterByState(this.handleFilterByCurrency(beneficiaries, currency), ['active', 'pending']);
+        const filtredBeneficiaries = this.handleFilterByState(beneficiaries, ['active', 'pending']);
 
         return (
             <div className="pg-beneficiaries">
@@ -366,10 +369,15 @@ class BeneficiariesComponent extends React.Component<Props, State> {
     };
 
     private handleClickToggleAddAddressModal = () => () => {
-        const { memberLevels, userData } = this.props;
+        const { memberLevels, userData, beneficiaries } = this.props;
 
         if (memberLevels && (userData.level < memberLevels.withdraw.minimum_level)) {
             this.handleToggleFailModal();
+        } else if (beneficiaries && beneficiaries.length >= 10) {
+            this.props.sendError({
+                error: { message: ['error.beneficiaries.max10.addresses'] },
+                processingType: 'alert',
+            });
         } else {
             this.handleToggleAddAddressModal();
         }
@@ -381,14 +389,6 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         };
 
         this.props.deleteAddress(payload);
-    };
-
-    private handleFilterByCurrency = (beneficiaries: Beneficiary[], currency: string) => {
-        if (beneficiaries.length && currency) {
-            return beneficiaries.filter(item => item.currency.toLowerCase() === currency.toLowerCase());
-        }
-
-        return [];
     };
 
     private handleFilterByState = (beneficiaries: Beneficiary[], filter: string | string[]) => {
@@ -409,12 +409,11 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         }
     };
 
-    private handleSetCurrentAddressOnUpdate = (beneficiaries: Beneficiary[], currency: string) => {
-        const filteredByCurrency = this.handleFilterByCurrency(beneficiaries, currency);
-        let filteredByState = this.handleFilterByState(filteredByCurrency, 'active');
+    private handleSetCurrentAddressOnUpdate = (beneficiaries: Beneficiary[]) => {
+        let filteredByState = this.handleFilterByState(beneficiaries, 'active');
 
         if (!filteredByState.length) {
-            filteredByState = this.handleFilterByState(filteredByCurrency, 'pending');
+            filteredByState = this.handleFilterByState(beneficiaries, 'pending');
         }
 
         if (filteredByState.length) {
@@ -469,7 +468,11 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     deleteAddress: payload => dispatch(beneficiariesDelete(payload)),
     memberLevelsFetch: () => dispatch(memberLevelsFetch()),
     beneficiariesCreateData: payload => dispatch(beneficiariesCreateData(payload)),
+    sendError: payload => dispatch(sendError(payload)),
 });
 
 // tslint:disable-next-line:no-any
-export const Beneficiaries = injectIntl(connect(mapStateToProps, mapDispatchToProps)(BeneficiariesComponent) as any) as any;
+export const Beneficiaries = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(BeneficiariesComponent) as any; // tslint:disable-line
