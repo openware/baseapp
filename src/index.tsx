@@ -13,7 +13,7 @@ import { rootSaga } from './modules';
 import { rangerSagas } from './modules/public/ranger';
 import { rangerMiddleware, sagaMiddleware, store } from './store';
 
-import '@openware/react-components/build/index.css'
+import '@openware/react-components/build/index.css';
 
 
 if (!Intl.PluralRules) {

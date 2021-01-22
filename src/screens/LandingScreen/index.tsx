@@ -1,9 +1,9 @@
+import { LandingBlock } from '@openware/react-components';
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { LandingBlock } from '@openware/react-components';
 
 import { IntlProps } from '../../';
 import { LogoIcon } from '../../assets/images/LogoIcon';
