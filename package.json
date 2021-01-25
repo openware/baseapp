@@ -18,7 +18,7 @@
     "@types/ws": "^6.0.4",
     "@web3-react/core": "^6.1.1",
     "@web3-react/injected-connector": "^6.0.7",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "bitcoincashjs": "0.1.10",
     "bootstrap": "^4.3.1",
     "compression-webpack-plugin": "^3.0.1",
