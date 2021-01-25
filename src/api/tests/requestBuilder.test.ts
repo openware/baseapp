@@ -39,6 +39,8 @@ describe('Request Builder', () => {
             message: '',
             config: config,
             response: response,
+            isAxiosError: true,
+            toJSON: () => response,
         };
         const expectedError = {
             code: 500,
@@ -67,6 +69,8 @@ describe('Request Builder', () => {
             message: '',
             config: config,
             response: response,
+            isAxiosError: true,
+            toJSON: () => response,
         };
         const expectedError = {
             code: 500,
@@ -75,13 +79,15 @@ describe('Request Builder', () => {
         expect(formatError(responseError)).toEqual(expectedError);
     });
 
-    it('should user defaultResponse object if responce is undefined', () => {
+    it('should use defaultResponse object if response is undefined', () => {
         const config: AxiosRequestConfig = {};
 
         const responseError: AxiosError = {
             name: '',
             message: '',
             config: config,
+            isAxiosError: true,
+            toJSON: () => config,
         };
         const expectedError = {
             code: 500,
@@ -92,18 +98,21 @@ describe('Request Builder', () => {
 
     it('should return empty array if error message is undefined', () => {
         const config: AxiosRequestConfig = {};
+        const response = {
+            status: 500,
+            statusText: 'qwert',
+            headers: 'qwerty',
+            config,
+            data: undefined,
+        };
 
         const responseError: AxiosError = {
             name: '',
             message: '',
             config: config,
-            response: {
-                status: 500,
-                statusText: 'qwert',
-                headers: 'qwerty',
-                config,
-                data: undefined,
-            },
+            response: response,
+            isAxiosError: true,
+            toJSON: () => response,
         };
         const expectedError = {
             code: 500,
