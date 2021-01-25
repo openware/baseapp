@@ -1,25 +1,19 @@
 import { shallow } from 'enzyme';
-import * as React from 'react';
-import { connect, Provider } from 'react-redux';
-import { createStore } from 'redux';
+import React from 'react';
+import { TestComponentWrapper } from 'lib/test';
 import { IntlProps } from '../../';
-import { rootReducer } from '../../modules';
 import { EmailVerificationScreen } from '../EmailVerification';
-
-const store = createStore(rootReducer);
-const EmailVerification = connect()(EmailVerificationScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
-        <Provider store={store}>
-            <EmailVerification />
-        </Provider>,
+        <TestComponentWrapper>
+            <EmailVerificationScreen />
+        </TestComponentWrapper>
     );
 
 describe('EmailVerificationScreen', () => {
-    const wrapper = setup();
-
     it('should render', () => {
+        const wrapper = setup().render();
         expect(wrapper).toMatchSnapshot();
     });
 });

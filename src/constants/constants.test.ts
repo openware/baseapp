@@ -1,9 +1,4 @@
-import {
-    ORDER_BOOK_DEFAULT_SIDE_LIMIT,
-    PG_TITLE_PREFIX,
-    pgRoutes,
-    STORAGE_DEFAULT_LIMIT,
-} from './';
+import { ORDER_BOOK_DEFAULT_SIDE_LIMIT, PG_TITLE_PREFIX, pgRoutes, STORAGE_DEFAULT_LIMIT } from './';
 
 describe('Constants', () => {
     const expectedRoutesForLoggedInUser = [

@@ -10,7 +10,8 @@ export * from './emailValidation';
 export * from './filterData';
 export * from './formatCCYAddress';
 export * from './formatDate';
-export * from './geetest';
+// MUST BE REMOVED: Vadym P. responsibility
+// export * from './geetest';
 export * from './getCsrfToken';
 export * from './getHistorySagaParam';
 export * from './getLanguageByCode';

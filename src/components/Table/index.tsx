@@ -24,7 +24,7 @@ export interface TableState {
     selectedRowKey?: string;
 }
 
-interface TableProps {
+export interface TableProps {
     /**
      * Data which is used to render Table. The first element
      * of array is used to render table head unless `noHead`
