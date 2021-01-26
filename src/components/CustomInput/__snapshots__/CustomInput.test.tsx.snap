@@ -1,3 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CustomInput component should render 1`] = `ShallowWrapper {}`;
+exports[`CustomInput component should render 1`] = `
+<Fragment>
+  <div
+    className="custom-input"
+  >
+    <label
+      className=""
+    />
+    <InputGroup
+      size="lg"
+    >
+      <FormControl
+        autoFocus={false}
+        onBlur={[MockFunction]}
+        onChange={[Function]}
+        onFocus={[MockFunction]}
+        placeholder=""
+        size="lg"
+        type=""
+        value=""
+      />
+    </InputGroup>
+  </div>
+</Fragment>
+`;

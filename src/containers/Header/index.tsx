@@ -23,6 +23,14 @@ import {
 import { HeaderToolbar } from '../HeaderToolbar';
 import { NavBar } from '../NavBar';
 
+import arrowBottom from './arrows/arrowBottom.svg';
+import arrowBottomLight from './arrows/arrowBottomLight.svg';
+import arrowRight from './arrows/arrowRight.svg';
+import arrowRightLight from './arrows/arrowRightLight.svg';
+
+import backIcon from './back.svg';
+import backLightIcon from './backLight.svg';
+
 interface ReduxProps {
     currentMarket: Market | undefined;
     colorTheme: string;
@@ -44,11 +52,7 @@ interface LocationProps extends RouterProps {
     };
 }
 
-const noHeaderRoutes = [
-    '/confirm',
-    '/404',
-    '/500',
-];
+const noHeaderRoutes = ['/confirm', '/404', '/500'];
 
 type Props = ReduxProps & DispatchProps & IntlProps & LocationProps;
 
@@ -56,7 +60,8 @@ class Head extends React.Component<Props> {
     public render() {
         const { mobileWallet, location, configsLoading } = this.props;
         const tradingCls = location.pathname.includes('/trading') ? 'pg-container-trading' : '';
-        const shouldRenderHeader = !noHeaderRoutes.some(r => location.pathname.includes(r)) && location.pathname !== '/';
+        const shouldRenderHeader =
+            !noHeaderRoutes.some((r) => location.pathname.includes(r)) && location.pathname !== '/';
 
         if (!shouldRenderHeader || configsLoading) {
             return <React.Fragment />;
@@ -67,13 +72,12 @@ class Head extends React.Component<Props> {
                 <div className={`pg-container pg-header__content ${tradingCls}`}>
                     <div
                         className={`pg-sidebar__toggler ${mobileWallet && 'pg-sidebar__toggler-mobile'}`}
-                        onClick={this.openSidebar}
-                    >
-                        <span className="pg-sidebar__toggler-item"/>
-                        <span className="pg-sidebar__toggler-item"/>
-                        <span className="pg-sidebar__toggler-item"/>
+                        onClick={this.openSidebar}>
+                        <span className="pg-sidebar__toggler-item" />
+                        <span className="pg-sidebar__toggler-item" />
+                        <span className="pg-sidebar__toggler-item" />
                     </div>
-                    <div onClick={e => this.redirectToLanding()} className="pg-header__logo">
+                    <div onClick={(e) => this.redirectToLanding()} className="pg-header__logo">
                         <div className="pg-logo">
                             <LogoIcon className="pg-logo__img" />
                         </div>
@@ -85,7 +89,7 @@ class Head extends React.Component<Props> {
                     {this.renderMobileWalletNav()}
                     <div className="pg-header__navbar">
                         {this.renderMarketToolbar()}
-                        <NavBar onLinkChange={this.closeMenu}/>
+                        <NavBar onLinkChange={this.closeMenu} />
                     </div>
                 </div>
             </header>
@@ -94,12 +98,12 @@ class Head extends React.Component<Props> {
 
     public renderMobileWalletNav = () => {
         const { colorTheme, mobileWallet } = this.props;
-        const isLight = colorTheme === 'light' ? 'Light' : '';
-
-        return mobileWallet && (
-            <div onClick={this.backWallets} className="pg-header__toggler">
-                <img alt="" src={require(`./back${isLight}.svg`)} />
-            </div>
+        return (
+            mobileWallet && (
+                <div onClick={this.backWallets} className="pg-header__toggler">
+                    <img alt="" src={colorTheme === 'light' ? backLightIcon : backIcon} />
+                </div>
+            )
         );
     };
 
@@ -112,7 +116,7 @@ class Head extends React.Component<Props> {
             return null;
         }
 
-        return <HeaderToolbar/>;
+        return <HeaderToolbar />;
     };
 
     private renderMarketToggler = () => {
@@ -124,13 +128,11 @@ class Head extends React.Component<Props> {
 
         return (
             <div className="pg-header__market-selector-toggle" onClick={this.props.toggleMarketSelector}>
-                <p className="pg-header__market-selector-toggle-value">
-                    {currentMarket && currentMarket.name}
-                </p>
+                <p className="pg-header__market-selector-toggle-value">{currentMarket && currentMarket.name}</p>
                 {marketSelectorOpened ? (
-                    <img src={require(`./arrows/arrowBottom${isLight ? 'Light' : ''}.svg`)} alt="arrow"/>
+                    <img src={isLight ? arrowBottomLight : arrowBottom} alt="arrow" />
                 ) : (
-                    <img src={require(`./arrows/arrowRight${isLight ? 'Light' : ''}.svg`)} alt="arrow"/>
+                    <img src={isLight ? arrowRightLight : arrowRight} alt="arrow" />
                 )}
             </div>
         );
@@ -157,15 +159,14 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     configsLoading: selectConfigsLoading(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        setMobileWalletUi: payload => dispatch(setMobileWalletUi(payload)),
-        toggleSidebar: payload => dispatch(toggleSidebar(payload)),
-        toggleMarketSelector: () => dispatch(toggleMarketSelector()),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    setMobileWalletUi: (payload) => dispatch(setMobileWalletUi(payload)),
+    toggleSidebar: (payload) => dispatch(toggleSidebar(payload)),
+    toggleMarketSelector: () => dispatch(toggleMarketSelector()),
+});
 
 export const Header = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps)
 )(Head) as React.ComponentClass;

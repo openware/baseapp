@@ -30,6 +30,7 @@ describe('DepositCrypto', () => {
                     handleOnCopy={handleOnCopy}
                     text={'text123'}
                     wallet={wallet}
+                    disabled={false}
                 />,
             </Provider>,
         );

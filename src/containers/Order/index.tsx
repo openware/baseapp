@@ -163,7 +163,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     priceLimit={priceLimit}
                     to={currentMarket.base_unit}
                     handleSendType={this.getOrderType}
-                    orderTypes={this.getOrderTypes}
                     currentMarketAskPrecision={currentMarket.amount_precision}
                     currentMarketBidPrecision={currentMarket.price_precision}
                     width={this.state.width}
@@ -299,11 +298,6 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     };
 
     private translate = (id: string, value?: any) => this.props.intl.formatMessage({ id }, { ...value });
-
-    private getOrderTypes = [
-        this.translate('page.body.trade.header.newOrder.content.orderType.limit'),
-        this.translate('page.body.trade.header.newOrder.content.orderType.market'),
-    ];
 }
 
 const mapStateToProps = (state: RootState) => ({
