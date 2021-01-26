@@ -112,15 +112,16 @@
     animation-duration: var(--market-selector-animation-duration);
     animation-name: pg-trading-header-selector-list-container-open;
     background: var(--market-selector-background-color);
+    bottom: 0;
     box-shadow: 4px 4px 10px var(--shadow-color-level-2);
     display: block;
-    height: 100vh;
     left: calc(var(--big-gap) * -0.23);
+    min-width: calc(var(--big-gap) * 6 + var(--gap) + 12px);
     overflow-x: hidden;
     overflow-y: scroll;
     padding-left: calc(var(--gap));
     position: absolute;
-    top: 0;
+    top: 64px;
     width: fit-content;
     z-index: 10;
   }
@@ -200,14 +201,10 @@
 @keyframes pg-trading-header-selector-list-container-open {
   from {
     height: 0;
-    top: 0;
-    width: 0;
   }
 
   to {
     height: calc(100vh - var(--big-gap) * 1.1);
-    top: calc(var(--big-gap) * -0.082);
-    width: calc(var(--big-gap) * 5.6);
   }
 }
 
