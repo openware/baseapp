@@ -1,5 +1,5 @@
 {
-    "extends": ["tslint:recommended", "tslint-plugin-prettier", "tslint-react-hooks"],
+    "extends": ["tslint-plugin-prettier"],
     "linterOptions": {
         "exclude": ["config/**/*.js", "node_modules/**/*.ts", "coverage/lcov-report/*.js", "src/charting_library/*"]
     },
@@ -62,7 +62,7 @@
         "no-internal-module": true,
         "no-namespace": [true, "allow-declarations"],
         "no-parameter-reassignment": true,
-        "only-arrow-functions": false,
+        "only-arrow-functions": true,
         "prefer-for-of": true,
         "promise-function-async": true,
         "await-promise": true,
@@ -159,7 +159,6 @@
         "no-any": false,
         "no-var-requires": false,
         "ordered-imports": true,
-        "newline-before-return": true,
-        "react-hooks/exhaustive-deps": false
+        "newline-before-return": true
     }
 }

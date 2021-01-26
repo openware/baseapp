@@ -1,15 +1,34 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+    injectIntl,
+} from 'react-intl';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { compose } from 'redux';
+import { IntlProps } from '../../';
 import { Decimal, Table } from '../../components';
 import { localeDate, setTradeColor } from '../../helpers';
 import {
+    Market,
+    PublicTrade,
+    RootState,
     selectCurrentMarket,
     selectCurrentPrice,
     setCurrentPrice,
 } from '../../modules';
 import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modules/public/recentTrades';
-import { TradeTableCell } from './RecentTradesTableCell';
+
+interface ReduxProps {
+    recentTrades: PublicTrade[];
+    currentMarket: Market | undefined;
+    currentPrice: number | undefined;
+}
+
+interface DispatchProps {
+    tradesFetch: typeof recentTradesFetch;
+    setCurrentPrice: typeof setCurrentPrice;
+}
+
+type Props = DispatchProps & ReduxProps & IntlProps;
 
 const handleHighlightValue = (prevValue: string, curValue: string) => {
     let highlighted = '';
@@ -30,31 +49,53 @@ const handleHighlightValue = (prevValue: string, curValue: string) => {
     );
 };
 
-const RecentTradesMarket = () => {
-    const { formatMessage } = useIntl();
-    const dispatch = useDispatch();
 
-    const currentMarket = useSelector(selectCurrentMarket);
-    const currentPrice = useSelector(selectCurrentPrice);
-    const recentTrades = useSelector(selectRecentTradesOfCurrentMarket);
+class RecentTradesMarketContainer extends React.Component<Props> {
+    public componentDidMount() {
+        if (this.props.currentMarket) {
+            this.props.tradesFetch(this.props.currentMarket);
+        }
+    }
 
-    const headers = React.useMemo(() => {
+    public componentWillReceiveProps(next: Props) {
+        if (next.currentMarket && this.props.currentMarket !== next.currentMarket) {
+            this.props.tradesFetch(next.currentMarket);
+        }
+    }
+
+    public shouldComponentUpdate(nextProps: Props) {
+        return JSON.stringify(nextProps.recentTrades) !== JSON.stringify(this.props.recentTrades);
+    }
+
+    public render() {
+        return (
+            <div className="pg-recent-trades__markets">
+                <Table
+                    data={this.getTrades(this.props.recentTrades)}
+                    header={this.getHeaders()}
+                    onSelect={this.handleOnSelect}
+                />
+            </div>
+        );
+    }
+
+    private getHeaders = () => {
         return [
-            formatMessage({ id: 'page.body.trade.header.recentTrades.content.time' }),
-            formatMessage({ id: 'page.body.trade.header.recentTrades.content.amount' }),
-            formatMessage({ id: 'page.body.trade.header.recentTrades.content.price' }),
+            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.time' }),
+            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.amount' }),
+            this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades.content.price' }),
         ];
-    }, [formatMessage]);
+    };
 
-    const getTrades = React.useCallback(() => {
-        const priceFixed = currentMarket ? currentMarket.price_precision : 0;
-        const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
+    private getTrades(trades: PublicTrade[]) {
+        const priceFixed = this.props.currentMarket ? this.props.currentMarket.price_precision : 0;
+        const amountFixed = this.props.currentMarket ? this.props.currentMarket.amount_precision : 0;
 
         const renderRow = (item, i) => {
-            const { created_at, taker_type, price, amount, trades } = item;
-            const higlightedDate = handleHighlightValue(String(localeDate(recentTrades[i - 1] ? recentTrades[i - 1].created_at : '', 'time')), String(localeDate(created_at, 'time')));
+            const { created_at, taker_type, price, amount } = item;
+            const higlightedDate = handleHighlightValue(String(localeDate(trades[i - 1] ? trades[i - 1].created_at : '', 'time')), String(localeDate(created_at, 'time')));
 
-            return trades? [
+            return [
                 <span style={{ color: setTradeColor(taker_type).color }} key={i}>{higlightedDate}</span>,
                 <span style={{ color: setTradeColor(taker_type).color }} key={i}>
                     <Decimal fixed={amountFixed} thousSep=",">{amount}</Decimal>
@@ -62,50 +103,41 @@ const RecentTradesMarket = () => {
                 <span style={{ color: setTradeColor(taker_type).color }} key={i}>
                     <Decimal fixed={priceFixed} thousSep="," prevValue={trades[i - 1] ? trades[i - 1].price : 0}>{price}</Decimal>
                 </span>,
-                <TradeTableCell higlightedDate={higlightedDate} takerType={taker_type} type="date"/>,
-                <TradeTableCell amount={amount} takerType={taker_type} amountFixed={amountFixed} type="amount"/>,
-                <TradeTableCell
-                    price={price}
-                    priceFixed={priceFixed}
-                    takerType={taker_type}
-                    prevValue={recentTrades[i - 1] ? recentTrades[i - 1].price : 0}
-                    amountFixed={amountFixed}
-                    type="price"
-                />,
-            ]: undefined;
+            ];
         };
 
-        return (recentTrades.length > 0)
-            ? recentTrades.map(renderRow)
-            : [[]];
-    }, [currentMarket, recentTrades]);
+        return (trades.length > 0)
+            ? trades.map(renderRow)
+            : [[[''], this.props.intl.formatMessage({ id: 'page.noDataToShow' }), ['']]];
+    }
 
-    const handleOnSelect = React.useCallback((index: string) => {
+    private handleOnSelect = (index: string) => {
+        const { recentTrades, currentPrice } = this.props;
         const priceToSet = recentTrades[Number(index)] ? Number(recentTrades[Number(index)].price) : 0;
 
         if (currentPrice !== priceToSet) {
-            dispatch(setCurrentPrice(priceToSet));
+            this.props.setCurrentPrice(priceToSet);
         }
-    }, [currentPrice, recentTrades, dispatch]);
+    };
+}
 
-    React.useEffect(() => {
-        if (currentMarket) {
-            dispatch(recentTradesFetch(currentMarket));
-        }
-    }, [dispatch, currentMarket]);
+const mapStateToProps = (state: RootState): ReduxProps => ({
+    recentTrades: selectRecentTradesOfCurrentMarket(state),
+    currentMarket: selectCurrentMarket(state),
+    currentPrice: selectCurrentPrice(state),
+});
 
-    return (
-        <div className="pg-recent-trades__markets">
-            <Table
-                data={getTrades()}
-                header={headers}
-                onSelect={handleOnSelect}
-            />
-        </div>
-    );
-};
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    tradesFetch: market => dispatch(recentTradesFetch(market)),
+    setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
+});
+
+const RecentTradesMarket = compose(
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
+)(RecentTradesMarketContainer) as any; // tslint:disable-line
 
 export {
-    RecentTradesMarket,
     handleHighlightValue,
+    RecentTradesMarket,
 };

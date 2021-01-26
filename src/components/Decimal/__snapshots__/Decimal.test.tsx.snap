@@ -1,144 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Decimal should handle empty string child 1`] = `
-<Fragment>
-  <span>
-    0
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .00000000
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle empty string child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should handle extremly large number child 1`] = `
-<Fragment>
-  <span>
-    0
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .1234
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle extremly large number child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should handle large number child 1`] = `
-<Fragment>
-  <span>
-    12345678
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .01234567
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle large number child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should handle number child 1`] = `
-<Fragment>
-  <span>
-    123
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .32030200
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle number child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should handle small exponential string child 1`] = `
-<Fragment>
-  <span>
-    0
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .00000003
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle small exponential string child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should handle small number child 1`] = `
-<Fragment>
-  <span>
-    0
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .00000007
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle small number child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should handle small string child 1`] = `
-<Fragment>
-  <span>
-    0
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .00000007
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle small string child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should handle smallest number child 1`] = `
-<Fragment>
-  <span>
-    0
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .00000000
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle smallest number child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should handle string child 1`] = `
-<Fragment>
-  <span>
-    123
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .32030200
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle string child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should handle zero number value child 1`] = `
-<Fragment>
-  <span>
-    0
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .00000000
-  </span>
-</Fragment>
-`;
+exports[`Decimal should handle zero number value child 1`] = `ShallowWrapper {}`;
 
-exports[`Decimal should render 1`] = `
-<Fragment>
-  <span>
-    123
-  </span>
-  <span
-    className="cr-decimal__opacity"
-  >
-    .32030200
-  </span>
-</Fragment>
-`;
+exports[`Decimal should render 1`] = `ShallowWrapper {}`;

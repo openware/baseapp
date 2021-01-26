@@ -131,12 +131,13 @@ export class WalletTable extends React.Component<Props> {
         const {
             currency,
             currencies,
+            intl,
             type,
             wallets,
         } = this.props;
         const { fixed } = wallets.find(w => w.currency === currency) || { fixed: 8 };
         if (list.length === 0) {
-            return [[]];
+            return [[intl.formatMessage({ id: 'page.noDataToShow' }), '', '']];
         }
 
         return list.sort((a, b) => {

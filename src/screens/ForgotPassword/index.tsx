@@ -172,7 +172,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
         this.props.history.goBack();
     };
 
-    private handleEnterPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
 

@@ -1,4 +1,7 @@
-import { PG_TITLE_PREFIX, pgRoutes } from './';
+import {
+    PG_TITLE_PREFIX,
+    pgRoutes,
+} from './';
 
 describe('Constants', () => {
     const expectedRoutesForLoggedInUser = [

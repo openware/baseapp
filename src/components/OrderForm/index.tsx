@@ -398,7 +398,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         return disabled || !available || invalidAmount || invalidLimitPrice || invalidMarketPrice;
     };
 
-    private handleEnterPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
 

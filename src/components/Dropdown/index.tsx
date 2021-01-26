@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
-import { convertToString } from '../../helpers';
 
 type DropdownElem = number | string | React.ReactNode;
 
@@ -34,52 +33,85 @@ export interface DropdownComponentProps {
     disableContentEditable?: boolean;
 }
 
+interface DropdownComponentState {
+    selected: string;
+    selectedIndex: string;
+}
 
 /**
  *  Cryptobase Dropdown that overrides default dropdown with list of options.
  */
+class DropdownComponent extends React.PureComponent<DropdownComponentProps & {}, DropdownComponentState> {
+    constructor(props: DropdownComponentProps) {
+        super(props);
+        const selectedValue = this.props.placeholder || this.convertToString(this.props.list[0]);
+        this.state = {
+            selected: selectedValue,
+            selectedIndex: '0',
+        };
+    }
 
-export const DropdownComponent = (props: DropdownComponentProps) => {
-    const [selected, setSelected] = React.useState<string | undefined>('');
+    public componentDidUpdate(prevProps: DropdownComponentProps) {
+        const { placeholder } = this.props;
 
-    const { list, className, placeholder, onSelect } = props;
-    const defaultPlaceholder = list[0];
+        if (placeholder && placeholder !== prevProps.placeholder) {
+            this.setState({
+                selected: placeholder,
+                selectedIndex: '0',
+            });
+        }
+    }
 
-    const cx = React.useMemo(() => classnames('cr-dropdown', className, {
-        'cr-dropdown--default': selected === placeholder,
-    }), [selected, placeholder, className]);
+    public render() {
+        const { list } = this.props;
+        const { selected } = this.state;
+        const cx = classnames('cr-dropdown', this.props.className, {
+            'cr-dropdown--default': selected === this.props.placeholder,
+        });
 
-    const handleSelect = React.useCallback((elem: DropdownElem, index: number) => {
-        onSelect && onSelect(index);
-        setSelected(convertToString(elem));
-    }, [onSelect]);
+        return (
+            <div className={cx}>
+                <Dropdown>
+                    <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                        {selected}
+                        <ChevronIcon className="cr-dropdown__arrow" />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        {list.map((elem, index) => this.renderElem(elem, index))}
+                    </Dropdown.Menu>
+                </Dropdown>
+            </div>
+        );
+    }
 
-    const renderElem = React.useCallback((elem: DropdownElem, index: number) => {
+    private renderElem = (elem: DropdownElem, index: number) => {
         return  (
             <Dropdown.Item
                 key={index}
-                onSelect={() => handleSelect(elem, index)}
+                onSelect={ (eventKey: any, e?: React.SyntheticEvent<unknown>) => this.handleSelect(elem, index)}
             >
                 {elem}
             </Dropdown.Item>
         );
-    }, [handleSelect]);
+    };
 
-    React.useEffect(() => {
-        setSelected(placeholder || convertToString(defaultPlaceholder));
-    }, [placeholder, defaultPlaceholder]);
+    private handleSelect = (elem: DropdownElem, index: number) => {
+        this.props.onSelect && this.props.onSelect(index);
+        this.setState({
+            selected: this.convertToString(elem),
+            selectedIndex: index.toString(),
+        });
+    };
 
-    return (
-        <div className={cx}>
-            <Dropdown>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                    {selected}
-                    <ChevronIcon className="cr-dropdown__arrow" />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    {list.map(renderElem)}
-                </Dropdown.Menu>
-            </Dropdown>
-        </div>
-    );
+    private convertToString = (elem: DropdownElem) => {
+        if (elem !== undefined && elem !== null) {
+            return elem.toString();
+        }
+
+        return '';
+    };
+}
+
+export {
+    DropdownComponent,
 };

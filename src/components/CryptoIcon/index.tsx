@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React from 'react';
+import * as React from 'react';
 
 export interface CryptoIconProps {
     code: string;
@@ -8,21 +8,19 @@ export interface CryptoIconProps {
 }
 
 const findIcon = (code: string): string => {
-    try {
-        return require(`cryptocurrency-icons/svg/color/${code.toLowerCase()}.svg`).default as string;
-    } catch (err) {
-        return require('cryptocurrency-icons/svg/color/generic.svg').default as string;
-    }
+  try {
+    return require(`../../../node_modules/cryptocurrency-icons/svg/color/${code.toLowerCase()}.svg`);
+  } catch (err){
+    return require('../../../node_modules/cryptocurrency-icons/svg/color/generic.svg');
+  }
 };
 
-export const CryptoIcon: React.FunctionComponent<CryptoIconProps> = (props) => {
+export const CryptoIcon: React.FunctionComponent<CryptoIconProps> = props => {
     const { code, className = '', children } = props;
-
-    const icon = findIcon(code);
 
     return (
         <span className={cx('cr-crypto-icon', className)}>
-            <img src={icon} alt="crypto-icon" /> {children}
+          <img src={findIcon(code)} alt="crypto-icon"/> {children}
         </span>
     );
 };
