@@ -15,6 +15,7 @@ export function* historySaga(action: HistoryFetch) {
             deposits: '/account/deposits',
             withdraws: '/account/withdraws',
             trades: '/market/trades',
+            transfers: '/account/internal_transfers',
         };
         const params = getHistorySagaParam(action.payload);
         const data = yield call(API.get(config), `${coreEndpoint[type]}?${params}`);

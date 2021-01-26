@@ -308,6 +308,14 @@ export const en = {
     'page.body.history.trade.header.amount': 'Amount',
     'page.body.history.trade.header.balance': 'Balance',
 
+    'page.body.history.transfer': 'Transfer History',
+    'page.body.history.transfer.header.date': 'Date',
+    'page.body.history.transfer.header.amount': 'Amount',
+    'page.body.history.transfer.header.currency': 'Currency',
+    'page.body.history.transfer.header.direction': 'Direction',
+    'page.body.history.transfer.header.toAccount': 'To account',
+    'page.body.history.transfer.header.status': 'Status',
+    'page.body.history.transfer.content.status.completed': 'Completed',
 
     'page.body.profile.header.account': 'Profile',
 
