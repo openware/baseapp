@@ -138,6 +138,14 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                 withdrawSuccess: true,
             };
         case WALLETS_ADDRESS_DATA_WS: {
+            // if (action.payload.currencies.includes(state.selectedWalletCurrency)) {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         selectedWalletAddress: action.payload.address,
+            //     };
+            // }
+
             return {
                 ...state,
                 list: getUpdatedWalletsList(state.list, action.payload),

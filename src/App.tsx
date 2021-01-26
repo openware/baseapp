@@ -3,12 +3,13 @@ import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Router } from 'react-router';
+import { Route, Router, Switch } from 'react-router';
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
 import { useSetMobileDevice } from './hooks';
 import * as mobileTranslations from './mobile/translations';
 import { selectCurrentLanguage, selectMobileDeviceState } from './modules';
+import { SignInScreen } from './screens';
 import { languageMap } from './translations';
 
 const gaKey = gaTrackerKey();
@@ -16,7 +17,7 @@ const browserHistory = createBrowserHistory();
 
 if (gaKey) {
     ReactGA.initialize(gaKey);
-    browserHistory.listen(location => {
+    browserHistory.listen((location) => {
         ReactGA.set({ page: location.pathname });
         ReactGA.pageview(location.pathname);
     });
@@ -28,7 +29,9 @@ const MobileHeader = React.lazy(() => import('./mobile/components/Header').then(
 
 /* Desktop components */
 const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ Alerts }) => ({ default: Alerts })));
-const CustomizationContainer = React.lazy(() => import('./containers/Customization').then(({ Customization }) => ({ default: Customization })));
+const CustomizationContainer = React.lazy(() =>
+    import('./containers/Customization').then(({ Customization }) => ({ default: Customization }))
+);
 const FooterContainer = React.lazy(() => import('./containers/Footer').then(({ Footer }) => ({ default: Footer })));
 const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ Header }) => ({ default: Header })));
 const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
@@ -36,7 +39,7 @@ const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) =>
 
 const getTranslations = (lang: string, isMobileDevice: boolean) => {
     if (isMobileDevice) {
-        return  {
+        return {
             ...languageMap[lang],
             ...mobileTranslations[lang],
         };
@@ -61,12 +64,12 @@ const RenderDeviceContainers = () => {
 
     return (
         <React.Fragment>
-            <HeaderContainer/>
-            <SidebarContainer/>
-            <CustomizationContainer/>
-            <AlertsContainer/>
-            <LayoutContainer/>
-            <FooterContainer/>
+            <HeaderContainer />
+            <SidebarContainer />
+            <CustomizationContainer />
+            <AlertsContainer />
+            <LayoutContainer />
+            <FooterContainer />
         </React.Fragment>
     );
 };

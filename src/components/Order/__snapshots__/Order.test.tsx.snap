@@ -1,3 +1,138 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Order should match snapshot 1`] = `ShallowWrapper {}`;
+exports[`Order should match snapshot 1`] = `
+<div
+  className="cr-order cr-order--extended"
+>
+  <div
+    className="cr-order--extended__buy"
+  >
+    <Component
+      currentTabIndex={0}
+      fixed={true}
+      onTabChange={[Function]}
+      panels={
+        Array [
+          Object {
+            "content": <OrderForm
+              amount=""
+              available={12}
+              currentMarketAskPrecision={4}
+              currentMarketBidPrecision={5}
+              currentMarketFilters={Array []}
+              from="btc"
+              handleAmountChange={[Function]}
+              handleChangeAmountByButton={[Function]}
+              onSubmit={[Function]}
+              orderTypes={
+                Array [
+                  "Limit",
+                  "Market",
+                ]
+              }
+              orderTypesIndex={
+                Array [
+                  "Limit",
+                  "Market",
+                ]
+              }
+              priceMarket={5}
+              to="eth"
+              totalPrice={0}
+              translate={
+                [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      "page.body.trade.header.newOrder.content.tabs.buy",
+                    ],
+                    Array [
+                      "page.body.trade.header.newOrder.content.tabs.sell",
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                }
+              }
+              type="buy"
+            />,
+            "label": "Buy",
+          },
+        ]
+      }
+    />
+  </div>
+  <div
+    className="cr-order--extended__sell"
+  >
+    <Component
+      currentTabIndex={0}
+      fixed={true}
+      onTabChange={[Function]}
+      panels={
+        Array [
+          Object {
+            "content": <OrderForm
+              amount=""
+              available={200}
+              currentMarketAskPrecision={4}
+              currentMarketBidPrecision={5}
+              currentMarketFilters={Array []}
+              from="btc"
+              handleAmountChange={[Function]}
+              handleChangeAmountByButton={[Function]}
+              onSubmit={[Function]}
+              orderTypes={
+                Array [
+                  "Limit",
+                  "Market",
+                ]
+              }
+              orderTypesIndex={
+                Array [
+                  "Limit",
+                  "Market",
+                ]
+              }
+              priceMarket={10}
+              to="eth"
+              totalPrice={0}
+              translate={
+                [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      "page.body.trade.header.newOrder.content.tabs.buy",
+                    ],
+                    Array [
+                      "page.body.trade.header.newOrder.content.tabs.sell",
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                }
+              }
+              type="sell"
+            />,
+            "label": "Sell",
+          },
+        ]
+      }
+    />
+  </div>
+</div>
+`;

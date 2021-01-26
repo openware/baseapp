@@ -27,6 +27,9 @@ import {
     User,
 } from '../../modules';
 
+import enIcon from 'src/assets/images/sidebar/en.svg';
+import ruIcon from 'src/assets/images/sidebar/ru.svg';
+
 interface State {
     isOpenLanguage: boolean;
 }
@@ -78,22 +81,15 @@ class SidebarContainer extends React.Component<Props, State> {
         return (
             <div className={sidebarClassName}>
                 {this.renderProfileLink()}
-                <div className="pg-sidebar-wrapper-nav">
-                    {pgRoutes(isLoggedIn).map(this.renderNavItems(address))}
-                </div>
+                <div className="pg-sidebar-wrapper-nav">{pgRoutes(isLoggedIn).map(this.renderNavItems(address))}</div>
                 <div className="pg-sidebar-wrapper-lng">
                     <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-menu-language-container">
                         <Dropdown>
                             <Dropdown.Toggle variant="primary" id={languageClassName}>
-                                <img
-                                    src={this.tryRequire(lang) && require(`../../assets/images/sidebar/${lang}.svg`)}
-                                    alt={`${lang}-flag-icon`}
-                                />
+                                <img src={this.getLanguageIcon(lang)} alt={lang} />
                                 <span className="dropdown-menu-language-selected">{languageName}</span>
                             </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                {this.getLanguageDropdownItems()}
-                            </Dropdown.Menu>
+                            <Dropdown.Menu>{this.getLanguageDropdownItems()}</Dropdown.Menu>
                         </Dropdown>
                     </div>
                 </div>
@@ -118,10 +114,7 @@ class SidebarContainer extends React.Component<Props, State> {
             <Link to={path} key={index} onClick={handleLinkChange} className={`${isActive && 'route-selected'}`}>
                 <div className="pg-sidebar-wrapper-nav-item">
                     <div className="pg-sidebar-wrapper-nav-item-img-wrapper">
-                        <SidebarIcons
-                            className={iconClassName}
-                            name={img}
-                        />
+                        <SidebarIcons className={iconClassName} name={img} />
                     </div>
                     <p className="pg-sidebar-wrapper-nav-item-text">
                         <FormattedMessage id={name} />
@@ -141,17 +134,19 @@ class SidebarContainer extends React.Component<Props, State> {
             'pg-sidebar-wrapper-nav-item-img--active': isActive,
         });
 
-        return isLoggedIn && (
-            <div className="pg-sidebar-wrapper-profile">
-                <Link to="/profile" onClick={handleLinkChange} className={`${isActive && 'route-selected'}`}>
-                    <div className="pg-sidebar-wrapper-profile-link">
-                        <ProfileIcon className={iconClassName} />
-                        <p className="pg-sidebar-wrapper-profile-link-text">
-                            <FormattedMessage id={'page.header.navbar.profile'} />
-                        </p>
-                    </div>
-                </Link>
-            </div>
+        return (
+            isLoggedIn && (
+                <div className="pg-sidebar-wrapper-profile">
+                    <Link to="/profile" onClick={handleLinkChange} className={`${isActive && 'route-selected'}`}>
+                        <div className="pg-sidebar-wrapper-profile-link">
+                            <ProfileIcon className={iconClassName} />
+                            <p className="pg-sidebar-wrapper-profile-link-text">
+                                <FormattedMessage id={'page.header.navbar.profile'} />
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+            )
         );
     };
 
@@ -174,29 +169,23 @@ class SidebarContainer extends React.Component<Props, State> {
     };
 
     public getLanguageDropdownItems = () => {
-        return languages.map((l: string, index: number) =>
-            <Dropdown.Item key={index} onClick={e => this.handleChangeLanguage(l)}>
+        return languages.map((l: string, index: number) => (
+            <Dropdown.Item key={index} onClick={(e) => this.handleChangeLanguage(l)}>
                 <div className="dropdown-row">
-                    <img
-                        src={this.tryRequire(l) && require(`../../assets/images/sidebar/${l}.svg`)}
-                        alt={`${l}-flag-icon`}
-                    />
+                    <img src={this.getLanguageIcon(l)} alt={l} />
                     <span>{l.toUpperCase()}</span>
                 </div>
-            </Dropdown.Item>,
-        );
+            </Dropdown.Item>
+        ));
     };
 
-    private tryRequire = (name: string) => {
-        try {
-            require(`../../assets/images/sidebar/${name}.svg`);
-
-            return true;
-        } catch (err) {
-            return false;
+    private getLanguageIcon = (name: string): string => {
+        if (name === 'ru') {
+            return ruIcon;
+        } else {
+            return enIcon;
         }
     };
-
 
     private handleChangeLanguage = (language: string) => {
         const { user, isLoggedIn } = this.props;
@@ -230,14 +219,14 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    changeLanguage: payload => dispatch(changeLanguage(payload)),
-    toggleSidebar: payload => dispatch(toggleSidebar(payload)),
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    changeLanguage: (payload) => dispatch(changeLanguage(payload)),
+    toggleSidebar: (payload) => dispatch(toggleSidebar(payload)),
     logoutFetch: () => dispatch(logoutFetch()),
-    changeUserDataFetch: payload => dispatch(changeUserDataFetch(payload)),
+    changeUserDataFetch: (payload) => dispatch(changeUserDataFetch(payload)),
 });
 
 export const Sidebar = compose(
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps)
 )(SidebarContainer) as React.ComponentClass;

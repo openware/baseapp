@@ -30,7 +30,6 @@ export function* signInSaga(action: SignInFetch) {
             localStorage.setItem('csrfToken', user.csrf_token);
             yield put(signInRequire2FA({ require2fa: user.otp }));
         }
-
         yield put(signInData());
     } catch (error) {
         if (error.code === 401 && error.message.indexOf('identity.session.missing_otp') > -1) {

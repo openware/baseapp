@@ -1,0 +1,6 @@
+{
+    "hooks": {
+        "commit-msg": "./scripts/validate_commit.js $HUSKY_GIT_PARAMS && (cd \"./$GIT_PREFIX\"; yarn lint)",
+        "pre-push": "yarn lint && CI=true yarn test --no-watch"
+    }
+}
