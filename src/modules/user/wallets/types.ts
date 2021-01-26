@@ -12,7 +12,6 @@ export interface Wallet {
     deposit_address?: WalletAddress;
     active?: boolean;
 }
-
 export interface WalletAddress {
     address: string;
     currencies: string[];

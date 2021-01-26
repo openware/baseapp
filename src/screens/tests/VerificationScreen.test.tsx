@@ -1,26 +1,20 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { connect, Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { TestComponentWrapper } from 'lib/test';
 import { VerificationScreen } from '..';
 import { IntlProps } from '../../';
-import { rootReducer } from '../../modules';
 import { extractToken } from '../VerificationScreen';
-
-const store = createStore(rootReducer);
-const Verification = connect()(VerificationScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
-        <Provider store={store}>
-            <Verification />
-        </Provider>,
+        <TestComponentWrapper>
+            <VerificationScreen />
+        </TestComponentWrapper>
     );
-
 
 describe('VerificationScreen test', () => {
     it('should render', () => {
-        const wrapper = setup();
+        const wrapper = setup().render();
         expect(wrapper).toMatchSnapshot();
     });
 
