@@ -30,6 +30,26 @@
 
     &__group {
       margin-bottom: calc(var(--gap) * 3.1);
+
+      &--focused {
+        .cr-sign-up-form__label {
+          color: var(--input-legend-color-active);
+        }
+
+        input {
+          border-color: var(--input-border-color-active) !important;
+        }
+      }
+
+      &--errored {
+        .cr-sign-up-form__label {
+          color: var(--input-border-color-error);
+        }
+
+        input {
+          border-color: var(--input-border-color-error) !important;
+        }
+      }
     }
 
     &__option {
@@ -38,16 +58,6 @@
       .__selected {
         border-bottom: 2px solid var(--primary-cta-color);
         color: var(--primary-text-color);
-      }
-    }
-
-    &__group--focused {
-      .cr-sign-up-form__label {
-        color: var(--input-legend-color-active);
-      }
-
-      input {
-        border-color: var(--input-border-color-active) !important;
       }
     }
 
