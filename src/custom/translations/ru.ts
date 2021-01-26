@@ -306,6 +306,15 @@ export const ru: LangType = {
     'page.body.history.withdraw.content.status.confirming': 'Подтверждается',
     'page.body.history.withdraw.content.status.errored': 'Ошибка',
 
+    'page.body.history.transfer': 'История трансферов',
+    'page.body.history.transfer.header.date': 'Дата',
+    'page.body.history.transfer.header.amount': 'Количество',
+    'page.body.history.transfer.header.currency': 'Валюта',
+    'page.body.history.transfer.header.direction': 'Направление',
+    'page.body.history.transfer.header.toAccount': 'На аккаунт',
+    'page.body.history.transfer.header.status': 'Статус',
+    'page.body.history.transfer.content.status.completed': 'Completed',
+
     'page.body.history.trade': 'История ордеров',
     'page.body.history.trade.header.id': 'ID',
     'page.body.history.trade.header.date': 'Дата',
