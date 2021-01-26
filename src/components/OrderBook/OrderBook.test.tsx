@@ -1,9 +1,8 @@
-import { shallow, ShallowWrapper } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
+import { mount, shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
-import { spy } from 'sinon';
+import { SinonSpy, spy } from 'sinon';
 import { CellData } from '../../components/Table';
-import { mapValues, OrderBook, OrderBookProps } from './';
+import {  mapValues, OrderBook, OrderBookProps } from './';
 
 const data: CellData[][] = [
     ['12349', '14', '12'],
@@ -21,11 +20,7 @@ const defaultProps: OrderBookProps = {
 };
 
 const setup = (props: Partial<OrderBook> = {}) =>
-    shallow(
-        <TestComponentWrapper>
-            <OrderBook {...{ ...defaultProps, ...props }} />
-        </TestComponentWrapper>
-    );
+    shallow(<OrderBook {...{ ...defaultProps, ...props }} />);
 
 describe('History', () => {
     let wrapper: ShallowWrapper<History>;
@@ -35,7 +30,7 @@ describe('History', () => {
     });
 
     it('should render', () => {
-        expect(wrapper.render()).toMatchSnapshot();
+        expect(wrapper).toMatchSnapshot();
     });
 
     it('should return correct data', () => {
@@ -53,5 +48,14 @@ describe('History', () => {
 
         const result = mapValues(maxVolume, orderEntry);
         expect(result).toEqual(expectedData);
+    });
+
+    it('should handle onSelect function', () => {
+        // tslint:disable: no-shadowed-variable
+        const wrapper = mount(<OrderBook {...{ ...defaultProps}} />);
+        wrapper.find('tbody').find('tr').first().simulate('click');
+        expect(wrapper.find('tbody').find('tr').first().prop('className')).toEqual('cr-table__row--selected');
+        expect((defaultProps.onSelect as SinonSpy).calledOnceWith()).toBeTruthy();
+        wrapper.unmount();
     });
 });

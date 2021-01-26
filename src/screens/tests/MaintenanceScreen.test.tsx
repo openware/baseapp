@@ -1,19 +1,24 @@
 import { shallow } from 'enzyme';
-import React from 'react';
-import { TestComponentWrapper } from 'lib/test';
+import * as React from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import { IntlProps } from '../../';
+import { rootReducer } from '../../modules';
 import { MaintenanceScreen } from '../MaintenanceScreen';
+
+const store = createStore(rootReducer);
 
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
-        <TestComponentWrapper>
+        <Provider store={store}>
             <MaintenanceScreen />
-        </TestComponentWrapper>
+        </Provider>,
     );
 
 describe('MaintenanceScreen', () => {
+    const wrapper = setup();
+
     it('should render', () => {
-        const wrapper = setup().render();
         expect(wrapper).toMatchSnapshot();
     });
 });

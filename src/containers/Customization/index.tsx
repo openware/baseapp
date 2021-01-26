@@ -141,14 +141,14 @@ class CustomizationContainer extends React.Component<Props, State> {
             AVAILABLE_COLORS_TITLES.reduce((result, item) => {
                const itemColor = bodyStyles.getPropertyValue(item.key);
 
-               if (itemColor) {
+                if (itemColor) {
                     currentColors.push({
                         key: item.key,
                         value: itemColor,
                     });
                 }
 
-               return result;
+                return result;
             }, {});
         }
 

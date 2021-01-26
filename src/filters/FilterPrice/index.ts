@@ -15,7 +15,7 @@ export interface FilterPrice {
     validatePriceStep(price: number): PriceValidation;
 }
 
-export const buildFilterPrice = (filter: MarketFilter): FilterPrice => {
+export const buildFilterPrice = (filter: MarketFilter) : FilterPrice => {
     switch (filter.type) {
         case 'significant_digits':
             return new FilterPriceSignificantDigit(filter as MarketFilterSignificantDigit);

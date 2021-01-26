@@ -1,8 +1,8 @@
 //tslint:disable-next-line
-import QRCodeGenerator from 'qrcode.react';
-import React from 'react';
+import * as QRCodeGenerator from 'qrcode.react';
+import * as React from 'react';
 
-export interface QRCodeProps {
+interface QRCodeProps {
     /**
      * Data which is used to generate QR code(e.g. wallet address).
      * @default Required
@@ -21,7 +21,11 @@ export interface QRCodeProps {
 const QRCodeComponent: React.FC<QRCodeProps> = ({ data = '', dimensions }) => {
     return (
         <div className="qr-code">
-            <QRCodeGenerator value={data} size={dimensions} renderAs="svg" />
+            <QRCodeGenerator
+                value={data}
+                size={dimensions}
+                renderAs="svg"
+            />
         </div>
     );
 };

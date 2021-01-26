@@ -123,15 +123,6 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         if (nextProps.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) {
             this.handleToggleConfirmationModal();
         }
-
-        if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
-            this.handleToggleAddAddressModal();
-            this.handleToggleConfirmationModal();
-        }
-
-        if (nextProps.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) {
-            this.handleToggleConfirmationModal();
-        }
     }
 
     public render() {

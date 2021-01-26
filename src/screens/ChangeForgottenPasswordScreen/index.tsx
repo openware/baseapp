@@ -5,7 +5,8 @@ import {
   MapDispatchToPropsFunction,
   MapStateToProps,
 } from 'react-redux';
-import { RouterProps, withRouter } from 'react-router';
+import { RouterProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { ChangePassword } from '../../components';

@@ -2,7 +2,7 @@ import cr from 'classnames';
 import React, { FormEvent } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { CustomInput } from '../CustomInput';
+import { CustomInput } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { EMAIL_REGEX } from '../../helpers';
 import { GeetestCaptchaResponse } from '../../modules';
@@ -32,7 +32,7 @@ export interface EmailFormProps {
     captcha_response?: string | GeetestCaptchaResponse;
 }
 
-export const EmailForm: React.FC<EmailFormProps> = (props) => {
+const EmailForm = React.memo((props: EmailFormProps) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
 
     const {
@@ -146,4 +146,6 @@ export const EmailForm: React.FC<EmailFormProps> = (props) => {
             </div>
         </form>
     );
-}
+});
+
+export { EmailForm };

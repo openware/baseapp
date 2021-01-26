@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dropdown #render should render dropdown 1`] = `ShallowWrapper {}`;

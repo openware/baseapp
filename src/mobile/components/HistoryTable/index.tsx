@@ -61,7 +61,7 @@ const HistoryTable = (props: any) => {
         } = props;
         const { fixed } = wallets.find(w => w.currency === currency) || { fixed: DEFAULT_CCY_PRECISION };
         if (list.length === 0) {
-            return [[]];
+            return [[intl.formatMessage({ id: 'page.noDataToShow' }), '', '']];
         }
 
         return list.sort((a, b) => {

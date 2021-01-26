@@ -1,19 +1,25 @@
 import { shallow } from 'enzyme';
-import React from 'react';
-import { TestComponentWrapper } from 'lib/test';
+import * as React from 'react';
+import { connect, Provider } from 'react-redux';
+import { createStore } from 'redux';
 import { IntlProps } from '../../';
+import { rootReducer } from '../../modules';
 import { SignInScreen } from '../SignInScreen';
+
+const store = createStore(rootReducer);
+const Identity = connect()(SignInScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
-        <TestComponentWrapper>
-            <SignInScreen />
-        </TestComponentWrapper>
+        <Provider store={store}>
+            <Identity />
+        </Provider>,
     );
 
 describe('SignInScreen', () => {
+    const wrapper = setup();
+
     it('should render', () => {
-        const wrapper = setup().render();
         expect(wrapper).toMatchSnapshot();
     });
 });

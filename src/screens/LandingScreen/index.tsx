@@ -11,21 +11,21 @@ import { MarketsTable } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import { RootState, selectCurrentColorTheme, selectUserLoggedIn } from '../../modules';
 
-import FeaturesExchangeIcon from 'src/assets/images/landing/features/Exchange.svg';
-import FeaturesTypesIcon from 'src/assets/images/landing/features/Types.svg';
-import FeaturesCustomizeIcon from 'src/assets/images/landing/features/Customize.svg';
-import FeaturesSecurityIcon from 'src/assets/images/landing/features/Security.svg';
-import FeaturesCommunityIcon from 'src/assets/images/landing/features/Community.svg';
-import FeaturesAPIIcon from 'src/assets/images/landing/features/API.svg';
+const FeaturesExchangeIcon = require('../../assets/images/landing/features/Exchange.svg');
+const FeaturesTypesIcon = require('../../assets/images/landing/features/Types.svg');
+const FeaturesCustomizeIcon = require('../../assets/images/landing/features/Customize.svg');
+const FeaturesSecurityIcon = require('../../assets/images/landing/features/Security.svg');
+const FeaturesCommunityIcon = require('../../assets/images/landing/features/Community.svg');
+const FeaturesAPIIcon = require('../../assets/images/landing/features/API.svg');
 
-import TelegramIcon from 'src/assets/images/landing/social/Telegram.svg';
-import LinkedInIcon from 'src/assets/images/landing/social/LinkedIn.svg';
-import TwitterIcon from 'src/assets/images/landing/social/Twitter.svg';
-import YouTubeIcon from 'src/assets/images/landing/social/YouTube.svg';
-import RedditIcon from 'src/assets/images/landing/social/Reddit.svg';
-import FacebookIcon from 'src/assets/images/landing/social/Facebook.svg';
-import MediumIcon from 'src/assets/images/landing/social/Medium.svg';
-import CoinMarketIcon from 'src/assets/images/landing/social/CoinMarket.svg';
+const TelegramIcon = require('../../assets/images/landing/social/Telegram.svg');
+const LinkedInIcon = require('../../assets/images/landing/social/LinkedIn.svg');
+const TwitterIcon = require('../../assets/images/landing/social/Twitter.svg');
+const YouTubeIcon = require('../../assets/images/landing/social/YouTube.svg');
+const RedditIcon = require('../../assets/images/landing/social/Reddit.svg');
+const FacebookIcon = require('../../assets/images/landing/social/Facebook.svg');
+const MediumIcon = require('../../assets/images/landing/social/Medium.svg');
+const CoinMarketIcon = require('../../assets/images/landing/social/CoinMarket.svg');
 
 interface ReduxProps {
     isLoggedIn: boolean;

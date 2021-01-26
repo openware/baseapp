@@ -1,13 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GridItem should render 1`] = `
-<div
-  className="cr-grid-item"
->
-  <div
-    className="cr-grid-item__body"
-  >
-    Children
-  </div>
-</div>
-`;
+exports[`GridItem should render 1`] = `ShallowWrapper {}`;

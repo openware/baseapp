@@ -1,44 +1,41 @@
 import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
 import * as React from 'react';
 import { CryptoIcon, CryptoIconProps } from '.';
 
 const defaultProps: CryptoIconProps = {
-    code: 'btc',
+    code: 'BTC',
 };
 
 const setup = (props: Partial<CryptoIconProps> = {}) =>
-    shallow(
-        <TestComponentWrapper>
-            <CryptoIcon {...{ ...defaultProps, ...props }} />
-        </TestComponentWrapper>
-    );
+    shallow(<CryptoIcon {...{ ...defaultProps, ...props }} />);
 
 describe('CryptoIcon', () => {
+
     it('should render', () => {
-        const wrapper = setup().render();
+        const wrapper = setup();
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should have correct className', () => {
-        const wrapper = setup().render();
+        const wrapper = setup();
         expect(wrapper.hasClass('cr-crypto-icon')).toBeTruthy();
     });
 
     it('should render children', () => {
         const amount = 123;
-        const wrapper = setup({ children: [amount] }).render();
+        const wrapper = setup({ children: [amount] });
         expect(wrapper.text()).toEqual(` ${amount}`);
     });
 
-    it.skip('should have correct path to svg images', () => {
-        const wrapper = setup().render();
-        expect(wrapper.find('img').prop('src')).toEqual(require('cryptocurrency-icons/svg/color/btc.svg'));
+    it('should have correct path to svg images', () => {
+        const icon = setup();
+        expect(icon.find('img').prop('src')).toEqual(require('../../../node_modules/cryptocurrency-icons/svg/color/btc.svg'));
     });
 
     it('should pass along supplied className', () => {
         const className = 'some-class';
-        const wrapper = setup({ className }).render();
+        const wrapper = setup({ className });
         expect(wrapper.hasClass(className)).toBeTruthy();
     });
+
 });

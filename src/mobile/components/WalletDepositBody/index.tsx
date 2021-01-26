@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { formatCCYAddress } from 'src/helpers';
 import { Blur } from '../../../components/Blur';
 import { CurrencyInfo } from '../../../components/CurrencyInfo';
 import { DepositCrypto } from '../../../components/DepositCrypto';
@@ -23,10 +22,6 @@ const WalletDepositBodyComponent = props => {
         const text = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
             { confirmations: currencyItem.min_confirmations });
         const error = intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.pending'});
-
-        const selectedWalletAddress = '';
-
-        const walletAddress = formatCCYAddress(wallet.currency, selectedWalletAddress) || '';
 
         const title = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message1' });
         const description = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message2' });
@@ -55,7 +50,6 @@ const WalletDepositBodyComponent = props => {
                         handleOnCopy={handleOnCopy}
                         text={text}
                         wallet={wallet}
-                        disabled={walletAddress === ''}
                     />
                 </React.Fragment>
             );

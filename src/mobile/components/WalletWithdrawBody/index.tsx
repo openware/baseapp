@@ -116,7 +116,7 @@ const WalletWithdrawBodyComponent = props => {
             </div>
         );
     };
-    
+
     useBeneficiariesFetch();
     useCurrenciesFetch();
 

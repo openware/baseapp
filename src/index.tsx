@@ -8,7 +8,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
 import { sentryEnabled } from './api/config';
 import { App } from './App';
-import './index.pcss';
+import './index.css';
 import { rootSaga } from './modules';
 import { rangerSagas } from './modules/public/ranger';
 import { rangerMiddleware, sagaMiddleware, store } from './store';

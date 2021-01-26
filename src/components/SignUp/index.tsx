@@ -229,7 +229,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     );
 
     const handleEnterPress = React.useCallback(
-        (event: React.KeyboardEvent<HTMLDivElement>) => {
+        (event: React.KeyboardEvent<HTMLInputElement>) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
 

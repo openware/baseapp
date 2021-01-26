@@ -1,36 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Basic Modal should render 1`] = `
-<div
-  className="cr-modal"
->
-  <div
-    className="cr-modal__container"
-  >
-    <div
-      className="cr-modal__container-header"
-    >
-      <div>
-        Title
-      </div>
-    </div>
-    <div
-      className="cr-modal__container-content"
-    >
-      <div>
-        Some content
-      </div>
-    </div>
-    <div
-      className="cr-modal__container-footer"
-    >
-      <Button
-        active={false}
-        disabled={false}
-        onClick={[MockFunction]}
-        variant="primary"
-      />
-    </div>
-  </div>
-</div>
-`;
+exports[`Basic Modal should render 1`] = `ShallowWrapper {}`;
