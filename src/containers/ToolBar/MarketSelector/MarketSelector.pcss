@@ -16,11 +16,10 @@
   &-search-wrapper {
     animation-duration: var(--market-selector-animation-duration);
     animation-name: pg-trading-header-selector-search;
-    background: var(--market-selector-background-color);
     bottom: 0;
     left: 0;
     position: fixed;
-    width: calc(var(--big-gap) * 6);
+    width: 436px;
     z-index: 20;
   }
 
@@ -116,13 +115,12 @@
     box-shadow: 4px 4px 10px var(--shadow-color-level-2);
     display: block;
     left: calc(var(--big-gap) * -0.23);
-    min-width: calc(var(--big-gap) * 6 + var(--gap) + 12px);
     overflow-x: hidden;
     overflow-y: scroll;
     padding-left: calc(var(--gap));
     position: absolute;
     top: 64px;
-    width: fit-content;
+    width: 450px;
     z-index: 10;
   }
 
@@ -230,6 +228,6 @@
 
   to {
     height: calc(var(--big-gap) * 0.7);
-    width: calc(var(--big-gap) * 5);
+    width: 437px;
   }
 }
