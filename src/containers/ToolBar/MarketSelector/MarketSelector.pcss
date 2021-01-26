@@ -16,11 +16,10 @@
   &-search-wrapper {
     animation-duration: var(--market-selector-animation-duration);
     animation-name: pg-trading-header-selector-search;
-    background: var(--market-selector-background-color);
     bottom: 0;
     left: 0;
     position: fixed;
-    width: calc(var(--big-gap) * 6);
+    width: 436px;
     z-index: 20;
   }
 
@@ -112,16 +111,16 @@
     animation-duration: var(--market-selector-animation-duration);
     animation-name: pg-trading-header-selector-list-container-open;
     background: var(--market-selector-background-color);
+    bottom: 0;
     box-shadow: 4px 4px 10px var(--shadow-color-level-2);
     display: block;
-    height: 100vh;
     left: calc(var(--big-gap) * -0.23);
     overflow-x: hidden;
     overflow-y: scroll;
     padding-left: calc(var(--gap));
     position: absolute;
-    top: 0;
-    width: fit-content;
+    top: 64px;
+    width: 450px;
     z-index: 10;
   }
 
@@ -200,14 +199,10 @@
 @keyframes pg-trading-header-selector-list-container-open {
   from {
     height: 0;
-    top: 0;
-    width: 0;
   }
 
   to {
     height: calc(100vh - var(--big-gap) * 1.1);
-    top: calc(var(--big-gap) * -0.082);
-    width: calc(var(--big-gap) * 5.6);
   }
 }
 
@@ -233,6 +228,6 @@
 
   to {
     height: calc(var(--big-gap) * 0.7);
-    width: calc(var(--big-gap) * 5);
+    width: 437px;
   }
 }
