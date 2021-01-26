@@ -260,7 +260,7 @@ class SignUp extends React.Component<Props> {
 
     private handleChangeNickname = (value: string) => {
         this.setState({
-            nickname: value.toLowerCase(),
+            nickname: value.replace(/[^A-Za-z0-9]+/g, '').toLowerCase(),
         });
     };
 
