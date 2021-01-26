@@ -118,10 +118,9 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         <div className="pg-profile-page__row">
                             <h2>UID: {user.uid}</h2>
                         </div>
-                        {isNicknamesEnabled() ? (
+                        {isNicknamesEnabled() && user.nickname ? (
                             <div className="pg-profile-page__row">
-                                <h2>{this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password'})}
-                                    {user.nickname}
+                                <h2>{this.props.intl.formatMessage({ id: 'page.body.profile.header.account.nickname'})}: {user.nickname}
                                 </h2>
                             </div>
                         ) : null}

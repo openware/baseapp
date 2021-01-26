@@ -8,7 +8,6 @@ import { CustomInput, PasswordStrengthMeter } from '../';
 import { isNicknamesEnabled } from '../../api';
 import {
     EMAIL_REGEX,
-    ERROR_FORBIDDEN_SYMBOL,
     ERROR_LONG_NICKNAME,
     ERROR_SHORT_NICKNAME,
     NICKNAME_REGEX,
@@ -128,11 +127,9 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     const history = useHistory();
     const { formatMessage } = useIntl();
 
-    const disableButton = React.useCallback((): boolean => {
-        if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword) {
-            if (isNicknamesEnabled() && !nickname.match(NICKNAME_REGEX)) {
-                return false;
-            }
+    const disableButton = React.useMemo((): boolean => {
+        if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword ||
+            (isNicknamesEnabled() && !nickname.match(NICKNAME_REGEX))) {
 
             return true;
         }
@@ -243,13 +240,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     );
 
     const renderNicknameError = (nick: string) => {
-        if (nick.length < 4) {
-            return translate(ERROR_SHORT_NICKNAME);
-        } else if (nick.match(/^[a-zA-Z0-9]*$/)) {
-            return translate(ERROR_FORBIDDEN_SYMBOL);
-        } else {
-            return translate(ERROR_LONG_NICKNAME);
-        }
+        return nick.length < 4 ? translate(ERROR_SHORT_NICKNAME) : translate(ERROR_LONG_NICKNAME);
     };
 
     const renderLogIn = React.useCallback(() => {
@@ -292,6 +283,8 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                         <div
                             className={cr('cr-sign-up-form__group', {
                                 'cr-sign-up-form__group--focused': nicknameFocused,
+                                'cr-sign-up-form__group--errored': nickname.length &&
+                                !nicknameFocused && !nickname.match(NICKNAME_REGEX),
                             })}>
                             <CustomInput
                                 type="text"
@@ -305,7 +298,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                                 classNameInput="cr-sign-up-form__input"
                                 autoFocus={!isMobileDevice}
                             />
-                            {!nickname.match(NICKNAME_REGEX) && !nicknameFocused ? (
+                            {!nickname.match(NICKNAME_REGEX) && !nicknameFocused && nickname.length ? (
                                 <div className="cr-sign-up-form__error">
                                     {renderNicknameError(nickname)}
                                 </div>
@@ -380,7 +373,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                         <Button
                             block={true}
                             type="button"
-                            disabled={disableButton()}
+                            disabled={disableButton}
                             onClick={(e) => handleClick(e as any)}
                             size="lg"
                             variant="primary">
