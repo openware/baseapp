@@ -1,3 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OpenOrders should render 1`] = `ShallowWrapper {}`;
+exports[`OpenOrders should render 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      },
+      "subscription": Subscription {
+        "handleChangeWrapper": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "dispatch": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+          Symbol(observable): [Function],
+        },
+        "unsubscribe": null,
+      },
+    }
+  }
+>
+  // @ts-ignore
+  <Connect(injectIntl(Connect(OpenOrdersContainer)))
+    cancelFetching={false}
+    currentMarket={
+      Object {
+        "amount_precision": 4,
+        "base_unit": "eth",
+        "id": "ethusd",
+        "max_price": "0.0",
+        "min_amount": "0.0",
+        "min_price": "0.0",
+        "name": "ETH/USD",
+        "price_precision": 4,
+        "quote_unit": "usd",
+      }
+    }
+    fetching={false}
+    list={
+      Array [
+        Object {
+          "created_at": "2019-01-31T21:14:04+01:00",
+          "executed_volume": "10",
+          "id": 131,
+          "market": "ethusd",
+          "origin_volume": "10",
+          "price": "104.4313",
+          "remaining_volume": "0",
+          "side": "sell",
+          "state": "wait",
+        },
+      ]
+    }
+    userLoggedIn={true}
+  />
+</ContextProvider>
+`;

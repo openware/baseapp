@@ -1,25 +1,19 @@
 import { shallow } from 'enzyme';
-import * as React from 'react';
-import { connect, Provider } from 'react-redux';
-import { createStore } from 'redux';
+import React from 'react';
+import { TestComponentWrapper } from 'lib/test';
 import { OrdersTabScreen } from '../';
 import { IntlProps } from '../../';
-import { rootReducer } from '../../modules';
-
-const store = createStore(rootReducer);
-const OrdersTab = connect()(OrdersTabScreen);
 
 const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
-        <Provider store={store}>
-            <OrdersTab />
-        </Provider>,
+        <TestComponentWrapper>
+            <OrdersTabScreen />
+        </TestComponentWrapper>
     );
 
 describe('OrdersTabScreen test', () => {
     it('should render', () => {
-        const wrapper = setup();
+        const wrapper = setup().render();
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper).toBeDefined();
     });
 });
