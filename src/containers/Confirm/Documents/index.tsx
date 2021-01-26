@@ -21,9 +21,9 @@ import {
     sendDocuments,
 } from '../../../modules';
 
-const DocumentFrontExample = require('../../../assets/images/kyc/DocumentFrontExample.svg');
-const DocumentBackExample = require('../../../assets/images/kyc/DocumentBackExample.svg');
-const DocumentSelfieExample = require('../../../assets/images/kyc/DocumentSelfieExample.svg');
+import DocumentFrontExample from 'src/assets/images/kyc/DocumentFrontExample.svg';
+import DocumentBackExample from 'src/assets/images/kyc/DocumentBackExample.svg';
+import DocumentSelfieExample from 'src/assets/images/kyc/DocumentSelfieExample.svg';
 
 interface ReduxProps {
     lang: string;
@@ -60,7 +60,7 @@ type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 // tslint:disable:member-ordering
 class DocumentsComponent extends React.Component<Props, DocumentsState> {
     public translate = (e: string) => {
-        return this.props.intl.formatMessage({id: e});
+        return this.props.intl.formatMessage({ id: e });
     };
 
     public data = [
@@ -108,20 +108,23 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
         const issuedDateFocusedClass = cr('pg-confirm__content-documents__row__content', {
             'pg-confirm__content-documents__row__content--focused': issuedDateFocused,
-            'pg-confirm__content-documents__row__content--wrong': issuedDate && !this.handleValidateInput('issuedDate', issuedDate),
+            'pg-confirm__content-documents__row__content--wrong':
+                issuedDate && !this.handleValidateInput('issuedDate', issuedDate),
         });
 
         const expireDateFocusedClass = cr('pg-confirm__content-documents__row__content', {
             'pg-confirm__content-documents__row__content--focused': expireDateFocused,
-            'pg-confirm__content-documents__row__content--wrong': expireDate && !this.handleValidateInput('expireDate', expireDate),
+            'pg-confirm__content-documents__row__content--wrong':
+                expireDate && !this.handleValidateInput('expireDate', expireDate),
         });
 
         const idNumberFocusedClass = cr('pg-confirm__content-documents__row__content', {
             'pg-confirm__content-documents__row__content--focused': idNumberFocused,
-            'pg-confirm__content-documents__row__content--wrong': idNumber && !this.handleValidateInput('idNumber', idNumber),
+            'pg-confirm__content-documents__row__content--wrong':
+                idNumber && !this.handleValidateInput('idNumber', idNumber),
         });
 
-        const onSelect = value => this.handleChangeDocumentsType(this.data[value]);
+        const onSelect = (value) => this.handleChangeDocumentsType(this.data[value]);
 
         return (
             <React.Fragment>
@@ -187,7 +190,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             </div>
                         </fieldset>
                     </div>
-                    {this.state.documentsType  ? (
+                    {this.state.documentsType ? (
                         <UploadFile
                             isMobileDevice={isMobileDevice}
                             id="fileFront"
@@ -196,7 +199,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             buttonText={this.translate('page.body.kyc.documents.uploadFile.front.button')}
                             sizesText={this.translate('page.body.kyc.documents.uploadFile.front.sizes')}
                             formatsText={this.translate('page.body.kyc.documents.uploadFile.front.formats')}
-                            handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'front')}
+                            handleUploadScan={(uploadEvent) => this.handleUploadScan(uploadEvent, 'front')}
                             exampleImagePath={DocumentFrontExample}
                             uploadedFile={fileFront[0] && (fileFront[0] as File).name}
                         />
@@ -210,12 +213,12 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             buttonText={this.translate('page.body.kyc.documents.uploadFile.back.button')}
                             sizesText={this.translate('page.body.kyc.documents.uploadFile.back.sizes')}
                             formatsText={this.translate('page.body.kyc.documents.uploadFile.back.formats')}
-                            handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'back')}
+                            handleUploadScan={(uploadEvent) => this.handleUploadScan(uploadEvent, 'back')}
                             exampleImagePath={DocumentBackExample}
                             uploadedFile={fileBack[0] && (fileBack[0] as File).name}
                         />
                     ) : null}
-                    {this.state.documentsType  ? (
+                    {this.state.documentsType ? (
                         <UploadFile
                             isMobileDevice={isMobileDevice}
                             id="fileSelfie"
@@ -224,7 +227,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             buttonText={this.translate('page.body.kyc.documents.uploadFile.selfie.button')}
                             sizesText={this.translate('page.body.kyc.documents.uploadFile.selfie.sizes')}
                             formatsText={this.translate('page.body.kyc.documents.uploadFile.selfie.formats')}
-                            handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'selfie')}
+                            handleUploadScan={(uploadEvent) => this.handleUploadScan(uploadEvent, 'selfie')}
                             exampleImagePath={DocumentSelfieExample}
                             uploadedFile={fileSelfie[0] && (fileSelfie[0] as File).name}
                         />
@@ -236,8 +239,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             size="lg"
                             variant="primary"
                             type="button"
-                            block={true}
-                        >
+                            block={true}>
                             {this.translate('page.body.kyc.submit')}
                         </Button>
                     </div>
@@ -297,14 +299,17 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     private handleUploadScan = (uploadEvent, id) => {
         const allFiles: File[] = uploadEvent.target.files;
         const maxDocsCount = 1;
-        const additionalFileList = Array.from(allFiles).length > maxDocsCount ?  Array.from(allFiles).slice(0, maxDocsCount) : Array.from(allFiles);
+        const additionalFileList =
+            Array.from(allFiles).length > maxDocsCount
+                ? Array.from(allFiles).slice(0, maxDocsCount)
+                : Array.from(allFiles);
 
         switch (id) {
             case 'front':
                 this.setState({ fileFront: additionalFileList });
                 break;
             case 'back':
-                this.setState({ fileBack: additionalFileList});
+                this.setState({ fileBack: additionalFileList });
                 break;
             case 'selfie':
                 this.setState({ fileSelfie: additionalFileList });
@@ -330,25 +335,13 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     };
 
     private handleCheckButtonDisabled = () => {
-        const {
-            documentsType,
-            issuedDate,
-            expireDate,
-            fileBack,
-            fileFront,
-            fileSelfie,
-            idNumber,
-        } = this.state;
+        const { documentsType, issuedDate, expireDate, fileBack, fileFront, fileSelfie, idNumber } = this.state;
 
         const typeOfDocuments = this.getDocumentsType(documentsType);
-        const filesValid = (typeOfDocuments === 'Passport') ? (
-            fileFront.length &&
-            fileSelfie.length
-        ) : (
-            fileSelfie.length &&
-            fileFront.length &&
-            fileBack.length
-        );
+        const filesValid =
+            typeOfDocuments === 'Passport'
+                ? fileFront.length && fileSelfie.length
+                : fileSelfie.length && fileFront.length && fileBack.length;
 
         return (
             !this.handleValidateInput('idNumber', idNumber) ||
@@ -359,12 +352,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     };
 
     private sendDocuments = () => {
-        const {
-            documentsType,
-            fileBack,
-            fileFront,
-            fileSelfie,
-        } = this.state;
+        const { documentsType, fileBack, fileFront, fileSelfie } = this.state;
         const identificator = randomSecureHex(32);
 
         if (this.handleCheckButtonDisabled()) {
@@ -381,12 +369,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     };
 
     private createFormData = (docCategory: string, upload: File[], identificator: string) => {
-        const {
-            documentsType,
-            expireDate,
-            issuedDate,
-            idNumber,
-        }: DocumentsState = this.state;
+        const { documentsType, expireDate, issuedDate, idNumber }: DocumentsState = this.state;
         const typeOfDocuments = this.getDocumentsType(documentsType);
 
         const request = new FormData();
@@ -407,10 +390,14 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     private getDocumentsType = (value: string) => {
         switch (value) {
-           case this.data[0]: return 'Passport';
-           case this.data[1]: return 'Identity card';
-           case this.data[2]: return 'Driver license';
-           default: return value;
+            case this.data[0]:
+                return 'Passport';
+            case this.data[1]:
+                return 'Identity card';
+            case this.data[2]:
+                return 'Driver license';
+            default:
+                return value;
         }
     };
 }
@@ -421,14 +408,13 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        fetchAlert: payload => dispatch(alertPush(payload)),
-        sendDocuments: payload => dispatch(sendDocuments(payload)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    fetchAlert: (payload) => dispatch(alertPush(payload)),
+    sendDocuments: (payload) => dispatch(sendDocuments(payload)),
+});
 
 export const Documents = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps)
 )(DocumentsComponent) as any; // tslint:disable-line

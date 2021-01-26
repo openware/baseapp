@@ -1,3 +1,112 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DepositFiat should match snapshot 1`] = `ShallowWrapper {}`;
+exports[`DepositFiat should match snapshot 1`] = `
+<div
+  className="cr-deposit-fiat"
+>
+  <p
+    className="cr-deposit-fiat__title"
+  >
+    text123
+  </p>
+  <p
+    className="cr-deposit-fiat__description"
+  >
+    123123
+  </p>
+  <div
+    className="cr-deposit-fiat-credentials"
+  >
+    <div
+      className="cr-deposit-fiat-detail"
+      key="0"
+    >
+      <p
+        className="cr-deposit-fiat-detail__label"
+      >
+        <FormattedMessage
+          id="page.body.wallets.tabs.deposit.fiat.bankName"
+        />
+        :
+      </p>
+      <p
+        className="cr-deposit-fiat-detail__value"
+      >
+        Diamant Bank
+      </p>
+    </div>
+    <div
+      className="cr-deposit-fiat-detail"
+      key="1"
+    >
+      <p
+        className="cr-deposit-fiat-detail__label"
+      >
+        <FormattedMessage
+          id="page.body.wallets.tabs.deposit.fiat.accountNumber"
+        />
+        :
+      </p>
+      <p
+        className="cr-deposit-fiat-detail__value"
+      >
+        10120212
+      </p>
+    </div>
+    <div
+      className="cr-deposit-fiat-detail"
+      key="2"
+    >
+      <p
+        className="cr-deposit-fiat-detail__label"
+      >
+        <FormattedMessage
+          id="page.body.wallets.tabs.deposit.fiat.accountName"
+        />
+        :
+      </p>
+      <p
+        className="cr-deposit-fiat-detail__value"
+      >
+        name
+      </p>
+    </div>
+    <div
+      className="cr-deposit-fiat-detail"
+      key="3"
+    >
+      <p
+        className="cr-deposit-fiat-detail__label"
+      >
+        <FormattedMessage
+          id="page.body.wallets.tabs.deposit.fiat.phoneNumber"
+        />
+        :
+      </p>
+      <p
+        className="cr-deposit-fiat-detail__value"
+      >
+        +3 8093 1212 12 12
+      </p>
+    </div>
+    <div
+      className="cr-deposit-fiat-detail"
+      key="4"
+    >
+      <p
+        className="cr-deposit-fiat-detail__label"
+      >
+        <FormattedMessage
+          id="page.body.wallets.tabs.deposit.fiat.referenceCode"
+        />
+        :
+      </p>
+      <p
+        className="cr-deposit-fiat-detail__value"
+      >
+        42389734
+      </p>
+    </div>
+  </div>
+</div>
+`;

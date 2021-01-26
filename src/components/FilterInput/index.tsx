@@ -22,7 +22,7 @@ export interface FilterInputProps {
     /**
      * onFilter prop is called whenever input value changes
      */
-    onFilter: (items: object[]) => void;
+    onFilter?: (items: object[]) => void;
     /**
      * Additional class name for styling (by default `cr-search`)
      */
@@ -56,7 +56,7 @@ export class FilterInput extends React.Component<FilterInputProps, SearchInputSt
         const result = data
             .filter(item => filter(item, value));
 
-        this.props.onFilter(result);
+        this.props.onFilter && this.props.onFilter(result);
         this.setState({ key: value });
     }
 

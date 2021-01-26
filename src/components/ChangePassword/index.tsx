@@ -47,7 +47,7 @@ export const ChangePasswordComponent = props => {
         setConfirmPasswordFocus(false);
     };
 
-    const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleEnterPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
 

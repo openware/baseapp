@@ -133,7 +133,7 @@ const SignIn: React.FC<SignInProps> = ({
     );
 
     const handleEnterPress = React.useCallback(
-        (event: React.KeyboardEvent<HTMLInputElement>) => {
+        (event: React.KeyboardEvent<HTMLDivElement>) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
 
