@@ -1,3 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RestrictedScreen should render 1`] = `ShallowWrapper {}`;
+exports[`RestrictedScreen should render 1`] = `
+<div
+  class="pg-restricted-screen"
+>
+  <div
+    class="pg-restricted-screen__title"
+  >
+    404
+  </div>
+  <div
+    class="pg-restricted-screen__content"
+  >
+    Page not found
+  </div>
+</div>
+`;

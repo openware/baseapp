@@ -1,3 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EmailVerificationScreen should render 1`] = `ShallowWrapper {}`;
+exports[`EmailVerificationScreen should render 1`] = `
+<div
+  class="pg-emailverification-container"
+>
+  <div
+    class="pg-emailverification"
+  >
+    <div
+      class="pg-emailverification-title"
+    >
+      VERIFY YOUR EMAIL ADDRESS
+    </div>
+    <div
+      class="pg-emailverification-body"
+    >
+      <div
+        class="pg-emailverification-body-text"
+      >
+        To complete registration, check for an email in your inbox with further instruction. If you cannot find the email, please check your spam folder
+      </div>
+      <div
+        class="pg-emailverification-body-container"
+      >
+        <button
+          class="pg-emailverification-body-container-button"
+        >
+          Resend Confirmation
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

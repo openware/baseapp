@@ -48,6 +48,7 @@ export interface DepositCryptoProps {
      * Generate address button label
      */
     buttonLabel?: string;
+    disabled?: boolean;
 }
 
 
@@ -65,7 +66,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         handleGenerateAddress,
         handleOnCopy,
         text,
-        wallet,
+        wallet
     } = props;
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const size = dimensions || QR_SIZE;

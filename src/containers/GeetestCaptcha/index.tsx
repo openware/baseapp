@@ -3,7 +3,8 @@ import {
     connect,
     MapStateToProps,
 } from 'react-redux';
-import { initGeetest } from '../../helpers/geetest';
+// MUST BE REMOVED: Vadym P. responsibility
+// import { initGeetest } from '../../helpers/geetest.js.txt';
 import {
     geetestCaptchaFetch,
     GeetestCaptchaKeys,
@@ -49,16 +50,17 @@ class GeetestCaptchaComponent extends React.Component<Props> {
                 geetestCaptchaKeys,
                 lang,
             } = next;
-            initGeetest({
-                gt: geetestCaptchaKeys.gt,
-                challenge: geetestCaptchaKeys.challenge,
-                offline: 0,
-                new_captcha: false,
-                product: 'popup',
-                width: '100%',
-                lang: lang,
-                https: true,
-            }, this.captchaComingHandler);
+            // MUST BE REMOVED: Vadym P. responsibility
+            // initGeetest({
+            //     gt: geetestCaptchaKeys.gt,
+            //     challenge: geetestCaptchaKeys.challenge,
+            //     offline: 0,
+            //     new_captcha: false,
+            //     product: 'popup',
+            //     width: '100%',
+            //     lang: lang,
+            //     https: true,
+            // }, this.captchaComingHandler);
         }
 
         if (next.shouldCaptchaReset && !this.props.shouldCaptchaReset) {

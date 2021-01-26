@@ -1,3 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`History should render 1`] = `ShallowWrapper {}`;
+exports[`History should render 1`] = `
+<Component
+  data={
+    Array [
+      Array [
+        "10:40",
+        <span
+          className="cr-history-action"
+        >
+          market
+        </span>,
+        "BTC/USDT",
+        "Buy",
+        "9.400,0",
+        "0, 4005",
+        "3.459",
+      ],
+      Array [
+        "10:40",
+        <span
+          className="cr-history-action"
+        >
+          market
+        </span>,
+        "BTC/USDT",
+        "Buy",
+        "9.400,0",
+        "0, 4005",
+        "3.459",
+      ],
+      Array [
+        "10:40",
+        <span
+          className="cr-history-action"
+        >
+          market
+        </span>,
+        "BTC/USDT",
+        "Buy",
+        "9.400,0",
+        "0, 4005",
+        "3.459",
+      ],
+    ]
+  }
+  header={
+    Array [
+      "Time",
+      "Action",
+      "Price",
+      "Amount",
+      "Total",
+    ]
+  }
+  titleComponent="Trades History"
+/>
+`;
