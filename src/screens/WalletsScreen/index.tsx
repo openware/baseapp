@@ -175,7 +175,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         } = this.props;
         const { selectedWalletIndex } = this.state;
 
-        if (wallets.length === 0 && next.wallets.length > 0) {
+        if (!wallets.length && next.wallets.length) {
             this.setState({ selectedWalletIndex: 0 });
             next.wallets[0]?.currency && this.props.fetchBeneficiaries({ currency_id:  next.wallets[0].currency.toLowerCase() });
         }
