@@ -30,6 +30,7 @@ import {
     Currency,
     RootState,
     selectBeneficiariesActivateSuccess,
+    selectBeneficiariesCreateSuccess,
     selectBeneficiariesDeleteSuccess,
     selectCurrencies,
     selectHistory,
@@ -58,6 +59,7 @@ interface ReduxProps {
     mobileWalletChosen: string;
     beneficiariesActivateSuccess: boolean;
     beneficiariesDeleteSuccess: boolean;
+    beneficiariesAddSuccess: boolean;
     currencies: Currency[];
 }
 
@@ -151,6 +153,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         if (selectedWalletIndex === -1 && wallets.length) {
             this.setState({ selectedWalletIndex: 0 });
+            wallets[0]?.currency && this.props.fetchBeneficiaries({ currency_id: wallets[0].currency.toLowerCase() });
         }
 
         if (!this.props.currencies.length) {
@@ -168,13 +171,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             beneficiariesActivateSuccess,
             beneficiariesDeleteSuccess,
             withdrawSuccess,
+            beneficiariesAddSuccess,
         } = this.props;
         const { selectedWalletIndex } = this.state;
 
-        if (wallets.length === 0 && next.wallets.length > 0) {
-            this.setState({
-                selectedWalletIndex: 0,
-            });
+        if (!wallets.length && next.wallets.length) {
+            this.setState({ selectedWalletIndex: 0 });
+            next.wallets[0]?.currency && this.props.fetchBeneficiaries({ currency_id:  next.wallets[0].currency.toLowerCase() });
         }
 
         if (!withdrawSuccess && next.withdrawSuccess) {
@@ -182,7 +185,8 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }
 
         if ((next.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) ||
-            (next.beneficiariesDeleteSuccess && !beneficiariesDeleteSuccess)) {
+            (next.beneficiariesDeleteSuccess && !beneficiariesDeleteSuccess) ||
+            (next.beneficiariesAddSuccess && !beneficiariesAddSuccess)) {
             const selectedCurrency = (next.wallets[selectedWalletIndex] || { currency: '' }).currency;
 
             this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase() });
@@ -262,21 +266,8 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         );
     }
 
-    private onTabChange = label => {
-        const { selectedWalletIndex } = this.state;
-        const { wallets } = this.props;
-
-        const selectedCurrency = wallets[selectedWalletIndex]?.currency;
-
-        if (label === this.renderTabs()[1].label && selectedCurrency) {
-            this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase() });
-        }
-
-        this.setState({ tab: label });
-    };
-
+    private onTabChange = label => this.setState({ tab: label });
     private onActiveIndexChange = index => this.setState({ activeIndex: index });
-
     private onCurrentTabChange = index => this.setState({ currentTabIndex: index });
 
     private toggleSubmitModal = () => {
@@ -481,9 +472,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         );
     };
 
-
     private redirectToEnable2fa = () => this.props.history.push('/security/2fa', { enable2fa: true });
-
 
     private isTwoFactorAuthRequired(level: number, is2faEnabled: boolean) {
         return level > 1 || (level === 1 && is2faEnabled);
@@ -491,13 +480,6 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     private onWalletSelectionChange = (value: Wallet) => {
         const { wallets } = this.props;
-        const { tab } = this.state;
-        const depositTab = { label: this.renderTabs()[0].label, index: 0 };
-
-        if (tab !== depositTab.label && value.type !== 'fiat') {
-            this.onTabChange(depositTab.label);
-            this.onCurrentTabChange(depositTab.index);
-        }
 
         const nextWalletIndex = this.props.wallets.findIndex(
             wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase()
@@ -507,6 +489,8 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             selectedWalletIndex: nextWalletIndex,
             withdrawDone: false,
         });
+
+        this.props.fetchBeneficiaries({ currency_id: value.currency.toLowerCase() });
         this.props.setMobileWalletUi(wallets[nextWalletIndex].name);
     };
 }
@@ -521,6 +505,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
     beneficiariesDeleteSuccess: selectBeneficiariesDeleteSuccess(state),
     currencies: selectCurrencies(state),
+    beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
