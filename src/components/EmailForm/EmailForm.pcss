@@ -35,11 +35,11 @@
   }
 
   &__form-content {
-    bottom: 23px;
+    bottom: var(--email-form-padding);
     box-sizing: border-box;
-    left: 23px;
+    left: var(--email-form-padding);
     position: absolute;
-    right: 23px;
+    right: var(--email-form-padding);
     top: 80px;
   }
 
@@ -62,6 +62,10 @@
     background: transparent;
     margin-bottom: 20px;
     position: relative;
+
+    &:last-child {
+      margin-bottom: var(--email-form-padding);
+    }
   }
 
   &__error {
