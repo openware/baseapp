@@ -178,10 +178,6 @@
                         width: calc(var(--gap) * 2.5);
                     }
                 }
-
-                .cr-email-form__group {
-                    margin-top: calc(var(--gap) * 3);
-                }
             }
         }
     }
@@ -574,7 +570,7 @@
         }
 
         &-content {
-            padding: 0 calc(var(--gap) * 2.23) !important;
+            padding: var(--email-form-padding) var(--email-form-padding) 0 !important;
 
             fieldset {
                 border: 1px solid var(--kyc-grey);
@@ -588,12 +584,7 @@
         }
 
         &-footer {
-            padding: calc(var(--gap) * 3) calc(var(--gap) * 2.23);
-
-            .cr-button {
-                margin-left: calc(var(--gap) * 0.3);
-                padding: calc(var(--gap) * 2) var(--gap);
-            }
+            padding: 0 var(--email-form-padding) var(--email-form-padding);
         }
     }
 
