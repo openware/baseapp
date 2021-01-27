@@ -6,9 +6,8 @@ import {
 } from './constants';
 
 export interface CreateInternalTranfertsPayload {
-    uid?: string;
-    nickname?: string;
-    amount: number;
+    username_or_uid: string;
+    amount: string;
     currency: string;
     otp: string;
 }

@@ -9,5 +9,5 @@ Access-Control-Allow-Headers: content-type, x-csrf-token
 {
     "currency": "btc",
     "amount": 10,
-    "nickname": "test123"
+    "username_or_uid": "test123"
 }

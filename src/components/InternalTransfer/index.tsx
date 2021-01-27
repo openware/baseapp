@@ -41,23 +41,12 @@ export const InternalTransferComponent = () => {
     const translationUsername = isNicknamesEnabled() ? 'username' : 'uid';
 
     const handleCreateTransfer = useCallback(() => {
-        let payload;
-
-        if (isNicknamesEnabled()) {
-            payload = {
-                currency,
-                username,
-                amount,
-                otp
-            };
-        } else {
-            payload = {
-                currency,
-                uid: username,
-                amount,
-                otp
-            };
-        }
+        const payload = {
+            currency,
+            username_or_uid: username,
+            amount,
+            otp
+        };
 
         dispatch(createInternalTransfersFetch(payload));
         setShow(false);
