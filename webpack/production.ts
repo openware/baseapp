@@ -6,6 +6,7 @@ import path from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import JavaScriptObfuscator from 'webpack-obfuscator';
 import CompressionPlugin from 'compression-webpack-plugin';
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const rootDir = path.resolve(__dirname, '..');
 const BUILD_DIR = path.resolve(rootDir, 'build');
@@ -23,6 +24,7 @@ const config = merge(commonConfig, {
         publicPath: '/',
     },
     plugins: [
+        new BundleAnalyzerPlugin(),
         new ExtendedAPIPlugin(),
         new DefinePlugin({ 'process.env.BUILD_EXPIRE': JSON.stringify(process.env.BUILD_EXPIRE) }),
         new OptimizeCssAssetsPlugin({
