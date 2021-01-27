@@ -1,9 +1,9 @@
 import { mount, shallow } from 'enzyme';
 import { TestComponentWrapper } from 'lib/test';
 import React from 'react';
-import { WalletItem, WalletItemProps } from './';
+import { WalletItem } from './';
 
-const setup = (props: WalletItemProps) =>
+const setup = (props: any) =>
     shallow(
         <TestComponentWrapper>
             <WalletItem {...props} />

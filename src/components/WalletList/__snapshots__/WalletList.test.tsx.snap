@@ -16,9 +16,10 @@ exports[`WalletList should render 1`] = `
   >
     <Component
       active={true}
-      address="something-0"
       balance="456"
       currency="BTC"
+      explorerAddress="https://testnet.blockchain.info/address/#{address}"
+      explorerTransaction="https://testnet.blockchain.info/tx/#{txid}"
       fee={0.123}
       fixed={8}
       key="0"
@@ -39,7 +40,6 @@ exports[`WalletList should render 1`] = `
   >
     <Component
       active={false}
-      address="something-1"
       balance="456"
       currency="USD"
       fee={0.123}
@@ -62,7 +62,6 @@ exports[`WalletList should render 1`] = `
   >
     <Component
       active={false}
-      address="something-2"
       balance="2"
       currency="BTC"
       fee={0.3}
