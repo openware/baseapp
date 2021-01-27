@@ -47,7 +47,7 @@ export interface DropdownComponentProps {
 export const DropdownComponent = (props: DropdownComponentProps) => {
     const [selected, setSelected] = React.useState<string | undefined>('');
 
-    const { list, className, placeholder, onSelect } = props;
+    const { list, className, placeholder, clear, onSelect } = props;
     const defaultPlaceholder = list[0];
 
     const cx = React.useMemo(() => classnames('cr-dropdown', className, {
@@ -72,7 +72,11 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
 
     React.useEffect(() => {
         setSelected(placeholder || convertToString(defaultPlaceholder));
-    }, [placeholder, defaultPlaceholder]);
+
+        if (clear) {
+            setSelected(placeholder || convertToString(defaultPlaceholder));
+        }
+    }, [placeholder, defaultPlaceholder, clear]);
 
     return (
         <div className={cx}>
