@@ -30,6 +30,7 @@ import {
     Currency,
     RootState,
     selectBeneficiariesActivateSuccess,
+    selectBeneficiariesCreateSuccess,
     selectBeneficiariesDeleteSuccess,
     selectCurrencies,
     selectHistory,
@@ -58,6 +59,7 @@ interface ReduxProps {
     mobileWalletChosen: string;
     beneficiariesActivateSuccess: boolean;
     beneficiariesDeleteSuccess: boolean;
+    beneficiariesAddSuccess: boolean;
     currencies: Currency[];
 }
 
@@ -168,6 +170,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             beneficiariesActivateSuccess,
             beneficiariesDeleteSuccess,
             withdrawSuccess,
+            beneficiariesAddSuccess,
         } = this.props;
         const { selectedWalletIndex } = this.state;
 
@@ -182,7 +185,8 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }
 
         if ((next.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) ||
-            (next.beneficiariesDeleteSuccess && !beneficiariesDeleteSuccess)) {
+            (next.beneficiariesDeleteSuccess && !beneficiariesDeleteSuccess) ||
+            (next.beneficiariesAddSuccess && !beneficiariesAddSuccess)) {
             const selectedCurrency = (next.wallets[selectedWalletIndex] || { currency: '' }).currency;
 
             this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase() });
@@ -521,6 +525,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
     beneficiariesDeleteSuccess: selectBeneficiariesDeleteSuccess(state),
     currencies: selectCurrencies(state),
+    beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
