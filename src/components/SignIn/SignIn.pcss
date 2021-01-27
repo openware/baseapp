@@ -3,7 +3,6 @@
   box-shadow: 0 10px 15px var(--shadow-color-level-2);
   height: 500px;
   max-width: 424px;
-  min-height: 410px;
   position: relative;
 
   &__options-group {
@@ -40,12 +39,8 @@
   }
 
   &__form-content {
-    bottom: 23px;
     box-sizing: border-box;
-    left: 23px;
-    position: absolute;
-    right: 23px;
-    top: 80px;
+    padding: 23px 23px 14px;
   }
 
   & > * {
@@ -65,7 +60,7 @@
 
   &__group {
     background: transparent;
-    margin: 20px 0;
+    margin-bottom: 20px;
     position: relative;
   }
 
@@ -96,14 +91,9 @@
 
   &__button-wrapper {
     background: transparent;
-    bottom: 55px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    left: 0;
-    min-height: calc(var(--gap) * 28);
-    position: absolute;
-    right: 0;
   }
 
   &__button-wrapper--empty {
@@ -112,8 +102,6 @@
 
   &__bottom-section {
     background: transparent;
-    bottom: -10px;
-    position: absolute;
     width: 100%;
 
     .cr-sign-in-form__bottom-section-password {
