@@ -7,6 +7,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import JavaScriptObfuscator from 'webpack-obfuscator';
 import CompressionPlugin from 'compression-webpack-plugin';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const rootDir = path.resolve(__dirname, '..');
 const BUILD_DIR = path.resolve(rootDir, 'build');
@@ -22,6 +23,15 @@ const config = merge(commonConfig, {
         filename: '[name].js',
         globalObject: 'this',
         publicPath: '/',
+    },
+    optimization: {
+        usedExports: false,
+        minimize: true,
+        // minimizer: [
+        //     new UglifyJsPlugin({
+        //         include: /\.min\.js$/,
+        //     }),
+        // ],
     },
     plugins: [
         new BundleAnalyzerPlugin(),
