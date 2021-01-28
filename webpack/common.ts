@@ -33,8 +33,8 @@ const config: webpack.Configuration = {
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new LodashModuleReplacementPlugin({ shorthands: true }),
         new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: '[id].css',
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].[contenthash].css',
         }),
     ],
     optimization: {

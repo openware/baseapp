@@ -5,9 +5,9 @@ import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import path from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import JavaScriptObfuscator from 'webpack-obfuscator';
-import CompressionPlugin from 'compression-webpack-plugin';
+// import CompressionPlugin from 'compression-webpack-plugin';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const rootDir = path.resolve(__dirname, '..');
 const BUILD_DIR = path.resolve(rootDir, 'build');
@@ -20,18 +20,18 @@ const config = merge(commonConfig, {
     mode: 'production',
     output: {
         path: BUILD_DIR,
-        filename: '[name].js',
+        filename: '[name].[hash].js',
         globalObject: 'this',
         publicPath: '/',
     },
     optimization: {
         usedExports: false,
         minimize: true,
-        // minimizer: [
-        //     new UglifyJsPlugin({
-        //         include: /\.min\.js$/,
-        //     }),
-        // ],
+        minimizer: [
+            new UglifyJsPlugin({
+                include: /\.min\.js$/,
+            }),
+        ],
     },
     plugins: [
         new BundleAnalyzerPlugin(),
@@ -49,13 +49,13 @@ const config = merge(commonConfig, {
             patterns: [{ from: 'public' }],
         }),
         new JavaScriptObfuscator({ rotateUnicodeArray: true, domainLock: domain }),
-        new CompressionPlugin({
-            filename: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.js$|\.css$|\.html$/,
-            threshold: 10240,
-            minRatio: 0.8,
-        }),
+        // new CompressionPlugin({
+        //     filename: '[path].gz[query]',
+        //     algorithm: 'gzip',
+        //     test: /\.js$|\.css$|\.html$/,
+        //     threshold: 10240,
+        //     minRatio: 0.8,
+        // }),
     ],
     module: {
         rules: [
