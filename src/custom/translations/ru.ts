@@ -222,8 +222,10 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.addAddressModal.header': 'Add new withdrawal address',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.coinAddress': 'Blockchain Address',
+    'page.body.wallets.beneficiaries.addAddressModal.body.invalidAddress': 'Invalid Address',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag': 'Destination Tag (optional)',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatName': 'Description',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName': 'Full Name',
@@ -459,7 +461,7 @@ export const ru: LangType = {
     /* KYC */
     'page.confirm.title.email': 'Get Verified your email',
     'page.confirm.title.phone': 'Get Verified your phone number',
-    'page.confirm.title.profile': 'Get Verified your Identity',
+    'page.confirm.title.profile': 'Get Verified your Profile',
     'page.confirm.title.document': 'Get Verified your Government Issued ID ',
     'page.confirm.title.address': 'Residence verification',
 
