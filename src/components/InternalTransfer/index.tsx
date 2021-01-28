@@ -118,6 +118,7 @@ export const InternalTransferComponent = () => {
                         field="amount"
                         handleChangeInput={setAmount}
                         clear={!show}
+                        amount={amount}
                     />
                     <DropdownComponent
                         className="pg-confirm__content-address__row__content-number-dropdown"
@@ -126,9 +127,10 @@ export const InternalTransferComponent = () => {
                         placeholder="Currency"
                         clear={!show}
                     />
+                    {/* () => setAmount(wallet ? String(wallet.balance) : '')/ */}
                     <div onClick={() => setAmount(wallet ? String(wallet.balance) : '')} className={balanceError}>
                         {translate('page.body.internal.transfer.account.balance')} {wallet ? wallet.balance : 0} {currency}
-                        {wallet && wallet.balance && wallet.balance < amount ?
+                        {wallet && wallet.balance && +wallet.balance < +amount ?
                             translate('page.body.internal.transfer.insufficient.balance') : null}
                     </div>
                 </div>
@@ -145,7 +147,7 @@ export const InternalTransferComponent = () => {
                     onClick={() => setShow(!show)}
                     size="lg"
                     variant="primary"
-                    disabled={!username || !otp || !(+amount) || !currency || !(wallet && wallet.balance && wallet.balance >= amount)}
+                    disabled={!username || !otp || !(+amount) || !currency || !(wallet && wallet.balance && +wallet.balance >= +amount)}
                 >
                         {translate('page.body.internal.transfer.continue')}
                 </Button>

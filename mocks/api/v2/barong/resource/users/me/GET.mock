@@ -7,7 +7,7 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
     "username": "Turbo3000",
     "email": "john@barong.io",
     "level": 2,
-    "otp": false,
+    "otp": true,
     "role": "superadmin",
     "state": "",
     "uid": "ID787E383938",

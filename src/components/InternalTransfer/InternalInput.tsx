@@ -8,6 +8,7 @@ interface InternalTransferInputProps {
     field: string;
     clear: boolean;
     handleChangeInput: (value: string) => void;
+    amount?: string;
 }
 
 export const InternalTransferInput = (props: InternalTransferInputProps) => {
@@ -28,6 +29,12 @@ export const InternalTransferInput = (props: InternalTransferInputProps) => {
             setInputValue('');
         }
     }, [props.clear]);
+
+    useEffect(() => {
+        if (props.amount) {
+            setInputValue(props.amount);
+        }
+    }, [props.amount]);
 
     const handleChange = useCallback((value: string) => {
         switch (props.field) {
