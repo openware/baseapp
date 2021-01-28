@@ -46,7 +46,7 @@ export const WalletItem: React.FunctionComponent<Wallet> = (props: Wallet) => {
             <div className="cr-wallet-item__info">
                 {iconUrl ? (
                     <span className="cr-crypto-icon cr-wallet-item__icon">
-                        <img alt="" src={iconUrl} />
+                        <img alt={currency.toUpperCase()} src={iconUrl} />
                     </span>
                 ) : (<CryptoIcon className="cr-wallet-item__icon" code={currency.toUpperCase()} />)}
                 <div className="cr-wallet-item__description">
