@@ -13,7 +13,7 @@ import {
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
-import { isNicknamesEnabled } from '../../api';
+import { isUsernameEnabled } from '../../api';
 import { Captcha, Modal, SignUpForm } from '../../components';
 import {
     EMAIL_REGEX,
@@ -78,7 +78,7 @@ export const extractRefID = (props: RouterProps) => new URLSearchParams(props.lo
 class SignUp extends React.Component<Props> {
     public readonly state = {
         showModal: false,
-        nickname: '',
+        username: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -87,7 +87,7 @@ class SignUp extends React.Component<Props> {
         emailError: '',
         passwordError: '',
         confirmationError: '',
-        nicknameFocused: false,
+        usernameFocused: false,
         emailFocused: false,
         passwordFocused: false,
         confirmPasswordFocused: false,
@@ -148,7 +148,7 @@ class SignUp extends React.Component<Props> {
             geetestCaptchaSuccess,
         } = this.props;
         const {
-            nickname,
+            username,
             email,
             password,
             confirmPassword,
@@ -157,7 +157,7 @@ class SignUp extends React.Component<Props> {
             emailError,
             passwordError,
             confirmationError,
-            nicknameFocused,
+            usernameFocused,
             emailFocused,
             passwordFocused,
             confirmPasswordFocused,
@@ -186,8 +186,8 @@ class SignUp extends React.Component<Props> {
                         isLoading={loading}
                         onSignIn={this.handleSignIn}
                         onSignUp={this.handleSignUp}
-                        nickname={nickname}
-                        handleChangeNickname={this.handleChangeNickname}
+                        username={username}
+                        handleChangeUsername={this.handleChangeUsername}
                         email={email}
                         handleChangeEmail={this.handleChangeEmail}
                         password={password}
@@ -202,10 +202,10 @@ class SignUp extends React.Component<Props> {
                         confirmationError={confirmationError}
                         confirmPasswordFocused={confirmPasswordFocused}
                         refIdFocused={refIdFocused}
-                        nicknameFocused={nicknameFocused}
+                        usernameFocused={usernameFocused}
                         emailFocused={emailFocused}
                         passwordFocused={passwordFocused}
-                        handleFocusNickname={this.handleFocusNickname}
+                        handleFocusUsername={this.handleFocusUsername}
                         handleFocusEmail={this.handleFocusEmail}
                         handleFocusPassword={this.handleFocusPassword}
                         handleFocusConfirmPassword={this.handleFocusConfirmPassword}
@@ -258,9 +258,9 @@ class SignUp extends React.Component<Props> {
         }
     };
 
-    private handleChangeNickname = (value: string) => {
+    private handleChangeUsername = (value: string) => {
         this.setState({
-            nickname: value.replace(/[^A-Za-z0-9]+/g, '').toLowerCase(),
+            username: value.replace(/[^A-Za-z0-9]+/g, '').toLowerCase(),
         });
     };
 
@@ -327,9 +327,9 @@ class SignUp extends React.Component<Props> {
         });
     };
 
-    private handleFocusNickname = () => {
+    private handleFocusUsername = () => {
         this.setState({
-            nicknameFocused: !this.state.nicknameFocused,
+            usernameFocused: !this.state.usernameFocused,
         });
     };
 
@@ -365,7 +365,7 @@ class SignUp extends React.Component<Props> {
     private handleSignUp = () => {
         const { configs, i18n, captcha_response } = this.props;
         const {
-            nickname,
+            username,
             email,
             password,
             refId,
@@ -378,8 +378,8 @@ class SignUp extends React.Component<Props> {
             }),
         };
 
-        if (isNicknamesEnabled()) {
-            payload = { ...payload, nickname };
+        if (isUsernameEnabled()) {
+            payload = { ...payload, username };
         }
 
         if (refId) {

@@ -14,7 +14,7 @@ export const defaultConfig: Config = {
     showLanding: true,
     sentryEnabled: false,
     captchaLogin: false,
-    nicknamesEnabled: false,
+    usernameEnabled: false,
     gaTrackerKey: '',
     minutesUntilAutoLogout: '5',
     msAlertDisplayTime: '5000',
@@ -65,4 +65,4 @@ export const orderBookSideLimit = (): number => Number(Cryptobase.config.storage
 export const passwordEntropyStep = (): number => Number(Cryptobase.config.passwordEntropyStep);
 export const languages: string[] = (Cryptobase.config.languages && Cryptobase.config.languages.length > 0) ? Cryptobase.config.languages : ['en'];
 export const kycSteps = (): string[] => Cryptobase.config.kycSteps;
-export const isNicknamesEnabled = (): boolean => Cryptobase.config.nicknamesEnabled;
+export const isUsernameEnabled = (): boolean => Cryptobase.config.usernameEnabled;

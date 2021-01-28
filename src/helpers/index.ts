@@ -40,7 +40,7 @@ export * from './timeConvert';
 export * from './timezone';
 export * from './toggleColorTheme';
 export * from './truncateMiddle';
-export * from './nicknameValidation';
+export * from './usernameValidation';
 export * from './randomSecretHex';
 export * from './getVerificationStep';
 export * from './convertToString';
