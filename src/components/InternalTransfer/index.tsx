@@ -145,7 +145,7 @@ export const InternalTransferComponent = () => {
                     onClick={() => setShow(!show)}
                     size="lg"
                     variant="primary"
-                    disabled={!username || !otp || !(+amount) || !currency || !(wallet && wallet.balance && wallet.balance > amount)}
+                    disabled={!username || !otp || !(+amount) || !currency || !(wallet && wallet.balance && wallet.balance >= amount)}
                 >
                         {translate('page.body.internal.transfer.continue')}
                 </Button>
