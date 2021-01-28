@@ -12,6 +12,7 @@
 /android
 /ios
 .gradle/
+stats.json
 
 # misc
 .DS_Store
