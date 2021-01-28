@@ -17,7 +17,7 @@ const config = (csrfToken?: string): RequestOptions => {
 
 export function* createInternalTransfersSaga(action: CreateInternalTransfersFetch) {
     try {
-        yield call(API.post(config(getCsrfToken())), '/account/internal_transfers/new', action.payload);
+        yield call(API.post(config(getCsrfToken())), '/account/internal_transfers', action.payload);
         yield put(createInternalTransfersData());
         yield put(alertPush({message: ['success.internal.transfer.created'], type: 'success'}));
     } catch (error) {

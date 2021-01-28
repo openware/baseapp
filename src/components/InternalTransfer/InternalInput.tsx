@@ -31,6 +31,12 @@ export const InternalTransferInput = (props: InternalTransferInputProps) => {
 
     const handleChange = useCallback((value: string) => {
         switch (props.field) {
+            case 'username':
+            case 'uid':
+                setInputValue(value.replace(/[^A-Za-z0-9]+/g, '').toLowerCase());
+                props.handleChangeInput(value.replace(/[^A-Za-z0-9]+/g, '').toLowerCase());
+
+                break;
             case 'amount':
                 const convertedValue = cleanPositiveFloatInput(String(value));
                 const onlyNumbersRegex = `^(?:[\\d-]*\\.?[\\d-]{0,}|[\\d-]*\\.[\\d-])$`;

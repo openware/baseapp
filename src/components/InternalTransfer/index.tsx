@@ -17,7 +17,6 @@ export const InternalTransferComponent = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
-
     const wallets = useSelector(selectWallets);
     const user = useSelector(selectUserInfo);
 
@@ -42,7 +41,7 @@ export const InternalTransferComponent = () => {
 
     const handleCreateTransfer = useCallback(() => {
         const payload = {
-            currency,
+            currency: currency.toLowerCase(),
             username_or_uid: username,
             amount,
             otp
@@ -60,7 +59,7 @@ export const InternalTransferComponent = () => {
 
     const handleNavigateTo2fa = useCallback((enable2fa: boolean) => {
         history.push('/security/2fa', { enable2fa });
-    }, [history]);
+    }, []);
 
     const renderFooter = useMemo(() => {
         return (
@@ -146,7 +145,7 @@ export const InternalTransferComponent = () => {
                     onClick={() => setShow(!show)}
                     size="lg"
                     variant="primary"
-                    disabled={!username || !otp || !amount || !currency || !(wallet && wallet.balance && wallet.balance > amount)}
+                    disabled={!username || !otp || !(+amount) || !currency || !(wallet && wallet.balance && wallet.balance > amount)}
                 >
                         {translate('page.body.internal.transfer.continue')}
                 </Button>
@@ -159,7 +158,7 @@ export const InternalTransferComponent = () => {
             />
             {!user.otp && <div className="cr-internal-transfer--require-otp">
                 {translate('page.body.internal.transfer.please.enable.2fa')}
-                <div onClick={() => handleNavigateTo2fa(false)} className="cr-internal-transfer--require-otp-link">
+                <div onClick={() => handleNavigateTo2fa(true)} className="cr-internal-transfer--require-otp-link">
                     {translate('page.body.internal.transfer.enable')}
                 </div>
             </div>}
