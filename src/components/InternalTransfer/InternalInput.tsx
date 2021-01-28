@@ -39,10 +39,14 @@ export const InternalTransferInput = (props: InternalTransferInputProps) => {
     const handleChange = useCallback((value: string) => {
         switch (props.field) {
             case 'username':
-            case 'uid':
                 setInputValue(value.replace(/[^A-Za-z0-9]+/g, '').toLowerCase());
                 props.handleChangeInput(value.replace(/[^A-Za-z0-9]+/g, '').toLowerCase());
 
+                break;
+            case 'uid':
+                setInputValue(value.replace(/[^A-Za-z0-9]+/g, ''));
+                props.handleChangeInput(value.replace(/[^A-Za-z0-9]+/g, ''));
+    
                 break;
             case 'amount':
                 const convertedValue = cleanPositiveFloatInput(String(value));
