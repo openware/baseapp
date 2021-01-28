@@ -17,6 +17,7 @@ import {
     RootState,
     selectLabelData,
     selectSidebarState,
+    toggleSidebar,
 } from '../../modules';
 
 interface ReduxProps {
@@ -26,19 +27,22 @@ interface ReduxProps {
 
 interface DispatchProps {
     labelFetch: typeof labelFetch;
+    toggleSidebar: typeof toggleSidebar;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 class ConfirmComponent extends React.Component<Props> {
     public componentDidMount() {
-        const { labels } = this.props;
+        const { labels, isSidebarOpen } = this.props;
         setDocumentTitle('Confirm');
         this.props.labelFetch();
 
         if (labels.length) {
             this.handleCheckUserLabels(labels);
         }
+
+        isSidebarOpen && this.props.toggleSidebar(false);
     }
 
     public componentDidUpdate(prevProps: Props) {
@@ -60,15 +64,11 @@ class ConfirmComponent extends React.Component<Props> {
     };
 
     public render() {
-        const { history, isSidebarOpen } = this.props;
+        const { history } = this.props;
         const step = this.handleGetVerificationStep();
 
-        const containerClass = classnames('pg-container pg-confirm', {
-            'pg-container--open': isSidebarOpen,
-        });
-
         return (
-            <div className={containerClass}>
+            <div className="pg-container pg-confirm">
                 <div className="pg-confirm__logo">
                     <LogoIcon />
                 </div>
@@ -109,6 +109,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchToProps = dispatch => ({
     labelFetch: () => dispatch(labelFetch()),
+    toggleSidebar: (payload) => dispatch(toggleSidebar(payload)),
 });
 
 export const ConfirmScreen = compose(
