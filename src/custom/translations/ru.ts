@@ -222,8 +222,10 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.addAddressModal.header': 'Add new withdrawal address',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.coinAddress': 'Blockchain Address',
+    'page.body.wallets.beneficiaries.addAddressModal.body.invalidAddress': 'Invalid Address',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag': 'Destination Tag (optional)',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatName': 'Description',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName': 'Full Name',
