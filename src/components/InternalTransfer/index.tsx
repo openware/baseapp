@@ -126,7 +126,7 @@ export const InternalTransferComponent = () => {
                         placeholder="Currency"
                         clear={!show}
                     />
-                    <div className={balanceError}>
+                    <div onClick={() => setAmount(wallet ? String(wallet.balance) : '')} className={balanceError}>
                         {translate('page.body.internal.transfer.account.balance')} {wallet ? wallet.balance : 0} {currency}
                         {wallet && wallet.balance && wallet.balance < amount ?
                             translate('page.body.internal.transfer.insufficient.balance') : null}
