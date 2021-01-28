@@ -452,7 +452,7 @@ export const en = {
     /* KYC */
     'page.confirm.title.email': 'Get Verified your email',
     'page.confirm.title.phone': 'Get Verified your phone number',
-    'page.confirm.title.profile': 'Get Verified your Identity',
+    'page.confirm.title.profile': 'Get Verified your Profile',
     'page.confirm.title.document': 'Get Verified your Government Issued ID ',
     'page.confirm.title.address': 'Residence verification',
 
