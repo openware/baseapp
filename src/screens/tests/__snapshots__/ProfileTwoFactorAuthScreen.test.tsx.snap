@@ -119,7 +119,7 @@ exports[`ProfileTwoFactorAuthScreen test should render 1`] = `
           class="row col-12 pg-profile-two-factor-auth__body--text--group"
         >
           <div
-            class="col-12 col-md-8 col-sm-7"
+            class="col-12 col-sm-5"
           >
             <span
               class="cr-item-number"
@@ -133,7 +133,7 @@ exports[`ProfileTwoFactorAuthScreen test should render 1`] = `
             </span>
           </div>
           <div
-            class="col-12 col-md-4 col-sm-5"
+            class="col-12 col-sm-7"
           >
             <fieldset
               class="pg-profile-two-factor-auth__body--input"
