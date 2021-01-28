@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Decimal, Table } from '../../components';
+import { Table } from '../../components';
 import { DEFAULT_MARKET } from '../../constants';
-import { localeDate, setTradesType } from '../../helpers';
+import { localeDate } from '../../helpers';
 import {
     fetchHistory,
     selectCurrentMarket,
@@ -14,6 +14,7 @@ import {
     setCurrentPrice,
 } from '../../modules';
 import { handleHighlightValue } from './Market';
+import { TradeTableCell } from './RecentTradesTableCell';
 
 const timeFrom = String(Math.floor((Date.now() - 1000 * 60 * 60 * 24) / 1000));
 
@@ -33,20 +34,23 @@ export const RecentTradesYours = () => {
     ]), [formatMessage]);
 
     const renderRow = (item, i) => {
-        const { id, created_at, price, amount, side } = item;
+        const { id, created_at, price, amount, taker_type } = item;
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
-        const orderSide = side === 'sell' ?  'sell' : 'buy';
         const higlightedDate = handleHighlightValue(String(localeDate([...list][i - 1] ? [...list][i - 1].created_at : '', 'time')), String(localeDate(created_at, 'time')));
 
         return [
-            <span style={{ color: setTradesType(orderSide).color }} key={id}>{higlightedDate}</span>,
-            <span style={{ color: setTradesType(orderSide).color }} key={id}>
-                <Decimal key={id} fixed={amountFixed} thousSep=",">{amount}</Decimal>
-            </span>,
-            <span style={{ color: setTradesType(orderSide).color }} key={id}>
-                <Decimal key={id} fixed={priceFixed} thousSep="," prevValue={[...list][i - 1] ? [...list][i - 1].price : 0}>{price}</Decimal>
-            </span>,
+            <TradeTableCell higlightedDate={higlightedDate} takerType={taker_type} type="date"/>,
+            <TradeTableCell amount={amount} takerType={taker_type} amountFixed={amountFixed} type="amount"/>,
+            <TradeTableCell
+                price={price}
+                priceFixed={priceFixed}
+                prevValue={[...list][i - 1] ? [...list][i - 1].price : 0}
+                amountFixed={amountFixed}
+                takerType={taker_type}
+                id={id}
+                type="price"
+            />,
         ];
     };
 

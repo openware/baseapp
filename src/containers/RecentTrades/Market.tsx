@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Decimal, Table } from '../../components';
-import { localeDate, setTradeColor } from '../../helpers';
+import { Table } from '../../components';
+import { localeDate } from '../../helpers';
 import {
     selectCurrentMarket,
     selectCurrentPrice,
@@ -51,17 +51,10 @@ const RecentTradesMarket = () => {
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
 
         const renderRow = (item, i) => {
-            const { created_at, taker_type, price, amount, trades } = item;
+            const { created_at, taker_type, price, amount } = item;
             const higlightedDate = handleHighlightValue(String(localeDate(recentTrades[i - 1] ? recentTrades[i - 1].created_at : '', 'time')), String(localeDate(created_at, 'time')));
 
-            return trades? [
-                <span style={{ color: setTradeColor(taker_type).color }} key={i}>{higlightedDate}</span>,
-                <span style={{ color: setTradeColor(taker_type).color }} key={i}>
-                    <Decimal fixed={amountFixed} thousSep=",">{amount}</Decimal>
-                </span>,
-                <span style={{ color: setTradeColor(taker_type).color }} key={i}>
-                    <Decimal fixed={priceFixed} thousSep="," prevValue={trades[i - 1] ? trades[i - 1].price : 0}>{price}</Decimal>
-                </span>,
+            return recentTrades ? [
                 <TradeTableCell higlightedDate={higlightedDate} takerType={taker_type} type="date"/>,
                 <TradeTableCell amount={amount} takerType={taker_type} amountFixed={amountFixed} type="amount"/>,
                 <TradeTableCell
@@ -70,6 +63,7 @@ const RecentTradesMarket = () => {
                     takerType={taker_type}
                     prevValue={recentTrades[i - 1] ? recentTrades[i - 1].price : 0}
                     amountFixed={amountFixed}
+                    id={i}
                     type="price"
                 />,
             ]: undefined;
