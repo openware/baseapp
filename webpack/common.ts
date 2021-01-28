@@ -45,7 +45,7 @@ const config: webpack.Configuration = {
         splitChunks: {
             cacheGroups: {
                 styles: {
-                    name: 'styles',
+                    name: 'style',
                     test: /\.(css|sass|scss|pcss)$/,
                     chunks: 'all',
                     enforce: true,
