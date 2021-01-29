@@ -59,6 +59,7 @@ Access-Control-Allow-Credentials: true
   },
   {
     "id": "eth",
+    "icon_url": "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
     "name": "Ethereum",
     "symbol": "Ξ",
     "explorer_transaction": "https://rinkeby.etherscan.io/tx/#{txid}",
