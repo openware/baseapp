@@ -45,7 +45,7 @@ export const SignInScreen: React.FC = () => {
 
     useEffect(() => {
         if (requireEmailVerification) {
-            history.push('/email-verification');
+            history.push('/email-verification', { email: email });
         }
     }, [requireEmailVerification, history]);
 
