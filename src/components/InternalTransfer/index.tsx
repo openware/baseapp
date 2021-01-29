@@ -64,6 +64,14 @@ export const InternalTransferComponent = () => {
         history.push('/security/2fa', { enable2fa });
     }, []);
 
+    const handleChangeShow = () => {
+        setShow(false);
+        setUsername('');
+        setCurrency('');
+        setAmount('');
+        setOtp('');
+    }
+
     const renderFooter = useMemo(() => {
         return (
             <Button
@@ -85,7 +93,7 @@ export const InternalTransferComponent = () => {
                 <div className="cr-modal__container-header-text">
                     {translate('page.body.internal.transfer.header')}
                 </div>
-                <CloseIcon className={'cr-modal__container-header-cancel'} onClick={() => setShow(false)}/>
+                <CloseIcon className={'cr-modal__container-header-cancel'} onClick={handleChangeShow}/>
             </React.Fragment>
         );
     }, [translate, setShow]);
