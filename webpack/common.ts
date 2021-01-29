@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
 import { AppConfig } from './config';
 import alias from './alias.js';
@@ -28,21 +29,23 @@ const config: webpack.Configuration = {
             hash: true,
             chunks: ['common', 'bundle', 'styles'],
         }),
-        //new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en|ru|fr|zh|ko|de|es|it/),
-        //new LodashModuleReplacementPlugin({ shorthands: true }),
+        // Ignore all locale files of moment.js
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        new LodashModuleReplacementPlugin({ shorthands: true }),
         new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: '[id].css',
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].[contenthash].css',
         }),
     ],
     optimization: {
+        usedExports: false,
         moduleIds: 'hashed',
         namedModules: true,
         namedChunks: true,
         splitChunks: {
             cacheGroups: {
                 styles: {
-                    name: 'styles',
+                    name: 'style',
                     test: /\.(css|sass|scss|pcss)$/,
                     chunks: 'all',
                     enforce: true,
@@ -69,7 +72,6 @@ const config: webpack.Configuration = {
         extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
         alias: alias.webpack,
     },
-    devtool: 'source-map',
     externals: {
         config: JSON.stringify({
             app: AppConfig,
