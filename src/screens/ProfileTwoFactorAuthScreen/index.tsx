@@ -132,12 +132,13 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                 <div className="row m-0 pg-profile-two-factor-auth__body">
                     <div className="col-12 pl-2 pg-profile-two-factor-auth__body--text d-inline-block">
                         <div className="row col-12 pg-profile-two-factor-auth__body--text--group">
-                            <div className="col-12 col-md-8 col-sm-7">
+                            <div className="col-12 col-sm-5">
                                 <span className="cr-item-number">3   </span>
                                 <span className="cr-item-text">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.4')}</span>
                             </div>
-                            <div className="col-12 col-md-4 col-sm-5">
+                            <div className="col-12 col-sm-7">
                                 <fieldset className="pg-profile-two-factor-auth__body--input">
+                                    <div className="hidden-label">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}</div>
                                     <CustomInput
                                         handleChangeInput={this.handleOtpCodeChange}
                                         type="tel"
