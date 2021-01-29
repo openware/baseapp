@@ -982,6 +982,15 @@ export const ru: LangType = {
     'page.body.internal.transfer.placeholder.username': 'Send to account (nickname)',
     'page.body.internal.transfer.notice.username': `All transactions are final! Please, double check receiver's nickname before sending.`,
 
+    // internal transfer - errors
+    'account.internal_transfer.non_decimal_amount': 'Non decimal amount',
+    'account.internal_transfer.non_positive_amount': 'Non positive amount',
+    'account.internal_transfer.non_integer_otp': 'Non integer otp',
+    'account.internal_transfer.receiver_not_found': `Account doesn't exist`,
+    'account.internal_transfer.invalid_otp': 'Invalid otp',
+    'account.internal_transfer.insufficient_balance': 'Insufficient_balance',
+    'account.internal_transfer.can_not_tranfer_to_yourself': 'Can not tranfer to yourself',
+
     ...nationalitiesNames,
     ...mobileTranslationsRu,
 };
