@@ -320,7 +320,7 @@ export const ru: LangType = {
 
     'page.body.profile.header.account': 'Профиль',
 
-    'page.body.profile.header.account.nickname': 'Никнейм',
+    'page.body.profile.header.account.username': 'Никнейм',
     'page.body.profile.header.account.content.password': 'Пароль',
     'page.body.profile.header.account.content.password.button.change': 'Изменить',
     'page.body.profile.header.account.content.password.old': 'Старый пароль',
@@ -559,9 +559,9 @@ export const ru: LangType = {
     'page.header.signIn.resetPassword.error': 'Поля пустые или не совпадают',
 
     'page.header.signUp': 'Регистрация',
-    'page.header.signUp.nickname.minLength.error': 'Пожалуйста, введите больше символов. Минимальное колисчество символов - 4',
-    'page.header.signUp.nickname.maxLength.error': 'Пожалуйста, введите меньше символов. Максимальное колисчество символов - 12',
-    'page.header.signUp.nickname.uniqueness.error': 'This nickname is already taken',
+    'page.header.signUp.username.minLength.error': 'Пожалуйста, введите больше символов. Минимальное колисчество символов - 4',
+    'page.header.signUp.username.maxLength.error': 'Пожалуйста, введите меньше символов. Максимальное колисчество символов - 12',
+    'page.header.signUp.username.uniqueness.error': 'This username is already taken',
     'page.header.signUp.email': 'Почта',
     'page.header.signUp.email.message.error': 'Почта недействительная',
     'page.header.signUp.password': 'Пароль',
@@ -744,7 +744,7 @@ export const ru: LangType = {
     'identity.session.invalid_params': 'Неправильный адрес электронной почты или пароль',
     'identity.session.missing_otp': 'Отсутствует код 2FA',
     'identity.session.invalid_otp': 'Код 2FA недействителен',
-    'nickname.taken': 'Никнейм уже используется',
+    'username.taken': 'Никнейм уже используется',
     'first_name.invalid': 'Имя неверное',
     'last_name.invalid': 'Фамилия неверная',
     'city.invalid': 'Город неверный',

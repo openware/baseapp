@@ -29,5 +29,5 @@ window.env = {
         'address',
     ],
     captchaLogin: false,
-    nicknamesEnabled: true,
+    usernameEnabled: false,
 };

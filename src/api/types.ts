@@ -15,7 +15,7 @@ declare global {
         showLanding: boolean;
         sentryEnabled: boolean;
         captchaLogin: boolean;
-        nicknamesEnabled: boolean;
+        usernameEnabled: boolean;
         gaTrackerKey: string;
         minutesUntilAutoLogout: string;
         msAlertDisplayTime: string;
