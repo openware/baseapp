@@ -86,7 +86,7 @@
   }
 
   &__label {
-    color: var(--secondary-contast-cta-color));
+    color: var(--secondary-contast-cta-color);
     font-size: calc(var(--font-size) * 1.33);
     padding-bottom: var(--gap);
     padding-top: calc(var(--gap) * 2);
@@ -145,8 +145,8 @@
           margin-top: 0;
 
           h2 {
-            font-size: 11px;
-            line-height: 15px;
+            font-size: 22px;
+            line-height: 26px;
           }
 
           h3 {
@@ -177,10 +177,6 @@
             position: absolute;
             width: calc(var(--gap) * 2.5);
           }
-        }
-
-        .cr-email-form__group {
-          margin-top: calc(var(--gap) * 3);
         }
       }
     }
@@ -510,7 +506,7 @@
     &::before,
     &::after {
       background: var(--secondary-contrast-cta-color);
-      content: '';
+      content: "";
       height: 2px;
       left: 0;
       position: absolute;
@@ -555,7 +551,7 @@
 
     &::after {
       color: var(--primary-text-color);
-      content: ' ✓';
+      content: " ✓";
       display: inline;
       font-size: calc(var(--font-size) * 2.5);
       position: absolute;
@@ -574,7 +570,7 @@
     }
 
     &-content {
-      padding: 0 calc(var(--gap) * 2.23) !important;
+      padding: var(--email-form-padding) var(--email-form-padding) 0 !important;
 
       fieldset {
         border: 1px solid var(--kyc-grey);
@@ -588,12 +584,7 @@
     }
 
     &-footer {
-      padding: calc(var(--gap) * 3) calc(var(--gap) * 2.23);
-
-      .cr-button {
-        margin-left: calc(var(--gap) * 0.3);
-        padding: calc(var(--gap) * 2) var(--gap);
-      }
+      padding: 0 var(--email-form-padding) var(--email-form-padding);
     }
   }
 
@@ -694,8 +685,8 @@
         font-size: calc(var(--gap) * 2.33);
       }
 
-      input[type=number]::-webkit-inner-spin-button,
-      input[type=number]::-webkit-outer-spin-button {
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
