@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileTwoFactorAuth } from '../';
 import { IntlProps } from '../../';
-import { isNicknamesEnabled } from '../../api';
+import { isUsernameEnabled } from '../../api';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { ChangePassword, CustomInput, Modal } from '../../components';
 import {
@@ -118,9 +118,9 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         <div className="pg-profile-page__row">
                             <h2>UID: {user.uid}</h2>
                         </div>
-                        {isNicknamesEnabled() && user.nickname ? (
+                        {isUsernameEnabled() && user.username ? (
                             <div className="pg-profile-page__row">
-                                <h2>{this.props.intl.formatMessage({ id: 'page.body.profile.header.account.nickname'})}: {user.nickname}
+                                <h2>{this.props.intl.formatMessage({ id: 'page.body.profile.header.account.username'})}: {user.username}
                                 </h2>
                             </div>
                         ) : null}

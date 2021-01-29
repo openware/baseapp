@@ -28,7 +28,7 @@ describe('Module: Change user info', () => {
     };
 
     const fakeUser = {
-        nickname: 'johnny1337',
+        username: 'johnny1337',
         email: 'admin@barong.io',
         uid: 'ID26C901376F',
         role: 'admin',
