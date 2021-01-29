@@ -95,7 +95,7 @@ export const InternalTransferComponent = () => {
             <React.Fragment>
                 <div className="cr-modal__container-content__transfer">
                     {translate('page.body.internal.transfer.modal.content.transfer')}
-                    <span>{amount} {currency}</span>
+                    <span><Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">{amount.toString()}</Decimal>{currency}</span>
                     {translate('page.body.internal.transfer.modal.content.to')}
                     <span>{username}</span>
                     {translate('page.body.internal.transfer.modal.content.account')}
@@ -122,6 +122,7 @@ export const InternalTransferComponent = () => {
                         handleChangeInput={setAmount}
                         clear={!show}
                         amount={amount}
+                        fixed={wallet ? wallet.fixed : 0}
                     />
                     <DropdownComponent
                         className="pg-confirm__content-address__row__content-number-dropdown"
@@ -132,7 +133,7 @@ export const InternalTransferComponent = () => {
                     />
                     <div onClick={() => setAmount(wallet ? String(wallet.balance) : '')} className={balanceError}>
                         {translate('page.body.internal.transfer.account.balance')}
-                        {wallet && wallet.balance && currency !== '' ? <Decimal fixed={+wallet.fixed} thousSep=",">{wallet.balance.toString()}</Decimal> : 0} {currency}
+                        {wallet && wallet.balance && currency !== '' ? <Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">{wallet.balance.toString()}</Decimal> : 0} {currency}
                         {(wallet && wallet.balance && +wallet.balance < +amount) ?
                             translate('page.body.internal.transfer.insufficient.balance') : null}
                     </div>

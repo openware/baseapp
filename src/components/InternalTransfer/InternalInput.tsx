@@ -2,13 +2,14 @@ import classnames from 'classnames';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { CustomInput } from '../';
-import { cleanPositiveFloatInput } from '../../helpers';
+import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 
 interface InternalTransferInputProps {
     field: string;
     clear: boolean;
     handleChangeInput: (value: string) => void;
     amount?: string;
+    fixed?: number;
 }
 
 export const InternalTransferInput = (props: InternalTransferInputProps) => {
@@ -50,9 +51,8 @@ export const InternalTransferInput = (props: InternalTransferInputProps) => {
                 break;
             case 'amount':
                 const convertedValue = cleanPositiveFloatInput(String(value));
-                const onlyNumbersRegex = `^(?:[\\d-]*\\.?[\\d-]{0,}|[\\d-]*\\.[\\d-])$`;
 
-                if (convertedValue.match(onlyNumbersRegex)) {
+                if (convertedValue.match(precisionRegExp(props.fixed ? props.fixed : 0))) {
                     setInputValue(convertedValue);
                     props.handleChangeInput(convertedValue);
                 }
