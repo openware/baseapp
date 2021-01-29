@@ -4,12 +4,11 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { DropdownComponent } from '../';
-import { isNicknamesEnabled } from '../../api';
+import { DropdownComponent, Decimal } from '../';
+import { isUsernamesEnabled } from '../../api';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { Modal } from '../../components';
-import { useWalletsFetch } from '../../hooks';
-import { createInternalTransfersFetch, selectUserInfo, selectWallets } from '../../modules';
+import { createInternalTransfersFetch, selectUserInfo, selectWallets, walletsFetch } from '../../modules';
 import { InternalTransferInput } from './InternalInput';
 
 export const InternalTransferComponent = () => {
@@ -20,14 +19,18 @@ export const InternalTransferComponent = () => {
     const wallets = useSelector(selectWallets);
     const user = useSelector(selectUserInfo);
 
-    const [username, setusername] = useState('');
+    const [username, setUsername] = useState('');
     const [currency, setCurrency] = useState('');
     const [amount, setAmount] = useState('');
     const [otp, setOtp] = useState('');
 
     const [show, setShow] = useState(false);
 
-    useWalletsFetch();
+    React.useEffect(() => {
+        if (!wallets.length) {
+            dispatch(walletsFetch());
+        }
+    }, [dispatch, wallets]);
 
     const walletsList = wallets.length ? wallets.map(item => item.currency && item.currency.toUpperCase()) : [];
 
@@ -49,7 +52,7 @@ export const InternalTransferComponent = () => {
 
         dispatch(createInternalTransfersFetch(payload));
         setShow(false);
-        setusername('');
+        setUsername('');
         setCurrency('');
         setAmount('');
         setOtp('');
@@ -110,7 +113,7 @@ export const InternalTransferComponent = () => {
             <div className="cr-internal-transfer__inputs">
                 <InternalTransferInput
                     field={translationUsername}
-                    handleChangeInput={setusername}
+                    handleChangeInput={setUsername}
                     clear={!show}
                 />
                 <div className="cr-internal-transfer__group">
@@ -128,8 +131,9 @@ export const InternalTransferComponent = () => {
                         clear={!show}
                     />
                     <div onClick={() => setAmount(wallet ? String(wallet.balance) : '')} className={balanceError}>
-                        {translate('page.body.internal.transfer.account.balance')} {wallet ? wallet.balance : 0} {currency}
-                        {wallet && wallet.balance && +wallet.balance < +amount ?
+                        {translate('page.body.internal.transfer.account.balance')}
+                        {wallet && wallet.balance && currency !== '' ? <Decimal fixed={+wallet.fixed} thousSep=",">{wallet.balance.toString()}</Decimal> : 0} {currency}
+                        {(wallet && wallet.balance && +wallet.balance < +amount) ?
                             translate('page.body.internal.transfer.insufficient.balance') : null}
                     </div>
                 </div>
