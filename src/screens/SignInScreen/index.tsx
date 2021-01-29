@@ -1,27 +1,13 @@
 import cx from 'classnames';
-import * as React from 'react';
-import { injectIntl } from 'react-intl';
-import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
-import { RouterProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
-import { IntlProps } from '../../';
-import { captchaLogin } from '../../api';
-import { Captcha, SignInComponent, TwoFactorAuth } from '../../components';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import { SignInComponent, TwoFactorAuth } from '../../components';
 import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
+import { useReduxSelector } from '../../hooks';
 import {
-    Configs,
-    GeetestCaptchaResponse,
-    resetCaptchaState,
-    RootState,
-    selectAlertState,
-    selectCaptchaResponse,
-    selectConfigs,
-    selectGeetestCaptchaSuccess,
-    selectRecaptchaSuccess,
-    selectSignInError,
     selectSignInRequire2FA,
-    selectSignUpRequireVerification,
     selectUserFetching,
     selectUserLoggedIn,
     signIn,
@@ -31,297 +17,182 @@ import {
 } from '../../modules';
 import { CommonError } from '../../modules/types';
 
-interface ReduxProps {
-    error?: CommonError;
-    isLoggedIn: boolean;
-    loading?: boolean;
-    require2FA?: boolean;
-    requireEmailVerification?: boolean;
-    configs: Configs;
-    captcha_response?: string | GeetestCaptchaResponse;
-    reCaptchaSuccess: boolean;
-    geetestCaptchaSuccess: boolean;
-}
+export const SignInScreen: React.FC = () => {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { formatMessage } = useIntl();
 
-interface DispatchProps {
-    signIn: typeof signIn;
-    signInError: typeof signInError;
-    signInRequire2FA: typeof signInRequire2FA;
-    resetCaptchaState: typeof resetCaptchaState;
-    signUpRequireVerification: typeof signUpRequireVerification;
-}
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [emailFocused, setEmailFocused] = useState(false);
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [passwordFocused, setPasswordFocused] = useState(false);
+    const [otpCode, setOtpCode] = useState('');
+    const [error2fa, setError2fa] = useState('');
+    const [codeFocused, setCodeFocused] = useState(false);
 
-interface SignInState {
-    email: string;
-    emailError: string;
-    emailFocused: boolean;
-    password: string;
-    passwordError: string;
-    passwordFocused: boolean;
-    otpCode: string;
-    error2fa: string;
-    codeFocused: boolean;
-}
+    const isLoggedIn = useReduxSelector(selectUserLoggedIn);
+    const loading = useReduxSelector(selectUserFetching);
+    const require2FA = useReduxSelector(selectSignInRequire2FA);
+    const requireEmailVerification = useReduxSelector((x) => x.user.auth.requireVerification);
 
-type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
-
-class SignIn extends React.Component<Props, SignInState> {
-    public state = {
-        email: '',
-        emailError: '',
-        emailFocused: false,
-        password: '',
-        passwordError: '',
-        passwordFocused: false,
-        otpCode: '',
-        error2fa: '',
-        codeFocused: false,
-    };
-
-    public componentDidMount() {
+    useEffect(() => {
         setDocumentTitle('Sign In');
-        this.props.signInError({ code: 0, message: [''] });
-        this.props.signUpRequireVerification({requireVerification: false});
-    }
+        dispatch(signInError({ code: 0, message: [''] }));
+        dispatch(signUpRequireVerification({ requireVerification: false }));
+    }, [dispatch]);
 
-    public componentWillReceiveProps(nextProps: Props) {
-        const { email } = this.state;
-
-        if (!this.props.isLoggedIn && nextProps.isLoggedIn) {
-            this.props.resetCaptchaState();
-            this.props.history.push('/wallets');
+    useEffect(() => {
+        if (requireEmailVerification) {
+            history.push('/email-verification', { email: email });
         }
+    }, [requireEmailVerification, history]);
 
-        if (nextProps.requireEmailVerification) {
-            this.props.history.push('/email-verification', { email: email });
+    useEffect(() => {
+        if (isLoggedIn) {
+            history.push('/wallets');
         }
-    }
+    }, [isLoggedIn, history]);
 
-    public componentWillUnmount() {
-        this.props.resetCaptchaState();
-    }
+    const refreshError = useCallback(() => {
+        setEmailError('');
+        setPasswordError('');
+    }, []);
 
-    public renderCaptcha = () => {
-        const { error } = this.props;
+    const handleChangeOtpCode = useCallback((value: string) => {
+        setError2fa('');
+        setOtpCode(value);
+    }, []);
 
-        return (
-            <Captcha error={error} />
+    const handleSignIn = useCallback(() => {
+        dispatch(
+            signIn({
+                email,
+                password,
+            })
         );
-    };
+    }, [dispatch, email, password]);
 
-    public render() {
-        const { loading, require2FA } = this.props;
-
-        const className = cx('pg-sign-in-screen__container', { loading });
-
-        return (
-            <div className="pg-sign-in-screen">
-                <div className={className}>{require2FA ? this.render2FA() : this.renderSignInForm()}</div>
-            </div>
-        );
-    }
-
-    private renderSignInForm = () => {
-        const {
-            configs,
-            loading,
-            captcha_response,
-            reCaptchaSuccess,
-            geetestCaptchaSuccess,
-        } = this.props;
-        const { email, emailError, emailFocused, password, passwordError, passwordFocused } = this.state;
-
-        return (
-            <SignInComponent
-                email={email}
-                emailError={emailError}
-                emailFocused={emailFocused}
-                emailPlaceholder={this.props.intl.formatMessage({ id: 'page.header.signIn.email' })}
-                password={password}
-                passwordError={passwordError}
-                passwordFocused={passwordFocused}
-                passwordPlaceholder={this.props.intl.formatMessage({ id: 'page.header.signIn.password' })}
-                labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn' })}
-                labelSignUp={this.props.intl.formatMessage({ id: 'page.header.signUp' })}
-                emailLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.email' })}
-                passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.password' })}
-                receiveConfirmationLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.receiveConfirmation' })}
-                forgotPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signIn.forgotPassword' })}
-                isLoading={loading}
-                onForgotPassword={this.forgotPassword}
-                onSignUp={this.handleSignUp}
-                onSignIn={this.handleSignIn}
-                handleChangeFocusField={this.handleFieldFocus}
-                isFormValid={this.validateForm}
-                refreshError={this.refreshError}
-                changeEmail={this.handleChangeEmailValue}
-                changePassword={this.handleChangePasswordValue}
-                captchaType={configs.captcha_type}
-                renderCaptcha={this.renderCaptcha()}
-                reCaptchaSuccess={reCaptchaSuccess}
-                geetestCaptchaSuccess={geetestCaptchaSuccess}
-                captcha_response={captcha_response}
-            />
-        );
-    };
-
-    private render2FA = () => {
-        const { loading } = this.props;
-        const { otpCode, error2fa, codeFocused } = this.state;
-
-        return (
-            <TwoFactorAuth
-                isLoading={loading}
-                onSubmit={this.handle2FASignIn}
-                title={this.props.intl.formatMessage({ id: 'page.password2fa' })}
-                label={this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' })}
-                buttonLabel={this.props.intl.formatMessage({ id: 'page.header.signIn' })}
-                message={this.props.intl.formatMessage({ id: 'page.password2fa.message' })}
-                codeFocused={codeFocused}
-                otpCode={otpCode}
-                error={error2fa}
-                handleOtpCodeChange={this.handleChangeOtpCode}
-                handleChangeFocusField={this.handle2faFocus}
-                handleClose2fa={this.handleClose}
-            />
-        );
-    };
-
-    private refreshError = () => {
-        this.setState({
-            emailError: '',
-            passwordError: '',
-        });
-    };
-
-    private handleChangeOtpCode = (value: string) => {
-        this.setState({
-            error2fa: '',
-            otpCode: value,
-        });
-    };
-
-    private handleSignIn = () => {
-        const { email, password } = this.state;
-        const { configs: { captcha_type }, captcha_response } = this.props;
-
-        if (captcha_type !== 'none' && captchaLogin()) {
-            this.props.signIn({ email, password, captcha_response });
-        } else {
-            this.props.signIn({ email, password });
-        }
-    };
-
-    private handle2FASignIn = () => {
-        const { email, password, otpCode } = this.state;
-        const { configs: { captcha_type }, captcha_response } = this.props;
-
+    const handle2FASignIn = useCallback(() => {
         if (!otpCode) {
-            this.setState({
-                error2fa: 'Please enter 2fa code',
-            });
+            setError2fa('Please enter 2fa code');
         } else {
-            if (captcha_type !== 'none' && captchaLogin()) {
-                this.props.signIn({ email, password, captcha_response, otp_code: otpCode });
-            } else {
-                this.props.signIn({ email, password, otp_code: otpCode });
+            dispatch(
+                signIn({
+                    email,
+                    password,
+                    otp_code: otpCode,
+                })
+            );
+        }
+    }, [dispatch, otpCode, email, password]);
+
+    const handleSignUp = useCallback(() => {
+        history.push('/signup');
+    }, [history]);
+
+    const forgotPassword = useCallback(() => {
+        history.push('/forgot_password');
+    }, [history]);
+
+    const handleFieldFocus = useCallback(
+        (field: string) => {
+            switch (field) {
+                case 'email':
+                    setEmailFocused(!emailFocused);
+                    break;
+                case 'password':
+                    setPasswordFocused(!passwordFocused);
+                    break;
+                default:
+                    break;
             }
-        }
-    };
+        },
+        [emailFocused, passwordFocused]
+    );
 
-    private handleSignUp = () => {
-        this.props.history.push('/signup');
-    };
+    const handle2faFocus = useCallback(() => {
+        setCodeFocused(!codeFocused);
+    }, [codeFocused]);
 
-    private forgotPassword = () => {
-        this.props.history.push('/forgot_password');
-    };
-
-    private handleFieldFocus = (field: string) => {
-        switch (field) {
-            case 'email':
-                this.setState(prev => ({
-                    emailFocused: !prev.emailFocused,
-                }));
-                break;
-            case 'password':
-                this.setState(prev => ({
-                    passwordFocused: !prev.passwordFocused,
-                }));
-                break;
-            default:
-                break;
-        }
-    };
-
-    private handle2faFocus = () => {
-        this.setState(prev => ({
-            codeFocused: !prev.codeFocused,
-        }));
-    };
-
-    private validateForm = () => {
-        const { email, password } = this.state;
+    const validateForm = useCallback(() => {
         const isEmailValid = email.match(EMAIL_REGEX);
 
         if (!isEmailValid) {
-            this.setState({
-                emailError: this.props.intl.formatMessage({ id: ERROR_INVALID_EMAIL }),
-                passwordError: '',
-            });
+            setEmailError(formatMessage({ id: ERROR_INVALID_EMAIL }));
+            setPasswordError('');
 
             return;
         }
         if (!password) {
-            this.setState({
-                emailError: '',
-                passwordError: this.props.intl.formatMessage({ id: ERROR_EMPTY_PASSWORD }),
-            });
+            setEmailError('');
+            setPasswordError(formatMessage({ id: ERROR_EMPTY_PASSWORD }));
 
             return;
         }
-    };
+    }, [email, password, formatMessage]);
 
-    private handleChangeEmailValue = (value: string) => {
-        this.setState({
-            email: value,
-        });
-    };
+    const handleChangeEmailValue = useCallback((value: string) => {
+        setEmail(value);
+    }, []);
 
-    private handleChangePasswordValue = (value: string) => {
-        this.setState({
-            password: value,
-        });
-    };
+    const handleChangePasswordValue = useCallback((value: string) => {
+        setPassword(value);
+    }, []);
 
-    private handleClose = () => {
-        this.props.signInRequire2FA({ require2fa: false });
-    };
-}
+    const handleClose = useCallback(() => {
+        dispatch(signInRequire2FA({ require2fa: false }));
+    }, [dispatch]);
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
-    alert: selectAlertState(state),
-    error: selectSignInError(state),
-    isLoggedIn: selectUserLoggedIn(state),
-    loading: selectUserFetching(state),
-    require2FA: selectSignInRequire2FA(state),
-    requireEmailVerification: selectSignUpRequireVerification(state),
-    configs: selectConfigs(state),
-    captcha_response: selectCaptchaResponse(state),
-    reCaptchaSuccess: selectRecaptchaSuccess(state),
-    geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),
-});
-
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    signIn: data => dispatch(signIn(data)),
-    signInError: error => dispatch(signInError(error)),
-    signInRequire2FA: payload => dispatch(signInRequire2FA(payload)),
-    resetCaptchaState: () => dispatch(resetCaptchaState()),
-    signUpRequireVerification: data => dispatch(signUpRequireVerification(data)),
-});
-
-export const SignInScreen = compose(
-    injectIntl,
-    withRouter,
-    connect(mapStateToProps, mapDispatchToProps),
-)(SignIn) as React.ComponentClass;
+    return (
+        <div className="pg-sign-in-screen">
+            <div className={cx('pg-sign-in-screen__container', { loading })}>
+                {require2FA ? (
+                    <TwoFactorAuth
+                        isLoading={loading}
+                        onSubmit={handle2FASignIn}
+                        title={formatMessage({ id: 'page.password2fa' })}
+                        label={formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' })}
+                        buttonLabel={formatMessage({ id: 'page.header.signIn' })}
+                        message={formatMessage({ id: 'page.password2fa.message' })}
+                        codeFocused={codeFocused}
+                        otpCode={otpCode}
+                        error={error2fa}
+                        handleOtpCodeChange={handleChangeOtpCode}
+                        handleChangeFocusField={handle2faFocus}
+                        handleClose2fa={handleClose}
+                    />
+                ) : (
+                    <SignInComponent
+                        email={email}
+                        emailError={emailError}
+                        emailFocused={emailFocused}
+                        emailPlaceholder={formatMessage({ id: 'page.header.signIn.email' })}
+                        password={password}
+                        passwordError={passwordError}
+                        passwordFocused={passwordFocused}
+                        passwordPlaceholder={formatMessage({ id: 'page.header.signIn.password' })}
+                        labelSignIn={formatMessage({ id: 'page.header.signIn' })}
+                        labelSignUp={formatMessage({ id: 'page.header.signUp' })}
+                        emailLabel={formatMessage({ id: 'page.header.signIn.email' })}
+                        passwordLabel={formatMessage({ id: 'page.header.signIn.password' })}
+                        receiveConfirmationLabel={formatMessage({
+                            id: 'page.header.signIn.receiveConfirmation',
+                        })}
+                        forgotPasswordLabel={formatMessage({ id: 'page.header.signIn.forgotPassword' })}
+                        isLoading={loading}
+                        onForgotPassword={forgotPassword}
+                        onSignUp={handleSignUp}
+                        onSignIn={handleSignIn}
+                        handleChangeFocusField={handleFieldFocus}
+                        isFormValid={validateForm}
+                        refreshError={refreshError}
+                        changeEmail={handleChangeEmailValue}
+                        changePassword={handleChangePasswordValue}
+                    />
+                )}
+            </div>
+        </div>
+    );
+};
