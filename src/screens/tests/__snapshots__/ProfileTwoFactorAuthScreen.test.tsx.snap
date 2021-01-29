@@ -139,6 +139,11 @@ exports[`ProfileTwoFactorAuthScreen test should render 1`] = `
               class="pg-profile-two-factor-auth__body--input"
             >
               <div
+                class="hidden-label"
+              >
+                2FA code
+              </div>
+              <div
                 class="custom-input"
               >
                 <label />
