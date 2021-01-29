@@ -1230,6 +1230,7 @@ exports[`Markets should render empty data 1`] = `
         "success.documents.accepted": "Documents upload was successful",
         "success.email.confirmed": "Your email address has been successfully confirmed",
         "success.identity.accepted": "Identity upload was successful",
+        "success.internal.transfer.created": "Internal transfer was created",
         "success.message.sent": "Message was sent",
         "success.order.canceled": "Order was cancelled",
         "success.order.canceled.all": "All orders were cancelled",

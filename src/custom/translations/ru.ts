@@ -990,6 +990,7 @@ export const ru: LangType = {
     'account.internal_transfer.invalid_otp': 'Invalid otp',
     'account.internal_transfer.insufficient_balance': 'Insufficient_balance',
     'account.internal_transfer.can_not_tranfer_to_yourself': 'Can not tranfer to yourself',
+    'success.internal.transfer.created': 'Internal transfer was created',
 
     ...nationalitiesNames,
     ...mobileTranslationsRu,
