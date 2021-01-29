@@ -799,6 +799,7 @@ export const en = {
 
     'resource.documents.missing_doc_expire': 'Documents expiration date is missing',
     'resource.documents.empty_doc_expire': 'Documents expiration date is missing or empty',
+    'resource.documents.expire_not_a_date' : 'Documents expiration is not a date',
     'resource.documents.missing_doc_type': 'Documents type is missing',
     'resource.documents.empty_doc_type': 'Documents type is missing or empty',
     'resource.documents.missing_doc_number': 'Documents number is missing',

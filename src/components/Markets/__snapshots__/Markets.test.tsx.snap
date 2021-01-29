@@ -1154,6 +1154,7 @@ exports[`Markets should render empty data 1`] = `
         "resource.documents.empty_doc_expire": "Documents expiration date is missing or empty",
         "resource.documents.empty_doc_number": "Documents number is missing or empty",
         "resource.documents.empty_doc_type": "Documents type is missing or empty",
+        "resource.documents.expire_not_a_date": "Documents expiration is not a date",
         "resource.documents.limit_reached": "Maximum number of documents already reached",
         "resource.documents.limit_will_be_reached": "Documents amount will reach limit by this upload",
         "resource.documents.missing_doc_expire": "Documents expiration date is missing",
