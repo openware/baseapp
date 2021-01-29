@@ -801,6 +801,7 @@ export const ru: LangType = {
 
     'resource.documents.missing_doc_expire': 'Дата документа отсутствует',
     'resource.documents.empty_doc_expire': 'Дата документа отсутствует',
+    'resource.documents.expire_not_a_date' : 'Дата документа отсутствует',
     'resource.documents.missing_doc_type': 'Тип документа отсутствует',
     'resource.documents.empty_doc_type': 'Тип документа отсутствует',
     'resource.documents.missing_doc_number': 'Номер документа отсутствует',
