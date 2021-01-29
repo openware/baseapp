@@ -1,293 +1,293 @@
 .pg-profile-two-factor-auth {
-    display: block;
-    margin: 0 auto;
-    width: 535px;
+  display: block;
+  margin: 0 auto;
+  width: 535px;
 
-    &__header {
-        background: var(--subheader-background-color);
-        border-bottom: 2px solid var(--divider-color-level-2);
-        color: var(--primary-text-color);
+  &__header {
+    background: var(--subheader-background-color);
+    border-bottom: 2px solid var(--divider-color-level-2);
+    color: var(--primary-text-color);
+    font-size: calc(var(--gap) * 2.33);
+    font-style: normal;
+    height: calc(var(--gap) * 9.66);
+    line-height: calc(var(--gap) * 9.66);
+    text-transform: uppercase;
+
+    img {
+      cursor: pointer;
+    }
+  }
+
+  &__copyablefield {
+    display: flex;
+    justify-content: space-between;
+    padding-left: calc(var(--gap) * 11.5);
+    position: relative;
+
+    &__container {
+      position: relative;
+      width: 100%;
+
+      legend {
+        background: var(--input-background-color);
         font-size: calc(var(--gap) * 2.33);
-        font-style: normal;
-        height: calc(var(--gap) * 9.66);
-        line-height: calc(var(--gap) * 9.66);
-        text-transform: uppercase;
+        left: 5%;
+        padding: 0 3px;
+        position: absolute;
+        top: -10px;
+        width: auto;
+        z-index: 5;
+      }
 
-        img {
-            cursor: pointer;
+      &:focus-within {
+        legend {
+          color: var(--input-legend-color-active);
         }
+      }
     }
 
-    &__copyablefield {
-        display: flex;
-        justify-content: space-between;
-        padding-left: calc(var(--gap) * 11.5);
-        position: relative;
+    fieldset {
+      background: inherit;
+      border: 1px solid var(--input-border-color);
+      border-radius: calc(var(--gap) * 0.66);
+      flex-grow: 1;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
 
-        &__container {
-            position: relative;
-            width: 100%;
+      .cr-copyable-text-field {
+        padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
 
-            legend {
-                background: var(--input-background-color);
-                font-size: calc(var(--gap) * 2.33);
-                left: 5%;
-                padding: 0 3px;
-                position: absolute;
-                top: -10px;
-                width: auto;
-                z-index: 5;
+        .input-group {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+
+          .custom-input {
+            width: 70%;
+
+            label {
+              margin-top: -18px;
             }
+          }
 
-            &:focus-within {
-                legend {
-                    color: var(--input-legend-color-active);
-                }
-            }
+          .btn-primary {
+            border-radius: 0.3rem;
+          }
         }
+      }
 
-        fieldset {
-            background: inherit;
-            border: 1px solid var(--input-border-color);
-            border-radius: calc(var(--gap) * 0.66);
-            flex-grow: 1;
-            overflow: hidden;
-            position: relative;
-            width: 100%;
+      &:focus-within {
+        border: 1px solid var(--input-border-color-active) !important;
+        border-radius: calc(var(--gap) * 0.66);
+        overflow: hidden;
 
-            .cr-copyable-text-field {
-                padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
-
-                .input-group {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-
-                    .custom-input {
-                        width: 70%;
-
-                        label {
-                            margin-top: -18px;
-                        }
-                    }
-
-                    .btn-primary {
-                        border-radius: 0.3rem;
-                    }
-                }
-            }
-
-            &:focus-within {
-                border: 1px solid var(--input-border-color-active) !important;
-                border-radius: calc(var(--gap) * 0.66);
-                overflow: hidden;
-
-                legend {
-                    color: var(--input-legend-color-active) !important;
-                }
-            }
-
-            .cr-deposit-crypto__copyable-title {
-                margin-top: calc(var(--gap) * -1.5);
-                position: absolute;
-                width: max-content;
-            }
-
-            .pg-copyable-text-field {
-                &__input {
-                    border: none;
-                    padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
-
-                    input {
-                        background: transparent;
-                        box-sizing: border-box;
-                        color: var(--input-text-color);
-                    }
-                }
-            }
+        legend {
+          color: var(--input-legend-color-active) !important;
         }
-    }
+      }
 
-    &__body {
-        fieldset {
-            border: 1px solid var(--input-border-color);
-            border-radius: calc(var(--gap) * 0.6);
+      .cr-deposit-crypto__copyable-title {
+        margin-top: calc(var(--gap) * -1.5);
+        position: absolute;
+        width: max-content;
+      }
+
+      .pg-copyable-text-field {
+        &__input {
+          border: none;
+          padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
+
+          input {
+            background: transparent;
             box-sizing: border-box;
             color: var(--input-text-color);
-            height: calc(var(--gap) * 6.56);
-            margin: calc(var(--gap) * 2) 0;
-            max-width: 100%;
-            padding-left: 0;
-            float: right;
-            width: auto;
-
-            &:focus-within {
-                border-color: var(--input-border-color-active);
-                color: var(--input-text-color-active);
-            }
-
-            .hidden-label {
-                font-size: 1.25rem;
-                height: 0;
-                padding: 0 10px;
-                visibility: hidden;
-            }
-
-            input {
-                background: transparent;
-                border: unset;
-                bottom: 0;
-                color: var(--input-text-color);
-                font-size: calc(var(--gap) * 2);
-                margin-top: calc(var(--gap) * 1.16);
-
-                &::placeholder {
-                    color: var(--input-placeholder-color);
-                }
-            }
+          }
         }
-
-        &--input {
-            padding: 0;
-            position: relative;
-            width: 100%;
-
-            .custom-input {
-                padding: 0;
-
-                .input-group {
-                    padding: 0;
-
-                    input {
-                        margin-top: 0;
-                        padding: 0 0 0 10px;
-                    }
-                }
-            }
-        }
-
-        &--text {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            &--last {
-                justify-content: center;
-
-                span {
-                    font-size: calc(var(--font-size) * 3);
-                }
-            }
-
-            span {
-                font-size: calc(var(--font-size) * 3);
-            }
-
-            &--group {
-                align-items: center;
-                display: flex;
-                margin: calc(var(--gap) * 2) 0;
-
-                a {
-                    color: var(--primary-cta-color);
-                }
-
-                span {
-                    font-size: var(--font-size);
-                }
-
-                div {
-                    padding: 0 calc(var(--gap) * 1.5) 0 calc(var(--gap) * 4.16);
-                }
-            }
-        }
-
-        .pg-profile-two-factor-auth__qr {
-            height: calc(var(--big-gap) * 2.66);
-        }
-
-        .cr-input {
-            width: 100%;
-
-            input {
-                color: var(--input-text-color);
-                font-size: var(--font-size);
-                text-align: left;
-                width: 100%;
-            }
-        }
+      }
     }
+  }
 
-    &__form {
-        background: var(--body-background-color);
-        box-shadow: 0 10px 15px var(--shadow-color-level-2);
+  &__body {
+    fieldset {
+      border: 1px solid var(--input-border-color);
+      border-radius: calc(var(--gap) * 0.6);
+      box-sizing: border-box;
+      color: var(--input-text-color);
+      height: calc(var(--gap) * 6.56);
+      margin: calc(var(--gap) * 2) 0;
+      max-width: 100%;
+      padding-left: 0;
+      float: right;
+      width: auto;
 
-        .cr-copyable-text-field {
-            border: none;
+      &:focus-within {
+        border-color: var(--input-border-color-active);
+        color: var(--input-text-color-active);
+      }
 
-            input {
-                margin: 0;
-            }
-        }
-    }
+      .hidden-label {
+        font-size: 1.25rem;
+        height: 0;
+        padding: 0 10px;
+        visibility: hidden;
+      }
 
-    &__error {
-        color: var(--system-red);
-    }
-
-    &__info {
+      input {
+        background: transparent;
+        border: unset;
+        bottom: 0;
         color: var(--input-text-color);
+        font-size: calc(var(--gap) * 2);
+        margin-top: calc(var(--gap) * 1.16);
+
+        &::placeholder {
+          color: var(--input-placeholder-color);
+        }
+      }
     }
+
+    &--input {
+      padding: 0;
+      position: relative;
+      width: 100%;
+
+      .custom-input {
+        padding: 0;
+
+        .input-group {
+          padding: 0;
+
+          input {
+            margin-top: 0;
+            padding: 0 0 0 10px;
+          }
+        }
+      }
+    }
+
+    &--text {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &--last {
+        justify-content: center;
+
+        span {
+          font-size: calc(var(--font-size) * 3);
+        }
+      }
+
+      span {
+        font-size: calc(var(--font-size) * 3);
+      }
+
+      &--group {
+        align-items: center;
+        display: flex;
+        margin: calc(var(--gap) * 2) 0;
+
+        a {
+          color: var(--primary-cta-color);
+        }
+
+        span {
+          font-size: var(--font-size);
+        }
+
+        div {
+          padding: 0 calc(var(--gap) * 1.5) 0 calc(var(--gap) * 4.16);
+        }
+      }
+    }
+
+    .pg-profile-two-factor-auth__qr {
+      height: calc(var(--big-gap) * 2.66);
+    }
+
+    .cr-input {
+      width: 100%;
+
+      input {
+        color: var(--input-text-color);
+        font-size: var(--font-size);
+        text-align: left;
+        width: 100%;
+      }
+    }
+  }
+
+  &__form {
+    background: var(--body-background-color);
+    box-shadow: 0 10px 15px var(--shadow-color-level-2);
 
     .cr-copyable-text-field {
-        border-color: var(--input-border-color);
+      border: none;
 
-        input {
-            color: var(--input-text-color);
-            font-size: var(--font-size);
-        }
+      input {
+        margin: 0;
+      }
     }
+  }
+
+  &__error {
+    color: var(--system-red);
+  }
+
+  &__info {
+    color: var(--input-text-color);
+  }
+
+  .cr-copyable-text-field {
+    border-color: var(--input-border-color);
+
+    input {
+      color: var(--input-text-color);
+      font-size: var(--font-size);
+    }
+  }
 }
 
 @media (min-width: 992px) {
-    .pg-profile-two-factor-auth__qr {
-        height: calc(var(--big-gap) * 2) !important;
-        padding-left: 0 !important;
-    }
+  .pg-profile-two-factor-auth__qr {
+    height: calc(var(--big-gap) * 2) !important;
+    padding-left: 0 !important;
+  }
 }
 
 @media (max-width: 991px) {
-    .pg-profile-two-factor-auth {
-        width: 100%;
-    }
+  .pg-profile-two-factor-auth {
+    width: 100%;
+  }
 
-    .pg-profile-two-factor-auth__qr {
-        height: calc(var(--big-gap) * 1.8) !important;
-    }
+  .pg-profile-two-factor-auth__qr {
+    height: calc(var(--big-gap) * 1.8) !important;
+  }
 }
 
 @media (max-width: 767px) {
-    .pg-profile-two-factor-auth {
-        width: 100%;
-    }
+  .pg-profile-two-factor-auth {
+    width: 100%;
+  }
 
-    .pg-profile-two-factor-auth__qr {
-        display: block;
-        height: calc(var(--big-gap) * 5) !important;
-        margin: 0 auto;
-    }
+  .pg-profile-two-factor-auth__qr {
+    display: block;
+    height: calc(var(--big-gap) * 5) !important;
+    margin: 0 auto;
+  }
 }
 
 @media (max-width: 576px) {
-    .pg-profile-two-factor-auth__qr {
-        display: block;
-        height: calc(var(--big-gap) * 3) !important;
-        margin: 0 auto;
-    }
+  .pg-profile-two-factor-auth__qr {
+    display: block;
+    height: calc(var(--big-gap) * 3) !important;
+    margin: 0 auto;
+  }
 
-    .pg-profile-two-factor-auth__body {
-        fieldset {
-            float: none;
-        }
+  .pg-profile-two-factor-auth__body {
+    fieldset {
+      float: none;
     }
+  }
 }
