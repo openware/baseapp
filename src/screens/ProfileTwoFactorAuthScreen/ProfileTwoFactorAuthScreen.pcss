@@ -118,11 +118,19 @@
             margin: calc(var(--gap) * 2) 0;
             max-width: 100%;
             padding-left: 0;
-            width: 100%;
+            float: right;
+            width: auto;
 
             &:focus-within {
                 border-color: var(--input-border-color-active);
                 color: var(--input-text-color-active);
+            }
+
+            .hidden-label {
+                font-size: 1.25rem;
+                height: 0;
+                padding: 0 10px;
+                visibility: hidden;
             }
 
             input {
@@ -152,8 +160,7 @@
 
                     input {
                         margin-top: 0;
-                        padding: 0;
-                        padding-left: 10px;
+                        padding: 0 0 0 10px;
                     }
                 }
             }
@@ -276,5 +283,11 @@
         display: block;
         height: calc(var(--big-gap) * 3) !important;
         margin: 0 auto;
+    }
+
+    .pg-profile-two-factor-auth__body {
+        fieldset {
+            float: none;
+        }
     }
 }
