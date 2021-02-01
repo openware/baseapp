@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { validateBeneficiaryAddress } from '../../helpers/validateBeneficiaryAddress';
 import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesCreate,
@@ -10,7 +11,6 @@ import {
     selectMobileDeviceState,
 } from '../../modules';
 import { CustomInput } from '../CustomInput';
-import { validateBeneficiaryAddress } from '../../helpers/validateBeneficiaryAddress';
 
 interface Props {
     currency: string;
@@ -338,7 +338,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     }, [coinAddress, coinBeneficiaryName, coinDescription, coinDestinationTag]);
 
     const handleSubmitAddAddressFiatModal = React.useCallback(() => {
-        let data: BeneficiaryBank = {
+        const data: BeneficiaryBank = {
             full_name: fiatFullName,
             account_number: fiatAccountNumber,
             bank_name: fiatBankName,

@@ -34,15 +34,18 @@ const chainTokenMap = (tokenName: string) => {
             return chain;
         }
     }
+
     return '';
 };
 
 cryptoAddress.cryptocurrency = (cryptoCurrency, exact) => {
     if (cryptoRegExps.hasOwnProperty(cryptoCurrency)) {
         const bodyExp = cryptoRegExps[cryptoCurrency];
+
         return buildRegExp(bodyExp, exact);
     } else if (chainTokenMap(cryptoCurrency)) {
         const bodyExp = cryptoRegExps[chainTokenMap(cryptoCurrency)];
+
         return buildRegExp(bodyExp, exact);
     } else {
         // throw new Error('Unsupported cryptocurrency');
