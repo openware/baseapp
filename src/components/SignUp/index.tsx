@@ -10,8 +10,8 @@ import {
     EMAIL_REGEX,
     ERROR_LONG_USERNAME,
     ERROR_SHORT_USERNAME,
-    USERNAME_REGEX,
     PASSWORD_REGEX,
+    USERNAME_REGEX,
 } from '../../helpers';
 import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
