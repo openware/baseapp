@@ -26,6 +26,8 @@ export const InternalTransferComponent = () => {
 
     const [show, setShow] = useState(false);
 
+    const BALANCE_FETCH_TIMEOUT = 2000;
+
     React.useEffect(() => {
         if (!wallets.length) {
             dispatch(walletsFetch());
@@ -56,6 +58,7 @@ export const InternalTransferComponent = () => {
         setCurrency('');
         setAmount('');
         setOtp('');
+        setTimeout(() => {  dispatch(walletsFetch()) }, BALANCE_FETCH_TIMEOUT);
     }, [username, otp, amount, currency, dispatch]);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
