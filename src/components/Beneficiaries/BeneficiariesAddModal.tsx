@@ -87,6 +87,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         if (clear) {
             handleClearModalsInputs();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [handleToggleAddAddressModal]);
 
     const renderAddAddressModalHeader = React.useMemo(() => {
@@ -103,6 +104,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 </div>
             </div>
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formatMessage]);
 
     const handleSubmitAddAddressCoinModal = React.useCallback(() => {
@@ -117,6 +119,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
 
         dispatch(beneficiariesCreate(payload));
         handleClearModalsInputs();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [coinAddress, coinBeneficiaryName, coinDescription, currency]);
 
     const getState = React.useCallback(key => {
@@ -238,6 +241,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
             default:
                 break;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleChangeFieldFocus = React.useCallback((key: string) => {
@@ -303,6 +307,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 />
             </div>
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formatMessage, getState]);
 
     const renderInvalidAddressMessage = React.useMemo(() => {
@@ -311,6 +316,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
               <span className="pg-beneficiaries__error-text">{formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.invalidAddress' })}</span>
           </div>
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [coinAddress]);
 
     const renderAddAddressModalCryptoBody = React.useMemo(() => {
@@ -335,6 +341,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 </div>
             </div>
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [coinAddress, coinBeneficiaryName, coinDescription, coinDestinationTag]);
 
     const handleSubmitAddAddressFiatModal = React.useCallback(() => {
@@ -355,6 +362,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
 
         dispatch(beneficiariesCreate(payload));
         handleClearModalsInputs();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         fiatAccountNumber,
         fiatBankName,
@@ -389,6 +397,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 </div>
             </div>
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         fiatAccountNumber,
         fiatBankName,
@@ -414,6 +423,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 </div>
             </div>
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [type, isMobileDevice, getState]);
 
     return (
