@@ -1,4 +1,4 @@
-import moment from 'moment-timezone/builds/moment-timezone.min.js';
+import moment from 'moment-timezone';
 
 let timezone = '';
 export const getTimezone = () => timezone.length > 0 ? timezone : moment.tz.guess();

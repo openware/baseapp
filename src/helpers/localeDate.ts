@@ -1,4 +1,4 @@
-import moment from 'moment-timezone/builds/moment-timezone.min.js';
+import moment from 'moment-timezone';
 import { getTimezone } from './timezone';
 
 export const localeDate = (date, format, timezone = getTimezone()) => {
