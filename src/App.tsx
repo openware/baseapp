@@ -3,14 +3,14 @@ import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Route, Router, Switch } from 'react-router';
+import { Router } from 'react-router';
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
 import { useSetMobileDevice } from './hooks';
 import * as mobileTranslations from './mobile/translations';
-import { selectCurrentLanguage, selectMobileDeviceState } from './modules';
-import { SignInScreen } from './screens';
+import { selectCurrentColorTheme, selectCurrentLanguage, selectMobileDeviceState } from './modules';
 import { languageMap } from './translations';
+import { ThemeProvider } from '@openware/react-components';
 
 const gaKey = gaTrackerKey();
 const browserHistory = createBrowserHistory();
@@ -55,8 +55,8 @@ const RenderDeviceContainers = () => {
         return (
             <div className="pg-mobile-app">
                 <MobileHeader />
-                <AlertsContainer/>
-                <LayoutContainer/>
+                <AlertsContainer />
+                <LayoutContainer />
                 <MobileFooter />
             </div>
         );
@@ -78,15 +78,18 @@ export const App = () => {
     useSetMobileDevice();
     const lang = useSelector(selectCurrentLanguage);
     const isMobileDevice = useSelector(selectMobileDeviceState);
+    const colorTheme = useSelector(selectCurrentColorTheme);
 
     return (
         <IntlProvider locale={lang} messages={getTranslations(lang, isMobileDevice)} key={lang}>
             <Router history={browserHistory}>
-                <ErrorWrapper>
-                    <React.Suspense fallback={null}>
-                        <RenderDeviceContainers />
-                    </React.Suspense>
-                </ErrorWrapper>
+                <ThemeProvider theme={colorTheme || 'dark'}>
+                    <ErrorWrapper>
+                        <React.Suspense fallback={null}>
+                            <RenderDeviceContainers />
+                        </React.Suspense>
+                    </ErrorWrapper>
+                </ThemeProvider>
             </Router>
         </IntlProvider>
     );

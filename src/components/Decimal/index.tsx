@@ -75,7 +75,7 @@ const formatWithSeparators = (value: string, thousSep?: string, floatSep?: strin
 };
 
 class Decimal extends React.Component<DecimalProps> {
-    public static format(value: DecimalProps['children'], precision: number, thousSep?: string, floatSep?: string) {
+    public static format(value: DecimalProps['children'], precision: number, thousSep: string = ",", floatSep: string = ".") {
         if (typeof value === 'undefined') {
             return '0';
         }

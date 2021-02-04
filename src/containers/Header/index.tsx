@@ -89,7 +89,7 @@ class Head extends React.Component<Props> {
                     {this.renderMobileWalletNav()}
                     <div className="pg-header__navbar">
                         {this.renderMarketToolbar()}
-                        <NavBar onLinkChange={this.closeMenu} />
+                        <NavBar />
                     </div>
                 </div>
             </header>

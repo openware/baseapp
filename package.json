@@ -12,7 +12,7 @@
         "@formatjs/intl-relativetimeformat": "^7.0.0",
         "@ionic/cli": "^6.11.11",
         "@openware/cryptofont": "2.3.0",
-        "@openware/react-components": "^0.0.5",
+        "@openware/react-components": "^0.0.8",
         "@sentry/browser": "^5.17.0",
         "@types/ws": "^6.0.4",
         "@typescript-eslint/eslint-plugin": "^3.10.1",
