@@ -7,6 +7,7 @@ import {
     selectCurrentMarket,
     selectMarketSelectorState,
 } from '../../../modules';
+import searchIcon from '../icons/search.svg';
 import {
     MarketsList,
 } from './MarketsList';
@@ -51,7 +52,7 @@ class MarketSelectorComponent extends React.Component<ReduxProps, State> {
                     <div className={'pg-trading-header-selector-search-wrapper'}>
                         <div className={searchSelectorClassName}>
                             <div className="pg-trading-header-selector-search-icon">
-                                <img alt="" src={require('../icons/search.svg')} />
+                                <img alt="" src={searchIcon} />
                             </div>
                             <input
                                 className="pg-trading-header-selector-search-field"
