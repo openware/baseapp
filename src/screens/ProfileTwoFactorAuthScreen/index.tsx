@@ -108,8 +108,8 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                             <div className="d-inline">
                                 <span className="cr-item-number">1   </span>
                                 <span className="cr-item-text">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.1')}</span>
-                                <a target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/ru/app/google-authenticator/id388497605?mt=8">AppStore </a>
-                                <span className="cr-item-text">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.or')}</span>
+                                <a target="_blank" rel="noopener noreferrer" href="https://apps.apple.com/app/google-authenticator/id388497605?mt=8">AppStore</a>
+                                <span className="cr-item-text"> {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.or')}</span>
                                 <a target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl">Google play</a>
                             </div>
                         </div>
