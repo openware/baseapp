@@ -274,6 +274,7 @@ export const en = {
     'page.body.history.deposit.content.status.canceled': 'Cancelled',
     'page.body.history.deposit.content.status.rejected': 'Rejected',
     'page.body.history.deposit.content.status.skipped': 'Skipped',
+    'page.body.history.deposit.content.status.processing': 'Processing',
 
     'page.body.history.withdraw': 'Withdrawal History',
     'page.body.history.withdraw.header.id': 'ID',
