@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { all, call } from 'redux-saga/effects';
+import { FormStateMap, reducer as formReducer } from 'redux-form';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
@@ -70,6 +71,7 @@ export * from './public/memberLevels';
 export * from './public/blocklistAccess';
 
 export interface RootState {
+    form: Readonly<FormStateMap>;
     public: {
         alerts: AlertState;
         blocklistAccess: BlocklistAccessState;
@@ -115,6 +117,7 @@ export interface RootState {
 }
 
 export const rootReducer = combineReducers({
+    form: formReducer,
     public: publicReducer,
     user: userReducer,
 });

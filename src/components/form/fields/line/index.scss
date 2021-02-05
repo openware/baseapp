@@ -1,0 +1,16 @@
+.form-line {
+    position: relative;
+    &__group {
+        z-index: 0;
+    }
+    &__error {
+        padding: 1px 4px;
+        font-size: 10px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background-color: red;
+        color: white;
+        z-index: 1;
+    }
+}

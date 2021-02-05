@@ -1,5 +1,7 @@
 import { DropdownElem } from '../components/Order';
 
+export * from './form';
+
 export const PG_TITLE_PREFIX = 'Cryptobase';
 
 export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
