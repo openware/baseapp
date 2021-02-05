@@ -319,6 +319,7 @@ exports[`Markets should render empty data 1`] = `
         "page.body.history.deposit.content.status.accepted": "Accepted",
         "page.body.history.deposit.content.status.canceled": "Cancelled",
         "page.body.history.deposit.content.status.collected": "Collected",
+        "page.body.history.deposit.content.status.processing": "Processing",
         "page.body.history.deposit.content.status.rejected": "Rejected",
         "page.body.history.deposit.content.status.skipped": "Skipped",
         "page.body.history.deposit.content.status.submitted": "Submitted",
