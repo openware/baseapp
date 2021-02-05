@@ -8,7 +8,7 @@ export const useSetMobileDevice = () => {
 
     React.useEffect(() => {
         const handleResize = () => {
-            const isMobileDeviceCurrent = (window.innerWidth < 768) || (window.innerHeight < 600);
+            const isMobileDeviceCurrent = (window.innerWidth < 768) || (window.innerHeight < 500);
 
             if (isMobileDevice !== isMobileDeviceCurrent) {
                 dispatch(setMobileDevice(isMobileDeviceCurrent));
