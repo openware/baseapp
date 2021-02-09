@@ -19,6 +19,7 @@ interface OwnProps extends OwnPropsTranslations {
     id?: string;
     exampleImagePath?: string;
     uploadedFile?: string;
+    accept?: string;
 }
 
 type Props = OwnProps;
@@ -34,6 +35,7 @@ const UploadFileComponent: React.FC<Props> = ({
     id,
     isMobileDevice,
     uploadedFile,
+    accept = "application/pdf,image/jpeg,image/png",
     handleUploadScan,
 }) => {
     const [isMouseTooltipVisible, setIsMouseTooltipVisible] = useState<boolean>(false);
@@ -70,6 +72,7 @@ const UploadFileComponent: React.FC<Props> = ({
                 {label ? <label>{label}</label> : null}
                 <div className="pg-upload-file__content__form">
                     <input
+                        accept={accept}
                         className="pg-upload-file__content__form__input"
                         data-multiple-caption="files selected"
                         draggable={true}
