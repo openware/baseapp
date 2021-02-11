@@ -35,7 +35,7 @@ const UploadFileComponent: React.FC<Props> = ({
     id,
     isMobileDevice,
     uploadedFile,
-    accept = "application/pdf,image/jpeg,image/png",
+    accept = 'application/pdf,image/jpeg,image/png',
     handleUploadScan,
 }) => {
     const [isMouseTooltipVisible, setIsMouseTooltipVisible] = useState<boolean>(false);
