@@ -63,7 +63,7 @@ export const ru: LangType = {
     'page.body.trade.orderbook.header.amount': 'Кол.',
     'page.body.trade.orderbook.header.volume': 'Объем',
 
-    'page.body.trade.header.recentTrades': 'История торгов рынка',
+    'page.body.trade.header.recentTrades': 'Торги',
     'page.body.trade.header.recentTrades.content.time': 'Время',
     'page.body.trade.header.recentTrades.content.price': 'Цена',
     'page.body.trade.header.recentTrades.content.amount': 'Кол.',

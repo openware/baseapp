@@ -100,10 +100,6 @@ const TradingWrapper = props => {
                 render: () => <OrderBook size={orderBookComponentResized} />,
             },
             {
-                i: 4,
-                render: () => <MarketDepthsComponent />,
-            },
-            {
                 i: 5,
                 render: () => <OpenOrdersComponent/>,
             },

@@ -843,7 +843,7 @@ exports[`Markets should render empty data 1`] = `
         "page.body.trade.header.openOrders.content.price": "Price",
         "page.body.trade.header.openOrders.content.state": "State",
         "page.body.trade.header.openOrders.content.total": "Value",
-        "page.body.trade.header.recentTrades": "Recent Trades",
+        "page.body.trade.header.recentTrades": "Trades",
         "page.body.trade.header.recentTrades.content.amount": "Amount",
         "page.body.trade.header.recentTrades.content.price": "Price",
         "page.body.trade.header.recentTrades.content.time": "Time",

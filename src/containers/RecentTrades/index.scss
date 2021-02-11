@@ -1,3 +1,65 @@
 .trade-history-widget {
     flex: 1;
+
+    .widget-frame__tabs {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 13px;
+        width: 100%;
+    }
+
+    .vtable__body {
+        .vcell {
+            align-items: center;
+            display: flex;
+            font-size: 11px;
+            height: 25px;
+
+            span:first-child.highlight__opacity,
+            span:first-child.cr-decimal__opacity {
+                opacity: 0.6;
+            }
+
+            &--buy {
+                color: var(--bids);
+            }
+
+            &--sell {
+                color: var(--asks);
+            }
+        }
+    }
+
+    .vtable__row {
+        padding: 0 13px;
+    }
+
+    .tabs {
+        .tab {
+            align-items: center;
+
+            p {
+                margin-bottom: 0;
+            }
+
+            &--active {
+                padding-top: 2px;
+            }
+        }
+
+        &__nav {
+            border-bottom: none;
+
+            &-wrapper {
+                height: 35px;
+                padding: 0;
+            }
+        }
+
+        &__panel {
+            display: none;
+        }
+    }
 }

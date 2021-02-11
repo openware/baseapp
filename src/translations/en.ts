@@ -66,7 +66,7 @@ export const en = {
     'page.body.trade.orderbook.header.amount': 'Amount',
     'page.body.trade.orderbook.header.volume': 'Total',
 
-    'page.body.trade.header.recentTrades': 'Recent Trades',
+    'page.body.trade.header.recentTrades': 'Trades',
     'page.body.trade.header.recentTrades.content.time': 'Time',
     'page.body.trade.header.recentTrades.content.price': 'Price',
     'page.body.trade.header.recentTrades.content.amount': 'Amount',
