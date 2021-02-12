@@ -53,12 +53,12 @@ For more options for `jest` run `yarn test --help`.
 
 ## Configuration documentation
 
-Configuration file is located in  `public/config/env.js`
+Configuration file is fetched from sonic in  `public/config.js`
 
 
 | Argument                 | Description                                                  |
 | --------------------- | ------------------------------------------------------------ |
-| `api`    | URLs of `barong`, `peatio`, `applogic` and `ranger` API endpoints. You can use mockserver (<https://github.com/openware/mockserver>) with default `env.js` values |
+| `api`    | URLs of `barong`, `peatio`, `applogic` and `ranger` API endpoints. You can use mockserver (<https://github.com/openware/mockserver>) with default values |
 | `minutesUntilAutoLogout`                |  Autologout time in minutes  |
 | `withCredentials`               |  `false` or `true` if you want to include cookies as part of the request(https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials)   |
 | `gaTrackerKey` |  Google Analytics tracker key  |

@@ -21,7 +21,6 @@ stats.json
 .env.test.local
 .env.production.local
 .env
-env.js
 
 npm-debug.log*
 yarn-debug.log*
