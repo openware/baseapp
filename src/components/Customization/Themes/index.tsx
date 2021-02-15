@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { SettingsIcon } from '../../../assets/images/customization/SettingsIcon';
-import { DropdownComponent } from '../../../components';
+import { DropdownComponent, TabPanel } from '../../../components';
 import {
     CustomizationCurrentDataInterface,
     CustomizationDataInterface,
@@ -18,10 +18,12 @@ export const handleConvertColorCode = (value: string, fromRGB?: boolean) => (
 );
 
 interface OwnProps {
-    translate: (key: string) => string;
+    colorTheme: string;
     resetToDefault: boolean;
-    handleTriggerChartRebuild?: () => void;
+    handleSetCurrentColorTheme: (value: string) => void;
+    translate: (key: string) => string;
     handleSetCurrentCustomization: (key: string, value: string | number) => void;
+    handleTriggerChartRebuild?: () => void;
     currentCustomization?: CustomizationCurrentDataInterface;
     customization?: CustomizationDataInterface;
 }
@@ -30,6 +32,7 @@ type Props = OwnProps;
 
 interface State {
     colorSettingsItem: ThemeColorTitleInterface;
+    currentTabIndex: number;
     currentThemeIndex: number;
 }
 
@@ -42,6 +45,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
     public state = {
         colorSettingsItem: defaultColorSettingsItem,
         currentThemeIndex: 0,
+        currentTabIndex: 0,
     };
 
     public componentDidMount() {
@@ -64,7 +68,11 @@ export class CustomizationThemes extends React.Component<Props, State> {
     }
 
     public componentDidUpdate(prevProps: Props) {
-        const { customization, resetToDefault } = this.props;
+        const {
+            colorTheme,
+            customization,
+            resetToDefault,
+        } = this.props;
 
         if (customization && customization !== prevProps.customization) {
             this.handleApplyCustomizationSettings(customization);
@@ -75,6 +83,14 @@ export class CustomizationThemes extends React.Component<Props, State> {
                 this.handleResetCustomizationSettings(customization);
             } else {
                 this.handleChangeCurrentTheme(0);
+            }
+        }
+
+        if (colorTheme !== prevProps.colorTheme) {
+            if (colorTheme === 'dark') {
+                this.setState({ currentTabIndex: 0 });
+            } else {
+                this.setState({ currentTabIndex: 1 });
             }
         }
     }
@@ -128,14 +144,34 @@ export class CustomizationThemes extends React.Component<Props, State> {
         );
     }
 
+    public renderTabs = () => {
+        const { translate } = this.props;
+        const { currentTabIndex } = this.state;
+
+        return [
+            {
+                content: currentTabIndex === 0 ? this.renderColors() : null,
+                label: translate('page.body.customization.themes.tabs.dark'),
+            },
+            {
+                content: currentTabIndex === 1 ? this.renderColors() : null,
+                label: translate('page.body.customization.themes.tabs.light'),
+            },
+        ];
+    };
+
     public render() {
         const { handleTriggerChartRebuild, translate } = this.props;
-        const { colorSettingsItem } = this.state;
+        const { colorSettingsItem, currentTabIndex } = this.state;
 
         return (
             <div className="pg-customization-themes">
                 {this.renderThemesDropdown()}
-                {this.renderColors()}
+                <TabPanel
+                    panels={this.renderTabs()}
+                    onTabChange={this.handleChangeTab}
+                    currentTabIndex={currentTabIndex}
+                />
                 <ColorSettings
                     handleCloseColorSettings={this.handleSetColorSettingsItem}
                     item={colorSettingsItem}
@@ -145,6 +181,20 @@ export class CustomizationThemes extends React.Component<Props, State> {
             </div>
         );
     }
+
+    private handleChangeTab = (index: number) => {
+        const { handleSetCurrentColorTheme } = this.props;
+
+        if (index === 0) {
+            handleSetCurrentColorTheme('dark');
+        } else {
+            handleSetCurrentColorTheme('light');
+        }
+
+        this.setState({
+            currentTabIndex: index,
+        });
+    };
 
     private handleGetThemesTitlesList = () => {
         const { translate } = this.props;

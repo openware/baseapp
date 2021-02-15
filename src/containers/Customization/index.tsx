@@ -14,11 +14,13 @@ import {
     TabPanel,
 } from '../../components';
 import {
+    changeColorTheme,
     CustomizationCurrentDataInterface,
     CustomizationDataInterface,
     customizationUpdate,
     customizationUpdateCurrent,
     RootState,
+    selectCurrentColorTheme,
     selectCustomizationCurrent,
     selectCustomizationData,
     selectUserLoggedIn,
@@ -29,15 +31,17 @@ import { AVAILABLE_COLORS_TITLES, ThemeColorInterface } from '../../themes';
 import '../../styles/customization/style.pcss';
 
 interface ReduxProps {
+    colorTheme: string;
     currentCustomization?: CustomizationCurrentDataInterface;
     customization?: CustomizationDataInterface;
     userLoggedIn: boolean;
 }
 
 interface DispatchProps {
+    changeColorTheme: typeof changeColorTheme;
+    customizationUpdate: typeof customizationUpdate;
     customizationUpdateCurrent: typeof customizationUpdateCurrent;
     toggleChartRebuild: typeof toggleChartRebuild;
-    customizationUpdate: typeof customizationUpdate;
 }
 
 type Props = ReduxProps & RouterProps & DispatchProps & IntlProps;
@@ -56,19 +60,26 @@ class CustomizationContainer extends React.Component<Props, State> {
     };
 
     public renderTabs = () => {
-        const { currentCustomization, customization } = this.props;
+        const {
+            colorTheme,
+            currentCustomization,
+            customization,
+            changeColorTheme,
+        } = this.props;
         const { currentTabIndex, resetToDefault } = this.state;
 
         return [
             {
                 content: currentTabIndex === 0 ? (
                     <CustomizationThemes
-                        translate={this.translate}
+                        colorTheme={colorTheme}
+                        currentCustomization={currentCustomization}
                         customization={customization}
                         resetToDefault={resetToDefault}
-                        handleTriggerChartRebuild={this.handleTriggerChartRebuild}
+                        handleSetCurrentColorTheme={changeColorTheme}
                         handleSetCurrentCustomization={this.handleSetCurrentCustomization}
-                        currentCustomization={currentCustomization}
+                        handleTriggerChartRebuild={this.handleTriggerChartRebuild}
+                        translate={this.translate}
                     />
                 ) : null,
                 label: this.translate('page.body.customization.tabs.themes'),
@@ -202,6 +213,7 @@ class CustomizationContainer extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
+    colorTheme: selectCurrentColorTheme(state),
     currentCustomization: selectCustomizationCurrent(state),
     customization: selectCustomizationData(state),
     userLoggedIn: selectUserLoggedIn(state),
@@ -209,6 +221,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
+        changeColorTheme: payload => dispatch(changeColorTheme(payload)),
         customizationUpdate: payload => dispatch(customizationUpdate(payload)),
         customizationUpdateCurrent: payload => dispatch(customizationUpdateCurrent(payload)),
         toggleChartRebuild: () => dispatch(toggleChartRebuild()),
