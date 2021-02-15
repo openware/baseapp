@@ -26,6 +26,8 @@ import {
 } from '../../modules';
 import { AVAILABLE_COLORS_TITLES, ThemeColorInterface } from '../../themes';
 
+import '../../styles/customization/style.pcss';
+
 interface ReduxProps {
     currentCustomization?: CustomizationCurrentDataInterface;
     customization?: CustomizationDataInterface;

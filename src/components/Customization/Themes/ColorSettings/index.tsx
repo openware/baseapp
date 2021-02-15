@@ -51,7 +51,13 @@ export class ColorSettings extends React.Component<Props, State> {
                     >
                         <ArrowIcon />
                     </div>
-                    {item.title ? <span>{translate(item.title)}</span> : null}
+                    {item.title ? (
+                        <span
+                            className="pg-customization-color-settings__header__title"
+                        >
+                            {translate(item.title)}
+                        </span>
+                    ) : null}
                 </div>
                 <div className="pg-customization-color-settings__body">
                     <SketchPicker
