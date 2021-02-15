@@ -45,3 +45,4 @@ export * from './WalletList';
 export * from './MetaMaskButton';
 
 export * from './SetupInfoBlock';
+export * from './SetupFormBlock';
