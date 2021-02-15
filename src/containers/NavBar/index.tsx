@@ -33,7 +33,7 @@ class NavBarComponent extends React.Component<Props> {
         const { colorTheme } = this.props;
 
         return (
-            <div className={'pg-navbar'}>
+            <div className="pg-navbar">
                 <div className="pg-navbar__header-settings">
                     <div className="pg-navbar__header-settings__switcher">
                         <div

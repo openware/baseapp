@@ -68,6 +68,7 @@ import {
     TradingScreen,
     VerificationScreen,
     WalletsScreen,
+    SetupScreen,
 } from '../../screens';
 
 interface ReduxProps {
@@ -293,6 +294,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         return (
             <div className={`container-fluid pg-layout ${tradingCls}`}>
                 <Switch>
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/setup" component={SetupScreen} />
                     <Route exact={true} path="/magic-link" component={MagicLink} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />
