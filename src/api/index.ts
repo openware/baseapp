@@ -4,7 +4,7 @@ import { JsonBody, makeRequest } from './requestBuilder';
 export * from './config';
 
 export interface RequestOptions {
-    apiVersion: 'applogic' | 'peatio' | 'barong' | 'finex';
+    apiVersion: 'applogic' | 'peatio' | 'barong' | 'finex' | 'sonic';
     withHeaders?: boolean;
     headers?: any;
 }
@@ -72,9 +72,3 @@ export const API: ApiWrapper = {
             config
         ),
 };
-
-const conf: RequestOptions = {
-    apiVersion: 'barong',
-};
-
-export const changePassword = async (body) => API.post(conf)('/identity/users/password/confirm_code', body);

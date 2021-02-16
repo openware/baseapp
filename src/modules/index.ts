@@ -3,7 +3,6 @@ import { all, call } from 'redux-saga/effects';
 import { publicReducer, userReducer } from './app';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
-import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
 import { CustomizationState, rootCustomizationSaga } from './public/customization';
 import { ErrorHandlerState, rootErrorHandlerSaga } from './public/errorHandler';
@@ -21,6 +20,7 @@ import { rootApiKeysSaga } from './user/apiKeys/sagas';
 import { AuthState, rootAuthSaga } from './user/auth';
 import { BeneficiariesState, rootBeneficiariesSaga } from './user/beneficiaries';
 import { GeetestCaptchaState, rootGeetestCaptchaSaga } from './user/captcha';
+import { ConfigUpdateState, rootConfigUpdateSaga } from './user/config';
 import { CustomizationUpdateState, rootCustomizationUpdateSaga } from './user/customization';
 import { DocumentationState, rootDocumentationSaga } from './user/documentation';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
@@ -42,7 +42,6 @@ import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit'
 export * from './public/markets';
 export * from './public/orderBook';
 export * from './public/globalSettings';
-export * from './public/configs';
 export * from './public/currencies';
 export * from './public/customization';
 export * from './public/errorHandler';
@@ -53,6 +52,7 @@ export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';
 export * from './user/captcha';
+export * from './user/config';
 export * from './user/customization';
 export * from './user/documentation';
 export * from './user/wallets';
@@ -74,7 +74,6 @@ export interface RootState {
         alerts: AlertState;
         blocklistAccess: BlocklistAccessState;
         colorTheme: ColorThemeState;
-        configs: ConfigsState;
         currencies: CurrenciesState;
         customization: CustomizationState;
         rgl: GridLayoutState;
@@ -94,6 +93,7 @@ export interface RootState {
         auth: AuthState;
         beneficiaries: BeneficiariesState;
         captcha: GeetestCaptchaState;
+        configUpdate: ConfigUpdateState;
         customizationUpdate: CustomizationUpdateState;
         documentation: DocumentationState;
         history: HistoryState;
@@ -125,7 +125,7 @@ export function* rootSaga() {
         call(rootAuthSaga),
         call(rootBeneficiariesSaga),
         call(rootBlocklistAccessSaga),
-        call(rootConfigsSaga),
+        call(rootConfigUpdateSaga),
         call(rootCurrenciesSaga),
         call(rootCustomizationSaga),
         call(rootCustomizationUpdateSaga),

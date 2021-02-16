@@ -39,5 +39,9 @@ Access-Control-Allow-Credentials: true
         "address"
     ],
     "captchaLogin": false,
-    "usernameEnabled": false
+    "usernameEnabled": false,
+    "session_expire_time": 5000,
+    "captcha_type": "none",
+    "captcha_id": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+    "password_min_entropy": 14
 }

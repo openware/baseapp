@@ -13,10 +13,8 @@ import { setDocumentTitle } from '../../helpers';
 import {
     changeForgotPasswordFetch,
     changeLanguage,
-    Configs,
     entropyPasswordFetch,
     RootState, selectChangeForgotPasswordSuccess,
-    selectConfigs,
     selectCurrentPasswordEntropy,
     selectMobileDeviceState,
 } from '../../modules';
@@ -28,7 +26,6 @@ interface ChangeForgottenPasswordState {
 interface ReduxProps {
     changeForgotPassword?: boolean;
     isMobileDevice: boolean;
-    configs: Configs;
     currentPasswordEntropy: number;
 }
 
@@ -79,7 +76,7 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
     }
 
     public render() {
-        const { isMobileDevice, configs, currentPasswordEntropy } = this.props;
+        const { isMobileDevice, currentPasswordEntropy } = this.props;
 
         return (
             <div className="pg-change-forgotten-password-screen">
@@ -87,7 +84,6 @@ class ChangeForgottenPasswordComponent extends React.Component<Props, ChangeForg
                     <ChangePassword
                         handleChangePassword={this.handleSendNewPassword}
                         title={!isMobileDevice && this.props.intl.formatMessage({id: 'page.header.signIn.resetPassword.title'})}
-                        configs={configs}
                         currentPasswordEntropy={currentPasswordEntropy}
                         fetchCurrentPasswordEntropy={this.props.fetchCurrentPasswordEntropy}
                         hideOldPassword={true}
@@ -110,7 +106,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     changeForgotPassword: selectChangeForgotPasswordSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
     currentPasswordEntropy: selectCurrentPasswordEntropy(state),
-    configs: selectConfigs(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
