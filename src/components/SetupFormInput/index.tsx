@@ -29,7 +29,7 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
             <div className="setup-form-input">
                 <label>{label}</label>
                 <div className="setup-form-input__input">
-                    <input type={type || 'text'} onChange={e => this.handleChangeValue(e)} value={value} />
+                    <input autoComplete="false" type={type || 'text'} onChange={e => this.handleChangeValue(e)} value={value} />
                     { tooltipText && this.renderTooltipInfo() }
                 </div>
             </div>

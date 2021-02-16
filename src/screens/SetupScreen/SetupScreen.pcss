@@ -1,6 +1,6 @@
 .setup-screen {
   display: flex;
-  height: 100vh;
+  height: 100%;
   justify-content: flex-start;
   width: 100%;
 
@@ -29,18 +29,83 @@
     padding-top: 48px;
 
     &__term {
-      align-items: center;
-      display: flex;
-
-      input {
+      .container {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        font-size: 12px;
         height: 24px;
-        width: 24px;
+        margin-bottom: 12px;
+        padding-left: 35px;
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
       }
 
-      &__label {
-        margin-left: 13px;
+      .container input {
+        cursor: pointer;
+        height: 0;
+        opacity: 0;
+        position: absolute;
+        width: 0;
+      }
+
+      .checkmark {
+        background-color: var(--secondary-contrast-cta-color-level-1);
+        border-radius: 4px;
+        height: 25px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 25px;
+      }
+
+      .container:hover input ~ .checkmark {
+        background-color: var(--secondary-contrast-cta-color-level-2);
+      }
+
+      .container input:checked ~ .checkmark {
+        background-color: var(--primary-cta-color);
+      }
+
+      .checkmark::after {
+        content: "";
+        display: none;
+        position: absolute;
+      }
+
+      .container input:checked ~ .checkmark::after {
+        display: block;
+      }
+
+      .container .checkmark::after {
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        height: 13px;
+        left: 9px;
+        top: 5px;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        width: 7px;
+      }
+
+      a {
+        margin-left: 4px;
       }
     }
+
+    button {
+      height: 40px;
+      width: 75px;
+    }
+  }
+
+  &__save-general-settings {
+    display: flex;
+    justify-content: flex-end;
 
     button {
       height: 40px;

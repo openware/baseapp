@@ -12,7 +12,7 @@ export class AdminAccountForm extends React.Component<AdminAccountFormProps> {
         const { email, password, confirmPassword } = this.props;
 
         return (
-            <form className="admin-account-form">
+            <form className="admin-account-form" autoComplete="off">
                 <SetupFormInput 
                     label="Email"
                     value={email}
