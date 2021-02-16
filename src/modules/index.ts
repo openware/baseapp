@@ -36,6 +36,7 @@ import { ProfileState, rootProfileSaga } from './user/profile';
 import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
+import { rootSecretsSaga, SecretsState } from './user/secrets';
 
 export * from './admin/config';
 export * from './public/markets';
@@ -64,6 +65,7 @@ export * from './user/emailVerification';
 export * from './user/withdrawLimit';
 export * from './public/memberLevels';
 export * from './public/blocklistAccess';
+export * from './user/secrets';
 
 export interface RootState {
     public: {
@@ -100,6 +102,7 @@ export interface RootState {
         ordersHistory: OrdersHistoryState;
         password: PasswordState;
         profile: ProfileState;
+        secrets: SecretsState;
         sendEmailVerification: EmailVerificationState;
         userActivity: UserActivityState;
         wallets: WalletsState;
@@ -148,5 +151,6 @@ export function* rootSaga() {
         call(rootUserActivitySaga),
         call(rootWalletsSaga),
         call(rootWithdrawLimitSaga),
+        call(rootSecretsSaga),
     ]);
 }

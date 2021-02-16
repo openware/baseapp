@@ -44,8 +44,4 @@ export * from './WalletItem';
 export * from './WalletList';
 export * from './MetaMaskButton';
 
-export * from './SetupInfoBlock';
-export * from './SetupFormBlock';
-export * from './GeneralSettingForm';
-export * from './AdminAccountForm';
-export * from './SetupFormInput';
+export * from './SetupComponents';

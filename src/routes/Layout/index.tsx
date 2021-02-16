@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
@@ -250,7 +251,9 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             platformAccessStatus,
         } = this.props;
         const { isShownExpSessionModal } = this.state;
-        const tradingCls = location.pathname.includes('/trading') ? 'trading-layout' : '';
+        const desktopCls = classnames('container-fluid pg-layout', {
+            'trading-layout': location.pathname.includes('/trading'),
+        });
         toggleColorTheme(colorTheme);
 
         if (!platformAccessStatus.length) {
@@ -259,7 +262,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 
         if (isMobileDevice) {
             return (
-                <div className={'container-fluid pg-layout pg-layout--mobile'}>
+                <div className="container-fluid pg-layout pg-layout--mobile">
                     <Switch>
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpMobileScreen} />
@@ -292,7 +295,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         }
 
         return (
-            <div className={`container-fluid pg-layout ${tradingCls}`}>
+            <div className={desktopCls}>
                 <Switch>
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/setup" component={SetupScreen} />
                     <Route exact={true} path="/magic-link" component={MagicLink} />

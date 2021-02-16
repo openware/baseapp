@@ -3,7 +3,7 @@ import * as React from 'react';
 export interface SetupFormBlockProps {
     title: string;
     subtitle: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 export class SetupFormBlock extends React.Component<SetupFormBlockProps> {
@@ -18,10 +18,22 @@ export class SetupFormBlock extends React.Component<SetupFormBlockProps> {
                 <div className="setup-form-block__subtitle">
                     {subtitle}
                 </div>
-                <div className="setup-form-block__children">
-                    {children}
-                </div>
+                {this.renderChildren()}
             </div>
         );
     }
+
+    public renderChildren = () => {
+        const { children } = this.props;
+
+        if (children) {
+            return (
+                <div className="setup-form-block__children">
+                    {children}
+                </div>
+            );
+        }
+
+        return null;
+    };
 }

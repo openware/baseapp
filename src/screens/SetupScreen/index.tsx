@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { SetupInfoBlock, SetupFormBlock, GeneralSettingForm, AdminAccountForm } from '../../components';
+import {
+    SetupInfoBlock,
+    SetupFormBlock,
+    SetupGeneralSettingsForm,
+    SetupRegisterForm,
+    SetupMarketsBlock,
+} from '../../components';
 import logo from '../../assets/images/setup/logo.svg';
 import bgStep1 from '../../assets/images/setup/step1-background.png';
 import bgStep2 from '../../assets/images/setup/step2-background.png';
@@ -65,7 +71,7 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
                                     title="Admin account"
                                     subtitle="Create the first admin account for your exchange to access the admin panel."
                                 >
-                                    <AdminAccountForm
+                                    <SetupRegisterForm
                                         email={email}
                                         password={password}
                                         confirmPassword={confirmPassword}
@@ -109,7 +115,7 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
                                     title="General Settings"
                                     subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint."
                                 >
-                                    <GeneralSettingForm 
+                                    <SetupGeneralSettingsForm
                                         exchangeName={exchangeName}
                                         exchangeUrl={exchangeUrl}
                                     />
@@ -146,6 +152,7 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
                                     title="Select Markets"
                                     subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
                                 >
+                                    <SetupMarketsBlock />
                                     <Button
                                         block={true}
                                         type="button"
@@ -176,9 +183,7 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
                                 <SetupFormBlock
                                     title="Congratulations  exchange is live!"
                                     subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-                                >
-                                    children
-                                </SetupFormBlock>
+                                />
                             </div>
                         </div>
                     </React.Fragment>
