@@ -32,7 +32,9 @@ export const defaultConfig: Config = {
         'profile',
         'document',
         'address'
-    ]
+    ],
+    captcha_type: 'none',
+    password_min_entropy: 0,
 };
 
 export const Cryptobase = {
@@ -42,27 +44,30 @@ export const Cryptobase = {
 Cryptobase.config = { ...defaultConfig, ...window.env };
 Cryptobase.config.storage = { ...defaultConfig.storage, ...Cryptobase.config.storage };
 
-export const tradeUrl = (): string => Cryptobase.config.api.tradeUrl;
-export const authUrl = (): string => Cryptobase.config.api.authUrl;
-export const applogicUrl = (): string => Cryptobase.config.api.applogicUrl;
-export const rangerUrl = (): string => Cryptobase.config.api.rangerUrl;
-export const finexUrl = (): string => Cryptobase.config.api.finexUrl || tradeUrl();
-export const withCredentials = (): boolean => Cryptobase.config.withCredentials;
-export const incrementalOrderBook = (): boolean => Cryptobase.config.incrementalOrderBook;
-export const isResizableGrid = (): boolean => Cryptobase.config.isResizable;
-export const isDraggableGrid = (): boolean => Cryptobase.config.isDraggable;
-export const isFinexEnabled = (): boolean => Cryptobase.config.finex ;
-export const showLanding = (): boolean => Cryptobase.config.showLanding;
-export const sentryEnabled = (): boolean => Cryptobase.config.sentryEnabled;
-export const captchaLogin = (): boolean => Cryptobase.config.captchaLogin;
-export const minutesUntilAutoLogout = (): string => Cryptobase.config.minutesUntilAutoLogout;
-export const sessionCheckInterval = (): string => Cryptobase.config.sessionCheckInterval;
-export const balancesFetchInterval = (): string => Cryptobase.config.balancesFetchInterval;
-export const gaTrackerKey = (): string => Cryptobase.config.gaTrackerKey;
-export const msAlertDisplayTime = (): string => Cryptobase.config.msAlertDisplayTime;
-export const defaultStorageLimit = (): number => Number(Cryptobase.config.storage.defaultStorageLimit);
-export const orderBookSideLimit = (): number => Number(Cryptobase.config.storage.orderBookSideLimit);
-export const passwordEntropyStep = (): number => Number(Cryptobase.config.passwordEntropyStep);
-export const languages: string[] = (Cryptobase.config.languages && Cryptobase.config.languages.length > 0) ? Cryptobase.config.languages : ['en'];
-export const kycSteps = (): string[] => Cryptobase.config.kycSteps;
-export const isUsernameEnabled = (): boolean => Cryptobase.config.usernameEnabled;
+export const tradeUrl = () => Cryptobase.config.api.tradeUrl;
+export const authUrl = () => Cryptobase.config.api.authUrl;
+export const applogicUrl = () => Cryptobase.config.api.applogicUrl;
+export const rangerUrl = () => Cryptobase.config.api.rangerUrl;
+export const finexUrl = () => Cryptobase.config.api.finexUrl || tradeUrl();
+export const withCredentials = () => Cryptobase.config.withCredentials;
+export const incrementalOrderBook = () => Cryptobase.config.incrementalOrderBook;
+export const isResizableGrid = () => Cryptobase.config.isResizable;
+export const isDraggableGrid = () => Cryptobase.config.isDraggable;
+export const isFinexEnabled = () => Cryptobase.config.finex;
+export const showLanding = () => Cryptobase.config.showLanding;
+export const sentryEnabled = () => Cryptobase.config.sentryEnabled;
+export const captchaLogin = () => Cryptobase.config.captchaLogin;
+export const minutesUntilAutoLogout = () => Cryptobase.config.minutesUntilAutoLogout;
+export const sessionCheckInterval = () => Cryptobase.config.sessionCheckInterval;
+export const balancesFetchInterval = () => Cryptobase.config.balancesFetchInterval;
+export const gaTrackerKey = () => Cryptobase.config.gaTrackerKey;
+export const msAlertDisplayTime = () => Cryptobase.config.msAlertDisplayTime;
+export const defaultStorageLimit = () => Number(Cryptobase.config.storage.defaultStorageLimit);
+export const orderBookSideLimit = () => Number(Cryptobase.config.storage.orderBookSideLimit);
+export const passwordEntropyStep = () => Number(Cryptobase.config.passwordEntropyStep);
+export const languages = (Cryptobase.config.languages && Cryptobase.config.languages.length > 0) ? Cryptobase.config.languages : ['en'];
+export const kycSteps = () => Cryptobase.config.kycSteps;
+export const isUsernameEnabled = () => Cryptobase.config.usernameEnabled;
+export const captchaType = () => Cryptobase.config.captcha_type;
+export const captchaId = () => Cryptobase.config.captcha_id;
+export const passwordMinEntropy = () => Cryptobase.config.password_min_entropy;

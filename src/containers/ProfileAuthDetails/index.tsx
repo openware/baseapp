@@ -14,10 +14,8 @@ import { isUsernameEnabled } from '../../api';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { ChangePassword, CustomInput, Modal } from '../../components';
 import {
-    Configs,
     entropyPasswordFetch,
     RootState,
-    selectConfigs,
     selectCurrentPasswordEntropy,
     selectUserInfo,
     User,
@@ -32,7 +30,6 @@ import {
 interface ReduxProps {
     user: User;
     passwordChangeSuccess?: boolean;
-    configs: Configs;
     currentPasswordEntropy: number;
 }
 
@@ -87,7 +84,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
     public render() {
         const {
             user,
-            configs,
             currentPasswordEntropy,
         } = this.props;
 
@@ -99,7 +95,6 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                         handleChangePassword={this.props.changePassword}
                         title={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.change' })}
                         closeModal={this.toggleChangeModal}
-                        configs={configs}
                         currentPasswordEntropy={currentPasswordEntropy}
                         fetchCurrentPasswordEntropy={this.props.fetchCurrentPasswordEntropy}
                     />
@@ -281,7 +276,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
     passwordChangeSuccess: selectChangePasswordSuccess(state),
     currentPasswordEntropy: selectCurrentPasswordEntropy(state),
-    configs: selectConfigs(state),
 });
 
 const mapDispatchToProps = dispatch => ({

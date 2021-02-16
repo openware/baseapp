@@ -6,7 +6,6 @@ import { ChangePassword } from '../../../components';
 import {
     changePasswordFetch,
     entropyPasswordFetch,
-    selectConfigs,
     selectCurrentPasswordEntropy,
  } from '../../../modules';
 import { Subheader } from '../../components';
@@ -29,7 +28,6 @@ const ChangePasswordScreenComponent: React.FC = () => {
         }
     };
 
-    const configs = useSelector(selectConfigs);
     const currentPasswordEntropy = useSelector(selectCurrentPasswordEntropy);
 
     return (
@@ -42,7 +40,6 @@ const ChangePasswordScreenComponent: React.FC = () => {
             <div className="pg-mobile-profile-change-password-screen">
                 <ChangePassword
                     handleChangePassword={handleChangePassword}
-                    configs={configs}
                     currentPasswordEntropy={currentPasswordEntropy}
                     fetchCurrentPasswordEntropy={fetchCurrentPasswordEntropy}
                 />

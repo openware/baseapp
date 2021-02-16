@@ -7,17 +7,16 @@ import {
 import { connect, MapStateToProps } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { captchaType } from '../../api/config';
 import { IntlProps } from '../../';
 import { Captcha } from '../../components';
 import { EMAIL_REGEX, setDocumentTitle } from '../../helpers';
 import {
-    Configs,
     emailVerificationFetch,
     GeetestCaptchaResponse,
     resetCaptchaState,
     RootState,
     selectCaptchaResponse,
-    selectConfigs,
     selectCurrentLanguage,
     selectGeetestCaptchaSuccess,
     selectMobileDeviceState,
@@ -49,7 +48,6 @@ interface DispatchProps {
 interface ReduxProps {
     emailVerificationLoading: boolean;
     isMobileDevice: boolean;
-    configs: Configs;
     captcha_response?: string | GeetestCaptchaResponse;
     reCaptchaSuccess: boolean;
     geetestCaptchaSuccess: boolean;
@@ -123,9 +121,9 @@ class EmailVerificationComponent extends React.Component<Props> {
     }
 
     private handleClick = () => {
-        const { configs, captcha_response } = this.props;
+        const { captcha_response } = this.props;
 
-        switch (configs.captcha_type) {
+        switch (captchaType()) {
             case 'recaptcha':
             case 'geetest':
                 this.props.emailVerificationFetch({
@@ -145,21 +143,21 @@ class EmailVerificationComponent extends React.Component<Props> {
 
     private disableButton = (): boolean => {
         const {
-            configs,
             location,
             geetestCaptchaSuccess,
             reCaptchaSuccess,
         } = this.props;
+        const captchaTypeValue = captchaType();
 
         if (location.state && location.state.email && !location.state.email.match(EMAIL_REGEX)) {
             return true;
         }
 
-        if (configs.captcha_type === 'recaptcha' && !reCaptchaSuccess) {
+        if (captchaTypeValue === 'recaptcha' && !reCaptchaSuccess) {
             return true;
         }
 
-        if (configs.captcha_type === 'geetest' && !geetestCaptchaSuccess) {
+        if (captchaTypeValue === 'geetest' && !geetestCaptchaSuccess) {
             return true;
         }
 
@@ -171,7 +169,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     emailVerificationLoading: selectSendEmailVerificationLoading(state),
     i18n: selectCurrentLanguage(state),
     isMobileDevice: selectMobileDeviceState(state),
-    configs: selectConfigs(state),
     error: selectSendEmailVerificationError(state),
     success: selectSendEmailVerificationSuccess(state),
     captcha_response: selectCaptchaResponse(state),

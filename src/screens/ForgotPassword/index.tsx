@@ -10,21 +10,20 @@ import {
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { IntlProps } from '../../';
+import { captchaType } from '../../api/config';
 import { Captcha, EmailForm } from '../../components';
 import {
     EMAIL_REGEX,
     ERROR_INVALID_EMAIL,
     setDocumentTitle,
 } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
-    Configs,
     forgotPassword,
     GeetestCaptchaResponse,
     resetCaptchaState,
     RootState,
     selectCaptchaResponse,
-    selectConfigs,
     selectCurrentLanguage,
     selectForgotPasswordError,
     selectForgotPasswordSuccess,
@@ -36,7 +35,6 @@ import { CommonError } from '../../modules/types';
 interface ReduxProps {
     success: boolean;
     error?: CommonError;
-    configs: Configs;
     captcha_response?: string | GeetestCaptchaResponse;
     reCaptchaSuccess: boolean;
     geetestCaptchaSuccess: boolean;
@@ -88,7 +86,6 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
             emailError,
         } = this.state;
         const {
-            configs,
             captcha_response,
             reCaptchaSuccess,
             geetestCaptchaSuccess,
@@ -111,7 +108,7 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
                             handleInputEmail={this.handleInputEmail}
                             handleFieldFocus={this.handleFocusEmail}
                             handleReturnBack={this.handleComeBack}
-                            captchaType={configs.captcha_type}
+                            captchaType={captchaType()}
                             renderCaptcha={this.renderCaptcha()}
                             reCaptchaSuccess={reCaptchaSuccess}
                             geetestCaptchaSuccess={geetestCaptchaSuccess}
@@ -125,9 +122,9 @@ class ForgotPasswordComponent extends React.Component<Props, ForgotPasswordState
 
     private handleChangePassword = () => {
         const { email } = this.state;
-        const { configs, captcha_response } = this.props;
+        const { captcha_response } = this.props;
 
-        switch (configs.captcha_type) {
+        switch (captchaType()) {
             case 'recaptcha':
             case 'geetest':
                 this.props.forgotPassword({ email, captcha_response });
@@ -185,7 +182,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     success: selectForgotPasswordSuccess(state),
     error: selectForgotPasswordError(state),
     i18n: selectCurrentLanguage(state),
-    configs: selectConfigs(state),
     captcha_response: selectCaptchaResponse(state),
     reCaptchaSuccess: selectRecaptchaSuccess(state),
     geetestCaptchaSuccess: selectGeetestCaptchaSuccess(state),

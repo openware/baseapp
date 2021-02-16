@@ -37,7 +37,7 @@ describe('blacklistCountryReducer', () => {
 
     it('should handle SET_BLOCKLIST_STATUS', () => {
         const payload = {
-            status: '',
+            status: 'allowed',
         };
         const expectedState = {
             ...initialBlocklistAccessState,

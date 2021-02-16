@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { CustomInput, PasswordStrengthMeter } from '../';
 import { isUsernameEnabled } from '../../api';
+import { captchaType, passwordMinEntropy } from '../../api/config';
 import {
     EMAIL_REGEX,
     ERROR_LONG_USERNAME,
@@ -57,13 +58,11 @@ export interface SignUpFormProps {
     usernameFocused: boolean;
     emailFocused: boolean;
     passwordFocused: boolean;
-    captchaType: 'recaptcha' | 'geetest' | 'none';
     renderCaptcha: JSX.Element | null;
     reCaptchaSuccess: boolean;
     geetestCaptchaSuccess: boolean;
     captcha_response?: string | GeetestCaptchaResponse;
     currentPasswordEntropy: number;
-    minPasswordEntropy: number;
     passwordErrorFirstSolved: boolean;
     passwordErrorSecondSolved: boolean;
     passwordErrorThirdSolved: boolean;
@@ -89,7 +88,6 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     passwordFocused,
     referalCodeLabel,
     termsMessage,
-    captchaType,
     geetestCaptchaSuccess,
     hasConfirmed,
     reCaptchaSuccess,
@@ -108,7 +106,6 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     handleChangePassword,
     passwordErrorThirdSolved,
     handleFocusPassword,
-    minPasswordEntropy,
     refIdFocused,
     validateForm,
     onSignUp,
@@ -128,15 +125,19 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     const { formatMessage } = useIntl();
 
     const disableButton = React.useMemo((): boolean => {
+        const captchaTypeValue = captchaType();
+
         if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword ||
             (isUsernameEnabled() && !username.match(USERNAME_REGEX))) {
 
             return true;
         }
-        if (captchaType === 'recaptcha' && !reCaptchaSuccess) {
+
+        if (captchaTypeValue === 'recaptcha' && !reCaptchaSuccess) {
             return true;
         }
-        if (captchaType === 'geetest' && !geetestCaptchaSuccess) {
+
+        if (captchaTypeValue === 'geetest' && !geetestCaptchaSuccess) {
             return true;
         }
 
@@ -174,7 +175,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                 />
                 {password ? (
                     <PasswordStrengthMeter
-                        minPasswordEntropy={minPasswordEntropy}
+                        minPasswordEntropy={passwordMinEntropy()}
                         currentPasswordEntropy={currentPasswordEntropy}
                         passwordExist={password !== ''}
                         passwordErrorFirstSolved={passwordErrorFirstSolved}
@@ -194,7 +195,6 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
         passwordPopUp,
         handleChangePassword,
         handleFocusPassword,
-        minPasswordEntropy,
         passwordErrorFirstSolved,
         passwordErrorSecondSolved,
         passwordErrorThirdSolved,

@@ -9,7 +9,7 @@ export interface JsonBody {
 }
 
 export interface RequestOptions {
-    apiVersion: 'applogic' | 'peatio' | 'barong' | 'finex';
+    apiVersion: 'applogic' | 'peatio' | 'barong' | 'finex' | 'sonic';
     withHeaders?: boolean;
     headers?: object;
 }
@@ -20,18 +20,17 @@ export interface Request {
     body?: JsonBody;
 }
 
-export interface ApiVariety {
-    barong: string;
-    applogic: string;
-    peatio: string;
-}
+const getAPI = () => {
+    const hostUrl = window.location.hostname === 'localhost' ? 'http://localhost:9002' : '';
 
-const getAPI = () => ({
-    barong: authUrl(),
-    applogic: applogicUrl(),
-    peatio: tradeUrl(),
-    finex: finexUrl(),
-});
+    return {
+        barong: authUrl(),
+        applogic: applogicUrl(),
+        peatio: tradeUrl(),
+        finex: finexUrl(),
+        sonic: `${hostUrl}/api/v2`,
+    }
+};
 
 const buildRequest = (request: Request, configData: RequestOptions) => {
     const { body, method, url } = request;

@@ -10,7 +10,6 @@ import { LogoIcon } from '../../assets/images/LogoIcon';
 import {
     Market,
     RootState,
-    selectConfigsLoading,
     selectCurrentColorTheme,
     selectCurrentMarket,
     selectMarketSelectorState,
@@ -37,7 +36,6 @@ interface ReduxProps {
     mobileWallet: string;
     sidebarOpened: boolean;
     marketSelectorOpened: boolean;
-    configsLoading: boolean;
 }
 
 interface DispatchProps {
@@ -58,12 +56,12 @@ type Props = ReduxProps & DispatchProps & IntlProps & LocationProps;
 
 class Head extends React.Component<Props> {
     public render() {
-        const { mobileWallet, location, configsLoading } = this.props;
+        const { mobileWallet, location } = this.props;
         const tradingCls = location.pathname.includes('/trading') ? 'pg-container-trading' : '';
         const shouldRenderHeader =
             !noHeaderRoutes.some((r) => location.pathname.includes(r)) && location.pathname !== '/';
 
-        if (!shouldRenderHeader || configsLoading) {
+        if (!shouldRenderHeader) {
             return <React.Fragment />;
         }
 
@@ -156,7 +154,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     mobileWallet: selectMobileWalletUi(state),
     sidebarOpened: selectSidebarState(state),
     marketSelectorOpened: selectMarketSelectorState(state),
-    configsLoading: selectConfigsLoading(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
