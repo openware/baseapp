@@ -17,7 +17,7 @@ export const initialBlocklistAccessState: BlocklistAccessState = {
     loading: false,
     error: false,
     success: false,
-    status: '',
+    status: 'allowed',
 };
 
 export const blocklistAccessReducer = (state = initialBlocklistAccessState, action: SendAccessTokenAction) => {

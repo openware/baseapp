@@ -34,12 +34,9 @@ import {
     WalletWithdraw,
 } from '../../mobile/screens';
 import {
-    configsFetch,
     logoutFetch,
     Market,
     RootState,
-    selectConfigsLoading,
-    selectConfigsSuccess,
     selectCurrentColorTheme,
     selectCurrentMarket,
     selectMobileDeviceState,
@@ -87,12 +84,9 @@ interface ReduxProps {
     isMobileDevice: boolean;
     userLoading?: boolean;
     platformAccessStatus: string;
-    configsLoading: boolean;
-    configsSuccess: boolean;
 }
 
 interface DispatchProps {
-    fetchConfigs: typeof configsFetch;
     fetchCustomization: typeof customizationFetch;
     logout: typeof logoutFetch;
     userFetch: typeof userFetch;
@@ -180,7 +174,6 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     }
 
     public componentDidMount() {
-        this.props.fetchConfigs();
         if (
             !(this.props.location.pathname.includes('/magic-link')
             || this.props.location.pathname.includes('/404')
@@ -262,14 +255,13 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             isMobileDevice,
             userLoading,
             location,
-            configsLoading,
             platformAccessStatus,
         } = this.props;
         const { isShownExpSessionModal } = this.state;
         const tradingCls = location.pathname.includes('/trading') ? 'trading-layout' : '';
         toggleColorTheme(colorTheme);
 
-        if (configsLoading && !platformAccessStatus.length) {
+        if (!platformAccessStatus.length) {
             return renderLoader();
         }
 
@@ -422,8 +414,6 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
-    configsLoading: selectConfigsLoading(state),
-    configsSuccess: selectConfigsSuccess(state),
     colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
     customization: selectCustomizationData(state),
@@ -435,7 +425,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
-    fetchConfigs: () => dispatch(configsFetch()),
     fetchCustomization: () => dispatch(customizationFetch()),
     logout: () => dispatch(logoutFetch()),
     toggleChartRebuild: () => dispatch(toggleChartRebuild()),

@@ -1,15 +1,9 @@
 import * as React from 'react';
 import { injectIntl } from 'react-intl';
-import { connect, MapStateToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
-import { RootState, selectConfigsLoading } from '../../modules';
-
-interface ReduxProps {
-    configsLoading: boolean;
-}
 
 interface LocationProps extends RouterProps {
     location: {
@@ -23,14 +17,14 @@ const noFooterRoutes = [
     '/500',
 ];
 
-type FooterProps = LocationProps & ReduxProps & IntlProps;
+type FooterProps = LocationProps & IntlProps;
 
 class FooterComponent extends React.Component<FooterProps> {
     public render() {
-        const { location, configsLoading } = this.props;
+        const { location } = this.props;
         const shouldRenderFooter = !noFooterRoutes.some(r => location.pathname.includes(r));
 
-        if (!shouldRenderFooter || configsLoading) {
+        if (!shouldRenderFooter) {
             return <React.Fragment />;
         }
 
@@ -47,12 +41,7 @@ class FooterComponent extends React.Component<FooterProps> {
     public translate = (key: string) => this.props.intl.formatMessage({id: key});
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
-    configsLoading: selectConfigsLoading(state),
-});
-
 export const Footer = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps),
 )(FooterComponent) as React.ComponentClass;

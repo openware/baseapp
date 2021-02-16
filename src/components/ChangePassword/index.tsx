@@ -2,7 +2,7 @@ import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { PasswordStrengthMeter } from '..';
+import { passwordMinEntropy } from '../../api/config';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import {
     PASSWORD_REGEX,
@@ -11,6 +11,7 @@ import {
     passwordErrorThirdSolution,
 } from '../../helpers';
 import { CustomInput } from '../CustomInput';
+import { PasswordStrengthMeter } from '../index';
 
 export const ChangePasswordComponent = props => {
     const [oldPassword, setOldPassword] = React.useState('');
@@ -158,7 +159,7 @@ export const ChangePasswordComponent = props => {
                     />
                     {newPassword ?
                         <PasswordStrengthMeter
-                            minPasswordEntropy={props.configs.password_min_entropy}
+                            minPasswordEntropy={passwordMinEntropy()}
                             currentPasswordEntropy={props.currentPasswordEntropy}
                             passwordExist={newPassword !== ''}
                             passwordErrorFirstSolved={passwordErrorFirstSolved}

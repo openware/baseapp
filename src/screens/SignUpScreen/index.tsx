@@ -12,8 +12,8 @@ import {
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { IntlProps } from '../../';
 import { isUsernameEnabled } from '../../api';
+import { captchaType } from '../../api/config';
 import { Captcha, Modal, SignUpForm } from '../../components';
 import {
     EMAIL_REGEX,
@@ -26,14 +26,13 @@ import {
     passwordErrorThirdSolution,
     setDocumentTitle,
 } from '../../helpers';
+import { IntlProps } from '../../index';
 import {
-    Configs,
     entropyPasswordFetch, GeetestCaptchaResponse,
     LanguageState,
     resetCaptchaState,
     RootState,
     selectCaptchaResponse,
-    selectConfigs,
     selectCurrentLanguage,
     selectCurrentPasswordEntropy,
     selectGeetestCaptchaSuccess,
@@ -44,7 +43,6 @@ import {
 } from '../../modules';
 
 interface ReduxProps {
-    configs: Configs;
     requireVerification?: boolean;
     loading?: boolean;
     currentPasswordEntropy: number;
@@ -140,7 +138,6 @@ class SignUp extends React.Component<Props> {
 
     public render() {
         const {
-            configs,
             loading,
             currentPasswordEntropy,
             captcha_response,
@@ -210,13 +207,11 @@ class SignUp extends React.Component<Props> {
                         handleFocusPassword={this.handleFocusPassword}
                         handleFocusConfirmPassword={this.handleFocusConfirmPassword}
                         handleFocusRefId={this.handleFocusRefId}
-                        captchaType={configs.captcha_type}
                         renderCaptcha={this.renderCaptcha()}
                         reCaptchaSuccess={reCaptchaSuccess}
                         geetestCaptchaSuccess={geetestCaptchaSuccess}
                         captcha_response={captcha_response}
                         currentPasswordEntropy={currentPasswordEntropy}
-                        minPasswordEntropy={configs.password_min_entropy}
                         passwordErrorFirstSolved={passwordErrorFirstSolved}
                         passwordErrorSecondSolved={passwordErrorSecondSolved}
                         passwordErrorThirdSolved={passwordErrorThirdSolved}
@@ -363,7 +358,7 @@ class SignUp extends React.Component<Props> {
     };
 
     private handleSignUp = () => {
-        const { configs, i18n, captcha_response } = this.props;
+        const { i18n, captcha_response } = this.props;
         const {
             username,
             email,
@@ -386,7 +381,7 @@ class SignUp extends React.Component<Props> {
             payload = { ...payload, refId };
         }
 
-        switch (configs.captcha_type) {
+        switch (captchaType()) {
             case 'recaptcha':
             case 'geetest':
                 payload = { ...payload, captcha_response };
@@ -494,7 +489,6 @@ class SignUp extends React.Component<Props> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
-    configs: selectConfigs(state),
     i18n: selectCurrentLanguage(state),
     requireVerification: selectSignUpRequireVerification(state),
     signUpError: selectSignUpError(state),

@@ -1,13 +1,13 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
+import { rootSaga, sendError } from '../../../index';
 import { CommonError } from '../../../types';
-import { configsData, configsError, configsFetch } from '../actions';
-import { Configs } from '../types';
+import { configUpdate, configUpdateData, configUpdateError } from '../actions';
+import { ConfigUpdateDataInterface } from '../types';
 
-describe('Saga: configsFetchSaga', () => {
+describe('Saga: configUpdateSaga', () => {
     let store: MockStoreEnhanced;
     let sagaMiddleware: SagaMiddleware;
     let mockAxios: MockAdapter;
@@ -23,13 +23,15 @@ describe('Saga: configsFetchSaga', () => {
         mockAxios.reset();
     });
 
-    const fakeConfigs: Configs = {
-        captcha_type: 'none',
-        password_min_entropy: 0,
+    const fakeConfig: ConfigUpdateDataInterface = {
+        scope: 'public',
+        key: 'minutesUntilAutoLogout',
+        value: '10',
+        component: 'baseapp',
     };
 
-    const mockConfigs = () => {
-        mockAxios.onGet('/identity/configs').reply(200, fakeConfigs);
+    const mockConfigUpdate = () => {
+        mockAxios.onPost('/config').reply(200);
     };
 
     const error: CommonError = {
@@ -37,14 +39,14 @@ describe('Saga: configsFetchSaga', () => {
         code: 500,
     };
 
-    it('should fetch configs', async () => {
+    it('should update config', async () => {
         const expectedActions = [
-            configsFetch(),
-            configsData(fakeConfigs),
+            configUpdate(fakeConfig),
+            configUpdateData(fakeConfig),
         ];
 
-        mockConfigs();
-        const promise = new Promise(resolve => {
+        mockConfigUpdate();
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -54,26 +56,26 @@ describe('Saga: configsFetchSaga', () => {
             });
         });
 
-        store.dispatch(configsFetch());
+        store.dispatch(configUpdate(fakeConfig));
 
         return promise;
     });
 
 
-    it('should trigger an error on configs fetch', async () => {
+    it('should trigger an error on config update', async () => {
         const expectedActions = [
-            configsFetch(),
+            configUpdate(fakeConfig),
             sendError({
                 error,
                 processingType: 'alert',
                 extraOptions: {
-                    actionError: configsError,
+                    actionError: configUpdateError,
                 },
             }),
         ];
 
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -82,7 +84,7 @@ describe('Saga: configsFetchSaga', () => {
                 }
             });
         });
-        store.dispatch(configsFetch());
+        store.dispatch(configUpdate(fakeConfig));
 
         return promise;
     });
