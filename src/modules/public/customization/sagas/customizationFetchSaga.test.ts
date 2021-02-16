@@ -24,7 +24,7 @@ describe('Saga: customizationFetchSaga', () => {
     });
 
     const fakeCustomization: CustomizationDataInterface = {
-        settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
+        settings: '{\"theme_id\":\"1\",\"theme_colors\":{\"light\":[],\"dark\":[]}}',
     };
 
     const mockCustomization = () => {

@@ -1,23 +1,56 @@
+import { ThemeColorInterface } from '../modules';
 import {
-    DarkBlueTheme,
-    DarkRedTheme,
-    GreenTheme,
-    PurpleTheme,
-    ThemeColorInterface,
-} from './templates';
+    BlueTheme as BlueThemeDark,
+    RedTheme as RedThemeDark,
+    GreenTheme as GreenThemeDark,
+    PurpleTheme as PurpleThemeDark,
+} from './templates/dark';
+import {
+    BlueTheme as BlueThemeLight,
+    RedTheme as RedThemeLight,
+} from './templates/light';
 
-export * from './templates';
 export * from './ColorTitles';
 
 export interface ThemeInterface {
     id: number;
     title: string;
-    theme: ThemeColorInterface[];
+    themes: {
+        [key: string]: ThemeColorInterface[];
+    };
 }
 
 export const AVAILABLE_COLOR_THEMES: ThemeInterface[] = [
-    { id: 0, title: 'page.body.customization.themes.theme.darkBlue.title', theme: DarkBlueTheme },
-    { id: 1, title: 'page.body.customization.themes.theme.darkRed.title', theme: DarkRedTheme },
-    { id: 2, title: 'page.body.customization.themes.theme.purple.title', theme: PurpleTheme },
-    { id: 3, title: 'page.body.customization.themes.theme.green.title', theme: GreenTheme },
+    {
+        id: 0,
+        title: 'page.body.customization.themes.theme.darkBlue.title',
+        themes: {
+            light: BlueThemeLight,
+            dark: BlueThemeDark,
+        },
+    },
+    {
+        id: 1,
+        title: 'page.body.customization.themes.theme.darkRed.title',
+        themes: {
+            light: RedThemeLight,
+            dark: RedThemeDark,
+        },
+    },
+    {
+        id: 2,
+        title: 'page.body.customization.themes.theme.purple.title',
+        themes: {
+            light: BlueThemeLight,
+            dark: PurpleThemeDark,
+        },
+    },
+    {
+        id: 3,
+        title: 'page.body.customization.themes.theme.green.title',
+        themes: {
+            light: BlueThemeLight,
+            dark: GreenThemeDark,
+        },
+    },
 ];

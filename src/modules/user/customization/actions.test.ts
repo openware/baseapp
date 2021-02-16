@@ -5,7 +5,7 @@ import { CUSTOMIZATION_UPDATE, CUSTOMIZATION_UPDATE_DATA, CUSTOMIZATION_UPDATE_E
 
 describe('CustomizationUpdate actions', () => {
     const fakeCustomizationUpdate: CustomizationDataInterface = {
-        settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
+        settings: '{\"theme_id\":\"1\",\"theme_colors\":{\"light\":[],\"dark\":[]}}',
     };
 
     const error: CommonError = {

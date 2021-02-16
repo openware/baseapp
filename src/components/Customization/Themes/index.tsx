@@ -50,6 +50,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
 
     public componentDidMount() {
         const {
+            colorTheme,
             currentCustomization,
             customization,
         } = this.props;
@@ -63,6 +64,14 @@ export class CustomizationThemes extends React.Component<Props, State> {
         } else {
             if (customization) {
                 this.handleApplyCustomizationSettings(customization);
+            }
+        }
+
+        if (colorTheme) {
+            if (colorTheme === 'light') {
+                this.setState({ currentTabIndex: 1 });
+            } else {
+                this.setState({ currentTabIndex: 0 });
             }
         }
     }
@@ -87,10 +96,10 @@ export class CustomizationThemes extends React.Component<Props, State> {
         }
 
         if (colorTheme !== prevProps.colorTheme) {
-            if (colorTheme === 'dark') {
-                this.setState({ currentTabIndex: 0 });
-            } else {
+            if (colorTheme === 'light') {
                 this.setState({ currentTabIndex: 1 });
+            } else {
+                this.setState({ currentTabIndex: 0 });
             }
         }
     }
@@ -185,10 +194,10 @@ export class CustomizationThemes extends React.Component<Props, State> {
     private handleChangeTab = (index: number) => {
         const { handleSetCurrentColorTheme } = this.props;
 
-        if (index === 0) {
-            handleSetCurrentColorTheme('dark');
-        } else {
+        if (index === 1) {
             handleSetCurrentColorTheme('light');
+        } else {
+            handleSetCurrentColorTheme('dark');
         }
 
         this.setState({
@@ -212,18 +221,34 @@ export class CustomizationThemes extends React.Component<Props, State> {
         this.setState({ colorSettingsItem: newSettings });
     };
 
-
     private handleChangeCurrentTheme = (index: number) => {
         const { handleTriggerChartRebuild } = this.props;
         const rootElement = document.documentElement;
+        const lightModeBodyElement = document.querySelector<HTMLElement>('.light-mode')!;
         const themeToSet = AVAILABLE_COLOR_THEMES[index];
 
-        if (rootElement) {
+        this.handleClearCustomizationSettings();
+
+        if (rootElement) {    
             AVAILABLE_COLORS_TITLES.reduce((result, item) => {
-                const newItemColor = AVAILABLE_COLOR_THEMES[index].theme.find(theme => theme.key === item.key);
+                const newItemColor = AVAILABLE_COLOR_THEMES[index].themes.dark ?
+                    AVAILABLE_COLOR_THEMES[index].themes.dark.find(theme => theme.key === item.key) : null;
 
                 if (newItemColor) {
                     rootElement.style.setProperty(item.key, newItemColor.value);
+                }
+
+                return result;
+            }, {});
+        }
+
+        if (lightModeBodyElement) {    
+            AVAILABLE_COLORS_TITLES.reduce((result, item) => {
+                const newItemColor = AVAILABLE_COLOR_THEMES[index].themes.light ?
+                    AVAILABLE_COLOR_THEMES[index].themes.light.find(theme => theme.key === item.key) : null;
+
+                if (newItemColor) {
+                    lightModeBodyElement.style.setProperty(item.key, newItemColor.value);
                 }
 
                 return result;
@@ -259,12 +284,31 @@ export class CustomizationThemes extends React.Component<Props, State> {
     private handleResetCustomizationSettings = (customization: CustomizationDataInterface) => {
         const { handleTriggerChartRebuild } = this.props;
         const rootElement = document.documentElement;
+        const lightModeBodyElement = document.querySelector<HTMLElement>('.light-mode')!;
         const parsedSettings = customization && customization.settings ? JSON.parse(customization.settings) : null;
+        let shouldRebuildChart = false;
 
+        this.handleClearCustomizationSettings();
         this.handleApplyCustomizationSettings(customization);
 
-        if (rootElement && parsedSettings && parsedSettings.theme_colors) {
-            parsedSettings.theme_colors.reduce((result, item) => {
+        window.console.log('parsedSettings: ', parsedSettings);
+
+        if (lightModeBodyElement && parsedSettings?.theme_colors && parsedSettings?.theme_colors?.light) {
+            parsedSettings.theme_colors.light.reduce((result, item) => {
+                const newItemColor = item.value;
+
+                if (newItemColor) {
+                    lightModeBodyElement.style.setProperty(item.key, item.value);
+                }
+
+                return result;
+            }, {});
+
+            shouldRebuildChart = true;
+        }
+
+        if (rootElement && parsedSettings?.theme_colors && parsedSettings?.theme_colors?.dark) {
+            parsedSettings.theme_colors.dark.reduce((result, item) => {
                 const newItemColor = item.value;
 
                 if (newItemColor) {
@@ -274,7 +318,28 @@ export class CustomizationThemes extends React.Component<Props, State> {
                 return result;
             }, {});
 
-            handleTriggerChartRebuild && handleTriggerChartRebuild();
+            shouldRebuildChart = true;
+        }
+
+        if (shouldRebuildChart && handleTriggerChartRebuild) {
+            handleTriggerChartRebuild();
         }
     };
+
+    private handleClearCustomizationSettings = () => {
+        const rootElement = document.documentElement;
+        const bodyElement = document.querySelector<HTMLElement>('body')!;
+
+        if (rootElement) {    
+            AVAILABLE_COLORS_TITLES.reduce((result, item) => {
+                rootElement.style.removeProperty(item.key);
+
+                if (bodyElement) {
+                    bodyElement.style.removeProperty(item.key);
+                }
+
+                return result;
+            }, {});
+        }
+    }
 }

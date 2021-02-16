@@ -24,11 +24,12 @@ import {
     selectCustomizationCurrent,
     selectCustomizationData,
     selectUserLoggedIn,
+    ThemeColorInterface,
     toggleChartRebuild,
 } from '../../modules';
-import { AVAILABLE_COLORS_TITLES, ThemeColorInterface } from '../../themes';
+import { AVAILABLE_COLORS_TITLES } from '../../themes';
 
-import '../../styles/customization/style.pcss';
+import './customization.pcss';
 
 interface ReduxProps {
     colorTheme: string;
@@ -146,7 +147,7 @@ class CustomizationContainer extends React.Component<Props, State> {
     };
 
     private handleClickSaveButton = () => {
-        const { currentCustomization } = this.props;
+        const { colorTheme, currentCustomization } = this.props;
         const bodyStyles = window.getComputedStyle(document.body);
         const currentColors: ThemeColorInterface[] = [];
 
@@ -165,9 +166,12 @@ class CustomizationContainer extends React.Component<Props, State> {
             }, {});
         }
 
-        const payload = {
+        const payload: CustomizationCurrentDataInterface = {
             ...currentCustomization,
-            theme_colors: [...currentColors],
+            theme_colors: {
+                ...currentCustomization?.theme_colors,
+                [colorTheme]: [...currentColors],
+            },
         };
 
         this.props.customizationUpdate({ settings: JSON.stringify(payload) });

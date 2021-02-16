@@ -5,7 +5,7 @@ import { customizationUpdateReducer, initialCustomizationUpdateState } from './r
 
 describe('customizationReducer', () => {
     const fakeCustomization: CustomizationDataInterface = {
-        settings: '{\"theme_id\": \"1\",\"theme_colors\":[]}',
+        settings: '{\"theme_id\":\"1\",\"theme_colors\":{\"light\":[],\"dark\":[]}}',
     };
 
     const error: CommonError = {

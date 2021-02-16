@@ -1,6 +1,6 @@
-import { ThemeColorInterface } from './';
+import { ThemeColorInterface } from '../../../modules';
 
-export const DarkBlueTheme: ThemeColorInterface[] = [
+export const BlueTheme: ThemeColorInterface[] = [
     { key: '--rgb-main-background-color', value: '23, 28, 41' },
     { key: '--rgb-body-background-color', value: '30, 40, 65' },
     { key: '--rgb-header-background-color', value: '30, 40, 65' },
