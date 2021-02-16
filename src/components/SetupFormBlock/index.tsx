@@ -4,7 +4,7 @@ import { JsxElement } from 'typescript';
 export interface SetupFormBlockProps {
     title: string;
     subtitle: string;
-    children: React.ReactElement;
+    children: React.ReactNode;
 }
 
 export class SetupFormBlock extends React.Component<SetupFormBlockProps> {
