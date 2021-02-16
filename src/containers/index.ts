@@ -30,5 +30,3 @@ export * from './ToolBar';
 export * from './TradingChart';
 export * from './WalletsFetch';
 export * from './Withdraw';
-
-export * from './SetupForm';

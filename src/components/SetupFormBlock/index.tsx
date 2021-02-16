@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { JsxElement } from 'typescript';
 
 export interface SetupFormBlockProps {
     title: string;
