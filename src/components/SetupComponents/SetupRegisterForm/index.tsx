@@ -4,45 +4,48 @@ import { SetupFormInput } from '..';
 export interface SetupRegisterFormProps {
     email: string;
     password: string;
-    confirmPassword: string;
+    confirmPassword?: string;
+    showConfirmPassword?: boolean;
+    handleChangeEmail: (value: string) => void;
+    handleChangePassword: (value: string) => void;
+    handleChangeConfirmPassword?: (value: string) => void;
 }
 
 export class SetupRegisterForm extends React.Component<SetupRegisterFormProps> {
     public render() {
-        const { email, password, confirmPassword } = this.props;
+        const {
+            email,
+            password,
+            confirmPassword,
+            showConfirmPassword,
+            handleChangeEmail,
+            handleChangePassword,
+            handleChangeConfirmPassword,
+        } = this.props;
 
         return (
             <form className="setup-register-form" autoComplete="off">
                 <SetupFormInput
                     label="Email"
                     value={email}
-                    handleChangeInput={this.onChangeEmail}
+                    handleChangeInput={handleChangeEmail}
                 />
                 <SetupFormInput
                     label="Password"
                     value={password}
                     type="password"
-                    handleChangeInput={this.onChangePassword}
+                    handleChangeInput={handleChangePassword}
                 />
-                <SetupFormInput
-                    label="Confirm Password"
-                    value={confirmPassword}
-                    type="password"
-                    handleChangeInput={this.onChangeConfirmPassword}
-                />
+                {showConfirmPassword ?
+                    <SetupFormInput
+                        label="Confirm Password"
+                        value={confirmPassword}
+                        type="password"
+                        handleChangeInput={handleChangeConfirmPassword}
+                    />
+                    : null 
+                }
             </form>
         );
     }
-
-    private onChangeEmail = val => {
-        console.log('email: ', val);
-    };
-
-    private onChangePassword = val => {
-        console.log('password: ', val);
-    };
-
-    private onChangeConfirmPassword = val => {
-        console.log('confirm password: ', val);
-    };
 }

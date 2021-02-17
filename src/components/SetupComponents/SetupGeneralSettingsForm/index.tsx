@@ -4,11 +4,18 @@ import { SetupFormInput } from '..';
 export interface SetupGeneralSettingsFormProps {
     exchangeName: string;
     exchangeUrl: string;
+    handleChangeExchangeName: (value: string) => void;
+    handleChangeExchangeUrl: (value: string) => void;
 }
 
 export class SetupGeneralSettingsForm extends React.Component<SetupGeneralSettingsFormProps> {
     public render() {
-        const { exchangeName, exchangeUrl } = this.props;
+        const { 
+            exchangeName,
+            exchangeUrl,
+            handleChangeExchangeName,
+            handleChangeExchangeUrl,
+        } = this.props;
 
         return (
             <form className="setup-general-settings-form">
@@ -16,23 +23,15 @@ export class SetupGeneralSettingsForm extends React.Component<SetupGeneralSettin
                     label="Exchange Name"
                     value={exchangeName}
                     tooltipText="Consequat cupidatat officia duis duis enim voluptate cillum consectetur amet qui commodo proident elit."
-                    handleChangeInput={this.onChangeExchangeName}
+                    handleChangeInput={handleChangeExchangeName}
                 />
                 <SetupFormInput
                     label="Exchange Url"
                     value={exchangeUrl}
                     tooltipText="Consequat cupidatat officia duis duis enim voluptate cillum consectetur amet qui commodo proident elit."
-                    handleChangeInput={this.onChangeExchangeUrl}
+                    handleChangeInput={handleChangeExchangeUrl}
                 />
             </form>
         );
     }
-
-    private onChangeExchangeName = val => {
-        console.log('exchange name: ', val);
-    };
-
-    private onChangeExchangeUrl = val => {
-        console.log('exchange url: ', val);
-    };
 }

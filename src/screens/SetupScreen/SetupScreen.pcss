@@ -19,16 +19,25 @@
       flex-direction: column;
       padding: 72px;
       width: 100%;
+
+      &__close {
+        cursor: pointer;
+        position: absolute;
+        right: 24px;
+        top: 24px;
+      }
     }
   }
 
   &__agreement {
     align-items: center;
     display: flex;
-    justify-content: space-between;
-    padding-top: 48px;
+    justify-content: flex-end;
+    padding-top: 24px;
 
     &__term {
+      width: 100%;
+
       .container {
         align-items: center;
         cursor: pointer;
@@ -93,23 +102,99 @@
       }
 
       a {
+        color: var(--secondary-contrast-cta-color);
         margin-left: 4px;
+        text-decoration: underline;
+
+        &:hover {
+          color: var(--primary-cta-color);
+        }
       }
     }
 
     button {
+      bottom: 0;
+      font-size: 14px;
+      font-weight: bold;
       height: 40px;
+      letter-spacing: 0.04em;
+      margin-bottom: 75px;
+      position: absolute;
       width: 75px;
     }
   }
 
-  &__save-general-settings {
+  &__sign-in {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 24px;
+
+    button {
+      bottom: 0;
+      font-size: 14px;
+      font-weight: bold;
+      height: 40px;
+      letter-spacing: 0.04em;
+      margin-bottom: 75px;
+      position: absolute;
+      width: 75px;
+    }
+  }
+
+  &__step-footer {
     display: flex;
     justify-content: flex-end;
 
     button {
+      bottom: 0;
+      font-size: 14px;
+      font-weight: bold;
       height: 40px;
+      letter-spacing: 0.04em;
+      margin-bottom: 75px;
+      position: absolute;
       width: 75px;
+    }
+
+    &__congrat {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        bottom: 0;
+        font-size: 14px;
+        font-weight: bold;
+        height: 40px;
+        letter-spacing: 0.04em;
+        margin-bottom: 75px;
+        position: absolute;
+        width: 207px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .setup-screen {
+    &__left {
+      display: none;
+    }
+
+    &__right {
+      width: 100%;
+
+      &-wrapper {
+        padding: 32px;
+      }
+    }
+
+    &__step-footer {
+      &__congrat {
+        button {
+          width: 216px;
+        }
+      }
     }
   }
 }
