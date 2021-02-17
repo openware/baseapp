@@ -7,7 +7,6 @@ import { TestComponentWrapper } from 'lib/test';
 
 const defaults: SignUpFormProps = {
     onSignUp: jest.fn(),
-    captchaType: 'none',
     refId: '',
     password: '',
     email: '',
@@ -39,7 +38,6 @@ const defaults: SignUpFormProps = {
     geetestCaptchaSuccess: false,
     captcha_response: '',
     currentPasswordEntropy: 0,
-    minPasswordEntropy: 0,
     passwordErrorFirstSolved: false,
     passwordErrorSecondSolved: false,
     passwordErrorThirdSolved: false,
@@ -79,7 +77,6 @@ describe('SignUp component', () => {
     it('should render captcha block', () => {
         const wrapper = setup({
             hasConfirmed: true,
-            captchaType: 'recaptcha',
             renderCaptcha: <div className="cr-sign-up-form__recaptcha">Content</div>,
         }).render();
         expect(wrapper.find('.cr-sign-up-form__recaptcha')).toBeDefined();
