@@ -23,7 +23,6 @@ const defaults: SignInProps = {
     handleChangeFocusField: jest.fn(),
     changePassword: jest.fn(),
     changeEmail: jest.fn(),
-    captchaType: 'none',
     renderCaptcha: null,
     reCaptchaSuccess: false,
     geetestCaptchaSuccess: false,
