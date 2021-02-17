@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { configUpdateReducer } from './admin/config';
 import { alertReducer  } from './public/alert';
 import { blocklistAccessReducer } from './public/blocklistAccess';
 import { currenciesReducer } from './public/currencies';
@@ -17,7 +18,6 @@ import { apiKeysReducer } from './user/apiKeys';
 import { authReducer  } from './user/auth';
 import { beneficiariesReducer } from './user/beneficiaries';
 import { getGeetestCaptchaReducer } from './user/captcha';
-import { configUpdateReducer } from './user/config';
 import { customizationUpdateReducer } from './user/customization';
 import { documentationReducer } from './user/documentation';
 import { sendEmailVerificationReducer } from './user/emailVerification';
@@ -63,7 +63,6 @@ export const userReducer = combineReducers({
     auth: authReducer,
     beneficiaries: beneficiariesReducer,
     captcha: getGeetestCaptchaReducer,
-    configUpdate: configUpdateReducer,
     customizationUpdate: customizationUpdateReducer,
     documentation: documentationReducer,
     history: historyReducer,
@@ -80,4 +79,8 @@ export const userReducer = combineReducers({
     userActivity: userActivityReducer,
     wallets: walletsReducer,
     withdrawLimit: withdrawLimitReducer,
+});
+
+export const adminReducer = combineReducers({
+    configUpdate: configUpdateReducer,
 });
