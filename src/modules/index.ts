@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { all, call } from 'redux-saga/effects';
-import { publicReducer, userReducer } from './app';
+import { adminReducer, publicReducer, userReducer } from './app';
+import { ConfigUpdateState, rootConfigUpdateSaga } from './admin/config';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
@@ -20,7 +21,6 @@ import { rootApiKeysSaga } from './user/apiKeys/sagas';
 import { AuthState, rootAuthSaga } from './user/auth';
 import { BeneficiariesState, rootBeneficiariesSaga } from './user/beneficiaries';
 import { GeetestCaptchaState, rootGeetestCaptchaSaga } from './user/captcha';
-import { ConfigUpdateState, rootConfigUpdateSaga } from './user/config';
 import { CustomizationUpdateState, rootCustomizationUpdateSaga } from './user/customization';
 import { DocumentationState, rootDocumentationSaga } from './user/documentation';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
@@ -39,6 +39,7 @@ import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
 
+export * from './admin/config';
 export * from './public/alert';
 export * from './public/blocklistAccess';
 export * from './public/currencies';
@@ -55,7 +56,6 @@ export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';
 export * from './user/captcha';
-export * from './user/config';
 export * from './user/customization';
 export * from './user/documentation';
 export * from './user/emailVerification';
@@ -94,7 +94,6 @@ export interface RootState {
         auth: AuthState;
         beneficiaries: BeneficiariesState;
         captcha: GeetestCaptchaState;
-        configUpdate: ConfigUpdateState;
         customizationUpdate: CustomizationUpdateState;
         documentation: DocumentationState;
         history: HistoryState;
@@ -113,11 +112,15 @@ export interface RootState {
         wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
     };
+    admin: {
+        configUpdate: ConfigUpdateState;
+    };
 }
 
 export const rootReducer = combineReducers({
     public: publicReducer,
     user: userReducer,
+    admin: adminReducer,
 });
 
 export function* rootSaga() {
