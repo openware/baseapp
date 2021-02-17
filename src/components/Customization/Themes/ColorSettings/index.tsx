@@ -6,8 +6,8 @@ import { ArrowIcon } from '../../../../assets/images/customization/ArrowIcon';
 import { ThemeColorTitleInterface } from '../../../../themes';
 
 interface OwnProps {
-    handleCloseColorSettings: () => void;
     item: ThemeColorTitleInterface;
+    handleCloseColorSettings: () => void;
     translate: (key: string) => string;
     handleTriggerChartRebuild?: () => void;
 }

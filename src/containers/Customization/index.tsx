@@ -13,41 +13,38 @@ import {
     CustomizationThemes,
     TabPanel,
 } from '../../components';
+import { applyCustomizationSettings } from '../../helpers';
 import {
     changeColorTheme,
-    CustomizationCurrentDataInterface,
-    CustomizationDataInterface,
-    customizationUpdate,
-    customizationUpdateCurrent,
+    configUpdate,
     RootState,
     selectCurrentColorTheme,
-    selectCustomizationCurrent,
-    selectCustomizationData,
     selectUserLoggedIn,
-    ThemeColorInterface,
     toggleChartRebuild,
 } from '../../modules';
-import { AVAILABLE_COLORS_TITLES } from '../../themes';
+import {
+    AVAILABLE_COLOR_TITLES,
+    CustomizationSettingsInterface,
+    ThemeColorInterface,
+} from '../../themes';
 
 import './customization.pcss';
 
 interface ReduxProps {
     colorTheme: string;
-    currentCustomization?: CustomizationCurrentDataInterface;
-    customization?: CustomizationDataInterface;
     userLoggedIn: boolean;
 }
 
 interface DispatchProps {
     changeColorTheme: typeof changeColorTheme;
-    customizationUpdate: typeof customizationUpdate;
-    customizationUpdateCurrent: typeof customizationUpdateCurrent;
+    configUpdate: typeof configUpdate;
     toggleChartRebuild: typeof toggleChartRebuild;
 }
 
 type Props = ReduxProps & RouterProps & DispatchProps & IntlProps;
 
 interface State {
+    currentThemeId: number;
     currentTabIndex: number;
     isOpen: boolean;
     resetToDefault: boolean;
@@ -55,18 +52,14 @@ interface State {
 
 class CustomizationContainer extends React.Component<Props, State> {
     public state = {
+        currentThemeId: -1,
         currentTabIndex: 0,
         isOpen: true,
         resetToDefault: false,
     };
 
     public renderTabs = () => {
-        const {
-            colorTheme,
-            currentCustomization,
-            customization,
-            changeColorTheme,
-        } = this.props;
+        const { colorTheme, changeColorTheme } = this.props;
         const { currentTabIndex, resetToDefault } = this.state;
 
         return [
@@ -74,11 +67,9 @@ class CustomizationContainer extends React.Component<Props, State> {
                 content: currentTabIndex === 0 ? (
                     <CustomizationThemes
                         colorTheme={colorTheme}
-                        currentCustomization={currentCustomization}
-                        customization={customization}
                         resetToDefault={resetToDefault}
                         handleSetCurrentColorTheme={changeColorTheme}
-                        handleSetCurrentCustomization={this.handleSetCurrentCustomization}
+                        handleSetThemeId={this.handleSetThemeId}
                         handleTriggerChartRebuild={this.handleTriggerChartRebuild}
                         translate={this.translate}
                     />
@@ -141,42 +132,70 @@ class CustomizationContainer extends React.Component<Props, State> {
     }
 
     private handleClickResetButton = () => {
-        this.setState(prevState => ({
-            resetToDefault: !prevState.resetToDefault,
-        }));
+        this.setState({ resetToDefault: !this.state.resetToDefault });
+        applyCustomizationSettings(null, this.props.toggleChartRebuild);
     };
 
     private handleClickSaveButton = () => {
-        const { colorTheme, currentCustomization } = this.props;
-        const bodyStyles = window.getComputedStyle(document.body);
-        const currentColors: ThemeColorInterface[] = [];
+        const { currentThemeId } = this.state;
+        const settingsFromConfig: CustomizationSettingsInterface | null | undefined =
+            window.env?.settings ? JSON.parse(window.env.settings) : null;
+        const rootElement = document.documentElement;
+        const bodyElement = document.querySelector<HTMLElement>('body')!;
+        const currentColors: { [key: string]: ThemeColorInterface[] } = {
+            dark: [],
+            light: [],
+        };
 
-        if (bodyStyles) {
-            AVAILABLE_COLORS_TITLES.reduce((result, item) => {
-               const itemColor = bodyStyles.getPropertyValue(item.key);
+        AVAILABLE_COLOR_TITLES.reduce((result, item) => {
+            if (rootElement) {
+                const itemColor = rootElement.style.getPropertyValue(item.key);
 
-               if (itemColor) {
-                    currentColors.push({
+                if (itemColor) {
+                    currentColors.dark.push({
                         key: item.key,
                         value: itemColor,
                     });
                 }
+            }
 
-               return result;
-            }, {});
-        }
+            if (bodyElement) {
+                const itemColor = bodyElement.style.getPropertyValue(item.key);
 
-        const payload: CustomizationCurrentDataInterface = {
-            ...currentCustomization,
+                if (itemColor) {
+                    currentColors.light.push({
+                        key: item.key,
+                        value: itemColor,
+                    });
+                }
+            }
+
+            return result;
+        }, {});
+
+        let settings: CustomizationSettingsInterface = {
+            ...settingsFromConfig,
             theme_colors: {
-                ...currentCustomization?.theme_colors,
-                [colorTheme]: [...currentColors],
+                ...settingsFromConfig?.theme_colors,
+                dark: currentColors.dark,
+                light: currentColors.light,
             },
         };
 
-        this.props.customizationUpdate({ settings: JSON.stringify(payload) });
-    };
+        if (currentThemeId >= 0 ) {
+            settings = {
+                ...settings,
+                theme_id: currentThemeId,
+            }
+        }
 
+        this.props.configUpdate({
+            component: 'baseapp',
+            scope: 'public',
+            key: 'settings',
+            value: JSON.stringify(settings),
+        });
+    };
 
     private handleChangeTab = (index: number) => {
         this.setState({
@@ -192,16 +211,11 @@ class CustomizationContainer extends React.Component<Props, State> {
         return false;
     };
 
-    private handleSetCurrentCustomization = (key: string, value: string | number) => {
-        const { currentCustomization } = this.props;
-        const updatedCustomization = {
-            ...currentCustomization,
-            [key]: value,
-        };
-
-        // @ts-ignore
-        this.props.customizationUpdateCurrent(updatedCustomization);
-    };
+    private handleSetThemeId = (value: number) => {
+        this.setState({
+            currentThemeId: value,
+        });
+    }
 
     private handleToggleIsOpen = () => {
         this.setState(prevState => ({
@@ -218,16 +232,13 @@ class CustomizationContainer extends React.Component<Props, State> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     colorTheme: selectCurrentColorTheme(state),
-    currentCustomization: selectCustomizationCurrent(state),
-    customization: selectCustomizationData(state),
     userLoggedIn: selectUserLoggedIn(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         changeColorTheme: payload => dispatch(changeColorTheme(payload)),
-        customizationUpdate: payload => dispatch(customizationUpdate(payload)),
-        customizationUpdateCurrent: payload => dispatch(customizationUpdateCurrent(payload)),
+        configUpdate: payload => dispatch(configUpdate(payload)),
         toggleChartRebuild: () => dispatch(toggleChartRebuild()),
     });
 

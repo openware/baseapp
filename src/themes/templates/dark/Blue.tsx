@@ -1,4 +1,4 @@
-import { ThemeColorInterface } from '../../../modules';
+import { ThemeColorInterface } from '../../types';
 
 export const BlueTheme: ThemeColorInterface[] = [
     { key: '--rgb-main-background-color', value: '23, 28, 41' },

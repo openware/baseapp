@@ -2,13 +2,11 @@ import * as React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { SettingsIcon } from '../../../assets/images/customization/SettingsIcon';
 import { DropdownComponent, TabPanel } from '../../../components';
+import { applyCustomizationSettingsColors } from '../../../helpers';
 import {
-    CustomizationCurrentDataInterface,
-    CustomizationDataInterface,
-} from '../../../modules';
-import {
-    AVAILABLE_COLOR_THEMES,
-    AVAILABLE_COLORS_TITLES,
+    AVAILABLE_THEME_PRESETS,
+    AVAILABLE_COLOR_TITLES,
+    CustomizationSettingsInterface,
     ThemeColorTitleInterface,
 } from '../../../themes';
 import { ColorSettings } from './ColorSettings';
@@ -21,11 +19,9 @@ interface OwnProps {
     colorTheme: string;
     resetToDefault: boolean;
     handleSetCurrentColorTheme: (value: string) => void;
+    handleSetThemeId: (value: number) => void;
     translate: (key: string) => string;
-    handleSetCurrentCustomization: (key: string, value: string | number) => void;
     handleTriggerChartRebuild?: () => void;
-    currentCustomization?: CustomizationCurrentDataInterface;
-    customization?: CustomizationDataInterface;
 }
 
 type Props = OwnProps;
@@ -49,51 +45,20 @@ export class CustomizationThemes extends React.Component<Props, State> {
     };
 
     public componentDidMount() {
-        const {
-            colorTheme,
-            currentCustomization,
-            customization,
-        } = this.props;
+        const { colorTheme } = this.props;
+        const defaultTheme = this.handleGetDefaultTheme();
 
-        if (currentCustomization && currentCustomization.theme_id >= 0) {
-            const themeIndexToSet = AVAILABLE_COLOR_THEMES.findIndex(item => item.id === currentCustomization.theme_id);
-
-            if (themeIndexToSet >= 0) {
-                this.handleSetCurrentTheme(themeIndexToSet);
-            }
+        if (colorTheme === 'light') {
+            this.setState({ currentTabIndex: 1 });
         } else {
-            if (customization) {
-                this.handleApplyCustomizationSettings(customization);
-            }
+            this.setState({ currentTabIndex: 0 });
         }
 
-        if (colorTheme) {
-            if (colorTheme === 'light') {
-                this.setState({ currentTabIndex: 1 });
-            } else {
-                this.setState({ currentTabIndex: 0 });
-            }
-        }
+        this.handleSetCurrentTheme(defaultTheme);
     }
 
     public componentDidUpdate(prevProps: Props) {
-        const {
-            colorTheme,
-            customization,
-            resetToDefault,
-        } = this.props;
-
-        if (customization && customization !== prevProps.customization) {
-            this.handleApplyCustomizationSettings(customization);
-        }
-
-        if (resetToDefault !== prevProps.resetToDefault) {
-            if (customization && customization.settings) {
-                this.handleResetCustomizationSettings(customization);
-            } else {
-                this.handleChangeCurrentTheme(0);
-            }
-        }
+        const { colorTheme, resetToDefault } = this.props;
 
         if (colorTheme !== prevProps.colorTheme) {
             if (colorTheme === 'light') {
@@ -101,6 +66,11 @@ export class CustomizationThemes extends React.Component<Props, State> {
             } else {
                 this.setState({ currentTabIndex: 0 });
             }
+        }
+
+        if (resetToDefault !== prevProps.resetToDefault) {
+            this.handleChangeCurrentTheme(this.handleGetDefaultTheme());
+            this.handleChangeTab(0);
         }
     }
 
@@ -117,7 +87,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
                     className="pg-customization-themes__themes__dropdown"
                     list={this.handleGetThemesTitlesList()}
                     onSelect={this.handleChangeCurrentTheme}
-                    placeholder={translate(AVAILABLE_COLOR_THEMES[currentThemeIndex].title)}
+                    placeholder={translate(AVAILABLE_THEME_PRESETS[currentThemeIndex].title)}
                 />
             </div>
         );
@@ -147,7 +117,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
         return (
             <div className="pg-customization-themes__colors">
                 <PerfectScrollbar>
-                    {AVAILABLE_COLORS_TITLES.map((item, index) => this.renderColorsItem(item, index))}
+                    {AVAILABLE_COLOR_TITLES.map((item, index) => this.renderColorsItem(item, index))}
                 </PerfectScrollbar>
             </div>
         );
@@ -208,7 +178,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
     private handleGetThemesTitlesList = () => {
         const { translate } = this.props;
 
-        return AVAILABLE_COLOR_THEMES.map(item => translate(item.title));
+        return AVAILABLE_THEME_PRESETS.map(item => translate(item.title));
     };
 
     private handleSetColorSettingsItem = (item?: ThemeColorTitleInterface) => {
@@ -223,123 +193,35 @@ export class CustomizationThemes extends React.Component<Props, State> {
 
     private handleChangeCurrentTheme = (index: number) => {
         const { handleTriggerChartRebuild } = this.props;
-        const rootElement = document.documentElement;
-        const lightModeBodyElement = document.querySelector<HTMLElement>('.light-mode')!;
-        const themeToSet = AVAILABLE_COLOR_THEMES[index];
-
-        this.handleClearCustomizationSettings();
-
-        if (rootElement) {    
-            AVAILABLE_COLORS_TITLES.reduce((result, item) => {
-                const newItemColor = AVAILABLE_COLOR_THEMES[index].themes.dark ?
-                    AVAILABLE_COLOR_THEMES[index].themes.dark.find(theme => theme.key === item.key) : null;
-
-                if (newItemColor) {
-                    rootElement.style.setProperty(item.key, newItemColor.value);
-                }
-
-                return result;
-            }, {});
-        }
-
-        if (lightModeBodyElement) {    
-            AVAILABLE_COLORS_TITLES.reduce((result, item) => {
-                const newItemColor = AVAILABLE_COLOR_THEMES[index].themes.light ?
-                    AVAILABLE_COLOR_THEMES[index].themes.light.find(theme => theme.key === item.key) : null;
-
-                if (newItemColor) {
-                    lightModeBodyElement.style.setProperty(item.key, newItemColor.value);
-                }
-
-                return result;
-            }, {});
+        const themeToSet = AVAILABLE_THEME_PRESETS[index];        
+        const settingsToSet = {
+            theme_id: themeToSet.theme_id,
+            theme_colors: {
+                dark: themeToSet.theme_colors.dark,
+                light: themeToSet.theme_colors.light,
+            }
         }
 
         this.handleSetCurrentTheme(index);
-
-        if (themeToSet) {
-            this.props.handleSetCurrentCustomization('theme_id', themeToSet.id);
-        }
-
-        handleTriggerChartRebuild && handleTriggerChartRebuild();
+        applyCustomizationSettingsColors(settingsToSet, handleTriggerChartRebuild);
     };
 
     private handleSetCurrentTheme = (themeIndex: number) => {
+        const { handleSetThemeId } = this.props;
         this.setState({ currentThemeIndex: themeIndex });
+        handleSetThemeId(themeIndex);
     };
 
-    private handleApplyCustomizationSettings = (customization: CustomizationDataInterface) => {
-        const parsedSettings = customization.settings ? JSON.parse(customization.settings) : null;
+    private handleGetDefaultTheme = (): number => {
+        const settingsFromConfig: CustomizationSettingsInterface | null | undefined =
+            window.env?.settings ? JSON.parse(window.env.settings) : null;
 
-        if (parsedSettings && parsedSettings.theme_id) {
-            const themeIndexToSet = AVAILABLE_COLOR_THEMES.findIndex(theme => theme.id === +parsedSettings.theme_id);
+        const themeIndexToSet = AVAILABLE_THEME_PRESETS.findIndex(theme => theme.theme_id === settingsFromConfig?.theme_id);
 
-            if (themeIndexToSet >= 0) {
-                this.handleSetCurrentTheme(themeIndexToSet);
-                this.props.handleSetCurrentCustomization('theme_id', +parsedSettings.theme_id);
-            }
-        }
-    };
+        if (themeIndexToSet > 0) {
+            return themeIndexToSet;
+        }        
 
-    private handleResetCustomizationSettings = (customization: CustomizationDataInterface) => {
-        const { handleTriggerChartRebuild } = this.props;
-        const rootElement = document.documentElement;
-        const lightModeBodyElement = document.querySelector<HTMLElement>('.light-mode')!;
-        const parsedSettings = customization && customization.settings ? JSON.parse(customization.settings) : null;
-        let shouldRebuildChart = false;
-
-        this.handleClearCustomizationSettings();
-        this.handleApplyCustomizationSettings(customization);
-
-        window.console.log('parsedSettings: ', parsedSettings);
-
-        if (lightModeBodyElement && parsedSettings?.theme_colors && parsedSettings?.theme_colors?.light) {
-            parsedSettings.theme_colors.light.reduce((result, item) => {
-                const newItemColor = item.value;
-
-                if (newItemColor) {
-                    lightModeBodyElement.style.setProperty(item.key, item.value);
-                }
-
-                return result;
-            }, {});
-
-            shouldRebuildChart = true;
-        }
-
-        if (rootElement && parsedSettings?.theme_colors && parsedSettings?.theme_colors?.dark) {
-            parsedSettings.theme_colors.dark.reduce((result, item) => {
-                const newItemColor = item.value;
-
-                if (newItemColor) {
-                    rootElement.style.setProperty(item.key, item.value);
-                }
-
-                return result;
-            }, {});
-
-            shouldRebuildChart = true;
-        }
-
-        if (shouldRebuildChart && handleTriggerChartRebuild) {
-            handleTriggerChartRebuild();
-        }
-    };
-
-    private handleClearCustomizationSettings = () => {
-        const rootElement = document.documentElement;
-        const bodyElement = document.querySelector<HTMLElement>('body')!;
-
-        if (rootElement) {    
-            AVAILABLE_COLORS_TITLES.reduce((result, item) => {
-                rootElement.style.removeProperty(item.key);
-
-                if (bodyElement) {
-                    bodyElement.style.removeProperty(item.key);
-                }
-
-                return result;
-            }, {});
-        }
+        return 0;
     }
 }

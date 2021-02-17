@@ -1,4 +1,4 @@
-import { ThemeColorInterface } from '../../../modules';
+import { ThemeColorInterface } from '../../types';
 
 export const RedTheme: ThemeColorInterface[] = [
     { key: '--rgb-main-background-color', value: '255, 0, 0' },

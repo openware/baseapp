@@ -1,7 +1,7 @@
-import { ThemeColorInterface } from '../../../modules';
+import { ThemeColorInterface } from '../../types';
 
 export const BlueTheme: ThemeColorInterface[] = [
-    { key: '--rgb-main-background-color', value: '0, 0, 255' },
+    { key: '--rgb-main-background-color', value: '255, 255, 255' },
     { key: '--rgb-body-background-color', value: '255, 255, 255' },
     { key: '--rgb-header-background-color', value: '255, 255, 255' },
     { key: '--rgb-subheader-background-color', value: '255, 255, 255' },

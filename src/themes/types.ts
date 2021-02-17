@@ -3,11 +3,11 @@ export interface ThemeColorInterface {
     value: string;
 }
 
-export interface CustomizationDataInterface {
-    settings?: string;
+export interface ThemePresetInterface extends CustomizationSettingsInterface {
+    title: string;
 }
 
-export interface CustomizationCurrentDataInterface {
+export interface CustomizationSettingsInterface {
     theme_id: number;
     theme_colors: {
         [key: string]: ThemeColorInterface[];
