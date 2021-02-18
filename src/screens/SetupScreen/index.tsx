@@ -35,6 +35,7 @@ import {
     MarketUpdateItem,
     selectUserFetching,
     configUpdate,
+    selectMarketsAdminUpdate,
 } from '../../modules';
 import { wizardStep } from '../../api';
 
@@ -47,6 +48,7 @@ interface ReduxProps {
     user: User;
     userLoggedIn: boolean;
     userLoading: boolean;
+    marketsSuccess: boolean;
 }
 
 interface DispatchProps {
@@ -71,6 +73,14 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         this.state = {
             currentStep: wizardStep(),
         };
+    }
+
+    public componentWillReceiveProps(nextProps: Props) {
+        if (!this.props.marketsSuccess && nextProps.marketsSuccess) {
+            this.setState({
+                currentStep: 4,
+            });
+        }
     }
 
     public render() {
@@ -166,7 +176,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                             </div>
                         </React.Fragment>
                     );
-                default:
+                case 4:
                     return (
                         <React.Fragment>
                             <div className="setup-screen__left">
@@ -203,6 +213,8 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                             </div>
                         </React.Fragment>
                     );
+                default:
+                    return;
               }
         }
     };
@@ -318,6 +330,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     user: selectUserInfo(state),
     userLoggedIn: selectUserLoggedIn(state),
     userLoading: selectUserFetching(state),
+    marketsSuccess: selectMarketsAdminUpdate(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({

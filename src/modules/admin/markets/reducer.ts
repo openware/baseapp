@@ -11,11 +11,13 @@ import { MarketItem, MarketsAdminAction } from './actions';
 export interface MarketsAdminState {
     loading: boolean;
     list: MarketItem[];
+    successMarketsUpdate: boolean;
 }
 
 export const initialMarketsAdminState: MarketsAdminState = {
     loading: false,
     list: [],
+    successMarketsUpdate: false,
 };
 
 export const marketsAdminReducer = (state = initialMarketsAdminState, action: MarketsAdminAction) => {
@@ -47,6 +49,7 @@ export const marketsAdminReducer = (state = initialMarketsAdminState, action: Ma
             return {
                 ...state,
                 loading: false,
+                successMarketsUpdate: true,
             };
         case MARKET_ERROR:
             return {
