@@ -30,7 +30,7 @@ import {
     ThemeColorInterface,
 } from '../../themes';
 
-import './customization.pcss';
+import './Customization.pcss';
 
 interface ReduxProps {
     colorTheme: string;
