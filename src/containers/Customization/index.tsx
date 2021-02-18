@@ -145,8 +145,8 @@ class CustomizationContainer extends React.Component<Props, State> {
 
     private handleClickSaveButton = () => {
         const { currentThemeId } = this.state;
-        const settingsFromConfig: CustomizationSettingsInterface | null | undefined =
-            window.env?.palette ? JSON.parse(window.env.palette) : null;
+        const settingsFromConfig: CustomizationSettingsInterface | undefined =
+            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
         const rootElement = document.documentElement;
         const bodyElement = document.querySelector<HTMLElement>('body')!;
         const currentColors: { [key: string]: ThemeColorInterface[] } = {

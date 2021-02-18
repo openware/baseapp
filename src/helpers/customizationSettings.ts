@@ -31,8 +31,8 @@ export const applyCustomizationSettingsColors = (
     customization?: CustomizationSettingsInterface,
     toggleChartRebuild?: () => void,
 ) => {
-    const settingsFromConfig: CustomizationSettingsInterface | null | undefined =
-        window.env?.palette ? JSON.parse(window.env.palette) : null;
+    const settingsFromConfig: CustomizationSettingsInterface | undefined =
+        window.env?.palette ? JSON.parse(window.env.palette) : undefined;
     const rootElement = document.documentElement;
     const bodyElement = document.querySelector<HTMLElement>('body')!;
     let shouldChartRebuild = false;

@@ -213,8 +213,8 @@ export class CustomizationThemes extends React.Component<Props, State> {
     };
 
     private handleGetDefaultTheme = (): number => {
-        const settingsFromConfig: CustomizationSettingsInterface | null | undefined =
-            window.env?.palette ? JSON.parse(window.env.palette) : null;
+        const settingsFromConfig: CustomizationSettingsInterface | undefined =
+            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
 
         const themeIndexToSet = AVAILABLE_THEME_PRESETS.findIndex(theme => theme.theme_id === settingsFromConfig?.theme_id);
 
