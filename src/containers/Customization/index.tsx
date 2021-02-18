@@ -13,34 +13,41 @@ import {
     CustomizationThemes,
     TabPanel,
 } from '../../components';
+import { applyCustomizationSettings } from '../../helpers';
 import {
-    CustomizationCurrentDataInterface,
-    CustomizationDataInterface,
-    customizationUpdate,
-    customizationUpdateCurrent,
+    changeColorTheme,
+    configUpdate,
     RootState,
-    selectCustomizationCurrent,
-    selectCustomizationData,
+    selectCurrentColorTheme,
+    selectUserInfo,
     selectUserLoggedIn,
     toggleChartRebuild,
+    User,
 } from '../../modules';
-import { AVAILABLE_COLORS_TITLES, ThemeColorInterface } from '../../themes';
+import {
+    AVAILABLE_COLOR_TITLES,
+    CustomizationSettingsInterface,
+    ThemeColorInterface,
+} from '../../themes';
+
+import './Customization.pcss';
 
 interface ReduxProps {
-    currentCustomization?: CustomizationCurrentDataInterface;
-    customization?: CustomizationDataInterface;
+    colorTheme: string;
     userLoggedIn: boolean;
+    user: User;
 }
 
 interface DispatchProps {
-    customizationUpdateCurrent: typeof customizationUpdateCurrent;
+    changeColorTheme: typeof changeColorTheme;
+    configUpdate: typeof configUpdate;
     toggleChartRebuild: typeof toggleChartRebuild;
-    customizationUpdate: typeof customizationUpdate;
 }
 
 type Props = ReduxProps & RouterProps & DispatchProps & IntlProps;
 
 interface State {
+    currentThemeId: number;
     currentTabIndex: number;
     isOpen: boolean;
     resetToDefault: boolean;
@@ -48,25 +55,30 @@ interface State {
 
 class CustomizationContainer extends React.Component<Props, State> {
     public state = {
+        currentThemeId: -1,
         currentTabIndex: 0,
-        isOpen: true,
+        isOpen: false,
         resetToDefault: false,
     };
 
+    public componentDidMount() {
+        this.setState({ isOpen: this.handleCheckRoute() });
+    }
+
     public renderTabs = () => {
-        const { currentCustomization, customization } = this.props;
+        const { colorTheme, changeColorTheme } = this.props;
         const { currentTabIndex, resetToDefault } = this.state;
 
         return [
             {
                 content: currentTabIndex === 0 ? (
                     <CustomizationThemes
-                        translate={this.translate}
-                        customization={customization}
+                        colorTheme={colorTheme}
                         resetToDefault={resetToDefault}
+                        handleSetCurrentColorTheme={changeColorTheme}
+                        handleSetThemeId={this.handleSetThemeId}
                         handleTriggerChartRebuild={this.handleTriggerChartRebuild}
-                        handleSetCurrentCustomization={this.handleSetCurrentCustomization}
-                        currentCustomization={currentCustomization}
+                        translate={this.translate}
                     />
                 ) : null,
                 label: this.translate('page.body.customization.tabs.themes'),
@@ -100,10 +112,10 @@ class CustomizationContainer extends React.Component<Props, State> {
     }
 
     public render() {
-        const { userLoggedIn } = this.props;
+        const { userLoggedIn, user } = this.props;
         const { currentTabIndex, isOpen } = this.state;
 
-        if (!userLoggedIn || !this.handleCheckRoute()) {
+        if (!userLoggedIn || user?.role !== 'superadmin' ) {
             return null;
         }
 
@@ -127,39 +139,70 @@ class CustomizationContainer extends React.Component<Props, State> {
     }
 
     private handleClickResetButton = () => {
-        this.setState(prevState => ({
-            resetToDefault: !prevState.resetToDefault,
-        }));
+        this.setState({ resetToDefault: !this.state.resetToDefault });
+        applyCustomizationSettings(null, this.props.toggleChartRebuild);
     };
 
     private handleClickSaveButton = () => {
-        const { currentCustomization } = this.props;
-        const bodyStyles = window.getComputedStyle(document.body);
-        const currentColors: ThemeColorInterface[] = [];
+        const { currentThemeId } = this.state;
+        const settingsFromConfig: CustomizationSettingsInterface | undefined =
+            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+        const rootElement = document.documentElement;
+        const bodyElement = document.querySelector<HTMLElement>('body')!;
+        const currentColors: { [key: string]: ThemeColorInterface[] } = {
+            dark: [],
+            light: [],
+        };
 
-        if (bodyStyles) {
-            AVAILABLE_COLORS_TITLES.reduce((result, item) => {
-               const itemColor = bodyStyles.getPropertyValue(item.key);
+        AVAILABLE_COLOR_TITLES.reduce((result, item) => {
+            if (rootElement) {
+                const itemColor = rootElement.style.getPropertyValue(item.key);
 
-               if (itemColor) {
-                    currentColors.push({
+                if (itemColor) {
+                    currentColors.dark.push({
                         key: item.key,
                         value: itemColor,
                     });
                 }
+            }
 
-               return result;
-            }, {});
-        }
+            if (bodyElement) {
+                const itemColor = bodyElement.style.getPropertyValue(item.key);
 
-        const payload = {
-            ...currentCustomization,
-            theme_colors: [...currentColors],
+                if (itemColor) {
+                    currentColors.light.push({
+                        key: item.key,
+                        value: itemColor,
+                    });
+                }
+            }
+
+            return result;
+        }, {});
+
+        let settings: CustomizationSettingsInterface = {
+            ...settingsFromConfig,
+            theme_colors: {
+                ...settingsFromConfig?.theme_colors,
+                dark: currentColors.dark,
+                light: currentColors.light,
+            },
         };
 
-        this.props.customizationUpdate({ settings: JSON.stringify(payload) });
-    };
+        if (currentThemeId >= 0 ) {
+            settings = {
+                ...settings,
+                theme_id: currentThemeId,
+            }
+        }
 
+        this.props.configUpdate({
+            component: 'baseapp',
+            scope: 'public',
+            key: 'palette',
+            value: JSON.stringify(settings),
+        });
+    };
 
     private handleChangeTab = (index: number) => {
         this.setState({
@@ -175,16 +218,11 @@ class CustomizationContainer extends React.Component<Props, State> {
         return false;
     };
 
-    private handleSetCurrentCustomization = (key: string, value: string | number) => {
-        const { currentCustomization } = this.props;
-        const updatedCustomization = {
-            ...currentCustomization,
-            [key]: value,
-        };
-
-        // @ts-ignore
-        this.props.customizationUpdateCurrent(updatedCustomization);
-    };
+    private handleSetThemeId = (value: number) => {
+        this.setState({
+            currentThemeId: value,
+        });
+    }
 
     private handleToggleIsOpen = () => {
         this.setState(prevState => ({
@@ -200,15 +238,15 @@ class CustomizationContainer extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    currentCustomization: selectCustomizationCurrent(state),
-    customization: selectCustomizationData(state),
+    colorTheme: selectCurrentColorTheme(state),
     userLoggedIn: selectUserLoggedIn(state),
+    user: selectUserInfo(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        customizationUpdate: payload => dispatch(customizationUpdate(payload)),
-        customizationUpdateCurrent: payload => dispatch(customizationUpdateCurrent(payload)),
+        changeColorTheme: payload => dispatch(changeColorTheme(payload)),
+        configUpdate: payload => dispatch(configUpdate(payload)),
         toggleChartRebuild: () => dispatch(toggleChartRebuild()),
     });
 

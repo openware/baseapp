@@ -1,14 +1,12 @@
 import * as React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { SettingsIcon } from '../../../assets/images/customization/SettingsIcon';
-import { DropdownComponent } from '../../../components';
+import { DropdownComponent, TabPanel } from '../../../components';
+import { applyCustomizationSettingsColors } from '../../../helpers';
 import {
-    CustomizationCurrentDataInterface,
-    CustomizationDataInterface,
-} from '../../../modules';
-import {
-    AVAILABLE_COLOR_THEMES,
-    AVAILABLE_COLORS_TITLES,
+    AVAILABLE_THEME_PRESETS,
+    AVAILABLE_COLOR_TITLES,
+    CustomizationSettingsInterface,
     ThemeColorTitleInterface,
 } from '../../../themes';
 import { ColorSettings } from './ColorSettings';
@@ -18,18 +16,19 @@ export const handleConvertColorCode = (value: string, fromRGB?: boolean) => (
 );
 
 interface OwnProps {
-    translate: (key: string) => string;
+    colorTheme: string;
     resetToDefault: boolean;
+    handleSetCurrentColorTheme: (value: string) => void;
+    handleSetThemeId: (value: number) => void;
+    translate: (key: string) => string;
     handleTriggerChartRebuild?: () => void;
-    handleSetCurrentCustomization: (key: string, value: string | number) => void;
-    currentCustomization?: CustomizationCurrentDataInterface;
-    customization?: CustomizationDataInterface;
 }
 
 type Props = OwnProps;
 
 interface State {
     colorSettingsItem: ThemeColorTitleInterface;
+    currentTabIndex: number;
     currentThemeIndex: number;
 }
 
@@ -42,40 +41,36 @@ export class CustomizationThemes extends React.Component<Props, State> {
     public state = {
         colorSettingsItem: defaultColorSettingsItem,
         currentThemeIndex: 0,
+        currentTabIndex: 0,
     };
 
     public componentDidMount() {
-        const {
-            currentCustomization,
-            customization,
-        } = this.props;
+        const { colorTheme } = this.props;
+        const defaultTheme = this.handleGetDefaultTheme();
 
-        if (currentCustomization && currentCustomization.theme_id >= 0) {
-            const themeIndexToSet = AVAILABLE_COLOR_THEMES.findIndex(item => item.id === currentCustomization.theme_id);
-
-            if (themeIndexToSet >= 0) {
-                this.handleSetCurrentTheme(themeIndexToSet);
-            }
+        if (colorTheme === 'light') {
+            this.setState({ currentTabIndex: 1 });
         } else {
-            if (customization) {
-                this.handleApplyCustomizationSettings(customization);
-            }
+            this.setState({ currentTabIndex: 0 });
         }
+
+        this.handleSetCurrentTheme(defaultTheme);
     }
 
     public componentDidUpdate(prevProps: Props) {
-        const { customization, resetToDefault } = this.props;
+        const { colorTheme, resetToDefault } = this.props;
 
-        if (customization && customization !== prevProps.customization) {
-            this.handleApplyCustomizationSettings(customization);
+        if (colorTheme !== prevProps.colorTheme) {
+            if (colorTheme === 'light') {
+                this.setState({ currentTabIndex: 1 });
+            } else {
+                this.setState({ currentTabIndex: 0 });
+            }
         }
 
         if (resetToDefault !== prevProps.resetToDefault) {
-            if (customization && customization.settings) {
-                this.handleResetCustomizationSettings(customization);
-            } else {
-                this.handleChangeCurrentTheme(0);
-            }
+            this.handleChangeTab(0);
+            this.handleSetCurrentTheme(this.handleGetDefaultTheme());
         }
     }
 
@@ -92,7 +87,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
                     className="pg-customization-themes__themes__dropdown"
                     list={this.handleGetThemesTitlesList()}
                     onSelect={this.handleChangeCurrentTheme}
-                    placeholder={translate(AVAILABLE_COLOR_THEMES[currentThemeIndex].title)}
+                    placeholder={translate(AVAILABLE_THEME_PRESETS[currentThemeIndex].title)}
                 />
             </div>
         );
@@ -122,20 +117,40 @@ export class CustomizationThemes extends React.Component<Props, State> {
         return (
             <div className="pg-customization-themes__colors">
                 <PerfectScrollbar>
-                    {AVAILABLE_COLORS_TITLES.map((item, index) => this.renderColorsItem(item, index))}
+                    {AVAILABLE_COLOR_TITLES.map((item, index) => this.renderColorsItem(item, index))}
                 </PerfectScrollbar>
             </div>
         );
     }
 
+    public renderTabs = () => {
+        const { translate } = this.props;
+        const { currentTabIndex } = this.state;
+
+        return [
+            {
+                content: currentTabIndex === 0 ? this.renderColors() : null,
+                label: translate('page.body.customization.themes.tabs.dark'),
+            },
+            {
+                content: currentTabIndex === 1 ? this.renderColors() : null,
+                label: translate('page.body.customization.themes.tabs.light'),
+            },
+        ];
+    };
+
     public render() {
         const { handleTriggerChartRebuild, translate } = this.props;
-        const { colorSettingsItem } = this.state;
+        const { colorSettingsItem, currentTabIndex } = this.state;
 
         return (
             <div className="pg-customization-themes">
                 {this.renderThemesDropdown()}
-                {this.renderColors()}
+                <TabPanel
+                    panels={this.renderTabs()}
+                    onTabChange={this.handleChangeTab}
+                    currentTabIndex={currentTabIndex}
+                />
                 <ColorSettings
                     handleCloseColorSettings={this.handleSetColorSettingsItem}
                     item={colorSettingsItem}
@@ -146,10 +161,24 @@ export class CustomizationThemes extends React.Component<Props, State> {
         );
     }
 
+    private handleChangeTab = (index: number) => {
+        const { handleSetCurrentColorTheme } = this.props;
+
+        if (index === 1) {
+            handleSetCurrentColorTheme('light');
+        } else {
+            handleSetCurrentColorTheme('dark');
+        }
+
+        this.setState({
+            currentTabIndex: index,
+        });
+    };
+
     private handleGetThemesTitlesList = () => {
         const { translate } = this.props;
 
-        return AVAILABLE_COLOR_THEMES.map(item => translate(item.title));
+        return AVAILABLE_THEME_PRESETS.map(item => translate(item.title));
     };
 
     private handleSetColorSettingsItem = (item?: ThemeColorTitleInterface) => {
@@ -162,69 +191,37 @@ export class CustomizationThemes extends React.Component<Props, State> {
         this.setState({ colorSettingsItem: newSettings });
     };
 
-
     private handleChangeCurrentTheme = (index: number) => {
         const { handleTriggerChartRebuild } = this.props;
-        const rootElement = document.documentElement;
-        const themeToSet = AVAILABLE_COLOR_THEMES[index];
-
-        if (rootElement) {
-            AVAILABLE_COLORS_TITLES.reduce((result, item) => {
-                const newItemColor = AVAILABLE_COLOR_THEMES[index].theme.find(theme => theme.key === item.key);
-
-                if (newItemColor) {
-                    rootElement.style.setProperty(item.key, newItemColor.value);
-                }
-
-                return result;
-            }, {});
+        const themeToSet = AVAILABLE_THEME_PRESETS[index];        
+        const settingsToSet = {
+            theme_id: themeToSet.theme_id,
+            theme_colors: {
+                dark: themeToSet.theme_colors.dark,
+                light: themeToSet.theme_colors.light,
+            }
         }
 
         this.handleSetCurrentTheme(index);
-
-        if (themeToSet) {
-            this.props.handleSetCurrentCustomization('theme_id', themeToSet.id);
-        }
-
-        handleTriggerChartRebuild && handleTriggerChartRebuild();
+        applyCustomizationSettingsColors(settingsToSet, handleTriggerChartRebuild);
     };
 
     private handleSetCurrentTheme = (themeIndex: number) => {
+        const { handleSetThemeId } = this.props;
         this.setState({ currentThemeIndex: themeIndex });
+        handleSetThemeId(themeIndex);
     };
 
-    private handleApplyCustomizationSettings = (customization: CustomizationDataInterface) => {
-        const parsedSettings = customization.settings ? JSON.parse(customization.settings) : null;
+    private handleGetDefaultTheme = (): number => {
+        const settingsFromConfig: CustomizationSettingsInterface | undefined =
+            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
 
-        if (parsedSettings && parsedSettings.theme_id) {
-            const themeIndexToSet = AVAILABLE_COLOR_THEMES.findIndex(theme => theme.id === +parsedSettings.theme_id);
+        const themeIndexToSet = AVAILABLE_THEME_PRESETS.findIndex(theme => theme.theme_id === settingsFromConfig?.theme_id);
 
-            if (themeIndexToSet >= 0) {
-                this.handleSetCurrentTheme(themeIndexToSet);
-                this.props.handleSetCurrentCustomization('theme_id', +parsedSettings.theme_id);
-            }
-        }
-    };
+        if (themeIndexToSet > 0) {
+            return themeIndexToSet;
+        }        
 
-    private handleResetCustomizationSettings = (customization: CustomizationDataInterface) => {
-        const { handleTriggerChartRebuild } = this.props;
-        const rootElement = document.documentElement;
-        const parsedSettings = customization && customization.settings ? JSON.parse(customization.settings) : null;
-
-        this.handleApplyCustomizationSettings(customization);
-
-        if (rootElement && parsedSettings && parsedSettings.theme_colors) {
-            parsedSettings.theme_colors.reduce((result, item) => {
-                const newItemColor = item.value;
-
-                if (newItemColor) {
-                    rootElement.style.setProperty(item.key, item.value);
-                }
-
-                return result;
-            }, {});
-
-            handleTriggerChartRebuild && handleTriggerChartRebuild();
-        }
-    };
+        return 0;
+    }
 }

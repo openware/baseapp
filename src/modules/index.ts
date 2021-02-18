@@ -5,7 +5,6 @@ import { ConfigUpdateState, rootConfigUpdateSaga } from './admin/config';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
-import { CustomizationState, rootCustomizationSaga } from './public/customization';
 import { ErrorHandlerState, rootErrorHandlerSaga } from './public/errorHandler';
 import { ColorThemeState } from './public/globalSettings';
 import { GridLayoutState } from './public/gridLayout';
@@ -21,7 +20,6 @@ import { rootApiKeysSaga } from './user/apiKeys/sagas';
 import { AuthState, rootAuthSaga } from './user/auth';
 import { BeneficiariesState, rootBeneficiariesSaga } from './user/beneficiaries';
 import { GeetestCaptchaState, rootGeetestCaptchaSaga } from './user/captcha';
-import { CustomizationUpdateState, rootCustomizationUpdateSaga } from './user/customization';
 import { DocumentationState, rootDocumentationSaga } from './user/documentation';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
 import { HistoryState, rootHistorySaga } from './user/history';
@@ -43,7 +41,6 @@ export * from './admin/config';
 export * from './public/alert';
 export * from './public/blocklistAccess';
 export * from './public/currencies';
-export * from './public/customization';
 export * from './public/errorHandler';
 export * from './public/globalSettings';
 export * from './public/i18n';
@@ -56,7 +53,6 @@ export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';
 export * from './user/captcha';
-export * from './user/customization';
 export * from './user/documentation';
 export * from './user/emailVerification';
 export * from './user/history';
@@ -76,7 +72,6 @@ export interface RootState {
         blocklistAccess: BlocklistAccessState;
         colorTheme: ColorThemeState;
         currencies: CurrenciesState;
-        customization: CustomizationState;
         rgl: GridLayoutState;
         i18n: LanguageState;
         kline: KlineState;
@@ -94,7 +89,6 @@ export interface RootState {
         auth: AuthState;
         beneficiaries: BeneficiariesState;
         captcha: GeetestCaptchaState;
-        customizationUpdate: CustomizationUpdateState;
         documentation: DocumentationState;
         history: HistoryState;
         documents: DocumentsState;
@@ -131,8 +125,6 @@ export function* rootSaga() {
         call(rootBlocklistAccessSaga),
         call(rootConfigUpdateSaga),
         call(rootCurrenciesSaga),
-        call(rootCustomizationSaga),
-        call(rootCustomizationUpdateSaga),
         call(rootDocumentationSaga),
         call(rootErrorHandlerSaga),
         call(rootEmailVerificationSaga),

@@ -6,12 +6,11 @@ export * from './checkDate';
 export * from './cleanPositiveFloatInput';
 export * from './convertRgbToHex';
 export * from './copy';
+export * from './customizationSettings';
 export * from './emailValidation';
 export * from './filterData';
 export * from './formatCCYAddress';
 export * from './formatDate';
-// MUST BE REMOVED: Vadym P. responsibility
-// export * from './geetest';
 export * from './getCsrfToken';
 export * from './getHistorySagaParam';
 export * from './getLanguageByCode';

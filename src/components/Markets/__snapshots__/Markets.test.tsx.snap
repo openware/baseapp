@@ -311,6 +311,8 @@ exports[`Markets should render empty data 1`] = `
         "page.body.customization.themes.color.systemYellow": "System Yellow",
         "page.body.customization.themes.color.textContrastColor": "Text contrast",
         "page.body.customization.themes.selector.label": "Theme Presets",
+        "page.body.customization.themes.tabs.dark": "Dark",
+        "page.body.customization.themes.tabs.light": "Light",
         "page.body.customization.themes.theme.darkBlue.title": "Dark blue",
         "page.body.customization.themes.theme.darkRed.title": "Dark red",
         "page.body.customization.themes.theme.green.title": "Green",

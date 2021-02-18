@@ -1,6 +1,6 @@
-import { ThemeColorInterface } from './';
+import { ThemeColorInterface } from '../../types';
 
-export const DarkRedTheme: ThemeColorInterface[] = [
+export const RedTheme: ThemeColorInterface[] = [
     { key: '--rgb-main-background-color', value: '30, 30, 30' },
     { key: '--rgb-body-background-color', value: '30, 30, 30' },
     { key: '--rgb-header-background-color', value: '30, 30, 30' },

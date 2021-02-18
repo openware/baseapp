@@ -3,7 +3,6 @@ import { configUpdateReducer } from './admin/config';
 import { alertReducer  } from './public/alert';
 import { blocklistAccessReducer } from './public/blocklistAccess';
 import { currenciesReducer } from './public/currencies';
-import { customizationReducer } from './public/customization';
 import { errorHandlerReducer } from './public/errorHandler';
 import { changeColorThemeReducer  } from './public/globalSettings';
 import { gridLayoutReducer } from './public/gridLayout';
@@ -18,7 +17,6 @@ import { apiKeysReducer } from './user/apiKeys';
 import { authReducer  } from './user/auth';
 import { beneficiariesReducer } from './user/beneficiaries';
 import { getGeetestCaptchaReducer } from './user/captcha';
-import { customizationUpdateReducer } from './user/customization';
 import { documentationReducer } from './user/documentation';
 import { sendEmailVerificationReducer } from './user/emailVerification';
 import { historyReducer  } from './user/history';
@@ -43,7 +41,6 @@ export const publicReducer = combineReducers({
     blocklistAccess: blocklistAccessReducer,
     colorTheme: changeColorThemeReducer,
     currencies: currenciesReducer,
-    customization: customizationReducer,
     errorHandler: errorHandlerReducer,
     rgl: gridLayoutReducer,
     i18n: changeLanguageReducer,
@@ -63,7 +60,6 @@ export const userReducer = combineReducers({
     auth: authReducer,
     beneficiaries: beneficiariesReducer,
     captcha: getGeetestCaptchaReducer,
-    customizationUpdate: customizationUpdateReducer,
     documentation: documentationReducer,
     history: historyReducer,
     documents: documentsReducer,
