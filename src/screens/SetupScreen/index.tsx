@@ -30,6 +30,8 @@ import {
     selectUserInfo,
     User,
     signIn,
+    signUp,
+    LanguageState,
 } from '../../modules';
 import { sessionCheckInterval, wizardStep } from '../../api';
 
@@ -48,9 +50,14 @@ interface DispatchProps {
     updateMarket: typeof updateMarketFetch;
     userFetch: typeof userFetch;
     signIn: typeof signIn;
+    signUp: typeof signUp;
 }
 
-type Props = ReduxProps & DispatchProps;
+interface OwnProps {
+    i18n: LanguageState['lang'];
+}
+
+type Props = ReduxProps & DispatchProps & OwnProps;
 
 export class Setup extends React.Component<Props, SetupScreenState> {
     constructor(props: Props) {
@@ -257,13 +264,19 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     };
 
     private handleRegister = (email: string, password: string, confirmPassword: string) => {
+        //TODO: validate email REGEX and confirmPassword
+
+        const { i18n } = this.props;
         const payload = {
             email,
             password,
-            confirmPassword,
+            data: JSON.stringify({
+                language: i18n,
+            }),
         };
 
-        console.log(payload);
+        this.props.signUp(payload);
+
         this.handleChangeCurrentStep(2);
     };
 
@@ -303,6 +316,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     updateMarket: payload => dispatch(updateMarketFetch(payload)),
     userFetch: () => dispatch(userFetch()),
     signIn: payload => dispatch(signIn(payload)),
+    signUp: credentials => dispatch(signUp(credentials)),
 });
 
 export const SetupScreen = connect(mapStateToProps, mapDispatchToProps)(Setup);
