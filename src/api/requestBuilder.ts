@@ -28,7 +28,7 @@ const getAPI = () => {
         applogic: applogicUrl(),
         peatio: tradeUrl(),
         finex: finexUrl(),
-        sonic: `${hostUrl}/api/v2`,
+        sonic: `${hostUrl}/api/v2/sonic`,
     }
 };
 
