@@ -19,8 +19,10 @@ import {
     configUpdate,
     RootState,
     selectCurrentColorTheme,
+    selectUserInfo,
     selectUserLoggedIn,
     toggleChartRebuild,
+    User,
 } from '../../modules';
 import {
     AVAILABLE_COLOR_TITLES,
@@ -33,6 +35,7 @@ import './customization.pcss';
 interface ReduxProps {
     colorTheme: string;
     userLoggedIn: boolean;
+    user: User;
 }
 
 interface DispatchProps {
@@ -54,9 +57,13 @@ class CustomizationContainer extends React.Component<Props, State> {
     public state = {
         currentThemeId: -1,
         currentTabIndex: 0,
-        isOpen: true,
+        isOpen: false,
         resetToDefault: false,
     };
+
+    public componentDidMount() {
+        this.setState({ isOpen: this.handleCheckRoute() });
+    }
 
     public renderTabs = () => {
         const { colorTheme, changeColorTheme } = this.props;
@@ -105,10 +112,10 @@ class CustomizationContainer extends React.Component<Props, State> {
     }
 
     public render() {
-        const { userLoggedIn } = this.props;
+        const { userLoggedIn, user } = this.props;
         const { currentTabIndex, isOpen } = this.state;
 
-        if (!userLoggedIn || !this.handleCheckRoute()) {
+        if (!userLoggedIn || user?.role !== 'superadmin' ) {
             return null;
         }
 
@@ -139,7 +146,7 @@ class CustomizationContainer extends React.Component<Props, State> {
     private handleClickSaveButton = () => {
         const { currentThemeId } = this.state;
         const settingsFromConfig: CustomizationSettingsInterface | null | undefined =
-            window.env?.settings ? JSON.parse(window.env.settings) : null;
+            window.env?.palette ? JSON.parse(window.env.palette) : null;
         const rootElement = document.documentElement;
         const bodyElement = document.querySelector<HTMLElement>('body')!;
         const currentColors: { [key: string]: ThemeColorInterface[] } = {
@@ -192,7 +199,7 @@ class CustomizationContainer extends React.Component<Props, State> {
         this.props.configUpdate({
             component: 'baseapp',
             scope: 'public',
-            key: 'settings',
+            key: 'palette',
             value: JSON.stringify(settings),
         });
     };
@@ -233,6 +240,7 @@ class CustomizationContainer extends React.Component<Props, State> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     colorTheme: selectCurrentColorTheme(state),
     userLoggedIn: selectUserLoggedIn(state),
+    user: selectUserInfo(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =

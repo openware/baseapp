@@ -70,7 +70,6 @@ export class CustomizationThemes extends React.Component<Props, State> {
 
         if (resetToDefault !== prevProps.resetToDefault) {
             this.handleChangeCurrentTheme(this.handleGetDefaultTheme());
-            this.handleChangeTab(0);
         }
     }
 
@@ -214,7 +213,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
 
     private handleGetDefaultTheme = (): number => {
         const settingsFromConfig: CustomizationSettingsInterface | null | undefined =
-            window.env?.settings ? JSON.parse(window.env.settings) : null;
+            window.env?.palette ? JSON.parse(window.env.palette) : null;
 
         const themeIndexToSet = AVAILABLE_THEME_PRESETS.findIndex(theme => theme.theme_id === settingsFromConfig?.theme_id);
 
