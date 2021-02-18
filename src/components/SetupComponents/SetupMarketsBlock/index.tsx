@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { MarketItem } from 'src/modules';
+import { MarketItem, MarketUpdateItem } from 'src/modules';
 import { ArrowAllLeftIcon } from 'src/assets/images/setup/arrowAllLeftIcon';
 import { ArrowAllRightIcon } from 'src/assets/images/setup/arrowAllRightIcon';
 import { ArrowLeftIcon } from 'src/assets/images/setup/arrowLeftIcon';
@@ -15,7 +15,7 @@ export interface SetupMarketBlockState {
 
 interface SetupMarketBlockProps {
     marketsList: MarketItem[];
-    handleClickSave: (list: string[]) => void;
+    handleClickSave: (list: MarketUpdateItem[]) => void;
     fetchMarkets: () => void;
 }
 
@@ -173,7 +173,21 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
     };
 
     private handleSave = () => {
-        this.props.handleClickSave(this.state.addedMarkets);
+        const { marketsList } = this.props;
+        const { addedMarkets } = this.state;
+
+        const payloadMarkets = marketsList.map(item => {
+            if (addedMarkets.indexOf(item.name) !== -1) {
+                return {
+                    id: item.id,
+                    state: 'enabled',
+                };
+            }
+
+            return undefined;
+        }).filter(item => item !== undefined);
+
+        this.props.handleClickSave(payloadMarkets);
     };
 
     private getAllMarketsNames = marketsList => marketsList.map(market => market.name);

@@ -32,8 +32,11 @@ import {
     signIn,
     signUp,
     LanguageState,
+    MarketUpdateItem,
+    selectUserFetching,
+    configUpdate,
 } from '../../modules';
-import { sessionCheckInterval, wizardStep } from '../../api';
+import { wizardStep } from '../../api';
 
 interface SetupScreenState {
     currentStep: number;
@@ -43,14 +46,16 @@ interface ReduxProps {
     markets: MarketItem[];
     user: User;
     userLoggedIn: boolean;
+    userLoading: boolean;
 }
 
 interface DispatchProps {
     getMarketsList: typeof getMarketsAdminList;
-    updateMarket: typeof updateMarketFetch;
+    enableMarkets: typeof updateMarketFetch;
     userFetch: typeof userFetch;
     signIn: typeof signIn;
     signUp: typeof signUp;
+    setSecret: typeof configUpdate;
 }
 
 interface OwnProps {
@@ -68,18 +73,6 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         };
     }
 
-    public componentDidMount () {
-        // this.setState({
-        //     currentStep: wizardStep(),
-        // });
-
-        // const { userLoggedIn } = this.props;
-
-        // if (!userLoggedIn) {
-            // this.props.userFetch();
-        // }
-    }
-
     public render() {
         return (
             <div className="setup-screen">
@@ -89,133 +82,128 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     }
 
     public renderCurrentStep = () => {
-        const { userLoggedIn } = this.props;
+        const { userLoggedIn, userLoading } = this.props;
         const { currentStep } = this.state;
 
-        // if (!currentStep) {
-        //     window.location.replace('/');
-        //     return null;
-        // }
-
-        console.log(wizardStep(), currentStep, userLoggedIn);
-
-        if (currentStep > 1 && !userLoggedIn) {
-            console.log('renderLogin');
-            return this.renderLogin();
+        if (userLoading) {
+            return <div>Loading...</div>;
         }
 
-        switch (currentStep) {
-            case 1:
-                console.log('case1');
-                return (
-                    <React.Fragment>
-                        <div className="setup-screen__left">
-                            <SetupInfoBlock
-                                logo={logo}
-                                backgroundImage={bgStep1}
-                                title="Installation"
-                                description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-                            />
-                        </div>
-                        <div className="setup-screen__right">
-                            <div className="setup-screen__right-wrapper">
-                                <SetupFormBlock
-                                    title="Admin account"
-                                    subtitle="Create the first admin account for your exchange to access the admin panel."
-                                >
-                                    <SetupRegisterForm handleRegister={this.handleRegister} />
-                                </SetupFormBlock>
+        if (currentStep > 1 && !userLoggedIn) {
+            return this.renderLogin();
+        } else {
+            switch (currentStep) {
+                case 1:
+                    return (
+                        <React.Fragment>
+                            <div className="setup-screen__left">
+                                <SetupInfoBlock
+                                    logo={logo}
+                                    backgroundImage={bgStep1}
+                                    title="Installation"
+                                    description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                />
                             </div>
-                        </div>
-                    </React.Fragment>
-                );
-            case 2:
-                return (
-                    <React.Fragment>
-                        <div className="setup-screen__left">
-                            <SetupInfoBlock
-                                logo={logo}
-                                backgroundImage={bgStep1}
-                                title="Installation"
-                                description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-                            />
-                        </div>
-                        <div className="setup-screen__right">
-                            <div className="setup-screen__right-wrapper">
-                                <SetupFormBlock
-                                    title="General Settings"
-                                    subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint."
-                                >
-                                    <SetupGeneralSettingsForm handleCreateSettingsSecrets={this.handleCreateSettingsSecrets} />
-                                </SetupFormBlock>
-                            </div>
-                        </div>
-                    </React.Fragment>
-                );
-            case 3:
-                return (
-                    <React.Fragment>
-                        <div className="setup-screen__left">
-                            <SetupInfoBlock
-                                logo={logo}
-                                backgroundImage={bgStep2}
-                                title="Configure the liquidity network"
-                                description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-                            />
-                        </div>
-                        <div className="setup-screen__right">
-                            <div className="setup-screen__right-wrapper">
-                                <SetupFormBlock
-                                    title="Select Markets"
-                                    subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-                                >
-                                    <SetupMarketsBlock
-                                        marketsList={this.props.markets}
-                                        handleClickSave={this.handleSaveMarketsList}
-                                        fetchMarkets={this.props.getMarketsList}
-                                    />
-                                </SetupFormBlock>
-                            </div>
-                        </div>
-                    </React.Fragment>
-                );
-            default:
-                return (
-                    <React.Fragment>
-                        <div className="setup-screen__left">
-                            <SetupInfoBlock
-                                logo={logo}
-                                backgroundImage={bgStep3}
-                                title="Welcome to OpenDax software"
-                                description=""
-                            />
-                        </div>
-                        <div className="setup-screen__right">
-                            <div className="setup-screen__right-wrapper">
-                                <div className="setup-screen__right-wrapper__close" onClick={this.handleCompleteSetup}>
-                                    <CloseSetupIcon />
-                                </div>
-                                <SetupFormBlock
-                                    title={`Congratulations exchange is live!`}
-                                    subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-                                >
-                                    <SetupCongratsBlock />
-                                </SetupFormBlock>
-                                <div className="setup-screen__step-footer__congrat">
-                                    <Button
-                                        block={true}
-                                        type="button"
-                                        size="lg"
-                                        variant="primary"
-                                        onClick={this.handleCompleteSetup}
+                            <div className="setup-screen__right">
+                                <div className="setup-screen__right-wrapper">
+                                    <SetupFormBlock
+                                        title="Admin account"
+                                        subtitle="Create the first admin account for your exchange to access the admin panel."
                                     >
-                                        Continue and Customize
-                                    </Button>
+                                        <SetupRegisterForm handleRegister={this.handleRegister} />
+                                    </SetupFormBlock>
                                 </div>
                             </div>
-                        </div>
-                    </React.Fragment>
-                );
+                        </React.Fragment>
+                    );
+                case 2:
+                    return (
+                        <React.Fragment>
+                            <div className="setup-screen__left">
+                                <SetupInfoBlock
+                                    logo={logo}
+                                    backgroundImage={bgStep1}
+                                    title="Installation"
+                                    description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                />
+                            </div>
+                            <div className="setup-screen__right">
+                                <div className="setup-screen__right-wrapper">
+                                    <SetupFormBlock
+                                        title="General Settings"
+                                        subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint."
+                                    >
+                                        <SetupGeneralSettingsForm handleCreateSettingsSecrets={this.handleCreateSettingsSecrets} />
+                                    </SetupFormBlock>
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    );
+                case 3:
+                    return (
+                        <React.Fragment>
+                            <div className="setup-screen__left">
+                                <SetupInfoBlock
+                                    logo={logo}
+                                    backgroundImage={bgStep2}
+                                    title="Configure the liquidity network"
+                                    description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                />
+                            </div>
+                            <div className="setup-screen__right">
+                                <div className="setup-screen__right-wrapper">
+                                    <SetupFormBlock
+                                        title="Select Markets"
+                                        subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                    >
+                                        <SetupMarketsBlock
+                                            marketsList={this.props.markets}
+                                            handleClickSave={this.handleSaveMarketsList}
+                                            fetchMarkets={this.props.getMarketsList}
+                                        />
+                                    </SetupFormBlock>
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    );
+                default:
+                    return (
+                        <React.Fragment>
+                            <div className="setup-screen__left">
+                                <SetupInfoBlock
+                                    logo={logo}
+                                    backgroundImage={bgStep3}
+                                    title="Welcome to OpenDax software"
+                                    description=""
+                                />
+                            </div>
+                            <div className="setup-screen__right">
+                                <div className="setup-screen__right-wrapper">
+                                    <div className="setup-screen__right-wrapper__close" onClick={this.handleCompleteSetup}>
+                                        <CloseSetupIcon />
+                                    </div>
+                                    <SetupFormBlock
+                                        title={`Congratulations exchange is live!`}
+                                        subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                    >
+                                        <SetupCongratsBlock />
+                                    </SetupFormBlock>
+                                    <div className="setup-screen__step-footer__congrat">
+                                        <Button
+                                            block={true}
+                                            type="button"
+                                            size="lg"
+                                            variant="primary"
+                                            onClick={this.handleCompleteSetup}
+                                        >
+                                            Continue and Customize
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    );
+              }
         }
     };
 
@@ -264,8 +252,6 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     };
 
     private handleRegister = (email: string, password: string, confirmPassword: string) => {
-        //TODO: validate email REGEX and confirmPassword
-
         const { i18n } = this.props;
         const payload = {
             email,
@@ -276,7 +262,12 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         };
 
         this.props.signUp(payload);
-
+        this.props.setSecret({
+            scope: 'public',
+            component: 'global',
+            key: 'wizard_step',
+            value: '2',
+        });
         this.handleChangeCurrentStep(2);
     };
 
@@ -292,16 +283,33 @@ export class Setup extends React.Component<Props, SetupScreenState> {
 
         this.addSecret(exchangeNamePayload);
         this.addSecret(exchangeUrlPayload);
+        this.props.setSecret({
+            scope: 'public',
+            component: 'global',
+            key: 'wizard_step',
+            value: '3',
+        });
         this.handleChangeCurrentStep(3);
     };
 
-    private handleSaveMarketsList = (list: string[]) => {
-        console.log('handleSaveMarketsList: ', list);
+    private handleSaveMarketsList = (list: MarketUpdateItem[]) => {
+        this.props.enableMarkets(list);
+        this.props.setSecret({
+            scope: 'public',
+            component: 'global',
+            key: 'wizard_step',
+            value: 'false',
+        });
         this.handleChangeCurrentStep(4);
     };
 
     private addSecret = ({ key, value }) => {
-        console.log(`${key}: ${value}`);
+        this.props.setSecret({
+            scope: 'public',
+            component: 'global',
+            key,
+            value,
+        });
     };
 }
 
@@ -309,11 +317,13 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     markets: selectMarketsAdminList(state),
     user: selectUserInfo(state),
     userLoggedIn: selectUserLoggedIn(state),
+    userLoading: selectUserFetching(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    setSecret: payload => dispatch(configUpdate(payload)),
     getMarketsList: () => dispatch(getMarketsAdminList()),
-    updateMarket: payload => dispatch(updateMarketFetch(payload)),
+    enableMarkets: payload => dispatch(updateMarketFetch(payload)),
     userFetch: () => dispatch(userFetch()),
     signIn: payload => dispatch(signIn(payload)),
     signUp: credentials => dispatch(signUp(credentials)),
