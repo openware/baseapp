@@ -254,6 +254,9 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         const desktopCls = classnames('container-fluid pg-layout', {
             'trading-layout': location.pathname.includes('/trading'),
         });
+        const mobileCls = classnames('container-fluid pg-layout pg-layout--mobile', {
+            'pg-layout--mobile-setup': location.pathname.includes('/setup'),
+        });
         toggleColorTheme(colorTheme);
 
         if (!platformAccessStatus.length) {
@@ -262,7 +265,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 
         if (isMobileDevice) {
             return (
-                <div className="container-fluid pg-layout pg-layout--mobile">
+                <div className={mobileCls}>
                     <Switch>
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/setup" component={SetupScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInMobileScreen} />
