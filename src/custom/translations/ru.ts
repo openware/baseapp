@@ -640,10 +640,12 @@ export const ru: LangType = {
     'page.body.customization.themes.color.landingBackgroundColor': 'Landing background',
     'page.body.customization.themes.color.strengthMeterVeryStrong': 'Password very strong',
 
-    'page.body.customization.themes.theme.darkBlue.title': 'Dark blue',
-    'page.body.customization.themes.theme.darkRed.title': 'Dark red',
-    'page.body.customization.themes.theme.purple.title': 'Purple',
+    'page.body.customization.themes.theme.basic.title': 'Basic',
+    'page.body.customization.themes.theme.basicNew.title': 'Basic (new)',
+    'page.body.customization.themes.theme.yellow.title': 'Yellow',
+    'page.body.customization.themes.theme.red.title': 'Red',
     'page.body.customization.themes.theme.green.title': 'Green',
+    'page.body.customization.themes.theme.violet.title': 'Violet',
 
 
     /* Documentation */
