@@ -69,7 +69,8 @@ export class CustomizationThemes extends React.Component<Props, State> {
         }
 
         if (resetToDefault !== prevProps.resetToDefault) {
-            this.handleChangeCurrentTheme(this.handleGetDefaultTheme());
+            this.handleChangeTab(0);
+            this.handleSetCurrentTheme(this.handleGetDefaultTheme());
         }
     }
 
