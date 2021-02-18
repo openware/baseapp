@@ -3,7 +3,7 @@ export interface ThemeColorTitleInterface {
     title: string;
 }
 
-export const AVAILABLE_COLORS_TITLES: ThemeColorTitleInterface[] = [
+export const AVAILABLE_COLOR_TITLES: ThemeColorTitleInterface[] = [
     { key: '--rgb-main-background-color', title: 'page.body.customization.themes.color.mainBackgroundColor' },
     { key: '--rgb-body-background-color', title: 'page.body.customization.themes.color.bodyBackgroundColor' },
     { key: '--rgb-header-background-color', title: 'page.body.customization.themes.color.headerBackgroundColor' },

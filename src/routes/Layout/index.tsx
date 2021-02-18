@@ -9,7 +9,7 @@ import { IntlProps } from '../../';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
-import { toggleColorTheme } from '../../helpers';
+import { applyCustomizationSettings, toggleColorTheme } from '../../helpers';
 import {
     ChangeForgottenPasswordMobileScreen,
     ConfirmMobileScreen,
@@ -50,11 +50,6 @@ import {
     walletsReset,
 } from '../../modules';
 import {
-    CustomizationDataInterface,
-    customizationFetch,
-    selectCustomizationData,
-} from '../../modules/public/customization';
-import {
     ChangeForgottenPasswordScreen,
     ConfirmScreen,
     DocumentationScreen,
@@ -78,7 +73,6 @@ import {
 interface ReduxProps {
     colorTheme: string;
     currentMarket?: Market;
-    customization?: CustomizationDataInterface;
     user: User;
     isLoggedIn: boolean;
     isMobileDevice: boolean;
@@ -87,7 +81,6 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    fetchCustomization: typeof customizationFetch;
     logout: typeof logoutFetch;
     userFetch: typeof userFetch;
     walletsReset: typeof walletsReset;
@@ -196,6 +189,8 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     }
             }
         }
+
+        applyCustomizationSettings(null, this.props.toggleChartRebuild);
     }
 
     public componentWillReceiveProps(nextProps: LayoutProps) {
@@ -223,7 +218,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     }
 
     public componentDidUpdate(prevProps: LayoutProps) {
-        const { customization, isLoggedIn, userLoading } = this.props;
+        const { isLoggedIn, userLoading } = this.props;
 
         if (!isLoggedIn && prevProps.isLoggedIn && !userLoading) {
             this.props.walletsReset();
@@ -231,10 +226,6 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             if (!this.props.location.pathname.includes('/trading')) {
                 this.props.history.push('/trading/');
             }
-        }
-
-        if (customization && customization !== prevProps.customization) {
-            this.handleApplyCustomization(customization);
         }
     }
 
@@ -392,31 +383,11 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             isShownExpSessionModal: !this.state.isShownExpSessionModal,
         });
     };
-
-    private handleApplyCustomization = (customization: CustomizationDataInterface) => {
-        const rootElement = document.documentElement;
-        const parsedSettings = customization && customization.settings ? JSON.parse(customization.settings) : null;
-
-        if (rootElement && parsedSettings && parsedSettings.theme_colors) {
-            parsedSettings.theme_colors.reduce((result, item) => {
-                const newItemColor = item.value;
-
-                if (newItemColor) {
-                    rootElement.style.setProperty(item.key, item.value);
-                }
-
-                return result;
-            }, {});
-
-            this.props.toggleChartRebuild();
-        }
-    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
-    customization: selectCustomizationData(state),
     user: selectUserInfo(state),
     isLoggedIn: selectUserLoggedIn(state),
     isMobileDevice: selectMobileDeviceState(state),
@@ -425,7 +396,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
-    fetchCustomization: () => dispatch(customizationFetch()),
     logout: () => dispatch(logoutFetch()),
     toggleChartRebuild: () => dispatch(toggleChartRebuild()),
     userFetch: () => dispatch(userFetch()),

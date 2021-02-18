@@ -1,9 +1,13 @@
+@import "./colors.pcss";
+@import "./fonts.pcss";
+
 .pg-customization {
   background: var(--customization-background-color);
   box-shadow: var(--customization-shadow);
   color: var(--customization-primary-text-color);
   display: flex;
   flex-direction: column;
+  font-family: 'IBM Plex Sans', sans-serif;
   height: 100vh;
   justify-content: space-between;
   position: fixed;
@@ -20,7 +24,7 @@
     .pg-customization__toggler {
       svg {
         path {
-          fill: var(--customization-text-contrast-color);
+          fill: var(--customization-contrast-text-color);
           opacity: 0.72;
         }
       }
@@ -29,7 +33,7 @@
       &:active {
         svg {
           path {
-            fill: var(--customization-cta-color);
+            fill: var(--customization-system-green);
             opacity: 1;
           }
         }
@@ -45,33 +49,36 @@
       border-bottom: 1px solid var(--customization-divider-color);
       margin: 0;
 
-      .cr-tab {
-        color: var(--customization-primary-text-color);
-        font-size: 12px;
-        font-weight: 500;
-        letter-spacing: 0.3px;
-        line-height: 22px;
-        opacity: 0.6;
-        padding-left: 12px;
-        padding-right: 12px;
-        transition: 0.2s;
+      &-navigation {
+        padding-bottom: 0;
+      }
 
-        &:hover {
-          opacity: 1;
-        }
+      .cr-tab {
+        align-items: center;
+        color: var(--customization-contrast-text-color);
+        display: flex;
+        font-size: 10px;
+        font-weight: bold;
+        height: 51px;
+        justify-content: center;
+        letter-spacing: 0.6px;
+        line-height: 13px;
+        padding: 0 12px 0 12px;
+        text-transform: uppercase;
+        transition: 0.2s;
+        user-select: none;
 
         &:first-child {
-          padding-left: 24px;
+          margin-left: 12px;
         }
 
         &:last-child {
-          padding-right: 24px;
+          margin-right: 12px;
         }
 
+        &:hover,
         &__active {
-          color: var(--customization-primary-text-color);
-          opacity: 1;
-          text-shadow: -0.16px 0 var(--customization-primary-text-color), 0.16px 0 var(--customization-primary-text-color);
+          color: var(--customization-primary-cta-color);
           transition: 0.2s;
         }
 
@@ -95,7 +102,7 @@
     width: 100%;
 
     &__coming-soon {
-      color: var(--customization-text-contrast-color);
+      color: var(--customization-contrast-text-color);
       font-size: 14px;
       font-weight: 600;
       line-height: 22px;
@@ -104,44 +111,38 @@
 
   &__action-buttons {
     align-items: center;
+    border-top: 1px solid var(--customization-divider-color);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 24px;
-    padding-top: 14px;
     width: 100%;
 
     &__button {
       align-items: center;
-      background: var(--customization-cta-color);
+      background: var(--customization-system-green);
       border-radius: 4px;
       color: var(--customization-background-color);
       cursor: pointer;
       display: flex;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: bold;
-      height: 34px;
+      height: 40px;
       justify-content: center;
-      letter-spacing: 0.3px;
-      line-height: 22px;
+      letter-spacing: 0.48px;
+      line-height: 18px;
+      opacity: 0.85;
       transition: 0.2s;
       user-select: none;
       width: calc(50% - 11px);
 
       &:first-child {
-        background: var(--customization-background-color);
-        box-shadow: 0 0 0 1px var(--customization-text-contrast-color);
-        color: var(--customization-text-contrast-color);
-        font-weight: 400;
-        opacity: 0.72;
+        background: var(--customization-system-red);
+      }
 
-        &:hover,
-        &:active {
-          background: var(--customization-cta-secondary-color);
-          box-shadow: none;
-          color: var(--customization-background-color);
-          font-weight: bold;
-        }
+      &:hover,
+      &:active {
+        opacity: 1;
       }
     }
   }
@@ -149,7 +150,8 @@
   &__toggler {
     align-items: center;
     background: var(--customization-background-color);
-    border-radius: 50%;
+    border-radius: 6px;
+    box-shadow: var(--customization-shadow);
     cursor: pointer;
     display: flex;
     height: 60px;
@@ -157,12 +159,14 @@
     margin-left: -96px;
     position: absolute;
     top: calc(100vh - 96px);
+    transition: 0.2s;
     width: 60px;
 
     svg {
       path {
-        fill: var(--customization-cta-color);
+        fill: var(--customization-system-green);
         opacity: 1;
+        transition: 0.2s;
       }
     }
 
@@ -170,8 +174,9 @@
     &:active {
       svg {
         path {
-          fill: var(--customization-text-contrast-color);
+          fill: var(--customization-contrast-text-color);
           opacity: 0.72;
+          transition: 0.2s;
         }
       }
     }

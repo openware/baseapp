@@ -611,6 +611,8 @@ export const ru: LangType = {
     'page.body.customization.actionButtons.save': 'Save',
 
     'page.body.customization.themes.selector.label': 'Theme Presets',
+    'page.body.customization.themes.tabs.dark': 'Dark',
+    'page.body.customization.themes.tabs.light': 'Light',
 
     'page.body.customization.themes.color.mainBackgroundColor': 'Main background',
     'page.body.customization.themes.color.bodyBackgroundColor': 'Body background',

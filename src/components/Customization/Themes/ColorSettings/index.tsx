@@ -6,8 +6,8 @@ import { ArrowIcon } from '../../../../assets/images/customization/ArrowIcon';
 import { ThemeColorTitleInterface } from '../../../../themes';
 
 interface OwnProps {
-    handleCloseColorSettings: () => void;
     item: ThemeColorTitleInterface;
+    handleCloseColorSettings: () => void;
     translate: (key: string) => string;
     handleTriggerChartRebuild?: () => void;
 }
@@ -51,7 +51,13 @@ export class ColorSettings extends React.Component<Props, State> {
                     >
                         <ArrowIcon />
                     </div>
-                    {item.title ? <span>{translate(item.title)}</span> : null}
+                    {item.title ? (
+                        <span
+                            className="pg-customization-color-settings__header__title"
+                        >
+                            {translate(item.title)}
+                        </span>
+                    ) : null}
                 </div>
                 <div className="pg-customization-color-settings__body">
                     <SketchPicker
@@ -77,8 +83,15 @@ export class ColorSettings extends React.Component<Props, State> {
         const newItemColor = color && color.rgb && `${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}`;
 
         if (rootElement && newItemColor) {
+            const lightModeBodyElement = document.querySelector<HTMLElement>('.light-mode')!;
             this.handleSetCurrentItemColor(newItemColor);
-            rootElement.style.setProperty(item.key, newItemColor);
+
+            if (lightModeBodyElement) {
+                lightModeBodyElement.style.setProperty(item.key, newItemColor);
+            } else {
+                rootElement.style.setProperty(item.key, newItemColor);
+            }
+
             handleTriggerChartRebuild && handleTriggerChartRebuild();
         }
     };
