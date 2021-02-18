@@ -35,7 +35,7 @@ import { profileReducer  } from './user/profile';
 import { userActivityReducer  } from './user/userActivity';
 import { walletsReducer  } from './user/wallets';
 import { withdrawLimitReducer  } from './user/withdrawLimit';
-import { secretsReducer } from './user/secrets';
+import { marketsAdminReducer } from './admin/markets';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,
@@ -72,7 +72,6 @@ export const userReducer = combineReducers({
     ordersHistory: ordersHistoryReducer,
     password: passwordReducer,
     profile: profileReducer,
-    secrets: secretsReducer,
     sendEmailVerification: sendEmailVerificationReducer,
     userActivity: userActivityReducer,
     wallets: walletsReducer,
@@ -81,4 +80,5 @@ export const userReducer = combineReducers({
 
 export const adminReducer = combineReducers({
     configUpdate: configUpdateReducer,
+    markets: marketsAdminReducer,
 });

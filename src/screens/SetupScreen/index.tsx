@@ -1,49 +1,55 @@
 import * as React from 'react';
-import { Button, ThemeProvider } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import {
     SetupInfoBlock,
     SetupFormBlock,
     SetupGeneralSettingsForm,
     SetupRegisterForm,
+    SetupLoginForm,
     SetupMarketsBlock,
 } from '../../components';
+import {
+    connect,
+    MapDispatchToPropsFunction,
+    MapStateToProps,
+} from 'react-redux';
 import logo from '../../assets/images/setup/logo.svg';
 import bgStep1 from '../../assets/images/setup/step1-background.png';
 import bgStep2 from '../../assets/images/setup/step2-background.png';
 import bgStep3 from '../../assets/images/setup/step3-background.png';
 import { CloseSetupIcon } from 'src/assets/images/setup/CloseSetupIcon';
 import { SetupCongratsBlock } from 'src/components/SetupComponents/SetupCongratsBlock';
+import {
+    getMarketsAdminList,
+    MarketItem,
+    selectMarketsAdminList,
+    RootState,
+    selectUserLoggedIn,
+    updateMarketFetch,
+} from '../../modules';
 
 interface SetupScreenState {
     currentStep: number;
-    exchangeName: string;
-    exchangeUrl: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    showSignIn: boolean;
-    availableMarkets: string[];
-    addedMarkets: string[];
-    selectedAvailableMarkets: string[];
-    selectedAddedMarkets: string[];
 }
 
-export class SetupScreen extends React.Component<{}, SetupScreenState> {
-    constructor(props: {}) {
+interface ReduxProps {
+    markets: MarketItem[];
+    userLoggedIn: boolean;
+}
+
+interface DispatchProps {
+    getMarketsList: typeof getMarketsAdminList;
+    updateMarket: typeof updateMarketFetch;
+}
+
+type Props = ReduxProps & DispatchProps;
+
+export class Setup extends React.Component<Props, SetupScreenState> {
+    constructor(props: Props) {
         super(props);
 
         this.state = {
-            currentStep: 0,
-            exchangeName: '',
-            exchangeUrl: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            showSignIn: false,
-            availableMarkets: ['btc/usdt', 'eth/usdt', 'ltc/usdt'],
-            addedMarkets: [],
-            selectedAvailableMarkets: [],
-            selectedAddedMarkets: [],
+            currentStep: 2,
         };
     }
 
@@ -55,86 +61,8 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
         );
     }
 
-    private handleChangeEmail = (value: string) => {
-        this.setState({
-            email: value,
-        });
-    }
-
-    private handleChangePassword = (value: string) => {
-        this.setState({
-            password: value,
-        });
-    }
-
-    private handleChangeConfirmPassword = (value: string) => {
-        this.setState({
-            confirmPassword: value,
-        });
-    }
-
-    private handleChangeExchangeName = (value: string) => {
-        this.setState({
-            exchangeName: value,
-        });
-    }
-
-    private handleChangeExchangeUrl = (value: string) => {
-        this.setState({
-            exchangeUrl: value,
-        });
-    }
-
-    private handleSelectAvailableMarket = (value: string[]) => {
-        this.setState({
-            selectedAvailableMarkets: value,
-        });
-    }
-
-    private handleSelectAddedMarket = (value: string[]) => {
-        this.setState({
-            selectedAddedMarkets: value,
-        });
-    }
-
-    private handleAddMarket = () => {
-        console.log(this.state.addedMarkets, this.state.selectedAvailableMarkets);
-
-        this.setState(prevState => {
-            return {
-                addedMarkets: [...prevState.addedMarkets, ...prevState.selectedAvailableMarkets],
-                selectedAvailableMarkets: [],
-                // availableMarkets:  // TODO: remove selected item from available market list
-            }
-        });
-    }
-
-    private handleAddAllMarkets = () => {
-
-    }
-
-    private handleRemoveMarket = () => {
-
-    }
-
-    private handleRemoveAllMarkets = () => {
-
-    }
-
     public renderCurrentStep = () => {
-        const {
-            currentStep,
-            exchangeName,
-            exchangeUrl,
-            email,
-            password,
-            confirmPassword,
-            showSignIn,
-            availableMarkets,
-            addedMarkets,
-            selectedAvailableMarkets,
-            selectedAddedMarkets,
-        } = this.state;
+        const { currentStep } = this.state;
 
         switch (currentStep) {
             case 0:
@@ -150,61 +78,12 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
                         </div>
                         <div className="setup-screen__right">
                             <div className="setup-screen__right-wrapper">
-                                { showSignIn ? 
-                                    <SetupFormBlock
-                                        title="Admin account"
-                                        subtitle="Sign in the first admin account for your exchange to access the admin panel."
-                                    >
-                                        <SetupRegisterForm
-                                            email={email}
-                                            password={password}
-                                            handleChangeEmail={this.handleChangeEmail}
-                                            handleChangePassword={this.handleChangePassword}
-                                        />
-                                        <div className="setup-screen__sign-in">
-                                            <Button
-                                                block={true}
-                                                type="button"
-                                                size="lg"
-                                                variant="primary"
-                                                onClick={e => this.handleChangeCurrentStep(1)}
-                                            >
-                                                Next
-                                            </Button>
-                                        </div>
-                                    </SetupFormBlock>
-                                    : <SetupFormBlock
-                                        title="Admin account"
-                                        subtitle="Create the first admin account for your exchange to access the admin panel."
-                                    >
-                                        <SetupRegisterForm
-                                            email={email}
-                                            password={password}
-                                            confirmPassword={confirmPassword}
-                                            showConfirmPassword={true}
-                                            handleChangeEmail={this.handleChangeEmail}
-                                            handleChangePassword={this.handleChangePassword}
-                                            handleChangeConfirmPassword={this.handleChangeConfirmPassword}
-                                        />
-                                        <div className="setup-screen__agreement">
-                                            <div className="setup-screen__agreement__term">
-                                                <label className="container">I  agree all statements in <a href="#"> terms of service</a>
-                                                    <input type="checkbox" />
-                                                    <span className="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            <Button
-                                                block={true}
-                                                type="button"
-                                                size="lg"
-                                                variant="primary"
-                                                onClick={e => this.handleChangeCurrentStep(1)}
-                                            >
-                                                Next
-                                            </Button>
-                                        </div>
-                                    </SetupFormBlock>
-                                }
+                                <SetupFormBlock
+                                    title="Admin account"
+                                    subtitle="Sign in the first admin account for your exchange to access the admin panel."
+                                >
+                                    <SetupLoginForm handleLogin={this.handleLogin} />
+                                </SetupFormBlock>
                             </div>
                         </div>
                     </React.Fragment>
@@ -223,32 +102,39 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
                         <div className="setup-screen__right">
                             <div className="setup-screen__right-wrapper">
                                 <SetupFormBlock
-                                    title="General Settings"
-                                    subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint."
+                                    title="Admin account"
+                                    subtitle="Create the first admin account for your exchange to access the admin panel."
                                 >
-                                    <SetupGeneralSettingsForm
-                                        exchangeName={exchangeName}
-                                        exchangeUrl={exchangeUrl}
-                                        handleChangeExchangeName={this.handleChangeExchangeName}
-                                        handleChangeExchangeUrl={this.handleChangeExchangeUrl}
-                                    />
-                                    <div className="setup-screen__step-footer">
-                                        <Button
-                                            block={true}
-                                            type="button"
-                                            size="lg"
-                                            variant="primary"
-                                            onClick={e => this.handleChangeCurrentStep(2)}
-                                        >
-                                            Next
-                                        </Button>
-                                    </div>
+                                    <SetupRegisterForm handleRegister={this.handleRegister} />
                                 </SetupFormBlock>
                             </div>
                         </div>
                     </React.Fragment>
                 );
             case 2:
+                return (
+                    <React.Fragment>
+                        <div className="setup-screen__left">
+                            <SetupInfoBlock
+                                logo={logo}
+                                backgroundImage={bgStep1}
+                                title="Installation"
+                                description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                            />
+                        </div>
+                        <div className="setup-screen__right">
+                            <div className="setup-screen__right-wrapper">
+                                <SetupFormBlock
+                                    title="General Settings"
+                                    subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint."
+                                >
+                                    <SetupGeneralSettingsForm handleCreateSettingsSecrets={this.handleCreateSettingsSecrets} />
+                                </SetupFormBlock>
+                            </div>
+                        </div>
+                    </React.Fragment>
+                );
+            case 3:
                 return (
                     <React.Fragment>
                         <div className="setup-screen__left">
@@ -265,29 +151,11 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
                                     title="Select Markets"
                                     subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
                                 >
-                                    <SetupMarketsBlock 
-                                        availableMarkets={availableMarkets}
-                                        addedMarkets={addedMarkets}
-                                        selectedAvailableMarkets={selectedAvailableMarkets}
-                                        selectedAddedMarkets={selectedAddedMarkets}
-                                        handleSelectAvailableMarket={this.handleSelectAvailableMarket}
-                                        handleSelectAddedMarket={this.handleSelectAddedMarket}
-                                        handleAdd={this.handleAddMarket}
-                                        handleAddAll={this.handleAddAllMarkets}
-                                        handleRemove={this.handleRemoveMarket}
-                                        handleRemoveAll={this.handleRemoveAllMarkets}
+                                    <SetupMarketsBlock
+                                        marketsList={this.props.markets}
+                                        handleClickSave={this.handleSaveMarketsList}
+                                        fetchMarkets={this.props.getMarketsList}
                                     />
-                                    <div className="setup-screen__step-footer">
-                                        <Button
-                                            block={true}
-                                            type="button"
-                                            size="lg"
-                                            variant="primary"
-                                            onClick={e => this.handleChangeCurrentStep(3)}
-                                        >
-                                            Next
-                                        </Button>
-                                    </div>
                                 </SetupFormBlock>
                             </div>
                         </div>
@@ -306,9 +174,11 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
                         </div>
                         <div className="setup-screen__right">
                             <div className="setup-screen__right-wrapper">
-                                <div className="setup-screen__right-wrapper__close" onClick={() => this.handleCompleteSetup()}><CloseSetupIcon /></div>
+                                <div className="setup-screen__right-wrapper__close" onClick={this.handleCompleteSetup}>
+                                    <CloseSetupIcon />
+                                </div>
                                 <SetupFormBlock
-                                    title={`Congratulations ${exchangeName} exchange is live!`}
+                                    title={`Congratulations exchange is live!`}
                                     subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
                                 >
                                     <SetupCongratsBlock />
@@ -319,7 +189,7 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
                                         type="button"
                                         size="lg"
                                         variant="primary"
-                                        onClick={e => this.handleCompleteSetup()}
+                                        onClick={this.handleCompleteSetup}
                                     >
                                         Continue and Customize
                                     </Button>
@@ -340,4 +210,60 @@ export class SetupScreen extends React.Component<{}, SetupScreenState> {
     private handleCompleteSetup = () => {
         window.location.replace('/trading/dashbtc#settings');
     }
+
+    private handleLogin = (email: string, password: string) => {
+        const payload = {
+            email,
+            password,
+        };
+
+        console.log(payload);
+    };
+
+    private handleRegister = (email: string, password: string, confirmPassword: string) => {
+        const payload = {
+            email,
+            password,
+            confirmPassword,
+        };
+
+        console.log(payload);
+        this.handleChangeCurrentStep(2);
+    };
+
+    private handleCreateSettingsSecrets = (exchangeName: string, exchangeUrl: string) => {
+        const exchangeNamePayload = {
+            key: 'exchange_name',
+            value: exchangeName,
+        };
+        const exchangeUrlPayload = {
+            key: 'exchange_url',
+            value: exchangeUrl,
+        };
+
+        this.addSecret(exchangeNamePayload);
+        this.addSecret(exchangeUrlPayload);
+        this.handleChangeCurrentStep(3);
+    };
+
+    private handleSaveMarketsList = (list: string[]) => {
+        console.log(list);
+        this.handleChangeCurrentStep(4);
+    };
+
+    private addSecret = ({ key, value }) => {
+        console.log(`${key}: ${value}`);
+    };
 }
+
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    markets: selectMarketsAdminList(state),
+    userLoggedIn: selectUserLoggedIn(state),
+});
+
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    getMarketsList: () => dispatch(getMarketsAdminList()),
+    updateMarket: payload => dispatch(updateMarketFetch(payload)),
+});
+
+export const SetupScreen = connect(mapStateToProps, mapDispatchToProps)(Setup);

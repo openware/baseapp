@@ -1,38 +1,74 @@
 import * as React from 'react';
 import { SetupFormInput } from '..';
+import { Button } from 'react-bootstrap';
 
 export interface SetupLoginFormProps {
-    email: string;
-    password: string;
-    confirmPassword: string;
+    handleLogin: (email: string, password: string) => void;
 }
 
-export class SetupLoginForm extends React.Component<SetupLoginFormProps> {
+interface SetupLoginFormState {
+    email: string;
+    password: string;
+}
+
+export class SetupLoginForm extends React.Component<SetupLoginFormProps, SetupLoginFormState> {
+    constructor(props: SetupLoginFormProps) {
+        super(props);
+
+        this.state = {
+            email: '',
+            password: '',
+        };
+    }
+
     public render() {
-        const { email, password, confirmPassword } = this.props;
+        const { email, password } = this.state;
 
         return (
-            <form className="setup-login-form" autoComplete="off">
-                <SetupFormInput
-                    label="Email"
-                    value={email}
-                    handleChangeInput={this.onChangeEmail}
-                />
-                <SetupFormInput
-                    label="Password"
-                    value={password}
-                    type="password"
-                    handleChangeInput={this.onChangePassword}
-                />
-            </form>
+            <React.Fragment>
+                <form className="setup-login-form" autoComplete="off">
+                    <SetupFormInput
+                        label="Email"
+                        value={email}
+                        handleChangeInput={this.handleChangeEmail}
+                    />
+                    <SetupFormInput
+                        label="Password"
+                        value={password}
+                        type="password"
+                        handleChangeInput={this.handleChangePassword}
+                    />
+                </form>
+                <div className="setup-screen__sign-in">
+                    <Button
+                        block={true}
+                        type="button"
+                        size="lg"
+                        variant="primary"
+                        onClick={this.handleLogin}
+                    >
+                        Next
+                    </Button>
+                </div>
+            </React.Fragment>
         );
     }
 
-    private onChangeEmail = val => {
-        console.log('email: ', val);
+    private handleChangeEmail = (value: string) => {
+        this.setState({
+            email: value,
+        });
     };
 
-    private onChangePassword = val => {
-        console.log('password: ', val);
+    private handleChangePassword = (value: string) => {
+        this.setState({
+            password: value,
+        });
+    };
+
+    private handleLogin = () => {
+        const { email, password } = this.state;
+
+        this.props.handleLogin(email, password);
     };
 }
