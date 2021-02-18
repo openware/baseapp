@@ -177,8 +177,10 @@
 
 @media screen and (max-width: 992px) {
   .setup-screen {
+    flex-direction: column;
+
     &__left {
-      display: none;
+      width: 100%;
     }
 
     &__right {
@@ -186,14 +188,40 @@
 
       &-wrapper {
         padding: 32px;
+
+        &__close {
+          display: none;
+        }
       }
     }
 
     &__step-footer {
+      button {
+        float: right;
+        margin-bottom: 0;
+        margin-top: 48px;
+        position: unset;
+      }
+
       &__congrat {
         button {
+          float: right;
+          margin-bottom: 0;
+          margin-top: 60px;
+          position: unset;
           width: 216px;
         }
+      }
+    }
+
+    &__agreement {
+      display: block;
+
+      button {
+        float: right;
+        margin-bottom: 0;
+        margin-top: 24px;
+        position: unset;
       }
     }
   }

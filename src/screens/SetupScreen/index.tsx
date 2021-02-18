@@ -26,7 +26,12 @@ import {
     RootState,
     selectUserLoggedIn,
     updateMarketFetch,
+    userFetch,
+    selectUserInfo,
+    User,
+    signIn,
 } from '../../modules';
+import { sessionCheckInterval, wizardStep } from '../../api';
 
 interface SetupScreenState {
     currentStep: number;
@@ -34,12 +39,15 @@ interface SetupScreenState {
 
 interface ReduxProps {
     markets: MarketItem[];
+    user: User;
     userLoggedIn: boolean;
 }
 
 interface DispatchProps {
     getMarketsList: typeof getMarketsAdminList;
     updateMarket: typeof updateMarketFetch;
+    userFetch: typeof userFetch;
+    signIn: typeof signIn;
 }
 
 type Props = ReduxProps & DispatchProps;
@@ -49,8 +57,20 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         super(props);
 
         this.state = {
-            currentStep: 2,
+            currentStep: wizardStep(),
         };
+    }
+
+    public componentDidMount () {
+        // this.setState({
+        //     currentStep: wizardStep(),
+        // });
+
+        // const { userLoggedIn } = this.props;
+
+        // if (!userLoggedIn) {
+            // this.props.userFetch();
+        // }
     }
 
     public render() {
@@ -62,33 +82,24 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     }
 
     public renderCurrentStep = () => {
+        const { userLoggedIn } = this.props;
         const { currentStep } = this.state;
 
+        // if (!currentStep) {
+        //     window.location.replace('/');
+        //     return null;
+        // }
+
+        console.log(wizardStep(), currentStep, userLoggedIn);
+
+        if (currentStep > 1 && !userLoggedIn) {
+            console.log('renderLogin');
+            return this.renderLogin();
+        }
+
         switch (currentStep) {
-            case 0:
-                return (
-                    <React.Fragment>
-                        <div className="setup-screen__left">
-                            <SetupInfoBlock
-                                logo={logo}
-                                backgroundImage={bgStep1}
-                                title="Installation"
-                                description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-                            />
-                        </div>
-                        <div className="setup-screen__right">
-                            <div className="setup-screen__right-wrapper">
-                                <SetupFormBlock
-                                    title="Admin account"
-                                    subtitle="Sign in the first admin account for your exchange to access the admin panel."
-                                >
-                                    <SetupLoginForm handleLogin={this.handleLogin} />
-                                </SetupFormBlock>
-                            </div>
-                        </div>
-                    </React.Fragment>
-                );
             case 1:
+                console.log('case1');
                 return (
                     <React.Fragment>
                         <div className="setup-screen__left">
@@ -201,6 +212,31 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         }
     };
 
+    private renderLogin = () => {
+        return (
+            <React.Fragment>
+                <div className="setup-screen__left">
+                    <SetupInfoBlock
+                        logo={logo}
+                        backgroundImage={bgStep1}
+                        title="Installation"
+                        description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                    />
+                </div>
+                <div className="setup-screen__right">
+                    <div className="setup-screen__right-wrapper">
+                        <SetupFormBlock
+                            title="Admin account"
+                            subtitle="Sign in the first admin account for your exchange to access the admin panel."
+                        >
+                            <SetupLoginForm handleLogin={this.handleLogin} />
+                        </SetupFormBlock>
+                    </div>
+                </div>
+            </React.Fragment>
+        );
+    };
+
     private handleChangeCurrentStep = (currentStep: number) => {
         this.setState({
             currentStep,
@@ -217,7 +253,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
             password,
         };
 
-        console.log(payload);
+        this.props.signIn(payload);
     };
 
     private handleRegister = (email: string, password: string, confirmPassword: string) => {
@@ -247,7 +283,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     };
 
     private handleSaveMarketsList = (list: string[]) => {
-        console.log(list);
+        console.log('handleSaveMarketsList: ', list);
         this.handleChangeCurrentStep(4);
     };
 
@@ -258,12 +294,15 @@ export class Setup extends React.Component<Props, SetupScreenState> {
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     markets: selectMarketsAdminList(state),
+    user: selectUserInfo(state),
     userLoggedIn: selectUserLoggedIn(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     getMarketsList: () => dispatch(getMarketsAdminList()),
     updateMarket: payload => dispatch(updateMarketFetch(payload)),
+    userFetch: () => dispatch(userFetch()),
+    signIn: payload => dispatch(signIn(payload)),
 });
 
 export const SetupScreen = connect(mapStateToProps, mapDispatchToProps)(Setup);

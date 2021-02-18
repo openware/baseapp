@@ -136,7 +136,7 @@ const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent,
         return renderLoader();
     }
 
-    if (isLogged) {
+    if (isLogged && rest['path'] !== '/setup') {
         return <Route {...rest}><Redirect to={'/wallets'} /></Route>;
     }
 
@@ -264,6 +264,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             return (
                 <div className="container-fluid pg-layout pg-layout--mobile">
                     <Switch>
+                        <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/setup" component={SetupScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordMobileScreen} />

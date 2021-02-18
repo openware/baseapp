@@ -26,6 +26,18 @@ export interface MarketItem {
     updated_at: string;
 }
 
+export interface MarketUpdateItem {
+    id: string;
+    max_price?: string;
+    position?: number;
+    state?: string;
+    min_price?: string;
+    min_amount?: string;
+    amount_precision?: number;
+    price_precision?: number;
+    engine_id?: number;
+}
+
 export interface MarketsListFetch {
     type: typeof MARKETS_LIST_FETCH;
 }
@@ -55,17 +67,7 @@ export interface MarketsListError {
 
 export interface MarketUpdateFetch {
     type: typeof MARKET_UPDATE_FETCH;
-    payload: {
-        id: string;
-        max_price?: string;
-        position?: number;
-        state?: string;
-        min_price?: string;
-        min_amount?: string;
-        amount_precision?: number;
-        price_precision?: number;
-        engine_id?: number;
-    };
+    payload: MarketUpdateItem[];
 }
 
 

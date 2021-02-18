@@ -7,9 +7,17 @@ import { LogoIcon } from '../../../assets/images/LogoIcon';
 import { ProfileIcon } from '../../../assets/images/sidebar/ProfileIcon';
 import { selectUserLoggedIn } from '../../../modules';
 
+const noHeaderRoutes = ['/setup'];
+
 const HeaderComponent: React.FC = () => {
     const userLoggedIn = useSelector(selectUserLoggedIn);
     const intl = useIntl();
+    const shouldRenderHeader =
+        !noHeaderRoutes.some((r) => location.pathname.includes(r)) && location.pathname !== '/';
+
+    if (!shouldRenderHeader) {
+        return <React.Fragment />;
+    }
 
     return (
         <div className="pg-mobile-header">

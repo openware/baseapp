@@ -14,9 +14,16 @@ const handleGetActiveItemClass = (currentRoute: string, targetRoute: string, abs
     });
 };
 
+const noFooterRoutes = ['/setup'];
+
 const FooterComponent: React.FC = () => {
     const { pathname } = useLocation();
     const intl = useIntl();
+    const shouldRenderFooter = !noFooterRoutes.some(r => location.pathname.includes(r));
+
+    if (!shouldRenderFooter) {
+        return <React.Fragment />;
+    }
 
     return (
         <div className="pg-mobile-footer">
