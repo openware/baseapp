@@ -9,13 +9,14 @@ import (
 
 // SetSecret handles PUT '/api/v2/admin/secret'
 func SetSecret(ctx *gin.Context) {
-	kaigaraConfig, err := GetKaigaraConfig(ctx)
+	vaultConfig, err := GetVaultConfig(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
+
 	appName := ctx.Param("component")
-	vaultService := vault.NewService(kaigaraConfig.VaultAddr, kaigaraConfig.VaultToken, appName, kaigaraConfig.DeploymentID)
+	vaultService := vault.NewService(vaultConfig.Addr, vaultConfig.Token, appName, DeploymentID)
 
 	key := ctx.PostForm("key")
 	value := ctx.PostForm("value")
@@ -49,14 +50,14 @@ func SetSecret(ctx *gin.Context) {
 
 // GetSecrets handles GET '/api/v2/admin/secrets'
 func GetSecrets(ctx *gin.Context) {
-	kaigaraConfig, err := GetKaigaraConfig(ctx)
+	vaultConfig, err := GetVaultConfig(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 
 	// Initialize the VaultService without an appName since we'll use all of them
-	vaultService := vault.NewService(kaigaraConfig.VaultAddr, kaigaraConfig.VaultToken, "global", kaigaraConfig.DeploymentID)
+	vaultService := vault.NewService(vaultConfig.Addr, vaultConfig.Token, "global", DeploymentID)
 	scopes := []string{"public", "private", "secret"}
 
 	appNames, err := vaultService.ListAppNames()

@@ -14,7 +14,6 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
-github.com/docker/docker v1.13.1/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
@@ -162,8 +161,8 @@ github.com/openware/pkg/kli v0.0.0-20210110002944-50c944a5e00d h1:4qKQDWBN67YlA2
 github.com/openware/pkg/kli v0.0.0-20210110002944-50c944a5e00d/go.mod h1:GOlHexRI3ZB6oePaiqObLDwZ6/FmrmTb6hho62wehOE=
 github.com/openware/pkg/mngapi v0.0.0-20210204083929-709d949cb0ff h1:hEht6qOfZx/f0X1NKMpJH0cKma6vm70huT2EL/Y0igI=
 github.com/openware/pkg/mngapi v0.0.0-20210204083929-709d949cb0ff/go.mod h1:41rKG0I4Nnd9xPTHflQmz2NEGqORuFMZEbRhkY1SaxE=
-github.com/openware/sonic v0.0.0-20210215152436-29759f1becdc h1:QgXdyWAytHFPqZhrFMgFk+CA1FiBDoN82l6za3MUOao=
-github.com/openware/sonic v0.0.0-20210215152436-29759f1becdc/go.mod h1:Yp9uVLb7ixlPT2h8fbDNkM0cb48lbAm7+EVCxiYAUd0=
+github.com/openware/sonic v0.0.0-20210218125702-4178a31c18b0 h1:AMkn9+5bxXTgfDEr13l8k9fRqCQ0UYgK3HsNJm8bdkI=
+github.com/openware/sonic v0.0.0-20210218125702-4178a31c18b0/go.mod h1:7g3AehDiFitgME+N3qaWsDn3HxkVGlRhe5Mf5EOZvUI=
 github.com/pascaldekloe/goe v0.1.0/go.mod h1:lzWF7FIEvWOWxwDKqyGYQf6ZUaNfKdP144TG7ZOy1lc=
 github.com/pierrec/lz4 v2.0.5+incompatible h1:2xWsjqPFWcplujydGg4WmhC/6fZqK42wMM8aXeqhl0I=
 github.com/pierrec/lz4 v2.0.5+incompatible/go.mod h1:pdkljMzZIN41W+lC3N2tnIh5sFi+IEE17M5jbnwPHcY=

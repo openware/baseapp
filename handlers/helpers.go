@@ -5,8 +5,8 @@ import (
 	"sync"
 
 	"github.com/gin-gonic/gin"
-	kaigara "github.com/openware/kaigara/pkg/config"
 	"github.com/openware/kaigara/pkg/vault"
+	"github.com/openware/sonic"
 )
 
 type cache struct {
@@ -14,11 +14,11 @@ type cache struct {
 	Data  map[string]map[string]interface{}
 }
 
-// GetKaigaraConfig helper return kaigara co0nfig from gin context
-func GetKaigaraConfig(ctx *gin.Context) (*kaigara.KaigaraConfig, error) {
-	config, ok := ctx.MustGet("KaigaraConfig").(*kaigara.KaigaraConfig)
+// GetVaultConfig helper returns Vault config from gin context
+func GetVaultConfig(ctx *gin.Context) (*sonic.VaultConfig, error) {
+	config, ok := ctx.MustGet("VaultConfig").(*sonic.VaultConfig)
 	if !ok {
-		return nil, fmt.Errorf("Kaigara config is not found")
+		return nil, fmt.Errorf("Vault config is not found")
 	}
 
 	return config, nil

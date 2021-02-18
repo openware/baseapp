@@ -17,8 +17,9 @@ import (
 
 // Version variable stores Application Version from main package
 var (
-	Version     string
-	memoryCache = cache{
+	Version      string
+	DeploymentID string
+	memoryCache  = cache{
 		Data:  make(map[string]map[string]interface{}),
 		Mutex: sync.RWMutex{},
 	}
@@ -34,7 +35,10 @@ func Setup(app *sonic.Runtime) {
 	// Set up view engine
 	router.HTMLRender = ginview.Default()
 	Version = app.Version
-	kaigaraConfig := app.Conf.KaigaraConfig
+	vaultConfig := app.Conf.Vault
+	DeploymentID = app.Conf.DeploymentID
+
+	log.Println("DeploymentID in config:", app.Conf.DeploymentID)
 
 	// Serve static files
 	router.Static("/public", "./public")
@@ -45,19 +49,21 @@ func Setup(app *sonic.Runtime) {
 
 	SetPageRoutes(router)
 
+	vaultMiddleware := VaultConfigMiddleware(&vaultConfig)
+
 	vaultAPI := router.Group("/api/v2/admin")
-	vaultAPI.Use(KaigaraConfigMiddleware(&kaigaraConfig))
+	vaultAPI.Use(vaultMiddleware)
 	vaultAPI.GET("/secrets", GetSecrets)
 
 	vaultAPI.PUT(":component/secret", SetSecret)
 
 	vaultPublicAPI := router.Group("/api/v2/public")
-	vaultPublicAPI.Use(KaigaraConfigMiddleware(&kaigaraConfig))
+	vaultPublicAPI.Use(vaultMiddleware)
 
 	vaultPublicAPI.GET("/config", GetPublicConfigs)
 
 	// Initialize Vault Service
-	vaultService := vault.NewService(kaigaraConfig.VaultAddr, kaigaraConfig.VaultToken, "global", kaigaraConfig.DeploymentID)
+	vaultService := vault.NewService(vaultConfig.Addr, vaultConfig.Token, "global", DeploymentID)
 
 	// Define all public env on first system start
 	WriteCache(vaultService, scope, true)
