@@ -7,6 +7,8 @@ export const selectMarketsAdminList = (state: RootState): MarketsAdminState['lis
 export const selectMarketsAdminListLoading = (state: RootState): MarketsAdminState['loading'] =>
     state.admin.markets.loading;
 
-
 export const selectMarketsAdminUpdate = (state: RootState): MarketsAdminState['successMarketsUpdate'] =>
     state.admin.markets.successMarketsUpdate;
+
+export const selectEnabledMarketsAdminList = (state: RootState): MarketsAdminState['enabledMarkets'] =>
+    state.admin.markets.enabledMarkets;

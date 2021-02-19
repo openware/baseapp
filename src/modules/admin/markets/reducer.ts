@@ -6,18 +6,20 @@ import {
     MARKETS_LIST_ERROR,
     MARKETS_LIST_FETCH,
 } from './constants';
-import { MarketItem, MarketsAdminAction } from './actions';
+import { MarketItem, MarketsAdminAction, MarketUpdateItem } from './actions';
 
 export interface MarketsAdminState {
     loading: boolean;
     list: MarketItem[];
     successMarketsUpdate: boolean;
+    enabledMarkets: MarketUpdateItem[];
 }
 
 export const initialMarketsAdminState: MarketsAdminState = {
     loading: false,
     list: [],
     successMarketsUpdate: false,
+    enabledMarkets: [],
 };
 
 export const marketsAdminReducer = (state = initialMarketsAdminState, action: MarketsAdminAction) => {
@@ -44,6 +46,7 @@ export const marketsAdminReducer = (state = initialMarketsAdminState, action: Ma
             return {
                 ...state,
                 loading: true,
+                enabledMarkets: action.payload
             };
         case MARKET_DATA:
             return {

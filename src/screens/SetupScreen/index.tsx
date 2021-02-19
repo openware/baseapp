@@ -36,6 +36,7 @@ import {
     selectUserFetching,
     configUpdate,
     selectMarketsAdminUpdate,
+    selectEnabledMarketsAdminList,
 } from '../../modules';
 import { wizardStep } from '../../api';
 
@@ -49,6 +50,7 @@ interface ReduxProps {
     userLoggedIn: boolean;
     userLoading: boolean;
     marketsSuccess: boolean;
+    enabledMarkets: MarketUpdateItem[];
 }
 
 interface DispatchProps {
@@ -251,7 +253,11 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     };
 
     private handleCompleteSetup = () => {
-        window.location.replace('/trading/dashbtc#settings');
+        const { enabledMarkets } = this.props;
+
+        if (enabledMarkets.length) {
+            window.location.replace(`/trading/${enabledMarkets[0].id}#settings`);
+        }
     }
 
     private handleLogin = (email: string, password: string) => {
@@ -331,6 +337,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     userLoggedIn: selectUserLoggedIn(state),
     userLoading: selectUserFetching(state),
     marketsSuccess: selectMarketsAdminUpdate(state),
+    enabledMarkets: selectEnabledMarketsAdminList(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({

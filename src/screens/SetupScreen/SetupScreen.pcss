@@ -2,6 +2,7 @@
   display: flex;
   height: 100vh;
   justify-content: flex-start;
+  min-height: 900px;
   width: 100%;
 
   &__left {
@@ -178,12 +179,14 @@
 @media screen and (max-width: 992px) {
   .setup-screen {
     flex-direction: column;
+    min-height: unset;
 
     &__left {
       width: 100%;
     }
 
     &__right {
+      height: 100%;
       width: 100%;
 
       &-wrapper {
@@ -224,5 +227,9 @@
         position: unset;
       }
     }
+  }
+
+  .cr-sign-up-form__error {
+    font-size: 12px;
   }
 }
