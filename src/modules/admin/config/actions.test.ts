@@ -8,7 +8,7 @@ describe('ConfigUpdate actions', () => {
         scope: 'public',
         key: 'minutesUntilAutoLogout',
         value: '10',
-        component: 'baseapp',
+        component: 'global',
     };
 
     const error: CommonError = {
