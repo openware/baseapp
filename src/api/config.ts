@@ -34,8 +34,8 @@ export const defaultConfig: Config = {
         'address'
     ],
     captcha_type: 'none',
-    password_min_entropy: '0',
-    wizard_step: 1,
+    password_min_entropy: 0,
+    wizard_step: '1',
 };
 
 export const Cryptobase = {
@@ -76,4 +76,4 @@ export const isUsernameEnabled = () => convertToBoolean(Cryptobase.config.userna
 export const captchaType = () => Cryptobase.config.captcha_type;
 export const captchaId = () => Cryptobase.config.captcha_id;
 export const passwordMinEntropy = () => Number(Cryptobase.config.password_min_entropy);
-export const wizardStep = () => Cryptobase.config.wizard_step || 1;
+export const wizardStep = () => Number(Cryptobase.config.wizard_step) || 1;

@@ -41,7 +41,7 @@ import {
 import { wizardStep } from '../../api';
 
 interface SetupScreenState {
-    currentStep: number;
+    currentStep: string;
 }
 
 interface ReduxProps {
@@ -80,7 +80,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     public componentWillReceiveProps(nextProps: Props) {
         if (!this.props.marketsSuccess && nextProps.marketsSuccess) {
             this.setState({
-                currentStep: 4,
+                currentStep: '4',
             });
         }
     }
@@ -101,11 +101,11 @@ export class Setup extends React.Component<Props, SetupScreenState> {
             return <div>Loading...</div>;
         }
 
-        if (currentStep > 1 && !userLoggedIn) {
+        if (+currentStep > 1 && !userLoggedIn) {
             return this.renderLogin();
         } else {
             switch (currentStep) {
-                case 1:
+                case '1':
                     return (
                         <React.Fragment>
                             <div className="setup-screen__left">
@@ -128,7 +128,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                             </div>
                         </React.Fragment>
                     );
-                case 2:
+                case '2':
                     return (
                         <React.Fragment>
                             <div className="setup-screen__left">
@@ -151,7 +151,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                             </div>
                         </React.Fragment>
                     );
-                case 3:
+                case '3':
                     return (
                         <React.Fragment>
                             <div className="setup-screen__left">
@@ -178,7 +178,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                             </div>
                         </React.Fragment>
                     );
-                case 4:
+                case '4':
                     return (
                         <React.Fragment>
                             <div className="setup-screen__left">
@@ -246,7 +246,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         );
     };
 
-    private handleChangeCurrentStep = (currentStep: number) => {
+    private handleChangeCurrentStep = (currentStep: string) => {
         this.setState({
             currentStep,
         });
@@ -286,7 +286,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
             key: 'wizard_step',
             value: '2',
         });
-        this.handleChangeCurrentStep(2);
+        this.handleChangeCurrentStep('2');
     };
 
     private handleCreateSettingsSecrets = (exchangeName: string, exchangeUrl: string) => {
@@ -307,7 +307,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
             key: 'wizard_step',
             value: '3',
         });
-        this.handleChangeCurrentStep(3);
+        this.handleChangeCurrentStep('3');
     };
 
     private handleSaveMarketsList = (list: MarketUpdateItem[]) => {
@@ -318,7 +318,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
             key: 'wizard_step',
             value: 'false',
         });
-        this.handleChangeCurrentStep(4);
+        this.handleChangeCurrentStep('4');
     };
 
     private addSecret = ({ key, value }) => {
