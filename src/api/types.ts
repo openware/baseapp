@@ -7,15 +7,15 @@ declare global {
             rangerUrl: string;
             finexUrl: string;
         };
-        finex: boolean;
-        withCredentials: boolean;
-        incrementalOrderBook: boolean;
-        isResizable: boolean;
-        isDraggable: boolean;
-        showLanding: boolean;
-        sentryEnabled: boolean;
-        captchaLogin: boolean;
-        usernameEnabled: boolean;
+        finex: string | boolean;
+        withCredentials: string | boolean;
+        incrementalOrderBook: string | boolean;
+        isResizable: string | boolean;
+        isDraggable: string | boolean;
+        showLanding: string | boolean;
+        sentryEnabled: string | boolean;
+        captchaLogin: string | boolean;
+        usernameEnabled: string | boolean;
         gaTrackerKey: string;
         minutesUntilAutoLogout: string;
         msAlertDisplayTime: string;
@@ -30,7 +30,7 @@ declare global {
         kycSteps: string[];
         captcha_type: 'recaptcha' | 'geetest' | 'none';
         captcha_id?: string;
-        password_min_entropy: number;
+        password_min_entropy: string | number;
         palette?: string;
     }
 
