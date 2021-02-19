@@ -7,7 +7,7 @@ import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
-import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../../api';
+import { minutesUntilAutoLogout, sessionCheckInterval, showLanding, wizardStep } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { applyCustomizationSettings, toggleColorTheme } from '../../helpers';
@@ -261,6 +261,14 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 
         if (!platformAccessStatus.length) {
             return renderLoader();
+        }
+        
+        if ((wizardStep() === undefined || !!wizardStep() !== false) && this.props.location.pathname !== '/setup') {
+            return (
+                <div className={isMobileDevice ? mobileCls : desktopCls}>
+                    <Route loading={userLoading} isLogged={isLoggedIn}><Redirect to={'/setup'} /></Route>
+                </div>
+            );
         }
 
         if (isMobileDevice) {

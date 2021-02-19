@@ -35,7 +35,7 @@ export const defaultConfig: Config = {
     ],
     captcha_type: 'none',
     password_min_entropy: 0,
-    wizard_step: '1',
+    wizard_step: undefined,
 };
 
 export const Cryptobase = {

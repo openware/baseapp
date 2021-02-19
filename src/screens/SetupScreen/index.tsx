@@ -105,7 +105,8 @@ export class Setup extends React.Component<Props, SetupScreenState> {
             return this.renderLogin();
         } else {
             switch (currentStep) {
-                case '1':
+                case undefined:
+                case 1:
                     return (
                         <React.Fragment>
                             <div className="setup-screen__left">
@@ -216,7 +217,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                         </React.Fragment>
                     );
                 default:
-                    return;
+                    window.location.replace('/');
               }
         }
     };
