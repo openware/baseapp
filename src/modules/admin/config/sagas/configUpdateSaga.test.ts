@@ -27,7 +27,7 @@ describe('Saga: configUpdateSaga', () => {
         scope: 'public',
         key: 'minutesUntilAutoLogout',
         value: '10',
-        component: 'baseapp',
+        component: 'global',
     };
 
     const mockConfigUpdate = () => {
