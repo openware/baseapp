@@ -26,7 +26,7 @@ export const configUpdateReducer = (state = initialConfigUpdateState, action: Co
             };
         case CONFIG_UPDATE_DATA:
             if (
-                action.payload.component === 'baseapp' &&
+                action.payload.component === 'global' &&
                 action.payload.scope === 'public'
             ) {
                 window.env = {

@@ -197,7 +197,7 @@ class CustomizationContainer extends React.Component<Props, State> {
         }
 
         this.props.configUpdate({
-            component: 'baseapp',
+            component: 'global',
             scope: 'public',
             key: 'palette',
             value: JSON.stringify(settings),
