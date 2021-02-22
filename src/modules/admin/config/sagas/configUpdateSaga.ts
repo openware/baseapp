@@ -10,11 +10,10 @@ const configUpdateOptions: RequestOptions = {
 export function* configUpdateSaga(action: ConfigUpdate) {
     try {
         const { scope, key, value } = action.payload;
-        const payload = {
-            scope,
-            key,
-            value,
-        };
+        const payload = new FormData();
+        payload.append('scope', scope);
+        payload.append('key', key);
+        payload.append('value', value);
 
         yield call(API.put(configUpdateOptions), `/admin/${action.payload.component}/secret`, payload);
         yield put(configUpdateData(action.payload));
