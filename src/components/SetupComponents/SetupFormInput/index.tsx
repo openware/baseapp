@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TipIcon } from 'src/assets/images/TipIcon';
+import { TipIcon } from '../../../assets/images/TipIcon';
 
 export interface SetupFormInputProps {
     label: string;
