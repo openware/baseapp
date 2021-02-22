@@ -1,0 +1,73 @@
+.setup-form-input {
+  padding: 8px 0;
+  position: relative;
+
+  &__input {
+    position: relative;
+
+    &__tooltip {
+      cursor: pointer;
+      margin: 16px 12px;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    &__info {
+      background: var(--body-background-color);
+      border-radius: 4px;
+      box-shadow: 0 6px 12px var(--shadow-color-level-1);
+      font-size: 14px;
+      margin-right: 8px;
+      margin-top: 36px;
+      max-width: 294px;
+      padding: 24px 16px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: 0.2s;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+
+  input {
+    background: var(--dropdown-background-color);
+    border: none;
+    border-radius: 4px;
+    color: var(--primary-text-color);
+    display: block;
+    font-size: 16px;
+    height: 48px;
+    padding-left: 12px;
+    padding-right: 48px;
+    width: 100%;
+
+    &:focus {
+      background: var(--body-background-color);
+    }
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover {
+    background: var(--dropdown-background-color) !important;
+  }
+
+  input:-webkit-autofill:focus {
+    background: var(--body-background-color) !important;
+  }
+
+  input:-internal-autofill-selected {
+    background: var(--dropdown-background-color) !important;
+  }
+
+  label {
+    color: var(--secondary-contrast-cta-color);
+    display: block;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 13px;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+  }
+}

@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
@@ -6,7 +7,7 @@ import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
-import { minutesUntilAutoLogout, sessionCheckInterval, showLanding } from '../../api';
+import { minutesUntilAutoLogout, sessionCheckInterval, showLanding, wizardStep } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
 import { applyCustomizationSettings, toggleColorTheme } from '../../helpers';
@@ -68,6 +69,7 @@ import {
     TradingScreen,
     VerificationScreen,
     WalletsScreen,
+    SetupScreen,
 } from '../../screens';
 
 interface ReduxProps {
@@ -134,7 +136,7 @@ const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent,
         return renderLoader();
     }
 
-    if (isLogged) {
+    if (isLogged && rest['path'] !== '/setup') {
         return <Route {...rest}><Redirect to={'/wallets'} /></Route>;
     }
 
@@ -249,17 +251,31 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             platformAccessStatus,
         } = this.props;
         const { isShownExpSessionModal } = this.state;
-        const tradingCls = location.pathname.includes('/trading') ? 'trading-layout' : '';
+        const desktopCls = classnames('container-fluid pg-layout', {
+            'trading-layout': location.pathname.includes('/trading'),
+        });
+        const mobileCls = classnames('container-fluid pg-layout pg-layout--mobile', {
+            'pg-layout--mobile-setup': location.pathname.includes('/setup'),
+        });
         toggleColorTheme(colorTheme);
 
         if (!platformAccessStatus.length) {
             return renderLoader();
         }
+        
+        if ((wizardStep() !== 'false') && this.props.location.pathname !== '/setup') {
+            return (
+                <div className={isMobileDevice ? mobileCls : desktopCls}>
+                    <Route loading={userLoading} isLogged={isLoggedIn}><Redirect to={'/setup'} /></Route>
+                </div>
+            );
+        }
 
         if (isMobileDevice) {
             return (
-                <div className={'container-fluid pg-layout pg-layout--mobile'}>
+                <div className={mobileCls}>
                     <Switch>
+                        <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/setup" component={SetupScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signup" component={SignUpMobileScreen} />
                         <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordMobileScreen} />
@@ -291,8 +307,9 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         }
 
         return (
-            <div className={`container-fluid pg-layout ${tradingCls}`}>
+            <div className={desktopCls}>
                 <Switch>
+                    <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/setup" component={SetupScreen} />
                     <Route exact={true} path="/magic-link" component={MagicLink} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/signin" component={SignInScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/confirmation" component={VerificationScreen} />

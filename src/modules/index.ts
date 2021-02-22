@@ -36,8 +36,10 @@ import { ProfileState, rootProfileSaga } from './user/profile';
 import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
+import { MarketsAdminState, rootMarketsAdminSaga } from './admin/markets';
 
 export * from './admin/config';
+export * from './admin/markets';
 export * from './public/alert';
 export * from './public/blocklistAccess';
 export * from './public/currencies';
@@ -108,6 +110,7 @@ export interface RootState {
     };
     admin: {
         configUpdate: ConfigUpdateState;
+        markets: MarketsAdminState;
     };
 }
 
@@ -149,5 +152,6 @@ export function* rootSaga() {
         call(rootUserActivitySaga),
         call(rootWalletsSaga),
         call(rootWithdrawLimitSaga),
+        call(rootMarketsAdminSaga),
     ]);
 }

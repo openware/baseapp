@@ -1,0 +1,235 @@
+.setup-screen {
+  display: flex;
+  height: 100vh;
+  justify-content: flex-start;
+  min-height: 900px;
+  width: 100%;
+
+  &__left {
+    display: flex;
+    width: 50%;
+  }
+
+  &__right {
+    display: flex;
+    width: 50%;
+
+    &-wrapper {
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 72px;
+      width: 100%;
+
+      &__close {
+        cursor: pointer;
+        position: absolute;
+        right: 24px;
+        top: 24px;
+      }
+    }
+  }
+
+  &__agreement {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 24px;
+
+    &__term {
+      width: 100%;
+
+      .container {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        font-size: 12px;
+        height: 24px;
+        margin-bottom: 12px;
+        padding-left: 35px;
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .container input {
+        cursor: pointer;
+        height: 0;
+        opacity: 0;
+        position: absolute;
+        width: 0;
+      }
+
+      .checkmark {
+        background-color: var(--secondary-contrast-cta-color-level-1);
+        border-radius: 4px;
+        height: 25px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 25px;
+      }
+
+      .container:hover input ~ .checkmark {
+        background-color: var(--secondary-contrast-cta-color-level-2);
+      }
+
+      .container input:checked ~ .checkmark {
+        background-color: var(--primary-cta-color);
+      }
+
+      .checkmark::after {
+        content: "";
+        display: none;
+        position: absolute;
+      }
+
+      .container input:checked ~ .checkmark::after {
+        display: block;
+      }
+
+      .container .checkmark::after {
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        height: 13px;
+        left: 9px;
+        top: 5px;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        width: 7px;
+      }
+
+      a {
+        color: var(--secondary-contrast-cta-color);
+        margin-left: 4px;
+        text-decoration: underline;
+
+        &:hover {
+          color: var(--primary-cta-color);
+        }
+      }
+    }
+
+    button {
+      bottom: 0;
+      font-size: 14px;
+      font-weight: bold;
+      height: 40px;
+      letter-spacing: 0.04em;
+      margin-bottom: 75px;
+      position: absolute;
+      width: 75px;
+    }
+  }
+
+  &__sign-in {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 24px;
+
+    button {
+      bottom: 0;
+      font-size: 14px;
+      font-weight: bold;
+      height: 40px;
+      letter-spacing: 0.04em;
+      margin-bottom: 75px;
+      position: absolute;
+      width: 75px;
+    }
+  }
+
+  &__step-footer {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      bottom: 0;
+      font-size: 14px;
+      font-weight: bold;
+      height: 40px;
+      letter-spacing: 0.04em;
+      margin-bottom: 75px;
+      position: absolute;
+      width: 75px;
+    }
+
+    &__congrat {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        bottom: 0;
+        font-size: 14px;
+        font-weight: bold;
+        height: 40px;
+        letter-spacing: 0.04em;
+        margin-bottom: 75px;
+        position: absolute;
+        width: 207px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .setup-screen {
+    flex-direction: column;
+    min-height: unset;
+
+    &__left {
+      width: 100%;
+    }
+
+    &__right {
+      height: 100%;
+      width: 100%;
+
+      &-wrapper {
+        padding: 32px;
+
+        &__close {
+          display: none;
+        }
+      }
+    }
+
+    &__step-footer {
+      button {
+        float: right;
+        margin-bottom: 0;
+        margin-top: 48px;
+        position: unset;
+      }
+
+      &__congrat {
+        button {
+          float: right;
+          margin-bottom: 0;
+          margin-top: 60px;
+          position: unset;
+          width: 216px;
+        }
+      }
+    }
+
+    &__agreement {
+      display: block;
+
+      button {
+        float: right;
+        margin-bottom: 0;
+        margin-top: 24px;
+        position: unset;
+      }
+    }
+  }
+
+  .cr-sign-up-form__error {
+    font-size: 12px;
+  }
+}
