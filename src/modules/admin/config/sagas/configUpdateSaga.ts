@@ -1,10 +1,14 @@
 import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../../';
+import { getCsrfToken } from '../../../../helpers';
 import { API, RequestOptions } from '../../../../api';
 import { ConfigUpdate, configUpdateData, configUpdateError } from '../actions';
 
-const configUpdateOptions: RequestOptions = {
-    apiVersion: 'sonic',
+const configUpdateOptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'sonic',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
 };
 
 export function* configUpdateSaga(action: ConfigUpdate) {
@@ -15,7 +19,7 @@ export function* configUpdateSaga(action: ConfigUpdate) {
         payload.append('key', key);
         payload.append('value', value);
 
-        yield call(API.put(configUpdateOptions), `/admin/${action.payload.component}/secret`, payload);
+        yield call(API.put(configUpdateOptions(getCsrfToken())), `/admin/${action.payload.component}/secret`, payload);
         yield put(configUpdateData(action.payload));
     } catch (error) {
         yield put(sendError({
