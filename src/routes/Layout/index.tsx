@@ -263,7 +263,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             return renderLoader();
         }
         
-        if ((wizardStep() === undefined || !!wizardStep() !== false) && this.props.location.pathname !== '/setup') {
+        if ((wizardStep() !== 'false') && this.props.location.pathname !== '/setup') {
             return (
                 <div className={isMobileDevice ? mobileCls : desktopCls}>
                     <Route loading={userLoading} isLogged={isLoggedIn}><Redirect to={'/setup'} /></Route>

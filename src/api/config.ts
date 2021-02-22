@@ -76,4 +76,4 @@ export const isUsernameEnabled = () => convertToBoolean(Cryptobase.config.userna
 export const captchaType = () => Cryptobase.config.captcha_type;
 export const captchaId = () => Cryptobase.config.captcha_id;
 export const passwordMinEntropy = () => Number(Cryptobase.config.password_min_entropy);
-export const wizardStep = () => Number(Cryptobase.config.wizard_step) || 1;
+export const wizardStep = () => String(Cryptobase.config.wizard_step || '1');
