@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { MarketItem, MarketUpdateItem } from 'src/modules';
-import { ArrowAllLeftIcon } from '../../../assets/images/setup/arrowAllLeftIcon';
-import { ArrowAllRightIcon } from '../../../assets/images/setup/arrowAllRightIcon';
-import { ArrowLeftIcon } from '../../../assets/images/setup/arrowLeftIcon';
-import { ArrowRightIcon } from '../../../assets/images/setup/arrowRightIcon';
+import { ArrowAllLeftIcon } from '../../../assets/images/setup/ArrowAllLeftIcon';
+import { ArrowAllRightIcon } from '../../../assets/images/setup/ArrowAllRightIcon';
+import { ArrowLeftIcon } from '../../../assets/images/setup/ArrowLeftIcon';
+import { ArrowRightIcon } from '../../../assets/images/setup/ArrowRightIcon';
 
 export interface SetupMarketBlockState {
     availableMarkets: string[];
