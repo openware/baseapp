@@ -15,6 +15,7 @@ const noFooterRoutes = [
     '/confirm',
     '/404',
     '/500',
+    '/setup',
 ];
 
 type FooterProps = LocationProps & IntlProps;
