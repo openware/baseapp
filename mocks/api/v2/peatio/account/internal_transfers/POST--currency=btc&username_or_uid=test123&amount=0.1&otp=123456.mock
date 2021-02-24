@@ -7,7 +7,7 @@ Access-Control-Allow-Credentials: true
 Access-Control-Allow-Headers: content-type, x-csrf-token
 
 {
-    "currency": "btc",
-    "amount": 10,
-    "username": "test123"
+  "currency": "btc",
+  "amount": 10,
+  "username": "test123"
 }

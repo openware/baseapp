@@ -6,9 +6,8 @@ import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 
 interface InternalTransferInputProps {
     field: string;
-    clear: boolean;
     handleChangeInput: (value: string) => void;
-    amount?: string;
+    value?: string;
     fixed?: number;
 }
 
@@ -26,27 +25,23 @@ export const InternalTransferInput = (props: InternalTransferInputProps) => {
     }), [inputFocused, props.field]);
 
     useEffect(() => {
-        if (props.clear) {
-            setInputValue('');
+        if (typeof props.value !== 'undefined') {
+            setInputValue(props.value);
         }
-    }, [props.clear]);
-
-    useEffect(() => {
-        if (props.amount) {
-            setInputValue(props.amount);
-        }
-    }, [props.amount]);
+    }, [props.value]);
 
     const handleChange = useCallback((value: string) => {
+        const inputPrimaryPattern = /[^A-Za-z0-9]+/g;
+
         switch (props.field) {
             case 'username':
-                setInputValue(value.replace(/[^A-Za-z0-9]+/g, '').toLowerCase());
-                props.handleChangeInput(value.replace(/[^A-Za-z0-9]+/g, '').toLowerCase());
+                setInputValue(value.replace(inputPrimaryPattern, '').toLowerCase());
+                props.handleChangeInput(value.replace(inputPrimaryPattern, '').toLowerCase());
 
                 break;
             case 'uid':
-                setInputValue(value.replace(/[^A-Za-z0-9]+/g, ''));
-                props.handleChangeInput(value.replace(/[^A-Za-z0-9]+/g, ''));
+                setInputValue(value.replace(inputPrimaryPattern, ''));
+                props.handleChangeInput(value.replace(inputPrimaryPattern, ''));
     
                 break;
             case 'amount':

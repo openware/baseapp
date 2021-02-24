@@ -71,7 +71,7 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
     }, [handleSelect]);
 
     React.useEffect(() => {
-        if (clear === undefined || clear) {
+        if (clear !== false) {
             setSelected(placeholder || convertToString(defaultPlaceholder));
         }
     }, [placeholder, defaultPlaceholder, clear]);

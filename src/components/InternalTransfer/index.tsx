@@ -8,7 +8,13 @@ import { DropdownComponent, Decimal } from '../';
 import { isUsernameEnabled } from '../../api';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { Modal } from '../../components';
-import { createInternalTransfersFetch, selectUserInfo, selectWallets, walletsFetch } from '../../modules';
+import {
+    createInternalTransfersFetch,
+    selectInternalTransfersCreateSuccess,
+    selectUserInfo,
+    selectWallets,
+    walletsFetch,
+} from '../../modules';
 import { InternalTransferInput } from './InternalInput';
 
 export const InternalTransferComponent = () => {
@@ -18,6 +24,7 @@ export const InternalTransferComponent = () => {
     const history = useHistory();
     const wallets = useSelector(selectWallets);
     const user = useSelector(selectUserInfo);
+    const transferSuccess = useSelector(selectInternalTransfersCreateSuccess);
 
     const [username, setUsername] = useState('');
     const [currency, setCurrency] = useState('');
@@ -26,13 +33,15 @@ export const InternalTransferComponent = () => {
 
     const [show, setShow] = useState(false);
 
-    const BALANCE_FETCH_TIMEOUT = 2000;
+    React.useEffect(() => {
+        dispatch(walletsFetch());
+    }, []);
 
     React.useEffect(() => {
-        if (!wallets.length) {
-            dispatch(walletsFetch());
+        if (transferSuccess) {
+            handleResetState();
         }
-    }, [dispatch, wallets]);
+    }, [transferSuccess]);
 
     const walletsList = wallets.length ? wallets.map(item => item.currency && item.currency.toUpperCase()) : [];
 
@@ -54,11 +63,6 @@ export const InternalTransferComponent = () => {
 
         dispatch(createInternalTransfersFetch(payload));
         setShow(false);
-        setUsername('');
-        setCurrency('');
-        setAmount('');
-        setOtp('');
-        setTimeout(() => {  dispatch(walletsFetch()) }, BALANCE_FETCH_TIMEOUT);
     }, [username, otp, amount, currency, dispatch]);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
@@ -67,7 +71,7 @@ export const InternalTransferComponent = () => {
         history.push('/security/2fa', { enable2fa });
     }, []);
 
-    const handleChangeShow = () => {
+    const handleResetState = () => {
         setShow(false);
         setUsername('');
         setCurrency('');
@@ -83,7 +87,6 @@ export const InternalTransferComponent = () => {
                 onClick={handleCreateTransfer}
                 size="lg"
                 variant="primary"
-                disabled={!username || !otp || !amount || !currency}
             >
                 {translate('page.body.internal.transfer.continue')}
             </Button>
@@ -96,7 +99,7 @@ export const InternalTransferComponent = () => {
                 <div className="cr-modal__container-header-text">
                     {translate('page.body.internal.transfer.header')}
                 </div>
-                <CloseIcon className={'cr-modal__container-header-cancel'} onClick={handleChangeShow}/>
+                <CloseIcon className={'cr-modal__container-header-cancel'} onClick={() => setShow(false)}/>
             </React.Fragment>
         );
     }, [translate, setShow]);
@@ -125,14 +128,13 @@ export const InternalTransferComponent = () => {
                 <InternalTransferInput
                     field={translationUsername}
                     handleChangeInput={setUsername}
-                    clear={!show}
+                    value={username}
                 />
                 <div className="cr-internal-transfer__group">
                     <InternalTransferInput
                         field="amount"
                         handleChangeInput={setAmount}
-                        clear={!show}
-                        amount={amount}
+                        value={amount}
                         fixed={wallet ? wallet.fixed : 0}
                     />
                     <DropdownComponent
@@ -140,19 +142,26 @@ export const InternalTransferComponent = () => {
                         list={walletsList}
                         onSelect={value => setCurrency(walletsList[value])}
                         placeholder="Currency"
-                        clear={!show}
                     />
-                    <div onClick={() => setAmount(wallet ? Decimal.format(wallet.balance, wallet.fixed, '.') : '')} className={balanceError}>
+                    <div
+                        onClick={() => setAmount(wallet ? Decimal.format(wallet.balance, wallet.fixed, '.') : '')}
+                        className={balanceError}
+                    >
                         {translate('page.body.internal.transfer.account.balance')}
-                        {wallet && wallet.balance && currency !== '' ? <Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">{wallet.balance.toString()}</Decimal> : 0} {currency}
-                        {(wallet && wallet.balance && +wallet.balance < +amount) ?
-                            translate('page.body.internal.transfer.insufficient.balance') : null}
+                        {wallet && wallet.balance && currency !== '' ? (
+                            <Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">
+                                {wallet.balance.toString()}
+                            </Decimal>
+                        ) : 0} {currency}
+                        {(wallet && wallet.balance && +wallet.balance < +amount) ? (
+                            translate('page.body.internal.transfer.insufficient.balance')
+                        ) : null}
                     </div>
                 </div>
                 <InternalTransferInput
                     field="otp"
                     handleChangeInput={setOtp}
-                    clear={!show}
+                    value={otp}
                 />
             </div>
             <div className="cr-internal-transfer__inputs">
