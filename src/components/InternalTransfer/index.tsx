@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { DropdownComponent, Decimal } from '../';
-import { isUsernamesEnabled } from '../../api';
+import { isUsernameEnabled } from '../../api';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { Modal } from '../../components';
 import { createInternalTransfersFetch, selectUserInfo, selectWallets, walletsFetch } from '../../modules';
@@ -42,7 +42,7 @@ export const InternalTransferComponent = () => {
         'cr-internal-transfer__group--error': wallet && wallet.balance && +wallet.balance < +amount,
     }), [amount, wallet]);
 
-    const translationUsername = isNicknamesEnabled() ? 'username' : 'uid';
+    const translationUsername = isUsernameEnabled() ? 'username' : 'uid';
 
     const handleCreateTransfer = useCallback(() => {
         const payload = {
@@ -142,7 +142,7 @@ export const InternalTransferComponent = () => {
                         placeholder="Currency"
                         clear={!show}
                     />
-                    <div onClick={() => setAmount(wallet ? String(wallet.balance) : '')} className={balanceError}>
+                    <div onClick={() => setAmount(wallet ? Decimal.format(wallet.balance, wallet.fixed, '.') : '')} className={balanceError}>
                         {translate('page.body.internal.transfer.account.balance')}
                         {wallet && wallet.balance && currency !== '' ? <Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">{wallet.balance.toString()}</Decimal> : 0} {currency}
                         {(wallet && wallet.balance && +wallet.balance < +amount) ?

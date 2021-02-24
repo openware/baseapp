@@ -61,9 +61,9 @@ export const InternalTransferInput = (props: InternalTransferInputProps) => {
             case 'otp':
                 const converted = cleanPositiveFloatInput(String(value));
 
-                if ((converted.length <= 6 && converted.match(/^\d+$/)) || value === '') {
-                    setInputValue(converted);
-                    props.handleChangeInput(converted);
+                if ((value.length <= 6 && value.match(/^\d+$/)) || value === '') {
+                    setInputValue(value);
+                    props.handleChangeInput(value);
                 }
 
                 break;
