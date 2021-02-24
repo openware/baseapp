@@ -80,6 +80,12 @@ export interface SignUpFetch {
         captcha_response?: string | GeetestCaptchaResponse;
         refid?: string;
     };
+    callbackAction?: {
+        scope: string;
+        component: string;
+        key: string;
+        value: any;
+    };
 }
 
 export interface SignUpData {
@@ -179,9 +185,10 @@ export const signInRequire2FA = (payload: SignInRequire2FA['payload']): SignInRe
     payload,
 });
 
-export const signUp = (payload: SignUpFetch['payload']): SignUpFetch => ({
+export const signUp = (payload: SignUpFetch['payload'], callbackAction?: SignUpFetch['callbackAction']): SignUpFetch => ({
     type: AUTH_SIGN_UP_FETCH,
     payload,
+    callbackAction,
 });
 
 export const signUpData = (): SignUpData => ({

@@ -278,14 +278,14 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                 language: i18n,
             }),
         };
-
-        this.props.signUp(payload);
-        this.props.setSecret({
+        const callbackAction = {
             scope: 'public',
             component: 'global',
             key: 'wizard_step',
             value: '2',
-        });
+        };
+
+        this.props.signUp(payload, callbackAction);
         this.handleChangeCurrentStep('2');
     };
 
@@ -346,7 +346,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     enableMarkets: payload => dispatch(updateMarketFetch(payload)),
     userFetch: () => dispatch(userFetch()),
     signIn: payload => dispatch(signIn(payload)),
-    signUp: credentials => dispatch(signUp(credentials)),
+    signUp: (credentials, cbAction) => dispatch(signUp(credentials, cbAction)),
 });
 
 export const SetupScreen = connect(mapStateToProps, mapDispatchToProps)(Setup);
