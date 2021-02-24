@@ -9,7 +9,12 @@ const signUpConfig: RequestOptions = {
 
 export function* signUpSaga(action: SignUpFetch) {
     try {
-        yield call(API.post(signUpConfig), '/identity/users', action.payload);
+        const data = yield call(API.post(signUpConfig), '/identity/users', action.payload);
+
+        if (data.csrf_token) {
+            localStorage.setItem('csrfToken', data.csrf_token);
+        }
+
         yield put(signUpRequireVerification({ requireVerification: true }));
         yield put(signUpData());
     } catch (error) {
