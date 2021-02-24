@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { SetupFormInput } from '..';
 import { Button } from 'react-bootstrap';
-import { EMAIL_REGEX, ERROR_INVALID_EMAIL, ERROR_INVALID_PASSWORD, ERROR_PASSWORD_CONFIRMATION, PASSWORD_REGEX } from 'src/helpers';
+import {
+    EMAIL_REGEX,
+    ERROR_INVALID_EMAIL,
+    ERROR_INVALID_PASSWORD,
+    ERROR_PASSWORD_CONFIRMATION,
+    PASSWORD_REGEX,
+} from 'src/helpers';
 import {
     injectIntl,
 } from 'react-intl';
@@ -79,6 +85,7 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
                         size="lg"
                         variant="primary"
                         onClick={this.handleValidateForm}
+                        disabled={emailError || passwordError || confirmationError ? true : false}
                     >
                         Next
                     </Button>

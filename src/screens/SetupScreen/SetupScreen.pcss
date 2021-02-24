@@ -128,10 +128,14 @@
       position: absolute;
       width: 75px;
 
-      &:active, &:hover, &:focus {
+      &:active, &:hover, &:focus, &:disabled {
         background-color: var(--setup-markets-button-bg-color) !important;
         color: var(--setup-markets-button-color) !important;
         opacity: 0.72;
+      }
+
+      &:disabled {
+        opacity: 0.48;
       }
     }
   }
@@ -154,10 +158,14 @@
       position: absolute;
       width: 75px;
 
-      &:active, &:hover, &:focus {
+      &:active, &:hover, &:focus, &:disabled {
         background-color: var(--setup-markets-button-bg-color) !important;
         color: var(--setup-markets-button-color) !important;
         opacity: 0.72;
+      }
+
+      &:disabled {
+        opacity: 0.48;
       }
     }
   }
@@ -178,9 +186,13 @@
       position: absolute;
       width: 75px;
 
-      &:active, &:hover, &:focus {
+      &:active, &:hover, &:focus, &:disabled {
         background-color: var(--setup-markets-button-bg-color) !important;
         color: var(--setup-markets-button-color) !important;
+      }
+
+      &:disabled {
+        opacity: 0.48;
       }
     }
 
@@ -200,9 +212,13 @@
         position: absolute;
         width: 207px;
 
-        &:active, &:hover, &:focus {
+        &:active, &:hover, &:focus, &:disabled {
           background-color: var(--setup-markets-button-bg-color) !important;
           color: var(--setup-markets-button-color) !important;
+        }
+
+        &:disabled {
+          opacity: 0.48;
         }
       }
     }

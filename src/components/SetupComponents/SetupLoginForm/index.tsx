@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { SetupFormInput } from '..';
 import { Button } from 'react-bootstrap';
+import { EMAIL_REGEX } from '../../../helpers';
 
 export interface SetupLoginFormProps {
     handleLogin: (email: string, password: string) => void;
@@ -23,6 +24,7 @@ export class SetupLoginForm extends React.Component<SetupLoginFormProps, SetupLo
 
     public render() {
         const { email, password } = this.state;
+        const isEmailValid = email.match(EMAIL_REGEX) ? true : false;
 
         return (
             <React.Fragment>
@@ -46,6 +48,7 @@ export class SetupLoginForm extends React.Component<SetupLoginFormProps, SetupLo
                         size="lg"
                         variant="primary"
                         onClick={this.handleLogin}
+                        disabled={!(isEmailValid && password)}
                     >
                         Next
                     </Button>
