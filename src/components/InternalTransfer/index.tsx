@@ -34,7 +34,7 @@ export const InternalTransferComponent = () => {
     const wallet = wallets.length && wallets.find(item => item.currency.toLowerCase() === currency.toLowerCase());
 
     const balanceError = useMemo(() => classnames('cr-internal-transfer__group--balance', {
-        'cr-internal-transfer__group--error': wallet && wallet.balance && wallet.balance < amount,
+        'cr-internal-transfer__group--error': wallet && wallet.balance && +wallet.balance < +amount,
     }), [amount, wallet]);
 
     const translationUsername = isNicknamesEnabled() ? 'username' : 'uid';
