@@ -11,6 +11,7 @@ import {
     localeDate,
     setDepositStatusColor,
     setTradesType,
+    setTransferStatusColor,
     setWithdrawStatusColor,
     truncateMiddle,
 } from '../../helpers';
@@ -116,32 +117,41 @@ class HistoryComponent extends React.Component<Props> {
 
     private renderHeaders = (type: string) => {
         switch (type) {
-          case 'deposits':
-              return [
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.txid'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.date'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.currency'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.amount'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.deposit.header.status'}),
-              ];
-          case 'withdraws':
-              return [
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.address'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.date'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.currency'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.amount'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.fee'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.status'}),
-              ];
-          case 'trades':
-              return [
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.date'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.side'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.market'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.price'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.amount'}),
-                  this.props.intl.formatMessage({id: 'page.body.history.trade.header.total'}),
-              ];
+            case 'deposits':
+                return [
+                    this.props.intl.formatMessage({id: 'page.body.history.deposit.header.txid'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.deposit.header.date'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.deposit.header.currency'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.deposit.header.amount'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.deposit.header.status'}),
+                ];
+            case 'withdraws':
+                return [
+                    this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.address'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.date'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.currency'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.amount'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.fee'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.status'}),
+                ];
+            case 'trades':
+                return [
+                    this.props.intl.formatMessage({id: 'page.body.history.trade.header.date'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.trade.header.side'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.trade.header.market'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.trade.header.price'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.trade.header.amount'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.trade.header.total'}),
+                ];
+            case 'transfers':
+                return [
+                    this.props.intl.formatMessage({id: 'page.body.history.transfer.header.date'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.transfer.header.amount'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.transfer.header.currency'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.transfer.header.direction'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.transfer.header.toAccount'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.transfer.header.status'}),
+                ];
           default:
               return [];
         }
@@ -220,6 +230,20 @@ class HistoryComponent extends React.Component<Props> {
                     <Decimal key={id} fixed={marketToDisplay.price_precision} thousSep=",">{price}</Decimal>,
                     <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{amount}</Decimal>,
                     <Decimal key={id} fixed={marketToDisplay.amount_precision} thousSep=",">{total}</Decimal>,
+                ];
+            }
+            case 'transfers': {
+                const { id, created_at, currency, amount, direction, receiver } = item;
+                const status = intl.formatMessage({ id: `page.body.history.transfer.content.status.${item.status}` });
+                const wallet = wallets.find(obj => obj.currency === currency);
+
+                return [
+                    localeDate(created_at, 'fullDate'),
+                    wallet && Decimal.format(amount, wallet.fixed, ','),
+                    currency && currency.toUpperCase(),
+                    direction && direction.replace(/^./, direction[0].toUpperCase()),
+                    receiver && receiver.toUpperCase(),
+                    <span style={{ color: setTransferStatusColor(item.status) }} key={id}>{status}</span>,
                 ];
             }
             default: {

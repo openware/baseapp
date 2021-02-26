@@ -45,3 +45,4 @@ export * from './WalletList';
 export * from './MetaMaskButton';
 
 export * from './SetupComponents';
+export * from './InternalTransfer';

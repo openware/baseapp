@@ -32,6 +32,11 @@ export interface DropdownComponentProps {
      * @default false
      */
     disableContentEditable?: boolean;
+    /**
+     * Value for clear selected item
+     * @default false
+     */
+    clear?: boolean;
 }
 
 
@@ -42,7 +47,7 @@ export interface DropdownComponentProps {
 export const DropdownComponent = (props: DropdownComponentProps) => {
     const [selected, setSelected] = React.useState<string | undefined>('');
 
-    const { list, className, placeholder, onSelect } = props;
+    const { list, className, placeholder, clear, onSelect } = props;
     const defaultPlaceholder = list[0];
 
     const cx = React.useMemo(() => classnames('cr-dropdown', className, {
@@ -66,8 +71,10 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
     }, [handleSelect]);
 
     React.useEffect(() => {
-        setSelected(placeholder || convertToString(defaultPlaceholder));
-    }, [placeholder, defaultPlaceholder]);
+        if (clear !== false) {
+            setSelected(placeholder || convertToString(defaultPlaceholder));
+        }
+    }, [placeholder, defaultPlaceholder, clear]);
 
     return (
         <div className={cx}>
