@@ -1,10 +1,14 @@
+const hostUrl = window.location.hostname === 'localhost' ? 'http://localhost:9002' : window.location.origin;
+const protocolSSL = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+const rangerHostUrl =  window.location.hostname === 'localhost' ? 'wss://localhost:9003' : `${protocolSSL}${window.location.hostname}`;
+
 export const defaultConfig: Config = {
     api: {
-        authUrl: '',
-        tradeUrl: '',
-        applogicUrl: '',
-        rangerUrl: '',
-        finexUrl: ''
+        authUrl: `${hostUrl}/api/v2/barong`,
+        tradeUrl: `${hostUrl}/api/v2/peatio`,
+        applogicUrl: `${hostUrl}/api/v2/applogic`,
+        rangerUrl: `${hostUrl}/api/v2/rango`,
+        finexUrl: `${hostUrl}/api/v2/finex`,
     },
     finex: false,
     withCredentials: false,
