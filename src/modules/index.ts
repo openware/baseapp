@@ -23,6 +23,7 @@ import { GeetestCaptchaState, rootGeetestCaptchaSaga } from './user/captcha';
 import { DocumentationState, rootDocumentationSaga } from './user/documentation';
 import { EmailVerificationState, rootEmailVerificationSaga } from './user/emailVerification';
 import { HistoryState, rootHistorySaga } from './user/history';
+import { InternalTransfersState, rootInternalTransfersSaga } from './user/internalTransfers';
 import { AddressesState, rootSendAddressesSaga } from './user/kyc/addresses';
 import { DocumentsState, rootSendDocumentsSaga } from './user/kyc/documents';
 import { IdentityState, rootSendIdentitySaga } from './user/kyc/identity';
@@ -58,6 +59,7 @@ export * from './user/captcha';
 export * from './user/documentation';
 export * from './user/emailVerification';
 export * from './user/history';
+export * from './user/internalTransfers';
 export * from './user/kyc';
 export * from './user/openOrders';
 export * from './user/orders';
@@ -107,6 +109,7 @@ export interface RootState {
         userActivity: UserActivityState;
         wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
+        internalTransfers: InternalTransfersState;
     };
     admin: {
         configUpdate: ConfigUpdateState;
@@ -122,6 +125,7 @@ export const rootReducer = combineReducers({
 
 export function* rootSaga() {
     yield all([
+        call(rootInternalTransfersSaga),
         call(rootApiKeysSaga),
         call(rootAuthSaga),
         call(rootBeneficiariesSaga),
