@@ -48,24 +48,24 @@ const getTranslations = (lang: string, isMobileDevice: boolean) => {
 const RenderDeviceContainers = () => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
 
-    if (isMobileDevice) {
+    if (browserHistory.location.pathname === '/setup' || !isMobileDevice) {
         return (
-            <div className="pg-mobile-app">
-                <MobileHeader />
-                <AlertsContainer/>
-                <LayoutContainer/>
-            </div>
+            <React.Fragment>
+                <HeaderContainer />
+                <SidebarContainer />
+                <CustomizationContainer />
+                <AlertsContainer />
+                <LayoutContainer />
+            </React.Fragment>
         );
     }
 
     return (
-        <React.Fragment>
-            <HeaderContainer />
-            <SidebarContainer />
-            <CustomizationContainer />
-            <AlertsContainer />
-            <LayoutContainer />
-        </React.Fragment>
+        <div className="pg-mobile-app">
+            <MobileHeader />
+            <AlertsContainer/>
+            <LayoutContainer/>
+        </div>
     );
 };
 
