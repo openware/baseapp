@@ -23,7 +23,6 @@ if (gaKey) {
 }
 
 /* Mobile components */
-const MobileFooter = React.lazy(() => import('./mobile/components/Footer').then(({ Footer }) => ({ default: Footer })));
 const MobileHeader = React.lazy(() => import('./mobile/components/Header').then(({ Header }) => ({ default: Header })));
 
 /* Desktop components */
@@ -31,7 +30,6 @@ const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ A
 const CustomizationContainer = React.lazy(() =>
     import('./containers/Customization').then(({ Customization }) => ({ default: Customization }))
 );
-const FooterContainer = React.lazy(() => import('./containers/Footer').then(({ Footer }) => ({ default: Footer })));
 const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ Header }) => ({ default: Header })));
 const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
 const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
@@ -56,7 +54,6 @@ const RenderDeviceContainers = () => {
                 <MobileHeader />
                 <AlertsContainer/>
                 <LayoutContainer/>
-                <MobileFooter />
             </div>
         );
     }
@@ -68,7 +65,6 @@ const RenderDeviceContainers = () => {
             <CustomizationContainer />
             <AlertsContainer />
             <LayoutContainer />
-            <FooterContainer />
         </React.Fragment>
     );
 };

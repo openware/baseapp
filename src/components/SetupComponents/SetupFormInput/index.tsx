@@ -7,6 +7,8 @@ export interface SetupFormInputProps {
     type?: string;
     tooltipText?: string;
     handleChangeInput: (value: string) => void;
+    handleFocusInput?: () => void;
+    handleFocusOut?: () => void;
 }
 
 interface SetupFormInputState {
@@ -18,7 +20,7 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
         super(props);
 
         this.state = {
-          showTooltip: false,  
+          showTooltip: false,
         };
     }
 
@@ -29,7 +31,14 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
             <div className="setup-form-input">
                 <label>{label}</label>
                 <div className="setup-form-input__input">
-                    <input autoComplete="false" type={type || 'text'} onChange={e => this.handleChangeValue(e)} value={value} />
+                    <input
+                        autoComplete="false"
+                        type={type || 'text'}
+                        onChange={this.handleChangeValue}
+                        value={value}
+                        onFocus={this.handleFocus}
+                        onBlur={this.handleFocusOut}
+                    />
                     { tooltipText && this.renderTooltipInfo() }
                 </div>
             </div>
@@ -39,13 +48,13 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
     private renderTooltipInfo = () => {
         const { tooltipText } = this.props;
         const { showTooltip } = this.state;
-        
+
         return (
             <React.Fragment>
                 <div className="setup-form-input__input__tooltip" onMouseEnter={() => this.handleShowTooltip()} onMouseLeave={() => this.handleHideTooltip()}>
                     <TipIcon />
                 </div>
-                {showTooltip && 
+                {showTooltip &&
                     <div className="setup-form-input__input__info">
                         {tooltipText}
                     </div>
@@ -68,5 +77,13 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
 
     private handleChangeValue = e => {
         this.props.handleChangeInput && this.props.handleChangeInput(e.target.value);
+    };
+
+    private handleFocus = () => {
+        this.props.handleFocusInput && this.props.handleFocusInput();
+    };
+
+    private handleFocusOut = () => {
+        this.props.handleFocusOut && this.props.handleFocusOut();
     };
 }

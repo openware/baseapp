@@ -24,7 +24,7 @@ export class SetupLoginForm extends React.Component<SetupLoginFormProps, SetupLo
 
     public render() {
         const { email, password } = this.state;
-        const isEmailValid = !!email.match(EMAIL_REGEX);
+        const isEmailValid = email.match(EMAIL_REGEX) && password.length ? true : false;
 
         return (
             <React.Fragment>
@@ -48,7 +48,7 @@ export class SetupLoginForm extends React.Component<SetupLoginFormProps, SetupLo
                         size="lg"
                         variant="primary"
                         onClick={this.handleLogin}
-                        disabled={!(isEmailValid && password)}
+                        disabled={!isEmailValid}
                     >
                         Next
                     </Button>

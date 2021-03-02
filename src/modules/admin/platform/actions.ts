@@ -11,6 +11,12 @@ export interface PlatformCreateFetch {
         platform_name: string;
         platform_url: string;
     };
+    callbackAction?: {
+        scope: string;
+        component: string;
+        key: string;
+        value: any;
+    };
 }
 
 export interface PlatformCreateData {
@@ -28,9 +34,10 @@ export type PlatformCreateAction =
     | PlatformCreateData
     | PlatformCreateError;
 
-export const platformCreate = (payload: PlatformCreateFetch['payload']): PlatformCreateFetch => ({
+export const platformCreate = (payload: PlatformCreateFetch['payload'], callbackAction?: PlatformCreateFetch['callbackAction']): PlatformCreateFetch => ({
     type: PLATFORM_CREATE,
     payload,
+    callbackAction,
 });
 
 export const platformCreateData = (payload: PlatformCreateData['payload']): PlatformCreateData => ({

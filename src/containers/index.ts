@@ -3,7 +3,6 @@ export * from './ChangePassword';
 export * from './Confirm';
 export * from './Customization';
 export * from './Errors';
-export * from './Footer';
 export * from './GeetestCaptcha';
 export * from './Header';
 export * from './HistoryElement';

@@ -24,7 +24,6 @@ import {
     MarketItem,
     selectMarketsAdminList,
     RootState,
-    selectUserLoggedIn,
     updateMarketFetch,
     userFetch,
     selectUserInfo,
@@ -34,10 +33,11 @@ import {
     LanguageState,
     MarketUpdateItem,
     selectUserFetching,
-    configUpdate,
     selectMarketsAdminUpdate,
     selectEnabledMarketsAdminList,
     platformCreate,
+    selectSignUpSuccess,
+    selectPlatformCreateSuccess,
 } from '../../modules';
 import { wizardStep } from '../../api';
 
@@ -48,10 +48,11 @@ interface SetupScreenState {
 interface ReduxProps {
     markets: MarketItem[];
     user: User;
-    userLoggedIn: boolean;
     userLoading: boolean;
-    marketsSuccess: boolean;
     enabledMarkets: MarketUpdateItem[];
+    signUpSuccess: boolean;
+    platformCreateSuccess: boolean;
+    marketsSuccess: boolean;
 }
 
 interface DispatchProps {
@@ -60,7 +61,6 @@ interface DispatchProps {
     userFetch: typeof userFetch;
     signIn: typeof signIn;
     signUp: typeof signUp;
-    setSecret: typeof configUpdate;
     platformCreate: typeof platformCreate;
 }
 
@@ -80,9 +80,35 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     }
 
     public componentWillReceiveProps(nextProps: Props) {
+        if (!this.props.user.email && nextProps.user.email && this.state.currentStep === '1') {
+            this.setState({
+                currentStep: '2',
+            });
+        }
+
+        if (!this.props.platformCreateSuccess && nextProps.platformCreateSuccess) {
+            this.setState({
+                currentStep: '3',
+            });
+        }
+
         if (!this.props.marketsSuccess && nextProps.marketsSuccess) {
             this.setState({
                 currentStep: '4',
+            });
+        }
+
+        if (!this.props.user.email && nextProps.user.email && wizardStep() !== '1') {
+            this.setState({
+                currentStep: wizardStep(),
+            });
+        }
+    }
+
+    public componentDidMount() {
+        if (wizardStep() !== '1') {
+            this.setState({
+                currentStep: wizardStep(),
             });
         }
     }
@@ -96,14 +122,10 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     }
 
     public renderCurrentStep = () => {
-        const { userLoggedIn, userLoading } = this.props;
+        const { user } = this.props;
         const { currentStep } = this.state;
 
-        if (userLoading) {
-            return <div>Loading...</div>;
-        }
-
-        if (+currentStep > 1 && !userLoggedIn) {
+        if (+currentStep > 1 && !user.email.length) {
             return this.renderLogin();
         } else {
             switch (currentStep) {
@@ -248,12 +270,6 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         );
     };
 
-    private handleChangeCurrentStep = (currentStep: string) => {
-        this.setState({
-            currentStep,
-        });
-    };
-
     private handleCompleteSetup = () => {
         const { enabledMarkets } = this.props;
 
@@ -288,7 +304,6 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         };
 
         this.props.signUp(payload, callbackAction);
-        this.handleChangeCurrentStep('2');
     };
 
     private handleCreateSettingsSecrets = (exchangeName: string, exchangeUrl: string) => {
@@ -296,56 +311,44 @@ export class Setup extends React.Component<Props, SetupScreenState> {
             platform_name: exchangeName,
             platform_url: exchangeUrl,
         };
-
-        this.props.platformCreate(payload);
-
-        this.props.setSecret({
+        const callbackAction = {
             scope: 'public',
             component: 'global',
             key: 'wizard_step',
             value: '3',
-        });
-        this.handleChangeCurrentStep('3');
+        };
+
+        this.props.platformCreate(payload, callbackAction);
     };
 
     private handleSaveMarketsList = (list: MarketUpdateItem[]) => {
-        this.props.enableMarkets(list);
-        this.props.setSecret({
+        const callbackAction = {
             scope: 'public',
             component: 'global',
             key: 'wizard_step',
             value: 'false',
-        });
-        this.handleChangeCurrentStep('4');
-    };
-
-    private addSecret = ({ key, value }) => {
-        this.props.setSecret({
-            scope: 'public',
-            component: 'global',
-            key,
-            value,
-        });
+        };
+        this.props.enableMarkets(list, callbackAction);
     };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     markets: selectMarketsAdminList(state),
     user: selectUserInfo(state),
-    userLoggedIn: selectUserLoggedIn(state),
     userLoading: selectUserFetching(state),
     marketsSuccess: selectMarketsAdminUpdate(state),
     enabledMarkets: selectEnabledMarketsAdminList(state),
+    signUpSuccess: selectSignUpSuccess(state),
+    platformCreateSuccess: selectPlatformCreateSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    setSecret: payload => dispatch(configUpdate(payload)),
     getMarketsList: () => dispatch(getMarketsAdminList()),
-    enableMarkets: payload => dispatch(updateMarketFetch(payload)),
+    enableMarkets: (payload, cbAction) => dispatch(updateMarketFetch(payload, cbAction)),
     userFetch: () => dispatch(userFetch()),
     signIn: payload => dispatch(signIn(payload)),
     signUp: (credentials, cbAction) => dispatch(signUp(credentials, cbAction)),
-    platformCreate: payload => dispatch(platformCreate(payload)),
+    platformCreate: (payload, cbAction) => dispatch(platformCreate(payload, cbAction)),
 });
 
 export const SetupScreen = connect(mapStateToProps, mapDispatchToProps)(Setup);

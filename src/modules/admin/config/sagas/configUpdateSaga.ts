@@ -20,6 +20,7 @@ export function* configUpdateSaga(action: ConfigUpdate) {
         payload.append('value', value);
 
         yield call(API.put(configUpdateOptions(getCsrfToken())), `/admin/${action.payload.component}/secret`, payload);
+        window.env[key] = value;
         yield put(configUpdateData(action.payload));
     } catch (error) {
         yield put(sendError({

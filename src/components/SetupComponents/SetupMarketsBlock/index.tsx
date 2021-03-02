@@ -88,6 +88,7 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
                         size="lg"
                         variant="primary"
                         onClick={this.handleSave}
+                        disabled={!addedMarkets.length}
                     >
                         Save
                     </Button>

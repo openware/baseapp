@@ -5,5 +5,5 @@ fetchConfig.open('GET', `${hostUrl}/api/v2/sonic/public/config`, false);
 fetchConfig.send(null);
 
 if (fetchConfig.status === 200) {
-    window.env = JSON.parse(fetchConfig.responseText)?.global?.public;
+    window.env = JSON.parse(fetchConfig.responseText);
 }
