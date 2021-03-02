@@ -32,13 +32,13 @@ export class SetupGeneralSettingsForm extends React.Component<SetupGeneralSettin
                     <SetupFormInput
                         label="Exchange Name"
                         value={exchangeName}
-                        tooltipText="Consequat cupidatat officia duis duis enim voluptate cillum consectetur amet qui commodo proident elit."
+                        tooltipText="Exchange name of your trading platform"
                         handleChangeInput={this.handleChangeExchangeName}
                     />
                     <SetupFormInput
                         label="Exchange Url"
                         value={exchangeUrl}
-                        tooltipText="Consequat cupidatat officia duis duis enim voluptate cillum consectetur amet qui commodo proident elit."
+                        tooltipText="Using that URL users will be able to access the landing page of your trading platform"
                         handleChangeInput={this.handleChangeExchangeUrl}
                     />
                 </form>
