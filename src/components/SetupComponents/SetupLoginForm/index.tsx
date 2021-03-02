@@ -24,7 +24,7 @@ export class SetupLoginForm extends React.Component<SetupLoginFormProps, SetupLo
 
     public render() {
         const { email, password } = this.state;
-        const isEmailValid = email.match(EMAIL_REGEX) ? true : false;
+        const isEmailValid = !!email.match(EMAIL_REGEX);
 
         return (
             <React.Fragment>

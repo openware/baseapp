@@ -24,7 +24,7 @@ export class SetupGeneralSettingsForm extends React.Component<SetupGeneralSettin
 
     public render() {
         const { exchangeName, exchangeUrl } = this.state;
-        const validExchangeUrl = exchangeUrl.match(DOMAIN_REGEX) ? true : false;
+        const validExchangeUrl = !!exchangeUrl.match(DOMAIN_REGEX);
 
         return (
             <React.Fragment>

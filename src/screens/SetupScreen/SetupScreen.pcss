@@ -94,7 +94,7 @@
       }
 
       .container .checkmark::after {
-        border: solid #5B6488;
+        border: solid var(--setup-info-secondary-font-color);
         border-width: 0 3px 3px 0;
         height: 13px;
         left: 9px;
@@ -158,7 +158,10 @@
       position: absolute;
       width: 75px;
 
-      &:active, &:hover, &:focus, &:disabled {
+      &:active,
+      &:disabled,
+      &:focus,
+      &:hover {
         background-color: var(--setup-markets-button-bg-color) !important;
         color: var(--setup-markets-button-color) !important;
         opacity: 0.72;
@@ -212,7 +215,10 @@
         position: absolute;
         width: 207px;
 
-        &:active, &:hover, &:focus, &:disabled {
+        &:active,
+        &:disabled,
+        &:focus,
+        &:hover {
           background-color: var(--setup-markets-button-bg-color) !important;
           color: var(--setup-markets-button-color) !important;
         }
