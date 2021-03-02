@@ -14,7 +14,7 @@
     }
 
     &__info {
-      background: var(--body-background-color);
+      background: var(--setup-form-input-tooltip-bg);
       border-radius: 4px;
       box-shadow: 0 6px 12px var(--shadow-color-level-1);
       font-size: 14px;
@@ -25,17 +25,17 @@
       position: absolute;
       right: 0;
       top: 0;
-      transition: 0.2s;
+      /* transition: 0.2s; */
       width: 100%;
       z-index: 1;
     }
   }
 
   input {
-    background: var(--dropdown-background-color);
+    background: var(--setup-form-input-background);
     border: none;
     border-radius: 4px;
-    color: var(--primary-text-color);
+    color: var(--setup-form-input-color);
     display: block;
     font-size: 16px;
     height: 48px;
@@ -44,13 +44,13 @@
     width: 100%;
 
     &:focus {
-      background: var(--body-background-color);
+      background: var(--setup-form-input-background-focused);
     }
   }
 
   input:-webkit-autofill,
   input:-webkit-autofill:hover {
-    background: var(--dropdown-background-color) !important;
+    background: var(--setup-form-input-background) !important;
   }
 
   input:-webkit-autofill:focus {
@@ -58,7 +58,7 @@
   }
 
   input:-internal-autofill-selected {
-    background: var(--dropdown-background-color) !important;
+    background: var(--setup-form-input-background) !important;
   }
 
   label {

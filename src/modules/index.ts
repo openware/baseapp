@@ -38,36 +38,38 @@ import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
 import { MarketsAdminState, rootMarketsAdminSaga } from './admin/markets';
+import { PlatformCreateState, rootPlatformCreateSaga } from './admin/platform';
 
 export * from './admin/config';
 export * from './admin/markets';
-export * from './public/markets';
-export * from './public/orderBook';
-export * from './public/globalSettings';
+export * from './admin/platform';
+export * from './public/alert';
+export * from './public/blocklistAccess';
 export * from './public/currencies';
 export * from './public/errorHandler';
+export * from './public/globalSettings';
 export * from './public/i18n';
 export * from './public/kline';
-export * from './public/alert';
+export * from './public/markets';
+export * from './public/memberLevels';
+export * from './public/orderBook';
 export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';
 export * from './user/captcha';
 export * from './user/documentation';
-export * from './user/wallets';
-export * from './user/profile';
+export * from './user/emailVerification';
+export * from './user/history';
+export * from './user/internalTransfers';
+export * from './user/kyc';
 export * from './user/openOrders';
 export * from './user/orders';
 export * from './user/ordersHistory';
 export * from './user/password';
+export * from './user/profile';
 export * from './user/userActivity';
-export * from './user/history';
-export * from './user/kyc';
-export * from './user/emailVerification';
+export * from './user/wallets';
 export * from './user/withdrawLimit';
-export * from './public/memberLevels';
-export * from './public/blocklistAccess';
-export * from './user/internalTransfers';
 
 export interface RootState {
     public: {
@@ -75,44 +77,45 @@ export interface RootState {
         blocklistAccess: BlocklistAccessState;
         colorTheme: ColorThemeState;
         currencies: CurrenciesState;
-        rgl: GridLayoutState;
-        i18n: LanguageState;
-        kline: KlineState;
+        depth: DepthState;
         errorHandler: ErrorHandlerState;
+        i18n: LanguageState;
+        incrementDepth: DepthIncrementState;
+        kline: KlineState;
         markets: MarketsState;
         memberLevels: MemberLevelsState;
         orderBook: OrderBookState;
         ranger: RangerState;
         recentTrades: RecentTradesState;
-        depth: DepthState;
-        incrementDepth: DepthIncrementState;
+        rgl: GridLayoutState;
     };
     user: {
+        addresses: AddressesState;
         apiKeys: ApiKeysState;
         auth: AuthState;
         beneficiaries: BeneficiariesState;
         captcha: GeetestCaptchaState;
         documentation: DocumentationState;
-        history: HistoryState;
         documents: DocumentsState;
-        addresses: AddressesState;
+        history: HistoryState;
         identity: IdentityState;
+        internalTransfers: InternalTransfersState;
         label: LabelState;
-        phone: PhoneState;
         openOrders: OpenOrdersState;
         orders: OrdersState;
         ordersHistory: OrdersHistoryState;
         password: PasswordState;
+        phone: PhoneState;
         profile: ProfileState;
         sendEmailVerification: EmailVerificationState;
         userActivity: UserActivityState;
         wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
-        internalTransfers: InternalTransfersState;
     };
     admin: {
         configUpdate: ConfigUpdateState;
         markets: MarketsAdminState;
+        platform: PlatformCreateState;
     };
 }
 
@@ -124,7 +127,6 @@ export const rootReducer = combineReducers({
 
 export function* rootSaga() {
     yield all([
-        call(rootInternalTransfersSaga),
         call(rootApiKeysSaga),
         call(rootAuthSaga),
         call(rootBeneficiariesSaga),
@@ -132,13 +134,15 @@ export function* rootSaga() {
         call(rootConfigUpdateSaga),
         call(rootCurrenciesSaga),
         call(rootDocumentationSaga),
-        call(rootErrorHandlerSaga),
         call(rootEmailVerificationSaga),
+        call(rootErrorHandlerSaga),
         call(rootGeetestCaptchaSaga),
         call(rootHandleAlertSaga),
         call(rootHistorySaga),
+        call(rootInternalTransfersSaga),
         call(rootKlineFetchSaga),
         call(rootLabelSaga),
+        call(rootMarketsAdminSaga),
         call(rootMarketsSaga),
         call(rootMemberLevelsSaga),
         call(rootOpenOrdersSaga),
@@ -146,15 +150,15 @@ export function* rootSaga() {
         call(rootOrdersHistorySaga),
         call(rootOrdersSaga),
         call(rootPasswordSaga),
+        call(rootPlatformCreateSaga),
         call(rootProfileSaga),
         call(rootRecentTradesSaga),
-        call(rootSendCodeSaga),
         call(rootSendAddressesSaga),
+        call(rootSendCodeSaga),
         call(rootSendDocumentsSaga),
         call(rootSendIdentitySaga),
         call(rootUserActivitySaga),
         call(rootWalletsSaga),
         call(rootWithdrawLimitSaga),
-        call(rootMarketsAdminSaga),
     ]);
 }

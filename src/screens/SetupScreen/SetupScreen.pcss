@@ -1,3 +1,6 @@
+@import "./colors.pcss";
+@import "./fonts.pcss";
+
 .setup-screen {
   display: flex;
   height: 100vh;
@@ -15,7 +18,7 @@
     width: 50%;
 
     &-wrapper {
-      background: #fff;
+      background: var(--setup-background-color);
       display: flex;
       flex-direction: column;
       padding: 72px;
@@ -63,7 +66,7 @@
       }
 
       .checkmark {
-        background-color: var(--secondary-contrast-cta-color-level-1);
+        background-color: var(--setup-markets-checkbox-bg);
         border-radius: 4px;
         height: 25px;
         left: 0;
@@ -73,11 +76,11 @@
       }
 
       .container:hover input ~ .checkmark {
-        background-color: var(--secondary-contrast-cta-color-level-2);
+        background-color: var(--setup-markets-checkbox-bg);
       }
 
       .container input:checked ~ .checkmark {
-        background-color: var(--primary-cta-color);
+        background-color: var(--setup-markets-checkbox-bg);
       }
 
       .checkmark::after {
@@ -91,7 +94,7 @@
       }
 
       .container .checkmark::after {
-        border: solid white;
+        border: solid var(--setup-info-secondary-font-color);
         border-width: 0 3px 3px 0;
         height: 13px;
         left: 9px;
@@ -115,6 +118,8 @@
 
     button {
       bottom: 0;
+      background: var(--setup-markets-button-bg-color);
+      color: var(--setup-markets-button-color);
       font-size: 14px;
       font-weight: bold;
       height: 40px;
@@ -122,6 +127,16 @@
       margin-bottom: 75px;
       position: absolute;
       width: 75px;
+
+      &:active, &:hover, &:focus, &:disabled {
+        background-color: var(--setup-markets-button-bg-color) !important;
+        color: var(--setup-markets-button-color) !important;
+        opacity: 0.72;
+      }
+
+      &:disabled {
+        opacity: 0.48;
+      }
     }
   }
 
@@ -133,6 +148,8 @@
 
     button {
       bottom: 0;
+      background: var(--setup-markets-button-bg-color);
+      color: var(--setup-markets-button-color);
       font-size: 14px;
       font-weight: bold;
       height: 40px;
@@ -140,6 +157,19 @@
       margin-bottom: 75px;
       position: absolute;
       width: 75px;
+
+      &:active,
+      &:disabled,
+      &:focus,
+      &:hover {
+        background-color: var(--setup-markets-button-bg-color) !important;
+        color: var(--setup-markets-button-color) !important;
+        opacity: 0.72;
+      }
+
+      &:disabled {
+        opacity: 0.48;
+      }
     }
   }
 
@@ -149,6 +179,8 @@
 
     button {
       bottom: 0;
+      background: var(--setup-markets-button-bg-color);
+      color: var(--setup-markets-button-color);
       font-size: 14px;
       font-weight: bold;
       height: 40px;
@@ -156,6 +188,15 @@
       margin-bottom: 75px;
       position: absolute;
       width: 75px;
+
+      &:active, &:hover, &:focus, &:disabled {
+        background-color: var(--setup-markets-button-bg-color) !important;
+        color: var(--setup-markets-button-color) !important;
+      }
+
+      &:disabled {
+        opacity: 0.48;
+      }
     }
 
     &__congrat {
@@ -164,6 +205,8 @@
 
       button {
         bottom: 0;
+        background: var(--setup-markets-button-bg-color);
+        color: var(--setup-markets-button-color);
         font-size: 14px;
         font-weight: bold;
         height: 40px;
@@ -171,6 +214,18 @@
         margin-bottom: 75px;
         position: absolute;
         width: 207px;
+
+        &:active,
+        &:disabled,
+        &:focus,
+        &:hover {
+          background-color: var(--setup-markets-button-bg-color) !important;
+          color: var(--setup-markets-button-color) !important;
+        }
+
+        &:disabled {
+          opacity: 0.48;
+        }
       }
     }
   }

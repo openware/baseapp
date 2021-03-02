@@ -34,7 +34,12 @@
         text-transform: uppercase;
 
         &:checked {
-          background-color: var(--dropdown-background-color);
+          background-color: var(--setup-markets-block-option-checked);
+          font-weight: bold;
+        }
+
+        &:focus {
+          background-color: var(--setup-markets-block-option-checked);
           font-weight: bold;
         }
       }
@@ -55,11 +60,11 @@
       }
 
       &-add {
-        color: var(--primary-cta-color);
+        color: var(--setup-markets-block-text-blue);
       }
 
       &-remove {
-        color: var(--system-red-level-7);
+        color: var(--setup-markets-block-text-red);
         padding-top: 16px;
       }
     }
