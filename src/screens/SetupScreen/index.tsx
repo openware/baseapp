@@ -37,6 +37,7 @@ import {
     configUpdate,
     selectMarketsAdminUpdate,
     selectEnabledMarketsAdminList,
+    platformCreate,
 } from '../../modules';
 import { wizardStep } from '../../api';
 
@@ -60,6 +61,7 @@ interface DispatchProps {
     signIn: typeof signIn;
     signUp: typeof signUp;
     setSecret: typeof configUpdate;
+    platformCreate: typeof platformCreate;
 }
 
 interface OwnProps {
@@ -278,29 +280,25 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                 language: i18n,
             }),
         };
-
-        this.props.signUp(payload);
-        this.props.setSecret({
+        const callbackAction = {
             scope: 'public',
             component: 'global',
             key: 'wizard_step',
             value: '2',
-        });
+        };
+
+        this.props.signUp(payload, callbackAction);
         this.handleChangeCurrentStep('2');
     };
 
     private handleCreateSettingsSecrets = (exchangeName: string, exchangeUrl: string) => {
-        const exchangeNamePayload = {
-            key: 'exchange_name',
-            value: exchangeName,
-        };
-        const exchangeUrlPayload = {
-            key: 'exchange_url',
-            value: exchangeUrl,
+        const payload = {
+            platform_name: exchangeName,
+            platform_url: exchangeUrl,
         };
 
-        this.addSecret(exchangeNamePayload);
-        this.addSecret(exchangeUrlPayload);
+        this.props.platformCreate(payload);
+
         this.props.setSecret({
             scope: 'public',
             component: 'global',
@@ -346,7 +344,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     enableMarkets: payload => dispatch(updateMarketFetch(payload)),
     userFetch: () => dispatch(userFetch()),
     signIn: payload => dispatch(signIn(payload)),
-    signUp: credentials => dispatch(signUp(credentials)),
+    signUp: (credentials, cbAction) => dispatch(signUp(credentials, cbAction)),
+    platformCreate: payload => dispatch(platformCreate(payload)),
 });
 
 export const SetupScreen = connect(mapStateToProps, mapDispatchToProps)(Setup);

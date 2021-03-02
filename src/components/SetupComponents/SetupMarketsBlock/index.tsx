@@ -89,7 +89,7 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
                         variant="primary"
                         onClick={this.handleSave}
                     >
-                        Next
+                        Save
                     </Button>
                 </div>
             </React.Fragment>
