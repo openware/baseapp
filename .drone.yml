@@ -180,6 +180,19 @@ steps:
       branch:
         - "*-stable"
 
+  - name: "Build custom baseapp with assembly line"
+    image: curlimages/curl
+    environment:
+      SERVER: https://ci.openware.work
+      REPO: openware/assembly-line
+      BRANCH: master
+      COMPONENT: baseapp
+      DRONE_TOKEN:
+        from_secret: drone_token
+    commands:
+      - COMPONENT_VERSION=$(cat .tags)
+      - "curl -s -XPOST -H \"Authorization: Bearer $DRONE_TOKEN\" -i \"$SERVER/api/repos/$REPO/builds?branch=$BRANCH&ASSEMBLY_COMPONENT_VERSION=$COMPONENT_VERSION&ASSEMBLY_COMPONENT=$COMPONENT\""
+
 trigger:
   branch:
     - master
