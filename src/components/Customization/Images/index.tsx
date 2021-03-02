@@ -1,21 +1,21 @@
 import * as React from 'react';
+import { LogoInterface } from '../../../themes';
+import { ImageSettings } from './ImageSettings';
 
-interface OwnProps {
+interface ParentProps {
     translate: (key: string) => string;
+    resetToDefault: boolean;
+    handleSetHeaderLogo: (value: LogoInterface) => void;
 }
 
-type Props = OwnProps;
+type Props = ParentProps;
 
-export class CustomizationImages extends React.PureComponent<Props> {
-    public render() {
-        const { translate } = this.props;
-
-        return (
-            <div className="pg-customization-images">
-                <span className="pg-customization-images__coming-soon">
-                    {translate('page.body.customization.comingSoon')}
-                </span>
-            </div>
-        );
-    }
-}
+export const CustomizationImages: React.FC<Props> = (props: Props) => (
+    <div className="pg-customization-images">
+        <ImageSettings
+            {...props}
+            imageTitle="header_logo"
+            maxWidth={136}
+        />
+    </div>
+);

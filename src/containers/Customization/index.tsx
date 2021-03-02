@@ -27,6 +27,7 @@ import {
 import {
     AVAILABLE_COLOR_TITLES,
     CustomizationSettingsInterface,
+    LogoInterface,
     ThemeColorInterface,
 } from '../../themes';
 
@@ -51,6 +52,7 @@ interface State {
     currentTabIndex: number;
     isOpen: boolean;
     resetToDefault: boolean;
+    headerLogo?: LogoInterface;
 }
 
 class CustomizationContainer extends React.Component<Props, State> {
@@ -76,7 +78,7 @@ class CustomizationContainer extends React.Component<Props, State> {
                         colorTheme={colorTheme}
                         resetToDefault={resetToDefault}
                         handleSetCurrentColorTheme={changeColorTheme}
-                        handleSetThemeId={this.handleSetThemeId}
+                        handleSetThemeId={this.handleUpdateState('currentThemeId')}
                         handleTriggerChartRebuild={this.handleTriggerChartRebuild}
                         translate={this.translate}
                     />
@@ -92,7 +94,13 @@ class CustomizationContainer extends React.Component<Props, State> {
                 label: this.translate('page.body.customization.tabs.spacing'),
             },
             {
-                content: currentTabIndex === 3 ? <CustomizationImages translate={this.translate} /> : null,
+                content: currentTabIndex === 3 ? (
+                    <CustomizationImages
+                        handleSetHeaderLogo={this.handleUpdateState('headerLogo')}
+                        resetToDefault={resetToDefault}
+                        translate={this.translate}
+                    />
+                ) : null,
                 label: this.translate('page.body.customization.tabs.images'),
             },
         ];
@@ -218,11 +226,12 @@ class CustomizationContainer extends React.Component<Props, State> {
         return false;
     };
 
-    private handleSetThemeId = (value: number) => {
+    private handleUpdateState = (key: string) => value => {
+        // @ts-ignore
         this.setState({
-            currentThemeId: value,
+            [key]: value,
         });
-    }
+    };
 
     private handleToggleIsOpen = () => {
         this.setState(prevState => ({
