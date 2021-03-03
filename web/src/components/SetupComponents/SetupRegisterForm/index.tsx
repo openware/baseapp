@@ -227,7 +227,7 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
         } = this.state;
         const { currentPasswordEntropy } = this.props;
         const isEmailValid = email.match(EMAIL_REGEX);
-        const isPasswordValid = currentPasswordEntropy < passwordMinEntropy();
+        const isPasswordValid = currentPasswordEntropy >= passwordMinEntropy();
         const isConfirmPasswordValid = password === confirmPassword;
 
         return isEmailValid && isPasswordValid && isConfirmPasswordValid && agreementConfirmed;
