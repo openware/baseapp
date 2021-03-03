@@ -9,6 +9,7 @@ describe('Change color theme reducer', () => {
             sideBarActive: false,
             marketSelectorActive: false,
             isMobileDevice: false,
+            applyWindowEnvsTrigger: false,
         };
         expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('light'))).toEqual(expectedState);
         expect(localStorage.getItem('colorTheme')).toEqual('light');
@@ -18,6 +19,7 @@ describe('Change color theme reducer', () => {
             sideBarActive: false,
             marketSelectorActive: false,
             isMobileDevice: false,
+            applyWindowEnvsTrigger: false,
         };
         expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('dark'))).toEqual(expectedState);
         expect(localStorage.getItem('colorTheme')).toEqual('dark');

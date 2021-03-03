@@ -109,6 +109,12 @@
       max-width: 1180px;
       padding: 0 20px;
 
+      &__left img {
+        max-height: 64px;
+        max-width: 174px;
+        object-fit: contain;
+      }
+
       &__right {
         align-items: center;
         display: flex;
@@ -424,7 +430,10 @@
         justify-content: flex-start;
 
         img {
-          width: 174px;
+          height: auto;
+          max-height: 174px;
+          max-width: 174px;
+          object-fit: contain;
         }
       }
 

@@ -7,7 +7,10 @@ header {
   margin: 0 auto;
 
   .pg-logo__img {
-    height: calc(var(--gap) * 3.666);
+    cursor: pointer;
+    max-height: 64px;
+    max-width: 120px;
+    object-fit: contain;
   }
 
   &__market-selector-toggle {
@@ -23,17 +26,6 @@ header {
     &-value {
       color: var(--header-market-selector-text-color);
       margin: 0 14px 0 0;
-    }
-  }
-
-  &__logo {
-    cursor: pointer;
-
-    img {
-      border-style: none;
-      height: calc(var(--gap) * 3.5);
-      vertical-align: middle;
-      width: calc(var(--gap) * 19.67);
     }
   }
 

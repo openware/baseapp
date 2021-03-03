@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { BackgroundMaintenance } from '../../assets/images/BackgroundMaintenance';
-import { LogoIcon } from '../../assets/images/LogoIcon';
+import { Logo } from '../../components';
 import { setDocumentTitle } from '../../helpers';
 import { RootState, selectPlatformAccessStatus } from '../../modules';
 
@@ -35,7 +35,7 @@ class Maintenance extends React.Component<Props> {
             <div className="pg-maintenance-screen">
                 <div className="pg-maintenance-screen__container">
                     <div className="pg-maintenance-screen__container-header">
-                        <LogoIcon />
+                        <Logo />
                     </div>
                     <div className="pg-maintenance-screen__container-body">
                         <div className="pg-maintenance-screen__container-body-title">

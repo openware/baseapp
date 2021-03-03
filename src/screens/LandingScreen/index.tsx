@@ -6,10 +6,15 @@ import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
 import { IntlProps } from '../../';
-import { LogoIcon } from '../../assets/images/LogoIcon';
+import { Logo } from '../../components';
 import { MarketsTable } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
-import { RootState, selectCurrentColorTheme, selectUserLoggedIn } from '../../modules';
+import {
+    RootState,
+    selectCurrentColorTheme,
+    selectUserLoggedIn,
+} from '../../modules';
+import { CustomizationSettingsInterface, LogoInterface } from '../../themes';
 
 import FeaturesExchangeIcon from 'src/assets/images/landing/features/Exchange.svg';
 import FeaturesTypesIcon from 'src/assets/images/landing/features/Types.svg';
@@ -59,7 +64,7 @@ class Landing extends React.Component<Props> {
                 <div className="pg-landing-screen__header">
                     <div className="pg-landing-screen__header__wrap">
                         <div className="pg-landing-screen__header__wrap__left" onClick={(e) => this.handleScrollTop()}>
-                            <LogoIcon />
+                            <Logo />
                         </div>
                         <div className="pg-landing-screen__header__wrap__right">
                             {this.props.isLoggedIn ? (
@@ -213,7 +218,7 @@ class Landing extends React.Component<Props> {
                 <div className="pg-landing-screen__footer">
                     <div className="pg-landing-screen__footer__wrap">
                         <div className="pg-landing-screen__footer__wrap__left" onClick={(e) => this.handleScrollTop()}>
-                            <LogoIcon />
+                            <Logo />
                         </div>
                         <div className="pg-landing-screen__footer__wrap__navigation">
                             <div className="pg-landing-screen__footer__wrap__navigation__col">
