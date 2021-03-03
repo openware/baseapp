@@ -13,6 +13,7 @@ exports[`MaintenanceScreen should render 1`] = `
       <svg
         fill="none"
         height="20"
+        style="width:auto"
         viewBox="0 0 118 20"
         width="118"
         xmlns="http://www.w3.org/2000/svg"
