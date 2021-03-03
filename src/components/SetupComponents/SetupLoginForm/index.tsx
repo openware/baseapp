@@ -41,7 +41,7 @@ export class SetupLoginForm extends React.Component<SetupLoginFormProps, SetupLo
                         handleChangeInput={this.handleChangePassword}
                     />
                 </form>
-                <div className="setup-screen__sign-in">
+                <div className="setup-screen__button">
                     <Button
                         block={true}
                         type="button"

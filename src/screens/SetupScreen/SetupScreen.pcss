@@ -4,8 +4,8 @@
 .setup-screen {
   display: flex;
   height: 100vh;
+  min-height: 640px;
   justify-content: flex-start;
-  min-height: 900px;
   width: 100%;
 
   &__left {
@@ -39,10 +39,12 @@
     justify-content: flex-end;
     padding-top: 24px;
 
-    &__term {
+    &-term {
+      display: flex;
+      justify-content: flex-start;
       width: 100%;
 
-      .container {
+      .checkbox-container {
         align-items: center;
         cursor: pointer;
         display: flex;
@@ -57,7 +59,7 @@
         user-select: none;
       }
 
-      .container input {
+      .checkbox-container input {
         cursor: pointer;
         height: 0;
         opacity: 0;
@@ -75,11 +77,11 @@
         width: 25px;
       }
 
-      .container:hover input ~ .checkmark {
+      .checkbox-container:hover input ~ .checkmark {
         background-color: var(--setup-markets-checkbox-bg);
       }
 
-      .container input:checked ~ .checkmark {
+      .checkbox-container input:checked ~ .checkmark {
         background-color: var(--setup-markets-checkbox-bg);
       }
 
@@ -89,11 +91,11 @@
         position: absolute;
       }
 
-      .container input:checked ~ .checkmark::after {
+      .checkbox-container input:checked ~ .checkmark::after {
         display: block;
       }
 
-      .container .checkmark::after {
+      .checkbox-container .checkmark::after {
         border: solid var(--setup-info-secondary-font-color);
         border-width: 0 3px 3px 0;
         height: 13px;
@@ -115,16 +117,21 @@
         }
       }
     }
+  }
+
+  &__button {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
 
     button {
-      bottom: 0;
+      bottom: 72px;
       background: var(--setup-markets-button-bg-color);
       color: var(--setup-markets-button-color);
       font-size: 14px;
       font-weight: bold;
       height: 40px;
       letter-spacing: 0.04em;
-      margin-bottom: 75px;
       position: absolute;
       width: 75px;
 
@@ -147,7 +154,6 @@
     padding-top: 24px;
 
     button {
-      bottom: 0;
       background: var(--setup-markets-button-bg-color);
       color: var(--setup-markets-button-color);
       font-size: 14px;
@@ -155,7 +161,6 @@
       height: 40px;
       letter-spacing: 0.04em;
       margin-bottom: 75px;
-      position: absolute;
       width: 75px;
 
       &:active,
@@ -234,7 +239,7 @@
 @media screen and (max-width: 992px) {
   .setup-screen {
     flex-direction: column;
-    min-height: unset;
+    min-height: 100vh;
 
     &__left {
       width: 100%;
@@ -246,6 +251,8 @@
 
       &-wrapper {
         padding: 32px;
+
+
 
         &__close {
           display: none;
@@ -272,10 +279,9 @@
       }
     }
 
-    &__agreement {
-      display: block;
-
+    &__button {
       button {
+        width: 100%;
         float: right;
         margin-bottom: 0;
         margin-top: 24px;

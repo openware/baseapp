@@ -32,7 +32,6 @@ import {
     signUp,
     LanguageState,
     MarketUpdateItem,
-    selectUserFetching,
     selectMarketsAdminUpdate,
     selectEnabledMarketsAdminList,
     platformCreate,
@@ -48,7 +47,6 @@ interface SetupScreenState {
 interface ReduxProps {
     markets: MarketItem[];
     user: User;
-    userLoading: boolean;
     enabledMarkets: MarketUpdateItem[];
     signUpSuccess: boolean;
     platformCreateSuccess: boolean;
@@ -97,16 +95,18 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                 currentStep: '4',
             });
         }
+    }
 
-        if (!this.props.user.email && nextProps.user.email && wizardStep() !== '1') {
+    public componentDidMount() {
+        if (wizardStep() !== '1') {
             this.setState({
                 currentStep: wizardStep(),
             });
         }
     }
 
-    public componentDidMount() {
-        if (wizardStep() !== '1') {
+    public UNSAFE_componentWillReceiveProps(nextProps: Props) {
+        if (!this.props.user.email && nextProps.user.email && wizardStep() !== '1') {
             this.setState({
                 currentStep: wizardStep(),
             });
@@ -137,7 +137,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                     logo={logo}
                                     backgroundImage={bgStep1}
                                     title="Installation"
-                                    description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                    description="Create your first super admin account to access the management part of your trading platform. Use real email to be able to recover access to your platform"
                                 />
                             </div>
                             <div className="setup-screen__right">
@@ -160,14 +160,14 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                     logo={logo}
                                     backgroundImage={bgStep1}
                                     title="Installation"
-                                    description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                    description="Start configuration process by providing the name and URL of your trading platform"
                                 />
                             </div>
                             <div className="setup-screen__right">
                                 <div className="setup-screen__right-wrapper">
                                     <SetupFormBlock
                                         title="General Settings"
-                                        subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint."
+                                        subtitle="Define name and URL of your platform"
                                     >
                                         <SetupGeneralSettingsForm handleCreateSettingsSecrets={this.handleCreateSettingsSecrets} />
                                     </SetupFormBlock>
@@ -183,14 +183,14 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                     logo={logo}
                                     backgroundImage={bgStep2}
                                     title="Configure the liquidity network"
-                                    description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                    description="XLN is a liquidity network by Openware. Everyone can join it by deploying the OpenDAX platform or integrating with our APIs. XLN provides aggregated liquidity and creates a beneficial environment for all market participants"
                                 />
                             </div>
                             <div className="setup-screen__right">
                                 <div className="setup-screen__right-wrapper">
                                     <SetupFormBlock
                                         title="Select Markets"
-                                        subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                        subtitle="Make your list of market pairs that you want to add to your platform. All that market pairs has liquidity on them. You will be able do to congifure or edit you pair after deployment"
                                     >
                                         <SetupMarketsBlock
                                             marketsList={this.props.markets}
@@ -219,8 +219,8 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                         <CloseSetupIcon />
                                     </div>
                                     <SetupFormBlock
-                                        title={`Congratulations exchange is live!`}
-                                        subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                        title='Congratulations! Your exchange is live!'
+                                        subtitle="Use a customisation tool to change the visual appearance of your platform. You can change the colour scheme, fonts, spacing and platform`s logo."
                                     >
                                         <SetupCongratsBlock />
                                     </SetupFormBlock>
@@ -253,7 +253,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                         logo={logo}
                         backgroundImage={bgStep1}
                         title="Installation"
-                        description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                        description="Create your first super admin account to access the management part of your trading platform. Use real email to be able to recover access to your platform"
                     />
                 </div>
                 <div className="setup-screen__right">
@@ -335,7 +335,6 @@ export class Setup extends React.Component<Props, SetupScreenState> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     markets: selectMarketsAdminList(state),
     user: selectUserInfo(state),
-    userLoading: selectUserFetching(state),
     marketsSuccess: selectMarketsAdminUpdate(state),
     enabledMarkets: selectEnabledMarketsAdminList(state),
     signUpSuccess: selectSignUpSuccess(state),

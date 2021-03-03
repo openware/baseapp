@@ -42,7 +42,7 @@ export class SetupGeneralSettingsForm extends React.Component<SetupGeneralSettin
                         handleChangeInput={this.handleChangeExchangeUrl}
                     />
                 </form>
-                <div className="setup-screen__step-footer">
+                <div className="setup-screen__button">
                     <Button
                         block={true}
                         type="button"

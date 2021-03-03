@@ -81,7 +81,7 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
                         </select>
                     </div>
                 </div>
-                <div className="setup-screen__step-footer">
+                <div className="setup-screen__button">
                     <Button
                         block={true}
                         type="button"

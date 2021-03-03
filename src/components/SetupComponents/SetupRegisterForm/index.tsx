@@ -79,15 +79,7 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
         } = this.state;
         const { currentPasswordEntropy } = this.props;
         const isEmailValid = email.match(EMAIL_REGEX);
-        const isPasswordCorrect = currentPasswordEntropy < passwordMinEntropy();
         const isConfirmPasswordValid = password === confirmPassword;
-        //
-        // const isDisabled = !(email || password || confirmPassword)
-        //     || emailError !== ''
-        //     || confirmationError !== ''
-        //     || password !== confirmPassword
-        //     || currentPasswordEntropy < passwordMinEntropy()
-        //     || !agreementConfirmed;
 
         return (
             <React.Fragment>
@@ -134,12 +126,14 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
                      ) : null}
                 </form>
                 <div className="setup-screen__agreement">
-                    <div className="setup-screen__agreement__term">
-                        <label className="container">I  agree all statements in <a href="#"> terms of service</a>
-                            <input type="checkbox" checked={agreementConfirmed} onChange={e => this.handleToggleConfirmAgreement()} />
+                    <div className="setup-screen__agreement-term">
+                        <label className="checkbox-container">I  agree all statements in <a href="#"> terms of service</a>
+                            <input type="checkbox" checked={agreementConfirmed} onChange={() => this.handleToggleConfirmAgreement()} />
                             <span className="checkmark"></span>
                         </label>
                     </div>
+                </div>
+                <div className="setup-screen__button">
                     <Button
                         block={true}
                         type="button"
@@ -219,11 +213,9 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
     };
 
     private handleToggleConfirmAgreement = () => {
-        this.setState(prevState => {
-            return {
-                agreementConfirmed: !prevState.agreementConfirmed,
-            }
-        });
+        this.setState(prevState => ({
+          agreementConfirmed: !prevState.agreementConfirmed,
+        }));
     };
 
     private handleValidateForm = () => {
