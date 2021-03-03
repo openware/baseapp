@@ -1,10 +1,10 @@
 import {
-    MARKET_DATA,
-    MARKET_ERROR,
     MARKET_UPDATE_FETCH,
     MARKETS_LIST_DATA,
     MARKETS_LIST_ERROR,
     MARKETS_LIST_FETCH,
+    MARKET_UPDATE_DATA,
+    MARKET_UPDATE_ERROR,
 } from './constants';
 
 export interface MarketItem {
@@ -50,17 +50,6 @@ export interface MarketsListData {
     };
 }
 
-export interface MarketData {
-    type: typeof MARKET_DATA;
-    payload: {
-        currentMarket: MarketItem;
-    };
-}
-
-export interface MarketError {
-    type: typeof MARKET_ERROR;
-}
-
 export interface MarketsListError {
     type: typeof MARKETS_LIST_ERROR;
 }
@@ -68,32 +57,46 @@ export interface MarketsListError {
 export interface MarketUpdateFetch {
     type: typeof MARKET_UPDATE_FETCH;
     payload: MarketUpdateItem[];
+    callbackAction?: {
+        scope: string;
+        component: string;
+        key: string;
+        value: any;
+    };
+}
+
+export interface MarketUpdateData {
+    type: typeof MARKET_UPDATE_DATA;
+}
+
+export interface MarketUpdateError {
+    type: typeof MARKET_UPDATE_ERROR;
 }
 
 
 export type MarketsAdminAction = MarketsListFetch
     | MarketsListData
     | MarketsListError
-    | MarketData
-    | MarketError
-    | MarketUpdateFetch;
+    | MarketUpdateFetch
+    | MarketUpdateData
+    | MarketUpdateError;
 
 export const getMarketsAdminList = (): MarketsListFetch => ({
     type: MARKETS_LIST_FETCH,
 });
 
-export const updateMarketFetch = (payload: MarketUpdateFetch['payload']): MarketUpdateFetch => ({
+export const updateMarketFetch = (payload: MarketUpdateFetch['payload'], callbackAction?: MarketUpdateFetch['callbackAction']): MarketUpdateFetch => ({
     type: MARKET_UPDATE_FETCH,
     payload,
+    callbackAction,
 });
 
-export const getMarketData = (payload: MarketData['payload']): MarketData => ({
-    type: MARKET_DATA,
-    payload,
+export const updateMarketData = (): MarketUpdateData => ({
+    type: MARKET_UPDATE_DATA,
 });
 
-export const getMarketError = (): MarketError => ({
-    type: MARKET_ERROR,
+export const updateMarketError = (): MarketUpdateError => ({
+    type: MARKET_UPDATE_ERROR,
 });
 
 export const getMarketsListData = (payload: MarketsListData['payload']): MarketsListData => ({

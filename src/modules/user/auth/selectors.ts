@@ -25,3 +25,6 @@ export const selectSignInError = (state: RootState): AuthState['authError'] =>
 
 export const selectSignUpLoading = (state: RootState): AuthState['signUpLoading'] =>
     state.user.auth.signUpLoading;
+
+export const selectSignUpSuccess = (state: RootState): AuthState['signUpSuccess'] =>
+    state.user.auth.signUpSuccess;

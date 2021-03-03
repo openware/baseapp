@@ -29,6 +29,7 @@ export interface AuthState {
     current_password_entropy: number;
     signInLoading: boolean;
     signUpLoading: boolean;
+    signUpSuccess: boolean;
 }
 
 export const initialStateAuth: AuthState = {
@@ -38,6 +39,7 @@ export const initialStateAuth: AuthState = {
     current_password_entropy: 0,
     signInLoading: false,
     signUpLoading: false,
+    signUpSuccess: false,
 };
 
 export const authReducer = (state = initialStateAuth, action: AuthAction) => {
@@ -71,7 +73,7 @@ export const authReducer = (state = initialStateAuth, action: AuthAction) => {
         case AUTH_SIGN_UP_FETCH:
             return { ...state, signUpLoading: true };
         case AUTH_SIGN_UP_DATA:
-            return { ...state, signUpLoading: false };
+            return { ...state, signUpLoading: false, signUpSuccess: true };
         case AUTH_SIGN_UP_ERROR:
             return { ...state, signUpError: action.error, signUpLoading: false };
         case AUTH_LOGOUT_FETCH:

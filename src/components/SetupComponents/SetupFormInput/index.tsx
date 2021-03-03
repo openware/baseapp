@@ -7,6 +7,7 @@ export interface SetupFormInputProps {
     type?: string;
     tooltipText?: string;
     handleChangeInput: (value: string) => void;
+    handleFocus?: (type: string) => void;
 }
 
 interface SetupFormInputState {
@@ -18,7 +19,7 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
         super(props);
 
         this.state = {
-          showTooltip: false,  
+          showTooltip: false,
         };
     }
 
@@ -29,8 +30,15 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
             <div className="setup-form-input">
                 <label>{label}</label>
                 <div className="setup-form-input__input">
-                    <input autoComplete="false" type={type || 'text'} onChange={e => this.handleChangeValue(e)} value={value} />
-                    { tooltipText && this.renderTooltipInfo() }
+                    <input
+                        autoComplete="false"
+                        type={type || 'text'}
+                        onChange={this.handleChangeValue}
+                        value={value}
+                        onFocus={() => this.handleFocus('in')}
+                        onBlur={() => this.handleFocus('out')}
+                    />
+                    {tooltipText && this.renderTooltipInfo()}
                 </div>
             </div>
         );
@@ -39,26 +47,26 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
     private renderTooltipInfo = () => {
         const { tooltipText } = this.props;
         const { showTooltip } = this.state;
-        
+
         return (
             <React.Fragment>
                 <div className="setup-form-input__input__tooltip" onMouseEnter={() => this.handleShowTooltip()} onMouseLeave={() => this.handleHideTooltip()}>
                     <TipIcon />
                 </div>
-                {showTooltip && 
+                {showTooltip &&
                     <div className="setup-form-input__input__info">
                         {tooltipText}
                     </div>
                 }
             </React.Fragment>
         );
-    }
+    };
 
     private handleShowTooltip = () => {
         this.setState({
             showTooltip: true,
         });
-    }
+    };
 
     private handleHideTooltip = () => {
         this.setState({
@@ -68,5 +76,9 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
 
     private handleChangeValue = e => {
         this.props.handleChangeInput && this.props.handleChangeInput(e.target.value);
+    };
+
+    private handleFocus = (type: string) => {
+        this.props.handleFocus && this.props.handleFocus(type);
     };
 }

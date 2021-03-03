@@ -11,9 +11,25 @@ const platformCreateOptions = (csrfToken?: string): RequestOptions => {
     };
 };
 
+const configUpdateOptions = (csrfToken?: string): RequestOptions => {
+    return {
+        apiVersion: 'sonic',
+        headers: { 'X-CSRF-Token': csrfToken },
+    };
+};
+
 export function* platformCreateSaga(action: PlatformCreateFetch) {
     try {
         yield call(API.put(platformCreateOptions(getCsrfToken())), `/admin/platforms/new`, action.payload);
+        if (action.callbackAction) {
+            const { scope, key, value, component } = action.callbackAction;
+            const payload = new FormData();
+            payload.append('scope', scope);
+            payload.append('key', key);
+            payload.append('value', value);
+
+            yield call(API.put(configUpdateOptions(getCsrfToken())), `/admin/${component}/secret`, payload);
+        }
         yield put(platformCreateData(action.payload));
     } catch (error) {
         yield put(sendError({
