@@ -19,6 +19,10 @@ import {
     toggleMarketSelector,
     toggleSidebar,
 } from '../../modules';
+import {
+    CustomizationSettingsInterface,
+    LogoInterface,
+} from '../../themes';
 import { HeaderToolbar } from '../HeaderToolbar';
 import { NavBar } from '../NavBar';
 
@@ -57,6 +61,7 @@ type Props = ReduxProps & DispatchProps & IntlProps & LocationProps;
 class Head extends React.Component<Props> {
     public render() {
         const { mobileWallet, location } = this.props;
+        const image = this.handleGetImageFromConfig();
         const tradingCls = location.pathname.includes('/trading') ? 'pg-container-trading' : '';
         const shouldRenderHeader =
             !noHeaderRoutes.some((r) => location.pathname.includes(r)) && location.pathname !== '/';
@@ -77,7 +82,19 @@ class Head extends React.Component<Props> {
                     </div>
                     <div onClick={(e) => this.redirectToLanding()} className="pg-header__logo">
                         <div className="pg-logo">
-                            <LogoIcon className="pg-logo__img" />
+                            {image?.url ? (
+                                <img
+                                    src={image.url}
+                                    alt="Header logo"
+                                    className="pg-logo__img"
+                                    style={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                                />
+                            ) : (
+                                <LogoIcon
+                                    className="pg-logo__img"
+                                    styles={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                                />
+                            )}
                         </div>
                     </div>
                     {this.renderMarketToggler()}
@@ -134,6 +151,13 @@ class Head extends React.Component<Props> {
                 )}
             </div>
         );
+    };
+
+    private handleGetImageFromConfig = (): LogoInterface | undefined => {
+        const settingsFromConfig: CustomizationSettingsInterface | undefined =
+            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+
+        return settingsFromConfig?.['header_logo'];
     };
 
     private redirectToLanding = () => {

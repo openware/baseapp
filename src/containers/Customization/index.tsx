@@ -152,7 +152,7 @@ class CustomizationContainer extends React.Component<Props, State> {
     };
 
     private handleClickSaveButton = () => {
-        const { currentThemeId } = this.state;
+        const { currentThemeId, headerLogo } = this.state;
         const settingsFromConfig: CustomizationSettingsInterface | undefined =
             window.env?.palette ? JSON.parse(window.env.palette) : undefined;
         const rootElement = document.documentElement;
@@ -201,8 +201,15 @@ class CustomizationContainer extends React.Component<Props, State> {
             settings = {
                 ...settings,
                 theme_id: currentThemeId,
-            }
-        }
+            };
+        };
+
+        if (headerLogo) {
+            settings = {
+                ...settings,
+                header_logo: headerLogo,
+            };
+        };
 
         this.props.configUpdate({
             component: 'global',

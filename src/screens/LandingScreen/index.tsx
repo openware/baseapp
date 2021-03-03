@@ -10,6 +10,7 @@ import { LogoIcon } from '../../assets/images/LogoIcon';
 import { MarketsTable } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import { RootState, selectCurrentColorTheme, selectUserLoggedIn } from '../../modules';
+import { CustomizationSettingsInterface, LogoInterface } from '../../themes';
 
 import FeaturesExchangeIcon from 'src/assets/images/landing/features/Exchange.svg';
 import FeaturesTypesIcon from 'src/assets/images/landing/features/Types.svg';
@@ -54,12 +55,24 @@ class Landing extends React.Component<Props> {
     }
 
     public render() {
+        const image = this.handleGetImageFromConfig();
+
         return (
             <div className="pg-landing-screen">
                 <div className="pg-landing-screen__header">
                     <div className="pg-landing-screen__header__wrap">
                         <div className="pg-landing-screen__header__wrap__left" onClick={(e) => this.handleScrollTop()}>
-                            <LogoIcon />
+                            {image?.url ? (
+                                <img
+                                    src={image.url}
+                                    alt="Header logo"
+                                    style={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                                />
+                            ) : (
+                                <LogoIcon
+                                    styles={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                                />
+                            )}
                         </div>
                         <div className="pg-landing-screen__header__wrap__right">
                             {this.props.isLoggedIn ? (
@@ -213,7 +226,17 @@ class Landing extends React.Component<Props> {
                 <div className="pg-landing-screen__footer">
                     <div className="pg-landing-screen__footer__wrap">
                         <div className="pg-landing-screen__footer__wrap__left" onClick={(e) => this.handleScrollTop()}>
-                            <LogoIcon />
+                            {image?.url ? (
+                                <img
+                                    src={image.url}
+                                    alt="Header logo"
+                                    style={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                                />
+                            ) : (
+                                <LogoIcon
+                                    styles={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                                />
+                            )}
                         </div>
                         <div className="pg-landing-screen__footer__wrap__navigation">
                             <div className="pg-landing-screen__footer__wrap__navigation__col">
@@ -257,6 +280,13 @@ class Landing extends React.Component<Props> {
 
     private handleScrollTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    private handleGetImageFromConfig = (): LogoInterface | undefined => {
+        const settingsFromConfig: CustomizationSettingsInterface | undefined =
+            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+
+        return settingsFromConfig?.['header_logo'];
     };
 
     private translate = (key: string) => this.props.intl.formatMessage({ id: key });

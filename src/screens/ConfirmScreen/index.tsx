@@ -18,6 +18,10 @@ import {
     selectSidebarState,
     toggleSidebar,
 } from '../../modules';
+import {
+    CustomizationSettingsInterface,
+    LogoInterface,
+} from '../../themes';
 
 interface ReduxProps {
     isSidebarOpen: boolean;
@@ -65,11 +69,22 @@ class ConfirmComponent extends React.Component<Props> {
     public render() {
         const { history } = this.props;
         const step = this.handleGetVerificationStep();
+        const image = this.handleGetImageFromConfig();
 
         return (
             <div className="pg-container pg-confirm">
                 <div className="pg-confirm__logo">
-                    <LogoIcon />
+                    {image?.url ? (
+                        <img
+                            src={image.url}
+                            alt="Header logo"
+                            style={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                        />
+                    ) : (
+                        <LogoIcon
+                            styles={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                        />
+                    )}
                 </div>
                 <h3 className="pg-confirm__title">
                     <FormattedMessage id={`page.confirm.title.${step}`} />
@@ -98,6 +113,13 @@ class ConfirmComponent extends React.Component<Props> {
         if (pendingLabelExists || (kycSteps().length === passedSteps.length)) {
             this.props.history.push('/profile');
         }
+    };
+
+    private handleGetImageFromConfig = (): LogoInterface | undefined => {
+        const settingsFromConfig: CustomizationSettingsInterface | undefined =
+            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+
+        return settingsFromConfig?.['header_logo'];
     };
 }
 

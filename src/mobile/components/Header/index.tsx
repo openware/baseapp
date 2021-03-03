@@ -6,6 +6,10 @@ import { Link } from 'react-router-dom';
 import { LogoIcon } from '../../../assets/images/LogoIcon';
 import { ProfileIcon } from '../../../assets/images/sidebar/ProfileIcon';
 import { selectUserLoggedIn } from '../../../modules';
+import {
+    CustomizationSettingsInterface,
+    LogoInterface,
+} from '../../../themes';
 
 const noHeaderRoutes = ['/setup'];
 
@@ -19,10 +23,31 @@ const HeaderComponent: React.FC = () => {
         return <React.Fragment />;
     }
 
+    const handleGetImageFromConfig = (): LogoInterface | undefined => {
+        const settingsFromConfig: CustomizationSettingsInterface | undefined =
+            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+
+        return settingsFromConfig?.['header_logo'];
+    };
+
+    const image = handleGetImageFromConfig();
+
     return (
         <div className="pg-mobile-header">
             <Link to="/" className="pg-mobile-header__logo">
-                <LogoIcon className="pg-mobile-header__logo__icon" />
+                {image?.url ? (
+                    <img
+                        src={image.url}
+                        alt="Header logo"
+                        className="pg-mobile-header__logo__icon"
+                        style={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                    />
+                ) : (
+                    <LogoIcon
+                        className="pg-mobile-header__logo__icon"
+                        styles={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                    />
+                )}
             </Link>
             <div className="pg-mobile-header__account">
                 {userLoggedIn ? (

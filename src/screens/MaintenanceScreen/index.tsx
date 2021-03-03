@@ -9,6 +9,7 @@ import { BackgroundMaintenance } from '../../assets/images/BackgroundMaintenance
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { setDocumentTitle } from '../../helpers';
 import { RootState, selectPlatformAccessStatus } from '../../modules';
+import { CustomizationSettingsInterface, LogoInterface } from '../../themes';
 
 interface ReduxProps {
     status: string;
@@ -31,11 +32,23 @@ class Maintenance extends React.Component<Props> {
     }
 
     public render() {
+        const image = this.handleGetImageFromConfig();
+
         return (
             <div className="pg-maintenance-screen">
                 <div className="pg-maintenance-screen__container">
                     <div className="pg-maintenance-screen__container-header">
-                        <LogoIcon />
+                        {image?.url ? (
+                            <img
+                                src={image.url}
+                                alt="Header logo"
+                                style={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                            />
+                        ) : (
+                            <LogoIcon
+                                styles={{ width: image?.width ? `${image.width}px` : 'auto'}}
+                            />
+                        )}
                     </div>
                     <div className="pg-maintenance-screen__container-body">
                         <div className="pg-maintenance-screen__container-body-title">
@@ -52,6 +65,13 @@ class Maintenance extends React.Component<Props> {
             </div>
         );
     }
+
+    private handleGetImageFromConfig = (): LogoInterface | undefined => {
+        const settingsFromConfig: CustomizationSettingsInterface | undefined =
+            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+
+        return settingsFromConfig?.['header_logo'];
+    };
 
     private translate = (key: string) => this.props.intl.formatMessage({id: key});
 }
