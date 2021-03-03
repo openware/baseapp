@@ -6,12 +6,11 @@ import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
 import { IntlProps } from '../../';
-import { LogoIcon } from '../../assets/images/LogoIcon';
+import { Logo } from '../../components';
 import { MarketsTable } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
 import {
     RootState,
-    selectApplyWindowEnvsTriggerState,
     selectCurrentColorTheme,
     selectUserLoggedIn,
 } from '../../modules';
@@ -34,33 +33,17 @@ import MediumIcon from 'src/assets/images/landing/social/Medium.svg';
 import CoinMarketIcon from 'src/assets/images/landing/social/CoinMarket.svg';
 
 interface ReduxProps {
-    applyWindowEnvsTrigger: boolean;
     isLoggedIn: boolean;
     colorTheme: string;
 }
 
 type Props = ReduxProps & RouteProps & IntlProps;
 
-interface State {
-    image: LogoInterface | undefined;
-}
-
-class Landing extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-
-        this.state = {
-            image: undefined,
-        };
-    }
-
-
+class Landing extends React.Component<Props> {
     public componentDidMount() {
         if (this.props.colorTheme === 'light') {
             toggleColorTheme('dark');
         }
-
-        this.handleGetImageFromConfig();
     }
 
     public componentWillReceiveProps(next: Props) {
@@ -75,33 +58,13 @@ class Landing extends React.Component<Props, State> {
         }
     }
 
-    public componentDidUpdate(prevProps: Props) {
-        const { applyWindowEnvsTrigger } = this.props;
-
-        if (prevProps.applyWindowEnvsTrigger !== applyWindowEnvsTrigger) {
-            this.handleGetImageFromConfig();
-        }
-    }
-
     public render() {
-        const { image } = this.state;
-
         return (
             <div className="pg-landing-screen">
                 <div className="pg-landing-screen__header">
                     <div className="pg-landing-screen__header__wrap">
                         <div className="pg-landing-screen__header__wrap__left" onClick={(e) => this.handleScrollTop()}>
-                            {image?.url ? (
-                                <img
-                                    src={image.url}
-                                    alt="Header logo"
-                                    style={{ width: image?.width ? `${image.width}px` : 'auto'}}
-                                />
-                            ) : (
-                                <LogoIcon
-                                    styles={{ width: image?.width ? `${image.width}px` : 'auto'}}
-                                />
-                            )}
+                            <Logo />
                         </div>
                         <div className="pg-landing-screen__header__wrap__right">
                             {this.props.isLoggedIn ? (
@@ -255,17 +218,7 @@ class Landing extends React.Component<Props, State> {
                 <div className="pg-landing-screen__footer">
                     <div className="pg-landing-screen__footer__wrap">
                         <div className="pg-landing-screen__footer__wrap__left" onClick={(e) => this.handleScrollTop()}>
-                            {image?.url ? (
-                                <img
-                                    src={image.url}
-                                    alt="Header logo"
-                                    style={{ width: image?.width ? `${image.width}px` : 'auto'}}
-                                />
-                            ) : (
-                                <LogoIcon
-                                    styles={{ width: image?.width ? `${image.width}px` : 'auto'}}
-                                />
-                            )}
+                            <Logo />
                         </div>
                         <div className="pg-landing-screen__footer__wrap__navigation">
                             <div className="pg-landing-screen__footer__wrap__navigation__col">
@@ -311,18 +264,10 @@ class Landing extends React.Component<Props, State> {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    private handleGetImageFromConfig = () => {
-        const settingsFromConfig: CustomizationSettingsInterface | undefined =
-            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
-
-        this.setState({ image: settingsFromConfig?.['header_logo'] });
-    };
-
     private translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    applyWindowEnvsTrigger: selectApplyWindowEnvsTriggerState(state),
     isLoggedIn: selectUserLoggedIn(state),
     colorTheme: selectCurrentColorTheme(state),
 });
