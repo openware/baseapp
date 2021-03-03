@@ -4,6 +4,7 @@ import {
     TOGGLE_MARKET_SELECTOR,
     TOGGLE_MOBILE_DEVICE,
     TOGGLE_SIDEBAR,
+    TRIGGER_APPLY_WINDOW_ENVS,
 } from './constants';
 
 export interface ChangeColorThemeAction {
@@ -29,12 +30,17 @@ export interface ToggleSidebarAction {
     payload: boolean;
 }
 
+export interface TriggerApplyWindowEnvs {
+    type: string;
+}
+
 export type UIActions =
     | ChangeColorThemeAction
     | ToggleChartRebuildAction
     | ToggleMarketSelectorAction
     | ToggleMobileDeviceAction
-    | ToggleSidebarAction;
+    | ToggleSidebarAction
+    | TriggerApplyWindowEnvs;
 
 export const toggleChartRebuild = (): ToggleChartRebuildAction => ({
     type: TOGGLE_CHART_REBUILD,
@@ -57,4 +63,8 @@ export const setMobileDevice = (payload: boolean): ToggleMobileDeviceAction => (
 export const toggleSidebar = (payload: boolean): ToggleSidebarAction => ({
     type: TOGGLE_SIDEBAR,
     payload,
+});
+
+export const triggerApplyWindowEnvs = (): TriggerApplyWindowEnvs => ({
+    type: TRIGGER_APPLY_WINDOW_ENVS,
 });

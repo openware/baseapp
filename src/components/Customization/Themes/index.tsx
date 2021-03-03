@@ -193,9 +193,9 @@ export class CustomizationThemes extends React.Component<Props, State> {
 
     private handleChangeCurrentTheme = (index: number) => {
         const { handleTriggerChartRebuild } = this.props;
-        const themeToSet = AVAILABLE_THEME_PRESETS[index];        
+        const { title, ...themeToSet } = AVAILABLE_THEME_PRESETS[index];        
         const settingsToSet = {
-            theme_id: themeToSet.theme_id,
+            ...themeToSet,
             theme_colors: {
                 dark: themeToSet.theme_colors.dark,
                 light: themeToSet.theme_colors.light,

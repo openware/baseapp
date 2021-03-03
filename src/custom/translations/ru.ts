@@ -657,6 +657,13 @@ export const ru: LangType = {
     'page.body.customization.themes.theme.green.title': 'Green',
     'page.body.customization.themes.theme.violet.title': 'Violet',
 
+    'page.body.customization.images.field.width.label': 'Ширина изображения',
+    'page.body.customization.images.field.width.placeholder': 'Только цифры (px)',
+    'page.body.customization.images.field.url.label': 'Ссылка на изображение',
+    'page.body.customization.images.field.url.placeholder': 'https://yourimage',
+
+    'page.body.customization.images.header_logo.title': 'Header logo',
+
 
     /* Documentation */
     'page.documentation.header.version.title': 'Version:',
