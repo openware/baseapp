@@ -208,7 +208,7 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
 
     private handlePasswordFocus = (type: string) => {
         this.setState({
-            passwordPopUp: type === 'in' ? true : false,
+            passwordPopUp: type === 'in',
         });
     };
 

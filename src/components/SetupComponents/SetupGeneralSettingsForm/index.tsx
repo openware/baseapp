@@ -32,7 +32,7 @@ export class SetupGeneralSettingsForm extends React.Component<SetupGeneralSettin
                     <SetupFormInput
                         label="Exchange Name"
                         value={exchangeName}
-                        tooltipText="Exchange name of your trading platform"
+                        tooltipText="Public name of your exchange"
                         handleChangeInput={this.handleChangeExchangeName}
                     />
                     <SetupFormInput

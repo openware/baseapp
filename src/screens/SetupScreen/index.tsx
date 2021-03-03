@@ -77,7 +77,15 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         };
     }
 
-    public componentWillReceiveProps(nextProps: Props) {
+    public componentDidMount() {
+        if (wizardStep() !== '1') {
+            this.setState({
+                currentStep: wizardStep(),
+            });
+        }
+    }
+
+    public UNSAFE_componentWillReceiveProps(nextProps: Props) {
         if (!this.props.user.email && nextProps.user.email && this.state.currentStep === '1') {
             this.setState({
                 currentStep: '2',
@@ -95,17 +103,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                 currentStep: '4',
             });
         }
-    }
 
-    public componentDidMount() {
-        if (wizardStep() !== '1') {
-            this.setState({
-                currentStep: wizardStep(),
-            });
-        }
-    }
-
-    public UNSAFE_componentWillReceiveProps(nextProps: Props) {
         if (!this.props.user.email && nextProps.user.email && wizardStep() !== '1') {
             this.setState({
                 currentStep: wizardStep(),
