@@ -23,7 +23,6 @@ if (gaKey) {
 }
 
 /* Mobile components */
-const MobileFooter = React.lazy(() => import('./mobile/components/Footer').then(({ Footer }) => ({ default: Footer })));
 const MobileHeader = React.lazy(() => import('./mobile/components/Header').then(({ Header }) => ({ default: Header })));
 
 /* Desktop components */
@@ -31,7 +30,6 @@ const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ A
 const CustomizationContainer = React.lazy(() =>
     import('./containers/Customization').then(({ Customization }) => ({ default: Customization }))
 );
-const FooterContainer = React.lazy(() => import('./containers/Footer').then(({ Footer }) => ({ default: Footer })));
 const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ Header }) => ({ default: Header })));
 const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
 const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
@@ -50,26 +48,24 @@ const getTranslations = (lang: string, isMobileDevice: boolean) => {
 const RenderDeviceContainers = () => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
 
-    if (isMobileDevice) {
+    if (browserHistory.location.pathname === '/setup' || !isMobileDevice) {
         return (
-            <div className="pg-mobile-app">
-                <MobileHeader />
-                <AlertsContainer/>
-                <LayoutContainer/>
-                <MobileFooter />
-            </div>
+            <React.Fragment>
+                <HeaderContainer />
+                <SidebarContainer />
+                <CustomizationContainer />
+                <AlertsContainer />
+                <LayoutContainer />
+            </React.Fragment>
         );
     }
 
     return (
-        <React.Fragment>
-            <HeaderContainer />
-            <SidebarContainer />
-            <CustomizationContainer />
-            <AlertsContainer />
-            <LayoutContainer />
-            <FooterContainer />
-        </React.Fragment>
+        <div className="pg-mobile-app">
+            <MobileHeader />
+            <AlertsContainer/>
+            <LayoutContainer/>
+        </div>
     );
 };
 

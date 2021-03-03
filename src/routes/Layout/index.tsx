@@ -215,7 +215,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             }
         }
 
-        if (!this.props.user.email && nextProps.user.email) {
+        if (!this.props.user.email && nextProps.user.email && !this.props.location.pathname.includes('/setup')) {
             this.props.userFetch();
         }
     }
@@ -263,7 +263,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         if (!platformAccessStatus.length) {
             return renderLoader();
         }
-        
+
         if ((wizardStep() !== 'false') && this.props.location.pathname !== '/setup') {
             return (
                 <div className={isMobileDevice ? mobileCls : desktopCls}>

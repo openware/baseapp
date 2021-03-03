@@ -24,7 +24,6 @@ import {
     MarketItem,
     selectMarketsAdminList,
     RootState,
-    selectUserLoggedIn,
     updateMarketFetch,
     userFetch,
     selectUserInfo,
@@ -33,11 +32,11 @@ import {
     signUp,
     LanguageState,
     MarketUpdateItem,
-    selectUserFetching,
-    configUpdate,
     selectMarketsAdminUpdate,
     selectEnabledMarketsAdminList,
     platformCreate,
+    selectSignUpSuccess,
+    selectPlatformCreateSuccess,
 } from '../../modules';
 import { wizardStep } from '../../api';
 
@@ -48,10 +47,10 @@ interface SetupScreenState {
 interface ReduxProps {
     markets: MarketItem[];
     user: User;
-    userLoggedIn: boolean;
-    userLoading: boolean;
-    marketsSuccess: boolean;
     enabledMarkets: MarketUpdateItem[];
+    signUpSuccess: boolean;
+    platformCreateSuccess: boolean;
+    marketsSuccess: boolean;
 }
 
 interface DispatchProps {
@@ -60,7 +59,6 @@ interface DispatchProps {
     userFetch: typeof userFetch;
     signIn: typeof signIn;
     signUp: typeof signUp;
-    setSecret: typeof configUpdate;
     platformCreate: typeof platformCreate;
 }
 
@@ -79,10 +77,36 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         };
     }
 
-    public componentWillReceiveProps(nextProps: Props) {
+    public componentDidMount() {
+        if (wizardStep() !== '1') {
+            this.setState({
+                currentStep: wizardStep(),
+            });
+        }
+    }
+
+    public UNSAFE_componentWillReceiveProps(nextProps: Props) {
+        if (!this.props.user.email && nextProps.user.email && this.state.currentStep === '1') {
+            this.setState({
+                currentStep: '2',
+            });
+        }
+
+        if (!this.props.platformCreateSuccess && nextProps.platformCreateSuccess) {
+            this.setState({
+                currentStep: '3',
+            });
+        }
+
         if (!this.props.marketsSuccess && nextProps.marketsSuccess) {
             this.setState({
                 currentStep: '4',
+            });
+        }
+
+        if (!this.props.user.email && nextProps.user.email && wizardStep() !== '1') {
+            this.setState({
+                currentStep: wizardStep(),
             });
         }
     }
@@ -96,14 +120,10 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     }
 
     public renderCurrentStep = () => {
-        const { userLoggedIn, userLoading } = this.props;
+        const { user } = this.props;
         const { currentStep } = this.state;
 
-        if (userLoading) {
-            return <div>Loading...</div>;
-        }
-
-        if (+currentStep > 1 && !userLoggedIn) {
+        if (+currentStep > 1 && !user.email.length) {
             return this.renderLogin();
         } else {
             switch (currentStep) {
@@ -115,7 +135,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                     logo={logo}
                                     backgroundImage={bgStep1}
                                     title="Installation"
-                                    description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                    description="Create your first super admin account to access the management part of your trading platform. Use real email to be able to recover access to your platform"
                                 />
                             </div>
                             <div className="setup-screen__right">
@@ -138,14 +158,14 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                     logo={logo}
                                     backgroundImage={bgStep1}
                                     title="Installation"
-                                    description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                    description="Start configuration process by providing the name and URL of your trading platform"
                                 />
                             </div>
                             <div className="setup-screen__right">
                                 <div className="setup-screen__right-wrapper">
                                     <SetupFormBlock
                                         title="General Settings"
-                                        subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint."
+                                        subtitle="Define name and URL of your platform"
                                     >
                                         <SetupGeneralSettingsForm handleCreateSettingsSecrets={this.handleCreateSettingsSecrets} />
                                     </SetupFormBlock>
@@ -161,14 +181,14 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                     logo={logo}
                                     backgroundImage={bgStep2}
                                     title="Configure the liquidity network"
-                                    description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                    description="XLN is a liquidity network by Openware. Everyone can join it by deploying the OpenDAX platform or integrating with our APIs. XLN provides aggregated liquidity and creates a beneficial environment for all market participants"
                                 />
                             </div>
                             <div className="setup-screen__right">
                                 <div className="setup-screen__right-wrapper">
                                     <SetupFormBlock
                                         title="Select Markets"
-                                        subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                        subtitle="Make your list of market pairs that you want to add to your platform. All that market pairs has liquidity on them. You will be able do to congifure or edit you pair after deployment"
                                     >
                                         <SetupMarketsBlock
                                             marketsList={this.props.markets}
@@ -197,8 +217,8 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                         <CloseSetupIcon />
                                     </div>
                                     <SetupFormBlock
-                                        title={`Congratulations exchange is live!`}
-                                        subtitle="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                                        title='Congratulations! Your exchange is live!'
+                                        subtitle="Use a customisation tool to change the visual appearance of your platform. You can change the colour scheme, fonts, spacing and platform`s logo."
                                     >
                                         <SetupCongratsBlock />
                                     </SetupFormBlock>
@@ -231,7 +251,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                         logo={logo}
                         backgroundImage={bgStep1}
                         title="Installation"
-                        description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                        description="Create your first super admin account to access the management part of your trading platform. Use real email to be able to recover access to your platform"
                     />
                 </div>
                 <div className="setup-screen__right">
@@ -246,12 +266,6 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                 </div>
             </React.Fragment>
         );
-    };
-
-    private handleChangeCurrentStep = (currentStep: string) => {
-        this.setState({
-            currentStep,
-        });
     };
 
     private handleCompleteSetup = () => {
@@ -288,7 +302,6 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         };
 
         this.props.signUp(payload, callbackAction);
-        this.handleChangeCurrentStep('2');
     };
 
     private handleCreateSettingsSecrets = (exchangeName: string, exchangeUrl: string) => {
@@ -296,56 +309,43 @@ export class Setup extends React.Component<Props, SetupScreenState> {
             platform_name: exchangeName,
             platform_url: exchangeUrl,
         };
-
-        this.props.platformCreate(payload);
-
-        this.props.setSecret({
+        const callbackAction = {
             scope: 'public',
             component: 'global',
             key: 'wizard_step',
             value: '3',
-        });
-        this.handleChangeCurrentStep('3');
+        };
+
+        this.props.platformCreate(payload, callbackAction);
     };
 
     private handleSaveMarketsList = (list: MarketUpdateItem[]) => {
-        this.props.enableMarkets(list);
-        this.props.setSecret({
+        const callbackAction = {
             scope: 'public',
             component: 'global',
             key: 'wizard_step',
             value: 'false',
-        });
-        this.handleChangeCurrentStep('4');
-    };
-
-    private addSecret = ({ key, value }) => {
-        this.props.setSecret({
-            scope: 'public',
-            component: 'global',
-            key,
-            value,
-        });
+        };
+        this.props.enableMarkets(list, callbackAction);
     };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     markets: selectMarketsAdminList(state),
     user: selectUserInfo(state),
-    userLoggedIn: selectUserLoggedIn(state),
-    userLoading: selectUserFetching(state),
     marketsSuccess: selectMarketsAdminUpdate(state),
     enabledMarkets: selectEnabledMarketsAdminList(state),
+    signUpSuccess: selectSignUpSuccess(state),
+    platformCreateSuccess: selectPlatformCreateSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    setSecret: payload => dispatch(configUpdate(payload)),
     getMarketsList: () => dispatch(getMarketsAdminList()),
-    enableMarkets: payload => dispatch(updateMarketFetch(payload)),
+    enableMarkets: (payload, cbAction) => dispatch(updateMarketFetch(payload, cbAction)),
     userFetch: () => dispatch(userFetch()),
     signIn: payload => dispatch(signIn(payload)),
     signUp: (credentials, cbAction) => dispatch(signUp(credentials, cbAction)),
-    platformCreate: payload => dispatch(platformCreate(payload)),
+    platformCreate: (payload, cbAction) => dispatch(platformCreate(payload, cbAction)),
 });
 
 export const SetupScreen = connect(mapStateToProps, mapDispatchToProps)(Setup);
