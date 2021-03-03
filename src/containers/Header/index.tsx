@@ -10,6 +10,7 @@ import { LogoIcon } from '../../assets/images/LogoIcon';
 import {
     Market,
     RootState,
+    selectApplyWindowEnvsTriggerState,
     selectCurrentColorTheme,
     selectCurrentMarket,
     selectMarketSelectorState,
@@ -35,6 +36,7 @@ import backIcon from './back.svg';
 import backLightIcon from './backLight.svg';
 
 interface ReduxProps {
+    applyWindowEnvsTrigger: boolean;
     currentMarket: Market | undefined;
     colorTheme: string;
     mobileWallet: string;
@@ -58,10 +60,34 @@ const noHeaderRoutes = ['/confirm', '/404', '/500', '/setup'];
 
 type Props = ReduxProps & DispatchProps & IntlProps & LocationProps;
 
-class Head extends React.Component<Props> {
+interface State {
+    image: LogoInterface | undefined;
+}
+
+class Head extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            image: undefined,
+        };
+    }
+
+    public componentDidMount() {
+        this.handleGetImageFromConfig();
+    }
+
+    public componentDidUpdate(prevProps: Props) {
+        const { applyWindowEnvsTrigger } = this.props;
+
+        if (prevProps.applyWindowEnvsTrigger !== applyWindowEnvsTrigger) {
+            this.handleGetImageFromConfig();
+        }
+    }
+
     public render() {
         const { mobileWallet, location } = this.props;
-        const image = this.handleGetImageFromConfig();
+        const { image } = this.state;
         const tradingCls = location.pathname.includes('/trading') ? 'pg-container-trading' : '';
         const shouldRenderHeader =
             !noHeaderRoutes.some((r) => location.pathname.includes(r)) && location.pathname !== '/';
@@ -153,11 +179,11 @@ class Head extends React.Component<Props> {
         );
     };
 
-    private handleGetImageFromConfig = (): LogoInterface | undefined => {
+    private handleGetImageFromConfig = () => {
         const settingsFromConfig: CustomizationSettingsInterface | undefined =
             window.env?.palette ? JSON.parse(window.env.palette) : undefined;
 
-        return settingsFromConfig?.['header_logo'];
+        this.setState({ image: settingsFromConfig?.['header_logo'] });
     };
 
     private redirectToLanding = () => {
@@ -178,6 +204,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     mobileWallet: selectMobileWalletUi(state),
     sidebarOpened: selectSidebarState(state),
     marketSelectorOpened: selectMarketSelectorState(state),
+    applyWindowEnvsTrigger: selectApplyWindowEnvsTriggerState(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({

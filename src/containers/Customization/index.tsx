@@ -18,10 +18,12 @@ import {
     changeColorTheme,
     configUpdate,
     RootState,
+    selectConfigUpdateSuccess,
     selectCurrentColorTheme,
     selectUserInfo,
     selectUserLoggedIn,
     toggleChartRebuild,
+    triggerApplyWindowEnvs,
     User,
 } from '../../modules';
 import {
@@ -35,14 +37,16 @@ import './Customization.pcss';
 
 interface ReduxProps {
     colorTheme: string;
-    userLoggedIn: boolean;
+    configUpdateSuccess: boolean;
     user: User;
+    userLoggedIn: boolean;
 }
 
 interface DispatchProps {
     changeColorTheme: typeof changeColorTheme;
     configUpdate: typeof configUpdate;
     toggleChartRebuild: typeof toggleChartRebuild;
+    triggerApplyWindowEnvs: typeof triggerApplyWindowEnvs;
 }
 
 type Props = ReduxProps & RouterProps & DispatchProps & IntlProps;
@@ -52,7 +56,7 @@ interface State {
     currentTabIndex: number;
     isOpen: boolean;
     resetToDefault: boolean;
-    headerLogo?: LogoInterface;
+    headerLogo: LogoInterface | undefined;
 }
 
 class CustomizationContainer extends React.Component<Props, State> {
@@ -61,10 +65,18 @@ class CustomizationContainer extends React.Component<Props, State> {
         currentTabIndex: 0,
         isOpen: false,
         resetToDefault: false,
+        headerLogo: undefined,
     };
 
     public componentDidMount() {
         this.setState({ isOpen: this.handleCheckRoute() });
+    }
+
+    public componentDidUpdate(prevProps: Props) {
+        const { configUpdateSuccess } = this.props;
+        if (configUpdateSuccess !== prevProps.configUpdateSuccess) {
+            this.props.triggerApplyWindowEnvs();
+        }
     }
 
     public renderTabs = () => {
@@ -255,8 +267,9 @@ class CustomizationContainer extends React.Component<Props, State> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     colorTheme: selectCurrentColorTheme(state),
-    userLoggedIn: selectUserLoggedIn(state),
+    configUpdateSuccess: selectConfigUpdateSuccess(state),
     user: selectUserInfo(state),
+    userLoggedIn: selectUserLoggedIn(state),
 });
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
@@ -264,6 +277,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         changeColorTheme: payload => dispatch(changeColorTheme(payload)),
         configUpdate: payload => dispatch(configUpdate(payload)),
         toggleChartRebuild: () => dispatch(toggleChartRebuild()),
+        triggerApplyWindowEnvs: () => dispatch(triggerApplyWindowEnvs()),
     });
 
 // tslint:disable no-any

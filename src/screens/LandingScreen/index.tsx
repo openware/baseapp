@@ -9,7 +9,12 @@ import { IntlProps } from '../../';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { MarketsTable } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
-import { RootState, selectCurrentColorTheme, selectUserLoggedIn } from '../../modules';
+import {
+    RootState,
+    selectApplyWindowEnvsTriggerState,
+    selectCurrentColorTheme,
+    selectUserLoggedIn,
+} from '../../modules';
 import { CustomizationSettingsInterface, LogoInterface } from '../../themes';
 
 import FeaturesExchangeIcon from 'src/assets/images/landing/features/Exchange.svg';
@@ -29,17 +34,33 @@ import MediumIcon from 'src/assets/images/landing/social/Medium.svg';
 import CoinMarketIcon from 'src/assets/images/landing/social/CoinMarket.svg';
 
 interface ReduxProps {
+    applyWindowEnvsTrigger: boolean;
     isLoggedIn: boolean;
     colorTheme: string;
 }
 
 type Props = ReduxProps & RouteProps & IntlProps;
 
-class Landing extends React.Component<Props> {
+interface State {
+    image: LogoInterface | undefined;
+}
+
+class Landing extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            image: undefined,
+        };
+    }
+
+
     public componentDidMount() {
         if (this.props.colorTheme === 'light') {
             toggleColorTheme('dark');
         }
+
+        this.handleGetImageFromConfig();
     }
 
     public componentWillReceiveProps(next: Props) {
@@ -54,8 +75,16 @@ class Landing extends React.Component<Props> {
         }
     }
 
+    public componentDidUpdate(prevProps: Props) {
+        const { applyWindowEnvsTrigger } = this.props;
+
+        if (prevProps.applyWindowEnvsTrigger !== applyWindowEnvsTrigger) {
+            this.handleGetImageFromConfig();
+        }
+    }
+
     public render() {
-        const image = this.handleGetImageFromConfig();
+        const { image } = this.state;
 
         return (
             <div className="pg-landing-screen">
@@ -282,17 +311,18 @@ class Landing extends React.Component<Props> {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    private handleGetImageFromConfig = (): LogoInterface | undefined => {
+    private handleGetImageFromConfig = () => {
         const settingsFromConfig: CustomizationSettingsInterface | undefined =
             window.env?.palette ? JSON.parse(window.env.palette) : undefined;
 
-        return settingsFromConfig?.['header_logo'];
+        this.setState({ image: settingsFromConfig?.['header_logo'] });
     };
 
     private translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
+    applyWindowEnvsTrigger: selectApplyWindowEnvsTriggerState(state),
     isLoggedIn: selectUserLoggedIn(state),
     colorTheme: selectCurrentColorTheme(state),
 });

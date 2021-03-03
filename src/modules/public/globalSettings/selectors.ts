@@ -15,3 +15,6 @@ export const selectMobileDeviceState = (state: RootState): ColorThemeState['isMo
 
 export const selectSidebarState = (state: RootState): ColorThemeState['sideBarActive'] =>
     state.public.colorTheme.sideBarActive;
+
+export const selectApplyWindowEnvsTriggerState = (state: RootState): ColorThemeState['applyWindowEnvsTrigger'] =>
+    state.public.colorTheme.applyWindowEnvsTrigger;

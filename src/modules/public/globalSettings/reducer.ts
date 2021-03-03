@@ -4,6 +4,7 @@ import {
     TOGGLE_MARKET_SELECTOR,
     TOGGLE_MOBILE_DEVICE,
     TOGGLE_SIDEBAR,
+    TRIGGER_APPLY_WINDOW_ENVS,
 } from './constants';
 
 export interface ColorThemeState {
@@ -12,6 +13,7 @@ export interface ColorThemeState {
     marketSelectorActive: boolean;
     isMobileDevice: boolean;
     sideBarActive: boolean;
+    applyWindowEnvsTrigger: boolean;
 }
 
 const currentColorTheme: string = localStorage.getItem('colorTheme') || 'dark';
@@ -22,6 +24,7 @@ export const initialChangeColorThemeState: ColorThemeState = {
     marketSelectorActive: false,
     isMobileDevice: false,
     sideBarActive: false,
+    applyWindowEnvsTrigger: false,
 };
 
 export const changeColorThemeReducer = (state = initialChangeColorThemeState, action) => {
@@ -54,6 +57,11 @@ export const changeColorThemeReducer = (state = initialChangeColorThemeState, ac
                 ...state,
                 sideBarActive: action.payload,
                 marketSelectorActive: false,
+            };
+        case TRIGGER_APPLY_WINDOW_ENVS:
+            return {
+                ...state,
+                applyWindowEnvsTrigger: !state.applyWindowEnvsTrigger,
             };
         default:
             return state;
