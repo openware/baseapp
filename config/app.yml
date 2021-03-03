@@ -1,0 +1,33 @@
+port: 6969
+
+asset:
+  init: yarn install
+  build: yarn build
+  copy: cp -r client/build/ public/assets/
+
+database:
+  driver: "mysql"
+  host: localhost
+  port: 3306
+  user: root
+  name: opendax_development
+
+redis:
+  host: localhost
+  port: 6379
+
+mngapi:
+  peatio_url: http://peatio:8080/api/v2/management
+  barong_url: http://barong:8080/api/v2/management
+  jwt_issuer: opendax
+  jwt_algo: RS256
+  jwt_private_key:
+
+vault:
+  addr: http://localhost:8200
+  token: changeme
+
+deploymentID: opendax_uat
+
+opendax:
+  addr: http://opendax:6969

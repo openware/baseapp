@@ -1,0 +1,19 @@
+<!-- /views/page.html -->
+<!doctype html>
+
+<html lang="{{.language}}">
+    <head>
+        <title>{{.title}}</title>
+        <meta name="description" content="{{.description}}">
+    </head>
+
+    <body>
+        <a href="/"><- Back home!</a>
+        <br>
+
+        {{.body}}
+
+        <hr>
+        {{include "layouts/footer"}}
+    </body>
+</html>
