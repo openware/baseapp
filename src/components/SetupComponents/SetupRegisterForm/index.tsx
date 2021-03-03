@@ -2,12 +2,8 @@ import * as React from 'react';
 import { SetupFormInput } from '../';
 import { PasswordStrengthMeter } from '../../'
 import { Button } from 'react-bootstrap';
-import {
-    EMAIL_REGEX,
-    ERROR_INVALID_EMAIL,
-    ERROR_PASSWORD_CONFIRMATION,
-} from 'src/helpers';
-import { injectIntl } from 'react-intl';
+import { EMAIL_REGEX } from 'src/helpers';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { passwordMinEntropy } from '../../../api/config';
 import { IntlProps } from '../../../';
 import { compose } from 'redux';
@@ -35,9 +31,7 @@ interface SetupRegisterFormState {
     email: string;
     password: string;
     confirmPassword: string;
-    hasConfirmed: boolean;
-    emailError: string;
-    confirmationError: string;
+    agreementConfirmed: boolean;
     passwordErrorFirstSolved: boolean;
     passwordErrorSecondSolved: boolean;
     passwordErrorThirdSolved: boolean;
@@ -63,9 +57,7 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
             email: '',
             password: '',
             confirmPassword: '',
-            hasConfirmed: false,
-            emailError: '',
-            confirmationError: '',
+            agreementConfirmed: false,
             passwordErrorFirstSolved: false,
             passwordErrorSecondSolved: false,
             passwordErrorThirdSolved: false,
@@ -79,22 +71,23 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
             email,
             password,
             confirmPassword,
-            hasConfirmed,
-            emailError,
-            confirmationError,
+            agreementConfirmed,
             passwordErrorFirstSolved,
             passwordErrorSecondSolved,
             passwordErrorThirdSolved,
             passwordPopUp
         } = this.state;
         const { currentPasswordEntropy } = this.props;
-
-        const isDisabled = !(email || password || confirmPassword)
-            || emailError !== ''
-            || confirmationError !== ''
-            || password !== confirmPassword
-            || currentPasswordEntropy < passwordMinEntropy()
-            || !hasConfirmed;
+        const isEmailValid = email.match(EMAIL_REGEX);
+        const isPasswordCorrect = currentPasswordEntropy < passwordMinEntropy();
+        const isConfirmPasswordValid = password === confirmPassword;
+        //
+        // const isDisabled = !(email || password || confirmPassword)
+        //     || emailError !== ''
+        //     || confirmationError !== ''
+        //     || password !== confirmPassword
+        //     || currentPasswordEntropy < passwordMinEntropy()
+        //     || !agreementConfirmed;
 
         return (
             <React.Fragment>
@@ -104,14 +97,17 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
                         value={email}
                         handleChangeInput={this.handleChangeEmail}
                     />
-                    {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
+                    {(email && !isEmailValid) ? (
+                        <div className="cr-sign-up-form__error">
+                            <FormattedMessage id="page.header.signUp.email.message.error"/>
+                        </div>
+                    ) : null}
                     <SetupFormInput
                         label="Password"
                         value={password}
                         type="password"
                         handleChangeInput={this.handleChangePassword}
-                        handleFocusInput={this.handleFocusPassword}
-                        handleFocusOut={this.handleFocusOut}
+                        handleFocus={this.handlePasswordFocus}
                     />
                     {password ? (
                         <PasswordStrengthMeter
@@ -131,12 +127,16 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
                         type="password"
                         handleChangeInput={this.handleChangeConfirmPassword}
                     />
-                    {confirmationError && <div className={'cr-sign-up-form__error'}>{confirmationError}</div>}
+                    {(confirmPassword && !isConfirmPasswordValid) ? (
+                        <div className={'cr-sign-up-form__error'}>
+                            <FormattedMessage id="page.header.signUp.confirmPassword.message.error"/>
+                        </div>
+                     ) : null}
                 </form>
                 <div className="setup-screen__agreement">
                     <div className="setup-screen__agreement__term">
                         <label className="container">I  agree all statements in <a href="#"> terms of service</a>
-                            <input type="checkbox" checked={hasConfirmed} onChange={e => this.handleToggleConfirmAgreement()} />
+                            <input type="checkbox" checked={agreementConfirmed} onChange={e => this.handleToggleConfirmAgreement()} />
                             <span className="checkmark"></span>
                         </label>
                     </div>
@@ -145,8 +145,8 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
                         type="button"
                         size="lg"
                         variant="primary"
-                        onClick={this.handleValidateForm}
-                        disabled={isDisabled ? true : false}
+                        onClick={this.handleRegister}
+                        disabled={!this.handleValidateForm()}
                     >
                         Next
                     </Button>
@@ -206,72 +206,49 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
         });
     };
 
-    private handleFocusPassword = () => {
-        this.setState({
-            passwordPopUp: true,
-        });
-    };
-
-    private handleFocusOut = () => {
-        this.setState({
-            passwordPopUp: false,
-        });
-    };
-
     private handleChangeConfirmPassword = (value: string) => {
         this.setState({
             confirmPassword: value,
         });
     };
 
+    private handlePasswordFocus = (type: string) => {
+        this.setState({
+            passwordPopUp: type === 'in' ? true : false,
+        });
+    };
+
     private handleToggleConfirmAgreement = () => {
         this.setState(prevState => {
             return {
-                hasConfirmed: !prevState.hasConfirmed,
+                agreementConfirmed: !prevState.agreementConfirmed,
             }
         });
     };
 
     private handleValidateForm = () => {
-        const {email, password, confirmPassword} = this.state;
+        const {
+            email,
+            password,
+            confirmPassword,
+            agreementConfirmed,
+        } = this.state;
+        const { currentPasswordEntropy } = this.props;
         const isEmailValid = email.match(EMAIL_REGEX);
+        const isPasswordValid = currentPasswordEntropy < passwordMinEntropy();
         const isConfirmPasswordValid = password === confirmPassword;
 
-        const isValidForm = email && isEmailValid && password && confirmPassword && isConfirmPasswordValid;
-
-        if (!isValidForm) {
-            if (!isEmailValid) {
-                this.setState({
-                    confirmationError: '',
-                    emailError: this.props.intl.formatMessage({ id: ERROR_INVALID_EMAIL }),
-                    hasConfirmed: false,
-                });
-
-                return;
-            }
-
-            if (!isConfirmPasswordValid) {
-                this.setState({
-                    confirmationError: this.props.intl.formatMessage({ id: ERROR_PASSWORD_CONFIRMATION }),
-                    emailError: '',
-                    hasConfirmed: false,
-                });
-
-                return;
-            }
-        } else {
-            this.handleRegister();
-        }
+        return isEmailValid && isPasswordValid && isConfirmPasswordValid && agreementConfirmed;
     };
-
-    private translate = (id: string) =>
-        this.props.intl.formatMessage({ id });
 
     private handleRegister = () => {
         const { email, password, confirmPassword } = this.state;
 
         this.props.handleRegister(email, password, confirmPassword);
     };
+
+    private translate = (id: string) =>
+        this.props.intl.formatMessage({ id });
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

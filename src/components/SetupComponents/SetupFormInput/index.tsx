@@ -7,8 +7,7 @@ export interface SetupFormInputProps {
     type?: string;
     tooltipText?: string;
     handleChangeInput: (value: string) => void;
-    handleFocusInput?: () => void;
-    handleFocusOut?: () => void;
+    handleFocus?: (type: string) => void;
 }
 
 interface SetupFormInputState {
@@ -36,10 +35,10 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
                         type={type || 'text'}
                         onChange={this.handleChangeValue}
                         value={value}
-                        onFocus={this.handleFocus}
-                        onBlur={this.handleFocusOut}
+                        onFocus={() => this.handleFocus('in')}
+                        onBlur={() => this.handleFocus('out')}
                     />
-                    { tooltipText && this.renderTooltipInfo() }
+                    {tooltipText && this.renderTooltipInfo()}
                 </div>
             </div>
         );
@@ -61,13 +60,13 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
                 }
             </React.Fragment>
         );
-    }
+    };
 
     private handleShowTooltip = () => {
         this.setState({
             showTooltip: true,
         });
-    }
+    };
 
     private handleHideTooltip = () => {
         this.setState({
@@ -79,11 +78,7 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
         this.props.handleChangeInput && this.props.handleChangeInput(e.target.value);
     };
 
-    private handleFocus = () => {
-        this.props.handleFocusInput && this.props.handleFocusInput();
-    };
-
-    private handleFocusOut = () => {
-        this.props.handleFocusOut && this.props.handleFocusOut();
+    private handleFocus = (type: string) => {
+        this.props.handleFocus && this.props.handleFocus(type);
     };
 }
