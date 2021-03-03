@@ -5,28 +5,6 @@ name: "Push"
 concurrency:
   limit: 2
 
-steps:
-  - name: "Test & Build"
-    image: node:12.13.1
-    commands:
-      - export REACT_APP_GIT_SHA=$(git rev-parse --short HEAD)
-      - echo $REACT_APP_GIT_SHA > .tags
-      - export BUILD_DOMAIN=$(test -e .domains && cat .domains)
-      - export BUILD_EXPIRE=$(date -d "+1 month" +%s000)
-      - npm -g install yarn
-      - yarn install
-      - yarn lint
-      - yarn test:ci --collectCoverage=true
-      - yarn build
-
-trigger:
-  event:
-    - push
-  branch:
-    exclude:
-      - master
-      - "2-*-stable"
-
 ---
 kind: pipeline
 name: "New version"
@@ -35,24 +13,6 @@ concurrency:
   limit: 2
 
 steps:
-  - name: "Test"
-    image: node:12.13.1
-    commands:
-      - npm -g install yarn
-      - yarn install
-      - yarn lint
-      - yarn test:ci --collectCoverage=true
-
-  - name: "Bump & Tag"
-    image: quay.io/openware/sdk-citools:2.6.7
-    environment:
-      BRANCH_NAME: ${DRONE_BRANCH}
-      REPO_NAME: ${DRONE_REPO}
-      GITHUB_API_KEY:
-        from_secret: kite_bot_key
-    commands:
-      - BUNDLE_GEMFILE=/sdk/Gemfile bundle exec rake --rakefile=/sdk/Rakefile ci:prebuild
-
   - name: "Build Docker image"
     image: plugins/docker
     settings:
@@ -63,90 +23,14 @@ steps:
       repo:
         from_secret: quay_repo
       registry: quay.io
-      environment:
-        REACT_APP_SENTRY_KEY:
-          from_secret: master_sentry_key
-        REACT_APP_SENTRY_ORGANIZATION:
-          from_secret: master_sentry_organization
-        REACT_APP_SENTRY_PROJECT:
-          from_secret: master_sentry_project
-
-  - name: "Redeploy on master.devkube.com"
-    image: rubykube/microkube:0.2.0
-    environment:
-      WEBHOOK_JWT_SECRET:
-        from_secret: devkube_webhook_secret
-      DOCKER_REPO:
-        from_secret: quay_repo
-    commands:
-      - export latest_image=$DOCKER_REPO:$(cat .tags)
-      - cd /home/app
-      - bundle exec rake payload:send[frontend,$latest_image,http://$DRONE_BRANCH.devkube.com:1337]
-    when:
-      branch:
-        - master
-
-  - name: "Push and Notify"
-    image: quay.io/openware/sdk-citools:2.6.7
-    environment:
-      BOT_USERNAME: kite-bot
-      BOT_NAME: Kite Bot
-      BOT_EMAIL: kite-bot@heliostech.fr
-      BRANCH_NAME: ${DRONE_BRANCH}
-      SDK_BRANCH: ${DRONE_BRANCH}
-      REPO_NAME: ${DRONE_REPO}
-      TELEGRAM_BOT_TOKEN:
-        from_secret: baseapp_telegram_bot_token
-      TELEGRAM_CHAT_ID:
-        from_secret: baseapp_telegram_chat_id
-      SLACK_TOKEN:
-        from_secret: baseapp_slack_token
-      SLACK_CHANNEL:
-        from_secret: baseapp_slack_channel
-      GITHUB_API_KEY:
-        from_secret: kite_bot_key
-    commands:
-      - BUNDLE_GEMFILE=/sdk/Gemfile bundle exec rake --rakefile=/sdk/Rakefile ci:postbuild[/drone/src]
-    when:
-      branch:
-        - master
-        - "2-*-stable"
-
-  # http://plugins.drone.io/drone-plugins/drone-slack/
-  - name: Slack Notify
-    image: plugins/slack
-    settings:
-      webhook:
-        from_secret: slack_webhook
-      channel:
-        from_secret: slack_webhook_channel
-      template: >
-        *{{uppercasefirst repo.name}}*
-        {{#success build.status}}
-         [SUCCESS] Branch {{ build.branch }} by {{ build.author }}. Good job.
-        {{else}}
-         [FAILURE] Branch {{ build.branch }} by {{ build.author }}. Fix me please.
-        {{/success}}
-    when:
-      branch:
-        - master
-        - "2-*-stable"
-
-  - name: "Update global OpenDAX version"
-    image: quay.io/openware/goci:0.0.6
-    environment:
-      GIT_TOKEN:
-        from_secret: kite_bot_key
-    commands:
-      - /app/goci -component=frontend versions
-    when:
-      branch:
-        - "*-stable"
+      tags: ${DRONE_COMMIT:0:7}
 
 trigger:
   branch:
     - master
     - "2-*-stable"
+    - "integration/*"
+    - feature/wizard-sonic-2
   event:
     - push
 
