@@ -19,18 +19,18 @@ import { ThemePresetInterface } from './types';
 export const AVAILABLE_THEME_PRESETS: ThemePresetInterface[] = [
     {
         theme_id: 0,
-        title: 'page.body.customization.themes.theme.basicNew.title',
-        theme_colors: {
-            light: BasicNewThemeLight,
-            dark: BasicNewThemeDark,
-        },
-    },
-    {
-        theme_id: 1,
         title: 'page.body.customization.themes.theme.basic.title',
         theme_colors: {
             light: BasicThemeLight,
             dark: BasicThemeDark,
+        },
+    },
+    {
+        theme_id: 1,
+        title: 'page.body.customization.themes.theme.basicNew.title',
+        theme_colors: {
+            light: BasicNewThemeLight,
+            dark: BasicNewThemeDark,
         },
     },
     {
