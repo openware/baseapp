@@ -20,7 +20,7 @@ const configUpdateOptions = (csrfToken?: string): RequestOptions => {
 
 export function* platformCreateSaga(action: PlatformCreateFetch) {
     try {
-        yield call(API.put(platformCreateOptions(getCsrfToken())), `/admin/platforms/new`, action.payload);
+        yield call(API.post(platformCreateOptions(getCsrfToken())), `/admin/platforms/new`, action.payload);
         if (action.callbackAction) {
             const { scope, key, value, component } = action.callbackAction;
             const payload = new FormData();
