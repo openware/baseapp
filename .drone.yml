@@ -30,7 +30,7 @@ trigger:
     - master
     - "2-*-stable"
     - "integration/*"
-    - feature/wizard-sonic-2
+    - "hotfix/*"
   event:
     - push
 
