@@ -14,7 +14,7 @@ COPY . .
 
 RUN make all
 
-ARG KAIGARA_VERSION=0.1.9
+ARG KAIGARA_VERSION=0.1.17
 # Install Kaigara
 RUN curl -Lo /usr/bin/kaigara  https://github.com/openware/kaigara/releases/download/${KAIGARA_VERSION}/kaigara \
   && chmod +x /usr/bin/kaigara
