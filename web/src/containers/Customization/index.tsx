@@ -135,7 +135,11 @@ class CustomizationContainer extends React.Component<Props, State> {
         const { userLoggedIn, user } = this.props;
         const { currentTabIndex, isOpen } = this.state;
 
-        if (!userLoggedIn || user?.role !== 'superadmin' ) {
+        if (
+            !userLoggedIn ||
+            user?.role !== 'superadmin' ||
+            location.pathname === '/setup'
+        ) {
             return null;
         }
 
