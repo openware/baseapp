@@ -77,6 +77,9 @@ export const en = {
     'page.body.trade.header.openOrders.content.total': 'Value',
     'page.body.trade.header.openOrders.content.filled': 'Filled',
 
+    /* Charts */
+    'page.body.charts.tabs.chart': 'Chart',
+    'page.body.charts.tabs.depth': 'Depth',
 
     /* Markets Table */
     'page.body.marketsTable.filter.all': 'All',

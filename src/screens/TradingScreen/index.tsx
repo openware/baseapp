@@ -8,14 +8,13 @@ import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { GridChildInterface, GridItem } from '../../components/GridItem';
 import {
-    MarketDepthsComponent,
+    Charts,
     MarketsComponent,
     OpenOrdersComponent,
     OrderBook,
     OrderComponent,
     RecentTrades,
     ToolBar,
-    TradingChart,
 } from '../../containers';
 import { getUrlPart, setDocumentTitle } from '../../helpers';
 import {
@@ -93,7 +92,7 @@ const TradingWrapper = props => {
             },
             {
                 i: 2,
-                render: () => <TradingChart />,
+                render: () => <Charts />,
             },
             {
                 i: 3,
@@ -101,18 +100,14 @@ const TradingWrapper = props => {
             },
             {
                 i: 4,
-                render: () => <MarketDepthsComponent />,
-            },
-            {
-                i: 5,
                 render: () => <OpenOrdersComponent/>,
             },
             {
-                i: 6,
+                i: 5,
                 render: () => <RecentTrades/>,
             },
             {
-                i: 7,
+                i: 6,
                 render: () => <MarketsComponent/>,
             },
         ];
