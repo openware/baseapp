@@ -31,7 +31,7 @@ declare global {
         captcha_type: 'recaptcha' | 'geetest' | 'none';
         captcha_id?: string;
         password_min_entropy: string | number;
-        palette?: string;
+        theme?: string;
         wizard_step?: string;
     }
 

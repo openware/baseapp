@@ -1,3 +1,2 @@
-export * from './ColorTitles';
-export * from './Presets';
+export * from './presets';
 export * from './types';

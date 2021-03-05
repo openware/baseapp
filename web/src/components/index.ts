@@ -6,7 +6,6 @@ export * from './CombinedOrderBook';
 export * from './CopyableTextField';
 export * from './CurrencyInfo';
 export * from './CustomInput';
-export * from './Customization';
 export * from './Decimal';
 export * from './DepositCrypto';
 export * from './DepositFiat';

@@ -1,0 +1,26 @@
+import { ThemePaletteColorInterface } from '../../../types';
+
+export const RedTheme: ThemePaletteColorInterface[] = [
+    { key: '--rgb-primary-cta-color', value: '229, 86, 66' },
+    { key: '--rgb-cta-layer-color', value: '255, 255, 255' },
+    { key: '--rgb-main-background-color', value: '241, 236, 235' },
+    { key: '--rgb-header-background-color', value: '252, 245, 243' },
+    { key: '--rgb-body-background-color', value: '255, 255, 255' },
+    { key: '--rgb-subheader-background-color', value: '255, 255, 255' },
+    { key: '--rgb-input-background-color', value: '242, 240, 240' },
+    { key: '--rgb-dropdown-background-color', value: '249, 249, 249' },
+    { key: '--rgb-secondary-contrast-cta-color', value: '92, 65, 59' },
+    { key: '--rgb-icons', value: '121, 68, 68' },
+    { key: '--rgb-divider-color', value: '226, 207, 207' },
+    { key: '--rgb-contrast-cta-color', value: '34, 3, 3' },
+    { key: '--rgb-primary-text-color', value: '31, 7, 7' },
+    { key: '--rgb-system-green', value: '46, 189, 133' },
+    { key: '--rgb-system-red', value: '224, 41, 74' },
+    { key: '--rgb-asks', value: '233, 79, 57' },
+    { key: '--rgb-bids', value: '38, 174, 121' },
+    { key: '--rgb-system-yellow', value: '232, 175, 89' },
+    { key: '--rgb-text-contrast-color', value: '249, 245, 244' },
+    { key: '--rgb-shadow-color', value: '23, 28, 41' },
+    { key: '--rgb-landing-background-color', value: '251, 251, 251' },
+    { key: '--rgb-strength-meter-very-strong', value: '108, 239, 239' },
+];

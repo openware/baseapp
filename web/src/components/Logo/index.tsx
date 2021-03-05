@@ -2,23 +2,23 @@ import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { selectApplyWindowEnvsTriggerState } from '../../modules';
-import { CustomizationSettingsInterface, LogoInterface } from '../../themes';
+import { ThemeInterface, ThemeLogoInterface } from '../../themes';
 
 
-const DEFAULT_IMAGE: LogoInterface = {
+const DEFAULT_IMAGE: ThemeLogoInterface = {
     url: '',
     width: '',
 };
 
 export const Logo: FC = (): ReactElement => {
     const applyWindowEnvsTrigger = useSelector(selectApplyWindowEnvsTriggerState);
-    const [image, setImage] = useState<LogoInterface | undefined>(DEFAULT_IMAGE);
+    const [image, setImage] = useState<ThemeLogoInterface | undefined>(DEFAULT_IMAGE);
 
-    const handleGetImageFromConfig = (): LogoInterface | undefined => {
-        const settingsFromConfig: CustomizationSettingsInterface | undefined =
-            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+    const handleGetImageFromConfig = (): ThemeLogoInterface | undefined => {
+        const themeFromConfig: ThemeInterface | undefined =
+            window.env?.theme ? JSON.parse(window.env.theme) : undefined;
 
-        return settingsFromConfig?.['header_logo'];
+        return themeFromConfig?.['logo'];
     };
 
     useEffect(() => {

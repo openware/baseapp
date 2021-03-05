@@ -10,7 +10,7 @@ import { IntlProps } from '../../';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding, wizardStep } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch } from '../../containers';
-import { applyCustomizationSettings, toggleColorTheme } from '../../helpers';
+import { applyTheme, toggleColorTheme } from '../../helpers';
 import {
     ChangeForgottenPasswordMobileScreen,
     ConfirmMobileScreen,
@@ -193,7 +193,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             }
         }
 
-        applyCustomizationSettings(null, this.props.toggleChartRebuild);
+        applyTheme(null, this.props.toggleChartRebuild);
     }
 
     public componentWillReceiveProps(nextProps: LayoutProps) {

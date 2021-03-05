@@ -1,21 +1,26 @@
-export interface ThemeColorInterface {
+export interface ThemePaletteColorInterface {
     key: string;
     value: string;
 }
 
-export interface ThemePresetInterface extends CustomizationSettingsInterface {
-    title: string;
+export interface ThemePaletteInterface {
+    key: string;
+    colors: {
+        [key: string]: ThemePaletteColorInterface[];
+    };
 }
 
-export interface LogoInterface {
+export interface ThemeLogoInterface {
     url: string;
     width?: string;
 }
 
-export interface CustomizationSettingsInterface {
-    theme_id: number;
-    theme_colors: {
-        [key: string]: ThemeColorInterface[];
-    };
-    header_logo?: LogoInterface;
+export interface ThemeFontInterface {
+    key: string;
+    url: string;
+}
+export interface ThemeInterface {
+    palette?: ThemePaletteInterface;
+    logo?: ThemeLogoInterface;
+    font?: ThemeFontInterface;
 }

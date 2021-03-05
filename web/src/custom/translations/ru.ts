@@ -620,6 +620,7 @@ export const ru: LangType = {
     'page.body.customization.actionButtons.reset': 'Reset',
     'page.body.customization.actionButtons.save': 'Save',
 
+    'page.body.customization.fonts.fontFamily.selector.label': 'Font Family',
     'page.body.customization.themes.selector.label': 'Theme Presets',
     'page.body.customization.themes.tabs.dark': 'Dark',
     'page.body.customization.themes.tabs.light': 'Light',
@@ -659,7 +660,7 @@ export const ru: LangType = {
     'page.body.customization.images.field.url.label': 'Ссылка на изображение',
     'page.body.customization.images.field.url.placeholder': 'https://yourimage',
 
-    'page.body.customization.images.header_logo.title': 'Header logo',
+    'page.body.customization.images.logo.title': 'Logo',
 
 
     /* Documentation */

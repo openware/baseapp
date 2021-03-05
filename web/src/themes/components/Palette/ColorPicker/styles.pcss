@@ -1,0 +1,77 @@
+.pg-themes-color-picker {
+  align-items: flex-start;
+  background: var(--customization-background-color);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: flex-start;
+  position: fixed;
+  right: -340px;
+  top: 0;
+  transition: 0.4s;
+  width: 340px;
+  z-index: 1;
+
+  &--open {
+    right: 0;
+  }
+
+  &__header {
+    align-items: center;
+    border-bottom: 1px solid var(--customization-divider-color);
+    display: flex;
+    flex-direction: row;
+    height: 52px;
+    justify-content: center;
+    width: 100%;
+
+    &__chevron {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      height: 52px;
+      justify-content: center;
+      position: absolute;
+      right: 284px;
+      width: 56px;
+
+      svg {
+        path {
+          fill: var(--customization-contrast-text-color);
+        }
+      }
+    }
+
+    &__title {
+      align-items: center;
+      color: var(--customization-primary-text-color);      
+      display: flex;
+      font-size: 10px;
+      font-weight: bold;
+      height: 52px;
+      justify-content: center;
+      letter-spacing: 0.6px;
+      line-height: 13px;
+      text-transform: uppercase;
+    }
+  }
+
+  &__body {
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+    width: 100%;
+
+    .sketch-picker {
+      border: none;
+      box-shadow: none !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+  }
+}
+
+.pg-themes--hidden .pg-themes-color-picker--open {
+  right: -340px;
+} 
