@@ -77,6 +77,9 @@ export const ru: LangType = {
     'page.body.trade.header.openOrders.content.total': 'Всего',
     'page.body.trade.header.openOrders.content.filled': 'Заполненный',
 
+    /* Charts */
+    'page.body.charts.tabs.chart': 'График',
+    'page.body.charts.tabs.depth': 'Глубина рынка',
 
     /* Markets Table */
     'page.body.marketsTable.filter.all': 'All',

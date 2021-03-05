@@ -52,11 +52,6 @@ class MarketDepthContainer extends React.Component<Props> {
 
         return (
             <div className="cr-market-depth">
-                <div className="cr-table-header__content">
-                    <div className={'pg-market-depth__title'}>
-                        <FormattedMessage id="page.body.trade.header.marketDepths" />
-                    </div>
-                </div>
                 {(asksItems.length || bidsItems.length) ? this.renderMarketDepth() : null}
             </div>
         );
