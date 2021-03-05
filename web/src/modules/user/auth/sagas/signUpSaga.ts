@@ -28,10 +28,11 @@ export function* signUpSaga(action: SignUpFetch) {
 
             if (action.callbackAction) {
                 const { scope, key, value, component } = action.callbackAction;
-                const payload = new FormData();
-                payload.append('scope', scope);
-                payload.append('key', key);
-                payload.append('value', value);
+                const payload = {
+                    key,
+                    value,
+                    scope,
+                };
 
                 yield call(API.put(configUpdateOptions(data.csrf_token)), `/admin/${component}/secret`, payload);
             }
