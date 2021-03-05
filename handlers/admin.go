@@ -28,6 +28,12 @@ type CreatePlatformResponse struct {
 	PID string `json:"pid"`
 }
 
+type setSecretParams struct {
+	Key   string      `json:"key" binding:"required"`
+	Value interface{} `json:"value" binding:"required"`
+	Scope string      `json:"scope" binding:"required"`
+}
+
 // SetSecret handles PUT '/api/v2/admin/secret'
 func SetSecret(ctx *gin.Context) {
 	// Get global vault service
@@ -37,30 +43,32 @@ func SetSecret(ctx *gin.Context) {
 		return
 	}
 
-	key := ctx.PostForm("key")
-	value := ctx.PostForm("value")
-	scope := ctx.PostForm("scope")
+	var params setSecretParams
+	if err := ctx.ShouldBindJSON(&params); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	appName := ctx.Param("component")
 
-	if key == "" || value == "" || scope == "" {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": "param missing (key, value or scope)"})
+	if err := vaultService.LoadSecrets(appName, params.Scope); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	vaultService.LoadSecrets(appName, scope)
-	err = vaultService.SetSecret(appName, key, value, scope)
+	err = vaultService.SetSecret(appName, params.Key, params.Value, params.Scope)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	err = vaultService.SaveSecrets(appName, scope)
+	err = vaultService.SaveSecrets(appName, params.Scope)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	result, err := vaultService.GetSecret(appName, key, scope)
+	result, err := vaultService.GetSecret(appName, params.Key, params.Scope)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
