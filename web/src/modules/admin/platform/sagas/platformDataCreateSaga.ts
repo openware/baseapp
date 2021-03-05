@@ -23,10 +23,11 @@ export function* platformCreateSaga(action: PlatformCreateFetch) {
         yield call(API.post(platformCreateOptions(getCsrfToken())), `/admin/platforms/new`, action.payload);
         if (action.callbackAction) {
             const { scope, key, value, component } = action.callbackAction;
-            const payload = new FormData();
-            payload.append('scope', scope);
-            payload.append('key', key);
-            payload.append('value', value);
+            const payload = {
+                scope,
+                key,
+                value,
+            };
 
             yield call(API.put(configUpdateOptions(getCsrfToken())), `/admin/${component}/secret`, payload);
         }

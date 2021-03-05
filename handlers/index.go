@@ -15,6 +15,7 @@ import (
 	"github.com/openware/kaigara/pkg/vault"
 	"github.com/openware/pkg/utils"
 	"github.com/openware/sonic"
+	"github.com/openware/sonic/skel/daemons"
 )
 
 // Version variable stores Application Version from main package
@@ -86,6 +87,9 @@ func Setup(app *sonic.Runtime) {
 	// Define all public env on first system start
 	WriteCache(vaultService, scope, true)
 	go StartConfigCaching(vaultService, scope)
+
+	// Run LicenseRenewal
+	go daemons.LicenseRenewal("finex", app, vaultService)
 }
 
 // StartConfigCaching will fetch latest data from vault every 30 seconds

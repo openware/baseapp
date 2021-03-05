@@ -14,10 +14,11 @@ const configUpdateOptions = (csrfToken?: string): RequestOptions => {
 export function* configUpdateSaga(action: ConfigUpdate) {
     try {
         const { scope, key, value } = action.payload;
-        const payload = new FormData();
-        payload.append('scope', scope);
-        payload.append('key', key);
-        payload.append('value', value);
+        const payload = {
+            scope,
+            key,
+            value,
+        };
 
         yield call(API.put(configUpdateOptions(getCsrfToken())), `/admin/${action.payload.component}/secret`, payload);
         yield put(configUpdateData(action.payload));

@@ -28,10 +28,11 @@ export function* updateMarketSaga(action: MarketUpdateFetch) {
         yield all(action.payload.map(item => call(API.post(enableMarketsConfig(getCsrfToken())), '/admin/markets/update', item)));
         if (action.callbackAction) {
             const { scope, key, value, component } = action.callbackAction;
-            const payload = new FormData();
-            payload.append('scope', scope);
-            payload.append('key', key);
-            payload.append('value', value);
+            const payload = {
+                key,
+                value,
+                scope,
+            };
 
             yield call(API.put(configUpdateOptions(getCsrfToken())), `/admin/${component}/secret`, payload);
         }
