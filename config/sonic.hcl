@@ -18,6 +18,11 @@ path "transit/encrypt/deployment_id_kaigara_*" {
   capabilities = ["create", "read", "update"]
 }
 
+# Decrypt it's own secrets
+path "transit/decrypt/deployment_id_kaigara_sonic" {
+  capabilities = ["create", "read", "update"]
+}
+
 # Renew tokens
 path "auth/token/renew" {
   capabilities = ["update"]
