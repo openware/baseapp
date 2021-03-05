@@ -1,10 +1,16 @@
 window.env = {
     api: {
-        authUrl: 'http://localhost:9002/api/v2/barong',
-        tradeUrl: 'http://localhost:9002/api/v2/peatio',
+        authUrl: 'https://peatio.brandymint.ru/api/v2/barong',
+        tradeUrl: 'https://peatio.brandymint.ru/api/v2/peatio',
         applogicUrl: 'http://localhost:9002/api/v2/applogic',
-        rangerUrl: 'ws://localhost:9003/api/v2/ranger',
-        finexUrl: 'http://localhost:9002/api/v2/finex',
+        rangerUrl: 'ws://peatio.brandymint.ru/api/v2/ranger'
+    },
+    auth0: {
+      domain: 'bitzlato-dev.auth0.com',
+      client_id: 'KuP3bhpe9NVb6GcWmVeXgkTZPGm76wRh',
+      redirect_uri: 'https://peatio.brandymint.ru/success_signin',
+      auth_url: 'https://peatio.brandymint.ru/api/v2/barong/identity/sessions/auth0',
+      signedin_url: 'https://peatio.brandymint.ru/wallets'
     },
     minutesUntilAutoLogout: '5',
     withCredentials: false,

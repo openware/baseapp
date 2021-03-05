@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+     <script src="//cdn.auth0.com/js/auth0-spa-js/1.12/auth0-spa-js.production.js"></script>
+  </head>
+  <body>
+    <h1>You are redirecting to Exchange service. Wait a second..</h1>
+    <script src="https://peatio.brandymint.ru/config/env.js"></script>
+    <script type="text/javascript">
+      const useIdToken = (id_token) => 
+        fetch(window.env.auth0.auth_url + "?id_token=" + id_token,
+              {
+                credentials: 'same-origin', // credentials: 'include',
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+              }
+        )
+        .then(response => {
+          console.log('response', response);
+          response.json().then(user => {
+            localStorage.setItem('csrfToken', user.csrf_token);
+            window.location = window.env.auth0.signedin_url;
+          });
+        });
+
+      createAuth0Client({
+        domain: env.auth0.domain,
+        client_id: env.auth0.client_id,
+        redirect_uri: env.auth0.redirect_uri
+      })
+      .then(auth0 => {
+        auth0
+        .handleRedirectCallback()
+        .then(redirectResult => {
+          console.log('handleRedirectCallback', redirectResult)
+          auth0.getIdTokenClaims().then(result => {
+            console.debug('getIdTokenClaims from handleRedirectCallback', result);
+            if (result) {
+               useIdToken(result.__raw);
+            } else {
+              alert("Some error! Login again")
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
+
