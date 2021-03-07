@@ -1,5 +1,4 @@
-![Cryptocurrency Exchange Platform - Baseapp](https://github.com/openware/meta/raw/main/images/github_baseapp.png)
-
+![Cryptocurrency Exchange Platform - Zigma]
 <h3 align="center">
 <a href="https://www.openware.com/sdk/docs.html#baseapp">Guide</a> <span>&vert;</span> 
 <a href="https://www.openware.com/sdk/api.html">API Docs</a> <span>&vert;</span> 
