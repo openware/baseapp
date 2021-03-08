@@ -9,6 +9,7 @@ import { PublicTradeEvent } from './types';
 export interface RecentTradesState {
     list: PublicTrade[];
     loading: boolean;
+    lastTrade?: PublicTrade;
     error?: CommonError;
 }
 
@@ -29,6 +30,23 @@ export const convertTradeEventToTrade = (market: string, trade: PublicTradeEvent
 export const convertTradeEventList = (market: string, trades: PublicTradeEvent[]): PublicTrade[] =>
     trades.map(trade => convertTradeEventToTrade(market, trade));
 
+export const extendTradeWithPriceChange = (
+    trade?: PublicTrade,
+    prevTrade?: PublicTrade,
+): PublicTrade | undefined => {
+    if (trade) {
+        if (prevTrade) {
+            return {
+                ...trade,
+                price_change: String(+(trade?.price) - +(prevTrade?.price)),
+            };
+        }
+
+        return trade;
+    }
+
+    return;
+};
 
 export const recentTradesReducer = (state = initialState, action: RecentTradesActions) => {
     switch (action.type) {
@@ -36,6 +54,7 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
             return {
                 list: sliceArray(action.payload, defaultStorageLimit()),
                 loading: false,
+                lastTrade: extendTradeWithPriceChange(action.payload?.[0], action.payload?.[1]),
             };
         }
         case RECENT_TRADES_ERROR: {
@@ -43,6 +62,7 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
                 list: [],
                 loading: false,
                 error: action.error,
+                lastTrade: undefined,
             };
         }
         case RECENT_TRADES_FETCH: {
@@ -61,6 +81,7 @@ export const recentTradesReducer = (state = initialState, action: RecentTradesAc
             return {
                 ...state,
                 list: sliceArray(updatedList, defaultStorageLimit()),
+                lastTrade: extendTradeWithPriceChange(updatedList?.[0], updatedList?.[1]),
             };
         }
         default:
