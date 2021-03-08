@@ -4,7 +4,7 @@ import { CommonError } from '../../types';
 import { PublicTrade } from '../../user/history';
 import { Market } from '../markets';
 import { recentTradesData, recentTradesError, recentTradesFetch, recentTradesPush } from './actions';
-import { recentTradesReducer } from './reducer';
+import { extendTradeWithPriceChange, recentTradesReducer } from './reducer';
 import { PublicTradeEvent } from './types';
 
 describe('recentTrade reducer', () => {
@@ -22,7 +22,7 @@ describe('recentTrade reducer', () => {
     const fakeTrades: PublicTrade[] = [
         {
             id: 162413,
-            price: '0.01',
+            price: '0.015',
             total: '0.00059',
             amount: '0.059',
             market: 'bchbtc',
@@ -44,7 +44,7 @@ describe('recentTrade reducer', () => {
             tid: 162413,
             taker_type: 'sell',
             date: 1547464388,
-            price: '0.01',
+            price: '0.015',
             amount: '0.059',
         },
         {
@@ -59,7 +59,7 @@ describe('recentTrade reducer', () => {
     const fakeTradesAdjusted: PublicTrade[] = [
         {
             id: 162413,
-            price: '0.01',
+            price: '0.015',
             amount: '0.059',
             market: 'bchbtc',
             created_at: '2019-01-14T11:13:08.000Z',
@@ -77,7 +77,7 @@ describe('recentTrade reducer', () => {
 
     const trade: PublicTrade = {
         id: 162413,
-        price: '0.01',
+        price: '0.02',
         total: '0.059',
         amount: '0.00059',
         market: 'bchbtc',
@@ -107,6 +107,7 @@ describe('recentTrade reducer', () => {
         expect(recentTradesReducer(undefined, recentTradesData(fakeTrades))).toEqual({
             loading: false,
             list: fakeTrades,
+            lastTrade: extendTradeWithPriceChange(fakeTrades[0], fakeTrades[1]),
         });
     });
 
@@ -134,6 +135,7 @@ describe('recentTrade reducer', () => {
         expect(recentTradesReducer(initialState, recentTradesData(fakeTrades))).toEqual({
             loading: false,
             list: fakeTrades,
+            lastTrade: extendTradeWithPriceChange(fakeTrades[0], fakeTrades[1]),
         });
         Cryptobase.config.storage.defaultStorageLimit = initialLimit;
 
@@ -143,10 +145,12 @@ describe('recentTrade reducer', () => {
         const initialState = {
             loading: false,
             list: [trade],
+            lastTrade: extendTradeWithPriceChange(trade),
         };
         expect(recentTradesReducer(initialState, recentTradesPush({ trades: fakeTradeEvents, market: 'bchbtc' }))).toEqual({
             loading: false,
             list: fakeTradesAdjusted.concat(trade),
+            lastTrade: extendTradeWithPriceChange(fakeTradesAdjusted[0], fakeTradesAdjusted[1]),
         });
     });
 
@@ -168,12 +172,14 @@ describe('recentTrade reducer', () => {
         const initialState = {
             loading: false,
             list,
+            lastTrade: extendTradeWithPriceChange(list[0], list[1]),
         };
         const initialLimit = defaultStorageLimit();
         Cryptobase.config.storage.defaultStorageLimit = 2;
         expect(recentTradesReducer(initialState, recentTradesPush({ trades: fakeTradeEvents, market: 'bchbtc' }))).toEqual({
             loading: false,
             list: fakeTradesAdjusted,
+            lastTrade: extendTradeWithPriceChange(fakeTradesAdjusted[0], fakeTradesAdjusted[1]),
         });
         Cryptobase.config.storage.defaultStorageLimit = initialLimit;
 
@@ -190,5 +196,4 @@ describe('recentTrade reducer', () => {
             error,
         });
     });
-
 });

@@ -8,6 +8,7 @@ export interface PublicTrade {
     market: string;
     created_at: string;
     taker_type: string;
+    price_change?: string;
 }
 
 export interface PrivateTrade extends PublicTrade {

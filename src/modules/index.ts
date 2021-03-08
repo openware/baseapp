@@ -39,35 +39,36 @@ import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
 
-export * from './public/markets';
-export * from './public/orderBook';
-export * from './public/globalSettings';
+export * from './public/alert';
+export * from './public/blocklistAccess';
 export * from './public/configs';
 export * from './public/currencies';
 export * from './public/customization';
 export * from './public/errorHandler';
+export * from './public/globalSettings';
 export * from './public/i18n';
 export * from './public/kline';
-export * from './public/alert';
+export * from './public/markets';
+export * from './public/memberLevels';
+export * from './public/orderBook';
+export * from './public/recentTrades';
 export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';
 export * from './user/captcha';
 export * from './user/customization';
 export * from './user/documentation';
-export * from './user/wallets';
-export * from './user/profile';
+export * from './user/emailVerification';
+export * from './user/history';
+export * from './user/kyc';
 export * from './user/openOrders';
 export * from './user/orders';
 export * from './user/ordersHistory';
 export * from './user/password';
+export * from './user/profile';
 export * from './user/userActivity';
-export * from './user/history';
-export * from './user/kyc';
-export * from './user/emailVerification';
+export * from './user/wallets';
 export * from './user/withdrawLimit';
-export * from './public/memberLevels';
-export * from './public/blocklistAccess';
 
 export interface RootState {
     public: {
