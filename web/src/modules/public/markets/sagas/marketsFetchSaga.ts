@@ -28,7 +28,10 @@ export function* rootMarketsSaga() {
 
 export function* marketsFetchSaga(action: MarketsFetch) {
     try {
-        const markets = yield call(API.get(marketsRequestOptions), '/public/markets');
+        const payload = action.payload;
+        const request = payload && payload.type ? `/public/markets?type=${payload.type}` : '/public/markets';
+
+        const markets = yield call(API.get(payload ? tickersOptions : marketsRequestOptions), request);
         yield put(marketsData(markets));
         yield put(setCurrentMarketIfUnset(markets[0]));
     } catch (error) {
