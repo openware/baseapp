@@ -4,6 +4,7 @@ import { nationalitiesNames } from '../../translations/nationalities';
 
 export const ru: LangType = {
     'page.header.navbar.signIn': 'Войти',
+    'page.header.navbar.quick.exchange': 'Quick exchange',
     'page.header.navbar.trade': 'Биржа',
     'page.header.navbar.wallets': 'Кошельки',
     'page.header.navbar.openOrders': 'Ордера',
@@ -1001,6 +1002,15 @@ export const ru: LangType = {
     'account.internal_transfer.insufficient_balance': 'Insufficient_balance',
     'account.internal_transfer.can_not_tranfer_to_yourself': 'Can not tranfer to yourself',
     'success.internal.transfer.created': 'Internal transfer was created',
+
+    // quick exchange
+    'page.body.quick.exchange.header': 'Quick exchange',
+
+    'page.body.quick.exchange.label.exchange': 'You exchange',
+    'page.body.quick.exchange.label.receive': 'You receive',
+
+    'page.body.quick.exchange.placeholder.exchange': 'You exchange',
+    'page.body.quick.exchange.placeholder.receive': 'You receive',
 
     ...nationalitiesNames,
     ...mobileTranslationsRu,
