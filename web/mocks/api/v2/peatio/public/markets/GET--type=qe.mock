@@ -1,0 +1,85 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+
+[
+  {
+    "id": "btczar",
+    "name": "BTC/ZAR",
+    "base_unit": "btc",
+    "quote_unit": "zar",
+    "ask_fee": "0.0015",
+    "bid_fee": "0.0015",
+    "min_price": "0.0",
+    "max_price": "0.0",
+    "min_amount": "0.0",
+    "amount_precision": 6,
+    "price_precision": 2,
+    "type": "qe",
+    "state": "enabled"
+  },
+  {
+    "id": "bchzar",
+    "name": "BCH/ZAR",
+    "base_unit": "bch",
+    "quote_unit": "zar",
+    "ask_fee": "0.0015",
+    "bid_fee": "0.0015",
+    "min_price": "0.0",
+    "max_price": "0.0",
+    "min_amount": "0.0",
+    "amount_precision": 4,
+    "price_precision": 4,
+    "type": "qe",
+    "state": "enabled"
+  },
+  {
+    "id": "ethbtc",
+    "name": "ETH/BTC",
+    "base_unit": "eth",
+    "quote_unit": "btc",
+    "ask_fee": "0.0015",
+    "bid_fee": "0.0015",
+    "min_price": "0.0",
+    "max_price": "0.0",
+    "min_amount": "0.0",
+    "amount_precision": 4,
+    "price_precision": 4,
+    "type": "qe",
+    "state": "enabled"
+  },
+  {
+    "id": "dashbtc",
+    "name": "DASH/BTC",
+    "base_unit": "dash",
+    "quote_unit": "btc",
+    "ask_fee": "0.0015",
+    "bid_fee": "0.0015",
+    "min_price": "0.0",
+    "max_price": "0.0",
+    "min_amount": "0.0",
+    "amount_precision": 4,
+    "price_precision": 4,
+    "type": "qe",
+    "state": "enabled"
+  },
+  {
+    "id": "eurusd",
+    "name": "EUR/USD",
+    "base_unit": "eur",
+    "quote_unit": "usd",
+    "ask_fee": "0.0015",
+    "bid_fee": "0.0015",
+    "min_price": "0.0",
+    "max_price": "0.0",
+    "min_amount": "0.0",
+    "amount_precision": 4,
+    "price_precision": 4,
+    "type": "qe",
+    "state": "enabled"
+  }
+]

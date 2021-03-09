@@ -6,7 +6,7 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-    "minutesUntilAutoLogout": "5",
+    "minutesUntilAutoLogout": "100",
     "withCredentials": false,
     "gaTrackerKey": "",
     "rangerReconnectPeriod": "1",
