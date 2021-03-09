@@ -38,7 +38,7 @@ class History extends React.Component<Props, State> {
         currentTabIndex: 0,
     };
 
-    public tabMapping = ['deposits', 'withdraws', 'trades', 'transfers'];
+    public tabMapping = ['deposits', 'withdraws', 'trades', 'transfers', 'quick'];
 
     public componentDidMount() {
         setDocumentTitle('History');
@@ -94,6 +94,10 @@ class History extends React.Component<Props, State> {
             {
                 content: tab === 'transfers' ? <HistoryElement type="transfers" /> : null,
                 label: this.props.intl.formatMessage({id: 'page.body.history.transfer'}),
+            },
+            {
+                content: tab === 'quick' ? <HistoryElement type="quick" /> : null,
+                label: this.props.intl.formatMessage({id: 'page.body.history.quick'}),
             },
         ];
     };

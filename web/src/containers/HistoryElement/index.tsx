@@ -60,7 +60,10 @@ type Props = HistoryProps & ReduxProps & DispatchProps & IntlProps;
 class HistoryComponent extends React.Component<Props> {
     public componentDidMount() {
         const { currencies, type } = this.props;
-        this.props.fetchHistory({ page: 0, type, limit: 25 });
+        const fetchParams = { page: 0, type, limit: 25 }
+
+        if (type === 'quick') fetchParams['market_type'] = 'qe';
+        this.props.fetchHistory(fetchParams);
 
         if (currencies.length === 0) {
             this.props.fetchCurrencies();
@@ -151,6 +154,15 @@ class HistoryComponent extends React.Component<Props> {
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.direction'}),
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.toAccount'}),
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.status'}),
+                ];
+            case 'quick':
+                return [
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.date'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.amountGive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.currencyGive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.amountReceive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.currencyReceive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.status'}),
                 ];
           default:
               return [];
@@ -244,6 +256,32 @@ class HistoryComponent extends React.Component<Props> {
                     direction && direction.replace(/^./, direction[0].toUpperCase()),
                     receiver && receiver.toUpperCase(),
                     <span style={{ color: setTransferStatusColor(item.status) }} key={id}>{status}</span>,
+                ];
+            }
+            case 'quick': {
+                const { id, created_at, side, market, amount, total } = item;
+
+                const marketToDisplay = marketsData.find(m => m.id === market) ||
+                { name: '', price_precision: 0, amount_precision: 0, quote_unit: '', base_unit: '' };
+
+                const displayData = {
+                    amountGive: side === 'bid' ? total : amount,
+                    amountReceive: side === 'bid' ? amount : total,
+                    givePrecision: side === 'bid' ? marketToDisplay.price_precision : marketToDisplay.amount_precision,
+                    receivePrecision: side === 'bid' ? marketToDisplay.amount_precision : marketToDisplay.price_precision,
+                    currencyGive: side === 'bid' ? marketToDisplay.quote_unit.toUpperCase() : marketToDisplay.base_unit.toUpperCase(),
+                    currencyReceive: side === 'bid' ? marketToDisplay.base_unit.toUpperCase() : marketToDisplay.quote_unit.toUpperCase(),
+                }
+
+                const sideText = setTradesType(side).text.toLowerCase() ? intl.formatMessage({id: `page.body.history.quick.content.side.${setTradesType(side).text.toLowerCase()}`}) : '';
+
+                return [
+                    localeDate(created_at, 'fullDate'),
+                    <Decimal key={id} fixed={displayData.givePrecision} thousSep=",">{displayData.amountGive}</Decimal>,
+                    displayData.currencyGive,
+                    <Decimal key={id} fixed={displayData.receivePrecision} thousSep=",">{displayData.amountReceive}</Decimal>,
+                    displayData.currencyReceive,
+                    <span style={{ color: setTransferStatusColor('completed') }} key={id}>{'completed'}</span>,
                 ];
             }
             default: {
