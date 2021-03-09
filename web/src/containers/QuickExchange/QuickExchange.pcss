@@ -1,0 +1,37 @@
+.pg-quick-exchange {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: calc(var(--big-gap) * 11);
+
+  .cr-quick-exchange {
+    background: var(--body-background-color);
+    box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
+    position: relative;
+    width: 468px;
+
+    &__header {
+      background: var(--subheader-background-color);
+      color: var(--primary-text-color);
+      letter-spacing: 0.1px;
+      line-height: 20px;
+      padding: 6px 12px;
+    }
+
+    &__dropdown {
+      &-item {
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+
+        &-name {
+          margin-left: 12px;
+        }
+      }
+    }
+  }
+}

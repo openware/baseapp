@@ -14,6 +14,9 @@ import { Market, Ticker, TickerEvent } from './types';
 
 export interface MarketsFetch {
     type: typeof MARKETS_FETCH;
+    payload?: {
+        type: string;
+    }
 }
 
 export interface MarketsData {
@@ -69,8 +72,9 @@ export type MarketsAction =
     | SetCurrentMarket
     | SetCurrentMarketIfUnset;
 
-export const marketsFetch = (): MarketsFetch => ({
+export const marketsFetch = (payload?: MarketsFetch['payload']): MarketsFetch => ({
     type: MARKETS_FETCH,
+    payload,
 });
 
 export const marketsData = (payload: MarketsData['payload']): MarketsData => ({
