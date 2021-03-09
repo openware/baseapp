@@ -383,7 +383,7 @@ class SignUp extends React.Component<Props> {
         }
 
         if (refId) {
-            payload = { ...payload, refId };
+            payload = { ...payload, refid: refId };
         }
 
         switch (configs.captcha_type) {
