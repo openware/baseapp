@@ -259,21 +259,19 @@ class HistoryComponent extends React.Component<Props> {
                 ];
             }
             case 'quick': {
-                const { id, created_at, side, market, amount, total } = item;
+                const { id, created_at, origin_locked, bid, funds_received, state, market } = item;
 
                 const marketToDisplay = marketsData.find(m => m.id === market) ||
                 { name: '', price_precision: 0, amount_precision: 0, quote_unit: '', base_unit: '' };
 
                 const displayData = {
-                    amountGive: side === 'bid' ? total : amount,
-                    amountReceive: side === 'bid' ? amount : total,
-                    givePrecision: side === 'bid' ? marketToDisplay.price_precision : marketToDisplay.amount_precision,
-                    receivePrecision: side === 'bid' ? marketToDisplay.amount_precision : marketToDisplay.price_precision,
-                    currencyGive: side === 'bid' ? marketToDisplay.quote_unit.toUpperCase() : marketToDisplay.base_unit.toUpperCase(),
-                    currencyReceive: side === 'bid' ? marketToDisplay.base_unit.toUpperCase() : marketToDisplay.quote_unit.toUpperCase(),
+                    amountGive: origin_locked,
+                    amountReceive: funds_received,
+                    givePrecision: bid ? marketToDisplay.price_precision : marketToDisplay.amount_precision,
+                    receivePrecision: bid ? marketToDisplay.amount_precision : marketToDisplay.price_precision,
+                    currencyGive: bid ? marketToDisplay.quote_unit.toUpperCase() : marketToDisplay.base_unit.toUpperCase(),
+                    currencyReceive: bid ? marketToDisplay.base_unit.toUpperCase() : marketToDisplay.quote_unit.toUpperCase(),
                 }
-
-                const sideText = setTradesType(side).text.toLowerCase() ? intl.formatMessage({id: `page.body.history.quick.content.side.${setTradesType(side).text.toLowerCase()}`}) : '';
 
                 return [
                     localeDate(created_at, 'fullDate'),
@@ -281,7 +279,7 @@ class HistoryComponent extends React.Component<Props> {
                     displayData.currencyGive,
                     <Decimal key={id} fixed={displayData.receivePrecision} thousSep=",">{displayData.amountReceive}</Decimal>,
                     displayData.currencyReceive,
-                    <span style={{ color: setTransferStatusColor('completed') }} key={id}>{'completed'}</span>,
+                    <span style={{ color: setTransferStatusColor(state) }} key={id}>{state}</span>,
                 ];
             }
             default: {

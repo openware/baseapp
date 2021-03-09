@@ -16,7 +16,7 @@ export function* historySaga(action: HistoryFetch) {
             withdraws: '/account/withdraws',
             trades: '/market/trades',
             transfers: '/account/internal_transfers',
-            quick: '/market/trades',
+            quick: '/market/orders',
         };
         const params = getHistorySagaParam(action.payload);
         const data = yield call(API.get(config), `${coreEndpoint[type]}?${params}`);
@@ -38,7 +38,7 @@ export function* historySaga(action: HistoryFetch) {
         }
         let updatedData = data;
 
-        if (type === 'trades' || type === 'quick') {
+        if (type === 'trades') {
             updatedData = sliceArray(data, defaultStorageLimit());
         }
 
