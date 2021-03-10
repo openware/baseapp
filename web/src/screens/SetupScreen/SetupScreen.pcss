@@ -4,7 +4,7 @@
 .setup-screen {
   display: flex;
   height: 100vh;
-  min-height: 640px;
+  min-height: 680px;
   justify-content: flex-start;
   width: 100%;
 
@@ -15,6 +15,7 @@
 
   &__right {
     display: flex;
+    height: 100%;
     width: 50%;
 
     &-wrapper {
@@ -123,17 +124,18 @@
   &__button {
     display: flex;
     width: 100%;
+    padding-top: 32px;
+    position: relative;
     justify-content: flex-end;
 
     button {
-      bottom: 72px;
+      /* bottom: 72px; */
       background: var(--setup-markets-button-bg-color);
       color: var(--setup-markets-button-color);
       font-size: 14px;
       font-weight: bold;
-      height: 40px;
+      padding: 12px;
       letter-spacing: 0.04em;
-      position: absolute;
       width: 75px;
 
       &:active, &:hover, &:focus, &:disabled {
@@ -144,94 +146,6 @@
 
       &:disabled {
         opacity: 0.48;
-      }
-    }
-  }
-
-  &__sign-in {
-    align-items: center;
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 24px;
-
-    button {
-      background: var(--setup-markets-button-bg-color);
-      color: var(--setup-markets-button-color);
-      font-size: 14px;
-      font-weight: bold;
-      height: 40px;
-      letter-spacing: 0.04em;
-      margin-bottom: 75px;
-      width: 75px;
-
-      &:active,
-      &:disabled,
-      &:focus,
-      &:hover {
-        background-color: var(--setup-markets-button-bg-color) !important;
-        color: var(--setup-markets-button-color) !important;
-        opacity: 0.72;
-      }
-
-      &:disabled {
-        opacity: 0.48;
-      }
-    }
-  }
-
-  &__step-footer {
-    display: flex;
-    justify-content: flex-end;
-
-    button {
-      bottom: 0;
-      background: var(--setup-markets-button-bg-color);
-      color: var(--setup-markets-button-color);
-      font-size: 14px;
-      font-weight: bold;
-      height: 40px;
-      letter-spacing: 0.04em;
-      margin-bottom: 75px;
-      position: absolute;
-      width: 75px;
-
-      &:active, &:hover, &:focus, &:disabled {
-        background-color: var(--setup-markets-button-bg-color) !important;
-        color: var(--setup-markets-button-color) !important;
-      }
-
-      &:disabled {
-        opacity: 0.48;
-      }
-    }
-
-    &__congrat {
-      display: flex;
-      justify-content: flex-end;
-
-      button {
-        bottom: 0;
-        background: var(--setup-markets-button-bg-color);
-        color: var(--setup-markets-button-color);
-        font-size: 14px;
-        font-weight: bold;
-        height: 40px;
-        letter-spacing: 0.04em;
-        margin-bottom: 75px;
-        position: absolute;
-        width: 207px;
-
-        &:active,
-        &:disabled,
-        &:focus,
-        &:hover {
-          background-color: var(--setup-markets-button-bg-color) !important;
-          color: var(--setup-markets-button-color) !important;
-        }
-
-        &:disabled {
-          opacity: 0.48;
-        }
       }
     }
   }
@@ -240,20 +154,18 @@
 @media screen and (max-width: 992px) {
   .setup-screen {
     flex-direction: column;
-    min-height: 100vh;
+    /* min-height: 100vh; */
 
     &__left {
       width: 100%;
     }
 
     &__right {
-      height: 100%;
+      height: unset;
       width: 100%;
 
       &-wrapper {
         padding: 32px;
-
-
 
         &__close {
           display: none;
@@ -281,17 +193,52 @@
     }
 
     &__button {
+      padding: 28px 0 0 0;
+
       button {
+        position: relative;
         width: 100%;
         float: right;
-        margin-bottom: 0;
-        margin-top: 24px;
+        margin: 0;
         position: unset;
+        bottom: unset;
       }
     }
   }
 
   .cr-sign-up-form__error {
     font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 768px) and (min-height: 800px) {
+  .setup-screen {
+    &__right {
+      height: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .setup-screen {
+    &__right {
+      height: unset;
+    }
+  }
+
+  @media (min-height: 600px) {
+    .setup-screen {
+      &__right {
+        height: unset;
+      }
+    }
+  }
+
+  @media (min-height: 640px) {
+    .setup-screen {
+      &__right {
+        height: 100%;
+      }
+    }
   }
 }

@@ -7,6 +7,7 @@
 
     &:nth-child(2) {
       padding: 36px 24px 0 24px;
+      width: 34%;
     }
 
     &__title {
@@ -97,12 +98,27 @@
     }
 
     select {
-      max-height: 320px;
-      min-height: 320px;
+      height: 320px;
 
       option {
         font-size: 14px;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .setup-markets-block {
+    select {
+      height: 240px;
+    }
+  }
+}
+
+@media screen and (max-width: 323px) {
+  .setup-markets-block {
+    select {
+      height: 240px;
     }
   }
 }
