@@ -365,34 +365,18 @@ class SignUp extends React.Component<Props> {
             password,
             refId,
         } = this.state;
-        let payload: any = {
+        const payload = {
             email,
             password,
             data: JSON.stringify({
                 language: i18n,
             }),
+            ...(isUsernameEnabled() && { username }),
+            ...(refId && { refid: refId }),
+            ...(captchaType() !== 'none' && { captcha_response }),
         };
 
-        if (isUsernameEnabled()) {
-            payload = { ...payload, username };
-        }
-
-        if (refId) {
-            payload = { ...payload, refid: refId };
-        }
-
-        switch (captchaType()) {
-            case 'recaptcha':
-            case 'geetest':
-                payload = { ...payload, captcha_response };
-
-                this.props.signUp(payload);
-                break;
-            default:
-                this.props.signUp(payload);
-                break;
-        }
-
+        this.props.signUp(payload);
         this.props.resetCaptchaState();
     };
 
