@@ -62,7 +62,9 @@ class HistoryComponent extends React.Component<Props> {
         const { currencies, type } = this.props;
         const fetchParams = { page: 0, type, limit: 25 }
 
-        if (type === 'quick') fetchParams['market_type'] = 'qe';
+        if (type === 'quick_exchange') {
+            fetchParams['market_type'] = 'qe';
+        }
         this.props.fetchHistory(fetchParams);
 
         if (currencies.length === 0) {
@@ -155,7 +157,7 @@ class HistoryComponent extends React.Component<Props> {
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.toAccount'}),
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.status'}),
                 ];
-            case 'quick':
+            case 'quick_exchange':
                 return [
                     this.props.intl.formatMessage({id: 'page.body.history.quick.header.date'}),
                     this.props.intl.formatMessage({id: 'page.body.history.quick.header.amountGive'}),
@@ -258,7 +260,7 @@ class HistoryComponent extends React.Component<Props> {
                     <span style={{ color: setTransferStatusColor(item.status) }} key={id}>{status}</span>,
                 ];
             }
-            case 'quick': {
+            case 'quick_exchange': {
                 const { id, created_at, origin_locked, bid, funds_received, state, market } = item;
 
                 const marketToDisplay = marketsData.find(m => m.id === market) ||
