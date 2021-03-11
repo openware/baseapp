@@ -65,6 +65,7 @@ class HistoryComponent extends React.Component<Props> {
         if (type === 'quick_exchange') {
             fetchParams['market_type'] = 'qe';
         }
+
         this.props.fetchHistory(fetchParams);
 
         if (currencies.length === 0) {
@@ -261,26 +262,39 @@ class HistoryComponent extends React.Component<Props> {
                 ];
             }
             case 'quick_exchange': {
-                const { id, created_at, origin_locked, bid, funds_received, state, market } = item;
+                const { id, created_at, price, side, origin_volume, state, market } = item;
+                const defaultMarket = { market: '', price_precision: 0, amount_precision: 0, quote_unit: '', base_unit: '' };
 
-                const marketToDisplay = marketsData.find(m => m.id === market) ||
-                { name: '', price_precision: 0, amount_precision: 0, quote_unit: '', base_unit: '' };
+                const marketToDisplay = marketsData.find(m => m.id === market) || defaultMarket;
 
-                const displayData = {
-                    amountGive: origin_locked,
-                    amountReceive: funds_received,
-                    givePrecision: bid ? marketToDisplay.price_precision : marketToDisplay.amount_precision,
-                    receivePrecision: bid ? marketToDisplay.amount_precision : marketToDisplay.price_precision,
-                    currencyGive: bid ? marketToDisplay.quote_unit.toUpperCase() : marketToDisplay.base_unit.toUpperCase(),
-                    currencyReceive: bid ? marketToDisplay.base_unit.toUpperCase() : marketToDisplay.quote_unit.toUpperCase(),
+                let data;
+
+                if (side === 'buy') {
+                    data = {
+                        amountGive: price * origin_volume,
+                        amountReceive: origin_volume,
+                        givePrecision: marketToDisplay.price_precision,
+                        receivePrecision: marketToDisplay.amount_precision,
+                        currencyGive: marketToDisplay.quote_unit.toUpperCase(),
+                        currencyReceive: marketToDisplay.base_unit.toUpperCase(),
+                    }
+                } else {
+                    data = {
+                        amountGive: origin_volume,
+                        amountReceive: price * origin_volume,
+                        givePrecision: marketToDisplay.amount_precision,
+                        receivePrecision: marketToDisplay.price_precision,
+                        currencyGive: marketToDisplay.base_unit.toUpperCase(),
+                        currencyReceive: marketToDisplay.quote_unit.toUpperCase(),
+                    }
                 }
 
                 return [
                     localeDate(created_at, 'fullDate'),
-                    <Decimal key={id} fixed={displayData.givePrecision} thousSep=",">{displayData.amountGive}</Decimal>,
-                    displayData.currencyGive,
-                    <Decimal key={id} fixed={displayData.receivePrecision} thousSep=",">{displayData.amountReceive}</Decimal>,
-                    displayData.currencyReceive,
+                    <Decimal key={id} fixed={data.givePrecision} thousSep=",">{data.amountGive}</Decimal>,
+                    data.currencyGive,
+                    <Decimal key={id} fixed={data.receivePrecision} thousSep=",">{data.amountReceive}</Decimal>,
+                    data.currencyReceive,
                     <span style={{ color: setTransferStatusColor(state) }} key={id}>{state}</span>,
                 ];
             }
