@@ -60,7 +60,13 @@ type Props = HistoryProps & ReduxProps & DispatchProps & IntlProps;
 class HistoryComponent extends React.Component<Props> {
     public componentDidMount() {
         const { currencies, type } = this.props;
-        this.props.fetchHistory({ page: 0, type, limit: 25 });
+        const fetchParams = { page: 0, type, limit: 25 }
+
+        if (type === 'quick_exchange') {
+            fetchParams['market_type'] = 'qe';
+        }
+
+        this.props.fetchHistory(fetchParams);
 
         if (currencies.length === 0) {
             this.props.fetchCurrencies();
@@ -151,6 +157,15 @@ class HistoryComponent extends React.Component<Props> {
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.direction'}),
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.toAccount'}),
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.status'}),
+                ];
+            case 'quick_exchange':
+                return [
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.date'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.amountGive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.currencyGive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.amountReceive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.currencyReceive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.status'}),
                 ];
           default:
               return [];
@@ -244,6 +259,43 @@ class HistoryComponent extends React.Component<Props> {
                     direction && direction.replace(/^./, direction[0].toUpperCase()),
                     receiver && receiver.toUpperCase(),
                     <span style={{ color: setTransferStatusColor(item.status) }} key={id}>{status}</span>,
+                ];
+            }
+            case 'quick_exchange': {
+                const { id, created_at, price, side, origin_volume, state, market } = item;
+                const defaultMarket = { market: '', price_precision: 0, amount_precision: 0, quote_unit: '', base_unit: '' };
+
+                const marketToDisplay = marketsData.find(m => m.id === market) || defaultMarket;
+
+                let data;
+
+                if (side === 'buy') {
+                    data = {
+                        amountGive: price * origin_volume,
+                        amountReceive: origin_volume,
+                        givePrecision: marketToDisplay.price_precision,
+                        receivePrecision: marketToDisplay.amount_precision,
+                        currencyGive: marketToDisplay.quote_unit.toUpperCase(),
+                        currencyReceive: marketToDisplay.base_unit.toUpperCase(),
+                    }
+                } else {
+                    data = {
+                        amountGive: origin_volume,
+                        amountReceive: price * origin_volume,
+                        givePrecision: marketToDisplay.amount_precision,
+                        receivePrecision: marketToDisplay.price_precision,
+                        currencyGive: marketToDisplay.base_unit.toUpperCase(),
+                        currencyReceive: marketToDisplay.quote_unit.toUpperCase(),
+                    }
+                }
+
+                return [
+                    localeDate(created_at, 'fullDate'),
+                    <Decimal key={id} fixed={data.givePrecision} thousSep=",">{data.amountGive}</Decimal>,
+                    data.currencyGive,
+                    <Decimal key={id} fixed={data.receivePrecision} thousSep=",">{data.amountReceive}</Decimal>,
+                    data.currencyReceive,
+                    <span style={{ color: setTransferStatusColor(state) }} key={id}>{state}</span>,
                 ];
             }
             default: {
