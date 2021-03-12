@@ -41,7 +41,7 @@ steps:
 trigger:
   branch:
     - master
-    - "2-*-stable"
+    - "*-stable"
     - "integration/*"
     - "hotfix/*"
   event:
