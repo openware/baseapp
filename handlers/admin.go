@@ -293,7 +293,7 @@ func CreatePlatform(ctx *gin.Context) {
 			Driver: "opendax",
 			UID:    auth.UID,
 			URL:    fmt.Sprintf("wss://%v/api/v2/open_finance", platformURL.Host),
-			State:  0, // state disabled
+			State:  1, // state online
 			Key:    platform.KID,
 			Secret: platform.Secret,
 		}
@@ -311,7 +311,7 @@ func CreatePlatform(ctx *gin.Context) {
 			Driver: "opendax",
 			UID:    auth.UID,
 			URL:    fmt.Sprintf("wss://%v/api/v2/open_finance", platformURL.Host),
-			State:  0, // state disabled
+			State:  1, // state online
 			Key:    platform.KID,
 			Secret: platform.Secret,
 		}
