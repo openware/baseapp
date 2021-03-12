@@ -337,7 +337,7 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private getTickerValue = (currentMarket: Market, tickers: { [key: string]: Ticker }) => {
-        const defaultTicker = { amount: 0, low: 0, last: 0, high: 0, volume: 0, open: 0, price_change_percent: '+0.00%' };
+        const defaultTicker = { amount: '0', low: '0', last: '0', high: '0', volume: '0', open: '0', price_change_percent: '+0.00%' };
 
         return tickers[currentMarket.id] || defaultTicker;
     };
