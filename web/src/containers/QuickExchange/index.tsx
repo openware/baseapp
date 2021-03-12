@@ -8,6 +8,7 @@ import {
     selectMarkets,
     selectWallets,
     walletsFetch,
+    marketPriceFetch,
     Market,
 } from '../../modules'
 import { SwipeIcon } from '../../assets/images/swipe';
@@ -46,6 +47,13 @@ export const QuickExchangeContainer = () => {
         dispatch(walletsFetch());
         dispatch(marketsFetch({type: 'qe'}));
     }, []);
+
+    React.useEffect(() => {
+        if (base.currency && quote.currency) {
+            const market = base.currency + quote.currency;
+            dispatch(marketPriceFetch({ market, side: type }));
+        }
+    }, [base, quote, type]);
 
     const marketCurrency = getCurrencyForMarket(markets);
     const marketsBaseUnit = getCurrencyFiltred(quote.currency, base.currency, dropdownKey, marketCurrency, markets);
