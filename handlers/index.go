@@ -13,9 +13,10 @@ import (
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
 	"github.com/openware/kaigara/pkg/vault"
+	"github.com/openware/pkg/mngapi/peatio"
 	"github.com/openware/pkg/utils"
 	"github.com/openware/sonic"
-	"github.com/openware/sonic/skel/daemons"
+	"github.com/openware/baseapp/daemons"
 )
 
 // Version variable stores Application Version from main package
@@ -31,6 +32,11 @@ var (
 	BarongPublicKey string
 )
 
+// SonicContext stores requires client services used in handlers
+type SonicContext struct {
+	PeatioClient *peatio.Client
+}
+
 // Initialize scope which goroutine will fetch every 30 seconds
 const scope = "public"
 
@@ -44,8 +50,15 @@ func Setup(app *sonic.Runtime) {
 	BarongPublicKey = utils.GetEnv("BARONG_PUBLIC_KEY", "")
 	vaultConfig := app.Conf.Vault
 	opendaxConfig := app.Conf.Opendax
+	mngapiConfig := app.Conf.MngAPI
 
-	log.Println("DeploymentID in config:", DeploymentID)
+	peatioClient, err := peatio.New(mngapiConfig.PeatioURL, mngapiConfig.JWTIssuer, mngapiConfig.JWTAlgo, mngapiConfig.JWTPrivateKey)
+	if err != nil {
+		log.Printf("Can't create peatio client: " + err.Error())
+		return
+	}
+
+	log.Println("DeploymentID in config:", app.Conf.DeploymentID)
 
 	// Get app router
 	router := app.Srv
@@ -56,11 +69,8 @@ func Setup(app *sonic.Runtime) {
 	// Serve static files
 	router.Static("/public", "./public")
 
-	// React is looking for these files in root
-	// TODO: find solution for react build (webpack)
-	router.Static("/charting_library", "./public/assets/charting_library")
-
 	router.GET("/", index)
+	router.GET("/page", emptyPage)
 	router.GET("/version", version)
 
 	router.NoRoute(notFound)
@@ -75,6 +85,10 @@ func Setup(app *sonic.Runtime) {
 	adminAPI.Use(OpendaxConfigMiddleware(&opendaxConfig))
 	adminAPI.Use(AuthMiddleware())
 	adminAPI.Use(RBACMiddleware([]string{"superadmin"}))
+	adminAPI.Use(SonicContextMiddleware(&SonicContext{
+		PeatioClient: peatioClient,
+	}))
+
 	adminAPI.GET("/secrets", GetSecrets)
 	adminAPI.PUT(":component/secret", SetSecret)
 	adminAPI.POST("/platforms/new", CreatePlatform)
@@ -116,11 +130,19 @@ func index(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "index", gin.H{
-		"title":    "BaseAPP",
+		"title":    "Index title!",
 		"cssFiles": cssFiles,
 		"jsFiles":  jsFiles,
 		"rootID":   "root",
+		"add": func(a int, b int) int {
+			return a + b
+		},
 	})
+}
+
+// render only file, must full name with extension
+func emptyPage(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "page.html", gin.H{"title": "Page file title!!"})
 }
 
 // Return application version

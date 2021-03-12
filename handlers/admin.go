@@ -3,13 +3,16 @@ package handlers
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"path"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/openware/pkg/mngapi/peatio"
 )
 
 const (
@@ -25,7 +28,9 @@ type CreatePlatformParams struct {
 
 // CreatePlatformResponse store response from new platform
 type CreatePlatformResponse struct {
-	PID string `json:"pid"`
+	PID    string `json:"pid"`
+	KID    string `json:"kid"`
+	Secret string `json:"secret"`
 }
 
 type setSecretParams struct {
@@ -163,6 +168,7 @@ func CreatePlatform(ctx *gin.Context) {
 
 	// Get request parameters
 	var params CreatePlatformParams
+
 	if err := ctx.ShouldBindJSON(&params); err != nil {
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
@@ -170,6 +176,7 @@ func CreatePlatform(ctx *gin.Context) {
 
 	// Get Opendax API endpoint from config
 	url, err := url.Parse(opendaxConfig.Addr)
+
 	if err != nil {
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
@@ -252,6 +259,94 @@ func CreatePlatform(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
+	}
+
+	// Get Sonic Context
+	sc, err := GetSonicCtx(ctx)
+	if err != nil {
+		log.Printf("Can't get sonic context: %v", err.Error())
+		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Get engines by name
+	engines, apiError := sc.PeatioClient.GetEngines(peatio.GetEngineParams{Name: "opendax-cloud-engine"})
+	if apiError != nil {
+		log.Printf("Can't get engine by name. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
+		return
+	}
+
+	// Parse platform URL
+	platformURL, err := url.Parse(params.PlatformURL)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+	}
+
+	var engineID string
+	if len(engines) > 0 {
+		// Update engine
+		engineID = fmt.Sprint(engines[0].ID)
+		engineParams := peatio.UpdateEngineParams{
+			ID:     engineID,
+			Name:   "opendax-cloud-engine",
+			Driver: "opendax",
+			UID:    auth.UID,
+			URL:    fmt.Sprintf("wss://%v/api/v2/open_finance", platformURL.Host),
+			State:  0, // state disabled
+			Key:    platform.KID,
+			Secret: platform.Secret,
+		}
+
+		_, apiError := sc.PeatioClient.UpdateEngine(engineParams)
+		if apiError != nil {
+			log.Printf("Can't update engine. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+			ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
+			return
+		}
+	} else {
+		// Create engine
+		engineParams := peatio.CreateEngineParams{
+			Name:   "opendax-cloud-engine",
+			Driver: "opendax",
+			UID:    auth.UID,
+			URL:    fmt.Sprintf("wss://%v/api/v2/open_finance", platformURL.Host),
+			State:  0, // state disabled
+			Key:    platform.KID,
+			Secret: platform.Secret,
+		}
+
+		engine, apiError := sc.PeatioClient.CreateEngine(engineParams)
+		if apiError != nil {
+			log.Printf("Can't create engine. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+			ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
+			return
+		}
+
+		engineID = fmt.Sprint(engine.ID)
+	}
+
+	// Get list of markets
+	markets, apiError := sc.PeatioClient.GetMarkets()
+	if apiError != nil {
+		log.Printf("Can't get market list. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
+		return
+	}
+
+	// Update markets with new engine
+	for _, market := range markets {
+		marketParams := peatio.UpdateMarketParams{
+			ID:       market.ID,
+			EngineID: engineID,
+		}
+
+		_, apiError := sc.PeatioClient.UpdateMarket(marketParams)
+		if apiError != nil {
+			log.Printf("Can't update market. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+			ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
+			return
+		}
 	}
 
 	ctx.JSON(http.StatusCreated, resBody)
