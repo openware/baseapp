@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
-	"baseapp/models"
+	"github.com/openware/baseapp/models"
 )
 
 // SetPageRoutes configure module HTTP routes
