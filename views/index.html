@@ -6,19 +6,12 @@
             {{end}}
         {{end}}
     </head>
-    <style>
-        .home { color: blue;}
-    </style>
 {{end}}
 
 
 {{define "content"}}
     <body>
         <div id={{ .rootID }}></div>
-        <h1 class="home">Homepage</h1>
-        <p>42 + 142 = {{call $.add 42 142}}</p>
-        <hr>
-        <p><a href="/page">Page render</a></p>
         {{ if .jsFiles}}
             {{range .jsFiles}}
                 <script src="{{ . }}"></script>
