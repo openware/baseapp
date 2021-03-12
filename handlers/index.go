@@ -58,7 +58,7 @@ func Setup(app *sonic.Runtime) {
 		return
 	}
 
-	log.Println("DeploymentID in config:", app.Conf.DeploymentID)
+	log.Println("DeploymentID in config:", DeploymentID)
 
 	// Get app router
 	router := app.Srv
@@ -69,8 +69,11 @@ func Setup(app *sonic.Runtime) {
 	// Serve static files
 	router.Static("/public", "./public")
 
+	// React is looking for these files in root
+	// TODO: find solution for react build (webpack)
+	router.Static("/charting_library", "./public/assets/charting_library")
+
 	router.GET("/", index)
-	router.GET("/page", emptyPage)
 	router.GET("/version", version)
 
 	router.NoRoute(notFound)
@@ -130,19 +133,11 @@ func index(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "index", gin.H{
-		"title":    "Index title!",
+		"title":    "BaseApp",
 		"cssFiles": cssFiles,
 		"jsFiles":  jsFiles,
 		"rootID":   "root",
-		"add": func(a int, b int) int {
-			return a + b
-		},
 	})
-}
-
-// render only file, must full name with extension
-func emptyPage(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "page.html", gin.H{"title": "Page file title!!"})
 }
 
 // Return application version
