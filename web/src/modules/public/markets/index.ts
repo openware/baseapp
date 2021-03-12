@@ -1,5 +1,5 @@
 export * from './actions';
-export * from './sagas/marketsFetchSaga';
+export * from './sagas';
 export * from './reducer';
 export * from './selectors';
 export * from './types';

@@ -34,3 +34,6 @@ export const selectShouldFetchMarketsTickers = (state: RootState): boolean =>
 
 export const selectMarketFilters = (state: RootState): MarketsState['filters'] =>
     selectMarketsState(state).filters;
+
+export const selectMarketPrice = (state: RootState):  MarketsState['marketPrice'] =>
+    selectMarketsState(state).marketPrice;
