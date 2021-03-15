@@ -3,7 +3,8 @@ window.env = {
         authUrl: 'https://dapi.bitzlato.bz/api/v2/barong',
         tradeUrl: 'https://dapi.bitzlato.bz/api/v2/peatio',
         applogicUrl: 'http://localhost:9002/api/v2/applogic',
-        rangerUrl: 'ws://dapi.bitzlato.bz/api/v2/ranger'
+        // original_rangerUrl: 'wss://dapi.bitzlato.bz/api/v2/ranger',
+        rangerUrl: 'wss://dapi.bitzlato.bz/direct/api/v2/ranger'
     },
     auth0: {
       domain: 'bitzlato-dev.auth0.com',
@@ -12,13 +13,13 @@ window.env = {
       auth_url: 'https://dapi.bitzlato.bz/api/v2/barong/identity/sessions/auth0',
       signedin_url: 'https://dapi.bitzlato.bz/wallets'
     },
-    minutesUntilAutoLogout: '5',
+    minutesUntilAutoLogout: '600',
     withCredentials: false,
     gaTrackerKey: '',
     rangerReconnectPeriod: '1',
     msAlertDisplayTime: '5000',
     incrementalOrderBook: true,
-    finex: true,
+    finex: false,
     isResizable: false,
     isDraggable: false,
     languages: ['en', 'ru'],
