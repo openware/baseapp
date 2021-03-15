@@ -30,10 +30,11 @@ export interface MarketsState extends CommonState {
     loading: boolean;
     timestamp?: number;
     tickersTimestamp?: number;
+    successMarketPriceFetch: boolean;
     marketPrice: {
         market: string;
         side: string;
-        price: number;
+        price: string;
         created_at?: string;
         updated_at?: string;
     };
@@ -46,10 +47,11 @@ export const initialMarketsState: MarketsState = {
     tickers: {},
     tickerLoading: false,
     loading: false,
+    successMarketPriceFetch: false,
     marketPrice: {
         market: '',
         side: '',
-        price: 0,
+        price: '',
     },
 };
 
@@ -133,6 +135,7 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
         case MARKET_PRICE_DATA:
             return {
                 ...state,
+                successMarketPriceFetch: true,
                 marketPrice: {
                     ...state.marketPrice,
                     ...action.payload,
@@ -141,6 +144,7 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
         case MARKET_PRICE_ERROR:
             return {
                 ...state,
+                successMarketPriceFetch: false,
                 marketPrice: initialMarketsState.marketPrice,
             };
         default:

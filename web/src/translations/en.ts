@@ -686,6 +686,26 @@ export const en = {
     'page.documentation.models.item.table.data.required.true': 'Yes',
     'page.documentation.models.item.table.data.required.false': 'No',
 
+    /* Quick Exchange */
+    'page.body.quick.exchange.header': 'Quick exchang',
+
+    'page.body.quick.exchange.label.exchange': 'You exchange',
+    'page.body.quick.exchange.label.receive': 'You receive',
+    'page.body.quick.exchange.label.currency': 'Currency',
+
+    'page.body.quick.exchange.sublabel.min_amount': 'Min exchange amount is',
+    'page.body.quick.exchange.sublabel.balance': 'Balance',
+
+    'page.body.quick.exchange.estimated_price': 'Estimated price',
+    'page.body.quick.exchange.slippage': 'Slippage is higher than 1%. Enter a lower amount to get a better price',
+
+    'page.body.quick.exchange.placeholder.exchange': 'You exchange',
+    'page.body.quick.exchange.placeholder.receive': 'You receive',
+
+    'page.body.quick.exchange.button.exchange': 'Exchange',
+
+    'success.quick.exchange.order.created': 'Order successfully created',
+
     /* Error pages */
 
     'page.body.restricted': 'Page not found',
@@ -999,15 +1019,6 @@ export const en = {
     'account.internal_transfer.insufficient_balance': 'Insufficient_balance',
     'account.internal_transfer.can_not_tranfer_to_yourself': 'Can not tranfer to yourself',
     'success.internal.transfer.created': 'Internal transfer was created',
-
-    // quick exchange
-    'page.body.quick.exchange.header': 'Quick exchange',
-
-    'page.body.quick.exchange.label.exchange': 'You exchange',
-    'page.body.quick.exchange.label.receive': 'You receive',
-
-    'page.body.quick.exchange.placeholder.exchange': 'You exchange',
-    'page.body.quick.exchange.placeholder.receive': 'You receive',
 
     ...nationalitiesNames,
     ...customTranslations,
