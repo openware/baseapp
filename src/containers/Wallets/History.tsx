@@ -27,6 +27,10 @@ import {
 import { FailIcon } from './FailIcon';
 import { SucceedIcon } from './SucceedIcon';
 
+interface TransferLinks {
+    [key: string]: string;
+};
+
 export interface HistoryProps {
     label: string;
     type: string;
@@ -147,7 +151,8 @@ export class WalletTable extends React.Component<Props> {
             const confirmations = type === 'deposits' && item.confirmations;
             const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
             const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
-            const state = 'state' in item ? this.formatTxState(item.state, confirmations, minConfirmations) : '';
+            const transfer_links = 'transfer_links' in item ? item.transfer_links : undefined;
+            const state = 'state' in item ? this.formatTxState(item.state, confirmations, minConfirmations, transfer_links) : '';
 
             return [
                 localeDate(item.created_at, 'fullDate'),
@@ -157,7 +162,12 @@ export class WalletTable extends React.Component<Props> {
         });
     };
 
-    private formatTxState = (tx: string, confirmations?: number, minConfirmations?: number) => {
+    private presentTransferLinks = (links: TransferLinks): Array<JSX.Element> =>
+      Object.entries(links).map(([key, value]) => 
+        <a href={value} target='_blank' rel='noopener noreferrer' style={{ marginLeft: "5px" }}>{key}</a>
+      );
+
+    private formatTxState = (tx: string, confirmations?: number, minConfirmations?: number, transferLinks?: TransferLinks) => {
         const statusMapping = {
             succeed: <SucceedIcon />,
             failed: <FailIcon />,
@@ -168,7 +178,9 @@ export class WalletTable extends React.Component<Props> {
             processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
             prepared: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
             submitted: (confirmations !== undefined && minConfirmations !== undefined) ? (
-                `${confirmations}/${minConfirmations}`
+              (transferLinks !== undefined) 
+                ? (this.presentTransferLinks(transferLinks))
+                : `${confirmations}/${minConfirmations}`
             ) : (
                 this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' })
             ),
