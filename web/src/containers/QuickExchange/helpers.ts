@@ -6,15 +6,11 @@ const getCurrencyForMarket = (markets: Market[]) => {
     const marketBaseUnits = markets.map(item => item.base_unit);
     const marketQuoteUnits = markets.map(item => item.quote_unit);
 
-    const marketCurrencies =  marketBaseUnits.concat(...marketQuoteUnits).filter(this.onlyUnique);
+    const marketCurrencies =  marketBaseUnits.concat(...marketQuoteUnits).filter(onlyUnique);
     return marketCurrencies;
 };
 
-const getMarket = (marketID: string, markets: Market[]) => {
-    const marketLower = marketID.toLowerCase();
-
-    return markets.find(w => w.id === marketLower) as Market;
-};
+const getMarket = (marketID: string, markets: Market[]) => markets.find(w => w.id === marketID.toLowerCase()) as Market;
 
 const getMarkets = (
     key: string,
@@ -49,11 +45,7 @@ const getCurrencyFiltred = (
     return currenciesMarket.filter(w => w !== currencyLower) as string[];
 };
 
-const getWallet = (currency: string, wallets: Wallet[]) => {
-    const currencyLower = currency.toLowerCase();
-
-    return wallets.find(w => w.currency === currencyLower) as Wallet;
-};
+const getWallet = (currency: string, wallets: Wallet[]) => wallets.find(w => w.currency === currency.toLowerCase()) as Wallet;
 
 const getWallets = (wallets: Wallet[], marketsUnits: string[]) => wallets.filter(w => marketsUnits.indexOf(w.currency) !== -1);
 
@@ -74,6 +66,26 @@ const cleanPositiveFloatInput = (text: string) => {
     return cleanInput;
 };
 
+const getBaseAmount = (wallet: Wallet, value: string, marketPrice: string, prevBaseAmount: string, prevQuoteAmount: string) => {
+    if (+value <= +wallet.balance) {
+        const quotePrice = Number(value || '0') * Number(marketPrice);
+
+        return [value, String(quotePrice)];
+    }
+
+    return [prevBaseAmount, prevQuoteAmount];
+};
+
+const getQuoteAmount = (wallet: Wallet, value: string, marketPrice: string, prevBaseAmount: string, prevQuoteAmount: string) => {
+    const baseValue = Number(value || '0') / Number(marketPrice);
+
+    if (+wallet.balance >= baseValue) {
+        return [String(baseValue), value];
+    }
+
+    return [prevBaseAmount, prevQuoteAmount];
+};
+
 export {
     onlyUnique,
     getCurrencyForMarket,
@@ -84,4 +96,6 @@ export {
     getAvailableValue,
     cleanPositiveFloatInput,
     getMarket,
+    getBaseAmount,
+    getQuoteAmount,
 };

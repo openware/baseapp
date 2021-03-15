@@ -19,6 +19,7 @@ declare global {
         gaTrackerKey: string;
         minutesUntilAutoLogout: string;
         msAlertDisplayTime: string;
+        msPricesUpdates: string;
         sessionCheckInterval: string;
         balancesFetchInterval: string;
         passwordEntropyStep: string | number;

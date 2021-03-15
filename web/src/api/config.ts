@@ -22,6 +22,7 @@ export const defaultConfig: Config = {
     gaTrackerKey: '',
     minutesUntilAutoLogout: '5',
     msAlertDisplayTime: '5000',
+    msPricesUpdates: '1000',
     sessionCheckInterval: '15000',
     balancesFetchInterval: '3000',
     passwordEntropyStep: '14',
@@ -71,6 +72,7 @@ export const sessionCheckInterval = () => Cryptobase.config.sessionCheckInterval
 export const balancesFetchInterval = () => Cryptobase.config.balancesFetchInterval;
 export const gaTrackerKey = () => Cryptobase.config.gaTrackerKey;
 export const msAlertDisplayTime = () => Cryptobase.config.msAlertDisplayTime;
+export const msPricesUpdates = () => Cryptobase.config.msPricesUpdates;
 export const defaultStorageLimit = () => Number(Cryptobase.config.storage.defaultStorageLimit);
 export const orderBookSideLimit = () => Number(Cryptobase.config.storage.orderBookSideLimit);
 export const passwordEntropyStep = () => Number(Cryptobase.config.passwordEntropyStep);

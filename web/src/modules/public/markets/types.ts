@@ -58,7 +58,7 @@ export interface TickerEvent {
 }
 
 export interface MarketPriceInterface {
-    price: number;
+    price: string;
     created_at: string;
     updated_at: string;
 }

@@ -8,7 +8,7 @@
     background: var(--body-background-color);
     box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
     position: relative;
-    width: 468px;
+    width: 550px;
 
     &__header {
       background: var(--subheader-background-color);
@@ -86,6 +86,99 @@
             }
           }
         }
+
+        &-input-block {
+          display: flex;
+          flex-direction: column;
+          width: 65%;
+
+          &-input {
+            .cr-email-form__group {
+              width: 100%;
+              margin: 0;
+              padding-right: 8px;
+
+              &--focused {
+                input {
+                  border: none !important;
+                  border-bottom: 1px solid #e3e9f1 !important;
+                  border-radius: unset;
+                }
+              }
+
+              .custom-input {
+                .cr-email-form__label {
+                  left: 0;
+                  padding: 0;
+                  margin-top: -12px;
+                  color: rgba(255, 255, 255, 0.6);
+                }
+
+                input {
+                  padding: 12px 0;
+                  border: none;
+                  border-bottom: 1px solid #e3e9f1;
+                  border-radius: unset;
+                  font-size: 16px;
+                  color: #fff;
+                }
+              }
+            }
+          }
+
+          &-message {
+            display: flex;
+            align-items: center;
+            line-height: 14px;
+            font-size: 12px;
+            margin-top: 4px;
+            color: #E8AF59;
+
+            svg {
+              margin-right: 4px;
+            }
+          }
+        }
+
+        &-dropdown-block {
+          display: flex;
+          flex-direction: column;
+          width: 35%;
+
+          &-dropdown {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+
+            .show {
+              button {
+                outline: none;
+                border: none !important;
+                border-bottom: 1px solid #e3e9f1 !important;
+                border-radius: unset !important;
+              }
+            }
+
+            .dropdown-toggle {
+              height: unset;
+              padding: 9.5px 8px;
+              border: none !important;
+              border-bottom: 1px solid #e3e9f1 !important;
+              border-radius: unset;
+            }
+          }
+
+          &-message {
+            line-height: 14px;
+            font-size: 14px;
+            margin-top: 4px;
+            color: rgba(255, 255, 255, 0.5);
+
+            span {
+              color: #fff;
+            }
+          }
+        }
       }
 
       &-info {
@@ -106,6 +199,10 @@
           font-size: 10px;
           letter-spacing: 0.5px;
           color: orange;
+
+          svg {
+            margin-right: 4px;
+          }
         }
       }
 
@@ -135,7 +232,22 @@
         }
 
         &-icons {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           flex-grow: 3;
+
+          svg {
+            margin: 0 10px;
+          }
+
+          img {
+            width: 50px;
+          }
+
+          .cr-wallet-item__single__image-icon {
+            margin-right: unset !important;
+          }
         }
       }
 
