@@ -16,4 +16,7 @@ export * from './useUserActivityFetch';
 export * from './useUserOrdersHistoryFetch';
 export * from './useWalletsFetch';
 export * from './useOpenOrdersFetch';
+export * from './useP2PCurrenciesFetch';
+export * from './useP2PPaymentMethodsFetch';
+export * from './useP2POffersFetch';
 export * from './redux';

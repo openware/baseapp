@@ -1,0 +1,151 @@
+.cr-p2p-offers-table {
+  .cr-table {
+    &__head th {
+      color: var(--secondary-contrast-cta-color);
+      font-size: var(--font-size-smaller) !important;
+      text-align: left !important;
+      padding-left: 36px;
+
+      &:last-child {
+        width: unset;
+      }
+    }
+
+    &__head-row {
+      border-bottom: 1px solid var(--table-border-color);
+    }
+
+    &__body tr {
+      padding: 24px 36px; 
+      border-bottom: 1px solid var(--table-border-color);
+    }
+
+    &__body tr td {
+      padding: 24px 36px !important;
+      text-align: left !important;
+      color: var(--primary-text-color);
+
+      .advertisers {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+      }
+
+      .secondary {
+        color: var(--secondary-contrast-cta-color);
+      }
+
+      .price {
+        font-weight: 600;
+        font-size: 20px;
+      }
+
+      .limit {
+        display: flex;
+        flex-direction: row;
+
+        &-col {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      .payment {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .font {
+        &-small {
+          font-size: var(--font-size);
+        }
+
+        &-big {
+          font-size: 14px;
+          font-weight: normal;
+        }
+      }
+
+      .ml-small {
+        margin-left: 12px;
+      }
+
+      .ml-24 {
+        margin-left: 24px;
+      }
+
+      .sec-row {
+        margin-top: 12px;
+      }
+    }
+  }
+}
+
+.cr-p2p-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 56px 36px 42px;
+
+  &__filters {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__dp {
+    margin-left: 36px;
+
+    &-label {
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--secondary-contrast-cta-color);
+      font-size: var(--font-size-smaller);
+      font-weight: bold;
+    }
+
+    .cr-dropdown {
+      .dropdown-toggle {
+        height: 36px;
+        font-size: var(--font-size);
+        width: 180px;
+      }
+
+      .dropdown-menu {
+        z-index: 10000;
+      }
+    }
+  }
+
+  &__btn-wrapper {
+    .btn {
+      min-width: 110px;
+      height: 36px;
+
+      &:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+
+    .btn-outline-danger, .btn-outline-success {
+      border-color: var(--divider-color-level-2);
+    }
+  }
+
+  &__action {
+    .btn {
+      height: 32px;
+      padding: 0 26px;
+    }
+
+    .icon {
+      margin-left: 11px;
+    }
+  }
+}

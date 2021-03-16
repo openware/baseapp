@@ -72,6 +72,7 @@ import {
     WalletsScreen,
     SetupScreen,
     QuickExchange,
+    P2POffersScreen,
 } from '../../screens';
 
 interface ReduxProps {
@@ -332,6 +333,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute exact={true} loading={userLoading} isLogged={isLoggedIn} path="/docs" component={DocumentationScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/internal-transfer" component={InternalTransfer} />
                     <Route path="/quick-exchange" component={QuickExchange} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p" component={P2POffersScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}

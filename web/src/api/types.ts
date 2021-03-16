@@ -6,6 +6,7 @@ declare global {
             applogicUrl: string;
             rangerUrl: string;
             finexUrl: string;
+            p2pUrl: string;
         };
         finex: string | boolean;
         withCredentials: string | boolean;

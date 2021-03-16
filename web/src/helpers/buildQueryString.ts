@@ -17,8 +17,9 @@ const buildQueryArray = data => {
 export const buildQueryString = (action: any, key?: string) => (Object.entries(action)
     .filter(w => w[1] !== '')
     .map((k: any) => {
+        const param = k[0] === 'page' ? Number(k[1]) + 1 : k[1];
         return (
-            Array.isArray(k[1]) ? buildQueryArray(k) : `${k[0]}=${encodeURIComponent(k[1])}`
+            Array.isArray(param) ? buildQueryArray(k) : `${k[0]}=${encodeURIComponent(param)}`
         );
     })
     .join('&'));

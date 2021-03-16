@@ -11,6 +11,7 @@ export const en = {
     'page.header.navbar.history': 'History',
     'page.header.navbar.api': 'API Documentation',
     'page.header.navbar.internal.transfer': 'Internal transfer',
+    'page.header.navbar.p2p': 'P2P',
 
     'page.header.navbar.profile': 'Profile',
     'page.header.navbar.logout': 'Logout',
@@ -706,6 +707,18 @@ export const en = {
 
     'success.quick.exchange.order.created': 'Order successfully created',
 
+    'page.body.quick.exchange.quotes': 'New quotes in',
+    'page.body.quick.exchange.buy': 'Buy',
+    'page.body.quick.exchange.sell': 'Sell',
+    'page.body.quick.exchange.get': 'Get',
+    'page.body.quick.exchange.pay': 'Pay',
+    'page.body.quick.exchange.balance': 'Balance',
+    'page.body.quick.exchange.spend': 'You are going to spend',
+    'page.body.quick.exchange.receive': 'You are going to receive ',
+    'page.body.quick.exchange.confirm': 'Confirm Exchange',
+
+    'page.body.quick.exchange.preview': 'Preview',
+
     /* Error pages */
 
     'page.body.restricted': 'Page not found',
@@ -1019,6 +1032,27 @@ export const en = {
     'account.internal_transfer.insufficient_balance': 'Insufficient_balance',
     'account.internal_transfer.can_not_tranfer_to_yourself': 'Can not tranfer to yourself',
     'success.internal.transfer.created': 'Internal transfer was created',
+
+    // p2p
+    'page.body.p2p.header.faq': 'FAQ',
+    'page.body.p2p.header.orders': 'Orders',
+    'page.body.p2p.header.trades_history': 'Trades History',
+
+    'page.body.p2p.table.header.advertisers': 'Advertisers',
+    'page.body.p2p.table.header.price': 'Price',
+    'page.body.p2p.table.header.limit_available': 'Limit/Available',
+    'page.body.p2p.table.header.payment': 'Payment (bank)',
+    'page.body.p2p.table.header.trade': 'Trade',
+
+    'page.body.p2p.tabs.buy': 'Buy',
+    'page.body.p2p.tabs.sell': 'Sell',
+    'page.body.p2p.dropdown.all': 'All',
+    'page.body.p2p.dropdown.payments': 'Payments',
+    'page.body.p2p.dropdown.fiat': 'Fiat',
+    'page.body.p2p.tabs.create': 'Create',
+    'page.body.p2p.table.completion': 'Completion',
+    'page.body.p2p.table.available': 'Available',
+    'page.body.p2p.table.limit': 'Limit',
 
     ...nationalitiesNames,
     ...customTranslations,

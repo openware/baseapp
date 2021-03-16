@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { applogicUrl, authUrl, finexUrl, tradeUrl, withCredentials } from './config';
+import { applogicUrl, authUrl, finexUrl, p2pUrl, tradeUrl, withCredentials } from './config';
 
 export type HTTPMethod = 'get' | 'post' | 'delete' | 'put' | 'patch';
 
@@ -9,7 +9,7 @@ export interface JsonBody {
 }
 
 export interface RequestOptions {
-    apiVersion: 'applogic' | 'peatio' | 'barong' | 'finex' | 'sonic';
+    apiVersion: 'applogic' | 'peatio' | 'barong' | 'finex' | 'sonic' | 'p2p';
     withHeaders?: boolean;
     headers?: object;
 }
@@ -29,6 +29,7 @@ const getAPI = () => {
         peatio: tradeUrl(),
         finex: finexUrl(),
         sonic: `${hostUrl}/api/v2/sonic`,
+        p2p: p2pUrl(),
     }
 };
 

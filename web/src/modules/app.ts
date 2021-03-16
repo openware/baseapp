@@ -39,6 +39,7 @@ import { withdrawLimitReducer  } from './user/withdrawLimit';
 import { marketsAdminReducer } from './admin/markets';
 import { platformCreateReducer } from './admin/platform';
 import { quickExchangeReducer } from './user/quickExchange';
+import { p2pReducer } from './public/p2p';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,
@@ -56,6 +57,7 @@ export const publicReducer = combineReducers({
     incrementDepth: incrementDepthReducer,
     ranger: rangerReducer,
     recentTrades: recentTradesReducer,
+    p2p: p2pReducer,
 });
 
 export const userReducer = combineReducers({

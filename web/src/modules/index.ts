@@ -40,6 +40,7 @@ import { QuickExchangeState, rootQuickExchangeSaga } from './user/quickExchange'
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
 import { MarketsAdminState, rootMarketsAdminSaga } from './admin/markets';
 import { PlatformCreateState, rootPlatformCreateSaga } from './admin/platform';
+import { P2PState, rootP2PSaga } from './public/p2p';
 
 export * from './admin/config';
 export * from './admin/markets';
@@ -55,6 +56,7 @@ export * from './public/markets';
 export * from './public/memberLevels';
 export * from './public/orderBook';
 export * from './public/recentTrades';
+export * from './public/p2p';
 export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';
@@ -91,6 +93,7 @@ export interface RootState {
         ranger: RangerState;
         recentTrades: RecentTradesState;
         rgl: GridLayoutState;
+        p2p: P2PState;
     };
     user: {
         addresses: AddressesState;
@@ -152,6 +155,7 @@ export function* rootSaga() {
         call(rootOpenOrdersSaga),
         call(rootOrderBookSaga),
         call(rootOrdersHistorySaga),
+        call(rootP2PSaga),
         call(rootOrdersSaga),
         call(rootPasswordSaga),
         call(rootPlatformCreateSaga),

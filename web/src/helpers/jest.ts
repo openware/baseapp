@@ -14,6 +14,7 @@ const mockConfig: Config = {
         applogicUrl: '/api/v2/applogic',
         rangerUrl: '/api/v2/ranger',
         finexUrl: '/api/v2/finex',
+        p2pUrl: '/api/v2/p2p',
     },
     finex: false,
     withCredentials: false,

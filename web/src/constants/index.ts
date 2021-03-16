@@ -10,6 +10,7 @@ export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => 
         ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
         ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
         ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.p2p', '/p2p', `p2p${isLight ? 'Light' : ''}`],
         ['page.header.navbar.internal.transfer', '/internal-transfer', `internal_transfer${isLight ? 'Light' : ''}`],
     ];
     const routesUnloggedIn = [
@@ -34,6 +35,7 @@ export const DEFAULT_MARKET_HEADERS = ['Pair', 'Price', '24h Change'];
 
 export const DEFAULT_ORDER_TYPES: DropdownElem[] = ['Limit', 'Market'];
 export const AMOUNT_PERCENTAGE_ARRAY = [0.25, 0.5, 0.75, 1];
+export const DEFAULT_TABLE_PAGE_LIMIT = 25;
 
 export const DEFAULT_MARKET = {
     id: '',

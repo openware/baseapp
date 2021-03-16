@@ -21,6 +21,7 @@ export * from './OrdersElement';
 export * from './ProfileAccountActivity';
 export * from './ProfileApiKeys';
 export * from './ProfileAuthDetails';
+export * from './P2POffers';
 export * from './ProfileTwoFactorAuth';
 export * from './ProfileVerification';
 export * from './RecentTrades';

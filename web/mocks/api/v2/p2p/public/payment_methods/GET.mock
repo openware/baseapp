@@ -1,0 +1,37 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+[
+  {
+    "id": "1",
+    "type": "Bank Transfer",
+    "bank_name": "Yellow Bank",
+    "logo": "",
+    "options": {}
+  },
+  {
+    "id": "2",
+    "type": "Debit/Credit Card",
+    "bank_name": "Red bank",
+    "logo": "",
+    "options": {}
+  },
+  {
+    "id": "3",
+    "type": "Online Wallet",
+    "bank_name": "Black bank",
+    "logo": "",
+    "options": {}
+  },
+  {
+    "id": "4",
+    "type": "Mobile Payment",
+    "bank_name": "White bank",
+    "logo": "",
+    "options": {}
+  }
+]
