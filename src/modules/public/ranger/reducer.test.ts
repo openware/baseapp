@@ -8,7 +8,6 @@ describe('Ranger reducer', () => {
             withAuth: false,
             connected: false,
             connecting: true,
-            timestamp: Math.floor(Date.now() / 1000),
             subscriptions: [],
         });
 
@@ -16,7 +15,6 @@ describe('Ranger reducer', () => {
             withAuth: true,
             connected: false,
             connecting: true,
-            timestamp: Math.floor(Date.now() / 1000),
             subscriptions: [],
         });
     });

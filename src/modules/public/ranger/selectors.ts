@@ -12,9 +12,3 @@ export const selectRangerIsConnecting = (state: RootState): boolean =>
 
 export const selectSubscriptions = (state: RootState): string[] =>
     state.public.ranger.subscriptions;
-
-export const selectRangerTimestamp = (state: RootState): number | undefined =>
-    state.public.ranger.timestamp;
-
-export const selectShouldRangerConnect = (state: RootState): boolean =>
-    !selectRangerTimestamp(state) && !selectRangerIsConnecting(state);

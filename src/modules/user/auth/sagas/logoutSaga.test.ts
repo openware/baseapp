@@ -46,7 +46,7 @@ describe('Logout saga', () => {
 
     it('should logout user in success flow', async () => {
         mockLogout();
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -63,7 +63,7 @@ describe('Logout saga', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

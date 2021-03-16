@@ -14,7 +14,6 @@ export interface RangerState {
     connected: boolean;
     connecting: boolean;
     subscriptions: string[];
-    timestamp?: number;
 }
 
 const initialRangerState: RangerState = {
@@ -31,7 +30,7 @@ export const rangerReducer = (state = initialRangerState, action: RangerAction):
                 withAuth: action.payload.withAuth,
                 connected: false,
                 connecting: true,
-                timestamp: Math.floor(Date.now() / 1000),
+                subscriptions: [],
             };
         case RANGER_SUBSCRIPTIONS_DATA:
             return {

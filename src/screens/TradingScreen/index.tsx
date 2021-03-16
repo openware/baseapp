@@ -21,19 +21,13 @@ import {
     RootState,
     selectCurrentMarket,
     selectMarketTickers,
-    selectUserInfo,
-    selectUserLoggedIn,
     setCurrentMarket,
     setCurrentPrice,
     Ticker,
-    User,
 } from '../../modules';
 import { GridLayoutState, saveLayouts, selectGridLayoutState } from '../../modules/public/gridLayout';
 import { Market, marketsFetch, selectMarkets } from '../../modules/public/markets';
 import { depthFetch } from '../../modules/public/orderBook';
-import { rangerConnectFetch, RangerConnectFetch } from '../../modules/public/ranger';
-import { RangerState } from '../../modules/public/ranger/reducer';
-import { selectRanger } from '../../modules/public/ranger/selectors';
 
 const { WidthProvider, Responsive } = require('react-grid-layout');
 
@@ -56,9 +50,6 @@ const cols = {
 interface ReduxProps {
     currentMarket: Market | undefined;
     markets: Market[];
-    user: User;
-    rangerState: RangerState;
-    userLoggedIn: boolean;
     rgl: GridLayoutState;
     tickers: {
         [pair: string]: Ticker,
@@ -68,7 +59,6 @@ interface ReduxProps {
 interface DispatchProps {
     depthFetch: typeof depthFetch;
     marketsFetch: typeof marketsFetch;
-    rangerConnect: typeof rangerConnectFetch;
     setCurrentPrice: typeof setCurrentPrice;
     setCurrentMarket: typeof setCurrentMarket;
     saveLayouts: typeof saveLayouts;
@@ -144,7 +134,7 @@ class Trading extends React.Component<Props, StateProps> {
 
     public componentDidMount() {
         setDocumentTitle('Trading');
-        const { markets, currentMarket, userLoggedIn, rangerState: { connected, withAuth } } = this.props;
+        const { markets, currentMarket } = this.props;
 
         if (markets.length < 1) {
             this.props.marketsFetch();
@@ -152,14 +142,6 @@ class Trading extends React.Component<Props, StateProps> {
 
         if (currentMarket && !incrementalOrderBook()) {
             this.props.depthFetch(currentMarket);
-        }
-
-        if (!connected) {
-            this.props.rangerConnect({ withAuth: userLoggedIn });
-        }
-
-        if (userLoggedIn && !withAuth) {
-            this.props.rangerConnect({ withAuth: userLoggedIn });
         }
     }
 
@@ -171,12 +153,7 @@ class Trading extends React.Component<Props, StateProps> {
         const {
             history,
             markets,
-            userLoggedIn,
         } = this.props;
-
-        if (userLoggedIn !== nextProps.userLoggedIn) {
-            this.props.rangerConnect({ withAuth: nextProps.userLoggedIn });
-        }
 
         if (markets.length !== nextProps.markets.length) {
             this.setMarketFromUrlIfExists(nextProps.markets);
@@ -266,9 +243,6 @@ class Trading extends React.Component<Props, StateProps> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     currentMarket: selectCurrentMarket(state),
     markets: selectMarkets(state),
-    user: selectUserInfo(state),
-    rangerState: selectRanger(state),
-    userLoggedIn: selectUserLoggedIn(state),
     rgl: selectGridLayoutState(state),
     tickers: selectMarketTickers(state),
 });
@@ -276,7 +250,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     marketsFetch: () => dispatch(marketsFetch()),
     depthFetch: payload => dispatch(depthFetch(payload)),
-    rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
     setCurrentMarket: payload => dispatch(setCurrentMarket(payload)),
     saveLayouts: payload => dispatch(saveLayouts(payload)),
