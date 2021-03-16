@@ -53,8 +53,16 @@ For more options for `jest` run `yarn test --help`.
 
 ## Configuration documentation
 
-Configuration file is located in  `public/config/env.js`
+Configuration file is located in  `public/config/env.js`. 
 
+Create it from `public/config/env.js` and change to your custom settings:
+
+```bash
+$ cp public/config/env.example.js public/config/env.js
+$ edit public/config/env.js
+```
+
+Configuration options:
 
 | Argument                 | Description                                                  |
 | --------------------- | ------------------------------------------------------------ |
