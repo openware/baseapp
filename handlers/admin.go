@@ -12,7 +12,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/openware/pkg/jwt"
 	"github.com/openware/pkg/mngapi/peatio"
+	"github.com/openware/sonic"
+	"github.com/openware/baseapp/daemons"
 )
 
 const (
@@ -137,49 +140,11 @@ func GetSecrets(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, result)
 }
 
-// CreatePlatform to handler '/api/v2/admin/platforms/new'
-func CreatePlatform(ctx *gin.Context) {
-	// Get Opendax config
-	opendaxConfig, err := GetOpendaxConfig(ctx)
-	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Get global vault service
-	vaultService, err := GetVaultService(ctx)
-	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Get auth
-	auth, err := GetAuth(ctx)
-	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
-
-	// Allow only "superadmin" to create new platform
-	if auth.Role != "superadmin" {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
-
-	// Get request parameters
-	var params CreatePlatformParams
-
-	if err := ctx.ShouldBindJSON(&params); err != nil {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
-		return
-	}
-
+func registerPlatform(opendaxConfig *sonic.OpendaxConfig, auth *jwt.Auth, params *CreatePlatformParams) (*CreatePlatformResponse, []byte, error) {
 	// Get Opendax API endpoint from config
 	url, err := url.Parse(opendaxConfig.Addr)
-
 	if err != nil {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
-		return
+		return nil, nil, err
 	}
 	url.Path = path.Join(url.Path, "/api/v2/opx/platforms/new")
 
@@ -196,15 +161,13 @@ func CreatePlatform(ctx *gin.Context) {
 	// Convert payload to json string
 	jsonPayload, err := json.Marshal(payload)
 	if err != nil {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
-		return
+		return nil, nil, err
 	}
 
 	// Create new HTTP request
 	req, err := http.NewRequest(http.MethodPost, url.String(), bytes.NewBuffer(jsonPayload))
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		return nil, nil, err
 	}
 
 	// Add request header
@@ -215,72 +178,43 @@ func CreatePlatform(ctx *gin.Context) {
 	httpClient := &http.Client{Timeout: RequestTimeout}
 	res, err := httpClient.Do(req)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		return nil, nil, err
 	}
 	defer res.Body.Close()
 
 	// Convert response body to []byte
 	resBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		return nil, nil, err
 	}
 
 	// Check for API error
 	if res.StatusCode != http.StatusCreated {
-		ctx.JSON(res.StatusCode, resBody)
-		return
+		return nil, nil, fmt.Errorf("Unexpected response from opendax.cloud: %s", resBody)
 	}
 
 	// Get platform from response
-	platform := CreatePlatformResponse{}
-	err = json.Unmarshal(resBody, &platform)
+	platform := &CreatePlatformResponse{}
+	err = json.Unmarshal(resBody, platform)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		return nil, nil, err
 	}
 
-	app := "peatio"
-	scope := "private"
-	key := "platform_id"
-	// Load secret
-	vaultService.LoadSecrets(app, scope)
+	return platform, resBody, nil
+}
 
-	// Set Platform ID to secret
-	err = vaultService.SetSecret(app, key, platform.PID, scope)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Save secret to vault
-	err = vaultService.SaveSecrets(app, scope)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Get Sonic Context
-	sc, err := GetSonicCtx(ctx)
-	if err != nil {
-		log.Printf("Can't get sonic context: %v", err.Error())
-		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		return
-	}
-
+func createOpendaxEngine(sc *SonicContext, auth *jwt.Auth, params *CreatePlatformParams, platform *CreatePlatformResponse) (string, error) {
 	// Get engines by name
 	engines, apiError := sc.PeatioClient.GetEngines(peatio.GetEngineParams{Name: "opendax-cloud-engine"})
 	if apiError != nil {
-		log.Printf("Can't get engine by name. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
-		return
+		log.Printf("ERROR: Failed to get engine by name. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+		return "", fmt.Errorf(apiError.Error)
 	}
 
 	// Parse platform URL
 	platformURL, err := url.Parse(params.PlatformURL)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return "", err
 	}
 
 	var engineID string
@@ -300,9 +234,8 @@ func CreatePlatform(ctx *gin.Context) {
 
 		_, apiError := sc.PeatioClient.UpdateEngine(engineParams)
 		if apiError != nil {
-			log.Printf("Can't update engine. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
-			ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
-			return
+			log.Printf("ERROR: Failed to update engine. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+			return "", fmt.Errorf(apiError.Error)
 		}
 	} else {
 		// Create engine
@@ -318,20 +251,21 @@ func CreatePlatform(ctx *gin.Context) {
 
 		engine, apiError := sc.PeatioClient.CreateEngine(engineParams)
 		if apiError != nil {
-			log.Printf("Can't create engine. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
-			ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
-			return
+			log.Printf("ERROR: Failed to create engine. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+			return "", fmt.Errorf(apiError.Error)
 		}
 
 		engineID = fmt.Sprint(engine.ID)
 	}
+	return engineID, err
+}
 
+func createMarkets(sc *SonicContext, engineID string) error {
 	// Get list of markets
 	markets, apiError := sc.PeatioClient.GetMarkets()
 	if apiError != nil {
-		log.Printf("Can't get market list. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
-		return
+		log.Printf("ERROR: Failed to get market list. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+		return fmt.Errorf(apiError.Error)
 	}
 
 	// Update markets with new engine
@@ -343,10 +277,115 @@ func CreatePlatform(ctx *gin.Context) {
 
 		_, apiError := sc.PeatioClient.UpdateMarket(marketParams)
 		if apiError != nil {
-			log.Printf("Can't update market. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
-			ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": apiError.Error, "errors": apiError.Errors})
-			return
+			log.Printf("ERROR: Failed to update market. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
+			return fmt.Errorf(apiError.Error)
 		}
+	}
+	return nil
+}
+
+// CreatePlatform to handler '/api/v2/admin/platforms/new'
+func CreatePlatform(ctx *gin.Context) {
+	// Get Opendax config
+	opendaxConfig, err := GetOpendaxConfig(ctx)
+	if err != nil {
+		log.Printf("ERROR: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Get global vault service
+	vaultService, err := GetVaultService(ctx)
+	if err != nil {
+		log.Printf("ERROR: global vault service not found: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Get auth
+	auth, err := GetAuth(ctx)
+	if err != nil {
+		log.Printf("WARN: %s", err.Error())
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	// Allow only "superadmin" to create new platform
+	if auth.Role != "superadmin" {
+		log.Printf("WARN: %s is not superadmin %s", auth.Role, err.Error())
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	// Get request parameters
+	params := &CreatePlatformParams{}
+
+	if err := ctx.ShouldBindJSON(&params); err != nil {
+		log.Printf("ERROR: %s", err.Error())
+		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Register the platform
+	platform, resBody, err := registerPlatform(opendaxConfig, auth, params)
+	if err != nil {
+		log.Printf("ERROR: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	app := "peatio"
+	scope := "private"
+	key := "platform_id"
+	// Load secret
+	vaultService.LoadSecrets(app, scope)
+
+	// Set Platform ID to secret
+	err = vaultService.SetSecret(app, key, platform.PID, scope)
+	if err != nil {
+		log.Printf("ERROR: Failed to store Platform ID in vault: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Save secret to vault
+	err = vaultService.SaveSecrets(app, scope)
+	if err != nil {
+		log.Printf("ERROR: Failed to store secrets: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Retrieve a finex license
+	err = daemons.CreateNewLicense("finex", opendaxConfig, vaultService)
+	if err != nil {
+		log.Printf("ERROR: Failed to retrieve a finex license: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Get Sonic Context
+	sc, err := GetSonicCtx(ctx)
+	if err != nil {
+		log.Printf("ERROR: Can't get sonic context: %s", err.Error())
+		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Manage engines
+	engineID, err := createOpendaxEngine(sc, auth, params, platform)
+	if err != nil {
+		log.Printf("ERROR: Failed to create opendax engine: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Manage markets
+	err = createMarkets(sc, engineID)
+	if err != nil {
+		log.Printf("ERROR: Failed to create markets: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
 	ctx.JSON(http.StatusCreated, resBody)
