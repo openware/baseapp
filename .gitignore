@@ -1,5 +1,7 @@
 /.npmrc
 
+.domains
+
 # dependencies
 /node_modules
 
