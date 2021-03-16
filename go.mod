@@ -13,13 +13,11 @@ require (
 	github.com/gomarkdown/markdown v0.0.0-20201113031856-722100d81a8e
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
-	github.com/hashicorp/go-multierror v1.1.0 // indirect
 	github.com/hashicorp/go-retryablehttp v0.6.8 // indirect
-	github.com/hashicorp/go-rootcerts v1.0.2 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
-	github.com/openware/kaigara/pkg/vault v0.0.0-20210222134823-0ec1fca4b7ea
+	github.com/openware/kaigara/pkg/vault v0.0.0-20210316071439-774369aff604
 	github.com/openware/pkg/database v0.0.0-20210113145702-fb5cceb8f775
 	github.com/openware/pkg/ika v0.0.0-20210204083929-709d949cb0ff
 	github.com/openware/pkg/jwt v0.0.0-20210204083929-709d949cb0ff
@@ -35,7 +33,6 @@ require (
 	golang.org/x/text v0.3.5 // indirect
 	golang.org/x/time v0.0.0-20210220033141-f8bda1e9f3ba // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
-	gopkg.in/square/go-jose.v2 v2.5.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.20.11

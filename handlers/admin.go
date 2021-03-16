@@ -60,28 +60,26 @@ func SetSecret(ctx *gin.Context) {
 	appName := ctx.Param("component")
 
 	if err := vaultService.LoadSecrets(appName, params.Scope); err != nil {
+		log.Printf("ERR: LoadSecrets: %s", err)
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	err = vaultService.SetSecret(appName, params.Key, params.Value, params.Scope)
 	if err != nil {
+		log.Printf("ERR: SetSecret: %s", err)
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	err = vaultService.SaveSecrets(appName, params.Scope)
 	if err != nil {
+		log.Printf("ERR: SaveSecrets: %s", err)
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	result, err := vaultService.GetSecret(appName, params.Key, params.Scope)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	ctx.JSON(http.StatusOK, result)
+	ctx.JSON(http.StatusOK, "Secret saved successfully")
 }
 
 // GetSecrets handles GET '/api/v2/admin/secrets'

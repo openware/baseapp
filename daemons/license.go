@@ -58,7 +58,7 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 		for {
 			lic, err := getLicenseFromVault(appName, vaultService)
 			if err != nil {
-				log.Println("License is not found in vault")
+				log.Printf("ERR: LicenseRenewal: %s", err)
 				break
 			}
 
@@ -203,12 +203,17 @@ func getLicenseFromVault(app string, vaultService *vault.Service) (string, error
 	vaultService.LoadSecrets(app, scope)
 
 	// Get secret
-	license, err := vaultService.GetSecret(app, "finex_license_key", scope)
+	licRaw, err := vaultService.GetSecret(app, "finex_license_key", scope)
 	if err != nil {
 		return "", err
 	}
 
-	return license.(string), nil
+	lic, ok := licRaw.(string)
+	if !ok {
+		return "", fmt.Errorf("The license key is empty in Vault")
+	}
+
+	return lic, nil
 }
 
 func saveLicenseToVault(app string, vaultService *vault.Service, license string) error {
