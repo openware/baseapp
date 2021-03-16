@@ -74,7 +74,7 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 				break
 			}
 
-			err = createNewLicense(appName, app, vaultService)
+			err = CreateNewLicense(appName, &app.Conf.Opendax, vaultService)
 			if err != nil {
 				log.Println(err.Error())
 				break
@@ -88,13 +88,12 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 	}
 }
 
-func createNewLicense(appName string, app *sonic.Runtime, vaultService *vault.Service) error {
+func CreateNewLicense(appName string, opendaxConfig *sonic.OpendaxConfig, vaultService *vault.Service) error {
 	platformID, err := getPlatformIDFromVault(vaultService)
 	if err != nil {
 		return err
 	}
 
-	opendaxConfig := app.Conf.Opendax
 	url, err := url.Parse(opendaxConfig.Addr)
 	if err != nil {
 		return err
@@ -127,7 +126,6 @@ func createNewLicense(appName string, app *sonic.Runtime, vaultService *vault.Se
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("PlatformID", platformID)
 	req.Header.Add("Authorization", "Bearer "+jwtToken)
-
 	// Call HTTP request
 	httpClient := &http.Client{}
 	res, err := httpClient.Do(req)
