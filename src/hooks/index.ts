@@ -7,7 +7,6 @@ export * from './useDocumentTitle';
 export * from './useHistoryFetch';
 export * from './useMarketsFetch';
 export * from './usePrevious';
-export * from './useRangerConnectFetch';
 export * from './useResetCaptchaState';
 export * from './useSetMobileDevice';
 export * from './useSetShouldGeetestReset';

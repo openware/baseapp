@@ -3,14 +3,12 @@ import {
     useDepthFetch,
     useMarketsFetch,
     useMarketsTickersFetch,
-    useRangerConnectFetch,
 } from '../../../hooks';
 import { CurrentMarketInfo, TradingTabs } from '../../components';
 
 const TradingComponent: React.FC = () => {
     useMarketsFetch();
     useMarketsTickersFetch();
-    useRangerConnectFetch();
     useDepthFetch();
 
     return (

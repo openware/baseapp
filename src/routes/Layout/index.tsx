@@ -58,6 +58,11 @@ import {
     selectCustomizationData,
 } from '../../modules/public/customization';
 import {
+    rangerConnectFetch,
+    RangerState,
+    selectRanger,
+} from '../../modules/public/ranger';
+import {
     ChangeForgottenPasswordScreen,
     ConfirmScreen,
     DocumentationScreen,
@@ -80,21 +85,23 @@ import {
 
 interface ReduxProps {
     colorTheme: string;
-    currentMarket?: Market;
-    customization?: CustomizationDataInterface;
-    user: User;
-    isLoggedIn: boolean;
-    isMobileDevice: boolean;
-    userLoading?: boolean;
-    platformAccessStatus: string;
     configsLoading: boolean;
     configsSuccess: boolean;
+    currentMarket?: Market;
+    customization?: CustomizationDataInterface;
+    isLoggedIn: boolean;
+    isMobileDevice: boolean;
+    platformAccessStatus: string;
+    rangerState: RangerState;
+    user: User;
+    userLoading?: boolean;
 }
 
 interface DispatchProps {
     fetchConfigs: typeof configsFetch;
     fetchCustomization: typeof customizationFetch;
     logout: typeof logoutFetch;
+    rangerConnect: typeof rangerConnectFetch;
     userFetch: typeof userFetch;
     walletsReset: typeof walletsReset;
 }
@@ -180,18 +187,26 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     }
 
     public componentDidMount() {
+        const {
+            history,
+            isLoggedIn,
+            location,
+            platformAccessStatus,
+            rangerState,
+        } = this.props;
+
         this.props.fetchConfigs();
         if (
-            !(this.props.location.pathname.includes('/magic-link')
-            || this.props.location.pathname.includes('/404')
-            || this.props.location.pathname.includes('/500'))
+            !(location.pathname.includes('/magic-link')
+            || location.pathname.includes('/404')
+            || location.pathname.includes('/500'))
         ) {
-            switch (this.props.platformAccessStatus) {
+            switch (platformAccessStatus) {
                 case 'restricted':
-                    this.props.history.replace('/404');
+                    history.replace('/404');
                     break;
                 case 'maintenance':
-                    this.props.history.replace('/500');
+                    history.replace('/500');
                     break;
                 default:
                     const token = localStorage.getItem('csrfToken');
@@ -202,6 +217,10 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                         this.check();
                     }
             }
+        }
+
+        if (!rangerState.connected) {
+            this.props.rangerConnect({ withAuth: isLoggedIn });
         }
     }
 
@@ -230,7 +249,12 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     }
 
     public componentDidUpdate(prevProps: LayoutProps) {
-        const { customization, isLoggedIn, userLoading } = this.props;
+        const {
+            customization,
+            isLoggedIn,
+            rangerState,
+            userLoading,
+        } = this.props;
 
         if (!isLoggedIn && prevProps.isLoggedIn && !userLoading) {
             this.props.walletsReset();
@@ -243,12 +267,20 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         if (customization && customization !== prevProps.customization) {
             this.handleApplyCustomization(customization);
         }
+
+        if (
+            (isLoggedIn !== prevProps.isLoggedIn) ||
+            (!rangerState.connected && prevProps.rangerState.connected)
+        ) {
+            this.props.rangerConnect({ withAuth: isLoggedIn });
+        }
     }
 
     public componentWillUnmount() {
         for (const type of LayoutComponent.eventsListen) {
             document.body.removeEventListener(type, this.reset);
         }
+
         clearInterval(this.timer);
         clearInterval(this.walletsFetchInterval);
     }
@@ -422,16 +454,17 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    colorTheme: selectCurrentColorTheme(state),
     configsLoading: selectConfigsLoading(state),
     configsSuccess: selectConfigsSuccess(state),
-    colorTheme: selectCurrentColorTheme(state),
     currentMarket: selectCurrentMarket(state),
     customization: selectCustomizationData(state),
-    user: selectUserInfo(state),
     isLoggedIn: selectUserLoggedIn(state),
     isMobileDevice: selectMobileDeviceState(state),
-    userLoading: selectUserFetching(state),
     platformAccessStatus: selectPlatformAccessStatus(state),
+    rangerState: selectRanger(state),
+    user: selectUserInfo(state),
+    userLoading: selectUserFetching(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
@@ -439,6 +472,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchCustomization: () => dispatch(customizationFetch()),
     logout: () => dispatch(logoutFetch()),
     toggleChartRebuild: () => dispatch(toggleChartRebuild()),
+    rangerConnect: payload => dispatch(rangerConnectFetch(payload)),
     userFetch: () => dispatch(userFetch()),
     walletsReset: () => dispatch(walletsReset()),
 });
