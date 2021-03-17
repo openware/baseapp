@@ -1,37 +1,33 @@
 .pg-profile-page__referral {
-  padding-top: 7px;
+  background: var(--body-background-color);
   width: 100%;
+
+  h2 {
+    color: var(--main-text-color);
+    font-size: 22px;
+  }
+
+  p {
+    color: var(--secondary-contrast-cta-color);
+    font-size: 14px;
+  }
 
   fieldset {
     background: inherit;
-    border: 1px solid var(--input-border-color);
-    border-radius: calc(var(--gap) * 0.66);
     flex-grow: 1;
+    margin-top: 30px;
     overflow: hidden;
     padding: 0;
 
-    &:focus-within {
-      border: 1px solid var(--input-border-color-active) !important;
-      border-radius: calc(var(--gap) * 0.66);
-      overflow: hidden;
-
-      legend {
-        color: var(--input-legend-color-active) !important;
-      }
-    }
-
     .cr-deposit-crypto__copyable-title {
-      background: var(--input-background-color);
-      margin-top: calc(var(--gap) * -1.5);
-      padding: calc(var(--gap) * 0.2);
-      position: absolute;
-      width: max-content;
+      margin: 0;
     }
 
     .pg-copyable-text-field {
       &__input {
+        background: var(--input-background-color);
         border: none;
-        padding: var(--gap) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
+        padding: var(--gap);
 
         .input-group {
           display: flex;
@@ -45,6 +41,10 @@
             label {
               margin-top: -13px;
               z-index: 10;
+            }
+
+            input {
+              background: transparent !important;
             }
           }
         }

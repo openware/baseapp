@@ -1,18 +1,13 @@
 import cr from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
 import {
-    FormattedMessage,
     injectIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ProfileTwoFactorAuth } from '../';
 import { IntlProps } from '../../';
 import { isUsernameEnabled } from '../../api';
-import { CloseIcon } from '../../assets/images/CloseIcon';
-import { ChangePassword, CustomInput, Modal } from '../../components';
 import {
     entropyPasswordFetch,
     RootState,
@@ -26,6 +21,7 @@ import {
     toggle2faFetch,
 } from '../../modules/user/profile';
 
+import Gravatar from 'react-gravatar';
 
 interface ReduxProps {
     user: User;
@@ -87,189 +83,22 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             currentPasswordEntropy,
         } = this.props;
 
-        const modal = this.state.showChangeModal ? (
-            <div className="cr-modal">
-              <form className="cr-email-form">
-                <div className="pg-change-password-screen">
-                   <ChangePassword
-                        handleChangePassword={this.props.changePassword}
-                        title={this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.change' })}
-                        closeModal={this.toggleChangeModal}
-                        currentPasswordEntropy={currentPasswordEntropy}
-                        fetchCurrentPasswordEntropy={this.props.fetchCurrentPasswordEntropy}
-                    />
-                </div>
-              </form>
-            </div>
-        ) : null;
-
         return (
             <div className="pg-profile-page__box pg-profile-page__left-col__basic">
                 <div className="pg-profile-page__box-header pg-profile-page__left-col__basic__info-row">
-                    <div className="pg-profile-page__left-col__basic__info-row__block">
-                        <div className="pg-profile-page__row pg-profile-page__details-user">
-                            <p>{user.email}</p>
+                    <div className="pg-profile-page__left-col__basic__info-row__flex">
+                        <div className="pg-profile-page__details-gravatar">
+                            <Gravatar email={user.email} size={36} />
                         </div>
-                        <div className="pg-profile-page__row">
-                            <h2>UID: {user.uid}</h2>
-                        </div>
-                        {isUsernameEnabled() && user.username ? (
-                            <div className="pg-profile-page__row">
-                                <h2>{this.props.intl.formatMessage({ id: 'page.body.profile.header.account.username'})}: {user.username}
-                                </h2>
-                            </div>
-                        ) : null}
-                    </div>
-                </div>
-                <div className="pg-profile-page__row">
-                    <div>
-                        <div className="pg-profile-page__label">
-                            {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password'})}
-                        </div>
-                        <div>
-                            ************
+                        <div className="pg-profile-page__details-user">
+                            <h2>{user.email}</h2>
+                            <p>UID: {user.uid}</p>
                         </div>
                     </div>
-                    <Button
-                        className="btn-block mt-3 mb-3 btn-lg btn btn-primary w-25"
-                        onClick={this.toggleChangeModal}
-                        size="lg"
-                        variant="primary"
-                    >
-                        {this.props.intl.formatMessage({ id: 'page.body.profile.header.account.content.password.button.change'})}
-                    </Button>
-                    {modal}
                 </div>
-                {this.renderProfileTwoFactor()}
-                <Modal
-                    className="pg-profile-page__disable-2fa-modal"
-                    show={this.state.showModal}
-                    header={this.renderModalHeader()}
-                    content={this.renderModalBody()}
-                    footer={this.renderModalFooter()}
-                />
             </div>
         );
     }
-
-    private renderProfileTwoFactor = () => {
-        return (
-            <React.Fragment>
-                <div className="pg-profile-page__row">
-                    <ProfileTwoFactorAuth is2faEnabled={this.props.user.otp} navigateTo2fa={this.handleNavigateTo2fa}/>
-                </div>
-            </React.Fragment>
-        );
-    };
-
-    private renderModalHeader = () => {
-        return (
-            <div className="cr-email-form__options-group">
-                <div className="cr-email-form__option">
-                    <div className="cr-email-form__option-inner">
-                        <FormattedMessage id="page.body.profile.header.account.content.twoFactorAuthentication.modalHeader"/>
-                        <div className="cr-email-form__cros-icon" onClick={this.closeModal}>
-                            <CloseIcon className="close-icon" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    private renderModalBody = () => {
-        const { code2FA, code2FAFocus } = this.state;
-
-        const code2FAClass = cr('cr-email-form__group', {
-            'cr-email-form__group--focused': code2FAFocus,
-        });
-
-        return (
-            <div className="pg-exchange-modal-submit-body pg-exchange-modal-submit-body-2fa">
-                <div className={code2FAClass}>
-                    <CustomInput
-                        type="text"
-                        label="2FA code"
-                        placeholder="2FA code"
-                        defaultLabel=""
-                        handleFocusInput={this.handleClickFieldFocus('code2FAFocus')}
-                        handleChangeInput={this.handleChange2FACode}
-                        inputValue={code2FA}
-                        classNameLabel="cr-email-form__label"
-                        classNameInput="cr-email-form__input"
-                        autoFocus={true}
-                    />
-                </div>
-            </div>
-        );
-    };
-
-    private renderModalFooter = () => {
-        const { code2FA } = this.state;
-        const isValid2FA = code2FA.match('^[0-9]{6}$');
-
-        return (
-            <div className="pg-exchange-modal-submit-footer">
-                <Button
-                    block={true}
-                    disabled={!isValid2FA}
-                    onClick={this.handleDisable2FA}
-                    size="lg"
-                    variant="primary"
-                >
-                    {this.props.intl.formatMessage({id: 'page.body.profile.header.account.content.twoFactorAuthentication.disable'})}
-                </Button>
-            </div>
-        );
-    };
-
-    private handleChange2FACode = (value: string) => {
-        this.setState({
-            code2FA: value,
-        });
-    };
-
-    private handleDisable2FA = () => {
-        this.props.toggle2fa({
-            code: this.state.code2FA,
-            enable: false,
-        });
-        this.closeModal();
-        this.handleChange2FACode('');
-    };
-
-    private closeModal = () => {
-        this.setState({
-            showModal: false,
-        });
-      };
-
-    private toggleChangeModal = () => {
-        this.setState({
-            showChangeModal: !this.state.showChangeModal,
-        });
-    };
-
-    private handleNavigateTo2fa = (enable2fa: boolean) => {
-        if (enable2fa) {
-            this.props.history.push('/security/2fa', { enable2fa });
-        } else {
-            this.setState({
-                showModal: !this.state.showModal,
-            });
-        }
-    };
-
-    private handleClickFieldFocus = (field: string) => () => {
-        this.handleFieldFocus(field);
-    };
-
-    private handleFieldFocus = (field: string) => {
-        // @ts-ignore
-        this.setState(prev => ({
-            [field]: !prev[field],
-        }));
-    };
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({

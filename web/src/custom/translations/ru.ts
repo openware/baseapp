@@ -336,6 +336,11 @@ export const ru: LangType = {
 
     'page.body.profile.header.account': 'Профиль',
 
+    'page.body.profile.tabs.security': 'Security',
+    'page.body.profile.tabs.api_keys': 'API Keys',
+    'page.body.profile.tabs.payment': 'Payment',
+    'page.body.profile.tabs.referral': 'Referral',
+
     'page.body.profile.header.account.username': 'Никнейм',
     'page.body.profile.header.account.content.password': 'Пароль',
     'page.body.profile.header.account.content.password.button.change': 'Изменить',
@@ -374,6 +379,9 @@ export const ru: LangType = {
     'page.body.profile.header.account.profile.identity.title': 'Личность - подтверждено',
     'page.body.profile.header.account.profile.identity.message': 'Вывод средств разрешен',
 
+    'page.body.profile.referral.invite': 'Invite Friends.',
+    'page.body.profile.referral.earn': 'Earn Crypto Together',
+    'page.body.profile.referral.commission': 'Earn up to 40% commission every time your friends make a trade',
     'page.body.profile.header.referralProgram': 'Реферальная программа',
     'page.body.profile.content.copyLink': 'Скопировать',
 

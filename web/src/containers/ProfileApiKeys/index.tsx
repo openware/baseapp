@@ -113,7 +113,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
             <div className="pg-profile-page__api-keys">
                 <div className="pg-profile-page-header">
                     <div className="pg-profile-page__api-keys__header">
-                        <h3>{this.t('page.body.profile.apiKeys.header')}</h3>
+                        {this.t('page.body.profile.apiKeys.header')}
                         {user.otp && dataLoaded && (
                             <span
                                 className="pg-profile-page__pull-right"

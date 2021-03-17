@@ -328,7 +328,12 @@ export const en = {
 
     'page.body.profile.header.account': 'Profile',
 
-    'page.body.profile.header.account.username': 'Username',
+    'page.body.profile.tabs.security': 'Security',
+    'page.body.profile.tabs.api_keys': 'API Keys',
+    'page.body.profile.tabs.payment': 'Payment',
+    'page.body.profile.tabs.referral': 'Referral',
+
+    'page.body.profile.header.account.username': 'Nickname',
     'page.body.profile.header.account.content.password': 'Password',
     'page.body.profile.header.account.content.password.button.change': 'Change',
     'page.body.profile.header.account.content.password.old': 'Old password',
@@ -366,6 +371,9 @@ export const en = {
     'page.body.profile.header.account.profile.identity.title': 'Identity verified',
     'page.body.profile.header.account.profile.identity.message': 'Withdraw enabled',
 
+    'page.body.profile.referral.invite': 'Invite Friends.',
+    'page.body.profile.referral.earn': 'Earn Crypto Together',
+    'page.body.profile.referral.commission': 'Earn up to 40% commission every time your friends make a trade',
     'page.body.profile.header.referralProgram': 'Referral Link',
     'page.body.profile.content.copyLink': 'Copy',
 
