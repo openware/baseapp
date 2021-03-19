@@ -66,6 +66,11 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 				break
 			}
 
+			if expire == 0 {
+				log.Println("LicenseRenewal: the license does not expire")
+				break
+			}
+
 			// Check to skip renewal (less than 75% of expire time)
 			if time.Now().Unix() < creation+((expire-creation)*75/100) {
 				log.Println("License renewal was skipped")
