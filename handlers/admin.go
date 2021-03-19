@@ -14,7 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/openware/pkg/jwt"
 	"github.com/openware/pkg/mngapi/peatio"
-	"github.com/openware/sonic"
+	"github.com/openware/rango/pkg/auth"
 	"github.com/openware/baseapp/daemons"
 )
 
@@ -138,14 +138,7 @@ func GetSecrets(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, result)
 }
 
-func registerPlatform(opendaxConfig *sonic.OpendaxConfig, auth *jwt.Auth, params *CreatePlatformParams) (*CreatePlatformResponse, []byte, error) {
-	// Get Opendax API endpoint from config
-	url, err := url.Parse(opendaxConfig.Addr)
-	if err != nil {
-		return nil, nil, err
-	}
-	url.Path = path.Join(url.Path, "/api/v2/opx/platforms/new")
-
+func registerPlatform(auth *jwt.Auth, params *CreatePlatformParams, odaxUrl *url.URL) (*CreatePlatformResponse, []byte, error) {
 	// Request payload
 	payload := map[string]interface{}{
 		"email":             auth.Email,
@@ -163,7 +156,7 @@ func registerPlatform(opendaxConfig *sonic.OpendaxConfig, auth *jwt.Auth, params
 	}
 
 	// Create new HTTP request
-	req, err := http.NewRequest(http.MethodPost, url.String(), bytes.NewBuffer(jsonPayload))
+	req, err := http.NewRequest(http.MethodPost, odaxUrl.String(), bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return nil, nil, err
 	}
@@ -188,7 +181,7 @@ func registerPlatform(opendaxConfig *sonic.OpendaxConfig, auth *jwt.Auth, params
 
 	// Check for API error
 	if res.StatusCode != http.StatusCreated {
-		return nil, nil, fmt.Errorf("Unexpected response from opendax.cloud: %s", resBody)
+		return nil, nil, fmt.Errorf("ERR: registerPlatform: Unexpected response from opendax.cloud: %s", resBody)
 	}
 
 	// Get platform from response
@@ -201,18 +194,12 @@ func registerPlatform(opendaxConfig *sonic.OpendaxConfig, auth *jwt.Auth, params
 	return platform, resBody, nil
 }
 
-func createOpendaxEngine(sc *SonicContext, auth *jwt.Auth, params *CreatePlatformParams, platform *CreatePlatformResponse) (string, error) {
+func createOpendaxEngine(sc *SonicContext, auth *jwt.Auth, params *CreatePlatformParams, platform *CreatePlatformResponse, odaxUrl *url.URL) (string, error) {
 	// Get engines by name
 	engines, apiError := sc.PeatioClient.GetEngines(peatio.GetEngineParams{Name: "opendax-cloud-engine"})
 	if apiError != nil {
 		log.Printf("ERROR: Failed to get engine by name. Error: %v. Errors: %v", apiError.Error, apiError.Errors)
 		return "", fmt.Errorf(apiError.Error)
-	}
-
-	// Parse platform URL
-	platformURL, err := url.Parse(params.PlatformURL)
-	if err != nil {
-		return "", err
 	}
 
 	var engineID string
@@ -224,7 +211,7 @@ func createOpendaxEngine(sc *SonicContext, auth *jwt.Auth, params *CreatePlatfor
 			Name:   "opendax-cloud-engine",
 			Driver: "opendax",
 			UID:    auth.UID,
-			URL:    fmt.Sprintf("wss://%v/api/v2/open_finance", platformURL.Host),
+			URL:    fmt.Sprintf("wss://%v/api/v2/open_finance", odaxUrl.Host),
 			State:  1, // state online
 			Key:    platform.KID,
 			Secret: platform.Secret,
@@ -241,7 +228,7 @@ func createOpendaxEngine(sc *SonicContext, auth *jwt.Auth, params *CreatePlatfor
 			Name:   "opendax-cloud-engine",
 			Driver: "opendax",
 			UID:    auth.UID,
-			URL:    fmt.Sprintf("wss://%v/api/v2/open_finance", platformURL.Host),
+			URL:    fmt.Sprintf("wss://%v/api/v2/open_finance", odaxUrl.Host),
 			State:  1, // state online
 			Key:    platform.KID,
 			Secret: platform.Secret,
@@ -255,7 +242,7 @@ func createOpendaxEngine(sc *SonicContext, auth *jwt.Auth, params *CreatePlatfor
 
 		engineID = fmt.Sprint(engine.ID)
 	}
-	return engineID, err
+	return engineID, nil
 }
 
 func createMarkets(sc *SonicContext, engineID string) error {
@@ -279,6 +266,39 @@ func createMarkets(sc *SonicContext, engineID string) error {
 			return fmt.Errorf(apiError.Error)
 		}
 	}
+	return nil
+}
+
+func checkBalance(platform *CreatePlatformResponse, odaxUrl *url.URL) error {
+	// Create new HTTP request
+	peatioUrl := fmt.Sprintf("https://%v/api/v2/peatio/account/balances", odaxUrl.Host)
+	req, err := http.NewRequest(http.MethodGet, peatioUrl, nil)
+	if err != nil {
+		return err
+	}
+
+	nonce := time.Now().UnixNano() / int64(time.Millisecond)
+	req.Header = auth.NewAPIKeyHMAC(platform.KID, platform.Secret).GetSignedHeader(nonce)
+
+	// Call HTTP request
+	httpClient := &http.Client{Timeout: RequestTimeout}
+	res, err := httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+
+	// Convert response body to []byte
+	resBody, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
+
+	// Check for API error
+	if res.StatusCode != http.StatusOK {
+		return fmt.Errorf("ERR: checkBalance: Unexpected response from opendax.cloud: %s", resBody)
+	}
+
 	return nil
 }
 
@@ -315,6 +335,15 @@ func CreatePlatform(ctx *gin.Context) {
 		return
 	}
 
+	// Get Opendax API endpoint from config
+	odaxUrl, err := url.Parse(opendaxConfig.Addr)
+	if err != nil {
+		log.Printf("ERR: CreatePlatform: OpenDAX URL parsing failed: %s", err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	odaxUrl.Path = path.Join(odaxUrl.Path, "/api/v2/opx/platforms/new")
+
 	// Get request parameters
 	params := &CreatePlatformParams{}
 
@@ -325,7 +354,7 @@ func CreatePlatform(ctx *gin.Context) {
 	}
 
 	// Register the platform
-	platform, resBody, err := registerPlatform(opendaxConfig, auth, params)
+	platform, resBody, err := registerPlatform(auth, params, odaxUrl)
 	if err != nil {
 		log.Printf("ERROR: %s", err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -370,8 +399,16 @@ func CreatePlatform(ctx *gin.Context) {
 		return
 	}
 
+	// Check balance (this API call creates member on peatio)
+	balanceErr := checkBalance(platform, odaxUrl)
+	if balanceErr != nil {
+		log.Printf("ERROR: Failed to get member balance: %s", balanceErr.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": balanceErr.Error()})
+		return
+	}
+
 	// Manage engines
-	engineID, err := createOpendaxEngine(sc, auth, params, platform)
+	engineID, err := createOpendaxEngine(sc, auth, params, platform, odaxUrl)
 	if err != nil {
 		log.Printf("ERROR: Failed to create opendax engine: %s", err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
