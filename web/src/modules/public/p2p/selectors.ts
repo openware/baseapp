@@ -79,7 +79,7 @@ export const selectP2PPaymentMethodsError = (state: RootState): CommonError | un
 state.public.p2p.paymentMethods.error;
 
 export const selectP2PPaymentMethodsTimestamp = (state: RootState): number | undefined =>
-    state.public.p2p.currencies.timestamp;
+    state.public.p2p.paymentMethods.timestamp;
 
 export const selectShouldFetchP2PPaymentMethods = (state: RootState): boolean =>
     !selectP2PPaymentMethodsTimestamp(state) && !selectP2PPaymentMethodsLoading(state);
