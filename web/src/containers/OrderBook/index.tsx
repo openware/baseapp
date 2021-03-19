@@ -22,6 +22,7 @@ import {
     selectMobileDeviceState,
     selectOpenOrdersList,
     setCurrentPrice,
+    depthIncrementSubscribeResetLoading,
     Ticker,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
@@ -40,6 +41,7 @@ interface ReduxProps {
 
 interface DispatchProps {
     setCurrentPrice: typeof setCurrentPrice;
+    depthIncrementSubscribeResetLoading: typeof depthIncrementSubscribeResetLoading;
 }
 
 interface State {
@@ -72,11 +74,28 @@ class OrderBookContainer extends React.Component<Props, State> {
 
     private orderRef;
 
-    public componentDidUpdate() {
-        if (this.orderRef.current && this.state.width !== this.orderRef.current.clientWidth) {
-            this.setState({
-                width: this.orderRef.current.clientWidth,
-            });
+    public componentDidMount() {
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
+    }
+
+    // public componentDidUpdate() {
+    //     if (this.orderRef.current && this.state.width !== this.orderRef.current.clientWidth) {
+    //         this.setState({
+    //             width: this.orderRef.current.clientWidth,
+    //         });
+    //     }
+    // }
+
+    public componentDidUpdate(prevProps) {
+        this.handleResize();
+
+        if (!prevProps.orderBookLoading && this.props.orderBookLoading) {
+            setTimeout(() => {
+                if (this.props.orderBookLoading) {
+                    this.props.depthIncrementSubscribeResetLoading();
+                }
+            }, 5000);
         }
     }
 
@@ -85,34 +104,29 @@ class OrderBookContainer extends React.Component<Props, State> {
             asks,
             bids,
             currentMarket,
-            lastRecentTrade,
+            // lastRecentTrade,
             marketTickers,
             openOrdersList,
             orderBookLoading,
-            size,
+            // size,
         } = this.props;
+        const { width } = this.state;
+        const defaultTicker = {
+            last: 0,
+            price_change_percent: '+0.00%',
+        };
 
-        const shouldUpdateState =
+        const currentMarketTicker = currentMarket && marketTickers ? marketTickers[currentMarket.id] : defaultTicker;
+        const nextCurrentMarketTicker = currentMarket && nextProps.marketTickers ? nextProps.marketTickers[currentMarket.id] : defaultTicker;
+
+        return (
             JSON.stringify(nextProps.asks) !== JSON.stringify(asks) ||
             JSON.stringify(nextProps.bids) !== JSON.stringify(bids) ||
             (nextProps.currentMarket && nextProps.currentMarket.id) !== (currentMarket && currentMarket.id) ||
-            nextProps.openOrdersList !== openOrdersList ||
-            nextProps.orderBookLoading !== orderBookLoading ||
-            nextProps.size !== size;
-
-        if (nextProps.lastRecentTrade) {
-            return (
-                shouldUpdateState ||
-                JSON.stringify(nextProps.lastRecentTrade) !== JSON.stringify(lastRecentTrade)
-            );
-        }
-
-        const lastPrice = currentMarket && this.getTickerValue(currentMarket, marketTickers).last;
-        const nextLastPrice = nextProps.currentMarket && this.getTickerValue(nextProps.currentMarket, nextProps.marketTickers).last;
-
-        return (
-            shouldUpdateState ||
-            nextLastPrice !== lastPrice
+            (this.orderRef.current && this.orderRef.current.clientWidth !== width) ||
+            (JSON.stringify(currentMarketTicker) !== JSON.stringify(nextCurrentMarketTicker)) ||
+            (orderBookLoading !== nextProps.orderBookLoading) ||
+            JSON.stringify(nextProps.openOrdersList) !== JSON.stringify(openOrdersList)
         );
     }
 
@@ -341,6 +355,14 @@ class OrderBookContainer extends React.Component<Props, State> {
 
         return tickers[currentMarket.id] || defaultTicker;
     };
+
+    private handleResize = () => {
+        if (this.orderRef.current && this.state.width !== this.orderRef.current.clientWidth) {
+            this.setState({
+                width: this.orderRef.current.clientWidth,
+            });
+        }
+    };
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -359,6 +381,7 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
+        depthIncrementSubscribeResetLoading: () => dispatch(depthIncrementSubscribeResetLoading()),
     });
 
 export const OrderBook = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer)) as any;

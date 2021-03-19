@@ -4,9 +4,12 @@ import {
     DEPTH_DATA,
     DEPTH_DATA_INCREMENT,
     DEPTH_DATA_SNAPSHOT,
+    DEPTH_EMPTY_SNAP,
     DEPTH_ERROR,
     DEPTH_FETCH,
+    DEPTH_INCREMENT_EMPTY_SNAP,
     DEPTH_INCREMENT_SUBSCRIBE,
+    DEPTH_INCREMENT_SUBSCRIBE_RESET_LOADING,
     ORDER_BOOK_DATA,
     ORDER_BOOK_ERROR,
     ORDER_BOOK_FETCH,
@@ -33,8 +36,7 @@ export interface OrderBookError {
     error: CommonError;
 }
 
-export type OrderBookActions =
-    OrderBookFetch
+export type OrderBookActions = OrderBookFetch
     | OrderBookData
     | OrderBookError;
 
@@ -68,13 +70,27 @@ export interface DepthIncrementSubscribe {
     payload: MarketId;
 }
 
-export type DepthActions =
-    DepthFetch
+export interface DepthEmptySnap {
+    type: typeof DEPTH_EMPTY_SNAP;
+}
+
+export interface DepthIncrementEmptySnap {
+    type: typeof DEPTH_INCREMENT_EMPTY_SNAP;
+}
+
+export interface DepthIncrementSubscribeResetLoading {
+    type: typeof DEPTH_INCREMENT_SUBSCRIBE_RESET_LOADING;
+}
+
+export type DepthActions = DepthFetch
     | DepthData
     | DepthError
     | DepthDataIncrement
     | DepthDataSnapshot
-    | DepthIncrementSubscribe;
+    | DepthIncrementSubscribe
+    | DepthEmptySnap
+    | DepthIncrementEmptySnap
+    | DepthIncrementSubscribeResetLoading;
 
 export const orderBookFetch = (payload: OrderBookFetch['payload']): OrderBookFetch => ({
     type: ORDER_BOOK_FETCH,
@@ -119,4 +135,16 @@ export const depthError = (error: DepthError['error']): DepthError => ({
 export const depthIncrementSubscribe = (payload: DepthIncrementSubscribe['payload']): DepthIncrementSubscribe => ({
     type: DEPTH_INCREMENT_SUBSCRIBE,
     payload,
+});
+
+export const depthEmptySnap = (): DepthEmptySnap => ({
+    type: DEPTH_EMPTY_SNAP,
+});
+
+export const depthIncrementEmptySnap = (): DepthIncrementEmptySnap => ({
+    type: DEPTH_INCREMENT_EMPTY_SNAP,
+});
+
+export const depthIncrementSubscribeResetLoading = (): DepthIncrementSubscribeResetLoading => ({
+    type: DEPTH_INCREMENT_SUBSCRIBE_RESET_LOADING,
 });
