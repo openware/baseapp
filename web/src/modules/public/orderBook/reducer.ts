@@ -5,9 +5,12 @@ import {
     DEPTH_DATA,
     DEPTH_DATA_INCREMENT,
     DEPTH_DATA_SNAPSHOT,
+    DEPTH_EMPTY_SNAP,
     DEPTH_ERROR,
     DEPTH_FETCH,
+    DEPTH_INCREMENT_EMPTY_SNAP,
     DEPTH_INCREMENT_SUBSCRIBE,
+    DEPTH_INCREMENT_SUBSCRIBE_RESET_LOADING,
     ORDER_BOOK_DATA,
     ORDER_BOOK_ERROR,
     ORDER_BOOK_FETCH,
@@ -76,7 +79,6 @@ export const depthReducer = (state = initialDepth, action: DepthActions): DepthS
                 ...state,
                 loading: true,
                 error: undefined,
-                timestamp: Math.floor(Date.now() / 1000),
             };
         case DEPTH_DATA:
             const { asks, bids } = action.payload;
@@ -94,6 +96,13 @@ export const depthReducer = (state = initialDepth, action: DepthActions): DepthS
                 loading: false,
                 error: action.error,
             };
+        case DEPTH_EMPTY_SNAP:
+            return {
+                ...state,
+                loading: false,
+                asks: [],
+                bids: [],
+            };
         default:
             return state;
     }
@@ -106,7 +115,6 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
                 ...state,
                 marketId: action.payload,
                 loading: state.marketId === undefined || state.marketId !== action.payload,
-                timestamp: Math.floor(Date.now() / 1000),
             };
         case DEPTH_DATA_INCREMENT:
             const payload = {
@@ -114,21 +122,19 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
                 sequence: action.payload.sequence,
             };
 
-            const orderBookIncSideLimit = orderBookSideLimit() * 2;
-
             if (action.payload.asks) {
                 payload.asks = Array.isArray(action.payload.asks[0]) ? (
-                    handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(0, orderBookIncSideLimit)
+                    handleIncrementalUpdateArray(state.asks, action.payload.asks as string[][], 'asks').slice(0, orderBookSideLimit())
                 ) : (
-                    handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(0, orderBookIncSideLimit)
+                    handleIncrementalUpdate(state.asks, action.payload.asks as string[], 'asks').slice(0, orderBookSideLimit())
                 );
             }
 
             if (action.payload.bids) {
                 payload.bids = Array.isArray(action.payload.bids[0]) ? (
-                    handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(0, orderBookIncSideLimit)
+                    handleIncrementalUpdateArray(state.bids, action.payload.bids as string[][], 'bids').slice(0, orderBookSideLimit())
                 ) : (
-                    handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(0, orderBookIncSideLimit)
+                    handleIncrementalUpdate(state.bids, action.payload.bids as string[], 'bids').slice(0, orderBookSideLimit())
                 );
             }
 
@@ -141,6 +147,18 @@ export const incrementDepthReducer = (state = initialIncrementDepth, action: Dep
                 asks: sliceArray(asks, orderBookSideLimit()),
                 bids: sliceArray(bids, orderBookSideLimit()),
                 sequence,
+                loading: false,
+            };
+        case DEPTH_INCREMENT_EMPTY_SNAP:
+            return {
+                ...state,
+                loading: false,
+                asks: [],
+                bids: [],
+            };
+        case DEPTH_INCREMENT_SUBSCRIBE_RESET_LOADING:
+            return {
+                ...state,
                 loading: false,
             };
         default:

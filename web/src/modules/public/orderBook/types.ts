@@ -31,20 +31,18 @@ export interface DepthState extends CommonState {
     asks: string[][];
     bids: string[][];
     loading: boolean;
-    timestamp?: number;
 }
 
 export interface DepthIncrementState {
     marketId?: MarketId;
     asks: string[][];
     bids: string[][];
-    sequence: number | null;
     loading: boolean;
-    timestamp?: number;
+    sequence: number | null;
 }
 
 export interface DepthIncrementUpdateData {
     asks: string[][] | string[] | null;
     bids: string[][] | string[] | null;
-    sequence: number;
+    sequence: number | null;
 }
