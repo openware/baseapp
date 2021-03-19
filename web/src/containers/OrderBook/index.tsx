@@ -6,7 +6,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { IntlProps } from '../../';
 import { CombinedOrderBook, Decimal } from '../../components';
 import { colors } from '../../constants';
-import { accumulateVolume, calcMaxVolume } from '../../helpers';
+import { accumulateVolume, calcMaxVolume, sortBids, sortAsks } from '../../helpers';
 import {
     Market,
     PublicTrade,
@@ -207,7 +207,7 @@ class OrderBookContainer extends React.Component<Props, State> {
                 <div className={'cr-table-header__content'}>
                     {this.props.intl.formatMessage({id: 'page.body.trade.orderbook'})}
                 </div>
-                {orderBookLoading ? <div className="pg-combined-order-book-loader"><Spinner animation="border" variant="primary" /></div> : this.orderBook(bids, asks)}
+                {orderBookLoading ? <div className="pg-combined-order-book-loader"><Spinner animation="border" variant="primary" /></div> : this.orderBook(sortBids(bids), sortAsks(asks))}
             </div>
         );
     }
