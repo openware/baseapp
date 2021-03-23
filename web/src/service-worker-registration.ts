@@ -1,15 +1,85 @@
-// This optional code is used to register a service worker.
-// register() is not called by default.
+type Config = {
+  onSuccess?: (registration: ServiceWorkerRegistration) => void;
+  onUpdate?: (registration: ServiceWorkerRegistration) => void;
+};
 
-// This lets the app load faster on subsequent visits in production, and gives
-// it offline capabilities. However, it also means that developers (and users)
-// will only see deployed updates on subsequent visits to a page, after all the
-// existing tabs open on the page have been closed, since previously cached
-// resources are updated in the background.
+export function register(config?: Config) {
+  window.console.log('Try to register service worker');
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      const swUrl = `${window.location.origin}/service-worker.js`;
 
-// To learn more about the benefits of this model and instructions on how to
-// opt-in, read https://cra.link/PWA
+      registerValidSW(swUrl, config);
+    });
+  }
+}
 
+
+function registerValidSW(swUrl: string, config?: Config) {
+  navigator.serviceWorker.register(swUrl)
+    .then((registration) => {
+      registration.onupdatefound = () => {
+        const installingWorker = registration.installing;
+        if (installingWorker == null) {
+          return;
+        }
+        installingWorker.onstatechange = () => {
+          if (installingWorker.state === 'installed') {
+            if (navigator.serviceWorker.controller) {
+              // Execute callback
+              if (config && config.onUpdate) {
+                config.onUpdate(registration);
+              }
+            } else {
+              // Execute callback
+              if (config && config.onSuccess) {
+                config.onSuccess(registration);
+              }
+            }
+          }
+        };
+      };
+    })
+    .catch((error) => {
+      console.error('Error during service worker registration:', error);
+    });
+}
+
+
+
+
+/*
+  const webSocketWorker = new SharedWorker('service-worker.js');
+  const sendMessageToSocket = message => {
+    webSocketWorker.port.postMessage({ 
+      action: 'send', 
+      value: message,
+    });
+  };
+
+  // Event to listen for incoming data from the worker and update the DOM.
+  webSocketWorker.port.addEventListener('message', ({ data }) => {
+    window.console.log('New data received: ', data);
+  });
+    
+  // Initialize the port connection.
+  webSocketWorker.port.start();
+
+  // Remove the current worker port from the connected ports list.
+  // This way your connectedPorts list stays true to the actual connected ports, 
+  // as they array won't get automatically updated when a port is disconnected.
+  window.addEventListener('beforeunload', () => {
+    webSocketWorker.port.postMessage({ 
+      action: 'unload', 
+      value: null,
+    });
+
+    webSocketWorker.port.close();
+  });
+}
+*/
+
+/*
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -132,3 +202,4 @@ export function unregister() {
       });
   }
 }
+*/
