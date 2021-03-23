@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
+import WorkboxPlugin from 'workbox-webpack-plugin';
 
 import { AppConfig } from './config';
 import alias from './alias.js';
@@ -29,6 +30,10 @@ const config: webpack.Configuration = {
             hash: true,
             chunks: ['common', 'bundle', 'styles'],
         }),
+        new WorkboxPlugin.GenerateSW({
+            clientsClaim: true,
+            skipWaiting: true,
+          }),
         // Ignore all locale files of moment.js
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new LodashModuleReplacementPlugin({ shorthands: true }),
