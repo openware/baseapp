@@ -5,12 +5,14 @@ import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import path from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import JavaScriptObfuscator from 'webpack-obfuscator';
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const rootDir = path.resolve(__dirname, '..');
 const BUILD_DIR = path.resolve(rootDir, 'build');
 
 import commonConfig from './common';
+import serviceWorkerConfig from './service-worker';
 
 const domain = process.env.BUILD_DOMAIN ? process.env.BUILD_DOMAIN.split(',') : [];
 
@@ -80,5 +82,4 @@ const config = merge(commonConfig, {
     },
 });
 
-// eslint-disable-next-line import/no-default-export
-export default config;
+module.exports = [config, serviceWorkerConfig];
