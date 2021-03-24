@@ -9,7 +9,7 @@ import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding, wizardStep } from '../../api';
 import { ExpiredSessionModal } from '../../components';
-import { WalletsFetch } from '../../containers';
+import { WalletsFetch, CanCan } from '../../containers';
 import { applyCustomizationSettings, toggleColorTheme } from '../../helpers';
 import {
     ChangeForgottenPasswordMobileScreen,
@@ -49,6 +49,8 @@ import {
     User,
     userFetch,
     walletsReset,
+    AbilitiesInterface,
+    selectAbilities,
 } from '../../modules';
 import {
     ChangeForgottenPasswordScreen,
@@ -82,6 +84,7 @@ interface ReduxProps {
     isMobileDevice: boolean;
     userLoading?: boolean;
     platformAccessStatus: string;
+    abilities: AbilitiesInterface;
 }
 
 interface DispatchProps {
@@ -122,6 +125,16 @@ const PrivateRoute: React.FunctionComponent<any> = ({ component: CustomComponent
     const renderCustomerComponent = props => <CustomComponent {...props} />;
 
     if (isLogged) {
+        const { checkAbility, abilities, action, target } = rest;
+
+        if (checkAbility && !CanCan.checkAbilityByAction(action, target, abilities)) {
+            return (
+                <Route path="**">
+                    <Redirect to="/" />
+                </Route>
+            );
+        }
+
         return <Route {...rest} render={renderCustomerComponent} />;
     }
 
@@ -336,7 +349,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/internal-transfer" component={InternalTransfer} />
-                    <Route path="/quick-exchange" component={QuickExchange} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/quick-exchange" component={QuickExchange} checkAbility={true} abilities={this.props.abilities} action="read" target="QuickExchange" />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}
@@ -421,6 +434,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     isMobileDevice: selectMobileDeviceState(state),
     userLoading: selectUserFetching(state),
     platformAccessStatus: selectPlatformAccessStatus(state),
+    abilities: selectAbilities(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({

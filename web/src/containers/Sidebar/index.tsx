@@ -24,8 +24,11 @@ import {
     selectUserInfo,
     selectUserLoggedIn,
     toggleSidebar,
+    selectAbilities,
+    AbilitiesInterface,
     User,
 } from '../../modules';
+import { CanCan } from '../'; 
 
 import enIcon from 'src/assets/images/sidebar/en.svg';
 import ruIcon from 'src/assets/images/sidebar/ru.svg';
@@ -47,6 +50,7 @@ interface ReduxProps {
     currentMarket: Market | undefined;
     isActive: boolean;
     user: User;
+    abilities: AbilitiesInterface;
 }
 
 interface OwnProps {
@@ -90,7 +94,7 @@ class SidebarContainer extends React.Component<Props, State> {
         return (
             <div className={sidebarClassName}>
                 {this.renderProfileLink()}
-                <div className="pg-sidebar-wrapper-nav">{pgRoutes(isLoggedIn).map(this.renderNavItems(address))}</div>
+                <div className="pg-sidebar-wrapper-nav">{pgRoutes(isLoggedIn, CanCan.checkAbilityByAction('read', 'QuickExchange', this.props.abilities)).map(this.renderNavItems(address))}</div>
                 <div className="pg-sidebar-wrapper-lng">
                     <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-menu-language-container">
                         <Dropdown>
@@ -225,6 +229,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     currentMarket: selectCurrentMarket(state),
     lang: selectCurrentLanguage(state),
     isActive: selectSidebarState(state),
+    abilities: selectAbilities(state),
     user: selectUserInfo(state),
 });
 
