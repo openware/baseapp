@@ -31,3 +31,4 @@ export * from './TradingChart';
 export * from './WalletsFetch';
 export * from './Withdraw';
 export * from './QuickExchange';
+export * from './CanCan';
