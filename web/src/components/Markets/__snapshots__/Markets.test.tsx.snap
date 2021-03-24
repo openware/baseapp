@@ -288,6 +288,8 @@ exports[`Markets should render empty data 1`] = `
         "metamask.success.connected": "[MetaMask] Account connected",
         "page.body.500.availableSoon": "It will be available as soon as possible",
         "page.body.500.maintenance": "The platform is under maintenance",
+        "page.body.charts.tabs.chart": "Chart",
+        "page.body.charts.tabs.depth": "Depth",
         "page.body.customization.actionButtons.reset": "Reset",
         "page.body.customization.actionButtons.save": "Save",
         "page.body.customization.comingSoon": "Coming Soon",
