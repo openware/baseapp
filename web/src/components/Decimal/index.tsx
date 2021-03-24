@@ -80,10 +80,22 @@ class Decimal extends React.Component<DecimalProps> {
             return '0';
         }
 
+        let fmtVal: DecimalProps['children'] = '';
+        let isPositive = true;
         let result = '0';
 
-        if (value !== '' && value !== 0) {
-            result = handleRemoveExponent(Number(`${Math.floor(Number(`${handleRemoveExponent(value)}e${precision}`))}e-${precision}`));
+        if (typeof value === 'string' && Number(value) < 0) {
+            fmtVal = value.slice(1);
+            isPositive = false;
+        } else if (typeof value === 'number' && value < 0) {
+            fmtVal = value * -1;
+            isPositive = false;
+        } else {
+            fmtVal = value;
+        }
+
+        if (fmtVal !== '' && fmtVal !== 0) {
+            result = handleRemoveExponent(Number(`${Math.floor(Number(`${handleRemoveExponent(fmtVal)}e${precision}`))}e-${precision}`));
         }
 
         if (result.indexOf('.') === -1 && precision > 0) {
@@ -96,7 +108,7 @@ class Decimal extends React.Component<DecimalProps> {
 
         result = formatWithSeparators(result, thousSep, floatSep);
 
-        return result;
+        return isPositive ? result : `-${result}`;
     }
 
     public static getNumberBeforeDot(value: DecimalProps['children'], fixed: number, thousSep?: string, floatSep?: string) {

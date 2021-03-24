@@ -127,6 +127,14 @@ describe('Decimal', () => {
         expect(Decimal.format(1234567890123456, 0, ',')).toEqual('1,234,567,890,123,456');
     });
 
+    it('should handle format negative values with thousands separator', () => {
+        expect(Decimal.format(-123456789, 2, '')).toEqual('-123456789.00');
+        expect(Decimal.format(-123456789, 2, ',')).toEqual('-123,456,789.00');
+        expect(Decimal.format(-123456789.012345678, 6, ',')).toEqual('-123,456,789.012345');
+        expect(Decimal.format(-123456789.012345678, 6, ' ')).toEqual('-123 456 789.012345');
+        expect(Decimal.format(-1234567890123456, 0, ',')).toEqual('-1,234,567,890,123,456');
+    });
+
     it('should handle format with float separator', () => {
         expect(Decimal.format(0.0000000167, 8, '', '')).toEqual('0.00000001');
         expect(Decimal.format(0.0000000167, 8, '', '.')).toEqual('0.00000001');
