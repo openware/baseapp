@@ -19,10 +19,10 @@ require (
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/openware/kaigara/pkg/vault v0.0.0-20210316071439-774369aff604
 	github.com/openware/pkg/database v0.0.0-20210113145702-fb5cceb8f775
-	github.com/openware/pkg/ika v0.0.0-20210204083929-709d949cb0ff
+	github.com/openware/pkg/ika v0.0.0-20210224055737-ee0a497ae719
 	github.com/openware/pkg/jwt v0.0.0-20210204083929-709d949cb0ff
 	github.com/openware/pkg/kli v0.0.0-20210110002944-50c944a5e00d
-	github.com/openware/pkg/mngapi v0.0.0-20210312074626-3d99e6d03afb
+	github.com/openware/pkg/mngapi v0.0.0-20210324093355-1ac2290ada1a
 	github.com/openware/pkg/utils v0.0.0-20210204083929-709d949cb0ff
 	github.com/openware/rango v0.0.0-20210102195930-4a08497b5215
 	github.com/openware/sonic v0.0.0-20210219120221-2c220ea19081
@@ -37,4 +37,5 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.20.11
+	gotest.tools v2.2.0+incompatible
 )
