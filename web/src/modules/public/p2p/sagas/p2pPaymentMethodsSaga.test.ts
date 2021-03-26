@@ -27,14 +27,14 @@ describe('P2P Payment Methods Fetch', () => {
         {
             id: '1',
             type: '',
-            bank_name: 'Universal',
+            name: 'Universal',
             logo: '',
             options: {},
         },
         {
             id: '2',
             type: '',
-            bank_name: 'Universal',
+            name: 'Universal',
             logo: '',
             options: {},
         },

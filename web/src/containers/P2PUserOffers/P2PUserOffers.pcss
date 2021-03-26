@@ -1,0 +1,63 @@
+
+.cr-user-p2p-offers {
+  &__title {
+    color: var(--primary-text-color);
+    margin-bottom: 18px;
+  }
+
+  &-table {
+    .cr-table {
+      &__head th {
+        color: var(--secondary-contrast-cta-color);
+        font-size: var(--font-size-smaller) !important;
+        text-align: left !important;
+        padding: 10px 24px;
+
+        &:last-child {
+          width: unset;
+        }
+      }
+
+      &__head-row {
+        border-bottom: 1px solid var(--table-border-color);
+      }
+
+      &__body tr {
+        height: 102px;
+        border-bottom: 1px solid var(--table-border-color);
+      }
+
+      &__body tr td {
+        padding: 31px 24px !important;
+        text-align: left;
+        color: var(--primary-text-color);
+        font-size: 14px !important;
+
+        &:last-child {
+          width: 16%;
+        }
+      }
+
+      &--no-data {
+        text-align: center !important;
+      }
+    }
+  }
+
+  .btn-secondary {
+    height: 40px;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 160px;
+  }
+
+  .activeOffers {
+    margin-bottom: 60px;
+  }
+
+  .cancelledOffers {
+    .cr-table__body tr td:last-child {
+      width: 175px;
+    }
+  }
+}

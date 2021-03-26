@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+import { useHistory } from 'react-router';
 import { PlusIcon } from 'src/assets/images/PlusIcon';
 import { DropdownComponent } from 'src/components';
 
@@ -10,7 +11,6 @@ interface ParentProps {
     fiatCurrencies: string[];
     paymentMethod: string;
     paymentsList: string[];
-    onCreateClick: () => void;
     onClickSideTab: (side: string) => void;
     setPayment: (value: string) => void;
     setFiatCurrency: (id: string) => void;
@@ -20,18 +20,22 @@ type Props = ParentProps;
 
 export const P2POffersHeader: FC<Props> = (props: Props): ReactElement => {
     const { formatMessage } = useIntl();
+    const history = useHistory();
 
     const {
         onClickSideTab,
         paymentsList,
         paymentMethod,
         setPayment,
-        onCreateClick,
         side,
         fiatCurrencies,
         setFiatCurrency,
         fiatCurrency,
     } = props;
+
+    const onCreateClick = React.useCallback(() => {
+        history.push('/create-offer');
+    }, [history]);
 
     return (
         <div className="cr-p2p-header">

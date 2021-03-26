@@ -1,5 +1,3 @@
-import { Currency } from "../currencies";
-
 export interface Offer {
     id: number;
     user_nickname: string;
@@ -13,6 +11,7 @@ export interface Offer {
     base: string;
     quote: string;
     state: string;
+    side: string;
     created_at: string;
     upm_id: string[];
 }

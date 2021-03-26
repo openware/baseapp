@@ -29,6 +29,7 @@ describe('P2P actions', () => {
             quote: 'ngn',
             state: 'pending',
             created_at: '',
+            side: 'buy',
             upm_id: ['1'],
         },
         {
@@ -45,6 +46,7 @@ describe('P2P actions', () => {
             quote: 'ngn',
             state: 'pending',
             created_at: '',
+            side: 'buy',
             upm_id: ['1'],
         },
     ];
@@ -103,14 +105,14 @@ describe('P2P actions', () => {
         {
             id: '1',
             type: '',
-            bank_name: 'Universal',
+            name: 'Universal',
             logo: '',
             options: {},
         },
         {
             id: '2',
             type: '',
-            bank_name: 'Universal',
+            name: 'Universal',
             logo: '',
             options: {},
         },

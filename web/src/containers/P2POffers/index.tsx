@@ -2,7 +2,7 @@ import React, { FC, ReactElement, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
-import { DEFAULT_CCY_PRECISION, DEFAULT_TABLE_PAGE_LIMIT } from 'src/constants';
+import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, DEFAULT_TABLE_PAGE_LIMIT } from 'src/constants';
 import { Decimal, Pagination, Table } from '../../components';
 import { useCurrenciesFetch, useP2POffersFetch, useWalletsFetch } from '../../hooks';
 import {
@@ -111,7 +111,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
         }
 
         const amountPrecision = wallets.find(w => w.currency === cryptoCurrency.toLowerCase())?.fixed || DEFAULT_CCY_PRECISION;
-        const pricePrecision = wallets.find(obj => obj.currency === list[0].quote)?.fixed || 2;
+        const pricePrecision = wallets.find(obj => obj.currency === list[0].quote)?.fixed || DEFAULT_FIAT_PRECISION;
 
         return retrieveData(amountPrecision, pricePrecision);
     }

@@ -43,6 +43,7 @@ import { MarketsAdminState, rootMarketsAdminSaga } from './admin/markets';
 import { PlatformCreateState, rootPlatformCreateSaga } from './admin/platform';
 import { P2PState, rootP2PSaga } from './public/p2p';
 import { PaymentMethodState, rootPaymentMethodSaga } from './user/paymentMethod';
+import { P2POffersState, rootP2POffersSaga } from './user/p2pOffers';
 
 export * from './admin/config';
 export * from './admin/markets';
@@ -79,6 +80,7 @@ export * from './user/withdrawLimit';
 export * from './user/quickExchange';
 export * from './user/abilities';
 export * from './user/paymentMethod';
+export * from './user/p2pOffers';
 
 export interface RootState {
     public: {
@@ -124,6 +126,7 @@ export interface RootState {
         withdrawLimit: WithdrawLimitState;
         quickExchange: QuickExchangeState;
         paymentMethod: PaymentMethodState;
+        p2pOffers: P2POffersState;
     };
     admin: {
         configUpdate: ConfigUpdateState;
@@ -178,5 +181,6 @@ export function* rootSaga() {
         call(rootWithdrawLimitSaga),
         call(rootQuickExchangeSaga),
         call(rootPaymentMethodSaga),
+        call(rootP2POffersSaga),
     ]);
 }

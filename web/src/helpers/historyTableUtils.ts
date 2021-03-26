@@ -20,6 +20,11 @@ export const withdrawColorMapping = {
     confirming: '',
 };
 
+export const offersColorMapping = {
+    active: 'var(--system-green)',
+    cancelled: 'var(--system-red)',
+}
+
 export const tradesColorMapping = {
     sell: {
         color: 'var(--asks)',
@@ -42,3 +47,5 @@ export const setWithdrawStatusColor = (status: string): string => withdrawColorM
 export const setTradesType = (type: string) => tradesColorMapping[type] || { color: '', text: '' };
 
 export const setTransferStatusColor = (status: string): string => transferColorMapping[status];
+
+export const setOfferStatusColor = (status: string): string => offersColorMapping[status];

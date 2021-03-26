@@ -22,3 +22,5 @@ export * from './QuickExchange';
 export * from './SetupScreen';
 export * from './InternalTransfer';
 export * from './P2POffersScreen';
+export * from './CreateP2POfferScreen';
+export * from './P2PUserOffersScreen';

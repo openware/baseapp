@@ -6,7 +6,7 @@ import { TabPanel } from 'src/components';
 import { P2POffers } from 'src/containers/P2POffers';
 import { P2POffersHeader } from 'src/containers/P2POffers/P2POffersHeader';
 import { useDocumentTitle, useP2PCurrenciesFetch, useP2PPaymentMethodsFetch, useRangerConnectFetch } from 'src/hooks';
-import { P2PCurrency, selectP2PCurrenciesData, selectP2PPaymentMethodsData } from 'src/modules';
+import { selectP2PCurrenciesData, selectP2PPaymentMethodsData } from 'src/modules';
 
 export const P2POffersScreen: FC = (): ReactElement => {
     const [tab, setTab] = useState<string>('');
@@ -57,7 +57,6 @@ export const P2POffersScreen: FC = (): ReactElement => {
                     onClickSideTab={setSideFilter}
                     paymentsList={paymentMethods.map(i => i.name)}
                     paymentMethod={paymentFilter}
-                    onCreateClick={() => window.console.log('create')}
                     side={sideFilter}
                     fiatCurrencies={fiatCurList}
                     setFiatCurrency={setFiatCurrency}
@@ -83,7 +82,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
     const leftHeader = (
         <React.Fragment>
             <Link to="/p2p/faq" className="pg-p2p-tab__left">{translate('page.body.p2p.header.faq')}</Link>
-            <Link to="/p2p/orders" className="pg-p2p-tab__left">{translate('page.body.p2p.header.orders')}</Link>
+            <Link to="/p2p/offers" className="pg-p2p-tab__left">{translate('page.body.p2p.header.offers')}</Link>
             <Link to="/p2p/history" className="pg-p2p-tab__left">{translate('page.body.p2p.header.trades_history')}</Link>
         </React.Fragment>
     );

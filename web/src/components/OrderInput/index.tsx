@@ -26,9 +26,17 @@ export interface OrderInputProps {
      */
     label?: string;
     /**
+     * Display label
+     */
+    labelVisible?: boolean;
+    /**
      * Placeholder on the border
      */
     placeholder?: string;
+    /**
+     * Auto focus of field
+     */
+    autoFocus?: boolean;
     /**
      * Value of Input component
      */
@@ -53,7 +61,7 @@ export interface OrderInputProps {
  */
 
 export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((props: OrderInputProps) => {
-    const { currency, className, isFocused, label, placeholder, value, handleChangeValue, onKeyPress, handleFocusInput } = props;
+    const { currency, className, isFocused, label, labelVisible, placeholder, autoFocus, value, handleChangeValue, onKeyPress, handleFocusInput } = props;
 
     const fieldsetFocusedClass = React.useMemo(() => cr('cr-order-input__fieldset', {
         'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
@@ -71,10 +79,12 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
                     inputValue={value}
                     placeholder={placeholder || '0'}
                     handleChangeInput={handleChangeValue}
-                    label={value && label ? label : ''}
-                    defaultLabel={value && label ? label : ''}
+                    label={(value || labelVisible) && label ? label : ''}
+                    labelVisible={labelVisible}
+                    defaultLabel={(value || labelVisible) && label ? label : ''}
                     onKeyPress={onKeyPress}
                     handleFocusInput={() => handleFocusInput(props.label)}
+                    autoFocus={autoFocus}
                 />
             </fieldset>
             <div className={cryptoIconClass}>

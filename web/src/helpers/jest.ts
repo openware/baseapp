@@ -32,6 +32,8 @@ const mockConfig: Config = {
     sessionCheckInterval: '15000',
     balancesFetchInterval: '3000',
     passwordEntropyStep: '14',
+    password_min_entropy: '',
+    captcha_type: 'none',
     storage: {
         defaultStorageLimit: '50',
         orderBookSideLimit: '25'
@@ -43,7 +45,7 @@ const mockConfig: Config = {
         'profile',
         'document',
         'address'
-    ]
+    ],
 };
 
 // tslint:disable no-any no-console

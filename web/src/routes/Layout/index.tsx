@@ -75,6 +75,8 @@ import {
     SetupScreen,
     QuickExchange,
     P2POffersScreen,
+    P2PUserOffersScreen,
+    CreateP2POfferScreen,
 } from '../../screens';
 
 interface ReduxProps {
@@ -346,7 +348,9 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute exact={true} loading={userLoading} isLogged={isLoggedIn} path="/docs" component={DocumentationScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/internal-transfer" component={InternalTransfer} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/quick-exchange" component={QuickExchange} checkAbility={true} abilities={this.props.abilities} action="read" target="QuickExchange" />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p" component={P2POffersScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/offers" component={P2PUserOffersScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/create-offer" component={CreateP2POfferScreen} />
+                    <Route exaxt={true} path="/p2p" component={P2POffersScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}

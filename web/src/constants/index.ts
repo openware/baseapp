@@ -38,6 +38,7 @@ export const pgRoutes = (isLoggedIn: boolean, CanCan: boolean, isLight?: boolean
 };
 
 export const DEFAULT_CCY_PRECISION = 4;
+export const DEFAULT_FIAT_PRECISION = 2;
 export const DEFAULT_TRADING_VIEW_INTERVAL = '15';
 export const VALUATION_PRIMARY_CURRENCY = 'USD';
 export const VALUATION_SECONDARY_CURRENCY = 'ETH';
@@ -51,6 +52,8 @@ export const DEFAULT_MARKET_HEADERS = ['Pair', 'Price', '24h Change'];
 export const DEFAULT_ORDER_TYPES: DropdownElem[] = ['Limit', 'Market'];
 export const AMOUNT_PERCENTAGE_ARRAY = [0.25, 0.5, 0.75, 1];
 export const DEFAULT_TABLE_PAGE_LIMIT = 25;
+
+export const P2P_TIME_LIMIT_LIST = [ '15 min', '30 min', '60 min' ];
 
 export const DEFAULT_MARKET = {
     id: '',
