@@ -1,0 +1,10 @@
+export const PAYMENT_METHOD_DELETE_FETCH = 'payment_method/DELETE_FETCH';
+export const PAYMENT_METHOD_DELETE = 'payment_method/DELETE';
+export const PAYMENT_METHOD_ERROR = 'payment_method/ERROR';
+export const PAYMENT_METHOD_MODAL = 'payment_method/MODAL';
+export const PAYMENT_METHOD_CREATE_FETCH = 'payment_method/CREATE_FETCH';
+export const PAYMENT_METHOD_CREATE = 'payment_method/CREATE';
+export const PAYMENT_METHOD_UPDATE_FETCH = 'payment_method/UPDATE_FETCH';
+export const PAYMENT_METHOD_UPDATE = 'payment_method/UPDATE';
+export const PAYMENT_METHOD_LIST_FETCH = 'payment_method/LIST_FETCH';
+export const PAYMENT_METHOD_LIST = 'payment_method/LIST';

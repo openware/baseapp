@@ -377,6 +377,20 @@ export const en = {
     'page.body.profile.header.referralProgram': 'Referral Link',
     'page.body.profile.content.copyLink': 'Copy',
 
+    'page.body.profile.payment.title': 'P2P payment methods',
+    'page.body.profile.payment.desc': 'When you sell cryptocurrencies, the payment method added will be displayed to buyer as options to accept payment, please ensure that the account owner’s name is consistent with your verified name. You can add up to 20 payment methods.',
+    'page.body.profile.payment.button.add': '+ Add a payment method',
+    'page.body.profile.payment.button.edit': 'Edit',
+    'page.body.profile.payment.button.delete': 'Delete',
+    'page.body.profile.payment.modal.header.delete': 'Delete payment method',
+    'page.body.profile.payment.modal.header.create': 'Add payment method',
+    'page.body.profile.payment.modal.header.update': 'Edit payment method',
+    'page.body.profile.payment.modal.body.sureDelete': 'Are you sure you want to delete {name}',
+    'page.body.profile.payment.modal.body.no': 'No',
+    'page.body.profile.payment.modal.body.yes': 'Yes',
+    'page.body.profile.payment.modal.body.confirm': 'Confirm',
+    'page.body.profile.payment.modal.body.holderName': 'NAME',
+
     'page.body.profile.apiKeys.header': 'My API Keys',
     'page.body.profile.apiKeys.header.create': 'Create new',
 
@@ -1061,6 +1075,10 @@ export const en = {
     'page.body.p2p.table.completion': 'Completion',
     'page.body.p2p.table.available': 'Available',
     'page.body.p2p.table.limit': 'Limit',
+
+    'success.payment_method.deleted': 'Payment Method: successfully deleted',
+    'success.payment_method.created': 'Payment Method: successfully created',
+    'success.payment_method.updated': 'Payment Method: successfully updated',
 
     ...nationalitiesNames,
     ...customTranslations,

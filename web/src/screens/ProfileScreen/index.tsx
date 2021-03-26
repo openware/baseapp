@@ -8,6 +8,7 @@ import { TabPanel } from '../../components';
 import { ProfileApiKeys, ProfileVerification } from '../../containers';
 import { ProfileAccountActivity } from '../../containers/ProfileAccountActivity';
 import { ProfileAuthDetails } from '../../containers/ProfileAuthDetails';
+import { ProfilePayment } from '../../containers/ProfilePayment';
 import { ProfileSecurity } from '../../containers/ProfileSecurity';
 import { ReferralProgram } from '../../containers/ReferralProgram';
 import { setDocumentTitle } from '../../helpers';
@@ -99,7 +100,7 @@ class ProfileComponent extends React.Component<Props, State> {
                 label: this.props.intl.formatMessage({id: 'page.body.profile.tabs.api_keys'}),
             },
             {
-                content: tab === 'payment' ? <div>Payment</div> : null,
+                content: tab === 'payment' ? <ProfilePayment/> : null,
                 label: this.props.intl.formatMessage({id: 'page.body.profile.tabs.payment'}),
             },
             {

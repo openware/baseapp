@@ -55,7 +55,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
                 <P2POffersHeader
                     setPayment={setPaymentFilter}
                     onClickSideTab={setSideFilter}
-                    paymentsList={paymentMethods.map(i => i.bank_name)}
+                    paymentsList={paymentMethods.map(i => i.name)}
                     paymentMethod={paymentFilter}
                     onCreateClick={() => window.console.log('create')}
                     side={sideFilter}

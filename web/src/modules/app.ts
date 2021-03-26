@@ -41,6 +41,7 @@ import { marketsAdminReducer } from './admin/markets';
 import { platformCreateReducer } from './admin/platform';
 import { quickExchangeReducer } from './user/quickExchange';
 import { p2pReducer } from './public/p2p';
+import { paymentMethodReducer } from './user/paymentMethod';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,
@@ -85,6 +86,7 @@ export const userReducer = combineReducers({
     internalTransfers: internalTransfersReducer,
     quickExchange: quickExchangeReducer,
     abilities: abilitiesReducer,
+    paymentMethod: paymentMethodReducer,
 });
 
 export const adminReducer = combineReducers({

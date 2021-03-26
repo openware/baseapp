@@ -1,0 +1,32 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+[
+  {
+    "id": "1",
+    "type": "Bank Transfer",
+    "name": "Kasikon Bank",
+    "logo": "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEYSURBVHgBzZOxS0JRFMZ/9xL0IsFXS1LDC2oqqKE2MWqplhyK2qSpqRpqsC0KnKIhcApapC3qD4iajMYG2zVdopZ6gqKTV+8TnPShzzf4m87hfnx851yOMOKr+zXEjQATb+QF6kIMx9e+Gs00/WFLH0w0psQnfDMa6vQQnQuzNR9u9elchvuPZ3o2WpicpVgpk3x/JDgS4G7vDGs8ROIl1VbvOppdLVH4/+XzO0vy7QnLDNFzIifV1AyxpU2nPo5ss5s692ZkGgGssYlmukqJoDHqzSidzZB4be5kJbfIdfSQ9dvTttquv18v3w3XREeRHWLLG05d+Pvh4OGqo1bfmsIHBu9EZGMum/7JS6nUiS7wiA4ilLqsA3JpQ8llTi7NAAAAAElFTkSuQmCC",
+    "data": {
+      "bank_name": "Kasikon Bank",
+      "name": "Alice",
+      "account_number": "09-1023-1222-1"
+    }
+  },
+  {
+    "id": "2",
+    "type": "Debit/Credit Card",
+    "name": "Card",
+    "logo": "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEYSURBVHgBzZOxS0JRFMZ/9xL0IsFXS1LDC2oqqKE2MWqplhyK2qSpqRpqsC0KnKIhcApapC3qD4iajMYG2zVdopZ6gqKTV+8TnPShzzf4m87hfnx851yOMOKr+zXEjQATb+QF6kIMx9e+Gs00/WFLH0w0psQnfDMa6vQQnQuzNR9u9elchvuPZ3o2WpicpVgpk3x/JDgS4G7vDGs8ROIl1VbvOppdLVH4/+XzO0vy7QnLDNFzIifV1AyxpU2nPo5ss5s692ZkGgGssYlmukqJoDHqzSidzZB4be5kJbfIdfSQ9dvTttquv18v3w3XREeRHWLLG05d+Pvh4OGqo1bfmsIHBu9EZGMum/7JS6nUiS7wiA4ilLqsA3JpQ8llTi7NAAAAAElFTkSuQmCC",
+    "data": {
+      "expiry": "12/27",
+      "card_company": "Citi Card",
+      "holder_name": "John Wick",
+      "card_number": "1234-1111-2222-3333"
+    }
+  }
+]

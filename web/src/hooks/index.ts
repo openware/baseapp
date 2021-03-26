@@ -20,3 +20,4 @@ export * from './useP2PCurrenciesFetch';
 export * from './useP2PPaymentMethodsFetch';
 export * from './useP2POffersFetch';
 export * from './redux';
+export * from './useUserPaymentMethodsFetch';

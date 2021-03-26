@@ -25,6 +25,7 @@ export * from './P2POffers';
 export * from './ProfileSecurity';
 export * from './ProfileTwoFactorAuth';
 export * from './ProfileVerification';
+export * from './ProfilePayment';
 export * from './RecentTrades';
 export * from './ReferralProgram';
 export * from './Sidebar';

@@ -26,7 +26,7 @@ export interface P2PCurrency {
 export interface PaymentMethod {
     id: string;
     type: string;
-    bank_name: string;
+    name: string;
     logo: string;
     options: any;
 }
