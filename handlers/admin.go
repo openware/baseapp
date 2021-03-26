@@ -327,36 +327,6 @@ func CreatePlatform(ctx *gin.Context) {
 		return
 	}
 
-	app := "peatio"
-	scope := "private"
-	key := "platform_id"
-	// Load secret
-	vaultService.LoadSecrets(app, scope)
-
-	// Set Platform ID to secret
-	err = vaultService.SetSecret(app, key, platform.PID, scope)
-	if err != nil {
-		log.Printf("ERROR: Failed to store Platform ID in vault: %s", err.Error())
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Save secret to vault
-	err = vaultService.SaveSecrets(app, scope)
-	if err != nil {
-		log.Printf("ERROR: Failed to store secrets: %s", err.Error())
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Retrieve a finex license
-	err = daemons.CreateNewLicense("finex", opendaxConfig, vaultService)
-	if err != nil {
-		log.Printf("ERROR: Failed to retrieve a finex license: %s", err.Error())
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
 	// Get Sonic Context
 	sc, err := GetSonicCtx(ctx)
 	if err != nil {
@@ -385,6 +355,36 @@ func CreatePlatform(ctx *gin.Context) {
 	err = daemons.FetchMarketsFromOpenfinexCloud(sc.PeatioClient, opendaxConfig.Addr, platform.PID)
 	if err != nil {
 		log.Printf("ERROR: Failed to create markets: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	app := "peatio"
+	scope := "private"
+	key := "platform_id"
+	// Load secret
+	vaultService.LoadSecrets(app, scope)
+
+	// Set Platform ID to secret
+	err = vaultService.SetSecret(app, key, platform.PID, scope)
+	if err != nil {
+		log.Printf("ERROR: Failed to store Platform ID in vault: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Save secret to vault
+	err = vaultService.SaveSecrets(app, scope)
+	if err != nil {
+		log.Printf("ERROR: Failed to store secrets: %s", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Retrieve a finex license
+	err = daemons.CreateNewLicense("finex", opendaxConfig, vaultService)
+	if err != nil {
+		log.Printf("ERROR: Failed to retrieve a finex license: %s", err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
