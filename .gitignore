@@ -2,8 +2,6 @@
 .DS_Store
 
 # sonic
-go.mod
-go.sum
 bin/
 .vscode
 

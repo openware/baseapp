@@ -16,7 +16,7 @@ import (
 	"github.com/openware/pkg/mngapi/peatio"
 	"github.com/openware/pkg/utils"
 	"github.com/openware/sonic"
-	"github.com/openware/baseapp/daemons"
+	"baseapp/daemons"
 )
 
 // Version variable stores Application Version from main package
