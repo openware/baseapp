@@ -14,7 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/openware/pkg/jwt"
 	"github.com/openware/pkg/mngapi/peatio"
-	"github.com/openware/baseapp/daemons"
+	"baseapp/daemons"
 )
 
 const (
