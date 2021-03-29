@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { SignInComponent, TwoFactorAuth } from '../../components';
+import { Captcha, SignInComponent, TwoFactorAuth } from '../../components';
 import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
 import { useReduxSelector } from '../../hooks';
 import {
@@ -14,8 +14,8 @@ import {
     signInError,
     signInRequire2FA,
     signUpRequireVerification,
+    selectSignInError,
 } from '../../modules';
-import { CommonError } from '../../modules/types';
 
 export const SignInScreen: React.FC = () => {
     const dispatch = useDispatch();
@@ -36,6 +36,7 @@ export const SignInScreen: React.FC = () => {
     const loading = useReduxSelector(selectUserFetching);
     const require2FA = useReduxSelector(selectSignInRequire2FA);
     const requireEmailVerification = useReduxSelector((x) => x.user.auth.requireVerification);
+    const errorSignIn = useReduxSelector(selectSignInError);
 
     useEffect(() => {
         setDocumentTitle('Sign In');
@@ -145,6 +146,8 @@ export const SignInScreen: React.FC = () => {
         dispatch(signInRequire2FA({ require2fa: false }));
     }, [dispatch]);
 
+    const renderCaptcha = React.useMemo(() => <Captcha error={errorSignIn || emailError} />, [errorSignIn, emailError]);
+
     return (
         <div className="pg-sign-in-screen">
             <div className={cx('pg-sign-in-screen__container', { loading })}>
@@ -190,6 +193,7 @@ export const SignInScreen: React.FC = () => {
                         refreshError={refreshError}
                         changeEmail={handleChangeEmailValue}
                         changePassword={handleChangePasswordValue}
+                        renderCaptcha={renderCaptcha}
                     />
                 )}
             </div>
