@@ -29,8 +29,10 @@ trigger:
   branch:
     - master
     - "*-stable"
-    - "integration/*"
-    - "hotfix/*"
+    - "enhancement/*"
+    - "fix/*"
+    - "feature/*"
+
   event:
     - push
 
