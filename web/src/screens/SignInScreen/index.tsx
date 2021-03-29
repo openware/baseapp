@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { captchaType, captchaLogin } from '../../api';
 import { Captcha, SignInComponent, TwoFactorAuth } from '../../components';
 import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
 import { useReduxSelector } from '../../hooks';
@@ -15,6 +16,10 @@ import {
     signInRequire2FA,
     signUpRequireVerification,
     selectSignInError,
+    selectRecaptchaSuccess,
+    selectGeetestCaptchaSuccess,
+    selectCaptchaResponse,
+    resetCaptchaState,
 } from '../../modules';
 
 export const SignInScreen: React.FC = () => {
@@ -37,12 +42,19 @@ export const SignInScreen: React.FC = () => {
     const require2FA = useReduxSelector(selectSignInRequire2FA);
     const requireEmailVerification = useReduxSelector((x) => x.user.auth.requireVerification);
     const errorSignIn = useReduxSelector(selectSignInError);
+    const reCaptchaSuccess = useReduxSelector(selectRecaptchaSuccess);
+    const geetestCaptchaSuccess = useReduxSelector(selectGeetestCaptchaSuccess);
+    const captcha_response = useReduxSelector(selectCaptchaResponse);
 
     useEffect(() => {
         setDocumentTitle('Sign In');
         dispatch(signInError({ code: 0, message: [''] }));
         dispatch(signUpRequireVerification({ requireVerification: false }));
-    }, [dispatch]);
+
+        return () => {
+            dispatch(resetCaptchaState());
+        }
+    }, []);
 
     useEffect(() => {
         if (requireEmailVerification) {
@@ -55,6 +67,12 @@ export const SignInScreen: React.FC = () => {
             history.push('/wallets');
         }
     }, [isLoggedIn, history]);
+
+    useEffect(() => {
+        if (captchaType() !== 'none' && captchaLogin() && errorSignIn && !require2FA) {
+            dispatch(resetCaptchaState());
+        }
+    }, [errorSignIn, captchaType(), captchaLogin()]);
 
     const refreshError = useCallback(() => {
         setEmailError('');
@@ -71,9 +89,10 @@ export const SignInScreen: React.FC = () => {
             signIn({
                 email,
                 password,
+                ...(captchaType() !== 'none' && captchaLogin() && { captcha_response }),
             })
         );
-    }, [dispatch, email, password]);
+    }, [dispatch, email, password, captcha_response, captchaType()]);
 
     const handle2FASignIn = useCallback(() => {
         if (!otpCode) {
@@ -84,10 +103,11 @@ export const SignInScreen: React.FC = () => {
                     email,
                     password,
                     otp_code: otpCode,
+                    ...(captchaType() !== 'none' && captchaLogin() && { captcha_response }),
                 })
             );
         }
-    }, [dispatch, otpCode, email, password]);
+    }, [dispatch, otpCode, email, password, captchaType(), captchaLogin()]);
 
     const handleSignUp = useCallback(() => {
         history.push('/signup');
@@ -194,6 +214,9 @@ export const SignInScreen: React.FC = () => {
                         changeEmail={handleChangeEmailValue}
                         changePassword={handleChangePasswordValue}
                         renderCaptcha={renderCaptcha}
+                        reCaptchaSuccess={reCaptchaSuccess}
+                        geetestCaptchaSuccess={geetestCaptchaSuccess}
+                        captcha_response={captcha_response}
                     />
                 )}
             </div>
