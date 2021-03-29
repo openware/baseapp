@@ -18,7 +18,7 @@ export class SetupGeneralSettingsForm extends React.Component<SetupGeneralSettin
 
         this.state = {
             exchangeName: '',
-            exchangeUrl: '',
+            exchangeUrl: window.location.origin,
         };
     }
 
