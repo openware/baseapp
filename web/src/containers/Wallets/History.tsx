@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {
-    injectIntl,
-} from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
@@ -66,7 +65,7 @@ export class WalletTable extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public componentWillReceiveProps(nextProps: Props) {
         const {
             currencies,
             currency,
@@ -135,7 +134,8 @@ export class WalletTable extends React.Component<Props> {
             wallets,
         } = this.props;
         const { fixed } = wallets.find(w => w.currency === currency) || { fixed: 8 };
-        if (list.length === 0) {
+
+        if (!list.length) {
             return [[]];
         }
 
@@ -197,4 +197,7 @@ export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         resetHistory: () => dispatch(resetHistory()),
     });
 
-export const WalletHistory = injectIntl(connect(mapStateToProps, mapDispatchToProps)(WalletTable)) as any;
+export const WalletHistory = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  injectIntl,
+)(WalletTable) as any;

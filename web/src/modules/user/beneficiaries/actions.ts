@@ -16,6 +16,7 @@ import {
     BENEFICIARIES_RESEND_PIN,
     BENEFICIARIES_RESEND_PIN_DATA,
     BENEFICIARIES_RESEND_PIN_ERROR,
+    BENEFICIARIES_RESET_STATE,
 } from './constants';
 import { Beneficiary } from './types';
 
@@ -117,6 +118,10 @@ export interface BeneficiariesDeleteError {
     error: CommonError;
 }
 
+export interface BeneficiariesResetState {
+    type: typeof BENEFICIARIES_RESET_STATE;
+}
+
 export type BeneficiariesActions =
     BeneficiariesFetch
     | BeneficiariesData
@@ -133,7 +138,8 @@ export type BeneficiariesActions =
     | BeneficiariesDeleteError
     | BeneficiariesResendPin
     | BeneficiariesResendPinData
-    | BeneficiariesResendPinError;
+    | BeneficiariesResendPinError
+    | BeneficiariesResetState;
 
 export const beneficiariesFetch = (payload?: BeneficiariesFetch['payload']): BeneficiariesFetch => ({
     type: BENEFICIARIES_FETCH,
@@ -213,4 +219,8 @@ export const beneficiariesResendPinData = (payload: BeneficiariesResendPinData['
 export const beneficiariesResendPinError = (error: CommonError): BeneficiariesResendPinError => ({
     type: BENEFICIARIES_RESEND_PIN_ERROR,
     error,
+});
+
+export const beneficiariesResetState = (): BeneficiariesResetState => ({
+    type: BENEFICIARIES_RESET_STATE,
 });

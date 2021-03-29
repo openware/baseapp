@@ -1,21 +1,13 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { injectIntl } from 'react-intl';
-import { connect, MapDispatchToProps } from 'react-redux';
-import { compose } from 'redux';
-import { IntlProps } from '../../';
-import { ChevronIcon } from '../../assets/images/ChevronIcon';
-import { PlusIcon } from '../../assets/images/PlusIcon';
-import { TipIcon } from '../../assets/images/TipIcon';
-import { TrashBin } from '../../assets/images/TrashBin';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     beneficiariesCreateData,
     beneficiariesDelete,
     Beneficiary,
     BeneficiaryBank,
-    MemberLevels,
     memberLevelsFetch,
-    RootState,
     selectBeneficiaries,
     selectBeneficiariesActivateSuccess,
     selectBeneficiariesCreate,
@@ -24,45 +16,21 @@ import {
     selectMobileDeviceState,
     selectUserInfo,
     sendError,
-    User,
+    beneficiariesResetState,
 } from '../../modules';
-import { CommonError } from '../../modules/types';
+import { ChevronIcon } from '../../assets/images/ChevronIcon';
+import { PlusIcon } from '../../assets/images/PlusIcon';
+import { TipIcon } from '../../assets/images/TipIcon';
+import { TrashBin } from '../../assets/images/TrashBin';
 import { BeneficiariesActivateModal } from './BeneficiariesActivateModal';
 import { BeneficiariesAddModal } from './BeneficiariesAddModal';
 import { BeneficiariesFailAddModal } from './BeneficiariesFailAddModal';
 
-interface ReduxProps {
-    beneficiaries: Beneficiary[];
-    beneficiariesAddData: Beneficiary;
-    beneficiariesAddSuccess: boolean;
-    beneficiariesAddError?: CommonError;
-    beneficiariesActivateError?: CommonError;
-    memberLevels?: MemberLevels;
-    beneficiariesActivateSuccess: boolean;
-    userData: User;
-    isMobileDevice: boolean;
-}
-
-interface DispatchProps {
-    deleteAddress: typeof beneficiariesDelete;
-    memberLevelsFetch: typeof memberLevelsFetch;
-    beneficiariesCreateData: typeof beneficiariesCreateData;
-    sendError: typeof sendError;
-}
 
 interface OwnProps {
     currency: string;
     type: 'fiat' | 'coin';
     onChangeValue: (beneficiary: Beneficiary) => void;
-}
-
-interface State {
-    currentWithdrawalBeneficiary: Beneficiary;
-    isOpenAddressModal: boolean;
-    isOpenConfirmationModal: boolean;
-    isOpenDropdown: boolean;
-    isOpenTip: boolean;
-    isOpenFailModal: boolean;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -75,242 +43,205 @@ const defaultBeneficiary: Beneficiary = {
     },
 };
 
-type Props = ReduxProps & DispatchProps & OwnProps & IntlProps;
+type Props = OwnProps;
 
-// tslint:disable jsx-no-multiline-js
-class BeneficiariesComponent extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            currentWithdrawalBeneficiary: defaultBeneficiary,
-            isOpenAddressModal: false,
-            isOpenConfirmationModal: false,
-            isOpenDropdown: false,
-            isOpenTip: false,
-            isOpenFailModal: false,
-        };
-    }
+const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
+    const [currentWithdrawalBeneficiary, setWithdrawalBeneficiary] = React.useState(defaultBeneficiary);
+    const [isOpenAddressModal, setAddressModalState] = React.useState(false);
+    const [isOpenConfirmationModal, setConfirmationModalState] = React.useState(false);
+    const [isOpenFailModal, setFailModalState] = React.useState(false);
+    const [isOpenTip, setTipState] = React.useState(false);
+    const [isOpenDropdown, setDropdownState] = React.useState(false);
 
-    public componentDidMount() {
-        const { currency, beneficiaries, memberLevels } = this.props;
-        if (currency && beneficiaries.length) {
-            this.handleSetCurrentAddressOnUpdate(beneficiaries);
+    const { currency, type, onChangeValue } = props;
+
+    const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
+
+    /*    selectors    */
+    const beneficiaries = useSelector(selectBeneficiaries);
+    const beneficiariesAddData = useSelector(selectBeneficiariesCreate);
+    const beneficiariesAddSuccess = useSelector(selectBeneficiariesCreateSuccess);
+    const beneficiariesActivateSuccess = useSelector(selectBeneficiariesActivateSuccess);
+    const memberLevels = useSelector(selectMemberLevels);
+    const userData = useSelector(selectUserInfo);
+    const isMobileDevice = useSelector(selectMobileDeviceState);
+    /*    ---------    */
+
+    React.useEffect(() => {
+        if (beneficiaries) {
+            handleSetCurrentAddressOnUpdate(beneficiaries);
         }
 
         if (!memberLevels) {
-            this.props.memberLevelsFetch();
+            dispatch(memberLevelsFetch());
         }
-    }
+    }, []);
 
-    public componentWillReceiveProps(nextProps: Props) {
-        const {
-            currency,
-            beneficiaries,
-            beneficiariesAddSuccess,
-            beneficiariesActivateSuccess,
-        } = this.props;
-
-        if ((nextProps.currency && nextProps.currency !== currency) ||
-            (nextProps.beneficiaries.length && nextProps.beneficiaries !== beneficiaries)) {
-            this.handleSetCurrentAddressOnUpdate(nextProps.beneficiaries);
+    React.useEffect(() => {
+        if (currency) {
+            dispatch(beneficiariesResetState());
         }
 
-        if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
-            this.handleToggleAddAddressModal();
-            this.handleToggleConfirmationModal();
+        if (beneficiaries) {
+            handleSetCurrentAddressOnUpdate(beneficiaries);
         }
 
-        if (nextProps.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) {
-            this.handleToggleConfirmationModal();
+        if (beneficiariesAddSuccess) {
+            setAddressModalState(false);
+            setConfirmationModalState(true);
         }
 
-        if (nextProps.beneficiariesAddSuccess && !beneficiariesAddSuccess) {
-            this.handleToggleAddAddressModal();
-            this.handleToggleConfirmationModal();
+        if (beneficiariesActivateSuccess) {
+            setConfirmationModalState(false);
+        }
+    }, [currency, beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess]);
+
+    const handleDeleteAddress = React.useCallback((item: Beneficiary) => () => {
+        dispatch(beneficiariesDelete({ id: item.id }));
+    }, []);
+
+    const handleClickSelectAddress = React.useCallback((item: Beneficiary) => () => {
+        if (item.state && item.state.toLowerCase() === 'pending') {
+            dispatch(beneficiariesCreateData(item));
+            setConfirmationModalState(true);
+        } else {
+            handleSetCurrentAddress(item);
+        }
+    }, []);
+
+    const handleSetCurrentAddress = React.useCallback((item: Beneficiary) => {
+        if (item.data) {
+            setWithdrawalBeneficiary(item);
+            setDropdownState(false);
+            onChangeValue(item);
+        }
+    }, []);
+
+    const handleFilterByState = React.useCallback((beneficiariesList: Beneficiary[], filter: string | string[]) => {
+        if (beneficiariesList.length) {
+            return beneficiariesList.filter(item => filter.includes(item.state.toLowerCase()));
         }
 
-        if (nextProps.beneficiariesActivateSuccess && !beneficiariesActivateSuccess) {
-            this.handleToggleConfirmationModal();
+        return [];
+    }, []);
+
+    const handleClickToggleAddAddressModal = React.useCallback(() => () => {
+        if (memberLevels && (userData.level < memberLevels.withdraw.minimum_level)) {
+            setFailModalState(true);
+        } else if (beneficiaries && beneficiaries.length >= 10) {
+            dispatch(sendError({
+                error: { message: ['error.beneficiaries.max10.addresses'] },
+                processingType: 'alert',
+            }));
+        } else {
+            setAddressModalState(true);
         }
-    }
+    }, [beneficiaries]);
 
-    public render() {
-        const {
-            currency,
-            type,
-            beneficiaries,
-            beneficiariesAddData,
-            isMobileDevice,
-        } = this.props;
-        const {
-            currentWithdrawalBeneficiary,
-            isOpenAddressModal,
-            isOpenConfirmationModal,
-            isOpenFailModal,
-        } = this.state;
-        const filtredBeneficiaries = this.handleFilterByState(beneficiaries, ['active', 'pending']);
+    const handleSetCurrentAddressOnUpdate = React.useCallback((beneficiariesList: Beneficiary[]) => {
+        let filteredByState = handleFilterByState(beneficiariesList, 'active');
 
+        if (!filteredByState.length) {
+            filteredByState = handleFilterByState(beneficiariesList, 'pending');
+        }
+
+        if (filteredByState.length) {
+            handleSetCurrentAddress(filteredByState[0]);
+        }
+    }, []);
+
+    const renderAddAddress = React.useMemo(() => {
         return (
-            <div className="pg-beneficiaries">
-                <span className="pg-beneficiaries__title">{type === 'coin' ? this.translate('page.body.wallets.beneficiaries.title') : this.translate('page.body.wallets.beneficiaries.fiat.title')}</span>
-                {filtredBeneficiaries.length ? this.renderAddressDropdown(filtredBeneficiaries, currentWithdrawalBeneficiary, type) : this.renderAddAddress()}
-                {isOpenAddressModal && (
-                    <BeneficiariesAddModal
-                        currency={currency}
-                        type={type}
-                        handleToggleAddAddressModal={this.handleToggleAddAddressModal}
-                        handleToggleConfirmationModal={this.handleToggleConfirmationModal}
-                    />
-                )}
-                {isOpenConfirmationModal && (
-                    <BeneficiariesActivateModal
-                        beneficiariesAddData={beneficiariesAddData}
-                        handleToggleConfirmationModal={this.handleToggleConfirmationModal}
-                    />
-                )}
-                {isOpenFailModal && (
-                    <BeneficiariesFailAddModal isMobileDevice={isMobileDevice} handleToggleFailModal={this.handleToggleFailModal} />
-                )}
-            </div>
-        );
-    }
-
-    private renderAddAddress = () => {
-        return (
-            <div className="pg-beneficiaries__add" onClick={this.handleClickToggleAddAddressModal()}>
-                <span className="pg-beneficiaries__add__label">{this.translate('page.body.wallets.beneficiaries.addAddress')}</span>
+            <div className="pg-beneficiaries__add" onClick={handleClickToggleAddAddressModal()}>
+                <span className="pg-beneficiaries__add__label">
+                    {formatMessage({ id: 'page.body.wallets.beneficiaries.addAddress' })}
+                </span>
                 <PlusIcon className="pg-beneficiaries__add__icon" />
             </div>
         );
-    };
+    }, [formatMessage]);
 
-    private renderDropdownItem = (item: Beneficiary, index: number, type: 'fiat' | 'coin') => {
-        const isPending = item.state && item.state.toLowerCase() === 'pending';
-        const itemClassName = classnames('pg-beneficiaries__dropdown__body__item item', {
-            'item--pending': isPending,
-        });
-
-        if (type === 'fiat') {
-            return (
-                <div key={index} className={itemClassName}>
-                    <div className="item__left" onClick={this.handleClickSelectAddress(item)}>
-                        <span className="item__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.name')}</span>
-                        <span className="item__left__address">{item.name}</span>
-                    </div>
-                    <div className="item__left" onClick={this.handleClickSelectAddress(item)}>
-                        <span className="item__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.fullName')}</span>
-                        <span className="item__left__address">{item.data ? (item.data as BeneficiaryBank).full_name : ''}</span>
-                    </div>
-                    <div className="item__right">
-                        {isPending ? (
-                            <span className="item__right__pending">{this.translate('page.body.wallets.beneficiaries.dropdown.pending')}</span>
-                        ) : null}
-                        <span className="item__right__delete" onClick={this.handleClickDeleteAddress(item)}><TrashBin/></span>
-                    </div>
-                </div>
-            );
-        }
-
-        return (
-            <div key={index} className={itemClassName}>
-                <div className="item__left" onClick={this.handleClickSelectAddress(item)}>
-                    <span className="item__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.name')}</span>
-                    <span className="item__left__address">{item.name}</span>
-                </div>
-                <div className="item__right">
-                    {isPending ? (
-                        <span className="item__right__pending">{this.translate('page.body.wallets.beneficiaries.dropdown.pending')}</span>
-                    ) : null}
-                    <span className="item__right__delete" onClick={this.handleClickDeleteAddress(item)}><TrashBin/></span>
-                </div>
-            </div>
-        );
-    };
-
-    private renderDropdownBody = (beneficiaries: Beneficiary[], type: 'fiat' | 'coin') => {
-        const dropdownBodyClassName = classnames('pg-beneficiaries__dropdown__body', {
-            'fiat-body': type === 'fiat',
-        });
-
-        return (
-            <div className={dropdownBodyClassName}>
-                {beneficiaries && beneficiaries.map((item, index) => this.renderDropdownItem(item, index, type))}
-                <div className="pg-beneficiaries__dropdown__body__add add" onClick={this.handleClickToggleAddAddressModal()}>
-                    <span className="add__label">{this.translate('page.body.wallets.beneficiaries.addAddress')}</span>
-                    <PlusIcon className="add__icon" />
-                </div>
-            </div>
-        );
-    };
-
-    private renderDropdownTipCryptoNote = (note: string) => {
+    const renderDropdownTipCryptoNote = React.useCallback((note: string) => {
         return (
             <div className="tip__content__block">
-                <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.tipDescription')}</span>
+                <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipDescription' })}</span>
                 <span className="tip__content__block__value">{note}</span>
             </div>
         );
-    };
+    }, []);
 
-    private renderDropdownTipCrypto = (currentWithdrawalBeneficiary: Beneficiary) => {
+    const renderDropdownTipCrypto = React.useCallback((currentWithdrawalBeneficiary: Beneficiary) => {
         if (currentWithdrawalBeneficiary) {
             return (
                 <div className="pg-beneficiaries__dropdown__tip tip">
                     <div className="tip__content">
                         <div className="tip__content__block">
-                            <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.tipAddress')}</span>
+                            <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipAddress' })}</span>
                             <span className="tip__content__block__value">{currentWithdrawalBeneficiary.data.address}</span>
                         </div>
                         <div className="tip__content__block">
-                            <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.tipName')}</span>
+                            <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipName' })}</span>
                             <span className="tip__content__block__value">{currentWithdrawalBeneficiary.name}</span>
                         </div>
-                        {currentWithdrawalBeneficiary.description && this.renderDropdownTipCryptoNote(currentWithdrawalBeneficiary.description)}
+                        {currentWithdrawalBeneficiary.description && renderDropdownTipCryptoNote(currentWithdrawalBeneficiary.description)}
                     </div>
                 </div>
             );
         }
 
-        return;
-    };
+        return null;
+    }, []);
 
-    private renderDropdownTipFiatDescription = (description: string) => {
+    const renderDropdownTipFiatDescription = (description: string) => {
         return (
             <div className="tip__content__block">
-                <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.description')}</span>
+                <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.description' })}</span>
                 <span className="tip__content__block__value">{description}</span>
             </div>
         );
     };
 
-    private renderDropdownTipFiat = (currentWithdrawalBeneficiary: Beneficiary) => {
+    const renderDropdownTipFiat = React.useCallback((currentWithdrawalBeneficiary: Beneficiary) => {
         if (currentWithdrawalBeneficiary) {
             return (
                 <div className="pg-beneficiaries__dropdown__tip tip fiat-tip">
                     <div className="tip__content">
                         <div className="tip__content__block">
-                            <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.name')}</span>
-                            <span className="tip__content__block__value">{currentWithdrawalBeneficiary.name}</span>
+                            <span className="tip__content__block__label">
+                                {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.name' })}
+                            </span>
+                            <span className="tip__content__block__value">
+                                {currentWithdrawalBeneficiary.name}
+                            </span>
                         </div>
-                        {currentWithdrawalBeneficiary.description && this.renderDropdownTipFiatDescription(currentWithdrawalBeneficiary.description)}
+                        {currentWithdrawalBeneficiary.description && renderDropdownTipFiatDescription(currentWithdrawalBeneficiary.description)}
                         <div className="tip__content__block">
-                            <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.account')}</span>
-                            <span className="tip__content__block__value">{(currentWithdrawalBeneficiary.data as BeneficiaryBank).account_number}</span>
+                            <span className="tip__content__block__label">
+                                {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.account' })}
+                            </span>
+                            <span className="tip__content__block__value">
+                                {(currentWithdrawalBeneficiary.data as BeneficiaryBank).account_number}
+                            </span>
                         </div>
                         <div className="tip__content__block">
-                            <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.bankOfBeneficiary')}</span>
-                            <span className="tip__content__block__value">{(currentWithdrawalBeneficiary.data as BeneficiaryBank).bank_name}</span>
+                              <span className="tip__content__block__label">
+                                  {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.bankOfBeneficiary' })}
+                              </span>
+                            <span className="tip__content__block__value">
+                                {(currentWithdrawalBeneficiary.data as BeneficiaryBank).bank_name}
+                            </span>
                         </div>
                     </div>
                 </div>
             );
         }
 
-        return;
-    };
+        return null;
+    }, [isOpenDropdown]);
 
-    private renderAddressDropdown = (beneficiaries: Beneficiary[], currentWithdrawalBeneficiary: Beneficiary, type: 'fiat' | 'coin') => {
-        const { isOpenDropdown, isOpenTip } = this.state;
+
+    const renderAddressDropdown = React.useCallback((beneficiariesList: Beneficiary[], currentWithdrawalBeneficiary: Beneficiary, type: 'fiat' | 'coin') => {
         const isPending = currentWithdrawalBeneficiary.state && currentWithdrawalBeneficiary.state.toLowerCase() === 'pending';
 
         const dropdownClassName = classnames('pg-beneficiaries__dropdown', {
@@ -320,168 +251,192 @@ class BeneficiariesComponent extends React.Component<Props, State> {
         if (type === 'fiat') {
             return (
                 <div className={dropdownClassName}>
-                    <div className="pg-beneficiaries__dropdown__select fiat-select select" onClick={this.handleToggleDropdown}>
+                    <div className="pg-beneficiaries__dropdown__select fiat-select select" onClick={e => setDropdownState(!isOpenDropdown)}>
                         <div className="select__left">
-                            <span className="select__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.name')}</span>
+                            <span className="select__left__title">{formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.name' })}</span>
                             <span className="select__left__address">{currentWithdrawalBeneficiary.name}</span>
-                            <span className="select__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.fullName')}</span>
+                            <span className="select__left__title">{formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.fullName' })}</span>
                             <span className="select__left__address">{currentWithdrawalBeneficiary.data ? (currentWithdrawalBeneficiary.data as BeneficiaryBank).full_name : ''}</span>
                         </div>
                         <div className="select__right">
                             {isPending ? (
-                                <span className="select__right__pending">{this.translate('page.body.wallets.beneficiaries.dropdown.pending')}</span>
+                                <span className="select__right__pending">{formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.pending' })}</span>
                             ) : null}
-                            <span className="select__right__tip" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
-                            <span className="select__right__select">{this.translate('page.body.wallets.beneficiaries.dropdown.select')}</span>
+                            <span className="select__right__tip" onMouseOver={() => setTipState(true)} onMouseOut={() => setTipState(false)}><TipIcon/></span>
+                            <span className="select__right__select">{formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.select' })}</span>
                             <span className="select__right__chevron"><ChevronIcon /></span>
                         </div>
                     </div>
-                    {isOpenDropdown && this.renderDropdownBody(beneficiaries, type)}
-                    {isOpenTip && this.renderDropdownTipFiat(currentWithdrawalBeneficiary)}
+                    {isOpenDropdown && renderDropdownBody(beneficiaries, type)}
+                    {isOpenTip && renderDropdownTipFiat(currentWithdrawalBeneficiary)}
                 </div>
             );
         }
 
         return (
             <div className={dropdownClassName}>
-                <div className="pg-beneficiaries__dropdown__select select" onClick={this.handleToggleDropdown}>
+                <div className="pg-beneficiaries__dropdown__select select" onClick={() => setDropdownState(!isOpenDropdown)}>
                     <div className="select__left">
-                        <span className="select__left__title">{this.translate('page.body.wallets.beneficiaries.dropdown.name')}</span>
-                        <span className="select__left__address"><span>{currentWithdrawalBeneficiary.name}</span></span>
+                        <span className="select__left__title">
+                            {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.name' })}
+                        </span>
+                        <span className="select__left__address">
+                            <span>
+                                {currentWithdrawalBeneficiary.name}
+                            </span>
+                        </span>
                     </div>
                     <div className="select__right">
                         {isPending ? (
-                            <span className="select__right__pending">{this.translate('page.body.wallets.beneficiaries.dropdown.pending')}</span>
+                            <span className="select__right__pending">
+                                {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.pending' })}
+                            </span>
                         ) : null}
-                        <span className="select__right__tip" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
-                        <span className="select__right__select">{this.translate('page.body.wallets.beneficiaries.dropdown.select')}</span>
+                        <span className="select__right__tip" onMouseOver={() => setTipState(true)} onMouseOut={() => setTipState(false)}>
+                            <TipIcon/>
+                        </span>
+                        <span className="select__right__select">
+                            {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.select' })}
+                        </span>
                         <span className="select__right__chevron"><ChevronIcon /></span>
                     </div>
                 </div>
-                {isOpenDropdown && this.renderDropdownBody(beneficiaries, type)}
-                {isOpenTip && this.renderDropdownTipCrypto(currentWithdrawalBeneficiary)}
+                {isOpenDropdown && renderDropdownBody(beneficiariesList, type)}
+                {isOpenTip && renderDropdownTipCrypto(currentWithdrawalBeneficiary)}
             </div>
         );
-    };
+    }, [isOpenDropdown, isOpenTip]);
 
-    private handleClickDeleteAddress = (item: Beneficiary) => () => {
-        this.handleDeleteAddress(item);
-    };
+    const renderDropdownItem = React.useCallback((item: Beneficiary, index: number, type: OwnProps['type']) => {
+        const isPending = item.state && item.state.toLowerCase() === 'pending';
+        const itemClassName = classnames('pg-beneficiaries__dropdown__body__item', 'item', {
+            'item--pending': isPending,
+        });
 
-    private handleClickSelectAddress = (item: Beneficiary) => () => {
-        if (item.state && item.state.toLowerCase() === 'pending') {
-            this.props.beneficiariesCreateData({ id: item.id } as any);
-            this.handleToggleConfirmationModal();
-        } else {
-            this.handleSetCurrentAddress(item);
-        }
-    };
-
-    private handleClickToggleAddAddressModal = () => () => {
-        const { memberLevels, userData, beneficiaries } = this.props;
-
-        if (memberLevels && (userData.level < memberLevels.withdraw.minimum_level)) {
-            this.handleToggleFailModal();
-        } else if (beneficiaries && beneficiaries.length >= 10) {
-            this.props.sendError({
-                error: { message: ['error.beneficiaries.max10.addresses'] },
-                processingType: 'alert',
-            });
-        } else {
-            this.handleToggleAddAddressModal();
-        }
-    };
-
-    private handleDeleteAddress = (item: Beneficiary) => {
-        const payload = {
-            id: item.id,
-        };
-
-        this.props.deleteAddress(payload);
-    };
-
-    private handleFilterByState = (beneficiaries: Beneficiary[], filter: string | string[]) => {
-        if (beneficiaries.length) {
-            return beneficiaries.filter(item => filter.includes(item.state.toLowerCase()));
+        if (type === 'fiat') {
+            return (
+                <div key={index} className={itemClassName}>
+                    <div className="item__left" onClick={handleClickSelectAddress(item)}>
+                        <span className="item__left__title">
+                            {formatMessage({ id:'page.body.wallets.beneficiaries.dropdown.fiat.name' })}
+                        </span>
+                        <span className="item__left__address">
+                            {item.name}
+                        </span>
+                    </div>
+                    <div className="item__left" onClick={handleClickSelectAddress(item)}>
+                        <span className="item__left__title">
+                            {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.fullName' })}
+                        </span>
+                        <span className="item__left__address">
+                            {item.data ? (item.data as BeneficiaryBank).full_name : ''}
+                        </span>
+                    </div>
+                    <div className="item__right">
+                        {isPending && (
+                            <span className="item__right__pending" onClick={handleClickSelectAddress(item)}>
+                                {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.pending' })}
+                            </span>
+                        )}
+                        <span className="item__right__delete" onClick={handleDeleteAddress(item)}>
+                            <TrashBin/>
+                        </span>
+                    </div>
+                </div>
+            );
         }
 
-        return [];
-    };
+        return (
+            <div key={index} className={itemClassName}>
+                <div className="item__left" onClick={handleClickSelectAddress(item)}>
+                    <span className="item__left__title">
+                        {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.name' })}
+                    </span>
+                    <span className="item__left__address">
+                        {item.name}
+                    </span>
+                </div>
+                <div className="item__right">
+                    {isPending ? (
+                        <span className="item__right__pending">
+                            {formatMessage({ id:'page.body.wallets.beneficiaries.dropdown.pending' })}
+                        </span>
+                    ) : null}
+                    <span className="item__right__delete" onClick={handleDeleteAddress(item)}>
+                        <TrashBin/>
+                    </span>
+                </div>
+            </div>
+        );
+    }, [type]);
 
-    private handleSetCurrentAddress = (item: Beneficiary) => {
-        if (item.data) {
-            this.setState({
-                currentWithdrawalBeneficiary: item,
-                isOpenDropdown: false,
-            });
-            this.props.onChangeValue(item);
-        }
-    };
+    const renderDropdownBody = React.useCallback((beneficiariesList: Beneficiary[], type: 'fiat' | 'coin') => {
+        const dropdownBodyClassName = classnames('pg-beneficiaries__dropdown__body', {
+            'fiat-body': type === 'fiat',
+        });
 
-    private handleSetCurrentAddressOnUpdate = (beneficiaries: Beneficiary[]) => {
-        let filteredByState = this.handleFilterByState(beneficiaries, 'active');
+        return (
+            <div className={dropdownBodyClassName}>
+                {beneficiariesList && beneficiariesList.map((item, index) => renderDropdownItem(item, index, type))}
+                <div className="pg-beneficiaries__dropdown__body__add add" onClick={handleClickToggleAddAddressModal()}>
+                    <span className="add__label">
+                        {formatMessage({ id: 'page.body.wallets.beneficiaries.addAddress' })}
+                    </span>
+                    <PlusIcon className="add__icon" />
+                </div>
+            </div>
+        );
+    }, []);
 
-        if (!filteredByState.length) {
-            filteredByState = this.handleFilterByState(beneficiaries, 'pending');
-        }
+    const renderBeneficiariesAddModal = React.useMemo(() => {
+        return (
+            <BeneficiariesAddModal
+                currency={currency}
+                type={type}
+                handleToggleAddAddressModal={() => setAddressModalState(false)}
+            />
+        );
+    }, [currency, type]);
 
-        if (filteredByState.length) {
-            this.handleSetCurrentAddress(filteredByState[0]);
-        }
-    };
+    const renderActivateModal = React.useMemo(() => {
+        return (
+            <BeneficiariesActivateModal
+                beneficiariesAddData={beneficiariesAddData}
+                handleToggleConfirmationModal={() => setConfirmationModalState(false)}
+            />
+        );
+    }, []);
 
-    private handleToggleAddAddressModal = () => {
-        this.setState(prevState => ({
-            isOpenAddressModal: !prevState.isOpenAddressModal,
-        }));
-    };
+    const renderFailModal = React.useMemo(() => {
+        return (
+            <BeneficiariesFailAddModal
+                isMobileDevice={isMobileDevice}
+                handleToggleFailModal={() => setFailModalState(false)}
+            />
+        );
+    }, []);
 
-    private handleToggleConfirmationModal = () => {
-        this.setState(prevState => ({
-            isOpenConfirmationModal: !prevState.isOpenConfirmationModal,
-        }));
-    };
+    const filtredBeneficiaries = React.useMemo(() =>
+        handleFilterByState(beneficiaries, ['active', 'pending']), [beneficiaries]);
 
-    private handleToggleFailModal = () => {
-        this.setState(prevState => ({
-            isOpenFailModal: !prevState.isOpenFailModal,
-        }));
-    };
-
-    private handleToggleDropdown = () => {
-        this.setState(prevState => ({
-            isOpenDropdown: !prevState.isOpenDropdown,
-        }));
-    };
-
-    private handleToggleTip = () => {
-        this.setState(prevState => ({
-            isOpenTip: !prevState.isOpenTip,
-        }));
-    };
-
-    private translate = (id: string) => this.props.intl.formatMessage({ id });
+    return (
+        <div className="pg-beneficiaries">
+            <span className="pg-beneficiaries__title">
+                {props.type === 'coin'
+                    ? formatMessage({ id: 'page.body.wallets.beneficiaries.title' })
+                    : formatMessage({ id: 'page.body.wallets.beneficiaries.fiat.title'})
+                }
+            </span>
+            {filtredBeneficiaries.length ? renderAddressDropdown(filtredBeneficiaries, currentWithdrawalBeneficiary, type) : renderAddAddress}
+            {isOpenAddressModal && renderBeneficiariesAddModal}
+            {isOpenConfirmationModal && renderActivateModal}
+            {isOpenFailModal && renderFailModal}
+        </div>
+    );
 }
 
-const mapStateToProps = (state: RootState): ReduxProps => ({
-    beneficiaries: selectBeneficiaries(state),
-    beneficiariesAddData: selectBeneficiariesCreate(state),
-    memberLevels: selectMemberLevels(state),
-    beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
-    userData: selectUserInfo(state),
-    isMobileDevice: selectMobileDeviceState(state),
-    beneficiariesActivateSuccess: selectBeneficiariesActivateSuccess(state),
-});
+const Beneficiaries = React.memo(BeneficiariesComponent);
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
-    deleteAddress: payload => dispatch(beneficiariesDelete(payload)),
-    memberLevelsFetch: () => dispatch(memberLevelsFetch()),
-    beneficiariesCreateData: payload => dispatch(beneficiariesCreateData(payload)),
-    sendError: payload => dispatch(sendError(payload)),
-});
-
-// tslint:disable-next-line:no-any
-export const Beneficiaries = compose(
-    injectIntl,
-    connect(mapStateToProps, mapDispatchToProps),
-)(BeneficiariesComponent) as any; // tslint:disable-line
+export {
+    Beneficiaries,
+};
