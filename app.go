@@ -8,8 +8,8 @@ import (
 	"github.com/openware/pkg/ika"
 	"github.com/openware/pkg/kli"
 	"github.com/openware/sonic"
-	"github.com/openware/baseapp/handlers"
-	"github.com/openware/baseapp/models"
+	"baseapp/handlers"
+	"baseapp/models"
 )
 
 // Version of the application displayed by the cli and the version endpoint
