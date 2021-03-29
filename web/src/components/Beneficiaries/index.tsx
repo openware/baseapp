@@ -17,6 +17,7 @@ import {
     selectUserInfo,
     sendError,
     beneficiariesResetState,
+    selectBeneficiariesDeleteSuccess,
 } from '../../modules';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
@@ -63,6 +64,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     const beneficiariesAddData = useSelector(selectBeneficiariesCreate);
     const beneficiariesAddSuccess = useSelector(selectBeneficiariesCreateSuccess);
     const beneficiariesActivateSuccess = useSelector(selectBeneficiariesActivateSuccess);
+    const beneficiariesDeleteSuccess = useSelector(selectBeneficiariesDeleteSuccess);
     const memberLevels = useSelector(selectMemberLevels);
     const userData = useSelector(selectUserInfo);
     const isMobileDevice = useSelector(selectMobileDeviceState);
@@ -79,10 +81,12 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     }, []);
 
     React.useEffect(() => {
-        if (currency) {
+        if (currency || beneficiariesDeleteSuccess) {
             dispatch(beneficiariesResetState());
         }
+    }, [currency, beneficiariesDeleteSuccess]);
 
+    React.useEffect(() => {
         if (beneficiaries) {
             handleSetCurrentAddressOnUpdate(beneficiaries);
         }
@@ -95,7 +99,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         if (beneficiariesActivateSuccess) {
             setConfirmationModalState(false);
         }
-    }, [currency, beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess]);
+    }, [beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess]);
 
     const handleDeleteAddress = React.useCallback((item: Beneficiary) => () => {
         dispatch(beneficiariesDelete({ id: item.id }));
@@ -405,7 +409,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                 handleToggleConfirmationModal={() => setConfirmationModalState(false)}
             />
         );
-    }, []);
+    }, [beneficiariesAddData]);
 
     const renderFailModal = React.useMemo(() => {
         return (
