@@ -40,7 +40,6 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     const [amountError, setAmountError] = useState<string>('');
     const [lowLimitError, setLowLimitError] = useState<string>('');
     const [paymentMethodError, setPaymentMethodError] = useState<string>('');
-    const [pmLength, setPMLength] = useState<number>(0);
 
     const { asset, cash, side, amount, timeLimit, lowLimit, topLimit, paymentMethods } = props;
     const { formatMessage } = useIntl();
@@ -51,7 +50,6 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     useEffect(() => {
         if (userPM.length && !paymentMethods.length) {
             props.handleSetPaymentMethods([ userPM[0] ]);
-            setPMLength(1);
         }
     }, [userPM, paymentMethods, props.handleSetPaymentMethods]);
 
@@ -96,10 +94,10 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
         defineLowLimitError(lowLimit, convertedValue);
     }, [cash, lowLimit, props.handleSetTopLimit]);
 
-    const handleSelectPaymentMethod = React.useCallback((index: number, offerIndex: number) => {
-        props.handleUpdatePaymentMethods(userPM[index], offerIndex);
+    const handleSelectPaymentMethod = React.useCallback((index: number, dpIndex: number) => {
+        props.handleUpdatePaymentMethods(pmList(dpIndex)[index], dpIndex);
         definePaymentError(paymentMethods);
-    }, [userPM, props.handleUpdatePaymentMethods]);
+    }, [paymentMethods, props.handleUpdatePaymentMethods]);
 
     const defineAmountError = React.useCallback((value: string) => {
         let error = '';
@@ -165,14 +163,15 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
 
     const handleClickDelete = React.useCallback((index: number) => {
         props.handleRemovePaymentMethod(index);
-        setPMLength(pmLength - 1);
+    }, [props.handleRemovePaymentMethod]);
 
-    }, [pmLength, props.handleRemovePaymentMethod]);
+    const handleClickAdd = React.useCallback((dpIndex) => {
+        props.handleSetPaymentMethods([ ...paymentMethods, userPM.filter(el =>  !paymentMethods.includes(el))[0] ]);
+    }, [props.handleSetPaymentMethods, paymentMethods, userPM]);
 
-    const handleClickAdd = React.useCallback(() => {
-        setPMLength(pmLength + 1);
-        props.handleSetPaymentMethods([ ...paymentMethods, userPM[0] ]);
-    }, [pmLength, props.handleSetPaymentMethods, paymentMethods, userPM]);
+    const pmList = React.useCallback((dpIndex: number) => {
+        return userPM.filter(el => paymentMethods[dpIndex] === el || !paymentMethods.includes(el));
+    }, [paymentMethods, userPM]);
 
     const renderDPItem = React.useCallback((_, dpIndex) => {
         return (
@@ -183,16 +182,16 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                         <DropdownComponent
                             key={dpIndex}
                             className="cr-create-offer__dp-dropdown"
-                            list={userPM.map(renderPMItem)}
+                            list={pmList(dpIndex).map(renderPMItem)}
                             iconsList={iconsList()}
                             onSelect={index => handleSelectPaymentMethod(index, dpIndex)}
-                            placeholder={renderPMItem(userPM[dpIndex])}
+                            placeholder={renderPMItem(paymentMethods[dpIndex])}
                         />
                     </div>
-                    {(dpIndex === pmLength - 1) || (pmLength === 1) ? userPM.length > pmLength && (
+                    {(dpIndex === paymentMethods.length - 1) || (paymentMethods.length === 1) ? userPM.length > paymentMethods.length && (
                         <div className="payment-method__btn-wrapper">
                             <Button
-                                onClick={handleClickAdd}
+                                onClick={() => handleClickAdd(dpIndex)}
                                 size="lg"
                                 variant="outline-primary"
                             >
@@ -215,7 +214,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                 </div>
             </React.Fragment>
         )
-    }, [userPM, pmLength]);
+    }, [userPM, paymentMethods]);
 
     return (
         <div className="cr-create-offer">
@@ -282,7 +281,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                             {translate('page.body.p2p.create.offer.select_2_label')}
                         </p>
                     </div>
-                    {userPM.length ? Array.from(Array(pmLength).keys()).map(renderDPItem) : (
+                    {userPM.length ? Array.from(Array(paymentMethods.length).keys()).map(renderDPItem) : (
                         <React.Fragment>
                             <div className="cr-create-offer__dp-label">{translate('page.body.p2p.create.offer.payment_method')}</div>
                             <div>
