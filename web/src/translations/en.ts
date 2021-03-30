@@ -224,7 +224,7 @@ export const en = {
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag': 'Destination Tag (optional)',
 
-    'page.body.wallets.beneficiaries.addAddressModal.body.fiatName': 'Description',
+    'page.body.wallets.beneficiaries.addAddressModal.body.fiatName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName': 'Full Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatAccountNumber': 'Account Number',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankName': 'Bank Name',
