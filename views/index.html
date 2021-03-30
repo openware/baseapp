@@ -1,22 +1,8 @@
 {{define "head"}}
-    <head>
-        {{ if .cssFiles}}
-            {{range .cssFiles}}
-                <link href={{ . }} rel="stylesheet">
-            {{end}}
-        {{end}}
-    </head>
 {{end}}
-
 
 {{define "content"}}
     <body>
-        <div id={{ .rootID }}></div>
-        {{ if .jsFiles}}
-            {{range .jsFiles}}
-                <script src="{{ . }}"></script>
-            {{end}}
-        {{end}}
-
+        {{ .data }}
     </body>
 {{end}}

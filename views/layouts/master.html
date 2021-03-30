@@ -5,11 +5,23 @@
     <head>
         <title>{{.title}}</title>
         {{template "head" .}}
+        {{ if .cssFiles}}
+            {{range .cssFiles}}
+                <link href={{ . }} rel="stylesheet">
+            {{end}}
+        {{end}}
     </head>
 
     <body>
+        <script src="/public/assets/config.js"></script>
+        <div id={{ .rootID }}></div>
         {{template "content" .}}
         <hr>
         {{include "layouts/footer"}}
+        {{ if .jsFiles}}
+            {{range .jsFiles}}
+                <script src="{{ . }}"></script>
+            {{end}}
+        {{end}}
     </body>
 </html>
