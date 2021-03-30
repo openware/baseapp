@@ -17,6 +17,7 @@ import {
     BENEFICIARIES_RESEND_PIN,
     BENEFICIARIES_RESEND_PIN_DATA,
     BENEFICIARIES_RESEND_PIN_ERROR,
+    BENEFICIARIES_RESET_STATE,
 } from './constants';
 import { Beneficiary } from './types';
 
@@ -276,11 +277,9 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
         case BENEFICIARIES_DATA:
         case BENEFICIARIES_DATA_UPDATE:
         case BENEFICIARIES_ERROR:
-            const beneficiariesFetchState = { ...state.fetch };
-
             return {
                 ...state,
-                fetch: beneficiariesFetchReducer(beneficiariesFetchState, action),
+                fetch: beneficiariesFetchReducer({...state.fetch}, action),
             };
         case BENEFICIARIES_CREATE:
         case BENEFICIARIES_CREATE_DATA:
@@ -309,6 +308,14 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
                 ...state,
                 resendPin: beneficiariesResendPinReducer(beneficiariesResendPinState, action),
             };
+        case BENEFICIARIES_RESET_STATE:
+            return {
+                ...state,
+                create: initialBeneficiariesState.create,
+                activate: initialBeneficiariesState.activate,
+                resendPin: initialBeneficiariesState.resendPin,
+                delete: initialBeneficiariesState.delete,
+            }
         default:
             return state;
     }

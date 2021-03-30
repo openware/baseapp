@@ -105,9 +105,9 @@ const SignIn: React.FC<SignInProps> = ({
         [handleChangeFocusField]
     );
 
-    const isButtonDisabled = (): boolean => {
-        return ((captchaLogin() && captchaType !== 'none' && !reCaptchaSuccess && !geetestCaptchaSuccess)) ? true : false;
-    };
+    const isButtonDisabled = React.useMemo(() =>
+        !!(captchaLogin() && captchaType !== 'none' && !(reCaptchaSuccess || geetestCaptchaSuccess)),
+    [reCaptchaSuccess, geetestCaptchaSuccess]);
 
     const handleSubmitForm = React.useCallback(() => {
         refreshError();
@@ -233,7 +233,7 @@ const SignIn: React.FC<SignInProps> = ({
                         <Button
                             block={true}
                             type="button"
-                            disabled={isLoading || !email.match(EMAIL_REGEX) || !password || isButtonDisabled()}
+                            disabled={isLoading || !email.match(EMAIL_REGEX) || !password || isButtonDisabled}
                             onClick={handleClick as any}
                             size="lg"
                             variant="primary">
