@@ -24,7 +24,7 @@ import {
 } from '../../../helpers';
 
 export interface SetupRegisterFormProps {
-    handleRegister: (email: string, password: string, confirmPassword: string) => void;
+    handleRegister: (email: string, password: string) => void;
 }
 
 interface SetupRegisterFormState {
@@ -236,7 +236,7 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
     private handleRegister = () => {
         const { email, password, confirmPassword } = this.state;
 
-        this.props.handleRegister(email, password, confirmPassword);
+        this.props.handleRegister(email, password);
     };
 
     private translate = (id: string) =>

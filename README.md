@@ -6,6 +6,10 @@ This application was generated with [sonic](https://github.com/openware/sonic)
 
 To bring up all the dependencies, run `docker-compose up -Vd`
 
+Afterwards, enable the Transit engine for Vault with `vault secrets enable transit`
+
+Also, you may want to run `source .env` to load Peatio, Barong and Sonic public keys for development use
+
 [Optional] To load the Vault policy and create a token, follow these steps:
 1. Open `config/sonic.hcl` and substitute `deployment_id` with your actual deployment ID
 2. Run
@@ -15,6 +19,31 @@ export VAULT_TOKEN=*changeme*
 vault policy write *deployment_id*_sonic config/sonic.hcl
 vault token create -policy *deployment_id*_sonic -period=768h
 ```
+
+##### Peatio Management Scopes
+```
+  read_engines:
+    mandatory_signers:
+      - sonic
+    permitted_signers:
+      - sonic
+  write_engines:
+    mandatory_signers:
+      - sonic
+    permitted_signers:
+      - sonic
+  read_markets:
+    mandatory_signers:
+      - sonic
+    permitted_signers:
+      - sonic
+  write_markets:
+    mandatory_signers:
+      - sonic
+    permitted_signers:
+      - sonic
+```
+
 3. Use the resulting Vault token when running the application
 
 ## How to run Sonic with a frontend

@@ -285,13 +285,12 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         this.props.signIn(payload);
     };
 
-    private handleRegister = (email: string, password: string, confirmPassword: string) => {
-        const { i18n } = this.props;
+    private handleRegister = (email: string, password: string) => {
         const payload = {
             email,
             password,
             data: JSON.stringify({
-                language: i18n,
+                language: 'en',
             }),
         };
         const callbackAction = {

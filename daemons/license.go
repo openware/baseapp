@@ -23,33 +23,31 @@ type LicenseResponse struct {
 	Expire  int64  `json:"expire"`
 }
 
-func parseLicense(lic, component string) (int64, int64, error) {
+type License struct {
+	Finex struct {
+		Creation int64 `json:"creation"`
+		Expire   int64 `json:"expire"`
+	}
+}
+
+func parseLicense(lic string) (int64, int64, error) {
 	s := strings.Split(lic, ".")
 	if len(s) != 3 {
-		return 0, 0, fmt.Errorf("Unexpected license format")
+		return 0, 0, fmt.Errorf("ERR: parseLicense: unexpected license format")
 	}
 
 	data, err := base64.RawURLEncoding.DecodeString(s[1])
 	if err != nil {
-		return 0, 0, err
+		return 0, 0, fmt.Errorf("ERR: parseLicense: license decode: %s", err)
 	}
 
-	license := make(map[string]interface{})
-	json.Unmarshal(data, &license)
-
-	c := license[component].(map[string]interface{})
-
-	exp, err := c["expire"].(json.Number).Int64()
+	var license License
+	err = json.Unmarshal(data, &license)
 	if err != nil {
-		return 0, 0, err
+		return 0, 0, fmt.Errorf("ERR: parseLicense: license unmarshal: %s", err)
 	}
 
-	cre, err := c["creation"].(json.Number).Int64()
-	if err != nil {
-		return 0, 0, err
-	}
-
-	return exp, cre, nil
+	return license.Finex.Expire, license.Finex.Creation, nil
 }
 
 // LicenseRenewal to periodic check and renew license before expire
@@ -58,13 +56,18 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 		for {
 			lic, err := getLicenseFromVault(appName, vaultService)
 			if err != nil {
-				log.Println("License is not found in vault")
+				log.Printf("ERR: LicenseRenewal: %s", err)
 				break
 			}
 
-			expire, creation, err := parseLicense(lic, appName)
+			expire, creation, err := parseLicense(lic)
 			if err != nil {
 				log.Println(err.Error())
+				break
+			}
+
+			if expire == 0 {
+				log.Println("LicenseRenewal: the license does not expire")
 				break
 			}
 
@@ -74,7 +77,7 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 				break
 			}
 
-			err = createNewLicense(appName, app, vaultService)
+			err = CreateNewLicense(appName, &app.Conf.Opendax, vaultService)
 			if err != nil {
 				log.Println(err.Error())
 				break
@@ -88,13 +91,12 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 	}
 }
 
-func createNewLicense(appName string, app *sonic.Runtime, vaultService *vault.Service) error {
+func CreateNewLicense(appName string, opendaxConfig *sonic.OpendaxConfig, vaultService *vault.Service) error {
 	platformID, err := getPlatformIDFromVault(vaultService)
 	if err != nil {
 		return err
 	}
 
-	opendaxConfig := app.Conf.Opendax
 	url, err := url.Parse(opendaxConfig.Addr)
 	if err != nil {
 		return err
@@ -117,6 +119,9 @@ func createNewLicense(appName string, app *sonic.Runtime, vaultService *vault.Se
 	}
 	t := jwtgo.New(jwtgo.GetSigningMethod("RS256"))
 	jwtToken, err := t.SignedString(key)
+	if err != nil {
+		return err
+	}
 
 	req, err := http.NewRequest(http.MethodPost, url.String(), nil)
 	if err != nil {
@@ -127,7 +132,6 @@ func createNewLicense(appName string, app *sonic.Runtime, vaultService *vault.Se
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("PlatformID", platformID)
 	req.Header.Add("Authorization", "Bearer "+jwtToken)
-
 	// Call HTTP request
 	httpClient := &http.Client{}
 	res, err := httpClient.Do(req)
@@ -143,7 +147,7 @@ func createNewLicense(appName string, app *sonic.Runtime, vaultService *vault.Se
 	}
 	// Check for API error
 	if res.StatusCode != http.StatusCreated {
-		return fmt.Errorf("Unexpected status %d", res.StatusCode)
+		return fmt.Errorf("ERR: CreateNewLicense: Unexpected opx API response status %d", res.StatusCode)
 	}
 
 	license := LicenseResponse{}
@@ -175,7 +179,7 @@ func getPlatformIDFromVault(vaultService *vault.Service) (string, error) {
 	}
 
 	if result == nil {
-		return "", fmt.Errorf("Kaigara config %s.%s.%s not found", app, scope, key)
+		return "", fmt.Errorf("ERR: getPlatformIDFromVault: kaigara config %s.%s.%s not found", app, scope, key)
 	}
 
 	return result.(string), nil
@@ -205,12 +209,17 @@ func getLicenseFromVault(app string, vaultService *vault.Service) (string, error
 	vaultService.LoadSecrets(app, scope)
 
 	// Get secret
-	license, err := vaultService.GetSecret(app, "finex_license_key", scope)
+	licRaw, err := vaultService.GetSecret(app, "finex_license_key", scope)
 	if err != nil {
 		return "", err
 	}
 
-	return license.(string), nil
+	lic, ok := licRaw.(string)
+	if !ok {
+		return "", fmt.Errorf("ERR: getLicenseFromVault: The license key is empty in Vault")
+	}
+
+	return lic, nil
 }
 
 func saveLicenseToVault(app string, vaultService *vault.Service, license string) error {

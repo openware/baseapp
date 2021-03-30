@@ -10,6 +10,14 @@ import (
 	"github.com/openware/sonic"
 )
 
+// SonicContextMiddleware middleware to set sonic config to gin context
+func SonicContextMiddleware(ctx *SonicContext) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Set("sctx", ctx)
+		c.Next()
+	}
+}
+
 // OpendaxConfigMiddleware middleware to set kaigara config to gin context
 func OpendaxConfigMiddleware(config *sonic.OpendaxConfig) gin.HandlerFunc {
 	return func(c *gin.Context) {

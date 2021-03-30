@@ -26,6 +26,15 @@ func GetOpendaxConfig(ctx *gin.Context) (*sonic.OpendaxConfig, error) {
 	return config, nil
 }
 
+func GetSonicCtx(ctx *gin.Context) (*SonicContext, error) {
+	sctx, ok := ctx.MustGet("sctx").(*SonicContext)
+	if !ok {
+		return nil, fmt.Errorf("Sonic config is not found")
+	}
+
+	return sctx, nil
+}
+
 // GetAuth helper return auth from gin context
 func GetAuth(ctx *gin.Context) (*jwt.Auth, error) {
 	auth, ok := ctx.MustGet("auth").(*jwt.Auth)
