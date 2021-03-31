@@ -1,0 +1,38 @@
+.cr-wallets-header {
+  background: var(--body-background-color);
+  border-radius: 3px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__search {
+    .cr-search {
+      width: max-content;
+      border: 1px solid var(--input-border-color);
+      background: var(--input-background-color);
+      padding: 0 0 0 4px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      margin: 0;
+
+      input {
+        font-size: 16px;
+        letter-spacing: 0.1px;
+        padding: 5px 8px;
+        width: 132px;
+      }
+
+      &__cancel {
+        display: none;
+      }
+    }
+  }
+
+  &__checkbox {
+    margin-left: 12px;
+  }
+}

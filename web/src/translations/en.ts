@@ -1141,6 +1141,24 @@ export const en = {
     'page.body.p2p.my.offers.table.action': 'Action',
     'page.body.p2p.my.offers.table.cancel': 'Cancel',
 
+    // Wallets screen
+
+    'page.body.wallets.tab.overview': 'Overview',
+    'page.body.wallets.tab.spot': 'Spot',
+    'page.body.wallets.tab.p2p': 'P2P',
+    'page.body.wallets.tab.transfer': 'Transfer',
+    'page.body.wallets.overview.header.wallet': 'Wallet',
+    'page.body.wallets.overview.header.total': 'Total balance',
+    'page.body.wallets.overview.header.estimated': 'Estimated value',
+    'page.body.wallets.overview.header.spot': 'Spot balance',
+    'page.body.wallets.overview.header.p2p': 'P2P balance',
+    'page.body.wallets.overview.action.deposit': 'Deposit',
+    'page.body.wallets.overview.action.withdraw': 'Withdraw',
+    'page.body.wallets.overview.action.transfer': 'Transfer',
+    'page.body.wallets.overview.action.p2p': 'P2P',
+    'page.body.wallets.overview.seach': 'Search',
+    'page.body.wallets.overview.nonZero': 'Non Zero Balances',
+
     ...nationalitiesNames,
     ...customTranslations,
     ...mobileTranslations,

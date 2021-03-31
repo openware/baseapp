@@ -109,8 +109,8 @@ class EstimatedValueContainer extends React.Component<Props> {
 
         return (
             <div className="pg-estimated-value">
+                <span className="pg-estimated-value__title">{this.translate('page.body.wallets.estimated_value')}</span>
                 <div className="pg-estimated-value__container">
-                    {this.translate('page.body.wallets.estimated_value')}
                     <span className="value-container">
                         <span className="value">
                             {formatWithSeparators(estimatedValue, ',')}

@@ -1,27 +1,44 @@
 .pg-estimated-value {
   background: var(--body-background-color);
   display: flex;
+  margin: 24px auto 0;
+  width: 95%;
+  max-width: 1368px;
+  border-radius: 3px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 24px;
+  flex-direction: column;
+
+  &__title {
+    color: var(--secondary-contrast-cta-color);
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
 
   &__container {
-    margin: 3px auto;
-    padding: 5px;
-    width: 1368px;
+    display: flex;
+    flex-direction: row;
 
     .value-container {
-      font-size: 120%;
-      margin-left: var(--gap);
-      vertical-align: middle;
+      color: var(--primary-text-color);
+      margin-right: 48px;
+      display: flex;
+      align-items: center;
 
       .value {
+        font-size: 22px;
         color: var(--primary-text-color);
       }
 
       .value-sign {
-        background: var(--primary-cta-color);
-        border-radius: 10%;
-        color: var(--cta-layer-color);
-        margin-left: var(--gap);
+        background: var(--primary-cta-color-level-1);
+        border-radius: 3px;
+        color: var(--primary-cta-color);
+        margin-left: 6px;
         padding: 3px;
+        font-size: 14px;
+        letter-spacing: 0.0357143em;
       }
     }
   }
