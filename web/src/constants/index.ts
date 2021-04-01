@@ -1,25 +1,18 @@
+import { CanCan } from 'src/containers';
+import { AbilitiesInterface } from 'src/modules';
 import { DropdownElem } from '../components/Order';
 
 export const PG_TITLE_PREFIX = 'Cryptobase';
 
-export const pgRoutes = (isLoggedIn: boolean, CanCan: boolean, isLight?: boolean): string[][] => {
+export const pgRoutes = (isLoggedIn: boolean, abilities: AbilitiesInterface, isLight?: boolean): string[][] => {
     const routes = [
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
+        CanCan.checkAbilityByAction('read', 'QuickExchange', abilities) && ['page.header.navbar.quick.exchange', '/quick-exchange', `quick_exchange${isLight ? 'Light' : ''}`],
         ['page.header.navbar.wallets', '/wallets', `wallets${isLight ? 'Light' : ''}`],
         ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
         ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
+        CanCan.checkAbilityByAction('read', 'P2P', abilities) && ['page.header.navbar.p2p', '/p2p', `p2p${isLight ? 'Light' : ''}`],
         ['page.header.navbar.api', '/api', `api${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.internal.transfer', '/internal-transfer', `internal_transfer${isLight ? 'Light' : ''}`],
-    ];
-
-    const routesFinexAbilities = [
-        ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.quick.exchange', '/quick-exchange', `quick_exchange${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.wallets', '/wallets', `wallets${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.p2p', '/p2p', `p2p${isLight ? 'Light' : ''}`],
         ['page.header.navbar.internal.transfer', '/internal-transfer', `internal_transfer${isLight ? 'Light' : ''}`],
     ];
 
@@ -29,11 +22,7 @@ export const pgRoutes = (isLoggedIn: boolean, CanCan: boolean, isLight?: boolean
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
     ];
 
-    if (CanCan) {
-        return isLoggedIn ? routesFinexAbilities : routesUnloggedIn;
-    }
-
-    return isLoggedIn ? routes : routesUnloggedIn;
+    return isLoggedIn ? routes.filter(i => Boolean(i)) : routesUnloggedIn;
 };
 
 export const DEFAULT_CCY_PRECISION = 4;

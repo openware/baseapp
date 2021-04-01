@@ -1,12 +1,16 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { TabPanel } from 'src/components';
 import { P2POffers } from 'src/containers/P2POffers';
 import { P2POffersHeader } from 'src/containers/P2POffers/P2POffersHeader';
 import { useDocumentTitle, useP2PCurrenciesFetch, useP2PPaymentMethodsFetch, useRangerConnectFetch } from 'src/hooks';
 import { selectP2PCurrenciesData, selectP2PPaymentMethodsData } from 'src/modules';
+
+interface ParamType {
+    currency?: string;
+}
 
 export const P2POffersScreen: FC = (): ReactElement => {
     const [tab, setTab] = useState<string>('');
@@ -20,6 +24,8 @@ export const P2POffersScreen: FC = (): ReactElement => {
     const currencies = useSelector(selectP2PCurrenciesData);
     const paymentMethods = useSelector(selectP2PPaymentMethodsData);
     const { formatMessage } = useIntl();
+    const history = useHistory();
+    const { currency } = useParams<ParamType>();
 
     useRangerConnectFetch();
     useP2PCurrenciesFetch();
@@ -38,8 +44,25 @@ export const P2POffersScreen: FC = (): ReactElement => {
         }
     }, [currencies]);
 
+    useEffect(() => {
+        if (tabMapping.length) {
+            if (currency) {
+                const index = tabMapping.indexOf(currency);
+                if (index !== -1) {
+                    setTab(currency);
+                    setCurrentTabIndex(index);
+                }
+            } else {
+                history.push(`/p2p/${tabMapping[0]}`);
+            }
+        }
+    }, [currency, tabMapping, history]);
+
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
-    const onCurrentTabChange = useCallback((index: number) => setCurrentTabIndex(index), []);
+    const onCurrentTabChange = useCallback((index: number) => {
+        setCurrentTabIndex(index);
+        history.push(`/p2p/${tabMapping[index]}`);
+    }, [history, tabMapping]);
 
     const onTabChange = useCallback((index: number) => {
         renderTabs();

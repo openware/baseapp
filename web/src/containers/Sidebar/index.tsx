@@ -94,7 +94,7 @@ class SidebarContainer extends React.Component<Props, State> {
         return (
             <div className={sidebarClassName}>
                 {this.renderProfileLink()}
-                <div className="pg-sidebar-wrapper-nav">{pgRoutes(isLoggedIn, CanCan.checkAbilityByAction('read', 'QuickExchange', this.props.abilities)).map(this.renderNavItems(address))}</div>
+                <div className="pg-sidebar-wrapper-nav">{pgRoutes(isLoggedIn, this.props.abilities).map(this.renderNavItems(address))}</div>
                 <div className="pg-sidebar-wrapper-lng">
                     <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-menu-language-container">
                         <Dropdown>

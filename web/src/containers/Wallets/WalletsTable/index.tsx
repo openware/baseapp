@@ -1,12 +1,11 @@
 import React, { FC, ReactElement, useCallback, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CryptoIcon } from 'src/components/CryptoIcon';
 import { Decimal, formatWithSeparators, Table } from 'src/components';
-import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useWalletsFetch } from 'src/hooks';
-import { selectAbilities, selectCurrencies, selectMarkets, selectMarketTickers, selectWallets, Wallet } from 'src/modules';
-import { CanCan } from 'src/containers';
+import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useP2PCurrenciesFetch, useWalletsFetch } from 'src/hooks';
+import { selectAbilities, selectCurrencies, selectMarkets, selectMarketTickers, selectP2PCurrenciesData, selectWallets, Wallet } from 'src/modules';
 import { estimateUnitValue } from 'src/helpers/estimateValue';
 import { VALUATION_PRIMARY_CURRENCY } from 'src/constants';
 import { WalletsHeader } from 'src/components/WalletsHeader';
@@ -26,17 +25,18 @@ const WalletsTable: FC<Props> = (props: Props): ReactElement => {
     const [nonZeroSelected, setNonZeroSelected] = React.useState<boolean>(false);
 
     const { formatMessage } = useIntl();
-    const dispatch = useDispatch();
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
     const wallets = useSelector(selectWallets);
     const abilities = useSelector(selectAbilities);
     const currencies = useSelector(selectCurrencies);
     const markets = useSelector(selectMarkets);
     const tickers = useSelector(selectMarketTickers);
+    const p2pCurrencies = useSelector(selectP2PCurrenciesData);
     const { type } = props;
 
     useWalletsFetch();
     useCurrenciesFetch();
+    useP2PCurrenciesFetch(type);
     useMarketsTickersFetch();
     useMarketsFetch();
 
@@ -94,16 +94,14 @@ const WalletsTable: FC<Props> = (props: Props): ReactElement => {
                                 {translate('page.body.wallets.overview.action.withdraw')}
                             </Button>
                         </React.Fragment>
-                    ) : props.handleClickP2P && (
+                    ) : props.handleClickP2P && p2pCurrencies.find(i => i.id === currency.toLowerCase()) && (
                         <Button onClick={() => props.handleClickP2P(currency)} variant="secondary">
                             {translate('page.body.wallets.overview.action.p2p')}
                         </Button>
                     )}
-                    {CanCan.checkAbilityByAction('read', 'P2P', abilities) && (
-                        <Button onClick={() => props.handleClickTransfer(currency)} variant="secondary">
-                            {translate('page.body.wallets.overview.action.transfer')}
-                        </Button>
-                    )}
+                    <Button onClick={() => props.handleClickTransfer(currency)} variant="secondary">
+                        {translate('page.body.wallets.overview.action.transfer')}
+                    </Button>
                 </div>,
             ];
         })
@@ -115,6 +113,7 @@ const WalletsTable: FC<Props> = (props: Props): ReactElement => {
         currencies,
         markets,
         tickers,
+        p2pCurrencies,
         props.handleClickTransfer,
         props.handleClickP2P,
         props.handleClickDeposit,
