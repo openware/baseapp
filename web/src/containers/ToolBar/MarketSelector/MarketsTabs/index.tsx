@@ -1,7 +1,11 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RootState } from '../../../../modules';
+import {
+    RootState,
+    selectUserInfo,
+    User,
+} from '../../../../modules';
 import {
     Market,
     selectMarkets,
@@ -9,6 +13,7 @@ import {
 
 interface ReduxProps {
     markets: Market[];
+    user: User;
 }
 
 interface OwnProps {
@@ -41,10 +46,12 @@ export class MarketsTabsComponent extends React.Component<Props, State> {
     }
 
     private fastSearchButtons = () => {
-        const { markets } = this.props;
+        const { markets, user: { role } } = this.props;
         let listOfQuote: string[] = ['All'];
         if (markets.length > 0) {
-            listOfQuote = markets.reduce(this.quoteCurrencies, listOfQuote);
+            const data = role !== 'admin' && role !== 'superadmin' ? markets.filter(item => item && item.state !== 'hidden') : markets;
+
+            listOfQuote = data.reduce(this.quoteCurrencies, listOfQuote);
         }
 
         return (
@@ -98,6 +105,7 @@ export class MarketsTabsComponent extends React.Component<Props, State> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     markets: selectMarkets(state),
+    user: selectUserInfo(state),
 });
 
 //tslint:disable-next-line:no-any
