@@ -39,15 +39,15 @@ export const ProfilePayment: FC = (): ReactElement => {
     }, [dispatch]);
 
     const editPaymentMethod = useCallback((item) => {
-        const paymentMethod = paymentMethods.find(pm => pm.id === item.id);
+        const paymentMethod = userPaymentMethods.find(pm => pm.id === item.id);
         if (!paymentMethod) {
             return;
         }
 
         const optionData = [];
 
-        Object.keys(paymentMethod.options).map(key => {
-            const option = paymentMethod.options[key];
+        Object.keys(paymentMethod.data).map(key => {
+            const option = paymentMethod.data[key];
             optionData.push({
                 name: key,
                 required: option.required,
@@ -65,7 +65,7 @@ export const ProfilePayment: FC = (): ReactElement => {
             name: item.name,
             data: item.data,
         }));
-    }, [paymentMethods, dispatch]);
+    }, [userPaymentMethods, dispatch]);
 
     const handleHideModal = useCallback(() => {
         dispatch(paymentMethodModal({active: false}));
@@ -75,7 +75,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         if (modal.id) {
             dispatch(paymentMethodDeleteFetch({id: modal.id}));
         }
-    }, [dispatch]);
+    }, [dispatch, modal]);
 
     const pickPaymentMethodToAdd = useCallback((paymentMethod) => {
         const optionData = [];
