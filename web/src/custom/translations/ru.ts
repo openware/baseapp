@@ -398,6 +398,8 @@ export const ru: LangType = {
     'page.body.profile.payment.modal.body.yes': 'Yes',
     'page.body.profile.payment.modal.body.confirm': 'Confirm',
     'page.body.profile.payment.modal.body.holderName': 'NAME',
+    'page.body.profile.payment.modal.body.popular': 'POPULAR',
+    'page.body.profile.payment.modal.error.empty': 'Please enter {name}',
 
     'page.body.profile.apiKeys.header': 'Мои API ключи',
     'page.body.profile.apiKeys.header.create': 'Создать',

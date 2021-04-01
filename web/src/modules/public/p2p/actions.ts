@@ -117,4 +117,3 @@ export const p2pPaymentMethodsError = (error: CommonError): P2PPaymentMethodsErr
     type: P2P_PAYMENT_METHODS_ERROR,
     error,
 });
-

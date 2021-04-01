@@ -1,16 +1,16 @@
 import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../..';
 import { API, RequestOptions } from '../../../../api';
-import { p2pPaymentMethodsData, p2pPaymentMethodsError } from '../actions';
+import { buildQueryString } from '../../../../helpers';
+import { p2pPaymentMethodsData, p2pPaymentMethodsError, P2PPaymentMethodsFetch } from '../actions';
 
 const config: RequestOptions = {
     apiVersion: 'p2p',
 };
 
-export function* p2pPaymentMethodsSaga() {
+export function* p2pPaymentMethodsSaga(action: P2PPaymentMethodsFetch) {
     try {
         const data = yield call(API.get(config), '/public/payment_methods');
-
         yield put(p2pPaymentMethodsData(data));
     } catch (error) {
         yield put(sendError({
