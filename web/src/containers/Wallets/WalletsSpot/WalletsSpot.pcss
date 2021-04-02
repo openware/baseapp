@@ -3,9 +3,6 @@
   border-radius: var(--gap);
   display: flex;
   justify-content: flex-start;
-  margin-top: calc(var(--gap) * 2) !important;
-  max-width: 1368px !important;
-  padding: 0 0 calc(var(--gap) * 2) !important;
 
   .text-center {
     align-items: center;
@@ -32,8 +29,8 @@
     opacity: 1;
 
     img {
-      margin-right: calc(var(--gap) * 2);
-      width: 64px;
+      margin-right: 12px;
+      width: 42px;
     }
   }
 
@@ -304,36 +301,6 @@
     &__active {
       background: transparent;
       border-bottom: 1px solid var(--tab-panel-border-color-active);
-    }
-  }
-
-  .cr-copyable-text-field__disabled {
-    .cr-deposit-crypto {
-      &__copyable {
-        fieldset {
-          &:focus-within {
-            border-color: var(--input-border-color-active);
-
-            legend {
-              color: var(--input-legend-color-active);
-            }
-          }
-        }
-
-        .cr-deposit-crypto__copyable-area {
-          border: 1px solid var(--input-border-color);
-
-          .custom-input {
-            .input-group {
-              border: none;
-            }
-
-            label {
-              margin-top: -10px;
-            }
-          }
-        }
-      }
     }
   }
 

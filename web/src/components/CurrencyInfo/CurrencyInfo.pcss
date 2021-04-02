@@ -13,8 +13,8 @@
   }
 
   &__image-icon {
-    margin-right: calc(var(--gap) * 7);
-    max-height: calc(var(--gap) * 8);
+    margin-right: 12px;
+    width: 42px;
   }
 
   .cr-wallet-item {
@@ -29,20 +29,20 @@
     }
 
     &__balance,
+    &__currency,
     &__amount-locked {
       background: transparent;
-      color: var(--table-text-color);
+      color: var(--secondary-contrast-cta-color);
       display: flex;
-      font-size: calc(var(--gap) * 3);
-      line-height: 1;
-      margin-bottom: calc(var(--gap) * 0.6);
+      font-size: 14px;
+      line-height: 22px;
       padding-top: 0;
 
       &-amount,
       &-locked {
         background: transparent;
         color: var(--wallets-balance-color);
-        font-size: calc(var(--gap) * 5);
+        font-size: 18px;
         font-weight: 300;
       }
     }

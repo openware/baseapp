@@ -255,7 +255,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 
         return (
             <React.Fragment>
-                <div className="pg-container pg-wallet">
+                <div className="pg-wallet">
                     <div className="text-center">
                         {walletsLoading && <Spinner animation="border" variant="primary" />}
                     </div>
@@ -401,7 +401,10 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         if (wallets[selectedWalletIndex].type === 'coin') {
             return (
                 <React.Fragment>
-                    <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
+                    <CurrencyInfo
+                        wallet={wallets[selectedWalletIndex]}
+                        handleClickTransfer={currency => this.props.history.push(`/wallets/transfer/${currency}`)}
+                    />
                     {currencyItem && !currencyItem.deposit_enabled ? (
                         <Blur
                             className={blurCryptoClassName}
@@ -424,7 +427,10 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         } else {
             return (
                 <React.Fragment>
-                    <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
+                    <CurrencyInfo
+                        wallet={wallets[selectedWalletIndex]}
+                        handleClickTransfer={currency => this.props.history.push(`/wallets/transfer/${currency}`)}
+                    />
                     {currencyItem && !currencyItem.deposit_enabled ? (
                         <Blur
                             className="pg-blur-deposit-fiat"
@@ -446,7 +452,10 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 
         return (
             <React.Fragment>
-                <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
+                <CurrencyInfo
+                    wallet={wallets[selectedWalletIndex]}
+                    handleClickTransfer={currency => this.props.history.push(`/wallets/transfer/${currency}`)}
+                />
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
                 {currencyItem && !currencyItem.withdrawal_enabled ? (
                     <Blur
