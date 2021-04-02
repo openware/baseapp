@@ -177,6 +177,8 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      min-width: 500px;
+      width: 50%;
 
       &:nth-child(1) {
         flex-direction: row;
@@ -222,14 +224,12 @@
       }
 
       .custom-input {
-        margin-top: 10px;
+        margin-top: 20px;
       }
     }
 
     &__group__amount,
     &__group__code {
-      width: 50%;
-
       .custom-input {
         label {
           margin-top: 0;
@@ -237,7 +237,7 @@
 
         &:focus-within {
           label {
-            color: var(--input-legend-color-active) !important;
+            color: var(--secondary-contrast-cta-color);
           }
         }
       }
@@ -245,8 +245,22 @@
 
     &__group__amount {
       .custom-input {
+        background: var(--input-background-color);
+        border-radius: 4px;
+        padding: 4px;
+
         label {
+          left: 0;
+          font-size: 10px;
           margin-top: 2px;
+          padding: 0;
+          text-transform: uppercase;
+        }
+
+        .form-control {
+          background: transparent;
+          border: none;
+          height: 40px;
         }
       }
     }
@@ -344,8 +358,7 @@
 
     .pg-blur-deposit-fiat,
     .pg-blur-withdraw {
-      height: 600px;
-      margin-left: -10px;
+      height: 450px;
       margin-top: 94px;
       width: calc(100% - 10px);
 
@@ -474,7 +487,7 @@
 
   .pg-history-elem__label {
     color: var(--wallets-balance-color);
-    font-size: calc(var(--gap) * 5);
+    font-size: 20px;
     font-weight: 300;
   }
 
@@ -503,7 +516,7 @@
         margin: 10px;
 
         &-row {
-          border-bottom: 1px solid var(--table-border-color);
+          border-bottom: 1px solid var(--divider-color-level-1);
 
           th {
             background-color: var(--table-background-color);
@@ -533,7 +546,7 @@
 
         tr {
           background-color: var(--table-background-color);
-          border-bottom: 1px solid var(--header-border);
+          border-bottom: 1px solid var(--divider-color-level-1);
 
           td {
             background-color: var(--table-background-color);
@@ -585,14 +598,14 @@
   }
 
   .pg-blur-deposit-fiat {
-    height: 500px !important;
+    height: 500px;
   }
 }
 
 @media screen and (min-width: 768px) {
   .pg-wallet {
     .pg-blur-deposit-crypto {
-      height: 100px !important;
+      height: 100px;
       width: 100%;
 
       &--active {
@@ -602,12 +615,21 @@
 
     .pg-blur-deposit-fiat,
     .pg-blur-withdraw {
-      height: 360px !important;
+      height: 500px;
       width: 100%;
     }
 
     .pg-blur-withdraw {
-      height: 270px !important;
+      height: 270px;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .pg-wallet {
+    .cr-withdraw-column {
+      min-width: unset;
+      width: 100%;
     }
   }
 }

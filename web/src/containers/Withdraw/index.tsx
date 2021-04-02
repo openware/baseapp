@@ -121,7 +121,6 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                         />
                     </div>
                     <div className={lastDividerClassName} />
-                    {!isMobileDevice && twoFactorAuthRequired && this.renderOtpCodeInput()}
                 </div>
                 <div className="cr-withdraw-column">
                     <div>
@@ -136,7 +135,6 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             content={this.renderTotal()}
                         />
                     </div>
-                    {isMobileDevice && twoFactorAuthRequired && this.renderOtpCodeInput()}
                     <div className="cr-withdraw__deep">
                         <Button
                             variant="primary"
@@ -155,7 +153,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     private handleCheckButtonDisabled = (total: string, beneficiary: Beneficiary, otpCode: string) => {
         const isPending = beneficiary.state && beneficiary.state.toLowerCase() === 'pending';
 
-        return Number(total) <= 0 || !Boolean(beneficiary.id) || isPending || !Boolean(otpCode);
+        return Number(total) <= 0 || !Boolean(beneficiary.id) || isPending;
     };
 
     private renderFee = () => {
