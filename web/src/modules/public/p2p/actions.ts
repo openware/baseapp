@@ -27,7 +27,7 @@ export interface OffersData {
     payload: {
         list: Offer[];
         page: number;
-        total: number;  
+        total: number;
     };
 }
 

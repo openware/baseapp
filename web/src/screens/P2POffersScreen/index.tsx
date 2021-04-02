@@ -3,8 +3,8 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { TabPanel } from 'src/components';
-import { P2POffers } from 'src/containers/P2POffers';
-import { P2POffersHeader } from 'src/containers/P2POffers/P2POffersHeader';
+import { P2POffers } from 'src/containers/P2P/Offers';
+import { P2POffersHeader } from 'src/containers/P2P/Offers/P2POffersHeader';
 import { useDocumentTitle, useP2PCurrenciesFetch, useP2PPaymentMethodsFetch, useRangerConnectFetch } from 'src/hooks';
 import { selectP2PCurrenciesData, selectP2PPaymentMethodsData } from 'src/modules';
 

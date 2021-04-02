@@ -1,0 +1,33 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+[
+    {
+        "created_at": "02-06-2021 15:40",
+        "side": "buy",
+        "price":  "12.23",
+        "quantity":  "1.05",
+        "counterparty": "King_Coin66",
+        "state": "completed"
+    },
+    {
+        "created_at": "02-06-2021 15:40",
+        "side": "sell",
+        "price":  "22.34",
+        "quantity":  "2.15",
+        "counterparty": "Qwerty123",
+        "state": "dispute"
+    },
+    {
+        "created_at": "02-06-2021 15:40",
+        "side": "sell",
+        "price":  "7.44",
+        "quantity":  "1.15 usdt",
+        "counterparty": "Qwerty123",
+        "state": "cancelled"
+    }
+]

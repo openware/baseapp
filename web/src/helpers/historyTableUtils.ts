@@ -40,6 +40,21 @@ export const transferColorMapping = {
     completed: 'var(--system-green)',
 };
 
+export const stateColorMapping = {
+    dispute: {
+        color: 'var(--system-yellow)',
+        text: 'Dispute',
+    },
+    completed: {
+        color: 'var(--bids)',
+        text: 'Completed',
+    },
+    cancelled: {
+        color: 'var(--asks)',
+        text: 'Cancelled',
+    },
+}
+
 export const setDepositStatusColor = (status: string): string => depositColorMapping[status];
 
 export const setWithdrawStatusColor = (status: string): string => withdrawColorMapping[status];
@@ -49,3 +64,5 @@ export const setTradesType = (type: string) => tradesColorMapping[type] || { col
 export const setTransferStatusColor = (status: string): string => transferColorMapping[status];
 
 export const setOfferStatusColor = (status: string): string => offersColorMapping[status];
+
+export const setStateType = (status: string) => stateColorMapping[status] || {color: '', text: ''};

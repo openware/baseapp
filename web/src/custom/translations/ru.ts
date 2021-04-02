@@ -1146,6 +1146,16 @@ export const ru: LangType = {
     'page.body.p2p.my.offers.table.status': 'Status',
     'page.body.p2p.my.offers.table.action': 'Action',
     'page.body.p2p.my.offers.table.cancel': 'Cancel',
+    'page.body.p2p.order_history.title': 'P2P Order history',
+    'page.body.p2p.order_history.back': 'Back to P2P',
+    'page.body.p2p.order_history.date': 'Date',
+    'page.body.p2p.order_history.side': 'Side',
+    'page.body.p2p.order_history.price': 'Price',
+    'page.body.p2p.order_history.quantity': 'Quantity',
+    'page.body.p2p.order_history.counterparty': 'Counterparty',
+    'page.body.p2p.order_history.status': 'Status',
+    'page.body.p2p.order_history.actions': 'Actions',
+    'page.body.p2p.order_history.close_dispute': 'Close dispute',
 
     // Wallets screen
 

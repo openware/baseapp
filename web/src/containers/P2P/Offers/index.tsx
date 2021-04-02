@@ -1,10 +1,10 @@
 import React, { FC, ReactElement, useCallback } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
-import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, DEFAULT_TABLE_PAGE_LIMIT } from 'src/constants';
-import { Decimal, Pagination, Table } from '../../components';
-import { useCurrenciesFetch, useP2POffersFetch, useWalletsFetch } from '../../hooks';
+import { DEFAULT_CCY_PRECISION, DEFAULT_TABLE_PAGE_LIMIT, DEFAULT_FIAT_PRECISION } from 'src/constants';
+import { Decimal, Pagination, Table } from '../../../components';
+import { useCurrenciesFetch, useP2POffersFetch, useWalletsFetch } from '../../../hooks';
 import {
     offersFetch,
     RootState,
@@ -15,7 +15,7 @@ import {
     selectP2POffersNextPageExists,
     selectP2POffersTotalNumber,
     selectWallets,
-} from '../../modules';
+} from '../../../modules';
 
 interface ParentProps {
     cryptoCurrency: string;
@@ -35,6 +35,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
     const lastElemIndex = useSelector((state: RootState) => selectP2POffersLastElemIndex(state, DEFAULT_TABLE_PAGE_LIMIT));
     const nextPageExists = useSelector((state: RootState) => selectP2POffersNextPageExists(state, DEFAULT_TABLE_PAGE_LIMIT));
     const wallets = useSelector(selectWallets);
+    const dispatch = useDispatch();
 
     useWalletsFetch();
     useCurrenciesFetch();
@@ -49,11 +50,11 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
     ];
 
     const onClickPrevPage = useCallback(() => {
-        offersFetch({ page: Number(page) - 1, limit: DEFAULT_TABLE_PAGE_LIMIT });
+        dispatch(offersFetch({ page: Number(page) - 1, limit: DEFAULT_TABLE_PAGE_LIMIT }));
     }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT]);
 
     const onClickNextPage = useCallback(() => {
-        offersFetch({ page: Number(page) + 1, limit: DEFAULT_TABLE_PAGE_LIMIT });
+        dispatch(offersFetch({ page: Number(page) + 1, limit: DEFAULT_TABLE_PAGE_LIMIT }));
     }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT]);
 
     const retrieveData = (amountPrecision: number, pricePrecision: number) => (

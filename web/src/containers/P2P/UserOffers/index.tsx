@@ -4,8 +4,8 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
 import { localeDate, setOfferStatusColor, setTradeColor } from 'src/helpers';
-import { Decimal, Pagination, Table } from '../../components';
-import { useCurrenciesFetch, useP2PUserOffersFetch, useWalletsFetch } from '../../hooks';
+import { Decimal, Pagination, Table } from '../../../components';
+import { useCurrenciesFetch, useP2PUserOffersFetch, useWalletsFetch } from '../../../hooks';
 import {
     activeOffersFetch,
     cancelledOffersFetch,
@@ -19,7 +19,7 @@ import {
     selectP2PUserOffersNextPageExists,
     selectP2PUserOffersTotalNumber,
     selectWallets,
-} from '../../modules';
+} from '../../../modules';
 
 interface ParentProps {
     status: string;
