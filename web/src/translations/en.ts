@@ -1116,6 +1116,23 @@ export const en = {
     'page.body.p2p.create.offer.cancel': 'Cancel',
     'page.body.p2p.create.offer.confirm.info': 'After confirmation of the {side} order, the trading assets will be frozen',
 
+    'page.body.p2p.modal.header.buy': 'Buy',
+    'page.body.p2p.modal.header.sell': 'Sell',
+    'page.body.p2p.modal.error.min.amount': 'Min quantity is',
+    'page.body.p2p.modal.error.max.amount': 'Max quantity is',
+    'page.body.p2p.modal.label.price': 'Price:',
+    'page.body.p2p.modal.label.available': 'Available:',
+    'page.body.p2p.modal.label.time.limit': 'Payment time limit:',
+    'page.body.p2p.modal.label.time.minute': 'Min',
+    'page.body.p2p.modal.label.payment': 'Payment method:',
+    'page.body.p2p.modal.label.description': 'Description',
+    'page.body.p2p.modal.label.buy': 'I WANT TO PAY',
+    'page.body.p2p.modal.label.sell': 'I WANT TO SELL',
+    'page.body.p2p.modal.label.receive': 'I WILL RECEIVE',
+    'page.body.p2p.modal.label.balance': 'Balance',
+    'page.body.p2p.modal.button.payment': 'PAYMENT METHOD',
+    'page.body.p2p.modal.button.payment.add': 'Add Payment Method +',
+
     // p2p input error messages
     'page.body.p2p.error.empty.price': 'Please enter price',
     'page.body.p2p.error.greater.than.0.price': 'Price should be greater than 0',

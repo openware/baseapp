@@ -3,11 +3,11 @@
     &__head th {
       color: var(--secondary-contrast-cta-color);
       font-size: var(--font-size-smaller) !important;
-      text-align: left !important;
       padding-left: 36px;
+      text-align: left !important;
 
       &:last-child {
-        width: unset;
+        width: 120px;
       }
     }
 
@@ -16,19 +16,19 @@
     }
 
     &__body tr {
-      padding: 24px 36px; 
       border-bottom: 1px solid var(--table-border-color);
+      padding: 24px 36px;
     }
 
     &__body tr td {
+      color: var(--primary-text-color);
       padding: 24px 36px !important;
       text-align: left !important;
-      color: var(--primary-text-color);
 
       .advertisers {
+        align-items: flex-start;
         display: flex;
         flex-direction: row;
-        align-items: flex-start;
       }
 
       .secondary {
@@ -36,8 +36,8 @@
       }
 
       .price {
-        font-weight: 600;
         font-size: 20px;
+        font-weight: 600;
       }
 
       .limit {
@@ -45,15 +45,37 @@
         flex-direction: row;
 
         &-col {
+          align-items: flex-start;
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
         }
       }
 
       .payment {
         display: flex;
         flex-direction: column;
+      }
+
+      .trade {
+        .btn {
+          color: var(--cta-layer-color);
+          cursor: pointer;
+          font-size: 14px;
+          height: 40px;
+          width: 120px;
+
+          &-buy {
+            background: var(--bids);
+          }
+
+          &-sell {
+            background: var(--system-red);
+          }
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
       }
 
       .font {
@@ -87,31 +109,31 @@
 }
 
 .cr-p2p-header {
+  align-items: flex-end;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
   padding: 56px 36px 42px;
 
   &__filters {
-    display: flex;
     align-items: flex-end;
+    display: flex;
   }
 
   &__dp {
     margin-left: 36px;
 
     &-label {
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
       color: var(--secondary-contrast-cta-color);
       font-size: var(--font-size-smaller);
       font-weight: bold;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
     .cr-dropdown {
       .dropdown-toggle {
-        height: 36px;
         font-size: var(--font-size);
+        height: 36px;
         width: 180px;
       }
 
@@ -123,21 +145,22 @@
 
   &__btn-wrapper {
     .btn {
-      min-width: 110px;
       height: 36px;
+      min-width: 110px;
 
       &:first-child {
-        border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
       }
 
       &:last-child {
-        border-top-left-radius: 0;
         border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
       }
     }
 
-    .btn-outline-danger, .btn-outline-success {
+    .btn-outline-danger,
+    .btn-outline-success {
       border-color: var(--divider-color-level-2);
     }
   }
@@ -153,6 +176,251 @@
 
       path {
         fill: var(--cta-layer-color);
+      }
+    }
+  }
+}
+
+.cr-p2p-offers-modal {
+  .cr-modal {
+    &__container {
+      width: 540px;
+
+      &-header {
+        align-items: center;
+        border-bottom: 1px solid var(--divider-color-level-1) !important;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0;
+        padding: 19px 0;
+        position: relative;
+
+        &-title {
+          color: var(--primary-cta-color);
+          font-size: 14px;
+          letter-spacing: 0.04em;
+        }
+
+        &-box {
+          background-color: var(--body-background-color);
+          border-radius: 3px;
+          box-shadow: 1px 1px 5px var(--shadow-color-level-2);
+          display: block;
+          margin: 0 auto;
+          max-height: max-content;
+          max-width: 540px;
+          position: relative;
+          width: 100%;
+
+          &-close {
+            cursor: pointer;
+            height: 14px;
+            margin: 15px 10px;
+            position: absolute;
+            right: 10px;
+            top: 4px;
+            width: 14px;
+          }
+        }
+      }
+
+      &-content {
+        padding: 0 !important;
+
+        &-block {
+          border-bottom: 1px solid var(--divider-color-level-1);
+          padding: 0 24px;
+
+          &:last-child {
+            border-bottom: unset;
+          }
+        }
+
+        .advertiser {
+          align-items: center;
+          color: var(--primary-cta-color);
+          display: flex;
+          font-size: 16px;
+          padding: 12px 0;
+
+          &-name {
+            padding-left: 12px;
+          }
+        }
+
+        .detail {
+          color: var(--primary-text-color);
+          font-size: 14px;
+          padding: 9px 0;
+
+          &-block {
+            display: flex;
+            padding: 6px 0;
+
+            &-left,
+            &-right {
+              display: flex;
+              width: 50%;
+            }
+
+            &-label {
+              align-items: center;
+              color: var(--secondary-contrast-cta-color);
+              display: flex;
+              font-size: 12px;
+              font-weight: normal;
+              padding-right: 12px;
+            }
+          }
+        }
+
+        .description {
+          padding: 12px 0;
+
+          &__label {
+            color: var(--secondary-contrast-cta-color);
+            font-size: 12px;
+            padding-bottom: 4px;
+          }
+
+          &__content {
+            color: var(--primary-text-color);
+            font-size: 12px;
+            margin-bottom: 0;
+            padding-top: 4px;
+          }
+        }
+
+        .payment {
+          margin-bottom: 40px;
+          margin-top: 36px;
+
+          button {
+            background: none;
+            border: 1px solid var(--primary-cta-color);
+            color: var(--primary-cta-color);
+            font-size: 14px;
+            height: 40px;
+            margin-top: 7px;
+            width: 100%;
+          }
+        }
+
+        .cr-order-input {
+          padding-top: 24px;
+
+          &:last-child {
+            padding-bottom: 36px;
+          }
+
+          &__fieldset {
+            border-bottom-left-radius: 4px;
+            border-right: none;
+            border-top-left-radius: 4px;
+            height: 48px;
+
+            .custom-input {
+              width: 100%;
+
+              label {
+                background: transparent;
+                font-size: 10px;
+                left: 0;
+                margin-top: -20px;
+                padding: 0;
+              }
+
+              .form-control {
+                font-size: 16px;
+                height: 46px;
+                padding: 0 12px;
+              }
+            }
+          }
+
+          &__crypto-icon {
+            border-bottom-right-radius: 4px;
+            border-color: var(--input-border-color);
+            border-top-right-radius: 4px;
+            color: var(--secondary-contrast-cta-color);
+            font-size: 16px;
+            height: 48px;
+            margin-top: 12px;
+            min-width: unset;
+            padding: 12px;
+            width: max-content;
+          }
+
+          &__wrapper {
+            padding-top: 12px;
+
+            .cr-order-input {
+              padding-bottom: 0;
+            }
+
+            &--errored {
+              .cr-order-input__fieldset,
+              .cr-order-input__crypto-icon {
+                border-color: var(--system-red) !important;
+              }
+            }
+
+            .error {
+              color: var(--system-red);
+            }
+
+            .balance {
+              align-items: center;
+              color: var(--secondary-contrast-cta-color);
+              display: flex;
+              font-size: 14px;
+              justify-content: flex-end;
+
+              &-amount {
+                color: var(--primary-text-color);
+                padding: 0 6px;
+              }
+
+              &-currency {
+                font-weight: 500;
+              }
+            }
+
+            &:last-child {
+              padding-bottom: 36px;
+              padding-top: 18px;
+            }
+          }
+        }
+      }
+
+      &-footer {
+        padding: 0 24px 36px;
+
+        button {
+          color: var(--cta-layer-color);
+          font-size: 13px;
+          height: 40px;
+          width: 100%;
+
+          &.btn {
+            &-buy {
+              background: var(--system-green);
+
+              &:hover {
+                background: var(--system-green-level-8);
+              }
+            }
+
+            &-sell {
+              background: var(--system-red);
+
+              &:hover {
+                background: var(--system-red-level-8);
+              }
+            }
+          }
+        }
       }
     }
   }

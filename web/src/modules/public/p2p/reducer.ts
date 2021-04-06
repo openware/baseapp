@@ -38,7 +38,7 @@ export interface P2PState {
         success: boolean;
         timestamp?: number;
         error?: CommonError;
-    };
+    }
 }
 
 export const initialP2PState: P2PState = {

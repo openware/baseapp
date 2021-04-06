@@ -14,6 +14,8 @@ export interface Offer {
     side: string;
     created_at: string;
     upm_id: string[];
+    time_limit: number;
+    description: string;
 }
 
 export interface P2PCurrency {

@@ -1,4 +1,5 @@
 import React, { FC, ReactElement, useCallback } from 'react';
+import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
@@ -6,6 +7,7 @@ import { DEFAULT_CCY_PRECISION, DEFAULT_TABLE_PAGE_LIMIT, DEFAULT_FIAT_PRECISION
 import { Decimal, Pagination, Table } from '../../../components';
 import { useCurrenciesFetch, useP2POffersFetch, useWalletsFetch } from '../../../hooks';
 import {
+    Offer,
     offersFetch,
     RootState,
     selectP2POffers,
@@ -22,6 +24,7 @@ interface ParentProps {
     baseCurrency: string;
     paymentMethod: string;
     side: string;
+    onClickTrade: (offer: Offer) => void;
 }
 
 type Props = ParentProps;
@@ -60,6 +63,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
     const retrieveData = (amountPrecision: number, pricePrecision: number) => (
         list.map(item => {
             const {
+                id,
                 price,
                 user_nickname,
                 offers_count,
@@ -99,6 +103,15 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 <div className="payment">
                     <span className="font-small secondary">Yellow bank</span>
                     <span className="font-small secondary sec-row">Green bank</span>
+                </div>,
+                <div className="trade">
+                    <Button
+                        onClick={() => props.onClickTrade(item)}
+                        size="lg"
+                        variant={props.side}
+                    >
+                        {intl.formatMessage({ id: `page.body.p2p.tabs.${props.side}` })} {props.cryptoCurrency.toUpperCase()}
+                    </Button>
                 </div>
             ];
         })

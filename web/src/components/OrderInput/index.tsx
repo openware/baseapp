@@ -54,6 +54,14 @@ export interface OrderInputProps {
      * Function for handling 'Enter' key
      */
     onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    /**
+     * Show/Hide ALL button
+     */
+    showAllButton?: boolean;
+    /**
+     * Function for handling click ALL button
+     */
+    handleClickAllButton?: () => void;
 }
 
 /**
@@ -61,7 +69,7 @@ export interface OrderInputProps {
  */
 
 export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((props: OrderInputProps) => {
-    const { currency, className, isFocused, label, labelVisible, placeholder, autoFocus, value, handleChangeValue, onKeyPress, handleFocusInput } = props;
+    const { currency, className, isFocused, label, labelVisible, placeholder, autoFocus, value, showAllButton, handleChangeValue, onKeyPress, handleFocusInput, handleClickAllButton } = props;
 
     const fieldsetFocusedClass = React.useMemo(() => cr('cr-order-input__fieldset', {
         'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
@@ -88,6 +96,7 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
                 />
             </fieldset>
             <div className={cryptoIconClass}>
+                { showAllButton && <span className="cr-order-input__crypto-icon-all" onClick={handleClickAllButton}>ALL</span> }
                 {currency.toUpperCase()}
             </div>
         </div>

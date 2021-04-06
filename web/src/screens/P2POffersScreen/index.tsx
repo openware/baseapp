@@ -1,12 +1,11 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { TabPanel } from 'src/components';
-import { P2POffers } from 'src/containers/P2P/Offers';
-import { P2POffersHeader } from 'src/containers/P2P/Offers/P2POffersHeader';
+import { P2POffers, P2POffersHeader, P2POffersModal } from 'src/containers';
 import { useDocumentTitle, useP2PCurrenciesFetch, useP2PPaymentMethodsFetch, useRangerConnectFetch } from 'src/hooks';
-import { selectP2PCurrenciesData, selectP2PPaymentMethodsData } from 'src/modules';
+import { Offer, p2pOrdersCreateFetch, selectP2PCurrenciesData, selectP2PPaymentMethodsData, selectWallets } from 'src/modules';
 
 interface ParamType {
     currency?: string;
@@ -20,9 +19,14 @@ export const P2POffersScreen: FC = (): ReactElement => {
     const [fiatCurrency, setFiatCurrency] = useState<string>('');
     const [fiatCurList, setFiatCurList] = useState<string[]>([]);
     const [paymentFilter, setPaymentFilter] = useState<string>('');
+    const [openModal, setOpenModal] = useState<boolean>(false);
+    const [selectedOffer, setSelectedOffer] = useState<Offer>(null);
+    const [tradeAmount, setTradeAmount] = useState<string>('');
 
+    const dispatch = useDispatch();
     const currencies = useSelector(selectP2PCurrenciesData);
     const paymentMethods = useSelector(selectP2PPaymentMethodsData);
+    const wallets = useSelector(selectWallets);
     const { formatMessage } = useIntl();
     const history = useHistory();
     const { currency } = useParams<ParamType>();
@@ -72,6 +76,40 @@ export const P2POffersScreen: FC = (): ReactElement => {
         setTab(tabMapping[index]);
     }, [tabMapping]);
 
+    const handleSubmit = useCallback(() => {
+        const payload = {
+            offer_id: selectedOffer.id,
+            amount: +tradeAmount,
+            side: sideFilter,
+        };
+
+        window.console.log(payload);
+        // dispatch(p2pOrdersCreateFetch(payload));
+    }, [selectedOffer, tradeAmount, sideFilter]);
+
+    const closeModal = useCallback(() => {
+        setOpenModal(false);
+    }, []);
+
+    const handleClickTrade = useCallback((offer: Offer) => {
+        if (selectedOffer && selectedOffer.id !== offer.id) {
+            setTradeAmount('');
+        }
+
+        setTradeAmount('');
+        setOpenModal(true);
+        setSelectedOffer(offer);
+    }, [selectedOffer]);
+
+    const handleClickTradeAll = useCallback(() => {
+        if (sideFilter === 'buy') {
+            selectedOffer && setTradeAmount(selectedOffer.max_order_amount.toString());
+        } else {
+            const availableBalance = wallets.find(w => w.currency === selectedOffer.base.toLowerCase())?.balance || 0;
+            setTradeAmount(availableBalance.toString());
+        }
+    }, [sideFilter, selectedOffer, wallets]);
+
     const pageContent = useCallback((currency: string) => {
         return (
             <React.Fragment>
@@ -90,10 +128,31 @@ export const P2POffersScreen: FC = (): ReactElement => {
                     baseCurrency={fiatCurrency}
                     paymentMethod={paymentFilter}
                     side={sideFilter}
+                    onClickTrade={handleClickTrade}
                 />
+                {selectedOffer &&
+                    <P2POffersModal 
+                        side={sideFilter}
+                        currencyCode={selectedOffer.base}
+                        fiatCode={fiatCurrency}
+                        advertiserName={selectedOffer.user_nickname}
+                        price={selectedOffer.price}
+                        available={selectedOffer.available_amount}
+                        topLimit={selectedOffer.max_order_amount}
+                        lowLimit={selectedOffer.min_order_amount}
+                        timeLimit={selectedOffer.time_limit}
+                        description={selectedOffer.description}
+                        tradeAmount={tradeAmount}
+                        show={openModal}
+                        handleSetAmount={setTradeAmount}
+                        handleClickAll={handleClickTradeAll}
+                        handleSubmit={handleSubmit}
+                        closeModal={closeModal}
+                    />
+                }
             </React.Fragment>
         )
-    }, [sideFilter, fiatCurrency, paymentMethods, paymentFilter, fiatCurList, tab ]);
+    }, [sideFilter, fiatCurrency, paymentMethods, paymentFilter, fiatCurList, tab, openModal, selectedOffer, tradeAmount, handleClickTradeAll, handleSubmit ]);
 
     const renderTabs = () => tabMapping.map(i => {
         return {
