@@ -7,7 +7,7 @@ export enum HideMode {
     unmount = 'unmount',
 }
 
-export type OnTabChangeCallback = (index: number, label?: string) => void;
+export type OnTabChangeCallback = (index: number, label?: string | JSX.Element) => void;
 
 type OnCurrentTabChange = (index: number) => void;
 
@@ -15,7 +15,7 @@ export interface Tab {
     content: React.ReactNode;
     disabled?: boolean;
     hidden?: boolean;
-    label: string;
+    label: string | JSX.Element;
 }
 
 export interface TabPanelProps {

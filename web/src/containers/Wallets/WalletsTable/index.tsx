@@ -1,11 +1,11 @@
 import React, { FC, ReactElement, useCallback, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CryptoIcon } from 'src/components/CryptoIcon';
 import { Decimal, formatWithSeparators, Table } from 'src/components';
 import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useP2PCurrenciesFetch, useWalletsFetch } from 'src/hooks';
-import { selectAbilities, selectCurrencies, selectMarkets, selectMarketTickers, selectP2PCurrenciesData, selectWallets, Wallet } from 'src/modules';
+import { selectAbilities, selectCurrencies, selectMarkets, selectMarketTickers, selectP2PCurrenciesData, selectWallets, selectWalletsLoading, Wallet } from 'src/modules';
 import { estimateUnitValue } from 'src/helpers/estimateValue';
 import { VALUATION_PRIMARY_CURRENCY } from 'src/constants';
 import { WalletsHeader } from 'src/components/WalletsHeader';
@@ -32,6 +32,7 @@ const WalletsTable: FC<Props> = (props: Props): ReactElement => {
     const markets = useSelector(selectMarkets);
     const tickers = useSelector(selectMarketTickers);
     const p2pCurrencies = useSelector(selectP2PCurrenciesData);
+    const walletsLoading = useSelector(selectWalletsLoading);
     const { type } = props;
 
     useWalletsFetch();
@@ -122,6 +123,9 @@ const WalletsTable: FC<Props> = (props: Props): ReactElement => {
 
     return (
         <div className="cr-wallets-table">
+            <div className="text-center">
+                {walletsLoading && <Spinner animation="border" variant="primary" />}
+            </div>
             <div className={`cr-wallets-table__table ${type}`}>
                 <WalletsHeader
                     wallets={wallets}

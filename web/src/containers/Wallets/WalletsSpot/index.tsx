@@ -145,13 +145,13 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 
     public componentDidMount() {
         const { wallets, currency, action } = this.props;
-        const { currentTabIndex } = this.state;
+        const { currentTabIndex, selectedWalletIndex } = this.state;
 
         if (this.props.wallets.length === 0) {
             this.props.fetchWallets();
         }
 
-        if (wallets.length) {
+        if (wallets.length && selectedWalletIndex === -1) {
             const walletToSet = wallets.find(i => i.currency?.toLowerCase() === currency?.toLowerCase()) || wallets[0];
 
             this.setState({
@@ -190,7 +190,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         } = this.props;
         const { selectedWalletIndex, currentTabIndex } = this.state;
 
-        if (!wallets.length && next.wallets.length) {
+        if (!wallets.length && next.wallets.length && selectedWalletIndex === -1) {
             const walletToSet = next.wallets.find(i => i.currency?.toLowerCase() === currency?.toLowerCase()) || next.wallets[0];
 
             this.setState({
@@ -260,7 +260,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                         {walletsLoading && <Spinner animation="border" variant="primary" />}
                     </div>
                     <div className={`row no-gutters pg-wallet__tabs-content ${!historyList.length && 'pg-wallet__tabs-content-height'}`}>
-                        <div className={`col-md-5 col-sm-12 col-12 ${mobileWalletChosen && 'd-none d-md-block'}`}>
+                        <div className={`col-md-3 col-sm-12 col-12 ${mobileWalletChosen && 'd-none d-md-block'}`}>
                             <WalletList
                                 onWalletSelectionChange={this.onWalletSelectionChange}
                                 walletItems={filteredWallets || formattedWallets}

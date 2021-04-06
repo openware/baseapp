@@ -45,6 +45,7 @@ import { P2PState, rootP2PSaga } from './public/p2p';
 import { PaymentMethodState, rootPaymentMethodSaga } from './user/paymentMethod';
 import { P2POffersState, rootP2POffersSaga } from './user/p2pOffers';
 import { P2PTradesHistoryState, rootP2POrdersSaga } from './user/p2pOrders';
+import { P2PTransfersState, rootP2PTransfersSaga } from './user/p2pTransfers';
 
 export * from './admin/config';
 export * from './admin/markets';
@@ -83,6 +84,7 @@ export * from './user/abilities';
 export * from './user/paymentMethod';
 export * from './user/p2pOffers';
 export * from './user/p2pOrders';
+export * from './user/p2pTransfers';
 
 export interface RootState {
     public: {
@@ -130,6 +132,7 @@ export interface RootState {
         paymentMethod: PaymentMethodState;
         p2pOffers: P2POffersState;
         p2pTradesHistory: P2PTradesHistoryState;
+        p2pTransfers: P2PTransfersState;
     };
     admin: {
         configUpdate: ConfigUpdateState;
@@ -186,5 +189,6 @@ export function* rootSaga() {
         call(rootPaymentMethodSaga),
         call(rootP2POffersSaga),
         call(rootP2POrdersSaga),
+        call(rootP2PTransfersSaga),
     ]);
 }

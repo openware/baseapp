@@ -12,7 +12,7 @@ interface ParentProps {
 }
 
 /**
- * Component for displaying search field and checkbox for Overview, Spot, P2P Wallets tabs
+ * Component for displaying search field and checkbox for Overview, Spot, P2P, Transfers Wallets tabs
  */
 export const WalletsHeader: React.FunctionComponent<ParentProps> = (props: ParentProps) => {
     const { wallets, nonZeroSelected } = props;
@@ -47,6 +47,7 @@ export const WalletsHeader: React.FunctionComponent<ParentProps> = (props: Paren
                     custom
                     id="nonZeroSelected"
                     checked={nonZeroSelected}
+                    readOnly={true}
                     label={intl.formatMessage({id: 'page.body.wallets.overview.nonZero'})}
                 />
             </Form>

@@ -104,7 +104,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     
         if (!value) {
             error = translate('page.body.p2p.error.empty.amount');
-        } else if (!Number(value)) {
+        } else if (Number(value) <= 0) {
             error = translate('page.body.p2p.error.greater.than.0.amount');
         }
 
@@ -116,7 +116,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     
         if (!lowLimit) {
             error = translate('page.body.p2p.error.empty.min.limit');
-        } else if (!Number(lowLimit)) {
+        } else if (Number(lowLimit) <= 0) {
             error = translate('page.body.p2p.error.greater.than.0.min.limit');
         } else if (+lowLimit > +topLimit) {
             error = translate('page.body.p2p.error.min.limit.exceed.max');            
@@ -136,7 +136,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     }, [translate]);
 
     const handleSubmitClick = React.useCallback(() => {
-        if (!amount || !Number(amount) || !lowLimit || !Number(lowLimit) || +lowLimit > +topLimit || !paymentMethods.length) {
+        if (!amount || Number(amount) <= 0 || !lowLimit || Number(lowLimit) <= 0 || +lowLimit > +topLimit || !paymentMethods.length) {
             setShowError(true);
             defineAmountError(amount);
             defineLowLimitError(lowLimit, topLimit);

@@ -29,6 +29,21 @@
           .cr-tab {
             padding-left: 24px;
             padding-right: 24px;
+            font-size: 14px;
+
+            .icon {
+              margin-right: 6px;
+
+              path {
+                fill: var(--tab-panel-text-color);
+              }
+            }
+          }
+
+          .cr-tab__active {
+            .icon path {
+              fill: var(--tab-panel-text-color-active);
+            }
           }
         }
       }

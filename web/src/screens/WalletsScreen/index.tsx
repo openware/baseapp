@@ -2,10 +2,9 @@ import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { ChangeIcon } from 'src/assets/images/ChangeIcon';
 import { TabPanel } from 'src/components';
-import { CanCan, WalletsTable } from 'src/containers';
-import { EstimatedValue } from 'src/containers/Wallets/EstimatedValue';
-import { WalletsSpot } from 'src/containers/Wallets/WalletsSpot';
+import { CanCan, EstimatedValue, WalletsSpot, WalletsTable, WalletsTransfer } from 'src/containers';
 import { useDocumentTitle, useWalletsFetch } from 'src/hooks';
 import { selectAbilities, selectWallets } from 'src/modules';
 
@@ -54,7 +53,6 @@ export const WalletsScreen: FC = (): ReactElement => {
     }, [history, tabMapping]);
 
     const onTabChange = useCallback((index: number) => {
-        renderTabs();
         if (tab === tabMapping[index]) {
             return;
         }
@@ -74,8 +72,8 @@ export const WalletsScreen: FC = (): ReactElement => {
                 label: translate('page.body.wallets.tab.p2p'),
             },
             {
-                content: currentTabIndex === 0 ? <div>Transfer</div> : null,
-                label: translate('page.body.wallets.tab.transfer'),
+                content: currentTabIndex === 3 ? <WalletsTransfer currency={currency} /> : null,
+                label: <div><ChangeIcon className="icon" />{translate('page.body.wallets.tab.transfer')}</div>,
             },
         ] : [];
 

@@ -1,0 +1,37 @@
+.cr-double-dp-selector {
+  display: grid;
+  grid-template-columns: 1fr 24px 1fr;
+  grid-column-gap: 12px;
+  margin-top: 12px;
+
+  &__group {
+    &-label {
+      color: var(--input-legend-color);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 10px;
+    }
+
+    .cr-dropdown .dropdown-toggle {
+      font-size: 16px;
+      height: 48px;
+    }
+
+    .cr-dropdown .dropdown-item {
+      font-size: 16px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+  }
+
+  &__swap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon {
+      margin-top: 12px;
+    }
+  }
+}

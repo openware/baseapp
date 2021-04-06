@@ -38,3 +38,4 @@ export * from './Withdraw';
 export * from './QuickExchange';
 export * from './CanCan';
 export * from './Wallets/WalletsTable';
+export * from './Wallets';
