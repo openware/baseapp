@@ -295,14 +295,38 @@
           margin-bottom: 40px;
           margin-top: 36px;
 
-          button {
-            background: none;
-            border: 1px solid var(--primary-cta-color);
-            color: var(--primary-cta-color);
+          label {
+            margin-bottom: 0;
+            font-size: 10px;
+            color: var(--input-legend-color);
+          }
+
+          .btn {
             font-size: 14px;
             height: 40px;
-            margin-top: 7px;
+            margin-top: 3px;
             width: 100%;
+          }
+
+          .btn-outline-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .icon {
+              margin-left: 10px;
+
+              path {
+                fill: var(--primary-cta-color);
+              }
+            }
+
+            &:hover {
+              .icon path {
+                fill: var(--button-primary-cta-text-color-hover);
+                transition: 0.2s;
+              }
+            }
           }
         }
 

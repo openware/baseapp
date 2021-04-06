@@ -1,16 +1,18 @@
 import classnames from 'classnames';
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Dropdown } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
-import { cleanPositiveFloatInput, millisecondToMinutes, precisionRegExp } from 'src/helpers';
-import { selectWallets } from 'src/modules';
-import { Decimal, Modal, OrderInput } from 'src/components';
+import { cleanPositiveFloatInput, millisecondToMinutes, precisionRegExp, truncateMiddle } from 'src/helpers';
+import { P2POrderCreate, selectPaymentMethodList, selectWallets, UserPaymentMethod } from 'src/modules';
+import { Decimal, DropdownComponent, Modal, OrderInput } from 'src/components';
+import { PlusIcon } from 'src/assets/images/PlusIcon';
 
 interface ParentProps {
+    id: number;
     side: string;
     currencyCode: string;
     fiatCode: string;
@@ -21,27 +23,43 @@ interface ParentProps {
     lowLimit: string | number;
     timeLimit: number;
     description: string;
-    tradeAmount: string | number;
     show: boolean;
-    handleClickAll: () => void;
-    handleSubmit: () => void;
-    handleSetAmount: (value: string) => void;
+    handleSubmit: (payload: P2POrderCreate) => void;
     closeModal: () => void;
 }
 
 type Props = ParentProps;
 
 const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
-    const [amountFocused, setamountFocused] = useState<boolean>(false);
+    const [tradeAmount, setTradeAmount] = useState<string>('');
+    const [amountFocused, setAmountFocused] = useState<boolean>(false);
+    const [receiveAmount, setReceiveAmount] = useState<string>('');
+    const [receiveFocused, setReceiveFocused] = useState<boolean>(false);
+    const [paymentMethod, setPaymentMethod] = useState<UserPaymentMethod | undefined>(undefined);
     const [showError, setShowError] = useState<boolean>(false);
     const [amountError, setAmountError] = useState<string>('');
+    const [paymentMethodError, setPaymentMethodError] = useState<string>('');
     const [pricePrecision, setPricePrecision] = useState<number>(0);
     const [amountPrecision, setAmountPrecision] = useState<number>(0);
-    const [receiveAmount, setReceiveAmount] = useState<string>('');
     const [clickAll, setClickAll] = useState<boolean>(false);
 
-    const { side, currencyCode, fiatCode, advertiserName, price, available, topLimit, lowLimit, timeLimit, description, tradeAmount, show } = props;
+    const {
+        id,
+        side,
+        currencyCode,
+        fiatCode,
+        advertiserName,
+        price,
+        available,
+        topLimit,
+        lowLimit,
+        timeLimit,
+        description,
+        show,
+    } = props;
+
     const wallets = useSelector(selectWallets);
+    const userPM = useSelector(selectPaymentMethodList);
     const { formatMessage } = useIntl();
 
     useEffect(() => {
@@ -62,27 +80,34 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         setAmountPrecision(wallets.find(w => w.currency === currencyCode.toLowerCase())?.fixed || DEFAULT_CCY_PRECISION);
     }, [currencyCode, wallets]);
 
+    useEffect(() => {
+        if (userPM.length && !paymentMethod) {
+            setPaymentMethod(userPM[0]);
+            window.console.log('useEff', userPM);
+        }
+    }, [userPM, paymentMethod]);
+
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
 
     const handleAmountChange = React.useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
 
         if (convertedValue.match(precisionRegExp(side === 'buy' ? pricePrecision : amountPrecision))) {
-            props.handleSetAmount(convertedValue);
+            setTradeAmount(convertedValue);
             setReceiveAmount(side === 'buy' ? 
                 Decimal.format(+convertedValue / +price, amountPrecision, '')
                 : Decimal.format(+convertedValue * +price, pricePrecision, ''));
         }
 
         side === 'buy' ? defineAmountError(convertedValue) : defineAmountError((+convertedValue * +price).toString());
-    }, [amountPrecision, pricePrecision, side, price, props.handleSetAmount]);
+    }, [amountPrecision, pricePrecision, side, price]);
 
     const handleReceiveChange = React.useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
 
         if (convertedValue.match(precisionRegExp(side === 'buy' ? amountPrecision : pricePrecision))) {
             setReceiveAmount(convertedValue);
-            props.handleSetAmount(side === 'buy' ? 
+            setTradeAmount(side === 'buy' ? 
                 Decimal.format(+convertedValue * +price, pricePrecision, '') 
                 : Decimal.format(+convertedValue / +price, amountPrecision, ''));
         }
@@ -90,13 +115,18 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         side === 'buy' ? defineAmountError((+convertedValue * +price).toString()) : defineAmountError(convertedValue);
     }, [amountPrecision, pricePrecision, side, price]);
 
+    const handleSelectPaymentMethod = React.useCallback((index: number) => {
+        setPaymentMethod(userPM[index]);
+        definePaymentError(paymentMethod);
+    }, [paymentMethod, userPM]);
+
     const defineAmountError = React.useCallback((value: string) => {
         let error = '';
     
         if (!value) {
-            error = translate('page.body.p2p.error.empty.price');
+            error = translate('page.body.p2p.error.empty.amount');
         } else if (Number(value) <= 0) {
-            error = translate('page.body.p2p.error.greater.than.0.price');
+            error = translate('page.body.p2p.error.greater.than.0.amount');
         } else {
             const available = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
             error = +value < +lowLimit ? `${translate('page.body.p2p.modal.error.min.amount')} ${Decimal.format(lowLimit, pricePrecision, ',')} ${fiatCode}`
@@ -107,6 +137,16 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
 
         setAmountError(error);
     }, [translate, lowLimit, topLimit, fiatCode, pricePrecision, side, price, wallets, currencyCode]);
+
+    const definePaymentError = React.useCallback((pm?: UserPaymentMethod) => {
+        let error = '';
+    
+        if (side === 'sell' && !pm) {
+            error = translate('page.body.p2p.error.empty.payment.method');
+        }
+
+        setPaymentMethodError(error);
+    }, [side, translate]);
 
     const validatePriceRange = React.useCallback((value: number) => {
         return (value >= lowLimit && value <= topLimit)
@@ -120,18 +160,31 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
             || Number(tradeAmount) <= 0
             || side === 'sell' && available && +tradeAmount / +price > +available
             || !validatePriceRange(+tradeAmount)
+            || side === 'sell' && !paymentMethod
         ) {
             setShowError(true);
             defineAmountError(tradeAmount.toString());
+            definePaymentError(paymentMethod);
         } else {
-            props.handleSubmit();
+            const payload = {
+                offer_id: id,
+                amount: +tradeAmount,
+                side,
+            };
+    
+            props.handleSubmit(payload);
         }
-    }, [tradeAmount, price, wallets, currencyCode, props.handleSubmit]);
+    }, [tradeAmount, price, wallets, currencyCode, paymentMethod, id, props.handleSubmit]);
 
     const handleClickTradeAll = React.useCallback(() => {
-        props.handleClickAll();
+        if (side === 'buy') {
+            setTradeAmount(topLimit.toString());
+        } else {
+            const availableBalance = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance || 0;
+            setTradeAmount(availableBalance.toString());
+        }
         setClickAll(true);
-    }, [props.handleClickAll]);
+    }, [side, currencyCode, wallets]);
 
     const handleCloseModal = React.useCallback(() => {
         setClickAll(false);
@@ -163,9 +216,14 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         })
     ), [side, classnames]);
 
-    const getBalance = useCallback(() => {
-        return wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
-    }, [currencyCode, wallets]);
+    const iconsList = React.useCallback(() =>
+        userPM.map(i => <img className="ml-2 mr-3 mb-1" src={`data:image/png;base64,${i.logo}`} alt=""/>), [userPM]);
+
+    const renderPMItem = pm => {
+        const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));
+        const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 8, '***') : '';
+        return `${pm.name} ${numberValue}`;
+    };
 
     const body = React.useCallback(() => {
         const placeHolder = side === 'buy' ? 
@@ -215,7 +273,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                             value={tradeAmount}
                             isFocused={amountFocused}
                             handleChangeValue={handleAmountChange}
-                            handleFocusInput={() => setamountFocused(!amountFocused)}
+                            handleFocusInput={() => setAmountFocused(!amountFocused)}
                             labelVisible={true}
                             showAllButton={true}
                             handleClickAllButton={handleClickTradeAll}
@@ -224,7 +282,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                         {side === 'sell' && 
                             <div className="balance">
                                 {translate('page.body.p2p.modal.label.balance')}
-                                <span className="balance-amount">{Decimal.format(getBalance(), amountPrecision, '')}</span>
+                                <span className="balance-amount">{Decimal.format(wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance, amountPrecision, '')}</span>
                                 <span className="balance-currency">{currencyCode.toUpperCase()}</span>
                             </div> 
                         }
@@ -234,24 +292,66 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                             currency={side === 'buy' ? currencyCode : fiatCode}
                             label={translate('page.body.p2p.modal.label.receive')}
                             value={receiveAmount}
-                            isFocused={false}
+                            placeholder="0.00"
+                            isFocused={receiveFocused}
                             handleChangeValue={handleReceiveChange}
-                            handleFocusInput={() => null}
+                            handleFocusInput={() => setReceiveFocused(!receiveFocused)}
                             labelVisible={true}
                         />
                     </div>
-                    {side === 'sell' &&
-                        <div className="payment">
-                            <div>{translate('page.body.p2p.modal.button.payment')}</div>
-                            <Button>
-                                {translate('page.body.p2p.modal.button.payment.add')}
-                            </Button>
-                        </div>
-                    }
+                    {side === 'sell' && (
+                        <React.Fragment>
+                            <div className="payment">
+                                <label>{translate('page.body.p2p.modal.button.payment')}</label>
+                                {userPM.length ? (
+                                    <DropdownComponent
+                                        className="cr-create-offer__dp-dropdown"
+                                        list={userPM.map(renderPMItem)}
+                                        iconsList={iconsList()}
+                                        onSelect={handleSelectPaymentMethod}
+                                        placeholder={paymentMethod && renderPMItem(paymentMethod)}
+                                    />
+                                ) : (
+                                    <Button
+                                        onClick={() => window.console.log('add')}
+                                        size="lg"
+                                        variant="outline-primary"
+                                    >
+                                        <span>{translate('page.body.p2p.create.offer.payment_method.add')}</span>
+                                        <PlusIcon className="icon"/>
+                                    </Button>
+                                )}
+                                {showError && <span className="error">{paymentMethodError}</span>}
+                            </div>
+                        </React.Fragment>
+                    )}
                 </div>
             </React.Fragment>
         );
-    }, [translate, side, currencyCode, fiatCode, advertiserName, price, available, topLimit, lowLimit, timeLimit, description, tradeAmount, amountFocused, amountPrecision, pricePrecision, receiveAmount, showError, wallets, clickAll, props.handleClickAll]);
+    }, [
+        translate,
+        side,
+        currencyCode,
+        fiatCode,
+        advertiserName,
+        price,
+        available,
+        topLimit,
+        lowLimit,
+        timeLimit,
+        description,
+        tradeAmount,
+        amountFocused,
+        amountPrecision,
+        pricePrecision,
+        receiveAmount,
+        showError,
+        wallets,
+        clickAll,
+        userPM,
+        paymentMethod,
+        receiveFocused,
+    ]);
 
     const footer = React.useCallback(() => (
         <Button
