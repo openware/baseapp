@@ -11,6 +11,7 @@ import { App } from './App';
 import './index.pcss';
 import { rootSaga } from './modules';
 import { rangerSagas } from './modules/public/ranger';
+import * as serviceWorkerRegistration from './service-worker-registration';
 import { rangerMiddleware, sagaMiddleware, store } from './store';
 
 import '@openware/react-components/build/index.css';
@@ -50,4 +51,5 @@ const render = () => ReactDOM.render(
     document.getElementById('root') as HTMLElement,
 );
 
+serviceWorkerRegistration.register();
 render();

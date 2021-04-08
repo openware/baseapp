@@ -6,6 +6,7 @@ import 'webpack-dev-server';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 import commonConfig from './common';
+import serviceWorkerConfig from './service-worker';
 
 const config = merge(commonConfig, {
     devtool: 'cheap-module-eval-source-map',
@@ -63,5 +64,4 @@ const config = merge(commonConfig, {
     },
 });
 
-// eslint-disable-next-line import/no-default-export
-export default config;
+module.exports = [config, serviceWorkerConfig];
