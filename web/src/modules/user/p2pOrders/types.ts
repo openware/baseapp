@@ -10,6 +10,14 @@ export interface P2POrder {
     id: number;
     offer: Offer;
     amount: number;
+    base: string;
+    quote: string;
+    expiry_time: string;
+    side: string;
+    price: string;
+    created_at: string;
+    time_limit: string;
+    state: string;
 }
 
 export interface P2PTradesHistory {

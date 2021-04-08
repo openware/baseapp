@@ -1,11 +1,17 @@
 import { CommonError } from "src/modules/types";
 import {
+    P2P_ORDERS_CANCEL_DATA,
+    P2P_ORDERS_CANCEL_ERROR,
+    P2P_ORDERS_CANCEL_FETCH,
     P2P_ORDERS_CREATE_DATA,
     P2P_ORDERS_CREATE_ERROR,
     P2P_ORDERS_CREATE_FETCH,
     P2P_TRADES_HISTORY_DATA,
     P2P_TRADES_HISTORY_ERROR,
     P2P_TRADES_HISTORY_FETCH,
+    P2P_ORDER_DATA,
+    P2P_ORDER_ERROR,
+    P2P_ORDER_FETCH,
 } from "./constants";
 import { P2POrderCreate, P2POrder, P2PTradesHistory } from "./types";
 
@@ -46,13 +52,52 @@ export interface P2PTradesHistoryError {
     error: CommonError;
 }
 
+export interface P2POrderFetch {
+    type: typeof P2P_ORDER_FETCH;
+    payload: {
+        id: string | number;
+    };
+}
+
+export interface P2POrderData {
+    type: typeof P2P_ORDER_DATA;
+    payload: P2POrder;
+}
+
+export interface P2POrderError {
+    type: typeof P2P_ORDER_ERROR;
+    error: CommonError;
+}
+
+export interface P2POrdersCancelFetch {
+    type: typeof P2P_ORDERS_CANCEL_FETCH;
+    payload: {
+        id: string | number;
+    };
+}
+
+export interface P2POrdersCancelData {
+    type: typeof P2P_ORDERS_CANCEL_DATA;
+}
+
+export interface P2POrdersCancelError {
+    type: typeof P2P_ORDERS_CANCEL_ERROR;
+    error: CommonError;
+}
+
 export type P2POrdersActions =
     P2POrdersCreateFetch
     | P2POrdersCreateData
     | P2POrdersCreateError
     | P2PTradesHistoryFetch
     | P2PTradesHistoryData
-    | P2PTradesHistoryError;
+    | P2PTradesHistoryError
+    | P2POrderFetch
+    | P2POrderData
+    | P2POrderError
+    | P2POrdersCancelFetch
+    | P2POrdersCancelData
+    | P2POrdersCancelError;
 
 export const p2pOrdersCreateFetch = (payload: P2POrderCreate): P2POrdersCreateFetch => ({
     type: P2P_ORDERS_CREATE_FETCH,
@@ -81,5 +126,34 @@ export const p2pTradesHistoryData = (payload: P2PTradesHistoryData['payload']): 
 
 export const p2pTradesHistoryError = (error: CommonError): P2PTradesHistoryError => ({
     type: P2P_TRADES_HISTORY_ERROR,
+    error,
+});
+
+export const p2pOrderFetch = (payload: P2POrderFetch['payload']): P2POrderFetch => ({
+    type: P2P_ORDER_FETCH,
+    payload,
+});
+
+export const p2pOrderData = (payload: P2POrderData['payload']): P2POrderData => ({
+    type: P2P_ORDER_DATA,
+    payload,
+});
+
+export const p2pOrderError = (error: CommonError): P2POrderError => ({
+    type: P2P_ORDER_ERROR,
+    error,
+});
+
+export const p2pOrdersCancelFetch = (payload: P2POrdersCancelFetch['payload']): P2POrdersCancelFetch => ({
+    type: P2P_ORDERS_CANCEL_FETCH,
+    payload,
+});
+
+export const p2pOrdersCancelData = (): P2POrdersCancelData => ({
+    type: P2P_ORDERS_CANCEL_DATA,
+});
+
+export const p2pOrdersCancelError = (error: CommonError): P2POrdersCancelError => ({
+    type: P2P_ORDERS_CANCEL_ERROR,
     error,
 });

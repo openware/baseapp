@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TabPanel } from 'src/components';
 import { P2POffers, P2POffersHeader, P2POffersModal } from 'src/containers';
 import { useDocumentTitle, useP2PCurrenciesFetch, useP2PPaymentMethodsFetch, useRangerConnectFetch, useUserPaymentMethodsFetch } from 'src/hooks';
-import { Offer, P2POrderCreate, p2pOrdersCreateFetch, selectP2PCurrenciesData, selectP2PPaymentMethodsData } from 'src/modules';
+import { Offer, P2POrderCreate, p2pOrdersCreateFetch, selectP2PCreatedOrder, selectP2PCreateOrderSuccess, selectP2PCurrenciesData, selectP2PPaymentMethodsData } from 'src/modules';
 
 interface ParamType {
     currency?: string;
@@ -25,6 +25,8 @@ export const P2POffersScreen: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const currencies = useSelector(selectP2PCurrenciesData);
     const paymentMethods = useSelector(selectP2PPaymentMethodsData);
+    const createOrderSuccess = useSelector(selectP2PCreateOrderSuccess);
+    const createdOrder = useSelector(selectP2PCreatedOrder);
     const { formatMessage } = useIntl();
     const history = useHistory();
     const { currency } = useParams<ParamType>();
@@ -60,6 +62,12 @@ export const P2POffersScreen: FC = (): ReactElement => {
             }
         }
     }, [currency, tabMapping, history]);
+
+    useEffect(() => {
+        if (createOrderSuccess && createdOrder) {
+            history.push(`/p2p/transfer/${createdOrder.id}`);
+        }
+    }, [createdOrder, createOrderSuccess, history]);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
     const onCurrentTabChange = useCallback((index: number) => {

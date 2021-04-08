@@ -1,6 +1,8 @@
 import { RootState } from '../..';
 import { CommonError } from '../../types';
-import { P2PTradesHistory } from './types';
+import { P2POrder, P2PTradesHistory } from './types';
+
+// P2P Orders history
 
 export const selectP2PTradesHistoryData = (state: RootState): P2PTradesHistory[] =>
     state.user.p2pOrders.tradesHistory.list;
@@ -36,3 +38,20 @@ export const selectP2PTradesHistoryLastElemIndex = (state: RootState, limit: num
 
 export const selectP2PTradesHistoryNextPageExists = (state: RootState, limit: number): boolean =>
     (state.user.p2pOrders.tradesHistory.page + 1) < selectP2PTradesHistoryPageCount(state, limit);
+
+
+// P2P create order
+
+export const selectP2PCreatedOrder = (state: RootState): P2POrder =>
+    state.user.p2pOrders.createOrder.data;
+
+export const selectP2PCreateOrderSuccess = (state: RootState): boolean =>
+    state.user.p2pOrders.createOrder.success;
+
+export const selectP2POrderLoading = (state: RootState): boolean =>
+    state.user.p2pOrders.createOrder.loading;
+
+// P2P cancel order
+
+export const selectP2PCancelOrderSuccess = (state: RootState): boolean =>
+    state.user.p2pOrders.cancelOrder.success;

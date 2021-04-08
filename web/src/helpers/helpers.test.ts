@@ -465,4 +465,11 @@ describe('Helpers', () => {
             expect(helpers.hasDuplicates([1, 2, 3], 5)).toBeFalsy();
         });
     });
+
+    describe('Helpers', () => {
+        it('getCountdownDate', () => {
+            expect(helpers.getCountdownDate('2021-04-01T15:55:00.000Z')).toBe('00:00:00');
+            expect(helpers.getCountdownDate('2021-04-01T15:55:00.000Z', '5m')).toBe('00:00:00');
+        });
+    });
 });

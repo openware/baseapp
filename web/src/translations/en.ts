@@ -1169,6 +1169,26 @@ export const en = {
     'page.body.p2p.order_history.actions': 'Actions',
     'page.body.p2p.order_history.close_dispute': 'Close dispute',
 
+    'page.body.p2p.order.transfer.title.buy': 'Buy',
+    'page.body.p2p.order.transfer.title.sell': 'Sell',
+    'page.body.p2p.order.transfer.created.time': 'Created time',
+    'page.body.p2p.order.transfer.order.number': 'Order number',
+    'page.body.p2p.order.transfer.amount': 'Amount',
+    'page.body.p2p.order.transfer.price': 'Price',
+    'page.body.p2p.order.transfer.quantity': 'Quantity',
+    'page.body.p2p.order.transfer.info.1': '1. Make the payment and notify the seller that you completed the payment.',
+    'page.body.p2p.order.transfer.info.2': '2. Click the "I have paid" button to notify the seller that you made the payment.',    
+    'page.body.p2p.order.transfer.payment.toBe.made': 'Payment to be made',
+    'page.body.p2p.order.transfer.warning': 'Please make a payment within {time} mins, otherwise, the order will be cancelled.',
+    'page.body.p2p.order.transfer.confirm.checkbox': 'I have transferred {amount} to the seller’s account ',
+    'page.body.p2p.order.transfer.have.paid': 'I have paid',
+    'page.body.p2p.order.transfer.cancel.order': 'Cancel order',
+    'page.body.p2p.order.transfer.tips': 'Tips',
+    'page.body.p2p.order.transfer.tips.text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaturLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur...Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur...Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur...Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur...Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur...Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur...Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur...',
+    'page.body.p2p.order.transfer.waiting': 'Waiting for buyer\'s payment confirmation.',
+    'page.body.p2p.order.transfer.wait.for': 'Wait for the buyer\'s payment confirmation before. It may take {time} min.',
+    'page.body.p2p.order.transfer.wait.for.confirmation': 'Waiting for confirmation. Time limit: {time} mins, otherwise, the order will be cancelled.',
+
     // Wallets screen
 
     'page.body.wallets.tab.overview': 'Overview',
