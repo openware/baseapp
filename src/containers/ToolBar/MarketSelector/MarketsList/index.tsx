@@ -148,7 +148,11 @@ class MarketsListComponent extends React.Component<Props, State> {
         const {sortBy, reverseOrder} = this.state;
 
         if (sortBy !== 'none') {
-            marketsMapped.sort((a, b) => a[sortBy] > b[sortBy] ? 1 : b[sortBy] > a[sortBy] ? -1 : 0);
+            if (sortBy === 'id') {
+                marketsMapped.sort((a, b) => a[sortBy] > b[sortBy] ? 1 : b[sortBy] > a[sortBy] ? -1 : 0);
+            } else {
+                marketsMapped.sort((a, b) => +a[sortBy] > +b[sortBy] ? 1 : +b[sortBy] > +a[sortBy] ? -1 : 0);
+            }
         }
 
         reverseOrder && marketsMapped.reverse();
