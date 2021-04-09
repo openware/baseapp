@@ -72,6 +72,7 @@ func Setup(app *sonic.Runtime) {
 	// React is looking for these files in root
 	// TODO: find solution for react build (webpack)
 	router.Static("/charting_library", "./public/assets/charting_library")
+	router.Static("/css", "./public/assets/css")
 
 	router.GET("/", index)
 	router.GET("/version", version)
