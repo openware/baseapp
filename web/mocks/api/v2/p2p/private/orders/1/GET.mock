@@ -7,13 +7,14 @@ Access-Control-Allow-Credentials: true
 
 {
   "id": "1",
-  "expiry_time": "2021-04-08T20:28:54Z",
+  "expiry_time": "2021-04-09T20:28:54Z",
   "base": "usdt",
   "quote": "ngn",
-  "side": "buy",
+  "side": "sell",
   "price": "1.20",
   "amount": "100",
-  "created_at": "2021-04-08T15:28:54Z",
-  "state": "prepared",
+  "created_at": "2021-04-09T15:28:54Z",
+  "state": "wait",
+  "time_limit": "900000",
   "offer_id": "1"
 }

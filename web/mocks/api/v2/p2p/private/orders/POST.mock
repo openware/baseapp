@@ -16,5 +16,6 @@ Access-Control-Allow-Headers: content-type, x-csrf-token
   "created_at": "2021-04-07T15:28:54Z",
   "amount": "100",
   "state": "prepared",
+  "time_limit": "900000",
   "offer_id": "1"
 }

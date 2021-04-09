@@ -83,7 +83,6 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     useEffect(() => {
         if (userPM.length && !paymentMethod) {
             setPaymentMethod(userPM[0]);
-            window.console.log('useEff', userPM);
         }
     }, [userPM, paymentMethod]);
 
