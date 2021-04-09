@@ -219,7 +219,7 @@ if (detect()) {
     status.slide = "loaded";
 }
 
-export function initGeetest(userConfig, callback) {
+function initGeetest(userConfig, callback) {
 
     var config = new Config(userConfig);
 
@@ -279,3 +279,5 @@ export function initGeetest(userConfig, callback) {
     });
 
 };
+
+module.exports = initGeetest;
