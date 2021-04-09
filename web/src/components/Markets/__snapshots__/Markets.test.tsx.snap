@@ -164,6 +164,7 @@ exports[`Markets should render empty data 1`] = `
     messages={
       Object {
         "account.beneficiary.cant_resend_within_1_minute": "Can't resend activation pin within 1 minute",
+        "account.beneficiary.duplicate_address": "Beneficiary address already exists",
         "account.beneficiary.invalid_pin": "Invalid beneficiary activation pin",
         "account.currency.doesnt_exist": "Currency doesn't exist",
         "account.deposit.empty_txid": "Txid is missing, txid is empty",
@@ -922,7 +923,7 @@ exports[`Markets should render empty data 1`] = `
         "page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName": "Full Name",
         "page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankName": "Intermediary Bank Name (optional)",
         "page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode": "Intermediary Bank Swift Code (optional)",
-        "page.body.wallets.beneficiaries.addAddressModal.body.fiatName": "Description",
+        "page.body.wallets.beneficiaries.addAddressModal.body.fiatName": "Beneficiary Name",
         "page.body.wallets.beneficiaries.addAddressModal.body.invalidAddress": "Invalid Address",
         "page.body.wallets.beneficiaries.addAddressModal.header": "Add new withdrawal address",
         "page.body.wallets.beneficiaries.confirmationModal.body.button": "Confirm",

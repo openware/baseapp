@@ -3,7 +3,6 @@ import {
     connect,
     MapStateToProps,
 } from 'react-redux';
-import { initGeetest } from '../../helpers/geetest.js';
 import {
     geetestCaptchaFetch,
     GeetestCaptchaKeys,
@@ -12,6 +11,8 @@ import {
     selectCaptchaKeys,
     selectCurrentLanguage,
 } from '../../modules';
+
+import initGeetest = require("../../helpers/geetest.js")
 
 interface OwnProps {
     shouldCaptchaReset?: boolean;
