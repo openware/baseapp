@@ -80,10 +80,9 @@
           }
 
           &:nth-child(2) {
-            color: var(--wallets-locked-amount);
-            font-size: calc(var(--gap) * 1.9);
+            color: var(--secondary-contrast-cta-color);
+            font-size: 14px;
             font-weight: normal;
-            margin-top: calc(var(--gap) * 0.6);
             opacity: 0.3;
           }
         }
@@ -101,13 +100,15 @@
       }
 
       &__icon {
-        margin-left: calc(var(--gap) * 2);
-        margin-right: calc(var(--gap) * 1.5);
+        margin-left: 12px;
+        margin-right: 0px;
         min-width: 23px; /* update after changing icon lib */
       }
 
       &__balance {
-        font-weight: normal;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 18px;
         opacity: 0.5;
       }
 
@@ -147,15 +148,6 @@
 
         div {
           margin-right: auto;
-        }
-
-        &::before {
-          background-color: var(--primary-cta-color);
-          border-bottom-left-radius: calc(var(--gap) * 0.66);
-          border-top-left-radius: calc(var(--gap) * 0.66);
-          content: '';
-          height: calc(var(--gap) * 9);
-          width: 4px;
         }
       }
     }
@@ -382,7 +374,7 @@
     color: var(--primary-text-color);
     cursor: pointer;
     font-size: calc(var(--gap) * 2.66);
-    height: calc(var(--gap) * 9);
+    height: 48px;
 
     & > * {
       background: transparent;
@@ -445,7 +437,7 @@
   }
 
   .cr-wallet-item__balance {
-    margin-right: calc(var(--gap) * 3);
+    margin-right: 13px;
   }
 
   &__error {

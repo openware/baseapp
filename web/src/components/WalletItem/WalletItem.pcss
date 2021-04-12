@@ -2,7 +2,6 @@
   align-items: center;
   background-color: var(--background-wallet-item);
   display: flex;
-  height: calc(var(--gap) * 8);
   justify-content: space-between;
 
   span {
@@ -20,12 +19,24 @@
   }
 
   &__description {
+    align-items: baseline;
     background: var(--background-wallet-item);
     display: flex;
-    flex-direction: column;
-    margin-left: 10px;
+    flex-direction: row;
     padding-bottom: 15px;
     padding-top: 15px;
+
+    &-currency {
+      color: var(--primary-text-color);
+      font-size: 16px;
+      font-weight: 600;
+      margin-right: 6px;
+    }
+
+    &-name {
+      color: var(--secondary-contrast-cta-color);
+      font-size: 14px;
+    }
   }
 
   &__image-icon {
@@ -40,6 +51,10 @@
     margin-left: calc(var(--gap) * 4);
     text-transform: uppercase;
 
+    img {
+      margin-right: 0;
+    }
+
     & > * {
       background: var(--background-wallet-item);
     }
@@ -47,15 +62,16 @@
 
   &__balance {
     background: var(--background-wallet-item);
+    padding: 8px 0;
     margin-right: calc(var(--gap) * 10);
     text-align: right;
 
-    &-locked {
+    &-price {
       background: var(--background-wallet-item);
-      color: var(--placeholder-text);
-      font-size: 0.9em;
-      font-weight: 200;
-      padding-top: var(--gap);
+      color: var(--secondary-contrast-cta-color);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 15px;
     }
   }
 

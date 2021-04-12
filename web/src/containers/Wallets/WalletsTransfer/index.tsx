@@ -39,6 +39,9 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
     const dispatch = useDispatch();
     const wallets = useSelector(selectWallets);
     const walletsLoading = useSelector(selectWalletsLoading);
+    const currencies = useSelector(selectCurrencies);
+    const markets = useSelector(selectMarkets);
+    const tickers = useSelector(selectMarketTickers);
 
     const { currency } = props;
 
@@ -127,6 +130,9 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
                             walletItems={formattedWallets()}
                             activeIndex={activeIndex}
                             onActiveIndexChange={setActiveIndex}
+                            currencies={currencies}
+                            markets={markets}
+                            tickers={tickers}
                         />
                     </div>
                     <div className={`pg-wallet-transfers__content col-md-7 col-sm-12 col-12`}>

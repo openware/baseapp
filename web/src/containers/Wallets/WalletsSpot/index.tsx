@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button, Spinner, Form } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -12,6 +12,7 @@ import {
     CurrencyInfo,
     DepositCrypto,
     DepositFiat,
+    FilterInput,
     TabPanel,
     WalletList,
 } from 'src/components';
@@ -19,26 +20,32 @@ import { DEFAULT_CCY_PRECISION } from 'src/constants';
 import { Withdraw, WithdrawProps } from 'src/containers';
 import { ModalWithdrawConfirmation } from 'src/containers/ModalWithdrawConfirmation';
 import { ModalWithdrawSubmit } from 'src/containers/ModalWithdrawSubmit';
+import { WalletsHeader } from 'src/components/WalletsHeader';
 import { WalletHistory } from '../History';
-import { setDocumentTitle } from 'src/helpers';
 import {
     alertPush,
     beneficiariesFetch,
     Beneficiary,
     currenciesFetch,
     Currency,
+    Market,
+    marketsFetch,
+    marketsTickersFetch,
     RootState,
     selectBeneficiariesActivateSuccess,
     selectBeneficiariesCreateSuccess,
     selectBeneficiariesDeleteSuccess,
     selectCurrencies,
     selectHistory,
+    selectMarkets,
+    selectMarketTickers,
     selectMobileWalletUi,
     selectUserInfo,
     selectWallets,
     selectWalletsLoading,
     selectWithdrawSuccess,
     setMobileWalletUi,
+    Ticker,
     User,
     Wallet,
     WalletHistoryList,
@@ -59,9 +66,15 @@ interface ReduxProps {
     beneficiariesDeleteSuccess: boolean;
     beneficiariesAddSuccess: boolean;
     currencies: Currency[];
+    markets: Market[];
+    tickers: {
+        [key: string]: Ticker,
+    };
 }
 
 interface DispatchProps {
+    fetchMarkets: typeof marketsFetch;
+    fetchTickers: typeof marketsTickersFetch;
     fetchBeneficiaries: typeof beneficiariesFetch;
     fetchAddress: typeof walletsAddressFetch;
     fetchWallets: typeof walletsFetch;
@@ -101,8 +114,9 @@ interface WalletsState {
     selectedWalletIndex: number;
     withdrawSubmitModal: boolean;
     withdrawConfirmModal: boolean;
+    nonZeroSelected: boolean;
     bchAddress?: string;
-    filteredWallets?: Wallet[] | null;
+    filteredWallets?: Wallet[];
     tab: string;
     withdrawDone: boolean;
     total: string;
@@ -136,6 +150,8 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             withdrawDone: false,
             total: '',
             currentTabIndex: 0,
+            filteredWallets: [],
+            nonZeroSelected: false,
         };
     }
 
@@ -147,7 +163,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     private description = this.translate('page.body.wallets.tabs.deposit.fiat.message2');
 
     public componentDidMount() {
-        const { wallets, currency, action } = this.props;
+        const { wallets, currency, action, markets, tickers, currencies } = this.props;
         const { currentTabIndex, selectedWalletIndex } = this.state;
 
         if (this.props.wallets.length === 0) {
@@ -160,6 +176,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             this.setState({
                 selectedWalletIndex: wallets.indexOf(walletToSet),
                 activeIndex: wallets.indexOf(walletToSet),
+                filteredWallets: wallets,
             });
 
             walletToSet?.currency && this.props.fetchBeneficiaries({ currency_id: walletToSet.currency?.toLowerCase() });
@@ -176,7 +193,15 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             }
         }
 
-        if (!this.props.currencies.length) {
+        if (!markets.length) {
+            this.props.fetchMarkets();
+        }
+
+        if (!tickers.length) {
+            this.props.fetchTickers();
+        }
+
+        if (!currencies.length) {
             this.props.currenciesFetch();
         }
     }
@@ -199,7 +224,9 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             this.setState({
                 selectedWalletIndex: next.wallets.indexOf(walletToSet),
                 activeIndex: next.wallets.indexOf(walletToSet),
+                filteredWallets: next.wallets,
             });
+
 
             walletToSet?.currency && this.props.fetchBeneficiaries({ currency_id: walletToSet.currency?.toLowerCase() });
 
@@ -228,7 +255,15 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     }
 
     public render() {
-        const { wallets, historyList, mobileWalletChosen, walletsLoading } = this.props;
+        const {
+            wallets,
+            currencies,
+            markets,
+            tickers,
+            historyList,
+            mobileWalletChosen,
+            walletsLoading,
+        } = this.props;
         const {
             amount,
             fee,
@@ -236,16 +271,11 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             beneficiary,
             total,
             selectedWalletIndex,
-            filteredWallets,
             withdrawSubmitModal,
             withdrawConfirmModal,
             currentTabIndex,
+            nonZeroSelected,
         } = this.state;
-        const formattedWallets = wallets.map((wallet: Wallet) => ({
-            ...wallet,
-            currency: wallet.currency.toUpperCase(),
-            iconUrl: wallet.iconUrl ? wallet.iconUrl : '',
-        }));
         const selectedCurrency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
         const currencyType = (wallets[selectedWalletIndex] || { currency: '' }).type;
         let confirmationAddress = '';
@@ -268,11 +298,20 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                     </div>
                     <div className={`row no-gutters pg-wallet__tabs-content ${!historyList.length && 'pg-wallet__tabs-content-height'}`}>
                         <div className={`col-md-3 col-sm-12 col-12 ${mobileWalletChosen && 'd-none d-md-block'}`}>
+                            <WalletsHeader
+                                wallets={wallets}
+                                nonZeroSelected={nonZeroSelected}
+                                setFilteredWallets={this.handleFilter}
+                                handleClickCheckBox={this.handleToggleCheckbox}
+                            />
                             <WalletList
                                 onWalletSelectionChange={this.onWalletSelectionChange}
-                                walletItems={filteredWallets || formattedWallets}
+                                walletItems={this.formattedWallets()}
                                 activeIndex={this.state.activeIndex}
                                 onActiveIndexChange={this.onActiveIndexChange}
+                                currencies={currencies}
+                                markets={markets}
+                                tickers={tickers}
                             />
                         </div>
                         <div className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${!mobileWalletChosen && 'd-none d-md-block'}`}>
@@ -309,12 +348,36 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         );
     }
 
+    private formattedWallets = () => {
+        const { nonZeroSelected, filteredWallets } = this.state;
+
+        const list = nonZeroSelected ? filteredWallets.filter(i => i.balance && Number(i.balance) > 0) : filteredWallets;
+
+        return list.map((wallet: Wallet) => ({
+            ...wallet,
+            currency: wallet.currency.toUpperCase(),
+            iconUrl: wallet.iconUrl ? wallet.iconUrl : '',
+        }));
+    }
+
+    private handleFilter = (result: object[]) => {
+        this.setState({
+            filteredWallets: result as Wallet[],
+        });
+    };
+
+    private handleToggleCheckbox = () => {
+        this.setState(prevState => ({
+            nonZeroSelected: !prevState.nonZeroSelected,
+        }));
+    };
+
     private onTabChange = label => this.setState({ tab: label });
     private onActiveIndexChange = index => this.setState({ activeIndex: index });
     private onCurrentTabChange = index => {
         const { selectedWalletIndex } = this.state;
         const { wallets } = this.props;
- 
+
         this.setState({ currentTabIndex: index });
         wallets && wallets[selectedWalletIndex] && this.props.history.push(`/wallets/spot/${wallets[selectedWalletIndex].currency?.toLowerCase()}/${this.tabMapping[index]}`)
     };
@@ -563,6 +626,8 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
+    markets: selectMarkets(state),
+    tickers: selectMarketTickers(state),
     user: selectUserInfo(state),
     wallets: selectWallets(state, 'spot'),
     walletsLoading: selectWalletsLoading(state),
@@ -576,6 +641,8 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
+    fetchMarkets: () => dispatch(marketsFetch()),
+    fetchTickers: () => dispatch(marketsTickersFetch()),
     fetchBeneficiaries: params => dispatch(beneficiariesFetch(params)),
     fetchWallets: () => dispatch(walletsFetch()),
     fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),

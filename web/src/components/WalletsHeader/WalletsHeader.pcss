@@ -34,6 +34,32 @@
   }
 
   &__checkbox {
-    margin-left: 12px;
+
+    .custom-control {
+      padding-left: 0;
+
+      &-label {
+        align-items: center;
+        color: var(--secondary-contrast-cta-color);
+        display: flex;
+
+        &::before, &::after {
+          height: 20px;
+          top: 0;
+          left: 0;
+          width: 20px;
+        }
+
+        &::before {
+          position: static;
+          margin-right: 5px;
+        }
+      }
+
+      &-input {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 }
