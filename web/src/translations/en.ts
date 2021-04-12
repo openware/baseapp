@@ -189,9 +189,12 @@ export const en = {
     'page.body.wallets.tabs.withdraw.content.button': 'WITHDRAW',
     'page.body.wallets.tabs.withdraw.disabled.message': 'Withdraw was disabled by administration',
 
-    'page.body.wallets.tabs.withdraw.modal.confirmation': 'Confirmation',
-    'page.body.wallets.tabs.withdraw.modal.message1': 'You will receive ',
-    'page.body.wallets.tabs.withdraw.modal.message2': ' on address',
+    'page.body.wallets.tabs.withdraw.modal.title': 'Withdraw',
+    'page.body.wallets.tabs.withdraw.modal.withdrawTo': 'Withdraw to',
+    'page.body.wallets.tabs.withdraw.modal.amount': 'Withdrawal Amount',
+    'page.body.wallets.tabs.withdraw.modal.fee': 'Withdrawal Fee',
+    'page.body.wallets.tabs.withdraw.modal.total': 'Total Withdrawal Amount',
+    'page.body.wallets.tabs.withdraw.modal.message': 'Enter 2fa code from the Google Authenticator app',
     'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Cancel',
     'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Withdraw',
 

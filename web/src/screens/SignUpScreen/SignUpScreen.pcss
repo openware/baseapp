@@ -103,26 +103,35 @@
   .cr-modal__container {
     background: var(--body-background-color);
     border-radius: calc(var(--gap) * 0.66);
-    min-width: 30% !important;
+    min-width: 424px !important;
     outline: none;
-    width: calc(var(--big-gap) * 10);
+    width: 424px;
 
     .cr-modal__container-header {
-      border-bottom: 2px solid var(--divider-color-level-2);
+      border-bottom: 1px solid var(--divider-color-level-1);
       border-top-left-radius: calc(var(--gap) * 0.66);
       border-top-right-radius: calc(var(--gap) * 0.66);
       outline: none;
       text-align: center;
 
       .pg-exchange-modal-submit-header {
-        margin-top: calc(var(--gap) * 1.16);
+        color: var(--primary-cta-color);
+        font-size: 14px;
+        font-weight: 600;
+
+        &-close {
+          position: relative;
+          left: 32%;
+          cursor: pointer;
+          text-align: right;
+        }
       }
     }
 
     .cr-modal__container-content {
       color: var(--secondary-contrast-color);
       margin-bottom: 0;
-      padding: 0 calc(var(--gap) * 8.33);
+      padding: 0 25px;
     }
 
     .cr-modal__container-footer {

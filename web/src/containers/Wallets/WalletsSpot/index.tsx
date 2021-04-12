@@ -95,6 +95,7 @@ interface WalletsState {
     activeIndex: number;
     otpCode: string;
     amount: string;
+    fee: string;
     beneficiary: Beneficiary;
     selectedWalletIndex: number;
     withdrawSubmitModal: boolean;
@@ -128,6 +129,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             withdrawConfirmModal: false,
             otpCode: '',
             amount: '',
+            fee: '',
             beneficiary: defaultBeneficiary,
             tab: this.translate('page.body.wallets.tabs.deposit'),
             withdrawDone: false,
@@ -227,6 +229,9 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     public render() {
         const { wallets, historyList, mobileWalletChosen, walletsLoading } = this.props;
         const {
+            amount,
+            fee,
+            otpCode,
             beneficiary,
             total,
             selectedWalletIndex,
@@ -241,6 +246,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             iconUrl: wallet.iconUrl ? wallet.iconUrl : '',
         }));
         const selectedCurrency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
+        const currencyType = (wallets[selectedWalletIndex] || { currency: '' }).type;
         let confirmationAddress = '';
         let selectedWalletPrecision = DEFAULT_CCY_PRECISION;
 
@@ -283,12 +289,18 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                         onSubmit={this.toggleSubmitModal}
                     />
                     <ModalWithdrawConfirmation
+                        beneficiary={beneficiary}
+                        otpCode={otpCode}
                         show={withdrawConfirmModal}
-                        amount={total}
+                        type={currencyType}
+                        amount={amount}
+                        fee={fee}
+                        total={total}
                         currency={selectedCurrency}
                         rid={confirmationAddress}
                         onSubmit={this.handleWithdraw}
                         onDismiss={this.toggleConfirmModal}
+                        handleChangeCodeValue={this.handleChangeCodeValue}
                         precision={selectedWalletPrecision}
                     />
                 </div>
@@ -313,15 +325,22 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         }));
     };
 
-    private toggleConfirmModal = (amount?: string, total?: string, beneficiary?: Beneficiary, otpCode?: string) => {
+    private toggleConfirmModal = (amount?: string, total?: string, beneficiary?: Beneficiary, otpCode?: string, fee?: string) => {
         this.setState((state: WalletsState) => ({
             amount: amount || '',
             beneficiary: beneficiary ? beneficiary : defaultBeneficiary,
             otpCode: otpCode ? otpCode : '',
             withdrawConfirmModal: !state.withdrawConfirmModal,
             total: total || '',
+            fee: fee || '',
             withdrawDone: false,
         }));
+    };
+
+    private handleChangeCodeValue = (value: string) => {
+        this.setState({
+            otpCode: value,
+        });
     };
 
     private renderTabs() {

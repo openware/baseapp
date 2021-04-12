@@ -196,9 +196,12 @@ export const ru: LangType = {
 
     'page.body.wallets.tabs.withdraw.disabled.message': 'Вывод средств был отключен администрацией',
 
-    'page.body.wallets.tabs.withdraw.modal.confirmation': 'Подтверждение',
-    'page.body.wallets.tabs.withdraw.modal.message1': 'Вы получите ',
-    'page.body.wallets.tabs.withdraw.modal.message2': ' на кошелек',
+    'page.body.wallets.tabs.withdraw.modal.title': 'Вывести',
+    'page.body.wallets.tabs.withdraw.modal.withdrawTo': 'Вывести на',
+    'page.body.wallets.tabs.withdraw.modal.amount': 'Сумма вывода',
+    'page.body.wallets.tabs.withdraw.modal.fee': 'Комиссия вывода',
+    'page.body.wallets.tabs.withdraw.modal.total': 'Общая сумма вывода',
+    'page.body.wallets.tabs.withdraw.modal.message': 'Enter 2fa code from the Google Authenticator app',
     'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Отменить',
     'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Вывести',
 
