@@ -52,6 +52,9 @@ interface ReduxProps {
 interface OwnProps {
     onLinkChange?: () => void;
     history: History;
+    location: {
+        pathnname: string;
+    };
     changeUserDataFetch: typeof changeUserDataFetch;
 }
 
@@ -61,6 +64,12 @@ class SidebarContainer extends React.Component<Props, State> {
     public state = {
         isOpenLanguage: false,
     };
+
+    public componentWillReceiveProps(nextProps: Props) {
+        if (this.props.location.pathname !== nextProps.location.pathname && nextProps.isActive) {
+            this.props.toggleSidebar(false);
+        }
+    }
 
     public render() {
         const { isLoggedIn, isActive, lang } = this.props;
