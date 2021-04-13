@@ -1,7 +1,12 @@
 import { RootState } from '../../';
 import { Wallet } from './types';
 
-export const selectWallets = (state: RootState): Wallet[] =>
+export const selectWallets = (state: RootState, accountType?: string): Wallet[] =>
+    accountType
+    ? state.user.wallets.wallets.list.filter(i => i.account_type === accountType)
+    : state.user.wallets.wallets.list;
+
+export const selectWalletsSpot = (state: RootState, accountType?: string): Wallet[] =>
     state.user.wallets.wallets.list;
 
 export const selectWalletsLoading = (state: RootState): boolean =>

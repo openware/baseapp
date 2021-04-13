@@ -17,16 +17,16 @@ export function* walletsSaga(action: WalletsFetch) {
         const currencies = yield call(API.get(currenciesOptions), '/public/currencies');
 
         const accountsByCurrencies = currencies.map(currency => {
-            let walletInfo = accounts.find(wallet => wallet.currency === currency.id);
+            let walletInfo = accounts.filter(wallet => wallet.currency === currency.id);
 
-            if (!walletInfo) {
-                walletInfo = {
+            if (!walletInfo.length) {
+                walletInfo = [{
                     currency: currency.id,
-                };
+                }];
             }
 
-            return ({
-                ...walletInfo,
+            return walletInfo.map(acc => ({
+                ...acc,
                 name: currency?.name,
                 explorerTransaction: currency?.explorer_transaction,
                 explorerAddress: currency?.explorer_address,
@@ -34,10 +34,10 @@ export function* walletsSaga(action: WalletsFetch) {
                 type: currency?.type,
                 fixed: currency?.precision,
                 iconUrl: currency?.icon_url,
-            });
+            }));
         });
 
-        yield put(walletsData(accountsByCurrencies));
+        yield put(walletsData(accountsByCurrencies.flat()));
     } catch (error) {
         yield put(sendError({
             error,

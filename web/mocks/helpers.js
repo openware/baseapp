@@ -56,11 +56,11 @@ const Helpers = {
         const getLockedValue = (value, precision) => (Math.random() / 10 + +value).toFixed(precision);
 
         return {
-            "bch":  [getBalanceValue("10.12", 8), getLockedValue("0.001", 8)],
-            "btc": [getBalanceValue("0.21026373", 8), getLockedValue("0.0001", 8)],
-            "dash": [getBalanceValue("5", 6), getLockedValue("0.0005", 6)],
-            "eth": [getBalanceValue("5", 6), getLockedValue("0.0002", 6)],
-            "usd":  [getBalanceValue("1000", 2), getLockedValue("100", 2)]
+            "bch":  [getBalanceValue("10.12", 8), getLockedValue("0.001", 8), 'spot'],
+            "btc": [getBalanceValue("0.21026373", 8), getLockedValue("0.0001", 8), 'spot'],
+            "dash": [getBalanceValue("5", 6), getLockedValue("0.0005", 6), 'spot'],
+            "eth": [getBalanceValue("5", 6), getLockedValue("0.0002", 6), 'spot'],
+            "usd":  [getBalanceValue("1000", 2), getLockedValue("100", 2), 'p2p']
         }
     },
     getDepth: (sequence) => {

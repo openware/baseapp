@@ -4,11 +4,12 @@ import { useSelector } from 'react-redux';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
 import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useWalletsFetch } from '../../../hooks';
-import { selectCurrencies, selectMarkets, selectMarketTickers, selectWallets } from '../../../modules';
+import { RootState, selectCurrencies, selectMarkets, selectMarketTickers, selectWallets } from '../../../modules';
 
 const EstimatedValueMobile = React.memo(() => {
     const intl = useIntl();
-    const wallets = useSelector(selectWallets);
+
+    const wallets = useSelector((state: RootState) => selectWallets(state, 'spot')) || [];
     const markets = useSelector(selectMarkets);
     const currencies = useSelector(selectCurrencies);
     const tickers = useSelector(selectMarketTickers);

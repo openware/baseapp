@@ -4,6 +4,7 @@ export interface Wallet {
     type: 'fiat' | 'coin';
     fee: number;
     fixed: number;
+    account_type: string;
     balance?: string;
     locked?: string;
     iconUrl?: string;
@@ -35,6 +36,7 @@ export interface WalletWithdrawFiat {
 
 export interface AccountInterface {
     currency: string;
+    account_type: string;
     balance?: string;
     locked?: string;
     deposit_address?: WalletAddress;

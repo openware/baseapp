@@ -272,7 +272,7 @@ class HistoryComponent extends React.Component<Props> {
 const mapStateToProps = (state: RootState): ReduxProps => ({
     currencies: selectCurrencies(state),
     marketsData: selectMarkets(state),
-    wallets: selectWallets(state),
+    wallets: selectWallets(state, 'spot'),
     list: selectHistory(state),
     fetching: selectHistoryLoading(state),
     page: selectCurrentPage(state),

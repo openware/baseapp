@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ChangeIcon } from 'src/assets/images/ChangeIcon';
 import { TabPanel } from 'src/components';
-import { CanCan, EstimatedValue, WalletsSpot, WalletsTable, WalletsTransfer } from 'src/containers';
+import { CanCan, EstimatedValue, WalletsOverview, WalletsP2P, WalletsSpot, WalletsTransfer } from 'src/containers';
 import { useDocumentTitle, useWalletsFetch } from 'src/hooks';
-import { selectAbilities, selectWallets } from 'src/modules';
+import { RootState, selectAbilities, selectWallets } from 'src/modules';
 
 interface ParamType {
     routeTab?: string;
@@ -22,7 +22,7 @@ export const WalletsScreen: FC = (): ReactElement => {
     const history = useHistory();
     const { formatMessage } = useIntl();
     const { routeTab, currency, action } = useParams<ParamType>();
-    const wallets = useSelector(selectWallets);
+    const wallets = useSelector((state: RootState) => selectWallets(state, 'spot')) || [];
     const abilities = useSelector(selectAbilities);
 
     useDocumentTitle('Wallets');
@@ -62,13 +62,7 @@ export const WalletsScreen: FC = (): ReactElement => {
     const renderTabs = React.useCallback(() => {
         const p2pTabs = CanCan.checkAbilityByAction('read', 'P2P', abilities) ? [
             {
-                content: currentTabIndex === 2 ? (
-                    <WalletsTable
-                        type="p2p"
-                        handleClickP2P={currency => history.push(`/p2p/${currency}`)}
-                        handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
-                    />
-                ) : null,
+                content: currentTabIndex === 2 ? <WalletsP2P /> : null,
                 label: translate('page.body.wallets.tab.p2p'),
             },
             {
@@ -79,14 +73,7 @@ export const WalletsScreen: FC = (): ReactElement => {
 
         return [
             {
-                content: currentTabIndex === 0 ? (
-                    <WalletsTable
-                        type="overview"
-                        handleClickDeposit={currency => history.push(`/wallets/spot/${currency}/deposit`)}
-                        handleClickWithdraw={currency => history.push(`/wallets/spot/${currency}/withdraw`)}
-                        handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
-                    />
-                ) : null,
+                content: currentTabIndex === 0 ? <WalletsOverview /> : null,
                 label: translate('page.body.wallets.tab.overview'),
             },
             {

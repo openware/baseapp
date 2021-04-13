@@ -100,11 +100,11 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
                         payloadCurrencies.some(value => {
                             const targetWallet = action.payload.balances[value];
 
-                            if (value === wallet.currency) {
+                            if (value === wallet.currency && (targetWallet && targetWallet[2] === wallet.account_type)) {
                                 updatedWallet = {
                                     ...updatedWallet,
-                                    balance: targetWallet && targetWallet[0] ? targetWallet[0] : updatedWallet.balance,
-                                    locked: targetWallet && targetWallet[1] ? targetWallet[1] : updatedWallet.locked,
+                                    balance: targetWallet[0] ? targetWallet[0] : updatedWallet.balance,
+                                    locked: targetWallet[1] ? targetWallet[1] : updatedWallet.locked,
                                 };
 
                                 return true;

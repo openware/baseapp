@@ -89,6 +89,7 @@ const defaultWallet: Wallet = {
     type: 'coin',
     fixed: 0,
     fee: 0,
+    account_type: '',
 };
 
 interface WalletsState {
@@ -563,7 +564,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     user: selectUserInfo(state),
-    wallets: selectWallets(state),
+    wallets: selectWallets(state, 'spot'),
     walletsLoading: selectWalletsLoading(state),
     withdrawSuccess: selectWithdrawSuccess(state),
     historyList: selectHistory(state),

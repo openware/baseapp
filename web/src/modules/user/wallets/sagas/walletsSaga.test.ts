@@ -32,6 +32,7 @@ describe('Module: Wallets', () => {
             currency: 'eth',
             balance: '0',
             locked: '0',
+            account_type: 'spot',
             deposit_address: {
                 currencies: ['eth', 'trst'],
                 address: '0x00eec1e95026faf0412d7a29b94d514d31446141',
@@ -41,25 +42,30 @@ describe('Module: Wallets', () => {
         {
             currency: 'fth',
             balance:'0',
+            account_type: 'p2p',
             locked:'0',
         },
         {
             currency: 'gmt',
             balance:'0',
+            account_type: 'spot',
             locked:'0',
         },
         {
             currency: 'ksys',
+            account_type: 'spot',
             balance:'0',
             locked:'0',
         },
         {
             currency: 'kyn',
             balance:'0',
+            account_type: 'spot',
             locked:'0',
         },
         {
             currency: 'usd',
+            account_type: 'spot',
             balance:'0',
             locked:'0',
         },
@@ -201,6 +207,7 @@ describe('Module: Wallets', () => {
         if (!walletInfo) {
             walletInfo = {
                 currency: currencyInfo.id,
+                account_type: '',
             };
         }
 

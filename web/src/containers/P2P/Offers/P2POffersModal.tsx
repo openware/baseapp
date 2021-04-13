@@ -7,7 +7,7 @@ import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
 import { cleanPositiveFloatInput, millisecondToMinutes, precisionRegExp, truncateMiddle } from 'src/helpers';
-import { P2POrderCreate, selectPaymentMethodList, selectWallets, UserPaymentMethod } from 'src/modules';
+import { P2POrderCreate, RootState, selectPaymentMethodList, selectWallets, UserPaymentMethod } from 'src/modules';
 import { Decimal, DropdownComponent, Modal, OrderInput } from 'src/components';
 import { PlusIcon } from 'src/assets/images/PlusIcon';
 
@@ -58,7 +58,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         show,
     } = props;
 
-    const wallets = useSelector(selectWallets);
+    const wallets = useSelector((state: RootState) => selectWallets(state, 'p2p'));
     const userPM = useSelector(selectPaymentMethodList);
     const { formatMessage } = useIntl();
 

@@ -9,7 +9,7 @@ import { ArrowLeftIcon } from 'src/assets/images/setup/ArrowLeftIcon';
 import { P2P_TIME_LIMIT_LIST } from 'src/constants';
 import { cleanPositiveFloatInput, precisionRegExp, truncateMiddle } from 'src/helpers';
 import { Decimal, DropdownComponent, OrderInput } from '../../../components';
-import { Currency, UserPaymentMethod, selectPaymentMethodList, selectWallets, Wallet } from '../../../modules';
+import { Currency, UserPaymentMethod, selectPaymentMethodList, selectWallets, Wallet, RootState } from '../../../modules';
 
 interface ParentProps {
     amount: string;
@@ -44,7 +44,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     const { asset, cash, side, amount, timeLimit, lowLimit, topLimit, paymentMethods } = props;
     const { formatMessage } = useIntl();
 
-    const wallets = useSelector(selectWallets);
+    const wallets = useSelector((state: RootState) => selectWallets(state, 'p2p'));
     const userPM = useSelector(selectPaymentMethodList);
 
     useEffect(() => {

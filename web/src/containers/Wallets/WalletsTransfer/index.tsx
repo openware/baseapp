@@ -39,10 +39,6 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
     const dispatch = useDispatch();
     const wallets = useSelector(selectWallets);
     const walletsLoading = useSelector(selectWalletsLoading);
-    const currencies = useSelector(selectCurrencies);
-    const markets = useSelector(selectMarkets);
-    const tickers = useSelector(selectMarketTickers);
-    const p2pCurrencies = useSelector(selectP2PCurrenciesData);
 
     const { currency } = props;
 
@@ -66,9 +62,9 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
 
     useEffect(() => {
         if (wallets.length) {
-            setFilteredWallets(wallets);
+            setFilteredWallets(wallets.filter(i => i.account_type === from.toLowerCase()));
         }
-    }, [wallets]);
+    }, [wallets, from]);
 
     const onWalletSelectionChange = useCallback((value: Wallet) => {
         const nextWalletIndex = wallets.findIndex(

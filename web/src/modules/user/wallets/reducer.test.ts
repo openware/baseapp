@@ -13,6 +13,7 @@ describe('walletsList reducer', () => {
             explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
             fee: 0,
             type: 'coin',
+            account_type: 'spot',
             fixed: 8,
         },
         {
@@ -23,6 +24,7 @@ describe('walletsList reducer', () => {
             explorerTransaction: 'https://www.blocktrail.com/tBCC/tx/#{txid}',
             fee: 0,
             type: 'coin',
+            account_type: 'spot',
             fixed: 8,
         },
         {
@@ -33,6 +35,7 @@ describe('walletsList reducer', () => {
             explorerTransaction: 'https://rinkeby.etherscan.io/tx/#{txid}',
             fee: 0,
             type: 'coin',
+            account_type: 'p2p',
             fixed: 8,
         },
     ];
@@ -129,6 +132,7 @@ describe('walletsList reducer', () => {
                 explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
                 fee: 0,
                 type: 'coin',
+                account_type: 'spot',
                 fixed: 8,
                 deposit_address: {
                     currencies: ['btc', 'tbtc'],
@@ -144,6 +148,7 @@ describe('walletsList reducer', () => {
                 explorerTransaction: 'https://www.blocktrail.com/tBCC/tx/#{txid}',
                 fee: 0,
                 type: 'coin',
+                account_type: 'p2p',
                 fixed: 8,
             },
             {
@@ -153,6 +158,7 @@ describe('walletsList reducer', () => {
                 explorerAddress: 'https://rinkeby.etherscan.io/address/#{address}',
                 explorerTransaction: 'https://rinkeby.etherscan.io/tx/#{txid}',
                 fee: 0,
+                account_type: 'spot',
                 type: 'coin',
                 fixed: 8,
             },

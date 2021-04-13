@@ -10,6 +10,7 @@ Access-Control-Allow-Credentials: true
         "currency":"bch",
         "balance":"0",
         "locked":"0",
+        "account_type": "spot",
         "deposit_address": {
             "currencies": ["bch"],
             "address": null,
@@ -20,6 +21,7 @@ Access-Control-Allow-Credentials: true
         "currency": "btc",
         "balance": "0.21026373",
         "locked": "0.0",
+        "account_type": "spot",
         "deposit_address": {
             "currencies": ["btc"],
             "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
@@ -30,6 +32,7 @@ Access-Control-Allow-Credentials: true
         "currency": "eth",
         "balance": "1.5",
         "locked": "0.05",
+        "account_type": "spot",
         "deposit_address": {
             "currencies": ["eth", "trst"],
             "address": "0x00eec1e95026faf0412d7a29b94d514d31446141",
@@ -40,6 +43,7 @@ Access-Control-Allow-Credentials: true
         "currency":"ltc",
         "balance":"0.0",
         "locked":"0.0",
+        "account_type": "spot",
         "deposit_address": {
             "currencies": ["eth", "ltc"],
             "address":"0x00eec1e95026faf0412d7a29b94d514d31446141",
@@ -50,6 +54,7 @@ Access-Control-Allow-Credentials: true
         "currency":"dash",
         "balance":"0",
         "locked":"0",
+        "account_type": "spot",
         "deposit_address": {
             "currencies": ["dash"],
             "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
@@ -59,26 +64,70 @@ Access-Control-Allow-Credentials: true
     {
         "currency":"xrp",
         "balance":"0",
+        "account_type": "spot",
         "locked":"0"
     },
     {
         "currency":"usdt",
         "balance":"1000.0",
+        "account_type": "spot",
         "locked":"0.0"
     },
     {
         "currency":"krw",
         "balance":"548000",
+        "account_type": "spot",
         "locked":"2000"
     },
     {
         "currency":"usd",
         "balance":"1000.0",
+        "account_type": "spot",
         "locked":"0.0"
     },
     {
         "currency":"eur",
         "balance":"1000.0",
+        "account_type": "spot",
         "locked":"0.0"
+    },
+    {
+        "currency":"ngn",
+        "balance":"1000.0",
+        "account_type": "spot",
+        "locked":"0.0",
+            "deposit_address": {
+            "currencies": ["ngn"],
+            "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
+            "state": "active"
+        }
+    },
+    {
+        "currency":"ngnt",
+        "balance":"1000.0",
+        "account_type": "p2p",
+        "locked":"0.0",
+            "deposit_address": {
+            "currencies": ["ngnt"],
+            "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
+            "state": "active"
+        }
+    },
+    {
+        "currency":"usdt",
+        "balance":"5000.0",
+        "account_type": "p2p",
+        "locked":"0.0"
+    },
+    {
+        "currency":"ngn",
+        "balance":"5000.0",
+        "account_type": "p2p",
+        "locked":"0.0",
+            "deposit_address": {
+            "currencies": ["ngn"],
+            "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
+            "state": "active"
+        }
     }
 ]
