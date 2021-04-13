@@ -62,7 +62,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
         dispatch(offersFetch({ page: Number(page) + 1, limit: DEFAULT_TABLE_PAGE_LIMIT }));
     }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT]);
 
-    const retrieveData = (amountPrecision: number, pricePrecision: number) => (
+    const retrieveData = React.useCallback((amountPrecision: number, pricePrecision: number, hostUrl: string) => (
         list.map(item => {
             const {
                 id,
@@ -75,10 +75,11 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 min_order_amount,
                 max_order_amount,
                 base,
+                payment_methods,
             } = item;
 
             return [
-                <div className="advertisers">
+                <div className="advertisers" key={id}>
                     <AvatarIcon fillColor="var(--icons)"/>
                     <div className="font-small ml-small">
                         {user_nickname}
@@ -88,11 +89,11 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                         </div>
                     </div>
                 </div>,
-                <div className="price">
+                <div className="price" key={id}>
                     {Decimal.format(price, pricePrecision, ',')}&nbsp;
                     <span className="font-big secondary">{quote?.toUpperCase()}</span>
                 </div>,
-                <div className="limit">
+                <div className="limit" key={id}>
                     <div className="limit-col">
                         <span className="font-small secondary">{intl.formatMessage({ id: 'page.body.p2p.table.available' })}</span>
                         <span className="font-small secondary sec-row">{intl.formatMessage({ id: 'page.body.p2p.table.limit' })}</span>
@@ -102,11 +103,15 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                         <span className="font-big ml-small sec-row">{Decimal.format(min_order_amount, pricePrecision, ',')} - {Decimal.format(max_order_amount, pricePrecision, ',')}</span>
                     </div>
                 </div>,
-                <div className="payment">
-                    <span className="font-small secondary">Yellow bank</span>
-                    <span className="font-small secondary sec-row">Green bank</span>
+                <div className="payment" key={id}>
+                    {payment_methods.map(i => (
+                        <div className="payment-item">
+                            <img className="ml-2 mr-3 mb-1" src={`${hostUrl}/api/v2/p2p/public/payment_methods/${i.id}/logo`} alt=""/>
+                            <span className="font-small secondary">{i.name}</span>
+                        </div>
+                    ))}
                 </div>,
-                <div className="trade">
+                <div className="trade" key={id}>
                     <Button
                         onClick={() => props.onClickTrade(item)}
                         size="lg"
@@ -117,9 +122,9 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 </div>
             ];
         })
-    );
+    ), [list]);
 
-    const tableData = () => {
+    const tableData = React.useCallback(() => {
         const { cryptoCurrency } = props;
 
         if (list.length === 0) {
@@ -128,9 +133,10 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
 
         const amountPrecision = wallets.find(w => w.currency === cryptoCurrency.toLowerCase())?.fixed || DEFAULT_CCY_PRECISION;
         const pricePrecision = wallets.find(obj => obj.currency === list[0].quote)?.fixed || DEFAULT_FIAT_PRECISION;
+        const hostUrl = window.location.hostname === 'localhost' ? 'http://localhost:9002' : window.location.origin;
 
-        return retrieveData(amountPrecision, pricePrecision);
-    }
+        return retrieveData(amountPrecision, pricePrecision, hostUrl);
+    }, [list, wallets, props.cryptoCurrency]);
 
     return (
         <div className="cr-p2p-offers-table">

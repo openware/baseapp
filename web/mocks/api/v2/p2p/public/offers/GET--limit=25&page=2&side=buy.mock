@@ -20,7 +20,7 @@ Total: 28
         "quote": "ngn",
         "state": "pending",
         "created_at": "",
-        "upm_id": ["1"]
+        "payment_methods": [{ "id": 1, "name": "Yellow Bank" }, {"id": 2, "name": "Monobank" }]
     },
     {
         "id": 2,
@@ -36,5 +36,5 @@ Total: 28
         "quote": "ngn",
         "state": "pending",
         "created_at": "",
-        "upm_id": ["1"]
+        "payment_methods": [{ "id": 1, "name": "Yellow Bank" }, {"id": 2, "name": "Monobank" }]
 }]

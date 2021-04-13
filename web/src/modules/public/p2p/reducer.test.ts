@@ -20,7 +20,7 @@ describe('P2P reducer', () => {
             state: 'pending',
             created_at: '',
             side: 'buy',
-            upm_id: ['1'],
+            payment_methods: [],
         },
         {
             id: 2,
@@ -37,7 +37,7 @@ describe('P2P reducer', () => {
             state: 'pending',
             created_at: '',
             side: 'buy',
-            upm_id: ['1'],
+            payment_methods: [],
         },
     ];
 

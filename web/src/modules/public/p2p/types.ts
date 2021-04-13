@@ -13,9 +13,9 @@ export interface Offer {
     state: string;
     side: string;
     created_at: string;
-    upm_id: string[];
     time_limit: number;
     description: string;
+    payment_methods: PaymentMethod[];
 }
 
 export interface P2PCurrency {
@@ -28,6 +28,6 @@ export interface PaymentMethod {
     id: string;
     type: string;
     name: string;
-    logo: string;
+    logo?: string;
     options: any;
 }
