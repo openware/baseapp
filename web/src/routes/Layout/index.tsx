@@ -78,7 +78,7 @@ import {
     P2POffersScreen,
     P2PUserOffersScreen,
     CreateP2POfferScreen,
-    P2PTransferOrderScreen,
+    P2POrderScreen,
 } from '../../screens';
 
 interface ReduxProps {
@@ -356,7 +356,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/offers" component={P2PUserOffersScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/create-offer" component={CreateP2POfferScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/history" component={P2PTradesHistory} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/transfer/:id" component={P2PTransferOrderScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/transfer/:id" component={P2POrderScreen} />
                     <Route exaxt={true} path="/p2p/:currency" component={P2POffersScreen} />
                     <Route exaxt={true} path="/p2p" component={P2POffersScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>

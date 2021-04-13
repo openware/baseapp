@@ -14,7 +14,8 @@ Access-Control-Allow-Credentials: true
   "price": "1.20",
   "amount": "100",
   "created_at": "2021-04-09T15:28:54Z",
-  "state": "wait",
+  "state": "dispute",
   "time_limit": "900000",
+  "dispute": { "id": "1" },
   "offer_id": "1"
 }

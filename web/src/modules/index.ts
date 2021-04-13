@@ -46,6 +46,7 @@ import { PaymentMethodState, rootPaymentMethodSaga } from './user/paymentMethod'
 import { P2POffersState, rootP2POffersSaga } from './user/p2pOffers';
 import { P2PTransfersState, rootP2PTransfersSaga } from './user/p2pTransfers';
 import { P2POrdersState, rootP2POrdersSaga } from './user/p2pOrders';
+import { P2PDisputeState, rootP2PDisputeSaga } from './user/p2pDispute';
 
 export * from './admin/config';
 export * from './admin/markets';
@@ -85,6 +86,7 @@ export * from './user/paymentMethod';
 export * from './user/p2pOffers';
 export * from './user/p2pOrders';
 export * from './user/p2pTransfers';
+export * from './user/p2pDispute';
 
 export interface RootState {
     public: {
@@ -133,6 +135,7 @@ export interface RootState {
         p2pOffers: P2POffersState;
         p2pTransfers: P2PTransfersState;
         p2pOrders: P2POrdersState;
+        p2pDispute: P2PDisputeState;
     };
     admin: {
         configUpdate: ConfigUpdateState;
@@ -190,5 +193,6 @@ export function* rootSaga() {
         call(rootP2POffersSaga),
         call(rootP2POrdersSaga),
         call(rootP2PTransfersSaga),
+        call(rootP2PDisputeSaga),
     ]);
 }

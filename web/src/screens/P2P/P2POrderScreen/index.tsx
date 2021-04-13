@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Decimal } from 'src/components';
-import { OrderWaitConfirmation, OrderWaitPayment } from 'src/containers';
+import { Dispute, OrderWaitConfirmation, OrderWaitPayment } from 'src/containers';
 import { localeDate } from 'src/helpers';
 import { useCurrenciesFetch, useDocumentTitle } from 'src/hooks';
 import { useP2POrderFetch } from 'src/hooks/useP2POrderFetch';
@@ -14,7 +14,7 @@ interface ParamType {
     id?: string;
 }
 
-export const P2PTransferOrderScreen: FC = (): ReactElement => {
+export const P2POrderScreen: FC = (): ReactElement => {
     const { formatMessage } = useIntl();
     const { id } = useParams<ParamType>();
     const order: P2POrder = useSelector(selectP2PCreatedOrder);
@@ -32,12 +32,19 @@ export const P2PTransferOrderScreen: FC = (): ReactElement => {
 
     const content = useCallback(() => {
         if (order) {
-            if ((order.side === 'buy' && order.state === 'prepared')
-                || (order.side === 'sell' && order.state === 'wait')) {
-                return <OrderWaitPayment order={order}/>;
-            } else if ((order.side === 'buy' && order.state === 'wait')
-                || (order.side === 'sell' && order.state === 'prepared')) {
-                return <OrderWaitConfirmation order={order} />
+            switch (order.state) {
+                case 'prepared':
+                    return order.side === 'buy'
+                        ? <OrderWaitPayment order={order}/>
+                        : <OrderWaitConfirmation order={order} />;
+                case 'wait':
+                    return order.side === 'buy'
+                        ? <OrderWaitConfirmation order={order} />
+                        : <OrderWaitPayment order={order}/>;
+                case 'dispute':
+                    return <Dispute order={order}/>;
+                default:
+                    return;
             }
         }
     }, [order]);

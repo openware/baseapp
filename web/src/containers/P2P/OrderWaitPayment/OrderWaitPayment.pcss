@@ -47,35 +47,17 @@
     }
 
     .custom-control-label {
-      margin-left: 12px;
       font-weight: 600;
       font-size: 18px;
       letter-spacing: 0.44px;
-      color: var(--primary-text-color);
     }
 
     .custom-control-label::before {
-      background-color: var(--input-background-color);
-      border-color: var(--input-border-color);
-      height: 20px;
-      margin-right: calc(var(--gap) * 3);
       top: 4px;
-      transition: 0.2s;
-      width: 20px;
-      left: -30px;
-    }
-
-    .custom-control-input:checked ~ .custom-control-label::before {
-      background-color: var(--input-checkbox-background-color-active);
-      border-color: var(--input-border-color-active);
-      transition: 0.2s;
     }
 
     .custom-control-label::after {
-      height: 20px;
       top: 4px;
-      left: -30px;
-      width: 20px;
     }
   }
 

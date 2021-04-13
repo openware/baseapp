@@ -1208,6 +1208,19 @@ export const en = {
     'page.body.p2p.order.transfer.wait.payment.confirmation.logDispute': 'Log dispute',
     'page.body.p2p.order.transfer.wait.payment.confirmation.warning.sell': 'Waiting for confirmation. Time limit: {time} mins, otherwise, the order will be cancelled.',
 
+    'page.body.p2p.dispute.title': 'Log transaction dispute',
+    'page.body.p2p.dispute.description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+    'page.body.p2p.dispute.attachment.label': 'Upload proof of payment',
+    'page.body.p2p.dispute.attachment.btn': 'select file',
+    'page.body.p2p.dispute.attachment.description': ' JPG, SVG, PNG, GIF and PDF. Maximum file size is 20MB.',
+    'page.body.p2p.dispute.checkbox.notReceive': 'Did not receive my stable coin',
+    'page.body.p2p.dispute.checkbox.tooLong': 'Transaction taking too long',
+    'page.body.p2p.dispute.checkbox.amountDifferent': 'Transaction amount is different to order value',
+    'page.body.p2p.dispute.message.label': 'Your message',
+    'page.body.p2p.dispute.message.placeholder': 'Describe your problem (optional)',
+    'page.body.p2p.dispute.submit': 'Sumbit the dispute',
+    'page.body.p2p.dispute.cancel': 'Cancel',
+
     // Wallets screen
 
     'page.body.wallets.tab.overview': 'Overview',

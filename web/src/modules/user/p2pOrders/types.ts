@@ -18,6 +18,7 @@ export interface P2POrder {
     created_at: string;
     time_limit: string;
     state: string;
+    dispute: P2PDispute | null;
 }
 
 export interface P2PTradesHistory {
@@ -29,4 +30,8 @@ export interface P2PTradesHistory {
     status: string;
     quote: string;
     base: string;
+}
+
+export interface P2PDispute {
+    id: string | number;
 }

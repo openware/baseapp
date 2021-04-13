@@ -45,6 +45,7 @@ import { paymentMethodReducer } from './user/paymentMethod';
 import { p2pOffersReducer } from './user/p2pOffers';
 import { p2pTransfersReducer } from './user/p2pTransfers';
 import { p2pOrdersReducer } from './user/p2pOrders';
+import { p2pDisputeReducer } from './user/p2pDispute';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,
@@ -93,6 +94,7 @@ export const userReducer = combineReducers({
     p2pOffers: p2pOffersReducer,
     p2pTransfers: p2pTransfersReducer,
     p2pOrders: p2pOrdersReducer,
+    p2pDispute: p2pDisputeReducer,
 });
 
 export const adminReducer = combineReducers({

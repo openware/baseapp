@@ -11,7 +11,6 @@ export function* getOrderSaga(action: P2POrderFetch) {
     try {
         const data = yield call(API.get(config), `/private/orders/${action.payload.id}`);
 
-        window.console.log(data);
         yield put(p2pOrderData(data));
     } catch (error) {
         yield put(sendError({
