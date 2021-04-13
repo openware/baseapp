@@ -57,7 +57,6 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
     const onCurrentTabChange = useCallback((index: number) => setCurrentTabIndex(index), []);
 
     const onTabChange = useCallback((index: number) => {
-        renderTabs();
         if (side === tabMapping[index]) {
             return;
         }
@@ -101,9 +100,9 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
         })
     ), [showError]);
 
-    const renderTabs = () => tabMapping.map(i => {
+    const renderTabs = () => tabMapping.map((i, index) => {
         return {
-            content: pageContent(),
+            content: currentTabIndex === index ? pageContent() : null,
             label: translate(`page.body.p2p.create.offer.${i}`),
         }
     });

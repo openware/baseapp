@@ -76,7 +76,6 @@ export const P2POffersScreen: FC = (): ReactElement => {
     }, [history, tabMapping]);
 
     const onTabChange = useCallback((index: number) => {
-        renderTabs();
         if (tab === tabMapping[index]) {
             return;
         }
@@ -138,9 +137,9 @@ export const P2POffersScreen: FC = (): ReactElement => {
         )
     }, [sideFilter, fiatCurrency, paymentMethods, paymentFilter, fiatCurList, tab, openModal, selectedOffer ]);
 
-    const renderTabs = () => tabMapping.map(i => {
+    const renderTabs = () => tabMapping.map((i, index) => {
         return {
-            content: pageContent(i),
+            content: currentTabIndex === index ? pageContent(i) : null,
             label: i.toUpperCase(),
         }
     });

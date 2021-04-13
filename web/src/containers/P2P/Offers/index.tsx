@@ -42,7 +42,9 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
 
     useWalletsFetch();
     useCurrenciesFetch();
-    useP2POffersFetch({ limit: DEFAULT_TABLE_PAGE_LIMIT, page });
+    const { side } = props;
+
+    useP2POffersFetch({ limit: DEFAULT_TABLE_PAGE_LIMIT, page, side });
 
     const headerTitles = [
         intl.formatMessage({ id: 'page.body.p2p.table.header.advertisers' }),
