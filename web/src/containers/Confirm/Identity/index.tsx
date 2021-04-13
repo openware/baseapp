@@ -372,15 +372,15 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
                 return value.match(lastNameRegex) ? true : false;
             case 'residentialAddress':
-                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\s]+$`);
+                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;~\\/\\s]+$`);
 
                 return value.match(residentialAddressRegex) ? true : false;
             case 'city':
-                const cityRegex = new RegExp(`^[a-zA-Z]+$`);
+                const cityRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\s]+$`);
 
                 return value.match(cityRegex) ? true : false;
             case 'postcode':
-                const postcodeRegex = new RegExp(`^[a-zA-Z0-9]{1,12}$`);
+                const postcodeRegex = new RegExp(`^[a-zA-Z0-9/\\s]{1,12}$`);
 
                 return value.match(postcodeRegex) ? true : false;
             case 'dateOfBirth':
