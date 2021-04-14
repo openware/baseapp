@@ -9,7 +9,7 @@ describe('Constants', () => {
         ['page.header.navbar.wallets', '/wallets', 'wallets'],
         ['page.header.navbar.openOrders', '/orders', 'orders'],
         ['page.header.navbar.history', '/history', 'history'],
-        ['page.header.navbar.api', '/api', 'api'],
+        ['page.header.navbar.api', '/docs', 'api'],
     ];
 
     const expectedRoutesForNotLoggedInUser = [
