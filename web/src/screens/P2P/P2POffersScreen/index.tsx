@@ -65,7 +65,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
 
     useEffect(() => {
         if (createOrderSuccess && createdOrder) {
-            history.push(`/p2p/transfer/${createdOrder.id}`);
+            history.push(`/p2p/order/${createdOrder.id}`);
         }
     }, [createdOrder, createOrderSuccess, history]);
 
@@ -109,7 +109,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
                     fiatCurrency={fiatCurrency}
                 />
                 <P2POffers
-                    cryptoCurrency={currency}
+                    quoteCurrency={currency}
                     baseCurrency={fiatCurrency}
                     paymentMethod={paymentFilter}
                     side={sideFilter}

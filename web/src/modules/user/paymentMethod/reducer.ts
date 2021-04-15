@@ -1,3 +1,4 @@
+import { PaymentMethod } from 'src/modules/public/p2p';
 import { PaymentMethodAction } from './actions';
 import {
     PAYMENT_METHOD_LIST,
@@ -15,17 +16,15 @@ import {
 export interface PaymentMethodStateModal {
     active: boolean;
     action?: 'createStep1' | 'createStep2' | 'update' | 'delete';
-    id?: string;
+    payment_method_id?: string;
     name?: string;
     data?: any;
 }
 
 export interface UserPaymentMethod {
-    id: string;
-    type: string;
-    name: string;
-    logo: string;
     data: any;
+    payment_method_id: number;
+    payment_method: PaymentMethod;
 }
 
 export interface PaymentMethodState {

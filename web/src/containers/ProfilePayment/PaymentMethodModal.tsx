@@ -6,6 +6,7 @@ import { titleCase } from 'src/helpers';
 import { PaymentOptionInterface } from './';
 import { PaymentMethodSelector } from './PaymentMethodSelector';
 import { PaymentMethod } from 'src/modules';
+import { HOST_URL } from 'src/constants';
 
 export interface PaymentMethodModalProps {
     paymentOptions: PaymentOptionInterface[];
@@ -63,7 +64,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
             <div className="popular-payment-methods">
                 {paymentMethods.map(item => (
                     <div className="popular-payment-method" onClick={() => props.pickPaymentMethodToAdd(item)}>
-                        <img src={`data:image/png;base64,${item.logo}`} alt=""/>
+                        <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${item.id}/logo`} alt=""/>
                         {item.name}
                     </div>
                 ))}
@@ -161,7 +162,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 body = (
                     <div>
                         <div className="picked-payment-method">
-                            {pm?.logo ? <img src={`data:image/png;base64,${pm.logo}`} alt=""/> : null}
+                            {pm && <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pm.id}/logo`} alt=""/>}
                             {modal.name}
                         </div>
                         <div className="holder-name">

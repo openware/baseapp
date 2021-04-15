@@ -7,12 +7,16 @@ Access-Control-Allow-Credentials: true
 Access-Control-Allow-Headers: content-type, x-csrf-token
 
 {
-  "id": "2",
-  "payment_method_id": 1,
-  "payment_method": { "name": "Yellow Bank", "type": "Debit/Credit Card" },
-  "data": {
-      "name": "John Wick",
-      "bank_name": "Siam Commercial Bank",
-      "account_number": "123456199"
-  }
+  "id": "1",
+  "expiry_time": "2021-04-09T20:28:54Z",
+  "base": "usdt",
+  "quote": "ngn",
+  "side": "buy",
+  "price": "1.20",
+  "amount": "100",
+  "created_at": "2021-04-09T15:28:54Z",
+  "state": "wait",
+  "time_limit": "900000",
+  "dispute": { "id": "1" },
+  "offer_id": "1"
 }

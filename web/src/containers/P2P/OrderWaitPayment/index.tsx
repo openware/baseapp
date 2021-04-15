@@ -1,10 +1,10 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { getCountdownDate, millisecondToMinutes } from 'src/helpers';
-import { P2POrder, p2pOrdersCancelFetch, selectP2PCancelOrderSuccess } from 'src/modules';
+import { P2POrder, p2pOrdersUpdateFetch } from 'src/modules';
 
 interface ParentProps {
     order: P2POrder;
@@ -18,8 +18,6 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
 
     const { order } = props;
     const dispatch = useDispatch();
-    const history = useHistory();
-    const cancelSuccess = useSelector(selectP2PCancelOrderSuccess);
     const { formatMessage } = useIntl();
 
     useEffect(() => {
@@ -34,12 +32,6 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
         }
     });
 
-    useEffect(() => {
-        if (cancelSuccess) {
-            history.push('/p2p');
-        }
-    }, [cancelSuccess, history]);
-
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
 
     const clickCheckBox = useCallback(e => {
@@ -50,7 +42,11 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     }, [confirmTransfer]);
 
     const handleCancel = useCallback(() => {
-        order && dispatch(p2pOrdersCancelFetch({ id: order.id }));
+        order && dispatch(p2pOrdersUpdateFetch({ id: order.id, action: 'cancel' }));
+    }, [order, dispatch]);
+
+    const handleClickPaid = useCallback(() => {
+        order && dispatch(p2pOrdersUpdateFetch({ id: order.id, action: 'approve' }));
     }, [order, dispatch]);
 
     return (
@@ -89,7 +85,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
             {order?.side === 'buy' ? (
                 <div className="cr-prepare-order__btn-wrapper__grid">
                     <Button
-                        onClick={() => window.console.log('paid')}
+                        onClick={handleClickPaid}
                         size="lg"
                         variant="primary"
                         disabled={!confirmTransfer}
@@ -107,7 +103,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
             ) : (
                 <div className="cr-prepare-order__btn-wrapper__grid">
                     <Button
-                        onClick={() => window.console.log('confirm')}
+                        onClick={handleClickPaid}
                         size="lg"
                         variant="primary"
                         disabled={!confirmTransfer}

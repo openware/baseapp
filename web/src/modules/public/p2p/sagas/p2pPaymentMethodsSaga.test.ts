@@ -25,14 +25,14 @@ describe('P2P Payment Methods Fetch', () => {
 
     const fakeP2PPaymentMethods: PaymentMethod[] = [
         {
-            id: '1',
+            id: 1,
             type: '',
             name: 'Universal',
             logo: '',
             options: {},
         },
         {
-            id: '2',
+            id: 2,
             type: '',
             name: 'Universal',
             logo: '',

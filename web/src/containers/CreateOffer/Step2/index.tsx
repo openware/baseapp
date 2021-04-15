@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 import { DeleteIcon } from 'src/assets/images/DeleteIcon';
 import { PlusIcon } from 'src/assets/images/PlusIcon';
 import { ArrowLeftIcon } from 'src/assets/images/setup/ArrowLeftIcon';
-import { P2P_TIME_LIMIT_LIST } from 'src/constants';
+import { HOST_URL, P2P_TIME_LIMIT_LIST } from 'src/constants';
 import { cleanPositiveFloatInput, precisionRegExp, truncateMiddle } from 'src/helpers';
 import { Decimal, DropdownComponent, OrderInput } from '../../../components';
 import { Currency, UserPaymentMethod, selectPaymentMethodList, Wallet, selectP2PWallets } from '../../../modules';
@@ -154,19 +154,19 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     ), [showError]);
 
     const iconsList = React.useCallback(() =>
-        userPM.map(i => <img className="ml-2 mr-3 mb-1" src={`data:image/png;base64,${i.logo}`} alt=""/>), [userPM]);
+        userPM.map(i => <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPM]);
 
-    const renderPMItem = pm => {
+    const renderPMItem = (pm: UserPaymentMethod) => {
         const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));
         const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 8, '***') : '';
-        return `${pm.name} ${numberValue}`;
+        return `${pm.payment_method?.name} ${numberValue}`;
     };
 
     const handleClickDelete = React.useCallback((index: number) => {
         props.handleRemovePaymentMethod(index);
     }, [props.handleRemovePaymentMethod]);
 
-    const handleClickAdd = React.useCallback((dpIndex) => {
+    const handleClickAdd = React.useCallback(() => {
         props.handleSetPaymentMethods([ ...paymentMethods, userPM.filter(el =>  !paymentMethods.includes(el))[0] ]);
     }, [props.handleSetPaymentMethods, paymentMethods, userPM]);
 
@@ -192,7 +192,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                     {(dpIndex === paymentMethods.length - 1) || (paymentMethods.length === 1) ? userPM.length > paymentMethods.length && (
                         <div className="payment-method__btn-wrapper">
                             <Button
-                                onClick={() => handleClickAdd(dpIndex)}
+                                onClick={() => handleClickAdd()}
                                 size="lg"
                                 variant="outline-primary"
                             >
@@ -287,7 +287,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                             <div className="cr-create-offer__dp-label">{translate('page.body.p2p.create.offer.payment_method')}</div>
                             <div>
                                 <Button
-                                    onClick={() => history.push('/profile')}
+                                    onClick={() => history.push('/profile/payment')}
                                     size="lg"
                                     variant="outline-primary"
                                 >

@@ -48,14 +48,14 @@ export interface PaymentMethodUpdateData {
 export interface PaymentMethodDeleteFetch {
     type: typeof PAYMENT_METHOD_DELETE_FETCH;
     payload: {
-        id: string;
+        payment_method_id: string;
     };
 }
 
 export interface PaymentMethodDelete {
     type: typeof PAYMENT_METHOD_DELETE;
     payload: {
-        id: string;
+        payment_method_id: string;
     };
 }
 

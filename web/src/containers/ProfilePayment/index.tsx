@@ -5,8 +5,9 @@ import { Button } from 'react-bootstrap';
 import { PaymentMethodModal } from './PaymentMethodModal';
 import { titleCase } from 'src/helpers';
 import { useP2PPaymentMethodsFetch, useUserPaymentMethodsFetch } from 'src/hooks';
-import { PaymentMethod, selectP2PPaymentMethodsData, selectPaymentMethodList, selectPaymentMethodModal } from 'src/modules';
+import { PaymentMethod, selectP2PPaymentMethodsData, selectPaymentMethodList, selectPaymentMethodModal, UserPaymentMethod } from 'src/modules';
 import { paymentMethodCreateFetch, paymentMethodDeleteFetch, paymentMethodUpdateFetch, paymentMethodModal } from 'src/modules';
+import { HOST_URL } from 'src/constants';
 
 export interface PaymentOptionInterface {
     name: string;
@@ -35,11 +36,11 @@ export const ProfilePayment: FC = (): ReactElement => {
     }, [dispatch]);
 
     const deletePaymentMethod = useCallback((item) => {
-        dispatch(paymentMethodModal({active: true, action: 'delete', id: item.id, name: item.name}));
+        dispatch(paymentMethodModal({active: true, action: 'delete', payment_method_id: item.payment_method_id, name: item.name}));
     }, [dispatch]);
 
     const editPaymentMethod = useCallback((item) => {
-        const paymentMethod = userPaymentMethods.find(pm => pm.id === item.id);
+        const paymentMethod = userPaymentMethods.find(pm => pm.payment_method_id === item.payment_method_id);
         if (!paymentMethod) {
             return;
         }
@@ -61,7 +62,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         dispatch(paymentMethodModal({
             active: true,
             action: 'update',
-            id: item.id,
+            payment_method_id: item.payment_method_id,
             name: item.name,
             data: item.data,
         }));
@@ -72,8 +73,8 @@ export const ProfilePayment: FC = (): ReactElement => {
     }, [dispatch]);
 
     const handleDelete = useCallback(() => {
-        if (modal.id) {
-            dispatch(paymentMethodDeleteFetch({id: modal.id}));
+        if (modal.payment_method_id) {
+            dispatch(paymentMethodDeleteFetch({payment_method_id: modal.payment_method_id}));
         }
     }, [dispatch, modal]);
 
@@ -95,7 +96,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         dispatch(paymentMethodModal({
             active: true,
             action: 'createStep2',
-            id: paymentMethod.id,
+            payment_method_id: paymentMethod.payment_method_id,
             name: paymentMethod.name
         }));
     }, [dispatch]);
@@ -111,7 +112,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         const customFields = {};
         paymentOptions.map(option => customFields[option.name] = option.value);
         dispatch(paymentMethodCreateFetch({
-            payment_method_id: modal.id,
+            payment_method_id: modal.payment_method_id,
             data: customFields,
         }));
     }, [paymentOptions, dispatch]);
@@ -120,20 +121,20 @@ export const ProfilePayment: FC = (): ReactElement => {
         const customFields = {};
         paymentOptions.map(option => customFields[option.name] = option.value);
         dispatch(paymentMethodUpdateFetch({
-            payment_method_id: modal.id,
+            payment_method_id: modal.payment_method_id,
             data: customFields,
         }));
     }, [dispatch, paymentOptions]);
 
-    const renderPaymentMethodItem = item => {
+    const renderPaymentMethodItem = (item: UserPaymentMethod) => {
         return (
             <div className="payment-method-item">
                 <div className="payment-method-item-header">
                     <div className="payment-method-item-header-left">
                         <div className="payment-method-item-header-left__logo">
-                            <img src={`data:image/png;base64,${item.logo}`} alt=""/>
+                            <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${item.payment_method_id}/logo`} alt=""/>
                         </div>
-                        <div className="payment-method-item-header-left__title">{item.name}</div>
+                        <div className="payment-method-item-header-left__title">{item.payment_method?.name}</div>
                     </div>
                     <div className="payment-method-item-header-right">
                         <div className="payment-method-item-edit" onClick={() => editPaymentMethod(item)}>
@@ -179,7 +180,7 @@ export const ProfilePayment: FC = (): ReactElement => {
                 <h2>{translate('page.body.profile.payment.title')}</h2>
                 <p>{translate('page.body.profile.payment.desc')}</p>
                 <div className="payment-method-list">
-                    {userPaymentMethods && userPaymentMethods.length && userPaymentMethods.map(renderPaymentMethodItem)}
+                    {userPaymentMethods && userPaymentMethods.length > 0 && userPaymentMethods.map(renderPaymentMethodItem)}
                 </div>
                 <Button
                     onClick={createPaymentMethod}

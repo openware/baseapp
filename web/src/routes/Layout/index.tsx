@@ -344,6 +344,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={HistoryScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/confirm" component={ConfirmScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile/:routeTab" component={ProfileScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets/:routeTab/:currency/:action" component={WalletsScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets/:routeTab/:currency" component={WalletsScreen} />
@@ -356,7 +357,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/offers" component={P2PUserOffersScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/create-offer" component={CreateP2POfferScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/history" component={P2PTradesHistory} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/transfer/:id" component={P2POrderScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/order/:id" component={P2POrderScreen} />
                     <Route exaxt={true} path="/p2p/:currency" component={P2POffersScreen} />
                     <Route exaxt={true} path="/p2p" component={P2POffersScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>

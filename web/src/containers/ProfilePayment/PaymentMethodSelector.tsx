@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { CustomInput } from 'src/components';
+import { HOST_URL } from 'src/constants';
 import { PaymentMethod } from 'src/modules';
 
 export interface PaymentMethodSelectorProps {
@@ -17,7 +18,7 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = props => {
 
     const renderDropdownList = (pm: PaymentMethod) =>
         <div className="search-dropdown__item" onClick={() => props.selectPaymentMethod(pm)}>
-            <img src={`data:image/png;base64,${pm.logo}`} alt=""/>{pm.name}
+            <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pm.id}/logo`} alt=""/>{pm.name}
         </div>;
 
     return (

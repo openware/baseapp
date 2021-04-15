@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
-import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
+import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, HOST_URL } from 'src/constants';
 import { cleanPositiveFloatInput, millisecondToMinutes, precisionRegExp, truncateMiddle } from 'src/helpers';
 import { P2POrderCreate, selectP2PWallets, selectPaymentMethodList, UserPaymentMethod } from 'src/modules';
 import { Decimal, DropdownComponent, Modal, OrderInput } from 'src/components';
@@ -216,7 +216,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     ), [side, classnames]);
 
     const iconsList = React.useCallback(() =>
-        userPM.map(i => <img className="ml-2 mr-3 mb-1" src={`data:image/png;base64,${i.logo}`} alt=""/>), [userPM]);
+        userPM.map(i => <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPM]);
 
     const renderPMItem = pm => {
         const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));

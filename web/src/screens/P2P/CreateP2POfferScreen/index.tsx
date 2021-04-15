@@ -84,7 +84,7 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
                 max_order_amount: topLimit,
                 min_order_amount: lowLimit,
                 time_limit: Number(timeLimit.match(/\d+/)[0]) * 60 * 1000,
-                upm_id: paymentMethods.map(i => i.id),
+                upm_id: paymentMethods.map(i => String(i.payment_method_id)),
                 description,
                 reply_message: replyMessage,
             };

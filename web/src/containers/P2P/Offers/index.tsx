@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
-import { DEFAULT_CCY_PRECISION, DEFAULT_TABLE_PAGE_LIMIT, DEFAULT_FIAT_PRECISION } from 'src/constants';
+import { DEFAULT_CCY_PRECISION, DEFAULT_TABLE_PAGE_LIMIT, DEFAULT_FIAT_PRECISION, HOST_URL } from 'src/constants';
 import { Decimal, Pagination, Table } from '../../../components';
 import { useCurrenciesFetch, useP2POffersFetch, useWalletsFetch } from '../../../hooks';
 import {
@@ -16,11 +16,12 @@ import {
     selectP2POffersLastElemIndex,
     selectP2POffersNextPageExists,
     selectP2POffersTotalNumber,
+    selectP2PPaymentMethodsData,
     selectWallets,
 } from '../../../modules';
 
 interface ParentProps {
-    cryptoCurrency: string;
+    quoteCurrency: string;
     baseCurrency: string;
     paymentMethod: string;
     side: string;
@@ -39,12 +40,20 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
     const nextPageExists = useSelector((state: RootState) => selectP2POffersNextPageExists(state, DEFAULT_TABLE_PAGE_LIMIT));
     const wallets = useSelector(selectWallets);
     const dispatch = useDispatch();
-
+    const paymentMethods = useSelector(selectP2PPaymentMethodsData);
     useWalletsFetch();
     useCurrenciesFetch();
-    const { side } = props;
 
-    useP2POffersFetch({ limit: DEFAULT_TABLE_PAGE_LIMIT, page, side });
+    const { side, paymentMethod, quoteCurrency, baseCurrency } = props;
+
+    useP2POffersFetch({
+        limit: DEFAULT_TABLE_PAGE_LIMIT,
+        page,
+        quote: quoteCurrency,
+        base: baseCurrency,
+        side,
+        payment_method: paymentMethod,
+    });
 
     const headerTitles = [
         intl.formatMessage({ id: 'page.body.p2p.table.header.advertisers' }),
@@ -55,14 +64,36 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
     ];
 
     const onClickPrevPage = useCallback(() => {
-        dispatch(offersFetch({ page: Number(page) - 1, limit: DEFAULT_TABLE_PAGE_LIMIT }));
-    }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT]);
+        const paymentMethodId = paymentMethods.find(i => i.name === paymentMethod);
+
+        dispatch(
+            offersFetch({
+                page: Number(page) - 1,
+                limit: DEFAULT_TABLE_PAGE_LIMIT,
+                quote: quoteCurrency,
+                base: baseCurrency,
+                payment_method: paymentMethodId?.id,
+                side,
+            }),
+        );
+    }, [offersFetch, side, paymentMethod, quoteCurrency, baseCurrency, page, DEFAULT_TABLE_PAGE_LIMIT, paymentMethods]);
 
     const onClickNextPage = useCallback(() => {
-        dispatch(offersFetch({ page: Number(page) + 1, limit: DEFAULT_TABLE_PAGE_LIMIT }));
-    }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT]);
+        const paymentMethodId = paymentMethods.find(i => i.name === paymentMethod);
 
-    const retrieveData = React.useCallback((amountPrecision: number, pricePrecision: number, hostUrl: string) => (
+        dispatch(
+            offersFetch({
+                page: Number(page) + 1,
+                limit: DEFAULT_TABLE_PAGE_LIMIT,
+                quote: quoteCurrency,
+                base: baseCurrency,
+                payment_method: paymentMethodId?.id,
+                side,
+            }),
+        );
+    }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT, side, paymentMethod, quoteCurrency, baseCurrency, paymentMethods]);
+
+    const retrieveData = React.useCallback((amountPrecision: number, pricePrecision: number) => (
         list.map(item => {
             const {
                 id,
@@ -106,7 +137,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 <div className="payment" key={id}>
                     {payment_methods.map(i => (
                         <div className="payment-item">
-                            <img className="ml-2 mr-3 mb-1" src={`${hostUrl}/api/v2/p2p/public/payment_methods/${i.id}/logo`} alt=""/>
+                            <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.id}/logo`} alt=""/>
                             <span className="font-small secondary">{i.name}</span>
                         </div>
                     ))}
@@ -117,7 +148,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                         size="lg"
                         variant={props.side}
                     >
-                        {intl.formatMessage({ id: `page.body.p2p.tabs.${props.side}` })} {props.cryptoCurrency.toUpperCase()}
+                        {intl.formatMessage({ id: `page.body.p2p.tabs.${props.side}` })} {props.quoteCurrency.toUpperCase()}
                     </Button>
                 </div>
             ];
@@ -125,18 +156,17 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
     ), [list]);
 
     const tableData = React.useCallback(() => {
-        const { cryptoCurrency } = props;
+        const { quoteCurrency } = props;
 
         if (list.length === 0) {
             return [[]];
         }
 
-        const amountPrecision = wallets.find(w => w.currency === cryptoCurrency.toLowerCase())?.fixed || DEFAULT_CCY_PRECISION;
+        const amountPrecision = wallets.find(w => w.currency === quoteCurrency.toLowerCase())?.fixed || DEFAULT_CCY_PRECISION;
         const pricePrecision = wallets.find(obj => obj.currency === list[0].quote)?.fixed || DEFAULT_FIAT_PRECISION;
-        const hostUrl = window.location.hostname === 'localhost' ? 'http://localhost:9002' : window.location.origin;
 
-        return retrieveData(amountPrecision, pricePrecision, hostUrl);
-    }, [list, wallets, props.cryptoCurrency]);
+        return retrieveData(amountPrecision, pricePrecision);
+    }, [list, wallets, props.quoteCurrency]);
 
     return (
         <div className="cr-p2p-offers-table">

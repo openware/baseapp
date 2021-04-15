@@ -1,8 +1,8 @@
 import { CommonError } from "src/modules/types";
 import {
-    P2P_ORDERS_CANCEL_DATA,
-    P2P_ORDERS_CANCEL_ERROR,
-    P2P_ORDERS_CANCEL_FETCH,
+    P2P_ORDERS_UPDATE_DATA,
+    P2P_ORDERS_UPDATE_ERROR,
+    P2P_ORDERS_UPDATE_FETCH,
     P2P_ORDERS_CREATE_DATA,
     P2P_ORDERS_CREATE_ERROR,
     P2P_ORDERS_CREATE_FETCH,
@@ -69,19 +69,20 @@ export interface P2POrderError {
     error: CommonError;
 }
 
-export interface P2POrdersCancelFetch {
-    type: typeof P2P_ORDERS_CANCEL_FETCH;
+export interface P2POrdersUpdateFetch {
+    type: typeof P2P_ORDERS_UPDATE_FETCH;
     payload: {
         id: string | number;
+        action: string;
     };
 }
 
-export interface P2POrdersCancelData {
-    type: typeof P2P_ORDERS_CANCEL_DATA;
+export interface P2POrdersUpdateData {
+    type: typeof P2P_ORDERS_UPDATE_DATA;
 }
 
-export interface P2POrdersCancelError {
-    type: typeof P2P_ORDERS_CANCEL_ERROR;
+export interface P2POrdersUpdateError {
+    type: typeof P2P_ORDERS_UPDATE_ERROR;
     error: CommonError;
 }
 
@@ -95,9 +96,9 @@ export type P2POrdersActions =
     | P2POrderFetch
     | P2POrderData
     | P2POrderError
-    | P2POrdersCancelFetch
-    | P2POrdersCancelData
-    | P2POrdersCancelError;
+    | P2POrdersUpdateFetch
+    | P2POrdersUpdateData
+    | P2POrdersUpdateError;
 
 export const p2pOrdersCreateFetch = (payload: P2POrderCreate): P2POrdersCreateFetch => ({
     type: P2P_ORDERS_CREATE_FETCH,
@@ -144,16 +145,16 @@ export const p2pOrderError = (error: CommonError): P2POrderError => ({
     error,
 });
 
-export const p2pOrdersCancelFetch = (payload: P2POrdersCancelFetch['payload']): P2POrdersCancelFetch => ({
-    type: P2P_ORDERS_CANCEL_FETCH,
+export const p2pOrdersUpdateFetch = (payload: P2POrdersUpdateFetch['payload']): P2POrdersUpdateFetch => ({
+    type: P2P_ORDERS_UPDATE_FETCH,
     payload,
 });
 
-export const p2pOrdersCancelData = (): P2POrdersCancelData => ({
-    type: P2P_ORDERS_CANCEL_DATA,
+export const p2pOrdersUpdateData = (): P2POrdersUpdateData => ({
+    type: P2P_ORDERS_UPDATE_DATA,
 });
 
-export const p2pOrdersCancelError = (error: CommonError): P2POrdersCancelError => ({
-    type: P2P_ORDERS_CANCEL_ERROR,
+export const p2pOrdersUpdateError = (error: CommonError): P2POrdersUpdateError => ({
+    type: P2P_ORDERS_UPDATE_ERROR,
     error,
 });

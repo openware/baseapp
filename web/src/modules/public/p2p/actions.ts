@@ -19,6 +19,9 @@ export interface OffersFetch {
         limit: number;
         side?: string;
         currency_id?: string;
+        payment_method?: number;
+        base?: string;
+        quote?: string;
     };
 }
 

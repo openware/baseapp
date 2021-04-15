@@ -18,9 +18,9 @@ const deleteOptions = (csrfToken?: string): RequestOptions => {
 
 export function* paymentMethodDeleteSaga(action: PaymentMethodDeleteFetch) {
     try {
-        const { id } = action.payload;
-        yield call(API.delete(deleteOptions(getCsrfToken())), `/private/payment_methods/${id}`);
-        yield put(paymentMethodDelete({id}));
+        const { payment_method_id } = action.payload;
+        yield call(API.delete(deleteOptions(getCsrfToken())), `/private/payment_methods/${payment_method_id}`);
+        yield put(paymentMethodDelete({payment_method_id}));
         yield put(alertPush({ message: ['success.payment_method.deleted'], type: 'success' }));
         yield put(paymentMethodModal({ active: false }));
     } catch (error) {

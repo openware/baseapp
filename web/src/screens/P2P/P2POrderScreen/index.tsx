@@ -1,7 +1,7 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Decimal } from 'src/components';
 import { Dispute, OrderWaitConfirmation, OrderWaitPayment } from 'src/containers';
 import { localeDate } from 'src/helpers';
@@ -23,6 +23,13 @@ export const P2POrderScreen: FC = (): ReactElement => {
     useDocumentTitle('P2P Order Transfer');
     useCurrenciesFetch();
     useP2POrderFetch(id);
+    const history = useHistory();
+
+    useEffect(() => {
+        if (order?.state === 'cancelled') {
+            history.push('/p2p');
+        }
+    }, [order, history]);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
 

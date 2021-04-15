@@ -31,6 +31,7 @@ describe('P2P actions', () => {
             created_at: '',
             side: 'buy',
             payment_methods: [],
+            time_limit: 1,
         },
         {
             id: 2,
@@ -48,6 +49,7 @@ describe('P2P actions', () => {
             created_at: '',
             side: 'buy',
             payment_methods: [],
+            time_limit: 1,
         },
     ];
 
@@ -103,14 +105,14 @@ describe('P2P actions', () => {
 
     const fakeP2PPaymentMethods: PaymentMethod[] = [
         {
-            id: '1',
+            id: 1,
             type: '',
             name: 'Universal',
             logo: '',
             options: {},
         },
         {
-            id: '2',
+            id: 2,
             type: '',
             name: 'Universal',
             logo: '',

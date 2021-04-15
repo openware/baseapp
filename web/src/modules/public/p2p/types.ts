@@ -14,7 +14,7 @@ export interface Offer {
     side: string;
     created_at: string;
     time_limit: number;
-    description: string;
+    description?: string;
     payment_methods: PaymentMethod[];
 }
 
@@ -25,7 +25,7 @@ export interface P2PCurrency {
 }
 
 export interface PaymentMethod {
-    id: string;
+    id: number;
     type: string;
     name: string;
     logo?: string;

@@ -1,10 +1,10 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { getCountdownDate, millisecondToMinutes } from 'src/helpers';
-import { P2POrder, p2pOrdersCancelFetch } from 'src/modules';
+import { P2POrder, p2pOrdersUpdateFetch } from 'src/modules';
 
 interface ParentProps {
     order: P2POrder;
@@ -16,8 +16,6 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
     const [timeLeft, setTimeLeft] = useState<string>('00:00:00');
 
     const { order } = props;
-    const dispatch = useDispatch();
-    const history = useHistory();
     const { formatMessage } = useIntl();
 
     useEffect(() => {
@@ -33,10 +31,6 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
     });
 
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
-
-    const handleCancel = useCallback(() => {
-        order && dispatch(p2pOrdersCancelFetch({ id: order.id }));
-    }, [order, dispatch]);
 
     return (
         <div className="cr-confirm-order">

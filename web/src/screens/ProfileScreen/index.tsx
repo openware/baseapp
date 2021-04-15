@@ -1,117 +1,136 @@
-import * as React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { RouterProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
-import { IntlProps } from '../../';
-import { TabPanel } from '../../components';
-import { ProfileApiKeys, ProfileVerification } from '../../containers';
-import { ProfileAccountActivity } from '../../containers/ProfileAccountActivity';
-import { ProfileAuthDetails } from '../../containers/ProfileAuthDetails';
-import { ProfilePayment } from '../../containers/ProfilePayment';
-import { ProfileSecurity } from '../../containers/ProfileSecurity';
-import { ReferralProgram } from '../../containers/ReferralProgram';
-import { setDocumentTitle } from '../../helpers';
+import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import { TabPanel } from 'src/components';
+import {
+    CanCan,
+    ReferralProgram,
+    ProfileSecurity,
+    ProfilePayment,
+    ProfileAuthDetails,
+    ProfileAccountActivity,
+    ProfileApiKeys,
+    ProfileVerification,
+} from 'src/containers';
+import { useDocumentTitle } from 'src/hooks';
+import { selectAbilities } from 'src/modules';
 
-type Props = RouterProps & IntlProps;
-
-interface State {
-    tab: string;
-    currentTabIndex: number;
+interface ParamType {
+    routeTab?: string;
+    currency?: string;
+    action?: string;
 }
 
-class ProfileComponent extends React.Component<Props, State> {
-    public state = {
-        tab: 'security',
-        currentTabIndex: 0,
-    };
+export const ProfileScreen: FC = (): ReactElement => {
+    const [tab, setTab] = useState<string>('');
+    const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
+    const [tabMapping, setTabMapping] = useState<string[]>(['security', 'api_keys', 'referral']);
 
-    public tabMapping = ['security', 'api_keys', 'payment', 'referral'];
+    const history = useHistory();
+    const { formatMessage } = useIntl();
+    const { routeTab } = useParams<ParamType>();
+    const abilities = useSelector(selectAbilities);
 
-    public componentDidMount() {
-        setDocumentTitle('Profile');
-    }
+    useDocumentTitle('Profile');
 
-    public goBack = () => {
-        this.props.history.goBack();
-    };
+    useEffect(() => {
+        if (abilities && CanCan.checkAbilityByAction('read', 'P2P', abilities)) {
+            setTabMapping(['security', 'api_keys', 'payment', 'referral']);
+        }
+    }, [abilities]);
 
-    public render() {
-        return (
-            <div className="container pg-profile-page">
-                <div className="pg-profile-page__details">
-                    <div className="pg-profile-top">
-                        <div className="row">
-                            <div className="col-12 col-md-6 mx-0">
-                                <div className="row col-12 mx-0">
-                                    <ProfileAuthDetails/>
-                                </div>
-                            </div>
-                            <div className="col-12 col-md-6">
-                                <ProfileVerification/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12">
-                            <TabPanel
-                                panels={this.renderTabs()}
-                                onTabChange={this.handleMakeRequest}
-                                currentTabIndex={this.state.currentTabIndex}
-                                onCurrentTabChange={this.onCurrentTabChange}
-                            />
-                        </div>
-                    </div>
-                </div>
-                
-                {
-                    this.state.tab === 'security' ? (
-                        <div className="row">
-                            <div className="col-12">
-                                <ProfileAccountActivity/>
-                            </div>
-                        </div>
-                    ) : null
-                }
-            </div>
-        );
-    }
+    useEffect(() => {
+        if (routeTab) {
+            const index = tabMapping.indexOf(routeTab);
+            if (index !== -1) {
+                setTab(routeTab);
+                setCurrentTabIndex(index);
+            }
+        } else {
+            history.push('/profile/security');
+        }
+    }, [routeTab, tabMapping, history]);
 
-    private onCurrentTabChange = index => this.setState({ currentTabIndex: index });
+    const goBack = useCallback(() => {
+        history.goBack();
+    }, [history]);
 
-    private handleMakeRequest = (index: number) => {
-        if (this.state.tab === this.tabMapping[index]) {
+    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const onCurrentTabChange = useCallback((index: number) => {
+        setCurrentTabIndex(index);
+        history.push(`/profile/${tabMapping[index]}`);
+    }, [history, tabMapping]);
+
+    const onTabChange = useCallback((index: number) => {
+        if (tab === tabMapping[index]) {
             return;
         }
+        setTab(tabMapping[index]);
+    }, [tabMapping]);
 
-        this.setState({ tab: this.tabMapping[index] });
-    };
-
-    private renderTabs = () => {
-        const { tab } = this.state;
+    const renderTabs = React.useCallback(() => {
+        const isP2PEnabled = CanCan.checkAbilityByAction('read', 'P2P', abilities);
+        const p2pTabs = [
+            {
+                content: tab === 'payment' ? <ProfilePayment/> : null,
+                label: translate('page.body.profile.tabs.payment'),
+            }
+        ];
 
         return [
             {
                 content: tab === 'security' ? <ProfileSecurity/> : null,
-                label: this.props.intl.formatMessage({id: 'page.body.profile.tabs.security'}),
+                label: translate('page.body.profile.tabs.security'),
             },
             {
                 content: tab === 'api_keys' ? <ProfileApiKeys/> : null,
-                label: this.props.intl.formatMessage({id: 'page.body.profile.tabs.api_keys'}),
+                label: translate('page.body.profile.tabs.api_keys'),
             },
-            {
-                content: tab === 'payment' ? <ProfilePayment/> : null,
-                label: this.props.intl.formatMessage({id: 'page.body.profile.tabs.payment'}),
-            },
+            ...(isP2PEnabled ? p2pTabs : []),
             {
                 content: tab === 'referral' ? <ReferralProgram/> : null,
-                label: this.props.intl.formatMessage({id: 'page.body.profile.tabs.referral'}),
+                label: translate('page.body.profile.tabs.referral'),
             },
         ];
-    };
-}
+    }, [currentTabIndex, abilities, history, translate]);
 
-export const ProfileScreen = compose(
-    injectIntl,
-    withRouter,
-)(ProfileComponent as any) as React.ComponentClass;
+    return (
+        <div className="container pg-profile-page">
+            <div className="pg-profile-page__details">
+                <div className="pg-profile-top">
+                    <div className="row">
+                        <div className="col-12 col-md-6 mx-0">
+                            <div className="row col-12 mx-0">
+                                <ProfileAuthDetails/>
+                            </div>
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <ProfileVerification/>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12">
+                        <TabPanel
+                            panels={renderTabs()}
+                            onTabChange={onTabChange}
+                            currentTabIndex={currentTabIndex}
+                            onCurrentTabChange={onCurrentTabChange}
+                        />
+                    </div>
+                </div>
+            </div>
+            
+            {
+                tab === 'security' ? (
+                    <div className="row">
+                        <div className="col-12">
+                            <ProfileAccountActivity/>
+                        </div>
+                    </div>
+                ) : null
+            }
+        </div>
+    );
+};

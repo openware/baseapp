@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DEFAULT_TABLE_PAGE_LIMIT } from 'src/constants';
-import { offersFetch, selectShouldFetchP2POffers } from '../modules';
+import { offersFetch, selectP2PPaymentMethodsData } from '../modules';
 
-export const useP2POffersFetch = ({ limit = DEFAULT_TABLE_PAGE_LIMIT, page = 0, side = 'buy' }) => {
-    const shouldDispatch = useSelector(selectShouldFetchP2POffers);
+export const useP2POffersFetch = ({ limit = DEFAULT_TABLE_PAGE_LIMIT, page = 0, side = 'buy', payment_method = '', base = '', quote = '' }) => {
     const dispatch = useDispatch();
+    const paymentMethods = useSelector(selectP2PPaymentMethodsData);
 
     React.useEffect(() => {
-        if (shouldDispatch) {
-            dispatch(offersFetch({ limit, page, side: side === 'buy' ? 'sell' : 'buy' }));
-        }
-    }, [dispatch, shouldDispatch, side, limit, page]);
+        const paymentMethodId = paymentMethods.find(i => i.name === payment_method);
+        dispatch(offersFetch({ limit, page, side: side === 'buy' ? 'sell' : 'buy', payment_method: paymentMethodId?.id, base: base?.toLowerCase(), quote: quote?.toLowerCase() }));
+    }, [dispatch, limit, page, side, payment_method, base, quote, paymentMethods]);
 };

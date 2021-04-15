@@ -51,7 +51,7 @@ export const selectP2PCreateOrderSuccess = (state: RootState): boolean =>
 export const selectP2POrderLoading = (state: RootState): boolean =>
     state.user.p2pOrders.createOrder.loading;
 
-// P2P cancel order
+// P2P update order
 
-export const selectP2PCancelOrderSuccess = (state: RootState): boolean =>
-    state.user.p2pOrders.cancelOrder.success;
+export const selectP2PUpdateOrderSuccess = (state: RootState): boolean =>
+    state.user.p2pOrders.updateOrder.success;

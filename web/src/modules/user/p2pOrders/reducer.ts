@@ -4,9 +4,9 @@ import {
     P2P_ORDER_DATA,
     P2P_ORDER_ERROR,
     P2P_ORDER_FETCH,
-    P2P_ORDERS_CANCEL_DATA,
-    P2P_ORDERS_CANCEL_ERROR,
-    P2P_ORDERS_CANCEL_FETCH,
+    P2P_ORDERS_UPDATE_DATA,
+    P2P_ORDERS_UPDATE_ERROR,
+    P2P_ORDERS_UPDATE_FETCH,
     P2P_ORDERS_CREATE_DATA,
     P2P_ORDERS_CREATE_ERROR,
     P2P_ORDERS_CREATE_FETCH,
@@ -23,7 +23,7 @@ export interface P2POrdersState {
         success: boolean;
         error?: CommonError;
     };
-    cancelOrder: {
+    updateOrder: {
         loading: boolean;
         success: boolean;
         error?: CommonError;
@@ -44,7 +44,7 @@ export const initialP2POrdersState: P2POrdersState = {
         loading: false,
         success: false,
     },
-    cancelOrder: {
+    updateOrder: {
         loading: false,
         success: false,
     },
@@ -141,21 +141,21 @@ const orderItemReducer = (state: P2POrdersState['createOrder'], action: P2POrder
     }
 };
 
-const cancelOrderReducer = (state: P2POrdersState['cancelOrder'], action: P2POrdersActions) => {
+const updateOrderReducer = (state: P2POrdersState['updateOrder'], action: P2POrdersActions) => {
     switch (action.type) {
-        case P2P_ORDERS_CANCEL_FETCH:
+        case P2P_ORDERS_UPDATE_FETCH:
             return {
                 ...state,
                 loading: true,
             };
-        case P2P_ORDERS_CANCEL_DATA:
+        case P2P_ORDERS_UPDATE_DATA:
             return {
                 ...state,
                 loading: false,
                 success: true,
                 error: undefined,
             };
-        case P2P_ORDERS_CANCEL_ERROR:
+        case P2P_ORDERS_UPDATE_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -196,14 +196,14 @@ export const p2pOrdersReducer = (state = initialP2POrdersState, action: P2POrder
                 ...state,
                 createOrder: orderItemReducer(getOrderState, action),
             };
-        case P2P_ORDERS_CANCEL_FETCH:
-        case P2P_ORDERS_CANCEL_DATA:
-        case P2P_ORDERS_CANCEL_ERROR:
-            const cancelOrderState = { ...state.cancelOrder };
+        case P2P_ORDERS_UPDATE_FETCH:
+        case P2P_ORDERS_UPDATE_DATA:
+        case P2P_ORDERS_UPDATE_ERROR:
+            const updateOrderState = { ...state.updateOrder };
 
             return {
                 ...state,
-                cancelOrder: cancelOrderReducer(cancelOrderState, action),
+                updateOrder: updateOrderReducer(updateOrderState, action),
             };
         default:
             return state;

@@ -70,7 +70,7 @@ const ConfirmOfferModal: FC<Props> = (props: Props): ReactElement => {
                     </div>
                     <div className="cr-create-offer__modal-item">
                         <span className="cr-create-offer__modal-item__label">{translate('page.body.p2p.create.offer.payment_method')}</span>
-                        {paymentMethods.map(i => <span className="cr-create-offer__modal-item__value">{i.name}</span>)}
+                        {paymentMethods.map(i => <span className="cr-create-offer__modal-item__value">{i.payment_method?.name}</span>)}
                     </div>
                     <div className="cr-create-offer__modal-item">
                         <span className="cr-create-offer__modal-item__label">{translate('page.body.p2p.create.offer.time_limit')}</span>
