@@ -3,6 +3,7 @@ import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { DeleteIcon } from 'src/assets/images/DeleteIcon';
 import { PlusIcon } from 'src/assets/images/PlusIcon';
 import { ArrowLeftIcon } from 'src/assets/images/setup/ArrowLeftIcon';
@@ -43,7 +44,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
 
     const { asset, cash, side, amount, timeLimit, lowLimit, topLimit, paymentMethods } = props;
     const { formatMessage } = useIntl();
-
+    const history = useHistory();
     const wallets = useSelector((state: RootState) => selectWallets(state, 'p2p'));
     const userPM = useSelector(selectPaymentMethodList);
 
@@ -286,7 +287,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                             <div className="cr-create-offer__dp-label">{translate('page.body.p2p.create.offer.payment_method')}</div>
                             <div>
                                 <Button
-                                    onClick={() => window.console.log('add')}
+                                    onClick={() => history.push('/profile')}
                                     size="lg"
                                     variant="outline-primary"
                                 >

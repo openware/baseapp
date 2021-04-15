@@ -29,5 +29,5 @@ export interface PaymentMethod {
     type: string;
     name: string;
     logo?: string;
-    options: any;
+    options?: any;
 }

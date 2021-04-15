@@ -114,7 +114,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 );
                 break;
             case 'createStep2':
-                const {logo, options} = paymentMethods.find(p => p.id === modal.id);
+                const { logo, options } = paymentMethods.find(p => p.id === modal.id);
                 body = (
                     <div>
                         <div className="picked-payment-method">

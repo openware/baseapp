@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
@@ -80,7 +80,7 @@ export const ProfilePayment: FC = (): ReactElement => {
     const pickPaymentMethodToAdd = useCallback((paymentMethod) => {
         const optionData = [];
 
-        Object.keys(paymentMethod.options).map(key => {
+        paymentMethod.options && Object.keys(paymentMethod.options).map(key => {
             const option = paymentMethod.options[key];
             optionData.push({
                 name: key,
@@ -111,7 +111,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         const customFields = {};
         paymentOptions.map(option => customFields[option.name] = option.value);
         dispatch(paymentMethodCreateFetch({
-            pm_id: modal.id,
+            payment_method_id: modal.id,
             data: customFields,
         }));
     }, [paymentOptions, dispatch]);
@@ -120,7 +120,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         const customFields = {};
         paymentOptions.map(option => customFields[option.name] = option.value);
         dispatch(paymentMethodUpdateFetch({
-            pm_id: modal.id,
+            payment_method_id: modal.id,
             data: customFields,
         }));
     }, [dispatch, paymentOptions]);
