@@ -4,8 +4,8 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CryptoIcon } from 'src/components/CryptoIcon';
 import { Decimal, Table } from 'src/components';
-import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useP2PCurrenciesFetch, useWalletsFetch } from 'src/hooks';
-import { RootState, selectAbilities, selectCurrencies, selectMarkets, selectMarketTickers, selectP2PCurrenciesData, selectWallets, selectWalletsLoading, Wallet } from 'src/modules';
+import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useP2PCurrenciesFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
+import { selectAbilities, selectCurrencies, selectMarkets, selectMarketTickers, selectP2PCurrenciesData, selectP2PWallets, selectWalletsLoading, Wallet } from 'src/modules';
 import { WalletsHeader } from 'src/components/WalletsHeader';
 import { useHistory } from 'react-router';
 
@@ -17,7 +17,7 @@ const WalletsP2P: FC = (): ReactElement => {
     const history = useHistory();
 
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
-    const wallets = useSelector((state: RootState) => selectWallets(state, 'p2p'));
+    const wallets = useSelector(selectP2PWallets);
     const abilities = useSelector(selectAbilities);
     const currencies = useSelector(selectCurrencies);
     const markets = useSelector(selectMarkets);
@@ -25,7 +25,7 @@ const WalletsP2P: FC = (): ReactElement => {
     const p2pCurrencies = useSelector(selectP2PCurrenciesData);
     const walletsLoading = useSelector(selectWalletsLoading);
 
-    useWalletsFetch();
+    useP2PWalletsFetch();
     useCurrenciesFetch();
     useP2PCurrenciesFetch();
     useMarketsTickersFetch();

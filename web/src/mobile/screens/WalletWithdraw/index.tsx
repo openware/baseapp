@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
-import { RootState } from 'src/modules';
 import { useWalletsFetch } from '../../../hooks';
 import { selectWallets } from '../../../modules/user/wallets';
 import { Subheader, WalletBanner, WalletHeader, WalletWithdrawBody } from '../../components';
@@ -14,7 +13,7 @@ const WalletWithdraw: React.FC = () => {
     const { currency = '' } = useParams();
     const intl = useIntl();
     const history = useHistory();
-    const wallets = useSelector((state: RootState) => selectWallets(state, 'spot')) || [];
+    const wallets = useSelector(selectWallets) || [];
     const wallet = wallets.find(item => item.currency === currency) || defaultWallet;
 
     useWalletsFetch();

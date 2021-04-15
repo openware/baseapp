@@ -1,6 +1,9 @@
 import { CommonError } from '../../types';
 import { WalletsAction } from './actions';
 import {
+    P2P_WALLETS_DATA,
+    P2P_WALLETS_ERROR,
+    P2P_WALLETS_FETCH,
     SET_MOBILE_WALLET_UI,
     WALLETS_ADDRESS_DATA,
     WALLETS_ADDRESS_DATA_WS,
@@ -26,6 +29,12 @@ export interface WalletsState {
         mobileWalletChosen: string;
         timestamp?: number;
     };
+    p2pWallets: {
+        list: Wallet[];
+        loading: boolean;
+        error?: CommonError;
+        timestamp?: number;
+    };
 }
 
 export const initialWalletsState: WalletsState = {
@@ -34,6 +43,10 @@ export const initialWalletsState: WalletsState = {
         loading: false,
         withdrawSuccess: false,
         mobileWalletChosen: '',
+    },
+    p2pWallets: {
+        list: [],
+        loading: false,
     },
 };
 
@@ -174,6 +187,68 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
     }
 };
 
+const p2pWalletsListReducer = (state: WalletsState['p2pWallets'], action: WalletsAction): WalletsState['p2pWallets'] => {
+    switch (action.type) {
+        case P2P_WALLETS_FETCH:
+            return {
+                ...state,
+                loading: true,
+                timestamp: Math.floor(Date.now() / 1000),
+            };
+        case P2P_WALLETS_DATA: {
+            return {
+                ...state,
+                loading: false,
+                list: action.payload,
+            };
+        }
+        case WALLETS_DATA_WS: {
+            let updatedList = state.list;
+
+            if (state.list.length) {
+                updatedList = state.list.map(wallet => {
+                    let updatedWallet = wallet;
+                    const payloadCurrencies = Object.keys(action.payload.balances);
+
+                    if (payloadCurrencies.length) {
+                        payloadCurrencies.some(value => {
+                            const targetWallet = action.payload.balances[value];
+
+                            if (value === wallet.currency && (targetWallet && targetWallet[2] === wallet.account_type)) {
+                                updatedWallet = {
+                                    ...updatedWallet,
+                                    balance: targetWallet[0] ? targetWallet[0] : updatedWallet.balance,
+                                    locked: targetWallet[1] ? targetWallet[1] : updatedWallet.locked,
+                                };
+
+                                return true;
+                            }
+
+                            return false;
+                        });
+                    }
+
+                    return updatedWallet;
+                });
+            }
+
+            return {
+                ...state,
+                loading: false,
+                list: updatedList,
+            };
+        }
+        case P2P_WALLETS_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
+            };
+        default:
+            return state;
+    }
+};
+
 export const walletsReducer = (state = initialWalletsState, action: WalletsAction): WalletsState => {
     switch (action.type) {
         case WALLETS_FETCH:
@@ -193,6 +268,16 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
             return {
                 ...state,
                 wallets: walletsListReducer(walletsListState, action),
+            };
+        case P2P_WALLETS_FETCH:
+        case P2P_WALLETS_DATA:
+        case P2P_WALLETS_ERROR:
+        case WALLETS_DATA_WS:
+            const p2pWalletsListState = { ...state.p2pWallets };
+
+            return {
+                ...state,
+                p2pWallets: p2pWalletsListReducer(p2pWalletsListState, action),
             };
         case WALLETS_RESET:
             return {

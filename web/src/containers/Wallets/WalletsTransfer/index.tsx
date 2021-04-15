@@ -3,13 +3,14 @@ import { Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { DoubleDropdownSelector, TransferForm, WalletList } from 'src/components';
-import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useP2PCurrenciesFetch, useWalletsFetch } from 'src/hooks';
+import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useP2PCurrenciesFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
 import {
     createP2PTransfersFetch,
     selectCurrencies,
     selectMarkets,
     selectMarketTickers,
-    selectP2PCurrenciesData,
+    selectP2PWalletsLoading,
+    selectP2PWallets,
     selectWallets,
     selectWalletsLoading,
     Wallet,
@@ -38,13 +39,16 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
     const history = useHistory();
     const dispatch = useDispatch();
     const wallets = useSelector(selectWallets);
+    const p2pWallets = useSelector(selectP2PWallets);
     const walletsLoading = useSelector(selectWalletsLoading);
+    const p2pWalletsLoading = useSelector(selectP2PWalletsLoading);
     const currencies = useSelector(selectCurrencies);
     const markets = useSelector(selectMarkets);
     const tickers = useSelector(selectMarketTickers);
 
     const { currency } = props;
 
+    useP2PWalletsFetch();
     useWalletsFetch();
     useCurrenciesFetch();
     useP2PCurrenciesFetch();
@@ -64,10 +68,8 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
     }, [wallets, history]);
 
     useEffect(() => {
-        if (wallets.length) {
-            setFilteredWallets(wallets.filter(i => i.account_type === from.toLowerCase()));
-        }
-    }, [wallets, from]);
+        setFilteredWallets(from.toLowerCase() === 'spot' ? wallets : p2pWallets);
+    }, [wallets, p2pWallets, from]);
 
     const onWalletSelectionChange = useCallback((value: Wallet) => {
         const nextWalletIndex = wallets.findIndex(
@@ -92,7 +94,7 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
 
     const handleTransfer = useCallback((currency: string, amount: string) => {
         const payload = {
-            currency: currency,
+            currency: currency?.toLowerCase(),
             amount,
             from: from.toLowerCase(),
             to: to.toLowerCase(),
@@ -105,7 +107,7 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
         <div className="pg-wallet-transfers">
             <div className="pg-wallet">
                 <div className="text-center">
-                    {walletsLoading && <Spinner animation="border" variant="primary" />}
+                    {((from === 'spot' && walletsLoading || from === 'p2p' && p2pWalletsLoading)) && <Spinner animation="border" variant="primary" />}
                 </div>
                 <div className="row no-gutters pg-wallet__tabs-content pg-wallet__tabs-content-height">
                     <div className={`col-md-3 col-sm-12 col-12`}>

@@ -182,7 +182,7 @@ export class WalletTable extends React.Component<Props> {
 export const mapStateToProps = (state: RootState): ReduxProps => ({
     currencies: selectCurrencies(state),
     list: selectHistory(state),
-    wallets: selectWallets(state, 'spot'),
+    wallets: selectWallets(state),
     fetching: selectHistoryLoading(state),
     page: selectCurrentPage(state),
     firstElemIndex: selectFirstElemIndex(state, 6),

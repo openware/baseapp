@@ -101,33 +101,5 @@ Access-Control-Allow-Credentials: true
             "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
             "state": "active"
         }
-    },
-    {
-        "currency":"ngnt",
-        "balance":"1000.0",
-        "account_type": "p2p",
-        "locked":"0.0",
-            "deposit_address": {
-            "currencies": ["ngnt"],
-            "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
-            "state": "active"
-        }
-    },
-    {
-        "currency":"usdt",
-        "balance":"5000.0",
-        "account_type": "p2p",
-        "locked":"0.0"
-    },
-    {
-        "currency":"ngn",
-        "balance":"5000.0",
-        "account_type": "p2p",
-        "locked":"0.0",
-            "deposit_address": {
-            "currencies": ["ngn"],
-            "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
-            "state": "active"
-        }
     }
 ]

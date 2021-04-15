@@ -307,7 +307,7 @@ const mapStateToProps = (state: RootState) => ({
     currentMarketFilters: selectCurrentMarketFilters(state),
     executeLoading: selectOrderExecuteLoading(state),
     marketTickers: selectMarketTickers(state),
-    wallets: selectWallets(state, 'spot'),
+    wallets: selectWallets(state),
     currentPrice: selectCurrentPrice(state),
     userLoggedIn: selectUserLoggedIn(state),
     isMobileDevice: selectMobileDeviceState(state),

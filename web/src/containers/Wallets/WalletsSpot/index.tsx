@@ -629,7 +629,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     markets: selectMarkets(state),
     tickers: selectMarketTickers(state),
     user: selectUserInfo(state),
-    wallets: selectWallets(state, 'spot'),
+    wallets: selectWallets(state),
     walletsLoading: selectWalletsLoading(state),
     withdrawSuccess: selectWithdrawSuccess(state),
     historyList: selectHistory(state),

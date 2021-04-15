@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
-import { RootState } from 'src/modules';
 import {
     useCurrenciesFetch,
     useRangerConnectFetch,
@@ -21,7 +20,7 @@ const WalletDeposit: React.FC = () => {
     const intl = useIntl();
     const history = useHistory();
     const { currency = '' } = useParams<{ currency?: string }>();
-    const wallets = useSelector((state: RootState) => selectWallets(state, 'spot')) || [];
+    const wallets = useSelector(selectWallets) || [];
 
     useCurrenciesFetch();
     useWalletsFetch();

@@ -13,7 +13,6 @@ import {
     selectInternalTransfersCreateSuccess,
     selectUserInfo,
     selectWallets,
-    RootState,
     walletsFetch,
 } from '../../modules';
 import { InternalTransferInput } from './InternalInput';
@@ -23,7 +22,7 @@ export const InternalTransferComponent = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const wallets = useSelector((state: RootState) => selectWallets(state, 'spot'));
+    const wallets = useSelector(selectWallets);
     const user = useSelector(selectUserInfo);
     const transferSuccess = useSelector(selectInternalTransfersCreateSuccess);
 

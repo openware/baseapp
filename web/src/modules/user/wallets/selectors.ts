@@ -1,12 +1,7 @@
 import { RootState } from '../../';
 import { Wallet } from './types';
 
-export const selectWallets = (state: RootState, accountType?: string): Wallet[] =>
-    accountType
-    ? state.user.wallets.wallets.list.filter(i => i.account_type === accountType)
-    : state.user.wallets.wallets.list;
-
-export const selectWalletsSpot = (state: RootState, accountType?: string): Wallet[] =>
+export const selectWallets = (state: RootState): Wallet[] =>
     state.user.wallets.wallets.list;
 
 export const selectWalletsLoading = (state: RootState): boolean =>
@@ -23,3 +18,15 @@ export const selectMobileWalletUi = (state: RootState): string =>
 
 export const selectShouldFetchWallets = (state: RootState): boolean =>
     !selectWalletsTimestamp(state) && !selectWalletsLoading(state);
+
+export const selectP2PWalletsLoading = (state: RootState): boolean =>
+    state.user.wallets.p2pWallets.loading;
+
+export const selectP2PWalletsTimestamp = (state: RootState): number | undefined =>
+    state.user.wallets.p2pWallets.timestamp;
+
+export const selectShouldFetchP2PWallets = (state: RootState): boolean =>
+    !selectP2PWalletsTimestamp(state) && !selectP2PWalletsLoading(state);
+
+export const selectP2PWallets = (state: RootState): Wallet[] =>
+    state.user.wallets.p2pWallets.list;
