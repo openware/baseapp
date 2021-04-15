@@ -36,7 +36,7 @@ export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: 
     return tickers;
 };
 
-export const streamsBuilder = (withAuth: boolean, prevSubscriptions: string[], market: Market | undefined) => {
+export const streamsBuilder = (withAuth: boolean, withP2P: boolean, prevSubscriptions: string[], market: Market | undefined) => {
     let streams: string[] = ['global.tickers'];
 
     if (withAuth) {
@@ -54,12 +54,21 @@ export const streamsBuilder = (withAuth: boolean, prevSubscriptions: string[], m
             ];
         }
     }
+
     if (market) {
         streams = [
             ...streams,
             ...(marketStreams(market).channels),
         ];
     }
+
+    if (withP2P) {
+        streams = [
+            ...streams,
+            'p2p',
+        ];
+    }
+
     for (const stream of prevSubscriptions) {
         if (streams.indexOf(stream) < 0) {
             streams.push(stream);

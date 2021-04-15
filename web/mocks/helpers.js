@@ -120,6 +120,26 @@ const Helpers = {
             "sequence": sequence,
         }
     },
+    getP2POrder: (state) => {
+        return {
+            "event": `p2p_order.${state}`,
+            "payload": {
+                "id":82030,
+                "user_uid":"U487205863",
+                "base":"usdt",
+                "quote":"usd",
+                "side":"sell",
+                "price":"1",
+                "origin_amount":"6",
+                "available_amount":"6",
+                "min_order_amount":"10",
+                "max_order_amount":"100",
+                "time_limit":10,
+                "state": state,
+                "payment_methods":null,
+            }
+        }
+    },
     getStreamsFromUrl: (url) => url.replace("/", "").split(/[&?]stream=/).filter(stream => stream.length > 0),
     unique: (list) => list.filter((value, index, self) => self.indexOf(value) === index)
 }

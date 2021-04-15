@@ -12,8 +12,9 @@ import {
     P2P_ORDER_DATA,
     P2P_ORDER_ERROR,
     P2P_ORDER_FETCH,
+    P2P_ORDERS_WS,
 } from "./constants";
-import { P2POrderCreate, P2POrder, P2PTradesHistory } from "./types";
+import { P2POrderCreate, P2POrder } from "./types";
 
 export interface P2POrdersCreateFetch {
     type: typeof P2P_ORDERS_CREATE_FETCH;
@@ -41,7 +42,7 @@ export interface P2PTradesHistoryFetch {
 export interface P2PTradesHistoryData {
     type: typeof P2P_TRADES_HISTORY_DATA;
     payload: {
-        list: P2PTradesHistory[];
+        list: P2POrder[];
         page: number;
         total: number;
     }
@@ -55,7 +56,7 @@ export interface P2PTradesHistoryError {
 export interface P2POrderFetch {
     type: typeof P2P_ORDER_FETCH;
     payload: {
-        id: string | number;
+        id: number;
     };
 }
 
@@ -72,18 +73,24 @@ export interface P2POrderError {
 export interface P2POrdersUpdateFetch {
     type: typeof P2P_ORDERS_UPDATE_FETCH;
     payload: {
-        id: string | number;
+        id: number;
         action: string;
     };
 }
 
 export interface P2POrdersUpdateData {
     type: typeof P2P_ORDERS_UPDATE_DATA;
+    payload: P2POrder;
 }
 
 export interface P2POrdersUpdateError {
     type: typeof P2P_ORDERS_UPDATE_ERROR;
     error: CommonError;
+}
+
+export interface P2POrdersDataWS {
+    type: typeof P2P_ORDERS_WS;
+    payload: P2POrder;
 }
 
 export type P2POrdersActions =
@@ -98,7 +105,8 @@ export type P2POrdersActions =
     | P2POrderError
     | P2POrdersUpdateFetch
     | P2POrdersUpdateData
-    | P2POrdersUpdateError;
+    | P2POrdersUpdateError
+    | P2POrdersDataWS;
 
 export const p2pOrdersCreateFetch = (payload: P2POrderCreate): P2POrdersCreateFetch => ({
     type: P2P_ORDERS_CREATE_FETCH,
@@ -150,11 +158,17 @@ export const p2pOrdersUpdateFetch = (payload: P2POrdersUpdateFetch['payload']): 
     payload,
 });
 
-export const p2pOrdersUpdateData = (): P2POrdersUpdateData => ({
+export const p2pOrdersUpdateData = (payload: P2POrdersUpdateData['payload']): P2POrdersUpdateData => ({
     type: P2P_ORDERS_UPDATE_DATA,
+    payload,
 });
 
 export const p2pOrdersUpdateError = (error: CommonError): P2POrdersUpdateError => ({
     type: P2P_ORDERS_UPDATE_ERROR,
     error,
+});
+
+export const p2pOrdersDataWS = (payload: P2POrdersDataWS['payload']): P2POrdersDataWS => ({
+    type: P2P_ORDERS_WS,
+    payload,
 });

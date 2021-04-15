@@ -31,6 +31,10 @@ const balancesMock = (ws) => () => {
     sendEvent(ws, "balances", Helpers.getBalances());
 };
 
+const p2pOrdersMock = (ws, state) => () => {
+    sendEvent(ws, `p2p`, Helpers.getP2POrder(state));
+};
+
 /*
     Example: ["btcusd.update",{"asks":[["1000.0","0.1"]],"bids":[]}]
 */
@@ -222,6 +226,9 @@ class RangerMock {
         this.subscribe(ws, Helpers.getStreamsFromUrl(request.url));
         ws.timers.push(setInterval(tickersMock(ws, this.markets), 3000));
         ws.timers.push(setInterval(balancesMock(ws), 3000));
+        ws.timers.push(setInterval(p2pOrdersMock(ws, 'approved'), 3000));
+        ws.timers.push(setInterval(p2pOrdersMock(ws, 'cancelled'), 3000));
+
         this.markets.forEach((name) => {
             let { baseUnit, quoteUnit, marketId } = Helpers.getMarketInfos(name);
             ws.timers.push(setInterval(orderBookIncrementMock(ws, marketId), 200));

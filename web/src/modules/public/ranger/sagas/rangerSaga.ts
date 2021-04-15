@@ -1,5 +1,6 @@
 import { Channel, eventChannel, EventChannel } from 'redux-saga';
 import { all, call, cancel, delay, fork, put, race, select, take, takeEvery } from 'redux-saga/effects';
+import { p2pOrdersDataWS } from 'src/modules/user/p2pOrders';
 import { isFinexEnabled, rangerUrl } from '../../../../api';
 import { store } from '../../../../store';
 import { pushHistoryEmit } from '../../../user/history';
@@ -38,13 +39,13 @@ interface RangerBuffer {
 }
 
 const initRanger = (
-    { withAuth }: RangerConnectFetch['payload'],
+    { withAuth, withP2P }: RangerConnectFetch['payload'],
     market: Market | undefined,
     prevSubs: string[],
     buffer: RangerBuffer,
 ): [EventChannel<any>, WebSocket] => {
     const baseUrl = `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
-    const streams = streamsBuilder(withAuth, prevSubs, market);
+    const streams = streamsBuilder(withAuth, withP2P, prevSubs, market);
 
     const ws = new WebSocket(generateSocketURI(baseUrl, streams));
     const channel = eventChannel(emitter => {
@@ -144,7 +145,7 @@ const initRanger = (
                         );
 
                         return;
-                    }
+                    }                    
 
                     switch (routingKey) {
                         // public
@@ -210,7 +211,14 @@ const initRanger = (
                             emitter(walletsAddressDataWS(event));
 
                             return;
+                        case 'p2p':
+                            const p2pOrdersMatch = event && String(event.event).includes('p2p_order');
 
+                            if (p2pOrdersMatch) {
+                                emitter(p2pOrdersDataWS(event.payload));
+        
+                                return;
+                            }
                         default:
                     }
                     window.console.log(`Unhandeled websocket channel: ${routingKey}`);
