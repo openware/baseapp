@@ -3,6 +3,7 @@ import { Spinner } from 'react-bootstrap';
 import {
     injectIntl,
 } from 'react-intl';
+import { isUsernameEnabled } from '../../api';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
@@ -233,7 +234,7 @@ class HistoryComponent extends React.Component<Props> {
                 ];
             }
             case 'transfers': {
-                const { id, created_at, currency, amount, direction, receiver } = item;
+                const { id, created_at, currency, amount, direction, receiver_username, receiver_uid } = item;
                 const status = intl.formatMessage({ id: `page.body.history.transfer.content.status.${item.status}` });
                 const wallet = wallets.find(obj => obj.currency === currency);
 
@@ -242,7 +243,7 @@ class HistoryComponent extends React.Component<Props> {
                     wallet && Decimal.format(amount, wallet.fixed, ','),
                     currency && currency.toUpperCase(),
                     direction && direction.replace(/^./, direction[0].toUpperCase()),
-                    receiver && receiver.toUpperCase(),
+                    isUsernameEnabled() ? receiver_username && receiver_username.toUpperCase() : receiver_uid && receiver_uid.toUpperCase(),
                     <span style={{ color: setTransferStatusColor(item.status) }} key={id}>{status}</span>,
                 ];
             }
