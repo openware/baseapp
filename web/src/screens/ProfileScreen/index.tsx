@@ -23,7 +23,7 @@ interface ParamType {
 }
 
 export const ProfileScreen: FC = (): ReactElement => {
-    const [tab, setTab] = useState<string>('');
+    const [tab, setTab] = useState<string>('security');
     const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
     const [tabMapping, setTabMapping] = useState<string[]>(['security', 'api_keys', 'referral']);
 

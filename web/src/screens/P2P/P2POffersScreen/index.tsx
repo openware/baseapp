@@ -109,8 +109,8 @@ export const P2POffersScreen: FC = (): ReactElement => {
                     fiatCurrency={fiatCurrency}
                 />
                 <P2POffers
-                    quoteCurrency={currency}
-                    baseCurrency={fiatCurrency}
+                    base={currency}
+                    quote={fiatCurrency}
                     paymentMethod={paymentFilter}
                     side={sideFilter}
                     onClickTrade={handleClickTrade}

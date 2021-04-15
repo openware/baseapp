@@ -15,7 +15,7 @@ const buildQueryArray = data => {
 
 // tslint:disable:no-any
 export const buildQueryString = (action: any, key?: string) => (Object.entries(action)
-    .filter(w => w[1] !== '')
+    .filter(w => w[1] !== '' && w[1] !== undefined)
     .map((k: any) => {
         const param = k[0] === 'page' ? Number(k[1]) + 1 : k[1];
         return (

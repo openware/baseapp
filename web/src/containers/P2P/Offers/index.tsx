@@ -21,8 +21,8 @@ import {
 } from '../../../modules';
 
 interface ParentProps {
-    quoteCurrency: string;
-    baseCurrency: string;
+    base: string;
+    quote: string;
     paymentMethod: string;
     side: string;
     onClickTrade: (offer: Offer) => void;
@@ -44,13 +44,13 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
     useWalletsFetch();
     useCurrenciesFetch();
 
-    const { side, paymentMethod, quoteCurrency, baseCurrency } = props;
+    const { side, paymentMethod, base, quote } = props;
 
     useP2POffersFetch({
         limit: DEFAULT_TABLE_PAGE_LIMIT,
         page,
-        quote: quoteCurrency,
-        base: baseCurrency,
+        quote,
+        base,
         side,
         payment_method: paymentMethod,
     });
@@ -70,13 +70,13 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
             offersFetch({
                 page: Number(page) - 1,
                 limit: DEFAULT_TABLE_PAGE_LIMIT,
-                quote: quoteCurrency,
-                base: baseCurrency,
+                quote,
+                base,
                 payment_method: paymentMethodId?.id,
                 side,
             }),
         );
-    }, [offersFetch, side, paymentMethod, quoteCurrency, baseCurrency, page, DEFAULT_TABLE_PAGE_LIMIT, paymentMethods]);
+    }, [offersFetch, side, paymentMethod, base, quote, page, DEFAULT_TABLE_PAGE_LIMIT, paymentMethods]);
 
     const onClickNextPage = useCallback(() => {
         const paymentMethodId = paymentMethods.find(i => i.name === paymentMethod);
@@ -85,13 +85,13 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
             offersFetch({
                 page: Number(page) + 1,
                 limit: DEFAULT_TABLE_PAGE_LIMIT,
-                quote: quoteCurrency,
-                base: baseCurrency,
+                quote,
+                base,
                 payment_method: paymentMethodId?.id,
                 side,
             }),
         );
-    }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT, side, paymentMethod, quoteCurrency, baseCurrency, paymentMethods]);
+    }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT, side, paymentMethod, base, quote, paymentMethods]);
 
     const retrieveData = React.useCallback((amountPrecision: number, pricePrecision: number) => (
         list.map(item => {
@@ -146,9 +146,9 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                     <Button
                         onClick={() => props.onClickTrade(item)}
                         size="lg"
-                        variant={props.side}
+                        variant={side}
                     >
-                        {intl.formatMessage({ id: `page.body.p2p.tabs.${props.side}` })} {props.quoteCurrency.toUpperCase()}
+                        {intl.formatMessage({ id: `page.body.p2p.tabs.${side}` })} {base.toUpperCase()}
                     </Button>
                 </div>
             ];
@@ -156,17 +156,15 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
     ), [list]);
 
     const tableData = React.useCallback(() => {
-        const { quoteCurrency } = props;
-
         if (list.length === 0) {
             return [[]];
         }
 
-        const amountPrecision = wallets.find(w => w.currency === quoteCurrency.toLowerCase())?.fixed || DEFAULT_CCY_PRECISION;
+        const amountPrecision = wallets.find(w => w.currency === base.toLowerCase())?.fixed || DEFAULT_CCY_PRECISION;
         const pricePrecision = wallets.find(obj => obj.currency === list[0].quote)?.fixed || DEFAULT_FIAT_PRECISION;
 
         return retrieveData(amountPrecision, pricePrecision);
-    }, [list, wallets, props.quoteCurrency]);
+    }, [list, wallets, base]);
 
     return (
         <div className="cr-p2p-offers-table">

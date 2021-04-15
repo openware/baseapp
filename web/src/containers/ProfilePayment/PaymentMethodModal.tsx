@@ -5,7 +5,7 @@ import { CustomInput } from 'src/components';
 import { titleCase } from 'src/helpers';
 import { PaymentOptionInterface } from './';
 import { PaymentMethodSelector } from './PaymentMethodSelector';
-import { PaymentMethod } from 'src/modules';
+import { PaymentMethod, PaymentMethodStateModal } from 'src/modules';
 import { HOST_URL } from 'src/constants';
 
 export interface PaymentMethodModalProps {
@@ -13,7 +13,7 @@ export interface PaymentMethodModalProps {
     paymentMethods: PaymentMethod[];
     filtered: PaymentMethod[];
     searchKeyword: string;
-    modal: any;
+    modal: PaymentMethodStateModal;
     translate: (id: string, value?: any) => string;
     hideModal: () => void;
     pickPaymentMethodToAdd: (item: any) => void;
@@ -115,16 +115,16 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 );
                 break;
             case 'createStep2':
-                const { logo, options } = paymentMethods.find(p => p.id === modal.id);
+                const pm = paymentMethods.find(p => +p.id === +modal.payment_method_id);
                 body = (
                     <div>
                         <div className="picked-payment-method">
-                            {logo ? <img src={`data:image/png;base64,${logo}`} alt=""/> : null}
+                            {pm && <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pm.id}/logo`} alt=""/>}
                             {modal.name}
                         </div>
                         <div className="holder-name">
                             <label>{translate('page.body.profile.payment.modal.body.holderName')}</label>
-                            {options?.user}
+                            {pm?.options?.user}
                         </div>
                         <div className="custom-fields">
                             {
@@ -158,11 +158,11 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 );
                 break;
             case 'update':
-                const pm = paymentMethods.find(p => p.id === modal.id);
+                const pmUpdate = paymentMethods.find(p => +p.id === +modal.payment_method_id);
                 body = (
                     <div>
                         <div className="picked-payment-method">
-                            {pm && <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pm.id}/logo`} alt=""/>}
+                            {pmUpdate && <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pmUpdate.id}/logo`} alt=""/>}
                             {modal.name}
                         </div>
                         <div className="holder-name">
