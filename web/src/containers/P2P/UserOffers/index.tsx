@@ -101,7 +101,7 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
                 <span key={id}>{Decimal.format(origin_amount, amountPrecision, ',')} {base?.toUpperCase()}</span>,
                 <span key={id}>{Decimal.format(price, pricePrecision, ',')} {quote?.toUpperCase()}</span>,
                 <span style={{ color: setOfferStatusColor(item.state) }} className="text-capitalize" key={id}>{state}</span>,
-                state === 'active' && (
+                state === 'wait' && (
                     <Button key={id} onClick={handleCancel(id)} variant="secondary">
                         {translate('page.body.p2p.my.offers.table.cancel')}
                     </Button>

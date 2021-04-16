@@ -7,9 +7,6 @@ describe('P2P reducer', () => {
     const fakeOffersArray: Offer[] = [
         {
             id: 1,
-            user_nickname: 'King_Coin66',
-            offers_count: 123,
-            success_rate: 1,
             price: 1.2,
             available_amount: '5534.00',
             origin_amount: '7666.00',
@@ -21,12 +18,15 @@ describe('P2P reducer', () => {
             created_at: '',
             side: 'buy',
             payment_methods: [],
+            time_limit: 1,
+            user: {
+                user_nickname: 'King_Coin66',
+                offers_count: 123,
+                success_rate: 1,
+            },
         },
         {
             id: 2,
-            user_nickname: 'King_Coin66',
-            offers_count: 123,
-            success_rate: 1,
             price: 1.2,
             available_amount: '5534.00',
             origin_amount: '7666.00',
@@ -38,6 +38,12 @@ describe('P2P reducer', () => {
             created_at: '',
             side: 'buy',
             payment_methods: [],
+            time_limit: 1,
+            user: {
+                user_nickname: 'King_Coin66',
+                offers_count: 123,
+                success_rate: 1,
+            },
         },
     ];
 
@@ -149,17 +155,15 @@ describe('P2P reducer', () => {
 
     const fakeP2PPaymentMethods: PaymentMethod[] = [
         {
-            id: '1',
+            id: 1,
             type: '',
             name: 'Universal',
-            logo: '',
             options: {},
         },
         {
-            id: '2',
+            id: 2,
             type: '',
             name: 'Universal',
-            logo: '',
             options: {},
         },
     ];

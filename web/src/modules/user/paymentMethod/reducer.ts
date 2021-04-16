@@ -26,10 +26,7 @@ export interface UserPaymentMethod {
     id: number;
     payment_method_id: number;
     data: any;
-    payment_method: {
-        type: string;
-        name: string;
-    };
+    payment_method: PaymentMethod;
 }
 
 export interface PaymentMethodState {

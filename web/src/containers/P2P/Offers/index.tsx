@@ -98,9 +98,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
             const {
                 id,
                 price,
-                user_nickname,
-                offers_count,
-                success_rate,
+                user,
                 available_amount,
                 quote,
                 min_order_amount,
@@ -113,10 +111,10 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 <div className="advertisers" key={id}>
                     <AvatarIcon fillColor="var(--icons)"/>
                     <div className="font-small ml-small">
-                        {user_nickname}
+                        {user?.user_nickname}
                         <div className="sec-row">
-                            <span className="font-small secondary">{offers_count}</span>
-                            <span className="font-small secondary ml-24">{+success_rate * 100}% {intl.formatMessage({ id: 'page.body.p2p.table.completion' })}</span>
+                            <span className="font-small secondary">{user?.offers_count}</span>
+                            {user?.success_rate ? <span className="font-small secondary ml-24">{+user?.success_rate * 100}% {intl.formatMessage({ id: 'page.body.p2p.table.completion' })}</span> : null}
                         </div>
                     </div>
                 </div>,
@@ -137,7 +135,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 <div className="payment" key={id}>
                     {payment_methods.map(i => (
                         <div className="payment-item">
-                            <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.id}/logo`} alt=""/>
+                            <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i?.payment_method?.id}/logo`} alt=""/>
                             <span className="font-small secondary">{i.payment_method.name}</span>
                         </div>
                     ))}
