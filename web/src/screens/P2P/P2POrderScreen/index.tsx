@@ -1,9 +1,9 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Decimal } from 'src/components';
-import { Dispute, OrderWaitConfirmation, OrderWaitPayment } from 'src/containers';
+import { Dispute, OrderWaitConfirmation, OrderWaitPayment, P2POrderConfirmModal } from 'src/containers';
 import { localeDate } from 'src/helpers';
 import { useCurrenciesFetch, useDocumentTitle } from 'src/hooks';
 import { useP2POrderFetch } from 'src/hooks/useP2POrderFetch';
@@ -19,11 +19,11 @@ export const P2POrderScreen: FC = (): ReactElement => {
     const { id } = useParams<ParamType>();
     const order: P2POrder = useSelector(selectP2PCreatedOrder);
     const currencies: Currency[] = useSelector(selectCurrencies);
+    const history = useHistory();
 
     useDocumentTitle('P2P Order Transfer');
     useCurrenciesFetch();
     useP2POrderFetch(id);
-    const history = useHistory();
 
     useEffect(() => {
         if (order?.state === 'cancelled') {
@@ -36,6 +36,10 @@ export const P2POrderScreen: FC = (): ReactElement => {
     const title = useCallback(() => {
         return order && `${translate(`page.body.p2p.order.transfer.title.${order.side}`)} ${order.base?.toUpperCase()}`; 
     }, [order, translate]);
+
+    const handleModalAction = useCallback(() => {
+        history.push(`/p2p/${order.base}`);
+    }, [history]);
 
     const content = useCallback(() => {
         if (order) {
@@ -50,6 +54,16 @@ export const P2POrderScreen: FC = (): ReactElement => {
                         : <OrderWaitPayment order={order}/>;
                 case 'dispute':
                     return <Dispute order={order}/>;
+                case 'done':
+                    return (
+                        <P2POrderConfirmModal
+                            precissionQuote={getPrecision(order.quote)}
+                            precissionBase={getPrecision(order.base)}
+                            order={order}
+                            show={true}
+                            closeModal={handleModalAction}
+                        />
+                    );
                 default:
                     return;
             }

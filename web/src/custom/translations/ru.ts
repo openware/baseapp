@@ -1139,6 +1139,13 @@ export const ru: LangType = {
     'page.body.p2p.modal.button.payment': 'PAYMENT METHOD',
     'page.body.p2p.modal.button.payment.add': 'Add Payment Method +',
 
+    'page.body.p2p.order.modal.header.buyOrder': 'Buy Order completed',
+    'page.body.p2p.order.modal.header.sellOrder': 'Sell Order completed',
+    'page.body.p2p.order.modal.body.price': 'Price',
+    'page.body.p2p.order.modal.body.amount': 'Amount',
+    'page.body.p2p.order.modal.body.quantity': 'Quantity',
+    'page.body.p2p.order.modal.footer.button': 'OK',
+
     // p2p input error messages
     'page.body.p2p.error.empty.price': 'Please enter price',
     'page.body.p2p.error.greater.than.0.price': 'Price should be greater than 0',

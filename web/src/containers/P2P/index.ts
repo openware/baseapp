@@ -7,3 +7,4 @@ export * from './UserOffers';
 export * from './OrderWaitPayment';
 export * from './OrderWaitConfirmation';
 export * from './Dispute';
+export * from './ModalP2POrderConfiramtion';
