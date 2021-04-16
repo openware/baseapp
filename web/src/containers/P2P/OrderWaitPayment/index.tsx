@@ -2,12 +2,12 @@ import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react
 import { Button, Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import { getCountdownDate, millisecondToMinutes } from 'src/helpers';
 import { P2POrder, p2pOrdersUpdateFetch } from 'src/modules';
 
 interface ParentProps {
     order: P2POrder;
+    isTaker: boolean;
 }
 
 type Props = ParentProps;
@@ -16,7 +16,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     const [timeLeft, setTimeLeft] = useState<string>('00:00:00');
     const [confirmTransfer, setConfirmTransfer] = useState<boolean>(false);
 
-    const { order } = props;
+    const { order, isTaker } = props;
     const dispatch = useDispatch();
     const { formatMessage } = useIntl();
 
@@ -51,23 +51,23 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
 
     return (
         <div className="cr-prepare-order">
-            {order?.side === 'buy' ? (
+            {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
                 <div className="cr-prepare-order__block">
                     <span className="bold">{translate('page.body.p2p.order.transfer.info.1')}</span>
                     <span className="bold">{translate('page.body.p2p.order.transfer.info.2')}</span>
                 </div>
             ) : (
                 <div className="cr-prepare-order__block">
-                    <span className="bold-36">{translate('page.body.p2p.order.transfer.order.wait.sell.info')}</span>
+                    <span className="bold-36">{translate(`page.body.p2p.order.transfer.order.wait.info`)}</span>
                 </div>
             )}
             <div className="cr-prepare-order__block">
                 <div className="cr-prepare-order__block--row">
-                    <span className="huge-text">{translate(`page.body.p2p.order.transfer.order.wait.timer.${order?.side}`)}</span>
+                    <span className="huge-text">{translate(`page.body.p2p.order.transfer.order.wait.timer.${order?.state}`)}</span>
                     <span className="ticker">{timeLeft}</span>
                 </div>
                 <div className="cr-prepare-order__block--row">
-                    <span>{translate(`page.body.p2p.order.transfer.order.wait.warning.${order?.side}`, order && { time: millisecondToMinutes(order.time_limit) })}</span>
+                    <span>{translate(`page.body.p2p.order.transfer.order.wait.warning.${order?.state}`, order && { time: millisecondToMinutes(order.time_limit) })}</span>
                 </div>
                 <div className="cr-prepare-order__block--row">
                     <Form className="cr-prepare-order__checkbox" onClick={clickCheckBox}>
@@ -77,12 +77,12 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                             id="confirmTransfer"
                             checked={confirmTransfer}
                             readOnly={true}
-                            label={translate(`page.body.p2p.order.transfer.order.wait.confirm.checkbox.${order?.side}`, order && { amount: `${order.amount} ${order.quote?.toUpperCase()}` })}
+                            label={translate(`page.body.p2p.order.transfer.order.wait.confirm.checkbox.${order?.state}`, order && { amount: `${order.amount} ${order.quote?.toUpperCase()}` })}
                         />
                     </Form>
                 </div>
             </div>
-            {order?.side === 'buy' ? (
+            {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
                 <div className="cr-prepare-order__btn-wrapper__grid">
                     <Button
                         onClick={handleClickPaid}

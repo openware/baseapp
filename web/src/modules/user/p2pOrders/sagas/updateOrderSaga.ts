@@ -17,7 +17,7 @@ export function* updateOrderSaga(action: P2POrdersUpdateFetch) {
         const data = yield call(API.post(executeOptions(getCsrfToken())), `/private/orders/${id}/${action.payload.action}`);
         yield put(p2pOrdersUpdateData());
         yield put(p2pOrdersCreateData(data));
-        yield put(alertPush({ message: ['success.order.created'], type: 'success'}));
+        yield put(alertPush({ message: [`success.order.${action.payload.action}`], type: 'success'}));
     } catch (error) {
         yield put(sendError({
             error,

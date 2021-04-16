@@ -19,6 +19,7 @@ export interface P2POrder {
     time_limit: string;
     state: string;
     dispute: P2PDispute | null;
+    user_uid: string;
 }
 
 export interface P2PTradesHistory {

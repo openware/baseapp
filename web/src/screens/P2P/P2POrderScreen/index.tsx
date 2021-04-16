@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { Dispute, OrderWaitConfirmation, OrderWaitPayment, P2POrderConfirmModal 
 import { localeDate } from 'src/helpers';
 import { useCurrenciesFetch, useDocumentTitle } from 'src/hooks';
 import { useP2POrderFetch } from 'src/hooks/useP2POrderFetch';
-import { selectCurrencies, selectP2PCreatedOrder } from 'src/modules';
+import { selectCurrencies, selectP2PCreatedOrder, selectUserInfo, User } from 'src/modules';
 import { Currency, P2POrder } from '../../../modules';
 
 interface ParamType {
@@ -20,6 +20,7 @@ export const P2POrderScreen: FC = (): ReactElement => {
     const order: P2POrder = useSelector(selectP2PCreatedOrder);
     const currencies: Currency[] = useSelector(selectCurrencies);
     const history = useHistory();
+    const user: User = useSelector(selectUserInfo);
 
     useDocumentTitle('P2P Order Transfer');
     useCurrenciesFetch();
@@ -43,15 +44,17 @@ export const P2POrderScreen: FC = (): ReactElement => {
 
     const content = useCallback(() => {
         if (order) {
+            const isTaker = order.user_uid === user.uid;
+
             switch (order.state) {
                 case 'prepared':
-                    return order.side === 'buy'
-                        ? <OrderWaitPayment order={order}/>
-                        : <OrderWaitConfirmation order={order} />;
+                    return ((isTaker && order.side === 'sell') || (!isTaker && order.side === 'buy'))
+                        ? <OrderWaitConfirmation order={order} isTaker={isTaker}/>
+                        : <OrderWaitPayment order={order} isTaker={isTaker}/>;
                 case 'wait':
-                    return order.side === 'buy'
-                        ? <OrderWaitConfirmation order={order} />
-                        : <OrderWaitPayment order={order}/>;
+                    return ((isTaker && order.side === 'sell') || (!isTaker && order.side === 'buy'))
+                        ? <OrderWaitPayment order={order} isTaker={isTaker}/>
+                        : <OrderWaitConfirmation order={order} isTaker={isTaker}/>;
                 case 'dispute':
                     return <Dispute order={order}/>;
                 case 'done':
@@ -68,7 +71,7 @@ export const P2POrderScreen: FC = (): ReactElement => {
                     return;
             }
         }
-    }, [order]);
+    }, [order, user]);
 
     const getPrecision = useCallback((cur: string) => {
         return cur && currencies.find(i => i.id === cur.toLowerCase())?.precision;

@@ -5,3 +5,18 @@ Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
 Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Headers: content-type, x-csrf-token
+
+{
+  "id": "1",
+  "expiry_time": "2021-04-09T20:28:54Z",
+  "base": "usdt",
+  "quote": "ngn",
+  "side": "buy",
+  "price": "1.20",
+  "amount": "100",
+  "created_at": "2021-04-09T15:28:54Z",
+  "state": "cancelled",
+  "time_limit": "900000",
+  "dispute": { "id": "1" },
+  "offer_id": "1"
+}

@@ -1,13 +1,12 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import { getCountdownDate, millisecondToMinutes } from 'src/helpers';
-import { P2POrder, p2pOrdersUpdateFetch } from 'src/modules';
+import { P2POrder } from 'src/modules';
 
 interface ParentProps {
     order: P2POrder;
+    isTaker: boolean;
 }
 
 type Props = ParentProps;
@@ -15,7 +14,7 @@ type Props = ParentProps;
 const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
     const [timeLeft, setTimeLeft] = useState<string>('00:00:00');
 
-    const { order } = props;
+    const { order, isTaker } = props;
     const { formatMessage } = useIntl();
 
     useEffect(() => {
@@ -35,21 +34,21 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
     return (
         <div className="cr-confirm-order">
             <div className="cr-confirm-order__block">
-                <span className="bold-36">{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.${order?.side}`)}</span>
-                <span className="description">{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.${order?.side}.desc`, order && { time: millisecondToMinutes(order.time_limit) })}</span>
+                <span className="bold-36">{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.${order?.state}`)}</span>
+                <span className="description">{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.${order?.state}.desc`, order && { time: millisecondToMinutes(order.time_limit) })}</span>
             </div>
             <div className="cr-confirm-order__block cr-confirm-order__block-tall">
                 <div className="cr-confirm-order__block--row">
-                    <span className="huge-text">{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.timer.${order?.side}`)}</span>
+                    <span className="huge-text">{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.timer.${order?.state}`)}</span>
                     <span className="ticker">{timeLeft}</span>
                 </div>
-                {order?.side === 'sell' && (
+                {(!isTaker && order?.state === 'prepared' && order?.side === 'buy') || (order?.state === 'prepared' && order?.side === 'sell') && (
                     <div className="cr-confirm-order__block--row">
-                        <span>{translate('page.body.p2p.order.transfer.wait.payment.confirmation.warning.sell', order && { time: millisecondToMinutes(order.time_limit) })}</span>
+                        <span>{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.warning.${order?.state}`, order && { time: millisecondToMinutes(order.time_limit) })}</span>
                     </div>
-                    )}
+                )}
             </div>
-            {order?.side === 'buy' && (
+            {((isTaker && order?.state === 'wait') || (!isTaker && order?.side === 'sell')) && (
                 <div className="cr-confirm-order__btn-wrapper__grid">
                     <Button
                         onClick={() => window.console.log('logDispute')}
