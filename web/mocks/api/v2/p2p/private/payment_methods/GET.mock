@@ -7,7 +7,7 @@ Access-Control-Allow-Credentials: true
 
 [
   {
-    "id": "1",
+    "id": "31",
     "payment_method_id": 1,
     "payment_method": { "name": "Kasikon Bank", "type": "Bank Transfer" },
     "data": {
@@ -17,7 +17,7 @@ Access-Control-Allow-Credentials: true
     }
   },
   {
-    "id": "2",
+    "id": "32",
     "payment_method_id": 2,
     "payment_method": { "name": "Card", "type": "Debit/Credit Card" },
     "data": {
@@ -28,7 +28,7 @@ Access-Control-Allow-Credentials: true
     }
   },
     {
-    "id": "3",
+    "id": "33",
     "payment_method_id": 3,
     "payment_method": { "name": "Monobank", "type": "Debit/Credit Card" },
     "data": {

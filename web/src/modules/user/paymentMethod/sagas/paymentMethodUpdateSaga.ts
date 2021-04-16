@@ -13,8 +13,8 @@ const updateOptions = (csrfToken?: string): RequestOptions => {
 
 export function* paymentMethodUpdateSaga(action: PaymentMethodUpdateFetch) {
     try {
-        const { payment_method_id } = action.payload;
-        yield call(API.put(updateOptions(getCsrfToken())), `/private/payment_methods/${payment_method_id}`, action.payload);
+        const { id } = action.payload;
+        yield call(API.put(updateOptions(getCsrfToken())), `/private/payment_methods/${id}`, action.payload);
         yield put(paymentMethodUpdate());
         yield put(alertPush({ message: ['success.payment_method.updated'], type: 'success' }));
         yield put(paymentMethodModal({ active: false }));

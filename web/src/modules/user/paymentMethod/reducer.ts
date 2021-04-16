@@ -17,6 +17,7 @@ export interface PaymentMethodStateModal {
     active: boolean;
     action?: 'createStep1' | 'createStep2' | 'update' | 'delete';
     payment_method_id?: number;
+    upm_id?: number;
     name?: string;
     data?: any;
 }

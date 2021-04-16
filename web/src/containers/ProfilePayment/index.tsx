@@ -36,7 +36,7 @@ export const ProfilePayment: FC = (): ReactElement => {
     }, [dispatch]);
 
     const deletePaymentMethod = useCallback((item) => {
-        dispatch(paymentMethodModal({active: true, action: 'delete', payment_method_id: item.payment_method_id, name: item.name}));
+        dispatch(paymentMethodModal({active: true, action: 'delete', upm_id: item.id, name: item.name}));
     }, [dispatch]);
 
     const editPaymentMethod = useCallback((item) => {
@@ -62,6 +62,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         dispatch(paymentMethodModal({
             active: true,
             action: 'update',
+            upm_id: item.id,
             payment_method_id: item.payment_method_id,
             name: item.name,
             data: item.data,
@@ -73,8 +74,8 @@ export const ProfilePayment: FC = (): ReactElement => {
     }, [dispatch]);
 
     const handleDelete = useCallback(() => {
-        if (modal.payment_method_id) {
-            dispatch(paymentMethodDeleteFetch({payment_method_id: modal.payment_method_id}));
+        if (modal.upm_id) {
+            dispatch(paymentMethodDeleteFetch({id: modal.upm_id}));
         }
     }, [dispatch, modal]);
 
@@ -122,7 +123,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         const customFields = {};
         paymentOptions.map(option => customFields[option.name] = option.value);
         dispatch(paymentMethodUpdateFetch({
-            payment_method_id: Number(modal.payment_method_id),
+            id: Number(modal.upm_id),
             data: customFields,
         }));
     }, [dispatch, paymentOptions]);
