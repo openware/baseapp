@@ -36,11 +36,11 @@ export const P2POrderScreen: FC = (): ReactElement => {
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
 
     const title = useCallback(() => {
-        return order && `${translate(`page.body.p2p.order.transfer.title.${order.side}`)} ${order.base?.toUpperCase()}`; 
+        return order && `${translate(`page.body.p2p.order.transfer.title.${order.side}`)} ${order.offer?.base?.toUpperCase()}`; 
     }, [order, translate]);
 
     const handleModalAction = useCallback(() => {
-        history.push(`/p2p/${order.base}`);
+        history.push(`/p2p/${order?.offer?.base}`);
     }, [history]);
 
     const content = useCallback(() => {
@@ -61,8 +61,8 @@ export const P2POrderScreen: FC = (): ReactElement => {
                 case 'done':
                     return (
                         <P2POrderConfirmModal
-                            precissionQuote={getPrecision(order.quote)}
-                            precissionBase={getPrecision(order.base)}
+                            precissionQuote={getPrecision(order?.offer?.quote)}
+                            precissionBase={getPrecision(order?.offer?.base)}
                             order={order}
                             show={true}
                             closeModal={handleModalAction}
@@ -98,15 +98,15 @@ export const P2POrderScreen: FC = (): ReactElement => {
                     <div className="pg-transfer-order__subheader-grid">
                         <div className="pg-transfer-order__subheader-grid-info">
                             <div className="label">{translate('page.body.p2p.order.transfer.amount')}</div>
-                            <div className="value">{order ? Decimal.format(+order.amount * +order.price, getPrecision(order.quote), ',') : '-'}&nbsp;{order?.quote?.toUpperCase()}</div>
+                            <div className="value">{order ? Decimal.format(+order.amount * +order.offer?.price, getPrecision(order.offer?.quote), ',') : '-'}&nbsp;{order?.offer?.quote?.toUpperCase()}</div>
                         </div>
                         <div className="pg-transfer-order__subheader-grid-info">
                             <div className="label">{translate('page.body.p2p.order.transfer.price')}</div>
-                            <div className="value">{order ? Decimal.format(order.price, getPrecision(order.quote), ',') : '-'}&nbsp;{order?.quote?.toUpperCase()}</div>
+                            <div className="value">{order ? Decimal.format(order?.offer?.price, getPrecision(order?.offer?.quote), ',') : '-'}&nbsp;{order?.offer?.quote?.toUpperCase()}</div>
                         </div>
                         <div className="pg-transfer-order__subheader-grid-info">
                             <div className="label">{translate('page.body.p2p.order.transfer.quantity')}</div>
-                            <div className="value">{order ? Decimal.format(order.amount, getPrecision(order.base), ',') : '-'}&nbsp;{order?.base?.toUpperCase()}</div>
+                            <div className="value">{order ? Decimal.format(order.amount, getPrecision(order?.offer?.base), ',') : '-'}&nbsp;{order?.offer?.base?.toUpperCase()}</div>
                         </div>
                     </div>
                 </div>

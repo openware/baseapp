@@ -1,14 +1,11 @@
 import React, { FC, ReactElement, useCallback } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ArrowLeftIcon } from 'src/assets/images/setup/ArrowLeftIcon';
 import { P2PUserOffers } from 'src/containers';
 import { useDocumentTitle, useP2PCurrenciesFetch, useRangerConnectFetch } from 'src/hooks';
-import { selectP2PCurrenciesData } from 'src/modules';
 
 export const P2PUserOffersScreen: FC = (): ReactElement => {
-    const currencies = useSelector(selectP2PCurrenciesData);
     const { formatMessage } = useIntl();
 
     useRangerConnectFetch();

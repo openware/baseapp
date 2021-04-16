@@ -23,7 +23,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     useEffect(() => {
         if (order) {
             const timer = setTimeout(() => {
-                setTimeLeft(getCountdownDate(order.expiry_time));
+                setTimeLeft(getCountdownDate(order.first_approve_expire_at));
             }, 1000);
 
             return () => {
@@ -67,7 +67,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                     <span className="ticker">{timeLeft}</span>
                 </div>
                 <div className="cr-prepare-order__block--row">
-                    <span>{translate(`page.body.p2p.order.transfer.order.wait.warning.${order?.state}`, order && { time: millisecondToMinutes(order.time_limit) })}</span>
+                    <span>{translate(`page.body.p2p.order.transfer.order.wait.warning.${order?.state}`, order && { time: millisecondToMinutes(order.offer.time_limit) })}</span>
                 </div>
                 <div className="cr-prepare-order__block--row">
                     <Form className="cr-prepare-order__checkbox" onClick={clickCheckBox}>
@@ -77,7 +77,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                             id="confirmTransfer"
                             checked={confirmTransfer}
                             readOnly={true}
-                            label={translate(`page.body.p2p.order.transfer.order.wait.confirm.checkbox.${order?.state}`, order && { amount: `${order.amount} ${order.quote?.toUpperCase()}` })}
+                            label={translate(`page.body.p2p.order.transfer.order.wait.confirm.checkbox.${order?.state}`, order && { amount: `${order.amount} ${order?.offer?.quote?.toUpperCase()}` })}
                         />
                     </Form>
                 </div>

@@ -52,19 +52,19 @@ const P2POrderConfirmModal: FC<Props> = (props: Props): ReactElement => {
                         <div className="detail-block">
                             <div className="detail-block-label">{translate('page.body.p2p.order.modal.body.amount')}</div>
                             <div className="detail-block-value">
-                                {order ? Decimal.format(+order.amount * +order.price, precissionQuote, ',') : '-'}&nbsp;{order?.quote?.toUpperCase()}
+                                {order ? Decimal.format(+order.amount * +order?.offer?.price, precissionQuote, ',') : '-'}&nbsp;{order?.offer?.quote?.toUpperCase()}
                             </div>
                         </div>
                         <div className="detail-block">
                             <div className="detail-block-label">{translate('page.body.p2p.order.modal.body.price')}</div>
                             <div className="detail-block-value">
-                                {order ? Decimal.format(order.price, precissionQuote, ',') : '-'}&nbsp;{order?.quote?.toUpperCase()}
+                                {order ? Decimal.format(order?.offer?.price, precissionQuote, ',') : '-'}&nbsp;{order?.offer?.quote?.toUpperCase()}
                             </div>
                         </div>
                         <div className="detail-block">
                             <div className="detail-block-label">{translate('page.body.p2p.order.modal.body.quantity')}</div>
                             <div className="detail-block-value">
-                                {order ? Decimal.format(order.amount, precissionBase, ',') : '-'}&nbsp;{order?.base?.toUpperCase()}
+                                {order ? Decimal.format(order.amount, precissionBase, ',') : '-'}&nbsp;{order?.offer?.base?.toUpperCase()}
                             </div>
                         </div>
                     </div>
