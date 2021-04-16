@@ -17,5 +17,6 @@ Access-Control-Allow-Credentials: true
   "state": "wait",
   "time_limit": "900000",
   "dispute": { "id": "1" },
+  "user_uid": "ID787E383938",
   "offer_id": "1"
 }

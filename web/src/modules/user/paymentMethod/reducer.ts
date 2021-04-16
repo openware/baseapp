@@ -22,9 +22,13 @@ export interface PaymentMethodStateModal {
 }
 
 export interface UserPaymentMethod {
-    data: any;
+    id: number;
     payment_method_id: number;
-    payment_method: PaymentMethod;
+    data: any;
+    payment_method: {
+        type: string;
+        name: string;
+    };
 }
 
 export interface PaymentMethodState {

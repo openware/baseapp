@@ -1,3 +1,5 @@
+import { UserPaymentMethod } from "src/modules";
+
 export interface Offer {
     id: number;
     user_nickname: string;
@@ -15,7 +17,7 @@ export interface Offer {
     created_at: string;
     time_limit: number;
     description?: string;
-    payment_methods: PaymentMethod[];
+    payment_methods: UserPaymentMethod[];
 }
 
 export interface P2PCurrency {
@@ -28,6 +30,5 @@ export interface PaymentMethod {
     id: number;
     type: string;
     name: string;
-    logo?: string;
     options?: any;
 }

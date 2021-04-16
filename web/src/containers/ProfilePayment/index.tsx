@@ -78,7 +78,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         }
     }, [dispatch, modal]);
 
-    const pickPaymentMethodToAdd = useCallback((paymentMethod) => {
+    const pickPaymentMethodToAdd = useCallback((paymentMethod: PaymentMethod) => {
         const optionData = [];
 
         paymentMethod.options && Object.keys(paymentMethod.options).map(key => {
@@ -96,7 +96,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         dispatch(paymentMethodModal({
             active: true,
             action: 'createStep2',
-            payment_method_id: paymentMethod.payment_method_id,
+            payment_method_id: String(paymentMethod.id),
             name: paymentMethod.name
         }));
     }, [dispatch]);
@@ -111,8 +111,9 @@ export const ProfilePayment: FC = (): ReactElement => {
     const addPaymentMethodConfirm = useCallback(() => {
         const customFields = {};
         paymentOptions.map(option => customFields[option.name] = option.value);
+
         dispatch(paymentMethodCreateFetch({
-            payment_method_id: modal.payment_method_id,
+            id: modal.payment_method_id,
             data: customFields,
         }));
     }, [paymentOptions, dispatch]);

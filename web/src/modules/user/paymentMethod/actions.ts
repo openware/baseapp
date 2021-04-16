@@ -24,7 +24,7 @@ export interface PaymentMethodListData {
 export interface PaymentMethodCreateFetch {
     type: typeof PAYMENT_METHOD_CREATE_FETCH;
     payload: {
-        payment_method_id: string;
+        id: string;
         data?: any;
     };
 }

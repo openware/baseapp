@@ -69,7 +69,7 @@ export interface CreateOfferFetch {
         amount: string | number;
         min_order_amount: string | number;
         max_order_amount: string | number;
-        upm_id: string[];
+        upm_id: number[];
         time_limit: string | number;
         description?: string;
         reply_message?: string;

@@ -16,7 +16,7 @@ export interface PaymentMethodModalProps {
     modal: PaymentMethodStateModal;
     translate: (id: string, value?: any) => string;
     hideModal: () => void;
-    pickPaymentMethodToAdd: (item: any) => void;
+    pickPaymentMethodToAdd: (item: PaymentMethod) => void;
     handleCustomFieldChange: (value: string, key: any) => void;
     addPaymentMethodConfirm: () => void;
     updatePaymentMethodConfirm: () => void;
