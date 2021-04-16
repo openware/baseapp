@@ -48,10 +48,10 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
     useMarketsFetch();
 
     useEffect(() => {
-        if (wallets.length && p2pWallets.length && currencies.length && !filteredWallets.length) {
+        if (wallets.length && currencies.length && !filteredWallets.length) {
             const extendedWallets: ExtendedWallet[] = currencies.map(cur => {
                 const spotWallet = wallets.find(i => i.currency === cur.id);
-                const p2pWallet = p2pWallets.find(i => i.currency === cur.id);
+                const p2pWallet = isP2PEnabled ? p2pWallets.find(i => i.currency === cur.id) : null;
 
                 return {
                     ...(spotWallet || p2pWallet),
