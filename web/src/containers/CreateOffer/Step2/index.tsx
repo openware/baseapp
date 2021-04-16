@@ -154,7 +154,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     ), [showError]);
 
     const iconsList = React.useCallback(() =>
-        userPM.map(i => <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPM]);
+        userPM.map(i => <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPM]);
 
     const renderPMItem = (pm: UserPaymentMethod) => {
         const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));

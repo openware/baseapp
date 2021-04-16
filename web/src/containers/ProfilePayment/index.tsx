@@ -133,7 +133,7 @@ export const ProfilePayment: FC = (): ReactElement => {
                 <div className="payment-method-item-header">
                     <div className="payment-method-item-header-left">
                         <div className="payment-method-item-header-left__logo">
-                            <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${item.payment_method_id}/logo`} alt=""/>
+                            <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${item.payment_method_id}/logo`} alt=""/>
                         </div>
                         <div className="payment-method-item-header-left__title">{item.payment_method?.name}</div>
                     </div>

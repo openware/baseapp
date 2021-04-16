@@ -137,7 +137,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 <div className="payment" key={id}>
                     {payment_methods.map(i => (
                         <div className="payment-item">
-                            <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.id}/logo`} alt=""/>
+                            <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.id}/logo`} alt=""/>
                             <span className="font-small secondary">{i.payment_method.name}</span>
                         </div>
                     ))}

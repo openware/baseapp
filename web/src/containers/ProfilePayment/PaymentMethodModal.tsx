@@ -64,7 +64,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
             <div className="popular-payment-methods">
                 {paymentMethods.map(item => (
                     <div className="popular-payment-method" onClick={() => props.pickPaymentMethodToAdd(item)}>
-                        <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${item.id}/logo`} alt=""/>
+                        <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${item.id}/logo`} alt=""/>
                         {item.name}
                     </div>
                 ))}
@@ -119,7 +119,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 body = (
                     <div>
                         <div className="picked-payment-method">
-                            {pm && <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pm.id}/logo`} alt=""/>}
+                            {pm && <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pm.id}/logo`} alt=""/>}
                             {modal.name}
                         </div>
                         <div className="holder-name">
@@ -162,7 +162,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 body = (
                     <div>
                         <div className="picked-payment-method">
-                            {pmUpdate && <img className="ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pmUpdate.id}/logo`} alt=""/>}
+                            {pmUpdate && <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pmUpdate.id}/logo`} alt=""/>}
                             {modal.name}
                         </div>
                         <div className="holder-name">
