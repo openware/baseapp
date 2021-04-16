@@ -24,7 +24,7 @@ export interface PaymentMethodListData {
 export interface PaymentMethodCreateFetch {
     type: typeof PAYMENT_METHOD_CREATE_FETCH;
     payload: {
-        id: string;
+        payment_method_id: number;
         data?: any;
     };
 }
@@ -36,7 +36,7 @@ export interface PaymentMethodCreateData {
 export interface PaymentMethodUpdateFetch {
     type: typeof PAYMENT_METHOD_UPDATE_FETCH;
     payload: {
-        payment_method_id: string;
+        payment_method_id: number;
         data?: any;
     };
 }
@@ -48,14 +48,14 @@ export interface PaymentMethodUpdateData {
 export interface PaymentMethodDeleteFetch {
     type: typeof PAYMENT_METHOD_DELETE_FETCH;
     payload: {
-        payment_method_id: string;
+        payment_method_id: number;
     };
 }
 
 export interface PaymentMethodDelete {
     type: typeof PAYMENT_METHOD_DELETE;
     payload: {
-        payment_method_id: string;
+        payment_method_id: number;
     };
 }
 

@@ -16,7 +16,7 @@ import {
 export interface PaymentMethodStateModal {
     active: boolean;
     action?: 'createStep1' | 'createStep2' | 'update' | 'delete';
-    payment_method_id?: string;
+    payment_method_id?: number;
     name?: string;
     data?: any;
 }

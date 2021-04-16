@@ -33,7 +33,8 @@ describe('P2P actions', () => {
             quote: 'ngn',
             state: 'pending',
             created_at: '',
-            upm_id: [1],
+            time_limit: 0,
+            payment_methods: [],
         },
         {
             id: 2,
@@ -50,7 +51,8 @@ describe('P2P actions', () => {
             side: 'buy',
             state: 'pending',
             created_at: '',
-            upm_id: [1],
+            time_limit: 0,
+            payment_methods: [],
         },
     ];
 

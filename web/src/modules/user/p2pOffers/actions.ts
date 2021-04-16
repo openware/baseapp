@@ -88,7 +88,7 @@ export interface CreateOfferError {
 export interface CancelOfferFetch {
     type: typeof P2P_CANCEL_OFFER_FETCH;
     payload: {
-        id: string | number;
+        id: number;
         list: Offer[];
     }
 }

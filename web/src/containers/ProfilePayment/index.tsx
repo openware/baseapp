@@ -96,7 +96,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         dispatch(paymentMethodModal({
             active: true,
             action: 'createStep2',
-            payment_method_id: String(paymentMethod.id),
+            payment_method_id: paymentMethod.id,
             name: paymentMethod.name
         }));
     }, [dispatch]);
@@ -113,7 +113,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         paymentOptions.map(option => customFields[option.name] = option.value);
 
         dispatch(paymentMethodCreateFetch({
-            id: modal.payment_method_id,
+            payment_method_id: Number(modal.payment_method_id),
             data: customFields,
         }));
     }, [paymentOptions, dispatch]);
@@ -122,7 +122,7 @@ export const ProfilePayment: FC = (): ReactElement => {
         const customFields = {};
         paymentOptions.map(option => customFields[option.name] = option.value);
         dispatch(paymentMethodUpdateFetch({
-            payment_method_id: modal.payment_method_id,
+            payment_method_id: Number(modal.payment_method_id),
             data: customFields,
         }));
     }, [dispatch, paymentOptions]);
