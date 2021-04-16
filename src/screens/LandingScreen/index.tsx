@@ -21,13 +21,13 @@ const FeaturesCommunityIcon = require('../../assets/images/landing/features/Comm
 const FeaturesAPIIcon = require('../../assets/images/landing/features/API.svg');
 
 const TelegramIcon = require('../../assets/images/landing/social/Telegram.svg');
-const LinkedInIcon = require('../../assets/images/landing/social/LinkedIn.svg');
+// const LinkedInIcon = require('../../assets/images/landing/social/LinkedIn.svg');
 const TwitterIcon = require('../../assets/images/landing/social/Twitter.svg');
-const YouTubeIcon = require('../../assets/images/landing/social/YouTube.svg');
-const RedditIcon = require('../../assets/images/landing/social/Reddit.svg');
-const FacebookIcon = require('../../assets/images/landing/social/Facebook.svg');
-const MediumIcon = require('../../assets/images/landing/social/Medium.svg');
-const CoinMarketIcon = require('../../assets/images/landing/social/CoinMarket.svg');
+// const YouTubeIcon = require('../../assets/images/landing/social/YouTube.svg');
+// const RedditIcon = require('../../assets/images/landing/social/Reddit.svg');
+// const FacebookIcon = require('../../assets/images/landing/social/Facebook.svg');
+// const MediumIcon = require('../../assets/images/landing/social/Medium.svg');
+// const CoinMarketIcon = require('../../assets/images/landing/social/CoinMarket.svg');
 
 
 interface ReduxProps {
@@ -276,20 +276,15 @@ class Landing extends React.Component<Props> {
                     </div>
                     <div className="pg-landing-screen__footer__wrap__social">
                         <div className="pg-landing-screen__footer__wrap__social__row">
-                            <img src={TelegramIcon} alt="Telegram" />
-                            <img src={LinkedInIcon} alt="LinkedIn" />
-                            <img src={TwitterIcon} alt="Twitter" />
-                            <img src={YouTubeIcon} alt="YouTube" />
+                        <Link to="https://telegram.com/alttraderpro"><img src={TelegramIcon} alt="Telegram" /></Link>
+                         
+                        <Link to="https://twitter.com/alttraderpro"><img src={TwitterIcon} alt="Twitter" /></Link>
+                         
                         </div>
-                        <div className="pg-landing-screen__footer__wrap__social__row">
-                            <img src={RedditIcon} alt="Reddit" />
-                            <img src={FacebookIcon} alt="Facebook" />
-                            <img src={MediumIcon} alt="MediumIcon" />
-                            <img src={CoinMarketIcon} alt="CoinMarket" />
-                        </div>
+                     
                     </div>
                 </div>
-                <span className="pg-landing-screen__footer__rights">{this.translate('page.body.landing.footer.rights')}</span>
+                <span className="pg-landing-screen__footer__rights">AltTraderPro @ All rights reserved.</span>
             </div>
         );
     }
