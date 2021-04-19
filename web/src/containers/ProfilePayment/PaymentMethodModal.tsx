@@ -132,11 +132,11 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                                     <div className={inputClass(option)}>
                                         <CustomInput
                                             type="text"
-                                            label={titleCase(option.name)}
-                                            defaultLabel={titleCase(option.name)}
-                                            placeholder={titleCase(option.name)}
+                                            label={option.description ? option.description : titleCase(option.key)}
+                                            defaultLabel={option.description ? option.description : titleCase(option.key)}
+                                            placeholder={option.name ? option.name : titleCase(option.key)}
                                             inputValue={option.value}
-                                            handleChangeInput={(value, name?) => props.handleCustomFieldChange(value, option.name)}
+                                            handleChangeInput={(value, key?) => props.handleCustomFieldChange(value, option.key)}
                                         />
                                         {showError && option.required && !option.value &&
                                             <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}
@@ -174,11 +174,11 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                                     <div className={inputClass(option)}>
                                         <CustomInput
                                             type="text"
-                                            label={titleCase(option.name)}
-                                            defaultLabel={titleCase(option.name)}
-                                            placeholder={titleCase(option.name)}
+                                            label={option.description ? option.description : titleCase(option.key)}
+                                            defaultLabel={option.description ? option.description : titleCase(option.key)}
+                                            placeholder={option.name ? option.name : titleCase(option.key)}
                                             inputValue={option.value ? option.value : ''}
-                                            handleChangeInput={(value, name?) => props.handleCustomFieldChange(value, option.name)}
+                                            handleChangeInput={(value, key?) => props.handleCustomFieldChange(value, option.key)}
                                         />
                                         {showError && option.required && !option.value && 
                                             <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}

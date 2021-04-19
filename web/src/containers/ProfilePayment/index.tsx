@@ -10,7 +10,9 @@ import { paymentMethodCreateFetch, paymentMethodDeleteFetch, paymentMethodUpdate
 import { HOST_URL } from 'src/constants';
 
 export interface PaymentOptionInterface {
-    name: string;
+    key: string;
+    name?: string;
+    description?: string;
     required: boolean;
     options: string[];
     value?: string;
@@ -50,7 +52,9 @@ export const ProfilePayment: FC = (): ReactElement => {
         Object.keys(paymentMethod.data).map(key => {
             const option = paymentMethod.data[key];
             optionData.push({
-                name: key,
+                key: key,
+                name: option.name,
+                description: option.description,
                 required: option.required,
                 options: option.options,
                 value: item.data[key],
@@ -85,7 +89,9 @@ export const ProfilePayment: FC = (): ReactElement => {
         paymentMethod.options && Object.keys(paymentMethod.options).map(key => {
             const option = paymentMethod.options[key];
             optionData.push({
-                name: key,
+                key: key,
+                name: option.name,
+                description: option.description,
                 required: option.required,
                 options: option.options,
                 value: '',
@@ -102,8 +108,8 @@ export const ProfilePayment: FC = (): ReactElement => {
         }));
     }, [dispatch]);
 
-    const handleCustomFieldChange = useCallback((value: string, name: string) => {
-        const option = paymentOptions.find(p => p.name === name);
+    const handleCustomFieldChange = useCallback((value: string, key: string) => {
+        const option = paymentOptions.find(p => p.key === key);
         const index = paymentOptions.indexOf(option);
         option.value = value;
         setPaymentOptions([...paymentOptions.slice(0, index), option, ...paymentOptions.slice(index + 1)]);
@@ -111,7 +117,7 @@ export const ProfilePayment: FC = (): ReactElement => {
 
     const addPaymentMethodConfirm = useCallback(() => {
         const customFields = {};
-        paymentOptions.map(option => customFields[option.name] = option.value);
+        paymentOptions.map(option => customFields[option.key] = option.value);
 
         dispatch(paymentMethodCreateFetch({
             payment_method_id: Number(modal.payment_method_id),
@@ -121,7 +127,7 @@ export const ProfilePayment: FC = (): ReactElement => {
 
     const updatePaymentMethodConfirm = useCallback(() => {
         const customFields = {};
-        paymentOptions.map(option => customFields[option.name] = option.value);
+        paymentOptions.map(option => customFields[option.key] = option.value);
         dispatch(paymentMethodUpdateFetch({
             id: Number(modal.upm_id),
             data: customFields,
