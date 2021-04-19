@@ -1,4 +1,7 @@
+import { defaultStorageLimit } from "src/api";
+import { sliceArray } from "src/helpers";
 import { CommonError } from "src/modules/types";
+import { insertIfNotExisted, insertOrUpdate } from "./helpers";
 import { P2POrdersActions } from "./actions";
 import {
     P2P_ORDER_DATA,
@@ -13,7 +16,8 @@ import {
     P2P_TRADES_HISTORY_DATA,
     P2P_TRADES_HISTORY_ERROR,
     P2P_TRADES_HISTORY_FETCH,
-    P2P_ORDERS_WS,
+    P2P_ORDERS_UPDATE,
+    P2P_ORDERS_APPEND,
 } from "./constants";
 import { P2POrder } from "./types";
 
@@ -95,17 +99,44 @@ const orderReducer = (state: P2POrdersState['order'], action: P2POrdersActions) 
                 updateSuccess: false,
                 error: action.error,
             };
-        case P2P_ORDERS_WS:
-            return {
-                ...state,
-                data: action.payload,
-                loading: false,
-            };
         case P2P_ORDER_ERROR:
             return {
                 ...state,
                 loading: false,
                 error: action.error,
+            };
+        default:
+            return state;
+    }
+};
+
+const p2pOrdersWebsocketReducer = (state: P2POrdersState, action: P2POrdersActions) => {
+    switch (action.type) {
+        case P2P_ORDERS_APPEND:
+            return {
+                ...state,
+                list: sliceArray(insertIfNotExisted(state.tradesHistory.list, action.payload), defaultStorageLimit())
+            };
+        case P2P_ORDERS_UPDATE:
+            let orderState = { ...state.order };
+
+            if (state.order.data && action.payload.id === state.order.data.id) {
+                orderState = {
+                    ...state.order,
+                    data: action.payload,
+                    loading: false,
+                };
+            }
+
+            const tradesHistoryState = {
+                ...state.tradesHistory,
+                list: sliceArray(insertOrUpdate(state.tradesHistory.list, action.payload), defaultStorageLimit()),
+            };
+
+            return {
+                ...state,
+                tradesHistory: tradesHistoryState,
+                order: orderState,
             };
         default:
             return state;
@@ -155,7 +186,6 @@ export const p2pOrdersReducer = (state = initialP2POrdersState, action: P2POrder
         case P2P_ORDERS_UPDATE_FETCH:
         case P2P_ORDERS_UPDATE_DATA:
         case P2P_ORDERS_UPDATE_ERROR:
-        case P2P_ORDERS_WS:
             const orderState = { ...state.order };
 
             return {
@@ -170,6 +200,11 @@ export const p2pOrdersReducer = (state = initialP2POrdersState, action: P2POrder
             return {
                 ...state,
                 tradesHistory: tradesHistoryReducer(tradesHistoryState, action),
+            };
+        case P2P_ORDERS_UPDATE:
+        case P2P_ORDERS_APPEND:
+            return {
+                ...p2pOrdersWebsocketReducer(state, action),
             };
         default:
             return state;

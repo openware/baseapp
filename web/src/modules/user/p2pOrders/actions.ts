@@ -12,7 +12,8 @@ import {
     P2P_ORDER_DATA,
     P2P_ORDER_ERROR,
     P2P_ORDER_FETCH,
-    P2P_ORDERS_WS,
+    P2P_ORDERS_UPDATE,
+    P2P_ORDERS_APPEND,
 } from "./constants";
 import { P2POrderCreate, P2POrder } from "./types";
 
@@ -75,6 +76,7 @@ export interface P2POrdersUpdateFetch {
     payload: {
         id: number;
         action: string;
+        payment_method_id?: number;
     };
 }
 
@@ -89,7 +91,12 @@ export interface P2POrdersUpdateError {
 }
 
 export interface P2POrdersDataWS {
-    type: typeof P2P_ORDERS_WS;
+    type: typeof P2P_ORDERS_UPDATE;
+    payload: P2POrder;
+}
+
+export interface P2POrdersAppend {
+    type: typeof P2P_ORDERS_APPEND;
     payload: P2POrder;
 }
 
@@ -106,7 +113,8 @@ export type P2POrdersActions =
     | P2POrdersUpdateFetch
     | P2POrdersUpdateData
     | P2POrdersUpdateError
-    | P2POrdersDataWS;
+    | P2POrdersDataWS
+    | P2POrdersAppend;
 
 export const p2pOrdersCreateFetch = (payload: P2POrderCreate): P2POrdersCreateFetch => ({
     type: P2P_ORDERS_CREATE_FETCH,
@@ -169,6 +177,11 @@ export const p2pOrdersUpdateError = (error: CommonError): P2POrdersUpdateError =
 });
 
 export const p2pOrdersDataWS = (payload: P2POrdersDataWS['payload']): P2POrdersDataWS => ({
-    type: P2P_ORDERS_WS,
+    type: P2P_ORDERS_UPDATE,
+    payload,
+});
+
+export const p2pOrdersAppend = (payload: P2POrdersAppend['payload']): P2POrdersAppend => ({
+    type: P2P_ORDERS_APPEND,
     payload,
 });

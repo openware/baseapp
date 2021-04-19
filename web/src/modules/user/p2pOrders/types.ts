@@ -1,4 +1,5 @@
 import { Offer } from "src/modules";
+import { UserPaymentMethod } from "../paymentMethod";
 
 export interface P2POrderCreate {
     offer_id: number;
@@ -16,4 +17,5 @@ export interface P2POrder {
     created_at: string;
     state: string;
     user_uid: string;
+    payment_method?: UserPaymentMethod;
 }
