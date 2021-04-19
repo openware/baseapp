@@ -172,7 +172,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         } else {
             const payload = {
                 offer_id: id,
-                amount: +tradeAmount,
+                amount: side === 'sell' ? tradeAmount : receiveAmount,
                 side,
             };
     

@@ -3,7 +3,7 @@ import { UserPaymentMethod } from "../paymentMethod";
 
 export interface P2POrderCreate {
     offer_id: number;
-    amount: number;
+    amount: string;
     side: string;
 }
 
