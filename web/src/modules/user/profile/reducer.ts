@@ -4,6 +4,7 @@ import {
     PROFILE_CHANGE_PASSWORD_DATA,
     PROFILE_CHANGE_PASSWORD_ERROR,
     PROFILE_CHANGE_PASSWORD_FETCH,
+    PROFILE_CHANGE_PASSWORD_RESET,
     PROFILE_CHANGE_USER_DATA,
     PROFILE_CHANGE_USER_ERROR,
     PROFILE_CHANGE_USER_FETCH,
@@ -101,6 +102,12 @@ const passwordChangeReducer = (state: ProfileState['passwordChange'], action: Pr
                 ...state,
                 error: action.error,
             };
+        case PROFILE_CHANGE_PASSWORD_RESET:
+            return {
+                ...state,
+                success: false,
+            };
+
         default:
             return state;
     }
@@ -223,6 +230,7 @@ export const profileReducer = (state = initialStateProfile, action: ProfileActio
         case PROFILE_CHANGE_PASSWORD_FETCH:
         case PROFILE_CHANGE_PASSWORD_DATA:
         case PROFILE_CHANGE_PASSWORD_ERROR:
+        case PROFILE_CHANGE_PASSWORD_RESET:
             const passwordChangeState = { ...state.passwordChange };
 
             return {
