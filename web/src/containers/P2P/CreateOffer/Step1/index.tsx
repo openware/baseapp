@@ -5,12 +5,12 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CryptoIcon } from 'src/components/CryptoIcon';
 import { cleanPositiveFloatInput, precisionRegExp } from 'src/helpers';
-import { DropdownComponent, OrderInput, TabPanel } from '../../../components';
+import { DropdownComponent, OrderInput, TabPanel } from '../../../../components';
 import {
     Currency,
     selectCurrencies,
     selectP2PCurrenciesData,
-} from '../../../modules';
+} from '../../../../modules';
 
 interface ParentProps {
     price: string;

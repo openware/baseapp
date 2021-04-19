@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { Currency, UserPaymentMethod } from 'src/modules';
-import { Decimal, Modal } from '../../../components';
+import { Decimal, Modal } from '../../../../components';
 
 interface ParentProps {
     side: string;

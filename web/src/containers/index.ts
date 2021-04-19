@@ -2,7 +2,7 @@ export * from './Alerts';
 export * from './ChangePassword';
 export * from './Charts';
 export * from './Confirm';
-export * from './CreateOffer';
+export * from './P2P/CreateOffer';
 export * from './Customization';
 export * from './Errors';
 export * from './GeetestCaptcha';

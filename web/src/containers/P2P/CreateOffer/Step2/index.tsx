@@ -9,8 +9,8 @@ import { PlusIcon } from 'src/assets/images/PlusIcon';
 import { ArrowLeftIcon } from 'src/assets/images/setup/ArrowLeftIcon';
 import { HOST_URL, P2P_TIME_LIMIT_LIST } from 'src/constants';
 import { cleanPositiveFloatInput, precisionRegExp, truncateMiddle } from 'src/helpers';
-import { Decimal, DropdownComponent, OrderInput } from '../../../components';
-import { Currency, UserPaymentMethod, selectPaymentMethodList, Wallet, selectP2PWallets } from '../../../modules';
+import { Decimal, DropdownComponent, OrderInput } from '../../../../components';
+import { Currency, UserPaymentMethod, selectPaymentMethodList, Wallet, selectP2PWallets } from '../../../../modules';
 
 interface ParentProps {
     amount: string;
