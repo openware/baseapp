@@ -42,23 +42,32 @@ export const ProfilePayment: FC = (): ReactElement => {
     }, [dispatch]);
 
     const editPaymentMethod = useCallback((item) => {
-        const paymentMethod = userPaymentMethods.find(pm => pm.payment_method_id === item.payment_method_id);
-        if (!paymentMethod) {
+        const upm = userPaymentMethods.find(pm => pm.payment_method_id === item.payment_method_id);
+        if (!upm) {
+            return;
+        }
+
+        const paymentMethod = paymentMethods.find(pm => pm.id === upm.payment_method_id);
+        if (!paymentMethod || !paymentMethod.options) {
             return;
         }
 
         const optionData = [];
 
-        Object.keys(paymentMethod.data).map(key => {
-            const option = paymentMethod.data[key];
-            optionData.push({
-                key: key,
-                name: option.name,
-                description: option.description,
-                required: option.required,
-                options: option.options,
-                value: item.data[key],
-            });
+        Object.keys(upm.data).map(key => {
+            const option = paymentMethod.options[key];
+
+            if (option) {
+                optionData.push({
+                    key: key,
+                    name: option.name,
+                    description: option.description,
+                    required: option.required,
+                    type: option.type,
+                    options: option.options,
+                    value: item.data[key],
+                });
+            }
         });
 
         setPaymentOptions(optionData);
@@ -71,7 +80,7 @@ export const ProfilePayment: FC = (): ReactElement => {
             name: item.name,
             data: item.data,
         }));
-    }, [userPaymentMethods, dispatch]);
+    }, [paymentMethods, userPaymentMethods, dispatch]);
 
     const handleHideModal = useCallback(() => {
         dispatch(paymentMethodModal({active: false}));
@@ -93,6 +102,7 @@ export const ProfilePayment: FC = (): ReactElement => {
                 name: option.name,
                 description: option.description,
                 required: option.required,
+                type: option.type,
                 options: option.options,
                 value: '',
             });

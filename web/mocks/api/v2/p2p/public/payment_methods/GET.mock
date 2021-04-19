@@ -7,7 +7,7 @@ Access-Control-Allow-Credentials: true
 
 [
   {
-    "id": "1",
+    "id": 1,
     "type": "Bank Transfer",
     "name": "Yellow Bank",
     "logo": "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEYSURBVHgBzZOxS0JRFMZ/9xL0IsFXS1LDC2oqqKE2MWqplhyK2qSpqRpqsC0KnKIhcApapC3qD4iajMYG2zVdopZ6gqKTV+8TnPShzzf4m87hfnx851yOMOKr+zXEjQATb+QF6kIMx9e+Gs00/WFLH0w0psQnfDMa6vQQnQuzNR9u9elchvuPZ3o2WpicpVgpk3x/JDgS4G7vDGs8ROIl1VbvOppdLVH4/+XzO0vy7QnLDNFzIifV1AyxpU2nPo5ss5s692ZkGgGssYlmukqJoDHqzSidzZB4be5kJbfIdfSQ9dvTttquv18v3w3XREeRHWLLG05d+Pvh4OGqo1bfmsIHBu9EZGMum/7JS6nUiS7wiA4ilLqsA3JpQ8llTi7NAAAAAElFTkSuQmCC",
@@ -24,9 +24,9 @@ Access-Control-Allow-Credentials: true
         "type": "dropdown",
         "required": true,
         "options": [
-          {"id": 1, "value": "Federal Reserve Bank"},
-          {"id": 2, "value": "Bank of America"},
-          {"id": 3, "value": "Siam Commercial Bank"}
+          {"id": 1, "value": "Kasikon Bank"},
+          {"id": 2, "value": "Card"},
+          {"id": 3, "value": "Monobank"}
         ]
       },
       "account_number": {
@@ -38,7 +38,7 @@ Access-Control-Allow-Credentials: true
     }
   },
   {
-    "id": "2",
+    "id": 2,
     "type": "Debit/Credit Card",
     "name": "Card",
     "logo": "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEYSURBVHgBzZOxS0JRFMZ/9xL0IsFXS1LDC2oqqKE2MWqplhyK2qSpqRpqsC0KnKIhcApapC3qD4iajMYG2zVdopZ6gqKTV+8TnPShzzf4m87hfnx851yOMOKr+zXEjQATb+QF6kIMx9e+Gs00/WFLH0w0psQnfDMa6vQQnQuzNR9u9elchvuPZ3o2WpicpVgpk3x/JDgS4G7vDGs8ROIl1VbvOppdLVH4/+XzO0vy7QnLDNFzIifV1AyxpU2nPo5ss5s692ZkGgGssYlmukqJoDHqzSidzZB4be5kJbfIdfSQ9dvTttquv18v3w3XREeRHWLLG05d+Pvh4OGqo1bfmsIHBu9EZGMum/7JS6nUiS7wiA4ilLqsA3JpQ8llTi7NAAAAAElFTkSuQmCC",
