@@ -16,6 +16,7 @@ import {
     selectP2PTradesHistoryLastElemIndex,
     selectP2PTradesHistoryNextPageExists,
     RootState,
+    P2POrder,
 } from '../../../modules';
 import {
     setTradesType,
@@ -66,7 +67,7 @@ const TradesHistory: FC = (): ReactElement => {
                     {intl.formatMessage({id: 'page.body.p2p.order_history.back'})}
                 </span>
                 <div className="cr-p2p-history-table">
-                    <History headers={renderHeaders()} data={retrieveData()}/>
+                    <History headers={renderHeaders()} data={retrieveData()} onSelect={onRowClick}/>
                     {list.length > 0 &&
                     <Pagination
                         firstElemIndex={firstElemIndex}
@@ -88,7 +89,12 @@ const TradesHistory: FC = (): ReactElement => {
 
     const handleCloseDispute = () => {
         console.log('Close dipuste!');
-    }
+    };
+
+    const onRowClick = useCallback((index: string) => {
+        const orderId = list[index]?.id;
+        orderId && history.push(`/p2p/order/${orderId}`);
+    }, [history, list]);
 
     const renderDisputeButton = () => {
         return [
@@ -102,8 +108,9 @@ const TradesHistory: FC = (): ReactElement => {
         ]
     };
 
-    const renderTableRow = (item) => {
-        const { created_at, side, price, amount, counterparty, state, quote, base } = item;
+    const renderTableRow = (item: P2POrder) => {
+        const { created_at, side, amount, state } = item;
+        const { price, quote, base, user } = item.offer;
         const sideColored = setTradesType(side);
         const stateColored = setStateType(state);
 
@@ -112,9 +119,9 @@ const TradesHistory: FC = (): ReactElement => {
             <span style={{ color: sideColored.color }}>{sideColored.text}</span>,
             `${price} ${base.toUpperCase()}/${quote.toUpperCase()}`,
             `${amount} ${base.toUpperCase()}`,
-            counterparty,
+            user?.user_nickname,
             <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
-            renderDisputeButton(),
+            state === 'dispute' ? renderDisputeButton() : null,
         ];
     };
 

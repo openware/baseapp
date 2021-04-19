@@ -7,35 +7,4 @@ Access-Control-Allow-Credentials: true
 Access-Control-Expose-Headers: total
 Total: 26
 
-[
-    {
-        "created_at": "02-06-2021 15:40",
-        "side": "buy",
-        "price":  "12.23",
-        "amount":  "1.05",
-        "counterparty": "King_Coin66",
-        "state": "completed",
-        "quote": "usd",
-        "base": "uah"
-    },
-    {
-        "created_at": "02-06-2021 15:40",
-        "side": "sell",
-        "price":  "22.34",
-        "amount":  "2.15",
-        "counterparty": "Qwerty123",
-        "state": "dispute",
-        "quote": "usd",
-        "base": "uah"
-    },
-    {
-        "created_at": "02-06-2021 15:40",
-        "side": "sell",
-        "price":  "7.44",
-        "amount":  "1.15",
-        "counterparty": "Qwerty123",
-        "state": "cancelled",
-        "quote": "usd",
-        "base": "uah"
-    }
-]
+[{"id":1,"user_uid":"IDD9046D42A4","offer_id":10,"amount":"1","locked":"1","state":"prepared","side":"sell","first_approve_expire_at":"2021-04-27T01:15:40.144Z","second_approve_expire_at":"0001-01-01T00:00:00Z","created_at":"2021-04-16T15:15:40.144Z","updated_at":"2021-04-16T15:15:40.144Z","offer":{"id":10,"uid":"IDE95CD87C19","base":"btc","quote":"eur","side":"buy","price":"10001","origin_amount":"1","available_amount":"0","min_order_amount":"1","max_order_amount":"100","time_limit":900000,"state":"wait","description":"","reply":"","payment_methods":null,"user":{"user_uid":"","user_user":"","user_nickname":"","offers_count":0},"created_at":"2021-04-16T15:15:05.16Z","updated_at":"2021-04-16T15:15:40.151Z"}},{"id":3,"user_uid":"IDD9046D42A4","offer_id":11,"amount":"12","locked":"12","state":"done","side":"sell","first_approve_expire_at":"2021-04-29T17:29:50.493Z","second_approve_expire_at":"2021-04-29T18:07:45.187Z","created_at":"2021-04-19T07:29:50.493Z","updated_at":"2021-04-19T08:08:04.229Z","offer":{"id":11,"uid":"IDE95CD87C19","base":"usdt","quote":"usd","side":"buy","price":"1","origin_amount":"100","available_amount":"76","min_order_amount":"10","max_order_amount":"100","time_limit":900000,"state":"wait","description":"","reply":"","payment_methods":null,"user":{"user_uid":"","user_user":"","user_nickname":"","offers_count":0},"created_at":"2021-04-19T06:13:20.25Z","updated_at":"2021-04-19T08:21:35.783Z"}},{"id":4,"user_uid":"IDD9046D42A4","offer_id":11,"amount":"12","locked":"12","state":"done","side":"sell","first_approve_expire_at":"2021-04-29T18:21:35.775Z","second_approve_expire_at":"2021-04-29T18:27:20.469Z","created_at":"2021-04-19T08:21:35.775Z","updated_at":"2021-04-19T08:28:56.935Z","offer":{"id":11,"uid":"IDE95CD87C19","base":"usdt","quote":"usd","side":"buy","price":"1","origin_amount":"100","available_amount":"76","min_order_amount":"10","max_order_amount":"100","time_limit":900000,"state":"wait","description":"","reply":"","payment_methods":null,"user":{"user_uid":"","user_user":"","user_nickname":"","offers_count":0},"created_at":"2021-04-19T06:13:20.25Z","updated_at":"2021-04-19T08:21:35.783Z"}}]

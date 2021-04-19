@@ -45,13 +45,21 @@ export const stateColorMapping = {
         color: 'var(--system-yellow)',
         text: 'Dispute',
     },
-    completed: {
+    done: {
         color: 'var(--bids)',
         text: 'Completed',
     },
     cancelled: {
         color: 'var(--asks)',
         text: 'Cancelled',
+    },
+    wait: {
+        color: 'var(--system-yellow)',
+        text: 'Wait',
+    },
+    prepared: {
+        color: 'var(--system-yellow)',
+        text: 'Prepared',
     },
 }
 

@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
-import { Button, Dropdown } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
@@ -10,6 +10,7 @@ import { cleanPositiveFloatInput, millisecondToMinutes, precisionRegExp, truncat
 import { P2POrderCreate, selectP2PWallets, selectPaymentMethodList, UserPaymentMethod } from 'src/modules';
 import { Decimal, DropdownComponent, Modal, OrderInput } from 'src/components';
 import { PlusIcon } from 'src/assets/images/PlusIcon';
+import { useP2PWalletsFetch } from 'src/hooks';
 
 interface ParentProps {
     id: number;
@@ -24,6 +25,7 @@ interface ParentProps {
     timeLimit: number;
     description: string;
     show: boolean;
+    paymentMethods: UserPaymentMethod[];
     handleSubmit: (payload: P2POrderCreate) => void;
     closeModal: () => void;
 }
@@ -56,11 +58,13 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         timeLimit,
         description,
         show,
+        paymentMethods,
     } = props;
 
     const wallets = useSelector(selectP2PWallets);
     const userPM = useSelector(selectPaymentMethodList);
     const { formatMessage } = useIntl();
+    useP2PWalletsFetch();
 
     useEffect(() => {
         if (clickAll) {
@@ -157,12 +161,13 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         if (
             !tradeAmount
             || Number(tradeAmount) <= 0
-            || side === 'sell' && available && +tradeAmount / +price > +available
-            || !validatePriceRange(+tradeAmount)
-            || side === 'sell' && !paymentMethod
+            || (side === 'sell' && available && +tradeAmount / +price > +available)
+            || (side === 'sell' && !validatePriceRange(+receiveAmount))
+            || (side === 'buy' && !validatePriceRange(+tradeAmount))
+            || (side === 'sell' && !paymentMethod)
         ) {
             setShowError(true);
-            defineAmountError(tradeAmount.toString());
+            side === 'buy' ? defineAmountError(tradeAmount.toString()) : defineAmountError(receiveAmount.toString());
             definePaymentError(paymentMethod);
         } else {
             const payload = {
@@ -173,7 +178,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     
             props.handleSubmit(payload);
         }
-    }, [tradeAmount, price, wallets, currencyCode, paymentMethod, id, props.handleSubmit]);
+    }, [tradeAmount, receiveAmount, price, wallets, currencyCode, paymentMethod, id, props.handleSubmit]);
 
     const handleClickTradeAll = React.useCallback(() => {
         if (side === 'buy') {
@@ -218,10 +223,10 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     const iconsList = React.useCallback(() =>
         userPM.map(i => <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPM]);
 
-    const renderPMItem = pm => {
+    const renderPMItem = (pm: UserPaymentMethod) => {
         const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));
         const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 8, '***') : '';
-        return `${pm.name} ${numberValue}`;
+        return `${pm?.payment_method?.name} ${numberValue}`;
     };
 
     const body = React.useCallback(() => {
@@ -253,16 +258,23 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                             </div>
                             <div className="detail-block-right">
                                 <div className="detail-block-label">{translate('page.body.p2p.modal.label.payment')}</div>
+                                {paymentMethods.map(i => (
+                                    <div className="payment-item">
+                                        <img className="payment-method-logo mr-3" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i?.payment_method?.id}/logo`} alt=""/>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="cr-modal__container-content-block">
-                    <div className="description">
-                        <span className="description__label">{translate('page.body.p2p.modal.label.description')}</span>
-                        <p className="description__content">{description}</p>
+                {description ? (
+                    <div className="cr-modal__container-content-block">
+                        <div className="description">
+                            <span className="description__label">{translate('page.body.p2p.modal.label.description')}</span>
+                            <p className="description__content">{description}</p>
+                        </div>
                     </div>
-                </div>
+                ) : null}
                 <div className="cr-modal__container-content-block">
                     <div className={inputClass(amountError)}>
                         <OrderInput

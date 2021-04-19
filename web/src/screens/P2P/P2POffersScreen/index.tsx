@@ -128,6 +128,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
                         lowLimit={selectedOffer.min_order_amount}
                         timeLimit={selectedOffer.time_limit}
                         description={selectedOffer.description}
+                        paymentMethods={selectedOffer.payment_methods}
                         show={openModal}
                         handleSubmit={handleSubmit}
                         closeModal={closeModal}

@@ -15,10 +15,5 @@ export interface P2POrder {
     side: string;
     created_at: string;
     state: string;
-    dispute: P2PDispute | null;
     user_uid: string;
-}
-
-export interface P2PDispute {
-    id: string | number;
 }

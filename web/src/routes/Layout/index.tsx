@@ -358,8 +358,8 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/create-offer" component={CreateP2POfferScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/history" component={P2PTradesHistory} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/order/:id" component={P2POrderScreen} />
-                    <Route exaxt={true} path="/p2p/:currency" component={P2POffersScreen} />
-                    <Route exaxt={true} path="/p2p" component={P2POffersScreen} />
+                    <Route path="/p2p/:currency" component={P2POffersScreen} />
+                    <Route path="/p2p" component={P2POffersScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}

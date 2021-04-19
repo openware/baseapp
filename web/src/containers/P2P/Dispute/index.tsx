@@ -75,10 +75,10 @@ const Dispute: FC<Props> = (props: Props): ReactElement => {
     }, [amountDifferent]);
 
     const handleSubmitCLick = useCallback(() => {
-        if (order?.dispute) {
+        if (order) {
             const request = new FormData();
             request.append('attachment', attachment[0]);
-            request.append('dispute_id', String(order.dispute.id));
+            request.append('order_id', String(order.id));
             request.append('message', `Reason: ${reason}. ${message}`);
 
             dispatch(p2pDisputeFetch(request));

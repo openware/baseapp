@@ -18,5 +18,57 @@ Access-Control-Allow-Headers: content-type, x-csrf-token
   "state": "prepared",
   "time_limit": "900000",
   "user_uid": "ID787E383938",
-  "offer_id": "1"
+  "offer_id": "1",
+  "offer": {
+        "id": 8,
+        "uid": "IDD9046D42A4",
+        "base": "ngnt",
+        "quote": "ngn",
+        "side": "buy",
+        "price": "123",
+        "origin_amount": "12",
+        "available_amount": "12",
+        "min_order_amount": "1",
+        "max_order_amount": "2",
+        "time_limit": 900000,
+        "state": "wait",
+        "description": "asd",
+        "reply": "",
+        "payment_methods": [
+            {
+                "id": 24,
+                "user_uid": "IDD9046D42A4",
+                "payment_method_id": 6,
+                "data": {
+                    "card_number": "1312123123123123"
+                },
+                "created_at": "2021-04-16T14:12:46.547Z",
+                "updated_at": "2021-04-16T14:12:46.547Z",
+                "payment_method": {
+                    "id": 6,
+                    "type": "Bank Transfer",
+                    "name": "Mono transfer",
+                    "options": {
+                        "card_number": {
+                            "name": "Card Number",
+                            "type": "short_answer",
+                            "required": true,
+                            "description": "Your card number"
+                        }
+                    },
+                    "enabled": true,
+                    "created_at": "2021-04-16T10:49:57.13Z",
+                    "updated_at": "2021-04-16T10:49:57.13Z"
+                }
+            }
+        ],
+        "user": {
+            "user_uid": "IDD9046D42A4",
+            "user_user": "email",
+            "user_nickname": "kek",
+            "offers_count": 1
+        },
+        "created_at": "2021-04-16T14:42:10.167Z",
+        "updated_at": "2021-04-16T14:42:10.167Z"
+    }
 }

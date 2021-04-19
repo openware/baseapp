@@ -22,7 +22,7 @@ export const P2POrderScreen: FC = (): ReactElement => {
     const history = useHistory();
     const user: User = useSelector(selectUserInfo);
 
-    useDocumentTitle('P2P Order Transfer');
+    useDocumentTitle('P2P Order');
     useCurrenciesFetch();
     useP2POrderFetch(Number(id));
     useRangerConnectFetch();
