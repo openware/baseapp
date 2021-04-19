@@ -4,8 +4,8 @@ import { Button, Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { LeftArrowIcon } from '../../../assets/images/slider';
-import { History, Pagination } from '../../../components';
-import { DEFAULT_TABLE_PAGE_LIMIT } from '../../../../src/constants';
+import { Decimal, History, Pagination } from '../../../components';
+import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, DEFAULT_TABLE_PAGE_LIMIT } from '../../../../src/constants';
 import {
     selectP2PTradesHistoryData,
     selectP2PTradesHistoryLoading,
@@ -17,16 +17,21 @@ import {
     selectP2PTradesHistoryNextPageExists,
     RootState,
     P2POrder,
+    selectCurrencies,
 } from '../../../modules';
 import {
     setTradesType,
     setStateType,
+    localeDate,
 } from '../../../helpers';
+import { useRangerConnectFetch } from 'src/hooks';
 
 const TradesHistory: FC = (): ReactElement => {
     const intl = useIntl();
     const history = useHistory();
     const dispatch = useDispatch();
+
+    useRangerConnectFetch();
 
     const list = useSelector(selectP2PTradesHistoryData);
     const fetching = useSelector(selectP2PTradesHistoryLoading);
@@ -35,6 +40,7 @@ const TradesHistory: FC = (): ReactElement => {
     const firstElemIndex = useSelector((state: RootState) => selectP2PTradesHistoryFirstElemIndex(state, DEFAULT_TABLE_PAGE_LIMIT));
     const lastElemIndex = useSelector((state: RootState) => selectP2PTradesHistoryLastElemIndex(state, DEFAULT_TABLE_PAGE_LIMIT));
     const nextPageExists = useSelector((state: RootState) => selectP2PTradesHistoryNextPageExists(state, DEFAULT_TABLE_PAGE_LIMIT));
+    const currencies = useSelector(selectCurrencies);
 
     const onClickPrevPage = useCallback(() => {
         dispatch(p2pTradesHistoryFetch({ page: Number(page) - 1, limit: DEFAULT_TABLE_PAGE_LIMIT }));
@@ -113,12 +119,14 @@ const TradesHistory: FC = (): ReactElement => {
         const { price, quote, base, user } = item.offer;
         const sideColored = setTradesType(side);
         const stateColored = setStateType(state);
+        const pricePrecision = currencies.find(item => item.id === quote)?.precision;
+        const amountPrecision = currencies.find(item => item.id === base)?.precision;
 
         return [
-            created_at,
+            localeDate(created_at, 'fullDate'),
             <span style={{ color: sideColored.color }}>{sideColored.text}</span>,
-            `${price} ${base.toUpperCase()}/${quote.toUpperCase()}`,
-            `${amount} ${base.toUpperCase()}`,
+            `${Decimal.format(price, pricePrecision || DEFAULT_FIAT_PRECISION, ',')} ${base.toUpperCase()}/${quote.toUpperCase()}`,
+            `${Decimal.format(amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${base.toUpperCase()}`,
             user?.user_nickname,
             <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
             state === 'dispute' ? renderDisputeButton() : null,
