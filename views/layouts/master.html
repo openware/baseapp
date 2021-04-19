@@ -17,7 +17,9 @@
         <div id={{ .rootID }}></div>
         {{template "content" .}}
         <hr>
-        {{include "layouts/footer"}}
+        {{ if .renderFooter }}
+            {{include "layouts/footer"}}
+        {{end}}
         {{ if .jsFiles}}
             {{range .jsFiles}}
                 <script src="{{ . }}"></script>

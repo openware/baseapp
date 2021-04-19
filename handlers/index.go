@@ -9,6 +9,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"strconv"
 
 	"baseapp/daemons"
 
@@ -127,6 +128,11 @@ func StartConfigCaching(vaultService *vault.Service, scope string) {
 
 // index render with master layer
 func index(ctx *gin.Context) {
+	var renderFooter, err = strconv.ParseBool(utils.GetEnv("RENDER_FOOTER", "false"))
+	if err != nil {
+		log.Println("renderFooter:", "should be true of false: "+err.Error())
+	}
+
 	cssFiles, err := FilesPaths("/public/assets/*.css")
 	if err != nil {
 		log.Println("filePaths:", "Can't take list of paths for css files: "+err.Error())
@@ -138,10 +144,11 @@ func index(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "index", gin.H{
-		"title":    "BaseApp",
-		"cssFiles": cssFiles,
-		"jsFiles":  jsFiles,
-		"rootID":   "root",
+		"title":    	"BaseApp",
+		"cssFiles": 	cssFiles,
+		"jsFiles":  	jsFiles,
+		"rootID":   	"root",
+		"renderFooter": renderFooter,
 	})
 }
 
