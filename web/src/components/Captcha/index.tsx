@@ -43,11 +43,11 @@ export const CaptchaComponent = props => {
             case 'recaptcha':
                 return (
                     <div className="pg-captcha--recaptcha">
-                        <ReCAPTCHA
+                        {captchaId() && <ReCAPTCHA
                             ref={reCaptchaRef}
                             sitekey={captchaId()}
                             onChange={handleRecaptchaChange}
-                        />
+                        />}
                     </div>
                 );
             case 'geetest':
