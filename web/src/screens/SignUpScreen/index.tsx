@@ -250,6 +250,7 @@ class SignUp extends React.Component<Props> {
             this.setState({
                 hasConfirmed: !this.state.hasConfirmed,
             });
+            this.clearFields();
         }
     };
 
@@ -469,6 +470,14 @@ class SignUp extends React.Component<Props> {
 
             return;
         }
+    };
+
+    private clearFields = () => {
+        this.setState({
+            confirmationError: '',
+            emailError: '',
+            passwordError: '',
+        });
     };
 }
 
