@@ -1,23 +1,24 @@
-HTTP/2 200
+HTTP/2 201
 Content-Type: application/json; charset=utf-8
 Access-Control-Allow-Origin: *
-Access-Control-Allow-Mzarods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
 Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers: content-type, x-csrf-token
 
 {
-  "id": "100",
-  "first_approve_expire_at": "2021-04-09T20:28:54Z",
-  "second_approve_expire_at": "2021-04-09T20:28:54Z",
+  "id": 82030,
+  "expiry_time": "2021-04-07T20:28:54Z",
   "base": "usdt",
   "quote": "ngn",
-  "side": "sell",
+  "side": "buy",
   "price": "1.20",
+  "created_at": "2021-04-07T15:28:54Z",
   "amount": "100",
-  "created_at": "2021-04-09T15:28:54Z",
-  "state": "dispute",
+  "state": "prepared",
   "time_limit": "900000",
   "user_uid": "ID787E383938",
+  "offer_id": "1",
   "offer": {
         "id": 8,
         "uid": "IDD9046D42A4",
@@ -59,6 +60,33 @@ Access-Control-Allow-Credentials: true
                     "created_at": "2021-04-16T10:49:57.13Z",
                     "updated_at": "2021-04-16T10:49:57.13Z"
                 }
+            },
+             {
+                "id": 25,
+                "user_uid": "IDD9046D42A4",
+                "payment_method_id": 7,
+                "data": {
+                    "card_number": "1312123123123123",
+                    "account_name": "Boss"
+                },
+                "created_at": "2021-04-16T14:12:46.547Z",
+                "updated_at": "2021-04-16T14:12:46.547Z",
+                "payment_method": {
+                    "id": 6,
+                    "type": "Bank Transfer",
+                    "name": "PrivatBank",
+                    "options": {
+                        "card_number": {
+                            "name": "Card Number",
+                            "type": "short_answer",
+                            "required": true,
+                            "description": "Your card number"
+                        }
+                    },
+                    "enabled": true,
+                    "created_at": "2021-04-16T10:49:57.13Z",
+                    "updated_at": "2021-04-16T10:49:57.13Z"
+                }
             }
         ],
         "user": {
@@ -69,6 +97,5 @@ Access-Control-Allow-Credentials: true
         },
         "created_at": "2021-04-16T14:42:10.167Z",
         "updated_at": "2021-04-16T14:42:10.167Z"
-    },
-  "offer_id": "1"
+    }
 }

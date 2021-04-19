@@ -60,8 +60,10 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     }, [order, dispatch]);
 
     const handleClickPaid = useCallback(() => {
-        order && dispatch(p2pOrdersUpdateFetch({ id: order.id, action: 'approve' }));
-    }, [order, dispatch]);
+        const selectedPaymentMethod = order?.offer?.payment_methods[currentTabIndex];
+
+        order && dispatch(p2pOrdersUpdateFetch({ id: order.id, action: 'approve', payment_method_id: selectedPaymentMethod.id }));
+    }, [order, currentTabIndex, dispatch]);
 
     const onCurrentTabChange = useCallback((index: number) => {
         setCurrentTabIndex(index);
