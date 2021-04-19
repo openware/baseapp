@@ -113,7 +113,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                     <div className="font-small ml-small">
                         {user?.user_nickname}
                         <div className="sec-row">
-                            <span className="font-small secondary">{user?.offers_count}</span>
+                            <span className="font-small secondary">{user?.offers_count}&nbsp;{intl.formatMessage({ id: 'page.body.p2p.table.offers' })}</span>
                             {user?.success_rate ? <span className="font-small secondary ml-24">{+user?.success_rate * 100}% {intl.formatMessage({ id: 'page.body.p2p.table.completion' })}</span> : null}
                         </div>
                     </div>
@@ -128,8 +128,8 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                         <span className="font-small secondary sec-row">{intl.formatMessage({ id: 'page.body.p2p.table.limit' })}</span>
                     </div>
                     <div className="limit-col">
-                        <span className="font-big ml-small">{Decimal.format(available_amount, amountPrecision, ',')} {base?.toUpperCase()}</span>
-                        <span className="font-big ml-small sec-row">{Decimal.format(min_order_amount, pricePrecision, ',')} - {Decimal.format(max_order_amount, pricePrecision, ',')}</span>
+                        <span className="font-big ml-small">{Decimal.format(+available_amount, amountPrecision, ',')} {base?.toUpperCase()}</span>
+                        <span className="font-big ml-small sec-row">{Decimal.format(+min_order_amount * +price, pricePrecision, ',')} - {Decimal.format(+max_order_amount * +price, pricePrecision, ',')} {quote?.toUpperCase()}</span>
                     </div>
                 </div>,
                 <div className="payment" key={id}>

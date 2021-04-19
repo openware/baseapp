@@ -1087,6 +1087,7 @@ export const ru: LangType = {
     'page.body.p2p.tabs.create': 'Create',
     'page.body.p2p.table.completion': 'Completion',
     'page.body.p2p.table.available': 'Available',
+    'page.body.p2p.table.offers': 'Offers',
     'page.body.p2p.table.limit': 'Limit',
 
     'page.body.p2p.create.offer.title': 'Create offer',

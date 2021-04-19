@@ -18,4 +18,5 @@ export interface P2POrder {
     state: string;
     user_uid: string;
     payment_method?: UserPaymentMethod;
+    payment_method_id?: number; // payment method to which another user has sent money
 }
