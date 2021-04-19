@@ -2,8 +2,10 @@ import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react
 import { Button, Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { getCountdownDate, millisecondToMinutes } from 'src/helpers';
-import { P2POrder, p2pOrdersUpdateFetch } from 'src/modules';
+import { TabPanel } from 'src/components';
+import { HOST_URL } from 'src/constants';
+import { getCountdownDate, millisecondToMinutes, titleCase } from 'src/helpers';
+import { P2POrder, p2pOrdersUpdateFetch, UserPaymentMethod } from 'src/modules';
 
 interface ParentProps {
     order: P2POrder;
@@ -15,6 +17,9 @@ type Props = ParentProps;
 const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     const [timeLeft, setTimeLeft] = useState<string>('00:00:00');
     const [confirmTransfer, setConfirmTransfer] = useState<boolean>(false);
+    const [tab, setTab] = useState<string>('');
+    const [tabMapping, setTabMapping] = useState<string[]>([]);
+    const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
 
     const { order, isTaker } = props;
     const dispatch = useDispatch();
@@ -31,6 +36,15 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
             };
         }
     });
+
+    useEffect(() => {
+        if (order) {
+            const pmList = order.offer.payment_methods.map(i => i.payment_method.name);
+            setTabMapping(pmList);
+            setTab(pmList[0]);
+            setCurrentTabIndex(0);
+        }
+    }, [order, ]);
 
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
 
@@ -49,6 +63,45 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
         order && dispatch(p2pOrdersUpdateFetch({ id: order.id, action: 'approve' }));
     }, [order, dispatch]);
 
+    const onCurrentTabChange = useCallback((index: number) => {
+        setCurrentTabIndex(index);
+    }, [tabMapping]);
+
+    const onTabChange = useCallback((index: number) => {
+        if (tab === tabMapping[index]) {
+            return;
+        }
+        setTab(tabMapping[index]);
+    }, [tabMapping]);
+
+    const renderTabs = useCallback(() => tabMapping.map((i, index) => {
+        const selectedPaymentMethod = order?.offer?.payment_methods[index];
+
+        return {
+            content: currentTabIndex === index ? getPaymentMethodInfo(selectedPaymentMethod) : null,
+            label: <div><img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${selectedPaymentMethod?.payment_method.id}/logo`} alt=""/>{i}</div>,
+        };
+    }), [order, currentTabIndex, tabMapping]);
+
+    const getPaymentMethodInfo = (pm?: UserPaymentMethod) => {
+        return pm ? (
+            <div className="pm-list">
+                {
+                    Object.keys(pm.data).map(key => {
+                        const value = pm.data[key];
+
+                        return (
+                            <div className="pm-list__item">
+                                <label>{titleCase(key)}</label>
+                                <div>{value}</div>
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        ) : null;
+    };
+
     return (
         <div className="cr-prepare-order">
             {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
@@ -61,6 +114,18 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                     <span className="bold-36">{translate(`page.body.p2p.order.transfer.order.wait.info`)}</span>
                 </div>
             )}
+            {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
+                <div className="cr-prepare-order-tab">
+                    <div className="cr-prepare-order-tab__tabs-content">
+                        <TabPanel
+                            panels={renderTabs()}
+                            onTabChange={onTabChange}
+                            currentTabIndex={currentTabIndex}
+                            onCurrentTabChange={onCurrentTabChange}
+                        />
+                    </div>
+                </div>
+            ) : null}
             <div className="cr-prepare-order__block">
                 <div className="cr-prepare-order__block--row">
                     <span className="huge-text">{translate(`page.body.p2p.order.transfer.order.wait.timer.${order?.state}`)}</span>
