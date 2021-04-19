@@ -3,15 +3,15 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
-import { localeDate, setOfferStatusColor, setTradeColor } from 'src/helpers';
+import { localeDate, setOfferStatusColor } from 'src/helpers';
 import { Decimal, Pagination, Table } from '../../../components';
 import { useCurrenciesFetch, useP2PUserOffersFetch, useWalletsFetch } from '../../../hooks';
 import {
     activeOffersFetch,
     cancelledOffersFetch,
     cancelOffer,
+    doneOffersFetch,
     RootState,
-    selectP2PCancelOfferLoading,
     selectP2POffersCurrentPage,
     selectP2PUserOffers,
     selectP2PUserOffersFirstElemIndex,
@@ -38,7 +38,6 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
     const firstElemIndex = useSelector((state: RootState) => selectP2PUserOffersFirstElemIndex(state, status, 3));
     const lastElemIndex = useSelector((state: RootState) => selectP2PUserOffersLastElemIndex(state, status, 3));
     const nextPageExists = useSelector((state: RootState) => selectP2PUserOffersNextPageExists(state, status, 3));
-    const cancelFetching = useSelector(selectP2PCancelOfferLoading);
     const wallets = useSelector(selectWallets);
 
     useWalletsFetch();
@@ -56,27 +55,40 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
     ], [status]);
 
     const onClickPrevPage = useCallback(() => {
-        if (status === 'activeOffers') {
-            activeOffersFetch({ page: Number(page) - 1, limit: 3 });
-        } else if (status === 'cancelledOffers') {
-            cancelledOffersFetch({ page: Number(page) - 1, limit: 3 });
+        switch (status) {
+            case 'activeOffers':
+                dispatch(activeOffersFetch({ page: Number(page) - 1, limit: 3 }));
+                break;
+            case 'cancelledOffers':
+                dispatch(cancelledOffersFetch({ page: Number(page) - 1, limit: 3 }));
+                break;
+            case 'doneOffers':
+                dispatch(doneOffersFetch({ page: Number(page) - 1, limit: 3 }));
+                break;
+            default:
+                break;
         }
     }, [activeOffersFetch, cancelledOffersFetch, status, page, 3]);
 
     const onClickNextPage = useCallback(() => {
-        if (status === 'activeOffers') {
-            activeOffersFetch({ page: Number(page) + 1, limit: 3 });
-        } else if (status === 'cancelledOffers') {
-            cancelledOffersFetch({ page: Number(page) + 1, limit: 3 });
+        switch (status) {
+            case 'activeOffers':
+                dispatch(activeOffersFetch({ page: Number(page) + 1, limit: 3 }));
+                break;
+            case 'cancelledOffers':
+                dispatch(cancelledOffersFetch({ page: Number(page) + 1, limit: 3 }));
+                break;
+            case 'doneOffers':
+                dispatch(doneOffersFetch({ page: Number(page) + 1, limit: 3 }));
+                break;
+            default:
+                break;
         }
     }, [activeOffersFetch, cancelledOffersFetch, status, page, 3]);
 
     const handleCancel = React.useCallback((id: number) => () => {
-        if (cancelFetching) {
-            return;
-        }
         dispatch(cancelOffer({ id, list }));
-    }, [cancelFetching, list, cancelOffer, dispatch]);
+    }, [list, cancelOffer, dispatch]);
 
     const retrieveData = () => (
         !list.length ? [[]] : list.map(item => {
@@ -96,7 +108,7 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
 
             return [
                 localeDate(created_at, 'shortDate'),
-                <span style={{ color: setTradeColor(side).color }} key={id}>{translate(`page.body.p2p.my.offers.table.side.${side}`)}</span>,
+                <span style={{ color: setOfferStatusColor(side) }} key={id}>{translate(`page.body.p2p.my.offers.table.side.${side}`)}</span>,
                 `${base?.toUpperCase()}/${quote?.toUpperCase()}`,
                 <span key={id}>{Decimal.format(origin_amount, amountPrecision, ',')} {base?.toUpperCase()}</span>,
                 <span key={id}>{Decimal.format(price, pricePrecision, ',')} {quote?.toUpperCase()}</span>,

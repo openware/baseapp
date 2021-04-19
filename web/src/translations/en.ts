@@ -1161,6 +1161,7 @@ export const en = {
     'page.body.p2p.my.offers.back': 'Back to P2P',
     'page.body.p2p.my.offers.activeOffers': 'Active',
     'page.body.p2p.my.offers.cancelledOffers': 'Cancelled',
+    'page.body.p2p.my.offers.doneOffers': 'Completed',
     'page.body.p2p.my.offers.table.date': 'Date',
     'page.body.p2p.my.offers.table.side': 'Side',
     'page.body.p2p.my.offers.table.side.buy': 'Buy',

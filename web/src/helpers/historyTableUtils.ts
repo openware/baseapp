@@ -21,9 +21,10 @@ export const withdrawColorMapping = {
 };
 
 export const offersColorMapping = {
-    active: 'var(--system-green)',
+    wait: 'var(--system-yellow)',
     cancelled: 'var(--system-red)',
-}
+    done: 'var(--system-green)',
+};
 
 export const tradesColorMapping = {
     sell: {

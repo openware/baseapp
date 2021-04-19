@@ -13,6 +13,9 @@ import {
     P2P_CANCELLED_OFFERS_DATA,
     P2P_CANCELLED_OFFERS_ERROR,
     P2P_CANCELLED_OFFERS_FETCH,
+    P2P_DONE_OFFERS_DATA,
+    P2P_DONE_OFFERS_ERROR,
+    P2P_DONE_OFFERS_FETCH,
     P2P_CANCEL_OFFER_DATA,
     P2P_CANCEL_OFFER_ERROR,
     P2P_CANCEL_OFFER_FETCH,
@@ -49,6 +52,15 @@ export interface P2POffersState {
         timestamp?: number;
         error?: CommonError;
     };
+    doneOffers: {
+        page: number;
+        total: number;
+        list: Offer[];
+        fetching: boolean;
+        success: boolean;
+        timestamp?: number;
+        error?: CommonError;
+    };
 }
 
 export const initialP2POffersState: P2POffersState = {
@@ -69,6 +81,13 @@ export const initialP2POffersState: P2POffersState = {
         success: false,
     },
     cancelledOffers: {
+        page: 0,
+        total: 0,
+        list: [],
+        fetching: false,
+        success: false,
+    },
+    doneOffers: {
         page: 0,
         total: 0,
         list: [],
@@ -129,6 +148,39 @@ export const cancelledOffersFetchReducer = (state: P2POffersState['cancelledOffe
                 error: undefined,
             };
         case P2P_CANCELLED_OFFERS_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                success: false,
+                page: 0,
+                total: 0,
+                list: [],
+                error: action.error,
+            };
+        default:
+            return state;
+    }
+};
+
+export const doneOffersReducer = (state: P2POffersState['doneOffers'], action: P2POffersActions) => {
+    switch (action.type) {
+        case P2P_DONE_OFFERS_FETCH:
+            return {
+                ...state,
+                fetching: true,
+                timestamp: Math.floor(Date.now() / 1000),
+            };
+        case P2P_DONE_OFFERS_DATA:
+            return {
+                ...state,
+                list: sliceArray(action.payload.list, defaultStorageLimit()),
+                page: action.payload.page,
+                total: action.payload.total,
+                fetching: false,
+                success: true,
+                error: undefined,
+            };
+        case P2P_DONE_OFFERS_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -234,6 +286,15 @@ export const p2pOffersReducer = (state = initialP2POffersState, action: P2POffer
             return {
                 ...state,
                 cancelledOffers: cancelledOffersFetchReducer(cancelledOffersFetchState, action),
+            };
+        case P2P_DONE_OFFERS_FETCH:
+        case P2P_DONE_OFFERS_DATA:
+        case P2P_DONE_OFFERS_ERROR:
+            const doneOffersState = { ...state.doneOffers };
+
+            return {
+                ...state,
+                cancelledOffers: doneOffersReducer(doneOffersState, action),
             };
         default:
             return state;

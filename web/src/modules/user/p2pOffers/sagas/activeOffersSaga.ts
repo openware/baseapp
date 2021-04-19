@@ -11,7 +11,7 @@ const config: RequestOptions = {
 
 export function* activeOffersSaga(action: ActiveOffersFetch) {
     try {
-        const { data, headers } = yield call(API.get(config), `/private/offers?state=active&${buildQueryString(action.payload)}`);
+        const { data, headers } = yield call(API.get(config), `/private/offers?state=wait&${buildQueryString(action.payload)}`);
 
         yield put(activeOffersData({ list: data, total: headers.total, page: action.payload.page }));
     } catch (error) {

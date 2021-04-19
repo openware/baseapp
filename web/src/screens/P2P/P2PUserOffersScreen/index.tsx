@@ -23,6 +23,7 @@ export const P2PUserOffersScreen: FC = (): ReactElement => {
                 </Link>
                 <P2PUserOffers status="activeOffers"/>
                 <P2PUserOffers status="cancelledOffers"/>
+                <P2PUserOffers status="doneOffers"/>
             </div>
         </div>
     );
