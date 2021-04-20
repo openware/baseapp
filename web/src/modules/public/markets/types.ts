@@ -56,3 +56,9 @@ export interface TickerEvent {
     volume: string;
     at: number;
 }
+
+export interface MarketPriceInterface {
+    price: string;
+    created_at: string;
+    updated_at: string;
+}

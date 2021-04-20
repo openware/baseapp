@@ -3,6 +3,7 @@ import { PG_TITLE_PREFIX, pgRoutes } from './';
 describe('Constants', () => {
     const expectedRoutesForLoggedInUser = [
         ['page.header.navbar.trade', '/trading/', 'trade'],
+        ['page.header.navbar.quick.exchange', '/quick-exchange', 'quick_exchange'],
         ['page.header.navbar.wallets', '/wallets', 'wallets'],
         ['page.header.navbar.openOrders', '/orders', 'orders'],
         ['page.header.navbar.history', '/history', 'history'],

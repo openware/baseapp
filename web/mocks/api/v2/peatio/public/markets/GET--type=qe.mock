@@ -19,6 +19,7 @@ Access-Control-Allow-Credentials: true
     "min_amount": "0.0",
     "amount_precision": 6,
     "price_precision": 2,
+    "type": "qe",
     "state": "enabled"
   },
   {
@@ -33,6 +34,7 @@ Access-Control-Allow-Credentials: true
     "min_amount": "0.0",
     "amount_precision": 4,
     "price_precision": 4,
+    "type": "qe",
     "state": "enabled"
   },
   {
@@ -47,6 +49,7 @@ Access-Control-Allow-Credentials: true
     "min_amount": "0.0",
     "amount_precision": 4,
     "price_precision": 4,
+    "type": "qe",
     "state": "enabled"
   },
   {
@@ -61,6 +64,7 @@ Access-Control-Allow-Credentials: true
     "min_amount": "0.0",
     "amount_precision": 4,
     "price_precision": 4,
+    "type": "qe",
     "state": "enabled"
   },
   {
@@ -75,6 +79,7 @@ Access-Control-Allow-Credentials: true
     "min_amount": "0.0",
     "amount_precision": 4,
     "price_precision": 4,
+    "type": "qe",
     "state": "enabled"
   }
 ]

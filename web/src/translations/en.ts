@@ -4,6 +4,7 @@ import { nationalitiesNames } from './nationalities';
 
 export const en = {
     'page.header.navbar.signIn': 'Sign In',
+    'page.header.navbar.quick.exchange': 'Quick exchange',
     'page.header.navbar.trade': 'Trade',
     'page.header.navbar.wallets': 'Wallets',
     'page.header.navbar.openOrders': 'Orders',
@@ -684,6 +685,26 @@ export const en = {
     'page.documentation.models.item.table.header.required': 'Required',
     'page.documentation.models.item.table.data.required.true': 'Yes',
     'page.documentation.models.item.table.data.required.false': 'No',
+
+    /* Quick Exchange */
+    'page.body.quick.exchange.header': 'Quick exchang',
+
+    'page.body.quick.exchange.label.exchange': 'You exchange',
+    'page.body.quick.exchange.label.receive': 'You receive',
+    'page.body.quick.exchange.label.currency': 'Currency',
+
+    'page.body.quick.exchange.sublabel.min_amount': 'Min exchange amount is',
+    'page.body.quick.exchange.sublabel.balance': 'Balance',
+
+    'page.body.quick.exchange.estimated_price': 'Estimated price',
+    'page.body.quick.exchange.slippage': 'Slippage is higher than 1%. Enter a lower amount to get a better price',
+
+    'page.body.quick.exchange.placeholder.exchange': 'You exchange',
+    'page.body.quick.exchange.placeholder.receive': 'You receive',
+
+    'page.body.quick.exchange.button.exchange': 'Exchange',
+
+    'success.quick.exchange.order.created': 'Order successfully created',
 
     /* Error pages */
 
