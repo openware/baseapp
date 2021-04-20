@@ -14,6 +14,7 @@ import {
     selectUserInfo,
     selectWallets,
     walletsFetch,
+    createInternalTransfersReset,
 } from '../../modules';
 import { InternalTransferInput } from './InternalInput';
 
@@ -40,6 +41,7 @@ export const InternalTransferComponent = () => {
     React.useEffect(() => {
         if (transferSuccess) {
             handleResetState();
+            dispatch(createInternalTransfersReset());
         }
     }, [transferSuccess]);
 
