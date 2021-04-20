@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import * as React from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { convertToString } from '../../helpers';
@@ -37,6 +37,7 @@ export interface DropdownComponentProps {
      * @default false
      */
     clear?: boolean;
+    selectedValue?: string;
 }
 
 
@@ -45,21 +46,35 @@ export interface DropdownComponentProps {
  */
 
 export const DropdownComponent = (props: DropdownComponentProps) => {
-    const [selected, setSelected] = React.useState<string | undefined>('');
+    const [selected, setSelected] = useState<string | undefined>('');
 
     const { list, className, placeholder, clear, onSelect } = props;
     const defaultPlaceholder = list[0];
 
-    const cx = React.useMemo(() => classnames('cr-dropdown', className, {
+    const cx = useMemo(() => classnames('cr-dropdown', className, {
         'cr-dropdown--default': selected === placeholder,
     }), [selected, placeholder, className]);
 
-    const handleSelect = React.useCallback((elem: DropdownElem, index: number) => {
+    useEffect(() => {
+        if (clear !== false) {
+            setSelected(placeholder || convertToString(defaultPlaceholder));
+        }
+    }, [placeholder, defaultPlaceholder, clear]);
+
+    useEffect(() => {
+        if (typeof props.selectedValue !== 'undefined' && props.selectedValue !== '') {
+            setSelected(props.selectedValue);
+        } else if (props.selectedValue === '') {
+            setSelected(placeholder || convertToString(defaultPlaceholder));
+        }
+    }, [props.selectedValue]);
+
+    const handleSelect = useCallback((elem: DropdownElem, index: number) => {
         onSelect && onSelect(index);
         setSelected(convertToString(elem));
-    }, [onSelect]);
+    }, [list, selected, onSelect]);
 
-    const renderElem = React.useCallback((elem: DropdownElem, index: number) => {
+    const renderElem = useCallback((elem: DropdownElem, index: number) => {
         return  (
             <Dropdown.Item
                 key={index}
@@ -69,12 +84,6 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
             </Dropdown.Item>
         );
     }, [handleSelect]);
-
-    React.useEffect(() => {
-        if (clear !== false) {
-            setSelected(placeholder || convertToString(defaultPlaceholder));
-        }
-    }, [placeholder, defaultPlaceholder, clear]);
 
     return (
         <div className={cx}>

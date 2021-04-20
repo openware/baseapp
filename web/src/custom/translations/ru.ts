@@ -4,6 +4,7 @@ import { nationalitiesNames } from '../../translations/nationalities';
 
 export const ru: LangType = {
     'page.header.navbar.signIn': 'Войти',
+    'page.header.navbar.quick.exchange': 'Quick exchange',
     'page.header.navbar.trade': 'Биржа',
     'page.header.navbar.wallets': 'Кошельки',
     'page.header.navbar.openOrders': 'Ордера',
@@ -695,6 +696,25 @@ export const ru: LangType = {
     'page.documentation.models.item.table.data.required.true': 'Yes',
     'page.documentation.models.item.table.data.required.false': 'No',
 
+    /* Quick Exchange */
+    'page.body.quick.exchange.header': 'Quick exchang',
+
+    'page.body.quick.exchange.label.exchange': 'You exchange',
+    'page.body.quick.exchange.label.receive': 'You receive',
+    'page.body.quick.exchange.label.currency': 'Currency',
+
+    'page.body.quick.exchange.sublabel.min_amount': 'Min exchange amount is',
+    'page.body.quick.exchange.sublabel.balance': 'Balance',
+
+    'page.body.quick.exchange.estimated_price': 'Estimated price',
+    'page.body.quick.exchange.slippage': 'Slippage is higher than 1%. Enter a lower amount to get a better price',
+
+    'page.body.quick.exchange.placeholder.exchange': 'You exchange',
+    'page.body.quick.exchange.placeholder.receive': 'You receive',
+
+    'page.body.quick.exchange.button.exchange': 'Exchange',
+
+    'success.quick.exchange.order.created': 'Order successfully created',
 
     // success messages
     'success.addresses.accepted': 'Ваш адрес успешно приняты',

@@ -36,6 +36,7 @@ import { PasswordState, rootPasswordSaga } from './user/password';
 import { ProfileState, rootProfileSaga } from './user/profile';
 import { rootUserActivitySaga, UserActivityState } from './user/userActivity';
 import { rootWalletsSaga, WalletsState } from './user/wallets';
+import { QuickExchangeState, rootQuickExchangeSaga } from './user/quickExchange';
 import { rootWithdrawLimitSaga, WithdrawLimitState } from './user/withdrawLimit';
 import { MarketsAdminState, rootMarketsAdminSaga } from './admin/markets';
 import { PlatformCreateState, rootPlatformCreateSaga } from './admin/platform';
@@ -71,6 +72,7 @@ export * from './user/profile';
 export * from './user/userActivity';
 export * from './user/wallets';
 export * from './user/withdrawLimit';
+export * from './user/quickExchange';
 
 export interface RootState {
     public: {
@@ -112,6 +114,7 @@ export interface RootState {
         userActivity: UserActivityState;
         wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
+        quickExchange: QuickExchangeState;
     };
     admin: {
         configUpdate: ConfigUpdateState;
@@ -161,5 +164,6 @@ export function* rootSaga() {
         call(rootUserActivitySaga),
         call(rootWalletsSaga),
         call(rootWithdrawLimitSaga),
+        call(rootQuickExchangeSaga),
     ]);
 }
