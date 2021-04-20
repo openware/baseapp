@@ -1163,9 +1163,9 @@ export const ru: LangType = {
 
     'page.body.p2p.my.offers.title': 'My P2P offers',
     'page.body.p2p.my.offers.back': 'Back to P2P',
-    'page.body.p2p.my.offers.activeOffers': 'Active',
-    'page.body.p2p.my.offers.cancelledOffers': 'Cancelled',
-    'page.body.p2p.my.offers.doneOffers': 'Completed',
+    'page.body.p2p.my.offers.wait': 'Active',
+    'page.body.p2p.my.offers.cancelled': 'Cancelled',
+    'page.body.p2p.my.offers.done': 'Done',
     'page.body.p2p.my.offers.table.date': 'Date',
     'page.body.p2p.my.offers.table.side': 'Side',
     'page.body.p2p.my.offers.table.side.buy': 'Buy',

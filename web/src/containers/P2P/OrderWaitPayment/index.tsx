@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { TabPanel } from 'src/components';
 import { HOST_URL } from 'src/constants';
-import { getCountdownDate, millisecondToMinutes, titleCase } from 'src/helpers';
+import { getCountdownDate, secondToMinutes, titleCase } from 'src/helpers';
 import { P2POrder, p2pOrdersUpdateFetch, UserPaymentMethod } from 'src/modules';
 
 interface ParentProps {
@@ -156,7 +156,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                     <span className="ticker">{timeLeft}</span>
                 </div>
                 <div className="cr-prepare-order__block--row">
-                    <span>{translate(`page.body.p2p.order.transfer.order.wait.warning.${order?.state}`, order && { time: millisecondToMinutes(order.offer.time_limit) })}</span>
+                    <span>{translate(`page.body.p2p.order.transfer.order.wait.warning.${order?.state}`, order && { time: secondToMinutes(order.offer.time_limit) })}</span>
                 </div>
                 <div className="cr-prepare-order__block--row">
                     <Form className="cr-prepare-order__checkbox" onClick={clickCheckBox}>

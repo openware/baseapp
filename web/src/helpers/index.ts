@@ -47,5 +47,5 @@ export * from './hasDuplicates';
 export * from './ssToMMSS';
 export * from './mergeObjects';
 export * from './titleCase';
-export * from './convertMillisecondToMinute';
+export * from './convertSecondToMinute';
 export * from './getCountDownDate';

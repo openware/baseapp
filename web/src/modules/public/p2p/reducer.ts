@@ -1,5 +1,6 @@
 import { defaultStorageLimit } from 'src/api';
 import { sliceArray } from 'src/helpers';
+import { insertOrUpdate } from './helpers';
 import { CommonError } from '../../types';
 import { P2PActions } from './actions';
 import {
@@ -9,6 +10,7 @@ import {
     P2P_OFFERS_DATA,
     P2P_OFFERS_ERROR,
     P2P_OFFERS_FETCH,
+    P2P_OFFERS_UPDATE,
     P2P_PAYMENT_METHODS_DATA,
     P2P_PAYMENT_METHODS_ERROR,
     P2P_PAYMENT_METHODS_FETCH,
@@ -78,6 +80,11 @@ export const p2pOffersFetchReducer = (state: P2PState['offers'], action: P2PActi
                 fetching: false,
                 success: true,
                 error: undefined,
+            };
+        case P2P_OFFERS_UPDATE:
+            return {
+                ...state,
+                list: sliceArray(insertOrUpdate(state.list, action.payload), defaultStorageLimit()),
             };
         case P2P_OFFERS_ERROR:
             return {
@@ -173,6 +180,7 @@ export const p2pReducer = (state = initialP2PState, action: P2PActions) => {
         case P2P_OFFERS_FETCH:
         case P2P_OFFERS_DATA:
         case P2P_OFFERS_ERROR:
+        case P2P_OFFERS_UPDATE:
             const p2pOffersFetchState = { ...state.offers };
 
             return {

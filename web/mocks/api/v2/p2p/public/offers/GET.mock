@@ -76,7 +76,7 @@ Total: 26
         }
 },
     {
-        "id": 8,
+        "id": 10,
         "uid": "IDD9046D42A4",
         "base": "ngnt",
         "quote": "ngn",
@@ -86,7 +86,7 @@ Total: 26
         "available_amount": "12",
         "min_order_amount": "1",
         "max_order_amount": "2",
-        "time_limit": 900000,
+        "time_limit": 900,
         "state": "wait",
         "description": "asd",
         "reply": "",

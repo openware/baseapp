@@ -16,7 +16,7 @@ Access-Control-Allow-Headers: content-type, x-csrf-token
   "created_at": "2021-04-07T15:28:54Z",
   "amount": "100",
   "state": "prepared",
-  "time_limit": "900000",
+  "time_limit": "900",
   "user_uid": "ID787E383938",
   "offer_id": "1",
   "offer": {
@@ -30,7 +30,7 @@ Access-Control-Allow-Headers: content-type, x-csrf-token
         "available_amount": "12",
         "min_order_amount": "1",
         "max_order_amount": "2",
-        "time_limit": 900000,
+        "time_limit": 900,
         "state": "wait",
         "description": "asd",
         "reply": "",

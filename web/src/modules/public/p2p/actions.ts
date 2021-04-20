@@ -6,6 +6,7 @@ import {
     P2P_OFFERS_DATA,
     P2P_OFFERS_ERROR,
     P2P_OFFERS_FETCH,
+    P2P_OFFERS_UPDATE,
     P2P_PAYMENT_METHODS_DATA,
     P2P_PAYMENT_METHODS_ERROR,
     P2P_PAYMENT_METHODS_FETCH,
@@ -37,6 +38,11 @@ export interface OffersData {
 export interface OffersError {
     type: typeof P2P_OFFERS_ERROR;
     error: CommonError;
+}
+
+export interface P2POffersUpdate {
+    type: typeof P2P_OFFERS_UPDATE;
+    payload: Offer;
 }
 
 export interface P2PCurrenciesFetch {
@@ -76,7 +82,8 @@ export type P2PActions =
     | P2PCurrenciesError
     | P2PPaymentMethodsFetch
     | P2PPaymentMethodsData
-    | P2PPaymentMethodsError;
+    | P2PPaymentMethodsError
+    | P2POffersUpdate;
 
 export const offersFetch = (payload?: OffersFetch['payload']): OffersFetch => ({
     type: P2P_OFFERS_FETCH,
@@ -91,6 +98,11 @@ export const offersData = (payload: OffersData['payload']): OffersData => ({
 export const offersError = (error: CommonError): OffersError => ({
     type: P2P_OFFERS_ERROR,
     error,
+});
+
+export const p2pOffersUpdate = (payload: P2POffersUpdate['payload']): P2POffersUpdate => ({
+    type: P2P_OFFERS_UPDATE,
+    payload,
 });
 
 export const p2pCurrenciesFetch = (): P2PCurrenciesFetch => ({

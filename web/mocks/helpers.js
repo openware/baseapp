@@ -135,7 +135,7 @@ const Helpers = {
                 "min_order_amount":"10",
                 "max_order_amount":"100",
                 "time_limit":10,
-                "state": state,
+                "state": state === 'approved' ? 'done' : state,
                 "payment_methods":null,
                 "offer": {
                     "id": 8,
@@ -148,7 +148,7 @@ const Helpers = {
                     "available_amount": "12",
                     "min_order_amount": "1",
                     "max_order_amount": "2",
-                    "time_limit": 900000,
+                    "time_limit": 900,
                     "state": "wait",
                     "description": "asd",
                     "reply": "",
@@ -216,6 +216,63 @@ const Helpers = {
                     "created_at": "2021-04-16T14:42:10.167Z",
                     "updated_at": "2021-04-16T14:42:10.167Z"
                 }
+            }
+        }
+    },
+    getP2POffer: (state) => {
+        return {
+            "event": `p2p_offer.${state}`,
+            "payload": {
+                "id": 8,
+                "uid": "IDD9046D42A4",
+                "base": "usdt",
+                "quote": "ngn",
+                "side": "buy",
+                "price": "27",
+                "origin_amount": "12",
+                "available_amount": "10",
+                "min_order_amount": "1",
+                "max_order_amount": "2",
+                "time_limit": 900,
+                "state": state === 'cancelled' ? state : "wait",
+                "description": "asd",
+                "reply": "",
+                "payment_methods": [
+                    {
+                        "id": 24,
+                        "user_uid": "IDD9046D42A4",
+                        "payment_method_id": 6,
+                        "data": {
+                            "card_number": "1312123123123123"
+                        },
+                        "created_at": "2021-04-16T14:12:46.547Z",
+                        "updated_at": "2021-04-16T14:12:46.547Z",
+                        "payment_method": {
+                            "id": 6,
+                            "type": "Bank Transfer",
+                            "name": "Mono transfer",
+                            "options": {
+                                "card_number": {
+                                    "name": "Card Number",
+                                    "type": "short_answer",
+                                    "required": true,
+                                    "description": "Your card number"
+                                }
+                            },
+                            "enabled": true,
+                            "created_at": "2021-04-16T10:49:57.13Z",
+                            "updated_at": "2021-04-16T10:49:57.13Z"
+                        }
+                    }
+                ],
+                "user": {
+                    "user_uid": "IDD9046D42A4",
+                    "user_user": "maker@openware.com",
+                    "user_nickname": "maker",
+                    "offers_count": 4
+                },
+                "created_at": "2021-04-16T14:42:10.167Z",
+                "updated_at": "2021-04-20T08:01:52.539Z"
             }
         }
     },

@@ -1,33 +1,130 @@
 HTTP/2 200
 Content-Type: application/json; charset=utf-8
 Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Allow-Mzarods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
 Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: total
+Total: 26
 
 [
     {
-        "created_at": "02-06-2021 15:40",
+        "id": 1,
+        "user_nickname": "King_Coin66",
+        "offers_count": 123,
+        "success_rate": 1,
+        "price": 27,
+        "available_amount": "5534.00",
+        "origin_amount": "7666.00",
+        "min_order_amount": "10",
+        "max_order_amount": "1000",
+        "base": "usdt",
+        "quote": "ngn",
+        "state": "pending",
+        "created_at": "",
+        "side": "sell",
+        "payment_methods": [{
+            "id": "1",
+            "payment_method_id": 1,
+            "payment_method": {
+                "name": "Kasikon Bank",
+                "type": "Bank Transfer"
+            },
+            "data": {
+                "bank_name": "Kasikon Bank",
+                "name": "Alice",
+                "account_number": "09-1023-1222-1"
+            }
+        }],
+        "user": {
+            "user_nickname": "King_Coin66",
+            "offers_count": 123,
+            "success_rate": 1
+        }
+    },
+    {
+        "id": 2,
+        "user_nickname": "King_Coin66",
+        "offers_count": 123,
+        "success_rate": 1,
+        "price": 1.2,
+        "available_amount": "5534.00",
+        "origin_amount": "7666.00",
+        "min_order_amount": "15",
+        "max_order_amount": "5000",
+        "base": "usdt",
+        "quote": "ngn",
+        "state": "pending",
+        "created_at": "",
+        "payment_methods": [{
+            "id": "1",
+            "payment_method_id": 1,
+            "payment_method": {
+                "name": "Kasikon Bank",
+                "type": "Bank Transfer"
+            },
+            "data": {
+                "bank_name": "Kasikon Bank",
+                "name": "Alice",
+                "account_number": "09-1023-1222-1"
+            }
+        }],
+        "user": {
+            "user_nickname": "King_Coin66",
+            "offers_count": 123,
+            "success_rate": 1
+        }
+},
+    {
+        "id": 10,
+        "uid": "IDD9046D42A4",
+        "base": "ngnt",
+        "quote": "ngn",
         "side": "buy",
-        "price":  "12.23",
-        "quantity":  "1.05",
-        "counterparty": "King_Coin66",
-        "state": "completed"
-    },
-    {
-        "created_at": "02-06-2021 15:40",
-        "side": "sell",
-        "price":  "22.34",
-        "quantity":  "2.15",
-        "counterparty": "Qwerty123",
-        "state": "dispute"
-    },
-    {
-        "created_at": "02-06-2021 15:40",
-        "side": "sell",
-        "price":  "7.44",
-        "quantity":  "1.15 usdt",
-        "counterparty": "Qwerty123",
-        "state": "cancelled"
+        "price": "123",
+        "origin_amount": "12",
+        "available_amount": "12",
+        "min_order_amount": "1",
+        "max_order_amount": "2",
+        "time_limit": 900,
+        "state": "wait",
+        "description": "asd",
+        "reply": "",
+        "payment_methods": [
+            {
+                "id": 24,
+                "user_uid": "IDD9046D42A4",
+                "payment_method_id": 6,
+                "data": {
+                    "card_number": "1312123123123123"
+                },
+                "created_at": "2021-04-16T14:12:46.547Z",
+                "updated_at": "2021-04-16T14:12:46.547Z",
+                "payment_method": {
+                    "id": 6,
+                    "type": "Bank Transfer",
+                    "name": "Mono transfer",
+                    "options": {
+                        "card_number": {
+                            "name": "Card Number",
+                            "type": "short_answer",
+                            "required": true,
+                            "description": "Your card number"
+                        }
+                    },
+                    "enabled": true,
+                    "created_at": "2021-04-16T10:49:57.13Z",
+                    "updated_at": "2021-04-16T10:49:57.13Z"
+                }
+            }
+        ],
+        "user": {
+            "user_uid": "IDD9046D42A4",
+            "user_user": "email",
+            "user_nickname": "kek",
+            "offers_count": 1
+        },
+        "created_at": "2021-04-16T14:42:10.167Z",
+        "updated_at": "2021-04-16T14:42:10.167Z"
     }
 ]

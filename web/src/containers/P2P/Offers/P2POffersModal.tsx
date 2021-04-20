@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, HOST_URL } from 'src/constants';
-import { cleanPositiveFloatInput, millisecondToMinutes, precisionRegExp, truncateMiddle } from 'src/helpers';
+import { cleanPositiveFloatInput, secondToMinutes, precisionRegExp, truncateMiddle } from 'src/helpers';
 import { P2POrderCreate, selectP2PWallets, selectPaymentMethodList, UserPaymentMethod } from 'src/modules';
 import { Decimal, DropdownComponent, Modal, OrderInput } from 'src/components';
 import { PlusIcon } from 'src/assets/images/PlusIcon';
@@ -263,7 +263,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                         </div>
                         <div className="detail-block">
                             <div className="detail-block-left">
-                                <div className="detail-block-label">{translate('page.body.p2p.modal.label.time.limit')}</div>{millisecondToMinutes(timeLimit)} {translate('page.body.p2p.modal.label.time.minute')}
+                                <div className="detail-block-label">{translate('page.body.p2p.modal.label.time.limit')}</div>{secondToMinutes(timeLimit)} {translate('page.body.p2p.modal.label.time.minute')}
                             </div>
                             <div className="detail-block-right">
                                 <div className="detail-block-label">{translate('page.body.p2p.modal.label.payment')}</div>

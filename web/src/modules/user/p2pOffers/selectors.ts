@@ -1,47 +1,47 @@
 import { Offer, RootState } from '../..';
 import { CommonError } from '../../types';
 
-/* P2P Active Offers fetch */
-export const selectP2PUserOffers = (state: RootState, status: string): Offer[] =>
-    state.user.p2pOffers[status].list;
+/* P2P User Offers fetch */
+export const selectP2PUserOffers = (state: RootState): Offer[] =>
+    state.user.p2pOffers.offers.list;
 
-export const selectP2PUserOffersFetchLoading = (state: RootState, status: string): boolean =>
-    state.user.p2pOffers[status].fetching;
+export const selectP2PUserOffersFetchLoading = (state: RootState): boolean =>
+    state.user.p2pOffers.offers.fetching;
 
-export const selectP2PUserOffersFetchSuccess = (state: RootState, status: string): boolean =>
-    state.user.p2pOffers[status].success;
+export const selectP2PUserOffersFetchSuccess = (state: RootState): boolean =>
+    state.user.p2pOffers.offers.success;
 
-export const selectP2PUserOffersFetchError = (state: RootState, status: string): CommonError | undefined =>
-    state.user.p2pOffers[status].error;
+export const selectP2PUserOffersFetchError = (state: RootState): CommonError | undefined =>
+    state.user.p2pOffers.offers.error;
 
-export const selectP2PUserOffersTimestamp = (state: RootState, status: string): number | undefined =>
-    state.user.p2pOffers[status].timestamp;
+export const selectP2PUserOffersTimestamp = (state: RootState): number | undefined =>
+    state.user.p2pOffers.offers.timestamp;
 
-export const selectShouldFetchP2PUserOffers = (state: RootState, status: string): boolean =>
-    !selectP2PUserOffersTimestamp(state, status) && !selectP2PUserOffersFetchLoading(state, status);
+export const selectShouldFetchP2PUserOffers = (state: RootState): boolean =>
+    !selectP2PUserOffersTimestamp(state) && !selectP2PUserOffersFetchLoading(state);
 
-export const selectP2PUserOffersTotalNumber = (state: RootState, status: string): number =>
-    state.user.p2pOffers[status].total;
+export const selectP2PUserOffersTotalNumber = (state: RootState): number =>
+    state.user.p2pOffers.offers.total;
 
-export const selectP2PUserOffersCurrentPage = (state: RootState, status: string): number =>
-    state.user.p2pOffers[status].page;
+export const selectP2PUserOffersCurrentPage = (state: RootState): number =>
+    state.user.p2pOffers.offers.page;
 
-export const selectP2PUserOffersPageCount = (state: RootState, status: string, limit): number =>
-    Math.ceil(state.user.p2pOffers[status].total / limit);
+export const selectP2PUserOffersPageCount = (state: RootState, limit): number =>
+    Math.ceil(state.user.p2pOffers.offers.total / limit);
 
-export const selectP2PUserOffersFirstElemIndex = (state: RootState, status: string, limit): number =>
-    (state.user.p2pOffers[status].page * limit) + 1;
+export const selectP2PUserOffersFirstElemIndex = (state: RootState, limit): number =>
+    (state.user.p2pOffers.offers.page * limit) + 1;
 
-export const selectP2PUserOffersLastElemIndex = (state: RootState, status: string, limit: number): number => {
-    if ((state.user.p2pOffers[status].page * limit) + limit > selectP2PUserOffersTotalNumber(state, status)) {
-        return selectP2PUserOffersTotalNumber(state, status);
+export const selectP2PUserOffersLastElemIndex = (state: RootState, limit: number): number => {
+    if ((state.user.p2pOffers.offers.page * limit) + limit > selectP2PUserOffersTotalNumber(state)) {
+        return selectP2PUserOffersTotalNumber(state);
     } else {
-        return (state.user.p2pOffers[status].page * limit) + limit;
+        return (state.user.p2pOffers.offers.page * limit) + limit;
     }
 };
 
-export const selectP2PUserOffersNextPageExists = (state: RootState, status: string, limit: number): boolean =>
-    (state.user.p2pOffers[status].page + 1) < selectP2PUserOffersPageCount(state, status, limit);
+export const selectP2PUserOffersNextPageExists = (state: RootState, limit: number): boolean =>
+    (state.user.p2pOffers.offers.page + 1) < selectP2PUserOffersPageCount(state, limit);
 
 
 /* P2P Create Offer */

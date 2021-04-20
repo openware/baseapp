@@ -2,15 +2,13 @@ import React, { FC, ReactElement, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
+import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, DEFAULT_TABLE_PAGE_LIMIT } from 'src/constants';
 import { localeDate, setOfferStatusColor } from 'src/helpers';
 import { Decimal, Pagination, Table } from '../../../components';
 import { useCurrenciesFetch, useP2PUserOffersFetch, useWalletsFetch } from '../../../hooks';
 import {
-    activeOffersFetch,
-    cancelledOffersFetch,
+    userOffersFetch,
     cancelOffer,
-    doneOffersFetch,
     RootState,
     selectP2POffersCurrentPage,
     selectP2PUserOffers,
@@ -22,7 +20,7 @@ import {
 } from '../../../modules';
 
 interface ParentProps {
-    status: string;
+    state: string;
 }
 
 type Props = ParentProps;
@@ -31,18 +29,18 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
     const page = useSelector(selectP2POffersCurrentPage);
-    const { status } = props;
+    const { state } = props;
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
-    const list = useSelector((state: RootState) => selectP2PUserOffers(state, status));
-    const total = useSelector((state: RootState) => selectP2PUserOffersTotalNumber(state, status));
-    const firstElemIndex = useSelector((state: RootState) => selectP2PUserOffersFirstElemIndex(state, status, 3));
-    const lastElemIndex = useSelector((state: RootState) => selectP2PUserOffersLastElemIndex(state, status, 3));
-    const nextPageExists = useSelector((state: RootState) => selectP2PUserOffersNextPageExists(state, status, 3));
+    const list = useSelector(selectP2PUserOffers);
+    const total = useSelector(selectP2PUserOffersTotalNumber);
+    const firstElemIndex = useSelector((state: RootState) => selectP2PUserOffersFirstElemIndex(state, DEFAULT_TABLE_PAGE_LIMIT));
+    const lastElemIndex = useSelector((state: RootState) => selectP2PUserOffersLastElemIndex(state, DEFAULT_TABLE_PAGE_LIMIT));
+    const nextPageExists = useSelector((state: RootState) => selectP2PUserOffersNextPageExists(state, DEFAULT_TABLE_PAGE_LIMIT));
     const wallets = useSelector(selectWallets);
 
     useWalletsFetch();
     useCurrenciesFetch();
-    useP2PUserOffersFetch({ limit: 3, page, status });
+    useP2PUserOffersFetch({ limit: DEFAULT_TABLE_PAGE_LIMIT, page, state });
 
     const headerTitles = useCallback(() => [
         translate('page.body.p2p.my.offers.table.date'),
@@ -51,40 +49,16 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
         translate('page.body.p2p.my.offers.table.amount'),
         translate('page.body.p2p.my.offers.table.price'),
         translate('page.body.p2p.my.offers.table.status'),
-        status === 'activeOffers' ? translate('page.body.p2p.my.offers.table.action') : '',
-    ], [status]);
+        state === 'wait' ? translate('page.body.p2p.my.offers.table.action') : '',
+    ], [state]);
 
     const onClickPrevPage = useCallback(() => {
-        switch (status) {
-            case 'activeOffers':
-                dispatch(activeOffersFetch({ page: Number(page) - 1, limit: 3 }));
-                break;
-            case 'cancelledOffers':
-                dispatch(cancelledOffersFetch({ page: Number(page) - 1, limit: 3 }));
-                break;
-            case 'doneOffers':
-                dispatch(doneOffersFetch({ page: Number(page) - 1, limit: 3 }));
-                break;
-            default:
-                break;
-        }
-    }, [activeOffersFetch, cancelledOffersFetch, status, page, 3]);
+        dispatch(userOffersFetch({ page: Number(page) - 1, limit: DEFAULT_TABLE_PAGE_LIMIT, state }));
+    }, [userOffersFetch, state, page, DEFAULT_TABLE_PAGE_LIMIT]);
 
     const onClickNextPage = useCallback(() => {
-        switch (status) {
-            case 'activeOffers':
-                dispatch(activeOffersFetch({ page: Number(page) + 1, limit: 3 }));
-                break;
-            case 'cancelledOffers':
-                dispatch(cancelledOffersFetch({ page: Number(page) + 1, limit: 3 }));
-                break;
-            case 'doneOffers':
-                dispatch(doneOffersFetch({ page: Number(page) + 1, limit: 3 }));
-                break;
-            default:
-                break;
-        }
-    }, [activeOffersFetch, cancelledOffersFetch, status, page, 3]);
+        dispatch(userOffersFetch({ page: Number(page) + 1, limit: DEFAULT_TABLE_PAGE_LIMIT, state }));
+    }, [userOffersFetch, state, page, DEFAULT_TABLE_PAGE_LIMIT]);
 
     const handleCancel = React.useCallback((id: number) => () => {
         dispatch(cancelOffer({ id, list }));
@@ -124,8 +98,8 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
 
     return (
         <div className="cr-user-p2p-offers">
-            <h3 className="cr-user-p2p-offers__title">{translate(`page.body.p2p.my.offers.${status}`)}</h3>
-            <div className={`cr-user-p2p-offers-table ${status}`}>
+            <h3 className="cr-user-p2p-offers__title">{translate(`page.body.p2p.my.offers.${state}`)}</h3>
+            <div className={`cr-user-p2p-offers-table ${state}`}>
                 <Table header={headerTitles()} data={retrieveData()}/>
                 {list.length > 0 &&
                     <Pagination

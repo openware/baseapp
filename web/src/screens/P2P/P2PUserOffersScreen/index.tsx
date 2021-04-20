@@ -21,9 +21,7 @@ export const P2PUserOffersScreen: FC = (): ReactElement => {
                 <Link to="/p2p" className="pg-user-p2p-offers--subtitle">
                     <ArrowLeftIcon className="icon"/><span>{translate('page.body.p2p.my.offers.back')}</span>
                 </Link>
-                <P2PUserOffers status="activeOffers"/>
-                <P2PUserOffers status="cancelledOffers"/>
-                <P2PUserOffers status="doneOffers"/>
+                <P2PUserOffers state="wait"/>
             </div>
         </div>
     );

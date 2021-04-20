@@ -4,30 +4,26 @@ import {
     P2P_CREATE_OFFER_DATA,
     P2P_CREATE_OFFER_ERROR,
     P2P_CREATE_OFFER_FETCH,
-    P2P_ACTIVE_OFFERS_DATA,
-    P2P_ACTIVE_OFFERS_ERROR,
-    P2P_ACTIVE_OFFERS_FETCH,
-    P2P_CANCELLED_OFFERS_DATA,
-    P2P_CANCELLED_OFFERS_ERROR,
-    P2P_CANCELLED_OFFERS_FETCH,
-    P2P_DONE_OFFERS_DATA,
-    P2P_DONE_OFFERS_ERROR,
-    P2P_DONE_OFFERS_FETCH,
+    P2P_USER_OFFERS_DATA,
+    P2P_USER_OFFERS_ERROR,
+    P2P_USER_OFFERS_FETCH,
+    P2P_USER_OFFERS_UPDATE,
     P2P_CANCEL_OFFER_DATA,
     P2P_CANCEL_OFFER_ERROR,
     P2P_CANCEL_OFFER_FETCH,
 } from './constants';
 
-export interface ActiveOffersFetch {
-    type: typeof P2P_ACTIVE_OFFERS_FETCH;
+export interface UserOffersFetch {
+    type: typeof P2P_USER_OFFERS_FETCH;
     payload: {
         page: number;
         limit: number;
+        state: string;
     };
 }
 
-export interface ActiveOffersData {
-    type: typeof P2P_ACTIVE_OFFERS_DATA;
+export interface UserOffersData {
+    type: typeof P2P_USER_OFFERS_DATA;
     payload: {
         list: Offer[];
         page: number;
@@ -35,53 +31,14 @@ export interface ActiveOffersData {
     };
 }
 
-export interface ActiveOffersError {
-    type: typeof P2P_ACTIVE_OFFERS_ERROR;
+export interface UserOffersError {
+    type: typeof P2P_USER_OFFERS_ERROR;
     error: CommonError;
 }
 
-export interface CancelledOffersFetch {
-    type: typeof P2P_CANCELLED_OFFERS_FETCH;
-    payload: {
-        page: number;
-        limit: number;
-    };
-}
-
-export interface CancelledOffersData {
-    type: typeof P2P_CANCELLED_OFFERS_DATA;
-    payload: {
-        list: Offer[];
-        page: number;
-        total: number;  
-    };
-}
-
-export interface CancelledOffersError {
-    type: typeof P2P_CANCELLED_OFFERS_ERROR;
-    error: CommonError;
-}
-
-export interface DoneOffersFetch {
-    type: typeof P2P_DONE_OFFERS_FETCH;
-    payload: {
-        page: number;
-        limit: number;
-    };
-}
-
-export interface DoneOffersData {
-    type: typeof P2P_DONE_OFFERS_DATA;
-    payload: {
-        list: Offer[];
-        page: number;
-        total: number;  
-    };
-}
-
-export interface DoneOffersError {
-    type: typeof P2P_DONE_OFFERS_ERROR;
-    error: CommonError;
+export interface P2PUserOffersUpdate {
+    type: typeof P2P_USER_OFFERS_UPDATE;
+    payload: Offer;
 }
 
 export interface CreateOfferFetch {
@@ -129,65 +86,35 @@ export interface CancelOfferError {
 }
 
 export type P2POffersActions =
-    CancelledOffersFetch
-    | CancelledOffersData
-    | CancelledOffersError
-    | ActiveOffersFetch
-    | ActiveOffersData
-    | ActiveOffersError
+    | UserOffersFetch
+    | UserOffersData
+    | UserOffersError
     | CreateOfferFetch
     | CreateOfferData
     | CreateOfferError
     | CancelOfferFetch
     | CancelOfferData
     | CancelOfferError
-    | DoneOffersFetch
-    | DoneOffersData
-    | DoneOffersError;
+    | P2PUserOffersUpdate;
 
-export const activeOffersFetch = (payload?: ActiveOffersFetch['payload']): ActiveOffersFetch => ({
-    type: P2P_ACTIVE_OFFERS_FETCH,
+export const userOffersFetch = (payload?: UserOffersFetch['payload']): UserOffersFetch => ({
+    type: P2P_USER_OFFERS_FETCH,
     payload,
 });
 
-export const activeOffersData = (payload: ActiveOffersData['payload']): ActiveOffersData => ({
-    type: P2P_ACTIVE_OFFERS_DATA,
+export const userOffersData = (payload: UserOffersData['payload']): UserOffersData => ({
+    type: P2P_USER_OFFERS_DATA,
     payload,
 });
 
-export const activeOffersError = (error: CommonError): ActiveOffersError => ({
-    type: P2P_ACTIVE_OFFERS_ERROR,
+export const userOffersError = (error: CommonError): UserOffersError => ({
+    type: P2P_USER_OFFERS_ERROR,
     error,
 });
 
-export const cancelledOffersFetch = (payload?: CancelledOffersFetch['payload']): CancelledOffersFetch => ({
-    type: P2P_CANCELLED_OFFERS_FETCH,
+export const p2pUserOffersUpdate = (payload: P2PUserOffersUpdate['payload']): P2PUserOffersUpdate => ({
+    type: P2P_USER_OFFERS_UPDATE,
     payload,
-});
-
-export const cancelledOffersData = (payload: CancelledOffersData['payload']): CancelledOffersData => ({
-    type: P2P_CANCELLED_OFFERS_DATA,
-    payload,
-});
-
-export const cancelledOffersError = (error: CommonError): CancelledOffersError => ({
-    type: P2P_CANCELLED_OFFERS_ERROR,
-    error,
-});
-
-export const doneOffersFetch = (payload?: DoneOffersFetch['payload']): DoneOffersFetch => ({
-    type: P2P_DONE_OFFERS_FETCH,
-    payload,
-});
-
-export const doneOffersData = (payload: DoneOffersData['payload']): DoneOffersData => ({
-    type: P2P_DONE_OFFERS_DATA,
-    payload,
-});
-
-export const doneOffersError = (error: CommonError): DoneOffersError => ({
-    type: P2P_DONE_OFFERS_ERROR,
-    error,
 });
 
 export const createOffer = (payload: CreateOfferFetch['payload']): CreateOfferFetch => ({

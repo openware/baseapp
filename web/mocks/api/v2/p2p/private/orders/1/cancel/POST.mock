@@ -17,7 +17,7 @@ Access-Control-Allow-Headers: content-type, x-csrf-token
   "amount": "100",
   "created_at": "2021-04-09T15:28:54Z",
   "state": "cancelled",
-  "time_limit": "900000",
+  "time_limit": "900",
   "dispute": { "id": "1" },
   "offer_id": "1"
 }
