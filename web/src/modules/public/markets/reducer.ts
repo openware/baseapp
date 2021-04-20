@@ -11,6 +11,9 @@ import {
     MARKETS_TICKERS_DATA,
     MARKETS_TICKERS_ERROR,
     MARKETS_TICKERS_FETCH,
+    MARKET_PRICE_FETCH,
+    MARKET_PRICE_DATA,
+    MARKET_PRICE_ERROR,
 } from './constants';
 import { Market, Ticker } from './types';
 
@@ -27,6 +30,14 @@ export interface MarketsState extends CommonState {
     loading: boolean;
     timestamp?: number;
     tickersTimestamp?: number;
+    successMarketPriceFetch: boolean;
+    marketPrice: {
+        market: string;
+        side: string;
+        price: string;
+        created_at?: string;
+        updated_at?: string;
+    };
 }
 
 export const initialMarketsState: MarketsState = {
@@ -36,6 +47,12 @@ export const initialMarketsState: MarketsState = {
     tickers: {},
     tickerLoading: false,
     loading: false,
+    successMarketPriceFetch: false,
+    marketPrice: {
+        market: '',
+        side: '',
+        price: '',
+    },
 };
 
 export const marketsReducer = (state = initialMarketsState, action: MarketsAction) => {
@@ -106,7 +123,30 @@ export const marketsReducer = (state = initialMarketsState, action: MarketsActio
                 ...state,
                 tickerLoading: false,
             };
-
+        case MARKET_PRICE_FETCH:
+            return {
+                ...state,
+                marketPrice: {
+                    ...state.marketPrice,
+                    market: action.payload.market,
+                    side: action.payload.side,
+                },
+            };
+        case MARKET_PRICE_DATA:
+            return {
+                ...state,
+                successMarketPriceFetch: true,
+                marketPrice: {
+                    ...state.marketPrice,
+                    ...action.payload,
+                },
+            };
+        case MARKET_PRICE_ERROR:
+            return {
+                ...state,
+                successMarketPriceFetch: false,
+                marketPrice: initialMarketsState.marketPrice,
+            };
         default:
             return state;
     }

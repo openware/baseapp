@@ -5,6 +5,7 @@ export const PG_TITLE_PREFIX = 'Cryptobase';
 export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
     const routes = [
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.quick.exchange', '/quick-exchange', `quick_exchange${isLight ? 'Light' : ''}`],
         ['page.header.navbar.wallets', '/wallets', `wallets${isLight ? 'Light' : ''}`],
         ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
         ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],

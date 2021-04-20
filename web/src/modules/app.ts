@@ -38,6 +38,7 @@ import { walletsReducer  } from './user/wallets';
 import { withdrawLimitReducer  } from './user/withdrawLimit';
 import { marketsAdminReducer } from './admin/markets';
 import { platformCreateReducer } from './admin/platform';
+import { quickExchangeReducer } from './user/quickExchange';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,
@@ -79,6 +80,7 @@ export const userReducer = combineReducers({
     wallets: walletsReducer,
     withdrawLimit: withdrawLimitReducer,
     internalTransfers: internalTransfersReducer,
+    quickExchange: quickExchangeReducer,
 });
 
 export const adminReducer = combineReducers({
