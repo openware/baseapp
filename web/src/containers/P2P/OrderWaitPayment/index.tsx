@@ -104,6 +104,23 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
         ) : null;
     };
 
+    const renderPaymentMethodDetails = () => {
+        const details = order?.offer?.payment_methods?.find(pm => pm.id === order.payment_method_id);
+
+        return details ? <div className="pm-details"> {
+            Object.keys(details.payment_method.options).map(key => {
+                const option = details.payment_method.options[key];
+
+                return (
+                    <div className="field">
+                        <div className="label">{option.name}</div>
+                        <div className="value">{details.data[key]}</div>
+                    </div>
+                );
+            })
+        }</div> : null;
+    };
+
     return (
         <div className="cr-prepare-order">
             {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
@@ -113,7 +130,12 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                 </div>
             ) : (
                 <div className="cr-prepare-order__block">
-                    <span className="bold-36">{translate(`page.body.p2p.order.transfer.order.wait.info`)}</span>
+                    <div className="cr-prepare-order__block--row">
+                        <span className="bold-36">{translate(`page.body.p2p.order.transfer.order.wait.info`)}</span>
+                    </div>
+                    <div className="cr-prepare-order__block--row">
+                        { renderPaymentMethodDetails() }
+                    </div>
                 </div>
             )}
             {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
