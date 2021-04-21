@@ -275,6 +275,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                             handleFocusInput={() => setAmountFocused(!amountFocused)}
                             labelVisible={true}
                             showAllButton={true}
+                            allButtonText={translate('page.body.p2p.modal.button.all')}
                             handleClickAllButton={handleClickTradeAll}
                         />
                         {showError && <span className="error">{amountError}</span>}

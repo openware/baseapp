@@ -1137,6 +1137,7 @@ export const en = {
     'page.body.p2p.modal.label.balance': 'Balance',
     'page.body.p2p.modal.button.payment': 'PAYMENT METHOD',
     'page.body.p2p.modal.button.payment.add': 'Add Payment Method +',
+    'page.body.p2p.modal.button.all': 'ALL',
 
     'page.body.p2p.order.modal.header.buyOrder': 'Buy Order completed',
     'page.body.p2p.order.modal.header.sellOrder': 'Sell Order completed',
