@@ -239,7 +239,7 @@ const Helpers = {
                 "min_order_amount": "1",
                 "max_order_amount": "2",
                 "time_limit": 900,
-                "state": states[Math.floor(Math.random() * states.length)],,
+                "state": states[Math.floor(Math.random() * states.length)],
                 "description": "asd",
                 "reply": "",
                 "payment_methods": [

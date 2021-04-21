@@ -20,7 +20,7 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
     useEffect(() => {
         if (order) {
             const timer = setTimeout(() => {
-                setTimeLeft(getCountdownDate(order.second_approve_expire_at));
+                setTimeLeft(getCountdownDate(order.state === 'prepared' ? order.first_approve_expire_at : order.second_approve_expire_at));
             }, 1000);
 
             return () => {
