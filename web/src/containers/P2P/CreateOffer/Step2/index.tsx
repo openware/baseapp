@@ -9,6 +9,7 @@ import { PlusIcon } from 'src/assets/images/PlusIcon';
 import { ArrowLeftIcon } from 'src/assets/images/setup/ArrowLeftIcon';
 import { HOST_URL, P2P_TIME_LIMIT_LIST } from 'src/constants';
 import { cleanPositiveFloatInput, precisionRegExp, truncateMiddle } from 'src/helpers';
+import { useP2PWalletsFetch } from 'src/hooks';
 import { Decimal, DropdownComponent, OrderInput } from '../../../../components';
 import { Currency, UserPaymentMethod, selectPaymentMethodList, Wallet, selectP2PWallets } from '../../../../modules';
 
@@ -47,6 +48,8 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     const history = useHistory();
     const wallets = useSelector(selectP2PWallets);
     const userPM = useSelector(selectPaymentMethodList);
+
+    useP2PWalletsFetch();
 
     useEffect(() => {
         if (userPM.length && !paymentMethods.length) {

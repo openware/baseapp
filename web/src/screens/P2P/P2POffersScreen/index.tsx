@@ -88,6 +88,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
 
     const closeModal = useCallback(() => {
         setOpenModal(false);
+        setSelectedOffer(null);
     }, []);
 
     const handleClickTrade = useCallback((offer: Offer) => {
