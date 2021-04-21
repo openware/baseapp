@@ -240,7 +240,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
 
     const body = React.useCallback(() => {
         const placeHolder = side === 'buy' ? 
-            `${Decimal.format(lowLimit, pricePrecision, ',')} - ${Decimal.format(topLimit, pricePrecision, ',')}`
+            `${Decimal.format(+lowLimit * +price, pricePrecision, ',')} - ${Decimal.format(+topLimit * +price, pricePrecision, ',')}`
             : Decimal.format(0, amountPrecision, '');
 
         return (
