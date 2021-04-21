@@ -155,11 +155,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                     <div>
                         <div className="picked-payment-method">
                             {pm && <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pm.id}/logo`} alt=""/>}
-                            {modal.name}
-                        </div>
-                        <div className="holder-name">
-                            <label>{translate('page.body.profile.payment.modal.body.holderName')}</label>
-                            {pm?.options?.user}
+                            {pm?.name}
                         </div>
                         <div className="custom-fields">
                             {renderCustomFields(paymentOptions)}
@@ -183,10 +179,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                     <div>
                         <div className="picked-payment-method">
                             {pmUpdate && <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pmUpdate.id}/logo`} alt=""/>}
-                            {modal.name}
-                        </div>
-                        <div className="holder-name">
-                            <label>{translate('page.body.profile.payment.modal.body.holderName')}</label>
+                            {pmUpdate?.name}
                         </div>
                         <div className="custom-fields">
                             {renderCustomFields(paymentOptions)}
