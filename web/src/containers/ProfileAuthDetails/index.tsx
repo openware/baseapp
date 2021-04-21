@@ -91,7 +91,10 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                             <Gravatar email={user.email} size={36} />
                         </div>
                         <div className="pg-profile-page__details-user">
-                            <h2>{user.email}</h2>
+                            {isUsernameEnabled() ? (
+                                <h2>{user.username}</h2>
+                            ) : null }
+                            <span>{user.email}</span>
                             <p>UID: {user.uid}</p>
                         </div>
                     </div>

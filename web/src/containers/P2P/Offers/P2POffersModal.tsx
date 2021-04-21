@@ -12,6 +12,7 @@ import { Decimal, DropdownComponent, Modal, OrderInput } from 'src/components';
 import { PlusIcon } from 'src/assets/images/PlusIcon';
 import { useP2PWalletsFetch } from 'src/hooks';
 import { useHistory } from 'react-router';
+import { isUsernameEnabled } from 'src/api';
 
 interface ParentProps {
     id: number;
@@ -245,12 +246,14 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
 
         return (
             <React.Fragment>
-                <div className="cr-modal__container-content-block">
-                    <div className="advertiser">
-                        <AvatarIcon fillColor="var(--icons)"/>
-                        <div className="advertiser-name">{advertiserName}</div>
+                {isUsernameEnabled() ? (
+                    <div className="cr-modal__container-content-block">
+                        <div className="advertiser">
+                            <AvatarIcon fillColor="var(--icons)"/>
+                            <div className="advertiser-name">{advertiserName}</div>
+                        </div>
                     </div>
-                </div>
+                ) : null}
                 <div className="cr-modal__container-content-block">
                     <div className="detail">
                         <div className="detail-block">

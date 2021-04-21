@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
+import { isUsernameEnabled } from 'src/api';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
 import { DEFAULT_CCY_PRECISION, DEFAULT_TABLE_PAGE_LIMIT, DEFAULT_FIAT_PRECISION, HOST_URL } from 'src/constants';
 import { Decimal, Pagination, Table } from '../../../components';
@@ -111,8 +112,8 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 <div className="advertisers" key={id}>
                     <AvatarIcon fillColor="var(--icons)"/>
                     <div className="font-small ml-small">
-                        {user?.user_nickname}
-                        <div className="sec-row">
+                        {isUsernameEnabled() ? user?.user_nickname : null }
+                        <div className={isUsernameEnabled() ? 'sec-row' : 'mt-small'}>
                             <span className="font-small secondary">{user?.offers_count}&nbsp;{intl.formatMessage({ id: 'page.body.p2p.table.offers' })}</span>
                             {user?.success_rate ? <span className="font-small secondary ml-24">{+user?.success_rate * 100}% {intl.formatMessage({ id: 'page.body.p2p.table.completion' })}</span> : null}
                         </div>

@@ -24,6 +24,7 @@ import {
     setStateType,
     localeDate,
 } from '../../../helpers';
+import { isUsernameEnabled } from 'src/api';
 
 const TradesHistory: FC = (): ReactElement => {
     const intl = useIntl();
@@ -53,10 +54,10 @@ const TradesHistory: FC = (): ReactElement => {
             intl.formatMessage({id: 'page.body.p2p.order_history.side'}),
             intl.formatMessage({id: 'page.body.p2p.order_history.price'}),
             intl.formatMessage({id: 'page.body.p2p.order_history.quantity'}),
-            intl.formatMessage({id: 'page.body.p2p.order_history.counterparty'}),
+            isUsernameEnabled() ? intl.formatMessage({id: 'page.body.p2p.order_history.counterparty'}) : null,
             intl.formatMessage({id: 'page.body.p2p.order_history.status'}),
             intl.formatMessage({id: 'page.body.p2p.order_history.actions'}),
-        ];
+        ].filter(i => Boolean(i));
     };
 
     const renderContent = () => {
@@ -119,15 +120,16 @@ const TradesHistory: FC = (): ReactElement => {
         const pricePrecision = currencies.find(item => item.id === quote)?.precision;
         const amountPrecision = currencies.find(item => item.id === base)?.precision;
 
-        return [
+        const list = [
             localeDate(created_at, 'fullDate'),
             <span style={{ color: sideColored.color }}>{sideColored.text}</span>,
             `${Decimal.format(price, pricePrecision || DEFAULT_FIAT_PRECISION, ',')} ${base.toUpperCase()}/${quote.toUpperCase()}`,
             `${Decimal.format(amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${base.toUpperCase()}`,
-            user?.user_nickname,
             <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
             state === 'dispute' ? renderDisputeButton() : null,
         ];
+
+        return isUsernameEnabled() ? list.splice(4, 0, user?.user_nickname) : list;
     };
 
     React.useEffect(() => {
