@@ -111,11 +111,11 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
         currenciesList.map(i => {
             return (
                 <React.Fragment>
-                    {i.icon_url ? (
+                    {i?.icon_url ? (
                         <span className="cr-crypto-icon cr-wallet-item__icon">
-                            <img alt={i?.name.toUpperCase()} src={i.icon_url} />
+                            <img alt={i?.name.toUpperCase()} src={i?.icon_url} />
                         </span>
-                    ) : (<CryptoIcon className="cr-wallet-item__icon" code={i.id.toUpperCase()} />)}
+                    ) : (<CryptoIcon className="cr-wallet-item__icon" code={i?.id.toUpperCase()} />)}
                 </React.Fragment>
             );
         });

@@ -121,7 +121,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
                         side={sideFilter}
                         currencyCode={selectedOffer.base}
                         fiatCode={fiatCurrency}
-                        advertiserName={selectedOffer.user.user_nickname}
+                        advertiserName={selectedOffer.user?.user_nickname}
                         price={selectedOffer.price}
                         available={selectedOffer.available_amount}
                         topLimit={selectedOffer.max_order_amount}

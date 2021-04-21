@@ -70,9 +70,9 @@ const WalletsP2P: FC = (): ReactElement => {
                 <div key={index} className="cr-wallets-table__wallet">
                     {iconUrl ? (
                         <span className="cr-wallets-table__wallet--icon">
-                            <img alt={currency.toUpperCase()} src={iconUrl} />
+                            <img alt={currency?.toUpperCase()} src={iconUrl} />
                         </span>
-                    ) : (<CryptoIcon className="cr-wallets-table__wallet--icon" code={currency.toUpperCase()} />)}
+                    ) : (<CryptoIcon className="cr-wallets-table__wallet--icon" code={currency?.toUpperCase()} />)}
                     <div className="cr-wallets-table__wallet--description">
                         <span className="bold">{currency?.toUpperCase()}</span>
                         <span className="secondary">{name}</span>
@@ -82,7 +82,7 @@ const WalletsP2P: FC = (): ReactElement => {
                 <Decimal key={index} fixed={fixed} thousSep=",">{balance ? balance.toString() : '0'}</Decimal>,
                 <Decimal key={index} fixed={fixed} thousSep=",">{locked ? locked.toString() : '0'}</Decimal>,
                 <div className="cr-wallets-table__button-wrapper" key={index}>
-                    {p2pCurrencies.find(i => i.id === currency.toLowerCase()) && (
+                    {p2pCurrencies.find(i => i.id === currency?.toLowerCase()) && (
                         <Button onClick={() => handleClickP2P(currency)} variant="secondary">
                             {translate('page.body.wallets.overview.action.p2p')}
                         </Button>
