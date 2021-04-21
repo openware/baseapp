@@ -18,9 +18,6 @@ import {
     Wallet,
 } from '../../../modules';
 import { Market, Ticker } from '../../../modules/public/markets';
-import { rangerConnectFetch, RangerConnectFetch } from '../../../modules/public/ranger';
-import { RangerState } from '../../../modules/public/ranger/reducer';
-import { selectRanger } from '../../../modules/public/ranger/selectors';
 
 interface EstimatedValueProps {
     wallets: Wallet[];
@@ -32,7 +29,6 @@ interface ReduxProps {
     tickers: {
         [key: string]: Ticker,
     };
-    rangerState: RangerState;
     userLoggedIn: boolean;
 }
 
@@ -40,7 +36,6 @@ interface DispatchProps {
     fetchCurrencies: typeof currenciesFetch;
     fetchMarkets: typeof marketsFetch;
     fetchTickers: typeof marketsTickersFetch;
-    rangerConnect: typeof rangerConnectFetch;
 }
 
 type Props = DispatchProps & ReduxProps & EstimatedValueProps & IntlProps;
@@ -53,7 +48,6 @@ class EstimatedValueContainer extends React.Component<Props> {
             fetchMarkets,
             fetchTickers,
             markets,
-            rangerState: {connected},
             tickers,
             userLoggedIn,
         } = this.props;
@@ -68,10 +62,6 @@ class EstimatedValueContainer extends React.Component<Props> {
 
         if (!currencies.length) {
             fetchCurrencies();
-        }
-
-        if (!connected) {
-            this.props.rangerConnect({withAuth: userLoggedIn});
         }
     }
 
@@ -148,7 +138,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     currencies: selectCurrencies(state),
     markets: selectMarkets(state),
     tickers: selectMarketTickers(state),
-    rangerState: selectRanger(state),
     userLoggedIn: selectUserLoggedIn(state),
 });
 
@@ -156,7 +145,6 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
     fetchCurrencies: () => dispatch(currenciesFetch()),
     fetchMarkets: () => dispatch(marketsFetch()),
     fetchTickers: () => dispatch(marketsTickersFetch()),
-    rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
 });
 
 // tslint:disable-next-line:no-any

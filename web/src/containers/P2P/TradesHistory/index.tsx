@@ -24,14 +24,11 @@ import {
     setStateType,
     localeDate,
 } from '../../../helpers';
-import { useRangerConnectFetch } from 'src/hooks';
 
 const TradesHistory: FC = (): ReactElement => {
     const intl = useIntl();
     const history = useHistory();
     const dispatch = useDispatch();
-
-    useRangerConnectFetch();
 
     const list = useSelector(selectP2PTradesHistoryData);
     const fetching = useSelector(selectP2PTradesHistoryLoading);

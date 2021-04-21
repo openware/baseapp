@@ -1229,6 +1229,9 @@ export const en = {
     'page.body.p2p.dispute.message.placeholder': 'Describe your problem (optional)',
     'page.body.p2p.dispute.submit': 'Sumbit the dispute',
     'page.body.p2p.dispute.cancel': 'Cancel',
+    'page.alert.p2p.new.order.title': 'New P2P order',
+    'page.alert.p2p.new.order.data': 'Order #{id} waiting for your action',
+    'page.alert.p2p.new.order.link': 'Go to the order',
 
     // Wallets screen
 

@@ -3,12 +3,11 @@ import { useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { ArrowLeftIcon } from 'src/assets/images/setup/ArrowLeftIcon';
 import { P2PUserOffers } from 'src/containers';
-import { useDocumentTitle, useP2PCurrenciesFetch, useRangerConnectFetch } from 'src/hooks';
+import { useDocumentTitle, useP2PCurrenciesFetch } from 'src/hooks';
 
 export const P2PUserOffersScreen: FC = (): ReactElement => {
     const { formatMessage } = useIntl();
 
-    useRangerConnectFetch();
     useP2PCurrenciesFetch();
     useDocumentTitle('My P2P offers');
 

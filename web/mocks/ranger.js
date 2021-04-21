@@ -230,11 +230,11 @@ class RangerMock {
         this.subscribe(ws, Helpers.getStreamsFromUrl(request.url));
         ws.timers.push(setInterval(tickersMock(ws, this.markets), 3000));
         ws.timers.push(setInterval(balancesMock(ws), 3000));
-        ws.timers.push(setInterval(p2pOrdersMock(ws, 'approved'), 30000));
+        ws.timers.push(setInterval(p2pOrdersMock(ws, 'approved'), 3000));
         ws.timers.push(setInterval(p2pOrdersMock(ws, 'cancelled'), 30000));
         ws.timers.push(setInterval(p2pOffersMock(ws, 'cancelled'), 30000));
-        ws.timers.push(setInterval(p2pOffersMock(ws, 'created'), 3000));
-        ws.timers.push(setInterval(p2pOffersMock(ws, 'updated'), 3000));    
+        ws.timers.push(setInterval(p2pOffersMock(ws, 'created'), 30000));
+        ws.timers.push(setInterval(p2pOffersMock(ws, 'updated'), 30000));    
 
         this.markets.forEach((name) => {
             let { marketId } = Helpers.getMarketInfos(name);

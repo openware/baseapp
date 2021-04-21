@@ -214,20 +214,28 @@ const initRanger = (
 
                             return;
 
+                        // public
+                        case 'p2p':
+                            const p2pPublicOffersMatch = event && String(event.event).includes('p2p_offer');
+
+                            if (p2pPublicOffersMatch) {
+                                emitter(p2pOffersUpdate(event.payload));
+                                return;
+                            }
+
                         // private
                         case 'p2p':
                             const p2pOrdersMatch = event && String(event.event).includes('p2p_order');
 
                             if (p2pOrdersMatch) {
                                 emitter(p2pOrdersDataWS(event.payload));
-        
+
                                 return;
                             }
 
                             const p2pOffersMatch = event && String(event.event).includes('p2p_offer');
 
                             if (p2pOffersMatch) {
-                                emitter(p2pOffersUpdate(event.payload));
                                 emitter(p2pUserOffersUpdate(event.payload));
 
                                 return;

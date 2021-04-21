@@ -121,10 +121,13 @@ const Helpers = {
         }
     },
     getP2POrder: (state) => {
+        const array = [82030, 1, 2, 3];
+        const states = ['done', 'wait', 'prepared', 'cancelled', 'dispute'];
+
         return {
             "event": `p2p_order.${state}`,
             "payload": {
-                "id":82030,
+                "id": array[Math.floor(Math.random() * array.length)],
                 "user_uid":"U487205863",
                 "base":"usdt",
                 "quote":"usd",
@@ -135,7 +138,7 @@ const Helpers = {
                 "min_order_amount":"10",
                 "max_order_amount":"100",
                 "time_limit":10,
-                "state": state === 'approved' ? 'done' : state,
+                "state": states[Math.floor(Math.random() * states.length)],
                 "payment_methods":null,
                 "offer": {
                     "id": 8,
@@ -220,6 +223,8 @@ const Helpers = {
         }
     },
     getP2POffer: (state) => {
+        const states = ['done', 'wait', 'prepared', 'cancelled', 'dispute'];
+
         return {
             "event": `p2p_offer.${state}`,
             "payload": {
@@ -234,7 +239,7 @@ const Helpers = {
                 "min_order_amount": "1",
                 "max_order_amount": "2",
                 "time_limit": 900,
-                "state": state === 'cancelled' ? state : "wait",
+                "state": states[Math.floor(Math.random() * states.length)],,
                 "description": "asd",
                 "reply": "",
                 "payment_methods": [

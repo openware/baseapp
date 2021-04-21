@@ -5,7 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Decimal } from 'src/components';
 import { Dispute, OrderWaitConfirmation, OrderWaitPayment, P2POrderConfirmModal } from 'src/containers';
 import { localeDate } from 'src/helpers';
-import { useCurrenciesFetch, useDocumentTitle, useRangerConnectFetch } from 'src/hooks';
+import { useCurrenciesFetch, useDocumentTitle } from 'src/hooks';
 import { useP2POrderFetch } from 'src/hooks/useP2POrderFetch';
 import { selectCurrencies, selectP2PCreatedOrder, selectUserInfo, User } from 'src/modules';
 import { Currency, P2POrder } from '../../../modules';
@@ -25,7 +25,6 @@ export const P2POrderScreen: FC = (): ReactElement => {
     useDocumentTitle('P2P Order');
     useCurrenciesFetch();
     useP2POrderFetch(Number(id));
-    useRangerConnectFetch();
 
     useEffect(() => {
         if (order?.state === 'cancelled') {

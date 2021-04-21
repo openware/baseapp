@@ -8,3 +8,4 @@ export * from './OrderWaitPayment';
 export * from './OrderWaitConfirmation';
 export * from './Dispute';
 export * from './ModalP2POrderConfiramtion';
+export * from './P2PAlerts';

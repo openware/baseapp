@@ -4,7 +4,7 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { TabPanel } from 'src/components';
 import { P2POffers, P2POffersHeader, P2POffersModal } from 'src/containers';
-import { useDocumentTitle, useP2PCurrenciesFetch, useP2PPaymentMethodsFetch, useRangerConnectFetch, useUserPaymentMethodsFetch } from 'src/hooks';
+import { useDocumentTitle, useP2PCurrenciesFetch, useP2PPaymentMethodsFetch, useUserPaymentMethodsFetch } from 'src/hooks';
 import { Offer, P2POrderCreate, p2pOrdersCreateFetch, selectP2PCreatedOrder, selectP2PCreateOrderSuccess, selectP2PCurrenciesData, selectP2PPaymentMethodsData } from 'src/modules';
 
 interface ParamType {
@@ -31,7 +31,6 @@ export const P2POffersScreen: FC = (): ReactElement => {
     const history = useHistory();
     const { currency } = useParams<ParamType>();
 
-    useRangerConnectFetch();
     useP2PCurrenciesFetch();
     useP2PPaymentMethodsFetch();
     useUserPaymentMethodsFetch();
