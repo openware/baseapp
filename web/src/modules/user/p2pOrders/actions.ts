@@ -14,6 +14,7 @@ import {
     P2P_ORDER_FETCH,
     P2P_ORDERS_UPDATE,
     P2P_ORDERS_APPEND,
+    P2P_ORDER_RESET_SUCCESS,
 } from "./constants";
 import { P2POrderCreate, P2POrder } from "./types";
 
@@ -100,6 +101,10 @@ export interface P2POrdersAppend {
     payload: P2POrder;
 }
 
+export interface P2POrderResetSuccess {
+    type: typeof P2P_ORDER_RESET_SUCCESS;
+}
+
 export type P2POrdersActions =
     P2POrdersCreateFetch
     | P2POrdersCreateData
@@ -114,7 +119,8 @@ export type P2POrdersActions =
     | P2POrdersUpdateData
     | P2POrdersUpdateError
     | P2POrdersDataWS
-    | P2POrdersAppend;
+    | P2POrdersAppend
+    | P2POrderResetSuccess;
 
 export const p2pOrdersCreateFetch = (payload: P2POrderCreate): P2POrdersCreateFetch => ({
     type: P2P_ORDERS_CREATE_FETCH,
@@ -184,4 +190,8 @@ export const p2pOrdersDataWS = (payload: P2POrdersDataWS['payload']): P2POrdersD
 export const p2pOrdersAppend = (payload: P2POrdersAppend['payload']): P2POrdersAppend => ({
     type: P2P_ORDERS_APPEND,
     payload,
+});
+
+export const p2pOrderResetSuccess = (): P2POrderResetSuccess => ({
+    type: P2P_ORDER_RESET_SUCCESS,
 });

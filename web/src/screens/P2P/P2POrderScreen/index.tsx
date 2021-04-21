@@ -1,13 +1,13 @@
 import React, { FC, ReactElement, useCallback, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { Decimal } from 'src/components';
 import { Dispute, OrderWaitConfirmation, OrderWaitPayment, P2POrderConfirmModal } from 'src/containers';
 import { localeDate } from 'src/helpers';
 import { useCurrenciesFetch, useDocumentTitle } from 'src/hooks';
 import { useP2POrderFetch } from 'src/hooks/useP2POrderFetch';
-import { selectCurrencies, selectP2PCreatedOrder, selectUserInfo, User } from 'src/modules';
+import { p2pOrderResetSuccess, selectCurrencies, selectP2PCreatedOrder, selectP2PCreateOrderSuccess, selectUserInfo, User } from 'src/modules';
 import { Currency, P2POrder } from '../../../modules';
 
 interface ParamType {
@@ -18,9 +18,11 @@ export const P2POrderScreen: FC = (): ReactElement => {
     const { formatMessage } = useIntl();
     const { id } = useParams<ParamType>();
     const order: P2POrder = useSelector(selectP2PCreatedOrder);
+    const createdOrderSuccess = useSelector(selectP2PCreateOrderSuccess);
     const currencies: Currency[] = useSelector(selectCurrencies);
     const history = useHistory();
     const user: User = useSelector(selectUserInfo);
+    const dispatch = useDispatch();
 
     useDocumentTitle('P2P Order');
     useCurrenciesFetch();
@@ -31,6 +33,12 @@ export const P2POrderScreen: FC = (): ReactElement => {
             history.push('/p2p');
         }
     }, [order, history]);
+
+    useEffect(() => {
+        if (createdOrderSuccess) {
+            dispatch(p2pOrderResetSuccess());
+        }
+    }, [createdOrderSuccess]);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
 

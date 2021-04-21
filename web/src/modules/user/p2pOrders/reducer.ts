@@ -18,6 +18,7 @@ import {
     P2P_TRADES_HISTORY_FETCH,
     P2P_ORDERS_UPDATE,
     P2P_ORDERS_APPEND,
+    P2P_ORDER_RESET_SUCCESS,
 } from "./constants";
 import { P2POrder } from "./types";
 
@@ -105,6 +106,11 @@ const orderReducer = (state: P2POrdersState['order'], action: P2POrdersActions) 
                 loading: false,
                 error: action.error,
             };
+        case P2P_ORDER_RESET_SUCCESS:
+            return {
+                ...state,
+                success: false,
+            };
         default:
             return state;
     }
@@ -186,6 +192,7 @@ export const p2pOrdersReducer = (state = initialP2POrdersState, action: P2POrder
         case P2P_ORDERS_UPDATE_FETCH:
         case P2P_ORDERS_UPDATE_DATA:
         case P2P_ORDERS_UPDATE_ERROR:
+        case P2P_ORDER_RESET_SUCCESS:
             const orderState = { ...state.order };
 
             return {

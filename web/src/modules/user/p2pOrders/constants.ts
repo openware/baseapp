@@ -16,3 +16,5 @@ export const P2P_TRADES_HISTORY_ERROR = 'p2p_trades_history/ERROR';
 
 export const P2P_ORDERS_UPDATE = 'p2p_orders/UPDATE';
 export const P2P_ORDERS_APPEND = 'p2p_orders/APPEND';
+
+export const P2P_ORDER_RESET_SUCCESS = 'p2p_order/RESET_SUCCESS';
