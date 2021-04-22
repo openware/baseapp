@@ -1,13 +1,14 @@
 import classnames from 'classnames';
-import React, { FC, ReactElement, useCallback, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
-import { P2P_TIME_LIMIT_LIST } from 'src/constants';
+import { Decimal } from 'src/components';
+import { DEFAULT_CCY_PRECISION, P2P_TIME_LIMIT_LIST } from 'src/constants';
 import { ConfirmOfferModal, CreateOfferStep1, CreateOfferStep2, CreateOfferStep3 } from 'src/containers';
 import { useCurrenciesFetch, useDocumentTitle, useP2PCurrenciesFetch, useUserPaymentMethodsFetch, useWalletsFetch } from 'src/hooks';
-import { createOffer, Currency, UserPaymentMethod } from 'src/modules';
+import { createOffer, Currency, selectCurrencies, UserPaymentMethod } from 'src/modules';
 
 export const CreateP2POfferScreen: FC = (): ReactElement => {
     const [step, setStep] = useState<number>(0);
@@ -23,16 +24,22 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
     const [asset, setAsset] = useState<Currency | undefined>();
     const [cash, setCash] = useState<Currency | undefined>();
     const [open, setOpen] = useState<boolean>(false);
+    const [amountPrecision, setAmountPrecision] = useState<number>(0);
 
     const { formatMessage } = useIntl();
     const history = useHistory();
     const dispatch = useDispatch();
+    const currencies = useSelector(selectCurrencies);
 
     useDocumentTitle('Create Offer');
     useCurrenciesFetch();
     useWalletsFetch();
     useP2PCurrenciesFetch();
     useUserPaymentMethodsFetch();
+
+    useEffect(() => {
+        setAmountPrecision(currencies.find(c => c.id === asset?.id.toLowerCase())?.precision || DEFAULT_CCY_PRECISION);
+    }, [asset, currencies]);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
 
@@ -81,8 +88,8 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
                 side,
                 price,
                 amount,
-                max_order_amount: Number(price) ? +topLimit / +price : 0,
-                min_order_amount: Number(price) ? +lowLimit / +price : 0,
+                max_order_amount: Number(price) ? Decimal.format(+topLimit / +price, amountPrecision) : 0,
+                min_order_amount: Number(price) ? Decimal.format(+lowLimit / +price, amountPrecision) : 0,
                 time_limit: Number(timeLimit.match(/\d+/)[0]) * 60,
                 upm_id: paymentMethods.map(i => Number(i.id)),
                 description,
@@ -106,6 +113,7 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
         paymentMethods,
         description,
         replyMessage,
+        amountPrecision,
         dispatch,
     ]);
 
