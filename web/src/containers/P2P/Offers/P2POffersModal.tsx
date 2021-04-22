@@ -46,6 +46,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     const [pricePrecision, setPricePrecision] = useState<number>(0);
     const [amountPrecision, setAmountPrecision] = useState<number>(0);
     const [clickAll, setClickAll] = useState<boolean>(false);
+    const [availablePM, setAvailablePM] = useState<UserPaymentMethod[]>([]);
 
     const {
         id,
@@ -70,6 +71,12 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     useP2PWalletsFetch();
 
     useEffect(() => {
+        if (userPM.length && paymentMethods.length) {
+            setAvailablePM(userPM.reduce((acc, upm) => { return paymentMethods.find(p => p.payment_method_id === upm.payment_method_id) ? [...acc, upm] : acc }, []));
+        }
+    }, [userPM, paymentMethod]);
+
+    useEffect(() => {
         if (clickAll) {
             defineAmountError(tradeAmount.toString());
             setReceiveAmount(side === 'buy' ? 
@@ -88,10 +95,10 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     }, [currencyCode, wallets]);
 
     useEffect(() => {
-        if (userPM.length && !paymentMethod) {
-            setPaymentMethod(userPM[0]);
+        if (availablePM.length && !paymentMethod) {
+            setPaymentMethod(availablePM[0]);
         }
-    }, [userPM, paymentMethod]);
+    }, [availablePM, paymentMethod]);
 
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
 
@@ -122,9 +129,9 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     }, [amountPrecision, pricePrecision, side, price]);
 
     const handleSelectPaymentMethod = React.useCallback((index: number) => {
-        setPaymentMethod(userPM[index]);
+        setPaymentMethod(availablePM[index]);
         definePaymentError(paymentMethod);
-    }, [paymentMethod, userPM]);
+    }, [paymentMethod, availablePM]);
 
     const defineAmountError = React.useCallback((value: string) => {
         let error = '';
@@ -231,7 +238,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     ), [side, classnames]);
 
     const iconsList = React.useCallback(() =>
-        userPM.map(i => <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPM]);
+        availablePM.map(i => <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPM]);
 
     const renderPMItem = (pm: UserPaymentMethod) => {
         const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));
@@ -327,10 +334,10 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                         <React.Fragment>
                             <div className="payment">
                                 <label>{translate('page.body.p2p.modal.button.payment')}</label>
-                                {userPM.length ? (
+                                {availablePM.length ? (
                                     <DropdownComponent
                                         className="cr-create-offer__dp-dropdown"
-                                        list={userPM.map(renderPMItem)}
+                                        list={availablePM.map(renderPMItem)}
                                         iconsList={iconsList()}
                                         onSelect={handleSelectPaymentMethod}
                                         placeholder={paymentMethod && renderPMItem(paymentMethod)}
@@ -372,7 +379,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         showError,
         wallets,
         clickAll,
-        userPM,
+        availablePM,
         paymentMethod,
         receiveFocused,
         history,
