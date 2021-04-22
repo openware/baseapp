@@ -16,6 +16,10 @@ import {
     P2P_CANCEL_OFFER_FETCH,
 } from './constants';
 
+export interface OfferNestedOrders extends Offer {
+    orders: P2POrder[];
+}
+
 export interface UserOffersFetch {
     type: typeof P2P_USER_OFFERS_FETCH;
     payload: {
@@ -48,9 +52,7 @@ export interface UserOfferOrdersFetch {
 
 export interface UserOfferOrdersData {
     type: typeof P2P_USER_OFFER_ORDERS_DATA;
-    payload: {
-        list: P2POrder[];
-    };
+    payload: OfferNestedOrders;
 }
 
 export interface UserOfferOrdersError {

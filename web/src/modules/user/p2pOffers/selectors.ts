@@ -1,5 +1,6 @@
 import { Offer, P2POrder, RootState } from '../..';
 import { CommonError } from '../../types';
+import { OfferNestedOrders } from './actions';
 
 /* P2P User Offers fetch */
 export const selectP2PUserOffers = (state: RootState): Offer[] =>
@@ -45,20 +46,20 @@ export const selectP2PUserOffersNextPageExists = (state: RootState, limit: numbe
 
 
 /* P2P User Offer Orders fetch */
-export const selectP2PUserOfferOrders = (state: RootState): P2POrder[] =>
-    state.user.p2pOffers.orders.list;
+export const selectP2PUserOfferOrders = (state: RootState): OfferNestedOrders =>
+    state.user.p2pOffers.offerOrders.data;
 
 export const selectP2PUserOfferOrdersFetchLoading = (state: RootState): boolean =>
-    state.user.p2pOffers.orders.fetching;
+    state.user.p2pOffers.offerOrders.fetching;
 
 export const selectP2PUserOfferOrdersFetchSuccess = (state: RootState): boolean =>
-    state.user.p2pOffers.orders.success;
+    state.user.p2pOffers.offerOrders.success;
 
 export const selectP2PUserOfferOrdersFetchError = (state: RootState): CommonError | undefined =>
-    state.user.p2pOffers.orders.error;
+    state.user.p2pOffers.offerOrders.error;
 
 export const selectP2PUserOfferOrdersTimestamp = (state: RootState): number | undefined =>
-    state.user.p2pOffers.orders.timestamp;
+    state.user.p2pOffers.offerOrders.timestamp;
 
 export const selectShouldFetchP2PUserOfferOrders = (state: RootState): boolean =>
     !selectP2PUserOfferOrdersTimestamp(state) && !selectP2PUserOfferOrdersFetchLoading(state);

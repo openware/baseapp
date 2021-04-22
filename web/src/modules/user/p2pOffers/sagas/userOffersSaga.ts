@@ -34,9 +34,9 @@ export function* userOffersSaga(action: UserOffersFetch) {
 
 export function* userOfferOrdersSaga(action: UserOfferOrdersFetch) {
     try {
-        const { data, headers } = yield call(API.get(config), `/private/offer/${action.payload.offer_id}`);
+        const { data } = yield call(API.get(config), `/private/offers/${action.payload.offer_id}/orders`);
 
-        yield put(userOfferOrdersData({ list: data }));
+        yield put(userOfferOrdersData(data));
     } catch (error) {
         yield put(sendError({
             error,

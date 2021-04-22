@@ -7,7 +7,7 @@ import { P2PUserOffers, P2PUserOfferOrders } from 'src/containers';
 import { useDocumentTitle, useP2PCurrenciesFetch } from 'src/hooks';
 
 export const P2PUserOffersScreen: FC = (): ReactElement => {
-    const { id = '' } = useParams();
+    const { id } = useParams<{ id?: string }>();
     const { formatMessage } = useIntl();
 
     useP2PCurrenciesFetch();

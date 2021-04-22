@@ -48,6 +48,7 @@ Total: 26
         "offers_count": 123,
         "success_rate": 1,
         "price": 1.2,
+        "side": "buy",
         "available_amount": "5534.00",
         "origin_amount": "7666.00",
         "min_order_amount": "15",

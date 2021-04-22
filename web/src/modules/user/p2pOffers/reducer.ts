@@ -1,9 +1,9 @@
 import { defaultStorageLimit } from 'src/api';
 import { sliceArray } from 'src/helpers';
-import { Offer, P2POrder } from 'src/modules';
+import { Offer } from 'src/modules';
 import { insertOrUpdate } from './helpers';
 import { CommonError } from '../../types';
-import { P2POffersActions } from './actions';
+import { OfferNestedOrders, P2POffersActions } from './actions';
 import {
     P2P_CREATE_OFFER_DATA,
     P2P_CREATE_OFFER_ERROR,
@@ -42,8 +42,8 @@ export interface P2POffersState {
         timestamp?: number;
         error?: CommonError;
     };
-    orders: {
-        list: P2POrder[];
+    offerOrders: {
+        data?: OfferNestedOrders;
         fetching: boolean;
         success: boolean;
         timestamp?: number;
@@ -68,8 +68,7 @@ export const initialP2POffersState: P2POffersState = {
         fetching: false,
         success: false,
     },
-    orders: {
-        list: [],
+    offerOrders: {
         fetching: false,
         success: false,
     },
@@ -113,7 +112,7 @@ export const offersFetchReducer = (state: P2POffersState['offers'], action: P2PO
     }
 };
 
-export const ordersFetchReducer = (state: P2POffersState['orders'], action: P2POffersActions) => {
+export const offerOrdersFetchReducer = (state: P2POffersState['offerOrders'], action: P2POffersActions) => {
     switch (action.type) {
         case P2P_USER_OFFER_ORDERS_FETCH:
             return {
@@ -124,7 +123,7 @@ export const ordersFetchReducer = (state: P2POffersState['orders'], action: P2PO
         case P2P_USER_OFFER_ORDERS_DATA:
             return {
                 ...state,
-                list: action.payload.list,
+                data: action.payload,
                 fetching: false,
                 success: true,
                 error: undefined,
@@ -134,7 +133,7 @@ export const ordersFetchReducer = (state: P2POffersState['orders'], action: P2PO
                 ...state,
                 fetching: false,
                 success: false,
-                list: [],
+                data: undefined,
                 error: action.error,
             };
         default:
@@ -229,11 +228,11 @@ export const p2pOffersReducer = (state = initialP2POffersState, action: P2POffer
         case P2P_USER_OFFER_ORDERS_FETCH:
         case P2P_USER_OFFER_ORDERS_DATA:
         case P2P_USER_OFFER_ORDERS_ERROR:
-            const userOfferOrdersFetchState = { ...state.orders };
+            const userOfferOrdersFetchState = { ...state.offerOrders };
 
             return {
                 ...state,
-                orders: ordersFetchReducer(userOfferOrdersFetchState, action),
+                offerOrders: offerOrdersFetchReducer(userOfferOrdersFetchState, action),
             };
         default:
             return state;

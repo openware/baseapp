@@ -19,6 +19,7 @@ import {
     selectP2PUserOffersTotalNumber,
     selectWallets,
 } from '../../../modules';
+import { EyeIcon } from 'src/assets/images/EyeIcon';
 
 const P2PUserOffers: FC = (): ReactElement => {
     const [tab, setTab] = useState<string>('');
@@ -94,16 +95,17 @@ const P2PUserOffers: FC = (): ReactElement => {
                 <span key={id}>{Decimal.format(origin_amount, amountPrecision, ',')} {base?.toUpperCase()}</span>,
                 <span key={id}>{Decimal.format(price, pricePrecision, ',')} {quote?.toUpperCase()}</span>,
                 <span style={{ color: setOfferStatusColor(state) }} className="text-capitalize" key={id}>{translate(`page.body.p2p.my.offers.${tab}`}</span>,
-                <span className="actions">
+                <div className="actions">
                     <Button key={id} onClick={handleOrders(id)} variant="primary">
-                        {translate('page.body.p2p.my.offers.table.orders')}
+                        <span>{translate('page.body.p2p.my.offers.table.orders')}</span>
+                        <EyeIcon className="eye-icon" />
                     </Button>
                     {tab === 'wait' && (
-                        <Button key={id} onClick={handleCancel(id)} variant="secondary">
+                        <Button key={id} onClick={handleCancel(id)} variant="outline-danger">
                             {translate('page.body.p2p.my.offers.table.cancel')}
                         </Button>
                     )}
-                </span>,
+                </div>,
             ];
         })
     ), [list, tab]);

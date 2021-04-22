@@ -1,15 +1,18 @@
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Table } from '../../../components';
+import { useHistory, useParams } from 'react-router';
+import { ArrowRightIcon } from 'src/assets/images/setup/ArrowRightIcon';
+import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
+import { localeDate, setStateType, setTradesType } from 'src/helpers';
+import { Decimal, Table } from '../../../components';
+import { useCurrenciesFetch, useP2PUserOfferOrdersFetch } from '../../../hooks';
 import {
-    cancelOffer,
-    Offer,
-    userOfferOrdersFetch,
-    RootState,
     selectP2PUserOfferOrders,
-    selectP2PUserOffers,
+    P2POrder,
+    selectCurrencies,
+    cancelOffer,
 } from '../../../modules';
 
 interface ParentProps {
@@ -19,25 +22,16 @@ interface ParentProps {
 type Props = ParentProps;
 
 const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
-    const [currentOffer, setCurrentOffer] = useState<Offer>(null);
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
-    const list = useSelector(selectP2PUserOfferOrders);
-    const offers = useSelector(selectP2PUserOffers);
+    const offer = useSelector(selectP2PUserOfferOrders);
+    const currencies = useSelector(selectCurrencies);
+    const history = useHistory();
+    const { id } = useParams<{id?: string}>();
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
-    useEffect(() => {
-        dispatch(userOfferOrdersFetch({ offer_id: props.offerId }));
-    }, []);
-
-    useEffect(() => {
-        const offer = offers.find(o => o.id === props.offerId);
-        if (offer) {
-            setCurrentOffer(offer);
-        } else {
-            list.length ? setCurrentOffer(list[0].offer) : null;
-        }
-    }, [offers, list]);
+    useP2PUserOfferOrdersFetch({ offer_id: Number(id) });
+    useCurrenciesFetch();
 
     const handleCancel = useCallback((id: number) => () => {
         dispatch(cancelOffer({ id, list: [] }));
@@ -50,50 +44,78 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
         translate('page.body.p2p.my.offer_orders.table.quantity'),
         translate('page.body.p2p.my.offer_orders.table.counterparty'),
         translate('page.body.p2p.my.offer_orders.table.status'),
+        '',
     ];
 
-    const retrieveData = useCallback(() => (
-        list && list.length ? list.map(item => {
+    const onRowClick = useCallback((index: string) => {
+        const orderId = offer?.orders && offer?.orders[index]?.id;
+        orderId && history.push(`/p2p/order/${orderId}`);
+    }, [history, offer]);
+
+    const getPrecision = (id: string, currencies) => {
+        return currencies.find(i => i.id === id)?.precision || DEFAULT_CCY_PRECISION;
+    };
+
+    const retrieveData = useCallback(() => {
+        if (!offer?.orders?.length) {
+            return [[]];
+        }
+
+        const { price, base, quote } = offer;
+        const priceItem = `${Decimal.format(price, getPrecision(quote, currencies) || DEFAULT_FIAT_PRECISION, ',')} ${base.toUpperCase()}/${quote.toUpperCase()}`;
+        const amountPrecision = getPrecision(base, currencies);
+
+        return offer.orders.map((item: P2POrder) => {
+            const { created_at, side, amount, user_uid, state } = item;
+            const sideColored = setTradesType(side);
+            const stateColored = setStateType(state);
+
             return [
-                <span key={item.id}>{item.created_at}</span>,
-                <span key={item.id}>{item.side}</span>,
-                <span key={item.id}>{`${item.offer.price} ${item.offer.base}/${item.offer.quote}`}</span>,
-                <span key={item.id}>{`${item.amount} ${item.offer.quote}`}</span>,
-                <span key={item.id}>{item.offer.user.user_nickname}</span>,
-                <span key={item.id}>{item.state}</span>,
+                localeDate(created_at, 'shortDate'),
+                <span style={{ color: sideColored.color }}>{sideColored.text}</span>,
+                priceItem,
+                `${Decimal.format(amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${base.toUpperCase()}`,
+                <span>{user_uid}</span>,
+                <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
+                <ArrowRightIcon className="icon-right" />,
             ];
-        }) : []
-    ), [list]);
+        })
+    }, [offer, currencies]);
 
     const p2pOfferInfo = useCallback(() => {
-        return currentOffer ? (
+        const sideColored = setTradesType(offer?.side);
+        const amountPrecision = getPrecision(offer?.base, currencies);
+        const priceItem = `${Decimal.format(offer?.price, getPrecision(offer?.quote, currencies) || DEFAULT_FIAT_PRECISION, ',')} ${offer?.quote.toUpperCase()}`;
+        const stateColored = setStateType(offer?.state);
+
+        return offer ? (
             <div className="cr-user-p2p-offer-info">
                 <div>
-                    <span>{currentOffer.created_at}</span>
+                    <span>{localeDate(offer.created_at, 'fullDate')}</span>
                     <label>{translate('page.body.p2p.my.offer_orders.table.date')}</label>
                 </div>
                 <div>
-                    <span>{currentOffer.side}</span>
+                    <span style={{ color: sideColored.color }}>{sideColored.text}</span>
                     <label>{translate('page.body.p2p.my.offer_orders.table.side')}</label>
                 </div>
                 <div>
-                    <span>{`${currentOffer.base.toUpperCase()}/${currentOffer.quote.toUpperCase()}`}</span>
+                    <span>{`${offer.base.toUpperCase()}/${offer.quote.toUpperCase()}`}</span>
                     <label></label>
                 </div>
                 <div>
-                    <span>{`${currentOffer.available_amount} ${currentOffer.base.toUpperCase()}`}</span>
+                    <span>{`${Decimal.format(offer.available_amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${offer.base.toUpperCase()}`}</span>
                     <label>{translate('page.body.p2p.my.offer_orders.table.available')}</label>
                 </div>
                 <div>
-                    <span>{`${currentOffer.price} ${currentOffer.quote.toUpperCase()}`}</span>
+                    <span>{priceItem}</span>
                     <label>{translate('page.body.p2p.my.offer_orders.table.price')}</label>
                 </div>
                 <div>
-                    <span>{currentOffer.state}</span>
+                    <span style={{ color: stateColored.color }}>{stateColored.text}</span>
                     <label>{translate('page.body.p2p.my.offer_orders.table.status')}</label>
                 </div>
                 <div>
-                    <Button onClick={handleCancel(currentOffer.id)} variant="secondary">
+                    <Button onClick={handleCancel(offer.id)} variant="secondary">
                         {translate('page.body.p2p.my.offers.table.cancel')}
                     </Button>
                 </div>
@@ -101,13 +123,13 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
         ) : (
             <div className="cr-user-p2p-offer-info"></div>
         )
-    }, [currentOffer]);
+    }, [offer]);
 
     return (
         <div className="cr-user-p2p-offer-orders">
             {p2pOfferInfo()}
             <div className="cr-user-p2p-offer-orders-table">
-                <Table header={headerTitles()} data={retrieveData()}/>
+                <Table header={headerTitles()} data={retrieveData()} onSelect={onRowClick}/>
             </div>
         </div>
     );
