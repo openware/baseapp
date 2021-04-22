@@ -14,7 +14,7 @@ interface ParentProps {
 type Props = ParentProps;
 
 const REASON_MESSAGES = {
-    notReceive: 'Did not receive my stable coin',
+    notReceive: 'Did not receive my fiat',
     tooLong: 'Transaction taking too long',
     amountDifferent: 'Transaction amount is different to order value',
 };
