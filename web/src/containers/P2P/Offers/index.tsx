@@ -94,7 +94,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
         );
     }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT, side, paymentMethod, base, quote, paymentMethods]);
 
-    const retrieveData = React.useCallback((amountPrecision: number, pricePrecision: number) => (
+    const retrieveData = useCallback((amountPrecision: number, pricePrecision: number) => (
         list.map(item => {
             const {
                 id,
@@ -154,7 +154,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
         })
     ), [list]);
 
-    const tableData = React.useCallback(() => {
+    const tableData = useCallback(() => {
         if (list.length === 0) {
             return [[]];
         }

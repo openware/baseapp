@@ -1,10 +1,11 @@
-import React, { FC, ReactElement, useCallback } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, DEFAULT_TABLE_PAGE_LIMIT } from 'src/constants';
 import { localeDate, setOfferStatusColor } from 'src/helpers';
-import { Decimal, Pagination, Table } from '../../../components';
+import { Decimal, Pagination, Table, TabPanel } from '../../../components';
 import { useCurrenciesFetch, useP2PUserOffersFetch, useWalletsFetch } from '../../../hooks';
 import {
     userOffersFetch,
@@ -19,17 +20,15 @@ import {
     selectWallets,
 } from '../../../modules';
 
-interface ParentProps {
-    state: string;
-}
+const P2PUserOffers: FC = (): ReactElement => {
+    const [tab, setTab] = useState<string>('');
+    const [tabMapping, setTabMapping] = useState<string[]>(['wait', 'done', 'cancelled']);
+    const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
 
-type Props = ParentProps;
-
-const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
     const { formatMessage } = useIntl();
+    const history = useHistory();
     const dispatch = useDispatch();
     const page = useSelector(selectP2POffersCurrentPage);
-    const { state } = props;
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
     const list = useSelector(selectP2PUserOffers);
     const total = useSelector(selectP2PUserOffersTotalNumber);
@@ -40,7 +39,11 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
 
     useWalletsFetch();
     useCurrenciesFetch();
-    useP2PUserOffersFetch({ limit: DEFAULT_TABLE_PAGE_LIMIT, page, state });
+    useP2PUserOffersFetch({ limit: DEFAULT_TABLE_PAGE_LIMIT, page, state: tab });
+
+    useEffect(() => {
+        setTab(tabMapping[0]);
+    }, []);
 
     const headerTitles = useCallback(() => [
         translate('page.body.p2p.my.offers.table.date'),
@@ -49,22 +52,26 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
         translate('page.body.p2p.my.offers.table.amount'),
         translate('page.body.p2p.my.offers.table.price'),
         translate('page.body.p2p.my.offers.table.status'),
-        state === 'wait' ? translate('page.body.p2p.my.offers.table.action') : '',
-    ], [state]);
+        tab === 'wait' ? translate('page.body.p2p.my.offers.table.action') : '',
+    ], [tab]);
 
     const onClickPrevPage = useCallback(() => {
-        dispatch(userOffersFetch({ page: Number(page) - 1, limit: DEFAULT_TABLE_PAGE_LIMIT, state }));
-    }, [userOffersFetch, state, page, DEFAULT_TABLE_PAGE_LIMIT]);
+        dispatch(userOffersFetch({ page: Number(page) - 1, limit: DEFAULT_TABLE_PAGE_LIMIT, state: tab }));
+    }, [userOffersFetch, tab, page, DEFAULT_TABLE_PAGE_LIMIT]);
 
     const onClickNextPage = useCallback(() => {
-        dispatch(userOffersFetch({ page: Number(page) + 1, limit: DEFAULT_TABLE_PAGE_LIMIT, state }));
-    }, [userOffersFetch, state, page, DEFAULT_TABLE_PAGE_LIMIT]);
+        dispatch(userOffersFetch({ page: Number(page) + 1, limit: DEFAULT_TABLE_PAGE_LIMIT, state: tab }));
+    }, [userOffersFetch, tab, page, DEFAULT_TABLE_PAGE_LIMIT]);
 
-    const handleCancel = React.useCallback((id: number) => () => {
+    const handleCancel = useCallback((id: number) => () => {
         dispatch(cancelOffer({ id, list }));
     }, [list, cancelOffer, dispatch]);
 
-    const retrieveData = () => (
+    const handleOrders = useCallback((id: number) => () => {
+        history.push(`/p2p/offer/${id}`);
+    }, [history]);
+
+    const retrieveData = useCallback(() => (
         !list.length ? [[]] : list.map(item => {
             const {
                 id,
@@ -86,20 +93,36 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
                 `${base?.toUpperCase()}/${quote?.toUpperCase()}`,
                 <span key={id}>{Decimal.format(origin_amount, amountPrecision, ',')} {base?.toUpperCase()}</span>,
                 <span key={id}>{Decimal.format(price, pricePrecision, ',')} {quote?.toUpperCase()}</span>,
-                <span style={{ color: setOfferStatusColor(item.state) }} className="text-capitalize" key={id}>{state}</span>,
-                state === 'wait' && (
-                    <Button key={id} onClick={handleCancel(id)} variant="secondary">
-                        {translate('page.body.p2p.my.offers.table.cancel')}
+                <span style={{ color: setOfferStatusColor(state) }} className="text-capitalize" key={id}>{translate(`page.body.p2p.my.offers.${tab}`}</span>,
+                <span className="actions">
+                    <Button key={id} onClick={handleOrders(id)} variant="primary">
+                        {translate('page.body.p2p.my.offers.table.orders')}
                     </Button>
-                ),
+                    {tab === 'wait' && (
+                        <Button key={id} onClick={handleCancel(id)} variant="secondary">
+                            {translate('page.body.p2p.my.offers.table.cancel')}
+                        </Button>
+                    )}
+                </span>,
             ];
         })
-    );
+    ), [list, tab]);
 
-    return (
-        <div className="cr-user-p2p-offers">
-            <h3 className="cr-user-p2p-offers__title">{translate(`page.body.p2p.my.offers.${state}`)}</h3>
-            <div className={`cr-user-p2p-offers-table ${state}`}>
+    const onCurrentTabChange = useCallback((index: number) => {
+        setCurrentTabIndex(index);
+        history.push(`/p2p/offers/${tabMapping[index]}`);
+    }, [history, tabMapping]);
+
+    const onTabChange = useCallback((index: number) => {
+        if (tab === tabMapping[index]) {
+            return;
+        }
+        setTab(tabMapping[index]);
+    }, [tabMapping]);
+
+    const pageContent = useCallback((tabLabel: string) => {
+        return (
+            <div className={`cr-user-p2p-offers-table ${tabLabel}`}>
                 <Table header={headerTitles()} data={retrieveData()}/>
                 {list.length > 0 &&
                     <Pagination
@@ -112,6 +135,24 @@ const P2PUserOffers: FC<Props> = (props: Props): ReactElement => {
                         onClickNextPage={onClickNextPage}
                     />}
             </div>
+        );
+    }, [retrieveData]);
+
+    const renderTabs = () => tabMapping.map((tabLabel, index) => {
+        return {
+            content: currentTabIndex === index ? pageContent(tabLabel) : null,
+            label: translate(`page.body.p2p.my.offers.${tabLabel}`),
+        }
+    });
+
+    return (
+        <div className="cr-user-p2p-offers">
+            <TabPanel
+                panels={renderTabs()}
+                onTabChange={onTabChange}
+                currentTabIndex={currentTabIndex}
+                onCurrentTabChange={onCurrentTabChange}
+            />
         </div>
     );
 };

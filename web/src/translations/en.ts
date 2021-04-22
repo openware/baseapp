@@ -1159,6 +1159,7 @@ export const en = {
 
     'page.body.p2p.my.offers.title': 'My P2P offers',
     'page.body.p2p.my.offers.back': 'Back to P2P',
+    'page.body.p2p.my.offers.back.offers': 'Back',
     'page.body.p2p.my.offers.wait': 'Active',
     'page.body.p2p.my.offers.cancelled': 'Cancelled',
     'page.body.p2p.my.offers.done': 'Done',
@@ -1172,6 +1173,15 @@ export const en = {
     'page.body.p2p.my.offers.table.status': 'Status',
     'page.body.p2p.my.offers.table.action': 'Action',
     'page.body.p2p.my.offers.table.cancel': 'Cancel',
+    'page.body.p2p.my.offers.table.orders': 'Orders',
+    'page.body.p2p.my.offer_orders.table.date': 'Date',
+    'page.body.p2p.my.offer_orders.table.side': 'Side',
+    'page.body.p2p.my.offer_orders.table.price': 'Price',
+    'page.body.p2p.my.offer_orders.table.quantity': 'Quantity',
+    'page.body.p2p.my.offer_orders.table.counterparty': 'Counterparty',
+    'page.body.p2p.my.offer_orders.table.status': 'Status',
+    'page.body.p2p.my.offer_orders.table.available': 'Available',
+
     'page.body.p2p.order_history.title': 'P2P Order history',
     'page.body.p2p.order_history.back': 'Back to P2P',
     'page.body.p2p.order_history.date': 'Date',

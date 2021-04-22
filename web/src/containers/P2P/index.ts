@@ -4,6 +4,7 @@ export * from './Offers';
 
 export * from './TradesHistory';
 export * from './UserOffers';
+export * from './UserOffers/P2PUserOfferOrders';
 export * from './OrderWaitPayment';
 export * from './OrderWaitConfirmation';
 export * from './Dispute';

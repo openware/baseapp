@@ -56,6 +56,7 @@ Total: 26
         "quote": "ngn",
         "state": "pending",
         "created_at": "",
+        "side": "sell",
         "payment_methods": [{
             "id": "1",
             "payment_method_id": 1,

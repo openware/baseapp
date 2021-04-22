@@ -1,11 +1,13 @@
 import React, { FC, ReactElement, useCallback } from 'react';
 import { useIntl } from 'react-intl';
+import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { ArrowLeftIcon } from 'src/assets/images/setup/ArrowLeftIcon';
-import { P2PUserOffers } from 'src/containers';
+import { P2PUserOffers, P2PUserOfferOrders } from 'src/containers';
 import { useDocumentTitle, useP2PCurrenciesFetch } from 'src/hooks';
 
 export const P2PUserOffersScreen: FC = (): ReactElement => {
+    const { id = '' } = useParams();
     const { formatMessage } = useIntl();
 
     useP2PCurrenciesFetch();
@@ -17,10 +19,17 @@ export const P2PUserOffersScreen: FC = (): ReactElement => {
         <div className="pg-user-p2p-offers pg-container">
             <div className="pg-user-p2p-offers__content">
                 <h1 className="pg-user-p2p-offers--title">{translate('page.body.p2p.my.offers.title')}</h1>
-                <Link to="/p2p" className="pg-user-p2p-offers--subtitle">
-                    <ArrowLeftIcon className="icon"/><span>{translate('page.body.p2p.my.offers.back')}</span>
-                </Link>
-                <P2PUserOffers state="wait"/>
+                {id ? <React.Fragment>
+                    <Link to="/p2p/offers" className="pg-user-p2p-offers--subtitle">
+                        <ArrowLeftIcon className="icon"/><span>{translate('page.body.p2p.my.offers.back.offers')}</span>
+                    </Link>
+                    <P2PUserOfferOrders offerId={+id} />
+                </React.Fragment> : <React.Fragment>
+                    <Link to="/p2p" className="pg-user-p2p-offers--subtitle">
+                        <ArrowLeftIcon className="icon"/><span>{translate('page.body.p2p.my.offers.back')}</span>
+                    </Link>
+                    <P2PUserOffers />
+                </React.Fragment>}
             </div>
         </div>
     );

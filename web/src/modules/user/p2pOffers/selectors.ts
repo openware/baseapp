@@ -1,4 +1,4 @@
-import { Offer, RootState } from '../..';
+import { Offer, P2POrder, RootState } from '../..';
 import { CommonError } from '../../types';
 
 /* P2P User Offers fetch */
@@ -42,6 +42,26 @@ export const selectP2PUserOffersLastElemIndex = (state: RootState, limit: number
 
 export const selectP2PUserOffersNextPageExists = (state: RootState, limit: number): boolean =>
     (state.user.p2pOffers.offers.page + 1) < selectP2PUserOffersPageCount(state, limit);
+
+
+/* P2P User Offer Orders fetch */
+export const selectP2PUserOfferOrders = (state: RootState): P2POrder[] =>
+    state.user.p2pOffers.orders.list;
+
+export const selectP2PUserOfferOrdersFetchLoading = (state: RootState): boolean =>
+    state.user.p2pOffers.orders.fetching;
+
+export const selectP2PUserOfferOrdersFetchSuccess = (state: RootState): boolean =>
+    state.user.p2pOffers.orders.success;
+
+export const selectP2PUserOfferOrdersFetchError = (state: RootState): CommonError | undefined =>
+    state.user.p2pOffers.orders.error;
+
+export const selectP2PUserOfferOrdersTimestamp = (state: RootState): number | undefined =>
+    state.user.p2pOffers.orders.timestamp;
+
+export const selectShouldFetchP2PUserOfferOrders = (state: RootState): boolean =>
+    !selectP2PUserOfferOrdersTimestamp(state) && !selectP2PUserOfferOrdersFetchLoading(state);
 
 
 /* P2P Create Offer */

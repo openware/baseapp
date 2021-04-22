@@ -1,9 +1,12 @@
-import { Offer } from 'src/modules';
+import { Offer, P2POrder } from 'src/modules';
 import { CommonError } from '../../types';
 import {
     P2P_CREATE_OFFER_DATA,
     P2P_CREATE_OFFER_ERROR,
     P2P_CREATE_OFFER_FETCH,
+    P2P_USER_OFFER_ORDERS_DATA,
+    P2P_USER_OFFER_ORDERS_ERROR,
+    P2P_USER_OFFER_ORDERS_FETCH,
     P2P_USER_OFFERS_DATA,
     P2P_USER_OFFERS_ERROR,
     P2P_USER_OFFERS_FETCH,
@@ -27,12 +30,31 @@ export interface UserOffersData {
     payload: {
         list: Offer[];
         page: number;
-        total: number;  
+        total: number;
     };
 }
 
 export interface UserOffersError {
     type: typeof P2P_USER_OFFERS_ERROR;
+    error: CommonError;
+}
+
+export interface UserOfferOrdersFetch {
+    type: typeof P2P_USER_OFFER_ORDERS_FETCH;
+    payload: {
+        offer_id: number;
+    };
+}
+
+export interface UserOfferOrdersData {
+    type: typeof P2P_USER_OFFER_ORDERS_DATA;
+    payload: {
+        list: P2POrder[];
+    };
+}
+
+export interface UserOfferOrdersError {
+    type: typeof P2P_USER_OFFER_ORDERS_ERROR;
     error: CommonError;
 }
 
@@ -89,6 +111,9 @@ export type P2POffersActions =
     | UserOffersFetch
     | UserOffersData
     | UserOffersError
+    | UserOfferOrdersFetch
+    | UserOfferOrdersData
+    | UserOfferOrdersError
     | CreateOfferFetch
     | CreateOfferData
     | CreateOfferError
@@ -109,6 +134,21 @@ export const userOffersData = (payload: UserOffersData['payload']): UserOffersDa
 
 export const userOffersError = (error: CommonError): UserOffersError => ({
     type: P2P_USER_OFFERS_ERROR,
+    error,
+});
+
+export const userOfferOrdersFetch = (payload: UserOfferOrdersFetch['payload']): UserOfferOrdersFetch => ({
+    type: P2P_USER_OFFER_ORDERS_FETCH,
+    payload,
+});
+
+export const userOfferOrdersData = (payload: UserOfferOrdersData['payload']): UserOfferOrdersData => ({
+    type: P2P_USER_OFFER_ORDERS_DATA,
+    payload,
+});
+
+export const userOfferOrdersError = (error: CommonError): UserOfferOrdersError => ({
+    type: P2P_USER_OFFER_ORDERS_ERROR,
     error,
 });
 

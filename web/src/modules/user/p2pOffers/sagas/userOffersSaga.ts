@@ -2,7 +2,14 @@ import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../..';
 import { API, RequestOptions } from '../../../../api';
 import { buildQueryString } from '../../../../helpers';
-import { userOffersData, userOffersError, UserOffersFetch } from '../actions';
+import {
+    userOfferOrdersData,
+    userOfferOrdersError,
+    UserOfferOrdersFetch,
+    userOffersData,
+    userOffersError,
+    UserOffersFetch
+} from '../actions';
 
 const config: RequestOptions = {
     apiVersion: 'p2p',
@@ -20,6 +27,22 @@ export function* userOffersSaga(action: UserOffersFetch) {
             processingType: 'alert',
             extraOptions: {
                 actionError: userOffersError,
+            },
+        }));
+    }
+}
+
+export function* userOfferOrdersSaga(action: UserOfferOrdersFetch) {
+    try {
+        const { data, headers } = yield call(API.get(config), `/private/offer/${action.payload.offer_id}`);
+
+        yield put(userOfferOrdersData({ list: data }));
+    } catch (error) {
+        yield put(sendError({
+            error,
+            processingType: 'alert',
+            extraOptions: {
+                actionError: userOfferOrdersError,
             },
         }));
     }
