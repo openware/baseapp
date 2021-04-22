@@ -17,39 +17,47 @@ describe('P2P actions', () => {
     const fakeOffersArray: Offer[] = [
         {
             id: 1,
-            user_nickname: 'King_Coin66',
-            offers_count: 123,
-            success_rate: 1,
+            user: {
+                user_nickname: 'King_Coin66',
+                offers_count: 1,
+                user_uid: '',
+                success_rate: '',
+            },
+            uid: '',
             price: 1.2,
             available_amount: '5534.00',
             origin_amount: '7666.00',
             min_order_amount: '15',
             max_order_amount: '5000',
             base: 'usdt',
+            side: 'buy',
             quote: 'ngn',
             state: 'pending',
             created_at: '',
-            side: 'buy',
+            time_limit: 0,
             payment_methods: [],
-            time_limit: 1,
         },
         {
-            id: 2,
-            user_nickname: 'King_Coin66',
-            offers_count: 123,
-            success_rate: 1,
+            id: 1,
+            user: {
+                user_nickname: 'King_Coin66',
+                offers_count: 1,
+                user_uid: '',
+                success_rate: '',
+            },
+            uid: '',
             price: 1.2,
             available_amount: '5534.00',
             origin_amount: '7666.00',
             min_order_amount: '15',
             max_order_amount: '5000',
             base: 'usdt',
+            side: 'buy',
             quote: 'ngn',
             state: 'pending',
             created_at: '',
-            side: 'buy',
+            time_limit: 0,
             payment_methods: [],
-            time_limit: 1,
         },
     ];
 
@@ -60,11 +68,11 @@ describe('P2P actions', () => {
 
     it('should check offersFetch action creator', () => {
         const expectedAction = { type: P2P_OFFERS_FETCH, payload: { page: 0, limit: 25 } };
-        expect(actions.offersFetch({ page: 0, limit: 25 })).toEqual(expectedAction);
+        expect(actions.offersFetch({ page: 0, limit: 25, side: 'buy', base: '', quote: '' })).toEqual(expectedAction);
     });
 
     it('should check offersData action creator', () => {
-        const payload = { list: fakeOffersArray, page: 1, total: 2 };
+        const payload = { list: fakeOffersArray, page: 1, total: 2, side: '', base: '', quote: '' };
         const expectedAction = { type: P2P_OFFERS_DATA, payload };
         expect(actions.offersData(payload)).toEqual(expectedAction);
     });
@@ -108,14 +116,12 @@ describe('P2P actions', () => {
             id: 1,
             type: '',
             name: 'Universal',
-            logo: '',
             options: {},
         },
         {
             id: 2,
             type: '',
             name: 'Universal',
-            logo: '',
             options: {},
         },
     ];

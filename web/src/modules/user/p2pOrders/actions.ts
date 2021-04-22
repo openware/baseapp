@@ -15,6 +15,7 @@ import {
     P2P_ORDERS_UPDATE,
     P2P_ORDERS_APPEND,
     P2P_ORDER_RESET_SUCCESS,
+    P2P_REMOVE_ORDER_ALERT,
 } from "./constants";
 import { P2POrderCreate, P2POrder } from "./types";
 
@@ -105,6 +106,13 @@ export interface P2POrderResetSuccess {
     type: typeof P2P_ORDER_RESET_SUCCESS;
 }
 
+export interface P2POrderRemoveAlert {
+    type: typeof P2P_REMOVE_ORDER_ALERT;
+    payload: {
+        list: P2POrder[];
+    }
+}
+
 export type P2POrdersActions =
     P2POrdersCreateFetch
     | P2POrdersCreateData
@@ -120,7 +128,8 @@ export type P2POrdersActions =
     | P2POrdersUpdateError
     | P2POrdersDataWS
     | P2POrdersAppend
-    | P2POrderResetSuccess;
+    | P2POrderResetSuccess
+    | P2POrderRemoveAlert;
 
 export const p2pOrdersCreateFetch = (payload: P2POrderCreate): P2POrdersCreateFetch => ({
     type: P2P_ORDERS_CREATE_FETCH,
@@ -194,4 +203,9 @@ export const p2pOrdersAppend = (payload: P2POrdersAppend['payload']): P2POrdersA
 
 export const p2pOrderResetSuccess = (): P2POrderResetSuccess => ({
     type: P2P_ORDER_RESET_SUCCESS,
+});
+
+export const p2pOrderRemoveAlert = (payload: P2POrderRemoveAlert['payload']): P2POrderRemoveAlert => ({
+    type: P2P_REMOVE_ORDER_ALERT,
+    payload,
 });

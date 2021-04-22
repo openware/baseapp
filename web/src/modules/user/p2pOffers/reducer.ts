@@ -1,7 +1,7 @@
 import { defaultStorageLimit } from 'src/api';
 import { sliceArray } from 'src/helpers';
 import { Offer } from 'src/modules';
-import { insertOrUpdate } from 'src/modules/public/p2p/helpers';
+import { insertOrUpdate } from './helpers';
 import { CommonError } from '../../types';
 import { P2POffersActions } from './actions';
 import {

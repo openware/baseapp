@@ -8,7 +8,7 @@ export const useP2POrderFetch = (id?: number) => {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        if (!createdOrder && id && !loading) {
+        if (id && (!createdOrder || createdOrder.id !== id) && !loading) {
             dispatch(p2pOrderFetch({ id }));
         }
     }, [dispatch, id, createdOrder, loading, p2pOrderFetch]);

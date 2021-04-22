@@ -18,3 +18,4 @@ export const P2P_ORDERS_UPDATE = 'p2p_orders/UPDATE';
 export const P2P_ORDERS_APPEND = 'p2p_orders/APPEND';
 
 export const P2P_ORDER_RESET_SUCCESS = 'p2p_order/RESET_SUCCESS';
+export const P2P_REMOVE_ORDER_ALERT = 'p2p_order/REMOVE_ALERT';

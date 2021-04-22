@@ -1,10 +1,30 @@
 import { Offer } from "src/modules/public/p2p";
 
-export const insertOrUpdate = (list: Offer[], offer: Offer) => {
+export const insertOrUpdate = (
+    list: Offer[],
+    offer: Offer,
+    side: string,
+    base: string,
+    quote: string,
+    payment_method?: number, // TODO filter offer by payment_method if selected
+) => {
     const { id } = offer;
+
     const index = list.findIndex((value: Offer) => value.id === id);
 
-    if (index === -1) {
+    if (offer.state === 'cancelled' || offer.state !== 'done') {
+        if (index === -1 ) {
+            return list;
+        } else {
+            return list.filter(i => i.id !== offer.id);
+        }
+    }
+
+    if (index === -1
+        && side === offer.side
+        && base === offer.base
+        && quote === offer.quote
+    ) {
         return [{...offer}, ...list];
     }
 

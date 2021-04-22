@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, useCallback } from 'react';
 import { useIntl } from 'react-intl';
-import { Button, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { LeftArrowIcon } from '../../../assets/images/slider';
@@ -54,10 +54,9 @@ const TradesHistory: FC = (): ReactElement => {
             intl.formatMessage({id: 'page.body.p2p.order_history.side'}),
             intl.formatMessage({id: 'page.body.p2p.order_history.price'}),
             intl.formatMessage({id: 'page.body.p2p.order_history.quantity'}),
-            isUsernameEnabled() ? intl.formatMessage({id: 'page.body.p2p.order_history.counterparty'}) : null,
+            intl.formatMessage({id: 'page.body.p2p.order_history.counterparty'}),
             intl.formatMessage({id: 'page.body.p2p.order_history.status'}),
-            intl.formatMessage({id: 'page.body.p2p.order_history.actions'}),
-        ].filter(i => Boolean(i));
+        ];
     };
 
     const renderContent = () => {
@@ -91,45 +90,27 @@ const TradesHistory: FC = (): ReactElement => {
         return [...list].map(item => renderTableRow(item));
     };
 
-    const handleCloseDispute = () => {
-        console.log('Close dipuste!');
-    };
-
     const onRowClick = useCallback((index: string) => {
         const orderId = list[index]?.id;
         orderId && history.push(`/p2p/order/${orderId}`);
     }, [history, list]);
 
-    const renderDisputeButton = () => {
-        return [
-            <Button
-                onClick={handleCloseDispute}
-                size="lg"
-                variant="secondary"
-            >
-                {intl.formatMessage({id: 'page.body.p2p.order_history.close_dispute'})}
-            </Button>
-        ]
-    };
-
     const renderTableRow = (item: P2POrder) => {
-        const { created_at, side, amount, state } = item;
+        const { created_at, side, amount, state, user_uid } = item;
         const { price, quote, base, user } = item.offer;
         const sideColored = setTradesType(side);
         const stateColored = setStateType(state);
         const pricePrecision = currencies.find(item => item.id === quote)?.precision;
         const amountPrecision = currencies.find(item => item.id === base)?.precision;
 
-        const list = [
+        return [
             localeDate(created_at, 'fullDate'),
             <span style={{ color: sideColored.color }}>{sideColored.text}</span>,
             `${Decimal.format(price, pricePrecision || DEFAULT_FIAT_PRECISION, ',')} ${base.toUpperCase()}/${quote.toUpperCase()}`,
             `${Decimal.format(amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${base.toUpperCase()}`,
+            <span>{user?.user_nickname || user_uid}</span>,
             <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
-            state === 'dispute' ? renderDisputeButton() : null,
         ];
-
-        return list.splice(4, 0, user?.user_nickname || user?.user_uid);
     };
 
     React.useEffect(() => {

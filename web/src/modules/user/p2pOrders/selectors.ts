@@ -55,3 +55,8 @@ export const selectP2POrderLoading = (state: RootState): boolean =>
 
 export const selectP2PUpdateOrderSuccess = (state: RootState): boolean =>
     state.user.p2pOrders.order.updateSuccess;
+
+// P2P Orders Alert list
+
+export const selectP2POrderAlerts = (state: RootState): P2POrder[] =>
+    state.user.p2pOrders.alertList.list;

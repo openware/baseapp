@@ -36,6 +36,10 @@ export interface P2PState {
         page: number;
         total: number;
         list: Offer[];
+        side: string;
+        base: string;
+        quote: string;
+        payment_method?: number;
         fetching: boolean;
         success: boolean;
         timestamp?: number;
@@ -58,6 +62,9 @@ export const initialP2PState: P2PState = {
         page: 0,
         total: 0,
         list: [],
+        side: '',
+        base: '',
+        quote: '',
         fetching: false,
         success: false,
     },
@@ -77,14 +84,29 @@ export const p2pOffersFetchReducer = (state: P2PState['offers'], action: P2PActi
                 list: sliceArray(action.payload.list, defaultStorageLimit()),
                 page: action.payload.page,
                 total: action.payload.total,
+                side: action.payload.side,
+                base: action.payload.base,
+                quote: action.payload.quote,
+                payment_method: action.payload.payment_method,
                 fetching: false,
                 success: true,
                 error: undefined,
             };
         case P2P_OFFERS_UPDATE:
+            const newList = sliceArray(
+                insertOrUpdate(
+                    state.list,
+                    action.payload,
+                    state.side,
+                    state.base,
+                    state.quote,
+                    state.payment_method,
+            ), defaultStorageLimit());
+
             return {
                 ...state,
-                list: sliceArray(insertOrUpdate(state.list, action.payload), defaultStorageLimit()),
+                list: newList,
+                total: newList.length,
             };
         case P2P_OFFERS_ERROR:
             return {
@@ -92,6 +114,7 @@ export const p2pOffersFetchReducer = (state: P2PState['offers'], action: P2PActi
                 fetching: false,
                 success: false,
                 page: 0,
+                side: '',
                 total: 0,
                 list: [],
                 error: action.error,

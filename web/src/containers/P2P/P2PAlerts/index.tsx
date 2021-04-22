@@ -1,19 +1,20 @@
 import FadeIn from 'react-fade-in';
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { P2PAlertIcon } from 'src/assets/images/P2PAlertIcon';
 import { RightArrowIcon } from 'src/assets/images/slider';
-import { selectP2PTradesHistoryData, selectUserInfo } from 'src/modules';
+import { p2pOrderRemoveAlert, selectP2POrderAlerts, selectUserInfo } from 'src/modules';
 
 const P2PAlerts: FC = (): ReactElement => {
     const [idList, setIdList] = useState<number[]>([]);
     const { formatMessage } = useIntl();
-    const orders = useSelector(selectP2PTradesHistoryData);
+    const orders = useSelector(selectP2POrderAlerts);
     const user = useSelector(selectUserInfo);
     const history = useHistory();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const list = orders
@@ -25,7 +26,7 @@ const P2PAlerts: FC = (): ReactElement => {
                     || (order.state === 'wait' && isMaker && order.side === 'buy')
                     || (order.state === 'wait' && isTaker && order.side === 'sell')
                     || (order.state === 'prepared' && isTaker && order.side === 'buy')
-                    ) && history.location.pathname !== `/p2p/order/${order.id}`);
+                    ) && !history.location.pathname.includes(`/p2p/order/${order.id}`));
             })
             .map(o => o.id);
 
@@ -33,14 +34,9 @@ const P2PAlerts: FC = (): ReactElement => {
     }, [orders, user, history]);
 
     const removeItem = useCallback(id => {
-        const curList = idList;
-        const index = curList.indexOf(id);
-
-        if (index !== -1) {
-            curList.splice(index, 1);
-            setIdList(curList);
-        }
-    }, [idList]);
+        const updatedList = orders.filter(i => i.id !== id);
+        dispatch(p2pOrderRemoveAlert({ list: updatedList }));
+    }, [orders, dispatch]);
 
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
 
@@ -60,7 +56,7 @@ const P2PAlerts: FC = (): ReactElement => {
                             <div className="pg-p2p-alert__item__body-col">
                                 <span>{translate('page.alert.p2p.new.order.data', { id: i })}</span>
                                 <div className="link">
-                                    <Link to={`/p2p/order/${i}`}>{translate('page.alert.p2p.new.order.link')}</Link>
+                                    <div onClick={() => history.push(`/p2p/order/${i}`)}>{translate('page.alert.p2p.new.order.link')}</div>
                                     <RightArrowIcon className="right-icon"/>                   
                                 </div>
                             </div>

@@ -18,11 +18,10 @@ export interface OffersFetch {
     payload: {
         page: number;
         limit: number;
-        side?: string;
-        currency_id?: string;
+        side: string;
+        base: string;
+        quote: string;
         payment_method?: number;
-        base?: string;
-        quote?: string;
     };
 }
 
@@ -32,6 +31,10 @@ export interface OffersData {
         list: Offer[];
         page: number;
         total: number;
+        side: string;
+        base: string;
+        quote: string;
+        payment_method?: number;
     };
 }
 
