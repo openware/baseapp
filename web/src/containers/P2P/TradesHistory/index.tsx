@@ -129,7 +129,7 @@ const TradesHistory: FC = (): ReactElement => {
             state === 'dispute' ? renderDisputeButton() : null,
         ];
 
-        return isUsernameEnabled() ? list.splice(4, 0, user?.user_nickname) : list;
+        return list.splice(4, 0, user?.user_nickname || user?.user_uid);
     };
 
     React.useEffect(() => {
