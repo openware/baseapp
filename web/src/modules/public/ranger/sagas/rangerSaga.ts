@@ -215,7 +215,7 @@ const initRanger = (
                             return;
 
                         // public
-                        case 'p2p':
+                        case 'p2p.event':
                             const p2pPublicOffersMatch = event && String(event.event).includes('p2p_offer');
 
                             if (p2pPublicOffersMatch) {

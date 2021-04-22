@@ -11,9 +11,10 @@ export const useRangerConnectFetch = () => {
     const shouldFetch = useSelector(selectShouldRangerConnect);
     const { connected, withAuth } = useSelector(selectRanger);
     const abilities = useSelector(selectAbilities);
-    const withP2P = CanCan.checkAbilityByAction('read', 'P2P', abilities);
 
     React.useEffect(() => {
+        const withP2P = CanCan.checkAbilityByAction('read', 'P2P', abilities);
+
         if (!connected && shouldFetch) {
             dispatch(rangerConnectFetch({ withAuth: userLoggedIn, withP2P }));
         } else if (connected && !withAuth && userLoggedIn) {

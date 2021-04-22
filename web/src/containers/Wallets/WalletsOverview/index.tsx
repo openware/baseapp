@@ -48,7 +48,7 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
     useMarketsFetch();
 
     useEffect(() => {
-        if (wallets.length && currencies.length && !filteredWallets.length) {
+        if (wallets.length && (isP2PEnabled ? p2pWallets.length : true) && currencies.length && !filteredWallets.length) {
             const extendedWallets: ExtendedWallet[] = currencies.map(cur => {
                 const spotWallet = wallets.find(i => i.currency === cur.id);
                 const p2pWallet = isP2PEnabled ? p2pWallets.find(i => i.currency === cur.id) : null;
@@ -65,7 +65,7 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
             setFilteredWallets(extendedWallets);
             setMergedWallets(extendedWallets);
         }
-    }, [wallets, p2pWallets, currencies]);
+    }, [wallets, p2pWallets, currencies, isP2PEnabled]);
 
     const headerTitles = useCallback(() => ([
         translate('page.body.wallets.overview.header.wallet'),

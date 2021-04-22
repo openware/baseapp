@@ -19,6 +19,7 @@ export interface Offer {
         user_nickname: string;
         offers_count: string | number;
         success_rate: string | number;
+        user_uid: string;
     };
 }
 

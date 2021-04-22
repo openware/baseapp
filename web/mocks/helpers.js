@@ -128,7 +128,7 @@ const Helpers = {
             "event": `p2p_order.${state}`,
             "payload": {
                 "id": array[Math.floor(Math.random() * array.length)],
-                "user_uid":"U487205863",
+                "user_uid":"ID787E383938",
                 "base":"usdt",
                 "quote":"usd",
                 "side":"sell",

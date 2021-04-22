@@ -17,7 +17,16 @@ const P2PAlerts: FC = (): ReactElement => {
 
     useEffect(() => {
         const list = orders
-            .filter(i => i.state === 'wait' && i.user_uid !== user.uid && history.location.pathname !== `/p2p/order/${i.id}`)
+            .filter(order => {
+                const isTaker = order.user_uid === user.uid;
+                const isMaker = order.offer?.user?.user_uid === user.uid;
+
+                return (((order.state === 'prepared' && isMaker && order.side === 'sell')
+                    || (order.state === 'wait' && isMaker && order.side === 'buy')
+                    || (order.state === 'wait' && isTaker && order.side === 'sell')
+                    || (order.state === 'prepared' && isTaker && order.side === 'buy')
+                    ) && history.location.pathname !== `/p2p/order/${order.id}`);
+            })
             .map(o => o.id);
 
         setIdList(list);
