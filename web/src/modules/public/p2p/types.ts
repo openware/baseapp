@@ -15,6 +15,7 @@ export interface Offer {
     time_limit: number;
     description?: string;
     payment_methods: UserPaymentMethod[];
+    uid: string;
     user: {
         user_nickname: string;
         offers_count: string | number;

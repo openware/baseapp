@@ -19,7 +19,7 @@ const P2PAlerts: FC = (): ReactElement => {
         const list = orders
             .filter(order => {
                 const isTaker = order.user_uid === user.uid;
-                const isMaker = order.offer?.user?.user_uid === user.uid;
+                const isMaker = order.offer?.uid === user.uid;
 
                 return (((order.state === 'prepared' && isMaker && order.side === 'sell')
                     || (order.state === 'wait' && isMaker && order.side === 'buy')
