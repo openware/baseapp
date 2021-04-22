@@ -1113,7 +1113,7 @@ export const en = {
     'page.body.p2p.create.offer.description.placeholder': 'Add any description to your order',
     'page.body.p2p.create.offer.replyMessage': 'Auto reply (optional)',
     'page.body.p2p.create.offer.replyMessage.placeholder': 'Auto reply message will be sent to the counterparty once the order is created',
-    'page.body.p2p.create.offer.create_order': 'Create order',
+    'page.body.p2p.create.offer.create_order': 'Create offer',
     'page.body.p2p.create.offer.header': 'Confirm offer',
     'page.body.p2p.create.offer.type': 'Type',
     'page.body.p2p.create.offer.currency': 'Currency (Fiat)',
