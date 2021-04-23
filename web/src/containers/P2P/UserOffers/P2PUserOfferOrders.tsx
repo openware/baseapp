@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { ArrowRightIcon } from 'src/assets/images/setup/ArrowRightIcon';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
-import { localeDate, setStateType, setTradesType } from 'src/helpers';
+import { localeDate, setOfferStatusColor, setStateType, setTradesType } from 'src/helpers';
 import { Decimal, Table } from '../../../components';
 import { useCurrenciesFetch, useP2PUserOfferOrdersFetch } from '../../../hooks';
 import {
@@ -47,11 +47,6 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
         '',
     ];
 
-    const onRowClick = useCallback((index: string) => {
-        const orderId = offer?.orders && offer?.orders[index]?.id;
-        orderId && history.push(`/p2p/order/${orderId}`);
-    }, [history, offer]);
-
     const getPrecision = (id: string, currencies) => {
         return currencies.find(i => i.id === id)?.precision || DEFAULT_CCY_PRECISION;
     };
@@ -66,7 +61,7 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
         const amountPrecision = getPrecision(base, currencies);
 
         return offer.orders.map((item: P2POrder) => {
-            const { created_at, side, amount, user_uid, state } = item;
+            const { id, created_at, side, amount, user_uid, state } = item;
             const sideColored = setTradesType(side);
             const stateColored = setStateType(state);
 
@@ -77,7 +72,7 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
                 `${Decimal.format(amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${base.toUpperCase()}`,
                 <span>{user_uid}</span>,
                 <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
-                <ArrowRightIcon className="icon-right" />,
+                ['prepared', 'wait'].includes(state) ? <div onClick={() => history.push(`/p2p/order/${id}`)}><ArrowRightIcon className="icon-right" /></div> : null,
             ];
         })
     }, [offer, currencies]);
@@ -86,7 +81,6 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
         const sideColored = setTradesType(offer?.side);
         const amountPrecision = getPrecision(offer?.base, currencies);
         const priceItem = `${Decimal.format(offer?.price, getPrecision(offer?.quote, currencies) || DEFAULT_FIAT_PRECISION, ',')} ${offer?.quote.toUpperCase()}`;
-        const stateColored = setStateType(offer?.state);
 
         return offer ? (
             <div className="cr-user-p2p-offer-info">
@@ -111,14 +105,16 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
                     <label>{translate('page.body.p2p.my.offer_orders.table.price')}</label>
                 </div>
                 <div>
-                    <span style={{ color: stateColored.color }}>{stateColored.text}</span>
+                    <span style={{ color: setOfferStatusColor(offer.state) }}>{translate(`page.body.p2p.my.offers.${offer.state}`)}</span>
                     <label>{translate('page.body.p2p.my.offer_orders.table.status')}</label>
                 </div>
-                <div>
-                    <Button onClick={handleCancel(offer.id)} variant="secondary">
-                        {translate('page.body.p2p.my.offers.table.cancel')}
-                    </Button>
-                </div>
+                {offer.state === 'wait' ? (
+                    <div>
+                        <Button onClick={handleCancel(offer.id)} variant="secondary">
+                            {translate('page.body.p2p.my.offers.table.cancel')}
+                        </Button>
+                    </div>
+                ) : null}
             </div>
         ) : (
             <div className="cr-user-p2p-offer-info"></div>
@@ -129,7 +125,7 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
         <div className="cr-user-p2p-offer-orders">
             {p2pOfferInfo()}
             <div className="cr-user-p2p-offer-orders-table">
-                <Table header={headerTitles()} data={retrieveData()} onSelect={onRowClick}/>
+                <Table header={headerTitles()} data={retrieveData()}/>
             </div>
         </div>
     );

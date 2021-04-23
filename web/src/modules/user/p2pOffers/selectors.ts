@@ -58,11 +58,8 @@ export const selectP2PUserOfferOrdersFetchSuccess = (state: RootState): boolean 
 export const selectP2PUserOfferOrdersFetchError = (state: RootState): CommonError | undefined =>
     state.user.p2pOffers.offerOrders.error;
 
-export const selectP2PUserOfferOrdersTimestamp = (state: RootState): number | undefined =>
-    state.user.p2pOffers.offerOrders.timestamp;
-
 export const selectShouldFetchP2PUserOfferOrders = (state: RootState): boolean =>
-    !selectP2PUserOfferOrdersTimestamp(state) && !selectP2PUserOfferOrdersFetchLoading(state);
+    !selectP2PUserOfferOrdersFetchLoading(state);
 
 
 /* P2P Create Offer */

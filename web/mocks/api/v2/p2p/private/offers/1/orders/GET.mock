@@ -15,7 +15,7 @@ Access-Control-Allow-Headers: content-type, x-csrf-token
     "max_order_amount": "1000",
     "base": "usdt",
     "quote": "ngn",
-    "state": "pending",
+    "state": "wait",
     "created_at": "",
     "side": "sell",
     "payment_methods": [{
