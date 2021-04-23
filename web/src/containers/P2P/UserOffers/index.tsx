@@ -83,6 +83,7 @@ const P2PUserOffers: FC = (): ReactElement => {
                 quote,
                 base,
                 state,
+                orders_count,
             } = item;
 
             const amountPrecision = wallets.find(w => w.currency === base)?.fixed || DEFAULT_CCY_PRECISION;
@@ -96,10 +97,12 @@ const P2PUserOffers: FC = (): ReactElement => {
                 <span key={id}>{Decimal.format(price, pricePrecision, ',')} {quote?.toUpperCase()}</span>,
                 <span style={{ color: setOfferStatusColor(state) }} className="text-capitalize" key={id}>{translate(`page.body.p2p.my.offers.${tab}`)}</span>,
                 <div className="actions">
-                    <Button onClick={handleOrders(id)} variant="primary">
-                        <span>{translate('page.body.p2p.my.offers.table.orders')}</span>
-                        <EyeIcon className="eye-icon"/>
-                    </Button>
+                    {typeof orders_count === 'undefined' || orders_count > 0 ? (
+                        <Button onClick={handleOrders(id)} variant="primary">
+                            <span>{translate('page.body.p2p.my.offers.table.orders')}</span>&nbsp;{orders_count}
+                            <EyeIcon className="eye-icon"/>
+                        </Button>
+                    ) : null}
                     {tab === 'wait' && (
                         <Button onClick={handleCancel(id)} variant="outline-danger">
                             {translate('page.body.p2p.my.offers.table.cancel')}

@@ -22,6 +22,7 @@ export interface Offer {
         success_rate: string | number;
         user_uid: string;
     };
+    orders_count?: number;
 }
 
 export interface P2PCurrency {
