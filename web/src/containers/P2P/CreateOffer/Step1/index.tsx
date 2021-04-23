@@ -44,11 +44,11 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
         if (p2pCurrencies.length && currencies.length) {
             const fiatCurList = p2pCurrencies.filter(i => i.type === 'fiat').map(i => i.id).map(i => currencies.find(c => c.id === i));
             setCashList(fiatCurList);
-            fiatCurList.length && props.handleSetCash(fiatCurList[0]);
+            fiatCurList.length && props.handleSetCash(cash || fiatCurList[0]);
 
             const cryptoCurList = p2pCurrencies.filter(i => i.type === 'coin').map(i => i.id).map(i => currencies.find(c => c.id === i));
             setAssetList(cryptoCurList);
-            cryptoCurList.length && props.handleSetAsset(cryptoCurList[0]);
+            cryptoCurList.length && props.handleSetAsset(asset || cryptoCurList[0]);
         }
     }, [p2pCurrencies, currencies, props.handleSetAsset, props.handleSetCash]);
 
