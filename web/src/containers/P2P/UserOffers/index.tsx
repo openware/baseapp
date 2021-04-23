@@ -96,12 +96,12 @@ const P2PUserOffers: FC = (): ReactElement => {
                 <span key={id}>{Decimal.format(price, pricePrecision, ',')} {quote?.toUpperCase()}</span>,
                 <span style={{ color: setOfferStatusColor(state) }} className="text-capitalize" key={id}>{translate(`page.body.p2p.my.offers.${tab}`)}</span>,
                 <div className="actions">
-                    <Button key={id} onClick={handleOrders(id)} variant="primary">
+                    <Button onClick={handleOrders(id)} variant="primary">
                         <span>{translate('page.body.p2p.my.offers.table.orders')}</span>
                         <EyeIcon className="eye-icon"/>
                     </Button>
                     {tab === 'wait' && (
-                        <Button key={id} onClick={handleCancel(id)} variant="outline-danger">
+                        <Button onClick={handleCancel(id)} variant="outline-danger">
                             {translate('page.body.p2p.my.offers.table.cancel')}
                         </Button>
                     )}
@@ -120,6 +120,7 @@ const P2PUserOffers: FC = (): ReactElement => {
             return;
         }
         setTab(tabMapping[index]);
+        dispatch(userOffersFetch({ page: 0, limit: DEFAULT_TABLE_PAGE_LIMIT, state: tabMapping[index] }));
     }, [tabMapping]);
 
     const pageContent = useCallback((tabLabel: string) => {
