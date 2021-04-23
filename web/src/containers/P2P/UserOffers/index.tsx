@@ -95,7 +95,7 @@ const P2PUserOffers: FC = (): ReactElement => {
                 `${base?.toUpperCase()}/${quote?.toUpperCase()}`,
                 <span key={id}>{Decimal.format(origin_amount, amountPrecision, ',')} {base?.toUpperCase()}</span>,
                 <span key={id}>{Decimal.format(price, pricePrecision, ',')} {quote?.toUpperCase()}</span>,
-                <span style={{ color: setOfferStatusColor(state) }} className="text-capitalize" key={id}>{translate(`page.body.p2p.my.offers.${tab}`)}</span>,
+                <span style={{ color: setOfferStatusColor(state) }} className="text-capitalize" key={id}>{translate(`page.body.p2p.my.offers.${state}`)}</span>,
                 <div className="actions">
                     {typeof orders_count === 'undefined' || orders_count > 0 ? (
                         <Button onClick={handleOrders(id)} variant="primary">

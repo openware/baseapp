@@ -12,7 +12,7 @@ export const insertOrUpdate = (
 
     const index = list.findIndex((value: Offer) => value.id === id);
 
-    if (offer.state === 'cancelled' || offer.state !== 'done') {
+    if (offer.state === 'cancelled' || offer.state === 'done') {
         if (index === -1 ) {
             return list;
         } else {
