@@ -6,24 +6,8 @@ Access-Control-Expose-Headers: total
 Total: 28
 
 [
-    {
-        "id": 1,
-        "user_nickname": "King_Coin66",
-        "offers_count": 123,
-        "success_rate": 1,
-        "price": 1.25,
-        "available_amount": "5534.00",
-        "origin_amount": "7666.00",
-        "min_order_amount": "15",
-        "max_order_amount": "5000",
-        "base": "usdt",
-        "quote": "ngn",
-        "state": "pending",
-        "created_at": "",
-        "payment_methods": [{ "id": 1, "name": "Yellow Bank" }, {"id": 2, "name": "Monobank" }]
-    },
-    {
-        "id": 2,
+		{
+        "id": 3,
         "user_nickname": "King_Coin66",
         "offers_count": 123,
         "success_rate": 1,
@@ -37,4 +21,21 @@ Total: 28
         "state": "pending",
         "created_at": "",
         "payment_methods": [{ "id": 1, "name": "Yellow Bank" }, {"id": 2, "name": "Monobank" }]
-}]
+		},
+    {
+        "id": 4,
+        "user_nickname": "King_Coin66",
+        "offers_count": 123,
+        "success_rate": 1,
+        "price": 1.25,
+        "available_amount": "5534.00",
+        "origin_amount": "7666.00",
+        "min_order_amount": "15",
+        "max_order_amount": "5000",
+        "base": "usdt",
+        "quote": "ngn",
+        "state": "pending",
+        "created_at": "",
+        "payment_methods": [{ "id": 1, "name": "Yellow Bank" }, {"id": 2, "name": "Monobank" }]
+    }
+]

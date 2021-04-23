@@ -26,6 +26,7 @@ interface ParentProps {
     quote: string;
     paymentMethod: string;
     side: string;
+    sort?: string;
     onClickTrade: (offer: Offer) => void;
 }
 
@@ -45,7 +46,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
     useWalletsFetch();
     useCurrenciesFetch();
 
-    const { side, paymentMethod, base, quote } = props;
+    const { side, sort, paymentMethod, base, quote } = props;
 
     useP2POffersFetch({
         limit: DEFAULT_TABLE_PAGE_LIMIT,
@@ -53,6 +54,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
         quote,
         base,
         side,
+        sort,
         payment_method: paymentMethod,
     });
 

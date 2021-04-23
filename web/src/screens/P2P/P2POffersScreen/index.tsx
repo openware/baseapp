@@ -16,6 +16,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
     const [tabMapping, setTabMapping] = useState<string[]>([]);
     const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
     const [sideFilter, setSideFilter] = useState<string>('buy');
+    const [sortParam, setSortParam] = useState<string>('price asc');
     const [fiatCurrency, setFiatCurrency] = useState<string>('');
     const [fiatCurList, setFiatCurList] = useState<string[]>([]);
     const [paymentFilter, setPaymentFilter] = useState<string>('');
@@ -95,12 +96,17 @@ export const P2POffersScreen: FC = (): ReactElement => {
         setSelectedOffer(offer);
     }, [selectedOffer]);
 
+    const handleSideFilter = (side: string) => {
+        setSideFilter(side);
+        side === 'sell' ? setSortParam('price desc') : setSortParam('price asc');
+    };
+
     const pageContent = useCallback((currency: string) => {
         return (
             <React.Fragment>
                 <P2POffersHeader
                     setPayment={setPaymentFilter}
-                    onClickSideTab={setSideFilter}
+                    onClickSideTab={handleSideFilter}
                     paymentsList={paymentMethods.map(i => i.name)}
                     paymentMethod={paymentFilter}
                     side={sideFilter}
@@ -113,6 +119,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
                     quote={fiatCurrency}
                     paymentMethod={paymentFilter}
                     side={sideFilter}
+                    sort={sortParam}
                     onClickTrade={handleClickTrade}
                 />
                 {selectedOffer &&

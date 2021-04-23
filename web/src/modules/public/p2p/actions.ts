@@ -19,6 +19,7 @@ export interface OffersFetch {
         page: number;
         limit: number;
         side: string;
+        sort?: string;
         base: string;
         quote: string;
         payment_method?: number;
@@ -32,6 +33,7 @@ export interface OffersData {
         page: number;
         total: number;
         side: string;
+        sort?: string;
         base: string;
         quote: string;
         payment_method?: number;
