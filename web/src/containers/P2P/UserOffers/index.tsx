@@ -22,7 +22,7 @@ import {
 import { EyeIcon } from 'src/assets/images/EyeIcon';
 
 const P2PUserOffers: FC = (): ReactElement => {
-    const [tab, setTab] = useState<string>('');
+    const [tab, setTab] = useState<string>('wait');
     const [tabMapping, setTabMapping] = useState<string[]>(['wait', 'done', 'cancelled']);
     const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
 
@@ -115,8 +115,7 @@ const P2PUserOffers: FC = (): ReactElement => {
 
     const onCurrentTabChange = useCallback((index: number) => {
         setCurrentTabIndex(index);
-        history.push(`/p2p/offers/${tabMapping[index]}`);
-    }, [history, tabMapping]);
+    }, [tabMapping]);
 
     const onTabChange = useCallback((index: number) => {
         if (tab === tabMapping[index]) {
@@ -124,7 +123,7 @@ const P2PUserOffers: FC = (): ReactElement => {
         }
         setTab(tabMapping[index]);
         dispatch(userOffersFetch({ page: 0, limit: DEFAULT_TABLE_PAGE_LIMIT, state: tabMapping[index] }));
-    }, [tabMapping]);
+    }, [tab, tabMapping]);
 
     const pageContent = useCallback((tabLabel: string) => {
         return (
