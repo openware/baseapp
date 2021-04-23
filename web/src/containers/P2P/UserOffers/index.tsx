@@ -1,7 +1,7 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, DEFAULT_TABLE_PAGE_LIMIT } from 'src/constants';
 import { localeDate, setOfferStatusColor } from 'src/helpers';
@@ -94,11 +94,11 @@ const P2PUserOffers: FC = (): ReactElement => {
                 `${base?.toUpperCase()}/${quote?.toUpperCase()}`,
                 <span key={id}>{Decimal.format(origin_amount, amountPrecision, ',')} {base?.toUpperCase()}</span>,
                 <span key={id}>{Decimal.format(price, pricePrecision, ',')} {quote?.toUpperCase()}</span>,
-                <span style={{ color: setOfferStatusColor(state) }} className="text-capitalize" key={id}>{translate(`page.body.p2p.my.offers.${tab}`}</span>,
+                <span style={{ color: setOfferStatusColor(state) }} className="text-capitalize" key={id}>{translate(`page.body.p2p.my.offers.${tab}`)}</span>,
                 <div className="actions">
                     <Button key={id} onClick={handleOrders(id)} variant="primary">
                         <span>{translate('page.body.p2p.my.offers.table.orders')}</span>
-                        <EyeIcon className="eye-icon" />
+                        <EyeIcon className="eye-icon"/>
                     </Button>
                     {tab === 'wait' && (
                         <Button key={id} onClick={handleCancel(id)} variant="outline-danger">

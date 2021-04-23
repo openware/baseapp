@@ -78,27 +78,13 @@
         display: flex;
         flex-direction: row;
 
-        a {
+        .btn-primary {
           margin-right: 12px;
 
           .eye-icon {
             margin-left: 5px;
           }
         }
-      }
-    }
-  }
-
-  .icon-right {
-    cursor: pointer;
-
-    path {
-      &:first-child {
-        fill: transparent;
-      }
-
-      &:nth-child(2) {
-        fill: var(--icons);
       }
     }
   }
@@ -184,6 +170,20 @@
 
       &--no-data {
         text-align: center !important;
+      }
+    }
+  }
+
+  .icon-right {
+    cursor: pointer;
+
+    path {
+      &:first-child {
+        fill: transparent;
+      }
+
+      &:nth-child(2) {
+        fill: var(--icons);
       }
     }
   }
