@@ -29,7 +29,7 @@ export const P2POrderScreen: FC = (): ReactElement => {
     useP2POrderFetch(Number(id));
 
     useEffect(() => {
-        if (order?.state === 'cancelled') {
+        if (['autocancelled', 'cancelled'].includes(order?.state)) {
             history.push('/p2p');
         }
     }, [order, history]);

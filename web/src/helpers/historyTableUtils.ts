@@ -54,6 +54,10 @@ export const stateColorMapping = {
         color: 'var(--asks)',
         text: 'Cancelled',
     },
+    autocancelled: {
+        color: 'var(--asks)',
+        text: 'Auto Cancelled',
+    },
     wait: {
         color: 'var(--system-yellow)',
         text: 'Wait',
