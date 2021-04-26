@@ -103,14 +103,19 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                             <DropdownComponent
                                 list={option.options.map(i => i?.value)}
                                 onSelect={value => props.handleCustomFieldChange(option.options[value].value, option.key)}
-                                placeholder={option.name ? option.name : titleCase(option.key)}
-                                selectedValue={option.value}
+                                placeholder={option.value}
                             />
                             {showError && option.required && !option.value &&
                                 <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}
                         </div>
                     );
                 default:
+                    const keyContainsNumber = option.key.includes('number');
+                    if (modal.action === 'update' && keyContainsNumber && !option.flag) {
+                        option.value = '';
+                        option.flag = true;
+                    }
+
                     return (
                         <div className={inputClass(option)}>
                             <CustomInput
@@ -127,7 +132,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                     );
             }            
         });
-    }, [showError, paymentMethods, props.handleCustomFieldChange]);
+    }, [showError, paymentMethods, paymentOptions, props.handleCustomFieldChange]);
 
     const renderModalBody = useCallback(() => {
         let body;

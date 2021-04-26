@@ -11,7 +11,7 @@ Access-Control-Allow-Credentials: true
     "payment_method_id": 1,
     "payment_method": { "name": "Kasikon Bank", "type": "Bank Transfer" },
     "data": {
-      "bank_name": "Kasikon Bank",
+      "bank_name": "Monobank",
       "name": "Alice",
       "account_number": "09-1023-1222-1"
     }

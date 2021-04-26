@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { PaymentMethodModal } from './PaymentMethodModal';
-import { titleCase } from 'src/helpers';
+import { titleCase, truncateMiddle } from 'src/helpers';
 import { useP2PPaymentMethodsFetch, useUserPaymentMethodsFetch } from 'src/hooks';
 import { PaymentMethod, selectP2PPaymentMethodsData, selectPaymentMethodList, selectPaymentMethodModal, UserPaymentMethod } from 'src/modules';
 import { paymentMethodCreateFetch, paymentMethodDeleteFetch, paymentMethodUpdateFetch, paymentMethodModal } from 'src/modules';
@@ -16,6 +16,7 @@ export interface PaymentOptionInterface {
     required: boolean;
     options: string[];
     value?: string;
+    flag?: boolean;
 }
 
 export const ProfilePayment: FC = (): ReactElement => {
@@ -167,9 +168,10 @@ export const ProfilePayment: FC = (): ReactElement => {
                     {
                         Object.keys(item.data).map(key => {
                             const value = item.data[key];
+                            const masked = key.includes('number') ? truncateMiddle(value, 8, '***') : value;
                             return (
                                 <div className="payment-method-item-body__col">
-                                    <div>{value}</div>
+                                    <div>{masked}</div>
                                     <label>{titleCase(key)}</label>
                                 </div>
                             );

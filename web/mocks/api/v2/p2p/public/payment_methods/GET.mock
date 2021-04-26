@@ -25,7 +25,7 @@ Access-Control-Allow-Credentials: true
         "required": true,
         "options": [
           {"id": 1, "value": "Kasikon Bank"},
-          {"id": 2, "value": "Card"},
+          {"id": 2, "value": "K-Bank"},
           {"id": 3, "value": "Monobank"}
         ]
       },
