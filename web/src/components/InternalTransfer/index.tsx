@@ -30,16 +30,19 @@ export const InternalTransferComponent = () => {
     const [currency, setCurrency] = useState('');
     const [amount, setAmount] = useState('');
     const [otp, setOtp] = useState('');
+    const [clear, setClear] = useState(true);
 
     const [show, setShow] = useState(false);
 
     React.useEffect(() => {
         dispatch(walletsFetch());
+        setClear(false);
     }, []);
 
     React.useEffect(() => {
         if (transferSuccess) {
             handleResetState();
+            setClear(true);
         }
     }, [transferSuccess]);
 
@@ -77,6 +80,7 @@ export const InternalTransferComponent = () => {
         setCurrency('');
         setAmount('');
         setOtp('');
+        setClear(false);
     }
 
     const renderFooter = useMemo(() => {
@@ -142,6 +146,7 @@ export const InternalTransferComponent = () => {
                         list={walletsList}
                         onSelect={value => setCurrency(walletsList[value])}
                         placeholder="Currency"
+                        clear={clear}
                     />
                     <div
                         onClick={() => setAmount(wallet ? Decimal.format(wallet.balance, wallet.fixed, '.') : '')}
