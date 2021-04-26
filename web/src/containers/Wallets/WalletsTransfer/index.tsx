@@ -83,7 +83,7 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
 
 
     const formattedWallets = useCallback(() => {
-        const list = nonZeroSelected ? filteredWallets.filter(i => i.balance && Number(i.balance) > 0) : filteredWallets;
+        const list = nonZeroSelected ? filteredWallets.filter(i => i.currency && i.balance && Number(i.balance) > 0) : filteredWallets.filter(i => i.currency);
 
         return list.map((wallet: Wallet) => ({
             ...wallet,

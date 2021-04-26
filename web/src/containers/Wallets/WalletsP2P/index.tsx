@@ -54,7 +54,7 @@ const WalletsP2P: FC = (): ReactElement => {
     }, [history]);
 
     const retrieveData = React.useCallback(() => {
-        const list = nonZeroSelected ? filteredWallets.filter(i => i.balance && Number(i.balance) > 0) : filteredWallets;
+        const list = nonZeroSelected ? filteredWallets.filter(i => i.currency && i.balance && Number(i.balance) > 0) : filteredWallets.filter(i => i.currency);
 
         return !list.length ? [[]] : list.map((item, index) => {
             const {
