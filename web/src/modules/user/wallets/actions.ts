@@ -3,6 +3,7 @@ import {
     P2P_WALLETS_FETCH,
     P2P_WALLETS_DATA,
     P2P_WALLETS_ERROR,
+    P2P_WALLETS_DATA_WS,
     SET_MOBILE_WALLET_UI,
     WALLETS_ADDRESS_DATA,
     WALLETS_ADDRESS_DATA_WS,
@@ -100,6 +101,14 @@ export interface P2PWalletsError {
     error: CommonError;
 }
 
+export interface P2PWalletsDataByRanger {
+    type: typeof P2P_WALLETS_DATA_WS;
+    payload: {
+        ws: boolean;
+        balances;
+    };
+}
+
 export type WalletsAction = WalletsFetch
     | WalletsData
     | WalletsDataByRanger
@@ -115,7 +124,8 @@ export type WalletsAction = WalletsFetch
     | SetMobileWalletUi
     | P2PWalletsFetch
     | P2PWalletsData
-    | P2PWalletsError;
+    | P2PWalletsError
+    | P2PWalletsDataByRanger;
 
 export const walletsFetch = (): WalletsFetch => ({
     type: WALLETS_FETCH,
@@ -191,4 +201,9 @@ export const p2pWalletsData = (payload: P2PWalletsData['payload']): P2PWalletsDa
 export const p2pWalletsError = (error: CommonError): P2PWalletsError => ({
     type: P2P_WALLETS_ERROR,
     error,
+});
+
+export const updateP2PWalletsDataByRanger = (payload: P2PWalletsDataByRanger['payload']): P2PWalletsDataByRanger => ({
+    type: P2P_WALLETS_DATA_WS,
+    payload,
 });

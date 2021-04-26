@@ -22,3 +22,4 @@ export const SET_MOBILE_WALLET_UI = 'wallets/SET_MOBILE_WALLET_UI';
 export const P2P_WALLETS_FETCH = 'p2p_wallets/FETCH';
 export const P2P_WALLETS_DATA = 'p2p_wallets/DATA';
 export const P2P_WALLETS_ERROR = 'p2p_wallets/ERROR';
+export const P2P_WALLETS_DATA_WS = 'p2p_wallets/DATA_WS';

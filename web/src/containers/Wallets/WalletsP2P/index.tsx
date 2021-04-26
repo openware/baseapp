@@ -32,9 +32,7 @@ const WalletsP2P: FC = (): ReactElement => {
     useMarketsFetch();
 
     useEffect(() => {
-        if (wallets.length && !filteredWallets.length) {
-            setFilteredWallets(wallets);
-        }
+        setFilteredWallets(wallets);
     }, [wallets]);
 
     const headerTitles = [

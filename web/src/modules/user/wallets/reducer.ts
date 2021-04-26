@@ -2,6 +2,7 @@ import { CommonError } from '../../types';
 import { WalletsAction } from './actions';
 import {
     P2P_WALLETS_DATA,
+    P2P_WALLETS_DATA_WS,
     P2P_WALLETS_ERROR,
     P2P_WALLETS_FETCH,
     SET_MOBILE_WALLET_UI,
@@ -202,7 +203,7 @@ const p2pWalletsListReducer = (state: WalletsState['p2pWallets'], action: Wallet
                 list: action.payload,
             };
         }
-        case WALLETS_DATA_WS: {
+        case P2P_WALLETS_DATA_WS: {
             let updatedList = state.list;
 
             if (state.list.length) {
@@ -272,7 +273,7 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
         case P2P_WALLETS_FETCH:
         case P2P_WALLETS_DATA:
         case P2P_WALLETS_ERROR:
-        case WALLETS_DATA_WS:
+        case P2P_WALLETS_DATA_WS:
             const p2pWalletsListState = { ...state.p2pWallets };
 
             return {

@@ -187,5 +187,19 @@ Access-Control-Allow-Credentials: true
     "withdrawal_enabled": false,
     "base_factor": 1,
     "precision": 2
+  },
+  {
+    "id": "ngn",
+    "name": "NGN",
+    "type": "fiat",
+    "min_confirmations": 4,
+    "deposit_fee": "0.0",
+    "withdraw_fee": "0.01",
+    "withdraw_limit_24h": "100.0",
+    "withdraw_limit_72h": "200.0",
+    "deposit_enabled": true,
+    "withdrawal_enabled": true,
+    "base_factor": 1,
+    "precision": 2
   }
 ]

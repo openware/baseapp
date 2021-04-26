@@ -171,6 +171,10 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
             },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
          };
         expect(walletsReducer(initialState, actions.walletsAddressData(addressDataPayload))).toEqual(expectedState);
     });
