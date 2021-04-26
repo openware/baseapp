@@ -147,7 +147,7 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
                     <OrderInput
                         currency={cash ? cash.id : ''}
                         label={translate('page.body.p2p.create.offer.price')}
-                        placeholder="00.00"
+                        placeholder="0.00"
                         value={price || ''}
                         isFocused={priceFocused}
                         handleChangeValue={handlePriceChange}

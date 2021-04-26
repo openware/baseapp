@@ -227,7 +227,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                     <OrderInput
                         currency={asset ? asset.id : ''}
                         label={translate('page.body.p2p.create.offer.amount')}
-                        placeholder="00.00"
+                        placeholder="0.00"
                         value={amount || ''}
                         isFocused={amountFocused}
                         handleChangeValue={handleAmountChange}
@@ -259,7 +259,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                             <OrderInput
                                 currency={cash ? cash.id : ''}
                                 label={translate('page.body.p2p.create.offer.order_limit')}
-                                placeholder="00.00"
+                                placeholder="0.00"
                                 value={lowLimit || ''}
                                 isFocused={lowLimitFocused}
                                 handleChangeValue={handleLowLimitChange}
@@ -271,7 +271,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                         <span className="approximate">&#8764;</span>
                         <OrderInput
                             currency={cash ? cash.id : ''}
-                            placeholder="00.00"
+                            placeholder="0.00"
                             value={topLimit || ''}
                             isFocused={topLimitFocused}
                             handleChangeValue={handleTopLimitChange}
