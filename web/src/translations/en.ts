@@ -885,6 +885,7 @@ export const en = {
 
     // peatio
     'account.currency.doesnt_exist': 'Currency doesn\'t exist',
+    'account.currency.deposit_disabled': 'Deposit is currently disabled',
     'account.deposit.invalid_state': 'Deposit invalid state',
     'account.deposit.non_integer_limit': 'Value you send could not be parsed into Integer type',
     'account.deposit.invalid_limit': 'Invalid limit',
