@@ -7,7 +7,7 @@ import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { Markets } from '../../components/Markets';
 import { useMarketsTickersFetch } from '../../hooks';
-import { setCurrentPrice } from '../../modules';
+import { setCurrentPrice, selectUserInfo } from '../../modules';
 import {
     Market,
     selectCurrentMarket,
@@ -26,6 +26,7 @@ export const MarketsComponent = () => {
     const marketsLoading = useSelector(selectMarketsLoading);
     const marketTickers = useSelector(selectMarketTickers);
     const currentMarket = useSelector(selectCurrentMarket);
+    const userData = useSelector(selectUserInfo);
 
     const headers = React.useMemo(() => ([
         formatMessage({ id: 'page.body.trade.header.markets.content.pair' }),
@@ -40,13 +41,17 @@ export const MarketsComponent = () => {
             price_change_percent: '+0.00%',
         };
 
-        return marketsData.map((market: Market) =>
-            ([
+        return marketsData.map((market: Market) => {
+            if (market.state && market.state === 'hidden' && userData.role !== 'admin' && userData.role !== 'superadmin') {
+                return [null, null, null, null];
+            }
+
+            return ([
                 market.name,
                 Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision, ','),
                 (marketTickers[market.id] || defaultTicker).price_change_percent,
-            ]),
-        );
+            ])
+        });
     }, [marketTickers, marketsData]);
 
     const handleOnSelect = React.useCallback((index: string) => {
@@ -63,11 +68,12 @@ export const MarketsComponent = () => {
 
     const renderMarkets = React.useCallback(() => {
         const key = currentMarket && currentMarket.name;
+        const marketData = mapMarkets().filter(item => item[0] !== null);
 
         return (
             <Markets
                 filters={false}
-                data={mapMarkets()}
+                data={marketData}
                 rowKeyIndex={0}
                 onSelect={handleOnSelect}
                 selectedKey={key}
