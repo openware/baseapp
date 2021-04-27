@@ -47,6 +47,10 @@ const MarketsTableComponent = props => {
     };
 
     const formatFilteredMarkets = (list: string[], market: Market) => {
+        if (market.state && market.state === 'hidden' && userData.role !== 'admin' && userData.role !== 'superadmin') {
+            return list;
+        }
+
         if (!list.includes(market.quote_unit)) {
             list.push(market.quote_unit);
         }
