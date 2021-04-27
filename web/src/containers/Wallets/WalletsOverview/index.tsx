@@ -23,6 +23,7 @@ interface ExtendedWallet extends Wallet {
 }
 
 const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
+    const [filterValue, setFilterValue] = React.useState<string>('');
     const [filteredWallets, setFilteredWallets] = React.useState<ExtendedWallet[]>([]);
     const [mergedWallets, setMergedWallets] = React.useState<ExtendedWallet[]>([]);
     const [nonZeroSelected, setNonZeroSelected] = React.useState<boolean>(false);
@@ -90,8 +91,9 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
 
     const retrieveData = React.useCallback(() => {
         const list = nonZeroSelected ? filteredWallets.filter(i => i.balance && Number(i.balance) > 0) : filteredWallets;
+        const filteredList = list.filter(i => !filterValue || i.name?.toLocaleLowerCase().includes(filterValue.toLowerCase()) || i.currency?.toLocaleLowerCase().includes(filterValue.toLowerCase()));
 
-        return !list.length ? [[]] : list.map((item, index) => {
+        return !filteredList.length ? [[]] : filteredList.map((item, index) => {
             const {
                 currency,
                 iconUrl,
@@ -155,6 +157,7 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
                 <WalletsHeader
                     wallets={mergedWallets}
                     nonZeroSelected={nonZeroSelected}
+                    setFilterValue={setFilterValue}
                     setFilteredWallets={setFilteredWallets}
                     handleClickCheckBox={setNonZeroSelected}
                 />

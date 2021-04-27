@@ -10,6 +10,7 @@ import { WalletsHeader } from 'src/components/WalletsHeader';
 import { useHistory } from 'react-router';
 
 const WalletsP2P: FC = (): ReactElement => {
+    const [filterValue, setFilterValue] = React.useState<string>('');
     const [filteredWallets, setFilteredWallets] = React.useState<Wallet[]>([]);
     const [nonZeroSelected, setNonZeroSelected] = React.useState<boolean>(false);
 
@@ -53,8 +54,9 @@ const WalletsP2P: FC = (): ReactElement => {
 
     const retrieveData = React.useCallback(() => {
         const list = nonZeroSelected ? filteredWallets.filter(i => i.currency && i.balance && Number(i.balance) > 0) : filteredWallets.filter(i => i.currency);
+        const filteredList = list.filter(i => !filterValue || i.name?.toLocaleLowerCase().includes(filterValue.toLowerCase()) || i.currency?.toLocaleLowerCase().includes(filterValue.toLowerCase()));
 
-        return !list.length ? [[]] : list.map((item, index) => {
+        return !filteredList.length ? [[]] : filteredList.map((item, index) => {
             const {
                 currency,
                 iconUrl,
@@ -110,6 +112,7 @@ const WalletsP2P: FC = (): ReactElement => {
                 <WalletsHeader
                     wallets={wallets}
                     nonZeroSelected={nonZeroSelected}
+                    setFilterValue={setFilterValue}
                     setFilteredWallets={setFilteredWallets}
                     handleClickCheckBox={setNonZeroSelected}
                 />
