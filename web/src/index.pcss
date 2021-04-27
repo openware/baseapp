@@ -85,13 +85,6 @@ input[type=button] {
     }
   }
 
-  thead th {
-    background: var(--table-background-color);
-    position: sticky;
-    top: calc(var(--gap) * 6);
-    z-index: 9999;
-  }
-
   td {
     font-weight: normal;
     line-height: 16px;
@@ -99,7 +92,7 @@ input[type=button] {
 
   td,
   th {
-    font-size: 0.8em !important;
+    font-size: 0.8em;
     padding: 6px 12px;
   }
 
@@ -110,7 +103,7 @@ input[type=button] {
 
   &__head {
     th {
-      font-size: 1em !important;
+      font-size: 1em;
     }
 
     th:last-child {
@@ -130,9 +123,9 @@ input[type=button] {
 
     td {
       background: transparent;
-      font-size: 1em !important;
-      padding-bottom: calc(var(--gap) * 1.38) !important;
-      padding-top: calc(var(--gap) * 1.38) !important;
+      font-size: 1em;
+      padding-bottom: calc(var(--gap) * 1.38);
+      padding-top: calc(var(--gap) * 1.38);
     }
   }
 }
