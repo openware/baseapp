@@ -11,6 +11,7 @@ import {
 
 export interface RangerState {
     withAuth: boolean;
+    withP2P: boolean;
     connected: boolean;
     connecting: boolean;
     subscriptions: string[];
@@ -19,6 +20,7 @@ export interface RangerState {
 
 const initialRangerState: RangerState = {
     withAuth: false,
+    withP2P: false,
     connected: false,
     connecting: false,
     subscriptions: [],
@@ -29,6 +31,7 @@ export const rangerReducer = (state = initialRangerState, action: RangerAction):
             return {
                 ...state,
                 withAuth: action.payload.withAuth,
+                withP2P: action.payload.withP2P,
                 connected: false,
                 connecting: true,
                 timestamp: Math.floor(Date.now() / 1000),
