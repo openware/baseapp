@@ -7,8 +7,8 @@ import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { Decimal } from 'src/components';
 import { DEFAULT_CCY_PRECISION, P2P_TIME_LIMIT_LIST } from 'src/constants';
 import { ConfirmOfferModal, CreateOfferStep1, CreateOfferStep2, CreateOfferStep3 } from 'src/containers';
-import { useCurrenciesFetch, useDocumentTitle, useP2PCurrenciesFetch, useUserPaymentMethodsFetch, useWalletsFetch } from 'src/hooks';
-import { createOffer, Currency, selectCurrencies, UserPaymentMethod } from 'src/modules';
+import { useCurrenciesFetch, useDocumentTitle, useP2PCurrenciesFetch, useP2PHighestPriceFetch, useUserPaymentMethodsFetch, useWalletsFetch } from 'src/hooks';
+import { createOffer, Currency, selectCurrencies, selectP2PHighestPriceData, UserPaymentMethod } from 'src/modules';
 
 export const CreateP2POfferScreen: FC = (): ReactElement => {
     const [step, setStep] = useState<number>(0);
@@ -30,12 +30,14 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
     const history = useHistory();
     const dispatch = useDispatch();
     const currencies = useSelector(selectCurrencies);
+    const highestPrice = useSelector(selectP2PHighestPriceData);
 
     useDocumentTitle('Create Offer');
     useCurrenciesFetch();
     useWalletsFetch();
     useP2PCurrenciesFetch();
     useUserPaymentMethodsFetch();
+    useP2PHighestPriceFetch(asset, cash);
 
     useEffect(() => {
         setAmountPrecision(currencies.find(c => c.id === asset?.id.toLowerCase())?.precision || DEFAULT_CCY_PRECISION);
@@ -125,6 +127,7 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
                     cash={cash}
                     side={side}
                     price={price}
+                    highestPrice={highestPrice}
                     handleSetAsset={setAsset}
                     handleSetCash={setCash}
                     handleSetSide={setSide}
@@ -177,6 +180,7 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
         paymentMethods,
         description,
         replyMessage,
+        highestPrice,
     ]);
 
     const confirmOfferModal = React.useCallback(() => {

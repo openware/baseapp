@@ -4,8 +4,9 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CryptoIcon } from 'src/components/CryptoIcon';
+import { DEFAULT_FIAT_PRECISION } from 'src/constants';
 import { cleanPositiveFloatInput, precisionRegExp } from 'src/helpers';
-import { DropdownComponent, OrderInput, TabPanel } from '../../../../components';
+import { Decimal, DropdownComponent, OrderInput, TabPanel } from '../../../../components';
 import {
     Currency,
     selectCurrencies,
@@ -15,6 +16,7 @@ import {
 interface ParentProps {
     price: string;
     side: string;
+    highestPrice: string;
     asset?: Currency;
     cash?: Currency;
     handleSetSide: (value: string) => void;
@@ -34,7 +36,7 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
     const [showError, setShowError] = useState<boolean>(false);
     const [priceError, setPriceError] = useState<string>('');
 
-    const { asset, cash, side, price } = props;
+    const { asset, cash, side, price, highestPrice } = props;
     const tabMapping = [ 'buy', 'sell' ];
     const { formatMessage } = useIntl();
     const p2pCurrencies = useSelector(selectP2PCurrenciesData);
@@ -155,6 +157,14 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
                         labelVisible={true}
                     />
                     {showError && <span className="error">{priceError}</span>}
+                    {highestPrice ? (
+                        <div className="cr-create-offer__info mt-2">
+                            <p className="cr-create-offer__info-grey">
+                                {translate('page.body.p2p.create.offer.highest_price')}:
+                                &nbsp;<span className="bold">{Decimal.format(highestPrice, cash?.precision || DEFAULT_FIAT_PRECISION)} {cash?.id.toUpperCase()}</span>
+                            </p>
+                        </div>
+                     ) : null}
                 </div>
                 <div className="cr-create-offer__btn-wrapper">
                     <Button

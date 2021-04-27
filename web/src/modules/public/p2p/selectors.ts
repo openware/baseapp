@@ -83,3 +83,16 @@ export const selectP2PPaymentMethodsTimestamp = (state: RootState): number | und
 
 export const selectShouldFetchP2PPaymentMethods = (state: RootState): boolean =>
     !selectP2PPaymentMethodsTimestamp(state) && !selectP2PPaymentMethodsLoading(state);
+
+/* P2P Highest Price Methods */
+export const selectP2PHighestPriceData = (state: RootState): string =>
+    state.public.p2p.highestPrice.data;
+
+export const selectP2PHighestPriceLoading = (state: RootState): boolean =>
+    state.public.p2p.highestPrice.fetching;
+
+export const selectP2PHighestPriceTimestamp = (state: RootState): number | undefined =>
+    state.public.p2p.highestPrice.timestamp;
+
+export const selectShouldFetchP2PHighestPrice = (state: RootState): boolean =>
+    !selectP2PHighestPriceTimestamp(state) && !selectP2PHighestPriceLoading(state);

@@ -10,3 +10,7 @@ export const P2P_CURRENCIES_ERROR = 'p2p_currencies/ERROR';
 export const P2P_PAYMENT_METHODS_FETCH = 'p2p_payment_methods/FETCH';
 export const P2P_PAYMENT_METHODS_DATA  = 'p2p_payment_methods/DATA';
 export const P2P_PAYMENT_METHODS_ERROR = 'p2p_payment_methods/ERROR';
+
+export const P2P_HIGHEST_PRICE_FETCH = 'p2p_highest_price/FETCH';
+export const P2P_HIGHEST_PRICE_DATA  = 'p2p_highest_price/DATA';
+export const P2P_HIGHEST_PRICE_ERROR = 'p2p_highest_price/ERROR';

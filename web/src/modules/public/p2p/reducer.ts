@@ -7,6 +7,9 @@ import {
     P2P_CURRENCIES_DATA,
     P2P_CURRENCIES_ERROR,
     P2P_CURRENCIES_FETCH,
+    P2P_HIGHEST_PRICE_DATA,
+    P2P_HIGHEST_PRICE_ERROR,
+    P2P_HIGHEST_PRICE_FETCH,
     P2P_OFFERS_DATA,
     P2P_OFFERS_ERROR,
     P2P_OFFERS_FETCH,
@@ -44,7 +47,13 @@ export interface P2PState {
         success: boolean;
         timestamp?: number;
         error?: CommonError;
-    }
+    };
+    highestPrice: {
+        data: string;
+        fetching: boolean;
+        error?: CommonError;
+        timestamp?: number;
+    };
 }
 
 export const initialP2PState: P2PState = {
@@ -67,6 +76,10 @@ export const initialP2PState: P2PState = {
         quote: '',
         fetching: false,
         success: false,
+    },
+    highestPrice: {
+        data: '',
+        fetching: false,
     },
 };
 
@@ -180,6 +193,32 @@ const p2pPaymentMethodsReducer = (state: P2PState['paymentMethods'], action: P2P
     }
 };
 
+const p2pHighestPriceReducer = (state: P2PState['highestPrice'], action: P2PActions) => {
+    switch (action.type) {
+        case P2P_HIGHEST_PRICE_FETCH:
+            return {
+                ...state,
+                fetching: true,
+                timestamp: Math.floor(Date.now() / 1000),
+            };
+        case P2P_HIGHEST_PRICE_DATA:
+            return {
+                ...state,
+                data: action.payload,
+                fetching: false,
+                error: undefined,
+            };
+        case P2P_HIGHEST_PRICE_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                error: action.error,
+            };
+        default:
+            return state;
+    }
+};
+
 export const p2pReducer = (state = initialP2PState, action: P2PActions) => {
     switch (action.type) {
         case P2P_CURRENCIES_FETCH:
@@ -209,6 +248,15 @@ export const p2pReducer = (state = initialP2PState, action: P2PActions) => {
             return {
                 ...state,
                 offers: p2pOffersFetchReducer(p2pOffersFetchState, action),
+            };
+        case P2P_HIGHEST_PRICE_FETCH:
+        case P2P_HIGHEST_PRICE_DATA:
+        case P2P_HIGHEST_PRICE_ERROR:
+            const p2pHighestPriceState = { ...state.highestPrice };
+
+            return {
+                ...state,
+                highestPrice: p2pHighestPriceReducer(p2pHighestPriceState, action),
             };
         default:
             return state;
