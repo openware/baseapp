@@ -12,6 +12,7 @@ import {
     selectMarkets,
     selectMarketTickers,
     setCurrentMarket,
+    selectUserInfo,
 } from '../../modules';
 
 const defaultTicker = {
@@ -32,6 +33,7 @@ const MarketsTableComponent = props => {
     const dispatch = useDispatch();
     const markets = useSelector(selectMarkets);
     const marketTickers = useSelector(selectMarketTickers);
+    const userData = useSelector(selectUserInfo);
     const [currentBidUnit, setCurrentBidUnit] = React.useState('');
 
     const handleRedirectToTrading = (id: string) => {
@@ -82,11 +84,19 @@ const MarketsTableComponent = props => {
         }),
     ) : [];
 
+    const filteredMarkets = formattedMarkets.map(market => {
+        if (market.state && market.state === 'hidden' && userData.role !== 'admin' && userData.role !== 'superadmin') {
+            return [null, null, null, null];
+        }
+
+        return market;
+    }).filter(item => item[0] !== null);
+
     return (
         <TickerTable
             currentBidUnit={currentBidUnit}
             currentBidUnitsList={currentBidUnitsList}
-            markets={formattedMarkets}
+            markets={filteredMarkets}
             redirectToTrading={handleRedirectToTrading}
             setCurrentBidUnit={setCurrentBidUnit}
         />
