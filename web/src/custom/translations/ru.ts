@@ -1100,7 +1100,7 @@ export const ru: LangType = {
     'page.body.p2p.create.offer.asset': 'Asset',
     'page.body.p2p.create.offer.cash': 'With cash',
     'page.body.p2p.create.offer.price': 'Your price',
-    'page.body.p2p.create.offer.highest_price': 'Highest Order Price',
+    'page.body.p2p.create.offer.highest_price': 'Highest Offer Price',
     'page.body.p2p.create.offer.next_step': 'Next step',
     'page.body.p2p.create.offer.back': 'Back',
     'page.body.p2p.create.offer.amount': 'Total trading amount',
