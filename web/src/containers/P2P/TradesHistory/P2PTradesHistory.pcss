@@ -42,6 +42,7 @@
   }
 
   .cr-p2p-history-table {
+    background-color: var(--table-background-color);
     margin-top: 25px;
     width: 100%;
 
@@ -57,23 +58,11 @@
           border-bottom: 1px solid var(--table-border-color);
 
           th {
-            color: var(--table-text-color);
-            font-size: 10px !important;
-            font-weight: 400;
             line-height: 16px;
-            padding: 0 25px;
             text-align: left;
             height: 36px;
-            width: 120px;
-
-            &:first-child {
-              padding-left: 25px;
-              text-align: left;
-            }
-
-            &:nth-child(7) {
-              white-space: nowrap;
-            }
+            padding: 0 20px;
+            white-space: nowrap;
           }
         }
       }
@@ -81,16 +70,12 @@
       &__body {
         tr {
           border-bottom: 1px solid var(--table-border-color);
-          height: 102px;
           cursor: pointer;
 
           td {
-            background-color: var(--table-background-color);
             color: var(--primary-text-color);
-            font-size: 12px !important;
-            line-height: 22px;
-            font-weight: 400;
-            padding: 0 25px;
+            font-size: 14px;
+            padding: 25px 20px;
             text-align: left;
 
             &:first-child {

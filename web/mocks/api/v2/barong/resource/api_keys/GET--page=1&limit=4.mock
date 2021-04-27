@@ -9,7 +9,7 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
         "created_at": "2019-02-14T15:56:57Z",
         "kid": "5c3933e8c8f97071",
         "scope": [],
-        "state": "active",
+        "state": "disabled",
         "updated_at": "2019-02-14T15:56:57Z"
     },
     {
