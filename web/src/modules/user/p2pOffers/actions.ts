@@ -35,6 +35,7 @@ export interface UserOffersData {
         list: Offer[];
         page: number;
         total: number;
+        state: string;
     };
 }
 

@@ -223,12 +223,13 @@ const Helpers = {
         }
     },
     getP2POffer: (state) => {
-        const states = ['done', 'wait', 'prepared', 'cancelled', 'dispute'];
+        const states = ['done', 'wait', 'cancelled'];
+        const ids = [1, 2, 8, 10];
 
         return {
             "event": `p2p_offer.${state}`,
             "payload": {
-                "id": 8,
+                "id": ids[Math.floor(Math.random() * ids.length)],
                 "uid": "IDD9046D42A4",
                 "base": "usdt",
                 "quote": "ngn",
