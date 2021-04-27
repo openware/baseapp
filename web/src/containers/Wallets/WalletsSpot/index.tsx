@@ -116,6 +116,7 @@ interface WalletsState {
     withdrawConfirmModal: boolean;
     nonZeroSelected: boolean;
     bchAddress?: string;
+    filterValue: string;
     filteredWallets?: Wallet[];
     tab: string;
     withdrawDone: boolean;
@@ -150,6 +151,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             withdrawDone: false,
             total: '',
             currentTabIndex: 0,
+            filterValue: '',
             filteredWallets: [],
             nonZeroSelected: false,
         };
@@ -301,6 +303,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                             <WalletsHeader
                                 wallets={wallets}
                                 nonZeroSelected={nonZeroSelected}
+                                setFilterValue={this.setFilterValue}
                                 setFilteredWallets={this.handleFilter}
                                 handleClickCheckBox={this.handleToggleCheckbox}
                             />
@@ -359,6 +362,12 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             iconUrl: wallet.iconUrl ? wallet.iconUrl : '',
         }));
     }
+
+    private setFilterValue = (value: string) => {
+        this.setState({
+            filterValue: value,
+        });
+    };
 
     private handleFilter = (result: object[]) => {
         this.setState({

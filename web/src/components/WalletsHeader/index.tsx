@@ -7,6 +7,7 @@ import { Wallet } from '../../modules';
 interface ParentProps {
     wallets: Wallet[];
     nonZeroSelected: boolean;
+    setFilterValue: (value: string) => void;
     setFilteredWallets: (value: Wallet[]) => void;
     handleClickCheckBox: (value: boolean) => void;
 }
@@ -19,6 +20,7 @@ export const WalletsHeader: React.FunctionComponent<ParentProps> = (props: Paren
     const intl = useIntl();
 
     const searchFilter = (row: Wallet, searchKey: string) => {
+        props.setFilterValue(searchKey);
         return row ? row.name?.toLowerCase().includes(searchKey.toLowerCase()) || row.currency?.toLowerCase().includes(searchKey.toLowerCase()) : false;
     };
 

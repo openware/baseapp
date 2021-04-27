@@ -26,6 +26,7 @@ interface ParentProps {
 type Props = ParentProps;
 
 const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
+    const [filterValue, setFilterValue] = useState<string>('');
     const [filteredWallets, setFilteredWallets] = useState<Wallet[]>([]);
     const [nonZeroSelected, setNonZeroSelected] = useState<boolean>(false);
     const [selWalletIndex, setSelWalletIndex] = useState<number>(-1);
@@ -84,13 +85,14 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
 
     const formattedWallets = useCallback(() => {
         const list = nonZeroSelected ? filteredWallets.filter(i => i.currency && i.balance && Number(i.balance) > 0) : filteredWallets.filter(i => i.currency);
+        const filteredList = list.filter(i => !filterValue || i.name?.toLocaleLowerCase().includes(filterValue.toLowerCase()) || i.currency?.toLocaleLowerCase().includes(filterValue.toLowerCase()));
 
-        return list.map((wallet: Wallet) => ({
+        return filteredList.map((wallet: Wallet) => ({
             ...wallet,
             currency: wallet.currency.toUpperCase(),
             iconUrl: wallet.iconUrl ? wallet.iconUrl : '',
         }));
-    }, [filteredWallets, nonZeroSelected]);
+    }, [filteredWallets, nonZeroSelected, filterValue]);
 
     const handleTransfer = useCallback((currency: string, amount: string) => {
         const payload = {
@@ -124,6 +126,7 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
                         <WalletsHeader
                             wallets={wallets}
                             nonZeroSelected={nonZeroSelected}
+                            setFilterValue={setFilterValue}
                             setFilteredWallets={setFilteredWallets}
                             handleClickCheckBox={setNonZeroSelected}
                         />
