@@ -37,6 +37,7 @@ export interface P2POffersState {
         page: number;
         total: number;
         list: Offer[];
+        state: string;
         fetching: boolean;
         success: boolean;
         timestamp?: number;
@@ -65,6 +66,7 @@ export const initialP2POffersState: P2POffersState = {
         page: 0,
         total: 0,
         list: [],
+        state: '',
         fetching: false,
         success: false,
     },
@@ -88,6 +90,7 @@ export const offersFetchReducer = (state: P2POffersState['offers'], action: P2PO
                 list: sliceArray(action.payload.list, defaultStorageLimit()),
                 page: action.payload.page,
                 total: action.payload.total,
+                state: action.payload.state,
                 fetching: false,
                 success: true,
                 error: undefined,
@@ -95,7 +98,7 @@ export const offersFetchReducer = (state: P2POffersState['offers'], action: P2PO
         case P2P_USER_OFFERS_UPDATE:
             return {
                 ...state,
-                list: sliceArray(insertOrUpdate(state.list, action.payload), defaultStorageLimit()),
+                list: sliceArray(insertOrUpdate(state.list, action.payload, state.state), defaultStorageLimit()),
             };
         case P2P_USER_OFFERS_ERROR:
             return {
@@ -105,6 +108,7 @@ export const offersFetchReducer = (state: P2POffersState['offers'], action: P2PO
                 page: 0,
                 total: 0,
                 list: [],
+                state: '',
                 error: action.error,
             };
         default:

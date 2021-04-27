@@ -1,8 +1,16 @@
 import { Offer } from "src/modules";
 
-export const insertOrUpdate = (list: Offer[], offer: Offer): Offer[] => {
+export const insertOrUpdate = (list: Offer[], offer: Offer, tabState: string): Offer[] => {
     const { id } = offer;
     const index = list.findIndex((value: Offer) => value.id === id);
+
+    if (offer.state !== tabState) {
+        if (index === -1 ) {
+            return list;
+        } else {
+            return list.filter(i => i.id !== offer.id);
+        }
+    }
 
     if (index === -1) {
         return [{...offer}, ...list];
