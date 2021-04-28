@@ -168,7 +168,8 @@ export const ProfilePayment: FC = (): ReactElement => {
                     {
                         Object.keys(item.data).map(key => {
                             const value = item.data[key];
-                            const masked = key.includes('number') ? truncateMiddle(value, 8, '***') : value;
+                            const masked = key.includes('number') ? truncateMiddle(value, 12, '****') : value;
+
                             return (
                                 <div className="payment-method-item-body__col">
                                     <div>{masked}</div>
