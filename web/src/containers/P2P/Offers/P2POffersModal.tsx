@@ -191,6 +191,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                 offer_id: id,
                 amount: side === 'sell' ? tradeAmount : receiveAmount,
                 side,
+                ...(side === 'sell' && { payment_method_id: paymentMethod.id }),
             };
     
             props.handleSubmit(payload);
@@ -242,7 +243,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
 
     const renderPMItem = (pm: UserPaymentMethod) => {
         const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));
-        const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 8, '***') : '';
+        const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 12, '****') : '';
         return `${pm?.payment_method?.name} ${numberValue}`;
     };
 

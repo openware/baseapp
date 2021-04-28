@@ -161,7 +161,7 @@ const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
 
     const renderPMItem = (pm: UserPaymentMethod) => {
         const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));
-        const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 8, '***') : '';
+        const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 12, '****') : '';
         return `${pm.payment_method?.name} ${numberValue}`;
     };
 

@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { TabPanel } from 'src/components';
 import { HOST_URL } from 'src/constants';
-import { getCountdownDate, secondToMinutes, titleCase } from 'src/helpers';
+import { getCountdownDate, secondToMinutes, titleCase, truncateMiddle } from 'src/helpers';
 import { P2POrder, p2pOrdersUpdateFetch, UserPaymentMethod } from 'src/modules';
 
 interface ParentProps {
@@ -39,12 +39,14 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
 
     useEffect(() => {
         if (order) {
-            const pmList = order.offer.payment_methods.map(i => i.payment_method.name);
+            const pmList = order.side === 'sell'
+                ? [ order.payment_method?.payment_method.name ]
+                : order.offer.payment_methods.map(i => i.payment_method.name);
             setTabMapping(pmList);
             setTab(pmList[0]);
             setCurrentTabIndex(0);
         }
-    }, [order, ]);
+    }, [order]);
 
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
 
@@ -62,7 +64,11 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     const handleClickPaid = useCallback(() => {
         const selectedPaymentMethod = order?.offer?.payment_methods[currentTabIndex];
 
-        order && dispatch(p2pOrdersUpdateFetch({ id: order.id, action: 'approve', payment_method_id: selectedPaymentMethod.id }));
+        order && dispatch(p2pOrdersUpdateFetch({
+            id: order.id,
+            action: 'approve',
+            ...(order.side === 'buy' && order.state === 'prepared' && { payment_method_id: selectedPaymentMethod.id }),
+        }));
     }, [order, currentTabIndex, dispatch]);
 
     const onCurrentTabChange = useCallback((index: number) => {
@@ -77,7 +83,9 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     }, [tabMapping]);
 
     const renderTabs = useCallback(() => tabMapping.map((i, index) => {
-        const selectedPaymentMethod = order?.offer?.payment_methods[index];
+        const selectedPaymentMethod = order.side === 'sell'
+            ? order?.payment_method
+            : order?.offer?.payment_methods[index];
 
         return {
             content: currentTabIndex === index ? getPaymentMethodInfo(selectedPaymentMethod) : null,
@@ -91,11 +99,13 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                 {
                     Object.keys(pm.data).map(key => {
                         const value = pm.data[key];
+                        const keyContainsNumber = key.includes('number');
+                        const truncatedValue = keyContainsNumber ? truncateMiddle(value, 12, '****') : value;
 
                         return (
                             <div className="pm-list__item">
                                 <label>{titleCase(key)}</label>
-                                <div>{value}</div>
+                                <div>{truncatedValue}</div>
                             </div>
                         );
                     })
@@ -105,16 +115,18 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     };
 
     const renderPaymentMethodDetails = () => {
-        const details = order?.offer?.payment_methods?.find(pm => pm.id === order.payment_method_id);
+        const details = order.side === 'sell' ? order?.payment_method : order?.offer?.payment_methods?.find(pm => pm.id === order.payment_method_id);
 
         return details ? <div className="pm-details"> {
             Object.keys(details.payment_method.options).map(key => {
                 const option = details.payment_method.options[key];
+                const keyContainsNumber = key.includes('number');
+                const value = keyContainsNumber ? truncateMiddle(details.data[key], 12, '****') : details.data[key];
 
                 return (
                     <div className="field">
                         <div className="label">{option.name}</div>
-                        <div className="value">{details.data[key]}</div>
+                        <div className="value">{value}</div>
                     </div>
                 );
             })

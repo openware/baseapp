@@ -5,6 +5,7 @@ export interface P2POrderCreate {
     offer_id: number;
     amount: string;
     side: string;
+    payment_method_id?: number;
 }
 
 export interface P2POrder {
@@ -17,6 +18,6 @@ export interface P2POrder {
     created_at: string;
     state: string;
     user_uid: string;
-    payment_method?: UserPaymentMethod;
-    payment_method_id?: number; // payment method to which another user has sent money
+    payment_method?: UserPaymentMethod; // payment method to which current user should send money (for sell orders state prepared for maker)
+    payment_method_id?: number; // payment method to which another user has sent money (for buy orders in wait state for maker)
 }
