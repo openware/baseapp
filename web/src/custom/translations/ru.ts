@@ -888,6 +888,7 @@ export const ru: LangType = {
 
     // peatio
     'account.currency.doesnt_exist': 'Валюта не существует',
+    'account.currency.deposit_disabled': 'Deposit is currently disabled',
     'account.deposit.invalid_state': 'Депозит недействителен',
     'account.deposit.non_integer_limit': 'Невозможно проанализировать отправленное вами значение в тип Integer',
     'account.deposit.invalid_limit': 'Неверный лимит',
