@@ -15,14 +15,14 @@ interface ParentProps {
 
 type Props = ParentProps;
 
-const CreateOfferStep3: FC<Props> = (props: Props): ReactElement => {
+const CreateOfferStepThree: FC<Props> = (props: Props): ReactElement => {
     const [descFocused, setDescFocused] = useState<boolean>(false);
     const [replyFocused, setReplytFocused] = useState<boolean>(false);
 
     const { description, replyMessage } = props;
     const { formatMessage } = useIntl();
 
-    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
     const descFocusClass = useCallback(() => (
         classnames('cr-email-form__group', {
@@ -91,5 +91,5 @@ const CreateOfferStep3: FC<Props> = (props: Props): ReactElement => {
 };
 
 export {
-    CreateOfferStep3,
+    CreateOfferStepThree,
 };

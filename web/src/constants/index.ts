@@ -44,7 +44,7 @@ export const AMOUNT_PERCENTAGE_ARRAY = [0.25, 0.5, 0.75, 1];
 export const DEFAULT_TABLE_PAGE_LIMIT = 25;
 export const HOST_URL = window.location.hostname === 'localhost' ? 'http://localhost:9002' : window.location.origin;
 
-export const P2P_TIME_LIMIT_LIST = [ '15 min', '30 min', '60 min' ];
+export const P2P_TIME_LIMIT_LIST = ['15 min', '30 min', '60 min'];
 
 export const DEFAULT_MARKET = {
     id: '',

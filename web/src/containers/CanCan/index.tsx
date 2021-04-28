@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-    connect,
-    MapStateToProps,
-} from 'react-redux';
+import { connect, MapStateToProps } from 'react-redux';
 import {
     AbilitiesInterface,
     RootState,
@@ -54,7 +51,6 @@ class CanCanService extends React.Component<Props> {
     public render() {
         const { abilities, action, target, loading } = this.props;
 
-
         if (!loading && abilities
             && ((typeof target === 'string' && (this.checkAbilityByAction(action, target) || this.checkAbilityByAction('read', target)))
             || (target instanceof Object && (this.checkFieldByAction(action, target) || (this.checkFieldByAction('read', target))))
@@ -88,5 +84,4 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
         abilities: selectAbilities(state),
     });
 
-//tslint:disable-next-line:no-any
-export const CanCan = connect(mapStateToProps, null)(CanCanService as any) as any;
+export const CanCan = connect(mapStateToProps)(CanCanService);

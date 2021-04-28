@@ -34,7 +34,7 @@ interface ParentProps {
 
 type Props = ParentProps;
 
-const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
+const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
     const [amountFocused, setAmountFocused] = useState<boolean>(false);
     const [lowLimitFocused, setLowLimitFocused] = useState<boolean>(false);
     const [topLimitFocused, setTopLimitFocused] = useState<boolean>(false);
@@ -57,9 +57,9 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
         }
     }, [userPM, paymentMethods, props.handleSetPaymentMethods]);
 
-    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
-    const getAvailableAsset = useCallback((asset?: Currency) => {
+    const getAvailableAsset = useCallback(() => {
         if (asset && wallets.length) {
             const wallet = wallets.find(w => w.currency === asset.id.toLowerCase()) as Wallet;
             return wallet?.balance ? Number(wallet.balance) : 0;
@@ -67,7 +67,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
     }, [asset, wallets]);
 
     const handleSetAllAmount = useCallback(() => {
-        handleAmountChange(String(getAvailableAsset(asset)));
+        handleAmountChange(String(getAvailableAsset()));
     },[asset]);
 
     const handleAmountChange = useCallback((value: string) => {
@@ -78,7 +78,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
         }
 
         defineAmountError(convertedValue);
-    }, [asset, props.handleSetAmount]);
+    }, [asset]);
 
     const handleLowLimitChange = useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
@@ -87,7 +87,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
             props.handleSetLowLimit(convertedValue);
         }
         defineLowLimitError(convertedValue, topLimit);
-    }, [cash, topLimit, props.handleSetLowLimit]);
+    }, [cash, topLimit]);
 
     const handleTopLimitChange = useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
@@ -96,12 +96,12 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
             props.handleSetTopLimit(convertedValue);
         }
         defineLowLimitError(lowLimit, convertedValue);
-    }, [cash, lowLimit, props.handleSetTopLimit]);
+    }, [cash, lowLimit]);
 
     const handleSelectPaymentMethod = React.useCallback((index: number, dpIndex: number) => {
         props.handleUpdatePaymentMethods(pmList(dpIndex)[index], dpIndex);
         definePaymentError(paymentMethods);
-    }, [paymentMethods, props.handleUpdatePaymentMethods]);
+    }, [paymentMethods]);
 
     const defineAmountError = React.useCallback((value: string) => {
         let error = '';
@@ -148,7 +148,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
         } else {
             props.handleChangeStep(2);
         }
-    }, [amount, lowLimit, topLimit, paymentMethods, props.handleChangeStep]);
+    }, [amount, lowLimit, topLimit, paymentMethods]);
 
     const inputClass = useCallback((error: string) => (
         classnames('cr-create-offer__input', {
@@ -242,7 +242,7 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
                                 {translate('page.body.trade.header.newOrder.content.available')}:&nbsp;
                             </label>
                             <span className="cr-create-offer__info-dark">
-                                {Decimal.format(getAvailableAsset(asset), asset.precision, ',')}&nbsp;
+                                {Decimal.format(getAvailableAsset(), asset.precision, ',')}&nbsp;
                             </span>
                             <span className="cr-create-offer__info-grey">
                                 {asset.id?.toUpperCase()}&nbsp;
@@ -335,5 +335,5 @@ const CreateOfferStep2: FC<Props> = (props: Props): ReactElement => {
 };
 
 export {
-    CreateOfferStep2,
+    CreateOfferStepTwo,
 };

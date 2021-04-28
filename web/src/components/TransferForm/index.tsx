@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import { DEFAULT_CCY_PRECISION } from 'src/constants';
 import { cleanPositiveFloatInput, precisionRegExp } from 'src/helpers';
 import { CustomInput, Decimal, PercentageButton } from '..';
+import { AMOUNT_PERCENTAGE_ARRAY } from '../../constants';
 import { Wallet } from '../../modules';
 
 interface ParentProps {
@@ -27,7 +28,6 @@ export const TransferForm: FC<Props> = (props: Props) => {
     const { wallet } = props;
 
     const intl = useIntl();
-    const amountPercentageArray = [0.25, 0.5, 0.75, 1];
 
     const handleAmountChange = useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
@@ -40,9 +40,7 @@ export const TransferForm: FC<Props> = (props: Props) => {
     }, [wallet]);
 
     const handleChangeAmountByButton = useCallback((value: number) => {
-        const newAmount = wallet?.balance ? (
-            Decimal.format(+wallet.balance * value, wallet.fixed || DEFAULT_CCY_PRECISION)
-        ) : '';
+        const newAmount = wallet?.balance ? Decimal.format(+wallet.balance * value, wallet.fixed || DEFAULT_CCY_PRECISION) : '';
         setAmount(newAmount);
         defineAmountError(newAmount);
     }, [wallet]);
@@ -64,7 +62,7 @@ export const TransferForm: FC<Props> = (props: Props) => {
         }
 
         setAmountError(error);
-    }, [intl, wallet]);
+    }, [wallet]);
 
     const handleOnClick = React.useCallback(() => {
         if (!amount || Number(amount) <= 0 || Number(amount) > Number(wallet.balance)) {
@@ -74,7 +72,7 @@ export const TransferForm: FC<Props> = (props: Props) => {
             props.handleSubmit(wallet.currency, amount);
             setAmount('');
         }
-    }, [wallet, props.handleSubmit, amount]);
+    }, [wallet, amount]);
 
     return (
         <div className="cr-transfer-form">
@@ -92,13 +90,13 @@ export const TransferForm: FC<Props> = (props: Props) => {
             </fieldset>
             {showError && <span className="error">{amountError}</span>}
             <div className="cr-transfer-form__percentage-buttons">
-                {
-                    amountPercentageArray.map((value, index) => <PercentageButton
+                {AMOUNT_PERCENTAGE_ARRAY.map((value, index) =>
+                    <PercentageButton
                         value={value}
                         key={index}
                         onClick={handleChangeAmountByButton}
-                    />)
-                }
+                    />
+                )}
             </div>
             <div className="cr-transfer-form__total">
                 <label className="cr-transfer-form__total__label">
@@ -117,14 +115,16 @@ export const TransferForm: FC<Props> = (props: Props) => {
                 <label className="cr-transfer-form__available__label">
                     {intl.formatMessage({ id: 'page.body.wallets.transfers.form.available' })}
                 </label>
-                <div className="cr-transfer-form__available__content">
-                    <span className="cr-transfer-form__available__content__amount">
-                        {wallet ? Decimal.format(wallet.balance, wallet.fixed, ',') : ''}&nbsp;
-                    </span>
-                    <span className="cr-transfer-form__available__content__currency">
-                        {wallet?.currency?.toUpperCase()}
-                    </span>
-                </div>
+                {wallet ? 
+                    <div className="cr-transfer-form__available__content">
+                        <span className="cr-transfer-form__available__content__amount">
+                            {Decimal.format(wallet.balance, wallet.fixed, ',')}&nbsp;
+                        </span>
+                        <span className="cr-transfer-form__available__content__currency">
+                            {wallet.currency.toUpperCase()}
+                        </span>
+                    </div>
+                : null}
             </div>
             <div className="cr-transfer-form__btn-wrapper">
                 <Button

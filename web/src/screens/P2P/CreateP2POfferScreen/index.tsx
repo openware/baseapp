@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { Decimal } from 'src/components';
 import { DEFAULT_CCY_PRECISION, P2P_TIME_LIMIT_LIST } from 'src/constants';
-import { ConfirmOfferModal, CreateOfferStep1, CreateOfferStep2, CreateOfferStep3 } from 'src/containers';
+import { ConfirmOfferModal, CreateOfferStepOne, CreateOfferStepTwo, CreateOfferStepThree } from 'src/containers';
 import { useCurrenciesFetch, useDocumentTitle, useP2PCurrenciesFetch, useP2PHighestPriceFetch, useUserPaymentMethodsFetch, useWalletsFetch } from 'src/hooks';
 import { createOffer, Currency, selectCurrencies, selectP2PHighestPriceData, UserPaymentMethod } from 'src/modules';
 
@@ -122,7 +122,7 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
     const content = useCallback(() => {
         switch (step) {
             case 0: return (
-                <CreateOfferStep1
+                <CreateOfferStepOne
                     asset={asset}
                     cash={cash}
                     side={side}
@@ -136,7 +136,7 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
                 />
             );
             case 1: return (
-                <CreateOfferStep2
+                <CreateOfferStepTwo
                     asset={asset}
                     cash={cash}
                     side={side}
@@ -156,7 +156,7 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
                 />
             );
             case 2: return (
-                <CreateOfferStep3
+                <CreateOfferStepThree
                     description={description}
                     replyMessage={replyMessage}
                     handleSetDescription={setDescription}

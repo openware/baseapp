@@ -22,7 +22,7 @@ module.exports = {
         '^.+\\.(jsx|js)$': 'babel-jest',
         '^.+\\.svg$': '<rootDir>/jest/svg-transform.js',
     },
-    testRegex: '.src/.*.(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx|jsx|ts)?$',
+    testRegex: '.src/.*.(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx|jsx|ts|js)?$',
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node', 'css', 'scss'],
     snapshotSerializers: ['enzyme-to-json/serializer'],
     transformIgnorePatterns: ['<rootDir>/node_modules/(?!lodash-es)'],

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useState, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ interface ParentProps {
 
 type Props = ParentProps;
 
-const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
+const CreateOfferStepOne: FC<Props> = (props: Props): ReactElement => {
     const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
     const [assetList, setAssetList] = useState<Currency[]>([]);
     const [cashList, setCashList] = useState<Currency[]>([]);
@@ -37,7 +37,7 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
     const [priceError, setPriceError] = useState<string>('');
 
     const { asset, cash, side, price, highestPrice } = props;
-    const tabMapping = [ 'buy', 'sell' ];
+    const tabMapping = ['buy', 'sell'];
     const { formatMessage } = useIntl();
     const p2pCurrencies = useSelector(selectP2PCurrenciesData);
     const currencies = useSelector(selectCurrencies);
@@ -52,9 +52,9 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
             setAssetList(cryptoCurList);
             cryptoCurList.length && props.handleSetAsset(asset || cryptoCurList[0]);
         }
-    }, [p2pCurrencies, currencies, props.handleSetAsset, props.handleSetCash]);
+    }, [p2pCurrencies, currencies, props.asset, props.cash]);
 
-    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
     const onCurrentTabChange = useCallback((index: number) => setCurrentTabIndex(index), []);
 
@@ -63,7 +63,7 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
             return;
         }
         props.handleSetSide(tabMapping[index]);
-    }, [tabMapping, side, props.handleSetSide]);
+    }, [tabMapping, side]);
 
     const handlePriceChange = React.useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
@@ -73,7 +73,7 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
         }
 
         definePriceError(convertedValue);
-    }, [cash, props.handleSetPrice]);
+    }, [cash]);
 
     const definePriceError = React.useCallback((value: string) => {
         let error = '';
@@ -94,13 +94,13 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
         } else {
             props.handleGoNext();
         }
-    }, [price, props.handleGoNext]);
+    }, [price]);
 
-    const inputClass = useCallback((error: string) => (
+    const inputClass = useMemo(() => (
         classnames('cr-create-offer__input', {
-            'cr-create-offer__input--errored': showError && error,
+            'cr-create-offer__input--errored': showError && priceError,
         })
-    ), [showError]);
+    ), [showError, priceError]);
 
     const renderTabs = () => tabMapping.map((i, index) => {
         return {
@@ -111,15 +111,11 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
 
     const iconsList = (currenciesList: Currency[]) =>
         currenciesList.map(i => {
-            return (
-                <React.Fragment>
-                    {i?.icon_url ? (
-                        <span className="cr-crypto-icon cr-wallet-item__icon">
-                            <img alt={i?.name.toUpperCase()} src={i?.icon_url} />
-                        </span>
-                    ) : (<CryptoIcon className="cr-wallet-item__icon" code={i?.id.toUpperCase()} />)}
-                </React.Fragment>
-            );
+            return i?.icon_url ? (
+                <span className="cr-crypto-icon cr-wallet-item__icon">
+                    <img alt={i?.name.toUpperCase()} src={i?.icon_url} />
+                </span>
+            ) : (<CryptoIcon className="cr-wallet-item__icon" code={i?.id.toUpperCase()} />);
         });
 
     const pageContent = React.useCallback(() => {
@@ -145,7 +141,7 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
                         placeholder={cash?.name}
                     />
                 </div>
-                <div className={inputClass(priceError)}>
+                <div className={inputClass}>
                     <OrderInput
                         currency={cash ? cash.id : ''}
                         label={translate('page.body.p2p.create.offer.price')}
@@ -179,7 +175,7 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
                 </div>
             </div>
         )
-    }, [asset, assetList, cash, cashList, price, priceFocused, priceError, showError, props.handleSetCash, props.handleSetAsset, props.handleGoNext]);
+    }, [asset, assetList, cash, cashList, price, priceFocused, priceError, showError]);
 
     return (
         <div className="cr-create-offer">
@@ -196,5 +192,5 @@ const CreateOfferStep1: FC<Props> = (props: Props): ReactElement => {
 };
 
 export {
-    CreateOfferStep1,
+    CreateOfferStepOne,
 };

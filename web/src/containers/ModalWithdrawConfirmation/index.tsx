@@ -39,6 +39,7 @@ type Props = ModalWithdrawConfirmationProps & IntlProps;
 class ModalWithdraw extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
+
         this.state = {
             isOpenTip: false,
         };

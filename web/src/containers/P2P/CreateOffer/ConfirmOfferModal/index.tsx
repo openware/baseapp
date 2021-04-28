@@ -1,11 +1,11 @@
-import React, { FC, ReactElement, useCallback } from 'react';
+import React, { FC, ReactElement, useCallback, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { Currency, UserPaymentMethod } from 'src/modules';
 import { Decimal, Modal } from '../../../../components';
 
-interface ParentProps {
+interface ConfirmOfferModalProps {
     side: string;
     asset: Currency;
     cash: Currency;
@@ -21,24 +21,22 @@ interface ParentProps {
     toggleModal: () => void;
 }
 
-type Props = ParentProps;
-
-const ConfirmOfferModal: FC<Props> = (props: Props): ReactElement => {
+const ConfirmOfferModal: FC<ConfirmOfferModalProps> = (props: ConfirmOfferModalProps): ReactElement => {
     const { side, asset, cash, price, amount, topLimit, lowLimit, paymentMethods, timeLimit, show } = props;
     const { formatMessage } = useIntl();
 
-    const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
+    const translate = useCallback((id: string, value?: any) => formatMessage({ id }, { ...value }), [formatMessage]);
 
-    const header = React.useCallback(() => (
+    const header = useMemo(() => (
         <React.Fragment>
             <span className="pg-create-offer__header-title">{translate('page.body.p2p.create.offer.header')}</span>
             <div onClick={props.toggleModal} className="pg-create-offer-box-close">
                 <CloseIcon className="close-icon" />
             </div>
         </React.Fragment>
-    ), [translate, props.toggleModal]);
+    ), [props.toggleModal]);
 
-    const body = React.useCallback(() => {
+    const body = useMemo(() => {
         return (
             <div className="form-padding">
                 <div className="cr-create-offer__modal">
@@ -84,7 +82,7 @@ const ConfirmOfferModal: FC<Props> = (props: Props): ReactElement => {
         );
     }, [translate, side, asset, cash, price, amount, timeLimit, lowLimit, topLimit, paymentMethods]);
 
-    const footer = React.useCallback(() => (
+    const footer = useMemo(() => (
         <div className="cr-create-offer__btn-wrapper__grid">
             <Button
                 onClick={props.toggleModal}
@@ -101,15 +99,15 @@ const ConfirmOfferModal: FC<Props> = (props: Props): ReactElement => {
                 {translate('page.body.p2p.create.offer.confirm').toUpperCase()}
             </Button>
         </div>
-    ), [translate, props.toggleModal]);
+    ), [props.toggleModal]);
 
     return (
         <div className="cr-create-offer">
             <Modal
                 show={show}
-                header={header()}
-                content={body()}
-                footer={footer()}
+                header={header}
+                content={body}
+                footer={footer}
             />
         </div>
     );

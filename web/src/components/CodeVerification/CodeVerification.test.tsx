@@ -11,7 +11,7 @@ const defaultProps: CodeVerificationProps = {
     onSubmit: jest.fn(),
 };
 
-const setup = (props: Partial<CodeVerificationProps> = {}) => shallow(<CodeVerification {...{...props, ...defaultProps}} />);
+const setup = (props: Partial<CodeVerificationProps> = {}) => shallow(<CodeVerification {...{ ...defaultProps, ...props }} />);
 
 describe('CodeVerification test', () => {
     it('should render', () => {

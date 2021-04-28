@@ -73,7 +73,22 @@ export interface OrderInputProps {
  */
 
 export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((props: OrderInputProps) => {
-    const { currency, className, isFocused, label, labelVisible, placeholder, autoFocus, value, showAllButton, allButtonText, handleChangeValue, onKeyPress, handleFocusInput, handleClickAllButton } = props;
+    const {
+        allButtonText,
+        autoFocus,
+        className,
+        currency,
+        handleChangeValue,
+        handleFocusInput,
+        handleClickAllButton
+        isFocused,
+        label,
+        labelVisible,
+        onKeyPress,
+        placeholder,
+        showAllButton,
+        value,
+    } = props;
 
     const fieldsetFocusedClass = React.useMemo(() => cr('cr-order-input__fieldset', {
         'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
