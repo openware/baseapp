@@ -60,7 +60,7 @@ const TradesHistory: FC = (): ReactElement => {
     };
 
     const renderContent = () => {
-        return [
+        return (
             <div className="pg-p2p-trades-history">
                 <h1>{intl.formatMessage({id: 'page.body.p2p.order_history.title'})}</h1>
                 <span className="pg-p2p-trades-history-back" onClick={() => history.push('/p2p')}>
@@ -83,7 +83,7 @@ const TradesHistory: FC = (): ReactElement => {
                     />}
                 </div>
             </div>
-        ];
+        );
     };
 
     const retrieveData = () => {
@@ -97,7 +97,7 @@ const TradesHistory: FC = (): ReactElement => {
 
     const renderTableRow = (item: P2POrder) => {
         const { created_at, side, amount, state, user_uid } = item;
-        const { price, quote, base, user } = item.offer;
+        const { price, quote, base, user, uid } = item.offer;
         const sideColored = setTradesType(side);
         const stateColored = setStateType(state);
         const pricePrecision = currencies.find(item => item.id === quote)?.precision;
@@ -108,7 +108,7 @@ const TradesHistory: FC = (): ReactElement => {
             <span style={{ color: sideColored.color }}>{sideColored.text}</span>,
             `${Decimal.format(price, pricePrecision || DEFAULT_FIAT_PRECISION, ',')} ${base.toUpperCase()}/${quote.toUpperCase()}`,
             `${Decimal.format(amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${base.toUpperCase()}`,
-            <span>{user?.user_nickname || user_uid}</span>,
+            <span>{user?.user_nickname || uid}</span>,
             <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
         ];
     };
