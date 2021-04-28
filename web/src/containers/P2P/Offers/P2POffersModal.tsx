@@ -199,13 +199,18 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
 
     const handleClickTradeAll = React.useCallback(() => {
         if (side === 'buy') {
-            setTradeAmount(topLimit.toString());
+            const maxLimit = +topLimit * +price;
+            if ((+available * +price) < maxLimit) {
+                handleReceiveChange(available.toString());
+            } else {
+                handleAmountChange(maxLimit.toString());
+            }
         } else {
             const availableBalance = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance || 0;
             setTradeAmount(availableBalance.toString());
         }
         setClickAll(true);
-    }, [side, currencyCode, wallets]);
+    }, [side, currencyCode, wallets, available, topLimit, price]);
 
     const handleCloseModal = React.useCallback(() => {
         setClickAll(false);
