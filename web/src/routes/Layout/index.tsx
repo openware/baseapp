@@ -173,15 +173,15 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     public componentDidMount() {
         if (
             !(this.props.location.pathname.includes('/magic-link')
-            || this.props.location.pathname.includes('/404')
-            || this.props.location.pathname.includes('/500'))
+            || this.props.location.pathname.includes('/maintenance')
+            || this.props.location.pathname.includes('/restriction'))
         ) {
             switch (this.props.platformAccessStatus) {
                 case 'restricted':
-                    this.props.history.replace('/404');
+                    this.props.history.replace('/restriction');
                     break;
                 case 'maintenance':
-                    this.props.history.replace('/500');
+                    this.props.history.replace('/maintenance');
                     break;
                 default:
                     const token = localStorage.getItem('csrfToken');
@@ -200,16 +200,16 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     public componentWillReceiveProps(nextProps: LayoutProps) {
         if (
             !(nextProps.location.pathname.includes('/magic-link')
-            || nextProps.location.pathname.includes('/404')
-            || nextProps.location.pathname.includes('/500'))
+            || nextProps.location.pathname.includes('/restriction')
+            || nextProps.location.pathname.includes('/maintenance'))
             || this.props.platformAccessStatus !== nextProps.platformAccessStatus
         ) {
             switch (nextProps.platformAccessStatus) {
                 case 'restricted':
-                    this.props.history.replace('/404');
+                    this.props.history.replace('/restriction');
                     break;
                 case 'maintenance':
-                    this.props.history.replace('/500');
+                    this.props.history.replace('/maintenance');
                     break;
                 default:
                     break;
@@ -319,8 +319,8 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/forgot_password" component={ForgotPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/password_reset" component={ChangeForgottenPasswordScreen} />
                     <PublicRoute loading={userLoading} isLogged={isLoggedIn} path="/email-verification" component={EmailVerificationScreen} />
-                    <Route path="/404" component={RestrictedScreen} />
-                    <Route path="/500" component={MaintenanceScreen} />
+                    <Route path="/restriction" component={RestrictedScreen} />
+                    <Route path="/maintenance" component={MaintenanceScreen} />
                     <Route exact={true} path="/trading/:market?" component={TradingScreen} />
                     {showLanding() && <Route exact={true} path="/" component={LandingScreen} />}
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
