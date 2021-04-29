@@ -74,7 +74,6 @@ export const P2POffersHeader: FC<Props> = (props: Props): ReactElement => {
                         className="cr-p2p-header__dp-dropdown"
                         list={paymentsList}
                         onSelect={value => setPayment(paymentsList[value])}
-                        placeholder={paymentMethod || formatMessage({ id: 'page.body.p2p.dropdown.all' })}
                     />
                 </div>
             </div>

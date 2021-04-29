@@ -107,7 +107,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
                 <P2POffersHeader
                     setPayment={setPaymentFilter}
                     onClickSideTab={handleSideFilter}
-                    paymentsList={paymentMethods.map(i => i.name)}
+                    paymentsList={[formatMessage({ id: 'page.body.p2p.dropdown.all' }), ...paymentMethods.map(i => i.name)]}
                     paymentMethod={paymentFilter}
                     side={sideFilter}
                     fiatCurrencies={fiatCurList}
