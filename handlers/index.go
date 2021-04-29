@@ -75,6 +75,9 @@ func Setup(app *sonic.Runtime) {
 	router.Static("/css", "./public/assets/css")
 
 	router.GET("/", index)
+	router.GET("/maintenance", maintenance)
+	router.GET("/restriction", restriction)
+
 	router.GET("/version", version)
 
 	router.NoRoute(notFound)
@@ -138,6 +141,30 @@ func index(ctx *gin.Context) {
 		"cssFiles": cssFiles,
 		"jsFiles":  jsFiles,
 		"rootID":   "root",
+	})
+}
+
+func maintenance(ctx *gin.Context) {
+	cssFiles, err := FilesPaths("/public/assets/*.css")
+	if err != nil {
+		log.Println("filePaths:", "Can't take list of paths for css files: "+err.Error())
+	}
+
+	ctx.HTML(http.StatusOK, "maintenance", gin.H{
+		"title":                 "Maintenance",
+		"cssFiles":              cssFiles,
+	})
+}
+
+func restriction(ctx *gin.Context) {
+	cssFiles, err := FilesPaths("/public/assets/*.css")
+	if err != nil {
+		log.Println("filePaths:", "Can't take list of paths for css files: "+err.Error())
+	}
+
+	ctx.HTML(http.StatusOK, "restriction", gin.H{
+		"title":                 "Restriction",
+		"cssFiles":              cssFiles,
 	})
 }
 
