@@ -69,8 +69,9 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
     }, [wallets, history]);
 
     useEffect(() => {
-        setFilteredWallets(from.toLowerCase() === 'spot' ? wallets : p2pWallets);
-    }, [wallets, p2pWallets, from]);
+        const availableSpotToP2PWallet = from.toLowerCase() === 'spot' && to.toLowerCase() === 'p2p' ? wallets.filter(w => p2pWallets.find(p2p => p2p.currency === w.currency)) : wallets;
+        setFilteredWallets(from.toLowerCase() === 'spot' ? availableSpotToP2PWallet : p2pWallets);
+    }, [wallets, p2pWallets, from, to]);
 
     const onWalletSelectionChange = useCallback((value: Wallet) => {
         const nextWalletIndex = wallets.findIndex(
