@@ -147,7 +147,7 @@ const initRanger = (
                         );
 
                         return;
-                    }                    
+                    }
 
                     switch (routingKey) {
                         // public

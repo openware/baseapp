@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { FC, ReactElement, useCallback, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useMemo, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { ArrowLeftIcon } from 'src/assets/images/setup/ArrowLeftIcon';
@@ -24,13 +24,13 @@ const CreateOfferStepThree: FC<Props> = (props: Props): ReactElement => {
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
-    const descFocusClass = useCallback(() => (
+    const descFocusClass = useMemo(() => (
         classnames('cr-email-form__group', {
             'cr-email-form__group--focused': descFocused,
         })
     ), [descFocused]);
 
-    const replyFocusClass = useCallback(() => (
+    const replyFocusClass = useMemo(() => (
         classnames('cr-create-offer__group', {
             'cr-create-offer--focused': replyFocused,
         })
@@ -41,7 +41,7 @@ const CreateOfferStepThree: FC<Props> = (props: Props): ReactElement => {
             <div className="form-padding">
                 <div className="cr-create-offer__input">
                     <div className="cr-create-offer__dp-label">{translate('page.body.p2p.create.offer.description')}</div>
-                    <div className={descFocusClass()}>
+                    <div className={descFocusClass}>
                         <Form.Control
                             placeholder={translate('page.body.p2p.create.offer.description.placeholder')}
                             onChange={e => props.handleSetDescription(e.target.value)}
@@ -56,7 +56,7 @@ const CreateOfferStepThree: FC<Props> = (props: Props): ReactElement => {
                 </div>
                 <div className="cr-create-offer__input">
                     <div className="cr-create-offer__dp-label">{translate('page.body.p2p.create.offer.replyMessage')}</div>
-                    <div className={replyFocusClass()}>
+                    <div className={replyFocusClass}>
                         <Form.Control
                             placeholder={translate('page.body.p2p.create.offer.replyMessage.placeholder')}
                             onChange={e => props.handleSetReplyMessage(e.target.value)}

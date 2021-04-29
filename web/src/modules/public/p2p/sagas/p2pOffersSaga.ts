@@ -12,7 +12,6 @@ const config: RequestOptions = {
 export function* p2pOffersSaga(action: OffersFetch) {
     try {
         const { side, sort, base, quote, payment_method } = action.payload;
-
         const { data, headers } = yield call(API.get(config), `/public/offers?${buildQueryString(action.payload)}`);
 
         yield put(offersData({

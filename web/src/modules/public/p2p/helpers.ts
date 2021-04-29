@@ -6,7 +6,7 @@ export const insertOrUpdate = (
     side: string,
     base: string,
     quote: string,
-    payment_method?: number, // TODO filter offer by payment_method if selected
+    payment_method?: number,
 ) => {
     const { id } = offer;
 

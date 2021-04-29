@@ -61,6 +61,34 @@ describe('P2P actions', () => {
         },
     ];
 
+    const fakeP2PCurrenciesArray: P2PCurrency[] = [
+        {
+            id: 'usdt',
+            type: 'coin',
+            enabled: true,
+        },
+        {
+            id: 'usdt',
+            type: 'coin',
+            enabled: true,
+        },
+    ];
+
+    const fakeP2PPaymentMethods: PaymentMethod[] = [
+        {
+            id: 1,
+            type: '',
+            name: 'Universal',
+            options: {},
+        },
+        {
+            id: 2,
+            type: '',
+            name: 'Universal',
+            options: {},
+        },
+    ];
+
     const fakeError: CommonError = {
         code: 500,
         message: ['Server error'],
@@ -82,19 +110,6 @@ describe('P2P actions', () => {
         expect(actions.offersError(fakeError)).toEqual(expectedAction);
     });
 
-    const fakeP2PCurrenciesArray: P2PCurrency[] = [
-        {
-            id: 'usdt',
-            type: 'coin',
-            enabled: true,
-        },
-        {
-            id: 'usdt',
-            type: 'coin',
-            enabled: true,
-        },
-    ];
-
     it('should check p2pCurrenciesFetch action creator', () => {
         const expectedAction = { type: P2P_CURRENCIES_FETCH };
         expect(actions.p2pCurrenciesFetch()).toEqual(expectedAction);
@@ -110,21 +125,6 @@ describe('P2P actions', () => {
         const expectedAction = { type: P2P_CURRENCIES_ERROR, error: fakeError };
         expect(actions.p2pCurrenciesError(fakeError)).toEqual(expectedAction);
     });
-
-    const fakeP2PPaymentMethods: PaymentMethod[] = [
-        {
-            id: 1,
-            type: '',
-            name: 'Universal',
-            options: {},
-        },
-        {
-            id: 2,
-            type: '',
-            name: 'Universal',
-            options: {},
-        },
-    ];
 
     it('should check p2pPaymentMethodsFetch action creator', () => {
         const expectedAction = { type: P2P_PAYMENT_METHODS_FETCH };

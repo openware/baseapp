@@ -47,6 +47,34 @@ describe('P2P reducer', () => {
         },
     ];
 
+    const fakeP2PCurrenciesArray: P2PCurrency[] = [
+        {
+            id: 'usdt',
+            type: 'coin',
+            enabled: true,
+        },
+        {
+            id: 'usdt',
+            type: 'coin',
+            enabled: true,
+        },
+    ];
+
+    const fakeP2PPaymentMethods: PaymentMethod[] = [
+        {
+            id: 1,
+            type: '',
+            name: 'Universal',
+            options: {},
+        },
+        {
+            id: 2,
+            type: '',
+            name: 'Universal',
+            options: {},
+        },
+    ];
+
     const error: CommonError = {
         code: 500,
         message: ['Server error'],
@@ -98,19 +126,6 @@ describe('P2P reducer', () => {
         expect(p2pReducer(initialP2PState, actions.offersError(error))).toEqual(expectedState);
     });
 
-    const fakeP2PCurrenciesArray: P2PCurrency[] = [
-        {
-            id: 'usdt',
-            type: 'coin',
-            enabled: true,
-        },
-        {
-            id: 'usdt',
-            type: 'coin',
-            enabled: true,
-        },
-    ];
-
     it('should handle p2pCurrenciesFetch', () => {
         const expectedState = {
             ...initialP2PState,
@@ -152,21 +167,6 @@ describe('P2P reducer', () => {
 
         expect(p2pReducer(initialP2PState, actions.p2pCurrenciesError(error))).toEqual(expectedState);
     });
-
-    const fakeP2PPaymentMethods: PaymentMethod[] = [
-        {
-            id: 1,
-            type: '',
-            name: 'Universal',
-            options: {},
-        },
-        {
-            id: 2,
-            type: '',
-            name: 'Universal',
-            options: {},
-        },
-    ];
 
     it('should handle p2pPaymentMethodsFetch', () => {
         const expectedState = {
