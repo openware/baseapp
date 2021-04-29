@@ -14,8 +14,8 @@ const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSI
 
 const sentryMiddleware = sentryEnabled ? createSentryMiddleware(Sentry, {}) : undefined;
 
-const store = createStore(
-    rootReducer,
+const store = pluginsReducer => createStore(
+    rootReducer(pluginsReducer),
     composeEnhancer(applyMiddleware(sagaMiddleware, rangerMiddleware, sentryMiddleware))
 );
 

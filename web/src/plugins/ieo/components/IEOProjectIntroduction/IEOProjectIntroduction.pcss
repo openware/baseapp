@@ -1,0 +1,44 @@
+.ieo-profile-project-introduction {
+  background-color: var(--body-background-color);
+  border: 1px solid var(--tables-border-color-level-1);
+  border-radius: 6px;
+  box-shadow: 3px 3px 10px 3px var(--shadow-color-level-1);
+  color: var(--color-white);
+  margin-bottom: calc(var(--gap) * 5);
+
+  &__header {
+    align-items: center;
+    background: var(--ieo-header-bg);
+    border-bottom: calc(var(--gap) * 0.25) solid var(--ieo-header-border);
+    border-radius: calc(var(--gap) * 0.5) calc(var(--gap) * 0.5) 0 0;
+    display: flex;
+    flex-direction: row;
+    font-size: calc(var(--gap) * 2);
+    font-weight: bold;
+    justify-content: flex-start;
+    line-height: calc(var(--gap) * 3.2);
+    padding: calc(var(--gap) * 1) calc(var(--gap) * 5.75);
+    padding-left: calc(var(--gap) * 2.5);
+    width: 100%;
+  }
+
+  &__body {
+    padding: calc(var(--gap) * 3.8);
+
+    p {
+      font-size: calc(var(--gap) * 2);
+      font-weight: normal;
+      line-height: calc(var(--gap) * 2.83);
+      padding: var(--gap) 0;
+      white-space: pre-line;
+    }
+
+    @media (max-width: 576px) {
+      padding: calc(var(--gap) * 1.5);
+
+      pre {
+        padding: 0 calc(var(--gap) * 2.5);
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Plugins } from '../../../Plugins';
 
 interface SidebarIconsProps {
     name: string;
@@ -102,6 +103,6 @@ export const SidebarIcons: React.FC<SidebarIconsProps> = (props: SidebarIconsPro
                 </svg>
             );
         default:
-            return null;
+            return Plugins.getMenuIcons(props.name, props.className);
     }
 };

@@ -42,7 +42,8 @@ const mockConfig: Config = {
         'profile',
         'document',
         'address'
-    ]
+    ],
+    plugins: [],
 };
 
 // tslint:disable no-any no-console

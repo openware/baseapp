@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import { all, call } from 'redux-saga/effects';
 import { adminReducer, publicReducer, userReducer } from './app';
+import { Plugins } from '../Plugins';
+import { PluginsState } from '../plugins/PluginsTemplate';
 import { ConfigUpdateState, rootConfigUpdateSaga } from './admin/config';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
@@ -121,12 +123,14 @@ export interface RootState {
         markets: MarketsAdminState;
         platform: PlatformCreateState;
     };
+    plugins: PluginsState | any;
 }
 
-export const rootReducer = combineReducers({
+export const rootReducer = (pluginsReducer: any) => combineReducers({
     public: publicReducer,
     user: userReducer,
     admin: adminReducer,
+    plugins: pluginsReducer,
 });
 
 export function* rootSaga() {
@@ -165,5 +169,6 @@ export function* rootSaga() {
         call(rootWalletsSaga),
         call(rootWithdrawLimitSaga),
         call(rootQuickExchangeSaga),
+        call(Plugins.getRootPluginsSaga()),
     ]);
 }

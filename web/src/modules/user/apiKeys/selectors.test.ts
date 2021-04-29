@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import { PluginsManager } from '../../../plugins/PluginsManager';
 import { rootReducer } from '../../';
 import {
     selectApiKeys,
@@ -11,7 +12,7 @@ import {
 } from './selectors';
 
 describe('Api Keys selectors', () => {
-    const state = createStore(rootReducer).getState();
+    const state = createStore(rootReducer(Plugins.getReduxReducer())).getState();
 
     it('should select apiKeys', () => {
         expect(selectApiKeys(state)).toEqual(state.user.apiKeys.apiKeys);
