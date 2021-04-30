@@ -1,8 +1,9 @@
 import { DropdownElem } from '../components/Order';
+import { PluginsManager } from '../plugins/PluginsManager';
 
 export const PG_TITLE_PREFIX = 'Cryptobase';
 
-export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
+export const pgRoutes = (isLoggedIn: boolean, Plugins: PluginsManager, isLight?: boolean): string[][] => {
     const routes = [
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
         ['page.header.navbar.quick.exchange', '/quick-exchange', `quick_exchange${isLight ? 'Light' : ''}`],
@@ -11,11 +12,13 @@ export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => 
         ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
         ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
         ['page.header.navbar.internal.transfer', '/internal-transfer', `internal_transfer${isLight ? 'Light' : ''}`],
+        ...Plugins.getMenu(isLoggedIn, isLight),
     ];
     const routesUnloggedIn = [
         ['page.header.navbar.signIn', '/signin', `signin${isLight ? 'Light' : ''}`],
         ['page.header.signUp', '/signup', `signup${isLight ? 'Light' : ''}`],
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
+        ...Plugins.getMenu(isLoggedIn, isLight),
     ];
 
     return isLoggedIn ? routes : routesUnloggedIn;

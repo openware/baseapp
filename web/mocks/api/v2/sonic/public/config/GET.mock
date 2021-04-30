@@ -37,5 +37,22 @@ Access-Control-Allow-Credentials: true
     "captcha_type": "none",
     "password_min_entropy": 14,
     "wizard_step": "false",
-    "msPricesUpdates": "1000"
+    "msPricesUpdates": "1000",
+    "plugins": [
+        {
+            "name": "ieo",
+            "config": {
+                "fields": {
+                    "name": "IEO",
+                    "base_currency": "btc",
+                    "quote_currency": "all",
+                    "result": "true",
+                    "description": "true",
+                    "low_goal": "true",
+                    "ratio": "true",
+                    "metadata": "true"
+                }
+            }
+        }
+    ]
 }

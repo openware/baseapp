@@ -1,0 +1,14 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+{
+  "id": 1,
+  "key": "IEO-ETH-1",
+  "value": "{\"website\": \"https://www.TEST.com\",\"whitepaper\": \"https://www.TEST.com/whitepaper_eng.pdf\",\"telegram\": \"https://t.me.TEST\",\"twitter\": \"https://twitter.com.TEST\",\"bitcointalk\": \"https://bitcointalk.org/index.php?board=1.0\",\"introduction\": \"Welcome to the new investment horizons.\\nThe Open Ware coin market,and EOS-based platform to buy and sell natural and lab-grown diamonds, heirloom or other jewellery, is opening the formerly closed diamond market for everybody.\\nOWC willpresent a marketplace and a trading platform for businesses and individuals working as a reliable tool for B2B, B2C or P2P relations.\\nBuy directly from diamond producers, wholesalers and individual market participants. Sell your diamond ring or other jewellery to anyone in the world. Open your own shop with OWC token-powered services, launch ads and promotional campaigns.\\nOther options available for OWC token are\\n- transaction insurance\\n- storageservices\\n- relevant search, helping to find the best offers based on a particular request\\n- trade statistics, giving a deeper glimpse on the diamond markets’ supply and demand.\\nFor complex deals our consultants are ready to help and manage the technical aspect, assuring the deal will be done the fastest way possible. For clients who wish to learn about the special offers as soon as they appear on the platform, OWC will offer premium support by personal manager.\\nAll together these functions will serve to bring the best trading experience and open a new world of possibilities for the open diamond market participants.\\nThe OWC market remains a closed area where most investors are not allowed. We believe that access to the OWC market is a natural right of any individual and build.TEST Market to operate worldwide.\\nThe DOM platform will allow users to choose between natural or lab-grown diamonds from the manufacturers or individuals and individually agree on the prices.\\nDOM willoffer variety of payment methods, including banking, cash or cryptocurrency transactions. OWC will be built on EOS blockchain ecosystem and operate without any fees for both counterparties.\\nBusinesscompanies will be able to open virtual branches on OWC, using value-added services of the platform. DOM will also introduce a secured smart contract system, allowing to implement any business logic and solve the safety issues.\\nLearn more on the company's website www.TEST.com\"}",
+  "created_at": "2019-11-26T16:22:27.738Z",
+  "updated_at": "2019-11-26T16:27:27.584Z"
+}

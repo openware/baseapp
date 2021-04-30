@@ -91,7 +91,10 @@
         "test:coverage": "jest --config jest.config.js --collectCoverage=true",
         "test:ci": "jest --config jest.config.js --silent --ci",
         "spec:integration": "cypress open",
-        "clean": "rimraf build"
+        "clean": "rimraf build",
+        "prepare:plugins": "./bin/prepare-plugins.js",
+        "plugins:template": "./bin/plugins-template.js",
+        "plugins:clone": "./bin/plugins-clone.js"
     },
     "devDependencies": {
         "@openware/coding-standards": "2.3.0",

@@ -1,6 +1,7 @@
 import { ru as mobileTranslationsRu } from '../../mobile/translations';
 import { LangType } from '../../translations';
 import { nationalitiesNames } from '../../translations/nationalities';
+import { Plugins } from '../../Plugins';
 
 export const ru: LangType = {
     'page.header.navbar.signIn': 'Войти',
@@ -1026,4 +1027,5 @@ export const ru: LangType = {
 
     ...nationalitiesNames,
     ...mobileTranslationsRu,
+    ...Plugins.getTranslations('ru'),
 };

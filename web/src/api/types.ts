@@ -34,6 +34,7 @@ declare global {
         password_min_entropy: string | number;
         palette?: string;
         wizard_step?: string;
+        plugins: any[];
     }
 
     interface Window {

@@ -12,6 +12,7 @@ import './index.pcss';
 import { rootSaga } from './modules';
 import { rangerSagas } from './modules/public/ranger';
 import { rangerMiddleware, sagaMiddleware, store } from './store';
+import { Plugins } from './Plugins';
 
 import '@openware/react-components/build/index.css';
 
@@ -28,6 +29,7 @@ if (!Intl.RelativeTimeFormat) {
     require('@formatjs/intl-relativetimeformat/locale-data/ru');
 }
 
+const appStore = store(Plugins.getReduxReducer());
 sagaMiddleware.run(rootSaga);
 rangerMiddleware.run(rangerSagas);
 
@@ -44,7 +46,7 @@ if (sentryEnabled()) {
 }
 
 const render = () => ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={appStore}>
         <App />
     </Provider>,
     document.getElementById('root') as HTMLElement,

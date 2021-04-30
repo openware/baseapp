@@ -1,4 +1,7 @@
+import { PluginsManager } from '../plugins/PluginsManager';
 import { PG_TITLE_PREFIX, pgRoutes } from './';
+
+const Plugins = new PluginsManager();
 
 describe('Constants', () => {
     const expectedRoutesForLoggedInUser = [
@@ -22,10 +25,10 @@ describe('Constants', () => {
     });
 
     it('Rendering correct correct routes if user is not logged in', () => {
-        expect(pgRoutes(false)).toEqual(expectedRoutesForNotLoggedInUser);
+        expect(pgRoutes(false, Plugins)).toEqual(expectedRoutesForNotLoggedInUser);
     });
 
     it('Rendering correct correct routes if user is not logged in', () => {
-        expect(pgRoutes(true)).toEqual(expectedRoutesForLoggedInUser);
+        expect(pgRoutes(true, Plugins)).toEqual(expectedRoutesForLoggedInUser);
     });
 });

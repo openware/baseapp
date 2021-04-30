@@ -1,0 +1,500 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+
+[
+  {
+    "id": 331,
+    "name": "BTC",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "prom",
+    "supply": "0",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "preparing",
+    "collected_amount": "12.00043201",
+    "ratio": "6.4",
+    "type": "FCFS",
+    "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "starts_at": "2019-11-29T10:30:02.000Z",
+    "finishes_at": "2019-11-30T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 331,
+        "quote_currency_id": "btc",
+        "price": "0.00000531",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 331,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+  {
+    "id": 332,
+    "name": "test",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34.2",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "distributing",
+    "collected_amount": "20.0",
+    "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "20.4",
+    "starts_at": "2019-11-22T10:30:02.000Z",
+    "finishes_at": "2019-11-30T19:20:01.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_arpa.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+  {
+    "id": 333,
+    "name": "Openware Coin",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "ongoing",
+    "collected_amount": "20.0",
+    "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "24000",
+    "starts_at": "2019-11-21T10:30:02.000Z",
+    "finishes_at": "2019-11-23T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+    {
+    "id": 333,
+    "name": "Openware Coin Past",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "finished",
+    "collected_amount": "20.0",
+      "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "34000",
+    "starts_at": "2019-09-19T10:30:02.000Z",
+    "finishes_at": "2019-10-01T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+  {
+    "id": 333,
+    "name": "Openware Coin",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "ongoing",
+    "collected_amount": "20.0",
+    "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "24000",
+    "starts_at": "2019-11-21T10:30:02.000Z",
+    "finishes_at": "2019-11-23T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+    {
+    "id": 333,
+    "name": "Openware Coin Past",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "finished",
+    "collected_amount": "20.0",
+      "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "34000",
+    "starts_at": "2019-09-19T10:30:02.000Z",
+    "finishes_at": "2019-10-01T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+  {
+    "id": 333,
+    "name": "Openware Coin",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "ongoing",
+    "collected_amount": "20.0",
+    "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "24000",
+    "starts_at": "2019-11-21T10:30:02.000Z",
+    "finishes_at": "2019-11-23T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+  {
+    "id": 333,
+    "name": "Openware Coin Past",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "finished",
+    "collected_amount": "20.0",
+      "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "34000",
+    "starts_at": "2019-09-19T10:30:02.000Z",
+    "finishes_at": "2019-10-01T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },{
+    "id": 333,
+    "name": "Openware Coin Past",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "finished",
+    "collected_amount": "20.0",
+      "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "34000",
+    "starts_at": "2019-09-19T10:30:02.000Z",
+    "finishes_at": "2019-10-01T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+  {
+    "id": 333,
+    "name": "Openware Coin",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "ongoing",
+    "collected_amount": "20.0",
+    "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "24000",
+    "starts_at": "2019-11-21T10:30:02.000Z",
+    "finishes_at": "2019-11-23T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+    {
+    "id": 333,
+    "name": "Openware Coin Past",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "finished",
+    "collected_amount": "20.0",
+      "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "34000",
+    "starts_at": "2019-09-19T10:30:02.000Z",
+    "finishes_at": "2019-10-01T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  },
+  {
+    "id": 333,
+    "name": "Openware Coin",
+    "introduction_url": null,
+    "owner_uid": "946111b1-02cd-472d-8e12-38a321d20bb8",
+    "currency_id": "eth",
+    "supply": "34000",
+    "low_goal": "0.0",
+    "commission": "0.0",
+    "min_amount": "0.0",
+    "min_unit": "0.0",
+    "state": "ongoing",
+    "collected_amount": "20.0",
+    "description": "wjfnwjfnwefjn wfiwe wiuewiueeiwu uewiwuei ewiuewiuew ewiuewuiwe ewiuweuiwe ewiuewuiew uweiuwe",
+    "ratio": "8.4",
+    "type": "FCFS",
+    "tokens_ordered": "24000",
+    "starts_at": "2019-11-21T10:30:02.000Z",
+    "finishes_at": "2019-11-23T15:55:00.000Z",
+    "created_at": "2019-09-19T10:30:02.000Z",
+    "updated_at": "2019-09-19T10:30:02.000Z",
+    "introduction_url": "https://material.tokenman.com/IEOTemplate/_prom.html",
+    "pairs": [
+      {
+        "id": 104,
+        "sale_id": 332,
+        "quote_currency_id": "btc",
+        "price": "2.9",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      },
+      {
+        "id": 105,
+        "sale_id": 332,
+        "quote_currency_id":"usd",
+        "price": "1.4",
+        "created_at": "2019-09-19T10:30:02.000Z",
+        "updated_at": "2019-09-19T10:30:02.000Z"
+      }
+    ]
+  }
+]

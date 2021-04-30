@@ -2,7 +2,7 @@
 .DS_Store
 
 # sonic
-bin/
+./bin/
 .vscode
 
 # baseapp

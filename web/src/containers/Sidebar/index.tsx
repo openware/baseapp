@@ -26,6 +26,7 @@ import {
     toggleSidebar,
     User,
 } from '../../modules';
+import { Plugins } from '../../Plugins';
 
 import enIcon from 'src/assets/images/sidebar/en.svg';
 import ruIcon from 'src/assets/images/sidebar/ru.svg';
@@ -87,10 +88,14 @@ class SidebarContainer extends React.Component<Props, State> {
             'pg-sidebar-wrapper--hidden': !isActive,
         });
 
+        const imageSrc = this.tryRequireRoot(lang)
+            ? require(`../../assets/images/sidebar/${lang}.svg`)
+            : this.tryRequirePlugins(lang) && require(`../../plugins/assets/images/${lang}.svg`);
+
         return (
             <div className={sidebarClassName}>
                 {this.renderProfileLink()}
-                <div className="pg-sidebar-wrapper-nav">{pgRoutes(isLoggedIn).map(this.renderNavItems(address))}</div>
+                <div className="pg-sidebar-wrapper-nav">{pgRoutes(isLoggedIn, Plugins).map(this.renderNavItems(address))}</div>
                 <div className="pg-sidebar-wrapper-lng">
                     <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-menu-language-container">
                         <Dropdown>
@@ -216,6 +221,26 @@ class SidebarContainer extends React.Component<Props, State> {
         }
 
         this.props.changeLanguage(language);
+    };
+
+    private tryRequireRoot = (name: string) => {
+        try {
+            require(`../../assets/images/sidebar/${name}.svg`);
+
+            return true;
+        } catch (err) {
+            return false;
+        }
+    };
+
+    private tryRequirePlugins = (name: string) => {
+        try {
+            require(`../../plugins/assets/images/${name}.svg`);
+
+            return true;
+        } catch (err) {
+            return false;
+        }
     };
 }
 
