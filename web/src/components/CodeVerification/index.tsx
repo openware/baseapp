@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import * as React from 'react';
+import React, { FC, ReactElement, useCallback } from 'react';
 
 export interface CodeVerificationProps {
     placeholder: string;
@@ -13,32 +13,19 @@ export interface CodeVerificationProps {
     isMobile?: boolean;
 }
 
-export class CodeVerification extends React.Component<CodeVerificationProps> {
-    public render() {
-        const { code, type, inputMode, onSubmit, showPaste2FA, isMobile } = this.props;
+const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProps): ReactElement => {
+    const {
+        code,
+        codeLength,
+        inputMode,
+        isMobile,
+        onSubmit,
+        placeholder,
+        showPaste2FA,
+        type,
+    } = props;
 
-        return (
-            <div className="pg-code-verification">
-                <div className="pg-code-verification__wrapper">
-                    {this.getCodeBlocks()}
-                </div>
-                <div className="pg-code-verification__input">
-                    <input
-                        autoFocus={true}
-                        type={type}
-                        value={code}
-                        inputMode={inputMode}
-                        onChange={this.onCodeChange}
-                        onKeyPress={onSubmit}
-                    />
-                    {isMobile && showPaste2FA && <div className="pg-code-verification__paste" onClick={() => this.paste2FA()}>Paste 2FA</div>}
-                </div>
-            </div>
-        );
-    }
-
-    public getCodeBlocks = () => {
-        const { code, placeholder, codeLength } = this.props;
+    const getCodeBlocks = useCallback(() => {
         const codeItems = code.split('');
 
         for (let i = 0; i < codeLength; i++) {
@@ -65,23 +52,46 @@ export class CodeVerification extends React.Component<CodeVerificationProps> {
                 </div>
             );
         });
-    };
+    }, [code]);
 
-    private onCodeChange = e => {
-        if (e.target.value.length <= this.props.codeLength && (e.target.value.match(/^[0-9\b]+$/) || e.target.value === '')) {
-            this.props.onChange(e.target.value);
+    const onCodeChange = e => {
+        if (e.target.value.length <= codeLength && (e.target.value.match(/^[0-9\b]+$/) || e.target.value === '')) {
+            props.onChange(e.target.value);
         }
     };
 
-    private async paste2FA() {
+    const paste2FA = async () => {
         const text = await navigator.clipboard?.readText();
         let inputList = '';
 
-        for (const code of text) {
-            inputList += code.toString();
-            if (inputList.length <= this.props.codeLength && (!inputList || inputList.match(/^[0-9\b]+$/))) {
-                this.props.onChange(inputList);
+        for (const char of text) {
+            inputList += char.toString();
+            if (inputList.length <= codeLength && (!inputList || inputList.match(/^[0-9\b]+$/))) {
+                props.onChange(inputList);
             }
         }
-    }
+    };
+
+    return (
+        <div className="pg-code-verification">
+            <div className="pg-code-verification__wrapper">
+                {getCodeBlocks()}
+            </div>
+            <div className="pg-code-verification__input">
+                <input
+                    autoFocus={true}
+                    type={type}
+                    value={code}
+                    inputMode={inputMode}
+                    onChange={onCodeChange}
+                    onKeyPress={onSubmit}
+                />
+                {isMobile && showPaste2FA && <div className="pg-code-verification__paste" onClick={() => paste2FA()}>Paste 2FA</div>}
+            </div>
+        </div>
+    );
+};
+
+export {
+    CodeVerification,
 }
