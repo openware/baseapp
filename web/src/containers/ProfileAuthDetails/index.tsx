@@ -1,5 +1,6 @@
 import cr from 'classnames';
 import { History } from 'history';
+import { AvatarIcon } from 'src/assets/images/NavBarIcons';
 import * as React from 'react';
 import {
     injectIntl,
@@ -20,8 +21,6 @@ import {
     selectChangePasswordSuccess,
     toggle2faFetch,
 } from '../../modules/user/profile';
-
-import Gravatar from 'react-gravatar';
 
 interface ReduxProps {
     user: User;
@@ -87,8 +86,8 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
             <div className="pg-profile-page__box pg-profile-page__left-col__basic">
                 <div className="pg-profile-page__box-header pg-profile-page__left-col__basic__info-row">
                     <div className="pg-profile-page__left-col__basic__info-row__flex">
-                        <div className="pg-profile-page__details-gravatar">
-                            <Gravatar email={user.email} size={36} />
+                        <div className="pg-profile-page__details-avatar">
+                            <AvatarIcon fillColor="var(--icons)"/>
                         </div>
                         <div className="pg-profile-page__details-user">
                             {isUsernameEnabled() ? (
