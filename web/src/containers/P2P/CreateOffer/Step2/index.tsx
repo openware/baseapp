@@ -156,9 +156,6 @@ const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
         })
     ), [showError]);
 
-    const iconsList = React.useMemo(() =>
-        userPaymentMethods.map(i => <img key={i.id} className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPaymentMethods]);
-
     const renderPMItem = (pm: UserPaymentMethod) => {
         const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));
         const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 12, '****') : '';
@@ -176,6 +173,10 @@ const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
 
     const pmList = React.useCallback((dpIndex: number) =>
         userPaymentMethods.filter(el => paymentMethods[dpIndex] === el || !paymentMethods.includes(el)), [paymentMethods, userPaymentMethods]);
+
+    const iconList = React.useCallback((dpIndex: number) =>
+        pmList(dpIndex).map(i => <img key={i.id} className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>)
+    , [pmList]);
 
     const renderDPButton = React.useCallback((dpIndex) =>
         (dpIndex === paymentMethods.length - 1) || (paymentMethods.length === 1) ? userPaymentMethods.length > paymentMethods.length && (
@@ -212,7 +213,7 @@ const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
                             key={dpIndex}
                             className="cr-create-offer__dp-dropdown"
                             list={pmList(dpIndex).map(renderPMItem)}
-                            iconsList={iconsList}
+                            iconsList={iconList(dpIndex)}
                             onSelect={index => handleSelectPaymentMethod(index, dpIndex)}
                             placeholder={renderPMItem(paymentMethods[dpIndex])}
                         />
