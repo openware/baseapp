@@ -1,11 +1,11 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
-import { TabPanel } from 'src/components';
+import { useDispatch, useSelector } from 'react-redux';
+import { Decimal, TabPanel } from 'src/components';
 import { HOST_URL } from 'src/constants';
 import { getCountdownDate, secondToMinutes, titleCase, truncateMiddle } from 'src/helpers';
-import { P2POrder, p2pOrdersUpdateFetch, UserPaymentMethod } from 'src/modules';
+import { Currency, P2POrder, p2pOrdersUpdateFetch, selectCurrencies, UserPaymentMethod } from 'src/modules';
 
 interface ParentProps {
     order: P2POrder;
@@ -20,6 +20,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     const [tab, setTab] = useState<string>('');
     const [tabMapping, setTabMapping] = useState<string[]>([]);
     const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
+    const currencies: Currency[] = useSelector(selectCurrencies);
 
     const { order, isTaker } = props;
     const dispatch = useDispatch();
@@ -133,6 +134,10 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
         }</div> : null;
     };
 
+    const getPrecision = useCallback((cur: string) => {
+        return cur && currencies.find(i => i.id === cur.toLowerCase())?.precision;
+    }, [currencies]);
+
     return (
         <div className="cr-prepare-order">
             {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
@@ -178,7 +183,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                             id="confirmTransfer"
                             checked={confirmTransfer}
                             readOnly={true}
-                            label={translate(`page.body.p2p.order.transfer.order.wait.confirm.checkbox.${order?.state}`, order && { amount: `${order.amount} ${order?.offer?.quote?.toUpperCase()}` })}
+                            label={translate(`page.body.p2p.order.transfer.order.wait.confirm.checkbox.${order?.state}`, order && { amount: `${Decimal.format(+order.amount * +order.offer?.price, getPrecision(order.offer?.quote), ',')} ${order?.offer?.quote?.toUpperCase()}` })}
                         />
                     </Form>
                 </div>
