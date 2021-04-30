@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Decimal, TabPanel } from 'src/components';
 import { HOST_URL } from 'src/constants';
-import { getCountdownDate, secondToMinutes, titleCase, truncateMiddle } from 'src/helpers';
+import { getCountdownDate, secondToMinutes, titleCase } from 'src/helpers';
 import { Currency, P2POrder, p2pOrdersUpdateFetch, selectCurrencies, UserPaymentMethod } from 'src/modules';
 
 interface ParentProps {
@@ -99,14 +99,10 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
             <div className="pm-list">
                 {
                     Object.keys(pm.data).map(key => {
-                        const value = pm.data[key];
-                        const keyContainsNumber = key.includes('number');
-                        const truncatedValue = keyContainsNumber ? truncateMiddle(value, 12, '****') : value;
-
                         return (
                             <div className="pm-list__item">
                                 <label>{titleCase(key)}</label>
-                                <div>{truncatedValue}</div>
+                                <div>{pm.data[key]}</div>
                             </div>
                         );
                     })
@@ -121,13 +117,11 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
         return details ? <div className="pm-details"> {
             Object.keys(details.payment_method.options).map(key => {
                 const option = details.payment_method.options[key];
-                const keyContainsNumber = key.includes('number');
-                const value = keyContainsNumber ? truncateMiddle(details.data[key], 12, '****') : details.data[key];
 
                 return (
                     <div className="field">
                         <div className="label">{option.name}</div>
-                        <div className="value">{value}</div>
+                        <div className="value">{details.data[key]}</div>
                     </div>
                 );
             })
