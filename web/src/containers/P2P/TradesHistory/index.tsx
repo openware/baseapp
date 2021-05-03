@@ -85,8 +85,9 @@ const TradesHistory: FC = (): ReactElement => {
 
     const onRowClick = useCallback((index: string) => {
         const orderId = list[index]?.id;
-        orderId && history.push(`/p2p/order/${orderId}`);
-    }, [list]);
+        const orderState = list[index]?.state;
+        orderId && orderState !== 'cancelled' && history.push(`/p2p/order/${orderId}`);
+    }, [history, list]);
 
     const renderContent = useMemo(() => {
         return (
