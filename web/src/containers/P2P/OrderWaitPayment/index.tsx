@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Decimal, TabPanel } from 'src/components';
 import { HOST_URL } from 'src/constants';
 import { getCountdownDate, secondToMinutes, titleCase } from 'src/helpers';
-import { Currency, P2POrder, p2pOrdersUpdateFetch, selectCurrencies, UserPaymentMethod } from 'src/modules';
+import { Currency, P2POrder, p2pOrdersUpdateFetch, p2pOrderUpdateStatus, selectCurrencies, UserPaymentMethod } from 'src/modules';
 
 interface ParentProps {
     order: P2POrder;
@@ -15,7 +15,7 @@ interface ParentProps {
 type Props = ParentProps;
 
 const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
-    const [timeLeft, setTimeLeft] = useState<string>('00:00:00');
+    const [timeLeft, setTimeLeft] = useState<string>('');
     const [confirmTransfer, setConfirmTransfer] = useState<boolean>(false);
     const [tab, setTab] = useState<string>('');
     const [tabMapping, setTabMapping] = useState<string[]>([]);
@@ -37,6 +37,12 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
             };
         }
     });
+
+    useEffect(() => {
+        if (timeLeft === '00:00:00' && order?.state === 'prepared') {
+            dispatch(p2pOrderUpdateStatus('autocancelled'));
+        }
+    }, [order, timeLeft]);
 
     useEffect(() => {
         if (order) {

@@ -20,6 +20,7 @@ import {
     P2P_ORDERS_APPEND,
     P2P_ORDER_RESET_SUCCESS,
     P2P_REMOVE_ORDER_ALERT,
+    P2P_ORDER_UPDATE_STATUS,
 } from "./constants";
 import { P2POrder } from "./types";
 
@@ -120,6 +121,15 @@ const orderReducer = (state: P2POrdersState['order'], action: P2POrdersActions) 
                 ...state,
                 success: false,
             };
+        case P2P_ORDER_UPDATE_STATUS:
+            console.log('P2P_ORDER_UPDATE_STATUS: ', action.payload);
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    state: action.payload,
+                },
+            };
         default:
             return state;
     }
@@ -218,6 +228,7 @@ export const p2pOrdersReducer = (state = initialP2POrdersState, action: P2POrder
         case P2P_ORDERS_UPDATE_DATA:
         case P2P_ORDERS_UPDATE_ERROR:
         case P2P_ORDER_RESET_SUCCESS:
+        case P2P_ORDER_UPDATE_STATUS:
             const orderState = { ...state.order };
 
             return {

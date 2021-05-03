@@ -16,6 +16,7 @@ import {
     P2P_ORDERS_APPEND,
     P2P_ORDER_RESET_SUCCESS,
     P2P_REMOVE_ORDER_ALERT,
+    P2P_ORDER_UPDATE_STATUS,
 } from "./constants";
 import { P2POrderCreate, P2POrder } from "./types";
 
@@ -112,6 +113,11 @@ export interface P2POrderRemoveAlert {
     }
 }
 
+export interface P2POrderUpdateStatus {
+    type: typeof P2P_ORDER_UPDATE_STATUS;
+    payload: string;
+}
+
 export type P2POrdersActions =
     P2POrdersCreateFetch
     | P2POrdersCreateData
@@ -128,7 +134,8 @@ export type P2POrdersActions =
     | P2POrdersDataWS
     | P2POrdersAppend
     | P2POrderResetSuccess
-    | P2POrderRemoveAlert;
+    | P2POrderRemoveAlert
+    | P2POrderUpdateStatus;
 
 export const p2pOrdersCreateFetch = (payload: P2POrderCreate): P2POrdersCreateFetch => ({
     type: P2P_ORDERS_CREATE_FETCH,
@@ -206,5 +213,10 @@ export const p2pOrderResetSuccess = (): P2POrderResetSuccess => ({
 
 export const p2pOrderRemoveAlert = (payload: P2POrderRemoveAlert['payload']): P2POrderRemoveAlert => ({
     type: P2P_REMOVE_ORDER_ALERT,
+    payload,
+});
+
+export const p2pOrderUpdateStatus = (payload: P2POrderUpdateStatus['payload']): P2POrderUpdateStatus => ({
+    type: P2P_ORDER_UPDATE_STATUS,
     payload,
 });
