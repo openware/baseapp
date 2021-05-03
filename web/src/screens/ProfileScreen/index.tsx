@@ -50,11 +50,7 @@ export const ProfileScreen: FC = (): ReactElement => {
         } else {
             history.push('/profile/security');
         }
-    }, [routeTab, tabMapping, history]);
-
-    const goBack = useCallback(() => {
-        history.goBack();
-    }, [history]);
+    }, [routeTab, tabMapping]);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
     const onCurrentTabChange = useCallback((index: number) => {

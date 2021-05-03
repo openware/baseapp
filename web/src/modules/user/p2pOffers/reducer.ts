@@ -83,17 +83,17 @@ export const offersFetchReducer = (state: P2POffersState['offers'], action: P2PO
                 ...state,
                 fetching: true,
                 timestamp: Math.floor(Date.now() / 1000),
+                page: action.payload.page,
+                state: action.payload.state,
+                error: undefined,
             };
         case P2P_USER_OFFERS_DATA:
             return {
                 ...state,
                 list: sliceArray(action.payload.list, defaultStorageLimit()),
-                page: action.payload.page,
                 total: action.payload.total,
-                state: action.payload.state,
                 fetching: false,
-                success: true,
-                error: undefined,
+                success: true,                
             };
         case P2P_USER_OFFERS_UPDATE:
             return {

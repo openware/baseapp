@@ -72,6 +72,10 @@ const orderReducer = (state: P2POrdersState['order'], action: P2POrdersActions) 
             return {
                 ...state,
                 loading: true,
+                error: undefined,
+                success: false,
+                updateSuccess: false,
+                data: undefined,
             };
         case P2P_ORDERS_CREATE_DATA:
             return {
@@ -79,22 +83,18 @@ const orderReducer = (state: P2POrdersState['order'], action: P2POrdersActions) 
                 data: action.payload,
                 loading: false,
                 success: true,
-                error: undefined,
             };
         case P2P_ORDERS_CREATE_ERROR:
             return {
                 ...state,
                 loading: false,
-                success: false,
                 error: action.error,
-                data: undefined,
             };
         case P2P_ORDER_DATA:
             return {
                 ...state,
                 data: action.payload,
                 loading: false,
-                error: undefined,
             };
         case P2P_ORDERS_UPDATE_DATA:
             return {
@@ -102,22 +102,18 @@ const orderReducer = (state: P2POrdersState['order'], action: P2POrdersActions) 
                 data: action.payload,
                 loading: false,
                 updateSuccess: true,
-                error: undefined,
             };
         case P2P_ORDERS_UPDATE_ERROR:
             return {
                 ...state,
-                updateSuccess: false,
                 loading: false,
                 error: action.error,
-                data: undefined,
             };
         case P2P_ORDER_ERROR:
             return {
                 ...state,
                 loading: false,
                 error: action.error,
-                data: undefined,
             };
         case P2P_ORDER_RESET_SUCCESS:
             return {
@@ -183,26 +179,26 @@ const tradesHistoryReducer = (state: P2POrdersState['tradesHistory'], action: P2
         case P2P_TRADES_HISTORY_FETCH:
             return {
                 ...state,
+                page: action.payload.page,
+                list: [],
                 fetching: true,
+                error: undefined,
+                success: false,
             };
         case P2P_TRADES_HISTORY_DATA:
             return {
                 ...state,
                 list: action.payload.list,
-                page: action.payload.page,
                 total: action.payload.total,
                 fetching: false,
                 success: true,
-                error: undefined,
             };
         case P2P_TRADES_HISTORY_ERROR:
             return {
                 ...state,
-                list: [],
                 page: 0,
                 total: 0,
                 fetching: false,
-                success: false,
                 error: action.error,
             };
         default:

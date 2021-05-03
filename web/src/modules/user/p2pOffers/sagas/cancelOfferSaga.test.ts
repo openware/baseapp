@@ -24,7 +24,6 @@ describe('P2P CancelOffer', () => {
 
     const fakeCancelOfferPayload = {
         id: 1,
-        list: [],
     };
 
     const mockP2PCancelOffer = () => {

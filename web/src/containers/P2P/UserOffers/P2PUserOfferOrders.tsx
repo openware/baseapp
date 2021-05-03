@@ -34,7 +34,7 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
     useCurrenciesFetch();
 
     const handleCancel = useCallback((id: number) => () => {
-        dispatch(cancelOffer({ id, list: [] }));
+        dispatch(cancelOffer({ id }));
     }, [cancelOffer, dispatch]);
 
     const headerTitles = () => [

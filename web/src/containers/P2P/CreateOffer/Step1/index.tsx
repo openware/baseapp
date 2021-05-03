@@ -65,7 +65,7 @@ const CreateOfferStepOne: FC<Props> = (props: Props): ReactElement => {
         props.handleSetSide(tabMapping[index]);
     }, [tabMapping, side]);
 
-    const handlePriceChange = React.useCallback((value: string) => {
+    const handlePriceChange = useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
 
         if (cash && convertedValue.match(precisionRegExp(cash.precision))) {
@@ -75,7 +75,7 @@ const CreateOfferStepOne: FC<Props> = (props: Props): ReactElement => {
         definePriceError(convertedValue);
     }, [cash]);
 
-    const definePriceError = React.useCallback((value: string) => {
+    const definePriceError = useCallback((value: string) => {
         let error = '';
     
         if (!value) {
@@ -87,7 +87,7 @@ const CreateOfferStepOne: FC<Props> = (props: Props): ReactElement => {
         setPriceError(error);
     }, [translate]);
 
-    const handleSubmitClick = React.useCallback(() => {
+    const handleSubmitClick = useCallback(() => {
         if (!price || !Number(price)) {
             setShowError(true);
             definePriceError(price);
@@ -102,13 +102,6 @@ const CreateOfferStepOne: FC<Props> = (props: Props): ReactElement => {
         })
     ), [showError, priceError]);
 
-    const renderTabs = () => tabMapping.map((i, index) => {
-        return {
-            content: currentTabIndex === index ? pageContent() : null,
-            label: translate(`page.body.p2p.create.offer.${i}`),
-        }
-    });
-
     const iconsList = (currenciesList: Currency[]) =>
         currenciesList.map(i => {
             return i?.icon_url ? (
@@ -118,7 +111,7 @@ const CreateOfferStepOne: FC<Props> = (props: Props): ReactElement => {
             ) : (<CryptoIcon className="cr-wallet-item__icon" code={i?.id.toUpperCase()} />);
         });
 
-    const pageContent = React.useCallback(() => {
+    const pageContent = useCallback(() => {
         return (
             <div>
                 <div className="cr-create-offer__input">
@@ -177,11 +170,18 @@ const CreateOfferStepOne: FC<Props> = (props: Props): ReactElement => {
         )
     }, [asset, assetList, cash, cashList, price, priceFocused, priceError, showError]);
 
+    const renderTabs = useMemo(() => tabMapping.map((i, index) => {
+        return {
+            content: currentTabIndex === index ? pageContent() : null,
+            label: translate(`page.body.p2p.create.offer.${i}`),
+        }
+    }), [currentTabIndex, tabMapping]);
+
     return (
         <div className="cr-create-offer">
             <div className="cr-create-offer-tab__tabs-content">
                 <TabPanel
-                    panels={renderTabs()}
+                    panels={renderTabs}
                     onTabChange={onTabChange}
                     currentTabIndex={currentTabIndex}
                     onCurrentTabChange={onCurrentTabChange}

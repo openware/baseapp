@@ -14,7 +14,7 @@ export function* p2pTradesHistorySaga(action: P2PTradesHistoryFetch) {
     try {
         const { data, headers } = yield call(API.get(config), `/private/orders?${buildQueryString(action.payload)}`);
 
-        yield put(p2pTradesHistoryData({ list: data, total: headers.total, page: action.payload.page }));
+        yield put(p2pTradesHistoryData({ list: data, total: headers.total }));
     } catch (error) {
         yield put(sendError({
             error,

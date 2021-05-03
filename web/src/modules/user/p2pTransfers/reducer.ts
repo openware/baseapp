@@ -20,7 +20,12 @@ const initialState: P2PTransfersState = {
 export const p2pTransfersReducer = (state = initialState, action: CreateP2PTransfersActions) => {
     switch (action.type) {
         case CREATE_P2P_TRANSFERS_FETCH:
-            return { ...state, fetching: true };
+            return {
+                ...state,
+                fetching: true,
+                success: false,
+                error: undefined,
+            };
         case CREATE_P2P_TRANSFERS_DATA:
             return {
                 ...state,
@@ -31,8 +36,7 @@ export const p2pTransfersReducer = (state = initialState, action: CreateP2PTrans
             return {
                 ...state,
                 error: action.error,
-                fetching: false,
-                success: false,
+                fetching: false,                
             };
         }
         default:

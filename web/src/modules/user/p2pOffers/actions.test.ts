@@ -76,6 +76,8 @@ describe('P2P actions', () => {
         description: '',
     };
 
+    const fakeOfferCancelPayload = { id: 2, list: [] };
+
     it('should check createOffer action creator', () => {
         const expectedAction = { type: P2P_CREATE_OFFER_FETCH, payload: fakeCreateOfferPayload };
         expect(actions.createOffer(fakeCreateOfferPayload)).toEqual(expectedAction);
@@ -90,8 +92,6 @@ describe('P2P actions', () => {
         const expectedAction = { type: P2P_CREATE_OFFER_ERROR, error: fakeError };
         expect(actions.createOfferError(fakeError)).toEqual(expectedAction);
     });
-
-    const fakeOfferCancelPayload = { id: 2, list: [] };
 
     it('should check cancelOffer action creator', () => {
         const expectedAction = { type: P2P_CANCEL_OFFER_FETCH, payload: fakeOfferCancelPayload };

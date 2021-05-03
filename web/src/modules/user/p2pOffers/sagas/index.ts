@@ -1,6 +1,6 @@
 import { takeEvery, takeLatest } from 'redux-saga/effects';
 import {
-		P2P_USER_OFFER_ORDERS_FETCH,
+	P2P_USER_OFFER_ORDERS_FETCH,
     P2P_USER_OFFERS_FETCH,
     P2P_CREATE_OFFER_FETCH,
     P2P_CANCEL_OFFER_FETCH,

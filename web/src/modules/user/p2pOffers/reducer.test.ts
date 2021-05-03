@@ -51,103 +51,6 @@ describe('User P2P Offers reducer', () => {
         },
     ];
 
-    const error: CommonError = {
-        code: 500,
-        message: ['Server error'],
-    };
-
-    it('should handle activeOffersFetch', () => {
-        const expectedState = {
-            ...initialP2POffersState,
-            activeOffers: {
-                ...initialP2POffersState.activeOffers,
-                fetching: true,
-                timestamp: Math.floor(Date.now() / 1000),
-            },
-        };
-
-        expect(p2pOffersReducer(initialP2POffersState, actions.activeOffersFetch({ page: 0, limit: 1 }))).toEqual(expectedState);
-    });
-
-    it('should handle activeOffersData', () => {
-        const expectedState = {
-            ...initialP2POffersState,
-            activeOffers: {
-                ...initialP2POffersState.activeOffers,
-                list: fakeOffersArray,
-                fetching: false,
-                success: true,
-                page: 1,
-                total: 2,
-            },
-         };
-
-        expect(p2pOffersReducer(initialP2POffersState, actions.activeOffersData({ list: fakeOffersArray, page: 1, total: 2 }))).toEqual(expectedState);
-    });
-
-    it('should handle activeOffersError', () => {
-        const expectedState = {
-            ...initialP2POffersState,
-            activeOffers: {
-                ...initialP2POffersState.activeOffers,
-                list: [],
-                fetching: false,
-                success: false,
-                error: error,
-                page: 0,
-                total: 0,
-            },
-        };
-
-        expect(p2pOffersReducer(initialP2POffersState, actions.activeOffersError(error))).toEqual(expectedState);
-    });
-
-    it('should handle cancelledOffersFetch', () => {
-        const expectedState = {
-            ...initialP2POffersState,
-            cancelledOffers: {
-                ...initialP2POffersState.cancelledOffers,
-                fetching: true,
-                timestamp: Math.floor(Date.now() / 1000),
-            },
-        };
-
-        expect(p2pOffersReducer(initialP2POffersState, actions.cancelledOffersFetch({ page: 0, limit: 1 }))).toEqual(expectedState);
-    });
-
-    it('should handle cancelledOffersData', () => {
-        const expectedState = {
-            ...initialP2POffersState,
-            cancelledOffers: {
-                ...initialP2POffersState.cancelledOffers,
-                list: fakeOffersArray,
-                fetching: false,
-                success: true,
-                page: 1,
-                total: 2,
-            },
-         };
-
-        expect(p2pOffersReducer(initialP2POffersState, actions.cancelledOffersData({ list: fakeOffersArray, page: 1, total: 2 }))).toEqual(expectedState);
-    });
-
-    it('should handle cancelledOffersError', () => {
-        const expectedState = {
-            ...initialP2POffersState,
-            cancelledOffers: {
-                ...initialP2POffersState.cancelledOffers,
-                list: [],
-                fetching: false,
-                success: false,
-                error: error,
-                page: 0,
-                total: 0,
-            },
-        };
-
-        expect(p2pOffersReducer(initialP2POffersState, actions.cancelledOffersError(error))).toEqual(expectedState);
-    });
-
     const fakeCreateOfferPayload = {
         price: 1.2,
         amount: '5534.00',
@@ -155,11 +58,64 @@ describe('User P2P Offers reducer', () => {
         max_order_amount: '5000',
         base: 'usdt',
         quote: 'ngn',
-        upm_id: ['1'],
+        upm_id: [1],
         time_limit: '15',
         side: 'buy',
         description: '',
     };
+
+    const fakeOfferCancelPayload = { id: 2 };
+
+    const error: CommonError = {
+        code: 500,
+        message: ['Server error'],
+    };
+
+    it('should handle userOffersFetch', () => {
+        const expectedState = {
+            ...initialP2POffersState,
+            offers: {
+                ...initialP2POffersState.offers,
+                fetching: true,
+                timestamp: Math.floor(Date.now() / 1000),
+            },
+        };
+
+        expect(p2pOffersReducer(initialP2POffersState, actions.userOffersFetch({ page: 0, limit: 1, state: 'pending' }))).toEqual(expectedState);
+    });
+
+    it('should handle userOffersData', () => {
+        const expectedState = {
+            ...initialP2POffersState,
+            activeOffers: {
+                ...initialP2POffersState.offers,
+                list: fakeOffersArray,
+                fetching: false,
+                success: true,
+                page: 1,
+                total: 2,
+            },
+         };
+
+        expect(p2pOffersReducer(initialP2POffersState, actions.userOffersData({ list: fakeOffersArray, page: 1, total: 2, state: 'pending' }))).toEqual(expectedState);
+    });
+
+    it('should handle userOffersError', () => {
+        const expectedState = {
+            ...initialP2POffersState,
+            activeOffers: {
+                ...initialP2POffersState.offers,
+                list: [],
+                fetching: false,
+                success: false,
+                error: error,
+                page: 0,
+                total: 0,
+            },
+        };
+
+        expect(p2pOffersReducer(initialP2POffersState, actions.userOffersError(error))).toEqual(expectedState);
+    });
 
     it('should handle createOffer', () => {
         const expectedState = {
@@ -199,8 +155,6 @@ describe('User P2P Offers reducer', () => {
 
         expect(p2pOffersReducer(initialP2POffersState, actions.createOfferError(error))).toEqual(expectedState);
     });
-
-    const fakeOfferCancelPayload = { id: 2, list: [] };
 
     it('should handle cancelOffer', () => {
         const expectedState = {

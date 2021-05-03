@@ -1,5 +1,5 @@
 import { RootState } from '../../';
-import { AbilitiesState } from './';
+import { AbilitiesState } from './reducer';
 
 export const selectAbilities = (state: RootState): AbilitiesState['abilities'] =>
     state.user.abilities.abilities;

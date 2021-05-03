@@ -12,12 +12,12 @@ describe('Abilities reducer', () => {
 
     it('should handle ABILITIES_DATA', () => {
         const abilitiesResponse = [{
-            read: [ 'Order', 'Trade', 'Member', 'Account', 'PaymentAddress' ],
-            update: [ 'Order' ],
+            read: ['Order', 'Trade', 'Member', 'Account', 'PaymentAddress'],
+            update: ['Order'],
         }];
         const abilities = {
-            read: [ 'Order', 'Trade', 'Member', 'Account', 'PaymentAddress' ],
-            update: [ 'Order' ],
+            read: ['Order', 'Trade', 'Member', 'Account', 'PaymentAddress'],
+            update: ['Order'],
         };
         const expectedState = {
             ...initialAbilitiesState,

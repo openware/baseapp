@@ -33,9 +33,7 @@ export interface UserOffersData {
     type: typeof P2P_USER_OFFERS_DATA;
     payload: {
         list: Offer[];
-        page: number;
         total: number;
-        state: string;
     };
 }
 
@@ -96,7 +94,6 @@ export interface CancelOfferFetch {
     type: typeof P2P_CANCEL_OFFER_FETCH;
     payload: {
         id: number;
-        list: Offer[];
     }
 }
 

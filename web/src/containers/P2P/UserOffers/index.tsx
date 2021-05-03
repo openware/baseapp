@@ -65,8 +65,8 @@ const P2PUserOffers: FC = (): ReactElement => {
     }, [userOffersFetch, tab, page, DEFAULT_TABLE_PAGE_LIMIT]);
 
     const handleCancel = useCallback((id: number) => () => {
-        dispatch(cancelOffer({ id, list }));
-    }, [list, cancelOffer, dispatch]);
+        dispatch(cancelOffer({ id }));
+    }, [cancelOffer, dispatch]);
 
     const handleOrders = useCallback((id: number) => () => {
         history.push(`/p2p/offer/${id}`);

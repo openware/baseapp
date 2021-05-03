@@ -18,10 +18,9 @@ const config: RequestOptions = {
 
 export function* userOffersSaga(action: UserOffersFetch) {
     try {
-        const { page, state } = action.payload;
         const { data, headers } = yield call(API.get(config), `/private/offers?${buildQueryString(action.payload)}`);
 
-        yield put(userOffersData({ list: data, total: headers.total, page, state }));
+        yield put(userOffersData({ list: data, total: headers.total }));
     } catch (error) {
         yield put(sendError({
             error,

@@ -1,8 +1,5 @@
 import { mergeObjects } from '../../../helpers/mergeObjects';
-import {
-    AbilitiesAction,
-    AbilitiesInterface,
-} from './actions';
+import { AbilitiesAction, AbilitiesInterface } from './actions';
 import {
     ABILITIES_DATA,
     ABILITIES_ERROR,
@@ -28,6 +25,6 @@ export const abilitiesReducer = (state = initialAbilitiesState, action: Abilitie
         case ABILITIES_ERROR:
             return { ...state, loading: false };
         default:
-            return { ...state };
+            return state;
     }
 };

@@ -64,7 +64,6 @@ export const paymentMethodReducer = (state = initialPaymentMethodState, action: 
                 ...state,
                 list: action.payload,
                 listLoading: false,
-                error: false,
             };
         case PAYMENT_METHOD_CREATE_FETCH:
             return {
@@ -103,7 +102,6 @@ export const paymentMethodReducer = (state = initialPaymentMethodState, action: 
             return {
                 ...state,
                 loading: false,
-                error: false,
                 success: true,
             };
         case PAYMENT_METHOD_ERROR:

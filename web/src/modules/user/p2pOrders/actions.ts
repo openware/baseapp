@@ -46,7 +46,6 @@ export interface P2PTradesHistoryData {
     type: typeof P2P_TRADES_HISTORY_DATA;
     payload: {
         list: P2POrder[];
-        page: number;
         total: number;
     }
 }

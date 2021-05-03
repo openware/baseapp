@@ -65,19 +65,18 @@ export const WalletsScreen: FC = (): ReactElement => {
         } else {
             history.push('/wallets/overview');
         }
-    }, [routeTab, tabMapping, history]);
+    }, [routeTab, tabMapping]);
 
-    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
     const onCurrentTabChange = useCallback((index: number) => {
         setCurrentTabIndex(index);
         history.push(`/wallets/${tabMapping[index]}`);
-    }, [history, tabMapping]);
+    }, [tabMapping]);
 
     const onTabChange = useCallback((index: number) => {
-        if (tab === tabMapping[index]) {
-            return;
+        if (tab !== tabMapping[index]) {
+            setTab(tabMapping[index]);
         }
-        setTab(tabMapping[index]);
     }, [tabMapping]);
 
     const renderTabs = React.useCallback(() => {

@@ -46,10 +46,9 @@ class History extends React.Component<Props, State> {
         currentTabIndex: 0,
     };
 
-    public tabMapping = CanCan.checkAbilityByAction('read', 'QuickExchange', this.props.abilities) ?
-        ['deposits', 'withdraws', 'trades', 'transfers', 'quick_exchange']
-        :
-        ['deposits', 'withdraws', 'trades', 'transfers'];
+    public tabMapping = CanCan.checkAbilityByAction('read', 'QuickExchange', this.props.abilities)
+        ? ['deposits', 'withdraws', 'trades', 'transfers', 'quick_exchange']
+        : ['deposits', 'withdraws', 'trades', 'transfers'];
 
     public componentDidMount() {
         setDocumentTitle('History');

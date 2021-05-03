@@ -8,7 +8,7 @@ export const insertOrUpdate = (list: Offer[], offer: Offer, tabState: string): O
         if (index === -1 ) {
             return list;
         } else {
-            return list.filter(i => i.id !== offer.id);
+            return list.filter(i => i.id !== id);
         }
     }
 
@@ -17,7 +17,7 @@ export const insertOrUpdate = (list: Offer[], offer: Offer, tabState: string): O
     }
 
     return list.map(item => {
-        if (item.id === offer.id) {
+        if (item.id === id) {
             return {...offer};
         }
 
@@ -28,5 +28,5 @@ export const insertOrUpdate = (list: Offer[], offer: Offer, tabState: string): O
 export const insertIfNotExisted = (list: Offer[], offer: Offer): Offer[] => {
     const index = list.findIndex((value: Offer) => value.id === offer.id);
 
-    return (index === -1) ? [{...offer}, ...list] : [...list];
+    return index === -1 ? [{...offer}, ...list] : list;
 };
