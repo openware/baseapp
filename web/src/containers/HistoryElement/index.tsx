@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
-import {
-    injectIntl,
-} from 'react-intl';
+import { injectIntl } from 'react-intl';
 import {connect, MapDispatchToPropsFunction} from 'react-redux';
 import { compose } from 'redux';
 import { IntlProps } from '../../';

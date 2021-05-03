@@ -23,6 +23,7 @@ interface HistorySuccessPayload {
     list: WalletHistoryList;
     page: number;
     nextPageExists: boolean;
+    type: string;
 }
 
 export interface HistoryFetch {
