@@ -52,17 +52,16 @@ export const ProfileScreen: FC = (): ReactElement => {
         }
     }, [routeTab, tabMapping]);
 
-    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
     const onCurrentTabChange = useCallback((index: number) => {
         setCurrentTabIndex(index);
         history.push(`/profile/${tabMapping[index]}`);
-    }, [history, tabMapping]);
+    }, [tabMapping]);
 
     const onTabChange = useCallback((index: number) => {
-        if (tab === tabMapping[index]) {
-            return;
+        if (tab !== tabMapping[index]) {
+            setTab(tabMapping[index]);
         }
-        setTab(tabMapping[index]);
     }, [tabMapping]);
 
     const renderTabs = React.useCallback(() => {
@@ -89,7 +88,7 @@ export const ProfileScreen: FC = (): ReactElement => {
                 label: translate('page.body.profile.tabs.referral'),
             },
         ];
-    }, [currentTabIndex, abilities, history, translate]);
+    }, [currentTabIndex, abilities]);
 
     return (
         <div className="container pg-profile-page">

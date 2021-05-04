@@ -4,8 +4,21 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { TabPanel } from 'src/components';
 import { P2POffers, P2POffersHeader, P2POffersModal } from 'src/containers';
-import { useDocumentTitle, useP2PCurrenciesFetch, useP2PPaymentMethodsFetch, useUserPaymentMethodsFetch } from 'src/hooks';
-import { Offer, P2POrderCreate, p2pOrdersCreateFetch, selectP2PCreatedOrder, selectP2PCreateOrderSuccess, selectP2PCurrenciesData, selectP2PPaymentMethodsData } from 'src/modules';
+import {
+    useDocumentTitle,
+    useP2PCurrenciesFetch,
+    useP2PPaymentMethodsFetch,
+    useUserPaymentMethodsFetch,
+} from 'src/hooks';
+import {
+    Offer,
+    P2POrderCreate,
+    p2pOrdersCreateFetch,
+    selectP2PCreatedOrder,
+    selectP2PCreateOrderSuccess,
+    selectP2PCurrenciesData,
+    selectP2PPaymentMethodsData,
+} from 'src/modules';
 
 interface ParamType {
     currency?: string;
@@ -73,13 +86,12 @@ export const P2POffersScreen: FC = (): ReactElement => {
     const onCurrentTabChange = useCallback((index: number) => {
         setCurrentTabIndex(index);
         history.push(`/p2p/${tabMapping[index]}`);
-    }, [history, tabMapping]);
+    }, [tabMapping]);
 
     const onTabChange = useCallback((index: number) => {
-        if (tab === tabMapping[index]) {
-            return;
+        if (tab !== tabMapping[index]) {
+            setTab(tabMapping[index]);
         }
-        setTab(tabMapping[index]);
     }, [tabMapping]);
 
     const handleSubmit = useCallback((payload: P2POrderCreate) => {
