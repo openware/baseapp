@@ -5,6 +5,7 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { compose } from 'redux';
+import { themeSwitcher } from '../../api/config';
 import { Moon } from '../../assets/images/Moon';
 import { Sun } from '../../assets/images/Sun';
 import { colors } from '../../constants';
@@ -31,6 +32,10 @@ type Props = OwnProps & ReduxProps & DispatchProps;
 class NavBarComponent extends React.Component<Props> {
     public render() {
         const { colorTheme } = this.props;
+
+        if (themeSwitcher() !== 'visible') {
+            return null;
+        }
 
         return (
             <div className="pg-navbar">
@@ -93,4 +98,4 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
 
 export const NavBar = compose(
     connect(mapStateToProps, mapDispatchToProps),
-)(NavBarComponent) as any; // tslint:disable-line
+)(NavBarComponent) as any;
