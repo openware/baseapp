@@ -1,8 +1,8 @@
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Decimal, TabPanel } from 'src/components';
+import { Decimal, Modal, TabPanel } from 'src/components';
 import { HOST_URL } from 'src/constants';
 import { getCountdownDate, secondToMinutes, titleCase } from 'src/helpers';
 import { Currency, P2POrder, p2pOrdersUpdateFetch, p2pOrderUpdateStatus, selectCurrencies, UserPaymentMethod } from 'src/modules';
@@ -20,6 +20,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     const [tab, setTab] = useState<string>('');
     const [tabMapping, setTabMapping] = useState<string[]>([]);
     const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
+    const [showTimeout, setShowTimeout] = useState<boolean>(false);
     const currencies: Currency[] = useSelector(selectCurrencies);
 
     const { order, isTaker } = props;
@@ -40,7 +41,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
 
     useEffect(() => {
         if (timeLeft === '00:00:00' && order?.state === 'prepared') {
-            dispatch(p2pOrderUpdateStatus('autocancelled'));
+            setShowTimeout(true);
         }
     }, [order, timeLeft]);
 
@@ -138,6 +139,18 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
         return cur && currencies.find(i => i.id === cur.toLowerCase())?.precision;
     }, [currencies]);
 
+    const renderModalFooter = useMemo(() => {
+        return (
+            <Button
+                onClick={() => dispatch(p2pOrderUpdateStatus('autocancelled'))}
+                size="lg"
+                variant="primary"
+            >
+                {translate('page.body.p2p.order.transfer.order.wait.timeout.ok')}
+            </Button>
+        );
+    }, []);
+
     return (
         <div className="cr-prepare-order">
             {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
@@ -217,7 +230,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                         {translate('page.body.p2p.order.transfer.order.wait.confirm')}
                     </Button>
                     <Button
-                        onClick={() => window.console.log('dispute')}
+                        onClick={() => dispatch(p2pOrderUpdateStatus('dispute'))}
                         size="lg"
                         variant="secondary"
                     >
@@ -225,6 +238,12 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                     </Button>
                 </div>
             )}
+            <Modal
+                show={showTimeout}
+                header={translate('page.body.p2p.order.transfer.order.wait.timeout.title')}
+                content={translate('page.body.p2p.order.transfer.order.wait.timeout.detail')}
+                footer={renderModalFooter}
+            />
         </div>
     );
 };

@@ -1,39 +1,39 @@
 .cr-prepare-order {
   &__block {
-    padding: 24px 36px;
     border-top: 1px solid var(--divider-color-level-1);
-    width: 100%;
     display: flex;
     flex-direction: column;
+    padding: 24px 36px;
+    width: 100%;
 
     .bold {
-      font-weight: 600;
-      font-size: 16px;
-      letter-spacing: 0.15px;
       color: var(--primary-text-color);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.15px;
     }
 
     .bold-36 {
-      font-weight: 600;
-      font-size: 36px;
-      letter-spacing: 0.25px;
       color: var(--primary-text-color);
+      font-size: 36px;
+      font-weight: 600;
+      letter-spacing: 0.25px;
     }
 
     &--row {
       font-size: 14px;
 
       .huge-text {
-        font-weight: 600;
-        font-size: 22px;
         color: var(--primary-text-color);
+        font-size: 22px;
+        font-weight: 600;
         margin-bottom: 12px;
       }
 
       .ticker {
-        font-weight: 600;
-        font-size: 22px;
         color: var(--primary-cta-color);
+        font-size: 22px;
+        font-weight: 600;
         margin-left: 12px;
       }
 
@@ -67,8 +67,8 @@
     }
 
     .custom-control-label {
-      font-weight: 600;
       font-size: 18px;
+      font-weight: 600;
       letter-spacing: 0.44px;
     }
 
@@ -94,33 +94,55 @@
         }
       }
     }
+
     .cr-tab-content {
       padding: 24px 36px;
     }
 
     .pm-list {
       label {
-        font-size: 12px;
         color: var(--secondary-contrast-cta-color);
+        font-size: 12px;
       }
 
       div {
+        color: var(--primary-text-color);
         font-size: 16px;
         letter-spacing: 0.25px;
-        color: var(--primary-text-color);
       }
     }
   }
 
-  &__btn-wrapper {  
+  &__btn-wrapper {
     &__grid {
-      padding: 8px 36px 36px;
       display: grid;
-      grid-template-columns: 315px 176px;
       grid-column-gap: 24px;
+      grid-template-columns: 315px 176px;
+      padding: 8px 36px 36px;
 
       .btn {
         height: 40px;
+      }
+    }
+  }
+
+  .cr-modal {
+    &__container {
+      width: 424px;
+
+      &-header {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      &-content {
+        display: flex;
+        justify-content: center;
+        padding: 0 36px !important;
+      }
+
+      &-footer {
+        padding: 24px 36px;
       }
     }
   }

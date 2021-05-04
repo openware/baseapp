@@ -1,8 +1,9 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import { getCountdownDate, secondToMinutes } from 'src/helpers';
-import { P2POrder } from 'src/modules';
+import { P2POrder, p2pOrderUpdateStatus } from 'src/modules';
 
 interface ParentProps {
     order: P2POrder;
@@ -15,6 +16,7 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
     const [timeLeft, setTimeLeft] = useState<string>('00:00:00');
 
     const { order, isTaker } = props;
+    const dispatch = useDispatch();
     const { formatMessage } = useIntl();
 
     useEffect(() => {
@@ -51,7 +53,7 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
             {((isTaker && order?.state === 'wait') || (!isTaker && order?.side === 'sell')) && (
                 <div className="cr-confirm-order__btn-wrapper__grid">
                     <Button
-                        onClick={() => window.console.log('logDispute')}
+                        onClick={() => dispatch(p2pOrderUpdateStatus('dispute'))}
                         size="lg"
                         variant="primary"
                         disabled={timeLeft !== '00:00:00'}
