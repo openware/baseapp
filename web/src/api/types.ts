@@ -37,6 +37,7 @@ declare global {
         wizard_step?: string;
         barong_upload_size_min_range?: string;
         barong_upload_size_max_range?: string;
+        themeSwitcher: 'visible' | 'hidden';
     }
 
     interface Window {
