@@ -11,5 +11,5 @@ export const useP2PCurrenciesFetch = () => {
         if (shouldDispatch) {
             dispatch(p2pCurrenciesFetch());
         }
-    }, [dispatch, shouldDispatch]);
+    }, [shouldDispatch]);
 };

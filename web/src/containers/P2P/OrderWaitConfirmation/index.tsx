@@ -29,7 +29,7 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
         }
     });
 
-    const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
+    const translate = useCallback((id: string, value?: any) => formatMessage({ id }, { ...value }), [formatMessage]);
 
     return (
         <div className="cr-confirm-order">

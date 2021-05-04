@@ -11,5 +11,5 @@ export const useP2PUserOfferOrdersFetch = ({ offer_id }) => {
         if ((!currentOffer || currentOffer.id !== offer_id) && shouldDispatch) {
             dispatch(userOfferOrdersFetch({ offer_id }));
         }
-    }, [dispatch, shouldDispatch, offer_id, currentOffer]);
+    }, [shouldDispatch, offer_id, currentOffer]);
 };

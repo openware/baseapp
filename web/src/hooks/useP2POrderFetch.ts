@@ -11,5 +11,5 @@ export const useP2POrderFetch = (id?: number) => {
         if (id && (!createdOrder || createdOrder.id !== id) && !loading) {
             dispatch(p2pOrderFetch({ id }));
         }
-    }, [dispatch, id, createdOrder, loading, p2pOrderFetch]);
+    }, [id, createdOrder, loading, p2pOrderFetch]);
 };

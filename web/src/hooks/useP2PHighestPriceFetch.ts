@@ -9,5 +9,5 @@ export const useP2PHighestPriceFetch = (base?: Currency, quote?: Currency) => {
         if (base && quote) {
             dispatch(p2pHighestPriceFetch({ base: base.id.toLowerCase(), quote: quote.id.toLowerCase() }));
         }
-    }, [dispatch, base, quote, p2pHighestPriceFetch]);
+    }, [base, quote, p2pHighestPriceFetch]);
 };

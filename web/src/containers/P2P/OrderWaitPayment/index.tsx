@@ -49,7 +49,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
         }
     }, [order]);
 
-    const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
+    const translate = useCallback((id: string, value?: any) => formatMessage({ id }, { ...value }), []);
 
     const clickCheckBox = useCallback(e => {
         if (e) {
@@ -60,7 +60,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
 
     const handleCancel = useCallback(() => {
         order && dispatch(p2pOrdersUpdateFetch({ id: order.id, action: 'cancel' }));
-    }, [order, dispatch]);
+    }, [order]);
 
     const handleClickPaid = useCallback(() => {
         const selectedPaymentMethod = order?.offer?.payment_methods[currentTabIndex];
@@ -70,17 +70,16 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
             action: 'approve',
             ...(order.side === 'buy' && order.state === 'prepared' && { payment_method_id: selectedPaymentMethod.id }),
         }));
-    }, [order, currentTabIndex, dispatch]);
+    }, [order, currentTabIndex]);
 
     const onCurrentTabChange = useCallback((index: number) => {
         setCurrentTabIndex(index);
     }, [tabMapping]);
 
     const onTabChange = useCallback((index: number) => {
-        if (tab === tabMapping[index]) {
-            return;
-        }
-        setTab(tabMapping[index]);
+        if (tab !== tabMapping[index]) {
+            setTab(tabMapping[index]);
+        }        
     }, [tabMapping]);
 
     const renderTabs = useCallback(() => tabMapping.map((i, index) => {

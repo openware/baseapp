@@ -58,13 +58,13 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
         payment_method: paymentMethod,
     });
 
-    const headerTitles = [
+    const headerTitles = React.useMemo(() => [
         intl.formatMessage({ id: 'page.body.p2p.table.header.advertisers' }),
         intl.formatMessage({ id: 'page.body.p2p.table.header.price' }),
         intl.formatMessage({ id: 'page.body.p2p.table.header.limit_available' }),
         intl.formatMessage({ id: 'page.body.p2p.table.header.payment' }),
         intl.formatMessage({ id: 'page.body.p2p.table.header.trade' }),
-    ];
+    ], []);
 
     const onClickPrevPage = useCallback(() => {
         const paymentMethodId = paymentMethods.find(i => i.name === paymentMethod);
@@ -79,7 +79,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 side,
             }),
         );
-    }, [offersFetch, side, paymentMethod, base, quote, page, DEFAULT_TABLE_PAGE_LIMIT, paymentMethods]);
+    }, [side, paymentMethod, base, quote, page, paymentMethods]);
 
     const onClickNextPage = useCallback(() => {
         const paymentMethodId = paymentMethods.find(i => i.name === paymentMethod);
@@ -94,7 +94,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 side,
             }),
         );
-    }, [offersFetch, page, DEFAULT_TABLE_PAGE_LIMIT, side, paymentMethod, base, quote, paymentMethods]);
+    }, [page, side, paymentMethod, base, quote, paymentMethods]);
 
     const retrieveData = useCallback((amountPrecision: number, pricePrecision: number) => (
         list.map(item => {

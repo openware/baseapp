@@ -12,5 +12,5 @@ export const useP2PUserOffersFetch = ({ limit = DEFAULT_TABLE_PAGE_LIMIT, page =
         if (shouldDispatch) {
             dispatch(userOffersFetch({ limit, page, state }));
         }
-    }, [dispatch, shouldDispatch, limit, page, state]);
+    }, [shouldDispatch, limit, page, state]);
 };

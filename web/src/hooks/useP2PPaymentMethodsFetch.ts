@@ -10,5 +10,5 @@ export const useP2PPaymentMethodsFetch = () => {
         if (shouldDispatch) {
             dispatch(p2pPaymentMethodsFetch());
         }
-    }, [dispatch, shouldDispatch]);
+    }, [shouldDispatch]);
 };

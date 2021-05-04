@@ -13,5 +13,5 @@ export const useP2PWalletsFetch = () => {
         if (shouldDispatch && !loadingAbilities && CanCan.checkAbilityByAction('read', 'P2P', abilities)) {
             dispatch(p2pWalletsFetch());
         }
-    }, [dispatch, abilities, loadingAbilities, shouldDispatch]);
+    }, [abilities, loadingAbilities, shouldDispatch]);
 };
