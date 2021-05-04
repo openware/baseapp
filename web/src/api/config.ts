@@ -88,9 +88,6 @@ export const captchaType = () => Cryptobase.config.captcha_type;
 export const captchaId = () => Cryptobase.config.captcha_id;
 export const passwordMinEntropy = () => Number(Cryptobase.config.password_min_entropy);
 export const wizardStep = () => String(Cryptobase.config.wizard_step || '1');
-<<<<<<< HEAD
 export const barongUploadSizeMinRange = Number(Cryptobase.config.barong_upload_size_min_range || '1');
 export const barongUploadSizeMaxRange = Number(Cryptobase.config.barong_upload_size_max_range || '20');
-=======
 export const themeSwitcher = () => Cryptobase.config.themeSwitcher;
->>>>>>> Feature: Add themeSwitcher env to configs, display themeSwitcher depends on themeSwitcher config
