@@ -32,7 +32,7 @@ export const P2POrderScreen: FC = (): ReactElement => {
         if (['autocancelled', 'cancelled'].includes(order?.state)) {
             history.push('/p2p');
         }
-    }, [order, history]);
+    }, [order]);
 
     useEffect(() => {
         if (createdOrderSuccess) {
@@ -40,15 +40,13 @@ export const P2POrderScreen: FC = (): ReactElement => {
         }
     }, [createdOrderSuccess]);
 
-    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
-    const title = useCallback(() => {
-        return order && `${translate(`page.body.p2p.order.transfer.title.${order.side}`)} ${order.offer?.base?.toUpperCase()}`; 
-    }, [order, translate]);
+    const title = React.useCallback(() => (order && `${translate(`page.body.p2p.order.transfer.title.${order.side}`)} ${order.offer?.base?.toUpperCase()}`), [order]);
 
     const handleModalAction = useCallback(() => {
         history.push(`/p2p/${order?.offer?.base}`);
-    }, [history]);
+    }, [order]);
 
     const content = useCallback(() => {
         if (order) {
@@ -81,9 +79,7 @@ export const P2POrderScreen: FC = (): ReactElement => {
         }
     }, [order, user]);
 
-    const getPrecision = useCallback((cur: string) => {
-        return cur && currencies.find(i => i.id === cur.toLowerCase())?.precision;
-    }, [currencies]);
+    const getPrecision = useCallback((cur: string) => (cur && currencies.find(i => i.id === cur.toLowerCase())?.precision), [currencies]);
 
     return (
         <React.Fragment>

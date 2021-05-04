@@ -25,7 +25,6 @@ export const P2POffersHeader: FC<Props> = (props: Props): ReactElement => {
     const {
         onClickSideTab,
         paymentsList,
-        paymentMethod,
         setPayment,
         side,
         fiatCurrencies,
@@ -35,7 +34,7 @@ export const P2POffersHeader: FC<Props> = (props: Props): ReactElement => {
 
     const onCreateClick = React.useCallback(() => {
         history.push('/create-offer');
-    }, [history]);
+    }, []);
 
     return (
         <div className="cr-p2p-header">

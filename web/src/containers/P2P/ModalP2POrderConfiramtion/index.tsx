@@ -26,22 +26,22 @@ const P2POrderConfirmModal: FC<Props> = (props: Props): ReactElement => {
     } = props;
 
     const { formatMessage } = useIntl();
-    const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
+    const translate = useCallback((id: string, value?: any) => formatMessage({ id }, { ...value }), [formatMessage]);
 
-    const handleCloseModal = React.useCallback(() => {
+    const handleCloseModal = useCallback(() => {
         props.closeModal();
-    }, [props.closeModal]);
+    }, []);
 
-    const header = React.useCallback(() => (
+    const header = useCallback(() => (
         <React.Fragment>
             <span className="cr-modal__container-header-title">{translate(`page.body.p2p.order.modal.header.${side}Order`)}</span>
             <div onClick={handleCloseModal} className="cr-modal__container-header-close">
                 <CloseIcon className="close-icon" />
             </div>
         </React.Fragment>
-    ), [side, translate]);
+    ), [side]);
 
-    const body = React.useCallback(() => {
+    const body = useCallback(() => {
         return (
             <React.Fragment>
                 <div className="cr-modal__container-content-icon">
@@ -71,12 +71,7 @@ const P2POrderConfirmModal: FC<Props> = (props: Props): ReactElement => {
                 </div>
             </React.Fragment>
         );
-    }, [
-        translate,
-        order,
-        precissionBase,
-        precissionQuote,
-    ]);
+    }, [order, precissionBase, precissionQuote]);
 
     const footer = React.useCallback(() => (
         <Button
@@ -89,7 +84,7 @@ const P2POrderConfirmModal: FC<Props> = (props: Props): ReactElement => {
     ), [props.closeModal]);
 
     return (
-        <div className="">
+        <div>
             <Modal
                 show={show}
                 header={header()}

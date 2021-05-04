@@ -96,7 +96,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
 
     const handleSubmit = useCallback((payload: P2POrderCreate) => {
         dispatch(p2pOrdersCreateFetch(payload));
-    }, [selectedOffer, sideFilter]);
+    }, []);
 
     const closeModal = useCallback(() => {
         setOpenModal(false);
@@ -106,12 +106,12 @@ export const P2POffersScreen: FC = (): ReactElement => {
     const handleClickTrade = useCallback((offer: Offer) => {
         setOpenModal(true);
         setSelectedOffer(offer);
-    }, [selectedOffer]);
+    }, []);
 
-    const handleSideFilter = (side: string) => {
+    const handleSideFilter = useCallback((side: string) => {
         setSideFilter(side);
         side === 'sell' ? setSortParam('price desc') : setSortParam('price asc');
-    };
+    }, []);
 
     const pageContent = useCallback((currency: string) => {
         return (
@@ -155,28 +155,28 @@ export const P2POffersScreen: FC = (): ReactElement => {
                 }
             </React.Fragment>
         )
-    }, [sideFilter, fiatCurrency, paymentMethods, paymentFilter, fiatCurList, tab, openModal, selectedOffer ]);
+    }, [sideFilter, fiatCurrency, paymentMethods, paymentFilter, fiatCurList, openModal, selectedOffer]);
 
-    const renderTabs = () => tabMapping.map((i, index) => {
+    const renderTabs = React.useMemo(() => tabMapping.map((i, index) => {
         return {
             content: currentTabIndex === index ? pageContent(i) : null,
             label: i.toUpperCase(),
         }
-    });
+    }), [currentTabIndex, tabMapping, pageContent]);
 
-    const leftHeader = (
+    const leftHeader = React.useMemo(() => (
         <React.Fragment>
             <Link to="/p2p/faq" className="pg-p2p-tab__left">{translate('page.body.p2p.header.faq')}</Link>
             <Link to="/p2p/offers" className="pg-p2p-tab__left">{translate('page.body.p2p.header.offers')}</Link>
             <Link to="/p2p/history" className="pg-p2p-tab__left">{translate('page.body.p2p.header.trades_history')}</Link>
         </React.Fragment>
-    );
+    ), []);
 
     return (
         <div className="pg-p2p-tab pg-container">
             <div className="pg-p2p-tab__tabs-content">
                 <TabPanel
-                    panels={renderTabs()}
+                    panels={renderTabs}
                     onTabChange={onTabChange}
                     optionalHead={leftHeader}
                     currentTabIndex={currentTabIndex}

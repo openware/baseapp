@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useState, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -100,9 +100,9 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         }
     }, [availablePM, paymentMethod]);
 
-    const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
+    const translate = useCallback((id: string, value?: any) => formatMessage({ id }, { ...value }), [formatMessage]);
 
-    const handleAmountChange = React.useCallback((value: string) => {
+    const handleAmountChange = useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
 
         if (convertedValue.match(precisionRegExp(side === 'buy' ? pricePrecision : amountPrecision))) {
@@ -115,7 +115,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         defineAmountError(convertedValue);
     }, [amountPrecision, pricePrecision, side, price]);
 
-    const handleReceiveChange = React.useCallback((value: string) => {
+    const handleReceiveChange = useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
 
         if (convertedValue.match(precisionRegExp(side === 'buy' ? amountPrecision : pricePrecision))) {
@@ -128,12 +128,12 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         side === 'buy' ? defineAmountError(String(+convertedValue * +price)) : defineAmountError(String(Number(price) ? +convertedValue / +price : 0));
     }, [amountPrecision, pricePrecision, side, price]);
 
-    const handleSelectPaymentMethod = React.useCallback((index: number) => {
+    const handleSelectPaymentMethod = useCallback((index: number) => {
         setPaymentMethod(availablePM[index]);
         definePaymentError(paymentMethod);
     }, [paymentMethod, availablePM]);
 
-    const defineAmountError = React.useCallback((value: string) => {
+    const defineAmountError = useCallback((value: string) => {
         let error = '';
     
         if (!value) {
@@ -154,9 +154,9 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         }
 
         setAmountError(error);
-    }, [translate, lowLimit, topLimit, fiatCode, pricePrecision, side, price, wallets, currencyCode]);
+    }, [lowLimit, topLimit, fiatCode, pricePrecision, side, price, wallets, currencyCode]);
 
-    const definePaymentError = React.useCallback((pm?: UserPaymentMethod) => {
+    const definePaymentError = useCallback((pm?: UserPaymentMethod) => {
         let error = '';
     
         if (side === 'sell' && !pm) {
@@ -164,20 +164,24 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         }
 
         setPaymentMethodError(error);
-    }, [side, translate]);
+    }, [side]);
 
-    const validatePriceRange = React.useCallback((value: number) => {
-        const low = side === 'buy' ? +lowLimit * +price : lowLimit;
-        const top = side === 'buy' ? +topLimit * +price : topLimit;
+    const validatePriceRange = useCallback((value: number) => {
+        let low = lowLimit;
+        let top = topLimit;
 
-        return (value >= low && value <= top)
+        if (side === 'buy') {
+            low = +lowLimit * +price;
+            top = +topLimit * +price
+        }
+
+        return value >= low && value <= top;
     }, [lowLimit, topLimit, side]);
 
-    const handleSubmitClick = React.useCallback(() => {
+    const handleSubmitClick = useCallback(() => {
         const available = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
 
-        if (
-            !tradeAmount
+        if (!tradeAmount
             || Number(tradeAmount) <= 0
             || (side === 'sell' && available && +tradeAmount > +available)
             || !validatePriceRange(+tradeAmount)
@@ -196,9 +200,9 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     
             props.handleSubmit(payload);
         }
-    }, [tradeAmount, receiveAmount, price, wallets, currencyCode, paymentMethod, id, props.handleSubmit]);
+    }, [tradeAmount, receiveAmount, price, wallets, currencyCode, paymentMethod, id]);
 
-    const handleClickTradeAll = React.useCallback(() => {
+    const handleClickTradeAll = useCallback(() => {
         if (side === 'buy') {
             const maxLimit = +topLimit * +price;
             if ((+available * +price) < maxLimit) {
@@ -213,7 +217,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         setClickAll(true);
     }, [side, currencyCode, wallets, available, topLimit, price]);
 
-    const handleCloseModal = React.useCallback(() => {
+    const handleCloseModal = useCallback(() => {
         setClickAll(false);
         setShowError(false);
         setAmountError('');
@@ -221,52 +225,103 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         props.closeModal();
     }, [props.closeModal]);
 
-    const header = React.useCallback(() => (
+    const header = useMemo(() => (
         <React.Fragment>
             <span className="cr-modal__container-header-title">{translate(`page.body.p2p.modal.header.${side}`)} {currencyCode.toUpperCase()}</span>
             <div onClick={handleCloseModal} className="cr-modal__container-header-box-close">
                 <CloseIcon className="close-icon" />
             </div>
         </React.Fragment>
-    ), [side, currencyCode, translate]);
+    ), [side, currencyCode]);
 
-    const inputClass = useCallback((error: string) => (
+    const inputClass = useMemo(() => (
         classnames('cr-order-input__wrapper', {
-            'cr-order-input__wrapper--errored': showError && error,
+            'cr-order-input__wrapper--errored': showError && amountError,
         })
-    ), [showError, classnames]);
+    ), [amountError, showError]);
 
-    const buttonClass = useCallback(() => (
+    const buttonClass = useMemo(() => (
         classnames({
             'buy': side === 'buy',
             'sell': side === 'sell',
         })
-    ), [side, classnames]);
+    ), [side]);
 
-    const iconsList = React.useCallback(() =>
+    const iconsList = useCallback(() =>
         availablePM.map(i => <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPM]);
 
     const renderPMItem = (pm: UserPaymentMethod) => {
         const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));
         const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 12, '****') : '';
+
         return `${pm?.payment_method?.name} ${numberValue}`;
     };
 
-    const body = React.useCallback(() => {
+    const renderAvatar = useMemo(() => isUsernameEnabled() ? (
+        <div className="cr-modal__container-content-block">
+            <div className="advertiser">
+                <AvatarIcon fillColor="var(--icons)"/>
+                <div className="advertiser-name">{advertiserName}</div>
+            </div>
+        </div>
+    ) : null, [advertiserName]);
+
+    const renderDescription = useMemo(() => description ? (
+        <div className="cr-modal__container-content-block">
+            <div className="description">
+                <span className="description__label">{translate('page.body.p2p.modal.label.description')}</span>
+                <p className="description__content">{description}</p>
+            </div>
+        </div>
+    ) : null, [description]);
+
+    const renderBalance = useMemo(() => side === 'sell' && (
+        <div className="balance">
+            {translate('page.body.p2p.modal.label.balance')}
+            <span className="balance-amount">{Decimal.format(wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance, amountPrecision, '')}</span>
+            <span className="balance-currency">{currencyCode.toUpperCase()}</span>
+        </div>
+    ), [side, wallets, amountPrecision, currencyCode]);
+
+    const renderAmountError = useMemo(() => showError && (
+        <span className="error">{amountError}</span>
+    ), [showError, amountError]);
+
+    const renderPaymentMethod = useMemo(() => side === 'sell' && (
+        <React.Fragment>
+            <div className="payment">
+                <label>{translate('page.body.p2p.modal.button.payment')}</label>
+                {availablePM.length ? (
+                    <DropdownComponent
+                        className="cr-create-offer__dp-dropdown"
+                        list={availablePM.map(renderPMItem)}
+                        iconsList={iconsList()}
+                        onSelect={handleSelectPaymentMethod}
+                        placeholder={paymentMethod && renderPMItem(paymentMethod)}
+                    />
+                ) : (
+                    <Button
+                        onClick={() => history.push('/profile/payment')}
+                        size="lg"
+                        variant="outline-primary"
+                    >
+                        <span>{translate('page.body.p2p.create.offer.payment_method.add')}</span>
+                        <PlusIcon className="icon"/>
+                    </Button>
+                )}
+                {showError && <span className="error">{paymentMethodError}</span>}
+            </div>
+        </React.Fragment>
+    ), [side, availablePM, paymentMethod, showError, paymentMethodError]);
+
+    const body = useCallback(() => {
         const placeHolder = side === 'buy' ? 
             `${Decimal.format(+lowLimit * +price, pricePrecision, ',')} - ${Decimal.format(+topLimit * +price, pricePrecision, ',')}`
             : `${Decimal.format(+lowLimit , amountPrecision, ',')} - ${Decimal.format(+topLimit, amountPrecision, ',')}`;
 
         return (
             <React.Fragment>
-                {isUsernameEnabled() ? (
-                    <div className="cr-modal__container-content-block">
-                        <div className="advertiser">
-                            <AvatarIcon fillColor="var(--icons)"/>
-                            <div className="advertiser-name">{advertiserName}</div>
-                        </div>
-                    </div>
-                ) : null}
+                {renderAvatar}
                 <div className="cr-modal__container-content-block">
                     <div className="detail">
                         <div className="detail-block">
@@ -292,16 +347,9 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                         </div>
                     </div>
                 </div>
-                {description ? (
-                    <div className="cr-modal__container-content-block">
-                        <div className="description">
-                            <span className="description__label">{translate('page.body.p2p.modal.label.description')}</span>
-                            <p className="description__content">{description}</p>
-                        </div>
-                    </div>
-                ) : null}
+                {renderDescription}
                 <div className="cr-modal__container-content-block">
-                    <div className={inputClass(amountError)}>
+                    <div className={inputClass}>
                         <OrderInput
                             currency={side === 'buy' ? fiatCode : currencyCode}
                             label={side === 'buy' ? translate('page.body.p2p.modal.label.buy') : translate('page.body.p2p.modal.label.sell')}
@@ -315,14 +363,8 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                             allButtonText={translate('page.body.p2p.modal.button.all')}
                             handleClickAllButton={handleClickTradeAll}
                         />
-                        {showError && <span className="error">{amountError}</span>}
-                        {side === 'sell' && 
-                            <div className="balance">
-                                {translate('page.body.p2p.modal.label.balance')}
-                                <span className="balance-amount">{Decimal.format(wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance, amountPrecision, '')}</span>
-                                <span className="balance-currency">{currencyCode.toUpperCase()}</span>
-                            </div> 
-                        }
+                        {renderAmountError}
+                        {renderBalance}
                     </div>
                     <div className="cr-order-input__wrapper">
                         <OrderInput
@@ -336,37 +378,11 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                             labelVisible={true}
                         />
                     </div>
-                    {side === 'sell' && (
-                        <React.Fragment>
-                            <div className="payment">
-                                <label>{translate('page.body.p2p.modal.button.payment')}</label>
-                                {availablePM.length ? (
-                                    <DropdownComponent
-                                        className="cr-create-offer__dp-dropdown"
-                                        list={availablePM.map(renderPMItem)}
-                                        iconsList={iconsList()}
-                                        onSelect={handleSelectPaymentMethod}
-                                        placeholder={paymentMethod && renderPMItem(paymentMethod)}
-                                    />
-                                ) : (
-                                    <Button
-                                        onClick={() => history.push('/profile/payment')}
-                                        size="lg"
-                                        variant="outline-primary"
-                                    >
-                                        <span>{translate('page.body.p2p.create.offer.payment_method.add')}</span>
-                                        <PlusIcon className="icon"/>
-                                    </Button>
-                                )}
-                                {showError && <span className="error">{paymentMethodError}</span>}
-                            </div>
-                        </React.Fragment>
-                    )}
+                    {renderPaymentMethod}
                 </div>
             </React.Fragment>
         );
     }, [
-        translate,
         side,
         currencyCode,
         fiatCode,
@@ -391,22 +407,22 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         history,
     ]);
 
-    const footer = React.useCallback(() => (
+    const footer = useCallback(() => (
         <Button
             onClick={handleSubmitClick}
             size="lg"
-            variant={buttonClass()}
+            variant={buttonClass}
             disabled={showError && !!amountError}
         >
             {translate(`page.body.p2p.modal.header.${side}`)} {currencyCode.toUpperCase()}
         </Button>
-    ), [showError, amountError, translate, handleSubmitClick, buttonClass, props.closeModal]);
+    ), [showError, amountError, handleSubmitClick, buttonClass]);
 
     return (
         <div className="cr-p2p-offers-modal">
             <Modal
                 show={show}
-                header={header()}
+                header={header}
                 content={body()}
                 footer={footer()}
             />

@@ -34,7 +34,7 @@ const Dispute: FC<Props> = (props: Props): ReactElement => {
     const history = useHistory();
     const { formatMessage } = useIntl();
 
-    const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
+    const translate = useCallback((id: string, value?: any) => formatMessage({ id }, { ...value }), [formatMessage]);
 
     const handleUploadScan = useCallback((uploadEvent) => {
         const allFiles: File[] = uploadEvent.target.files;
@@ -84,22 +84,20 @@ const Dispute: FC<Props> = (props: Props): ReactElement => {
             dispatch(p2pDisputeFetch(request));
             history.push('/p2p');
         }
-    }, [order, attachment, message, reason, history, dispatch]);
+    }, [order, attachment, message, reason]);
 
-    const checkBoxField = (id: string, checked: boolean, onClick: (e, message) => void) => {
-        return (
-            <Form className="cr-dispute__checkbox" onClick={e => onClick(e, REASON_MESSAGES[id])}>
-                <Form.Check
-                    type="checkbox"
-                    custom
-                    id={id}
-                    checked={checked}
-                    readOnly={true}
-                    label={translate(`page.body.p2p.dispute.checkbox.${id}`)}
-                />
-            </Form>
-        );
-    };
+    const checkBoxField = useCallback((id: string, checked: boolean, onClick: (e, message) => void) => (
+        <Form className="cr-dispute__checkbox" onClick={e => onClick(e, REASON_MESSAGES[id])}>
+            <Form.Check
+                type="checkbox"
+                custom
+                id={id}
+                checked={checked}
+                readOnly={true}
+                label={translate(`page.body.p2p.dispute.checkbox.${id}`)}
+            />
+        </Form>
+    ), []);
 
     const messageFocusClass = useCallback(() => (
         classnames('cr-dispute__group', {

@@ -13,23 +13,27 @@ export const P2PUserOffersScreen: FC = (): ReactElement => {
     useP2PCurrenciesFetch();
     useDocumentTitle('My P2P offers');
 
-    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
+
+    const backButton = React.useMemo(() => (
+        id ? <React.Fragment>
+            <Link to="/p2p/offers" className="pg-user-p2p-offers--subtitle">
+                <ArrowLeftIcon className="icon"/><span>{translate('page.body.p2p.my.offers.back.offers')}</span>
+            </Link>
+            <P2PUserOfferOrders offerId={+id} />
+        </React.Fragment> : <React.Fragment>
+            <Link to="/p2p" className="pg-user-p2p-offers--subtitle">
+                <ArrowLeftIcon className="icon"/><span>{translate('page.body.p2p.my.offers.back')}</span>
+            </Link>
+            <P2PUserOffers />
+        </React.Fragment>
+    ), [id]);
 
     return (
         <div className="pg-user-p2p-offers pg-container">
             <div className="pg-user-p2p-offers__content">
                 <h1 className="pg-user-p2p-offers--title">{translate('page.body.p2p.my.offers.title')}</h1>
-                {id ? <React.Fragment>
-                    <Link to="/p2p/offers" className="pg-user-p2p-offers--subtitle">
-                        <ArrowLeftIcon className="icon"/><span>{translate('page.body.p2p.my.offers.back.offers')}</span>
-                    </Link>
-                    <P2PUserOfferOrders offerId={+id} />
-                </React.Fragment> : <React.Fragment>
-                    <Link to="/p2p" className="pg-user-p2p-offers--subtitle">
-                        <ArrowLeftIcon className="icon"/><span>{translate('page.body.p2p.my.offers.back')}</span>
-                    </Link>
-                    <P2PUserOffers />
-                </React.Fragment>}
+                {backButton}
             </div>
         </div>
     );

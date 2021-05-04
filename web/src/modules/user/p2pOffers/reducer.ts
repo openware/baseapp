@@ -123,6 +123,8 @@ export const offerOrdersFetchReducer = (state: P2POffersState['offerOrders'], ac
                 ...state,
                 fetching: true,
                 timestamp: Math.floor(Date.now() / 1000),
+                data: undefined,
+                error: undefined,
             };
         case P2P_USER_OFFER_ORDERS_DATA:
             return {
@@ -130,14 +132,12 @@ export const offerOrdersFetchReducer = (state: P2POffersState['offerOrders'], ac
                 data: action.payload,
                 fetching: false,
                 success: true,
-                error: undefined,
             };
         case P2P_USER_OFFER_ORDERS_ERROR:
             return {
                 ...state,
                 fetching: false,
                 success: false,
-                data: undefined,
                 error: action.error,
             };
         default:

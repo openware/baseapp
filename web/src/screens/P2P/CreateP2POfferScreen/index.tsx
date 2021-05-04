@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useState, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -7,7 +7,14 @@ import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { Decimal } from 'src/components';
 import { DEFAULT_CCY_PRECISION, P2P_TIME_LIMIT_LIST } from 'src/constants';
 import { ConfirmOfferModal, CreateOfferStepOne, CreateOfferStepTwo, CreateOfferStepThree } from 'src/containers';
-import { useCurrenciesFetch, useDocumentTitle, useP2PCurrenciesFetch, useP2PHighestPriceFetch, useUserPaymentMethodsFetch, useWalletsFetch } from 'src/hooks';
+import {
+    useCurrenciesFetch,
+    useDocumentTitle,
+    useP2PCurrenciesFetch,
+    useP2PHighestPriceFetch,
+    useUserPaymentMethodsFetch,
+    useWalletsFetch
+} from 'src/hooks';
 import { createOffer, Currency, selectCurrencies, selectP2PHighestPriceData, UserPaymentMethod } from 'src/modules';
 
 export const CreateP2POfferScreen: FC = (): ReactElement => {
@@ -43,20 +50,20 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
         setAmountPrecision(currencies.find(c => c.id === asset?.id.toLowerCase())?.precision || DEFAULT_CCY_PRECISION);
     }, [asset, currencies]);
 
-    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
     const goBack = useCallback(event => {
         event.preventDefault();
         history.goBack();
     }, []);
 
-    const cx = useCallback(() => (
+    const cx = useMemo(() => (
         classnames('pg-create-offer__progress-items', {
             'pg-create-offer__progress-first': step === 0,
             'pg-create-offer__progress-second': step === 1,
             'pg-create-offer__progress-third': step === 2,
         })
-    ), [classnames, step]);
+    ), [step]);
 
     const title = useCallback(() => {
         return step === 0 
@@ -119,7 +126,7 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
         dispatch,
     ]);
 
-    const content = useCallback(() => {
+    const content = useMemo(() => {
         switch (step) {
             case 0: return (
                 <CreateOfferStepOne
@@ -183,30 +190,29 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
         highestPrice,
     ]);
 
-    const confirmOfferModal = React.useCallback(() => {
-        return asset && cash && (
-            <ConfirmOfferModal
-                show={open}
-                asset={asset}
-                cash={cash}
-                side={side}
-                amount={amount}
-                price={price}
-                timeLimit={timeLimit}
-                paymentMethods={paymentMethods}
-                lowLimit={lowLimit}
-                topLimit={topLimit}
-                handleChangeStep={setStep}
-                handleSubmit={handleSubmit}
-                toggleModal={toggleModal}
-            />
-        );
-    }, [asset, cash, side, price, amount, topLimit, lowLimit, timeLimit, paymentMethods, open]);
+    const confirmOfferModal = useMemo(() => (
+        asset && cash &&
+        <ConfirmOfferModal
+            show={open}
+            asset={asset}
+            cash={cash}
+            side={side}
+            amount={amount}
+            price={price}
+            timeLimit={timeLimit}
+            paymentMethods={paymentMethods}
+            lowLimit={lowLimit}
+            topLimit={topLimit}
+            handleChangeStep={setStep}
+            handleSubmit={handleSubmit}
+            toggleModal={toggleModal}
+        />
+    ), [asset, cash, side, price, amount, topLimit, lowLimit, timeLimit, paymentMethods, open]);
 
     return (
         <div className="pg-create-offer pg-container">
             <div className="pg-create-offer__progress">
-                <div className={cx()}>
+                <div className={cx}>
                     <div className="pg-create-offer__progress-step">
                         <span className="pg-create-offer__title-text pg-create-offer__active-1">
                             {translate('page.body.p2p.create.offer.head.type')}
@@ -237,10 +243,10 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
                     </div>
                 </div>
                 <div className="pg-create-offer__content">
-                    {content()}
+                    {content}
                 </div>
             </div>
-            {confirmOfferModal()}
+            {confirmOfferModal}
         </div>
     );
 };
