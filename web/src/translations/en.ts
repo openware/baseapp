@@ -1280,6 +1280,7 @@ export const en = {
     'success.payment_method.deleted': 'Payment Method: successfully deleted',
     'success.payment_method.created': 'Payment Method: successfully created',
     'success.payment_method.updated': 'Payment Method: successfully updated',
+    'success.p2p.dispute.submit': 'Dispute has been successfully submitted',
 
     ...nationalitiesNames,
     ...customTranslations,
