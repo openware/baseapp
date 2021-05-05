@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useState, useMemo } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -82,18 +82,11 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
         }        
     }, [tabMapping]);
 
-    const renderTabs = useCallback(() => tabMapping.map((i, index) => {
-        const selectedPaymentMethod = order.side === 'sell'
-            ? order?.payment_method
-            : order?.offer?.payment_methods[index];
+    const getPaymentMethodInfo = useMemo(() => {
+        const pm: UserPaymentMethod = order.side === 'sell'
+            ? order.payment_method
+            : order.offer.payment_methods.length > currentTabIndex ? order.offer.payment_methods[currentTabIndex] : null;
 
-        return {
-            content: currentTabIndex === index ? getPaymentMethodInfo(selectedPaymentMethod) : null,
-            label: <div><img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${selectedPaymentMethod?.payment_method.id}/logo`} alt=""/>{i}</div>,
-        };
-    }), [order, currentTabIndex, tabMapping]);
-
-    const getPaymentMethodInfo = (pm?: UserPaymentMethod) => {
         return pm ? (
             <div className="pm-list">
                 {
@@ -108,58 +101,111 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                 }
             </div>
         ) : null;
-    };
+    }, [currentTabIndex, order]);
 
-    const renderPaymentMethodDetails = () => {
-        const details = order.side === 'sell' ? order?.payment_method : order?.offer?.payment_methods?.find(pm => pm.id === order.payment_method_id);
+    const renderTabs = useCallback(() => tabMapping.map((i, index) => {
+        const selectedPaymentMethod = order.side === 'sell'
+            ? order?.payment_method
+            : order?.offer?.payment_methods[index];
 
-        return details ? <div className="pm-details"> {
-            Object.keys(details.payment_method.options).map(key => {
-                const option = details.payment_method.options[key];
-
-                return (
-                    <div className="field">
-                        <div className="label">{option.name}</div>
-                        <div className="value">{details.data[key]}</div>
-                    </div>
-                );
-            })
-        }</div> : null;
-    };
+        return {
+            content: currentTabIndex === index ? getPaymentMethodInfo : null,
+            label: <div><img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${selectedPaymentMethod?.payment_method.id}/logo`} alt=""/>{i}</div>,
+        };
+    }), [order, currentTabIndex, tabMapping]);
 
     const getPrecision = useCallback((cur: string) => {
         return cur && currencies.find(i => i.id === cur.toLowerCase())?.precision;
     }, [currencies]);
 
+    const renderTransferInfo = useMemo(() => {
+        const details = order.side === 'sell' ? order?.payment_method : order?.offer?.payment_methods?.find(pm => pm.id === order.payment_method_id);
+
+        return !isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
+            <div className="cr-prepare-order__block">
+                <span className="bold">{translate('page.body.p2p.order.transfer.info.1')}</span>
+                <span className="bold">{translate('page.body.p2p.order.transfer.info.2')}</span>
+            </div>
+        ) : (
+            <div className="cr-prepare-order__block">
+                <div className="cr-prepare-order__block--row">
+                    <span className="bold-36">{translate(`page.body.p2p.order.transfer.order.wait.info`)}</span>
+                </div>
+                {details && (
+                    <div className="cr-prepare-order__block--row">
+                        <div className="pm-details">
+                            {Object.keys(details.payment_method.options).map(key =>
+                                <div className="field">
+                                    <div className="label">{details.payment_method.options[key].name}</div>
+                                    <div className="value">{details.data[key]}</div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    }, [isTaker, order]);
+
+    const renderPaymentMethodTabPanel = useMemo(() => {
+        return (!isTaker && order?.side === 'sell') || (isTaker && order?.side === 'buy') ? (
+            <div className="cr-prepare-order-tab">
+                <div className="cr-prepare-order-tab__tabs-content">
+                    <TabPanel
+                        panels={renderTabs()}
+                        onTabChange={onTabChange}
+                        currentTabIndex={currentTabIndex}
+                        onCurrentTabChange={onCurrentTabChange}
+                    />
+                </div>
+            </div>
+        ) : null;
+    }, [isTaker, order, currentTabIndex, onCurrentTabChange, onTabChange]);
+
+    const renderButtons = useMemo(() => {
+        return !isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
+            <div className="cr-prepare-order__btn-wrapper__grid">
+                <Button
+                    onClick={handleClickPaid}
+                    size="lg"
+                    variant="primary"
+                    disabled={!confirmTransfer}
+                >
+                    {translate('page.body.p2p.order.transfer.have.paid')}
+                </Button>
+                <Button
+                    onClick={handleCancel}
+                    size="lg"
+                    variant="secondary"
+                >
+                    {translate('page.body.p2p.order.transfer.cancel.order').toUpperCase()}
+                </Button>
+            </div>
+        ) : (
+            <div className="cr-prepare-order__btn-wrapper__grid">
+                <Button
+                    onClick={handleClickPaid}
+                    size="lg"
+                    variant="primary"
+                    disabled={!confirmTransfer}
+                >
+                    {translate('page.body.p2p.order.transfer.order.wait.confirm')}
+                </Button>
+                <Button
+                    onClick={() => window.console.log('dispute')}
+                    size="lg"
+                    variant="secondary"
+                >
+                    {translate('page.body.p2p.order.transfer.order.wait.logDispute')}
+                </Button>
+            </div>
+        );
+    }, [isTaker, order, confirmTransfer]);
+
     return (
         <div className="cr-prepare-order">
-            {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
-                <div className="cr-prepare-order__block">
-                    <span className="bold">{translate('page.body.p2p.order.transfer.info.1')}</span>
-                    <span className="bold">{translate('page.body.p2p.order.transfer.info.2')}</span>
-                </div>
-            ) : (
-                <div className="cr-prepare-order__block">
-                    <div className="cr-prepare-order__block--row">
-                        <span className="bold-36">{translate(`page.body.p2p.order.transfer.order.wait.info`)}</span>
-                    </div>
-                    <div className="cr-prepare-order__block--row">
-                        { renderPaymentMethodDetails() }
-                    </div>
-                </div>
-            )}
-            {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
-                <div className="cr-prepare-order-tab">
-                    <div className="cr-prepare-order-tab__tabs-content">
-                        <TabPanel
-                            panels={renderTabs()}
-                            onTabChange={onTabChange}
-                            currentTabIndex={currentTabIndex}
-                            onCurrentTabChange={onCurrentTabChange}
-                        />
-                    </div>
-                </div>
-            ) : null}
+            {renderTransferInfo}
+            {renderPaymentMethodTabPanel}
             <div className="cr-prepare-order__block">
                 <div className="cr-prepare-order__block--row">
                     <span className="huge-text">{translate(`page.body.p2p.order.transfer.order.wait.timer.${order?.state}`)}</span>
@@ -181,43 +227,7 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
                     </Form>
                 </div>
             </div>
-            {!isTaker && order?.side === 'sell' || isTaker && order?.side === 'buy' ? (
-                <div className="cr-prepare-order__btn-wrapper__grid">
-                    <Button
-                        onClick={handleClickPaid}
-                        size="lg"
-                        variant="primary"
-                        disabled={!confirmTransfer}
-                    >
-                        {translate('page.body.p2p.order.transfer.have.paid')}
-                    </Button>
-                    <Button
-                        onClick={handleCancel}
-                        size="lg"
-                        variant="secondary"
-                    >
-                        {translate('page.body.p2p.order.transfer.cancel.order').toUpperCase()}
-                    </Button>
-                </div>
-            ) : (
-                <div className="cr-prepare-order__btn-wrapper__grid">
-                    <Button
-                        onClick={handleClickPaid}
-                        size="lg"
-                        variant="primary"
-                        disabled={!confirmTransfer}
-                    >
-                        {translate('page.body.p2p.order.transfer.order.wait.confirm')}
-                    </Button>
-                    <Button
-                        onClick={() => window.console.log('dispute')}
-                        size="lg"
-                        variant="secondary"
-                    >
-                        {translate('page.body.p2p.order.transfer.order.wait.logDispute')}
-                    </Button>
-                </div>
-            )}
+            {renderButtons}
         </div>
     );
 };
