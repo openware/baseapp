@@ -54,6 +54,7 @@ const TradesHistory: FC = (): ReactElement => {
         return [
             translate('page.body.p2p.order_history.date'),
             translate('page.body.p2p.order_history.side'),
+            translate('page.body.p2p.order_history.asset'),
             translate('page.body.p2p.order_history.price'),
             translate('page.body.p2p.order_history.quantity'),
             translate('page.body.p2p.order_history.counterparty'),
@@ -72,7 +73,8 @@ const TradesHistory: FC = (): ReactElement => {
         return [
             localeDate(created_at, 'fullDate'),
             <span style={{ color: sideColored.color }}>{sideColored.text}</span>,
-            `${Decimal.format(price, pricePrecision || DEFAULT_FIAT_PRECISION, ',')} ${base.toUpperCase()}/${quote.toUpperCase()}`,
+            `${base.toUpperCase()}/${quote.toUpperCase()}`,
+            `${Decimal.format(price, pricePrecision || DEFAULT_FIAT_PRECISION, ',')} ${quote.toUpperCase()}`,
             `${Decimal.format(amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${base.toUpperCase()}`,
             <span>{user?.user_nickname || uid}</span>,
             <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
