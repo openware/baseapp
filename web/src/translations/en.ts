@@ -1186,6 +1186,7 @@ export const en = {
     'page.body.p2p.order_history.back': 'Back to P2P',
     'page.body.p2p.order_history.date': 'Date',
     'page.body.p2p.order_history.side': 'Side',
+    'page.body.p2p.order_history.asset': 'Asset/Fiat',
     'page.body.p2p.order_history.price': 'Price',
     'page.body.p2p.order_history.quantity': 'Quantity',
     'page.body.p2p.order_history.counterparty': 'Counterparty',
