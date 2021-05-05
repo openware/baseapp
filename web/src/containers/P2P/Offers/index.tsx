@@ -117,7 +117,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                         {user?.user_nickname || user?.user_uid}
                         <div className='sec-row'>
                             <span className="font-small secondary">{user?.offers_count}&nbsp;{intl.formatMessage({ id: 'page.body.p2p.table.offers' })}</span>
-                            {user?.success_rate ? <span className="font-small secondary ml-24">{+user?.success_rate * 100}% {intl.formatMessage({ id: 'page.body.p2p.table.completion' })}</span> : null}
+                            {user?.success_rate ? <span className="font-small secondary ml-24">{Decimal.format(+user?.success_rate * 100, 2).replace('.00','')}% {intl.formatMessage({ id: 'page.body.p2p.table.completion' })}</span> : null}
                         </div>
                     </div>
                 </div>,
