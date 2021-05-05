@@ -40,16 +40,20 @@ export const WalletItem: React.FunctionComponent<Props> = (props: Props) => {
         ? estimateUnitValue(currency.toUpperCase(), VALUATION_PRIMARY_CURRENCY, +balance, currencies, markets, tickers)
         : Decimal.format(0, fixed);
 
+    const walletIcon = React.useMemo(() => (
+        currency ?
+            iconUrl ?
+                <span className="cr-crypto-icon cr-wallet-item__icon">
+                    <img alt={currency.toUpperCase()} src={iconUrl} />
+                </span>
+            : <CryptoIcon className="cr-wallet-item__icon" code={currency.toUpperCase()} />
+        : null
+    ), [currency, iconUrl]);
+
     return (
         <div style={style} className={cName}>
             <div className="cr-wallet-item__info">
-                {currency ?
-                    iconUrl ?
-                        <span className="cr-crypto-icon cr-wallet-item__icon">
-                            <img alt={currency.toUpperCase()} src={iconUrl} />
-                        </span>
-                    : <CryptoIcon className="cr-wallet-item__icon" code={currency.toUpperCase()} />
-                : null}
+                {walletIcon}
                 <div className="cr-wallet-item__description">
                     <span className="cr-wallet-item__description-currency">{currency?.toUpperCase()}</span>
                     <span className="cr-wallet-item__description-name">{name}</span>

@@ -69,7 +69,7 @@ export const DoubleDropdownSelector: React.FunctionComponent<Props> = (props: Pr
                 <ChangeIcon className="icon"/>
             </div>
             <div className="cr-double-dp-selector__group">
-                <div className="cr-double-dp-selector__group-label">{labelFrom || intl.formatMessage({ id: 'page.body.wallets.transfers.to' })}</div>
+                <div className="cr-double-dp-selector__group-label">{labelTo || intl.formatMessage({ id: 'page.body.wallets.transfers.to' })}</div>
                 <DropdownComponent
                     className="cr-double-dp-selector__group-dropdown"
                     list={arrayTo}
