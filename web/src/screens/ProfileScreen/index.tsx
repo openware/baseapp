@@ -116,16 +116,13 @@ export const ProfileScreen: FC = (): ReactElement => {
                     </div>
                 </div>
             </div>
-            
-            {
-                tab === 'security' ? (
-                    <div className="row">
-                        <div className="col-12">
-                            <ProfileAccountActivity/>
-                        </div>
+            {tab === 'security' && (
+                <div className="row">
+                    <div className="col-12">
+                        <ProfileAccountActivity/>
                     </div>
-                ) : null
-            }
+                </div>
+            )}
         </div>
     );
 };

@@ -1,6 +1,5 @@
 import cr from 'classnames';
-import * as React from 'react';
-import { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { DEFAULT_CCY_PRECISION } from 'src/constants';

@@ -80,6 +80,33 @@ const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
     return list;
 };
 
+const updatedList = (wallets: Wallet[], balances: any) => {
+    return wallets.map(wallet => {
+        let updatedWallet = wallet;
+        const payloadCurrencies = Object.keys(balances);
+
+        if (payloadCurrencies.length) {
+            payloadCurrencies.some(value => {
+                const targetWallet = balances[value];
+
+                if (value === wallet.currency && (targetWallet && targetWallet[2] === wallet.account_type)) {
+                    updatedWallet = {
+                        ...updatedWallet,
+                        balance: targetWallet[0] ? targetWallet[0] : updatedWallet.balance,
+                        locked: targetWallet[1] ? targetWallet[1] : updatedWallet.locked,
+                    };
+
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
+        return updatedWallet;
+    });
+};
+
 const walletsListReducer = (state: WalletsState['wallets'], action: WalletsAction): WalletsState['wallets'] => {
     switch (action.type) {
         case WALLETS_ADDRESS_FETCH:
@@ -103,39 +130,10 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
             };
         }
         case WALLETS_DATA_WS: {
-            let updatedList = state.list;
-
-            if (state.list.length) {
-                updatedList = state.list.map(wallet => {
-                    let updatedWallet = wallet;
-                    const payloadCurrencies = Object.keys(action.payload.balances);
-
-                    if (payloadCurrencies.length) {
-                        payloadCurrencies.some(value => {
-                            const targetWallet = action.payload.balances[value];
-
-                            if (value === wallet.currency && (targetWallet && targetWallet[2] === wallet.account_type)) {
-                                updatedWallet = {
-                                    ...updatedWallet,
-                                    balance: targetWallet[0] ? targetWallet[0] : updatedWallet.balance,
-                                    locked: targetWallet[1] ? targetWallet[1] : updatedWallet.locked,
-                                };
-
-                                return true;
-                            }
-
-                            return false;
-                        });
-                    }
-
-                    return updatedWallet;
-                });
-            }
-
             return {
                 ...state,
                 loading: false,
-                list: updatedList,
+                list: updatedList(state.list, action.payload.balances),
             };
         }
         case WALLETS_ADDRESS_DATA: {
@@ -204,39 +202,10 @@ const p2pWalletsListReducer = (state: WalletsState['p2pWallets'], action: Wallet
             };
         }
         case P2P_WALLETS_DATA_WS: {
-            let updatedList = state.list;
-
-            if (state.list.length) {
-                updatedList = state.list.map(wallet => {
-                    let updatedWallet = wallet;
-                    const payloadCurrencies = Object.keys(action.payload.balances);
-
-                    if (payloadCurrencies.length) {
-                        payloadCurrencies.some(value => {
-                            const targetWallet = action.payload.balances[value];
-
-                            if (value === wallet.currency && (targetWallet && targetWallet[2] === wallet.account_type)) {
-                                updatedWallet = {
-                                    ...updatedWallet,
-                                    balance: targetWallet[0] ? targetWallet[0] : updatedWallet.balance,
-                                    locked: targetWallet[1] ? targetWallet[1] : updatedWallet.locked,
-                                };
-
-                                return true;
-                            }
-
-                            return false;
-                        });
-                    }
-
-                    return updatedWallet;
-                });
-            }
-
             return {
                 ...state,
                 loading: false,
-                list: updatedList,
+                list: updatedList(state.list, action.payload.balances),
             };
         }
         case P2P_WALLETS_ERROR:

@@ -31,14 +31,14 @@ const P2PAlerts: FC = (): ReactElement => {
             .map(o => o.id);
 
         setIdList(list);
-    }, [orders, user, history]);
+    }, [orders, user]);
 
     const removeItem = useCallback(id => {
         const updatedList = orders.filter(i => i.id !== id);
         dispatch(p2pOrderRemoveAlert({ list: updatedList }));
-    }, [orders, dispatch]);
+    }, [orders]);
 
-    const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
+    const translate = useCallback((id: string, value?: any) => formatMessage({ id }, { ...value }), []);
 
     return (
         <div className="pg-p2p-alert">
