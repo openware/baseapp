@@ -55,7 +55,7 @@ export const ProfilePayment: FC = (): ReactElement => {
 
         const optionData = [];
 
-        Object.keys(upm.data).map(key => {
+        Object.keys(upm.data).forEach(key => {
             const option = paymentMethod.options[key];
 
             if (option) {
