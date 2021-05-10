@@ -5,8 +5,17 @@ import { Button } from 'react-bootstrap';
 import { PaymentMethodModal } from './PaymentMethodModal';
 import { titleCase, truncateMiddle } from 'src/helpers';
 import { useP2PPaymentMethodsFetch, useUserPaymentMethodsFetch } from 'src/hooks';
-import { PaymentMethod, selectP2PPaymentMethodsData, selectPaymentMethodList, selectPaymentMethodModal, UserPaymentMethod } from 'src/modules';
-import { paymentMethodCreateFetch, paymentMethodDeleteFetch, paymentMethodUpdateFetch, paymentMethodModal } from 'src/modules';
+import {
+    PaymentMethod,
+    paymentMethodCreateFetch,
+    paymentMethodDeleteFetch,
+    paymentMethodModal,
+    paymentMethodUpdateFetch,
+    selectP2PPaymentMethodsData,
+    selectPaymentMethodList,
+    selectPaymentMethodModal,
+    UserPaymentMethod,
+} from 'src/modules';
 import { HOST_URL } from 'src/constants';
 
 export interface PaymentOptionInterface {

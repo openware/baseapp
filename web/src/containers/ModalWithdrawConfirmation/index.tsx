@@ -157,8 +157,6 @@ class ModalWithdraw extends React.Component<Props, State> {
                 </div>
             );
         }
-
-        return;
     };
 
     private handleToggleTip = () => {

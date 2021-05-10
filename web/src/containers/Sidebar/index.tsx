@@ -28,8 +28,6 @@ import {
     AbilitiesInterface,
     User,
 } from '../../modules';
-import { CanCan } from '../'; 
-
 import enIcon from 'src/assets/images/sidebar/en.svg';
 import ruIcon from 'src/assets/images/sidebar/ru.svg';
 

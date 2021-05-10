@@ -24,7 +24,6 @@ import {
     setStateType,
     localeDate,
 } from '../../../helpers';
-import { isUsernameEnabled } from 'src/api';
 
 const TradesHistory: FC = (): ReactElement => {
     const { formatMessage } = useIntl();
@@ -63,12 +62,12 @@ const TradesHistory: FC = (): ReactElement => {
     }, []);
 
     const renderTableRow = useCallback((item: P2POrder) => {
-        const { created_at, side, amount, state, user_uid } = item;
+        const { created_at, side, amount, state } = item;
         const { price, quote, base, user, uid } = item.offer;
         const sideColored = setTradesType(side);
         const stateColored = setStateType(state);
-        const pricePrecision = currencies.find(item => item.id === quote)?.precision;
-        const amountPrecision = currencies.find(item => item.id === base)?.precision;
+        const pricePrecision = currencies.find(c => c.id === quote)?.precision;
+        const amountPrecision = currencies.find(c => c.id === base)?.precision;
 
         return [
             localeDate(created_at, 'fullDate'),

@@ -94,7 +94,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
         })
     ), [showError]);
 
-    const renderCustomFields = useCallback((paymentOptions) => {
+    const renderCustomFields = useCallback(() => {
         return paymentOptions.map(option => {
             switch (option.type) {
                 case 'dropdown':
@@ -163,7 +163,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                             {pm?.name}
                         </div>
                         <div className="custom-fields">
-                            {renderCustomFields(paymentOptions)}
+                            {renderCustomFields()}
                         </div>
                     </div>
                 );
@@ -187,7 +187,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                             {pmUpdate?.name}
                         </div>
                         <div className="custom-fields">
-                            {renderCustomFields(paymentOptions)}
+                            {renderCustomFields()}
                         </div>
                     </div>
                 );
@@ -237,7 +237,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 </div>
             </React.Fragment>
         );
-    }, [translate, modal, paymentOptions, paymentMethods, searchKeyword, showError]);
+    }, [translate, modal, paymentMethods, searchKeyword, showError]);
 
     return modal.active ? (
         <div className="cr-modal">

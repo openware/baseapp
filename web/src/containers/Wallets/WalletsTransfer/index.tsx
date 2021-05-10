@@ -95,9 +95,9 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
         }));
     }, [filteredWallets, nonZeroSelected, filterValue]);
 
-    const handleTransfer = useCallback((currency: string, amount: string) => {
+    const handleTransfer = useCallback((currencyItem: string, amount: string) => {
         const payload = {
-            currency: currency?.toLowerCase(),
+            currency: currencyItem?.toLowerCase(),
             amount,
             from: from.toLowerCase(),
             to: to.toLowerCase(),
@@ -110,7 +110,7 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
         <div className="pg-wallet-transfers">
             <div className="pg-wallet">
                 <div className="text-center">
-                    {((from === 'spot' && walletsLoading || from === 'p2p' && p2pWalletsLoading)) && <Spinner animation="border" variant="primary" />}
+                    {((from === 'spot' && walletsLoading) || (from === 'p2p' && p2pWalletsLoading)) && <Spinner animation="border" variant="primary" />}
                 </div>
                 <div className="row no-gutters pg-wallet__tabs-content pg-wallet__tabs-content-height">
                     <div className={`col-md-3 col-sm-12 col-12`}>

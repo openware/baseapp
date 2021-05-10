@@ -1,4 +1,4 @@
-import { Offer, P2POrder, RootState } from '../..';
+import { Offer, RootState } from '../..';
 import { CommonError } from '../../types';
 import { OfferNestedOrders } from './actions';
 

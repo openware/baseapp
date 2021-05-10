@@ -82,7 +82,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
         }
     }, [createdOrder, createOrderSuccess, history]);
 
-    const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
+    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
     const onCurrentTabChange = useCallback((index: number) => {
         setCurrentTabIndex(index);
         history.push(`/p2p/${tabMapping[index]}`);
@@ -113,7 +113,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
         side === 'sell' ? setSortParam('price desc') : setSortParam('price asc');
     }, []);
 
-    const pageContent = useCallback((currency: string) => {
+    const pageContent = useCallback((pageCurrency: string) => {
         return (
             <React.Fragment>
                 <P2POffersHeader
@@ -127,7 +127,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
                     fiatCurrency={fiatCurrency}
                 />
                 <P2POffers
-                    base={currency}
+                    base={pageCurrency}
                     quote={fiatCurrency}
                     paymentMethod={paymentFilter}
                     side={sideFilter}

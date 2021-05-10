@@ -2,7 +2,7 @@ import FadeIn from 'react-fade-in';
 import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { P2PAlertIcon } from 'src/assets/images/P2PAlertIcon';
 import { RightArrowIcon } from 'src/assets/images/slider';

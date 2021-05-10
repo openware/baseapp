@@ -85,7 +85,6 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             withdrawFeeLabel,
             withdrawTotalLabel,
             withdrawButtonLabel,
-            isMobileDevice,
         } = this.props;
 
         const cx = classnames('cr-withdraw', className);

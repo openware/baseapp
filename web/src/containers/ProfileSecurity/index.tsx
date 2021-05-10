@@ -94,11 +94,7 @@ class ProfileSecurityComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const {
-            labels,
-            user,
-            currentPasswordEntropy,
-        } = this.props;
+        const { labels, currentPasswordEntropy } = this.props;
 
         const modal = this.state.showChangeModal ? (
             <div className="cr-modal">

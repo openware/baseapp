@@ -44,33 +44,33 @@ const Dispute: FC<Props> = (props: Props): ReactElement => {
         setAttachment(additionalFileList);
     }, []);
 
-    const clickNotReceive = useCallback((e, message) => {
+    const clickNotReceive = useCallback((e, msg) => {
         if (e) {
             e.preventDefault();
             setNotReceive(!notReceive);
             setTooLong(false);
             setAmountDifferent(false);
-            setReason(message);
+            setReason(msg);
         }
     }, [notReceive]);
 
-    const clickTooLong = useCallback((e, message) => {
+    const clickTooLong = useCallback((e, msg) => {
         if (e) {
             e.preventDefault();
             setTooLong(!tooLong);
             setAmountDifferent(false);
             setNotReceive(false);
-            setReason(message);
+            setReason(msg);
         }
     }, [tooLong]);
 
-    const clickAmountDifferent = useCallback((e, message) => {
+    const clickAmountDifferent = useCallback((e, msg) => {
         if (e) {
             e.preventDefault();
             setAmountDifferent(!amountDifferent);
             setTooLong(false);
             setNotReceive(false);
-            setReason(message);
+            setReason(msg);
         }
     }, [amountDifferent]);
 

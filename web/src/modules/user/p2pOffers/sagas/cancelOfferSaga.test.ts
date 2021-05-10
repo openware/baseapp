@@ -65,4 +65,20 @@ describe('P2P CancelOffer', () => {
 
         return promise;
     });
+
+    it('should trigger fetch cancelOffer error', async () => {
+        mockNetworkError(mockAxios);
+        const promise = new Promise(resolve => {
+            store.subscribe(() => {
+                const actions = store.getActions();
+                if (actions.length === expectedP2PCancelOfferActionsError.length) {
+                    expect(actions).toEqual(expectedP2PCancelOfferActionsError);
+                    resolve();
+                }
+            });
+        });
+        store.dispatch(cancelOffer(fakeCancelOfferPayload));
+
+        return promise;
+    });
 });

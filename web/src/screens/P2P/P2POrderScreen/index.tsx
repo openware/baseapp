@@ -40,7 +40,7 @@ export const P2POrderScreen: FC = (): ReactElement => {
         }
     }, [createdOrderSuccess]);
 
-    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
+    const translate = useCallback((key: string) => formatMessage({ id: key }), [formatMessage]);
 
     const title = React.useCallback(() => (order && `${translate(`page.body.p2p.order.transfer.title.${order.side}`)} ${order.offer?.base?.toUpperCase()}`), [order]);
 

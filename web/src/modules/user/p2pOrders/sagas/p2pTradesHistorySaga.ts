@@ -1,7 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { } from '../actions';
 import { buildQueryString } from '../../../../helpers';
 import { p2pTradesHistoryData, p2pTradesHistoryError, P2PTradesHistoryFetch } from '../actions';
 
