@@ -143,7 +143,8 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         } else {
             const available = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
             const low = side === 'buy' ? +lowLimit * +price : lowLimit;
-            const top = side === 'buy' ? +topLimit * +price : topLimit;
+            const topLimit = getTopLimit();
+            const top = side === 'buy' ? topLimit * +price : topLimit;
             const limitsPrecision = side === 'buy' ? pricePrecision : amountPrecision;
             const limitCur = side === 'buy' ? fiatCode : currencyCode;
 
@@ -154,7 +155,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         }
 
         setAmountError(error);
-    }, [lowLimit, topLimit, fiatCode, pricePrecision, side, price, wallets, currencyCode]);
+    }, [lowLimit, fiatCode, pricePrecision, side, price, wallets, currencyCode]);
 
     const definePaymentError = useCallback((pm?: UserPaymentMethod) => {
         let error = '';
@@ -168,15 +169,15 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
 
     const validatePriceRange = useCallback((value: number) => {
         let low = lowLimit;
-        let top = topLimit;
+        let top = getTopLimit();
 
         if (side === 'buy') {
             low = +lowLimit * +price;
-            top = +topLimit * +price
+            top = getTopLimit() * +price
         }
 
         return value >= low && value <= top;
-    }, [lowLimit, topLimit, side]);
+    }, [lowLimit, side]);
 
     const handleSubmitClick = useCallback(() => {
         const available = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
@@ -204,7 +205,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
 
     const handleClickTradeAll = useCallback(() => {
         if (side === 'buy') {
-            const maxLimit = +topLimit * +price;
+            const maxLimit = getTopLimit() * +price;
             if ((+available * +price) < maxLimit) {
                 handleReceiveChange(available.toString());
             } else {
@@ -215,7 +216,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
             setTradeAmount(availableBalance.toString());
         }
         setClickAll(true);
-    }, [side, currencyCode, wallets, available, topLimit, price]);
+    }, [side, currencyCode, wallets, available, price]);
 
     const handleCloseModal = useCallback(() => {
         setClickAll(false);
@@ -314,10 +315,15 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         </React.Fragment>
     ), [side, availablePM, paymentMethod, showError, paymentMethodError]);
 
+    const getTopLimit = useCallback(() => {
+        return +topLimit > +available ? +available : +topLimit;
+    }, [available, topLimit]);
+
     const body = useCallback(() => {
+        const topLimit = getTopLimit();
         const placeHolder = side === 'buy' ? 
-            `${Decimal.format(+lowLimit * +price, pricePrecision, ',')} - ${Decimal.format(+topLimit * +price, pricePrecision, ',')}`
-            : `${Decimal.format(+lowLimit , amountPrecision, ',')} - ${Decimal.format(+topLimit, amountPrecision, ',')}`;
+            `${Decimal.format(+lowLimit * +price, pricePrecision, ',')} - ${Decimal.format(topLimit * +price, pricePrecision, ',')}`
+            : `${Decimal.format(+lowLimit , amountPrecision, ',')} - ${Decimal.format(topLimit, amountPrecision, ',')}`;
 
         return (
             <React.Fragment>
@@ -389,7 +395,6 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         advertiserName,
         price,
         available,
-        topLimit,
         lowLimit,
         timeLimit,
         description,
