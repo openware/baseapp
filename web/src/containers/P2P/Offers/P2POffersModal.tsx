@@ -213,7 +213,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
             }
         } else {
             const availableBalance = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance || 0;
-            setTradeAmount(availableBalance.toString());
+            setTradeAmount(+availableBalance > +available ? available.toString() : availableBalance.toString());
         }
         setClickAll(true);
     }, [side, currencyCode, wallets, available, price]);
