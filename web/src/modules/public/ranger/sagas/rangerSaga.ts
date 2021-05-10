@@ -224,6 +224,8 @@ const initRanger = (
                                 return;
                             }
 
+                            return;
+
                         // private
                         case 'p2p':
                             const p2pOrdersMatch = event && String(event.event).includes('p2p_order');
@@ -241,6 +243,8 @@ const initRanger = (
 
                                 return;
                             }
+
+                            return;
                         default:
                     }
                     window.console.log(`Unhandeled websocket channel: ${routingKey}`);
