@@ -20,7 +20,7 @@ const initialState: InternalTransfersState = {
 export const internalTransfersReducer = (state = initialState, action: CreateInternalTransfersActions) => {
     switch (action.type) {
         case CREATE_INTERNAL_TRANSFERS_FETCH:
-            return { ...state, fetching: true };
+            return { ...state, fetching: true, success: false };
         case CREATE_INTERNAL_TRANSFERS_DATA:
             return {
                 ...state,
