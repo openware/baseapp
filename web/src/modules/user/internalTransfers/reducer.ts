@@ -4,7 +4,6 @@ import {
     CREATE_INTERNAL_TRANSFERS_DATA,
     CREATE_INTERNAL_TRANSFERS_ERROR,
     CREATE_INTERNAL_TRANSFERS_FETCH,
-    CREATE_INTERNAL_TRANSFERS_RESET,
 } from './constants';
 
 export interface InternalTransfersState {
@@ -21,25 +20,21 @@ const initialState: InternalTransfersState = {
 export const internalTransfersReducer = (state = initialState, action: CreateInternalTransfersActions) => {
     switch (action.type) {
         case CREATE_INTERNAL_TRANSFERS_FETCH:
-            return { ...state, fetching: true };
+            return { ...state, fetching: true, success: false };
         case CREATE_INTERNAL_TRANSFERS_DATA:
             return {
                 ...state,
                 success: true,
                 fetching: false,
             };
-        case CREATE_INTERNAL_TRANSFERS_ERROR:
+        case CREATE_INTERNAL_TRANSFERS_ERROR: {
             return {
                 ...state,
                 error: action.error,
                 fetching: false,
                 success: false,
             };
-        case CREATE_INTERNAL_TRANSFERS_RESET: 
-            return {
-                ...state,
-                success: false,
-            };
+        }
         default:
             return state;
     }
