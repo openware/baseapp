@@ -12,14 +12,15 @@ export const pgRoutes = (isLoggedIn: boolean, abilities: AbilitiesInterface, isL
         ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
         ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
         CanCan.checkAbilityByAction('read', 'P2P', abilities) && ['page.header.navbar.p2p', '/p2p', `p2p${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
         ['page.header.navbar.internal.transfer', '/internal-transfer', `internal_transfer${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
     ];
 
     const routesUnloggedIn = [
         ['page.header.navbar.signIn', '/signin', `signin${isLight ? 'Light' : ''}`],
         ['page.header.signUp', '/signup', `signup${isLight ? 'Light' : ''}`],
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
     ];
 
     return isLoggedIn ? routes.filter(i => Boolean(i)) : routesUnloggedIn;
