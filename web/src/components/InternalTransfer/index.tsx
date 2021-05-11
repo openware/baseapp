@@ -14,7 +14,6 @@ import {
     selectUserInfo,
     selectWallets,
     walletsFetch,
-    createInternalTransfersReset,
 } from '../../modules';
 import { InternalTransferInput } from './InternalInput';
 
@@ -31,20 +30,17 @@ export const InternalTransferComponent = () => {
     const [currency, setCurrency] = useState('');
     const [amount, setAmount] = useState('');
     const [otp, setOtp] = useState('');
-    const [clear, setClear] = useState(true);
+    const [clear, setClear] = useState(false);
 
     const [show, setShow] = useState(false);
 
     React.useEffect(() => {
         dispatch(walletsFetch());
-        setClear(false);
     }, []);
 
     React.useEffect(() => {
         if (transferSuccess) {
             handleResetState();
-            setClear(true);
-            dispatch(createInternalTransfersReset());
         }
     }, [transferSuccess]);
 
@@ -68,6 +64,7 @@ export const InternalTransferComponent = () => {
 
         dispatch(createInternalTransfersFetch(payload));
         setShow(false);
+        setClear(false);
     }, [username, otp, amount, currency, dispatch]);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
@@ -82,6 +79,7 @@ export const InternalTransferComponent = () => {
         setCurrency('');
         setAmount('');
         setOtp('');
+        setClear(true);
     }
 
     const renderFooter = useMemo(() => {
