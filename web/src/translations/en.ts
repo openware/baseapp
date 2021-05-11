@@ -404,7 +404,7 @@ export const en = {
     'page.body.profile.apiKeys.noKeys': 'You have no API keys',
 
     'page.body.profile.apiKeys.modal.btn.show': 'Show',
-    'page.body.profile.apiKeys.modal.btn.create': 'Confirm',
+    'page.body.profile.apiKeys.modal.btn.create': 'Create',
     'page.body.profile.apiKeys.modal.btn.copy': 'Copy',
     'page.body.profile.apiKeys.modal.btn.activate': 'Activate',
     'page.body.profile.apiKeys.modal.btn.disabled': 'Disable',
