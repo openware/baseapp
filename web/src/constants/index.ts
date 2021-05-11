@@ -9,13 +9,14 @@ export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => 
         ['page.header.navbar.wallets', '/wallets', `wallets${isLight ? 'Light' : ''}`],
         ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
         ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
         ['page.header.navbar.internal.transfer', '/internal-transfer', `internal_transfer${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
     ];
     const routesUnloggedIn = [
         ['page.header.navbar.signIn', '/signin', `signin${isLight ? 'Light' : ''}`],
         ['page.header.signUp', '/signup', `signup${isLight ? 'Light' : ''}`],
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
+        ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
     ];
 
     return isLoggedIn ? routes : routesUnloggedIn;
