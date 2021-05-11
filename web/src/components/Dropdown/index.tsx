@@ -100,11 +100,19 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
         }
     }, [placeholder, iconsList, defaultPlaceholder, clear]);
 
+    const renderSelectedItem = useMemo(() => {
+        if (selected) {
+            return iconsList ? <div>{selectedIcon}{selected}</div> : selected;
+        }
+
+        return placeholder;
+    }, [iconsList, selected]);
+
     return (
         <div className={cx}>
             <Dropdown>
                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                    {iconsList ? <div>{selectedIcon}{selected}</div> : selected}
+                    {renderSelectedItem}
                     <ChevronIcon className="cr-dropdown__arrow" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
