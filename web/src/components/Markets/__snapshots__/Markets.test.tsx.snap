@@ -748,7 +748,7 @@ exports[`Markets should render empty data 1`] = `
         "page.body.profile.apiKeys.modal.access_key": "Access Key",
         "page.body.profile.apiKeys.modal.btn.activate": "Activate",
         "page.body.profile.apiKeys.modal.btn.copy": "Copy",
-        "page.body.profile.apiKeys.modal.btn.create": "Confirm",
+        "page.body.profile.apiKeys.modal.btn.create": "Create",
         "page.body.profile.apiKeys.modal.btn.delete": "Delete",
         "page.body.profile.apiKeys.modal.btn.disabled": "Disable",
         "page.body.profile.apiKeys.modal.btn.show": "Show",
