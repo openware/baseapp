@@ -412,7 +412,7 @@ export const ru: LangType = {
     'page.body.profile.apiKeys.noKeys': 'У Вас нет API ключей',
 
     'page.body.profile.apiKeys.modal.btn.show': 'Показать',
-    'page.body.profile.apiKeys.modal.btn.create': 'Подтвердить',
+    'page.body.profile.apiKeys.modal.btn.create': 'Создать',
     'page.body.profile.apiKeys.modal.btn.copy': 'Копировать',
     'page.body.profile.apiKeys.modal.btn.activate': 'Активировать',
     'page.body.profile.apiKeys.modal.btn.disabled': 'Откл.',
