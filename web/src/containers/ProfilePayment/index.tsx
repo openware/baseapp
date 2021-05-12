@@ -20,10 +20,11 @@ import { HOST_URL } from 'src/constants';
 
 export interface PaymentOptionInterface {
     key: string;
+    type: string;
     name?: string;
     description?: string;
     required: boolean;
-    options: string[];
+    options: any[];
     value?: string;
     flag?: boolean;
 }
