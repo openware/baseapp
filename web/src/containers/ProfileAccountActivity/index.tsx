@@ -53,7 +53,7 @@ class ProfileAccountActivityComponent extends React.Component<Props> {
         return (
             <div className="pg-profile-page__activity">
                 <div className="pg-profile-page-header">
-                    <h3><FormattedMessage id="page.body.profile.header.accountActivity" /></h3>
+                    <FormattedMessage id="page.body.profile.header.accountActivity" />
                 </div>
                 <div className={`pg-history-elem ${userActivity.length ? '' : 'pg-history-empty'}`}>
                     {userActivity.length ? this.renderContent() : null}

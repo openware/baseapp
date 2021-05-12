@@ -1,0 +1,41 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+[
+  {
+    "id": "31",
+    "payment_method_id": 1,
+    "payment_method": { "name": "Kasikon Bank", "type": "Bank Transfer" },
+    "data": {
+      "bank_name": "Monobank",
+      "name": "Alice",
+      "account_number": "09-1023-1222-1"
+    }
+  },
+  {
+    "id": "32",
+    "payment_method_id": 2,
+    "payment_method": { "name": "Card", "type": "Debit/Credit Card" },
+    "data": {
+      "expiry": "12/27",
+      "card_company": "Citi Card",
+      "holder_name": "John Wick",
+      "card_number": "1234-1111-2222-3333"
+    }
+  },
+    {
+    "id": "33",
+    "payment_method_id": 3,
+    "payment_method": { "name": "Monobank", "type": "Debit/Credit Card" },
+    "data": {
+      "expiry": "12/27",
+      "card_company": "Universal bank",
+      "holder_name": "Lara Croft",
+      "card_number": "0000-1111-2222-3333"
+    }
+  }
+]

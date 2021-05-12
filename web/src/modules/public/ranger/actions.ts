@@ -19,6 +19,7 @@ export interface RangerConnectFetch {
     type: typeof RANGER_CONNECT_FETCH;
     payload: {
         withAuth: boolean;
+        withP2P?: boolean;
     };
 }
 

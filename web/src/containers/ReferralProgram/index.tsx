@@ -40,18 +40,24 @@ class ReferralProgramClass extends React.Component<Props> {
         const referralLink = `${window.document.location.origin}/signup?refid=${user.uid}`;
 
         return (
-            <div className="pg-profile-page__referral mb-3">
-                <fieldset className="pg-copyable-text__section" onClick={this.doCopy}>
-                    <legend className="cr-deposit-crypto__copyable-title">
-                        <FormattedMessage id="page.body.profile.header.referralProgram"/>
-                    </legend>
-                    <CopyableTextField
-                        className="pg-copyable-text-field__input"
-                        value={referralLink}
-                        fieldId="referral-id"
-                        copyButtonText={this.translate('page.body.profile.content.copyLink')}
-                    />
-                </fieldset>
+            <div className="pg-profile-page__referral">
+                <div className="pg-profile-page-header">{this.props.intl.formatMessage({id: 'page.body.profile.tabs.referral'})}</div>
+                <div className="pg-profile-page__box">
+                    <h2>{this.props.intl.formatMessage({id: 'page.body.profile.referral.invite'})}</h2>
+                    <h2>{this.props.intl.formatMessage({id: 'page.body.profile.referral.earn'})}</h2>
+                    <p>{this.props.intl.formatMessage({id: 'page.body.profile.referral.commission'})}</p>
+                    <fieldset className="pg-copyable-text__section" onClick={this.doCopy}>
+                        <legend className="cr-deposit-crypto__copyable-title">
+                            <FormattedMessage id="page.body.profile.header.referralProgram"/>
+                        </legend>
+                        <CopyableTextField
+                            className="pg-copyable-text-field__input"
+                            value={referralLink}
+                            fieldId="referral-id"
+                            copyButtonText={this.translate('page.body.profile.content.copyLink')}
+                        />
+                    </fieldset>
+                </div>
             </div>
         );
     }

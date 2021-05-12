@@ -6,6 +6,7 @@ import {
     PriceValidation,
     validatePriceStep,
 } from '../../filters';
+import { AMOUNT_PERCENTAGE_ARRAY } from '../../constants';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 import { OrderInput as OrderInputMobile } from '../../mobile/components';
 import { Decimal } from '../Decimal';
@@ -161,7 +162,6 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
 
         const total = orderType === 'Market'
             ? totalPrice : safeAmount * (Number(price) || 0);
-        const amountPercentageArray = [0.25, 0.5, 0.75, 1];
 
         const availablePrecision = type === 'buy' ? currentMarketBidPrecision : currentMarketAskPrecision;
         const availableCurrency = type === 'buy' ? from : to;
@@ -256,7 +256,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 <div className="cr-order-item">
                     <div className="cr-order-item__percentage-buttons">
                         {
-                            amountPercentageArray.map((value, index) => <PercentageButton
+                            AMOUNT_PERCENTAGE_ARRAY.map((value, index) => <PercentageButton
                                 value={value}
                                 key={index}
                                 onClick={this.handleChangeAmountByButton}

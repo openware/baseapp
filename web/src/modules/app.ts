@@ -14,6 +14,7 @@ import { depthReducer, incrementDepthReducer, orderBookReducer } from './public/
 import { rangerReducer  } from './public/ranger/reducer';
 import { recentTradesReducer  } from './public/recentTrades';
 import { apiKeysReducer } from './user/apiKeys';
+import { abilitiesReducer } from './user/abilities';
 import { authReducer  } from './user/auth';
 import { beneficiariesReducer } from './user/beneficiaries';
 import { getGeetestCaptchaReducer } from './user/captcha';
@@ -39,6 +40,12 @@ import { withdrawLimitReducer  } from './user/withdrawLimit';
 import { marketsAdminReducer } from './admin/markets';
 import { platformCreateReducer } from './admin/platform';
 import { quickExchangeReducer } from './user/quickExchange';
+import { p2pReducer } from './public/p2p';
+import { paymentMethodReducer } from './user/paymentMethod';
+import { p2pOffersReducer } from './user/p2pOffers';
+import { p2pTransfersReducer } from './user/p2pTransfers';
+import { p2pOrdersReducer } from './user/p2pOrders';
+import { p2pDisputeReducer } from './user/p2pDispute';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,
@@ -56,6 +63,7 @@ export const publicReducer = combineReducers({
     incrementDepth: incrementDepthReducer,
     ranger: rangerReducer,
     recentTrades: recentTradesReducer,
+    p2p: p2pReducer,
 });
 
 export const userReducer = combineReducers({
@@ -81,6 +89,12 @@ export const userReducer = combineReducers({
     withdrawLimit: withdrawLimitReducer,
     internalTransfers: internalTransfersReducer,
     quickExchange: quickExchangeReducer,
+    abilities: abilitiesReducer,
+    paymentMethod: paymentMethodReducer,
+    p2pOffers: p2pOffersReducer,
+    p2pTransfers: p2pTransfersReducer,
+    p2pOrders: p2pOrdersReducer,
+    p2pDispute: p2pDisputeReducer,
 });
 
 export const adminReducer = combineReducers({

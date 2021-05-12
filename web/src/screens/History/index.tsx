@@ -10,13 +10,21 @@ import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { TabPanel } from '../../components';
 import { HistoryElement } from '../../containers/HistoryElement';
+import { CanCan } from '../../containers';
 import { setDocumentTitle } from '../../helpers';
 import {
     fetchHistory,
     marketsFetch,
     resetHistory,
     walletsFetch,
+    RootState,
+    selectAbilities,
+    AbilitiesInterface,
 } from '../../modules';
+
+interface ReduxProps {
+    abilities: AbilitiesInterface;
+}
 
 interface DispatchProps {
     resetHistory: typeof resetHistory;
@@ -25,7 +33,7 @@ interface DispatchProps {
     fetchHistory: typeof fetchHistory;
 }
 
-type Props = DispatchProps & IntlProps;
+type Props = DispatchProps & IntlProps & ReduxProps;
 
 interface State {
     tab: string;
@@ -38,7 +46,9 @@ class History extends React.Component<Props, State> {
         currentTabIndex: 0,
     };
 
-    public tabMapping = ['deposits', 'withdraws', 'trades', 'transfers'];
+    public tabMapping = CanCan.checkAbilityByAction('read', 'QuickExchange', this.props.abilities)
+        ? ['deposits', 'withdraws', 'trades', 'transfers', 'quick_exchange']
+        : ['deposits', 'withdraws', 'trades', 'transfers'];
 
     public componentDidMount() {
         setDocumentTitle('History');
@@ -78,7 +88,12 @@ class History extends React.Component<Props, State> {
     private renderTabs = () => {
         const { tab } = this.state;
 
-        return [
+        const quickExchange = {
+            content: tab === 'quick_exchange' ? <HistoryElement type="quick_exchange" /> : null,
+            label: this.props.intl.formatMessage({id: 'page.body.history.quick'}),
+        };
+
+        const tabs = [
             {
                 content: tab === 'deposits' ? <HistoryElement type="deposits" /> : null,
                 label: this.props.intl.formatMessage({id: 'page.body.history.deposit'}),
@@ -96,8 +111,18 @@ class History extends React.Component<Props, State> {
                 label: this.props.intl.formatMessage({id: 'page.body.history.transfer'}),
             },
         ];
+
+        if (CanCan.checkAbilityByAction('read', 'QuickExchange', this.props.abilities)) {
+            tabs.push(quickExchange);
+        }
+
+        return tabs;
     };
 }
+
+const mapStateToProps = (state: RootState): ReduxProps => ({
+    abilities: selectAbilities(state),
+});
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     fetchMarkets: () => dispatch(marketsFetch()),
@@ -108,5 +133,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispat
 
 export const HistoryScreen = compose(
     injectIntl,
-    connect(null, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps),
 )(History) as React.ComponentClass;

@@ -3,7 +3,7 @@
 
 :root {
   /* typography */
-  --font-family: roboto, helvetica, sans-serif;
+  --font-family: 'IBM Plex Sans', sans-serif;
   --font-weight: normal;
   --font-size: 12px !important;
   --font-size-smaller: calc(var(--font-size) * 0.9);
@@ -38,6 +38,11 @@ input[type=button] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+  background: none;
 }
 
 .cr-title-component {
@@ -80,13 +85,6 @@ input[type=button] {
     }
   }
 
-  thead th {
-    background: var(--table-background-color);
-    position: sticky;
-    top: calc(var(--gap) * 6);
-    z-index: 9999;
-  }
-
   td {
     font-weight: normal;
     line-height: 16px;
@@ -94,7 +92,7 @@ input[type=button] {
 
   td,
   th {
-    font-size: 0.8em !important;
+    font-size: 0.8em;
     padding: 6px 12px;
   }
 
@@ -105,7 +103,7 @@ input[type=button] {
 
   &__head {
     th {
-      font-size: 1em !important;
+      font-size: 1em;
     }
 
     th:last-child {
@@ -125,9 +123,9 @@ input[type=button] {
 
     td {
       background: transparent;
-      font-size: 1em !important;
-      padding-bottom: calc(var(--gap) * 1.38) !important;
-      padding-top: calc(var(--gap) * 1.38) !important;
+      font-size: 1em;
+      padding-bottom: calc(var(--gap) * 1.38);
+      padding-top: calc(var(--gap) * 1.38);
     }
   }
 }
@@ -323,7 +321,8 @@ input:-webkit-autofill {
     box-shadow: none;
     color: var(--tab-panel-text-color);
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 12px;
+    font-weight: 600;
     padding-bottom: calc(var(--border-radius) * 2);
     padding-top: 14px;
     text-transform: none;
@@ -331,7 +330,7 @@ input:-webkit-autofill {
 
     &__pointer {
       background: none;
-      height: 2px;
+      height: 3px;
     }
 
     &__active {
@@ -348,6 +347,47 @@ input:-webkit-autofill {
   opacity: 1;
 }
 
+.custom-control {
+  &-label {
+    margin-left: 12px;
+    font-size: 12px;
+    color: var(--primary-text-color);
+  }
+
+  &-label::before {
+    background-color: var(--input-background-color);
+    border-color: var(--input-border-color);
+    height: 20px;
+    margin-right: calc(var(--gap) * 3);
+    top: -1px;
+    transition: 0.2s;
+    width: 20px;
+    left: -30px;
+  }
+
+  &-input:checked ~ .custom-control-label::before {
+    background-color: var(--input-checkbox-background-color-active);
+    border-color: var(--input-border-color-active);
+    transition: 0.2s;
+  }
+
+  &-input {
+    &:focus ~ .custom-control-label {
+      &::before {
+        border-color: var(--input-border-color-active);
+        box-shadow: 0 0 0 0.2rem var(--input-checkbox-shadow-color-active);
+      }
+    }
+  }
+
+  &-label::after {
+    height: 20px;
+    top: -1px;
+    left: -30px;
+    width: 20px;
+  }
+}
+
 @media screen and (min-width: 768px) and (max-width: 992px) {
   .cr-table {
     &__head tr th {
@@ -362,4 +402,10 @@ input:-webkit-autofill {
       top: calc(var(--gap) * 7.3);
     }
   }
+}
+
+.payment-method-logo {
+  max-height: 18px;
+  max-width: 18px;
+  object-fit: contain;
 }

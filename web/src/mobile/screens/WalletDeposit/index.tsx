@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import {
     useCurrenciesFetch,
-    useRangerConnectFetch,
     useWalletsFetch,
 } from '../../../hooks';
 import {
@@ -24,7 +23,6 @@ const WalletDeposit: React.FC = () => {
 
     useCurrenciesFetch();
     useWalletsFetch();
-    useRangerConnectFetch();
 
     const defaultWallet: Wallet = {
         name: '',
@@ -33,6 +31,7 @@ const WalletDeposit: React.FC = () => {
         type: 'coin',
         fixed: 0,
         fee: 0,
+        account_type: '',
     };
 
     const wallet: Wallet = wallets.find(item => item.currency === currency) || defaultWallet;

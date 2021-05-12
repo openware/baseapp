@@ -9,7 +9,8 @@ import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { minutesUntilAutoLogout, sessionCheckInterval, showLanding, wizardStep } from '../../api';
 import { ExpiredSessionModal } from '../../components';
-import { WalletsFetch } from '../../containers';
+import { WalletsFetch, CanCan } from '../../containers';
+import { P2PTradesHistory } from '../../containers/P2P/TradesHistory';
 import { applyCustomizationSettings, toggleColorTheme } from '../../helpers';
 import {
     ChangeForgottenPasswordMobileScreen,
@@ -49,6 +50,8 @@ import {
     User,
     userFetch,
     walletsReset,
+    AbilitiesInterface,
+    selectAbilities,
 } from '../../modules';
 import {
     ChangeForgottenPasswordScreen,
@@ -72,6 +75,10 @@ import {
     WalletsScreen,
     SetupScreen,
     QuickExchange,
+    P2POffersScreen,
+    P2PUserOffersScreen,
+    CreateP2POfferScreen,
+    P2POrderScreen,
 } from '../../screens';
 
 interface ReduxProps {
@@ -82,6 +89,7 @@ interface ReduxProps {
     isMobileDevice: boolean;
     userLoading?: boolean;
     platformAccessStatus: string;
+    abilities: AbilitiesInterface;
 }
 
 interface DispatchProps {
@@ -122,6 +130,16 @@ const PrivateRoute: React.FunctionComponent<any> = ({ component: CustomComponent
     const renderCustomerComponent = props => <CustomComponent {...props} />;
 
     if (isLogged) {
+        const { checkAbility, abilities, action, target } = rest;
+
+        if (checkAbility && !CanCan.checkAbilityByAction(action, target, abilities)) {
+            return (
+                <Route path="**">
+                    <Redirect to="/" />
+                </Route>
+            );
+        }
+
         return <Route {...rest} render={renderCustomerComponent} />;
     }
 
@@ -326,12 +344,23 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/orders" component={OrdersTabScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/history" component={HistoryScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/confirm" component={ConfirmScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile/:routeTab" component={ProfileScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets/:routeTab/:currency/:action" component={WalletsScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets/:routeTab/:currency" component={WalletsScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets/:routeTab" component={WalletsScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
                     <PrivateRoute exact={true} loading={userLoading} isLogged={isLoggedIn} path="/docs" component={DocumentationScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/internal-transfer" component={InternalTransfer} />
-                    <Route path="/quick-exchange" component={QuickExchange} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/quick-exchange" component={QuickExchange} checkAbility={true} abilities={this.props.abilities} action="read" target="QuickExchange" />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/create-offer" component={CreateP2POfferScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/offers" component={P2PUserOffersScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/offer/:id" component={P2PUserOffersScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/history" component={P2PTradesHistory} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/order/:id" component={P2POrderScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/:currency" component={P2POffersScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p" component={P2POffersScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}
@@ -414,6 +443,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     isMobileDevice: selectMobileDeviceState(state),
     userLoading: selectUserFetching(state),
     platformAccessStatus: selectPlatformAccessStatus(state),
+    abilities: selectAbilities(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({

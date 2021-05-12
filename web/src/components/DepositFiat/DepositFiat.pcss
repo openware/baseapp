@@ -2,31 +2,28 @@
   padding: calc(var(--gap) * 3) calc(var(--gap) * 3);
 
   &__title {
-    font-size: 1.2em;
-    margin-bottom: calc(var(--gap) * 3);
+    color: var(--primary-text-color);
+    font-size: 20px;
+    margin-bottom: 12px;
   }
 
   &__description {
-    margin-bottom: calc(var(--gap) * 3);
-  }
-
-  &-credentials {
-    position: relative;
-    width: 60%;
+    color: var(--secondary-contrast-cta-color);
+    font-size: 16px;
+    margin-bottom: 24px;
   }
 
   &-detail {
-    display: flex;
-
-    &__label,
-    &__value {
-      flex: 1;
-      margin-top: calc(var(--gap) * 2);
+    &__label {
+      color: var(--secondary-contrast-cta-color);
+      font-size: 14px;
+      margin: 0;
     }
 
-    &__label {
-      color: var(--base-2);
-      margin-right: calc(var(--gap) * 2);
+    &__value {
+      color: var(--primary-text-color);
+      font-size: 16px;
+      margin-bottom: 12px;
     }
   }
 }

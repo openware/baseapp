@@ -11,6 +11,10 @@ export interface HistoryProps {
      * List of headers for history table
      */
     headers?: string[];
+    /**
+     * Callback called when a row is selected
+     */
+     onSelect?: (key: string) => void;
 }
 
 export class History extends React.PureComponent<HistoryProps> {
@@ -18,7 +22,7 @@ export class History extends React.PureComponent<HistoryProps> {
     private title = 'Trades History';
 
     public render() {
-        const { headers = this.defaultHeaders } = this.props;
+        const { headers = this.defaultHeaders, onSelect } = this.props;
         const tableData = this.props.data.map(row => row.map(this.mapRows));
 
         return (
@@ -26,6 +30,7 @@ export class History extends React.PureComponent<HistoryProps> {
                 data={tableData}
                 header={headers}
                 titleComponent={this.title}
+                onSelect={onSelect}
             />
         );
     }

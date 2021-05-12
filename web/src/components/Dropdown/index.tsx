@@ -12,6 +12,10 @@ export interface DropdownComponentProps {
      */
     list: DropdownElem[];
     /**
+     * List of options
+     */
+    iconsList?: React.ReactNode[];
+    /**
      * Selection callback function
      * @default empty
      */
@@ -47,8 +51,9 @@ export interface DropdownComponentProps {
 
 export const DropdownComponent = (props: DropdownComponentProps) => {
     const [selected, setSelected] = useState<string | undefined>('');
+    const [selectedIcon, setSelectedIcon] = useState<React.ReactNode | undefined>('');
 
-    const { list, className, placeholder, clear, onSelect } = props;
+    const { list, className, placeholder, clear, iconsList, onSelect } = props;
     const defaultPlaceholder = list[0];
 
     const cx = useMemo(() => classnames('cr-dropdown', className, {
@@ -64,15 +69,18 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
     useEffect(() => {
         if (typeof props.selectedValue !== 'undefined' && props.selectedValue !== '') {
             setSelected(props.selectedValue);
+            iconsList && setSelectedIcon(iconsList[list.indexOf(props.selectedValue)]);
         } else if (props.selectedValue === '') {
             setSelected(placeholder || convertToString(defaultPlaceholder));
+            iconsList && setSelectedIcon(iconsList[list.indexOf(props.selectedValue)]);
         }
-    }, [props.selectedValue]);
+    }, [iconsList, props.selectedValue]);
 
     const handleSelect = useCallback((elem: DropdownElem, index: number) => {
         onSelect && onSelect(index);
         setSelected(convertToString(elem));
-    }, [list, selected, onSelect]);
+        iconsList && setSelectedIcon(iconsList[index]);
+    }, [iconsList, onSelect]);
 
     const renderElem = useCallback((elem: DropdownElem, index: number) => {
         return  (
@@ -80,16 +88,23 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
                 key={index}
                 onSelect={() => handleSelect(elem, index)}
             >
-                {elem}
+                {iconsList ? <div>{iconsList[index]}{elem}</div> : elem}
             </Dropdown.Item>
         );
-    }, [handleSelect]);
+    }, [iconsList, handleSelect]);
+
+    useEffect(() => {
+        if (clear !== false) {
+            setSelected(placeholder || convertToString(defaultPlaceholder));
+            iconsList && setSelectedIcon(iconsList[list.indexOf(placeholder)]);
+        }
+    }, [placeholder, iconsList, defaultPlaceholder, clear]);
 
     return (
         <div className={cx}>
             <Dropdown>
                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                    {selected}
+                    {iconsList ? <div>{selectedIcon}{selected}</div> : selected}
                     <ChevronIcon className="cr-dropdown__arrow" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

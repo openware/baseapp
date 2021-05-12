@@ -14,6 +14,7 @@ const mockConfig: Config = {
         applogicUrl: '/api/v2/applogic',
         rangerUrl: '/api/v2/ranger',
         finexUrl: '/api/v2/finex',
+        p2pUrl: '/api/v2/p2p',
     },
     finex: false,
     withCredentials: false,
@@ -31,6 +32,8 @@ const mockConfig: Config = {
     sessionCheckInterval: '15000',
     balancesFetchInterval: '3000',
     passwordEntropyStep: '14',
+    password_min_entropy: '',
+    captcha_type: 'none',
     storage: {
         defaultStorageLimit: '50',
         orderBookSideLimit: '25'
@@ -42,7 +45,7 @@ const mockConfig: Config = {
         'profile',
         'document',
         'address'
-    ]
+    ],
 };
 
 // tslint:disable no-any no-console

@@ -9,7 +9,7 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
     "level": 2,
     "otp": true,
     "role": "superadmin",
-    "state": "",
+    "state": "active",
     "uid": "ID787E383938",
     "csrf_token": "31415926535897932384626433832795028841971",
     "data":"{\"language\":\"en\"}",

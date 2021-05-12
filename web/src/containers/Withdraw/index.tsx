@@ -13,7 +13,7 @@ import { Beneficiary } from '../../modules';
 export interface WithdrawProps {
     currency: string;
     fee: number;
-    onClick: (amount: string, total: string, beneficiary: Beneficiary, otpCode: string) => void;
+    onClick: (amount: string, total: string, beneficiary: Beneficiary, otpCode: string, fee: string) => void;
     fixed: number;
     className?: string;
     type: 'fiat' | 'coin';
@@ -85,7 +85,6 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             withdrawFeeLabel,
             withdrawTotalLabel,
             withdrawButtonLabel,
-            isMobileDevice,
         } = this.props;
 
         const cx = classnames('cr-withdraw', className);
@@ -121,7 +120,6 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                         />
                     </div>
                     <div className={lastDividerClassName} />
-                    {!isMobileDevice && twoFactorAuthRequired && this.renderOtpCodeInput()}
                 </div>
                 <div className="cr-withdraw-column">
                     <div>
@@ -136,7 +134,6 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             content={this.renderTotal()}
                         />
                     </div>
-                    {isMobileDevice && twoFactorAuthRequired && this.renderOtpCodeInput()}
                     <div className="cr-withdraw__deep">
                         <Button
                             variant="primary"
@@ -155,7 +152,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     private handleCheckButtonDisabled = (total: string, beneficiary: Beneficiary, otpCode: string) => {
         const isPending = beneficiary.state && beneficiary.state.toLowerCase() === 'pending';
 
-        return Number(total) <= 0 || !Boolean(beneficiary.id) || isPending || !Boolean(otpCode);
+        return Number(total) <= 0 || !Boolean(beneficiary.id) || isPending;
     };
 
     private renderFee = () => {
@@ -179,39 +176,12 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         ) : <span>0 {currency.toUpperCase()}</span>;
     };
 
-    private renderOtpCodeInput = () => {
-        const { otpCode, withdrawCodeFocused } = this.state;
-        const { withdraw2faLabel } = this.props;
-        const withdrawCodeClass = classnames('cr-withdraw__group__code', {
-          'cr-withdraw__group__code--focused': withdrawCodeFocused,
-        });
-
-        return (
-            <React.Fragment>
-              <div className={withdrawCodeClass}>
-                  <CustomInput
-                      type="number"
-                      label={withdraw2faLabel || '2FA code'}
-                      placeholder={withdraw2faLabel || '2FA code'}
-                      defaultLabel="2FA code"
-                      handleChangeInput={this.handleChangeInputOtpCode}
-                      inputValue={otpCode}
-                      handleFocusInput={() => this.handleFieldFocus('code')}
-                      classNameLabel="cr-withdraw__label"
-                      classNameInput="cr-withdraw__input"
-                      autoFocus={false}
-                  />
-              </div>
-              <div className="cr-withdraw__divider cr-withdraw__divider-two" />
-            </React.Fragment>
-        );
-    };
-
     private handleClick = () => this.props.onClick(
         this.state.amount,
         this.state.total,
         this.state.beneficiary,
         this.state.otpCode,
+        this.props.fee.toString(),
     );
 
     private handleFieldFocus = (field: string) => {

@@ -8,7 +8,8 @@ import { selectCurrencies, selectMarkets, selectMarketTickers, selectWallets } f
 
 const EstimatedValueMobile = React.memo(() => {
     const intl = useIntl();
-    const wallets = useSelector(selectWallets);
+
+    const wallets = useSelector(selectWallets) || [];
     const markets = useSelector(selectMarkets);
     const currencies = useSelector(selectCurrencies);
     const tickers = useSelector(selectMarketTickers);

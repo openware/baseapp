@@ -22,10 +22,10 @@ describe('Constants', () => {
     });
 
     it('Rendering correct correct routes if user is not logged in', () => {
-        expect(pgRoutes(false)).toEqual(expectedRoutesForNotLoggedInUser);
+        expect(pgRoutes(false, true)).toEqual(expectedRoutesForNotLoggedInUser);
     });
 
     it('Rendering correct correct routes if user is not logged in', () => {
-        expect(pgRoutes(true)).toEqual(expectedRoutesForLoggedInUser);
+        expect(pgRoutes(true, false)).toEqual(expectedRoutesForLoggedInUser);
     });
 });

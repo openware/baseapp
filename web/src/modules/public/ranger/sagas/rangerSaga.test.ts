@@ -48,6 +48,7 @@ describe('Ranger module', () => {
                 applogicUrl: '',
                 rangerUrl: `ws://localhost:${echoServerPort}`,
                 finexUrl: '',
+                p2pUrl: '',
             }
         };
     });

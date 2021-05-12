@@ -1,0 +1,139 @@
+HTTP/2 201
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers: content-type, x-csrf-token
+
+{
+    "id": 1,
+    "user_uid": "ID787E383938",
+    "offer_id": 55,
+    "payment_method_id": 27,
+    "amount": "18.18",
+    "locked": "18.18",
+    "state": "prepared",
+    "side": "buy",
+    "first_approve_expire_at": "2021-04-27T16:33:15.266Z",
+    "second_approve_expire_at": "2021-04-27T16:48:15.266Z",
+    "created_at": "2021-04-27T16:18:15.266Z",
+    "updated_at": "2021-04-27T16:18:15.266Z",
+    "payment_method": {
+        "id": 27,
+        "user_uid": "ID04D2A6C3F5",
+        "payment_method_id": 1,
+        "data": {
+            "card_number": "1000000000000"
+        },
+        "state": "active",
+        "created_at": "2021-04-23T08:13:17.418Z",
+        "updated_at": "2021-04-23T08:13:17.418Z",
+        "payment_method": {
+            "id": 1,
+            "type": "Bank Transfer",
+            "name": "Privat",
+            "options": {
+                "card_number": {
+                    "name": "Card Number",
+                    "type": "short_answer",
+                    "required": true,
+                    "description": ""
+                }
+            },
+            "enabled": true,
+            "created_at": "2021-04-21T11:40:53.251Z",
+            "updated_at": "2021-04-22T16:55:04.845Z"
+        }
+    },
+    "offer": {
+        "id": 55,
+        "uid": "ID787E383938",
+        "base": "usdt",
+        "quote": "usd",
+        "side": "sell",
+        "price": "1.1",
+        "origin_amount": "100",
+        "available_amount": "81.82",
+        "min_order_amount": "18.18",
+        "max_order_amount": "27.27",
+        "time_limit": 900,
+        "state": "wait",
+        "description": "",
+        "reply": "",
+        "orders_count": 1,
+        "payment_methods": [
+            {
+                "id": 27,
+                "user_uid": "ID04D2A6C3F5",
+                "payment_method_id": 1,
+                "data": {
+                    "card_number": "4112459634234234"
+                },
+                "state": "active",
+                "created_at": "2021-04-23T08:13:17.418Z",
+                "updated_at": "2021-04-23T08:13:17.418Z",
+                "payment_method": {
+                    "id": 1,
+                    "type": "Bank Transfer",
+                    "name": "MonoBank",
+                    "options": {
+                        "card_number": {
+                            "name": "Card Number",
+                            "type": "short_answer",
+                            "required": true,
+                            "description": ""
+                        }
+                    },
+                    "enabled": true,
+                    "created_at": "2021-04-21T11:40:53.251Z",
+                    "updated_at": "2021-04-22T16:55:04.845Z"
+                }
+            },
+            {
+                "id": 28,
+                "user_uid": "ID04D2A6C3F5",
+                "payment_method_id": 5,
+                "data": {
+                    "your_name": "",
+                    "bank_name_": "privat"
+                },
+                "state": "active",
+                "created_at": "2021-04-23T09:02:52.179Z",
+                "updated_at": "2021-04-23T09:02:52.179Z",
+                "payment_method": {
+                    "id": 5,
+                    "type": "Bank Transfer",
+                    "name": "test",
+                    "options": {
+                        "your_name": {
+                            "name": "your name",
+                            "type": "short_answer",
+                            "required": false,
+                            "description": ""
+                        },
+                        "bank_name_": {
+                            "name": "bank name ",
+                            "type": "short_answer",
+                            "required": true,
+                            "description": ""
+                        }
+                    },
+                    "enabled": true,
+                    "created_at": "2021-04-23T09:02:28.463Z",
+                    "updated_at": "2021-04-23T09:02:28.463Z"
+                }
+            }
+        ],
+        "orders": null,
+        "user": {
+            "user_uid": "ID04D2A6C3F5",
+            "user_user": "mnaichuk@openware.com",
+            "user_nickname": "mnaichuk",
+            "offers_count": 20,
+            "success_rate": 0
+        },
+        "created_at": "2021-04-27T16:17:48.157Z",
+        "updated_at": "2021-04-27T16:18:15.27Z"
+    }
+}

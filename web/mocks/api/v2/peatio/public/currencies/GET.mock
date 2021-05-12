@@ -93,23 +93,6 @@ Access-Control-Allow-Credentials: true
     "precision": 8
   },
   {
-    "id": "trst",
-    "name": "WeTrust",
-    "symbol": "Ξ",
-    "explorer_transaction": "https://rinkeby.etherscan.io/tx/#{txid}",
-    "explorer_address": "https://rinkeby.etherscan.io/address/#{address}",
-    "type": "coin",
-    "min_confirmations": 5,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.02",
-    "withdraw_limit_24h": "300.0",
-    "withdraw_limit_72h": "600.0",
-    "deposit_enabled": false,
-    "withdrawal_enabled": true,
-    "base_factor": 1000000,
-    "precision": 8
-  },
-  {
     "id": "usd",
     "name": "US Dollar",
     "symbol": "$",
@@ -142,6 +125,40 @@ Access-Control-Allow-Credentials: true
     "precision": 8
   },
   {
+    "id": "ngnt",
+    "name": "NGNT",
+    "symbol": "ꭆ",
+    "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
+    "explorer_address": "https://bithomp.com/explorer/#{address}",
+    "type": "coin",
+    "min_confirmations": 5,
+    "deposit_fee": "0.0",
+    "withdraw_fee": "0.02",
+    "withdraw_limit_24h": "100.0",
+    "withdraw_limit_72h": "200.0",
+    "deposit_enabled": true,
+    "withdrawal_enabled": false,
+    "base_factor": 1000000,
+    "precision": 4
+  },
+  {
+    "id": "usdt",
+    "name": "Tether",
+    "symbol": "ꭆ",
+    "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
+    "explorer_address": "https://bithomp.com/explorer/#{address}",
+    "type": "coin",
+    "min_confirmations": 5,
+    "deposit_fee": "0.0",
+    "withdraw_fee": "0.02",
+    "withdraw_limit_24h": "100.0",
+    "withdraw_limit_72h": "200.0",
+    "deposit_enabled": true,
+    "withdrawal_enabled": false,
+    "base_factor": 1000000,
+    "precision": 4
+  },
+  {
     "id": "zar",
     "name": "ZAR",
     "symbol": "$",
@@ -168,6 +185,20 @@ Access-Control-Allow-Credentials: true
     "withdraw_limit_72h": "1000000.0",
     "deposit_enabled": false,
     "withdrawal_enabled": false,
+    "base_factor": 1,
+    "precision": 2
+  },
+  {
+    "id": "ngn",
+    "name": "NGN",
+    "type": "fiat",
+    "min_confirmations": 4,
+    "deposit_fee": "0.0",
+    "withdraw_fee": "0.01",
+    "withdraw_limit_24h": "100.0",
+    "withdraw_limit_72h": "200.0",
+    "deposit_enabled": true,
+    "withdrawal_enabled": true,
     "base_factor": 1,
     "precision": 2
   }

@@ -15,6 +15,20 @@ module.exports = {
             "price_change_percent": "+0.08%"
         }
     },
+    "btcusd": {
+        "at": ts,
+        "ticker": {
+            "amount": "60.0",
+            "buy": "59100.0",
+            "sell": "59200.0",
+            "low": "58500.0",
+            "high": "60000.0",
+            "last": "58500.0",
+            "volume": "120.0",
+            "open": 58500.0,
+            "price_change_percent": "+0.08%"
+        }
+    },
     "bchbtc": {
         "at": ts,
         "ticker": {

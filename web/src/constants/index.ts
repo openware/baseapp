@@ -1,27 +1,32 @@
+import { CanCan } from 'src/containers';
+import { AbilitiesInterface } from 'src/modules';
 import { DropdownElem } from '../components/Order';
 
 export const PG_TITLE_PREFIX = 'Cryptobase';
 
-export const pgRoutes = (isLoggedIn: boolean, isLight?: boolean): string[][] => {
+export const pgRoutes = (isLoggedIn: boolean, abilities: AbilitiesInterface, isLight?: boolean): string[][] => {
     const routes = [
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
-        ['page.header.navbar.quick.exchange', '/quick-exchange', `quick_exchange${isLight ? 'Light' : ''}`],
+        CanCan.checkAbilityByAction('read', 'QuickExchange', abilities) && ['page.header.navbar.quick.exchange', '/quick-exchange', `quick_exchange${isLight ? 'Light' : ''}`],
         ['page.header.navbar.wallets', '/wallets', `wallets${isLight ? 'Light' : ''}`],
         ['page.header.navbar.openOrders', '/orders', `orders${isLight ? 'Light' : ''}`],
         ['page.header.navbar.history', '/history', `history${isLight ? 'Light' : ''}`],
+        CanCan.checkAbilityByAction('read', 'P2P', abilities) && ['page.header.navbar.p2p', '/p2p', `p2p${isLight ? 'Light' : ''}`],
         ['page.header.navbar.api', '/docs', `api${isLight ? 'Light' : ''}`],
         ['page.header.navbar.internal.transfer', '/internal-transfer', `internal_transfer${isLight ? 'Light' : ''}`],
     ];
+
     const routesUnloggedIn = [
         ['page.header.navbar.signIn', '/signin', `signin${isLight ? 'Light' : ''}`],
         ['page.header.signUp', '/signup', `signup${isLight ? 'Light' : ''}`],
         ['page.header.navbar.trade', '/trading/', `trade${isLight ? 'Light' : ''}`],
     ];
 
-    return isLoggedIn ? routes : routesUnloggedIn;
+    return isLoggedIn ? routes.filter(i => Boolean(i)) : routesUnloggedIn;
 };
 
 export const DEFAULT_CCY_PRECISION = 4;
+export const DEFAULT_FIAT_PRECISION = 2;
 export const DEFAULT_TRADING_VIEW_INTERVAL = '15';
 export const VALUATION_PRIMARY_CURRENCY = 'USD';
 export const VALUATION_SECONDARY_CURRENCY = 'ETH';
@@ -32,8 +37,14 @@ export const DEFAULT_KYC_STEPS = ['email', 'phone', 'profile', 'document', 'addr
 
 export const DEFAULT_MARKET_HEADERS = ['Pair', 'Price', '24h Change'];
 
+export const TRANSFER_TYPES_LIST = ['Spot', 'P2P'];
+
 export const DEFAULT_ORDER_TYPES: DropdownElem[] = ['Limit', 'Market'];
 export const AMOUNT_PERCENTAGE_ARRAY = [0.25, 0.5, 0.75, 1];
+export const DEFAULT_TABLE_PAGE_LIMIT = 25;
+export const HOST_URL = window.location.hostname === 'localhost' ? 'http://localhost:9002' : window.location.origin;
+
+export const P2P_TIME_LIMIT_LIST = ['15 min', '30 min', '60 min'];
 
 export const DEFAULT_MARKET = {
     id: '',

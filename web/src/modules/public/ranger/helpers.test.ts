@@ -109,13 +109,13 @@ describe('ranger helpers', () => {
         };
 
         it('returns public streams without market', () => {
-            expect(streamsBuilder(false, [], undefined)).toEqual([
+            expect(streamsBuilder(false, false, [], undefined)).toEqual([
                 'global.tickers',
             ]);
         });
 
         it('returns public streams with market', () => {
-            expect(streamsBuilder(false, [], marketExample)).toEqual([
+            expect(streamsBuilder(false, false, [], marketExample)).toEqual([
                 'global.tickers',
                 'abcdefg.trades',
                 'abcdefg.update',
@@ -123,7 +123,7 @@ describe('ranger helpers', () => {
         });
 
         it('includes private streams', () => {
-            expect(streamsBuilder(true, [], undefined)).toEqual([
+            expect(streamsBuilder(true, false, [], undefined)).toEqual([
                 'global.tickers',
                 'order',
                 'trade',
@@ -132,7 +132,7 @@ describe('ranger helpers', () => {
         });
 
         it('includes public/privates streams with market', () => {
-            expect(streamsBuilder(true, [], marketExample)).toEqual([
+            expect(streamsBuilder(true, false, [], marketExample)).toEqual([
                 'global.tickers',
                 'order',
                 'trade',
@@ -144,7 +144,7 @@ describe('ranger helpers', () => {
 
         it('includes previous subscriptions in the list', () => {
             expect(
-                streamsBuilder(true, ['some subscription'], marketExample),
+                streamsBuilder(true, false, ['some subscription'], marketExample),
             ).toEqual([
                 'global.tickers',
                 'order',
@@ -158,9 +158,10 @@ describe('ranger helpers', () => {
 
         it('do not duplicates previous subscriptions', () => {
             expect(
-                streamsBuilder(true, ['global.tickers'], marketExample),
+                streamsBuilder(true, true, ['global.tickers'], marketExample),
             ).toEqual([
                 'global.tickers',
+                'p2p',
                 'order',
                 'trade',
                 'deposit_address',
@@ -175,7 +176,7 @@ describe('ranger helpers', () => {
                 finex: true,
             };
 
-            expect(streamsBuilder(true, [], undefined)).toEqual([
+            expect(streamsBuilder(true, false, [], undefined)).toEqual([
                 'global.tickers',
                 'order',
                 'trade',

@@ -18,7 +18,7 @@ const HistoryTable = (props: any) => {
     const intl = useIntl();
     const page = useSelector(selectCurrentPage);
     const list = useSelector(selectHistory);
-    const wallets = useSelector(selectWallets);
+    const wallets = useSelector(selectWallets) || [];
     const currencies = useSelector(selectCurrencies);
     const firstElemIndex = useSelector((state: RootState) => selectFirstElemIndex(state, DEFAULT_LIMIT));
     const lastElemIndex = useSelector((state: RootState) => selectLastElemIndex(state, DEFAULT_LIMIT));

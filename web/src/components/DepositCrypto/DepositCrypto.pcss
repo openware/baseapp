@@ -4,7 +4,9 @@
   display: flex;
   flex-direction: column;
   font-size: var(--font-size);
-  padding: calc(var(--gap) * 3);
+  min-width: 530px;
+  padding: 24px 18px;
+  width: 50%;
 
   div:nth-child(1) {
     display: flex;
@@ -13,16 +15,15 @@
 
   &__create {
     align-items: center;
-    justify-content: center !important;
     padding-top: calc(var(--gap) * 2);
   }
 
   .cr-deposit-info {
     background-color: inherit;
-    font-size: calc(var(--gap) * 2.3);
+    color: var(--secondary-contrast-cta-color);
+    font-size: 16px;
     line-height: 25px;
-    margin-bottom: calc(var(--gap) * 3);
-    width: 56%;
+    margin-bottom: 16px;
   }
 
   &__block {
@@ -34,6 +35,28 @@
 
     .cr-deposit-crypto__copyable {
       width: 100%;
+
+      &-area {
+        background: var(--input-background-color);
+        border: none;
+        border-radius: 4px;
+        padding: 4px;
+      }
+
+      .custom-input {
+        label {
+          background: none;
+          font-size: 10px;
+          left: unset;
+          margin-top: -20px;
+          padding: 0;
+        }
+      }
+
+      .form-control {
+        font-size: 12px;
+        height: 40px;
+      }
     }
 
     .pg-metamask {
@@ -57,12 +80,14 @@
     }
 
     .custom-input {
-      width: calc(100% - 110px);
+      width: calc(100% - 100px);
     }
 
-    .input-group-append > button {
-      border-radius: 2px;
-      width: 110px;
+    .input-group-append > button,
+    .input-group-append > .btn {
+      border-radius: 4px;
+      background-color: var(--primary-cta-color);
+      width: 100px;
     }
 
     &-title {
@@ -97,7 +122,9 @@
         background: inherit;
         padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
 
-        input {
+        input,
+        input:active,
+        input:focus {
           background: unset;
           color: var(--input-background-color);
         }
@@ -106,12 +133,14 @@
   }
 
   .qr-code {
-    margin-left: calc(var(--gap) * 3);
-    margin-top: calc(var(--gap) * 3);
+    margin-left: 48px;
+  }
+}
 
-    svg {
-      border: 1px solid var(--primary-text-color);
-    }
+@media screen and (max-width: 1024px) {
+  .cr-deposit-crypto {
+    min-width: unset;
+    width: 100%;
   }
 }
 

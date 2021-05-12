@@ -13,10 +13,12 @@ export * from './SignInScreen';
 export * from './SignUpScreen';
 export * from './TradingScreen';
 export * from './VerificationScreen';
-export * from './WalletsScreen';
 export * from './RestrictedScreen';
 export * from './MaintenanceScreen';
 export * from './InternalTransfer';
 export * from './QuickExchange';
 
 export * from './SetupScreen';
+export * from './InternalTransfer';
+export * from './P2P';
+export * from './WalletsScreen';

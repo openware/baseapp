@@ -1,0 +1,127 @@
+.cr-prepare-order {
+  &__block {
+    padding: 24px 36px;
+    border-top: 1px solid var(--divider-color-level-1);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .bold {
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.15px;
+      color: var(--primary-text-color);
+    }
+
+    .bold-36 {
+      font-weight: 600;
+      font-size: 36px;
+      letter-spacing: 0.25px;
+      color: var(--primary-text-color);
+    }
+
+    &--row {
+      font-size: 14px;
+
+      .huge-text {
+        font-weight: 600;
+        font-size: 22px;
+        color: var(--primary-text-color);
+        margin-bottom: 12px;
+      }
+
+      .ticker {
+        font-weight: 600;
+        font-size: 22px;
+        color: var(--primary-cta-color);
+        margin-left: 12px;
+      }
+
+      .pm-details {
+        margin: 48px 0 24px 0;
+
+        .field {
+          margin-bottom: 12px;
+
+          .label {
+            color: var(--secondary-contrast-cta-color);
+            font-size: 11px;
+            margin-bottom: 4px;
+          }
+
+          .value {
+            color: var(--primary-text-color);
+            font-size: 14px;
+            margin-bottom: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  &__checkbox {
+    margin-top: 36px;
+
+    .custom-control {
+      padding-left: 36px;
+    }
+
+    .custom-control-label {
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.44px;
+    }
+
+    .custom-control-label::before {
+      top: 4px;
+    }
+
+    .custom-control-label::after {
+      top: 4px;
+    }
+  }
+
+  &-tab {
+    .cr-tab-panel__navigation-container {
+      margin-bottom: 0;
+
+      &-navigation {
+        padding: 0 36px;
+
+        .cr-tab {
+          border: 1px solid var(--divider-color-level-1);
+          padding: 10px 12px;
+        }
+      }
+    }
+    .cr-tab-content {
+      padding: 24px 36px;
+    }
+
+    .pm-list {
+      label {
+        font-size: 12px;
+        color: var(--secondary-contrast-cta-color);
+      }
+
+      div {
+        font-size: 16px;
+        letter-spacing: 0.25px;
+        color: var(--primary-text-color);
+      }
+    }
+  }
+
+  &__btn-wrapper {  
+    &__grid {
+      padding: 8px 36px 36px;
+      display: grid;
+      grid-template-columns: 315px 176px;
+      grid-column-gap: 24px;
+
+      .btn {
+        height: 40px;
+      }
+    }
+  }
+}
