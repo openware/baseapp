@@ -147,8 +147,8 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         } else {
             const avail = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
             const low = side === 'buy' ? +lowLimit * +price : lowLimit;
-            const topLimit = getTopLimit();
-            const top = side === 'buy' ? topLimit * +price : topLimit;
+            const getTop = getTopLimit();
+            const top = side === 'buy' ? getTop * +price : getTop;
             const limitsPrecision = side === 'buy' ? pricePrecision : amountPrecision;
             const limitCur = side === 'buy' ? fiatCode : currencyCode;
 
@@ -329,10 +329,10 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     }, [available, topLimit]);
 
     const body = useCallback(() => {
-        const topLimit = getTopLimit();
+        const top = getTopLimit();
         const placeHolder = side === 'buy' ? 
-            `${Decimal.format(+lowLimit * +price, pricePrecision, ',')} - ${Decimal.format(topLimit * +price, pricePrecision, ',')}`
-            : `${Decimal.format(+lowLimit , amountPrecision, ',')} - ${Decimal.format(topLimit, amountPrecision, ',')}`;
+            `${Decimal.format(+lowLimit * +price, pricePrecision, ',')} - ${Decimal.format(top * +price, pricePrecision, ',')}`
+            : `${Decimal.format(+lowLimit , amountPrecision, ',')} - ${Decimal.format(top, amountPrecision, ',')}`;
 
         return (
             <React.Fragment>
