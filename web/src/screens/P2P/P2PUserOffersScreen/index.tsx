@@ -13,7 +13,7 @@ export const P2PUserOffersScreen: FC = (): ReactElement => {
     useP2PCurrenciesFetch();
     useDocumentTitle('My P2P offers');
 
-    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
+    const translate = useCallback((key: string) => formatMessage({ id: key }), [formatMessage]);
 
     const backButton = React.useMemo(() => (
         id ? <React.Fragment>

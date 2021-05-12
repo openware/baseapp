@@ -83,9 +83,13 @@ const OrderWaitPayment: FC<Props> = (props: Props): ReactElement => {
     }, [tabMapping]);
 
     const getPaymentMethodInfo = useMemo(() => {
-        const pm: UserPaymentMethod = order.side === 'sell'
-            ? order.payment_method
-            : order.offer.payment_methods.length > currentTabIndex ? order.offer.payment_methods[currentTabIndex] : null;
+        let pm: UserPaymentMethod = null;
+
+        if (order.side === 'sell') {
+            pm = order.payment_method;
+        } else if (order.offer.payment_methods.length > currentTabIndex) {
+            pm = order.offer.payment_methods[currentTabIndex];
+        }
 
         return pm ? (
             <div className="pm-list">

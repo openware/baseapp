@@ -146,7 +146,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                             paymentMethods={props.filtered}
                             searchKeyword={searchKeyword}
                             setSearchKeyword={props.setSearchKeyword}
-                            selectPaymentMethod={(pm) => props.pickPaymentMethodToAdd(pm)}
+                            selectPaymentMethod={(selectedPaymentMethod) => props.pickPaymentMethodToAdd(selectedPaymentMethod)}
                             translate={translate}
                         />
                         <label>{translate('page.body.profile.payment.modal.body.popular')}</label>

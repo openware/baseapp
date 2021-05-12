@@ -284,11 +284,12 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 
         if (wallets[selectedWalletIndex]) {
             selectedWalletPrecision = wallets[selectedWalletIndex].fixed;
-            confirmationAddress = wallets[selectedWalletIndex].type === 'fiat' ? (
-                beneficiary.name
-            ) : (
-                beneficiary.data ? (beneficiary.data.address as string) : ''
-            );
+
+            if (wallets[selectedWalletIndex].type === 'fiat') {
+                confirmationAddress = beneficiary.name;
+            } else if (beneficiary.data) {
+                confirmationAddress = beneficiary.data.address as string;
+            }
         }
 
         return (

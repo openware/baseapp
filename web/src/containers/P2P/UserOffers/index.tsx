@@ -21,9 +21,10 @@ import {
 } from '../../../modules';
 import { EyeIcon } from 'src/assets/images/EyeIcon';
 
+const tabMapping: string[] = ['wait', 'done', 'cancelled'];
+
 const P2PUserOffers: FC = (): ReactElement => {
     const [tab, setTab] = useState<string>('wait');
-    const [tabMapping, setTabMapping] = useState<string[]>(['wait', 'done', 'cancelled']);
     const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
 
     const { formatMessage } = useIntl();
