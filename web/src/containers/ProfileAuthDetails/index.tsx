@@ -19,6 +19,7 @@ import {
     changePasswordFetch,
     selectChangePasswordSuccess,
     toggle2faFetch,
+    changePasswordReset,
 } from '../../modules/user/profile';
 
 interface ReduxProps {
@@ -42,6 +43,7 @@ interface DispatchProps {
     clearPasswordChangeError: () => void;
     toggle2fa: typeof toggle2faFetch;
     fetchCurrentPasswordEntropy: typeof entropyPasswordFetch;
+    changePasswordReset: typeof changePasswordReset;
 }
 
 interface ProfileProps {
@@ -72,6 +74,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
     public componentWillReceiveProps(next: Props) {
         if (next.passwordChangeSuccess) {
             this.setState({ showChangeModal: false });
+            this.props.changePasswordReset();
         }
     }
 
@@ -110,6 +113,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(changePasswordFetch({ old_password, new_password, confirm_password })),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
     fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
+    changePasswordReset: () => dispatch(changePasswordReset()),
 });
 
 const ProfileAuthDetailsConnected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent));

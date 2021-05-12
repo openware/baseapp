@@ -233,16 +233,18 @@ class HistoryComponent extends React.Component<Props> {
                 ];
             }
             case 'transfers': {
-                const { id, created_at, currency, amount, direction, receiver } = item;
+                const { id, created_at, currency, amount, direction, receiver_username, receiver_uid } = item;
                 const status = intl.formatMessage({ id: `page.body.history.transfer.content.status.${item.status}` });
                 const wallet = wallets.find(obj => obj.currency === currency);
+
+                const toAccount = receiver_username?.toUpperCase() || receiver_uid?.toUpperCase();
 
                 return [
                     localeDate(created_at, 'fullDate'),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
                     currency && currency.toUpperCase(),
                     direction && direction.replace(/^./, direction[0].toUpperCase()),
-                    receiver && receiver.toUpperCase(),
+                    toAccount,
                     <span style={{ color: setTransferStatusColor(item.status) }} key={id}>{status}</span>,
                 ];
             }

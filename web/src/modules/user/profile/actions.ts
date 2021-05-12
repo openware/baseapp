@@ -3,6 +3,7 @@ import {
     PROFILE_CHANGE_PASSWORD_DATA,
     PROFILE_CHANGE_PASSWORD_ERROR,
     PROFILE_CHANGE_PASSWORD_FETCH,
+    PROFILE_CHANGE_PASSWORD_RESET,
     PROFILE_CHANGE_USER_DATA,
     PROFILE_CHANGE_USER_ERROR,
     PROFILE_CHANGE_USER_FETCH,
@@ -37,6 +38,10 @@ export interface ChangePasswordData {
 export interface ChangePasswordError {
     type: typeof PROFILE_CHANGE_PASSWORD_ERROR;
     error: CommonError;
+}
+
+export interface ChangePasswordReset {
+    type: typeof PROFILE_CHANGE_PASSWORD_RESET;
 }
 
 export interface Toggle2FAFetch {
@@ -127,6 +132,7 @@ export type ProfileAction =
     | ChangePasswordFetch
     | ChangePasswordData
     | ChangePasswordError
+    | ChangePasswordReset
     | Toggle2FAFetch
     | Toggle2FAData
     | Toggle2FAError
@@ -155,6 +161,10 @@ export const changePasswordData = (): ChangePasswordData => ({
 export const changePasswordError = (error: CommonError): ChangePasswordError => ({
     type: PROFILE_CHANGE_PASSWORD_ERROR,
     error,
+});
+
+export const changePasswordReset = (): ChangePasswordReset => ({
+    type: PROFILE_CHANGE_PASSWORD_RESET,
 });
 
 export const toggle2faFetch = (payload: Toggle2FAFetch['payload']): Toggle2FAFetch => ({

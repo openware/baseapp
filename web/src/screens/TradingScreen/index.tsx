@@ -155,7 +155,12 @@ class Trading extends React.Component<Props, StateProps> {
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { history, markets } = this.props;
+        const {
+            history,
+            markets,
+            currentMarket,
+            user: { role },
+        } = this.props;
 
         if (markets.length !== nextProps.markets.length) {
             this.setMarketFromUrlIfExists(nextProps.markets);
@@ -164,7 +169,8 @@ class Trading extends React.Component<Props, StateProps> {
         if (nextProps.currentMarket) {
             const marketFromUrl = history.location.pathname.split('/');
             const marketNotMatched = nextProps.currentMarket.id !== marketFromUrl[marketFromUrl.length - 1];
-            if (marketNotMatched) {
+
+            if (marketNotMatched && nextProps.currentMarket.state) {
                 history.replace(`/trading/${nextProps.currentMarket.id}`);
 
                 if (!incrementalOrderBook()) {
@@ -175,6 +181,20 @@ class Trading extends React.Component<Props, StateProps> {
 
         if (nextProps.currentMarket && nextProps.tickers) {
             this.setTradingTitle(nextProps.currentMarket, nextProps.tickers);
+        }
+
+        if (currentMarket?.id !== nextProps.currentMarket?.id && nextProps.currentMarket && role !== 'admin' && role !== 'superadmin') {
+            const firstActiveMarket = markets.length && markets.find(item => item.state && item.state !== 'hidden');
+
+            if (nextProps.currentMarket.state && nextProps.currentMarket.state === 'hidden') {
+                history.replace(`/trading/${firstActiveMarket.id}`);
+
+                this.props.setCurrentMarket(firstActiveMarket);
+
+                if (!incrementalOrderBook()) {
+                    this.props.depthFetch(nextProps.currentMarket);
+                }
+            }
         }
     }
 

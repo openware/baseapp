@@ -1,7 +1,8 @@
 import { call, put } from 'redux-saga/effects';
-import { sendError } from '../../../';
+import { sendError, currenciesData, Currency } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { walletsData, walletsError, WalletsFetch } from '../actions';
+import { Wallet } from '../types';
 
 const walletsOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -16,8 +17,10 @@ export function* walletsSaga(action: WalletsFetch) {
         const accounts = yield call(API.get(walletsOptions), '/account/balances');
         const currencies = yield call(API.get(currenciesOptions), '/public/currencies');
 
-        const accountsByCurrencies = currencies.map(currency => {
-            let walletInfo = accounts.find(wallet => wallet.currency === currency.id);
+        yield put(currenciesData(currencies));
+
+        const accountsByCurrencies = currencies.map((currency: Currency) => {
+            let walletInfo = accounts.find((wallet: Wallet) => wallet.currency === currency.id);
 
             if (!walletInfo) {
                 walletInfo = {

@@ -17,11 +17,14 @@ import {
     setCurrentMarket,
     setCurrentPrice,
     Ticker,
+    selectUserInfo,
+    User,
 } from '../../../../modules';
 
 interface ReduxProps {
     currentMarket: Market | undefined;
     markets: Market[];
+    user: User;
     marketTickers: {
         [key: string]: Ticker,
     };
@@ -68,7 +71,7 @@ class MarketsListComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const data = this.mapMarkets();
+        const data = this.mapMarkets().filter(item => item[0] !== null);
 
         return (
             <div className="pg-dropdown-markets-list-container">
@@ -128,7 +131,7 @@ class MarketsListComponent extends React.Component<Props, State> {
     });
 
     private mapMarkets() {
-        const { markets, marketTickers, search, currencyQuote } = this.props;
+        const { markets, marketTickers, search, currencyQuote, user: {role} } = this.props;
         const defaultTicker = {
             last: 0,
             volume: 0,
@@ -179,6 +182,10 @@ class MarketsListComponent extends React.Component<Props, State> {
                 'pg-dropdown-markets-list-container__negative': !isPositive,
             });
 
+            if (market.state && market.state === 'hidden' && role !== 'admin' && role !== 'superadmin') {
+                return [null, null, null, null];
+            }
+
             return [
                 market.name,
                 (<span className={classname}>{Decimal.format(Number(market.last), market.price_precision, ',')}</span>),
@@ -204,6 +211,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     currentMarket: selectCurrentMarket(state),
     markets: selectMarkets(state),
     marketTickers: selectMarketTickers(state),
+    user: selectUserInfo(state),
 });
 
 const mapDispatchToProps = {
