@@ -96,40 +96,39 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
 
     const renderCustomFields = useCallback(() => {
         return paymentOptions.map(option => {
-            switch (option.type) {
-                case 'dropdown':
-                    return (
-                        <div className={inputClass(option)}>
-                            <DropdownComponent
-                                list={option.options.map(i => i?.value)}
-                                onSelect={value => props.handleCustomFieldChange(option.options[value].value, option.key)}
-                                placeholder={option.value}
-                            />
-                            {showError && option.required && !option.value &&
-                                <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}
-                        </div>
-                    );
-                default:
-                    const keyContainsNumber = option.key.includes('number');
-                    if (modal.action === 'update' && keyContainsNumber && !option.flag) {
-                        option.value = '';
-                        option.flag = true;
-                    }
+            if (option.type === 'dropdown') {
+                return (
+                    <div className={inputClass(option)}>
+                        <DropdownComponent
+                            list={option.options.map(i => i?.value)}
+                            onSelect={value => props.handleCustomFieldChange(option.options[value].value, option.key)}
+                            placeholder={option.value}
+                        />
+                        {showError && option.required && !option.value &&
+                            <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}
+                    </div>
+                );
+            } else {
+                const keyContainsNumber = option.key.includes('number');
+                if (modal.action === 'update' && keyContainsNumber && !option.flag) {
+                    option.value = '';
+                    option.flag = true;
+                }
 
-                    return (
-                        <div className={inputClass(option)}>
-                            <CustomInput
-                                type="text"
-                                label={option.description ? option.description : titleCase(option.key)}
-                                defaultLabel={option.description ? option.description : titleCase(option.key)}
-                                placeholder={option.name ? option.name : titleCase(option.key)}
-                                inputValue={option.value}
-                                handleChangeInput={value => props.handleCustomFieldChange(value, option.key)}
-                            />
-                            {showError && option.required && !option.value &&
-                                <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}
-                        </div>
-                    );
+                return (
+                    <div className={inputClass(option)}>
+                        <CustomInput
+                            type="text"
+                            label={option.description ? option.description : titleCase(option.key)}
+                            defaultLabel={option.description ? option.description : titleCase(option.key)}
+                            placeholder={option.name ? option.name : titleCase(option.key)}
+                            inputValue={option.value}
+                            handleChangeInput={value => props.handleCustomFieldChange(value, option.key)}
+                        />
+                        {showError && option.required && !option.value &&
+                            <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}
+                    </div>
+                );
             }            
         });
     }, [showError, paymentMethods, paymentOptions, props.handleCustomFieldChange]);
