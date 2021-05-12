@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { CloseIcon } from 'src/assets/images/CloseIcon';

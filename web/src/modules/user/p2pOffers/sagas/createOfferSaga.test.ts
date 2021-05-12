@@ -29,7 +29,7 @@ describe('P2P CreateOffer', () => {
         max_order_amount: '5000',
         base: 'usdt',
         quote: 'ngn',
-        upm_id: ['1'],
+        upm_id: [1],
         time_limit: '15',
         side: 'buy',
         description: '',

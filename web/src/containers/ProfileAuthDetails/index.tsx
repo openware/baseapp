@@ -1,4 +1,3 @@
-import cr from 'classnames';
 import { History } from 'history';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
 import * as React from 'react';
@@ -77,10 +76,7 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const {
-            user,
-            currentPasswordEntropy,
-        } = this.props;
+        const { user } = this.props;
 
         return (
             <div className="pg-profile-page__box pg-profile-page__left-col__basic">

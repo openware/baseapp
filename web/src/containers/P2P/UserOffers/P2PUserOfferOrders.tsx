@@ -28,13 +28,13 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
     const currencies = useSelector(selectCurrencies);
     const history = useHistory();
     const { id } = useParams<{id?: string}>();
-    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
+    const translate = useCallback((key: string) => formatMessage({ id: key }), [formatMessage]);
 
     useP2PUserOfferOrdersFetch({ offer_id: Number(id) });
     useCurrenciesFetch();
 
-    const handleCancel = useCallback((id: number) => () => {
-        dispatch(cancelOffer({ id }));
+    const handleCancel = useCallback((offer_id: number) => () => {
+        dispatch(cancelOffer({ id: offer_id }));
     }, [cancelOffer, dispatch]);
 
     const headerTitles = () => [
@@ -47,8 +47,8 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
         '',
     ];
 
-    const getPrecision = (id: string, currencies) => {
-        return currencies.find(i => i.id === id)?.precision || DEFAULT_CCY_PRECISION;
+    const getPrecision = (code: string) => {
+        return currencies.find(i => i.id === code)?.precision || DEFAULT_CCY_PRECISION;
     };
 
     const retrieveData = useCallback(() => {
@@ -57,11 +57,11 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
         }
 
         const { price, base, quote } = offer;
-        const priceItem = `${Decimal.format(price, getPrecision(quote, currencies) || DEFAULT_FIAT_PRECISION, ',')} ${base.toUpperCase()}/${quote.toUpperCase()}`;
-        const amountPrecision = getPrecision(base, currencies);
+        const priceItem = `${Decimal.format(price, getPrecision(quote) || DEFAULT_FIAT_PRECISION, ',')} ${base.toUpperCase()}/${quote.toUpperCase()}`;
+        const amountPrecision = getPrecision(base);
 
         return offer.orders.map((item: P2POrder) => {
-            const { id, created_at, side, amount, user_uid, state } = item;
+            const { created_at, side, amount, user_uid, state } = item;
             const sideColored = setTradesType(side);
             const stateColored = setStateType(state);
 
@@ -72,15 +72,15 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
                 `${Decimal.format(amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${base.toUpperCase()}`,
                 <span>{user_uid}</span>,
                 <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
-                ['prepared', 'wait'].includes(state) ? <div onClick={() => history.push(`/p2p/order/${id}`)}><ArrowRightIcon className="icon-right" /></div> : null,
+                ['prepared', 'wait'].includes(state) ? <div onClick={() => history.push(`/p2p/order/${item.id}`)}><ArrowRightIcon className="icon-right" /></div> : null,
             ];
         })
     }, [offer, currencies]);
 
     const p2pOfferInfo = useCallback(() => {
         const sideColored = setTradesType(offer?.side);
-        const amountPrecision = getPrecision(offer?.base, currencies);
-        const priceItem = `${Decimal.format(offer?.price, getPrecision(offer?.quote, currencies) || DEFAULT_FIAT_PRECISION, ',')} ${offer?.quote.toUpperCase()}`;
+        const amountPrecision = getPrecision(offer?.base);
+        const priceItem = `${Decimal.format(offer?.price, getPrecision(offer?.quote) || DEFAULT_FIAT_PRECISION, ',')} ${offer?.quote.toUpperCase()}`;
 
         return offer ? (
             <div className="cr-user-p2p-offer-info">

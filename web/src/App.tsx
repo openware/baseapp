@@ -30,7 +30,7 @@ const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ A
 const CustomizationContainer = React.lazy(() =>
     import('./containers/Customization').then(({ Customization }) => ({ default: Customization }))
 );
-const P2PAlerts = React.lazy(() => import('./containers/P2P/P2PAlerts').then(({ P2PAlerts }) => ({ default: P2PAlerts })));
+const P2PAlertsContainer = React.lazy(() => import('./containers/P2P/P2PAlerts').then(({ P2PAlerts }) => ({ default: P2PAlerts })));
 const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ Header }) => ({ default: Header })));
 const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
 const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
@@ -56,7 +56,7 @@ const RenderDeviceContainers = () => {
                 <SidebarContainer />
                 <CustomizationContainer />
                 <AlertsContainer />
-                <P2PAlerts />
+                <P2PAlertsContainer />
                 <LayoutContainer />
             </React.Fragment>
         );

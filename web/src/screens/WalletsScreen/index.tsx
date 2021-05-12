@@ -34,7 +34,7 @@ export const WalletsScreen: FC = (): ReactElement => {
 
     useEffect(() => {
         if (wallets.length && currencies.length && p2pWallets.length) {
-            const mergedWallets = currencies.map(cur => {
+            const merged = currencies.map(cur => {
                 const spotWallet = wallets.find(i => i.currency === cur.id);
                 const p2pWallet = p2pWallets.find(i => i.currency === cur.id);
 
@@ -45,7 +45,7 @@ export const WalletsScreen: FC = (): ReactElement => {
                 };
             });
 
-            setMergedWallets(mergedWallets);
+            setMergedWallets(merged);
         }
     }, [wallets, p2pWallets, currencies]);
 

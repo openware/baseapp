@@ -1,7 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../..';
 import { API, RequestOptions } from '../../../../api';
-import { buildQueryString } from '../../../../helpers';
 import { p2pPaymentMethodsData, p2pPaymentMethodsError } from '../actions';
 
 const config: RequestOptions = {

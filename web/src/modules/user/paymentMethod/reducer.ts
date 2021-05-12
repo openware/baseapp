@@ -66,31 +66,7 @@ export const paymentMethodReducer = (state = initialPaymentMethodState, action: 
                 listLoading: false,
             };
         case PAYMENT_METHOD_CREATE_FETCH:
-            return {
-                ...state,
-                loading: true,
-                error: false,
-                success: false,
-            };
-        case PAYMENT_METHOD_CREATE:
-            return {
-                ...state,
-                loading: false,
-                success: true,
-            };
         case PAYMENT_METHOD_UPDATE_FETCH:
-            return {
-                ...state,
-                loading: true,
-                error: false,
-                success: false,
-            };
-        case PAYMENT_METHOD_UPDATE:
-            return {
-                ...state,
-                loading: false,
-                success: true,
-            };
         case PAYMENT_METHOD_DELETE_FETCH:
             return {
                 ...state,
@@ -98,6 +74,8 @@ export const paymentMethodReducer = (state = initialPaymentMethodState, action: 
                 error: false,
                 success: false,
             };
+        case PAYMENT_METHOD_CREATE:
+        case PAYMENT_METHOD_UPDATE:
         case PAYMENT_METHOD_DELETE:
             return {
                 ...state,

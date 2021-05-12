@@ -84,12 +84,6 @@ const orderReducer = (state: P2POrdersState['order'], action: P2POrdersActions) 
                 loading: false,
                 success: true,
             };
-        case P2P_ORDERS_CREATE_ERROR:
-            return {
-                ...state,
-                loading: false,
-                error: action.error,
-            };
         case P2P_ORDER_DATA:
             return {
                 ...state,
@@ -103,12 +97,8 @@ const orderReducer = (state: P2POrdersState['order'], action: P2POrdersActions) 
                 loading: false,
                 updateSuccess: true,
             };
+        case P2P_ORDERS_CREATE_ERROR:
         case P2P_ORDERS_UPDATE_ERROR:
-            return {
-                ...state,
-                loading: false,
-                error: action.error,
-            };
         case P2P_ORDER_ERROR:
             return {
                 ...state,

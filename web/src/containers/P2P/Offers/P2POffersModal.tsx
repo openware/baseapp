@@ -100,7 +100,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         }
     }, [availablePM, paymentMethod]);
 
-    const translate = useCallback((id: string, value?: any) => formatMessage({ id }, { ...value }), [formatMessage]);
+    const translate = useCallback((key: string, value?: any) => formatMessage({ id: key }, { ...value }), [formatMessage]);
 
     const handleAmountChange = useCallback((value: string) => {
         const convertedValue = cleanPositiveFloatInput(String(value));
@@ -125,7 +125,11 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                 : Decimal.format(+convertedValue / +price, amountPrecision, ''));
         }
 
-        side === 'buy' ? defineAmountError(String(+convertedValue * +price)) : defineAmountError(String(Number(price) ? +convertedValue / +price : 0));
+        if (side === 'buy') {
+            defineAmountError(String(+convertedValue * +price));
+        } else {
+            defineAmountError(String(Number(price) ? +convertedValue / +price : 0));
+        }
     }, [amountPrecision, pricePrecision, side, price]);
 
     const handleSelectPaymentMethod = useCallback((index: number) => {
@@ -141,17 +145,22 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         } else if (Number(value) <= 0) {
             error = translate('page.body.p2p.error.greater.than.0.amount');
         } else {
-            const available = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
+            const avail = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
             const low = side === 'buy' ? +lowLimit * +price : lowLimit;
             const topLimit = getTopLimit();
             const top = side === 'buy' ? topLimit * +price : topLimit;
             const limitsPrecision = side === 'buy' ? pricePrecision : amountPrecision;
             const limitCur = side === 'buy' ? fiatCode : currencyCode;
 
-            error = +value < +low ? `${translate('page.body.p2p.modal.error.min.amount')} ${Decimal.format(low, limitsPrecision, ',')} ${limitCur?.toUpperCase()}`
-                : +value > +top ? `${translate('page.body.p2p.modal.error.max.amount')} ${Decimal.format(top, limitsPrecision, ',')} ${limitCur?.toUpperCase()}`
-                : side === 'sell' && available && +value > +available ? translate('page.body.p2p.error.insufficient.funds')
-                : undefined;
+            if (+value < +low) {
+                error = `${translate('page.body.p2p.modal.error.min.amount')} ${Decimal.format(low, limitsPrecision, ',')} ${limitCur?.toUpperCase()}`;
+            } else if (+value > +top) {
+                error = `${translate('page.body.p2p.modal.error.max.amount')} ${Decimal.format(top, limitsPrecision, ',')} ${limitCur?.toUpperCase()}`;
+            } else if (side === 'sell' && avail && +value > +avail) {
+                error = translate('page.body.p2p.error.insufficient.funds');
+            } else {
+                error = undefined;
+            }
         }
 
         setAmountError(error);
@@ -180,11 +189,11 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     }, [lowLimit, side]);
 
     const handleSubmitClick = useCallback(() => {
-        const available = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
+        const avail = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
 
         if (!tradeAmount
             || Number(tradeAmount) <= 0
-            || (side === 'sell' && available && +tradeAmount > +available)
+            || (side === 'sell' && avail && +tradeAmount > +avail)
             || !validatePriceRange(+tradeAmount)
             || (side === 'sell' && !paymentMethod)
         ) {

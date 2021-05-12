@@ -49,7 +49,6 @@ class EstimatedValueContainer extends React.Component<Props> {
             fetchTickers,
             markets,
             tickers,
-            userLoggedIn,
         } = this.props;
 
         if (!markets.length) {

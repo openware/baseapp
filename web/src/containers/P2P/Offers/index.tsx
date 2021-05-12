@@ -2,7 +2,6 @@ import React, { FC, ReactElement, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
-import { isUsernameEnabled } from 'src/api';
 import { AvatarIcon } from 'src/assets/images/NavBarIcons';
 import { DEFAULT_CCY_PRECISION, DEFAULT_TABLE_PAGE_LIMIT, DEFAULT_FIAT_PRECISION, HOST_URL } from 'src/constants';
 import { Decimal, Pagination, Table } from '../../../components';
@@ -103,10 +102,8 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 price,
                 user,
                 available_amount,
-                quote,
                 min_order_amount,
                 max_order_amount,
-                base,
                 payment_methods,
             } = item;
 
@@ -129,7 +126,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                 </div>,
                 <div className="price" key={id}>
                     {Decimal.format(price, pricePrecision, ',')}&nbsp;
-                    <span className="font-big secondary">{quote?.toUpperCase()}</span>
+                    <span className="font-big secondary">{item.quote?.toUpperCase()}</span>
                 </div>,
                 <div className="limit" key={id}>
                     <div className="limit-col">
@@ -137,8 +134,8 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                         <span className="font-small secondary sec-row">{intl.formatMessage({ id: 'page.body.p2p.table.limit' })}</span>
                     </div>
                     <div className="limit-col">
-                        <span className="font-big ml-small">{Decimal.format(+available_amount, amountPrecision, ',')} {base?.toUpperCase()}</span>
-                        <span className="font-big ml-small sec-row">{Decimal.format(+min_order_amount * +price, pricePrecision, ',')} - {Decimal.format(+max_order_amount * +price, pricePrecision, ',')} {quote?.toUpperCase()}</span>
+                        <span className="font-big ml-small">{Decimal.format(+available_amount, amountPrecision, ',')} {item.base?.toUpperCase()}</span>
+                        <span className="font-big ml-small sec-row">{Decimal.format(+min_order_amount * +price, pricePrecision, ',')} - {Decimal.format(+max_order_amount * +price, pricePrecision, ',')} {item.quote?.toUpperCase()}</span>
                     </div>
                 </div>,
                 <div className="payment" key={id}>
@@ -155,7 +152,7 @@ const P2POffers: FC<Props> = (props: Props): ReactElement => {
                         size="lg"
                         variant={side}
                     >
-                        {intl.formatMessage({ id: `page.body.p2p.tabs.${side}` })} {base.toUpperCase()}
+                        {intl.formatMessage({ id: `page.body.p2p.tabs.${side}` })} {item.base.toUpperCase()}
                     </Button>
                 </div>
             ];

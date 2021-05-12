@@ -98,12 +98,12 @@ const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
         defineLowLimitError(lowLimit, convertedValue);
     }, [cash, lowLimit]);
 
-    const handleSelectPaymentMethod = React.useCallback((index: number, dpIndex: number) => {
+    const handleSelectPaymentMethod = useCallback((index: number, dpIndex: number) => {
         props.handleUpdatePaymentMethods(pmList(dpIndex)[index], dpIndex);
         definePaymentError(paymentMethods);
     }, [paymentMethods]);
 
-    const defineAmountError = React.useCallback((value: string) => {
+    const defineAmountError = useCallback((value: string) => {
         let error = '';
     
         if (!value) {
@@ -115,21 +115,21 @@ const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
         setAmountError(error);
     }, [translate]);
 
-    const defineLowLimitError = React.useCallback((lowLimit: string, topLimit: string) => {
+    const defineLowLimitError = useCallback((low: string, top: string) => {
         let error = '';
     
-        if (!lowLimit) {
+        if (!low) {
             error = translate('page.body.p2p.error.empty.min.limit');
-        } else if (Number(lowLimit) <= 0) {
+        } else if (Number(low) <= 0) {
             error = translate('page.body.p2p.error.greater.than.0.min.limit');
-        } else if (+lowLimit > +topLimit) {
+        } else if (+low > +top) {
             error = translate('page.body.p2p.error.min.limit.exceed.max');            
         }
 
         setLowLimitError(error);
-    }, [translate]);
+    }, []);
 
-    const definePaymentError = React.useCallback((list: UserPaymentMethod[]) => {
+    const definePaymentError = useCallback((list: UserPaymentMethod[]) => {
         let error = '';
     
         if (!list.length) {
@@ -139,7 +139,7 @@ const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
         setPaymentMethodError(error);
     }, [translate]);
 
-    const handleSubmitClick = React.useCallback(() => {
+    const handleSubmitClick = useCallback(() => {
         if (!amount || Number(amount) <= 0 || !lowLimit || Number(lowLimit) <= 0 || +lowLimit > +topLimit || !paymentMethods.length) {
             setShowError(true);
             defineAmountError(amount);
@@ -163,22 +163,22 @@ const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
         return `${pm.payment_method?.name} ${numberValue}`;
     };
 
-    const handleClickDelete = React.useCallback((index: number) => {
+    const handleClickDelete = useCallback((index: number) => {
         props.handleRemovePaymentMethod(index);
     }, [props.handleRemovePaymentMethod]);
 
-    const handleClickAdd = React.useCallback(() => {
+    const handleClickAdd = useCallback(() => {
         props.handleSetPaymentMethods([...paymentMethods, userPaymentMethods.filter(el => !paymentMethods.includes(el))[0]]);
     }, [props.handleSetPaymentMethods, paymentMethods, userPaymentMethods]);
 
-    const pmList = React.useCallback((dpIndex: number) =>
+    const pmList = useCallback((dpIndex: number) =>
         userPaymentMethods.filter(el => paymentMethods[dpIndex] === el || !paymentMethods.includes(el)), [paymentMethods, userPaymentMethods]);
 
-    const iconList = React.useCallback((dpIndex: number) =>
+    const iconList = useCallback((dpIndex: number) =>
         pmList(dpIndex).map(i => <img key={i.id} className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>)
     , [pmList]);
 
-    const renderDPButton = React.useCallback((dpIndex) =>
+    const renderDPButton = useCallback((dpIndex) =>
         (dpIndex === paymentMethods.length - 1) || (paymentMethods.length === 1) ? userPaymentMethods.length > paymentMethods.length && (
             <div className="payment-method__btn-wrapper">
                 <Button
@@ -203,7 +203,7 @@ const CreateOfferStepTwo: FC<Props> = (props: Props): ReactElement => {
             </div>
         ), [userPaymentMethods, paymentMethods]);
 
-    const renderDPItem = React.useCallback((_, dpIndex) => {
+    const renderDPItem = useCallback((_, dpIndex) => {
         return (
             <React.Fragment key={dpIndex}>
                 <div className="cr-create-offer__dp-label">{translate('page.body.p2p.create.offer.payment_method')}</div>
