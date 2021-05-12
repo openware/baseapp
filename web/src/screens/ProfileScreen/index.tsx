@@ -64,7 +64,7 @@ export const ProfileScreen: FC = (): ReactElement => {
         }
     }, [tabMapping]);
 
-    const renderTabs = React.useCallback(() => {
+    const renderTabs = useCallback(() => {
         const isP2PEnabled = CanCan.checkAbilityByAction('read', 'P2P', abilities);
         const p2pTabs = [
             {
@@ -88,7 +88,7 @@ export const ProfileScreen: FC = (): ReactElement => {
                 label: translate('page.body.profile.tabs.referral'),
             },
         ];
-    }, [currentTabIndex, abilities]);
+    }, [tab, abilities]);
 
     return (
         <div className="container pg-profile-page">
