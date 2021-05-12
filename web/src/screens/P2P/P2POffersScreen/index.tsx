@@ -82,7 +82,7 @@ export const P2POffersScreen: FC = (): ReactElement => {
         }
     }, [createdOrder, createOrderSuccess, history]);
 
-    const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
+    const translate = useCallback((key: string) => formatMessage({ id: key }), [formatMessage]);
     const onCurrentTabChange = useCallback((index: number) => {
         setCurrentTabIndex(index);
         history.push(`/p2p/${tabMapping[index]}`);
