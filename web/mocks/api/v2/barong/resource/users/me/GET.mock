@@ -76,5 +76,7 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
             "updated_at": "2019-05-16T14:01:49Z"
         }
     ],
-    "phones": "+380501823918"
+    "phones": "+380501823918",
+    "barong_upload_size_min_range": 0,
+    "barong_upload_size_max_range": 20
 }

@@ -544,6 +544,8 @@ export const en = {
     'page.body.kyc.address.uploadFile.sizes': 'Maximum file size is 20MB',
     'page.body.kyc.address.uploadFile.formats': 'JPG, JPEG, PNG, PDF formats',
     'page.body.kyc.address.uploadFile.tip': 'Please take a photo or scan of a utility bill showing your name/surname and your address. For the verification to work, the bill must be issued in your name and less than a 3 months ago',
+    'page.body.kyc.address.uploadFile.error.size.tooBig': 'The size of selected file is too big ({value}KB)',
+    'page.body.kyc.address.uploadFile.error.size.tooSmall': 'The size of selected file is too small ({value}KB)',
 
     'page.body.kyc.phone.head': 'Verify Phone',
     'page.body.kyc.phone.enterPhone': 'Enter phone number',

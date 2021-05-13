@@ -16,13 +16,16 @@ import {
     selectCurrentLanguage,
     selectMobileDeviceState,
     selectSendAddressesSuccess,
+    selectUserInfo,
     sendAddresses,
+    User,
 } from '../../../modules';
 
 interface ReduxProps {
     lang: string;
     success?: string;
     isMobileDevice: boolean;
+    user: User;
 }
 
 interface DispatchProps {
@@ -39,6 +42,7 @@ interface State {
     postcode: string;
     postcodeFocused: boolean;
     fileScan: File[];
+    fileSizeErrorMessage: string;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
@@ -53,6 +57,7 @@ class AddressComponent extends React.Component<Props, State> {
         postcode: '',
         postcodeFocused: false,
         fileScan: [],
+        fileSizeErrorMessage: '',
     };
 
     public UNSAFE_componentWillReceiveProps(next: Props) {
@@ -161,6 +166,7 @@ class AddressComponent extends React.Component<Props, State> {
                         tipText={this.translate('page.body.kyc.address.uploadFile.tip')}
                         handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'fileScan')}
                         uploadedFile={fileScan[0] && (fileScan[0] as File).name}
+                        fileSizeErrorMessage={this.state.fileSizeErrorMessage}
                     />
                     <div className="pg-confirm__content-deep">
                         <Button
@@ -211,9 +217,19 @@ class AddressComponent extends React.Component<Props, State> {
     };
 
     private handleUploadScan = (uploadEvent, id) => {
+        const { barong_upload_size_max_range, barong_upload_size_min_range } = this.props.user;
         const allFiles: File[] = uploadEvent.target.files;
         const maxDocsCount = 1;
         const additionalFileList = Array.from(allFiles).length > maxDocsCount ?  Array.from(allFiles).slice(0, maxDocsCount) : Array.from(allFiles);
+        const sizeKB = (additionalFileList[0].size / 1024).toFixed(1);
+
+        if (additionalFileList[0].size > barong_upload_size_max_range * 1024 * 1024) {
+            this.setState({ fileSizeErrorMessage: this.translate('page.body.kyc.address.uploadFile.error.size.tooBig', sizeKB) });
+        } else if (additionalFileList[0].size < barong_upload_size_min_range * 1024 * 1024) {
+            this.setState({ fileSizeErrorMessage: this.translate('page.body.kyc.address.uploadFile.error.size.tooSmall', sizeKB) });
+        } else {
+            this.setState({ fileSizeErrorMessage: '' });
+        }
 
         switch (id) {
             case 'fileScan':
@@ -256,6 +272,7 @@ class AddressComponent extends React.Component<Props, State> {
             country,
             fileScan,
             postcode,
+            fileSizeErrorMessage,
         } = this.state;
 
         const addressValid = this.handleValidateInput('address', address);
@@ -267,6 +284,7 @@ class AddressComponent extends React.Component<Props, State> {
             !cityValid ||
             !country.length ||
             !postcodeValid ||
+            fileSizeErrorMessage !== '' ||
             !fileScan.length
         );
     };
@@ -290,13 +308,14 @@ class AddressComponent extends React.Component<Props, State> {
         this.props.sendAddresses(request);
     };
 
-    private translate = (key: string) => this.props.intl.formatMessage({id: key});
+    private translate = (key: string, value?: string) => this.props.intl.formatMessage({id: key}, {value});
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
     success: selectSendAddressesSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
+    user: selectUserInfo(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
