@@ -237,6 +237,11 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         if (!this.props.user.email && nextProps.user.email && !this.props.location.pathname.includes('/setup')) {
             this.props.userFetch();
         }
+
+        if (!this.props.isLoggedIn && nextProps.isLoggedIn && !this.props.user.email) {
+            this.initInterval();
+            this.check();
+        }
     }
 
     public componentDidUpdate(prevProps: LayoutProps) {
@@ -410,6 +415,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
             }
 
             this.props.logout();
+            clearInterval(this.timer);
         }
     };
 
