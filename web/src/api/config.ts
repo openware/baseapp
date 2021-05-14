@@ -42,6 +42,8 @@ export const defaultConfig: Config = {
     captcha_type: 'none',
     password_min_entropy: 0,
     wizard_step: undefined,
+    barong_upload_size_min_range: '1',
+    barong_upload_size_max_range: '20',
 };
 
 export const Cryptobase = {
@@ -85,3 +87,5 @@ export const captchaType = () => Cryptobase.config.captcha_type;
 export const captchaId = () => Cryptobase.config.captcha_id;
 export const passwordMinEntropy = () => Number(Cryptobase.config.password_min_entropy);
 export const wizardStep = () => String(Cryptobase.config.wizard_step || '1');
+export const barongUploadSizeMinRange = Number(Cryptobase.config.barong_upload_size_min_range || '1');
+export const barongUploadSizeMaxRange = Number(Cryptobase.config.barong_upload_size_max_range || '20');

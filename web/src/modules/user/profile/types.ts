@@ -29,8 +29,6 @@ export interface User {
     state: string;
     uid: string;
     profiles: UserProfile[];
-    barong_upload_size_min_range?: number;
-    barong_upload_size_max_range?: number;
     csrf_token?: string;
     data?: string;
     referal_uid: string | null;

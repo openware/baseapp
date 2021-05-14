@@ -8,7 +8,7 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../../';
-import { languages } from '../../../api/config';
+import { barongUploadSizeMaxRange, barongUploadSizeMinRange, languages } from '../../../api/config';
 import { CustomInput, SearchDropdown, UploadFile } from '../../../components';
 import {
     alertPush,
@@ -16,16 +16,13 @@ import {
     selectCurrentLanguage,
     selectMobileDeviceState,
     selectSendAddressesSuccess,
-    selectUserInfo,
     sendAddresses,
-    User,
 } from '../../../modules';
 
 interface ReduxProps {
     lang: string;
     success?: string;
     isMobileDevice: boolean;
-    user: User;
 }
 
 interface DispatchProps {
@@ -161,7 +158,7 @@ class AddressComponent extends React.Component<Props, State> {
                         title={this.translate('page.body.kyc.address.uploadFile.title')}
                         label={this.translate('page.body.kyc.address.uploadFile.label')}
                         buttonText={this.translate('page.body.kyc.address.uploadFile.button')}
-                        sizesText={this.translate('page.body.kyc.address.uploadFile.sizes')}
+                        sizesText={this.uploadFileSizeGuide()}
                         formatsText={this.translate('page.body.kyc.address.uploadFile.formats')}
                         tipText={this.translate('page.body.kyc.address.uploadFile.tip')}
                         handleUploadScan={uploadEvent => this.handleUploadScan(uploadEvent, 'fileScan')}
@@ -184,6 +181,14 @@ class AddressComponent extends React.Component<Props, State> {
             </React.Fragment>
         );
     }
+
+    private uploadFileSizeGuide = () => {
+        if (barongUploadSizeMinRange) {
+            return this.translate('page.body.kyc.address.uploadFile.sizeMinMax', barongUploadSizeMaxRange.toString(), barongUploadSizeMinRange.toString());
+        }
+
+        return this.translate('page.body.kyc.address.uploadFile.sizeMax', barongUploadSizeMaxRange.toString());
+    };
 
     private handleChange = (value: string, key: string) => {
         // @ts-ignore
@@ -217,22 +222,26 @@ class AddressComponent extends React.Component<Props, State> {
     };
 
     private handleUploadScan = (uploadEvent, id) => {
-        const { barong_upload_size_max_range, barong_upload_size_min_range } = this.props.user;
         const allFiles: File[] = uploadEvent.target.files;
         const maxDocsCount = 1;
         const additionalFileList = Array.from(allFiles).length > maxDocsCount ?  Array.from(allFiles).slice(0, maxDocsCount) : Array.from(allFiles);
-        const sizeKB = (additionalFileList[0].size / 1024).toFixed(1);
 
-        if (additionalFileList[0].size > barong_upload_size_max_range * 1024 * 1024) {
-            this.setState({ fileSizeErrorMessage: this.translate('page.body.kyc.address.uploadFile.error.size.tooBig', sizeKB) });
-        } else if (additionalFileList[0].size < barong_upload_size_min_range * 1024 * 1024) {
-            this.setState({ fileSizeErrorMessage: this.translate('page.body.kyc.address.uploadFile.error.size.tooSmall', sizeKB) });
-        } else {
-            this.setState({ fileSizeErrorMessage: '' });
+        if (!additionalFileList.length) {
+            return;
         }
 
         switch (id) {
             case 'fileScan':
+                const sizeKB = (additionalFileList[0].size / 1024).toFixed(1);
+
+                if (additionalFileList[0].size > barongUploadSizeMaxRange * 1024 * 1024) {
+                    this.setState({ fileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB) });
+                } else if (additionalFileList[0].size < barongUploadSizeMinRange * 1024 * 1024) {
+                    this.setState({ fileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB) });
+                } else {
+                    this.setState({ fileSizeErrorMessage: '' });
+                }
+
                 this.setState({ fileScan: additionalFileList });
                 break;
             default:
@@ -308,14 +317,13 @@ class AddressComponent extends React.Component<Props, State> {
         this.props.sendAddresses(request);
     };
 
-    private translate = (key: string, value?: string) => this.props.intl.formatMessage({id: key}, {value});
+    private translate = (key: string, value?: string, min?: string) => this.props.intl.formatMessage({id: key}, {value, min});
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
     success: selectSendAddressesSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
-    user: selectUserInfo(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
