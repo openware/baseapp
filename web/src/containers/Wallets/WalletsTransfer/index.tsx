@@ -3,7 +3,7 @@ import { Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { DoubleDropdownSelector, TransferForm, WalletList } from 'src/components';
-import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useP2PCurrenciesFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
+import { useMarketsFetch, useMarketsTickersFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
 import {
     createP2PTransfersFetch,
     selectCurrencies,
@@ -51,8 +51,6 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
 
     useP2PWalletsFetch();
     useWalletsFetch();
-    useCurrenciesFetch();
-    useP2PCurrenciesFetch();
     useMarketsTickersFetch();
     useMarketsFetch();
 

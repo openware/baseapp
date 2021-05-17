@@ -6,12 +6,10 @@ import { formatWithSeparators } from '../../../components';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
 import {
-    currenciesFetch,
     Currency,
     marketsFetch,
     marketsTickersFetch,
     RootState,
-    selectCurrencies,
     selectMarkets,
     selectMarketTickers,
     selectUserLoggedIn,
@@ -21,10 +19,10 @@ import { Market, Ticker } from '../../../modules/public/markets';
 
 interface EstimatedValueProps {
     wallets: Wallet[];
+    currencies: Currency[];
 }
 
 interface ReduxProps {
-    currencies: Currency[];
     markets: Market[];
     tickers: {
         [key: string]: Ticker,
@@ -33,7 +31,6 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    fetchCurrencies: typeof currenciesFetch;
     fetchMarkets: typeof marketsFetch;
     fetchTickers: typeof marketsTickersFetch;
 }
@@ -43,8 +40,6 @@ type Props = DispatchProps & ReduxProps & EstimatedValueProps & IntlProps;
 class EstimatedValueContainer extends React.Component<Props> {
     public componentDidMount(): void {
         const {
-            currencies,
-            fetchCurrencies,
             fetchMarkets,
             fetchTickers,
             markets,
@@ -58,16 +53,10 @@ class EstimatedValueContainer extends React.Component<Props> {
         if (!tickers.length) {
             fetchTickers();
         }
-
-        if (!currencies.length) {
-            fetchCurrencies();
-        }
     }
 
     public componentWillReceiveProps(next: Props) {
         const {
-            currencies,
-            fetchCurrencies,
             fetchMarkets,
             fetchTickers,
             markets,
@@ -80,10 +69,6 @@ class EstimatedValueContainer extends React.Component<Props> {
 
         if (!tickers.length && next.tickers.length) {
             fetchTickers();
-        }
-
-        if (!currencies.length && next.currencies.length) {
-            fetchCurrencies();
         }
     }
 
@@ -134,14 +119,12 @@ class EstimatedValueContainer extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
-    currencies: selectCurrencies(state),
     markets: selectMarkets(state),
     tickers: selectMarketTickers(state),
     userLoggedIn: selectUserLoggedIn(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    fetchCurrencies: () => dispatch(currenciesFetch()),
     fetchMarkets: () => dispatch(marketsFetch()),
     fetchTickers: () => dispatch(marketsTickersFetch()),
 });
