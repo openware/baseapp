@@ -107,7 +107,7 @@ export const WalletsScreen: FC = (): ReactElement => {
 
     return (
         <React.Fragment>
-            <EstimatedValue wallets={mergedWallets} currencies={currencies}/>
+            <EstimatedValue wallets={mergedWallets} />
             <div className="pg-wallets-tab pg-container">
                 <div className="pg-wallets-tab__tabs-content">
                     <TabPanel
