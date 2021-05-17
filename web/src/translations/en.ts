@@ -520,7 +520,7 @@ export const en = {
     'page.body.kyc.identity.firstName': 'Your name',
     'page.body.kyc.identity.lastName': 'Your last name',
     'page.body.kyc.identity.dateOfBirth': 'Date of birth',
-    'page.body.kyc.identity.dateOfBirth.placeholder': 'DD/MM/YY',
+    'page.body.kyc.identity.dateOfBirth.placeholder': 'DD/MM/YYYY',
     'page.body.kyc.identity.CoR': 'Select country',
     'page.body.kyc.identity.residentialAddress': 'Your address',
     'page.body.kyc.identity.city': 'Your city',
