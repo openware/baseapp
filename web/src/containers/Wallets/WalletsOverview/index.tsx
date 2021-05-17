@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CryptoIcon } from 'src/components/CryptoIcon';
 import { Decimal, formatWithSeparators, Table } from 'src/components';
-import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
+import { useMarketsFetch, useMarketsTickersFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
 import { selectAbilities, selectCurrencies, selectMarkets, selectMarketTickers, selectP2PCurrenciesData, selectP2PWallets, selectP2PWalletsLoading, selectWallets, selectWalletsLoading, Wallet } from 'src/modules';
 import { estimateUnitValue } from 'src/helpers/estimateValue';
 import { VALUATION_PRIMARY_CURRENCY } from 'src/constants';
@@ -44,7 +44,6 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
 
     useWalletsFetch();
     useP2PWalletsFetch();
-    useCurrenciesFetch();
     useMarketsTickersFetch();
     useMarketsFetch();
 

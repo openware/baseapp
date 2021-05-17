@@ -18,7 +18,6 @@ interface Props {
     handleToggleAddAddressModal: () => void;
 }
 
-
 const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const [coinAddress, setCoinAddress] = React.useState('');
     const [coinAddressValid, setCoinAddressValid] = React.useState(false);

@@ -25,7 +25,6 @@ import {
     alertPush,
     beneficiariesFetch,
     Beneficiary,
-    currenciesFetch,
     Currency,
     Market,
     marketsFetch,
@@ -81,7 +80,6 @@ interface DispatchProps {
     walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
     fetchSuccess: typeof alertPush;
     setMobileWalletUi: typeof setMobileWalletUi;
-    currenciesFetch: typeof currenciesFetch;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -164,7 +162,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     private description = this.translate('page.body.wallets.tabs.deposit.fiat.message2');
 
     public componentDidMount() {
-        const { wallets, currency, action, markets, tickers, currencies } = this.props;
+        const { wallets, currency, action, markets, tickers } = this.props;
         const { currentTabIndex, selectedWalletIndex } = this.state;
 
         if (this.props.wallets.length === 0) {
@@ -201,10 +199,6 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         if (!tickers.length) {
             this.props.fetchTickers();
         }
-
-        if (!currencies.length) {
-            this.props.currenciesFetch();
-        }
     }
 
     public componentWillReceiveProps(next: Props) {
@@ -227,7 +221,6 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                 activeIndex: next.wallets.indexOf(walletToSet),
                 filteredWallets: next.wallets,
             });
-
 
             walletToSet?.currency && this.props.fetchBeneficiaries({ currency_id: walletToSet.currency?.toLowerCase() });
 
@@ -659,7 +652,6 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     clearWallets: () => dispatch(walletsData([])),
     fetchSuccess: payload => dispatch(alertPush(payload)),
     setMobileWalletUi: payload => dispatch(setMobileWalletUi(payload)),
-    currenciesFetch: () => dispatch(currenciesFetch()),
 });
 
 export const WalletsSpot = compose(
