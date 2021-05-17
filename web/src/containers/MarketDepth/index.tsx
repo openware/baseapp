@@ -1,98 +1,55 @@
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
 import { Decimal } from '../../components/Decimal';
 import { MarketDepths } from '../../components/MarketDepths';
 import {
-    Market,
-    RootState,
     selectChartRebuildState,
     selectCurrentColorTheme,
     selectCurrentMarket,
     selectDepthAsks,
     selectDepthBids,
+    selectOrderBookLoading,
 } from '../../modules';
 
-interface ReduxProps {
-    asksItems: string[][];
-    bidsItems: string[][];
-    chartRebuild: boolean;
-    colorTheme: string;
-    currentMarket: Market | undefined;
-}
+export const MarketDepthsComponent = () => {
+    const asksItems = useSelector(selectDepthAsks);
+    const bidsItems = useSelector(selectDepthBids);
+    const chartRebuild = useSelector(selectChartRebuildState);
+    const colorTheme = useSelector(selectCurrentColorTheme);
+    const currentMarket = useSelector(selectCurrentMarket);
+    const loading = useSelector(selectOrderBookLoading);
 
-type Props = ReduxProps;
+    const settings = React.useMemo(() => {
+        return {
+              tooltip: true,
+              dataKeyX: 'price',
+              dataKeyY: 'cumulativeVolume',
+        };
+    }, []);
 
-const settings = {
-    tooltip: true,
-    dataKeyX: 'price',
-    dataKeyY: 'cumulativeVolume',
-};
-
-class MarketDepthContainer extends React.Component<Props> {
-    public shouldComponentUpdate(nextProps: Props) {
-        const {
-            asksItems,
-            bidsItems,
-            chartRebuild,
-            colorTheme,
-            currentMarket,
-        } = this.props;
-        const colorThemeChanged = nextProps.colorTheme !== colorTheme;
-        const currentMarketChanged = nextProps.currentMarket ? nextProps.currentMarket !== currentMarket : false;
-        const chartRebuildTriggered = nextProps.chartRebuild !== chartRebuild;
-        const ordersChanged = JSON.stringify(nextProps.asksItems) !== JSON.stringify(asksItems) ||
-            JSON.stringify(nextProps.bidsItems) !== JSON.stringify(bidsItems);
-
-        return ordersChanged || currentMarketChanged || chartRebuildTriggered || colorThemeChanged;
-    }
-
-    public render() {
-        const { asksItems, bidsItems } = this.props;
-
-        return (
-            <div className="cr-market-depth">
-                {(asksItems.length || bidsItems.length) ? this.renderMarketDepth() : null}
-            </div>
-        );
-    }
-
-    private renderMarketDepth() {
-        const { colorTheme } = this.props;
-
-        return (
-            <MarketDepths
-                settings={settings}
-                className={'pg-market-depth'}
-                data={this.convertToDepthFormat()}
-                colorTheme={colorTheme}
-            />);
-    }
-
-    private convertToCumulative = (data, type) => {
-        const { currentMarket } = this.props;
-
-        if (!currentMarket) {
-            return;
-        }
-
+    const tipLayout = React.useCallback(({ volume, price, cumulativeVolume, cumulativePrice }) => {
         const [askCurrency, bidCurrency] = [currentMarket.base_unit.toUpperCase(), currentMarket.quote_unit.toUpperCase()];
-        const tipLayout = ({ volume, price, cumulativeVolume, cumulativePrice }) => (
-            <span className={'pg-market-depth__tooltip'}>
+
+        return (
+            <span className="pg-market-depth__tooltip">
                 <span><FormattedMessage id="page.body.trade.header.marketDepths.content.price" /> : {Decimal.format(price, currentMarket.price_precision)} {bidCurrency}</span>
                 <span><FormattedMessage id="page.body.trade.header.marketDepths.content.volume" /> : {Decimal.format(volume, currentMarket.amount_precision)} {askCurrency}</span>
                 <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeVolume" /> : {Decimal.format(cumulativeVolume, currentMarket.amount_precision)} {askCurrency}</span>
                 <span><FormattedMessage id="page.body.trade.header.marketDepths.content.cumulativeValue" /> : {Decimal.format(cumulativePrice, currentMarket.price_precision)} {bidCurrency}</span>
             </span>
         );
+    }, [currentMarket]);
 
+    const cumulative = React.useCallback((data, type) => {
         let cumulativeVolumeData = 0;
         let cumulativePriceData = 0;
 
-        const cumulative = data.map((item, index) => {
+        return data.map((item, index) => {
             const [price, volume] = item;
             const numberVolume = Decimal.format(volume, currentMarket.amount_precision);
             const numberPrice = Decimal.format(price, currentMarket.price_precision);
+
             cumulativeVolumeData = +numberVolume + cumulativeVolumeData;
             cumulativePriceData = cumulativePriceData + (+numberPrice * +numberVolume);
 
@@ -105,35 +62,44 @@ class MarketDepthContainer extends React.Component<Props> {
                 name: tipLayout({ volume, price, cumulativeVolume: cumulativeVolumeData, cumulativePrice: cumulativePriceData }),
             };
         });
+    }, [currentMarket]);
 
-        return type === 'bid' ? cumulative
-            .sort((a, b) => b.bid - a.bid) :
-            cumulative.sort((a, b) => a.ask - b.ask);
-    };
+    const convertToCumulative = React.useCallback((data, type) => {
+        const cumulativeData = cumulative(data, type);
 
-    private convertToDepthFormat() {
-        const { asksItems, bidsItems } = this.props;
-        const asksItemsLength = asksItems.length;
-        const bidsItemsLength = bidsItems.length;
+        return type === 'bid' ? cumulativeData.sort((a, b) => b.bid - a.bid) : cumulativeData.sort((a, b) => a.ask - b.ask);
+    }, []);
 
+    const convertToDepthFormat = React.useMemo(() => {
+        const resultLength = asksItems.length > bidsItems.length ? bidsItems.length : asksItems.length;
 
-        const resultLength = asksItemsLength > bidsItemsLength ? bidsItemsLength : asksItemsLength;
         const asks = asksItems.slice(0, resultLength);
         const bids = bidsItems.slice(0, resultLength);
 
-        const asksVolume = this.convertToCumulative(asks, 'ask');
-        const bidsVolume = this.convertToCumulative(bids, 'bid');
+        const asksVolume = convertToCumulative(asks, 'ask');
+        const bidsVolume = convertToCumulative(bids, 'bid');
 
         return [...bidsVolume, ...asksVolume];
+    }, [asksItems, bidsItems]);
+
+    const renderMarketDepths = React.useMemo(() => {
+        return (
+            <MarketDepths
+                settings={settings}
+                className="pg-market-depth"
+                data={convertToDepthFormat}
+                colorTheme={colorTheme}
+            />
+        );
+    }, [settings, colorTheme, asksItems, bidsItems]);
+
+    if (loading) {
+        return null;
     }
-}
 
-const mapStateToProps = (state: RootState) => ({
-    asksItems: selectDepthAsks(state),
-    bidsItems: selectDepthBids(state),
-    chartRebuild: selectChartRebuildState(state),
-    colorTheme: selectCurrentColorTheme(state),
-    currentMarket: selectCurrentMarket(state),
-});
-
-export const MarketDepthsComponent = connect(mapStateToProps)(MarketDepthContainer);
+    return (
+        <div className="cr-market-depth">
+            {renderMarketDepths}
+        </div>
+    );
+};
