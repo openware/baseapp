@@ -162,7 +162,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     private description = this.translate('page.body.wallets.tabs.deposit.fiat.message2');
 
     public componentDidMount() {
-        const { wallets, currency, action, markets, tickers, currencies } = this.props;
+        const { wallets, currency, action, markets, tickers } = this.props;
         const { currentTabIndex, selectedWalletIndex } = this.state;
 
         if (this.props.wallets.length === 0) {

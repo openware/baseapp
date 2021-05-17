@@ -31,8 +31,8 @@ const EstimatedValue: React.FC<Props> = (props: Props): React.ReactElement => {
     useMarketsFetch();
     useWalletsFetch();
 
-    const renderSecondaryCurrencyValuation = React.useCallback((estimatedValue: string) => {
-        const estimatedValueSecondary = estimateUnitValue(VALUATION_SECONDARY_CURRENCY, VALUATION_PRIMARY_CURRENCY, +estimatedValue, currencies, markets, tickers);
+    const renderSecondaryCurrencyValuation = React.useCallback((value: string) => {
+        const estimatedValueSecondary = estimateUnitValue(VALUATION_SECONDARY_CURRENCY, VALUATION_PRIMARY_CURRENCY, +value, currencies, markets, tickers);
 
         return (
             <span className="value-container">
