@@ -921,6 +921,7 @@ export const en = {
     'resource.api_key.empty_totp': 'TOTP code is missing or empty',
     'resource.api_key.missing_kid': 'KID is missing',
     'resource.api_key.empty_state': 'State is missing or empty',
+    'resource.api_key.invalid_totp': 'OTP code is invalid',
 
     'resource.phone.missing_phone_number': 'Phone number is missing',
     'resource.phone.empty_phone_number': 'Phone number is missing or empty',
