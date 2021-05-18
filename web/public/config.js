@@ -23,6 +23,9 @@ function fetchConfigs() {
     } else {
         if (fetchConfig.status === 200) {
             window.env = JSON.parse(fetchConfig.responseText);
+            if (['/restriction', '/maintenance'].includes(window.location.pathname)) {
+                window.location.replace(`${window.location.origin}/`);
+            }
         } else if (fetchConfig.status === 471 && window.location.pathname !== '/restriction') {
             window.location.replace(`${window.location.origin}/restriction`);
         } else if (UnavailableServiceErrors.has(fetchConfig.status) && window.location.pathname !== '/maintenance') {

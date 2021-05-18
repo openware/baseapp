@@ -11,13 +11,14 @@ import (
 	"time"
 	"strconv"
 
+	"baseapp/daemons"
+
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
 	"github.com/openware/kaigara/pkg/vault"
 	"github.com/openware/pkg/mngapi/peatio"
 	"github.com/openware/pkg/utils"
 	"github.com/openware/sonic"
-	"baseapp/daemons"
 )
 
 // Version variable stores Application Version from main package
@@ -157,9 +158,15 @@ func maintenance(ctx *gin.Context) {
 		log.Println("filePaths:", "Can't take list of paths for css files: "+err.Error())
 	}
 
+	jsFiles, err := FilesPaths("/public/assets/config.js")
+	if err != nil {
+		log.Println("filePaths", "Can't take path for config.js in public folder: "+err.Error())
+	}
+
 	ctx.HTML(http.StatusOK, "maintenance", gin.H{
-		"title":                 "Maintenance",
-		"cssFiles":              cssFiles,
+		"title":    "Maintenance",
+		"cssFiles": cssFiles,
+		"jsFiles":  jsFiles,
 	})
 }
 
@@ -169,9 +176,15 @@ func restriction(ctx *gin.Context) {
 		log.Println("filePaths:", "Can't take list of paths for css files: "+err.Error())
 	}
 
+	jsFiles, err := FilesPaths("/public/assets/config.js")
+	if err != nil {
+		log.Println("filePaths", "Can't take path for config.js in public folder: "+err.Error())
+	}
+
 	ctx.HTML(http.StatusOK, "restriction", gin.H{
-		"title":                 "Restriction",
-		"cssFiles":              cssFiles,
+		"title":    "Restriction",
+		"cssFiles": cssFiles,
+		"jsFiles":  jsFiles,
 	})
 }
 
