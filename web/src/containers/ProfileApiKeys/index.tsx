@@ -352,7 +352,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                 </div>
                 <div className={emailGroupClass}>
                     <CustomInput
-                        type="number"
+                        type="text"
                         label={this.t('page.body.profile.apiKeys.modal.label')}
                         placeholder={this.t('page.body.profile.apiKeys.modal.placeholder')}
                         defaultLabel="2FA code"

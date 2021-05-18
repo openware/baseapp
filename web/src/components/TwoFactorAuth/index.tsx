@@ -69,7 +69,7 @@ export const TwoFactorAuthComponent: React.FC<TwoFactorAuthProps> = ({
                                 'cr-email-form__group--focused': codeFocused,
                             })}>
                             <CustomInput
-                                type="number"
+                                type="text"
                                 label={label || '6-digit Google Authenticator Code'}
                                 placeholder={label || '6-digit Google Authenticator Code'}
                                 defaultLabel="6-digit Google Authenticator Code"
