@@ -924,6 +924,7 @@ export const ru: LangType = {
     'resource.api_key.empty_totp': '2FA отсутствует',
     'resource.api_key.missing_kid': 'KID отсутствует',
     'resource.api_key.empty_state': 'Состояние отсутствует',
+    'resource.api_key.invalid_totp': 'Код 2FA недействителен',
 
     'resource.phone.missing_phone_number': 'Номер телефона отсутствует',
     'resource.phone.empty_phone_number': 'Номер телефона отсутствует',
