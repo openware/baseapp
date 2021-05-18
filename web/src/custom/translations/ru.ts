@@ -531,7 +531,7 @@ export const ru: LangType = {
     'page.body.kyc.identity.firstName': 'Ваше имя',
     'page.body.kyc.identity.lastName': 'Ваша фамилия',
     'page.body.kyc.identity.dateOfBirth': 'Дата рождения',
-    'page.body.kyc.identity.dateOfBirth.placeholder': 'ДД / ММ / ГГ',
+    'page.body.kyc.identity.dateOfBirth.placeholder': 'ДД/ММ/ГГ',
     'page.body.kyc.identity.CoR': 'Страна проживания',
     'page.body.kyc.identity.residentialAddress': 'Место проживания',
     'page.body.kyc.identity.city': 'Город',
