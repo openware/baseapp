@@ -8,6 +8,7 @@ import { Captcha, SignInComponent, TwoFactorAuth } from '../../components';
 import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
 import { useReduxSelector } from '../../hooks';
 import {
+    selectMobileDeviceState,
     selectSignInRequire2FA,
     selectUserFetching,
     selectUserLoggedIn,
@@ -34,8 +35,6 @@ export const SignInScreen: React.FC = () => {
     const [passwordError, setPasswordError] = useState('');
     const [passwordFocused, setPasswordFocused] = useState(false);
     const [otpCode, setOtpCode] = useState('');
-    const [error2fa, setError2fa] = useState('');
-    const [codeFocused, setCodeFocused] = useState(false);
 
     const isLoggedIn = useReduxSelector(selectUserLoggedIn);
     const loading = useReduxSelector(selectUserFetching);
@@ -45,6 +44,7 @@ export const SignInScreen: React.FC = () => {
     const reCaptchaSuccess = useReduxSelector(selectRecaptchaSuccess);
     const geetestCaptchaSuccess = useReduxSelector(selectGeetestCaptchaSuccess);
     const captcha_response = useReduxSelector(selectCaptchaResponse);
+    const isMobileDevice = useReduxSelector(selectMobileDeviceState);
 
     useEffect(() => {
         setDocumentTitle('Sign In');
@@ -80,7 +80,6 @@ export const SignInScreen: React.FC = () => {
     }, []);
 
     const handleChangeOtpCode = useCallback((value: string) => {
-        setError2fa('');
         setOtpCode(value);
     }, []);
 
@@ -95,9 +94,7 @@ export const SignInScreen: React.FC = () => {
     }, [dispatch, email, password, captcha_response, captchaType()]);
 
     const handle2FASignIn = useCallback(() => {
-        if (!otpCode) {
-            setError2fa('Please enter 2fa code');
-        } else {
+        if (otpCode) {
             dispatch(
                 signIn({
                     email,
@@ -133,10 +130,6 @@ export const SignInScreen: React.FC = () => {
         [emailFocused, passwordFocused]
     );
 
-    const handle2faFocus = useCallback(() => {
-        setCodeFocused(!codeFocused);
-    }, [codeFocused]);
-
     const validateForm = useCallback(() => {
         const isEmailValid = email.match(EMAIL_REGEX);
 
@@ -163,6 +156,7 @@ export const SignInScreen: React.FC = () => {
     }, []);
 
     const handleClose = useCallback(() => {
+        setOtpCode('');
         dispatch(signInRequire2FA({ require2fa: false }));
     }, [dispatch]);
 
@@ -173,17 +167,14 @@ export const SignInScreen: React.FC = () => {
             <div className={cx('pg-sign-in-screen__container', { loading })}>
                 {require2FA ? (
                     <TwoFactorAuth
+                        isMobile={isMobileDevice}
                         isLoading={loading}
                         onSubmit={handle2FASignIn}
                         title={formatMessage({ id: 'page.password2fa' })}
-                        label={formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' })}
                         buttonLabel={formatMessage({ id: 'page.header.signIn' })}
                         message={formatMessage({ id: 'page.password2fa.message' })}
-                        codeFocused={codeFocused}
                         otpCode={otpCode}
-                        error={error2fa}
                         handleOtpCodeChange={handleChangeOtpCode}
-                        handleChangeFocusField={handle2faFocus}
                         handleClose2fa={handleClose}
                     />
                 ) : (
