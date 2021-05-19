@@ -6,8 +6,8 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { withRouter } from 'react-router';
 import { IntlProps } from '../../';
 import {
+    CodeVerification,
     CopyableTextField,
-    CustomInput,
     Pagination,
     Table,
 } from '../../components';
@@ -24,6 +24,7 @@ import {
     ApiKeyStateModal, ApiKeyUpdateFetch,
     apiKeyUpdateFetch,
     RootState,
+    selectMobileDeviceState,
     selectUserInfo,
     User,
 } from '../../modules';
@@ -46,6 +47,7 @@ interface ReduxProps {
     firstElemIndex: number;
     lastElemIndex: number;
     nextPageExists: boolean;
+    isMobile: boolean;
 }
 
 interface DispatchProps {
@@ -234,7 +236,7 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
 
     private renderModalBody = () => {
         const {otpCode, codeFocused} = this.state;
-        const { modal } = this.props;
+        const { modal, isMobile } = this.props;
         const secret = (modal && modal.apiKey) ? modal.apiKey.secret : '';
         const emailGroupClass = cr('cr-email-form__group', {
             'cr-email-form__group--focused': codeFocused,
@@ -351,18 +353,16 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                     {this.t('page.body.profile.apiKeys.modal.title')}
                 </div>
                 <div className={emailGroupClass}>
-                    <CustomInput
+                    <CodeVerification
+                        code={otpCode}
+                        onChange={this.handleOtpCodeChange}
+                        onSubmit={this.handleEnterPress}
+                        codeLength={6}
                         type="text"
-                        label={this.t('page.body.profile.apiKeys.modal.label')}
-                        placeholder={this.t('page.body.profile.apiKeys.modal.placeholder')}
-                        defaultLabel="2FA code"
-                        handleChangeInput={this.handleOtpCodeChange}
-                        inputValue={otpCode || ''}
-                        handleFocusInput={this.handleChangeFocusField}
-                        classNameLabel="cr-email-form__label"
-                        classNameInput="cr-email-form__input"
-                        autoFocus={true}
-                        onKeyPress={this.handleEnterPress}
+                        placeholder="X"
+                        inputMode="decimal"
+                        showPaste2FA={true}
+                        isMobile={isMobile}
                     />
                 </div>
                 <div className="cr-email-form__button-wrapper">
@@ -488,6 +488,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     firstElemIndex: selectApiKeysFirstElemIndex(state, 4),
     lastElemIndex: selectApiKeysLastElemIndex(state, 4),
     nextPageExists: selectApiKeysNextPageExists(state),
+    isMobile: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
