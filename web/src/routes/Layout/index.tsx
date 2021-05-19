@@ -409,9 +409,8 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         const timeleft = this.getLastAction() + parseFloat(minutesUntilAutoLogout()) * 60 * 1000;
         const diff = timeleft - now;
         const isTimeout = diff < 0;
-        const token = localStorage.getItem('csrfToken');
 
-        if (isTimeout && user.email || this.props.isLoggedIn && !token) {
+        if (isTimeout && user.email) {
             if (user.state === 'active') {
                 this.handleChangeExpSessionModalState();
             }
