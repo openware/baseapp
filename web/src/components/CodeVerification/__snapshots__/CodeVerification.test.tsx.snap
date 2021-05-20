@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CodeVerification test should render 1`] = `
+<div
+  className="pg-code-verification"
+>
+  <div
+    className="pg-code-verification__wrapper"
+  >
+    <div
+      className="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder pg-code-verification__wrapper-item-placeholder-border"
+      key="0"
+    />
+    <div
+      className="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+      key="1"
+    />
+    <div
+      className="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+      key="2"
+    />
+    <div
+      className="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+      key="3"
+    />
+    <div
+      className="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+      key="4"
+    />
+    <div
+      className="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+      key="5"
+    />
+  </div>
+  <div
+    className="pg-code-verification__input"
+  >
+    <input
+      autoFocus={true}
+      onChange={[Function]}
+      onKeyPress={[MockFunction]}
+      type=""
+      value=""
+    />
+  </div>
+</div>
+`;

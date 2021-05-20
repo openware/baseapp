@@ -38,22 +38,19 @@ exports[`TwoFactorAuth component should render 1`] = `
         <div
           className="cr-email-form__group"
         >
-          <CustomInput
-            autoFocus={true}
-            classNameInput="cr-email-form__input"
-            classNameLabel="cr-email-form__label"
-            defaultLabel="6-digit Google Authenticator Code"
-            handleChangeInput={[MockFunction]}
-            handleFocusInput={[MockFunction]}
-            inputValue=""
-            label="6-digit Google Authenticator Code"
-            onKeyPress={[Function]}
-            placeholder="6-digit Google Authenticator Code"
-            type="number"
+          <CodeVerification
+            code=""
+            codeLength={6}
+            inputMode="decimal"
+            onChange={[MockFunction]}
+            onSubmit={[Function]}
+            placeholder="X"
+            showPaste2FA={true}
+            type="text"
           />
         </div>
         <div
-          className="cr-email-form__button-wrapper cr-email-form__button-wrapper--empty"
+          className="cr-email-form__button-wrapper"
         >
           <Button
             active={false}
