@@ -24,6 +24,7 @@ if (gaKey) {
 
 /* Mobile components */
 const MobileHeader = React.lazy(() => import('./mobile/components/Header').then(({ Header }) => ({ default: Header })));
+const MobileFooter = React.lazy(() => import('./mobile/components/Footer').then(({ Footer }) => ({ default: Footer })));
 
 /* Desktop components */
 const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ Alerts }) => ({ default: Alerts })));
@@ -67,6 +68,7 @@ const RenderDeviceContainers = () => {
             <MobileHeader />
             <AlertsContainer/>
             <LayoutContainer/>
+            <MobileFooter />
         </div>
     );
 };
