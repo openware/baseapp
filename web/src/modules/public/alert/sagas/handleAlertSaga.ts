@@ -54,6 +54,9 @@ export function* handleAlertSaga(action: AlertPush) {
                 if (action.payload.message.indexOf('jwt.decode_and_verify') > -1) {
                     yield call(callAlertData, action);
                 }
+                if (action.payload.message.indexOf('account.withdraw.not_permitted') > -1) {
+                    yield call(callAlertData, action);
+                }
 
                 return;
             case 422:
