@@ -28,7 +28,7 @@ export function* logoutSaga(action: LogoutFetch) {
             },
         }));
 
-        if (error.messages.indexOf('identity.session.not_found') > -1) {
+        if (error.message.indexOf('identity.session.not_found') > -1) {
             yield put(userReset());
         }
     }
