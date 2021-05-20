@@ -1,51 +1,39 @@
-import cr from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { CustomInput } from '../';
+import { CodeVerification } from '../';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 
 export interface TwoFactorAuthProps {
-    errorMessage?: string;
+    isMobile?: boolean;
     isLoading?: boolean;
     onSubmit: () => void;
     title: string;
-    label: string;
     buttonLabel: string;
     message: string;
     otpCode: string;
-    error: string;
-    codeFocused: boolean;
     handleOtpCodeChange: (otp: string) => void;
-    handleChangeFocusField: () => void;
     handleClose2fa: () => void;
 }
 
 export const TwoFactorAuthComponent: React.FC<TwoFactorAuthProps> = ({
-    errorMessage,
+    isMobile,
     isLoading,
     title,
-    label,
-    buttonLabel,
     message,
-    error,
     otpCode,
-    codeFocused,
+    buttonLabel,
     onSubmit,
     handleOtpCodeChange,
-    handleChangeFocusField,
     handleClose2fa,
 }) => {
     const handleEnterPress = React.useCallback(
         (event: React.KeyboardEvent<HTMLInputElement>) => {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && otpCode.length >= 6) {
                 event.preventDefault();
-
-                if (!isLoading && otpCode.match(`^[0-9]{6}$`)) {
-                    onSubmit();
-                }
+                onSubmit();
             }
         },
-        [onSubmit, otpCode, isLoading]
+        [onSubmit, otpCode]
     );
 
     return (
@@ -64,31 +52,22 @@ export const TwoFactorAuthComponent: React.FC<TwoFactorAuthProps> = ({
                     </div>
                     <div className="cr-email-form__form-content">
                         <div className="cr-email-form__header">{message}</div>
-                        <div
-                            className={cr('cr-email-form__group', {
-                                'cr-email-form__group--focused': codeFocused,
-                            })}>
-                            <CustomInput
-                                type="number"
-                                label={label || '6-digit Google Authenticator Code'}
-                                placeholder={label || '6-digit Google Authenticator Code'}
-                                defaultLabel="6-digit Google Authenticator Code"
-                                handleChangeInput={handleOtpCodeChange}
-                                inputValue={otpCode}
-                                handleFocusInput={handleChangeFocusField}
-                                classNameLabel="cr-email-form__label"
-                                classNameInput="cr-email-form__input"
-                                onKeyPress={handleEnterPress}
-                                autoFocus={true}
+                        <div className="cr-email-form__group">
+                            <CodeVerification
+                                code={otpCode}
+                                onChange={handleOtpCodeChange}
+                                onSubmit={handleEnterPress}
+                                codeLength={6}
+                                type="text"
+                                placeholder="X"
+                                inputMode="decimal"
+                                showPaste2FA={true}
+                                isMobile={isMobile}
                             />
-                            {errorMessage && <div className="cr-email-form__error">{errorMessage}</div>}
                         </div>
-                        <div
-                            className={cr('cr-email-form__button-wrapper', {
-                                'cr-email-form__button-wrapper--empty': !(errorMessage || error),
-                            })}>
+                        <div className="cr-email-form__button-wrapper">
                             <Button
-                                disabled={isLoading || !otpCode.match(`^[0-9]{6}$`)}
+                                disabled={isLoading || otpCode.length < 6}
                                 onClick={onSubmit}
                                 size="lg"
                                 variant="primary">
