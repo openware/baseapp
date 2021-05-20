@@ -391,8 +391,6 @@ export const en = {
     'page.body.profile.apiKeys.modal.note_content': `To avoid asset loss, please do not tell your Secret Key and Private Key to others.\
  If you forget you Secret Key, please delete it and apply for a new Secret Key pair.`,
     'page.body.profile.apiKeys.modal.title': 'Enter 2fa code from the app',
-    'page.body.profile.apiKeys.modal.label': '6-digit Google Authenticator code',
-    'page.body.profile.apiKeys.modal.placeholder': 'Enter Code',
 
     'page.body.profile.apiKeys.table.header.kid': 'Kid',
     'page.body.profile.apiKeys.table.header.algorithm': 'Algorithm',
