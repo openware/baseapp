@@ -403,7 +403,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
     };
 
     private renderWithdraw = () => {
-        const { currencies, user, wallets, walletsError } = this.props;
+        const { currencies, user, wallets, walletsError, withdrawSuccess } = this.props;
         const { selectedWalletIndex } = this.state;
         const wallet = (wallets[selectedWalletIndex] || defaultWallet);
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
@@ -419,7 +419,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                     />
                 ) : null}
                 {this.renderWithdrawContent()}
-                {user.otp && wallet.currency && <WalletHistory label="withdraw" type="withdraws" currency={wallet.currency} />}
+                {user.otp && wallet.currency && <WalletHistory label="withdraw" type="withdraws" currency={wallet.currency} withdrawSuccess={withdrawSuccess} />}
             </React.Fragment>
         );
     };
