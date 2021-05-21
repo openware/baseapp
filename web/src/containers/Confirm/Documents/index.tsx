@@ -9,7 +9,7 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../../';
-import { languages } from '../../../api/config';
+import { barongUploadSizeMaxRange, barongUploadSizeMinRange, languages } from '../../../api/config';
 import { CustomInput, DropdownComponent, UploadFile } from '../../../components';
 import { formatDate, isDateInFuture, randomSecureHex } from '../../../helpers';
 import {
@@ -53,15 +53,16 @@ interface DocumentsState {
     fileFront: File[];
     fileBack: File[];
     fileSelfie: File[];
+    frontFileSizeErrorMessage: string;
+    backFileSizeErrorMessage: string;
+    selfieFileSizeErrorMessage: string;
 }
 
 type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 // tslint:disable:member-ordering
 class DocumentsComponent extends React.Component<Props, DocumentsState> {
-    public translate = (e: string) => {
-        return this.props.intl.formatMessage({ id: e });
-    };
+    public translate = (key: string, value?: string, min?: string) => this.props.intl.formatMessage({ id: key }, {value, min});
 
     public data = [
         this.translate('page.body.kyc.documents.select.passport'),
@@ -80,6 +81,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         fileFront: [],
         fileBack: [],
         fileSelfie: [],
+        frontFileSizeErrorMessage: '',
+        backFileSizeErrorMessage: '',
+        selfieFileSizeErrorMessage: '',
     };
 
     public UNSAFE_componentWillReceiveProps(next: Props) {
@@ -100,6 +104,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             expireDateFocused,
             idNumber,
             idNumberFocused,
+            frontFileSizeErrorMessage,
+            backFileSizeErrorMessage,
+            selfieFileSizeErrorMessage
         }: DocumentsState = this.state;
 
         /* tslint:disable */
@@ -197,11 +204,12 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             title={this.translate('page.body.kyc.documents.uploadFile.front.title')}
                             label={this.translate('page.body.kyc.documents.uploadFile.front.label')}
                             buttonText={this.translate('page.body.kyc.documents.uploadFile.front.button')}
-                            sizesText={this.translate('page.body.kyc.documents.uploadFile.front.sizes')}
+                            sizesText={this.uploadFileSizeGuide()}
                             formatsText={this.translate('page.body.kyc.documents.uploadFile.front.formats')}
                             handleUploadScan={(uploadEvent) => this.handleUploadScan(uploadEvent, 'front')}
                             exampleImagePath={DocumentFrontExample}
                             uploadedFile={fileFront[0] && (fileFront[0] as File).name}
+                            fileSizeErrorMessage={frontFileSizeErrorMessage}
                         />
                     ) : null}
                     {this.state.documentsType && this.state.documentsType !== 'Passport' ? (
@@ -211,11 +219,12 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             title={this.translate('page.body.kyc.documents.uploadFile.back.title')}
                             label={this.translate('page.body.kyc.documents.uploadFile.back.label')}
                             buttonText={this.translate('page.body.kyc.documents.uploadFile.back.button')}
-                            sizesText={this.translate('page.body.kyc.documents.uploadFile.back.sizes')}
+                            sizesText={this.uploadFileSizeGuide()}
                             formatsText={this.translate('page.body.kyc.documents.uploadFile.back.formats')}
                             handleUploadScan={(uploadEvent) => this.handleUploadScan(uploadEvent, 'back')}
                             exampleImagePath={DocumentBackExample}
                             uploadedFile={fileBack[0] && (fileBack[0] as File).name}
+                            fileSizeErrorMessage={backFileSizeErrorMessage}
                         />
                     ) : null}
                     {this.state.documentsType ? (
@@ -225,11 +234,12 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             title={this.translate('page.body.kyc.documents.uploadFile.selfie.title')}
                             label={this.translate('page.body.kyc.documents.uploadFile.selfie.label')}
                             buttonText={this.translate('page.body.kyc.documents.uploadFile.selfie.button')}
-                            sizesText={this.translate('page.body.kyc.documents.uploadFile.selfie.sizes')}
+                            sizesText={this.uploadFileSizeGuide()}
                             formatsText={this.translate('page.body.kyc.documents.uploadFile.selfie.formats')}
                             handleUploadScan={(uploadEvent) => this.handleUploadScan(uploadEvent, 'selfie')}
                             exampleImagePath={DocumentSelfieExample}
                             uploadedFile={fileSelfie[0] && (fileSelfie[0] as File).name}
+                            fileSizeErrorMessage={selfieFileSizeErrorMessage}
                         />
                     ) : null}
                     <div className="pg-confirm__content-deep">
@@ -247,6 +257,14 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             </React.Fragment>
         );
     }
+
+    private uploadFileSizeGuide = () => {
+        if (barongUploadSizeMinRange) {
+            return this.translate('page.body.kyc.address.uploadFile.sizeMinMax', barongUploadSizeMaxRange.toString(), barongUploadSizeMinRange.toString());
+        }
+
+        return this.translate('page.body.kyc.address.uploadFile.sizeMax', barongUploadSizeMaxRange.toString());
+    };
 
     private handleChangeDocumentsType = (value: string) => {
         this.setState({
@@ -299,19 +317,46 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     private handleUploadScan = (uploadEvent, id) => {
         const allFiles: File[] = uploadEvent.target.files;
         const maxDocsCount = 1;
-        const additionalFileList =
-            Array.from(allFiles).length > maxDocsCount
-                ? Array.from(allFiles).slice(0, maxDocsCount)
-                : Array.from(allFiles);
+        const additionalFileList = Array.from(allFiles).length > maxDocsCount ? Array.from(allFiles).slice(0, maxDocsCount) : Array.from(allFiles);
+
+        if (!additionalFileList.length) {
+            return;
+        }
+
+        const sizeKB = (additionalFileList[0].size / 1024).toFixed(1);
 
         switch (id) {
             case 'front':
+                if (additionalFileList[0].size > barongUploadSizeMaxRange * 1024 * 1024) {
+                    this.setState({ frontFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB) });
+                } else if (additionalFileList[0].size < barongUploadSizeMinRange * 1024 * 1024) {
+                    this.setState({ frontFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB) });
+                } else {
+                    this.setState({ frontFileSizeErrorMessage: '' });
+                }
+
                 this.setState({ fileFront: additionalFileList });
                 break;
             case 'back':
+                if (additionalFileList[0].size > barongUploadSizeMaxRange * 1024 * 1024) {
+                    this.setState({ backFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB) });
+                } else if (additionalFileList[0].size < barongUploadSizeMinRange * 1024 * 1024) {
+                    this.setState({ backFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB) });
+                } else {
+                    this.setState({ backFileSizeErrorMessage: '' });
+                }
+
                 this.setState({ fileBack: additionalFileList });
                 break;
             case 'selfie':
+                if (additionalFileList[0].size > barongUploadSizeMaxRange * 1024 * 1024) {
+                    this.setState({ selfieFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB) });
+                } else if (additionalFileList[0].size < barongUploadSizeMinRange * 1024 * 1024) {
+                    this.setState({ selfieFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB) });
+                } else {
+                    this.setState({ selfieFileSizeErrorMessage: '' });
+                }
+
                 this.setState({ fileSelfie: additionalFileList });
                 break;
             default:
@@ -335,13 +380,24 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     };
 
     private handleCheckButtonDisabled = () => {
-        const { documentsType, issuedDate, expireDate, fileBack, fileFront, fileSelfie, idNumber } = this.state;
+        const {
+            documentsType,
+            issuedDate,
+            expireDate,
+            fileBack,
+            fileFront,
+            fileSelfie,
+            idNumber,
+            frontFileSizeErrorMessage,
+            backFileSizeErrorMessage,
+            selfieFileSizeErrorMessage
+        } = this.state;
 
         const typeOfDocuments = this.getDocumentsType(documentsType);
         const filesValid =
             typeOfDocuments === 'Passport'
-                ? fileFront.length && fileSelfie.length
-                : fileSelfie.length && fileFront.length && fileBack.length;
+                ? fileFront.length && fileSelfie.length && frontFileSizeErrorMessage === '' && selfieFileSizeErrorMessage === ''
+                : fileSelfie.length && fileFront.length && fileBack.length && frontFileSizeErrorMessage === '' && backFileSizeErrorMessage === '' && selfieFileSizeErrorMessage === '';
 
         return (
             !this.handleValidateInput('idNumber', idNumber) ||

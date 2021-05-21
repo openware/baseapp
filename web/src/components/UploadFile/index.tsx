@@ -12,6 +12,7 @@ interface OwnPropsTranslations {
     formatsText?: string;
     tipText?: string;
     isMobileDevice?: boolean;
+    fileSizeErrorMessage?: string;
 }
 
 interface OwnProps extends OwnPropsTranslations {
@@ -37,6 +38,7 @@ const UploadFileComponent: React.FC<Props> = ({
     uploadedFile,
     accept = 'image/jpg,image/jpeg,image/png,.pdf',
     handleUploadScan,
+    fileSizeErrorMessage,
 }) => {
     const [isMouseTooltipVisible, setIsMouseTooltipVisible] = useState<boolean>(false);
 
@@ -94,6 +96,7 @@ const UploadFileComponent: React.FC<Props> = ({
                                     {buttonText}
                                 </span>
                             ) : null}
+                            <span className="pg-upload-file__content__form__error__text">{fileSizeErrorMessage ? fileSizeErrorMessage : ''}</span>
                             {sizesText ? (
                                 <span className="pg-upload-file__content__form__info__text">{sizesText}</span>
                             ) : null}
