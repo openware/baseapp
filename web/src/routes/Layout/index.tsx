@@ -219,6 +219,11 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         if (!this.props.user.email && nextProps.user.email && !this.props.location.pathname.includes('/setup')) {
             this.props.userFetch();
         }
+
+        if (!this.props.isLoggedIn && nextProps.isLoggedIn && !this.props.user.email) {
+            this.initInterval();
+            this.check();
+        }
     }
 
     public componentDidUpdate(prevProps: LayoutProps) {
@@ -375,12 +380,14 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         const timeleft = this.getLastAction() + parseFloat(minutesUntilAutoLogout()) * 60 * 1000;
         const diff = timeleft - now;
         const isTimeout = diff < 0;
+
         if (isTimeout && user.email) {
             if (user.state === 'active') {
                 this.handleChangeExpSessionModalState();
             }
 
             this.props.logout();
+            clearInterval(this.timer);
         }
     };
 
