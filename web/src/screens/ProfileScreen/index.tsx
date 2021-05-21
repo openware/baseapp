@@ -15,7 +15,7 @@ import {
 } from 'src/containers';
 import { CompanyAccount } from 'src/custom/components';
 import { useDocumentTitle } from 'src/hooks';
-import { selectAbilities } from 'src/modules';
+import { selectAbilities, selectUserInfo } from 'src/modules';
 
 interface ParamType {
     routeTab?: string;
@@ -32,9 +32,11 @@ export const ProfileScreen: FC = (): ReactElement => {
     const { formatMessage } = useIntl();
     const { routeTab } = useParams<ParamType>();
     const abilities = useSelector(selectAbilities);
+    const user = useSelector(selectUserInfo);
 
-    //TODO: get info from user api
-    const isCompanyAccount = true;
+    const isCompanyAccount = useCallback(() => {
+        return !!user.organization;
+    }, [user]);
 
     useDocumentTitle('Profile');
 
@@ -52,9 +54,9 @@ export const ProfileScreen: FC = (): ReactElement => {
                 setCurrentTabIndex(index);
             }
         } else {
-            isCompanyAccount ? history.push('/profile/company') : history.push('/profile/security');
+            isCompanyAccount() ? history.push('/profile/company') : history.push('/profile/security');
         }
-    }, [routeTab, tabMapping, isCompanyAccount]);
+    }, [routeTab, tabMapping]);
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
     const onCurrentTabChange = useCallback((index: number) => {
@@ -96,7 +98,7 @@ export const ProfileScreen: FC = (): ReactElement => {
 
     return (
         <div className="container pg-profile-page">
-            {isCompanyAccount ?
+            {isCompanyAccount() ?
                 <React.Fragment>
                     <CompanyAccount />
                 </React.Fragment>
@@ -125,7 +127,7 @@ export const ProfileScreen: FC = (): ReactElement => {
                     </div>
                 </div>
             }
-            {(isCompanyAccount || tab === 'security') && (
+            {(isCompanyAccount() || tab === 'security') && (
                 <div className="row">
                     <div className="col-12">
                         <ProfileAccountActivity/>

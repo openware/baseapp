@@ -58,6 +58,10 @@ export const DownloadBalanceComponent: React.FC<DownloadBalanceProps> = ({
         );
     }, [startDate, endDate]);
 
+    const onClickDownloadBalance = useCallback(() => {
+        handleDownloadBalance(startDate, endDate);
+    }, [startDate, endDate]);
+
     const renderFooter = useMemo(() => {
         return (
             <div className="cr-download-balance__footer">
@@ -72,10 +76,6 @@ export const DownloadBalanceComponent: React.FC<DownloadBalanceProps> = ({
             </div>
         );
     }, []);
-
-    const onClickDownloadBalance = useCallback(() => {
-        handleDownloadBalance(startDate, endDate);
-    }, [startDate, endDate]);
 
     return (
         <div className="cr-download-balance">

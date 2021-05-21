@@ -20,6 +20,13 @@ export interface Phone {
     validated_at: string | null;
 }
 
+export interface Organization {
+    id: number,
+    code: string,
+    name: string,
+    status: string,
+}
+
 export interface User {
     username?: string;
     email: string;
@@ -34,6 +41,7 @@ export interface User {
     referal_uid: string | null;
     labels: Label[];
     phone: Phone[];
+    organization?: Organization; 
     created_at: string;
     updated_at: string;
 }

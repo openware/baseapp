@@ -23,13 +23,13 @@ const CompanyAccountComponent: React.FC = () => {
             <div className="company-info">
                 <div className="company-info__icon"></div>
                 <div className="company-info__content">
-                    <div className="company-info__content__name">Delchain</div>
-                    <div className="company-info__content__id">8899776611</div>
+                    <div className="company-info__content__name">{user.organization?.name}</div>
+                    <div className="company-info__content__id">{user.organization?.code}</div>
                 </div>
                 <div className="company-info__status">{translate('page.body.profile.company.status.active')}</div>
             </div>
         );
-    }, []);
+    }, [user]);
 
     const renderAccountDetail = useMemo(() => {
         return (
