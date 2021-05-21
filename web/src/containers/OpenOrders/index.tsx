@@ -124,9 +124,9 @@ export class OpenOrdersContainer extends React.Component<Props> {
 
         return list.map((item: OrderCommon) => {
             const { id, price, created_at, remaining_volume, origin_volume, side } = item;
-
             const executedVolume = Number(origin_volume) - Number(remaining_volume);
             const remainingAmount = Number(remaining_volume);
+            const total = Number(origin_volume) * Number(price);
             const filled = ((executedVolume / Number(origin_volume)) * 100).toFixed(2);
             const priceFixed = currentMarket ? currentMarket.price_precision : 0;
             const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
@@ -135,7 +135,7 @@ export class OpenOrdersContainer extends React.Component<Props> {
                 localeDate(created_at, 'fullDate'),
                 <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(price, priceFixed, ',')}</span>,
                 <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(remainingAmount, amountFixed, ',')}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(+remaining_volume, amountFixed, ',')}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(total, amountFixed, ',')}</span>,
                 <span style={{ color: setTradeColor(side).color }} key={id}>{filled}%</span>,
                 side,
             ];
