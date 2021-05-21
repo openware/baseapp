@@ -57,7 +57,7 @@ export interface Deposit {
     fee: string;
     txid: string;
     created_at: string;
-    confirmations: number;
+    confirmations: number | string;
     completed_at: string;
     state: string;
     price?: number;
