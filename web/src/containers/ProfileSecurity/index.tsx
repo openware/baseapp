@@ -15,7 +15,7 @@ import { CloseIcon } from '../../assets/images/CloseIcon';
 import { CheckBigIcon } from '../../assets/images/kyc/CheckBigIcon';
 import { ClocksIcon } from '../../assets/images/kyc/ClocksIcon';
 import { CrossIcon } from '../../assets/images/kyc/CrossIcon';
-import { ChangePassword, CustomInput, Modal, Tooltip } from '../../components';
+import { ChangePassword, CodeVerification, Modal, Tooltip } from '../../components';
 import {
     entropyPasswordFetch,
     Label,
@@ -23,6 +23,7 @@ import {
     RootState,
     selectCurrentPasswordEntropy,
     selectLabelData,
+    selectMobileDeviceState,
     selectUserInfo,
     User,
 } from '../../modules';
@@ -38,6 +39,7 @@ interface ReduxProps {
     user: User;
     passwordChangeSuccess?: boolean;
     currentPasswordEntropy: number;
+    isMobile: boolean;
 }
 
 interface RouterProps {
@@ -306,26 +308,18 @@ class ProfileSecurityComponent extends React.Component<Props, State> {
     };
 
     private renderModalBody = () => {
-        const { code2FA, code2FAFocus } = this.state;
-
-        const code2FAClass = cr('cr-email-form__group', {
-            'cr-email-form__group--focused': code2FAFocus,
-        });
-
         return (
             <div className="pg-exchange-modal-submit-body pg-exchange-modal-submit-body-2fa">
-                <div className={code2FAClass}>
-                    <CustomInput
+                <div className="cr-email-form__group">
+                    <CodeVerification
+                        code={this.state.code2FA}
+                        onChange={this.handleChange2FACode}
+                        codeLength={6}
                         type="text"
-                        label="2FA code"
-                        placeholder="2FA code"
-                        defaultLabel=""
-                        handleFocusInput={this.handleClickFieldFocus('code2FAFocus')}
-                        handleChangeInput={this.handleChange2FACode}
-                        inputValue={code2FA}
-                        classNameLabel="cr-email-form__label"
-                        classNameInput="cr-email-form__input"
-                        autoFocus={true}
+                        placeholder="X"
+                        inputMode="decimal"
+                        showPaste2FA={true}
+                        isMobile={this.props.isMobile}
                     />
                 </div>
             </div>
@@ -388,17 +382,6 @@ class ProfileSecurityComponent extends React.Component<Props, State> {
         }
     };
 
-    private handleClickFieldFocus = (field: string) => () => {
-        this.handleFieldFocus(field);
-    };
-
-    private handleFieldFocus = (field: string) => {
-        // @ts-ignore
-        this.setState(prev => ({
-            [field]: !prev[field],
-        }));
-    };
-
     private handleCheckLabel = (labels: Label[], labelToCheck: string) => {
         const targetLabel =
             labels.length && labels.find((label: Label) => label.key === labelToCheck && label.scope === 'private');
@@ -429,6 +412,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     passwordChangeSuccess: selectChangePasswordSuccess(state),
     currentPasswordEntropy: selectCurrentPasswordEntropy(state),
     labels: selectLabelData(state),
+    isMobile: selectMobileDeviceState(state),
 });
 
 const mapDispatchToProps = dispatch => ({
