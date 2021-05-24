@@ -378,12 +378,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         );
     };
 
-    private handleChangeFocusField = () => {
-        this.setState(prev => ({
-            codeFocused: !prev.codeFocused,
-        }));
-    };
-
     private handleHide2FAModal = () => {
         const payload: ApiKeys2FAModal['payload'] = {active: false};
         this.props.toggleApiKeys2FAModal(payload);
