@@ -28,14 +28,12 @@ describe('P2P Payment Methods Fetch', () => {
             id: 1,
             type: '',
             name: 'Universal',
-            logo: '',
             options: {},
         },
         {
             id: 2,
             type: '',
             name: 'Universal',
-            logo: '',
             options: {},
         },
     ];

@@ -24,6 +24,7 @@ describe('Ranger reducer', () => {
     it('supports rangerConnectData', () => {
         expect(rangerReducer(undefined, rangerConnectData())).toEqual({
             withAuth: false,
+            withP2P: false,
             connected: true,
             connecting: false,
             subscriptions: [],
@@ -33,12 +34,14 @@ describe('Ranger reducer', () => {
     it('supports rangerDisconnectData', () => {
         const initialState: RangerState = {
             withAuth: true,
+            withP2P: false,
             connected: true,
             connecting: false,
             subscriptions: [],
         };
         expect(rangerReducer(initialState, rangerDisconnectData())).toEqual({
             withAuth: true,
+            withP2P: false,
             connected: false,
             connecting: false,
             subscriptions: [],

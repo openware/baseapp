@@ -161,10 +161,11 @@ describe('ranger helpers', () => {
                 streamsBuilder(true, true, ['global.tickers'], marketExample),
             ).toEqual([
                 'global.tickers',
-                'p2p',
+                'p2p.event',
                 'order',
                 'trade',
                 'deposit_address',
+                'p2p',
                 'abcdefg.trades',
                 'abcdefg.update',
             ]);

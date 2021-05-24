@@ -9,6 +9,7 @@ import { Wallet } from '../../modules';
 const onWalletSelectionChange = jest.fn();
 const walletItems: Wallet[] = [
     {
+        account_type: '',
         active: false,
         locked: '1',
         fee: 0.123,
@@ -20,6 +21,7 @@ const walletItems: Wallet[] = [
         explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
         explorerAddress: 'https://testnet.blockchain.info/address/#{address}'
     }, {
+        account_type: '',
         active: false,
         fee: 0.123,
         locked: '100',
@@ -29,6 +31,7 @@ const walletItems: Wallet[] = [
         type: 'coin',
         fixed: 8,
     }, {
+        account_type: '',
         active: false,
         fee: 0.3,
         locked: '0.4',
@@ -45,6 +48,9 @@ const defaultProps: WalletListProps = {
     onWalletSelectionChange: onWalletSelectionChange,
     walletItems: walletItems,
     onActiveIndexChange: jest.fn,
+    currencies: [],
+    tickers: {},
+    markets: [],
 };
 
 const setup = (props: Partial<WalletListProps> = {}) =>
