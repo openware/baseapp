@@ -156,7 +156,7 @@ export class WalletTable extends React.Component<Props> {
         });
     };
 
-    private formatTxState = (tx: string, confirmations?: number, minConfirmations?: number) => {
+    private formatTxState = (tx: string, confirmations?: number | string, minConfirmations?: number) => {
         const statusMapping = {
             succeed: <SucceedIcon />,
             failed: <FailIcon />,
@@ -166,7 +166,7 @@ export class WalletTable extends React.Component<Props> {
             rejected: <FailIcon />,
             processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
             prepared: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
-            submitted: (confirmations !== undefined && minConfirmations !== undefined) ? (
+            submitted: (minConfirmations && confirmations && confirmations !== 'N/A') ? (
                 `${confirmations}/${minConfirmations}`
             ) : (
                 this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' })
