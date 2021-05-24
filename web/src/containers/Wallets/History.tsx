@@ -20,6 +20,7 @@ import {
     selectLastElemIndex,
     selectNextPageExists,
     selectWallets,
+    selectWithdrawSuccess,
     Wallet,
     WalletHistoryList,
 } from '../../modules';
@@ -41,6 +42,7 @@ export interface ReduxProps {
     firstElemIndex: number;
     lastElemIndex: number;
     nextPageExists: boolean;
+    withdrawSuccess?: boolean;
 }
 
 interface DispatchProps {
@@ -70,6 +72,7 @@ export class WalletTable extends React.Component<Props> {
             currencies,
             currency,
             type,
+            withdrawSuccess,
         } = this.props;
         if (nextProps.currency !== currency || nextProps.type !== type) {
             this.props.resetHistory();
@@ -78,6 +81,10 @@ export class WalletTable extends React.Component<Props> {
 
         if (!currencies.length && nextProps.currencies.length) {
             this.props.fetchCurrencies();
+        }
+
+        if (!withdrawSuccess && nextProps.withdrawSuccess) {
+            this.props.fetchHistory({ page: 0, currency, type, limit: 6 });
         }
     }
 
@@ -188,6 +195,7 @@ export const mapStateToProps = (state: RootState): ReduxProps => ({
     firstElemIndex: selectFirstElemIndex(state, 6),
     lastElemIndex: selectLastElemIndex(state, 6),
     nextPageExists: selectNextPageExists(state, 6),
+    withdrawSuccess: selectWithdrawSuccess(state),
 });
 
 export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
