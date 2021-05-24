@@ -59,20 +59,28 @@
       background: var(--dropdown-background-color);
       padding: 0;
       width: 100%;
+      box-shadow: 0px 6px 12px var(--header-shadow-color-level-1);
+      border: none;
     }
 
     &-item {
       color: var(--dropdown-text-color);
       padding-bottom: 10px;
       padding-top: 10px;
+      border-bottom: 1px solid var(--dropdown-item-border-color);
       transition: 0.2s;
 
       &:hover,
       &:focus,
       &:active {
         background: var(--dropdown-background-color-hover);
+        color: var(--dropdown-text-color-hover);
         outline: none;
         transition: 0.2s;
+      }
+
+      &:last-child {
+        border-bottom: none;
       }
     }
   }

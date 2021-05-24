@@ -7,7 +7,7 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
     "email":"admin@barong.io",
     "uid":"ID489F525B1D",
     "role":"superadmin",
-    "level": 1,
+    "level": 3,
     "otp":true,
     "state":"active",
     "referral_uid":null,

@@ -12,9 +12,9 @@ export interface CommonState {
     loading?: boolean;
 }
 
-export type OrderStatus = 'wait' | 'done' | 'cancel' | 'pending' | 'reject';
+export type OrderStatus = 'wait' | 'done' | 'cancel' | 'pending' | 'reject' | 'trigger_wait';
 export type OrderSide = 'sell' | 'buy';
-export type OrderType = 'limit' | 'market';
+export type OrderType = 'limit' | 'market' | 'stop_loss' | 'stop_limit' | 'take_profit' | 'take_limit';
 export type OrderKind = 'bid' | 'ask';
 
 export interface OrderCommon {
@@ -28,8 +28,10 @@ export interface OrderCommon {
     ord_type?: OrderType;
     avg_price?: string;
     volume?: number;
+    trigger_price?: string;
     created_at?: string;
     updated_at?: string;
+    triggered_at?: string;
     confirmed?: boolean;
     uuid?: string;
     id?: number;

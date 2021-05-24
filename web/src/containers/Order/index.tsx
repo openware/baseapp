@@ -6,24 +6,31 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
+import { TRIGGER_BUY_PRICE_MULT, TRIGGER_BUY_PRICE_ADJUSTED_TYPES } from '../../constants'
 import {
     formatWithSeparators,
     Order,
     OrderProps,
     Decimal,
+    LockedComponent,
 } from '../../components';
 import { FilterPrice } from '../../filters';
 import { IntlProps } from '../../';
 import {
     alertPush,
+    MemberLevels,
+    memberLevelsFetch,
     RootState,
     selectCurrentPrice,
     selectDepthAsks,
     selectDepthBids,
+    selectMemberLevels,
     selectMobileDeviceState,
+    selectUserInfo,
     selectUserLoggedIn,
     selectWallets,
     setCurrentPrice,
+    User,
     Wallet,
     walletsFetch,
 } from '../../modules';
@@ -39,7 +46,7 @@ import {
 } from '../../modules/user/orders';
 
 interface ReduxProps {
-    currentMarket: Market | undefined;
+    currentMarket?: Market;
     currentMarketFilters: FilterPrice[];
     executeLoading: boolean;
     marketTickers: {
@@ -50,26 +57,29 @@ interface ReduxProps {
     bids: string[][];
     asks: string[][];
     wallets: Wallet[];
-    currentPrice: number | undefined;
+    currentPrice?: number;
     isMobileDevice: boolean;
+    memberLevels: MemberLevels;
+    user: User;
+    userLoggedIn: boolean;
 }
 
 interface StoreProps {
     orderSide: string;
-    priceLimit: number | undefined;
+    priceLimit: number | null;
+    trigger: number | null;
     width: number;
 }
 
 interface DispatchProps {
     walletsFetch: typeof walletsFetch;
+    memberLevelsFetch: typeof memberLevelsFetch;
     setCurrentPrice: typeof setCurrentPrice;
     orderExecute: typeof orderExecuteFetch;
     pushAlert: typeof alertPush;
 }
 
 interface OwnProps {
-    userLoggedIn: boolean;
-    currentPrice: string;
     defaultTabIndex?: number;
 }
 
@@ -81,7 +91,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         this.state = {
             orderSide: 'buy',
-            priceLimit: undefined,
+            priceLimit: null,
+            trigger: null,
             width: 0,
         };
 
@@ -93,6 +104,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     public componentDidMount() {
         if (!this.props.wallets.length) {
             this.props.walletsFetch();
+        }
+
+        if (!this.props.memberLevels) {
+            this.props.memberLevelsFetch();
         }
     }
 
@@ -114,11 +129,12 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         if (+next.currentPrice && next.currentPrice !== this.state.priceLimit) {
             this.setState({
                 priceLimit: +next.currentPrice,
+                trigger: +next.currentPrice,
             });
         }
     }
 
-    public render() {
+    public getContent = () => {
         const {
             asks,
             bids,
@@ -129,27 +145,38 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             isMobileDevice,
             marketTickers,
             wallets,
+            user,
+            memberLevels,
+            userLoggedIn,
         } = this.props;
-        const { priceLimit } = this.state;
-
-        if (!currentMarket) {
-            return null;
-        }
+        const { priceLimit, trigger } = this.state;
 
         const walletBase = this.getWallet(currentMarket.base_unit, wallets);
         const walletQuote = this.getWallet(currentMarket.quote_unit, wallets);
 
         const currentTicker = marketTickers[currentMarket.id];
         const defaultCurrentTicker = { last: '0' };
-        const headerContent = (
-            <div className="cr-table-header__content">
-                <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.newOrder" /></div>
-            </div>
-        );
 
-        return (
-            <div className={'pg-order'} ref={this.orderRef}>
-                {this.state.width > 448 ? headerContent : undefined}
+        const allowed = memberLevels && (user.level >= memberLevels.trading.minimum_level);
+
+        if (!userLoggedIn) {
+            return (
+                <LockedComponent
+                    text={this.translate('page.body.trade.header.newOrder.locked.login.text')}
+                    link={'/signin'}
+                    buttonText={this.translate('page.body.trade.header.newOrder.locked.login.buttonText')}
+                />
+            );
+        } else if (!allowed) {
+            return (
+                <LockedComponent
+                    text={this.translate('page.body.trade.header.newOrder.locked.minLevel.text')}
+                    link={'/profile'}
+                    buttonText={this.translate('page.body.trade.header.newOrder.locked.minLevel.buttonText')}
+                />
+            );
+        } else {
+            return (
                 <Order
                     asks={asks}
                     bids={bids}
@@ -161,17 +188,36 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     priceMarketBuy={Number((currentTicker || defaultCurrentTicker).last)}
                     priceMarketSell={Number((currentTicker || defaultCurrentTicker).last)}
                     priceLimit={priceLimit}
+                    trigger={trigger}
                     to={currentMarket.base_unit}
                     handleSendType={this.getOrderType}
                     currentMarketAskPrecision={currentMarket.amount_precision}
                     currentMarketBidPrecision={currentMarket.price_precision}
                     width={this.state.width}
                     listenInputPrice={this.listenInputPrice}
+                    listenInputTrigger={this.listenInputTrigger}
                     defaultTabIndex={defaultTabIndex}
                     currentMarketFilters={currentMarketFilters}
                     isMobileDevice={isMobileDevice}
                     translate={this.translate}
                 />
+            );
+        }
+    }
+
+    public render() {
+        const { currentMarket, executeLoading } = this.props;
+
+        if (!currentMarket) {
+            return null;
+        }
+
+        return (
+            <div className={'pg-order'} ref={this.orderRef}>
+                <div className="cr-table-header__content">
+                    <div className="cr-title-component">{this.translate("page.body.trade.header.newOrder")}</div>
+                </div>
+                {this.getContent()}
                 {executeLoading && <div className="pg-order--loading"><Spinner animation="border" variant="primary" /></div>}
             </div>
         );
@@ -189,19 +235,26 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             available,
             orderType,
             price,
+            trigger,
             type,
         } = value;
 
         this.props.setCurrentPrice(0);
 
+        const withPrice = typeof price !== 'undefined';
+        const withTrigger = typeof trigger !== 'undefined';
+        const actualOrderPrice = withPrice ? price : trigger;
+        const priceMult = TRIGGER_BUY_PRICE_ADJUSTED_TYPES.includes((orderType as string).toLowerCase()) ? TRIGGER_BUY_PRICE_MULT : 1;
+
         const resultData = {
             market: currentMarket.id,
             side: type,
             volume: amount.toString(),
-            ord_type: (orderType as string).toLowerCase(),
+            ord_type: (orderType as string).toLowerCase().replace('-', '_'),
+            ...(withPrice && { price: price.toString() }),
+            ...(withTrigger && { trigger_price: trigger.toString() }),
         };
 
-        const order = orderType === 'Limit' ? { ...resultData, price: price.toString() } : resultData;
         let orderAllowed = true;
 
         if (+resultData.volume < +currentMarket.min_amount) {
@@ -219,7 +272,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if (+price < +currentMarket.min_price) {
+        if (withPrice && +price < +currentMarket.min_price) {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.minPrice',
@@ -234,7 +287,22 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if (+currentMarket.max_price && +price > +currentMarket.max_price) {
+        if (withTrigger && +trigger < +currentMarket.min_price) {
+            this.props.pushAlert({
+                message: [this.translate(
+                    'error.order.create.minTriggerPrice',
+                    {
+                        price: Decimal.format(currentMarket.min_price, currentMarket.price_precision, ','),
+                        currency: currentMarket.quote_unit.toUpperCase(),
+                    },
+                )],
+                type: 'error',
+            });
+
+            orderAllowed = false;
+        }
+
+        if (+currentMarket.max_price && withPrice && +price > +currentMarket.max_price) {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.maxPrice',
@@ -249,14 +317,30 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if ((+available < (+amount * +price) && order.side === 'buy') ||
-            (+available < +amount && order.side === 'sell')) {
+        // if both price and trigger is defined then Order will be created with Price value no matter if trigger is bigger than max price
+        if (+currentMarket.max_price && withTrigger && !withPrice && +trigger > +currentMarket.max_price) {
+            this.props.pushAlert({
+                message: [this.translate(
+                    'error.order.create.maxTriggerPrice',
+                    {
+                        price: Decimal.format(currentMarket.max_price, currentMarket.price_precision, ','),
+                        currency: currentMarket.quote_unit.toUpperCase(),
+                    },
+                )],
+                type: 'error',
+            });
+
+            orderAllowed = false;
+        }
+
+        if ((+available < (+amount * +actualOrderPrice * priceMult) && resultData.side === 'buy') ||
+            (+available < +amount && resultData.side === 'sell')) {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.available',
                     {
                         available: formatWithSeparators(String(available), ','),
-                        currency: order.side === 'buy' ? (
+                        currency: resultData.side === 'buy' ? (
                             currentMarket.quote_unit.toUpperCase()
                         ) : (
                             currentMarket.base_unit.toUpperCase()
@@ -270,7 +354,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         }
 
         if (orderAllowed) {
-            this.props.orderExecute(order);
+            this.props.orderExecute(resultData);
         }
     };
 
@@ -286,13 +370,20 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         });
     };
 
-    private getAvailableValue(wallet: Wallet | undefined) {
+    private getAvailableValue(wallet?: Wallet) {
         return wallet && wallet.balance ? Number(wallet.balance) : 0;
     }
 
     private listenInputPrice = () => {
         this.setState({
-            priceLimit: undefined,
+            priceLimit: null,
+        });
+        this.props.setCurrentPrice(0);
+    };
+
+    private listenInputTrigger = () => {
+        this.setState({
+            trigger: null,
         });
         this.props.setCurrentPrice(0);
     };
@@ -311,10 +402,13 @@ const mapStateToProps = (state: RootState) => ({
     currentPrice: selectCurrentPrice(state),
     userLoggedIn: selectUserLoggedIn(state),
     isMobileDevice: selectMobileDeviceState(state),
+    memberLevels: selectMemberLevels(state),
+    user: selectUserInfo(state),
 });
 
 const mapDispatchToProps = dispatch => ({
     walletsFetch: () => dispatch(walletsFetch()),
+    memberLevelsFetch: () => dispatch(memberLevelsFetch()),
     orderExecute: payload => dispatch(orderExecuteFetch(payload)),
     pushAlert: payload => dispatch(alertPush(payload)),
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),

@@ -14,6 +14,8 @@ export const ru = {
     'page.mobile.charts.label.trades': 'Trades',
 
     'page.mobile.order.price.placeholder': 'Price ({currency})',
+    'page.mobile.order.trigger.placeholder.stop': 'Stop ({currency})',
+    'page.mobile.order.trigger.placeholder.take': 'Take ({currency})',
     'page.mobile.order.amount.placeholder': 'Amount ({currency})',
 
     'page.mobile.orderButtons.buy': 'Buy {base_unit}',

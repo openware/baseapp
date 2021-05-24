@@ -1,180 +1,157 @@
 import classnames from 'classnames';
-import * as React from 'react';
-import { Spinner } from 'react-bootstrap';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect, MapDispatchToPropsFunction } from 'react-redux';
-import { IntlProps } from '../../';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Form, Spinner } from 'react-bootstrap';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useOpenOrdersFetch } from 'src/hooks';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { Decimal, OpenOrders } from '../../components';
 import { localeDate, setTradeColor } from '../../helpers';
 import {
-    Market,
     openOrdersCancelFetch,
     ordersCancelAllFetch,
-    RootState,
-    selectCancelOpenOrdersFetching,
     selectCurrentMarket,
+    selectMarkets,
     selectOpenOrdersFetching,
     selectOpenOrdersList,
-    selectUserLoggedIn,
-    userOpenOrdersFetch,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
+import { getTriggerSign } from './helpers';
 
-interface ReduxProps {
-    currentMarket: Market | undefined;
-    list: OrderCommon[];
-    fetching: boolean;
-    cancelFetching: boolean;
-    userLoggedIn: boolean;
-}
+export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
+    const [hideOtherPairs, setHideOtherPairs] = useState<boolean>(true);
+    const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
+    const currentMarket = useSelector(selectCurrentMarket);
+    const list = useSelector(selectOpenOrdersList);
+    const fetching = useSelector(selectOpenOrdersFetching);
+    const markets = useSelector(selectMarkets);
 
-interface DispatchProps {
-    userOpenOrdersFetch: typeof userOpenOrdersFetch;
-    openOrdersCancelFetch: typeof openOrdersCancelFetch;
-    ordersCancelAll: typeof ordersCancelAllFetch;
-}
+    const translate = React.useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
 
-type Props = ReduxProps & DispatchProps & IntlProps;
+    useOpenOrdersFetch(currentMarket, hideOtherPairs);
 
-export class OpenOrdersContainer extends React.Component<Props> {
-    public componentDidMount() {
-        const { currentMarket, userLoggedIn } = this.props;
-        if (userLoggedIn && currentMarket) {
-            this.props.userOpenOrdersFetch({ market: currentMarket });
-        }
-    }
+    const headersKeys = useMemo(() => [
+        'Date',
+        'Market',
+        'Type',
+        'Price',
+        'Amount',
+        'Total',
+        'Trigger',
+        'Filled',
+        '',
+    ], []);
 
-    public componentWillReceiveProps(next: Props) {
-        const { userLoggedIn, currentMarket } = next;
-        const { userLoggedIn: prevUserLoggedIn, currentMarket: prevCurrentMarket } = this.props;
+    const renderHeaders = useMemo(() => [
+        translate('page.body.trade.header.openOrders.content.date'),
+        translate('page.body.trade.header.openOrders.content.market'),
+        translate('page.body.trade.header.openOrders.content.type'),
+        translate('page.body.trade.header.openOrders.content.price'),
+        translate('page.body.trade.header.openOrders.content.amount'),
+        translate('page.body.trade.header.openOrders.content.total'),
+        translate('page.body.trade.header.openOrders.content.trigger'),
+        translate('page.body.trade.header.openOrders.content.filled'),
+        '',
+    ], []);
 
-        if (!prevUserLoggedIn && userLoggedIn && currentMarket) {
-            this.props.userOpenOrdersFetch({ market: currentMarket });
-        } else if (userLoggedIn && currentMarket && prevCurrentMarket !== currentMarket) {
-            this.props.userOpenOrdersFetch({ market: currentMarket });
-        }
-    }
-
-    public render() {
-        const { list, fetching } = this.props;
-        const classNames = classnames('pg-open-orders', {
-            'pg-open-orders--empty': !list.length,
-            'pg-open-orders--loading': fetching,
-        });
-
-        return (
-            <div className={classNames}>
-                <div className="cr-table-header__content">
-                    <div className="cr-title-component">
-                        <FormattedMessage id="page.body.trade.header.openOrders" />
-                        <span className="cr-table-header__cancel" onClick={this.handleCancelAll}>
-                            <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
-                            <CloseIcon className="cr-table-header__close" />
-                        </span>
-                    </div>
-                </div>
-                {fetching ? <div className="open-order-loading"><Spinner animation="border" variant="primary" /></div> : this.openOrders()}
-            </div>
-        );
-    }
-
-    private renderHeadersKeys = () => {
-        return [
-            'Date',
-            'Price',
-            'Amount',
-            'Total',
-            'Filled',
-            '',
-        ];
-    };
-
-    private renderHeaders = () => {
-        const currentAskUnit = this.props.currentMarket ? ` (${this.props.currentMarket.base_unit.toUpperCase()})` : '';
-        const currentBidUnit = this.props.currentMarket ? ` (${this.props.currentMarket.quote_unit.toUpperCase()})` : '';
-
-        return [
-            this.translate('page.body.trade.header.openOrders.content.date'),
-            this.translate('page.body.trade.header.openOrders.content.price').concat(currentBidUnit),
-            this.translate('page.body.trade.header.openOrders.content.amount').concat(currentAskUnit),
-            this.translate('page.body.trade.header.openOrders.content.total').concat(currentBidUnit),
-            this.translate('page.body.trade.header.openOrders.content.filled'),
-            '',
-        ];
-    };
-
-    private openOrders = () => {
-        return (
-            <OpenOrders
-                headersKeys={this.renderHeadersKeys()}
-                headers={this.renderHeaders()}
-                data={this.renderData()}
-                onCancel={this.handleCancel}
-            />
-        );
-    };
-
-    private renderData = () => {
-        const { list, currentMarket } = this.props;
-
-        if (list.length === 0) {
-            return [[[''], [''], this.translate('page.noDataToShow')]];
+    const renderData = useCallback(data => {
+        if (!data.length) {
+            return [[[''], [''], [''], translate('page.noDataToShow')]];
         }
 
-        return list.map((item: OrderCommon) => {
-            const { id, price, created_at, remaining_volume, origin_volume, side } = item;
+        return data.map((item: OrderCommon) => {
+            const { id, price, created_at, remaining_volume, origin_volume, side, ord_type, market, trigger_price } = item;
             const executedVolume = Number(origin_volume) - Number(remaining_volume);
-            const remainingAmount = Number(remaining_volume);
-            const total = Number(origin_volume) * Number(price);
             const filled = ((executedVolume / Number(origin_volume)) * 100).toFixed(2);
-            const priceFixed = currentMarket ? currentMarket.price_precision : 0;
-            const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
+            const curMarket = markets.find(i => i.id === market);
+            const priceFixed = curMarket?.price_precision || 0;
+            const amountFixed = curMarket?.amount_precision || 0;
 
             return [
-                localeDate(created_at, 'fullDate'),
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(price, priceFixed, ',')}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(remainingAmount, amountFixed, ',')}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(total, amountFixed, ',')}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{filled}%</span>,
+                <span key={id} className="split-lines"><span className="secondary">{localeDate(created_at, 'date')}</span>&nbsp;<span>{localeDate(created_at, 'time')}</span></span>,
+                <span key={id} className="bold">{curMarket?.name.toUpperCase()}</span>,
+                <span key={id}>{ord_type ? translate(`page.body.trade.header.openOrders.content.type.${ord_type}`) : '-'}</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}><Decimal fixed={priceFixed} thousSep=",">{price}</Decimal></span>,
+                <span key={id}><Decimal fixed={amountFixed} thousSep=",">{+remaining_volume}</Decimal></span>,
+                <span key={id}><Decimal fixed={amountFixed} thousSep=",">{+remaining_volume * +price}</Decimal> <span className="cr-text__opacity">{curMarket?.quote_unit?.toUpperCase()}</span></span>,
+                <span key={id} className="split-lines">
+                    {trigger_price ? (
+                        <React.Fragment>
+                            <span>{translate('page.body.trade.header.openOrders.lastPrice')}</span>&nbsp;{getTriggerSign(ord_type, side)}&nbsp;&nbsp;
+                            <span style={{ color: setTradeColor(side).color }}>{Decimal.format(trigger_price, priceFixed, ',')}</span>
+                        </React.Fragment>
+                    ) : '-'}
+                </span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}><Decimal fixed={2} thousSep=",">{+filled}</Decimal>%</span>,
                 side,
             ];
         });
-    };
+    }, [markets]);
 
-    private translate = (e: string) => this.props.intl.formatMessage({ id: e });
-
-    private handleCancel = (index: number) => {
-        const { list } = this.props;
+    const handleCancel = useCallback((index: number) => {
         const orderToDelete = list[index];
-        this.props.openOrdersCancelFetch({ order: orderToDelete, list });
-    };
+        dispatch(openOrdersCancelFetch({ order: orderToDelete, list }));
+    }, [list]);
 
-    private handleCancelAll = () => {
-        const { currentMarket } = this.props;
-        currentMarket && this.props.ordersCancelAll({ market: currentMarket.id });
-    };
+    const handleCancelAll = useCallback(() => {
+        currentMarket && dispatch(ordersCancelAllFetch({ market: currentMarket.id }));
+    }, [currentMarket]);
+
+    const classNames = useMemo(() => 
+        classnames('pg-open-orders', {
+                'pg-open-orders--empty': !list.length,
+                'pg-open-orders--loading': fetching,
+            },
+        ),
+    [list, fetching]);
+
+    const handleToggleCheckbox = React.useCallback(event => {
+        event.preventDefault();
+        setHideOtherPairs(!hideOtherPairs);
+    }, [hideOtherPairs]);
+
+    const renderContent = useMemo(() => {
+        if (fetching) {
+            return (
+                <div className="open-order-loading">
+                    <Spinner animation="border" variant="primary" />
+                </div>
+            );
+        }
+
+        return (
+            <OpenOrders
+                headersKeys={headersKeys}
+                headers={renderHeaders}
+                data={renderData(list)}
+                onCancel={handleCancel}
+            />
+        );
+    }, [fetching, list, markets]);
+
+    return (
+        <div className={classNames}>
+            <div className="cr-table-header__content">
+                <div className="cr-title-component">
+                    <span>{translate('page.body.trade.header.openOrders')}</span>
+                    <Form className="cr-title-component__checkbox" onClick={handleToggleCheckbox}>
+                        <Form.Check
+                            type="checkbox"
+                            custom
+                            id="hideOtherPairs"
+                            checked={hideOtherPairs}
+                            readOnly={true}
+                            label={translate('page.body.trade.header.openOrders.hideOtherPairs')}
+                        />
+                    </Form>
+                    <span className="cr-table-header__cancel" onClick={handleCancelAll}>
+                        <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
+                        <CloseIcon className="cr-table-header__close" />
+                    </span>
+                </div>
+            </div>
+            {renderContent}
+        </div>
+    );
 }
-
-const mapStateToProps = (state: RootState): ReduxProps => ({
-    currentMarket: selectCurrentMarket(state),
-    list: selectOpenOrdersList(state),
-    fetching: selectOpenOrdersFetching(state),
-    cancelFetching: selectCancelOpenOrdersFetching(state),
-    userLoggedIn: selectUserLoggedIn(state),
-});
-
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    userOpenOrdersFetch: payload => dispatch(userOpenOrdersFetch(payload)),
-    openOrdersCancelFetch: payload => dispatch(openOrdersCancelFetch(payload)),
-    ordersCancelAll: payload => dispatch(ordersCancelAllFetch(payload)),
-});
-
-export type OpenOrdersProps = ReduxProps;
-
-export const OpenOrdersComponent = injectIntl(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps,
-    )(OpenOrdersContainer),
-) as React.FunctionComponent;
