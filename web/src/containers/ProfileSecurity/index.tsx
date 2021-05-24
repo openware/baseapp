@@ -1,4 +1,3 @@
-import cr from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
 import { Button, OverlayTrigger } from 'react-bootstrap';
