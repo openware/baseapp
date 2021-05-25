@@ -1052,10 +1052,10 @@ export const ru: LangType = {
     'page.body.internal.transfer.account.balance': 'Available balance: ',
     'page.body.internal.transfer.insufficient.balance': ' - Insufficient balance',
 
-    'page.body.internal.transfer.header.input.username': '1. Enter a valid nickname of a user whom you want to transfer money',
-    'page.body.internal.transfer.label.username': 'Send to account (nickname)',
-    'page.body.internal.transfer.placeholder.username': 'Send to account (nickname)',
-    'page.body.internal.transfer.notice.username': `All transactions are final! Please, double check receiver's nickname before sending.`,
+    'page.body.internal.transfer.header.input.username': '1. Enter a valid username of a user whom you want to transfer money',
+    'page.body.internal.transfer.label.username': 'Send to account (username)',
+    'page.body.internal.transfer.placeholder.username': 'Send to account (username)',
+    'page.body.internal.transfer.notice.username': `All transactions are final! Please, double check receiver's username before sending.`,
 
     // internal transfer - errors
     'account.internal_transfer.non_decimal_amount': 'Non decimal amount',
