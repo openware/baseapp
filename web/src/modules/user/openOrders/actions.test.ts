@@ -26,6 +26,11 @@ describe('Open Orders actions', () => {
         expect(actions.userOpenOrdersFetch(payload)).toEqual(expectedAction);
     });
 
+    it('should check userOpenOrdersFetch action creator without market param', () => {
+        const expectedAction = { type: OPEN_ORDERS_FETCH };
+        expect(actions.userOpenOrdersFetch()).toEqual(expectedAction);
+    });
+
     it('should check userOpenOrdersData action creator', () => {
         const payload = [];
         const expectedAction = { type: OPEN_ORDERS_DATA, payload };
