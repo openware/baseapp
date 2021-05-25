@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { useCallback, useMemo } from 'react';
-import { Spinner } from 'react-bootstrap';
+import { useCallback, useMemo, useState } from 'react';
+import { Form, Spinner } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOpenOrdersFetch } from 'src/hooks';
@@ -12,68 +12,100 @@ import {
     openOrdersCancelFetch,
     ordersCancelAllFetch,
     selectCurrentMarket,
+    selectMarkets,
     selectOpenOrdersFetching,
     selectOpenOrdersList,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
 
+const getTriggerSign = (ordType: string, ordSide: string) => {
+    if (ordType.includes('stop')) {
+        if (ordSide === 'buy') {
+            return '≥';
+        } else {
+            return '≤';
+        }
+    }
+
+    if (ordType.includes('take')) {
+        if (ordSide === 'buy') {
+            return '≤';
+        } else {
+            return '≥';
+        }
+    }
+}
+
 export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
+    const [hideOtherPairs, setHideOtherPairs] = useState<boolean>(true);
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
     const currentMarket = useSelector(selectCurrentMarket);
     const list = useSelector(selectOpenOrdersList);
     const fetching = useSelector(selectOpenOrdersFetching);
+    const markets = useSelector(selectMarkets);
+
     const translate = React.useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
 
-    useOpenOrdersFetch(currentMarket);
+    useOpenOrdersFetch(currentMarket, hideOtherPairs);
 
     const headersKeys = [
         'Date',
+        'Market',
+        'Type',
         'Price',
         'Amount',
         'Total',
+        'Trigger',
         'Filled',
         '',
     ];
 
-    const renderHeaders = useMemo(() => {
-        const currentAskUnit = currentMarket ? ` (${currentMarket.base_unit.toUpperCase()})` : '';
-        const currentBidUnit = currentMarket ? ` (${currentMarket.quote_unit.toUpperCase()})` : '';
-
-        return [
-            translate('page.body.trade.header.openOrders.content.date'),
-            translate('page.body.trade.header.openOrders.content.price').concat(currentBidUnit),
-            translate('page.body.trade.header.openOrders.content.amount').concat(currentAskUnit),
-            translate('page.body.trade.header.openOrders.content.total').concat(currentBidUnit),
-            translate('page.body.trade.header.openOrders.content.filled'),
-            '',
-        ];
-    }, [currentMarket]);
+    const renderHeaders = [
+        translate('page.body.trade.header.openOrders.content.date'),
+        translate('page.body.trade.header.openOrders.content.market'),
+        translate('page.body.trade.header.openOrders.content.type'),
+        translate('page.body.trade.header.openOrders.content.price'),
+        translate('page.body.trade.header.openOrders.content.amount'),
+        translate('page.body.trade.header.openOrders.content.total'),
+        translate('page.body.trade.header.openOrders.content.trigger'),
+        translate('page.body.trade.header.openOrders.content.filled'),
+        '',
+    ];
 
     const renderData = useMemo(() => {
         if (list.length === 0) {
-            return [[[''], [''], translate('page.noDataToShow')]];
+            return [[[''], [''], [''], translate('page.noDataToShow')]];
         }
 
         return list.map((item: OrderCommon) => {
-            const { id, price, created_at, remaining_volume, origin_volume, side } = item;
-
+            const { id, price, created_at, remaining_volume, origin_volume, side, ord_type, market, trigger_price } = item;
             const executedVolume = Number(origin_volume) - Number(remaining_volume);
-            const remainingAmount = Number(remaining_volume);
             const filled = ((executedVolume / Number(origin_volume)) * 100).toFixed(2);
-            const priceFixed = currentMarket ? currentMarket.price_precision : 0;
-            const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
+            const curMarket = markets.find(i => i.id === market);
+            const priceFixed = curMarket?.price_precision || 0;
+            const amountFixed = curMarket?.amount_precision || 0;
 
             return [
                 localeDate(created_at, 'fullDate'),
+                <span key={id}>{curMarket?.name.toUpperCase()}</span>,
+                <span key={id}>{ord_type ? translate(`page.body.trade.header.openOrders.content.type.${ord_type}`) : '-'}</span>,
                 <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(price, priceFixed, ',')}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(remainingAmount, amountFixed, ',')}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(+remaining_volume, amountFixed, ',')}</span>,
+                <span key={id}>{Decimal.format(+remaining_volume, amountFixed, ',')}</span>,
+                <span key={id}>{Decimal.format(+remaining_volume, amountFixed, ',')} {curMarket?.quote_unit?.toUpperCase()}</span>,
+                <span key={id}>
+                    {trigger_price ? (
+                        <React.Fragment>
+                            <span>{translate('page.body.trade.header.openOrders.lastPrice')}</span>&nbsp;{getTriggerSign(ord_type, side)}&nbsp;
+                            <span style={{ color: setTradeColor(side).color }}>{Decimal.format(trigger_price, priceFixed, ',')}</span>
+                        </React.Fragment>
+                    ) : '-'}
+                </span>,
                 <span style={{ color: setTradeColor(side).color }} key={id}>{filled}%</span>,
                 side,
             ];
         });
-    }, [list, currentMarket]);
+    }, [list]);
 
     const handleCancel = useCallback((index: number) => {
         const orderToDelete = list[index];
@@ -91,11 +123,26 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
         }),
     [list, fetching]);
 
+    const handleToggleCheckbox = React.useCallback(event => {
+        event.preventDefault();
+        setHideOtherPairs(!hideOtherPairs);
+    }, [hideOtherPairs]);
+
     return (
         <div className={classNames}>
             <div className="cr-table-header__content">
                 <div className="cr-title-component">
-                    <FormattedMessage id="page.body.trade.header.openOrders" />
+                    <span>{translate('page.body.trade.header.openOrders')}</span>
+                    <Form className="cr-title-component__checkbox" onClick={handleToggleCheckbox}>
+                        <Form.Check
+                            type="checkbox"
+                            custom
+                            id="hideOtherPairs"
+                            checked={hideOtherPairs}
+                            readOnly={true}
+                            label={translate('page.body.trade.header.openOrders.hideOtherPairs')}
+                        />
+                    </Form>
                     <span className="cr-table-header__cancel" onClick={handleCancelAll}>
                         <FormattedMessage id="page.body.openOrders.header.button.cancelAll" />
                         <CloseIcon className="cr-table-header__close" />

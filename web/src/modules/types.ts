@@ -28,8 +28,10 @@ export interface OrderCommon {
     ord_type?: OrderType;
     avg_price?: string;
     volume?: number;
+    trigger_price?: string;
     created_at?: string;
     updated_at?: string;
+    triggered_at?: string;
     confirmed?: boolean;
     uuid?: string;
     id?: number;

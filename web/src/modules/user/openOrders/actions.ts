@@ -15,7 +15,7 @@ import {
 
 export interface UserOpenOrdersFetch {
     type: typeof OPEN_ORDERS_FETCH;
-    payload: {
+    payload?: {
         market: Market,
     };
 }
@@ -73,7 +73,7 @@ export type OpenOrdersAction =
     | OpenOrdersCancelData
     | OpenOrdersCancelError;
 
-export const userOpenOrdersFetch = (payload: UserOpenOrdersFetch['payload']): UserOpenOrdersFetch => ({
+export const userOpenOrdersFetch = (payload?: UserOpenOrdersFetch['payload']): UserOpenOrdersFetch => ({
     type: OPEN_ORDERS_FETCH,
     payload,
 });
