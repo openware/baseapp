@@ -4,11 +4,10 @@ import { Market } from '../modules/public/markets';
 import { userOpenOrdersFetch } from '../modules/user/openOrders';
 import { selectUserLoggedIn } from '../modules/user/profile';
 
-
-export const useOpenOrdersFetch = (market: Market) => {
+export const useOpenOrdersFetch = (market?: Market) => {
     const dispatch = useDispatch();
     const userLoggedIn = useSelector(selectUserLoggedIn);
-    const id = market.id;
+    const id = market?.id;
 
     React.useEffect(() => {
         if (userLoggedIn && id) {
