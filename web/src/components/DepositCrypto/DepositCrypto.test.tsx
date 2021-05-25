@@ -18,6 +18,7 @@ describe('DepositCrypto', () => {
         fixed: 0,
         type: 'coin',
         fee: 0,
+        account_type: '',
     };
 
     beforeEach(() => {
