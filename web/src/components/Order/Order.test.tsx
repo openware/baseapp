@@ -1,5 +1,6 @@
 import { mount, shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
+import { TestComponentWrapper } from 'lib/test';
 import { SinonSpy, spy } from 'sinon';
 import { Order, OrderComponentProps } from './';
 
@@ -22,7 +23,7 @@ const defaultProps: OrderComponentProps = {
 };
 
 const setup = (props: Partial<OrderComponentProps> = {}) =>
-    shallow(<Order {...{ ...defaultProps, ...props }} />);
+    shallow(<TestComponentWrapper><Order {...{ ...defaultProps, ...props }} /></TestComponentWrapper>);
 
 describe('Order', () => {
     let wrapper: ShallowWrapper;
