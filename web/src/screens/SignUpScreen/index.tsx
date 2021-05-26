@@ -141,6 +141,38 @@ class SignUp extends React.Component<Props> {
     public render() {
         const {
             loading,
+        } = this.props;
+
+        const className = cx('pg-sign-up-screen__container', { loading });
+
+        return (
+            <div className="pg-sign-up-screen">
+                <div className={className}>
+                    {this.renderSignUp()}
+                    <Modal
+                        show={this.state.showModal}
+                        header={this.renderModalHeader()}
+                        content={this.renderModalBody()}
+                        footer={this.renderModalFooter()}
+                    />
+                </div>
+            </div>
+        );
+    }
+
+    private renderSignUp = () => {
+        if (window.env?.organizationEnabled) {
+            return this.state.signUpType === 'individual' ? this.renderIndividualSignUp()
+                : this.state.signUpType === 'company' ? this.renderOrganizationSignUp()
+                : this.renderSelectSignUpType();
+        }
+    
+        return this.renderIndividualSignUp();
+    }
+
+    private renderIndividualSignUp = () => {
+        const {
+            loading,
             currentPasswordEntropy,
             captcha_response,
             reCaptchaSuccess,
@@ -167,79 +199,73 @@ class SignUp extends React.Component<Props> {
             passwordPopUp,
         } = this.state;
 
-        const className = cx('pg-sign-up-screen__container', { loading });
-
         return (
-            <div className="pg-sign-up-screen">
-                <div className={className}>
-                    {this.state.signUpType === 'individual' ?
-                        <SignUpForm
-                            labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
-                            labelSignUp={this.props.intl.formatMessage({ id: 'page.header.signUp'})}
-                            emailLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.email'})}
-                            passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.password'})}
-                            confirmPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.confirmPassword'})}
-                            referalCodeLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.referalCode'})}
-                            termsMessage={this.props.intl.formatMessage({ id: 'page.header.signUp.terms'})}
-                            refId={refId}
-                            handleChangeRefId={this.handleChangeRefId}
-                            isLoading={loading}
-                            onSignIn={this.handleSignIn}
-                            onSignUp={this.handleSignUp}
-                            username={username}
-                            handleChangeUsername={this.handleChangeUsername}
-                            email={email}
-                            handleChangeEmail={this.handleChangeEmail}
-                            password={password}
-                            handleChangePassword={this.handleChangePassword}
-                            confirmPassword={confirmPassword}
-                            handleChangeConfirmPassword={this.handleChangeConfirmPassword}
-                            hasConfirmed={hasConfirmed}
-                            clickCheckBox={this.handleCheckboxClick}
-                            validateForm={this.handleValidateForm}
-                            emailError={emailError}
-                            passwordError={passwordError}
-                            confirmationError={confirmationError}
-                            confirmPasswordFocused={confirmPasswordFocused}
-                            refIdFocused={refIdFocused}
-                            usernameFocused={usernameFocused}
-                            emailFocused={emailFocused}
-                            passwordFocused={passwordFocused}
-                            handleFocusUsername={this.handleFocusUsername}
-                            handleFocusEmail={this.handleFocusEmail}
-                            handleFocusPassword={this.handleFocusPassword}
-                            handleFocusConfirmPassword={this.handleFocusConfirmPassword}
-                            handleFocusRefId={this.handleFocusRefId}
-                            renderCaptcha={this.renderCaptcha()}
-                            reCaptchaSuccess={reCaptchaSuccess}
-                            geetestCaptchaSuccess={geetestCaptchaSuccess}
-                            captcha_response={captcha_response}
-                            currentPasswordEntropy={currentPasswordEntropy}
-                            passwordErrorFirstSolved={passwordErrorFirstSolved}
-                            passwordErrorSecondSolved={passwordErrorSecondSolved}
-                            passwordErrorThirdSolved={passwordErrorThirdSolved}
-                            passwordPopUp={passwordPopUp}
-                            myRef={this.myRef}
-                            passwordWrapper={this.passwordWrapper}
-                            translate={this.translate}
-                        />
-                    : this.state.signUpType === 'company' ? 
-                        <SignUpCompanyForm
-                            handleGoBack={this.handleGoBackSignUpCompany}
-                        />
-                    : 
-                        <SignUpSelectionForm
-                            handleSelectSignUpType={this.handleSelectSignUpType}
-                        />
-                    }
-                    <Modal
-                        show={this.state.showModal}
-                        header={this.renderModalHeader()}
-                        content={this.renderModalBody()}
-                        footer={this.renderModalFooter()}
-                    />
-                </div>
-            </div>
+            <SignUpForm
+                labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
+                labelSignUp={this.props.intl.formatMessage({ id: 'page.header.signUp'})}
+                emailLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.email'})}
+                passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.password'})}
+                confirmPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.confirmPassword'})}
+                referalCodeLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.referalCode'})}
+                termsMessage={this.props.intl.formatMessage({ id: 'page.header.signUp.terms'})}
+                refId={refId}
+                handleChangeRefId={this.handleChangeRefId}
+                isLoading={loading}
+                onSignIn={this.handleSignIn}
+                onSignUp={this.handleSignUp}
+                username={username}
+                handleChangeUsername={this.handleChangeUsername}
+                email={email}
+                handleChangeEmail={this.handleChangeEmail}
+                password={password}
+                handleChangePassword={this.handleChangePassword}
+                confirmPassword={confirmPassword}
+                handleChangeConfirmPassword={this.handleChangeConfirmPassword}
+                hasConfirmed={hasConfirmed}
+                clickCheckBox={this.handleCheckboxClick}
+                validateForm={this.handleValidateForm}
+                emailError={emailError}
+                passwordError={passwordError}
+                confirmationError={confirmationError}
+                confirmPasswordFocused={confirmPasswordFocused}
+                refIdFocused={refIdFocused}
+                usernameFocused={usernameFocused}
+                emailFocused={emailFocused}
+                passwordFocused={passwordFocused}
+                handleFocusUsername={this.handleFocusUsername}
+                handleFocusEmail={this.handleFocusEmail}
+                handleFocusPassword={this.handleFocusPassword}
+                handleFocusConfirmPassword={this.handleFocusConfirmPassword}
+                handleFocusRefId={this.handleFocusRefId}
+                renderCaptcha={this.renderCaptcha()}
+                reCaptchaSuccess={reCaptchaSuccess}
+                geetestCaptchaSuccess={geetestCaptchaSuccess}
+                captcha_response={captcha_response}
+                currentPasswordEntropy={currentPasswordEntropy}
+                passwordErrorFirstSolved={passwordErrorFirstSolved}
+                passwordErrorSecondSolved={passwordErrorSecondSolved}
+                passwordErrorThirdSolved={passwordErrorThirdSolved}
+                passwordPopUp={passwordPopUp}
+                myRef={this.myRef}
+                passwordWrapper={this.passwordWrapper}
+                translate={this.translate}
+            />
+        );
+    }
+
+    private renderOrganizationSignUp = () => {
+        return (
+            <SignUpCompanyForm
+                handleGoBack={this.handleGoBackSignUpCompany}
+            />
+        );
+    }
+
+    private renderSelectSignUpType = () => {
+        return (
+            <SignUpSelectionForm
+                handleSelectSignUpType={this.handleSelectSignUpType}
+            />
         );
     }
 

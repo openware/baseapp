@@ -38,5 +38,6 @@ Access-Control-Allow-Credentials: true
     "password_min_entropy": 14,
     "wizard_step": "false",
     "msPricesUpdates": "1000",
-    "themeSwitcher": "visible"
+    "themeSwitcher": "visible",
+    "organizationEnabled": true
 }

@@ -35,7 +35,7 @@ const HeaderProfileComponent: React.FC = () => {
     }, []);
 
     const accountSwitch = useMemo(() => {
-        if (location.pathname.includes('/trading') || !user.organization) {
+        if (location.pathname.includes('/trading') || !user.organization || !window.env?.organizationEnabled) {
             return null;
         }
 
