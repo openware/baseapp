@@ -16,24 +16,7 @@ import {
     selectOpenOrdersList,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
-
-const getTriggerSign = (ordType: string, ordSide: string) => {
-    if (ordType.includes('stop')) {
-        if (ordSide === 'buy') {
-            return '≥';
-        } else {
-            return '≤';
-        }
-    }
-
-    if (ordType.includes('take')) {
-        if (ordSide === 'buy') {
-            return '≤';
-        } else {
-            return '≥';
-        }
-    }
-}
+import { getTriggerSign } from './helpers';
 
 export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
     const [hideOtherPairs, setHideOtherPairs] = useState<boolean>(true);
@@ -48,7 +31,7 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
 
     useOpenOrdersFetch(currentMarket, hideOtherPairs);
 
-    const headersKeys = [
+    const headersKeys = useMemo(() => [
         'Date',
         'Market',
         'Type',
@@ -58,9 +41,9 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
         'Trigger',
         'Filled',
         '',
-    ];
+    ], []);
 
-    const renderHeaders = [
+    const renderHeaders = useMemo(() => [
         translate('page.body.trade.header.openOrders.content.date'),
         translate('page.body.trade.header.openOrders.content.market'),
         translate('page.body.trade.header.openOrders.content.type'),
@@ -70,14 +53,14 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
         translate('page.body.trade.header.openOrders.content.trigger'),
         translate('page.body.trade.header.openOrders.content.filled'),
         '',
-    ];
+    ], []);
 
-    const renderData = useMemo(() => {
-        if (list.length === 0) {
+    const renderData = useCallback(data => {
+        if (!data.length) {
             return [[[''], [''], [''], translate('page.noDataToShow')]];
         }
 
-        return list.map((item: OrderCommon) => {
+        return data.map((item: OrderCommon) => {
             const { id, price, created_at, remaining_volume, origin_volume, side, ord_type, market, trigger_price } = item;
             const executedVolume = Number(origin_volume) - Number(remaining_volume);
             const filled = ((executedVolume / Number(origin_volume)) * 100).toFixed(2);
@@ -104,7 +87,7 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
                 side,
             ];
         });
-    }, [list]);
+    }, []);
 
     const handleCancel = useCallback((index: number) => {
         const orderToDelete = list[index];
@@ -117,15 +100,35 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
 
     const classNames = useMemo(() => 
         classnames('pg-open-orders', {
-            'pg-open-orders--empty': !list.length,
-            'pg-open-orders--loading': fetching,
-        }),
+                'pg-open-orders--empty': !list.length,
+                'pg-open-orders--loading': fetching,
+            },
+        ),
     [list, fetching]);
 
     const handleToggleCheckbox = React.useCallback(event => {
         event.preventDefault();
         setHideOtherPairs(!hideOtherPairs);
     }, [hideOtherPairs]);
+
+    const renderContent = useMemo(() => {
+        if (fetching) {
+            return (
+                <div className="open-order-loading">
+                    <Spinner animation="border" variant="primary" />
+                </div>
+            );
+        }
+
+        return (
+            <OpenOrders
+                headersKeys={headersKeys}
+                headers={renderHeaders}
+                data={renderData(list)}
+                onCancel={handleCancel}
+            />
+        );
+    }, [fetching, list]);
 
     return (
         <div className={classNames}>
@@ -148,15 +151,7 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
                     </span>
                 </div>
             </div>
-            {fetching && <div className="open-order-loading"><Spinner animation="border" variant="primary" /></div>}
-            {!fetching && (
-                <OpenOrders
-                    headersKeys={headersKeys}
-                    headers={renderHeaders}
-                    data={renderData}
-                    onCancel={handleCancel}
-                />
-            )}
+            {renderContent}
         </div>
     );
 }
