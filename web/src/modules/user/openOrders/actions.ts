@@ -16,7 +16,7 @@ import {
 export interface UserOpenOrdersFetch {
     type: typeof OPEN_ORDERS_FETCH;
     payload?: {
-        market: Market,
+        market: Market;
     };
 }
 
