@@ -17,7 +17,7 @@ yarn install && yarn start-mock
 ### 3. Change text description
 let's change title: ```Welcome to Baseapp.
 Buy, sell and trade digital currency.```
-1. copy ```Welcome to Baseapp``` and search with this in the en.ts and ru.ts. You will find on the line#104 id and text: page.body.landing.marketInfo.title.text1.
+1. copy ```Welcome to Baseapp``` and search for it in the en.ts and ru.ts. You will find on the line#104 id and text: page.body.landing.marketInfo.title.text1.
 2. change text from ```Welcome to Baseapp``` to ```Welcome to our App```. After you save this file you will see changes on the UI.
 
 ###### you can do same steps for second part ```Buy, sell and trade digital currency.```
@@ -74,7 +74,7 @@ let's change styles for the part which we added to our landing page
 
 And that’s it, now you have your custom title and block on the landing page.
 
-and small advice:
+and small advices:
    1. find the UI component which you want to change.
    2. find this component inside code (baseapp).
    3. make some customization
