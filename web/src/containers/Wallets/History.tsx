@@ -51,6 +51,8 @@ interface DispatchProps {
     resetHistory: typeof resetHistory;
 }
 
+const rowsPerPage = 6;
+
 export type Props = HistoryProps & ReduxProps & DispatchProps & IntlProps;
 
 export class WalletTable extends React.Component<Props> {
@@ -60,7 +62,7 @@ export class WalletTable extends React.Component<Props> {
             currency,
             type,
         } = this.props;
-        this.props.fetchHistory({ page: 0, currency, type, limit: 6 });
+        this.props.fetchHistory({ page: 0, currency, type, limit: rowsPerPage });
 
         if (!currencies.length) {
             this.props.fetchCurrencies();
@@ -76,7 +78,7 @@ export class WalletTable extends React.Component<Props> {
         } = this.props;
         if (nextProps.currency !== currency || nextProps.type !== type) {
             this.props.resetHistory();
-            this.props.fetchHistory({ page: 0, currency: nextProps.currency, type, limit: 6 });
+            this.props.fetchHistory({ page: 0, currency: nextProps.currency, type, limit: rowsPerPage });
         }
 
         if (!currencies.length && nextProps.currencies.length) {
@@ -84,7 +86,7 @@ export class WalletTable extends React.Component<Props> {
         }
 
         if (!withdrawSuccess && nextProps.withdrawSuccess) {
-            this.props.fetchHistory({ page: 0, currency, type, limit: 6 });
+            this.props.fetchHistory({ page: 0, currency, type, limit: rowsPerPage });
         }
     }
 
@@ -125,12 +127,12 @@ export class WalletTable extends React.Component<Props> {
 
     private onClickPrevPage = () => {
         const { page, type, currency } = this.props;
-        this.props.fetchHistory({ page: Number(page) - 1, currency, type, limit: 6 });
+        this.props.fetchHistory({ page: Number(page) - 1, currency, type, limit: rowsPerPage });
     };
 
     private onClickNextPage = () => {
         const { page, type, currency } = this.props;
-        this.props.fetchHistory({ page: Number(page) + 1, currency, type, limit: 6 });
+        this.props.fetchHistory({ page: Number(page) + 1, currency, type, limit: rowsPerPage });
     };
 
     private retrieveData = list => {
