@@ -7,6 +7,7 @@ export const localeDate = (date, format, timezone = getTimezone()) => {
             fullDate: 'DD-MM-YYYY HH:mm:ss',
             shortDate: 'DD-MM-YYYY HH:mm',
             time: 'HH:mm:ss',
+            date: 'DD-MM-YYYY',
           }[type];
     };
     const formatDisplay = getFormat(format);

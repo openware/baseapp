@@ -69,25 +69,25 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
             const amountFixed = curMarket?.amount_precision || 0;
 
             return [
-                localeDate(created_at, 'fullDate'),
-                <span key={id}>{curMarket?.name.toUpperCase()}</span>,
+                <span key={id} className="split-lines"><span className="secondary">{localeDate(created_at, 'date')}</span>&nbsp;<span>{localeDate(created_at, 'time')}</span></span>,
+                <span key={id} className="bold">{curMarket?.name.toUpperCase()}</span>,
                 <span key={id}>{ord_type ? translate(`page.body.trade.header.openOrders.content.type.${ord_type}`) : '-'}</span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{Decimal.format(price, priceFixed, ',')}</span>,
-                <span key={id}>{Decimal.format(+remaining_volume, amountFixed, ',')}</span>,
-                <span key={id}>{Decimal.format(+remaining_volume, amountFixed, ',')} {curMarket?.quote_unit?.toUpperCase()}</span>,
-                <span key={id}>
+                <span style={{ color: setTradeColor(side).color }} key={id}><Decimal fixed={priceFixed} thousSep=",">{price}</Decimal></span>,
+                <span key={id}><Decimal fixed={amountFixed} thousSep=",">{+remaining_volume}</Decimal></span>,
+                <span key={id}><Decimal fixed={amountFixed} thousSep=",">{+remaining_volume}</Decimal> <span className="cr-text__opacity">{curMarket?.quote_unit?.toUpperCase()}</span></span>,
+                <span key={id} className="split-lines">
                     {trigger_price ? (
                         <React.Fragment>
-                            <span>{translate('page.body.trade.header.openOrders.lastPrice')}</span>&nbsp;{getTriggerSign(ord_type, side)}&nbsp;
+                            <span>{translate('page.body.trade.header.openOrders.lastPrice')}</span>&nbsp;{getTriggerSign(ord_type, side)}&nbsp;&nbsp;
                             <span style={{ color: setTradeColor(side).color }}>{Decimal.format(trigger_price, priceFixed, ',')}</span>
                         </React.Fragment>
                     ) : '-'}
                 </span>,
-                <span style={{ color: setTradeColor(side).color }} key={id}>{filled}%</span>,
+                <span style={{ color: setTradeColor(side).color }} key={id}><Decimal fixed={2} thousSep=",">{+filled}</Decimal>%</span>,
                 side,
             ];
         });
-    }, []);
+    }, [markets]);
 
     const handleCancel = useCallback((index: number) => {
         const orderToDelete = list[index];
@@ -128,7 +128,7 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
                 onCancel={handleCancel}
             />
         );
-    }, [fetching, list]);
+    }, [fetching, list, markets]);
 
     return (
         <div className={classNames}>
