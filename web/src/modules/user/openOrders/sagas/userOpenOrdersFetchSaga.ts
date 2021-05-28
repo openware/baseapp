@@ -10,7 +10,7 @@ const ordersOptions: RequestOptions = {
 
 export function* userOpenOrdersFetchSaga(action: UserOpenOrdersFetch) {
     try {
-        let payload: any = { state: 'wait' };
+        let payload: any = { state: ['wait', 'trigger_wait'] };
         if (action.payload) {
             payload = { ...payload, market: action.payload.market.id };
         }
