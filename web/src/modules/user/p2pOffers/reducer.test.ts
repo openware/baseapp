@@ -76,8 +76,10 @@ describe('User P2P Offers reducer', () => {
             ...initialP2POffersState,
             offers: {
                 ...initialP2POffersState.offers,
+                state: 'pending',
                 fetching: true,
                 timestamp: Math.floor(Date.now() / 1000),
+                error: undefined,
             },
         };
 
@@ -87,23 +89,23 @@ describe('User P2P Offers reducer', () => {
     it('should handle userOffersData', () => {
         const expectedState = {
             ...initialP2POffersState,
-            activeOffers: {
+            offers: {
                 ...initialP2POffersState.offers,
                 list: fakeOffersArray,
                 fetching: false,
                 success: true,
-                page: 1,
+                page: 0,
                 total: 2,
             },
          };
 
-        expect(p2pOffersReducer(initialP2POffersState, actions.userOffersData({ list: fakeOffersArray, page: 1, total: 2, state: 'pending' }))).toEqual(expectedState);
+        expect(p2pOffersReducer(initialP2POffersState, actions.userOffersData({ list: fakeOffersArray, total: 2 }))).toEqual(expectedState);
     });
 
     it('should handle userOffersError', () => {
         const expectedState = {
             ...initialP2POffersState,
-            activeOffers: {
+            offers: {
                 ...initialP2POffersState.offers,
                 list: [],
                 fetching: false,

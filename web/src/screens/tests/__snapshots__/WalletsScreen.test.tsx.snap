@@ -2,51 +2,217 @@
 
 exports[`WalletsScreen should render 1`] = `
 Array [
-  "0",
   <div
-    class="pg-container pg-wallet"
+    class="pg-estimated-value"
+  >
+    <span
+      class="pg-estimated-value__title"
+    >
+      Estimated Value
+    </span>
+    <div
+      class="pg-estimated-value__container"
+    >
+      <span
+        class="value-container"
+      >
+        <span
+          class="value"
+        >
+          0.0000
+        </span>
+        <span
+          class="value-sign"
+        >
+          USD
+        </span>
+      </span>
+      <span
+        class="value-container"
+      >
+        <span
+          class="value"
+        >
+          0.0000
+        </span>
+        <span
+          class="value-sign"
+        >
+          ETH
+        </span>
+      </span>
+    </div>
+  </div>,
+  <div
+    class="pg-wallets-tab pg-container"
   >
     <div
-      class="text-center"
-    />
-    <div
-      class="row no-gutters pg-wallet__tabs-content pg-wallet__tabs-content-height"
+      class="pg-wallets-tab__tabs-content"
     >
       <div
-        class="col-md-5 col-sm-12 col-12 "
-      >
-        <ul
-          class="cr-wallet-list"
-        />
-      </div>
-      <div
-        class="pg-wallet__tabs col-md-7 col-sm-12 col-12 d-none d-md-block"
+        class="cr-tab-panel"
       >
         <div
-          class="cr-tab-panel"
+          class="cr-tab-panel__navigation-container draggable-container"
         >
           <div
-            class="cr-tab-panel__navigation-container draggable-container"
+            class="cr-tab-panel__navigation-container-navigation"
+            role="tablist"
           >
             <div
-              class="cr-tab-panel__navigation-container-navigation"
-              role="tablist"
+              class="cr-tab cr-tab__active"
+              role="tab"
+              tabindex="0"
+            >
+              Overview
+              <span
+                class="cr-tab__pointer"
+              />
+            </div>
+            <div
+              class="cr-tab"
+              role="tab"
+              tabindex="1"
+            >
+              Spot
+            </div>
+          </div>
+        </div>
+        <div
+          class="cr-tab-content cr-tab-content__active"
+        >
+          <div
+            class="cr-wallets-table"
+          >
+            <div
+              class="text-center"
+            />
+            <div
+              class="cr-wallets-table__table overview"
             >
               <div
-                class="cr-tab cr-tab__active"
-                role="tab"
-                tabindex="0"
+                class="cr-wallets-header"
               >
-                <span
-                  class="cr-tab__pointer"
+                <div
+                  class="cr-wallets-header__search"
+                >
+                  <div
+                    class="cr-search"
+                  >
+                    <span
+                      class="cr-search__icon"
+                    >
+                      <img
+                        alt="search icon"
+                        src="test-file-stub"
+                      />
+                    </span>
+                    <input
+                      class="cr-search__input"
+                      placeholder="Search"
+                      type="text"
+                      value=""
+                    />
+                    <span
+                      class="cr-search__cancel"
+                    >
+                      <svg
+                        fill="none"
+                        height="15"
+                        viewBox="0 0 15 15"
+                        width="15"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7.5 0C11.6475 0 15 3.3525 15 7.5C15 11.6475 11.6475 15 7.5 15C3.3525 15 0 11.6475 0 7.5C0 3.3525 3.3525 0 7.5 0ZM10.1925 3.75L7.5 6.4425L4.8075 3.75L3.75 4.8075L6.4425 7.5L3.75 10.1925L4.8075 11.25L7.5 8.5575L10.1925 11.25L11.25 10.1925L8.5575 7.5L11.25 4.8075L10.1925 3.75Z"
+                          fill="var(--icons)"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <form
+                  class="cr-wallets-header__checkbox"
+                >
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <input
+                      class="custom-control-input"
+                      id="nonZeroSelected"
+                      readonly=""
+                      type="checkbox"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="nonZeroSelected"
+                      title=""
+                    >
+                      Non Zero Balances
+                    </label>
+                  </div>
+                </form>
+              </div>
+              <div
+                class="cr-table-container"
+              >
+                <div
+                  class="cr-table-header__content cr-table-header__content-empty"
+                />
+                <table
+                  class="cr-table"
+                >
+                  <thead
+                    class="cr-table__head"
+                  >
+                    <tr
+                      class="cr-table__head-row"
+                    >
+                      <th>
+                        Wallet
+                      </th>
+                      <th>
+                        Total balance
+                      </th>
+                      <th>
+                        Estimated value
+                      </th>
+                      <th>
+                        Spot balance
+                      </th>
+                      <th>
+                         
+                      </th>
+                      <th>
+                         
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="cr-table__body"
+                  >
+                    <tr
+                      class=""
+                    >
+                      <td
+                        class="cr-table--no-data"
+                        colspan="6"
+                      >
+                        There is no data to show
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div
+                  class="cr-table-background"
                 />
               </div>
             </div>
           </div>
-          <div
-            class="cr-tab-content cr-tab-content__active"
-          />
         </div>
+        <div
+          class="cr-tab-content"
+        />
       </div>
     </div>
   </div>,

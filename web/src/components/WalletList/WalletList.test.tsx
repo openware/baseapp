@@ -1,14 +1,13 @@
-import { shallow, ShallowWrapper } from 'enzyme';
+import { mount, shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
-import {
-    WalletList,
-    WalletListProps,
-} from '../../components';
+import { TestComponentWrapper } from 'lib/test';
+import { WalletList, WalletListProps } from '../../components';
 import { Wallet } from '../../modules';
 
 const onWalletSelectionChange = jest.fn();
 const walletItems: Wallet[] = [
     {
+        account_type: '',
         active: false,
         locked: '1',
         fee: 0.123,
@@ -20,6 +19,7 @@ const walletItems: Wallet[] = [
         explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
         explorerAddress: 'https://testnet.blockchain.info/address/#{address}'
     }, {
+        account_type: '',
         active: false,
         fee: 0.123,
         locked: '100',
@@ -29,6 +29,7 @@ const walletItems: Wallet[] = [
         type: 'coin',
         fixed: 8,
     }, {
+        account_type: '',
         active: false,
         fee: 0.3,
         locked: '0.4',
@@ -45,10 +46,13 @@ const defaultProps: WalletListProps = {
     onWalletSelectionChange: onWalletSelectionChange,
     walletItems: walletItems,
     onActiveIndexChange: jest.fn,
+    currencies: [],
+    tickers: {},
+    markets: [],
 };
 
 const setup = (props: Partial<WalletListProps> = {}) =>
-    shallow(<WalletList {...{ ...defaultProps, ...props }} />);
+    shallow(<TestComponentWrapper><WalletList {...{ ...defaultProps, ...props }} /></TestComponentWrapper>);
 
 describe('WalletList', () => {
     let wrapper: ShallowWrapper;
@@ -62,10 +66,11 @@ describe('WalletList', () => {
     });
 
     it('should have correct className', () => {
-        expect(wrapper.hasClass('cr-wallet-list')).toBeTruthy();
+        expect(wrapper.render().hasClass('cr-wallet-list')).toBeTruthy();
     });
 
     it('should handle onWalletSelectionChange callback when an element is pressed', () => {
+        const wrapper = mount(<WalletList {...{ ...defaultProps}} />);
         const first = wrapper.find('[onClick]').first();
         first.simulate('click');
         expect(onWalletSelectionChange).toHaveBeenCalled();

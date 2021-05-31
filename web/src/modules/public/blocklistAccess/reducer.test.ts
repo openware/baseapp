@@ -22,6 +22,7 @@ describe('blacklistCountryReducer', () => {
             ...initialBlocklistAccessState,
             loading: false,
             success: true,
+            status: '',
          };
         expect(blocklistAccessReducer(initialBlocklistAccessState, actions.sendAccessTokenData())).toEqual(expectedState);
     });

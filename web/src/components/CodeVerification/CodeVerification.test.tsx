@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
+import { TestComponentWrapper } from 'lib/test';
 import { CodeVerification, CodeVerificationProps } from '../';
 
 const defaultProps: CodeVerificationProps = {
@@ -11,7 +12,8 @@ const defaultProps: CodeVerificationProps = {
     onSubmit: jest.fn(),
 };
 
-const setup = (props: Partial<CodeVerificationProps> = {}) => shallow(<CodeVerification {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<CodeVerificationProps> = {}) =>
+    shallow(<TestComponentWrapper><CodeVerification {...{ ...defaultProps, ...props }} /></TestComponentWrapper>);
 
 describe('CodeVerification test', () => {
     it('should render', () => {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Order should match snapshot 1`] = `
+exports[`CodeVerification test should render 1`] = `
 <Router
   history={
     Object {
@@ -1423,34 +1423,13 @@ exports[`Order should match snapshot 1`] = `
         }
       }
     >
-      <Order
-        asks={
-          Array [
-            Array [
-              "10",
-              "1",
-            ],
-          ]
-        }
-        availableBase={200}
-        availableQuote={12}
-        bids={
-          Array [
-            Array [
-              "10",
-              "1",
-            ],
-          ]
-        }
-        currentMarketAskPrecision={4}
-        currentMarketBidPrecision={5}
-        currentMarketFilters={Array []}
-        from="btc"
-        onSubmit={[Function]}
-        priceMarketBuy={5}
-        priceMarketSell={10}
-        to="eth"
-        translate={[MockFunction]}
+      <CodeVerification
+        code=""
+        codeLength={6}
+        onChange={[MockFunction]}
+        onSubmit={[MockFunction]}
+        placeholder=""
+        type=""
       />
     </Provider>
   </IntlProvider>
