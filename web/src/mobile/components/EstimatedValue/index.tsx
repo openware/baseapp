@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
-import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useWalletsFetch } from '../../../hooks';
+import { useMarketsFetch, useMarketsTickersFetch, useWalletsFetch } from '../../../hooks';
 import { selectCurrencies, selectMarkets, selectMarketTickers, selectWallets } from '../../../modules';
 
 const EstimatedValueMobile = React.memo(() => {
@@ -18,7 +18,6 @@ const EstimatedValueMobile = React.memo(() => {
 
     useWalletsFetch();
     useMarketsFetch();
-    useCurrenciesFetch();
     useMarketsTickersFetch();
 
     return (

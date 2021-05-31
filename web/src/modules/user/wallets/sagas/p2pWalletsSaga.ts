@@ -1,7 +1,8 @@
-import { call, put } from 'redux-saga/effects';
-import { sendError } from '../../../';
+import { call, put, select } from 'redux-saga/effects';
+import { sendError, Currency } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { p2pWalletsData, p2pWalletsError } from '../actions';
+import { selectCurrenciesState } from '../../../';
 
 const peatioOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -13,7 +14,8 @@ const p2pOptions: RequestOptions = {
 
 export function* p2pWalletsSaga() {
     try {
-        const currencies = yield call(API.get(peatioOptions), '/public/currencies');
+        const currenciesList =  yield select(selectCurrenciesState);
+        const currencies = currenciesList.list;
         const p2pCurrencies = yield call(API.get(p2pOptions), '/public/currencies');
         const p2pAccounts = yield call(API.get(peatioOptions), '/account/balances?account_type=p2p');
 

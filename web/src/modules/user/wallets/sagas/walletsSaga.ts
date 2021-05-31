@@ -1,26 +1,30 @@
-import { call, put } from 'redux-saga/effects';
-import { sendError, currenciesData, Currency } from '../../../';
+import { call, put, select } from 'redux-saga/effects';
+import { sendError, Currency } from '../../../';
+import { selectUserIsMember } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { walletsData, walletsError, WalletsFetch } from '../actions';
 import { Wallet } from '../types';
+import { selectCurrenciesState } from '../../../';
 
 const walletsOptions: RequestOptions = {
     apiVersion: 'peatio',
-};
+};;
 
-const currenciesOptions: RequestOptions = {
-    apiVersion: 'peatio',
-};
 
 export function* walletsSaga(action: WalletsFetch) {
     try {
         const accounts = yield call(API.get(walletsOptions), '/account/balances');
-        const currencies = yield call(API.get(currenciesOptions), '/public/currencies');
+        const currenciesList =  yield select(selectCurrenciesState);
+        const isMember: boolean = yield select(selectUserIsMember);
 
-        yield put(currenciesData(currencies));
+        const currencies: Currency[] = currenciesList.list;
 
         const accountsByCurrencies = currencies.map((currency: Currency) => {
             let walletInfo = accounts.find((wallet: Wallet) => wallet.currency === currency.id);
+
+            if (currency.status === 'hidden' && isMember) {
+                return null;
+            }
 
             if (!walletInfo) {
                 walletInfo = {
@@ -31,16 +35,20 @@ export function* walletsSaga(action: WalletsFetch) {
             return ({
                 ...walletInfo,
                 name: currency?.name,
-                explorerTransaction: currency?.explorer_transaction,
-                explorerAddress: currency?.explorer_address,
-                fee: currency?.withdraw_fee,
+                networks: currency?.networks?.map(network => ({
+                    explorerTransaction: network?.explorer_transaction,
+                    explorerAddress: network?.explorer_address,
+                    fee: network?.withdraw_fee,
+                })),
                 type: currency?.type,
                 fixed: currency?.precision,
                 iconUrl: currency?.icon_url,
             });
         });
 
-        yield put(walletsData(accountsByCurrencies));
+        const wallets = accountsByCurrencies.filter(item => item && item.currency);
+
+        yield put(walletsData(wallets));
     } catch (error) {
         yield put(sendError({
             error,

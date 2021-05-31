@@ -5,7 +5,19 @@ import { useSelector } from 'react-redux';
 import { CryptoIcon } from 'src/components/CryptoIcon';
 import { Decimal, formatWithSeparators, Table } from 'src/components';
 import { useMarketsFetch, useMarketsTickersFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
-import { selectAbilities, selectCurrencies, selectMarkets, selectMarketTickers, selectP2PCurrenciesData, selectP2PWallets, selectP2PWalletsLoading, selectWallets, selectWalletsLoading, Wallet } from 'src/modules';
+import {
+    selectAbilities,
+    selectCurrencies,
+    selectMarkets,
+    selectMarketTickers,
+    selectP2PCurrenciesData,
+    selectP2PWallets,
+    selectP2PWalletsLoading,
+    selectWallets,
+    selectWalletsLoading,
+    Wallet,
+    selectUserIsMember,
+} from 'src/modules';
 import { estimateUnitValue } from 'src/helpers/estimateValue';
 import { VALUATION_PRIMARY_CURRENCY } from 'src/constants';
 import { WalletsHeader } from 'src/components/WalletsHeader';
@@ -41,6 +53,7 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
     const p2pCurrencies = useSelector(selectP2PCurrenciesData);
     const walletsLoading = useSelector(selectWalletsLoading);
     const p2pWalletsLoading = useSelector(selectP2PWalletsLoading);
+    const isMember: boolean = useSelector(selectUserIsMember);
 
     useWalletsFetch();
     useP2PWalletsFetch();
@@ -50,6 +63,11 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
     useEffect(() => {
         if (wallets.length && (isP2PEnabled ? p2pWallets.length : true) && currencies.length) {
             const extendedWallets: ExtendedWallet[] = currencies.map(cur => {
+
+                if (cur.status === 'hidden' && isMember) {
+                    return null;
+                }
+
                 const spotWallet = wallets.find(i => i.currency === cur.id);
                 const p2pWallet = isP2PEnabled ? p2pWallets.find(i => i.currency === cur.id) : null;
 
@@ -62,8 +80,10 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
                 };
             });
 
-            setFilteredWallets(extendedWallets);
-            setMergedWallets(extendedWallets);
+            const extendedWalletsFilter = extendedWallets.filter(item => item && item.currency);
+
+            setFilteredWallets(extendedWalletsFilter);
+            setMergedWallets(extendedWalletsFilter);
         }
     }, [wallets, p2pWallets, currencies, isP2PEnabled]);
 

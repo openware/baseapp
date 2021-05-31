@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, DEFAULT_TABLE_PAGE_LIMIT } from 'src/constants';
 import { localeDate, setOfferStatusColor } from 'src/helpers';
 import { Decimal, Pagination, Table, TabPanel } from '../../../components';
-import { useCurrenciesFetch, useP2PUserOffersFetch, useWalletsFetch } from '../../../hooks';
+import { useP2PUserOffersFetch, useWalletsFetch } from '../../../hooks';
 import {
     userOffersFetch,
     cancelOffer,
@@ -40,7 +40,6 @@ const P2PUserOffers: FC = (): ReactElement => {
     const wallets = useSelector(selectWallets);
 
     useWalletsFetch();
-    useCurrenciesFetch();
     useP2PUserOffersFetch({ limit: DEFAULT_TABLE_PAGE_LIMIT, page, state: tab });
 
     useEffect(() => {
@@ -88,7 +87,7 @@ const P2PUserOffers: FC = (): ReactElement => {
             } = item;
 
             const amountPrecision = wallets.find(w => w.currency === base)?.fixed || DEFAULT_CCY_PRECISION;
-            const pricePrecision = wallets.find(obj => obj.currency === quote)?.fixed || DEFAULT_FIAT_PRECISION;    
+            const pricePrecision = wallets.find(obj => obj.currency === quote)?.fixed || DEFAULT_FIAT_PRECISION;
 
             return [
                 localeDate(created_at, 'shortDate'),

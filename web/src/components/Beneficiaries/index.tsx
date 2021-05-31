@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,11 +21,13 @@ import {
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
 import { TipIcon } from '../../assets/images/TipIcon';
-import { TrashBin } from '../../assets/images/TrashBin';
+import { LogoIcon } from '../../assets/images/LogoIcon';
+import { HugeCloseIcon } from '../../assets/images/CloseIcon';
 import { BeneficiariesActivateModal } from './BeneficiariesActivateModal';
 import { BeneficiariesAddModal } from './BeneficiariesAddModal';
 import { BeneficiariesFailAddModal } from './BeneficiariesFailAddModal';
-
+import { TabPanel } from '../TabPanel';
+import { SelectBeneficiariesCrypto } from './BeneficiariesCrypto/SelectBeneficiariesCrypto';
 
 interface OwnProps {
     currency: string;
@@ -38,6 +39,8 @@ const defaultBeneficiary: Beneficiary = {
     id: 0,
     currency: '',
     name: '',
+    blockchain_key: '',
+    blockchain_name: '',
     state: '',
     data: {
         address: '',
@@ -47,17 +50,19 @@ const defaultBeneficiary: Beneficiary = {
 type Props = OwnProps;
 
 const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
+    const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
+
+    const [tab, setTab] = React.useState(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}));
+    const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
+
     const [currentWithdrawalBeneficiary, setWithdrawalBeneficiary] = React.useState(defaultBeneficiary);
     const [isOpenAddressModal, setAddressModalState] = React.useState(false);
     const [isOpenConfirmationModal, setConfirmationModalState] = React.useState(false);
     const [isOpenFailModal, setFailModalState] = React.useState(false);
     const [isOpenTip, setTipState] = React.useState(false);
-    const [isOpenDropdown, setDropdownState] = React.useState(false);
 
     const { currency, type, onChangeValue } = props;
-
-    const { formatMessage } = useIntl();
-    const dispatch = useDispatch();
 
     /*    selectors    */
     const beneficiaries = useSelector(selectBeneficiaries);
@@ -70,8 +75,28 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
     /*    ---------    */
 
+    const uniqueBlockchainKeys = React.useMemo(() => (new Set(beneficiaries.map(item => item.blockchain_key))), [beneficiaries]);
+    const uniqueBlockchainKeysValues = React.useMemo(() => [...uniqueBlockchainKeys.values()], [uniqueBlockchainKeys]);
+
     React.useEffect(() => {
-        if (beneficiaries) {
+        setAddressModalState(false);
+
+        if (beneficiaries.length && beneficiaries[0].currency !== currency) {
+            setWithdrawalBeneficiary(defaultBeneficiary);
+            setCurrentTabIndex(0);
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}));
+        }
+    }, [currency, beneficiaries])
+
+    React.useEffect(() => {
+        if (beneficiaries.length) {
+            setCurrentTabIndex(0);
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+        }
+    }, [isOpenConfirmationModal, beneficiaries]);
+
+    React.useEffect(() => {
+        if (beneficiaries.length) {
             handleSetCurrentAddressOnUpdate(beneficiaries);
         }
 
@@ -92,12 +117,19 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         }
 
         if (beneficiariesAddSuccess) {
-            setAddressModalState(false);
             setConfirmationModalState(true);
         }
 
         if (beneficiariesActivateSuccess) {
             setConfirmationModalState(false);
+            setAddressModalState(false);
+        }
+
+        if (beneficiaries.length) {
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+            setCurrentTabIndex(0);
+        } else {
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}));
         }
     }, [beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess]);
 
@@ -111,16 +143,17 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
             setConfirmationModalState(true);
         } else {
             handleSetCurrentAddress(item);
+            setConfirmationModalState(false);
+            setAddressModalState(false);
         }
     }, []);
 
     const handleSetCurrentAddress = React.useCallback((item: Beneficiary) => {
         if (item.data) {
             setWithdrawalBeneficiary(item);
-            setDropdownState(false);
             onChangeValue(item);
         }
-    }, []);
+    }, [currency]);
 
     const handleFilterByState = React.useCallback((beneficiariesList: Beneficiary[], filter: string | string[]) => {
         if (beneficiariesList.length) {
@@ -242,25 +275,21 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         }
 
         return null;
-    }, [isOpenDropdown]);
+    }, []);
 
 
-    const renderAddressDropdown = React.useCallback((beneficiariesList: Beneficiary[], currentWithdrawalBeneficiary: Beneficiary, type: 'fiat' | 'coin') => {
-        const isPending = currentWithdrawalBeneficiary.state && currentWithdrawalBeneficiary.state.toLowerCase() === 'pending';
-
-        const dropdownClassName = classnames('pg-beneficiaries__dropdown', {
-            'pg-beneficiaries__dropdown--open': isOpenDropdown,
-        });
+    const renderAddressItem = React.useCallback((currentBeneficiary: Beneficiary) => {
+        const isPending = currentBeneficiary.state && currentBeneficiary.state.toLowerCase() === 'pending';
 
         if (type === 'fiat') {
             return (
-                <div className={dropdownClassName}>
-                    <div className="pg-beneficiaries__dropdown__select fiat-select select" onClick={e => setDropdownState(!isOpenDropdown)}>
+                <div className="pg-beneficiaries__dropdown">
+                    <div className="pg-beneficiaries__dropdown__select fiat-select select" onClick={handleClickToggleAddAddressModal()}>
                         <div className="select__left">
                             <span className="select__left__title">{formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.name' })}</span>
-                            <span className="select__left__address">{currentWithdrawalBeneficiary.name}</span>
+                            <span className="select__left__address">{currentBeneficiary.name}</span>
                             <span className="select__left__title">{formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.fullName' })}</span>
-                            <span className="select__left__address">{currentWithdrawalBeneficiary.data ? (currentWithdrawalBeneficiary.data as BeneficiaryBank).full_name : ''}</span>
+                            <span className="select__left__address">{currentBeneficiary.data ? (currentBeneficiary.data as BeneficiaryBank).full_name : ''}</span>
                         </div>
                         <div className="select__right">
                             {isPending ? (
@@ -271,24 +300,25 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                             <span className="select__right__chevron"><ChevronIcon /></span>
                         </div>
                     </div>
-                    {isOpenDropdown && renderDropdownBody(beneficiaries, type)}
-                    {isOpenTip && renderDropdownTipFiat(currentWithdrawalBeneficiary)}
+                    {isOpenTip && renderDropdownTipFiat(currentBeneficiary)}
                 </div>
             );
         }
 
         return (
-            <div className={dropdownClassName}>
-                <div className="pg-beneficiaries__dropdown__select select" onClick={() => setDropdownState(!isOpenDropdown)}>
+            <div className="pg-beneficiaries__dropdown">
+                <div className="pg-beneficiaries__dropdown__select select" onClick={handleClickToggleAddAddressModal()}>
                     <div className="select__left">
                         <span className="select__left__title">
-                            {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.name' })}
+                            {currentWithdrawalBeneficiary.name}
                         </span>
                         <span className="select__left__address">
                             <span>
-                                {currentWithdrawalBeneficiary.name}
+                                {currentWithdrawalBeneficiary.data?.address}
                             </span>
                         </span>
+                        <span className="item__left__title">
+                    </span>
                     </div>
                     <div className="select__right">
                         {isPending ? (
@@ -305,92 +335,10 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                         <span className="select__right__chevron"><ChevronIcon /></span>
                     </div>
                 </div>
-                {isOpenDropdown && renderDropdownBody(beneficiariesList, type)}
                 {isOpenTip && renderDropdownTipCrypto(currentWithdrawalBeneficiary)}
             </div>
         );
-    }, [isOpenDropdown, isOpenTip]);
-
-    const renderDropdownItem = React.useCallback((item: Beneficiary, index: number, type: OwnProps['type']) => {
-        const isPending = item.state && item.state.toLowerCase() === 'pending';
-        const itemClassName = classnames('pg-beneficiaries__dropdown__body__item', 'item', {
-            'item--pending': isPending,
-        });
-
-        if (type === 'fiat') {
-            return (
-                <div key={index} className={itemClassName}>
-                    <div className="item__left" onClick={handleClickSelectAddress(item)}>
-                        <span className="item__left__title">
-                            {formatMessage({ id:'page.body.wallets.beneficiaries.dropdown.fiat.name' })}
-                        </span>
-                        <span className="item__left__address">
-                            {item.name}
-                        </span>
-                    </div>
-                    <div className="item__left" onClick={handleClickSelectAddress(item)}>
-                        <span className="item__left__title">
-                            {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.fullName' })}
-                        </span>
-                        <span className="item__left__address">
-                            {item.data ? (item.data as BeneficiaryBank).full_name : ''}
-                        </span>
-                    </div>
-                    <div className="item__right">
-                        {isPending && (
-                            <span className="item__right__pending" onClick={handleClickSelectAddress(item)}>
-                                {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.pending' })}
-                            </span>
-                        )}
-                        <span className="item__right__delete" onClick={handleDeleteAddress(item)}>
-                            <TrashBin/>
-                        </span>
-                    </div>
-                </div>
-            );
-        }
-
-        return (
-            <div key={index} className={itemClassName}>
-                <div className="item__left" onClick={handleClickSelectAddress(item)}>
-                    <span className="item__left__title">
-                        {formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.name' })}
-                    </span>
-                    <span className="item__left__address">
-                        {item.name}
-                    </span>
-                </div>
-                <div className="item__right">
-                    {isPending ? (
-                        <span className="item__right__pending">
-                            {formatMessage({ id:'page.body.wallets.beneficiaries.dropdown.pending' })}
-                        </span>
-                    ) : null}
-                    <span className="item__right__delete" onClick={handleDeleteAddress(item)}>
-                        <TrashBin/>
-                    </span>
-                </div>
-            </div>
-        );
-    }, [type]);
-
-    const renderDropdownBody = React.useCallback((beneficiariesList: Beneficiary[], type: 'fiat' | 'coin') => {
-        const dropdownBodyClassName = classnames('pg-beneficiaries__dropdown__body', {
-            'fiat-body': type === 'fiat',
-        });
-
-        return (
-            <div className={dropdownBodyClassName}>
-                {beneficiariesList && beneficiariesList.map((item, index) => renderDropdownItem(item, index, type))}
-                <div className="pg-beneficiaries__dropdown__body__add add" onClick={handleClickToggleAddAddressModal()}>
-                    <span className="add__label">
-                        {formatMessage({ id: 'page.body.wallets.beneficiaries.addAddress' })}
-                    </span>
-                    <PlusIcon className="add__icon" />
-                </div>
-            </div>
-        );
-    }, []);
+    }, [currentWithdrawalBeneficiary, isOpenTip]);
 
     const renderBeneficiariesAddModal = React.useMemo(() => {
         return (
@@ -420,21 +368,94 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         );
     }, []);
 
-    const filtredBeneficiaries = React.useMemo(() =>
-        handleFilterByState(beneficiaries, ['active', 'pending']), [beneficiaries]);
+    const handleCloseModals = React.useCallback(() => {
+        if (beneficiaries.length) {
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+        } else {
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}));
+        }
+        setCurrentTabIndex(0);
+        setAddressModalState(false);
+        setConfirmationModalState(false);
+    }, [beneficiaries, setCurrentTabIndex, setAddressModalState, setConfirmationModalState, setTab]);
+
+    const onTabChange = React.useCallback(label => setTab(label), [setTab]);
+
+    const onCurrentTabChange = React.useCallback(index => setCurrentTabIndex(index), [setCurrentTabIndex]);
+
+    const renderTabs = React.useMemo(() => {
+        if (beneficiaries.length) {
+            return [
+                {
+                    content: tab === formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}) ? uniqueBlockchainKeysValues.map(item =>
+                        <SelectBeneficiariesCrypto
+                            blockchainKey={item}
+                            currency={currency}
+                            handleDeleteAddress={handleDeleteAddress}
+                            handleClickSelectAddress={handleClickSelectAddress} />) : null,
+                    label: formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}),
+                },
+                {
+                    content: tab === formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}) ? renderBeneficiariesAddModal : null,
+                    label: formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}),
+                }
+            ]
+        }
+
+        return [
+            {
+                content: tab === formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}) ? renderBeneficiariesAddModal : null,
+                label: formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}),
+            }
+        ];
+    }, [tab, isOpenConfirmationModal, isOpenFailModal, beneficiaries]);
+
+    const renderTabPanel = React.useMemo(() => {
+        if (isOpenConfirmationModal) {
+            return renderActivateModal;
+        }
+
+        if (isOpenFailModal) {
+            return renderFailModal;
+        }
+
+        return <TabPanel
+            panels={renderTabs}
+            onTabChange={(_, label) => onTabChange(label)}
+            currentTabIndex={currentTabIndex}
+            onCurrentTabChange={onCurrentTabChange}
+        />
+    }, [isOpenAddressModal, isOpenConfirmationModal, isOpenFailModal, tab])
+
+    const renderTitle = React.useMemo(() => {
+        if (isOpenConfirmationModal) {
+            return formatMessage({ id: 'page.body.wallets.beneficiaries.title.confirm.new.account' });
+        }
+
+        return formatMessage({ id: 'page.body.wallets.beneficiaries.title.withdrawal.limit' });
+    }, [isOpenConfirmationModal]);
+
+    const renderBeneficiariesModal = React.useMemo(() => {
+        return (
+            <div className="cr-modal pg-beneficiaries__modal">
+                <div className="cr-email-form__options-group">
+                    <div className="cr-email-form__option">
+                        <div className="cr-email-form__option-inner">
+                            <LogoIcon />
+                            <HugeCloseIcon className="cr-email-form__option-inner-close" onClick={() => handleCloseModals()}/>
+                        </div>
+                    </div>
+                </div>
+                <h3>{renderTitle}</h3>
+                {renderTabPanel}
+            </div>
+        );
+    }, [renderTabPanel, tab]);
 
     return (
         <div className="pg-beneficiaries">
-            <span className="pg-beneficiaries__title">
-                {props.type === 'coin'
-                    ? formatMessage({ id: 'page.body.wallets.beneficiaries.title' })
-                    : formatMessage({ id: 'page.body.wallets.beneficiaries.fiat.title'})
-                }
-            </span>
-            {filtredBeneficiaries.length ? renderAddressDropdown(filtredBeneficiaries, currentWithdrawalBeneficiary, type) : renderAddAddress}
-            {isOpenAddressModal && renderBeneficiariesAddModal}
-            {isOpenConfirmationModal && renderActivateModal}
-            {isOpenFailModal && renderFailModal}
+            {beneficiaries.length && currentWithdrawalBeneficiary.id && currentWithdrawalBeneficiary.currency === beneficiaries[0].currency ? renderAddressItem(currentWithdrawalBeneficiary) : renderAddAddress}
+            {isOpenAddressModal && renderBeneficiariesModal}
         </div>
     );
 }

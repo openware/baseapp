@@ -1,6 +1,17 @@
 .modal-body__withdraw-confirm {
   font-size: 14px;
   line-height: 22px;
+  margin-top: 63px;
+  
+  &-title {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0.15px;
+    color: var(--primary-text-color);
+    justify-content: center;
+    display: flex;
+  }
 
   span {
     color: var(--secondary-contrast-cta-color);
@@ -16,7 +27,9 @@
   }
 
   &-address {
-    margin-bottom: 20px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+    letter-spacing: 0.1px;
 
     &-row {
       display: flex;
@@ -40,6 +53,10 @@
     }
   }
 
+  &-name {
+    margin-bottom: 16px;
+  }
+
   &-inline {
     display: flex;
     flex-direction: row;
@@ -47,6 +64,7 @@
 
     p {
       font-size: 16px;
+      margin-bottom: 0;
     }
   }
 
@@ -58,7 +76,7 @@
     flex-direction: column;
     justify-content: center;
     height: 88px;
-    margin: 25px 0 17px;
+    margin: 24px 0 6px;
 
     div:nth-child(2) {
       font-size: 22px;
@@ -121,9 +139,21 @@
   justify-content: center;
   text-align: center;
 
+  &-verification {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.44px;
+    color: var(--primary-text-color);
+    text-align: left;
+    margin-bottom: 24px;
+  }
+
   &-title {
     font-size: 16px;
     line-height: 24px;
+    text-align: left;
+    letter-spacing: 0.1px;
   }
 
   &-form {
