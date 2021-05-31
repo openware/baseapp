@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { configsData, configsError } from '../actions';
-import { marketsData } from '../../markets';
+import { marketsData, setCurrentMarketIfUnset } from '../../markets';
 import { currenciesData } from '../../currencies';
 import { blockchainsData } from '../../blockchains';
 
@@ -17,6 +17,10 @@ export function* getConfigsSaga() {
         yield put(marketsData(markets));
         yield put(currenciesData(currencies));
         yield put(blockchainsData(blockchains));
+
+        if (markets.length) {
+            yield put(setCurrentMarketIfUnset(markets[0]));
+        }
 
         yield put(configsData());
     } catch (error) {
