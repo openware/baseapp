@@ -3,8 +3,10 @@ import { all, call } from 'redux-saga/effects';
 import { adminReducer, publicReducer, userReducer } from './app';
 import { ConfigUpdateState, rootConfigUpdateSaga } from './admin/config';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
+import { BlockchainsState } from './public/blockchains';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
-import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
+import { ConfigsState, rootConfigsSaga } from './public/configs';
+import { CurrenciesState } from './public/currencies';
 import { ErrorHandlerState, rootErrorHandlerSaga } from './public/errorHandler';
 import { ColorThemeState } from './public/globalSettings';
 import { GridLayoutState } from './public/gridLayout';
@@ -47,12 +49,16 @@ import { P2POffersState, rootP2POffersSaga } from './user/p2pOffers';
 import { P2PTransfersState, rootP2PTransfersSaga } from './user/p2pTransfers';
 import { P2POrdersState, rootP2POrdersSaga } from './user/p2pOrders';
 import { P2PDisputeState, rootP2PDisputeSaga } from './user/p2pDispute';
+import { rootFeeGroupSaga, FeeGroupState } from './user/feeGroup';
+import { rootWithdrawLimitsSaga, WithdrawLimitsState } from './public/withdrawLimits';
 
 export * from './admin/config';
 export * from './admin/markets';
 export * from './admin/platform';
 export * from './public/alert';
+export * from './public/blockchains';
 export * from './public/blocklistAccess';
+export * from './public/configs';
 export * from './public/currencies';
 export * from './public/errorHandler';
 export * from './public/globalSettings';
@@ -63,6 +69,7 @@ export * from './public/memberLevels';
 export * from './public/orderBook';
 export * from './public/recentTrades';
 export * from './public/p2p';
+export * from './public/withdrawLimits';
 export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';
@@ -79,6 +86,7 @@ export * from './user/password';
 export * from './user/profile';
 export * from './user/userActivity';
 export * from './user/wallets';
+export * from './user/feeGroup';
 export * from './user/withdrawLimit';
 export * from './user/quickExchange';
 export * from './user/abilities';
@@ -91,8 +99,10 @@ export * from './user/p2pDispute';
 export interface RootState {
     public: {
         alerts: AlertState;
+        blockchains: BlockchainsState;
         blocklistAccess: BlocklistAccessState;
         colorTheme: ColorThemeState;
+        configs: ConfigsState;
         currencies: CurrenciesState;
         depth: DepthState;
         errorHandler: ErrorHandlerState;
@@ -106,6 +116,7 @@ export interface RootState {
         recentTrades: RecentTradesState;
         rgl: GridLayoutState;
         p2p: P2PState;
+        withdrawLimits: WithdrawLimitsState,
     };
     user: {
         abilities: AbilitiesState;
@@ -130,6 +141,7 @@ export interface RootState {
         userActivity: UserActivityState;
         wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
+        feeGroup: FeeGroupState;
         quickExchange: QuickExchangeState;
         paymentMethod: PaymentMethodState;
         p2pOffers: P2POffersState;
@@ -152,6 +164,8 @@ export const rootReducer = combineReducers({
 
 export function* rootSaga() {
     yield all([
+        call(rootWithdrawLimitsSaga),
+        call(rootFeeGroupSaga),
         call(rootQuickExchangeSaga),
         call(rootAbilitiesSaga),
         call(rootApiKeysSaga),
@@ -159,7 +173,6 @@ export function* rootSaga() {
         call(rootBeneficiariesSaga),
         call(rootBlocklistAccessSaga),
         call(rootConfigUpdateSaga),
-        call(rootCurrenciesSaga),
         call(rootDocumentationSaga),
         call(rootEmailVerificationSaga),
         call(rootErrorHandlerSaga),
@@ -194,5 +207,6 @@ export function* rootSaga() {
         call(rootP2POrdersSaga),
         call(rootP2PTransfersSaga),
         call(rootP2PDisputeSaga),
+        call(rootConfigsSaga),
     ]);
 }

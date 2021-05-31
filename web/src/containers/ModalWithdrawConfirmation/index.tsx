@@ -5,7 +5,8 @@ import {
 } from 'react-intl';
 import { IntlProps } from '../../';
 import { Decimal, Modal, CodeVerification } from '../../components';
-import { CloseIcon } from '../../assets/images/CloseIcon';
+import { HugeCloseIcon } from '../../assets/images/CloseIcon';
+import { LogoIcon } from '../../assets/images/LogoIcon';
 import { Modal as MobileModal } from '../../mobile/components/Modal';
 import { TipIcon } from '../../assets/images/TipIcon';
 import {
@@ -61,6 +62,7 @@ class ModalWithdraw extends React.Component<Props, State> {
                 </div>
             </MobileModal> : (
             <Modal
+                fullView={true}
                 show={show}
                 header={this.renderHeader()}
                 content={this.renderBody()}
@@ -70,14 +72,14 @@ class ModalWithdraw extends React.Component<Props, State> {
     }
 
     private renderHeader = () => {
-        const { currency } = this.props;
-        const formattedCurrency = currency.toUpperCase();
-
         return (
-            <div className="pg-exchange-modal-submit-header">
-                {this.translate('page.body.wallets.tabs.withdraw.modal.title')}
-                {` ${formattedCurrency}`}
-                <CloseIcon onClick={() => this.props.onDismiss()} className="pg-exchange-modal-submit-header-close"/>
+            <div className="cr-email-form__options-group">
+                <div className="cr-email-form__option">
+                    <div className="cr-email-form__option-inner">
+                        <LogoIcon />
+                        <HugeCloseIcon className="cr-email-form__option-inner-close" onClick={this.props.onDismiss}/>
+                    </div>
+                </div>
             </div>
         );
     };
@@ -90,6 +92,10 @@ class ModalWithdraw extends React.Component<Props, State> {
 
         return (
             <div className="pg-exchange-modal-submit-body modal-body__withdraw-confirm">
+                <div className="modal-body__withdraw-confirm-title">
+                    {this.translate('page.body.wallets.tabs.withdraw.modal.title')}
+                    {` ${formattedCurrency}`}
+                </div>
                 <div className="modal-body__withdraw-confirm-address">
                     <span>
                         {this.translate('page.body.wallets.tabs.withdraw.modal.withdrawTo')}
@@ -97,6 +103,14 @@ class ModalWithdraw extends React.Component<Props, State> {
                     <div className="modal-body__withdraw-confirm-address-row bold-text">
                         {rid}
                         <span className="tip-icon" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
+                    </div>
+                </div>
+                <div className="modal-body__withdraw-confirm-name">
+                    <span>
+                        {this.translate('page.body.wallets.tabs.withdraw.modal.name')}
+                    </span>
+                    <div className="modal-body__withdraw-confirm-address-row bold-text">
+                        {beneficiary.name}
                     </div>
                 </div>
                 {isOpenTip && this.renderDropdownTipFiat(beneficiary)}
@@ -172,6 +186,7 @@ class ModalWithdraw extends React.Component<Props, State> {
 
         return (
             <div className="pg-exchange-modal-submit-footer modal-footer__withdraw-confirm">
+                <div className="modal-footer__withdraw-confirm-verification">{this.translate('page.body.wallets.tabs.withdraw.modal.verification')}</div>
                 <div className="modal-footer__withdraw-confirm-title">
                     {this.translate('page.body.wallets.tabs.withdraw.modal.message')}
                 </div>

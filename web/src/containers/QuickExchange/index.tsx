@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { Button, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { CanCan } from '../';
 import { msPricesUpdates } from '../../api';
-import { useCurrenciesFetch } from '../../hooks';
-import { CanCan } from '../../containers';
 import {
     marketsFetch,
     selectMarkets,
@@ -74,8 +73,6 @@ export const QuickExchangeContainer = () => {
     const abilitiesSuccess = useSelector(selectAbilitiesSuccess);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
-
-    useCurrenciesFetch();
 
     const updateMarketPrice = () => {
         if (currentSelectedMarket) {

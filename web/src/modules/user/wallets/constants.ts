@@ -23,3 +23,7 @@ export const P2P_WALLETS_FETCH = 'p2p_wallets/FETCH';
 export const P2P_WALLETS_DATA = 'p2p_wallets/DATA';
 export const P2P_WALLETS_ERROR = 'p2p_wallets/ERROR';
 export const P2P_WALLETS_DATA_WS = 'p2p_wallets/DATA_WS';
+
+export const WALLETS_USER_WITHDRAWALS_FETCH = 'userWithdrawals/FETCH';
+export const WALLETS_USER_WITHDRAWALS_DATA = 'userWithdrawals/DATA';
+export const WALLETS_USER_WITHDRAWALS_ERROR = 'userWithdrawals/ERROR';

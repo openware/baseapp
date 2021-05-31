@@ -54,6 +54,7 @@ describe('walletsList reducer', () => {
 
     const addressFetchPayload = {
         currency: 'btc',
+        blockchain_key: 'bitcoin',
     };
 
     it('should handle WALLETS_FETCH', () => {
@@ -121,6 +122,7 @@ describe('walletsList reducer', () => {
             currencies: ['btc', 'tbtc'],
             address: 'address',
             state: 'active',
+            blockchain_key: "bitcoin",
         };
 
         const updatedWallets: Wallet[] = [
@@ -134,11 +136,12 @@ describe('walletsList reducer', () => {
                 type: 'coin',
                 account_type: 'spot',
                 fixed: 8,
-                deposit_address: {
+                deposit_addresses: [{
                     currencies: ['btc', 'tbtc'],
                     address: 'address',
                     state: 'active',
-                },
+                    blockchain_key: 'bitcoin',
+                }],
             },
             {
                 balance: '0',

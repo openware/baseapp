@@ -1,20 +1,18 @@
-import classnames from 'classnames';
 import * as React from 'react';
-import { Button, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from 'src';
 import {
-    Blur,
     CurrencyInfo,
-    DepositCrypto,
-    DepositFiat,
     TabPanel,
     WalletList,
+    WarningMessage,
 } from 'src/components';
+import { DepositCryptoContainer, DepositFiatContainer } from '../';
 import { DEFAULT_CCY_PRECISION } from 'src/constants';
 import { Withdraw, WithdrawProps } from 'src/containers';
 import { ModalWithdrawConfirmation } from 'src/containers/ModalWithdrawConfirmation';
@@ -48,11 +46,14 @@ import {
     User,
     Wallet,
     WalletHistoryList,
-    walletsAddressFetch,
     walletsData,
     walletsFetch,
     walletsWithdrawCcyFetch,
+    selectMemberLevels,
+    MemberLevels,
+    memberLevelsFetch,
 } from 'src/modules';
+import { DEFAULT_WALLET } from '../../../constants';
 
 interface ReduxProps {
     user: User;
@@ -64,24 +65,24 @@ interface ReduxProps {
     beneficiariesActivateSuccess: boolean;
     beneficiariesDeleteSuccess: boolean;
     beneficiariesAddSuccess: boolean;
+    memberLevels: MemberLevels;
     currencies: Currency[];
     markets: Market[];
     tickers: {
         [key: string]: Ticker,
     };
-    beneficiariesAddError: any,
 }
 
 interface DispatchProps {
     fetchMarkets: typeof marketsFetch;
     fetchTickers: typeof marketsTickersFetch;
     fetchBeneficiaries: typeof beneficiariesFetch;
-    fetchAddress: typeof walletsAddressFetch;
     fetchWallets: typeof walletsFetch;
     clearWallets: () => void;
     walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
     fetchSuccess: typeof alertPush;
     setMobileWalletUi: typeof setMobileWalletUi;
+    memberLevelsFetch: typeof memberLevelsFetch;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -89,19 +90,11 @@ const defaultBeneficiary: Beneficiary = {
     currency: '',
     name: '',
     state: '',
+    blockchain_key: '',
+    blockchain_name: '',
     data: {
         address: '',
     },
-};
-
-const defaultWallet: Wallet = {
-    name: '',
-    currency: '',
-    balance: '',
-    type: 'coin',
-    fixed: 0,
-    fee: 0,
-    account_type: '',
 };
 
 interface WalletsState {
@@ -160,12 +153,13 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     public translate = (id: string) => this.props.intl.formatMessage({ id });
     public tabMapping = ['deposit', 'withdraw'];
 
-    private title = this.translate('page.body.wallets.tabs.deposit.fiat.message1');
-    private description = this.translate('page.body.wallets.tabs.deposit.fiat.message2');
-
     public componentDidMount() {
-        const { wallets, currency, action, markets, tickers } = this.props;
+        const { wallets, currency, action, markets, tickers, memberLevels } = this.props;
         const { currentTabIndex, selectedWalletIndex } = this.state;
+
+        if (!memberLevels) {
+            this.props.memberLevelsFetch();
+        }
 
         if (this.props.wallets.length === 0) {
             this.props.fetchWallets();
@@ -249,11 +243,11 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase() });
         }
 
-        if (!this.props.beneficiariesAddError && next.beneficiariesAddError && next.beneficiariesAddError.message) {
-            if (next.beneficiariesAddError.message.indexOf('account.withdraw.not_permitted') > -1) {
-                this.props.fetchSuccess({ message: next.beneficiariesAddError.message, type: 'error'});
-            }
-        }
+        // if (!this.props.beneficiariesAddError && next.beneficiariesAddError && next.beneficiariesAddError.message) {
+        //     if (next.beneficiariesAddError.message.indexOf('account.withdraw.not_permitted') > -1) {
+        //         this.props.fetchSuccess({ message: next.beneficiariesAddError.message, type: 'error'});
+        //     }
+        // }
     }
 
     public render() {
@@ -318,7 +312,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                                 tickers={tickers}
                             />
                         </div>
-                        <div className={`pg-wallet__tabs col-md-7 col-sm-12 col-12 ${!mobileWalletChosen && 'd-none d-md-block'}`}>
+                        <div className={`pg-wallet__tabs col-md-9 col-sm-12 col-12 ${!mobileWalletChosen && 'd-none d-md-block'}`}>
                             <TabPanel
                                 panels={this.renderTabs()}
                                 onTabChange={(_, label) => this.onTabChange(label)}
@@ -429,7 +423,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 
         return [
             {
-                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit(!!showWithdraw) : null,
+                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit() : null,
                 label: this.translate('page.body.wallets.tabs.deposit'),
             },
             {
@@ -457,91 +451,29 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         this.toggleConfirmModal();
     };
 
-    private handleOnCopy = () => {
-        this.props.fetchSuccess({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
-    };
-
-    private handleGenerateAddress = () => {
+    private renderDeposit = () => {
         const { selectedWalletIndex } = this.state;
-        const { wallets } = this.props;
-
-        const wallet: Wallet = wallets[selectedWalletIndex] || defaultWallet;
-
-        if (!wallet.deposit_address && wallets.length && wallet.type !== 'fiat') {
-            this.props.fetchAddress({ currency: wallets[selectedWalletIndex].currency });
-        }
-    };
-
-    private renderDeposit = (isAccountActivated: boolean) => {
         const {
-            currencies,
-            user,
             wallets,
         } = this.props;
-        const { selectedWalletIndex } = this.state;
-        const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
-        const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
-        const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
-                                                   { confirmations: currencyItem.min_confirmations });
-        const error = this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.pending'});
-
-        const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
-            'pg-blur-deposit-crypto--active': isAccountActivated,
-        });
-
-        const buttonLabel = `${this.translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${this.translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
 
         if (wallets[selectedWalletIndex].type === 'coin') {
             return (
-                <React.Fragment>
-                    <CurrencyInfo
-                        wallet={wallets[selectedWalletIndex]}
-                        handleClickTransfer={currency => this.props.history.push(`/wallets/transfer/${currency}`)}
-                    />
-                    {currencyItem && !currencyItem.deposit_enabled ? (
-                        <Blur
-                            className={blurCryptoClassName}
-                            text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
-                        />
-                    ) : null}
-                    <DepositCrypto
-                        buttonLabel={buttonLabel}
-                        copiableTextFieldText={this.translate('page.body.wallets.tabs.deposit.ccy.message.address')}
-                        copyButtonText={this.translate('page.body.wallets.tabs.deposit.ccy.message.button')}
-                        error={error}
-                        handleGenerateAddress={this.handleGenerateAddress}
-                        handleOnCopy={this.handleOnCopy}
-                        text={text}
-                        wallet={wallet}
-                    />
-                    {wallet.currency && <WalletHistory label="deposit" type="deposits" currency={wallet.currency} />}
-                </React.Fragment>
+                <DepositCryptoContainer
+                    selectedWalletIndex={selectedWalletIndex}
+                />
             );
         } else {
             return (
-                <React.Fragment>
-                    <CurrencyInfo
-                        wallet={wallets[selectedWalletIndex]}
-                        handleClickTransfer={currency => this.props.history.push(`/wallets/transfer/${currency}`)}
-                    />
-                    {currencyItem && !currencyItem.deposit_enabled ? (
-                        <Blur
-                            className="pg-blur-deposit-fiat"
-                            text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
-                        />
-                    ) : null}
-                    <DepositFiat title={this.title} description={this.description} uid={user ? user.uid : ''}/>
-                    {wallet.currency && <WalletHistory label="deposit" type="deposits" currency={wallet.currency} />}
-                </React.Fragment>
+                <DepositFiatContainer selectedWalletIndex={selectedWalletIndex} />
             );
         }
     };
 
     private renderWithdraw = () => {
-        const { currencies, user, wallets, walletsError } = this.props;
+        const { user, wallets, walletsError } = this.props;
         const { selectedWalletIndex } = this.state;
-        const wallet = (wallets[selectedWalletIndex] || defaultWallet);
-        const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
+        const wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
 
         return (
             <React.Fragment>
@@ -550,15 +482,57 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                     handleClickTransfer={currency => this.props.history.push(`/wallets/transfer/${currency}`)}
                 />
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
-                {currencyItem && !currencyItem.withdrawal_enabled ? (
-                    <Blur
-                        className="pg-blur-withdraw"
-                        text={this.translate('page.body.wallets.tabs.withdraw.disabled.message')}
-                    />
-                ) : null}
                 {this.renderWithdrawContent()}
                 {user.otp && wallet.currency && <WalletHistory label="withdraw" type="withdraws" currency={wallet.currency} />}
             </React.Fragment>
+        );
+    };
+
+    private renderWithdrawOTP = () => {
+        return (
+            <React.Fragment>
+                <span>{this.translate('page.body.wallets.tabs.withdraw.content.enable2fa')}</span>
+                <Link to={{pathname: "/security/2fa", state: {enable2fa: true} }}  className="cr-warning-message--button">
+                    <span>{this.translate('page.body.wallets.tabs.withdraw.content.enable2faButton')}</span>
+                    <div className="cr-warning-message--arrow" />
+                </Link>
+            </React.Fragment>
+        )
+    };
+
+    private renderWithdrawWarningKYC = () => {
+        return (
+            <React.Fragment>
+                <span>{this.translate('page.body.wallets.warning.withdraw.verification')}</span>
+                <Link to="/confirm" className="cr-warning-message--button">
+                    <span>{this.translate('page.body.wallets.warning.withdraw.verification.button')}</span>
+                    <div className="cr-warning-message--arrow" />
+                </Link>
+            </React.Fragment>
+        );
+    };
+
+    private renderWithdrawWarningNoNetworks = () => {
+        return (
+            <span>{this.translate('page.body.wallets.warning.withdraw.disabled')}
+                <span className="cr-warning-message--bold">{this.translate('page.body.wallets.warning.withdraw.no.networks')}</span>
+            </span>
+        );
+    };
+
+    private renderWithdrawWarning = () => {
+        const { selectedWalletIndex } = this.state;
+        const { user: {otp, level}, currencies, wallets, memberLevels } = this.props;
+
+        const wallet = wallets[selectedWalletIndex];
+        const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
+
+        return (
+            <div>
+                {!otp && <WarningMessage children={this.renderWithdrawOTP()} hint="page.body.wallets.warning.withdraw.otp.hint"/>}
+                {level < memberLevels?.withdraw.minimum_level && <WarningMessage children={this.renderWithdrawWarningKYC()} hint="page.body.wallets.warning.withdraw.verification.hint"/>}
+                {!currencyItem?.networks && <WarningMessage children={this.renderWithdrawWarningNoNetworks()} hint="page.body.wallets.warning.withdraw.no.networks.hint"/>}
+            </div>
         );
     };
 
@@ -568,15 +542,18 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         if (selectedWalletIndex === -1) {
             return [{ content: null, label: '' }];
         }
-        const { user: { level, otp }, wallets } = this.props;
+        const { user: { level, otp }, wallets, currencies, memberLevels } = this.props;
         const wallet = wallets[selectedWalletIndex];
-        const { currency, fee, type } = wallet;
+        const { currency, type } = wallet;
         const fixed = (wallet || { fixed: 0 }).fixed;
+        const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
 
         const withdrawProps: WithdrawProps = {
+            networks: currencyItem.networks,
             withdrawDone,
+            price: currencyItem.price,
+            name: currencyItem.name,
             currency,
-            fee,
             onClick: this.toggleConfirmModal,
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,
@@ -588,29 +565,12 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
         };
 
-        return otp ? <Withdraw {...withdrawProps} /> : this.isOtpDisabled();
+        if (!otp || !currencyItem?.networks || level < memberLevels?.withdraw.minimum_level) {
+            return this.renderWithdrawWarning();
+        }
+
+        return <Withdraw {...withdrawProps} />;
     };
-
-
-    private isOtpDisabled = () => {
-        return (
-            <React.Fragment>
-                <p className="pg-wallet__enable-2fa-message">
-                    {this.translate('page.body.wallets.tabs.withdraw.content.enable2fa')}
-                </p>
-                <Button
-                    block={true}
-                    onClick={this.redirectToEnable2fa}
-                    size="lg"
-                    variant="primary"
-                >
-                    {this.translate('page.body.wallets.tabs.withdraw.content.enable2faButton')}
-                </Button>
-            </React.Fragment>
-        );
-    };
-
-    private redirectToEnable2fa = () => this.props.history.push('/security/2fa', { enable2fa: true });
 
     private isTwoFactorAuthRequired(level: number, is2faEnabled: boolean) {
         return level > 1 || (level === 1 && is2faEnabled);
@@ -621,7 +581,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         const { currentTabIndex } = this.state;
 
         const nextWalletIndex = this.props.wallets.findIndex(
-            wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase()
+            wallet => wallet.currency?.toLowerCase() === value.currency.toLowerCase()
         );
 
         this.setState({
@@ -648,7 +608,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesDeleteSuccess: selectBeneficiariesDeleteSuccess(state),
     currencies: selectCurrencies(state),
     beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
-    beneficiariesAddError: selectBeneficiariesCreateError(state),
+    memberLevels: selectMemberLevels(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
@@ -656,11 +616,11 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchTickers: () => dispatch(marketsTickersFetch()),
     fetchBeneficiaries: params => dispatch(beneficiariesFetch(params)),
     fetchWallets: () => dispatch(walletsFetch()),
-    fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
     clearWallets: () => dispatch(walletsData([])),
     fetchSuccess: payload => dispatch(alertPush(payload)),
     setMobileWalletUi: payload => dispatch(setMobileWalletUi(payload)),
+    memberLevelsFetch: () => dispatch(memberLevelsFetch()),
 });
 
 export const WalletsSpot = compose(

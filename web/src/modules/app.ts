@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 import { configUpdateReducer } from './admin/config';
 import { alertReducer  } from './public/alert';
+import { blockchainsReducer } from './public/blockchains';
 import { blocklistAccessReducer } from './public/blocklistAccess';
+import { configsReducer } from './public/configs';
 import { currenciesReducer } from './public/currencies';
 import { errorHandlerReducer } from './public/errorHandler';
 import { changeColorThemeReducer  } from './public/globalSettings';
@@ -13,6 +15,7 @@ import { memberLevelsReducer } from './public/memberLevels';
 import { depthReducer, incrementDepthReducer, orderBookReducer } from './public/orderBook';
 import { rangerReducer  } from './public/ranger/reducer';
 import { recentTradesReducer  } from './public/recentTrades';
+import { withdrawLimitsReducer  } from './public/withdrawLimits';
 import { apiKeysReducer } from './user/apiKeys';
 import { abilitiesReducer } from './user/abilities';
 import { authReducer  } from './user/auth';
@@ -46,11 +49,14 @@ import { p2pOffersReducer } from './user/p2pOffers';
 import { p2pTransfersReducer } from './user/p2pTransfers';
 import { p2pOrdersReducer } from './user/p2pOrders';
 import { p2pDisputeReducer } from './user/p2pDispute';
+import { feeGroupReducer } from './user/feeGroup';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,
+    blockchains: blockchainsReducer,
     blocklistAccess: blocklistAccessReducer,
     colorTheme: changeColorThemeReducer,
+    configs: configsReducer,
     currencies: currenciesReducer,
     errorHandler: errorHandlerReducer,
     rgl: gridLayoutReducer,
@@ -64,6 +70,7 @@ export const publicReducer = combineReducers({
     ranger: rangerReducer,
     recentTrades: recentTradesReducer,
     p2p: p2pReducer,
+    withdrawLimits: withdrawLimitsReducer,
 });
 
 export const userReducer = combineReducers({
@@ -86,6 +93,7 @@ export const userReducer = combineReducers({
     sendEmailVerification: sendEmailVerificationReducer,
     userActivity: userActivityReducer,
     wallets: walletsReducer,
+    feeGroup: feeGroupReducer,
     withdrawLimit: withdrawLimitReducer,
     internalTransfers: internalTransfersReducer,
     quickExchange: quickExchangeReducer,

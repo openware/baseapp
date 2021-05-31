@@ -9,9 +9,23 @@ Access-Control-Allow-Credentials: true
     "currency": "btc",
     "balance": "0.21026373",
     "locked": "0.0",
-    "deposit_address": {
-        "currencies": ["btc"],
-        "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
-        "state": "active"
-    }
+    "deposit_addresses": [
+        {
+            "currencies": ["btc"],
+            "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
+            "state": "active",
+            "blockchain_key": "bitcoin"
+        },
+        {
+            "currencies": ["btc"],
+            "address": "test",
+            "state": "active",
+            "blockchain_key": "bitcoin_test"
+        },
+        {
+            "currencies": ["btc"],
+            "address": "test",
+            "state": "disabled",
+            "blockchain_key": "bitcoin_disabled"
+        }
 }

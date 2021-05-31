@@ -17,8 +17,28 @@ import {
     WALLETS_WITHDRAW_CCY_DATA,
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
+    WALLETS_USER_WITHDRAWALS_ERROR,
+    WALLETS_USER_WITHDRAWALS_DATA,
+    WALLETS_USER_WITHDRAWALS_FETCH,
 } from './constants';
 import { Wallet, WalletAddress, WalletWithdrawCCY } from './types';
+
+export interface UserWithdrawalsFetch {
+    type: typeof WALLETS_USER_WITHDRAWALS_FETCH;
+}
+
+export interface UserWithdrawalsData {
+    type: typeof WALLETS_USER_WITHDRAWALS_DATA;
+    payload: {
+        last_24_hours: string;
+        last_1_month: string;
+    };
+}
+
+export interface UserWithdrawalsError {
+    type: typeof WALLETS_USER_WITHDRAWALS_ERROR;
+    error: CommonError;
+}
 
 export interface WalletsFetch {
     type: typeof WALLETS_FETCH;
@@ -50,6 +70,7 @@ export interface WalletsAddressFetch {
     type: typeof WALLETS_ADDRESS_FETCH;
     payload: {
         currency: string;
+        blockchain_key: string;
     };
 }
 
@@ -125,7 +146,24 @@ export type WalletsAction = WalletsFetch
     | P2PWalletsFetch
     | P2PWalletsData
     | P2PWalletsError
-    | P2PWalletsDataByRanger;
+    | P2PWalletsDataByRanger
+    | UserWithdrawalsFetch
+    | UserWithdrawalsData
+    | UserWithdrawalsError;
+
+export const userWithdrawalsFetch = (): UserWithdrawalsFetch => ({
+    type: WALLETS_USER_WITHDRAWALS_FETCH,
+});
+    
+export const userWithdrawalsData = (payload: UserWithdrawalsData['payload']): UserWithdrawalsData => ({
+    type: WALLETS_USER_WITHDRAWALS_DATA,
+    payload,
+});
+    
+export const userWithdrawalsError = (error: CommonError): UserWithdrawalsError => ({
+    type: WALLETS_USER_WITHDRAWALS_ERROR,
+    error,
+});
 
 export const walletsFetch = (): WalletsFetch => ({
     type: WALLETS_FETCH,

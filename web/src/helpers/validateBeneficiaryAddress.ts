@@ -56,3 +56,4 @@ cryptoAddress.cryptocurrency = (cryptoCurrency, exact) => {
 };
 
 export const validateBeneficiaryAddress = cryptoAddress;
+

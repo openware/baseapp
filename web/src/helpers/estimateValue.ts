@@ -38,7 +38,7 @@ const getWalletTotal = (wallet: Wallet): number => {
 
 export const estimateWithMarket = (targetCurrency: string, walletCurrency: string, walletTotal: number, currencies: Currency[], markets: Market[], marketTickers: MarketTicker): number => {
     const formattedTargetCurrency = targetCurrency.toLowerCase();
-    const formattedWalletCurrency = walletCurrency.toLowerCase();
+    const formattedWalletCurrency = walletCurrency?.toLowerCase();
     const market = findMarket(formattedTargetCurrency, formattedWalletCurrency, markets);
     const marketTicker = findMarketTicker((market && market.id) || '', marketTickers);
     const targetCurrencyPrecision = handleCCYPrecision(currencies, formattedTargetCurrency, DEFAULT_CCY_PRECISION);
@@ -65,7 +65,7 @@ export const estimateWithMarket = (targetCurrency: string, walletCurrency: strin
 const estimateWithoutMarket = (targetCurrency: string, walletCurrency: string, walletTotal: number, currencies: Currency[], markets: Market[], marketTickers: MarketTicker): number => {
     const secondaryCurrencies: string[] = [];
     const formattedTargetCurrency = targetCurrency.toLowerCase();
-    const formattedWalletCurrency = walletCurrency.toLowerCase();
+    const formattedWalletCurrency = walletCurrency?.toLowerCase();
 
     for (const market of markets) {
         if (market.base_unit === formattedTargetCurrency) {
@@ -105,7 +105,7 @@ export const estimateValue = (targetCurrency: string, currencies: Currency[], wa
 
     if (wallets && wallets.length) {
         for (const wallet of wallets) {
-            const formattedWalletCurrency = wallet.currency.toLowerCase();
+            const formattedWalletCurrency = wallet.currency?.toLowerCase();
 
             if (formattedWalletCurrency === formattedTargetCurrency) {
                 const walletTotal = (Number(wallet.balance) || 0) + (Number(wallet.locked) || 0);

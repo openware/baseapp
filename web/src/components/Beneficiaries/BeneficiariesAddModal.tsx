@@ -8,20 +8,33 @@ import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesCreate,
     BeneficiaryBank,
+    selectCurrencies,
     selectMobileDeviceState,
+    BlockchainCurrencies,
 } from '../../modules';
 import { CustomInput } from '../CustomInput';
+import { DropdownBeneficiary } from './DropdownBeneficiary';
+import { BeneficiariesBlockchainItem } from './BeneficiariesCrypto/BeneficiariesBlockchainItem';
 
 interface Props {
     currency: string;
     type: 'fiat' | 'coin';
     handleToggleAddAddressModal: () => void;
-}
+};
+
+const defaultSelected = {
+    blockchainKey: '',
+    protocol: '',
+    name: '',
+    id: '',
+    fee: '',
+    minWithdraw: '',
+};
 
 const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const [coinAddress, setCoinAddress] = React.useState('');
     const [coinAddressValid, setCoinAddressValid] = React.useState(false);
-    const [coinTestnetAddressValid, setCoinTestnetAddressValid] = React.useState(false);
+    const [coinBlockchainName, setCoinBlockchainName] = React.useState(defaultSelected);
     const [coinBeneficiaryName, setCoinBeneficiaryName] = React.useState('');
     const [coinDescription, setCoinDescription] = React.useState('');
     const [coinDestinationTag, setCoinDestinationTag] = React.useState('');
@@ -50,11 +63,14 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const dispatch = useDispatch();
 
     const isMobileDevice = useSelector(selectMobileDeviceState);
+    const currencies = useSelector(selectCurrencies);
+    const currencyItem = React.useMemo(() => currencies.find(item => item.id === currency), [currencies]);
     const isRipple = React.useMemo(() => currency === 'xrp', [currency]);
 
     const handleClearModalsInputs = React.useCallback(() => {
         setCoinAddress('');
         setCoinBeneficiaryName('');
+        setCoinBlockchainName(defaultSelected);
         setCoinDescription('');
         setCoinDestinationTag('');
         setCoinAddressFocused(false);
@@ -62,7 +78,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         setCoinDescriptionFocused(false);
         setCoinDestinationTagFocused(false);
         setCoinAddressValid(false);
-        setCoinTestnetAddressValid(false);
+        // setCoinTestnetAddressValid(false);
 
         setFiatAccountNumber('');
         setFiatName('');
@@ -78,39 +94,13 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         setFiatBankSwiftCodeFocused(false);
         setFiatIntermediaryBankNameFocused(false);
         setFiatIntermediaryBankSwiftCodeFocused(false);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const handleClickToggleAddAddressModal = React.useCallback((clear?: boolean) => () => {
-        handleToggleAddAddressModal();
-
-        if (clear) {
-            handleClearModalsInputs();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [handleToggleAddAddressModal]);
-
-    const renderAddAddressModalHeader = React.useMemo(() => {
-        return (
-            <div className="cr-email-form__options-group">
-                <div className="cr-email-form__option">
-                    <div className="cr-email-form__option-inner">
-                        {formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.header' })}
-                        <span
-                            className="pg-profile-page__close pg-profile-page__pull-right"
-                            onClick={handleClickToggleAddAddressModal(true)}
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formatMessage]);
 
     const handleSubmitAddAddressCoinModal = React.useCallback(() => {
         const payload = {
             currency: currency || '',
             name: coinBeneficiaryName,
+            blockchain_key: coinBlockchainName.blockchainKey,
             data: JSON.stringify({
                 address: (isRipple && coinDestinationTag ? `${coinAddress}?dt=${coinDestinationTag}` : coinAddress),
             }),
@@ -119,8 +109,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
 
         dispatch(beneficiariesCreate(payload));
         handleClearModalsInputs();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [coinAddress, coinBeneficiaryName, coinDescription, currency]);
+    }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinBlockchainName]);
 
     const getState = React.useCallback(key => {
         switch (key) {
@@ -201,7 +190,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         const coinAddressTestnetValidator = validateBeneficiaryTestnetAddress.cryptocurrency(currency, true);
 
         setCoinAddressValid(coinAddressValidator.test(value.trim()));
-        setCoinTestnetAddressValid(coinAddressTestnetValidator.test(value.trim()));
+        // setCoinTestnetAddressValid(coinAddressTestnetValidator.test(value.trim()));
     }, [currency]);
 
     const handleChangeFieldValue = React.useCallback((key: string, value: string) => {
@@ -321,23 +310,49 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [coinAddress]);
 
-    const renderTestnetAddressMessage = React.useMemo(() => {
+    const handleChangenBlockchain = React.useCallback((index: number) => {
+        const blockchainItem = currencyItem.networks[index];
+
+        setCoinBlockchainName({
+            blockchainKey: blockchainItem.blockchain_key,
+            protocol: blockchainItem.protocol,
+            name: currencyItem.name,
+            id: currencyItem.id,
+            fee: blockchainItem?.withdraw_fee,
+            minWithdraw: blockchainItem.min_withdraw_amount,
+        });
+    }, [currencyItem]);
+
+    const renderDropdownItem = React.useCallback((name, fixed, price) => (item: BlockchainCurrencies, index) => {
         return (
-          <div className="cr-email-form__group">
-              <span className="pg-beneficiaries__warning-text">{formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.testnetAddress' })}</span>
-          </div>
+            <BeneficiariesBlockchainItem
+                blockchainKey={item.blockchain_key}
+                protocol={item.protocol}
+                name={name}
+                id={item.currency_id}
+                fee={item?.withdraw_fee}
+                minWithdraw={item.min_withdraw_amount}
+                fixed={fixed}
+                price={price}
+                disabled={item.status === 'disabled'}
+            />
         );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [coinAddress]);
+    }, []);
 
     const renderAddAddressModalCryptoBody = React.useMemo(() => {
-        const isDisabled = !coinAddress || !coinBeneficiaryName || (!coinAddressValid && !coinTestnetAddressValid);
+        const isDisabled = !coinAddress || !coinBeneficiaryName || !coinAddressValid || !coinBlockchainName.blockchainKey;
 
         return (
             <div className="cr-email-form__form-content">
                 {renderAddAddressModalBodyItem('coinAddress')}
-                {!coinAddressValid && !coinTestnetAddressValid && coinAddress && renderInvalidAddressMessage}
-                {!coinAddressValid && coinTestnetAddressValid && coinAddress && renderTestnetAddressMessage}
+                {!coinAddressValid && coinAddress && renderInvalidAddressMessage}
+                <DropdownBeneficiary
+                    list={currencyItem?.networks?.map(renderDropdownItem(currencyItem.name, currencyItem.precision, currencyItem.price))}
+                    selectedValue={coinBlockchainName}
+                    onSelect={handleChangenBlockchain}
+                    placeholder={formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.blockchain.networks' })}
+                    clear={false}
+                />
                 {renderAddAddressModalBodyItem('coinBeneficiaryName')}
                 {renderAddAddressModalBodyItem('coinDescription', true)}
                 {isRipple && renderAddAddressModalBodyItem('coinDestinationTag', true)}
@@ -424,13 +439,11 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         const addModalClass = classnames('beneficiaries-add-address-modal', {
             'beneficiaries-add-address-modal--coin': type === 'coin',
             'beneficiaries-add-address-modal--fiat': type === 'fiat',
-            'cr-modal': !isMobileDevice,
         });
 
         return (
             <div className={addModalClass}>
                 <div className="cr-email-form">
-                    {renderAddAddressModalHeader}
                     {type === 'coin' ? renderAddAddressModalCryptoBody : renderAddAddressModalFiatBody}
                 </div>
             </div>
@@ -442,7 +455,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         isMobileDevice ?
             <Modal
                 title={formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.header' })}
-                onClose={props.handleToggleAddAddressModal}
+                onClose={handleToggleAddAddressModal}
                 isOpen>
                 {renderContent()}
             </Modal> : renderContent()
