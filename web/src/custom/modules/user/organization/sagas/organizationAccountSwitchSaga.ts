@@ -3,7 +3,7 @@ import { getCsrfToken } from 'src/helpers';
 import { alertPush, sendError, userFetch } from 'src/modules';
 import { API, RequestOptions } from '../../../../../api';
 import {
-    CommercialAccountSwitch, commercialAccountSwitchError,
+    OrganizationAccountSwitch, organizationAccountSwitchError,
 } from '../actions';
 
 const config = (csrfToken?: string): RequestOptions => {
@@ -13,7 +13,7 @@ const config = (csrfToken?: string): RequestOptions => {
     };
 };
 
-export function* commercialAccountSwitchSaga(action: CommercialAccountSwitch) {
+export function* organizationAccountSwitchSaga(action: OrganizationAccountSwitch) {
     try {
         yield call(API.post(config(getCsrfToken())), `/identity/sessions/switch`, action.payload);
         yield put(alertPush({ message: ['success.account.switch'], type: 'success' }));
@@ -23,7 +23,7 @@ export function* commercialAccountSwitchSaga(action: CommercialAccountSwitch) {
             error,
             processingType: 'alert',
             extraOptions: {
-                actionError: commercialAccountSwitchError,
+                actionError: organizationAccountSwitchError,
             },
         }));
     }

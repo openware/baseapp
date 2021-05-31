@@ -9,7 +9,7 @@ import { CloseScreenIcon } from 'src/assets/images/CloseScreenIcon';
 import { LogoutIcon } from 'src/assets/images/sidebar/LogoutIcon';
 import { Logo } from 'src/components';
 import { SearchBox } from 'src/custom/components';
-import { commercialAccountsFetch, commercialAccountSwitch, selectCommercialAccounts } from 'src/modules';
+import { organizationAccountsFetch, organizationAccountSwitch, selectOrganizationAccounts } from 'src/modules';
 import { setDocumentTitle } from '../../../helpers';
 
 export const SwitchAccountScreen: React.FC = () => {
@@ -18,7 +18,7 @@ export const SwitchAccountScreen: React.FC = () => {
     const { formatMessage } = useIntl();
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
 
-    const accounts = useSelector(selectCommercialAccounts);
+    const accounts = useSelector(selectOrganizationAccounts);
     
     useEffect(() => {
         setDocumentTitle('Switch Account');
@@ -31,12 +31,12 @@ export const SwitchAccountScreen: React.FC = () => {
             keyword,
         };
 
-        dispatch(commercialAccountsFetch(payload));
+        dispatch(organizationAccountsFetch(payload));
     }, []);
 
     const handleSwitchAccount = useCallback(oid => {
         const payload = { oid };
-        dispatch(commercialAccountSwitch(payload));
+        dispatch(organizationAccountSwitch(payload));
     }, []);
 
     const getSearchLabel = useCallback(label => {

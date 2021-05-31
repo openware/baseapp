@@ -1,22 +1,22 @@
 import { CommonError } from '../../../../modules/types';
-import { CommercialActions } from './actions';
+import { OrganizationActions } from './actions';
 import {
-    COMMERCIAL_ACCOUNTS_FETCH,
-    COMMERCIAL_ACCOUNTS_DATA,
-    COMMERCIAL_ACCOUNTS_ERROR,
+    ORGANIZATION_ACCOUNTS_FETCH,
+    ORGANIZATION_ACCOUNTS_DATA,
+    ORGANIZATION_ACCOUNTS_ERROR,
 } from './constants';
-import { CommercialAccount } from './types';
+import { OrganizationAccount } from './types';
 
-export interface CommercialState {
+export interface OrganizationState {
     accounts: {
-        data: CommercialAccount[];
+        data: OrganizationAccount[];
         fetching: boolean;
         success: boolean;
         error?: CommonError;
     };
 }
 
-export const initialCommercialState: CommercialState = {
+export const initialOrganizationState: OrganizationState = {
     accounts: {
         data: [],
         fetching: false,
@@ -24,22 +24,22 @@ export const initialCommercialState: CommercialState = {
     },
 };
 
-export const commercialAccountsFetchReducer = (state: CommercialState['accounts'], action: CommercialActions) => {
+export const commercialAccountsFetchReducer = (state: OrganizationState['accounts'], action: OrganizationActions) => {
     switch (action.type) {
-        case COMMERCIAL_ACCOUNTS_FETCH:
+        case ORGANIZATION_ACCOUNTS_FETCH:
             return {
                 ...state,
                 fetching: true,
                 success: false,
             };
-        case COMMERCIAL_ACCOUNTS_DATA:
+        case ORGANIZATION_ACCOUNTS_DATA:
             return {
                 ...state,
                 data: action.payload,
                 fetching: false,
                 success: true,
             };
-        case COMMERCIAL_ACCOUNTS_ERROR:
+        case ORGANIZATION_ACCOUNTS_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -51,11 +51,11 @@ export const commercialAccountsFetchReducer = (state: CommercialState['accounts'
     }
 };
 
-export const commercialReducer = (state = initialCommercialState, action: CommercialActions) => {
+export const commercialReducer = (state = initialOrganizationState, action: OrganizationActions) => {
     switch (action.type) {
-        case COMMERCIAL_ACCOUNTS_FETCH:
-        case COMMERCIAL_ACCOUNTS_DATA:
-        case COMMERCIAL_ACCOUNTS_ERROR:
+        case ORGANIZATION_ACCOUNTS_FETCH:
+        case ORGANIZATION_ACCOUNTS_DATA:
+        case ORGANIZATION_ACCOUNTS_ERROR:
             const commercialAccountsState = { ...state.accounts };
 
             return {

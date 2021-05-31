@@ -1,4 +1,4 @@
-export interface CommercialAccount {
+export interface OrganizationAccount {
     id: number,
     oid: string,
     name: string,
