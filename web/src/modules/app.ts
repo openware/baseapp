@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { configUpdateReducer } from './admin/config';
 import { alertReducer  } from './public/alert';
 import { blocklistAccessReducer } from './public/blocklistAccess';
+import { configsReducer } from './public/configs';
 import { currenciesReducer } from './public/currencies';
 import { errorHandlerReducer } from './public/errorHandler';
 import { changeColorThemeReducer  } from './public/globalSettings';
@@ -51,6 +52,7 @@ export const publicReducer = combineReducers({
     alerts: alertReducer,
     blocklistAccess: blocklistAccessReducer,
     colorTheme: changeColorThemeReducer,
+    configs: configsReducer,
     currencies: currenciesReducer,
     errorHandler: errorHandlerReducer,
     rgl: gridLayoutReducer,

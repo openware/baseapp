@@ -4,6 +4,7 @@ import { adminReducer, publicReducer, userReducer } from './app';
 import { ConfigUpdateState, rootConfigUpdateSaga } from './admin/config';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
+import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
 import { ErrorHandlerState, rootErrorHandlerSaga } from './public/errorHandler';
 import { ColorThemeState } from './public/globalSettings';
@@ -53,6 +54,7 @@ export * from './admin/markets';
 export * from './admin/platform';
 export * from './public/alert';
 export * from './public/blocklistAccess';
+export * from './public/configs';
 export * from './public/currencies';
 export * from './public/errorHandler';
 export * from './public/globalSettings';
@@ -93,6 +95,7 @@ export interface RootState {
         alerts: AlertState;
         blocklistAccess: BlocklistAccessState;
         colorTheme: ColorThemeState;
+        configs: ConfigsState;
         currencies: CurrenciesState;
         depth: DepthState;
         errorHandler: ErrorHandlerState;
@@ -194,5 +197,6 @@ export function* rootSaga() {
         call(rootP2POrdersSaga),
         call(rootP2PTransfersSaga),
         call(rootP2PDisputeSaga),
+        call(rootConfigsSaga),
     ]);
 }

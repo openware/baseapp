@@ -1,4 +1,3 @@
-
 import { RootState } from '../../';
 import { CurrenciesState } from './reducer';
 import { Currency } from './types';
