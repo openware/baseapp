@@ -1,7 +1,6 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
-/* eslint-disable-next-line */
 import { Router } from 'react-router';
 import { createBrowserHistory } from 'history';
 import { languageMap } from 'src/translations';
