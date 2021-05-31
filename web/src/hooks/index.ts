@@ -1,6 +1,5 @@
 export * from './useApiKeysFetch';
 export * from './useBeneficiariesFetch';
-export * from './useCurrenciesFetch';
 export * from './useDepthFetch';
 export * from './useDocumentationFetch';
 export * from './useDocumentTitle';

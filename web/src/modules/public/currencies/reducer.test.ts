@@ -1,4 +1,3 @@
-import { CommonError } from '../../types';
 import * as actions from './actions';
 import { currenciesReducer, CurrenciesState, initialCurrenciesState } from './reducer';
 import { Currency } from './types';
@@ -48,34 +47,11 @@ describe('Currencies reducer', () => {
         },
     ];
 
-    const error: CommonError = {
-        code: 500,
-        message: ['Server error'],
-    };
-
-    it('should handle CURRENCIES_FETCH', () => {
+    it('should handle CURRENCIES_DATA', () => {
         const expectedState: CurrenciesState = {
             ...initialCurrenciesState,
-            loading: true,
-            timestamp: Math.floor(Date.now() / 1000),
-        };
-        expect(currenciesReducer(initialCurrenciesState, actions.currenciesFetch())).toEqual(expectedState);
-    });
-
-    it('should handle MARKETS_DATA', () => {
-        const expectedState: CurrenciesState = {
-            ...initialCurrenciesState,
-            loading: false,
             list: fakeCurrencies,
         };
         expect(currenciesReducer(initialCurrenciesState, actions.currenciesData(fakeCurrencies))).toEqual(expectedState);
-    });
-
-    it('should handle MARKETS_ERROR', () => {
-        const expectedState: CurrenciesState = {
-            ...initialCurrenciesState,
-            loading: false,
-        };
-        expect(currenciesReducer(initialCurrenciesState, actions.currenciesError(error))).toEqual(expectedState);
     });
 });

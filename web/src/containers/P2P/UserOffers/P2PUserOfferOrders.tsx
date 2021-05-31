@@ -7,7 +7,7 @@ import { ArrowRightIcon } from 'src/assets/images/setup/ArrowRightIcon';
 import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
 import { localeDate, setOfferStatusColor, setStateType, setTradesType } from 'src/helpers';
 import { Decimal, Table } from '../../../components';
-import { useCurrenciesFetch, useP2PUserOfferOrdersFetch } from '../../../hooks';
+import { useP2PUserOfferOrdersFetch } from '../../../hooks';
 import {
     selectP2PUserOfferOrders,
     P2POrder,
@@ -31,7 +31,6 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
     const translate = useCallback((key: string) => formatMessage({ id: key }), [formatMessage]);
 
     useP2PUserOfferOrdersFetch({ offer_id: Number(id) });
-    useCurrenciesFetch();
 
     const handleCancel = useCallback((offer_id: number) => () => {
         dispatch(cancelOffer({ id: offer_id }));

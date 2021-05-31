@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { Button } from 'react-bootstrap';
 import { msPricesUpdates } from '../../api';
-import { useCurrenciesFetch } from '../../hooks';
 import {
     marketsFetch,
     selectMarkets,
@@ -67,8 +66,6 @@ export const QuickExchangeContainer = () => {
     const updateTimer = useSelector(selectMarketPriceFetchSuccess);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
-
-    useCurrenciesFetch();
 
     const updateMarketPrice = () => {
         if (currentSelectedMarket) {
