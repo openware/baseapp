@@ -2,13 +2,13 @@ import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Router } from 'react-router';
 import { gaTrackerKey } from './api';
 import { ErrorWrapper } from './containers';
 import { useRangerConnectFetch, useSetMobileDevice } from './hooks';
 import * as mobileTranslations from './mobile/translations';
-import { selectCurrentLanguage, selectMobileDeviceState } from './modules';
+import { configsFetch, selectCurrentLanguage, selectMobileDeviceState } from './modules';
 import { languageMap } from './translations';
 
 const gaKey = gaTrackerKey();
@@ -74,6 +74,12 @@ const RenderDeviceContainers = () => {
 };
 
 export const App = () => {
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        dispatch(configsFetch());
+    }, []);
+
     useSetMobileDevice();
     const lang = useSelector(selectCurrentLanguage);
     const isMobileDevice = useSelector(selectMobileDeviceState);
