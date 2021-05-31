@@ -151,7 +151,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         const marketName = currentMarket ? currentMarket.name : market;
         const date = updated_at || created_at;
         const status = this.setOrderStatus(state);
-        const actualPrice = ord_type === 'market' || status === 'done' ? avg_price : status === 'trigger_wait' ? trigger_price : price;
+        const actualPrice = this.getPrice(ord_type, status, avg_price, trigger_price, price);
         const total = +actualPrice * +origin_volume;
         const executedVolume = Number(origin_volume) - Number(remaining_volume);
         const filled = ((executedVolume / Number(origin_volume)) * 100).toFixed(2);
@@ -193,6 +193,16 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         }
 
         return this.props.intl.formatMessage({ id: `page.body.trade.header.openOrders.content.type.${orderType}` });
+    };
+
+    private getPrice = (ord_type, status, avg_price, trigger_price, price) => {
+        if (ord_type === 'market' || status === 'done') {
+            return avg_price;
+        } else if (status === 'trigger_wait') {
+            return trigger_price;
+        } else {
+            return price;
+        }
     };
 
     private setOrderStatus = (status: string) => {
