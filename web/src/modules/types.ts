@@ -12,7 +12,7 @@ export interface CommonState {
     loading?: boolean;
 }
 
-export type OrderStatus = 'wait' | 'done' | 'cancel' | 'pending' | 'reject';
+export type OrderStatus = 'wait' | 'done' | 'cancel' | 'pending' | 'reject' | 'trigger_wait';
 export type OrderSide = 'sell' | 'buy';
 export type OrderType = 'limit' | 'market';
 export type OrderKind = 'bid' | 'ask';
