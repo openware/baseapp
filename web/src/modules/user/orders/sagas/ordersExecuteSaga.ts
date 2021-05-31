@@ -14,12 +14,13 @@ const executeOptions = (csrfToken?: string): RequestOptions => {
 
 export function* ordersExecuteSaga(action: OrderExecuteFetch) {
     try {
-        const { market, side, volume, price, ord_type } = action.payload;
+        const { market, side, volume, price, ord_type, trigger_price } = action.payload;
         const params = isFinexEnabled() ? {
             market: market,
             side: side,
             amount: volume,
-            price: price,
+            ...(typeof price !== 'undefined' && { price }),
+            ...(typeof trigger_price !== 'undefined' && { trigger_price }),
             type: ord_type,
         } : action.payload;
         const order = yield call(API.post(executeOptions(getCsrfToken())), '/market/orders', params);

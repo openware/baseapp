@@ -35,6 +35,7 @@ export const ru: LangType = {
     'page.body.trade.header.newOrder.content.orderType.limit': 'Лимит',
     'page.body.trade.header.newOrder.content.orderType.market': 'Рынок',
     'page.body.trade.header.newOrder.content.price': 'Цена',
+    'page.body.trade.header.newOrder.content.triggerPrice': 'Trigger price {sign} Market p.',
     'page.body.trade.header.newOrder.content.amount': 'Кол.',
     'page.body.trade.header.newOrder.content.total': 'Всего',
     'page.body.trade.header.newOrder.content.available': 'Доступно',
@@ -43,6 +44,8 @@ export const ru: LangType = {
     'error.order.create.minAmount': 'Кол-во слишком мало. Минимальное кол-во: {amount} {currency}',
     'error.order.create.minPrice': 'Цена слишком мала. Минимальная цена: {price} {currency}',
     'error.order.create.maxPrice': 'Цена слишком велика. Максимальная цена: {price} {currency}',
+    'error.order.create.minTriggerPrice': 'Trigger price is too low. Minimum price is {price} {currency}',
+    'error.order.create.maxTriggerPrice': 'Trigger price is too high. Maximum price is {price} {currency}',
     'error.order.create.available': 'Баланс превышен. Доступно {available} {currency}',
 
     'page.body.trade.header.marketDepths': 'Глубина рынка',

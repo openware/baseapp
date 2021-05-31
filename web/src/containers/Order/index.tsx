@@ -57,6 +57,7 @@ interface ReduxProps {
 interface StoreProps {
     orderSide: string;
     priceLimit: number | undefined;
+    trigger: number | undefined;
     width: number;
 }
 
@@ -82,6 +83,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         this.state = {
             orderSide: 'buy',
             priceLimit: undefined,
+            trigger: undefined,
             width: 0,
         };
 
@@ -114,6 +116,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         if (+next.currentPrice && next.currentPrice !== this.state.priceLimit) {
             this.setState({
                 priceLimit: +next.currentPrice,
+                trigger: +next.currentPrice,
             });
         }
     }
@@ -130,7 +133,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             marketTickers,
             wallets,
         } = this.props;
-        const { priceLimit } = this.state;
+        const { priceLimit, trigger } = this.state;
 
         if (!currentMarket) {
             return null;
@@ -163,12 +166,14 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     priceMarketBuy={Number((currentTicker || defaultCurrentTicker).last)}
                     priceMarketSell={Number((currentTicker || defaultCurrentTicker).last)}
                     priceLimit={priceLimit}
+                    trigger={trigger}
                     to={currentMarket.base_unit}
                     handleSendType={this.getOrderType}
                     currentMarketAskPrecision={currentMarket.amount_precision}
                     currentMarketBidPrecision={currentMarket.price_precision}
                     width={this.state.width}
                     listenInputPrice={this.listenInputPrice}
+                    listenInputTrigger={this.listenInputTrigger}
                     defaultTabIndex={defaultTabIndex}
                     currentMarketFilters={currentMarketFilters}
                     isMobileDevice={isMobileDevice}
@@ -191,19 +196,25 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             available,
             orderType,
             price,
+            trigger,
             type,
         } = value;
 
         this.props.setCurrentPrice(0);
 
+        const withPrice = typeof price !== 'undefined';
+        const withTrigger = typeof trigger !== 'undefined';
+        const actualOrderPrice = withPrice ? price : trigger;
+
         const resultData = {
             market: currentMarket.id,
             side: type,
             volume: amount.toString(),
-            ord_type: (orderType as string).toLowerCase(),
+            ord_type: (orderType as string).toLowerCase().replace('-', '_'),
+            ...(withPrice && { price: price.toString() }),
+            ...(withTrigger && { trigger_price: trigger.toString() }),
         };
 
-        const order = orderType === 'Limit' ? { ...resultData, price: price.toString() } : resultData;
         let orderAllowed = true;
 
         if (+resultData.volume < +currentMarket.min_amount) {
@@ -221,7 +232,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if (+price < +currentMarket.min_price) {
+        if (withPrice && +price < +currentMarket.min_price) {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.minPrice',
@@ -236,7 +247,22 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if (+currentMarket.max_price && +price > +currentMarket.max_price) {
+        if (withTrigger && +trigger < +currentMarket.min_price) {
+            this.props.pushAlert({
+                message: [this.translate(
+                    'error.order.create.minTriggerPrice',
+                    {
+                        price: Decimal.format(currentMarket.min_price, currentMarket.price_precision, ','),
+                        currency: currentMarket.quote_unit.toUpperCase(),
+                    },
+                )],
+                type: 'error',
+            });
+
+            orderAllowed = false;
+        }
+
+        if (+currentMarket.max_price && withPrice && +price > +currentMarket.max_price) {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.maxPrice',
@@ -251,14 +277,30 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if ((+available < (+amount * +price) && order.side === 'buy') ||
-            (+available < +amount && order.side === 'sell')) {
+        // if both price and trigger is defined then Order will be created with Price value no matter if trigger is bigger than max price
+        if (+currentMarket.max_price && withTrigger && !withPrice && +trigger > +currentMarket.max_price) {
+            this.props.pushAlert({
+                message: [this.translate(
+                    'error.order.create.maxTriggerPrice',
+                    {
+                        price: Decimal.format(currentMarket.max_price, currentMarket.price_precision, ','),
+                        currency: currentMarket.quote_unit.toUpperCase(),
+                    },
+                )],
+                type: 'error',
+            });
+
+            orderAllowed = false;
+        }
+
+        if ((+available < (+amount * +actualOrderPrice) && resultData.side === 'buy') ||
+            (+available < +amount && resultData.side === 'sell')) {
             this.props.pushAlert({
                 message: [this.translate(
                     'error.order.create.available',
                     {
                         available: formatWithSeparators(String(available), ','),
-                        currency: order.side === 'buy' ? (
+                        currency: resultData.side === 'buy' ? (
                             currentMarket.quote_unit.toUpperCase()
                         ) : (
                             currentMarket.base_unit.toUpperCase()
@@ -272,7 +314,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         }
 
         if (orderAllowed) {
-            this.props.orderExecute(order);
+            this.props.orderExecute(resultData);
         }
     };
 
@@ -295,6 +337,13 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     private listenInputPrice = () => {
         this.setState({
             priceLimit: undefined,
+        });
+        this.props.setCurrentPrice(0);
+    };
+
+    private listenInputTrigger = () => {
+        this.setState({
+            trigger: undefined,
         });
         this.props.setCurrentPrice(0);
     };
