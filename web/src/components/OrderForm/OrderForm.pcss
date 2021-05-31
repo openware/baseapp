@@ -104,4 +104,25 @@
       }
     }
   }
+
+  &__prices {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & > * {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .bids {
+      color: var(--bids);
+    }
+
+    .asks {
+      color: var(--asks);
+    }
+  }
 }

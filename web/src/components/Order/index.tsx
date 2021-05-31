@@ -215,6 +215,8 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     currentMarketBidPrecision={currentMarketBidPrecision}
                     totalPrice={getTotalPrice(amount, priceMarket, proposals)}
                     amount={amount}
+                    bestAsk={this.bestOBPrice(asks)}
+                    bestBid={this.bestOBPrice(bids)}
                     listenInputPrice={listenInputPrice}
                     handleAmountChange={this.handleAmountChange}
                     handleChangeAmountByButton={this.handleChangeAmountByButton}
@@ -292,4 +294,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
     };
 
     private isTypeSell = (type: string) => type === 'sell';
+
+    private bestOBPrice = (list: string[][]) => list[0] && list[0][0];
 }

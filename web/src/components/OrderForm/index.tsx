@@ -66,6 +66,14 @@ export interface OrderFormProps {
      */
     currentMarketBidPrecision: number;
     /**
+     * Best ask price
+     */
+    bestAsk?: string;
+    /**
+     * Best boid price
+     */
+    bestBid?: string;
+    /**
      * Whether order is disabled to execute
      */
     disabled?: boolean;
@@ -147,6 +155,8 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             totalPrice,
             amount,
             isMobileDevice,
+            bestBid,
+            bestAsk,
             translate,
         } = this.props;
         const {
@@ -229,6 +239,22 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                         </div>
                     </div>
                 )}
+                <div className="cr-order-item">
+                    {!isMobileDevice && (bestBid || bestAsk) ? (
+                            <div className="cr-order-item__prices">
+                                {bestBid ? (
+                                    <span className="bids">
+                                        &#x25B2; {Decimal.format(bestBid, currentMarketBidPrecision, ',')}
+                                    </span>
+                                ) : null}
+                                {bestAsk ? (
+                                    <span className="asks">
+                                        &#x25BC; {Decimal.format(bestAsk, currentMarketBidPrecision, ',')}
+                                    </span>
+                                ) : null}
+                            </div>
+                    ) : null}
+                </div>
                 <div className="cr-order-item">
                     {isMobileDevice ? (
                         <OrderInputMobile
