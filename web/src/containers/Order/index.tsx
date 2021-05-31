@@ -149,7 +149,9 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         return (
             <div className={'pg-order'} ref={this.orderRef}>
-                {this.state.width > 448 ? headerContent : undefined}
+                <div className="cr-table-header__content">
+                    <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.newOrder" /></div>
+                </div>
                 <Order
                     asks={asks}
                     bids={bids}
