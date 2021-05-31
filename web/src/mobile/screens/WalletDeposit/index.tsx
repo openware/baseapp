@@ -2,10 +2,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
-import {
-    useCurrenciesFetch,
-    useWalletsFetch,
-} from '../../../hooks';
+import { useWalletsFetch } from '../../../hooks';
 import {
     selectWallets,
     Wallet,
@@ -21,7 +18,6 @@ const WalletDeposit: React.FC = () => {
     const { currency = '' } = useParams<{ currency?: string }>();
     const wallets = useSelector(selectWallets) || [];
 
-    useCurrenciesFetch();
     useWalletsFetch();
 
     const defaultWallet: Wallet = {

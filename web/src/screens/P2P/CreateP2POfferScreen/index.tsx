@@ -8,7 +8,6 @@ import { Decimal } from 'src/components';
 import { DEFAULT_CCY_PRECISION, P2P_TIME_LIMIT_LIST } from 'src/constants';
 import { ConfirmOfferModal, CreateOfferStepOne, CreateOfferStepTwo, CreateOfferStepThree } from 'src/containers';
 import {
-    useCurrenciesFetch,
     useDocumentTitle,
     useP2PCurrenciesFetch,
     useP2PHighestPriceFetch,
@@ -40,7 +39,6 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
     const highestPrice = useSelector(selectP2PHighestPriceData);
 
     useDocumentTitle('Create Offer');
-    useCurrenciesFetch();
     useWalletsFetch();
     useP2PCurrenciesFetch();
     useUserPaymentMethodsFetch();
@@ -66,9 +64,9 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
     ), [step]);
 
     const title = useCallback(() => {
-        return step === 0 
+        return step === 0
         ? translate('page.body.p2p.create.offer.title')
-        : `${translate(`page.body.p2p.create.offer.title.${side}`)} ${asset?.id?.toUpperCase()}`; 
+        : `${translate(`page.body.p2p.create.offer.title.${side}`)} ${asset?.id?.toUpperCase()}`;
     }, [step, asset, side, translate]);
 
     const updatePaymentMethod = React.useCallback((value: UserPaymentMethod, index: number) => {
@@ -104,7 +102,7 @@ export const CreateP2POfferScreen: FC = (): ReactElement => {
                 description,
                 reply_message: replyMessage,
             };
-    
+
             dispatch(createOffer(payload))
             setOpen(false);
             history.push('/p2p');

@@ -6,7 +6,7 @@ import { AlertState, rootHandleAlertSaga } from './public/alert';
 import { BlockchainsState } from './public/blockchains';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
 import { ConfigsState, rootConfigsSaga } from './public/configs';
-import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
+import { CurrenciesState } from './public/currencies';
 import { ErrorHandlerState, rootErrorHandlerSaga } from './public/errorHandler';
 import { ColorThemeState } from './public/globalSettings';
 import { GridLayoutState } from './public/gridLayout';
@@ -165,7 +165,6 @@ export function* rootSaga() {
         call(rootBeneficiariesSaga),
         call(rootBlocklistAccessSaga),
         call(rootConfigUpdateSaga),
-        call(rootCurrenciesSaga),
         call(rootDocumentationSaga),
         call(rootEmailVerificationSaga),
         call(rootErrorHandlerSaga),

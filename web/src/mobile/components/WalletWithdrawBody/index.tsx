@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Blur } from '../../../components/Blur';
 import { ModalWithdrawSubmit, Withdraw } from '../../../containers';
-import { useBeneficiariesFetch, useCurrenciesFetch } from '../../../hooks';
+import { useBeneficiariesFetch } from '../../../hooks';
 import { selectCurrencies } from '../../../modules/public/currencies';
 import { Beneficiary } from '../../../modules/user/beneficiaries';
 import { selectUserInfo } from '../../../modules/user/profile';
@@ -116,9 +116,8 @@ const WalletWithdrawBodyComponent = props => {
             </div>
         );
     };
-    
+
     useBeneficiariesFetch();
-    useCurrenciesFetch();
 
     React.useEffect(() => {
         if (withdrawSuccess) {

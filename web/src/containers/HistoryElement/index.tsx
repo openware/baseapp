@@ -16,7 +16,6 @@ import {
     truncateMiddle,
 } from '../../helpers';
 import {
-    currenciesFetch,
     Currency,
     fetchHistory,
     Market,
@@ -51,7 +50,6 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    fetchCurrencies: typeof currenciesFetch;
     fetchHistory: typeof fetchHistory;
 }
 
@@ -286,7 +284,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        fetchCurrencies: () => dispatch(currenciesFetch()),
         fetchHistory: params => dispatch(fetchHistory(params)),
     });
 
