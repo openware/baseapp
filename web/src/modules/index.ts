@@ -3,6 +3,7 @@ import { all, call } from 'redux-saga/effects';
 import { adminReducer, publicReducer, userReducer } from './app';
 import { ConfigUpdateState, rootConfigUpdateSaga } from './admin/config';
 import { AlertState, rootHandleAlertSaga } from './public/alert';
+import { BlockchainsState } from './public/blockchains';
 import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklistAccess';
 import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState, rootCurrenciesSaga } from './public/currencies';
@@ -53,6 +54,7 @@ export * from './admin/config';
 export * from './admin/markets';
 export * from './admin/platform';
 export * from './public/alert';
+export * from './public/blockchains';
 export * from './public/blocklistAccess';
 export * from './public/configs';
 export * from './public/currencies';
@@ -93,6 +95,7 @@ export * from './user/p2pDispute';
 export interface RootState {
     public: {
         alerts: AlertState;
+        blockchains: BlockchainsState;
         blocklistAccess: BlocklistAccessState;
         colorTheme: ColorThemeState;
         configs: ConfigsState;

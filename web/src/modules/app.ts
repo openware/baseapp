@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { configUpdateReducer } from './admin/config';
 import { alertReducer  } from './public/alert';
+import { blockchainsReducer } from './public/blockchains';
 import { blocklistAccessReducer } from './public/blocklistAccess';
 import { configsReducer } from './public/configs';
 import { currenciesReducer } from './public/currencies';
@@ -50,6 +51,7 @@ import { p2pDisputeReducer } from './user/p2pDispute';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,
+    blockchains: blockchainsReducer,
     blocklistAccess: blocklistAccessReducer,
     colorTheme: changeColorThemeReducer,
     configs: configsReducer,
