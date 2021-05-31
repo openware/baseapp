@@ -57,20 +57,9 @@ type Props = HistoryProps & ReduxProps & DispatchProps & IntlProps;
 
 class HistoryComponent extends React.Component<Props> {
     public componentDidMount() {
-        const { currencies, type } = this.props;
+        const { type } = this.props;
+
         this.props.fetchHistory({ page: 0, type, limit: 25 });
-
-        if (currencies.length === 0) {
-            this.props.fetchCurrencies();
-        }
-    }
-
-    public componentWillReceiveProps(nextProps: Props) {
-        const { currencies } = this.props;
-
-        if (!currencies.length && nextProps.currencies.length) {
-            this.props.fetchCurrencies();
-        }
     }
 
     public render() {
