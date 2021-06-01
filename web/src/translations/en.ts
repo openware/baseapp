@@ -169,6 +169,12 @@ export const en = {
     'page.body.wallets.tabs.deposit.ccy.message.pending': 'Generating deposit address',
     'page.body.wallets.tabs.deposit.ccy.button.generate': 'Generate',
     'page.body.wallets.tabs.deposit.ccy.button.address': 'address',
+    'page.body.wallets.tabs.deposit.ccy.details': 'Deposit details',
+    'page.body.wallets.tabs.deposit.ccy.blockchain.networks': 'Blockchain network',
+    'page.body.wallets.tabs.deposit.ccy.tip': 'Lorem ipsum',
+    'page.body.wallets.tabs.deposit.ccy.hint.title': 'Send only {currency} to this deposit address.',
+    'page.body.wallets.tabs.deposit.ccy.hint': 'Sending coin or token other than {currency} to this address may result in the loss of your deposit.',
+
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Deposit using bank transfer',
     'page.body.wallets.tabs.deposit.fiat.message2': 'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account within 2 business days.',
