@@ -10,13 +10,14 @@ export interface Wallet {
     iconUrl?: string;
     explorerTransaction?: string;
     explorerAddress?: string;
-    deposit_address?: WalletAddress;
+    deposit_addresses?: WalletAddress[];
     active?: boolean;
 }
 export interface WalletAddress {
     address: string;
     currencies: string[];
     state?: string;
+    blockchain_key: string;
 }
 
 export interface WalletWithdrawCCY {

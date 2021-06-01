@@ -50,6 +50,7 @@ export interface DepositCryptoProps {
      */
     buttonLabel?: string;
     disabled?: boolean;
+    network: string;
 }
 
 
@@ -69,15 +70,19 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         handleGenerateAddress,
         handleOnCopy,
         text,
-        wallet
+        wallet,
+        network,
     } = props;
+    
+    const depositAddress = wallet.deposit_addresses.find(address => address.blockchain_key?.toLowerCase() === network.toLowerCase())
+
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const size = dimensions || QR_SIZE;
-    const disabled = !wallet.deposit_address?.address;
+    const disabled = !depositAddress.address;
     const onCopy = !disabled ? handleOnCopy : undefined;
     const className = classnames('cr-deposit-crypto', {'cr-copyable-text-field__disabled': disabled});
-    window.console.log(wallet);
-    if (!wallet.deposit_address) {
+
+    if (!depositAddress) {
         return (
             <div className={className}>
                 <div className="cr-deposit-crypto__create">
@@ -97,8 +102,18 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         );
     }
 
-    const walletAddress = wallet.deposit_address && wallet.deposit_address.address ?
-        formatCCYAddress(wallet.currency, wallet.deposit_address.address) : '';
+    if (depositAddress.state === 'disabled') {
+        return (
+            <div className="cr-deposit-crypto__disabled">
+                <div className="cr-deposit-crypto__disabled-wrapper">
+                    {formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.disabled'}, {currency: wallet?.currency.toUpperCase()})}
+                </div>
+            </div>
+        );
+    }
+
+    const walletAddress = depositAddress && depositAddress.address ?
+        formatCCYAddress(wallet.currency, depositAddress.address) : '';
 
     return (
         <React.Fragment>

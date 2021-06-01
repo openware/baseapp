@@ -34,10 +34,10 @@ const WalletDeposit: React.FC = () => {
 
 
     const handleGenerateAddress = () => {
-        if (!wallet.deposit_address && wallets.length && wallet.type !== 'fiat') {
-            dispatch(walletsAddressFetch({ currency }));
-            dispatch(walletsFetch());
-        }
+        // if (!wallet.deposit_address && wallets.length && wallet.type !== 'fiat') {
+        //     dispatch(walletsAddressFetch({ currency, blockchain_key: "bitcoin" })); //need change
+        //     dispatch(walletsFetch());
+        // }
     };
 
     return (
