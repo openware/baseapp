@@ -37,25 +37,6 @@ const defaultWallet: Wallet = {
     account_type: '',
 };
 
-const blockchain_networks = [
-    {
-        name: 'BEP2',
-        state: 'enabled',
-    },
-    {
-        name: 'BEP20(BSC)',
-        state: 'enabled',
-    },
-    {
-        name: 'ERC20',
-        state: 'disabled',
-    },
-    {
-        name: 'TRC20',
-        state: 'enabled',
-    }
-]
-
 export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => {
     const {
         selectedWalletIndex,
@@ -70,13 +51,20 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const wallets: Wallet[] = useSelector(selectWallets);
     const currencies: Currency[] = useSelector(selectCurrencies);
 
-    const [tab, setTab] = useState(blockchain_networks[0].name);
+    const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
+    const currencyItem: Currency | any = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
+
+    const [tab, setTab] = useState('');
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
+
+    useEffect(() => {
+        setTab(currencyItem.blockchain_currencies[0]?.blockchain_key.toUpperCase());
+    }, [wallet])
+
+    const depositAddress = wallet.deposit_addresses.find(address => address.blockchain_key?.toLowerCase() === tab.toLowerCase())
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
-    const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
-    const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
     const text = formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
                                                    { confirmations: currencyItem.min_confirmations });
         const error = translate('page.body.wallets.tabs.deposit.ccy.message.pending');
@@ -86,15 +74,11 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
 
         const buttonLabel = `${translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
 
-    const handleGenerateAddress = useEffect(() => {
-            const { selectedWalletIndex } = props;
-    
-            const wallet: Wallet = wallets[selectedWalletIndex] || defaultWallet;
-    
-            if (!wallet.deposit_address && wallets.length && wallet.type !== 'fiat') {
-                dispatch(walletsAddressFetch({ currency: wallets[selectedWalletIndex].currency }));
+    const handleGenerateAddress = useEffect(() => {    
+            if (!depositAddress && wallets.length && wallet.type !== 'fiat') {
+                dispatch(walletsAddressFetch({ currency: wallets[selectedWalletIndex].currency, blockchain_key: tab }));
             }
-        }, [selectedWalletIndex, wallets, walletsAddressFetch]);
+        }, [selectedWalletIndex, wallets, walletsAddressFetch, tab]);
 
     const handleOnCopy = () => dispatch(alertPush({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'}));
 
@@ -103,9 +87,9 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const onCurrentTabChange = index => setCurrentTabIndex(index);
 
     const renderTabs = () => {
-        return blockchain_networks.map(network => {
+        return currencyItem.blockchain_currencies?.map(network => {
             return {
-                content: tab === network.name ?
+                content: tab === network.blockchain_key?.toUpperCase() ?
                     <DepositCrypto
                         buttonLabel={buttonLabel}
                         copiableTextFieldText={translate('page.body.wallets.tabs.deposit.ccy.message.address')}
@@ -115,8 +99,9 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                         handleOnCopy={handleOnCopy}
                         text={text}
                         wallet={wallet}
+                        network={tab}
                     /> : null,
-                label: network.name,
+                label: network.blockchain_key?.toUpperCase(),
             };
         })
     }

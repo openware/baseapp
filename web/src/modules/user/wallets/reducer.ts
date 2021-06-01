@@ -58,6 +58,7 @@ const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
                 let depositAddress: WalletAddress = {
                     address: payload.address,
                     currencies: payload.currencies,
+                    blockchain_key: payload.blockchain_key,
                 };
 
                 if (payload.state) {
@@ -69,7 +70,7 @@ const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
 
                 return {
                     ...wallet,
-                    deposit_address: depositAddress,
+                    deposit_address: [], // need change
                 };
             }
 

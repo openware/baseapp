@@ -37,6 +37,7 @@ describe('Module: Wallets', () => {
                 currencies: ['eth', 'trst'],
                 address: '0x00eec1e95026faf0412d7a29b94d514d31446141',
                 state: 'active',
+                blockchain_key: 'erc20',
             },
         },
         {
@@ -242,7 +243,7 @@ describe('Module: Wallets', () => {
 
     it('should fetch wallets in success flow', async () => {
         mockWallets();
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -259,7 +260,7 @@ describe('Module: Wallets', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {
