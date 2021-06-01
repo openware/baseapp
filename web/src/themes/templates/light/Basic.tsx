@@ -8,7 +8,7 @@ export const BasicTheme: ThemeColorInterface[] = [
     { key: '--rgb-body-background-color', value: '255, 255, 255' },
     { key: '--rgb-subheader-background-color', value: '255, 255, 255' },
     { key: '--rgb-input-background-color', value: '255, 255, 255' },
-    { key: '--rgb-dropdown-background-color', value: '237, 241, 248' },
+    { key: '--rgb-dropdown-background-color', value: '245, 247, 251' },
     { key: '--rgb-secondary-contrast-cta-color', value: '119, 127, 147' },
     { key: '--rgb-icons', value: '119, 127, 147' },
     { key: '--rgb-divider-color', value: '0, 0, 0' },

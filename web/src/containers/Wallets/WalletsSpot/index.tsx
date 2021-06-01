@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import * as React from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
@@ -10,11 +9,10 @@ import { IntlProps } from 'src';
 import {
     Blur,
     CurrencyInfo,
-    DepositCrypto,
-    DepositFiat,
     TabPanel,
     WalletList,
 } from 'src/components';
+import { DepositCryptoContainer, DepositFiatContainer } from '../';
 import { DEFAULT_CCY_PRECISION } from 'src/constants';
 import { Withdraw, WithdrawProps } from 'src/containers';
 import { ModalWithdrawConfirmation } from 'src/containers/ModalWithdrawConfirmation';
@@ -157,9 +155,6 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     //tslint:disable member-ordering
     public translate = (id: string) => this.props.intl.formatMessage({ id });
     public tabMapping = ['deposit', 'withdraw'];
-
-    private title = this.translate('page.body.wallets.tabs.deposit.fiat.message1');
-    private description = this.translate('page.body.wallets.tabs.deposit.fiat.message2');
 
     public componentDidMount() {
         const { wallets, currency, action, markets, tickers } = this.props;
@@ -449,82 +444,22 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         this.toggleConfirmModal();
     };
 
-    private handleOnCopy = () => {
-        this.props.fetchSuccess({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
-    };
-
-    private handleGenerateAddress = () => {
-        const { selectedWalletIndex } = this.state;
-        const { wallets } = this.props;
-
-        const wallet: Wallet = wallets[selectedWalletIndex] || defaultWallet;
-
-        if (!wallet.deposit_address && wallets.length && wallet.type !== 'fiat') {
-            this.props.fetchAddress({ currency: wallets[selectedWalletIndex].currency });
-        }
-    };
-
     private renderDeposit = (isAccountActivated: boolean) => {
+        const { selectedWalletIndex } = this.state;
         const {
-            currencies,
-            user,
             wallets,
         } = this.props;
-        const { selectedWalletIndex } = this.state;
-        const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
-        const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
-        const text = this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
-                                                   { confirmations: currencyItem.min_confirmations });
-        const error = this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.pending'});
-
-        const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
-            'pg-blur-deposit-crypto--active': isAccountActivated,
-        });
-
-        const buttonLabel = `${this.translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${this.translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
 
         if (wallets[selectedWalletIndex].type === 'coin') {
             return (
-                <React.Fragment>
-                    <CurrencyInfo
-                        wallet={wallets[selectedWalletIndex]}
-                        handleClickTransfer={currency => this.props.history.push(`/wallets/transfer/${currency}`)}
-                    />
-                    {currencyItem && !currencyItem.deposit_enabled ? (
-                        <Blur
-                            className={blurCryptoClassName}
-                            text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
-                        />
-                    ) : null}
-                    <DepositCrypto
-                        buttonLabel={buttonLabel}
-                        copiableTextFieldText={this.translate('page.body.wallets.tabs.deposit.ccy.message.address')}
-                        copyButtonText={this.translate('page.body.wallets.tabs.deposit.ccy.message.button')}
-                        error={error}
-                        handleGenerateAddress={this.handleGenerateAddress}
-                        handleOnCopy={this.handleOnCopy}
-                        text={text}
-                        wallet={wallet}
-                    />
-                    {wallet.currency && <WalletHistory label="deposit" type="deposits" currency={wallet.currency} />}
-                </React.Fragment>
+                <DepositCryptoContainer
+                    isAccountActivated={isAccountActivated}
+                    selectedWalletIndex={selectedWalletIndex}
+                />
             );
         } else {
             return (
-                <React.Fragment>
-                    <CurrencyInfo
-                        wallet={wallets[selectedWalletIndex]}
-                        handleClickTransfer={currency => this.props.history.push(`/wallets/transfer/${currency}`)}
-                    />
-                    {currencyItem && !currencyItem.deposit_enabled ? (
-                        <Blur
-                            className="pg-blur-deposit-fiat"
-                            text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
-                        />
-                    ) : null}
-                    <DepositFiat title={this.title} description={this.description} uid={user ? user.uid : ''}/>
-                    {wallet.currency && <WalletHistory label="deposit" type="deposits" currency={wallet.currency} />}
-                </React.Fragment>
+                <DepositFiatContainer selectedWalletIndex={selectedWalletIndex} />
             );
         }
     };
