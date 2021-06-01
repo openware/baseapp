@@ -45,7 +45,6 @@ import {
     User,
     Wallet,
     WalletHistoryList,
-    walletsAddressFetch,
     walletsData,
     walletsFetch,
     walletsWithdrawCcyFetch,
@@ -72,7 +71,6 @@ interface DispatchProps {
     fetchMarkets: typeof marketsFetch;
     fetchTickers: typeof marketsTickersFetch;
     fetchBeneficiaries: typeof beneficiariesFetch;
-    fetchAddress: typeof walletsAddressFetch;
     fetchWallets: typeof walletsFetch;
     clearWallets: () => void;
     walletsWithdrawCcy: typeof walletsWithdrawCcyFetch;
@@ -582,7 +580,6 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchTickers: () => dispatch(marketsTickersFetch()),
     fetchBeneficiaries: params => dispatch(beneficiariesFetch(params)),
     fetchWallets: () => dispatch(walletsFetch()),
-    fetchAddress: ({ currency }) => dispatch(walletsAddressFetch({ currency })),
     walletsWithdrawCcy: params => dispatch(walletsWithdrawCcyFetch(params)),
     clearWallets: () => dispatch(walletsData([])),
     fetchSuccess: payload => dispatch(alertPush(payload)),

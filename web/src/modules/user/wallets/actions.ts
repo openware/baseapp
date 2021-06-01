@@ -50,6 +50,7 @@ export interface WalletsAddressFetch {
     type: typeof WALLETS_ADDRESS_FETCH;
     payload: {
         currency: string;
+        blockchain_key: string;
     };
 }
 
@@ -60,7 +61,7 @@ export interface WalletsAddressData {
 
 export interface WalletsAddressDataWS {
     type: typeof WALLETS_ADDRESS_DATA_WS;
-    payload: WalletAddress;
+    payload: WalletAddress; // mb it should be array idk (waiting for BE)
 }
 
 export interface WalletsAddressError {
