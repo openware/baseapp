@@ -55,3 +55,4 @@ export * from './TransferForm';
 export * from './Info';
 export * from './LockedComponent';
 export * from './WarningMessage';
+export * from './SearchBox';

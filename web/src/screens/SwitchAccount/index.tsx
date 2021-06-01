@@ -8,9 +8,9 @@ import { ArrowRightIcon } from 'src/assets/images/ArrowRightIcon';
 import { CloseScreenIcon } from 'src/assets/images/CloseScreenIcon';
 import { LogoutIcon } from 'src/assets/images/sidebar/LogoutIcon';
 import { Logo } from 'src/components';
-import { SearchBox } from 'src/custom/components';
+import { SearchBox } from '../../components';
 import { organizationAccountsFetch, organizationAccountSwitch, selectOrganizationAccounts } from 'src/modules';
-import { setDocumentTitle } from '../../../helpers';
+import { setDocumentTitle } from '../../helpers';
 
 export const SwitchAccountScreen: React.FC = () => {
     const dispatch = useDispatch();

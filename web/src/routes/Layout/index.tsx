@@ -79,10 +79,8 @@ import {
     P2PUserOffersScreen,
     CreateP2POfferScreen,
     P2POrderScreen,
+    SwitchAccountScreen,
 } from '../../screens';
-import {
-    SwitchAccountScreen
-} from '../../custom/screens';
 
 interface ReduxProps {
     colorTheme: string;
