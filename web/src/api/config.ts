@@ -7,7 +7,7 @@ export const defaultConfig: Config = {
         authUrl: `${hostUrl}/api/v2/barong`,
         tradeUrl: `${hostUrl}/api/v2/peatio`,
         applogicUrl: `${hostUrl}/api/v2/applogic`,
-        rangerUrl: ``,
+        rangerUrl: `${rangerHostUrl}/api/v2/ranger`,
         finexUrl: `${hostUrl}/api/v2/finex`,
         p2pUrl: `${hostUrl}/api/v2/p2p`,
     },

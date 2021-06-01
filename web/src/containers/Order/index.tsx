@@ -11,19 +11,25 @@ import {
     Order,
     OrderProps,
     Decimal,
+    LockedComponent,
 } from '../../components';
 import { FilterPrice } from '../../filters';
 import { IntlProps } from '../../';
 import {
     alertPush,
+    MemberLevels,
+    memberLevelsFetch,
     RootState,
     selectCurrentPrice,
     selectDepthAsks,
     selectDepthBids,
+    selectMemberLevels,
     selectMobileDeviceState,
+    selectUserInfo,
     selectUserLoggedIn,
     selectWallets,
     setCurrentPrice,
+    User,
     Wallet,
     walletsFetch,
 } from '../../modules';
@@ -52,6 +58,9 @@ interface ReduxProps {
     wallets: Wallet[];
     currentPrice: number | undefined;
     isMobileDevice: boolean;
+    memberLevels: MemberLevels;
+    user: User;
+    userLoggedIn: boolean;
 }
 
 interface StoreProps {
@@ -63,14 +72,13 @@ interface StoreProps {
 
 interface DispatchProps {
     walletsFetch: typeof walletsFetch;
+    memberLevelsFetch: typeof memberLevelsFetch;
     setCurrentPrice: typeof setCurrentPrice;
     orderExecute: typeof orderExecuteFetch;
     pushAlert: typeof alertPush;
 }
 
 interface OwnProps {
-    userLoggedIn: boolean;
-    currentPrice: string;
     defaultTabIndex?: number;
 }
 
@@ -95,6 +103,10 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
     public componentDidMount() {
         if (!this.props.wallets.length) {
             this.props.walletsFetch();
+        }
+
+        if (!this.props.memberLevels) {
+            this.props.memberLevelsFetch();
         }
     }
 
@@ -121,7 +133,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         }
     }
 
-    public render() {
+    public getContent = () => {
         const {
             asks,
             bids,
@@ -132,29 +144,38 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             isMobileDevice,
             marketTickers,
             wallets,
+            user,
+            memberLevels,
+            userLoggedIn,
         } = this.props;
         const { priceLimit, trigger } = this.state;
-
-        if (!currentMarket) {
-            return null;
-        }
 
         const walletBase = this.getWallet(currentMarket.base_unit, wallets);
         const walletQuote = this.getWallet(currentMarket.quote_unit, wallets);
 
         const currentTicker = marketTickers[currentMarket.id];
         const defaultCurrentTicker = { last: '0' };
-        const headerContent = (
-            <div className="cr-table-header__content">
-                <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.newOrder" /></div>
-            </div>
-        );
 
-        return (
-            <div className={'pg-order'} ref={this.orderRef}>
-                <div className="cr-table-header__content">
-                    <div className="cr-title-component"><FormattedMessage id="page.body.trade.header.newOrder" /></div>
-                </div>
+        const allowed = memberLevels && (user.level >= memberLevels.trading.minimum_level);
+
+        if (!userLoggedIn) {
+            return (
+                <LockedComponent
+                    text={this.translate('page.body.trade.header.newOrder.locked.login.text')}
+                    link={'/signin'}
+                    buttonText={this.translate('page.body.trade.header.newOrder.locked.login.buttonText')}
+                />
+            );
+        } else if (!allowed) {
+            return (
+                <LockedComponent
+                    text={this.translate('page.body.trade.header.newOrder.locked.minLevel.text')}
+                    link={'/profile'}
+                    buttonText={this.translate('page.body.trade.header.newOrder.locked.minLevel.buttonText')}
+                />
+            );
+        } else {
+            return (
                 <Order
                     asks={asks}
                     bids={bids}
@@ -179,6 +200,23 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     isMobileDevice={isMobileDevice}
                     translate={this.translate}
                 />
+            );
+        }
+    }
+
+    public render() {
+        const { currentMarket, executeLoading } = this.props;
+
+        if (!currentMarket) {
+            return null;
+        }
+
+        return (
+            <div className={'pg-order'} ref={this.orderRef}>
+                <div className="cr-table-header__content">
+                    <div className="cr-title-component">{this.translate("page.body.trade.header.newOrder")}</div>
+                </div>
+                {this.getContent()}
                 {executeLoading && <div className="pg-order--loading"><Spinner animation="border" variant="primary" /></div>}
             </div>
         );
@@ -362,10 +400,13 @@ const mapStateToProps = (state: RootState) => ({
     currentPrice: selectCurrentPrice(state),
     userLoggedIn: selectUserLoggedIn(state),
     isMobileDevice: selectMobileDeviceState(state),
+    memberLevels: selectMemberLevels(state),
+    user: selectUserInfo(state),
 });
 
 const mapDispatchToProps = dispatch => ({
     walletsFetch: () => dispatch(walletsFetch()),
+    memberLevelsFetch: () => dispatch(memberLevelsFetch()),
     orderExecute: payload => dispatch(orderExecuteFetch(payload)),
     pushAlert: payload => dispatch(alertPush(payload)),
     setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
