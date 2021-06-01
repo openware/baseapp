@@ -11,55 +11,78 @@ Access-Control-Allow-Credentials: true
         "balance":"0",
         "locked":"0",
         "account_type": "spot",
-        "deposit_address": {
-            "currencies": ["bch"],
-            "address": null,
-            "state": "pending"
-        }
+        "deposit_addresses": [
+            {
+                "currencies": ["bch"],
+                "address": null,
+                "state": "pending"
+            }
+        ]
     },
     {
         "currency": "btc",
         "balance": "0.21026373",
         "locked": "0.0",
         "account_type": "spot",
-        "deposit_address": {
-            "currencies": ["btc"],
-            "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
-            "state": "active"
-        }
+        "deposit_addresses": [
+            {
+                "currencies": ["btc"],
+                "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
+                "state": "active",
+                "blockchain_key": "bitcoin"
+            },
+            {
+                "currencies": ["btc"],
+                "address": "test",
+                "state": "active",
+                "blockchain_key": "bitcoin_test"
+            },
+            {
+                "currencies": ["btc"],
+                "address": "disabled",
+                "state": "disabled",
+                "blockchain_key": "bitcoin_disabled"
+            }
+        ]
     },
     {
         "currency": "eth",
         "balance": "1.5",
         "locked": "0.05",
         "account_type": "spot",
-        "deposit_address": {
-            "currencies": ["eth", "trst"],
-            "address": "0x00eec1e95026faf0412d7a29b94d514d31446141",
-            "state": "active"
-        }
+        "deposit_addresses": [
+            {
+                "currencies": ["eth", "trst"],
+                "address": "0x00eec1e95026faf0412d7a29b94d514d31446141",
+                "state": "active"
+            }
+        ]
     },
     {
         "currency":"ltc",
         "balance":"0.0",
         "locked":"0.0",
         "account_type": "spot",
-        "deposit_address": {
-            "currencies": ["eth", "ltc"],
-            "address":"0x00eec1e95026faf0412d7a29b94d514d31446141",
-            "state":"active"
-        }
+        "deposit_addresses": [
+            {
+                "currencies": ["eth", "ltc"],
+                "address":"0x00eec1e95026faf0412d7a29b94d514d31446141",
+                "state":"active"
+            }
+        ]
     },
     {
         "currency":"dash",
         "balance":"0",
         "locked":"0",
         "account_type": "spot",
-        "deposit_address": {
-            "currencies": ["dash"],
-            "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
-            "state": "active"
-        }
+        "deposit_addresses": [
+            {
+                "currencies": ["dash"],
+                "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
+                "state": "active"
+            }
+        ]
     },
     {
         "currency":"xrp",
@@ -95,11 +118,6 @@ Access-Control-Allow-Credentials: true
         "currency":"ngn",
         "balance":"1000.0",
         "account_type": "spot",
-        "locked":"0.0",
-            "deposit_address": {
-            "currencies": ["ngn"],
-            "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
-            "state": "active"
-        }
+        "locked":"0.0"
     }
 ]

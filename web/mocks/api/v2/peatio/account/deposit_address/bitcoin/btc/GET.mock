@@ -8,5 +8,6 @@ Access-Control-Allow-Credentials: true
 {
     "currencies": ["btc"],
     "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
-    "state": "active"
+    "state": "active",
+    "blockchain_key": "bitcoin"
 }

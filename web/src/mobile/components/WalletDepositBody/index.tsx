@@ -56,6 +56,7 @@ const WalletDepositBodyComponent = props => {
                         text={text}
                         wallet={wallet}
                         disabled={walletAddress === ''}
+                        network="kek"
                     />
                 </React.Fragment>
             );
