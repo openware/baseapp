@@ -1,5 +1,5 @@
-import { RootState } from '../../../../modules';
-import { CommonError } from '../../../../modules/types';
+import { RootState } from '../../../modules';
+import { CommonError } from '../../../modules/types';
 import { OrganizationAccount } from './types';
 
 export const selectOrganizationAccounts = (state: RootState): OrganizationAccount[] =>

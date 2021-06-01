@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { getCsrfToken } from 'src/helpers';
 import { alertPush, sendError, userFetch } from 'src/modules';
-import { API, RequestOptions } from '../../../../../api';
+import { API, RequestOptions } from '../../../../api';
 import {
     OrganizationAccountSwitch, organizationAccountSwitchError,
 } from '../actions';

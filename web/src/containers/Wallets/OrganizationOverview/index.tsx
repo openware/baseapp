@@ -38,11 +38,15 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
     useMarketsTickersFetch();
     useMarketsFetch();
 
-    const MOCK_ORGANIZATION_WALLETS = [
+    const MOCK_ORGANIZATION_WALLETS: Wallet[] = [
         {
             currency: "bch",
             iconUrl: undefined,
             name: "Bitcoin Cash",
+            type: "coin",
+            fee: 0,
+            fixed: 6,
+            account_type: 'organization',
             todayLimit: "10.20261901",
             available: "0",
             used: "10.20261901",
@@ -51,6 +55,10 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
             currency: "btc",
             iconUrl: undefined,
             name: "Bitcoin Cash",
+            type: "coin",
+            fee: 0,
+            fixed: 6,
+            account_type: 'organization',
             todayLimit: "0.21356898",
             available: "10.20261901",
             used: "10.20261901",
@@ -59,6 +67,10 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
             currency: "eth",
             iconUrl: "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
             name: "Bitcoin Cash",
+            type: "coin",
+            fee: 0,
+            fixed: 6,
+            account_type: 'organization',
             todayLimit: "10.20261901",
             available: "10.20261901",
             used: "10.20261901",
@@ -131,7 +143,7 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
     return (
         <div className="cr-wallets-organization-table">
             <div className="text-center">
-                {(walletsLoading) && <Spinner animation="border" variant="primary" />}
+                {walletsLoading && <Spinner animation="border" variant="primary" />}
             </div>
             <div className="cr-wallets-organization-table__table overview">
                 <WalletsHeader

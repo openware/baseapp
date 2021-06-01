@@ -10,6 +10,10 @@ export interface Wallet {
     active?: boolean;
     deposit_addresses?: WalletAddress[];
     networks: WalletBlockchain[];
+    deposit_address?: WalletAddress;
+    todayLimit?: string;
+    available?: string;
+    used?: string;
 }
 
 export interface WalletBlockchain {

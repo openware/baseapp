@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import { sendError } from 'src/modules';
-import { API, RequestOptions } from '../../../../../api';
+import { API, RequestOptions } from '../../../../api';
 import {
     OrganizationAccountsFetch,
     organizationAccountsData,

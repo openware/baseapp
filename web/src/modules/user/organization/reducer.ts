@@ -1,4 +1,4 @@
-import { CommonError } from '../../../../modules/types';
+import { CommonError } from '../../../modules/types';
 import { OrganizationActions } from './actions';
 import {
     ORGANIZATION_ACCOUNTS_FETCH,
