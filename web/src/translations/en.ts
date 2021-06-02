@@ -158,6 +158,7 @@ export const en = {
     'page.body.wallets.estimated_value': 'Estimated Value',
 
     'page.body.wallets.locked': 'Locked',
+    'page.body.wallets.balance': 'Balance',
     'page.body.wallets.balance.spot': 'Spot Balance',
     'page.body.wallets.balance.available': 'Available',
     'page.body.wallets.tabs.deposit': 'Deposit',
