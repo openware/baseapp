@@ -46,6 +46,7 @@ export const DEFAULT_TABLE_PAGE_LIMIT = 25;
 export const HOST_URL = window.location.hostname === 'localhost' ? 'http://localhost:9002' : window.location.origin;
 
 export const P2P_TIME_LIMIT_LIST = ['15 min', '30 min', '60 min'];
+export const ORDER_TYPES_WITH_TRIGGER = ['Stop-loss', 'Take-profit', 'Stop-limit', 'Take-limit'];
 
 export const DEFAULT_MARKET = {
     id: '',
