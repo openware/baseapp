@@ -21,6 +21,10 @@
     color: var(--input-text-color);
   }
 
+  input:focus {
+    background: var(--input-background-color-active) !important;
+  }
+
   input:focus-within {
     border-color: var(--input-border-color-active);
 
@@ -32,7 +36,7 @@
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
-    border: 1px solid var(--input-border-color);
+    border: 2px solid var(--input-border-color);
     -webkit-box-shadow: 0 0 0 1000px var(--input-background-color) inset;
     -webkit-text-fill-color: var(--input-text-color);
     transition: background-color 5000s ease-in-out 0s;

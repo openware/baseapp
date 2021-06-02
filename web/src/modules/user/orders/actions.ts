@@ -14,6 +14,7 @@ export interface OrderExecution {
     volume: string;
     price?: string;
     ord_type?: string;
+    trigger_price?: string;
 }
 
 export interface OrderExecuteFetch {
