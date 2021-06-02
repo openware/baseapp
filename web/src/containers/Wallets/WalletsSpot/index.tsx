@@ -7,7 +7,6 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from 'src';
 import {
-    Blur,
     CurrencyInfo,
     TabPanel,
     WalletList,
@@ -94,7 +93,7 @@ const defaultWallet: Wallet = {
     balance: '',
     type: 'coin',
     fixed: 0,
-    fee: 0,
+    blockchain_currencies: [{blockchain_key: '', fee: 0}],
     account_type: '',
 };
 
@@ -414,7 +413,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 
         return [
             {
-                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit(!!showWithdraw) : null,
+                content: tab === this.translate('page.body.wallets.tabs.deposit') ? this.renderDeposit() : null,
                 label: this.translate('page.body.wallets.tabs.deposit'),
             },
             {
@@ -442,7 +441,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         this.toggleConfirmModal();
     };
 
-    private renderDeposit = (isAccountActivated: boolean) => {
+    private renderDeposit = () => {
         const { selectedWalletIndex } = this.state;
         const {
             wallets,
@@ -451,7 +450,6 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         if (wallets[selectedWalletIndex].type === 'coin') {
             return (
                 <DepositCryptoContainer
-                    isAccountActivated={isAccountActivated}
                     selectedWalletIndex={selectedWalletIndex}
                 />
             );
@@ -475,12 +473,6 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                     handleClickTransfer={currency => this.props.history.push(`/wallets/transfer/${currency}`)}
                 />
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
-                {currencyItem && !currencyItem.withdrawal_enabled ? (
-                    <Blur
-                        className="pg-blur-withdraw"
-                        text={this.translate('page.body.wallets.tabs.withdraw.disabled.message')}
-                    />
-                ) : null}
                 {this.renderWithdrawContent()}
                 {user.otp && wallet.currency && <WalletHistory label="withdraw" type="withdraws" currency={wallet.currency} />}
             </React.Fragment>
@@ -495,13 +487,13 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         }
         const { user: { level, otp }, wallets } = this.props;
         const wallet = wallets[selectedWalletIndex];
-        const { currency, fee, type } = wallet;
+        const { currency, blockchain_currencies, type } = wallet;
         const fixed = (wallet || { fixed: 0 }).fixed;
 
         const withdrawProps: WithdrawProps = {
             withdrawDone,
             currency,
-            fee,
+            fee: 0, //need change
             onClick: this.toggleConfirmModal,
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,

@@ -107,6 +107,7 @@ class HistoryComponent extends React.Component<Props> {
             case 'deposits':
                 return [
                     this.props.intl.formatMessage({id: 'page.body.history.deposit.header.txid'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.deposit.header.blockchain'}),
                     this.props.intl.formatMessage({id: 'page.body.history.deposit.header.date'}),
                     this.props.intl.formatMessage({id: 'page.body.history.deposit.header.currency'}),
                     this.props.intl.formatMessage({id: 'page.body.history.deposit.header.amount'}),
@@ -115,6 +116,7 @@ class HistoryComponent extends React.Component<Props> {
             case 'withdraws':
                 return [
                     this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.address'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.blockchain'}),
                     this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.date'}),
                     this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.currency'}),
                     this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.amount'}),
@@ -161,11 +163,12 @@ class HistoryComponent extends React.Component<Props> {
         } = this.props;
         switch (type) {
             case 'deposits': {
-                const { amount, confirmations, created_at, currency, txid } = item;
-                const blockchainLink = this.getBlockchainLink(currency, txid);
+                const { amount, confirmations, created_at, currency, txid, blockchain_key } = item;
+                const blockchainLink = this.getBlockchainLink(currency, blockchain_key, txid);
                 const wallet = wallets.find(obj => obj.currency === currency);
                 const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
-                const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
+                const blockchainCurrency = itemCurrency.blockchain_currencies?.find(blockchain_cur => blockchain_cur.blockchain_key === item.blockchain_key);
+                const minConfirmations = blockchainCurrency && blockchainCurrency.min_confirmations;
                 const state = (item.state === 'submitted' && confirmations !== undefined && minConfirmations !== undefined) ? (
                     `${confirmations}/${minConfirmations}`
                 ) : (
@@ -178,14 +181,15 @@ class HistoryComponent extends React.Component<Props> {
                             {truncateMiddle(txid, 30)}
                         </a>
                     </div>,
+                    blockchain_key?.toUpperCase(),
                     localeDate(created_at, 'fullDate'),
-                    currency && currency.toUpperCase(),
+                    currency?.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
                     <span style={{ color: setDepositStatusColor(item.state) }} key={txid}>{state}</span>,
                 ];
             }
             case 'withdraws': {
-                const { txid, created_at, currency, amount, fee, rid } = item;
+                const { txid, created_at, currency, amount, blockchain_key, fee, rid } = item;
                 const state = intl.formatMessage({ id: `page.body.history.withdraw.content.status.${item.state}` });
                 const blockchainLink = this.getBlockchainLink(currency, txid, rid);
                 const wallet = wallets.find(obj => obj.currency === currency);
@@ -196,6 +200,7 @@ class HistoryComponent extends React.Component<Props> {
                             {truncateMiddle(txid || rid, 30)}
                         </a>
                     </div>,
+                    blockchain_key?.toUpperCase(),
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
@@ -241,15 +246,17 @@ class HistoryComponent extends React.Component<Props> {
         }
     };
 
-    private getBlockchainLink = (currency: string, txid: string, rid?: string) => {
+    private getBlockchainLink = (currency: string, txid: string, blockchainKey: string, rid?: string) => {
         const { wallets } = this.props;
-        const currencyInfo = wallets && wallets.find(wallet => wallet.currency === currency);
+        const currencyInfo = wallets?.find(wallet => wallet.currency === currency);
+        const blockchainCurrency = currencyInfo?.blockchain_currencies.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
+
         if (currencyInfo) {
-            if (txid && currencyInfo.explorerTransaction) {
-                return currencyInfo.explorerTransaction.replace('#{txid}', txid);
+            if (txid && blockchainCurrency?.explorerTransaction) {
+                return blockchainCurrency.explorerTransaction.replace('#{txid}', txid);
             }
-            if (rid && currencyInfo.explorerAddress) {
-                return currencyInfo.explorerAddress.replace('#{address}', rid);
+            if (rid && blockchainCurrency?.explorerAddress) {
+                return blockchainCurrency.explorerAddress.replace('#{address}', rid);
             }
         }
 

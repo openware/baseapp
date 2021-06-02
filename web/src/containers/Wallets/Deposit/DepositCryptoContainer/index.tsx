@@ -1,13 +1,11 @@
-import classnames from 'classnames';
 import { OverlayTrigger } from 'react-bootstrap';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { TipIcon } from '../../../../assets/images/TipIcon';
 import {
     CurrencyInfo,
-    Blur,
     DepositCrypto,
     TabPanel,
     Tooltip,
@@ -24,7 +22,6 @@ import { WalletHistory } from '../../History';
 
 interface DepositCryptoProps {
     selectedWalletIndex: number;
-    isAccountActivated: boolean;
 }
 
 const defaultWallet: Wallet = {
@@ -33,14 +30,13 @@ const defaultWallet: Wallet = {
     balance: '',
     type: 'coin',
     fixed: 0,
-    fee: 0,
+    blockchain_currencies: [{blockchain_key: '', fee: 0}],
     account_type: '',
 };
 
 export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => {
     const {
         selectedWalletIndex,
-        isAccountActivated,
     } = props;
 
     const { formatMessage } = useIntl();
@@ -59,20 +55,17 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
 
     useEffect(() => {
         setTab(currencyItem.blockchain_currencies[0]?.blockchain_key.toUpperCase());
-    }, [wallet])
+    }, [wallet.currency]);
 
-    const depositAddress = wallet.deposit_addresses.find(address => address.blockchain_key?.toLowerCase() === tab.toLowerCase())
+    const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab.toLowerCase());
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
     const text = formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
                                                    { confirmations: currencyItem.min_confirmations });
-        const error = translate('page.body.wallets.tabs.deposit.ccy.message.pending');
-        const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
-            'pg-blur-deposit-crypto--active': isAccountActivated,
-        });
-
-        const buttonLabel = `${translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
+    
+    const error = translate('page.body.wallets.tabs.deposit.ccy.message.pending');
+    const buttonLabel = `${translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
 
     const handleGenerateAddress = useEffect(() => {    
             if (!depositAddress && wallets.length && wallet.type !== 'fiat') {
@@ -86,10 +79,10 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
 
     const onCurrentTabChange = index => setCurrentTabIndex(index);
 
-    const renderTabs = () => {
+    const renderTabs = useMemo(() => {
         return currencyItem.blockchain_currencies?.map(network => {
             return {
-                content: tab === network.blockchain_key?.toUpperCase() ?
+                content: tab.toUpperCase() === network.blockchain_key?.toUpperCase() ?
                     <DepositCrypto
                         buttonLabel={buttonLabel}
                         copiableTextFieldText={translate('page.body.wallets.tabs.deposit.ccy.message.address')}
@@ -104,7 +97,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                 label: network.blockchain_key?.toUpperCase(),
             };
         })
-    }
+    }, [currencyItem, tab])
 
     return (
         <React.Fragment>
@@ -112,12 +105,6 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                 wallet={wallets[selectedWalletIndex]}
                 handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
             />
-            {currencyItem && !currencyItem.deposit_enabled ? (
-                <Blur
-                    className={blurCryptoClassName}
-                    text={translate('page.body.wallets.tabs.deposit.disabled.message')}
-                />
-            ) : null}
             <div className="cr-deposit-crypto-tabs">
                 <h3>{translate('page.body.wallets.tabs.deposit.ccy.details')}</h3>
                 <div className="cr-deposit-crypto-tabs__card">
@@ -133,7 +120,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                         </OverlayTrigger>
                     </div>
                     <TabPanel
-                        panels={renderTabs()}
+                        panels={renderTabs}
                         onTabChange={(_, label) => onTabChange(label)}
                         currentTabIndex={currentTabIndex}
                         onCurrentTabChange={onCurrentTabChange}

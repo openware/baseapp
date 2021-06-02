@@ -11,6 +11,7 @@ Total: 28
     {
         "id":339,
         "currency":"ltc",
+        "blockchain_key":"erc20",
         "type":"coin",
         "amount":"1.0",
         "fee":"0.001",
@@ -25,6 +26,7 @@ Total: 28
       {
         "id":299,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.01",
         "fee":"0.0001",
@@ -39,6 +41,7 @@ Total: 28
       {
         "id":290,
         "currency":"xrp",
+        "blockchain_key":"ripple",
         "type":"coin",
         "amount":"2.0",
         "fee":"0.25",
@@ -53,6 +56,7 @@ Total: 28
       {
         "id":276,
         "currency":"bch",
+        "blockchain_key":"bitcoinchain",
         "type":"coin",
         "amount":"0.1",
         "fee":"0.001",
@@ -67,6 +71,7 @@ Total: 28
       {
         "id":275,
         "currency":"bch",
+        "blockchain_key":"bitcoinchain",
         "type":"coin",
         "amount":"0.01",
         "fee":"0.001",
@@ -81,6 +86,7 @@ Total: 28
       {
         "id":274,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.01",
         "fee":"0.0001",
@@ -95,6 +101,7 @@ Total: 28
       {
         "id":273,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.01",
         "fee":"0.0001",
@@ -109,6 +116,7 @@ Total: 28
       {
         "id":269,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.001",
         "fee":"0.0001",
@@ -123,6 +131,7 @@ Total: 28
       {
         "id":267,
         "currency":"bch",
+        "blockchain_key":"bitcoinchain",
         "type":"coin",
         "amount":"0.1",
         "fee":"0.001",
@@ -137,6 +146,7 @@ Total: 28
       {
         "id":266,
         "currency":"bch",
+        "blockchain_key":"bitcoinchain",
         "type":"coin",
         "amount":"0.1",
         "fee":"0.001",
@@ -151,6 +161,7 @@ Total: 28
       {
         "id":265,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.5",
         "fee":"0.0001",
@@ -165,6 +176,7 @@ Total: 28
       {
         "id":264,
         "currency":"ltc",
+        "blockchain_key":"erc20",
         "type":"coin",
         "amount":"4.0",
         "fee":"0.01",
@@ -179,6 +191,7 @@ Total: 28
       {
         "id":263,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.1001",
         "fee":"0.0001",
@@ -193,6 +206,7 @@ Total: 28
       {
         "id":262,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.11",
         "fee":"0.0001",
@@ -207,6 +221,7 @@ Total: 28
       {
         "id":261,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.1",
         "fee":"0.0001",
@@ -221,6 +236,7 @@ Total: 28
       {
         "id":260,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.2",
         "fee":"0.0001",
@@ -235,6 +251,7 @@ Total: 28
       {
         "id":259,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.1",
         "fee":"0.0001",
@@ -249,6 +266,7 @@ Total: 28
       {
         "id":258,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.1",
         "fee":"0.0001",
@@ -263,6 +281,7 @@ Total: 28
       {
         "id":195,
         "currency":"xrp",
+        "blockchain_key":"ripple",
         "type":"coin",
         "amount":"1.0",
         "fee":"0.25",
@@ -277,6 +296,7 @@ Total: 28
       {
         "id":177,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.001",
         "fee":"0.0001",
@@ -291,6 +311,7 @@ Total: 28
       {
         "id":176,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.001",
         "fee":"0.0001",
@@ -305,6 +326,7 @@ Total: 28
       {
         "id":175,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"1.0",
         "fee":"0.0001",
@@ -319,6 +341,7 @@ Total: 28
       {
         "id":174,
         "currency":"xrp",
+        "blockchain_key":"ripple",
         "type":"coin",
         "amount":"0.5",
         "fee":"0.25",
@@ -333,6 +356,7 @@ Total: 28
       {
         "id":173,
         "currency":"ltc",
+        "blockchain_key":"erc20",
         "type":"coin",
         "amount":"0.5",
         "fee":"0.01",
@@ -347,6 +371,7 @@ Total: 28
       {
         "id":172,
         "currency":"btc",
+        "blockchain_key":"bitcoin",
         "type":"coin",
         "amount":"0.1",
         "fee":"0.0001",

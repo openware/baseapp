@@ -1,75 +1,95 @@
-import classnames from 'classnames';
-import * as React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { formatCCYAddress } from 'src/helpers';
-import { Blur } from '../../../components/Blur';
+import { useDispatch, useSelector } from 'react-redux';
+import { TabPanel } from '../../../components';
 import { CurrencyInfo } from '../../../components/CurrencyInfo';
 import { DepositCrypto } from '../../../components/DepositCrypto';
 import { DepositFiat } from '../../../components/DepositFiat';
-import { selectCurrencies } from '../../../modules/public/currencies';
 import { selectUserInfo } from '../../../modules/user/profile';
+import {
+    Currency,
+    selectCurrencies,
+    walletsAddressFetch,
+    alertPush
+} from '../../../modules';
 
 const WalletDepositBodyComponent = props => {
+    const { wallet } = props;
     const intl = useIntl();
-    const currencies = useSelector(selectCurrencies);
+    const dispatch = useDispatch();
+
+    const currencies: Currency[] = useSelector(selectCurrencies);
+
     const user = useSelector(selectUserInfo);
     const label = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.address' }), [intl]);
     const handleOnCopy = () => ({});
-    const renderDeposit = () => {
-        const { wallet } = props;
-        const isAccountActivated = wallet.type === 'fiat' || wallet.balance;
-        const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
-        const text = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
-            { confirmations: currencyItem.min_confirmations });
-        const error = intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.pending'});
 
-        const selectedWalletAddress = '';
+    const currencyItem: Currency | any = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
 
-        const walletAddress = formatCCYAddress(wallet.currency, selectedWalletAddress) || '';
+    const [tab, setTab] = useState('');
+    const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
-        const title = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message1' });
-        const description = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message2' });
-        const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
-            'pg-blur-deposit-crypto--active': isAccountActivated,
-        });
+    useEffect(() => {
+        setTab(currencyItem.blockchain_currencies ? currencyItem.blockchain_currencies[0]?.blockchain_key.toUpperCase() : '');
+    }, [wallet.currency]);
 
-        const buttonLabel = `${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.generate' })} ${wallet.currency.toUpperCase()} ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.address' })}`;
+    const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab.toLowerCase());
 
-        if (wallet.type === 'coin') {
-            return (
-                <React.Fragment>
-                    <CurrencyInfo wallet={wallet}/>
-                    {currencyItem && !currencyItem.deposit_enabled ? (
-                        <Blur
-                            className={blurCryptoClassName}
-                            text={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.disabled.message' })}
-                        />
-                    ) : null}
+    const text = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
+        { confirmations: currencyItem.min_confirmations });
+    const error = intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.pending'});
+
+    const title = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message1' });
+    const description = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message2' });
+
+    const buttonLabel = `${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.generate' })} ${wallet.currency.toUpperCase()} ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.address' })}`;
+
+    const handleGenerateAddress = useEffect(() => {    
+        if (!depositAddress && wallet.type !== 'fiat') {
+            dispatch(walletsAddressFetch({ currency: wallet.currency, blockchain_key: tab }));
+        }
+    }, [wallet, walletsAddressFetch, tab]);
+
+    const onTabChange = label => setTab(label);
+    const onCurrentTabChange = index => setCurrentTabIndex(index);
+
+    const renderTabs = useMemo(() => {
+        return currencyItem.blockchain_currencies?.map(network => {
+            return {
+                content: tab.toUpperCase() === network.blockchain_key?.toUpperCase() ?
                     <DepositCrypto
                         buttonLabel={buttonLabel}
                         copiableTextFieldText={`${wallet.currency.toUpperCase()} ${label}`}
                         copyButtonText={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.button'} )}
                         error={error}
-                        handleGenerateAddress={props.handleGenerateAddress}
+                        handleGenerateAddress={() => handleGenerateAddress}
                         handleOnCopy={handleOnCopy}
                         text={text}
                         wallet={wallet}
-                        disabled={walletAddress === ''}
-                        network="kek"
-                    />
+                        network={tab}
+                    /> : null,
+                label: network.blockchain_key?.toUpperCase(),
+            };
+        })
+    }, [tab, currencyItem]);
+
+    const renderDeposit = () => {
+        if (wallet.type === 'coin') {
+            return (
+                <React.Fragment>
+                    <CurrencyInfo wallet={wallet}/>
+                    {currencyItem.blockchain_currencies && <TabPanel
+                        panels={renderTabs}
+                        onTabChange={(_, label) => onTabChange(label)}
+                        currentTabIndex={currentTabIndex}
+                        onCurrentTabChange={onCurrentTabChange}
+                    />}
                 </React.Fragment>
             );
         } else {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallet}/>
-                    {currencyItem && !currencyItem.deposit_enabled ? (
-                        <Blur
-                            className="pg-blur-deposit-fiat"
-                            text={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.disabled.message' })}
-                        />
-                    ) : null}
                     <DepositFiat title={title} description={description} uid={user ? user.uid : ''}/>
                 </React.Fragment>
             );

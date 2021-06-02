@@ -176,6 +176,8 @@ export const en = {
     'page.body.wallets.tabs.deposit.ccy.hint.title': 'Send only {currency} to this deposit address.',
     'page.body.wallets.tabs.deposit.ccy.hint': 'Sending coin or token other than {currency} to this address may result in the loss of your deposit.',
     'page.body.wallets.tabs.deposit.ccy.disabled': 'Deposits of {currency} on that network is temporary suspended',
+    'page.body.wallets.tabs.deposit.ccy.memo': 'Memo',
+    'page.body.wallets.tabs.deposit.ccy.memo.warning': 'Both a MEMO and an Address are required to successfully deposit your USDT BEP2 tokens to Binance.',
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Deposit using bank transfer',
     'page.body.wallets.tabs.deposit.fiat.message2': 'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account within 2 business days.',
@@ -283,6 +285,7 @@ export const en = {
 
     'page.body.history.deposit': 'Deposit History',
     'page.body.history.deposit.header.txid': 'txID',
+    'page.body.history.deposit.header.blockchain': 'Network',
     'page.body.history.deposit.header.date': 'Date',
     'page.body.history.deposit.header.currency': 'Currency',
     'page.body.history.deposit.header.amount': 'Amount',
@@ -297,6 +300,7 @@ export const en = {
 
     'page.body.history.withdraw': 'Withdrawal History',
     'page.body.history.withdraw.header.id': 'ID',
+    'page.body.history.withdraw.header.blockchain': 'Network',
     'page.body.history.withdraw.header.date': 'Date',
     'page.body.history.withdraw.header.currency': 'Currency',
     'page.body.history.withdraw.header.address': 'Address',

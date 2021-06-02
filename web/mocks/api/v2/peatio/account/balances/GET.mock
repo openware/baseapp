@@ -15,7 +15,8 @@ Access-Control-Allow-Credentials: true
             {
                 "currencies": ["bch"],
                 "address": null,
-                "state": "pending"
+                "state": "pending",
+                "blockchain_key": "bitcoincash"
             }
         ]
     },
@@ -54,7 +55,8 @@ Access-Control-Allow-Credentials: true
             {
                 "currencies": ["eth", "trst"],
                 "address": "0x00eec1e95026faf0412d7a29b94d514d31446141",
-                "state": "active"
+                "state": "active",
+                "blockchain_key": "erc20"
             }
         ]
     },
@@ -67,7 +69,8 @@ Access-Control-Allow-Credentials: true
             {
                 "currencies": ["eth", "ltc"],
                 "address":"0x00eec1e95026faf0412d7a29b94d514d31446141",
-                "state":"active"
+                "state":"active",
+                "blockchain_key": "erc20"
             }
         ]
     },
@@ -80,7 +83,8 @@ Access-Control-Allow-Credentials: true
             {
                 "currencies": ["dash"],
                 "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
-                "state": "active"
+                "state": "active",
+                "blockchain_key": "erc20"
             }
         ]
     },
