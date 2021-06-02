@@ -52,3 +52,4 @@ export * from './Timer';
 export * from './WalletList';
 export * from './DoubleDropdownSelector';
 export * from './TransferForm';
+export * from './Info';
