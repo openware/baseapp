@@ -12,6 +12,7 @@ Access-Control-Allow-Credentials: true
     "deposit_address": {
         "currencies": ["eth", "ltc"],
         "address":"0x00eec1e95026faf0412d7a29b94d514d31446141",
-        "state":"active"
+        "state":"active",
+        "blockchain_key": "erc20"
     }
 }

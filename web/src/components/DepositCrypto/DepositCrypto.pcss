@@ -9,6 +9,19 @@
   width: 50%;
   min-width: 530px;
 
+  &__warning {
+    display: flex;
+    margin-top: 12px;
+
+    p {
+      margin-left: 12px;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.1px;
+      color: var(--secondary-contrast-cta-color);
+    }
+  }
+
   &__disabled {
     display: flex;
     align-items: center;
@@ -187,6 +200,22 @@
 @media screen and (max-width: 768px) {
   .cr-deposit-crypto {
     padding: 0;
+
+    &__warning {
+      padding: 0 14px;
+    }
+
+    &__currency {
+      padding: 0 14px;
+    }
+    
+    &__hint {
+      padding: 0 14px;
+
+      &-title {
+        padding: 0 14px;
+      }
+    }
 
     .cr-deposit-info {
       text-align: center;
