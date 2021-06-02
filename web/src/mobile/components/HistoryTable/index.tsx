@@ -69,7 +69,8 @@ const HistoryTable = (props: any) => {
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const confirmations = type === 'deposits' && item.confirmations;
             const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
-            const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
+            const blockchainCurrency = itemCurrency.blockchain_currencies?.find(blockchain_cur => blockchain_cur.blockchain_key === item.blockchain_key);
+            const minConfirmations = blockchainCurrency && blockchainCurrency.min_confirmations;
             const state = 'state' in item ? formatTxState(item.state, confirmations, minConfirmations) : '';
 
             return [

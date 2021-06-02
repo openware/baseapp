@@ -8,12 +8,17 @@ import { selectMobileDeviceState, Wallet } from '../../modules';
 import { CopyableTextField } from '../CopyableTextField';
 import { MetaMaskButton } from '../MetaMaskButton';
 import { QRCode } from '../QRCode';
+import { Warning } from '../../assets/images/Warning';
 
 export interface DepositCryptoProps {
     /**
      * Wallet
      */
     wallet: Wallet;
+    /**
+     * Blockchain
+     */
+        network: string;
     /**
      * Data which is used to display error if data is undefined
      */
@@ -50,7 +55,6 @@ export interface DepositCryptoProps {
      */
     buttonLabel?: string;
     disabled?: boolean;
-    network: string;
 }
 
 
@@ -74,13 +78,49 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         network,
     } = props;
     
-    const depositAddress = wallet.deposit_addresses.find(address => address.blockchain_key?.toLowerCase() === network.toLowerCase())
+    const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === network.toLowerCase());
 
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const size = dimensions || QR_SIZE;
-    const disabled = !depositAddress.address;
+    const disabled = !depositAddress?.address;
     const onCopy = !disabled ? handleOnCopy : undefined;
     const className = classnames('cr-deposit-crypto', {'cr-copyable-text-field__disabled': disabled});
+
+    const getDepositAddress = (depositAddress, currency) => {
+        const address = depositAddress?.address?.split('?')[0];
+
+        return address ? formatCCYAddress(currency, address) : '';
+    };
+
+    const getDepositTag = (depositAddress) => depositAddress?.address?.split('?')[1]?.split('=')[1];
+
+    const walletAddress = getDepositAddress(depositAddress, wallet.currency);
+    const walletTag = getDepositTag(depositAddress);
+
+    const renderMemo = React.useMemo(() => {
+        return (
+            <React.Fragment>
+                <div className="cr-deposit-crypto__block">
+                    <form className="cr-deposit-crypto__copyable">
+                        <fieldset className="cr-copyable-text-field" onClick={onCopy}>
+                            <CopyableTextField
+                                className="cr-deposit-crypto__copyable-area"
+                                value={walletTag || ''}
+                                fieldId={walletTag ? 'copy_memo_1' : 'copy_memo_2'}
+                                copyButtonText={copyButtonText}
+                                disabled={disabled}
+                                label={formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.memo'})}
+                            />
+                        </fieldset>
+                    </form>
+                </div>
+                <div className="cr-deposit-crypto__warning">
+                    <Warning />
+                    <p>{formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.memo.warning' })}</p>
+                </div>
+            </React.Fragment>
+        );
+    }, [walletTag]);
 
     if (!depositAddress) {
         return (
@@ -112,9 +152,6 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         );
     }
 
-    const walletAddress = depositAddress && depositAddress.address ?
-        formatCCYAddress(wallet.currency, depositAddress.address) : '';
-
     return (
         <React.Fragment>
             <h5 className="cr-deposit-crypto__currency">{`${wallet?.name} (${wallet?.currency.toUpperCase()})`}</h5>
@@ -144,6 +181,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
                         </fieldset>
                     </form>
                 </div>
+                {walletTag && renderMemo}
             </div>
             <h5 className="cr-deposit-crypto__hint-title">{formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.hint.title'}, {currency: wallet?.currency.toUpperCase()})}</h5>
             <p className="cr-deposit-crypto__hint">{formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.hint'}, {currency: wallet?.currency.toUpperCase()})}</p>

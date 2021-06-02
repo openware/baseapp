@@ -201,6 +201,8 @@ export const ru: LangType = {
     'page.body.wallets.tabs.deposit.ccy.hint.title': 'Send only {currency} to this deposit address.',
     'page.body.wallets.tabs.deposit.ccy.hint': 'Sending coin or token other than {currency} to this address may result in the loss of your deposit.',
     'page.body.wallets.tabs.deposit.ccy.disabled': 'Deposits of {currency} on that network is temporary suspended',
+    'page.body.wallets.tabs.deposit.ccy.memo': 'Memo',
+    'page.body.wallets.tabs.deposit.ccy.memo.warning': 'Both a MEMO and an Address are required to successfully deposit your USDT BEP2 tokens to Binance.',
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Вы можете внести депозит в банке, используя следующие реквизиты',
     'page.body.wallets.tabs.deposit.fiat.message2': 'Пожалуйста, используйте предоставленную информацию для завершения банковского платежа. Ваш депозит станет доступным на протяжении 2-х рабочих дней.',
@@ -311,6 +313,7 @@ export const ru: LangType = {
     'page.body.history.deposit': 'История депозитов',
     'page.body.history.deposit.header.txid': 'txID',
     'page.body.history.deposit.header.date': 'Дата',
+    'page.body.history.deposit.header.blockchain': 'Network',
     'page.body.history.deposit.header.currency': 'Валюта',
     'page.body.history.deposit.header.amount': 'Количество',
     'page.body.history.deposit.header.status': 'Статус',
@@ -324,6 +327,7 @@ export const ru: LangType = {
 
     'page.body.history.withdraw': 'История выводов',
     'page.body.history.withdraw.header.id': 'ID',
+    'page.body.history.withdraw.header.blockchain': 'Network',
     'page.body.history.withdraw.header.date': 'Дата',
     'page.body.history.withdraw.header.currency': 'Валюта',
     'page.body.history.withdraw.header.address': 'Адрес',
