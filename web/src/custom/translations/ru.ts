@@ -477,6 +477,7 @@ export const ru: LangType = {
     'page.confirm.title.profile': 'Get Verified your Profile',
     'page.confirm.title.document': 'Get Verified your Government Issued ID ',
     'page.confirm.title.address': 'Residence verification',
+    'page.confirm.title.warning': 'Please, provide all the information in English language',
 
     'page.body.kyc.phone.phoneNumber': 'Phone number',
     'page.body.kyc.phone.code': 'Enter code that you received',

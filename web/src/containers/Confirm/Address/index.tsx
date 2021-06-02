@@ -252,17 +252,17 @@ class AddressComponent extends React.Component<Props, State> {
     private handleValidateInput = (field: string, value: string): boolean => {
         switch (field) {
             case 'address':
-                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;~\\/\\s]+$`);
+                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;~\\/\\\\\\s]{1,255}$`);
 
-                return value.match(residentialAddressRegex) ? true : false;
+                return Boolean(value.match(residentialAddressRegex));
             case 'city':
-                const cityRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\s]+$`);
+                const cityRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\s]{1,255}$`);
 
-                return value.match(cityRegex) ? true : false;
+                return Boolean(value.match(cityRegex));
             case 'postcode':
                 const postcodeRegex = new RegExp(`^[a-zA-Z0-9/\\s]{1,12}$`);
 
-                return value.match(postcodeRegex) ? true : false;
+                return Boolean(value.match(postcodeRegex));
             default:
                 return true;
         }

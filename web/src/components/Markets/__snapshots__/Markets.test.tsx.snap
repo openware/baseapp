@@ -998,6 +998,7 @@ exports[`Markets should render empty data 1`] = `
         "page.confirm.title.email": "Get Verified your email",
         "page.confirm.title.phone": "Get Verified your phone number",
         "page.confirm.title.profile": "Get Verified your Profile",
+        "page.confirm.title.warning": "Please, provide all the information in English language",
         "page.documentation.endpoints.requestTypeItem.description.title": "Description",
         "page.documentation.endpoints.requestTypeItem.parameters.table.data.required.false": "No",
         "page.documentation.endpoints.requestTypeItem.parameters.table.data.required.true": "Yes",
