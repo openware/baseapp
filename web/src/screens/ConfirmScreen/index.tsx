@@ -7,7 +7,7 @@ import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { kycSteps } from '../../api';
 import { CrossIcon } from '../../assets/images/kyc/CrossIcon';
-import { Logo } from '../../components';
+import { Info, Logo } from '../../components';
 import { Address, Documents, Identity, Phone } from '../../containers';
 import { getVerificationStep, setDocumentTitle } from '../../helpers';
 import {
@@ -79,12 +79,15 @@ class ConfirmComponent extends React.Component<Props> {
                         onClick={e => history.push('/profile')}
                     />
                 </h3>
+                {['profile', 'address'].includes(step) && <Info variant="warning" text={this.translate('page.confirm.title.warning')} />}
                 <div className="pg-confirm__content">
                     {this.renderVerificationStep(step)}
                 </div>
             </div>
         );
     }
+
+    public translate = (id: string) => this.props.intl.formatMessage({ id });
 
     private handleGetVerificationStep = (): string => {
         const { labels } = this.props;

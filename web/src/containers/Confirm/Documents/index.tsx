@@ -371,9 +371,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             case 'expireDate':
                 return isDateInFuture(value);
             case 'idNumber':
-                const cityRegex = new RegExp(`^[a-zA-Z0-9]+$`);
+                const cityRegex = new RegExp(`^[a-zA-Z0-9]{1,255}$`);
 
-                return value.match(cityRegex) ? true : false;
+                return Boolean(value.match(cityRegex));
             default:
                 return true;
         }
