@@ -364,25 +364,25 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     private handleValidateInput = (field: string, value: string): boolean => {
         switch (field) {
             case 'firstName':
-                const firstNameRegex = new RegExp(`^[a-zA-Z]{1,100}$`);
+                const firstNameRegex = new RegExp(`^[a-zA-Z—-\\s]{1,100}$`);
 
-                return value.match(firstNameRegex) ? true : false;
+                return Boolean(value.match(firstNameRegex));
             case 'lastName':
-                const lastNameRegex = new RegExp(`^[a-zA-Z]{1,100}$`);
+                const lastNameRegex = new RegExp(`^[a-zA-Z—-\\s]{1,100}$`);
 
-                return value.match(lastNameRegex) ? true : false;
+                return Boolean(value.match(lastNameRegex));
             case 'residentialAddress':
-                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\s]+$`);
+                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\\\\\s]+$`);
 
-                return value.match(residentialAddressRegex) ? true : false;
+                return Boolean(value.match(residentialAddressRegex));
             case 'city':
                 const cityRegex = new RegExp(`^[a-zA-Z]+$`);
 
-                return value.match(cityRegex) ? true : false;
+                return Boolean(value.match(cityRegex));
             case 'postcode':
                 const postcodeRegex = new RegExp(`^[a-zA-Z0-9]{1,12}$`);
 
-                return value.match(postcodeRegex) ? true : false;
+                return Boolean(value.match(postcodeRegex));
             case 'dateOfBirth':
                 if (value.length === 10) {
                     return moment(value, 'DD/MM/YYYY').unix() < Date.now() / 1000;
