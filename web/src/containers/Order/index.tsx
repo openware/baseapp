@@ -45,7 +45,7 @@ import {
 } from '../../modules/user/orders';
 
 interface ReduxProps {
-    currentMarket: Market | undefined;
+    currentMarket?: Market;
     currentMarketFilters: FilterPrice[];
     executeLoading: boolean;
     marketTickers: {
@@ -56,7 +56,7 @@ interface ReduxProps {
     bids: string[][];
     asks: string[][];
     wallets: Wallet[];
-    currentPrice: number | undefined;
+    currentPrice?: number;
     isMobileDevice: boolean;
     memberLevels: MemberLevels;
     user: User;
@@ -65,8 +65,8 @@ interface ReduxProps {
 
 interface StoreProps {
     orderSide: string;
-    priceLimit: number | undefined;
-    trigger: number | undefined;
+    priceLimit: number | null;
+    trigger: number | null;
     width: number;
 }
 
@@ -90,8 +90,8 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         this.state = {
             orderSide: 'buy',
-            priceLimit: undefined,
-            trigger: undefined,
+            priceLimit: null,
+            trigger: null,
             width: 0,
         };
 
@@ -368,20 +368,20 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         });
     };
 
-    private getAvailableValue(wallet: Wallet | undefined) {
+    private getAvailableValue(wallet?: Wallet) {
         return wallet && wallet.balance ? Number(wallet.balance) : 0;
     }
 
     private listenInputPrice = () => {
         this.setState({
-            priceLimit: undefined,
+            priceLimit: null,
         });
         this.props.setCurrentPrice(0);
     };
 
     private listenInputTrigger = () => {
         this.setState({
-            trigger: undefined,
+            trigger: null,
         });
         this.props.setCurrentPrice(0);
     };

@@ -144,13 +144,13 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     public componentWillReceiveProps(next: OrderFormProps) {
         const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.props.currentMarketBidPrecision);
 
-        if (this.state.orderType === 'Limit' && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
+        if ((this.state.orderType as string).toLowerCase().includes('limit') && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
             this.handlePriceChange(nextPriceLimitTruncated);
         }
 
         const nextTriggerTruncated = Decimal.format(next.trigger, this.props.currentMarketBidPrecision);
 
-        if (ORDER_TYPES_WITH_TRIGGER.includes(String(this.state.orderType)) && next.trigger && nextTriggerTruncated !== this.state.trigger) {
+        if (['Stop-loss', 'Take-profit'].includes(String(this.state.orderType)) && next.trigger && nextTriggerTruncated !== this.state.trigger) {
             this.handleTriggerChange(nextTriggerTruncated);
         }
 
@@ -453,7 +453,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         });
     };
 
-    private handleFieldFocus = (field: string | undefined) => {
+    private handleFieldFocus = (field?: string) => {
         const { orderType } = this.state;
         const { type, translate } = this.props;
 
@@ -522,9 +522,11 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     };
 
     private handleChangeAmountByButton = (value: number) => {
-        const { orderType, price } = this.state;
+        const { orderType, price, trigger } = this.state;
 
-        this.props.handleChangeAmountByButton(value, orderType, price, this.props.type);
+        const priceToUse = (orderType as string).toLowerCase().includes('limit') || orderType === 'Market' ? price : trigger;
+
+        this.props.handleChangeAmountByButton(value, orderType, priceToUse, this.props.type);
     };
 
     private handleSubmit = () => {
