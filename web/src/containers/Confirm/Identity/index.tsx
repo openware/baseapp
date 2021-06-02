@@ -364,19 +364,19 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     private handleValidateInput = (field: string, value: string): boolean => {
         switch (field) {
             case 'firstName':
-                const firstNameRegex = new RegExp(`^[a-zA-Z—-\\s]{1,100}$`);
+                const firstNameRegex = new RegExp(`^[a-zA-Z—-\\s]{1,255}$`);
 
                 return Boolean(value.match(firstNameRegex));
             case 'lastName':
-                const lastNameRegex = new RegExp(`^[a-zA-Z—-\\s]{1,100}$`);
+                const lastNameRegex = new RegExp(`^[a-zA-Z—-\\s]{1,255}$`);
 
                 return Boolean(value.match(lastNameRegex));
             case 'residentialAddress':
-                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\\\\\s]+$`);
+                const residentialAddressRegex = new RegExp(`^[a-zA-Z0-9-,.;/\\\\\\s]{1,255}$`);
 
                 return Boolean(value.match(residentialAddressRegex));
             case 'city':
-                const cityRegex = new RegExp(`^[a-zA-Z]+$`);
+                const cityRegex = new RegExp(`^[a-zA-Z]{1,255}$`);
 
                 return Boolean(value.match(cityRegex));
             case 'postcode':
