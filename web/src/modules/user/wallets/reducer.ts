@@ -55,22 +55,41 @@ const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
     if (list.length && payload.currencies?.length) {
         return list.map(wallet => {
             if (payload.currencies.includes(wallet.currency)) {
-                let depositAddress: WalletAddress = {
-                    address: payload.address,
-                    currencies: payload.currencies,
-                    blockchain_key: payload.blockchain_key,
-                };
+                let depositAddresses: WalletAddress[] = [];
+                let depositAddress: WalletAddress = null;
 
-                if (payload.state) {
-                    depositAddress = {
-                        ...depositAddress,
-                        state: payload.state,
-                    };
+                if (wallet.deposit_addresses && wallet.deposit_addresses.length) {
+                    depositAddresses = wallet.deposit_addresses.map(address => {
+                        if (address.blockchain_key === payload.blockchain_key) {
+                            depositAddress = {
+                                address: payload.address,
+                                currencies: payload.currencies,
+                                blockchain_key: payload.blockchain_key,
+                            }
+
+                            if (payload.state) {
+                                depositAddress = {
+                                    ...depositAddress,
+                                    state: payload.state,
+                                };
+                            }
+
+                            return depositAddress;
+                        }
+    
+                        return address;
+                    });
+                } else {
+                    depositAddresses = [{
+                        address: payload.address,
+                        currencies: payload.currencies,
+                        blockchain_key: payload.blockchain_key,
+                    }];
                 }
 
                 return {
                     ...wallet,
-                    deposit_address: [], // need change
+                    deposit_addresses: depositAddresses,
                 };
             }
 

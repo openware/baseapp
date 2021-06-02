@@ -10,22 +10,12 @@ Access-Control-Allow-Credentials: true
     "id": "bch",
     "name": "Bitcoin Cash",
     "symbol": "฿",
-    "explorer_transaction": "https://www.blocktrail.com/tBCC/tx/#{txid}",
-    "explorer_address": "https://www.blocktrail.com/tBCC/address/#{address}",
     "type": "coin",
-    "min_confirmations": 7,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.01",
-    "withdraw_limit_24h": "0.1",
-    "withdraw_limit_72h": "0.2",
-    "deposit_enabled": true,
-    "withdrawal_enabled": true,
-    "base_factor": 100000000,
     "precision": 8,
     "blockchain_currencies": [
       {
         "id": 0,
-        "blockchain_key": "erc20",
+        "blockchain_key": "bitcoincash",
         "currency_id": "bch",
         "deposit_fee": "0.0",
         "min_deposit_amount": "3.6",
@@ -36,21 +26,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": true,
         "withdraw_enabled": false,
         "base_factor": 100000000,
-        "status": "enabled"
-      },
-      {
-        "id": 0,
-        "blockchain_key": "trc20",
-        "currency_id": "bch",
-        "deposit_fee": "0.0",
-        "min_deposit_amount": "3.6",
-        "withdraw_fee": "0.0",
-        "min_withdraw_amount": "3.6",
-        "withdraw_limit_24h": "100.0",
-        "withdraw_limit_72h": "1000.0",
-        "deposit_enabled": false,
-        "withdraw_enabled": false,
-        "base_factor": 100000000,
+        "min_confirmations": 6,
+        "explorer_transaction": "https://www.blocktrail.com/tBCC/tx/#{txid}",
+        "explorer_address": "https://www.blocktrail.com/tBCC/address/#{address}",
         "status": "enabled"
       }
     ]
@@ -59,17 +37,7 @@ Access-Control-Allow-Credentials: true
     "id": "btc",
     "name": "Bitcoin",
     "symbol": "฿",
-    "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
-    "explorer_address": "https://testnet.blockchain.info/address/#{address}",
     "type": "coin",
-    "min_confirmations": 6,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.005",
-    "withdraw_limit_24h": "0.1",
-    "withdraw_limit_72h": "0.2",
-    "deposit_enabled": true,
-    "withdrawal_enabled": true,
-    "base_factor": 100000000,
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -85,6 +53,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": true,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "min_confirmations": 6,
+        "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
+        "explorer_address": "https://testnet.blockchain.info/address/#{address}",
         "status": "enabled"
       },
       {
@@ -99,6 +70,9 @@ Access-Control-Allow-Credentials: true
         "withdraw_limit_72h": "1000.0",
         "deposit_enabled": false,
         "withdraw_enabled": false,
+        "min_confirmations": 6,
+        "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
+        "explorer_address": "https://testnet.blockchain.info/address/#{address}",
         "base_factor": 100000000,
         "status": "enabled"
       },
@@ -109,6 +83,9 @@ Access-Control-Allow-Credentials: true
         "deposit_fee": "0.0",
         "min_deposit_amount": "3.6",
         "withdraw_fee": "0.0",
+        "min_confirmations": 6,
+        "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
+        "explorer_address": "https://testnet.blockchain.info/address/#{address}",
         "min_withdraw_amount": "3.6",
         "withdraw_limit_24h": "100.0",
         "withdraw_limit_72h": "1000.0",
@@ -123,17 +100,7 @@ Access-Control-Allow-Credentials: true
     "id": "dash",
     "name": "Dash",
     "symbol": "Đ",
-    "explorer_transaction": "https://test.insight.dash.siampm.com/dash/tx/#{txid}",
-    "explorer_address": "https://test.insight.dash.siampm.com/dash/address/#{address}",
     "type": "coin",
-    "min_confirmations": 6,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.01",
-    "withdraw_limit_24h": "0.2",
-    "withdraw_limit_72h": "0.5000000000000001",
-    "deposit_enabled": false,
-    "withdrawal_enabled": false,
-    "base_factor": 100000000,
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -149,6 +116,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": true,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "min_confirmations": 6,
+        "explorer_transaction": "https://test.insight.dash.siampm.com/dash/tx/#{txid}",
+        "explorer_address": "https://test.insight.dash.siampm.com/dash/address/#{address}",
         "status": "enabled"
       },
       {
@@ -164,6 +134,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": false,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "min_confirmations": 6,
+        "explorer_transaction": "https://test.insight.dash.siampm.com/dash/tx/#{txid}",
+        "explorer_address": "https://test.insight.dash.siampm.com/dash/address/#{address}",
         "status": "enabled"
       }
     ]
@@ -173,17 +146,7 @@ Access-Control-Allow-Credentials: true
     "icon_url": "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
     "name": "Ethereum",
     "symbol": "Ξ",
-    "explorer_transaction": "https://rinkeby.etherscan.io/tx/#{txid}",
-    "explorer_address": "https://rinkeby.etherscan.io/address/#{address}",
     "type": "coin",
-    "min_confirmations": 7,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.02",
-    "withdraw_limit_24h": "0.2",
-    "withdraw_limit_72h": "0.5000000000000001",
-    "deposit_enabled": true,
-    "withdrawal_enabled": true,
-    "base_factor": 1e+18,
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -199,6 +162,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": true,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "min_confirmations": 7,
+        "explorer_transaction": "https://rinkeby.etherscan.io/tx/#{txid}",
+        "explorer_address": "https://rinkeby.etherscan.io/address/#{address}",
         "status": "enabled"
       },
       {
@@ -214,6 +180,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": false,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "min_confirmations": 7,
+        "explorer_transaction": "https://rinkeby.etherscan.io/tx/#{txid}",
+        "explorer_address": "https://rinkeby.etherscan.io/address/#{address}",
         "status": "enabled"
       }
     ]
@@ -222,17 +191,7 @@ Access-Control-Allow-Credentials: true
     "id": "ltc",
     "name": "Litecoin",
     "symbol": "Ł",
-    "explorer_transaction": "https://chain.so/tx/LTCTEST/#{txid}",
-    "explorer_address": "https://chain.so/address/LTCTEST/#{address}",
     "type": "coin",
-    "min_confirmations": 5,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.01",
-    "withdraw_limit_24h": "0.5000000000000001",
-    "withdraw_limit_72h": "1.2",
-    "deposit_enabled": true,
-    "withdrawal_enabled": true,
-    "base_factor": 100000000,
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -248,6 +207,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": true,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "explorer_transaction": "https://chain.so/tx/LTCTEST/#{txid}",
+        "explorer_address": "https://chain.so/address/LTCTEST/#{address}",
+        "min_confirmations": 5,
         "status": "enabled"
       },
       {
@@ -263,6 +225,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": false,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "explorer_transaction": "https://chain.so/tx/LTCTEST/#{txid}",
+        "explorer_address": "https://chain.so/address/LTCTEST/#{address}",
+        "min_confirmations": 5,
         "status": "enabled"
       }
     ]
@@ -286,22 +251,12 @@ Access-Control-Allow-Credentials: true
     "id": "xrp",
     "name": "Ripple",
     "symbol": "ꭆ",
-    "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
-    "explorer_address": "https://bithomp.com/explorer/#{address}",
     "type": "coin",
-    "min_confirmations": 5,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.02",
-    "withdraw_limit_24h": "100.0",
-    "withdraw_limit_72h": "200.0",
-    "deposit_enabled": true,
-    "withdrawal_enabled": false,
-    "base_factor": 1000000,
     "precision": 8,
     "blockchain_currencies": [
       {
         "id": 0,
-        "blockchain_key": "erc20",
+        "blockchain_key": "ripple",
         "currency_id": "bch",
         "deposit_fee": "0.0",
         "min_deposit_amount": "3.6",
@@ -312,11 +267,14 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": true,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
+        "explorer_address": "https://bithomp.com/explorer/#{address}",
+        "min_confirmations": 5,
         "status": "enabled"
       },
       {
         "id": 0,
-        "blockchain_key": "trc20",
+        "blockchain_key": "ripple_test",
         "currency_id": "bch",
         "deposit_fee": "0.0",
         "min_deposit_amount": "3.6",
@@ -327,6 +285,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": false,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
+        "explorer_address": "https://bithomp.com/explorer/#{address}",
+        "min_confirmations": 5,
         "status": "enabled"
       }
     ]
@@ -335,17 +296,7 @@ Access-Control-Allow-Credentials: true
     "id": "ngnt",
     "name": "NGNT",
     "symbol": "ꭆ",
-    "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
-    "explorer_address": "https://bithomp.com/explorer/#{address}",
     "type": "coin",
-    "min_confirmations": 5,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.02",
-    "withdraw_limit_24h": "100.0",
-    "withdraw_limit_72h": "200.0",
-    "deposit_enabled": true,
-    "withdrawal_enabled": false,
-    "base_factor": 1000000,
     "precision": 4,
     "blockchain_currencies": [
       {
@@ -361,6 +312,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": true,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
+        "explorer_address": "https://bithomp.com/explorer/#{address}",
+        "min_confirmations": 5,
         "status": "enabled"
       },
       {
@@ -376,6 +330,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": false,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
+        "explorer_address": "https://bithomp.com/explorer/#{address}",
+        "min_confirmations": 5,
         "status": "enabled"
       }
     ]
@@ -384,17 +341,7 @@ Access-Control-Allow-Credentials: true
     "id": "usdt",
     "name": "Tether",
     "symbol": "ꭆ",
-    "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
-    "explorer_address": "https://bithomp.com/explorer/#{address}",
     "type": "coin",
-    "min_confirmations": 5,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.02",
-    "withdraw_limit_24h": "100.0",
-    "withdraw_limit_72h": "200.0",
-    "deposit_enabled": true,
-    "withdrawal_enabled": false,
-    "base_factor": 1000000,
     "precision": 4,
     "blockchain_currencies": [
       {
@@ -410,6 +357,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": true,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
+        "explorer_address": "https://bithomp.com/explorer/#{address}",
+        "min_confirmations": 5,
         "status": "enabled"
       },
       {
@@ -425,6 +375,9 @@ Access-Control-Allow-Credentials: true
         "deposit_enabled": false,
         "withdraw_enabled": false,
         "base_factor": 100000000,
+        "explorer_transaction": "https://bithomp.com/explorer/#{txid}",
+        "explorer_address": "https://bithomp.com/explorer/#{address}",
+        "min_confirmations": 5,
         "status": "enabled"
       }
     ]
@@ -434,14 +387,6 @@ Access-Control-Allow-Credentials: true
     "name": "ZAR",
     "symbol": "$",
     "type": "fiat",
-    "min_confirmations": 7,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.02",
-    "withdraw_limit_24h": "100.0",
-    "withdraw_limit_72h": "200.0",
-    "deposit_enabled": true,
-    "withdrawal_enabled": false,
-    "base_factor": 1,
     "precision": 2
    },
   {
@@ -449,28 +394,12 @@ Access-Control-Allow-Credentials: true
     "name": "Euro",
     "symbol": "€",
     "type": "fiat",
-    "min_confirmations": 6,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.02",
-    "withdraw_limit_24h": "2000.0",
-    "withdraw_limit_72h": "1000000.0",
-    "deposit_enabled": false,
-    "withdrawal_enabled": false,
-    "base_factor": 1,
     "precision": 2
   },
   {
     "id": "ngn",
     "name": "NGN",
     "type": "fiat",
-    "min_confirmations": 4,
-    "deposit_fee": "0.0",
-    "withdraw_fee": "0.01",
-    "withdraw_limit_24h": "100.0",
-    "withdraw_limit_72h": "200.0",
-    "deposit_enabled": true,
-    "withdrawal_enabled": true,
-    "base_factor": 1,
     "precision": 2
   }
 ]

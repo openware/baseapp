@@ -27,7 +27,7 @@ const defaultWallet: Wallet = {
     balance: '',
     type: 'coin',
     fixed: 0,
-    fee: 0,
+    blockchain_currencies: [{blockchain_key: '', fee: 0}],
     account_type: '',
 };
 
@@ -47,7 +47,7 @@ export const DepositFiatContainer = (props: DepositFiatProps) => {
     } = props;
 
     const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
-    const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
+    const currencyItem = currencies && currencies.find(item => item.id === wallet.currency);
 
     const title = translate('page.body.wallets.tabs.deposit.fiat.message1');
     const description = translate('page.body.wallets.tabs.deposit.fiat.message2');
@@ -58,7 +58,7 @@ export const DepositFiatContainer = (props: DepositFiatProps) => {
                 wallet={wallets[selectedWalletIndex]}
                 handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
             />
-            {currencyItem && !currencyItem.deposit_enabled ? (
+            {currencyItem ? (
                 <Blur
                     className="pg-blur-deposit-fiat"
                     text={translate('page.body.wallets.tabs.deposit.disabled.message')}
