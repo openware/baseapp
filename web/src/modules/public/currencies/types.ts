@@ -11,6 +11,7 @@ export interface Currency {
 interface BlockchainCurrencies {
     id: number;
     blockchain_key: string;
+    protocol: string;
     currency_id: string;
     deposit_fee: string;
     min_deposit_amount: string;

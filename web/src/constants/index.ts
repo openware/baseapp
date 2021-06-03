@@ -1,5 +1,5 @@
 import { CanCan } from 'src/containers';
-import { AbilitiesInterface } from 'src/modules';
+import { AbilitiesInterface, Wallet } from 'src/modules';
 import { DropdownElem } from '../components/Order';
 
 export const PG_TITLE_PREFIX = 'Cryptobase';
@@ -24,6 +24,16 @@ export const pgRoutes = (isLoggedIn: boolean, abilities: AbilitiesInterface, isL
     ];
 
     return isLoggedIn ? routes.filter(i => Boolean(i)) : routesUnloggedIn;
+};
+
+export const DEFAULT_WALLET: Wallet = {
+    name: '',
+    currency: '',
+    balance: '',
+    type: 'coin',
+    fixed: 0,
+    blockchain_currencies: [{blockchain_key: '', fee: 0, protocol: ''}],
+    account_type: '',
 };
 
 export const DEFAULT_CCY_PRECISION = 4;
