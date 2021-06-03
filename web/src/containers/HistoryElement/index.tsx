@@ -163,7 +163,7 @@ class HistoryComponent extends React.Component<Props> {
         } = this.props;
         switch (type) {
             case 'deposits': {
-                const { amount, confirmations, created_at, currency, txid, blockchain_key } = item;
+                const { amount, confirmations, created_at, currency, txid, blockchain_key, protocol } = item;
                 const blockchainLink = this.getBlockchainLink(currency, blockchain_key, txid);
                 const wallet = wallets.find(obj => obj.currency === currency);
                 const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
@@ -181,7 +181,7 @@ class HistoryComponent extends React.Component<Props> {
                             {truncateMiddle(txid, 30)}
                         </a>
                     </div>,
-                    blockchain_key?.toUpperCase(),
+                    protocol?.toUpperCase(),
                     localeDate(created_at, 'fullDate'),
                     currency?.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
@@ -189,7 +189,7 @@ class HistoryComponent extends React.Component<Props> {
                 ];
             }
             case 'withdraws': {
-                const { txid, created_at, currency, amount, blockchain_key, fee, rid } = item;
+                const { txid, created_at, currency, amount, fee, rid, protocol } = item;
                 const state = intl.formatMessage({ id: `page.body.history.withdraw.content.status.${item.state}` });
                 const blockchainLink = this.getBlockchainLink(currency, txid, rid);
                 const wallet = wallets.find(obj => obj.currency === currency);
@@ -200,7 +200,7 @@ class HistoryComponent extends React.Component<Props> {
                             {truncateMiddle(txid || rid, 30)}
                         </a>
                     </div>,
-                    blockchain_key?.toUpperCase(),
+                    protocol?.toUpperCase(),
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
