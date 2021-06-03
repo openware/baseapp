@@ -16,20 +16,11 @@ import {
     selectCurrencies,
 } from '../../../../modules';
 import { WalletHistory } from '../../History';
+import { DEFAULT_WALLET } from '../../../../constants';
 
 interface DepositFiatProps {
     selectedWalletIndex: number;
 }
-
-const defaultWallet: Wallet = {
-    name: '',
-    currency: '',
-    balance: '',
-    type: 'coin',
-    fixed: 0,
-    blockchain_currencies: [{blockchain_key: '', fee: 0}],
-    account_type: '',
-};
 
 export const DepositFiatContainer = (props: DepositFiatProps) => {
     const { formatMessage } = useIntl();
@@ -46,7 +37,7 @@ export const DepositFiatContainer = (props: DepositFiatProps) => {
         selectedWalletIndex,
     } = props;
 
-    const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
+    const wallet: Wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
     const currencyItem = currencies && currencies.find(item => item.id === wallet.currency);
 
     const title = translate('page.body.wallets.tabs.deposit.fiat.message1');
@@ -58,12 +49,6 @@ export const DepositFiatContainer = (props: DepositFiatProps) => {
                 wallet={wallets[selectedWalletIndex]}
                 handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
             />
-            {currencyItem ? (
-                <Blur
-                    className="pg-blur-deposit-fiat"
-                    text={translate('page.body.wallets.tabs.deposit.disabled.message')}
-                />
-            ) : null}
             <DepositFiat title={title} description={description} uid={user ? user.uid : ''}/>
             {wallet.currency && <WalletHistory label="deposit" type="deposits" currency={wallet.currency} />}
         </React.Fragment>
