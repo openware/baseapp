@@ -11,6 +11,7 @@ import {
     Wallet,
 } from '../../../modules/user/wallets';
 import { Subheader, WalletDepositBody, WalletHeader } from '../../components';
+import { DEFAULT_WALLET } from '../../../constants';
 
 const WalletDeposit: React.FC = () => {
     const intl = useIntl();
@@ -21,17 +22,7 @@ const WalletDeposit: React.FC = () => {
     useCurrenciesFetch();
     useWalletsFetch();
 
-    const defaultWallet: Wallet = {
-        name: '',
-        currency: '',
-        balance: '',
-        type: 'coin',
-        fixed: 0,
-        blockchain_currencies: [{blockchain_key: '', fee: 0}],
-        account_type: '',
-    };
-
-    const wallet: Wallet = wallets.find(item => item.currency === currency) || defaultWallet;
+    const wallet: Wallet = wallets.find(item => item.currency === currency) || DEFAULT_WALLET;
 
     return (
         <React.Fragment>

@@ -14,6 +14,7 @@ export interface Wallet {
 
 export interface WalletBlockchain {
     blockchain_key: string;
+    protocol: string;
     explorerTransaction?: string;
     explorerAddress?: string;
     min_confirmations?: string;

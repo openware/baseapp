@@ -19,20 +19,11 @@ import {
     alertPush,
 } from '../../../../modules';
 import { WalletHistory } from '../../History';
+import { DEFAULT_WALLET } from '../../../../constants';
 
 interface DepositCryptoProps {
     selectedWalletIndex: number;
 }
-
-const defaultWallet: Wallet = {
-    name: '',
-    currency: '',
-    balance: '',
-    type: 'coin',
-    fixed: 0,
-    blockchain_currencies: [{blockchain_key: '', fee: 0}],
-    account_type: '',
-};
 
 export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => {
     const {
@@ -47,7 +38,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const wallets: Wallet[] = useSelector(selectWallets);
     const currencies: Currency[] = useSelector(selectCurrencies);
 
-    const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
+    const wallet: Wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
     const currencyItem: Currency | any = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
 
     const [tab, setTab] = useState('');
@@ -75,7 +66,11 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
 
     const handleOnCopy = () => dispatch(alertPush({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'}));
 
-    const onTabChange = label => setTab(label);
+    const onTabChange = label => {
+        const blockchain = currencyItem.blockchain_currencies?.find(item => item.protocol.toUpperCase() === label);
+
+        setTab(blockchain.blockchain_key);
+    };
 
     const onCurrentTabChange = index => setCurrentTabIndex(index);
 
@@ -94,7 +89,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                         wallet={wallet}
                         network={tab}
                     /> : null,
-                label: network.blockchain_key?.toUpperCase(),
+                label: network.protocol?.toUpperCase(),
             };
         })
     }, [currencyItem, tab])

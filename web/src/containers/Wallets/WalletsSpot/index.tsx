@@ -48,6 +48,7 @@ import {
     walletsFetch,
     walletsWithdrawCcyFetch,
 } from 'src/modules';
+import { DEFAULT_WALLET } from '../../../constants';
 
 interface ReduxProps {
     user: User;
@@ -85,16 +86,6 @@ const defaultBeneficiary: Beneficiary = {
     data: {
         address: '',
     },
-};
-
-const defaultWallet: Wallet = {
-    name: '',
-    currency: '',
-    balance: '',
-    type: 'coin',
-    fixed: 0,
-    blockchain_currencies: [{blockchain_key: '', fee: 0}],
-    account_type: '',
 };
 
 interface WalletsState {
@@ -463,7 +454,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     private renderWithdraw = () => {
         const { currencies, user, wallets, walletsError } = this.props;
         const { selectedWalletIndex } = this.state;
-        const wallet = (wallets[selectedWalletIndex] || defaultWallet);
+        const wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
 
         return (

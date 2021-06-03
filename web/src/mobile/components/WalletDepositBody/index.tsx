@@ -50,7 +50,12 @@ const WalletDepositBodyComponent = props => {
         }
     }, [wallet, walletsAddressFetch, tab]);
 
-    const onTabChange = label => setTab(label);
+    const onTabChange = label => {
+        const blockchain = currencyItem.blockchain_currencies?.find(item => item.protocol.toUpperCase() === label);
+
+        setTab(blockchain.blockchain_key);
+    };
+
     const onCurrentTabChange = index => setCurrentTabIndex(index);
 
     const renderTabs = useMemo(() => {
@@ -68,7 +73,7 @@ const WalletDepositBodyComponent = props => {
                         wallet={wallet}
                         network={tab}
                     /> : null,
-                label: network.blockchain_key?.toUpperCase(),
+                label: network.protocol?.toUpperCase(),
             };
         })
     }, [tab, currencyItem]);
