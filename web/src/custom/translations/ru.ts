@@ -163,6 +163,7 @@ export const ru: LangType = {
     'page.body.wallets.estimated_value': 'Оценочная стоимость',
 
     'page.body.wallets.locked': 'В ордерах',
+    'page.body.wallets.balance': 'Balance',
     'page.body.wallets.balance.spot': 'Spot Balance',
     'page.body.wallets.balance.available': 'Available',
     'page.body.wallets.tabs.deposit': 'Пополнить',
