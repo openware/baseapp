@@ -23,9 +23,12 @@ import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { TrashBin } from '../../assets/images/TrashBin';
+import { LogoIcon } from '../../assets/images/LogoIcon';
+import { HugeCloseIcon } from '../../assets/images/CloseIcon';
 import { BeneficiariesActivateModal } from './BeneficiariesActivateModal';
 import { BeneficiariesAddModal } from './BeneficiariesAddModal';
 import { BeneficiariesFailAddModal } from './BeneficiariesFailAddModal';
+import { TabPanel } from '../TabPanel';
 
 
 interface OwnProps {
@@ -47,6 +50,9 @@ const defaultBeneficiary: Beneficiary = {
 type Props = OwnProps;
 
 const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
+    const [tab, setTab] = React.useState('Whitelisted');
+    const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
+
     const [currentWithdrawalBeneficiary, setWithdrawalBeneficiary] = React.useState(defaultBeneficiary);
     const [isOpenAddressModal, setAddressModalState] = React.useState(false);
     const [isOpenConfirmationModal, setConfirmationModalState] = React.useState(false);
@@ -92,12 +98,12 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         }
 
         if (beneficiariesAddSuccess) {
-            setAddressModalState(false);
             setConfirmationModalState(true);
         }
 
         if (beneficiariesActivateSuccess) {
             setConfirmationModalState(false);
+            setAddressModalState(false);
         }
     }, [beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess]);
 
@@ -420,6 +426,62 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         );
     }, []);
 
+    const onTabChange = label => setTab(label);
+
+    const onCurrentTabChange = index => setCurrentTabIndex(index);
+
+    const renderTabs = React.useMemo(() => {
+        return [
+            {
+                content: tab === 'Whitelisted' ? renderBeneficiariesAddModal : null,
+                label: 'Whitelisted',
+            }
+        ]
+    }, [tab, isOpenConfirmationModal, isOpenFailModal]);
+
+    const renderTabPanel = React.useMemo(() => {
+        if (isOpenConfirmationModal) {
+            return renderActivateModal;
+        }
+
+        if (isOpenFailModal) {
+            return renderFailModal;
+        }
+
+        return <TabPanel
+            panels={renderTabs}
+            onTabChange={(_, label) => onTabChange(label)}
+            currentTabIndex={currentTabIndex}
+            onCurrentTabChange={onCurrentTabChange}
+        />
+    }, [isOpenAddressModal, isOpenConfirmationModal, isOpenFailModal])
+
+    const renderTitle = React.useMemo(() => {
+        if (isOpenConfirmationModal) {
+            return 'Confirm New Account';
+        }
+
+        return 'Withdrawal Address';
+    }, [isOpenConfirmationModal]);
+
+
+    const renderBeneficiariesModal = React.useMemo(() => {
+        return (
+            <div className="cr-modal pg-beneficiaries__modal">
+                <div className="cr-email-form__options-group">
+                    <div className="cr-email-form__option">
+                        <div className="cr-email-form__option-inner">
+                            <LogoIcon />
+                            <HugeCloseIcon className="cr-email-form__option-inner-close" onClick={() => window.console.log('close modal')}/>
+                        </div>
+                    </div>
+                </div>
+                <h3>{renderTitle}</h3>
+                {renderTabPanel}
+            </div>
+        );
+    }, [renderTabPanel]);
+
     const filtredBeneficiaries = React.useMemo(() =>
         handleFilterByState(beneficiaries, ['active', 'pending']), [beneficiaries]);
 
@@ -432,9 +494,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                 }
             </span>
             {filtredBeneficiaries.length ? renderAddressDropdown(filtredBeneficiaries, currentWithdrawalBeneficiary, type) : renderAddAddress}
-            {isOpenAddressModal && renderBeneficiariesAddModal}
-            {isOpenConfirmationModal && renderActivateModal}
-            {isOpenFailModal && renderFailModal}
+            {isOpenAddressModal && renderBeneficiariesModal}
         </div>
     );
 }
