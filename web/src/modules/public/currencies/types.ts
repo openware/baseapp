@@ -8,7 +8,7 @@ export interface Currency {
     blockchain_currencies: BlockchainCurrencies[];
 }
 
-interface BlockchainCurrencies {
+export interface BlockchainCurrencies {
     id: number;
     blockchain_key: string;
     protocol: string;
