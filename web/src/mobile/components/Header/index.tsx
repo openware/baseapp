@@ -12,8 +12,7 @@ const noHeaderRoutes = ['/setup'];
 const HeaderComponent: React.FC = () => {
     const userLoggedIn = useSelector(selectUserLoggedIn);
     const intl = useIntl();
-    const shouldRenderHeader =
-        !noHeaderRoutes.some((r) => location.pathname.includes(r)) && location.pathname !== '/';
+    const shouldRenderHeader = !noHeaderRoutes.some((r) => location.pathname.includes(r));
 
     if (!shouldRenderHeader) {
         return <React.Fragment />;
