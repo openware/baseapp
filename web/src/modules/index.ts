@@ -47,6 +47,7 @@ import { P2POffersState, rootP2POffersSaga } from './user/p2pOffers';
 import { P2PTransfersState, rootP2PTransfersSaga } from './user/p2pTransfers';
 import { P2POrdersState, rootP2POrdersSaga } from './user/p2pOrders';
 import { P2PDisputeState, rootP2PDisputeSaga } from './user/p2pDispute';
+import { rootFeeGroupSaga, FeeGroupState } from './user/feeGroup';
 
 export * from './admin/config';
 export * from './admin/markets';
@@ -79,6 +80,7 @@ export * from './user/password';
 export * from './user/profile';
 export * from './user/userActivity';
 export * from './user/wallets';
+export * from './user/feeGroup';
 export * from './user/withdrawLimit';
 export * from './user/quickExchange';
 export * from './user/abilities';
@@ -130,6 +132,7 @@ export interface RootState {
         userActivity: UserActivityState;
         wallets: WalletsState;
         withdrawLimit: WithdrawLimitState;
+        feeGroup: FeeGroupState;
         quickExchange: QuickExchangeState;
         paymentMethod: PaymentMethodState;
         p2pOffers: P2POffersState;
@@ -152,6 +155,7 @@ export const rootReducer = combineReducers({
 
 export function* rootSaga() {
     yield all([
+        call(rootFeeGroupSaga),
         call(rootQuickExchangeSaga),
         call(rootAbilitiesSaga),
         call(rootApiKeysSaga),
