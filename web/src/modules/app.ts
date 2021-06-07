@@ -46,6 +46,7 @@ import { p2pOffersReducer } from './user/p2pOffers';
 import { p2pTransfersReducer } from './user/p2pTransfers';
 import { p2pOrdersReducer } from './user/p2pOrders';
 import { p2pDisputeReducer } from './user/p2pDispute';
+import { feeGroupReducer } from './user/feeGroup';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,
@@ -86,6 +87,7 @@ export const userReducer = combineReducers({
     sendEmailVerification: sendEmailVerificationReducer,
     userActivity: userActivityReducer,
     wallets: walletsReducer,
+    feeGroup: feeGroupReducer,
     withdrawLimit: withdrawLimitReducer,
     internalTransfers: internalTransfersReducer,
     quickExchange: quickExchangeReducer,
