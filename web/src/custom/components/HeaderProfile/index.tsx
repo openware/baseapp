@@ -59,7 +59,7 @@ const HeaderProfileComponent: React.FC = () => {
                 </div>
                 <div className="account-switch__user">
                     <div className="account-switch__user__name">{isUsernameEnabled() ? user.username : user.email}</div>
-                    <div className="account-switch__user__uid">{user.uid}</div>
+                    <div className="account-switch__user__uid">{user.oid}</div>
                 </div>
                 <div className="account-switch__button" onClick={() => history.push('/accounts/switch')}>
                     <div className="account-switch__button__icon"><ChevronIcon /></div>
