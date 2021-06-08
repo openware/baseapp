@@ -69,6 +69,7 @@ export * from './public/memberLevels';
 export * from './public/orderBook';
 export * from './public/recentTrades';
 export * from './public/p2p';
+export * from './public/withdrawLimits';
 export * from './user/apiKeys';
 export * from './user/auth';
 export * from './user/beneficiaries';

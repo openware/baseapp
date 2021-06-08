@@ -12,6 +12,8 @@ import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 import { Beneficiary, BlockchainCurrencies } from '../../modules';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { RadioButton } from '../../assets/images/RadioButton';
+import { UserWithdrawalLimits } from './UserWithdrawalLimits';
+import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../constants';
 
 export interface WithdrawProps {
     currency: string;
@@ -97,7 +99,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             name,
         } = this.props;
 
-        const blockchainItem = blockchain_currencies.find(item => item.blockchain_key === beneficiary.blockchain_key);
+        const blockchainItem = blockchain_currencies?.find(item => item.blockchain_key === beneficiary.blockchain_key);
 
         const cx = classnames('cr-withdraw', className);
         const lastDividerClassName = classnames('cr-withdraw__divider', {
@@ -108,6 +110,8 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         const withdrawAmountClass = classnames('cr-withdraw__group__amount', {
           'cr-withdraw__group__amount--focused': withdrawAmountFocused,
         });
+
+        const estimatedValueFee = +price * +blockchainItem?.withdraw_fee;
 
         return (
             <React.Fragment>
@@ -160,7 +164,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                                         </div>
                                         <div className="cr-withdraw-blockchain-item-block">
                                             <div className="cr-withdraw-blockchain-item__fee"><span>Fee:&nbsp;</span><Decimal fixed={fixed} thousSep=",">{blockchainItem?.withdraw_fee?.toString()}</Decimal> {currency.toUpperCase()}</div>
-                                            <div className="cr-withdraw-blockchain-item__estimated-value">≈{price} USDT</div>
+                                            <div className="cr-withdraw-blockchain-item__estimated-value">≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedValueFee.toString()}</Decimal> {GLOBAL_PLATFORM_CURRENCY}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -205,7 +209,13 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             </div>
                         </div>
                     </div>
-                    <div>Limits</div>
+                    <div className="cr-withdraw__group__limits">
+                        <UserWithdrawalLimits
+                            currencyId={currency}
+                            fixed={fixed}
+                            price={price}
+                        />
+                    </div>
                 </div>
             </React.Fragment>
         );
@@ -221,7 +231,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         const { blockchain_currencies, fixed, currency } = this.props;
         const { beneficiary } = this.state;
 
-        const blockchainItem = blockchain_currencies.find(item => item.blockchain_key === beneficiary.blockchain_key);
+        const blockchainItem = blockchain_currencies?.find(item => item.blockchain_key === beneficiary.blockchain_key);
 
         return (
             <span>
@@ -241,31 +251,20 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         ) : <span>0 {currency.toUpperCase()}</span>;
     };
 
-    private handleClick = () => this.props.onClick(
-        this.state.amount,
-        this.state.total,
-        this.state.beneficiary,
-        this.state.otpCode,
-        // this.props.fee.toString(),
-        '0',
-    );
+    private handleClick = () => {
+        const { blockchain_currencies } = this.props;
+        const { beneficiary } = this.state;
 
-    private handleFieldFocus = (field: string) => {
-        switch (field) {
-            case 'amount':
-                this.setState(prev => ({
-                    withdrawAmountFocused: !prev.withdrawAmountFocused,
-                }));
-                break;
-            case 'code':
-                this.setState(prev => ({
-                    withdrawCodeFocused: !prev.withdrawCodeFocused,
-                }));
-                break;
-            default:
-                break;
-        }
-    };
+        const blockchainItem = blockchain_currencies.find(item => item.blockchain_key === beneficiary.blockchain_key);
+
+        this.props.onClick(
+            this.state.amount,
+            this.state.total,
+            this.state.beneficiary,
+            this.state.otpCode,
+            blockchainItem.withdraw_fee?.toString(),
+        );
+    }
 
     private handleChangeInputAmount = (value: string) => {
         const { beneficiary } = this.state;
@@ -297,9 +296,5 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         this.setState({
             beneficiary: value,
         });
-    };
-
-    private handleChangeInputOtpCode = (otpCode: string) => {
-        this.setState({ otpCode });
     };
 }

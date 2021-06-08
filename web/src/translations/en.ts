@@ -228,6 +228,9 @@ export const en = {
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'To withdraw you have to enable 2FA',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2FA',
 
+    'page.body.wallets.tabs.withdraw.content.withdrawal.limit': 'Withdrawal limits',
+    'page.body.wallets.tabs.withdraw.content.withdrawal.limit.tip': 'Lorem ipsum',
+
     'success.beneficiaries.created': 'Beneficiaries: successfully created',
     'success.beneficiaries.activated': 'Beneficiaries: successfully activated',
     'success.beneficiaries.deleted': 'Beneficiaries: successfully deleted',
