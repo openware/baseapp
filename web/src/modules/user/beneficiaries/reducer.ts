@@ -25,6 +25,7 @@ const defaultBeneficiary: Beneficiary = {
     id: 0,
     currency: '',
     name: '',
+    blockchain_key: '',
     state: '',
     data: {
         address: '',
