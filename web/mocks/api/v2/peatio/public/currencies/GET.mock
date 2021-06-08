@@ -11,7 +11,7 @@ Access-Control-Allow-Credentials: true
     "name": "Bitcoin Cash",
     "symbol": "฿",
     "type": "coin",
-    "price": "123",
+    "price": "1000",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -40,7 +40,7 @@ Access-Control-Allow-Credentials: true
     "name": "Bitcoin",
     "symbol": "฿",
     "type": "coin",
-    "price": "123",
+    "price": "32000",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -50,7 +50,7 @@ Access-Control-Allow-Credentials: true
         "currency_id": "btc",
         "deposit_fee": "0.0",
         "min_deposit_amount": "3.6",
-        "withdraw_fee": "0.0",
+        "withdraw_fee": "0.001",
         "min_withdraw_amount": "3.6",
         "withdraw_limit_24h": "0.0",
         "withdraw_limit_72h": "0.0",
@@ -69,7 +69,7 @@ Access-Control-Allow-Credentials: true
         "currency_id": "btc",
         "deposit_fee": "0.0",
         "min_deposit_amount": "3.6",
-        "withdraw_fee": "0.0",
+        "withdraw_fee": "0.0001",
         "min_withdraw_amount": "3.6",
         "withdraw_limit_24h": "100.0",
         "withdraw_limit_72h": "1000.0",
@@ -88,7 +88,7 @@ Access-Control-Allow-Credentials: true
         "currency_id": "btc",
         "deposit_fee": "0.0",
         "min_deposit_amount": "3.6",
-        "withdraw_fee": "0.0",
+        "withdraw_fee": "0.0001",
         "min_confirmations": 6,
         "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
         "explorer_address": "https://testnet.blockchain.info/address/#{address}",
@@ -107,7 +107,7 @@ Access-Control-Allow-Credentials: true
     "name": "Dash",
     "symbol": "Đ",
     "type": "coin",
-    "price": "123",
+    "price": "1000",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -156,7 +156,7 @@ Access-Control-Allow-Credentials: true
     "name": "Ethereum",
     "symbol": "Ξ",
     "type": "coin",
-    "price": "123",
+    "price": "1000",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -204,7 +204,7 @@ Access-Control-Allow-Credentials: true
     "name": "Litecoin",
     "symbol": "Ł",
     "type": "coin",
-    "price": "123",
+    "price": "1000",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -267,7 +267,7 @@ Access-Control-Allow-Credentials: true
     "name": "Ripple",
     "symbol": "ꭆ",
     "type": "coin",
-    "price": "123",
+    "price": "1000",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -315,7 +315,7 @@ Access-Control-Allow-Credentials: true
     "name": "NGNT",
     "symbol": "ꭆ",
     "type": "coin",
-    "price": "123",
+    "price": "1000",
     "precision": 4,
     "blockchain_currencies": [
       {
@@ -363,7 +363,7 @@ Access-Control-Allow-Credentials: true
     "name": "Tether",
     "symbol": "ꭆ",
     "type": "coin",
-    "price": "123",
+    "price": "1000",
     "precision": 4,
     "blockchain_currencies": [
       {
