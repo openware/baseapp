@@ -48,6 +48,7 @@ import { P2PTransfersState, rootP2PTransfersSaga } from './user/p2pTransfers';
 import { P2POrdersState, rootP2POrdersSaga } from './user/p2pOrders';
 import { P2PDisputeState, rootP2PDisputeSaga } from './user/p2pDispute';
 import { rootFeeGroupSaga, FeeGroupState } from './user/feeGroup';
+import { rootWithdrawLimitsSaga, WithdrawLimitsState } from './public/withdrawLimits';
 
 export * from './admin/config';
 export * from './admin/markets';
@@ -108,6 +109,7 @@ export interface RootState {
         recentTrades: RecentTradesState;
         rgl: GridLayoutState;
         p2p: P2PState;
+        withdrawLimits: WithdrawLimitsState,
     };
     user: {
         abilities: AbilitiesState;
@@ -155,6 +157,7 @@ export const rootReducer = combineReducers({
 
 export function* rootSaga() {
     yield all([
+        call(rootWithdrawLimitsSaga),
         call(rootFeeGroupSaga),
         call(rootQuickExchangeSaga),
         call(rootAbilitiesSaga),
