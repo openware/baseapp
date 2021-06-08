@@ -18,6 +18,9 @@ import {
     WALLETS_WITHDRAW_CCY_DATA,
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
+    WALLETS_USER_WITHDRAWALS_DATA,
+    WALLETS_USER_WITHDRAWALS_ERROR,
+    WALLETS_USER_WITHDRAWALS_FETCH,
 } from './constants';
 import { Wallet, WalletAddress } from './types';
 
@@ -36,6 +39,12 @@ export interface WalletsState {
         error?: CommonError;
         timestamp?: number;
     };
+    userWithdrawals: {
+        last_24_hours: string;
+        last_1_month: string;
+        loading: boolean;
+        error?: CommonError;
+    }
 }
 
 export const initialWalletsState: WalletsState = {
@@ -49,6 +58,11 @@ export const initialWalletsState: WalletsState = {
         list: [],
         loading: false,
     },
+    userWithdrawals: {
+        last_24_hours: '',
+        last_1_month: '',
+        loading: false,
+    }
 };
 
 const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
@@ -239,6 +253,29 @@ const p2pWalletsListReducer = (state: WalletsState['p2pWallets'], action: Wallet
     }
 };
 
+const userWithdrawalsReducer = (state: WalletsState['userWithdrawals'], action: WalletsAction): WalletsState['userWithdrawals'] => {
+    switch (action.type) {
+        case WALLETS_USER_WITHDRAWALS_FETCH:
+            return {
+                ...state,
+                loading: true,
+            };
+        case WALLETS_USER_WITHDRAWALS_DATA:
+            return {
+                ...state,
+                loading: false,
+            };
+        case WALLETS_USER_WITHDRAWALS_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
+            };
+        default:
+            return state;
+    }
+}
+
 export const walletsReducer = (state = initialWalletsState, action: WalletsAction): WalletsState => {
     switch (action.type) {
         case WALLETS_FETCH:
@@ -269,6 +306,15 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
                 ...state,
                 p2pWallets: p2pWalletsListReducer(p2pWalletsListState, action),
             };
+        case WALLETS_USER_WITHDRAWALS_FETCH:
+        case WALLETS_USER_WITHDRAWALS_DATA:
+        case WALLETS_USER_WITHDRAWALS_ERROR:
+            const userWithdrawalsState = { ...state.userWithdrawals };
+
+            return {
+                ...state,
+                userWithdrawals: userWithdrawalsReducer(userWithdrawalsState, action),
+            }
         case WALLETS_RESET:
             return {
                 ...state,
