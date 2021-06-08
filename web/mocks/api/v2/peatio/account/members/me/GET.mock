@@ -6,7 +6,7 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-    uid: 'ID787E383938',
-    email: 'john@barong.io',
-    group: 'vip-3',
+    "uid": "ID787E383938",
+    "email": "john@barong.io",
+    "group": "vip-3"
 }

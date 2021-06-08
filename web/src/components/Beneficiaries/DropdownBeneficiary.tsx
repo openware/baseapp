@@ -44,7 +44,6 @@ export interface DropdownBeneficiaryProps {
 
 const defaultSelected = {
     blockchainKey: '',
-    estimatedValue: '',
     protocol: '',
     name: '',
     id: '',

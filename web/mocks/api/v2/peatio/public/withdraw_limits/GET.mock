@@ -19,8 +19,8 @@ Access-Control-Allow-Credentials: true
         "id": 2,
         "group": "vip-3",
         "kyc_level": "2",
-        "limit_24_hour": "20",
-        "limit_1_month": "200",
+        "limit_24_hour": "2000",
+        "limit_1_month": "2000000",
         "created_at": "2021-05-06T08:48:27Z",
         "updated_at": "2021-05-06T08:48:27Z"
     },
