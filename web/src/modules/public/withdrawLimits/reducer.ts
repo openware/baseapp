@@ -4,22 +4,14 @@ import { WITHDRAW_LIMITS_DATA, WITHDRAW_LIMITS_ERROR, WITHDRAW_LIMITS_FETCH } fr
 import { WithdrawLimits } from './types';
 
 export interface WithdrawLimitsState {
-    data: WithdrawLimits;
+    data: WithdrawLimits[];
     loading: boolean;
     success: boolean;
     error?: CommonError;
 }
 
 export const initialWithdrawLimitsState: WithdrawLimitsState = {
-    data: {
-        created_at: '',
-        group: '',
-        id: -1,
-        kyc_level: '',
-        limit_1_month: '',
-        limit_24_hour: '',
-        updated_at: '',
-    },
+    data: [],
     loading: false,
     success: false,
 };

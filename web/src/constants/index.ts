@@ -36,6 +36,8 @@ export const DEFAULT_WALLET: Wallet = {
     account_type: '',
 };
 
+export const GLOBAL_PLATFORM_CURRENCY = 'USDT';
+
 export const DEFAULT_CCY_PRECISION = 4;
 export const DEFAULT_FIAT_PRECISION = 2;
 export const DEFAULT_TRADING_VIEW_INTERVAL = '15';

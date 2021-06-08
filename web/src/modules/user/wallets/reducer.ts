@@ -263,6 +263,8 @@ const userWithdrawalsReducer = (state: WalletsState['userWithdrawals'], action: 
         case WALLETS_USER_WITHDRAWALS_DATA:
             return {
                 ...state,
+                last_24_hours: action.payload.last_24_hours,
+                last_1_month: action.payload.last_1_month,
                 loading: false,
             };
         case WALLETS_USER_WITHDRAWALS_ERROR:
