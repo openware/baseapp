@@ -66,5 +66,6 @@ Access-Control-Allow-Credentials: true
             "label": "Overview",
             "enabled": true
         }
-    }
+    },
+    "colorTheme": "light"
 }

@@ -1,6 +1,9 @@
 export interface OrganizationAccount {
-    id: number,
-    oid: string,
     name: string,
-    uids: string[],
+    oid: string,
+    uid: number,
+}
+
+export interface OrganizationAbility {
+    manage: string[];
 }

@@ -52,6 +52,7 @@ import {
     walletsReset,
     AbilitiesInterface,
     selectAbilities,
+    organizationAbilitiesFetch,
 } from '../../modules';
 import {
     ChangeForgottenPasswordScreen,
@@ -97,6 +98,7 @@ interface DispatchProps {
     logout: typeof logoutFetch;
     userFetch: typeof userFetch;
     walletsReset: typeof walletsReset;
+    fetchOrganizationAbilities: typeof organizationAbilitiesFetch;
 }
 
 interface LocationProps extends RouterProps {
@@ -237,6 +239,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 
         if (!this.props.user.email && nextProps.user.email && !this.props.location.pathname.includes('/setup')) {
             this.props.userFetch();
+            window.env?.organization_enabled && this.props.fetchOrganizationAbilities();
         }
 
         if (!this.props.isLoggedIn && nextProps.isLoggedIn && !this.props.user.email) {
@@ -462,6 +465,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     toggleChartRebuild: () => dispatch(toggleChartRebuild()),
     userFetch: () => dispatch(userFetch()),
     walletsReset: () => dispatch(walletsReset()),
+    fetchOrganizationAbilities: () => dispatch(organizationAbilitiesFetch()),
 });
 
 export const Layout = compose(

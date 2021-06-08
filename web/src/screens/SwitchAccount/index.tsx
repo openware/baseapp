@@ -34,9 +34,10 @@ export const SwitchAccountScreen: React.FC = () => {
         dispatch(organizationAccountsFetch(payload));
     }, []);
 
-    const handleSwitchAccount = useCallback(oid => {
-        const payload = { oid };
+    const handleSwitchAccount = useCallback((oid, uid) => {
+        const payload = { oid, uid };
         dispatch(organizationAccountSwitch(payload));
+        history.goBack();
     }, []);
 
     const getSearchLabel = useCallback(label => {
@@ -56,9 +57,9 @@ export const SwitchAccountScreen: React.FC = () => {
                     getSearchLabel('ALL'),
                     ...list.map(account => {
                         return (
-                            <div className="pg-switch-account__container__body__accounts__item" onClick={() => handleSwitchAccount(account.oid)}>
+                            <div className="pg-switch-account__container__body__accounts__item" onClick={() => handleSwitchAccount(account.oid, account.uid)}>
                                 <div className="pg-switch-account__container__body__accounts__item__name">{account.name}</div>
-                                <div className="pg-switch-account__container__body__accounts__item__uid">{account.uid}</div>
+                                <div className="pg-switch-account__container__body__accounts__item__uid">{account.oid || account.uid}</div>
                                 <ArrowRightIcon />
                             </div>
                         );

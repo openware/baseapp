@@ -5,8 +5,11 @@ import {
     ORGANIZATION_ACCOUNTS_ERROR,
     ORGANIZATION_ACCOUNT_SWITCH,
     ORGANIZATION_ACCOUNT_SWITCH_ERROR,
+    ORGANIZATION_ABILITIES_FETCH,
+    ORGANIZATION_ABILITIES_DATA,
+    ORGANIZATION_ABILITIES_ERROR,
 } from './constants';
-import { OrganizationAccount } from './types';
+import { OrganizationAbility, OrganizationAccount } from './types';
 
 export interface OrganizationAccountsFetch {
     type: typeof ORGANIZATION_ACCOUNTS_FETCH;
@@ -27,10 +30,25 @@ export interface OrganizationAccountsError {
     error: CommonError;
 }
 
+export interface OrganizationAbilitiesFetch {
+    type: typeof ORGANIZATION_ABILITIES_FETCH;
+}
+
+export interface OrganizationAbilitiesData {
+    type: typeof ORGANIZATION_ABILITIES_DATA;
+    payload: OrganizationAbility;
+}
+
+export interface OrganizationAbilitiesError {
+    type: typeof ORGANIZATION_ABILITIES_ERROR;
+    error: CommonError;
+}
+
 export interface OrganizationAccountSwitch {
     type: typeof ORGANIZATION_ACCOUNT_SWITCH;
     payload: {
         oid: string,
+        uid: string,
     };
 }
 
@@ -43,6 +61,9 @@ export type OrganizationActions =
     OrganizationAccountsFetch
     | OrganizationAccountsData
     | OrganizationAccountsError
+    | OrganizationAbilitiesFetch
+    | OrganizationAbilitiesData
+    | OrganizationAbilitiesError
     | OrganizationAccountSwitch
     | OrganizationAccountSwitchError;
 
@@ -58,6 +79,20 @@ export const organizationAccountsData = (payload: OrganizationAccountsData['payl
 
 export const organizationAccountsError = (error: CommonError): OrganizationAccountsError => ({
     type: ORGANIZATION_ACCOUNTS_ERROR,
+    error,
+});
+
+export const organizationAbilitiesFetch = (): OrganizationAbilitiesFetch => ({
+    type: ORGANIZATION_ABILITIES_FETCH,
+});
+
+export const organizationAbilitiesData = (payload: OrganizationAbilitiesData['payload']): OrganizationAbilitiesData => ({
+    type: ORGANIZATION_ABILITIES_DATA,
+    payload,
+});
+
+export const organizationAbilitiesError = (error: CommonError): OrganizationAbilitiesError => ({
+    type: ORGANIZATION_ABILITIES_ERROR,
     error,
 });
 

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ProfileIcon } from 'src/assets/images/sidebar/ProfileIcon';
 import { ChevronIcon } from 'src/assets/images/ChevronIcon';
 import { useSelector } from 'react-redux';
-import { selectUserInfo } from 'src/modules';
+import { selectOrganizationAbilities, selectUserInfo } from 'src/modules';
 import { isUsernameEnabled } from 'src/api';
 
 const HeaderProfileComponent: React.FC = () => {
@@ -15,8 +15,11 @@ const HeaderProfileComponent: React.FC = () => {
     const { formatMessage } = useIntl();
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
     const user = useSelector(selectUserInfo);
+    const orgAbilities = useSelector(selectOrganizationAbilities);
     const location = useLocation();
     const history = useHistory();
+
+    const switchSessionsAbilities = ['AdminSwitchSession', 'SwitchSession'];
 
     useEffect(() => {
         if (profileOpen) {
@@ -34,8 +37,18 @@ const HeaderProfileComponent: React.FC = () => {
         setProfileOpen(false);
     }, []);
 
+    const switchAbility = useCallback(() => {
+        switchSessionsAbilities.find(s => s === orgAbilities.manage[0]);
+
+        const enable = orgAbilities.manage.reduce((result, val) => {
+            return result || !!switchSessionsAbilities.find(s => s.toLowerCase() === val.toLowerCase()); 
+        }, false);
+
+        return enable;
+    }, [orgAbilities, switchSessionsAbilities])
+
     const accountSwitch = useMemo(() => {
-        if (location.pathname.includes('/trading') || !user.organization || !window.env?.organization_enabled) {
+        if (location.pathname.includes('/trading') || !user.organization || !window.env?.organization_enabled || !switchAbility()) {
             return null;
         }
 
@@ -53,7 +66,7 @@ const HeaderProfileComponent: React.FC = () => {
                 </div>
             </div>
         );
-    }, [user, location]);
+    }, [user, location, switchAbility]);
 
     return (
         <div className="cr-header-profile">

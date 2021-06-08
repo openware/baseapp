@@ -45,7 +45,8 @@ declare global {
             p2p: WalletTabConfig;
             transfer: WalletTabConfig;
             organization: WalletTabConfig;
-        }
+        },
+        colorTheme?: string;
     }
 
     interface Window {

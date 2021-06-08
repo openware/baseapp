@@ -4,12 +4,21 @@ import {
     ORGANIZATION_ACCOUNTS_FETCH,
     ORGANIZATION_ACCOUNTS_DATA,
     ORGANIZATION_ACCOUNTS_ERROR,
+    ORGANIZATION_ABILITIES_FETCH,
+    ORGANIZATION_ABILITIES_DATA,
+    ORGANIZATION_ABILITIES_ERROR,
 } from './constants';
 import { OrganizationAccount } from './types';
 
 export interface OrganizationState {
     accounts: {
         data: OrganizationAccount[];
+        fetching: boolean;
+        success: boolean;
+        error?: CommonError;
+    };
+    abilities: {
+        manage: string[];
         fetching: boolean;
         success: boolean;
         error?: CommonError;
@@ -22,9 +31,14 @@ export const initialOrganizationState: OrganizationState = {
         fetching: false,
         success: false,
     },
+    abilities: {
+        manage: [],
+        fetching: false,
+        success: false,
+    },
 };
 
-export const commercialAccountsFetchReducer = (state: OrganizationState['accounts'], action: OrganizationActions) => {
+export const organizationAccountsFetchReducer = (state: OrganizationState['accounts'], action: OrganizationActions) => {
     switch (action.type) {
         case ORGANIZATION_ACCOUNTS_FETCH:
             return {
@@ -51,16 +65,52 @@ export const commercialAccountsFetchReducer = (state: OrganizationState['account
     }
 };
 
-export const commercialReducer = (state = initialOrganizationState, action: OrganizationActions) => {
+export const organizationAbilitiesFetchReducer = (state: OrganizationState['abilities'], action: OrganizationActions) => {
+    switch (action.type) {
+        case ORGANIZATION_ABILITIES_FETCH:
+            return {
+                ...state,
+                fetching: true,
+                success: false,
+            };
+        case ORGANIZATION_ABILITIES_DATA:
+            return {
+                ...state,
+                manage: action.payload.manage,
+                fetching: false,
+                success: true,
+            };
+        case ORGANIZATION_ABILITIES_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                success: false,
+                error: action.error,
+            };
+        default:
+            return state;
+    }
+};
+
+export const organizationReducer = (state = initialOrganizationState, action: OrganizationActions) => {
     switch (action.type) {
         case ORGANIZATION_ACCOUNTS_FETCH:
         case ORGANIZATION_ACCOUNTS_DATA:
         case ORGANIZATION_ACCOUNTS_ERROR:
-            const commercialAccountsState = { ...state.accounts };
+            const organizationAccountsState = { ...state.accounts };
 
             return {
                 ...state,
-                accounts: commercialAccountsFetchReducer(commercialAccountsState, action),
+                accounts: organizationAccountsFetchReducer(organizationAccountsState, action),
+            };
+        case ORGANIZATION_ABILITIES_FETCH:
+        case ORGANIZATION_ABILITIES_DATA:
+        case ORGANIZATION_ABILITIES_ERROR:
+            const organizationAbilitiesState = { ...state.abilities };
+
+            return {
+                ...state,
+                abilities: organizationAbilitiesFetchReducer(organizationAbilitiesState, action),
             };
         default:
             return state;

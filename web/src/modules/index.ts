@@ -150,7 +150,7 @@ export interface RootState {
         p2pTransfers: P2PTransfersState;
         p2pOrders: P2POrdersState;
         p2pDispute: P2PDisputeState;
-        commercial: OrganizationState;
+        organization: OrganizationState;
     };
     admin: {
         configUpdate: ConfigUpdateState;

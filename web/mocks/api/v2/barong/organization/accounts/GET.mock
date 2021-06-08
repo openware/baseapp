@@ -5,29 +5,43 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
 
 [
     {
-        "id": 1,
-        "oid": "OID001",
         "name": "Company A",
-        "uids": [
-            "IDFE10A90000"
-        ]
+        "oid": "OID001",
+        "uid": null
     },
     {
-        "id": 3,
-        "oid": "OID001AID001",
+        "name": "Company B",
+        "oid": "OID002",
+        "uid": null
+    },
+    {
         "name": "Group A1",
-        "uids": [
-            "IDFE10A90001",
-            "IDFE10A90002",
-            "IDFE10A90003"
-        ]
+        "oid": "OID001AID001",
+        "uid": null
     },
     {
-        "id": 4,
-        "oid": "OID001AID002",
         "name": "Group A2",
-        "uids": [
-            "IDFE10A90003"
-        ]
+        "oid": "OID001AID002",
+        "uid": null
+    },
+    {
+        "name": "Group B1",
+        "oid": "OID002AID002",
+        "uid": null
+    },
+    {
+        "name": "Admin God",
+        "oid": null,
+        "uid": "IDFE09081060"
+    },
+    {
+        "name": "User One",
+        "oid": null,
+        "uid": "IDFE0908101"
+    },
+    {
+        "name": "Super Admin",
+        "oid": null,
+        "uid": "IDFE0000000"
     }
 ]
