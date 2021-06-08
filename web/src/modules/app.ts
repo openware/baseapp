@@ -70,7 +70,7 @@ export const publicReducer = combineReducers({
     ranger: rangerReducer,
     recentTrades: recentTradesReducer,
     p2p: p2pReducer,
-    withdrawLimitsReducer: withdrawLimitsReducer,
+    withdrawLimits: withdrawLimitsReducer,
 });
 
 export const userReducer = combineReducers({
