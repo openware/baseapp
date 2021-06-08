@@ -15,6 +15,7 @@ const defaultBeneficiary: Beneficiary = {
     id: 0,
     currency: '',
     name: '',
+    blockchain_key: '',
     state: '',
     data: {
         address: '',
@@ -130,8 +131,10 @@ const WalletWithdrawBodyComponent = props => {
     return (
         <div className="cr-mobile-wallet-withdraw-body">
             <Withdraw
+                blockchain_currencies={currencyItem.blockchain_currencies}
                 isMobileDevice
-                fee={fee}
+                price={currencyItem.price}
+                name={currencyItem.name}
                 type={type}
                 fixed={fixed}
                 currency={currency}
