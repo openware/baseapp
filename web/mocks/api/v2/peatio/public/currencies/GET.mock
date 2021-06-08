@@ -11,6 +11,7 @@ Access-Control-Allow-Credentials: true
     "name": "Bitcoin Cash",
     "symbol": "฿",
     "type": "coin",
+    "price": "123",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -39,6 +40,7 @@ Access-Control-Allow-Credentials: true
     "name": "Bitcoin",
     "symbol": "฿",
     "type": "coin",
+    "price": "123",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -105,6 +107,7 @@ Access-Control-Allow-Credentials: true
     "name": "Dash",
     "symbol": "Đ",
     "type": "coin",
+    "price": "123",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -153,6 +156,7 @@ Access-Control-Allow-Credentials: true
     "name": "Ethereum",
     "symbol": "Ξ",
     "type": "coin",
+    "price": "123",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -200,6 +204,7 @@ Access-Control-Allow-Credentials: true
     "name": "Litecoin",
     "symbol": "Ł",
     "type": "coin",
+    "price": "123",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -262,6 +267,7 @@ Access-Control-Allow-Credentials: true
     "name": "Ripple",
     "symbol": "ꭆ",
     "type": "coin",
+    "price": "123",
     "precision": 8,
     "blockchain_currencies": [
       {
@@ -309,6 +315,7 @@ Access-Control-Allow-Credentials: true
     "name": "NGNT",
     "symbol": "ꭆ",
     "type": "coin",
+    "price": "123",
     "precision": 4,
     "blockchain_currencies": [
       {
@@ -356,6 +363,7 @@ Access-Control-Allow-Credentials: true
     "name": "Tether",
     "symbol": "ꭆ",
     "type": "coin",
+    "price": "123",
     "precision": 4,
     "blockchain_currencies": [
       {

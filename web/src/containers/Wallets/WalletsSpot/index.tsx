@@ -83,6 +83,7 @@ const defaultBeneficiary: Beneficiary = {
     currency: '',
     name: '',
     state: '',
+    blockchain_key: '',
     data: {
         address: '',
     },
@@ -452,10 +453,9 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     };
 
     private renderWithdraw = () => {
-        const { currencies, user, wallets, walletsError } = this.props;
+        const { user, wallets, walletsError } = this.props;
         const { selectedWalletIndex } = this.state;
         const wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
-        const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
 
         return (
             <React.Fragment>
@@ -476,15 +476,18 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         if (selectedWalletIndex === -1) {
             return [{ content: null, label: '' }];
         }
-        const { user: { level, otp }, wallets } = this.props;
+        const { user: { level, otp }, wallets, currencies } = this.props;
         const wallet = wallets[selectedWalletIndex];
-        const { currency, blockchain_currencies, type } = wallet;
+        const { currency, type } = wallet;
         const fixed = (wallet || { fixed: 0 }).fixed;
+        const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
 
         const withdrawProps: WithdrawProps = {
+            blockchain_currencies: currencyItem.blockchain_currencies,
             withdrawDone,
+            price: currencyItem.price,
+            name: currencyItem.name,
             currency,
-            fee: 0, //need change
             onClick: this.toggleConfirmModal,
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,
