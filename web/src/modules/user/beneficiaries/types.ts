@@ -22,6 +22,7 @@ export interface Beneficiary {
     id: number;
     currency: string;
     name: string;
+    blockchain_key: string;
     state: string;
     description?: string;
     data: BeneficiaryCrypto | BeneficiaryBank;
