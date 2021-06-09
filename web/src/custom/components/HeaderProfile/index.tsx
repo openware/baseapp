@@ -38,13 +38,8 @@ const HeaderProfileComponent: React.FC = () => {
     }, []);
 
     const switchAbility = useCallback(() => {
-        switchSessionsAbilities.find(s => s === orgAbilities.manage[0]);
-
-        const enable = orgAbilities.manage.reduce((result, val) => {
-            return result || !!switchSessionsAbilities.find(s => s.toLowerCase() === val.toLowerCase()); 
-        }, false);
-
-        return enable;
+        const abilities = orgAbilities?.manage || []
+        return abilities.some(ability => switchSessionsAbilities.includes(ability))
     }, [orgAbilities, switchSessionsAbilities])
 
     const accountSwitch = useMemo(() => {
