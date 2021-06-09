@@ -1,5 +1,5 @@
 import { RootState } from '../..';
-import { User, UserProfile } from './types';
+import { User, UserProfile, Organization } from './types';
 
 export const selectChangePasswordSuccess = (state: RootState): boolean | undefined =>
     state.user.profile.passwordChange.success;
@@ -34,3 +34,8 @@ export const selectUserFetching = (state: RootState): boolean =>
 
 export const selectUserDataChange = (state: RootState): boolean | undefined =>
     state.user.profile.userData.success;
+
+export const selectUserOrganization = (state: RootState): Organization | null => {
+    const { organization } = selectUserInfo(state);
+    return organization;
+}

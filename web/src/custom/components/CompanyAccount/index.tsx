@@ -24,7 +24,7 @@ const CompanyAccountComponent: React.FC = () => {
                 <div className="company-info__icon"></div>
                 <div className="company-info__content">
                     <div className="company-info__content__name">{user.organization?.name}</div>
-                    <div className="company-info__content__id">{user.organization?.code}</div>
+                    <div className="company-info__content__id">{user.organization?.oid}</div>
                 </div>
                 <div className="company-info__status">{translate('page.body.profile.company.status.active')}</div>
             </div>

@@ -22,7 +22,7 @@ export interface Phone {
 
 export interface Organization {
     id: number,
-    code: string,
+    oid: string,
     name: string,
     status: string,
 }

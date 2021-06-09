@@ -79,7 +79,7 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
     "phones": "+380501823918",
     "organization": {
         "id": 1,
-        "code": "8899776611",
+        "oid": "OID8899776611",
         "name": "Openfinex",
         "status": "active"
     }
