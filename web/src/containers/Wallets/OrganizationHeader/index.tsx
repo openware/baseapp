@@ -8,9 +8,9 @@ const OrganizationHeader: FC = (): ReactElement => {
 
     //TODO: Get calculated values from new Peatio Api.
     const MOCK_HEADER_DATA = {
-        totalLimit: 488981.31,
-        totalAvailable: 488981.31,
-        totalUsed: 488981.31,
+        totalLimit: 0,
+        totalAvailable: 0,
+        totalUsed: 0,
     }
 
     return (

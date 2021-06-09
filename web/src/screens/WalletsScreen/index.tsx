@@ -79,7 +79,7 @@ export const WalletsScreen: FC = (): ReactElement => {
                 setCurrentTabIndex(index);
             }
         } else {
-            history.push('/wallets/overview');
+            window.env.wallet_navs.organization?.enabled && window.env?.organization_enabled ? history.push('/wallets/organization') : history.push('/wallets/overview');
         }
     }, [routeTab, tabMapping]);
 

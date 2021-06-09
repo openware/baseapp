@@ -47,9 +47,9 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
             fee: 0,
             fixed: 6,
             account_type: 'organization',
-            todayLimit: "10.20261901",
+            todayLimit: "0",
             available: "0",
-            used: "10.20261901",
+            used: "0",
         },
         {
             currency: "btc",
@@ -59,9 +59,9 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
             fee: 0,
             fixed: 6,
             account_type: 'organization',
-            todayLimit: "0.21356898",
-            available: "10.20261901",
-            used: "10.20261901",
+            todayLimit: "0",
+            available: "0",
+            used: "0",
         },
         {
             currency: "eth",
@@ -71,9 +71,9 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
             fee: 0,
             fixed: 6,
             account_type: 'organization',
-            todayLimit: "10.20261901",
-            available: "10.20261901",
-            used: "10.20261901",
+            todayLimit: "0",
+            available: "0",
+            used: "0",
         },
     ]
 

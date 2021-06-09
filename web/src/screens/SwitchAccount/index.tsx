@@ -22,6 +22,14 @@ export const SwitchAccountScreen: React.FC = () => {
     
     useEffect(() => {
         setDocumentTitle('Switch Account');
+
+        const initialPayload = {
+            page: 0,
+            limit: 20,
+            keyword: '',
+        };
+
+        dispatch(organizationAccountsFetch(initialPayload));
     }, [dispatch]);
 
     const handleSearchAccounts = useCallback((keyword: string) => {
