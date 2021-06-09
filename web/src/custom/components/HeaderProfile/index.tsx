@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ProfileIcon } from 'src/assets/images/sidebar/ProfileIcon';
 import { ChevronIcon } from 'src/assets/images/ChevronIcon';
 import { useSelector } from 'react-redux';
-import { selectOrganizationAbilities, selectUserInfo } from 'src/modules';
+import { selectOrganizationAbilities, selectUserInfo, selectUserProfile } from 'src/modules';
 import { isUsernameEnabled } from 'src/api';
 
 const HeaderProfileComponent: React.FC = () => {
@@ -15,6 +15,7 @@ const HeaderProfileComponent: React.FC = () => {
     const { formatMessage } = useIntl();
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
     const user = useSelector(selectUserInfo);
+    const userProfile = useSelector(selectUserProfile);
     const orgAbilities = useSelector(selectOrganizationAbilities);
     const location = useLocation();
     const history = useHistory();
@@ -46,6 +47,7 @@ const HeaderProfileComponent: React.FC = () => {
         if (location.pathname.includes('/trading') || !window.env?.organization_enabled || !switchAbility()) {
             return null;
         }
+        const displayName = userProfile ? `${userProfile.first_name} ${userProfile.last_name}` : (isUsernameEnabled() ? user.username : user.email)
 
         return (
             <div className="account-switch">
@@ -53,8 +55,8 @@ const HeaderProfileComponent: React.FC = () => {
                     <ProfileIcon />
                 </div>
                 <div className="account-switch__user">
-                    <div className="account-switch__user__name">{isUsernameEnabled() ? user.username : user.email}</div>
-                    <div className="account-switch__user__uid">{user.oid}</div>
+                    <div className="account-switch__user__name">{displayName}</div>
+                    <div className="account-switch__user__uid">{user.oid || user.uid}</div>
                 </div>
                 <div className="account-switch__button" onClick={() => history.push('/accounts/switch')}>
                     <div className="account-switch__button__icon"><ChevronIcon /></div>

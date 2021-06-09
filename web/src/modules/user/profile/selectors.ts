@@ -1,5 +1,5 @@
 import { RootState } from '../..';
-import { User } from './types';
+import { User, UserProfile } from './types';
 
 export const selectChangePasswordSuccess = (state: RootState): boolean | undefined =>
     state.user.profile.passwordChange.success;
@@ -21,6 +21,13 @@ export const selectUserLoggedIn = (state: RootState): boolean => {
 
 export const selectUserInfo = (state: RootState): User =>
     state.user.profile.userData.user;
+
+export const selectUserProfile = (state: RootState): UserProfile => {
+    const { profiles } = selectUserInfo(state);
+    const verifiedProfiles = profiles.length ? profiles.filter((i) => i.state === 'verified') : [];
+    const lastVerifiedProfile = verifiedProfiles.length && verifiedProfiles[verifiedProfiles.length - 1];
+    return lastVerifiedProfile;
+}
 
 export const selectUserFetching = (state: RootState): boolean =>
     state.user.profile.userData.isFetching;
