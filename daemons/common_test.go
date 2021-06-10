@@ -1,13 +1,13 @@
 package daemons
 
 import (
+	"github.com/openware/pkg/sonic/config"
 	"log"
 	"os"
 	"testing"
 
 	"github.com/gin-gonic/gin"
 	"github.com/openware/pkg/ika"
-	"github.com/openware/sonic"
 )
 
 const (
@@ -29,8 +29,8 @@ func TestMain(m *testing.M) {
 }
 
 // initApp helper for initializing App database
-func initApp() *sonic.Runtime {
-	app := &sonic.Runtime{}
+func initApp() *config.Runtime {
+	app := &config.Runtime{}
 	cnf := "../config/app.yml"
 	if err := ika.ReadConfig(cnf, &app.Conf); err != nil {
 		log.Fatalf("Error: %v\n", err)

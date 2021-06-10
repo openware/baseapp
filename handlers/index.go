@@ -6,32 +6,24 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"strings"
-	"sync"
-	"time"
 	"strconv"
-
-	"baseapp/daemons"
+	"strings"
 
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
+	"github.com/openware/baseapp/daemons"
+	"github.com/openware/baseapp/models"
 	"github.com/openware/kaigara/pkg/vault"
 	"github.com/openware/pkg/mngapi/peatio"
+	"github.com/openware/pkg/sonic/config"
+	"github.com/openware/pkg/sonic/handlers"
 	"github.com/openware/pkg/utils"
-	"github.com/openware/sonic"
 )
 
 // Version variable stores Application Version from main package
 var (
 	Version      string
 	DeploymentID string
-	memoryCache  = cache{
-		Data:  make(map[string]interface{}),
-		Mutex: sync.RWMutex{},
-	}
-	SonicPublicKey  string
-	PeatioPublicKey string
-	BarongPublicKey string
 )
 
 // SonicContext stores requires client services used in handlers
@@ -43,13 +35,13 @@ type SonicContext struct {
 const scope = "public"
 
 // Setup set up routes to render view HTML
-func Setup(app *sonic.Runtime) {
+func Setup(app *config.Runtime) {
 	// Get config and env
 	Version = app.Version
 	DeploymentID = app.Conf.DeploymentID
-	SonicPublicKey = utils.GetEnv("SONIC_PUBLIC_KEY", "")
-	PeatioPublicKey = utils.GetEnv("PEATIO_PUBLIC_KEY", "")
-	BarongPublicKey = utils.GetEnv("BARONG_PUBLIC_KEY", "")
+	handlers.SonicPublicKey = utils.GetEnv("SONIC_PUBLIC_KEY", "")
+	handlers.PeatioPublicKey = utils.GetEnv("PEATIO_PUBLIC_KEY", "")
+	handlers.BarongPublicKey = utils.GetEnv("BARONG_PUBLIC_KEY", "")
 	vaultConfig := app.Conf.Vault
 	opendaxConfig := app.Conf.Opendax
 	mngapiConfig := app.Conf.MngAPI
@@ -60,7 +52,7 @@ func Setup(app *sonic.Runtime) {
 		return
 	}
 
-	log.Println("DeploymentID in config:", DeploymentID)
+	log.Println("DeploymentID in config:", app.Conf.DeploymentID)
 
 	// Get app router
 	router := app.Srv
@@ -71,11 +63,6 @@ func Setup(app *sonic.Runtime) {
 	// Serve static files
 	router.Static("/public", "./public")
 
-	// React is looking for these files in root
-	// TODO: find solution for react build (webpack)
-	router.Static("/charting_library", "./public/assets/charting_library")
-	router.Static("/css", "./public/assets/css")
-
 	router.GET("/", index)
 	router.GET("/maintenance", maintenance)
 	router.GET("/restriction", restriction)
@@ -84,45 +71,51 @@ func Setup(app *sonic.Runtime) {
 
 	router.NoRoute(notFound)
 
-	SetPageRoutes(router)
+	handlers.SetPageRoutes(router, &models.Page{})
+
+	// React is looking for these files in root
+	// TODO: find solution for react build (webpack)
+	router.Static("/charting_library", "./public/assets/charting_library")
+	router.Static("/css", "./public/assets/css")
 
 	// Initialize Vault Service
 	vaultService := vault.NewService(vaultConfig.Addr, vaultConfig.Token, DeploymentID)
 
 	adminAPI := router.Group("/api/v2/admin")
-	adminAPI.Use(VaultServiceMiddleware(vaultService))
-	adminAPI.Use(OpendaxConfigMiddleware(&opendaxConfig))
-	adminAPI.Use(AuthMiddleware())
-	adminAPI.Use(RBACMiddleware([]string{"superadmin"}))
-	adminAPI.Use(SonicContextMiddleware(&SonicContext{
+	adminAPI.Use(handlers.VaultServiceMiddleware(vaultService))
+	adminAPI.Use(handlers.OpendaxConfigMiddleware(&opendaxConfig))
+	adminAPI.Use(handlers.AuthMiddleware())
+	adminAPI.Use(handlers.RBACMiddleware([]string{"superadmin"}))
+	adminAPI.Use(handlers.SonicContextMiddleware(&handlers.SonicContext{
 		PeatioClient: peatioClient,
 	}))
 
-	adminAPI.GET("/secrets", GetSecrets)
-	adminAPI.PUT(":component/secret", SetSecret)
-	adminAPI.POST("/platforms/new", CreatePlatform)
+	adminAPI.GET("/secrets", handlers.GetSecrets)
+	adminAPI.PUT(":component/secret", handlers.SetSecret)
+	adminAPI.POST("/platforms/new", func(ctx *gin.Context) {
+		handlers.CreatePlatform(ctx, daemons.CreateNewLicense, daemons.FetchConfiguration)
+		return
+	})
 
 	publicAPI := router.Group("/api/v2/public")
-	publicAPI.Use(VaultServiceMiddleware(vaultService))
+	publicAPI.Use(handlers.VaultServiceMiddleware(vaultService))
 
-	publicAPI.GET("/config", GetPublicConfigs)
+	publicAPI.GET("/config", handlers.GetPublicConfigs)
 
 	// Define all public env on first system start
-	WriteCache(vaultService, scope, true)
-	go StartConfigCaching(vaultService, scope)
+	handlers.WriteCache(vaultService, scope, true)
+	go handlers.StartConfigCaching(vaultService, scope)
 
 	// Run LicenseRenewal
 	go daemons.LicenseRenewal("finex", app, vaultService)
-}
 
-// StartConfigCaching will fetch latest data from vault every 30 seconds
-func StartConfigCaching(vaultService *vault.Service, scope string) {
-	for {
-		<-time.After(20 * time.Second)
-
-		memoryCache.Mutex.Lock()
-		WriteCache(vaultService, scope, false)
-		memoryCache.Mutex.Unlock()
+	// Fetch currencies and markets from the main platform periodically
+	enabled, err := daemons.GetXLNEnabledFromVault(vaultService)
+	if err != nil {
+		log.Printf("cannot determine whether XLN is enabled: " + err.Error())
+	}
+	if enabled {
+		go daemons.FetchConfigurationPeriodic(peatioClient, vaultService, opendaxConfig.Addr)
 	}
 }
 
@@ -144,10 +137,10 @@ func index(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "index", gin.H{
-		"title":    	"BaseApp",
-		"cssFiles": 	cssFiles,
-		"jsFiles":  	jsFiles,
-		"rootID":   	"root",
+		"title":        "BaseApp",
+		"cssFiles":     cssFiles,
+		"jsFiles":      jsFiles,
+		"rootID":       "root",
 		"renderFooter": renderFooter,
 	})
 }

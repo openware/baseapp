@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/openware/sonic"
+	sonic "github.com/openware/pkg/sonic/config"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

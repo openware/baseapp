@@ -2,10 +2,10 @@ package models
 
 import (
 	"fmt"
+	"github.com/openware/pkg/sonic/config"
 	"io/ioutil"
 	"log"
 
-	"github.com/openware/sonic"
 	"gorm.io/gorm"
 )
 
@@ -21,14 +21,14 @@ type MetaModel struct {
 
 // db pointer for sharing among models
 var db *gorm.DB
-var app *sonic.Runtime
+var app *config.Runtime
 
 // Models contains the list of registered models of the application
 var registry = []MetaModel{}
 
 // Setup used to assign `db` connection
 // after connection is established on start server
-func Setup(apr *sonic.Runtime) {
+func Setup(apr *config.Runtime) {
 	app = apr
 	db = apr.DB
 }
