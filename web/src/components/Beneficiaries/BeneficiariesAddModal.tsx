@@ -14,7 +14,7 @@ import {
 } from '../../modules';
 import { CustomInput } from '../CustomInput';
 import { DropdownBeneficiary } from './DropdownBeneficiary';
-import { BeneficiariesBlockchaninItem } from './BeneficiariesCrypto/BeneficiariesBlockchaninItem';
+import { BeneficiariesBlockchainItem } from './BeneficiariesCrypto/BeneficiariesBlockchainItem';
 
 interface Props {
     currency: string;
@@ -333,7 +333,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
 
     const renderDropdownItem = (name, fixed, price) => (item: BlockchainCurrencies, index) => {
         return (
-            <BeneficiariesBlockchaninItem
+            <BeneficiariesBlockchainItem
                 blockchainKey={item.blockchain_key}
                 protocol={item.protocol}
                 name={name}
