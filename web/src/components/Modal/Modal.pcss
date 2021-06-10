@@ -11,6 +11,28 @@
   top: 0;
   z-index: 99999;
 
+  &--full-view {
+    background: var(--body-background-color);
+    bottom: auto;
+    justify-content: flex-start;
+    height: 100%;
+
+    .cr-email-form__options-group {
+      .cr-email-form__option {
+        border-bottom: none;
+
+        &-inner {
+          &-close {
+            float: right;
+            height: 100%;
+            right: 34px;
+            position: relative;
+          }
+        }
+      }
+    }
+  }
+
   &__container {
     background-color: var(--background);
     display: flex;

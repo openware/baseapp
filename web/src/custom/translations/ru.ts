@@ -213,6 +213,8 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.modal.message': 'Enter 2fa code from the Google Authenticator app',
     'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Отменить',
     'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Вывести',
+    'page.body.wallets.tabs.withdraw.modal.name': 'Name',
+    'page.body.wallets.tabs.withdraw.modal.verification': 'Verification',
 
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'Вам нужно активировать 2FA, чтобы получить возможность выводить Ваши валюты!',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Активировать 2FA',
