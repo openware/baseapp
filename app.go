@@ -1,22 +1,22 @@
 package main
 
 import (
+	"github.com/openware/pkg/ika"
+	"github.com/openware/pkg/sonic/config"
+	"github.com/openware/pkg/sonic/database"
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/openware/pkg/database"
-	"github.com/openware/pkg/ika"
 	"github.com/openware/pkg/kli"
-	"github.com/openware/sonic"
-	"baseapp/handlers"
-	"baseapp/models"
+	"github.com/openware/baseapp/handlers"
+	"github.com/openware/baseapp/models"
 )
 
 // Version of the application displayed by the cli and the version endpoint
 var Version = "1.0.0"
 
 // App config for the application
-var App sonic.Runtime
+var App config.Runtime
 
 func serve() error {
 	App.Srv = gin.Default()
