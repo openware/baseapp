@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table } from '../../components';
@@ -8,7 +8,7 @@ import {
     selectCurrentPrice,
     setCurrentPrice,
 } from '../../modules';
-import { recentTradesFetch, selectRecentTradesOfCurrentMarket } from '../../modules/public/recentTrades';
+import { recentTradesFetch } from '../../modules/public/recentTrades';
 import { TradeTableCell } from './RecentTradesTableCell';
 
 const handleHighlightValue = (prevValue: string, curValue: string) => {
@@ -30,13 +30,12 @@ const handleHighlightValue = (prevValue: string, curValue: string) => {
     );
 };
 
-const RecentTradesMarket = () => {
+const RecentTradesMarket = ({ recentTrades }) => {
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
 
     const currentMarket = useSelector(selectCurrentMarket);
     const currentPrice = useSelector(selectCurrentPrice);
-    const recentTrades = useSelector(selectRecentTradesOfCurrentMarket);
 
     const headers = React.useMemo(() => {
         return [
@@ -44,7 +43,7 @@ const RecentTradesMarket = () => {
             formatMessage({ id: 'page.body.trade.header.recentTrades.content.amount' }),
             formatMessage({ id: 'page.body.trade.header.recentTrades.content.price' }),
         ];
-    }, [formatMessage]);
+    }, []);
 
     const getTrades = React.useCallback(() => {
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
@@ -80,21 +79,27 @@ const RecentTradesMarket = () => {
         if (currentPrice !== priceToSet) {
             dispatch(setCurrentPrice(priceToSet));
         }
-    }, [currentPrice, recentTrades, dispatch]);
+    }, [currentPrice, recentTrades]);
 
     React.useEffect(() => {
         if (currentMarket) {
             dispatch(recentTradesFetch(currentMarket));
         }
-    }, [dispatch, currentMarket]);
+    }, [currentMarket]);
 
-    return (
-        <div className="pg-recent-trades__markets">
+    const content = useMemo(() => {
+        return (
             <Table
                 data={getTrades()}
                 header={headers}
                 onSelect={handleOnSelect}
             />
+        );
+    }, [recentTrades, currentMarket])
+
+    return (
+        <div className="pg-recent-trades__markets">
+            {content}
         </div>
     );
 };
