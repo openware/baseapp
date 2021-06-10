@@ -18,7 +18,7 @@ export interface OrganizationState {
         error?: CommonError;
     };
     abilities: {
-        manage: string[];
+        switchSession: boolean;
         fetching: boolean;
         success: boolean;
         error?: CommonError;
@@ -32,7 +32,7 @@ export const initialOrganizationState: OrganizationState = {
         success: false,
     },
     abilities: {
-        manage: [],
+        switchSession: false,
         fetching: false,
         success: false,
     },
@@ -76,13 +76,14 @@ export const organizationAbilitiesFetchReducer = (state: OrganizationState['abil
         case ORGANIZATION_ABILITIES_DATA:
             return {
                 ...state,
-                manage: action.payload.manage,
+                switchSession: action.payload,
                 fetching: false,
                 success: true,
             };
         case ORGANIZATION_ABILITIES_ERROR:
             return {
                 ...state,
+                switchSession: false,
                 fetching: false,
                 success: false,
                 error: action.error,

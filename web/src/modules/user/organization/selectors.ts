@@ -1,6 +1,6 @@
 import { RootState } from '../../../modules';
 import { CommonError } from '../../../modules/types';
-import { OrganizationAbility, OrganizationAccount } from './types';
+import { OrganizationAccount } from './types';
 
 export const selectOrganizationAccounts = (state: RootState): OrganizationAccount[] =>
     state.user.organization.accounts.data;
@@ -14,5 +14,5 @@ export const selectOrganizationAccountsSuccess = (state: RootState): boolean =>
 export const selectOrganizationAccountsError = (state: RootState): CommonError | undefined =>
     state.user.organization.accounts.error;
 
-export const selectOrganizationAbilities = (state: RootState): OrganizationAbility =>
-    state.user.organization.abilities;
+export const selectOrganizationSwitchSessionAbility = (state: RootState): boolean =>
+    state.user.organization.abilities.switchSession;

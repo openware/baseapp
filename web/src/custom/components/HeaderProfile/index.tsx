@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ProfileIcon } from 'src/assets/images/sidebar/ProfileIcon';
 import { ChevronIcon } from 'src/assets/images/ChevronIcon';
 import { useSelector } from 'react-redux';
-import { selectOrganizationAbilities, selectUserInfo, selectUserProfile, selectUserOrganization } from 'src/modules';
+import { selectOrganizationSwitchSessionAbility, selectUserInfo, selectUserProfile, selectUserOrganization } from 'src/modules';
 
 const HeaderProfileComponent: React.FC = () => {
     const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
@@ -16,11 +16,9 @@ const HeaderProfileComponent: React.FC = () => {
     const user = useSelector(selectUserInfo);
     const userProfile = useSelector(selectUserProfile);
     const userOrg = useSelector(selectUserOrganization);
-    const orgAbilities = useSelector(selectOrganizationAbilities);
+    const orgSwitchSessionAbility = useSelector(selectOrganizationSwitchSessionAbility);
     const location = useLocation();
     const history = useHistory();
-
-    const switchSessionsAbilities = ['AdminSwitchSession', 'SwitchSession'];
 
     useEffect(() => {
         if (profileOpen) {
@@ -39,9 +37,8 @@ const HeaderProfileComponent: React.FC = () => {
     }, []);
 
     const switchAbility = useCallback(() => {
-        const abilities = orgAbilities?.manage || []
-        return abilities.some(ability => switchSessionsAbilities.includes(ability))
-    }, [orgAbilities, switchSessionsAbilities])
+        return orgSwitchSessionAbility
+    }, [orgSwitchSessionAbility])
 
     const getDisplayName = () => {
         if (userOrg) {

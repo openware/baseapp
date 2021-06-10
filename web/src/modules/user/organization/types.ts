@@ -3,7 +3,3 @@ export interface OrganizationAccount {
     oid: string,
     uid: number,
 }
-
-export interface OrganizationAbility {
-    manage: string[];
-}

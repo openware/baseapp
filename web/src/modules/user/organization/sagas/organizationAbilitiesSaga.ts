@@ -13,12 +13,12 @@ const apiOptions: RequestOptions = {
 
 export function* organizationAbilitiesSaga(action: OrganizationAbilitiesFetch) {
     try {
-        const abilities = yield call(API.get(apiOptions), `/organization/abilities`);
+        const abilities = yield call(API.get(apiOptions), `/organization/switch_session_ability`);
         yield put(organizationAbilitiesData(abilities));
     } catch (error) {
         yield put(sendError({
             error,
-            processingType: 'alert',
+            processingType: 'console',
             extraOptions: {
                 actionError: organizationAbilitiesError,
             },
