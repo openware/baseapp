@@ -1,0 +1,59 @@
+#tooltip {
+  z-index: 99999;
+}
+
+.cr-beneficiary-blockchain-item {
+  width: 100%;
+  min-width: 456px;
+
+  &:first-child {
+    margin-top: 38px;
+  }
+
+  .cr-withdraw__group__blockchain-item {
+    margin-bottom: 15px;
+  }
+
+  .pg-beneficiaries__dropdown__body {
+    &__group {
+      margin-bottom: 24px;
+      box-shadow: 0px 6px 12px var(--header-shadow-color-level-1);
+    }
+
+    &__item {
+      background: var(--dropdown-background-color);
+      justify-content: space-between;
+      cursor: pointer;
+      height: 70px;
+
+      &:first-child {
+        border-top: 1px solid var(--divider-color-level-1);
+      }
+
+      &:hover {
+        transition: 0.2;
+        background: var(--dropdown-background-color-level-5);
+      }
+
+      .item__left {
+        display: flex;
+        flex-flow: column;
+
+        &__title {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 15px;
+          color: var(--primary-text-color);
+        }
+      }
+
+      .item__right {
+        display: flex;
+
+        &__pending {
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+}

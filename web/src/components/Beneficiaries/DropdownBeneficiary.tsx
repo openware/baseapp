@@ -1,10 +1,9 @@
-import { select } from '@redux-saga/core/effects';
 import classnames from 'classnames';
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { convertToString } from '../../helpers';
-import { BeneficiariesBlockchaninItemProps } from './BeneficiariesCrypto/BeneficiariesBlockchaninItem'; 
+import { BeneficiariesBlockchainItem, BeneficiariesBlockchainItemProps } from './BeneficiariesCrypto/BeneficiariesBlockchainItem'; 
 
 type DropdownElem = number | string | React.ReactNode;
 
@@ -39,7 +38,7 @@ export interface DropdownBeneficiaryProps {
      * @default false
      */
     clear?: boolean;
-    selectedValue?: BeneficiariesBlockchaninItemProps;
+    selectedValue?: BeneficiariesBlockchainItemProps;
 }
 
 const defaultSelected = {
@@ -56,7 +55,7 @@ const defaultSelected = {
  */
 
 export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
-    const [selected, setSelected] = useState<BeneficiariesBlockchaninItemProps | undefined>(defaultSelected);
+    const [selected, setSelected] = useState<BeneficiariesBlockchainItemProps | undefined>(defaultSelected);
 
     const { list, className, placeholder, clear, onSelect } = props;
     const defaultPlaceholder = list[0];
