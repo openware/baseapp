@@ -3,6 +3,7 @@ import {
     ORGANIZATION_ACCOUNTS_FETCH,
     ORGANIZATION_ACCOUNTS_DATA,
     ORGANIZATION_ACCOUNTS_ERROR,
+    ORGANIZATION_ACCOUNTS_RESET,
     ORGANIZATION_ACCOUNT_SWITCH,
     ORGANIZATION_ACCOUNT_SWITCH_ERROR,
     ORGANIZATION_ABILITIES_FETCH,
@@ -28,6 +29,10 @@ export interface OrganizationAccountsData {
 export interface OrganizationAccountsError {
     type: typeof ORGANIZATION_ACCOUNTS_ERROR;
     error: CommonError;
+}
+
+export interface OrganizationAccountsReset {
+    type: typeof ORGANIZATION_ACCOUNTS_RESET;
 }
 
 export interface OrganizationAbilitiesFetch {
@@ -61,6 +66,7 @@ export type OrganizationActions =
     OrganizationAccountsFetch
     | OrganizationAccountsData
     | OrganizationAccountsError
+    | OrganizationAccountsReset
     | OrganizationAbilitiesFetch
     | OrganizationAbilitiesData
     | OrganizationAbilitiesError
@@ -80,6 +86,10 @@ export const organizationAccountsData = (payload: OrganizationAccountsData['payl
 export const organizationAccountsError = (error: CommonError): OrganizationAccountsError => ({
     type: ORGANIZATION_ACCOUNTS_ERROR,
     error,
+});
+
+export const organizationAccountsReset = () => ({
+    type: ORGANIZATION_ACCOUNTS_RESET,
 });
 
 export const organizationAbilitiesFetch = (): OrganizationAbilitiesFetch => ({

@@ -9,7 +9,7 @@ import { CloseScreenIcon } from 'src/assets/images/CloseScreenIcon';
 import { LogoutIcon } from 'src/assets/images/sidebar/LogoutIcon';
 import { Logo } from 'src/components';
 import { SearchBox } from '../../components';
-import { organizationAccountsFetch, organizationAccountSwitch, selectOrganizationAccounts } from 'src/modules';
+import { organizationAccountsFetch, organizationAccountsReset, organizationAccountSwitch, selectOrganizationAccounts } from 'src/modules';
 import { setDocumentTitle } from '../../helpers';
 
 export const SwitchAccountScreen: React.FC = () => {
@@ -28,8 +28,12 @@ export const SwitchAccountScreen: React.FC = () => {
             limit: 20,
             keyword: '',
         };
-
+        
         dispatch(organizationAccountsFetch(initialPayload));
+
+        return () => {
+            dispatch(organizationAccountsReset());
+        };
     }, [dispatch]);
 
     const handleSearchAccounts = useCallback((keyword: string) => {

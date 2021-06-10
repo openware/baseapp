@@ -4,6 +4,7 @@ import {
     ORGANIZATION_ACCOUNTS_FETCH,
     ORGANIZATION_ACCOUNTS_DATA,
     ORGANIZATION_ACCOUNTS_ERROR,
+    ORGANIZATION_ACCOUNTS_RESET,
     ORGANIZATION_ABILITIES_FETCH,
     ORGANIZATION_ABILITIES_DATA,
     ORGANIZATION_ABILITIES_ERROR,
@@ -60,6 +61,13 @@ export const organizationAccountsFetchReducer = (state: OrganizationState['accou
                 success: false,
                 error: action.error,
             };
+        case ORGANIZATION_ACCOUNTS_RESET:
+            return {
+                ...state,
+                fetching: false,
+                success: true,
+                data: [],
+            };
         default:
             return state;
     }
@@ -98,6 +106,7 @@ export const organizationReducer = (state = initialOrganizationState, action: Or
         case ORGANIZATION_ACCOUNTS_FETCH:
         case ORGANIZATION_ACCOUNTS_DATA:
         case ORGANIZATION_ACCOUNTS_ERROR:
+        case ORGANIZATION_ACCOUNTS_RESET:
             const organizationAccountsState = { ...state.accounts };
 
             return {
