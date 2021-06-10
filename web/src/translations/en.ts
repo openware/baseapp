@@ -206,6 +206,8 @@ export const en = {
     'page.body.wallets.tabs.withdraw.modal.message': 'Enter 2fa code from the Google Authenticator app',
     'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Cancel',
     'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Withdraw',
+    'page.body.wallets.tabs.withdraw.modal.name': 'Name',
+    'page.body.wallets.tabs.withdraw.modal.verification': 'Verification',
 
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'To withdraw you have to enable 2FA',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2FA',
