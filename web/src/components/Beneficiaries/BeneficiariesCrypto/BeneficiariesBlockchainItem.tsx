@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../../constants';
-import { Decimal } from '../../';
+import { Decimal } from '../..';
 
-export interface BeneficiariesBlockchaninItemProps {
+export interface BeneficiariesBlockchainItemProps {
     blockchainKey: string;
     protocol: string;
     name: string;
@@ -13,7 +13,7 @@ export interface BeneficiariesBlockchaninItemProps {
     price?: string;
 }
 
-export const BeneficiariesBlockchaninItem = (props: BeneficiariesBlockchaninItemProps) => {
+export const BeneficiariesBlockchainItem = (props: BeneficiariesBlockchainItemProps) => {
     const { protocol, name, id, fee, minWithdraw, fixed, price } = props;
     const estimatedFeeValue = +fee * +price;
 
