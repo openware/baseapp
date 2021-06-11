@@ -20,11 +20,19 @@ export interface Phone {
     validated_at: string | null;
 }
 
+export interface OrganizationSubUnit {
+    id: number,
+    oid: string,
+    name: string,
+    status: string,
+}
+
 export interface Organization {
     id: number,
     oid: string,
     name: string,
     status: string,
+    subunit?: OrganizationSubUnit,
 }
 
 export interface OrganizationUser {

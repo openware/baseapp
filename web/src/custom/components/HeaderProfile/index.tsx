@@ -38,7 +38,7 @@ const HeaderProfileComponent: React.FC = () => {
 
     const getDisplayName = () => {
         if (userOrg) {
-            return userOrg.name
+            return userOrg.subunit?.name || userOrg.name
         }
         if (userProfile) {
             return `${userProfile.first_name} ${userProfile.last_name}`
@@ -48,7 +48,7 @@ const HeaderProfileComponent: React.FC = () => {
 
     const getDisplayID = () => {
         if (userOrg) {
-            return userOrg.oid
+            return userOrg.subunit?.oid || userOrg.oid
         }
         return user.uid
     }
