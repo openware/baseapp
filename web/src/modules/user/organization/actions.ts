@@ -10,7 +10,7 @@ import {
     ORGANIZATION_ABILITIES_DATA,
     ORGANIZATION_ABILITIES_ERROR,
 } from './constants';
-import { OrganizationAccount } from './types';
+import { OrganizationAbility, OrganizationAccount } from './types';
 
 export interface OrganizationAccountsFetch {
     type: typeof ORGANIZATION_ACCOUNTS_FETCH;
@@ -41,7 +41,7 @@ export interface OrganizationAbilitiesFetch {
 
 export interface OrganizationAbilitiesData {
     type: typeof ORGANIZATION_ABILITIES_DATA;
-    payload: boolean;
+    payload: OrganizationAbility;
 }
 
 export interface OrganizationAbilitiesError {

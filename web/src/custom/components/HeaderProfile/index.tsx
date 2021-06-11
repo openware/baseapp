@@ -36,10 +36,6 @@ const HeaderProfileComponent: React.FC = () => {
         setProfileOpen(false);
     }, []);
 
-    const switchAbility = useCallback(() => {
-        return orgSwitchSessionAbility
-    }, [orgSwitchSessionAbility])
-
     const getDisplayName = () => {
         if (userOrg) {
             return userOrg.name
@@ -58,7 +54,7 @@ const HeaderProfileComponent: React.FC = () => {
     }
 
     const accountSwitch = useMemo(() => {
-        if (location.pathname.includes('/trading') || !window.env?.organization_enabled || !switchAbility()) {
+        if (location.pathname.includes('/trading') || !window.env?.organization_enabled || !orgSwitchSessionAbility.ability) {
             return null;
         }
 
@@ -71,12 +67,15 @@ const HeaderProfileComponent: React.FC = () => {
                     <div className="account-switch__user__name">{getDisplayName()}</div>
                     <div className="account-switch__user__uid">{getDisplayID()}</div>
                 </div>
-                <div className="account-switch__button" onClick={() => history.push('/accounts/switch')}>
-                    <div className="account-switch__button__icon"><ChevronIcon /></div>
-                </div>
+                {orgSwitchSessionAbility.switch ? 
+                    <div className="account-switch__button" onClick={() => history.push('/accounts/switch')}>
+                        <div className="account-switch__button__icon"><ChevronIcon /></div>
+                    </div>
+                    : null
+                }
             </div>
         );
-    }, [user, location, switchAbility]);
+    }, [user, location, orgSwitchSessionAbility]);
 
     return (
         <div className="cr-header-profile">

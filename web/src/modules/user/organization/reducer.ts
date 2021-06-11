@@ -9,7 +9,7 @@ import {
     ORGANIZATION_ABILITIES_DATA,
     ORGANIZATION_ABILITIES_ERROR,
 } from './constants';
-import { OrganizationAccount } from './types';
+import { OrganizationAbility, OrganizationAccount } from './types';
 
 export interface OrganizationState {
     accounts: {
@@ -19,7 +19,7 @@ export interface OrganizationState {
         error?: CommonError;
     };
     abilities: {
-        switchSession: boolean;
+        switchSession: OrganizationAbility;
         fetching: boolean;
         success: boolean;
         error?: CommonError;
@@ -33,7 +33,10 @@ export const initialOrganizationState: OrganizationState = {
         success: false,
     },
     abilities: {
-        switchSession: false,
+        switchSession: {
+            ability: false,
+            switch: false,
+        },
         fetching: false,
         success: false,
     },
@@ -91,7 +94,10 @@ export const organizationAbilitiesFetchReducer = (state: OrganizationState['abil
         case ORGANIZATION_ABILITIES_ERROR:
             return {
                 ...state,
-                switchSession: false,
+                switchSession: {
+                    ability: false,
+                    switch: false,
+                },
                 fetching: false,
                 success: false,
                 error: action.error,

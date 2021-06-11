@@ -3,3 +3,8 @@ export interface OrganizationAccount {
     oid: string,
     uid: number,
 }
+
+export interface OrganizationAbility {
+    ability: boolean;
+    switch: boolean;
+}
