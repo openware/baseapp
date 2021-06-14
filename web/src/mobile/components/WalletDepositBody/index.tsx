@@ -9,8 +9,7 @@ import { selectUserInfo } from '../../../modules/user/profile';
 import {
     Currency,
     selectCurrencies,
-    walletsAddressFetch,
-    alertPush
+    walletsAddressFetch
 } from '../../../modules';
 
 const WalletDepositBodyComponent = props => {
@@ -26,7 +25,7 @@ const WalletDepositBodyComponent = props => {
 
     const currencyItem: Currency | any = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
 
-    const [tab, setTab] = useState('');
+    const [tab, setTab] = useState(currencyItem?.blockchain_currencies[0]?.blockchain_key);
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
     useEffect(() => {
