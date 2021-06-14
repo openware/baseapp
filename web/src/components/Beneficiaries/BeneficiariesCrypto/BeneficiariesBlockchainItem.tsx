@@ -23,7 +23,7 @@ export const BeneficiariesBlockchainItem = (props: BeneficiariesBlockchainItemPr
                 <h3 className="cr-beneficiaries-blockchain-item__protocol">{protocol?.toUpperCase()}</h3>
                 <div>{`${name} (${id.toUpperCase()})`}</div>
                 <div className="cr-beneficiaries-blockchain-item__fee">
-                    <span>Network Fee</span>
+                    <span>Network Fee&nbsp;</span>
                     <Decimal fixed={fixed} thousSep=",">{fee?.toString()}</Decimal>{id.toUpperCase()}
                 </div>
             </div>
