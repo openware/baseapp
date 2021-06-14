@@ -1,5 +1,5 @@
 import { OverlayTrigger } from 'react-bootstrap';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { TipIcon } from '../../assets/images/TipIcon';
@@ -35,10 +35,10 @@ export const UserWithdrawalLimits = React.memo((props: UserWithdrawalLimitsProps
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
-    const currentUserWithdrawalLimitGroup = withdrawLimit?.find(item => item.group === feeGroup.group);
-    
-    const estimatedValueDay = +currentUserWithdrawalLimitGroup?.limit_24_hour / +price;
-    const estimatedValueMonth = +currentUserWithdrawalLimitGroup?.limit_1_month / +price;
+    const currentUserWithdrawalLimitGroup = withdrawLimit?.find(item => item.group === feeGroup.group) || withdrawLimit?.find(item => item.group === 'any');
+
+    const estimatedValueDay = (+currentUserWithdrawalLimitGroup?.limit_24_hour - +usedWithdrawalLimitDay) / +price;
+    const estimatedValueMonth = (+currentUserWithdrawalLimitGroup?.limit_1_month - +usedWithdrawalLimitMonth) / +price;
 
     const canvas = document.getElementsByClassName('cr-withdrawal-limits__group-arc');
 
@@ -70,7 +70,7 @@ export const UserWithdrawalLimits = React.memo((props: UserWithdrawalLimitsProps
                 ctx.stroke();
             }
         }) 
-    }, [usedWithdrawalLimitDay, currentUserWithdrawalLimitGroup?.limit_24_hour])
+    }, [usedWithdrawalLimitDay, currentUserWithdrawalLimitGroup, currencyId])
 
     draw(usedWithdrawalLimitDay, currentUserWithdrawalLimitGroup?.limit_24_hour, 0);
     draw(usedWithdrawalLimitMonth, currentUserWithdrawalLimitGroup?.limit_1_month, 1);
@@ -116,8 +116,8 @@ export const UserWithdrawalLimits = React.memo((props: UserWithdrawalLimitsProps
                     </div>
                 </OverlayTrigger>
             </div>
-            {renderArcBlock('D', estimatedValueDay, currentUserWithdrawalLimitGroup?.limit_24_hour)}
-            {renderArcBlock('M', estimatedValueMonth, currentUserWithdrawalLimitGroup?.limit_1_month)}
+            {renderArcBlock('D', estimatedValueDay, +currentUserWithdrawalLimitGroup?.limit_24_hour - +usedWithdrawalLimitDay)}
+            {renderArcBlock('M', estimatedValueMonth, +currentUserWithdrawalLimitGroup?.limit_1_month - +usedWithdrawalLimitMonth)}
         </React.Fragment>
     );
 });

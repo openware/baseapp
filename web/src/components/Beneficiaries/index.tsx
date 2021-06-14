@@ -136,7 +136,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
             setWithdrawalBeneficiary(item);
             onChangeValue(item);
         }
-    }, []);
+    }, [currency]);
 
     const handleFilterByState = React.useCallback((beneficiariesList: Beneficiary[], filter: string | string[]) => {
         if (beneficiariesList.length) {
