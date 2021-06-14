@@ -41,7 +41,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const wallet: Wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
     const currencyItem: Currency | any = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
 
-    const [tab, setTab] = useState('');
+    const [tab, setTab] = useState(currencyItem?.blockchain_currencies[0]?.blockchain_key)
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
     useEffect(() => {
@@ -89,7 +89,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                         wallet={wallet}
                         network={tab}
                     /> : null,
-                label: network.protocol?.toUpperCase(),
+                label: network.protocol?.toUpperCase() || network.blockchain_key?.toUpperCase(),
             };
         })
     }, [currencyItem, tab])
