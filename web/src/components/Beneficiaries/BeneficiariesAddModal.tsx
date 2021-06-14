@@ -326,7 +326,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
             protocol: blockchainItem.protocol,
             name: currencyItem.name,
             id: currencyItem.id,
-            fee: blockchainItem.withdraw_fee,
+            fee: blockchainItem?.withdraw_fee,
             minWithdraw: blockchainItem.min_withdraw_amount,
         });
     };
@@ -338,7 +338,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 protocol={item.protocol}
                 name={name}
                 id={item.currency_id}
-                fee={item.withdraw_fee}
+                fee={item?.withdraw_fee}
                 minWithdraw={item.min_withdraw_amount}
                 fixed={fixed}
                 price={price}
