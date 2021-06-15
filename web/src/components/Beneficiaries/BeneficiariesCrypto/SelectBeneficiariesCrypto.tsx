@@ -37,7 +37,7 @@ export const SelectBeneficiariesCrypto = (props: SelectBeneficiariesCrypto) => {
         if (item.blockchain_key === blockchainKey) {
             return (
                 <div key={index} onClick={props.handleClickSelectAddress(item)} className={itemClassName}>
-                    <div className="item__left" onClick={() => window.console.log('test')}>
+                    <div className="item__left">
                         <span className="item__left__title">
                             {item.name}
                         </span>
@@ -61,7 +61,7 @@ export const SelectBeneficiariesCrypto = (props: SelectBeneficiariesCrypto) => {
                                 </div>
                             </OverlayTrigger>
                         </span>
-                        <span className="item__right__delete" onClick={() => window.console.log('test')}>
+                        <span className="item__right__delete" onClick={props.handleDeleteAddress(item)}>
                             <TrashBin></TrashBin>
                         </span>
                     </div>
