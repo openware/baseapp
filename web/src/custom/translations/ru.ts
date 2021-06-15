@@ -184,6 +184,10 @@ export const ru: LangType = {
     'page.body.wallets.tabs.deposit.ccy.disabled': 'Deposits of {currency} on that network is temporary suspended',
     'page.body.wallets.tabs.deposit.ccy.memo': 'Memo',
     'page.body.wallets.tabs.deposit.ccy.memo.warning': 'Both a MEMO and an Address are required to successfully deposit your USDT BEP2 tokens to Binance.',
+    'page.body.wallets.warning.deposit.disabled': 'Deposit disabled: ',
+    'page.body.wallets.warning.no.networks': 'No network configured for deposits',
+    'page.body.wallets.warning.deposit.verification': 'Withdraw are allowed after passing KYC verification',
+    'page.body.wallets.warning.deposit.verification.button': 'Verify Your Account',
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Вы можете внести депозит в банке, используя следующие реквизиты',
     'page.body.wallets.tabs.deposit.fiat.message2': 'Пожалуйста, используйте предоставленную информацию для завершения банковского платежа. Ваш депозит станет доступным на протяжении 2-х рабочих дней.',
@@ -204,6 +208,10 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.content.button': 'ВЫВЕСТИ',
 
     'page.body.wallets.tabs.withdraw.disabled.message': 'Вывод средств был отключен администрацией',
+    'page.body.wallets.warning.withdraw.disabled': 'Withdrawal disabled: ',
+    'page.body.wallets.warning.withdraw.no.networks': 'No network configured for withdrawals',
+    'page.body.wallets.warning.withdraw.verification': 'Withdraw are allowed after passing KYC verification',
+    'page.body.wallets.warning.withdraw.verification.button': 'Verify Your Account',
 
     'page.body.wallets.tabs.withdraw.modal.title': 'Вывести',
     'page.body.wallets.tabs.withdraw.modal.withdrawTo': 'Вывести на',
