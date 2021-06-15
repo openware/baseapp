@@ -1,6 +1,7 @@
 import { OverlayTrigger } from 'react-bootstrap';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { TipIcon } from '../../../../assets/images/TipIcon';
@@ -9,6 +10,7 @@ import {
     DepositCrypto,
     TabPanel,
     Tooltip,
+    WarningMessage,
 } from '../../../../components';
 import {
     Wallet,
@@ -17,6 +19,9 @@ import {
     selectCurrencies,
     walletsAddressFetch,
     alertPush,
+    selectMemberLevels,
+    selectUserInfo,
+    User,
 } from '../../../../modules';
 import { WalletHistory } from '../../History';
 import { DEFAULT_WALLET } from '../../../../constants';
@@ -37,6 +42,8 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
 
     const wallets: Wallet[] = useSelector(selectWallets);
     const currencies: Currency[] = useSelector(selectCurrencies);
+    const memberLevels = useSelector(selectMemberLevels);
+    const user: User = useSelector(selectUserInfo);
 
     const wallet: Wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
     const currencyItem: Currency | any = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
@@ -45,10 +52,10 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
     useEffect(() => {
-        setTab(currencyItem.blockchain_currencies[0]?.blockchain_key.toUpperCase());
+        setTab(currencyItem?.blockchain_currencies && currencyItem?.blockchain_currencies[0]?.blockchain_key.toUpperCase() || '');
     }, [wallet.currency]);
 
-    const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab.toLowerCase());
+    const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab?.toLowerCase());
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
@@ -59,7 +66,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const buttonLabel = `${translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
 
     const handleGenerateAddress = useEffect(() => {    
-            if (!depositAddress && wallets.length && wallet.type !== 'fiat') {
+            if (!depositAddress && wallets.length && wallet.type !== 'fiat' && currencyItem?.blockchain_currencies) {
                 dispatch(walletsAddressFetch({ currency: wallets[selectedWalletIndex].currency, blockchain_key: tab }));
             }
         }, [selectedWalletIndex, wallets, walletsAddressFetch, tab]);
@@ -94,34 +101,63 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
         })
     }, [currencyItem, tab])
 
+
+    const renderWarningNoNetworks = useMemo(() => (
+        <span>{translate('page.body.wallets.warning.deposit.disabled')}
+            <span className="cr-warning-message--bold">{translate('page.body.wallets.warning.no.networks')}</span>
+        </span>), []);
+
+    const renderWithdrawWarningKYC = useMemo(() => {
+        return (
+            <React.Fragment>
+                <span>{translate('page.body.wallets.warning.deposit.verification')}</span>
+                <Link to="/confirm" className="cr-warning-message--button">
+                    <span>{translate('page.body.wallets.warning.deposit.verification.button')}</span>
+                    <div className="cr-warning-message--arrow" />
+                </Link>
+            </React.Fragment>
+        );
+    }, []);
+
+    const renderWarning = useMemo(() => {
+        return (
+            <div>
+                {!currencyItem?.blockchain_currencies?.length && <WarningMessage children={renderWarningNoNetworks} hint="Lorem ipsum"/>}
+                {user.level < memberLevels?.deposit.minimum_level && <WarningMessage children={renderWithdrawWarningKYC} hint="Lorem ipsum"/>}
+            </div>
+        );
+    }, [currencyItem, memberLevels]);
+
     return (
         <React.Fragment>
             <CurrencyInfo
                 wallet={wallets[selectedWalletIndex]}
                 handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
             />
-            <div className="cr-deposit-crypto-tabs">
-                <h3>{translate('page.body.wallets.tabs.deposit.ccy.details')}</h3>
-                <div className="cr-deposit-crypto-tabs__card">
-                    <div className="cr-deposit-crypto-tabs__card-title">
-                        <h5>{translate('page.body.wallets.tabs.deposit.ccy.blockchain.networks')}</h5>
-                        <OverlayTrigger
-                            placement="right"
-                            delay={{ show: 250, hide: 300 }}
-                            overlay={<Tooltip title="page.body.wallets.tabs.deposit.ccy.tip" />}>
-                            <div className="cr-deposit-crypto-tabs__card-title-tip">
-                                <TipIcon />
-                            </div>
-                        </OverlayTrigger>
+            {currencyItem?.blockchain_currencies?.length &&
+                <div className="cr-deposit-crypto-tabs">
+                    <h3>{translate('page.body.wallets.tabs.deposit.ccy.details')}</h3>
+                    <div className="cr-deposit-crypto-tabs__card">
+                        <div className="cr-deposit-crypto-tabs__card-title">
+                            <h5>{translate('page.body.wallets.tabs.deposit.ccy.blockchain.networks')}</h5>
+                            <OverlayTrigger
+                                placement="right"
+                                delay={{ show: 250, hide: 300 }}
+                                overlay={<Tooltip title="page.body.wallets.tabs.deposit.ccy.tip" />}>
+                                <div className="cr-deposit-crypto-tabs__card-title-tip">
+                                    <TipIcon />
+                                </div>
+                            </OverlayTrigger>
+                        </div>
+                        <TabPanel
+                            panels={renderTabs}
+                            onTabChange={(_, label) => onTabChange(label)}
+                            currentTabIndex={currentTabIndex}
+                            onCurrentTabChange={onCurrentTabChange}
+                        />
                     </div>
-                    <TabPanel
-                        panels={renderTabs}
-                        onTabChange={(_, label) => onTabChange(label)}
-                        currentTabIndex={currentTabIndex}
-                        onCurrentTabChange={onCurrentTabChange}
-                    />
-                </div>
-            </div>
+                </div>}
+            {renderWarning}
             {wallet.currency && <WalletHistory label="deposit" type="deposits" currency={wallet.currency} />}
         </React.Fragment>
     );

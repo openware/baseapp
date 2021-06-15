@@ -53,3 +53,4 @@ export * from './WalletList';
 export * from './DoubleDropdownSelector';
 export * from './TransferForm';
 export * from './Info';
+export * from './WarningMessage';
