@@ -11,7 +11,6 @@ export function* withdrawLimitsSaga(action: WithdrawLimitsFetch) {
     try {
         const withdrawLimits = yield call(API.get(withdrawOption), '/public/withdraw_limits');
         yield put(withdrawLimitsData(withdrawLimits));
-        yield put(alertPush({message: ['success.withdraw.action'], type: 'success'}));
     } catch (error) {
         yield put(sendError({
             error,
