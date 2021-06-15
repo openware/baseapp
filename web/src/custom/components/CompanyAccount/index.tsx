@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { useIntl } from 'react-intl';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePasswordFetch, entropyPasswordFetch, selectCurrentPasswordEntropy, selectUserInfo } from 'src/modules';
+import { changePasswordFetch, entropyPasswordFetch, logoutFetch, selectCurrentPasswordEntropy, selectUserInfo } from 'src/modules';
 import { isUsernameEnabled } from 'src/api';
 import { ChangePassword } from 'src/components';
 import { DownloadBalance } from '..';
@@ -125,6 +125,14 @@ const CompanyAccountComponent: React.FC = () => {
                         <div className="company-info">
                             {renderAccountDetail}
                         </div>
+                        <Button
+                            className="btn-block mt-3 mb-3 btn-lg btn btn-primary"
+                            onClick={() => dispatch(logoutFetch())}
+                            size="lg"
+                            variant="primary"
+                        >
+                            {translate('page.body.profile.individual.logout')}
+                        </Button>
                     </div>
                     <div className="cr-company-account__content__right">
                         <Button
