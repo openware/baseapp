@@ -78,7 +78,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         network,
     } = props;
     
-    const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === network.toLowerCase());
+    const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === network?.toLowerCase());
 
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const size = dimensions || QR_SIZE;
