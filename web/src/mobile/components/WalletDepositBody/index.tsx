@@ -29,10 +29,10 @@ const WalletDepositBodyComponent = props => {
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
     useEffect(() => {
-        setTab(currencyItem.blockchain_currencies ? currencyItem.blockchain_currencies[0]?.blockchain_key.toUpperCase() : '');
+        setTab(currencyItem?.blockchain_currencies && currencyItem?.blockchain_currencies[0]?.blockchain_key.toUpperCase() || '');
     }, [wallet.currency]);
 
-    const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab.toLowerCase());
+    const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab?.toLowerCase());
 
     const text = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
         { confirmations: currencyItem.min_confirmations });
