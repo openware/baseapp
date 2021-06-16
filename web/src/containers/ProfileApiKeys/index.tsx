@@ -385,9 +385,18 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
     };
 
     private handleOtpCodeChange = (value: string) => {
-        this.setState({
-            otpCode: value,
-        });
+        if (this.validateNumberInput(value)) {
+            this.setState({
+                otpCode: value,
+            });
+        }
+    };
+
+    private validateNumberInput = (value: string) => {
+        const convertedText = value.trim();
+        const condition = new RegExp('^\\d*?$');
+
+        return condition.test(convertedText);
     };
 
     private renderOnClick = () => {
