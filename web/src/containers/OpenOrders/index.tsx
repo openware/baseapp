@@ -74,7 +74,7 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
                 <span key={id}>{ord_type ? translate(`page.body.trade.header.openOrders.content.type.${ord_type}`) : '-'}</span>,
                 <span style={{ color: setTradeColor(side).color }} key={id}><Decimal fixed={priceFixed} thousSep=",">{price}</Decimal></span>,
                 <span key={id}><Decimal fixed={amountFixed} thousSep=",">{+remaining_volume}</Decimal></span>,
-                <span key={id}><Decimal fixed={amountFixed} thousSep=",">{+remaining_volume}</Decimal> <span className="cr-text__opacity">{curMarket?.quote_unit?.toUpperCase()}</span></span>,
+                <span key={id}><Decimal fixed={amountFixed} thousSep=",">{+remaining_volume * +price}</Decimal> <span className="cr-text__opacity">{curMarket?.quote_unit?.toUpperCase()}</span></span>,
                 <span key={id} className="split-lines">
                     {trigger_price ? (
                         <React.Fragment>
