@@ -13,6 +13,7 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
     const { state, id, uuid } = order;
     switch (state) {
         case 'wait':
+        case 'trigger_wait':
             const index = list.findIndex((value: OrderCommon) => (value.uuid && value.uuid === uuid) || value.id === id);
             if (index === -1) {
                 return [{...order}, ...list];

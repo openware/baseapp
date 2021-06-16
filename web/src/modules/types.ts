@@ -14,7 +14,7 @@ export interface CommonState {
 
 export type OrderStatus = 'wait' | 'done' | 'cancel' | 'pending' | 'reject' | 'trigger_wait';
 export type OrderSide = 'sell' | 'buy';
-export type OrderType = 'limit' | 'market';
+export type OrderType = 'limit' | 'market' | 'stop_loss' | 'stop_limit' | 'take_profit' | 'take_limit';
 export type OrderKind = 'bid' | 'ask';
 
 export interface OrderCommon {
