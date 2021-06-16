@@ -48,11 +48,11 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const wallet: Wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
     const currencyItem: Currency | any = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
 
-    const [tab, setTab] = useState(currencyItem?.blockchain_currencies[0]?.blockchain_key)
+    const [tab, setTab] = useState(currencyItem?.blockchain_currencies ? currencyItem?.blockchain_currencies[0]?.blockchain_key : '')
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
     useEffect(() => {
-        setTab(currencyItem?.blockchain_currencies && currencyItem?.blockchain_currencies[0]?.blockchain_key.toUpperCase() || '');
+        setTab(currencyItem?.blockchain_currencies ? currencyItem?.blockchain_currencies[0]?.blockchain_key.toUpperCase() : '');
     }, [wallet.currency]);
 
     const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab?.toLowerCase());
@@ -134,7 +134,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                 wallet={wallets[selectedWalletIndex]}
                 handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
             />
-            {currencyItem?.blockchain_currencies?.length &&
+            {currencyItem?.blockchain_currencies?.length && user.level > memberLevels?.deposit.minimum_level &&
                 <div className="cr-deposit-crypto-tabs">
                     <h3>{translate('page.body.wallets.tabs.deposit.ccy.details')}</h3>
                     <div className="cr-deposit-crypto-tabs__card">
