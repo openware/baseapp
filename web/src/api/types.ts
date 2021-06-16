@@ -38,15 +38,19 @@ declare global {
         barong_upload_size_min_range?: string;
         barong_upload_size_max_range?: string;
         themeSwitcher: 'visible' | 'hidden';
-        organization_enabled?: string | boolean;
         wallet_navs?: {
             overview: WalletTabConfig;
             spot: WalletTabConfig;
             p2p: WalletTabConfig;
             transfer: WalletTabConfig;
             organization: WalletTabConfig;
-        },
+        };
         colorTheme?: string;
+        organization?: {
+            enable: string | boolean;
+            signup_email: string;
+            signup_telegram: string;
+        };
     }
 
     interface Window {

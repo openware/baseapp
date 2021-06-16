@@ -39,7 +39,6 @@ Access-Control-Allow-Credentials: true
     "wizard_step": "false",
     "msPricesUpdates": "1000",
     "themeSwitcher": "visible",
-    "organization_enabled": true,
     "wallet_navs": {
         "overview": {
             "id": "overview",
@@ -67,5 +66,10 @@ Access-Control-Allow-Credentials: true
             "enabled": true
         }
     },
-    "colorTheme": "light"
+    "colorTheme": "light",
+    "organization": {
+        "enable": true,
+        "signup_email": "signup@openfinex.io",
+        "signup_telegram": "https://t.me/openfinex"
+    }
 }

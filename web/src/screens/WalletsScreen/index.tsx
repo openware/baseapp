@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { organizationEnabled } from 'src/api';
 import { ChangeIcon } from 'src/assets/images/ChangeIcon';
 import { TabPanel } from 'src/components';
 import { CanCan, EstimatedValue, OrganizationHeader, OrganizationOverview, WalletsOverview, WalletsP2P, WalletsSpot, WalletsTransfer } from 'src/containers';
@@ -52,7 +53,7 @@ export const WalletsScreen: FC = (): ReactElement => {
     useEffect(() => {
         if (window.env?.wallet_navs) {
             const tabs = [
-                ...(window.env.wallet_navs.organization?.enabled && window.env?.organization_enabled ? [{id: window.env.wallet_navs.organization?.id, label: window.env.wallet_navs.organization?.label}] : []),
+                ...(window.env.wallet_navs.organization?.enabled && organizationEnabled() ? [{id: window.env.wallet_navs.organization?.id, label: window.env.wallet_navs.organization?.label}] : []),
                 ...(window.env.wallet_navs.overview?.enabled ? [{id: window.env.wallet_navs.overview?.id, label: window.env.wallet_navs.overview?.label}] : []),
                 ...(window.env.wallet_navs.spot.enabled ? [{id: window.env.wallet_navs.spot?.id, label: window.env.wallet_navs.spot?.label}] : []),
                 ...(window.env.wallet_navs.p2p?.enabled && abilities && CanCan.checkAbilityByAction('read', 'P2P', abilities) ? [{id: window.env.wallet_navs.p2p?.id, label:window.env.wallet_navs.p2p?.label}] : []),
@@ -79,7 +80,7 @@ export const WalletsScreen: FC = (): ReactElement => {
                 setCurrentTabIndex(index);
             }
         } else {
-            window.env.wallet_navs.organization?.enabled && window.env?.organization_enabled ? history.push('/wallets/organization') : history.push('/wallets/overview');
+            window.env.wallet_navs.organization?.enabled && organizationEnabled() ? history.push('/wallets/organization') : history.push('/wallets/overview');
         }
     }, [routeTab, tabMapping]);
 

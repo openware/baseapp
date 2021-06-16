@@ -71,6 +71,11 @@ export const defaultConfig: Config = {
             label: 'Overview',
             enabled: false
         }
+    },
+    organization: {
+        enable: false,
+        signup_email: '',
+        signup_telegram: ''
     }
 };
 
@@ -118,3 +123,4 @@ export const wizardStep = () => String(Cryptobase.config.wizard_step || '1');
 export const barongUploadSizeMinRange = Number(Cryptobase.config.barong_upload_size_min_range || '1');
 export const barongUploadSizeMaxRange = Number(Cryptobase.config.barong_upload_size_max_range || '20');
 export const themeSwitcher = () => Cryptobase.config.themeSwitcher;
+export const organizationEnabled = () => convertToBoolean(Cryptobase.config.organization?.enable);

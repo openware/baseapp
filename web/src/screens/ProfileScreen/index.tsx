@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { organizationEnabled } from 'src/api';
 import { TabPanel } from 'src/components';
 import {
     CanCan,
@@ -35,7 +36,7 @@ export const ProfileScreen: FC = (): ReactElement => {
     const user = useSelector(selectUserInfo);
 
     const isCompanyAccount = useCallback(() => {
-        return !!user.organization && window.env?.organization_enabled;
+        return !!user.organization && organizationEnabled();
     }, [user]);
 
     useDocumentTitle('Profile');

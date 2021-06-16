@@ -7,6 +7,7 @@ import { ProfileIcon } from 'src/assets/images/sidebar/ProfileIcon';
 import { ChevronIcon } from 'src/assets/images/ChevronIcon';
 import { useSelector } from 'react-redux';
 import { selectOrganizationSwitchSessionAbility, selectUserInfo, selectUserProfile, selectUserOrganization } from 'src/modules';
+import { organizationEnabled } from 'src/api';
 
 const HeaderProfileComponent: React.FC = () => {
     const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
@@ -54,7 +55,7 @@ const HeaderProfileComponent: React.FC = () => {
     }
 
     const accountSwitch = useMemo(() => {
-        if (location.pathname.includes('/trading') || !window.env?.organization_enabled || !orgSwitchSessionAbility.ability) {
+        if (location.pathname.includes('/trading') || !organizationEnabled() || !orgSwitchSessionAbility.ability) {
             return null;
         }
 

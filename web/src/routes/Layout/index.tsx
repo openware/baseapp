@@ -7,7 +7,7 @@ import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
-import { minutesUntilAutoLogout, sessionCheckInterval, showLanding, wizardStep } from '../../api';
+import { minutesUntilAutoLogout, organizationEnabled, sessionCheckInterval, showLanding, wizardStep } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch, CanCan } from '../../containers';
 import { P2PTradesHistory } from '../../containers/P2P/TradesHistory';
@@ -239,7 +239,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 
         if (!this.props.user.email && nextProps.user.email && !this.props.location.pathname.includes('/setup')) {
             this.props.userFetch();
-            window.env?.organization_enabled && this.props.fetchOrganizationAbilities();
+            organizationEnabled() && this.props.fetchOrganizationAbilities();
         }
 
         if (!this.props.isLoggedIn && nextProps.isLoggedIn && !this.props.user.email) {

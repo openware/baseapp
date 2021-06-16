@@ -14,7 +14,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { SignUpCompanyForm, SignUpSelectionForm } from '../../custom/components';
 import { isUsernameEnabled } from '../../api';
-import { captchaType } from '../../api/config';
+import { captchaType, organizationEnabled } from '../../api/config';
 import { Captcha, Modal, SignUpForm } from '../../components';
 import {
     EMAIL_REGEX,
@@ -161,7 +161,7 @@ class SignUp extends React.Component<Props> {
     }
 
     private renderSignUp = () => {
-        if (window.env?.organization_enabled) {
+        if (organizationEnabled()) {
             return this.state.signUpType === 'individual' ? this.renderIndividualSignUp()
                 : this.state.signUpType === 'company' ? this.renderOrganizationSignUp()
                 : this.renderSelectSignUpType();
