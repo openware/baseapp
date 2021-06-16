@@ -9,7 +9,7 @@ export interface Wallet {
     iconUrl?: string;
     active?: boolean;
     deposit_addresses?: WalletAddress[];
-    blockchain_currencies: WalletBlockchain[];
+    networks: WalletBlockchain[];
 }
 
 export interface WalletBlockchain {

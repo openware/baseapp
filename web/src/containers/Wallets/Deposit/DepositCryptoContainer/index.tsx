@@ -48,11 +48,11 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const wallet: Wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
     const currencyItem: Currency | any = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
 
-    const [tab, setTab] = useState(currencyItem?.blockchain_currencies ? currencyItem?.blockchain_currencies[0]?.blockchain_key : '')
+    const [tab, setTab] = useState(currencyItem?.networks ? currencyItem?.networks[0]?.blockchain_key : '')
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
     useEffect(() => {
-        setTab(currencyItem?.blockchain_currencies ? currencyItem?.blockchain_currencies[0]?.blockchain_key.toUpperCase() : '');
+        setTab(currencyItem?.networks ? currencyItem?.networks[0]?.blockchain_key.toUpperCase() : '');
     }, [wallet.currency]);
 
     const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab?.toLowerCase());
@@ -61,12 +61,12 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
 
     const text = formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.submit' },
                                                    { confirmations: currencyItem.min_confirmations });
-    
+
     const error = translate('page.body.wallets.tabs.deposit.ccy.message.pending');
     const buttonLabel = `${translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
 
-    const handleGenerateAddress = useEffect(() => {    
-            if (!depositAddress && wallets.length && wallet.type !== 'fiat' && currencyItem?.blockchain_currencies) {
+    const handleGenerateAddress = useEffect(() => {
+            if (!depositAddress && wallets.length && wallet.type !== 'fiat' && currencyItem?.networks) {
                 dispatch(walletsAddressFetch({ currency: wallets[selectedWalletIndex].currency, blockchain_key: tab }));
             }
         }, [selectedWalletIndex, wallets, walletsAddressFetch, tab]);
@@ -74,7 +74,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const handleOnCopy = () => dispatch(alertPush({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'}));
 
     const onTabChange = label => {
-        const blockchain = currencyItem.blockchain_currencies?.find(item => item.protocol.toUpperCase() === label);
+        const blockchain = currencyItem.networks?.find(item => item.protocol.toUpperCase() === label);
 
         setTab(blockchain.blockchain_key);
     };
@@ -82,7 +82,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const onCurrentTabChange = index => setCurrentTabIndex(index);
 
     const renderTabs = useMemo(() => {
-        return currencyItem.blockchain_currencies?.map(network => {
+        return currencyItem.networks?.map(network => {
             return {
                 content: tab.toUpperCase() === network.blockchain_key?.toUpperCase() ?
                     <DepositCrypto
@@ -122,7 +122,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const renderWarning = useMemo(() => {
         return (
             <div>
-                {!currencyItem?.blockchain_currencies?.length && <WarningMessage children={renderWarningNoNetworks} hint="Lorem ipsum"/>}
+                {!currencyItem?.networks?.length && <WarningMessage children={renderWarningNoNetworks} hint="Lorem ipsum"/>}
                 {user.level < memberLevels?.deposit.minimum_level && <WarningMessage children={renderWithdrawWarningKYC} hint="Lorem ipsum"/>}
             </div>
         );
@@ -134,7 +134,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                 wallet={wallets[selectedWalletIndex]}
                 handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
             />
-            {currencyItem?.blockchain_currencies?.length && user.level > memberLevels?.deposit.minimum_level &&
+            {currencyItem?.networks && user.level > memberLevels?.deposit.minimum_level &&
                 <div className="cr-deposit-crypto-tabs">
                     <h3>{translate('page.body.wallets.tabs.deposit.ccy.details')}</h3>
                     <div className="cr-deposit-crypto-tabs__card">

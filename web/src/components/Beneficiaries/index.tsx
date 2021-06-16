@@ -261,8 +261,8 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     }, []);
 
 
-    const renderAddressItem = React.useCallback((currentWithdrawalBeneficiary: Beneficiary) => {
-        const isPending = currentWithdrawalBeneficiary.state && currentWithdrawalBeneficiary.state.toLowerCase() === 'pending';
+    const renderAddressItem = React.useCallback((currentBeneficiary: Beneficiary) => {
+        const isPending = currentBeneficiary.state && currentBeneficiary.state.toLowerCase() === 'pending';
 
         if (type === 'fiat') {
             return (
@@ -270,9 +270,9 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                     <div className="pg-beneficiaries__dropdown__select fiat-select select" onClick={handleClickToggleAddAddressModal()}>
                         <div className="select__left">
                             <span className="select__left__title">{formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.name' })}</span>
-                            <span className="select__left__address">{currentWithdrawalBeneficiary.name}</span>
+                            <span className="select__left__address">{currentBeneficiary.name}</span>
                             <span className="select__left__title">{formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.fullName' })}</span>
-                            <span className="select__left__address">{currentWithdrawalBeneficiary.data ? (currentWithdrawalBeneficiary.data as BeneficiaryBank).full_name : ''}</span>
+                            <span className="select__left__address">{currentBeneficiary.data ? (currentBeneficiary.data as BeneficiaryBank).full_name : ''}</span>
                         </div>
                         <div className="select__right">
                             {isPending ? (
@@ -283,7 +283,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                             <span className="select__right__chevron"><ChevronIcon /></span>
                         </div>
                     </div>
-                    {isOpenTip && renderDropdownTipFiat(currentWithdrawalBeneficiary)}
+                    {isOpenTip && renderDropdownTipFiat(currentBeneficiary)}
                 </div>
             );
         }

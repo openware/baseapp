@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { convertToString } from '../../helpers';
-import { BeneficiariesBlockchainItem, BeneficiariesBlockchainItemProps } from './BeneficiariesCrypto/BeneficiariesBlockchainItem'; 
+import { BeneficiariesBlockchainItemProps } from './BeneficiariesCrypto/BeneficiariesBlockchainItem';
 
 type DropdownElem = number | string | React.ReactNode;
 
@@ -93,12 +93,6 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
             </Dropdown.Item>
         );
     }, [handleSelect]);
-
-    useEffect(() => {
-        if (clear !== false) {
-            setSelected(placeholder || convertToString(defaultPlaceholder));
-        }
-    }, [placeholder, defaultPlaceholder, clear]);
 
     const renderSelectedItem = useMemo(() => {
         if (selected.protocol && selected.name && selected.id) {

@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { TipIcon } from '../../assets/images/TipIcon';
-import { Tooltip } from '../../components';
+import { Tooltip, Decimal } from '../../components';
 import { useUserWithdrawalsFetch, useFeeGroupFetch, useWithdrawLimits } from '../../hooks';
 import {
     selectWithdrawLimits,
@@ -12,7 +12,6 @@ import {
     selectUserWithdrawalLimitsMonth,    
 } from '../../modules';
 import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../constants';
-import { Decimal } from '../../components';
 
 interface UserWithdrawalLimitsProps {
     currencyId: string;
@@ -55,7 +54,7 @@ export const UserWithdrawalLimits = React.memo((props: UserWithdrawalLimitsProps
         const angle = (Math.PI * 2 * +rad) / 100;
         const end = -angle + offset + 0.01;
 
-        ctxList.map((ctx, index) => {
+        ctxList.forEach((ctx, index) => {
             if (id === index && ctx) {
                 ctx.clearRect(0, 0, 46, 46);
                 ctx.beginPath();
@@ -69,7 +68,7 @@ export const UserWithdrawalLimits = React.memo((props: UserWithdrawalLimitsProps
                 ctx.arc(21, 24, 18, offset, 100);
                 ctx.stroke();
             }
-        }) 
+        });
     }, [usedWithdrawalLimitDay, currentUserWithdrawalLimitGroup, currencyId])
 
     draw(usedWithdrawalLimitDay, currentUserWithdrawalLimitGroup?.limit_24_hour, 0);

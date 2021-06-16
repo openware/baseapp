@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -523,7 +523,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             <React.Fragment>
                 {!otp && <WarningMessage children={this.renderWithdrawOTP()} hint="Lorem ipsum"/>}
                 {level < memberLevels?.withdraw.minimum_level && <WarningMessage children={this.renderWithdrawWarningKYC()} hint="Lorem ipsum"/>}
-                {!currencyItem?.blockchain_currencies && <WarningMessage children={this.renderWithdrawWarningNoNetworks()} hint="Lorem ipsum"/>}
+                {!currencyItem?.networks && <WarningMessage children={this.renderWithdrawWarningNoNetworks()} hint="Lorem ipsum"/>}
             </React.Fragment>
         );
     };
@@ -541,7 +541,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
 
         const withdrawProps: WithdrawProps = {
-            blockchain_currencies: currencyItem.blockchain_currencies,
+            networks: currencyItem.networks,
             withdrawDone,
             price: currencyItem.price,
             name: currencyItem.name,
@@ -557,7 +557,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
         };
 
-        if (!otp || !currencyItem?.blockchain_currencies || level < memberLevels?.withdraw.minimum_level) {
+        if (!otp || !currencyItem?.networks || level < memberLevels?.withdraw.minimum_level) {
             return this.renderWithdrawWarning();
         }
 

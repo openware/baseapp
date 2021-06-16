@@ -6,7 +6,7 @@ export interface Currency {
     precision: number;
     icon_url: string;
     price: string;
-    blockchain_currencies: BlockchainCurrencies[];
+    networks: BlockchainCurrencies[];
 }
 
 export interface BlockchainCurrencies {
