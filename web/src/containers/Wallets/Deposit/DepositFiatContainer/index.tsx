@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import {
     CurrencyInfo,
-    Blur,
     DepositFiat,
 } from '../../../../components';
 import {
@@ -29,7 +28,6 @@ export const DepositFiatContainer = (props: DepositFiatProps) => {
 
     const wallets: Wallet[] = useSelector(selectWallets);
     const user: User = useSelector(selectUserInfo);
-    const currencies: Currency[] = useSelector(selectCurrencies);
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
@@ -38,7 +36,6 @@ export const DepositFiatContainer = (props: DepositFiatProps) => {
     } = props;
 
     const wallet: Wallet = (wallets[selectedWalletIndex] || DEFAULT_WALLET);
-    const currencyItem = currencies && currencies.find(item => item.id === wallet.currency);
 
     const title = translate('page.body.wallets.tabs.deposit.fiat.message1');
     const description = translate('page.body.wallets.tabs.deposit.fiat.message2');

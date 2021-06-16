@@ -30,7 +30,7 @@ export interface WithdrawProps {
     withdrawTotalLabel?: string;
     withdrawButtonLabel?: string;
     withdrawDone: boolean;
-    blockchain_currencies: BlockchainCurrencies[];
+    networks: BlockchainCurrencies[];
     isMobileDevice?: boolean;
 }
 
@@ -85,7 +85,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             otpCode,
         } = this.state;
         const {
-            blockchain_currencies,
+            networks,
             className,
             currency,
             type,
@@ -99,7 +99,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             name,
         } = this.props;
 
-        const blockchainItem = blockchain_currencies?.find(item => item.blockchain_key === beneficiary.blockchain_key);
+        const blockchainItem = networks?.find(item => item.blockchain_key === beneficiary.blockchain_key);
 
         const cx = classnames('cr-withdraw', className);
         const lastDividerClassName = classnames('cr-withdraw__divider', {
@@ -230,10 +230,10 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     };
 
     private renderFee = () => {
-        const { blockchain_currencies, fixed, currency } = this.props;
+        const { networks, fixed, currency } = this.props;
         const { beneficiary } = this.state;
 
-        const blockchainItem = blockchain_currencies?.find(item => item.blockchain_key === beneficiary.blockchain_key);
+        const blockchainItem = networks?.find(item => item.blockchain_key === beneficiary.blockchain_key);
 
         return (
             <span>
@@ -254,10 +254,10 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     };
 
     private handleClick = () => {
-        const { blockchain_currencies } = this.props;
+        const { networks } = this.props;
         const { beneficiary } = this.state;
 
-        const blockchainItem = blockchain_currencies.find(item => item.blockchain_key === beneficiary.blockchain_key);
+        const blockchainItem = networks.find(item => item.blockchain_key === beneficiary.blockchain_key);
 
         this.props.onClick(
             this.state.amount,
@@ -270,9 +270,9 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
 
     private handleChangeInputAmount = (value: string) => {
         const { beneficiary } = this.state;
-        const { fixed, blockchain_currencies } = this.props;
+        const { fixed, networks } = this.props;
         const convertedValue = cleanPositiveFloatInput(String(value));
-        const blockchainItem = blockchain_currencies.find(item => item.blockchain_key === beneficiary.blockchain_key);
+        const blockchainItem = networks.find(item => item.blockchain_key === beneficiary.blockchain_key);
 
         if (convertedValue.match(precisionRegExp(fixed))) {
             const amount = (convertedValue !== '') ? Number(parseFloat(convertedValue).toFixed(fixed)) : '';

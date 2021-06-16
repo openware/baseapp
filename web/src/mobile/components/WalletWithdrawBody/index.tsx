@@ -39,7 +39,7 @@ const WalletWithdrawBodyComponent = props => {
     const user = useSelector(selectUserInfo);
     const currencies = useSelector(selectCurrencies);
     const withdrawSuccess = useSelector(selectWithdrawSuccess);
-    const { currency, fee, type } = props.wallet;
+    const { currency, type } = props.wallet;
     const fixed = (props.wallet || { fixed: 0 }).fixed;
     const withdrawAmountLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }), [intl]);
     const withdraw2faLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' }), [intl]);
@@ -131,7 +131,7 @@ const WalletWithdrawBodyComponent = props => {
     return (
         <div className="cr-mobile-wallet-withdraw-body">
             <Withdraw
-                blockchain_currencies={currencyItem.blockchain_currencies}
+                networks={currencyItem.networks}
                 isMobileDevice
                 price={currencyItem.price}
                 name={currencyItem.name}

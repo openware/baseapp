@@ -25,11 +25,11 @@ const WalletDepositBodyComponent = props => {
 
     const currencyItem: Currency | any = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
 
-    const [tab, setTab] = useState(currencyItem?.blockchain_currencies ? currencyItem?.blockchain_currencies[0]?.blockchain_key : '');
+    const [tab, setTab] = useState(currencyItem?.networks ? currencyItem?.networks[0]?.blockchain_key : '');
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
     useEffect(() => {
-        setTab(currencyItem?.blockchain_currencies ? currencyItem?.blockchain_currencies[0]?.blockchain_key.toUpperCase() : '');
+        setTab(currencyItem?.networks ? currencyItem?.networks[0]?.blockchain_key.toUpperCase() : '');
     }, [wallet.currency]);
 
     const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab?.toLowerCase());
@@ -43,14 +43,14 @@ const WalletDepositBodyComponent = props => {
 
     const buttonLabel = `${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.generate' })} ${wallet.currency.toUpperCase()} ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.address' })}`;
 
-    const handleGenerateAddress = useEffect(() => {    
+    const handleGenerateAddress = useEffect(() => {
         if (!depositAddress && wallet.type !== 'fiat') {
             dispatch(walletsAddressFetch({ currency: wallet.currency, blockchain_key: tab }));
         }
     }, [wallet, walletsAddressFetch, tab]);
 
     const onTabChange = label => {
-        const blockchain = currencyItem.blockchain_currencies?.find(item => item.protocol.toUpperCase() === label);
+        const blockchain = currencyItem.networks?.find(item => item.protocol.toUpperCase() === label);
 
         setTab(blockchain.blockchain_key);
     };
@@ -58,7 +58,7 @@ const WalletDepositBodyComponent = props => {
     const onCurrentTabChange = index => setCurrentTabIndex(index);
 
     const renderTabs = useMemo(() => {
-        return currencyItem.blockchain_currencies?.map(network => {
+        return currencyItem.networks?.map(network => {
             return {
                 content: tab.toUpperCase() === network.blockchain_key?.toUpperCase() ?
                     <DepositCrypto
@@ -82,7 +82,7 @@ const WalletDepositBodyComponent = props => {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallet}/>
-                    {currencyItem.blockchain_currencies && <TabPanel
+                    {currencyItem.networks && <TabPanel
                         panels={renderTabs}
                         onTabChange={(_, label) => onTabChange(label)}
                         currentTabIndex={currentTabIndex}
