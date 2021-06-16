@@ -103,27 +103,27 @@ export const WalletsScreen: FC = (): ReactElement => {
             switch (val.id) {
                 case 'overview':
                     return [ ...acc, {
-                            content: tabMapping[currentTabIndex].id === val.id ? <WalletsOverview isP2PEnabled={isP2PEnabled} /> : null,
+                            content: tabMapping[currentTabIndex]?.id === val.id ? <WalletsOverview isP2PEnabled={isP2PEnabled} /> : null,
                             label: window.env?.wallet_navs?.overview?.label || translate('page.body.wallets.tab.overview')
                         }];
                 case 'spot':
                     return [ ...acc, {
-                            content: tabMapping[currentTabIndex].id === val.id ?  <WalletsSpot currency={currency} action={action}/> : null,
+                            content: tabMapping[currentTabIndex]?.id === val.id ?  <WalletsSpot currency={currency} action={action}/> : null,
                             label: window.env?.wallet_navs?.spot?.label || translate('page.body.wallets.tab.spot')
                         }];
                 case 'p2p':
                     return [ ...acc, {
-                            content: tabMapping[currentTabIndex].id === val.id ?  <WalletsP2P /> : null,
+                            content: tabMapping[currentTabIndex]?.id === val.id ?  <WalletsP2P /> : null,
                             label: window.env?.wallet_navs?.p2p?.label || translate('page.body.wallets.tab.p2p')
                         }];
                 case 'transfer':
                     return [ ...acc, {
-                            content: tabMapping[currentTabIndex].id === val.id ?  <WalletsTransfer currency={currency} /> : null,
+                            content: tabMapping[currentTabIndex]?.id === val.id ?  <WalletsTransfer currency={currency} /> : null,
                             label: window.env?.wallet_navs?.transfer?.label || translate('page.body.wallets.tab.transfer')
                         }];
                 case 'organization':
                     return [ ...acc, {
-                            content: tabMapping[currentTabIndex].id === val.id ?  <OrganizationOverview isP2PEnabled={isP2PEnabled} /> : null,
+                            content: tabMapping[currentTabIndex]?.id === val.id ?  <OrganizationOverview isP2PEnabled={isP2PEnabled} /> : null,
                             label: window.env?.wallet_navs?.organization?.label || translate('page.body.wallets.tab.organization')
                         }];
                 default:
