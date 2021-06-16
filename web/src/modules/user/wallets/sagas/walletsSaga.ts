@@ -31,7 +31,7 @@ export function* walletsSaga(action: WalletsFetch) {
             return ({
                 ...walletInfo,
                 name: currency?.name,
-                blockchain_currencies: currency?.blockchain_currencies?.map(network => {
+                networks: currency?.networks?.map(network => {
                     return ({
                         explorerTransaction: network?.explorer_transaction,
                         explorerAddress: network?.explorer_address,

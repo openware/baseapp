@@ -167,7 +167,7 @@ class HistoryComponent extends React.Component<Props> {
                 const blockchainLink = this.getBlockchainLink(currency, blockchain_key, txid);
                 const wallet = wallets.find(obj => obj.currency === currency);
                 const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
-                const blockchainCurrency = itemCurrency?.blockchain_currencies?.find(blockchain_cur => blockchain_cur.blockchain_key === item.blockchain_key);
+                const blockchainCurrency = itemCurrency?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === item.blockchain_key);
                 const minConfirmations = blockchainCurrency?.min_confirmations;
                 const state = (item.state === 'submitted' && confirmations !== undefined && minConfirmations !== undefined) ? (
                     `${confirmations}/${minConfirmations}`
@@ -249,7 +249,7 @@ class HistoryComponent extends React.Component<Props> {
     private getBlockchainLink = (currency: string, txid: string, blockchainKey: string, rid?: string) => {
         const { wallets } = this.props;
         const currencyInfo = wallets?.find(wallet => wallet.currency === currency);
-        const blockchainCurrency = currencyInfo?.blockchain_currencies.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
+        const blockchainCurrency = currencyInfo?.networks.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
 
         if (currencyInfo) {
             if (txid && blockchainCurrency?.explorerTransaction) {

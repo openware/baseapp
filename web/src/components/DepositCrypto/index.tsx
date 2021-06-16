@@ -86,13 +86,13 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
     const onCopy = !disabled ? handleOnCopy : undefined;
     const className = classnames('cr-deposit-crypto', {'cr-copyable-text-field__disabled': disabled});
 
-    const getDepositAddress = (depositAddress, currency) => {
-        const address = depositAddress?.address?.split('?')[0];
+    const getDepositAddress = (addressData, currency) => {
+        const address = addressData?.address?.split('?')[0];
 
         return address ? formatCCYAddress(currency, address) : '';
     };
 
-    const getDepositTag = (depositAddress) => depositAddress?.address?.split('?')[1]?.split('=')[1];
+    const getDepositTag = (addressData) => addressData?.address?.split('?')[1]?.split('=')[1];
 
     const walletAddress = getDepositAddress(depositAddress, wallet.currency);
     const walletTag = getDepositTag(depositAddress);

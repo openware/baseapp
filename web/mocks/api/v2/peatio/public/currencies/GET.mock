@@ -13,7 +13,7 @@ Access-Control-Allow-Credentials: true
     "type": "coin",
     "price": "1000",
     "precision": 8,
-    "blockchain_currencies": null
+    "networks": null
   },
   {
     "id": "btc",
@@ -22,7 +22,7 @@ Access-Control-Allow-Credentials: true
     "type": "coin",
     "price": "32000",
     "precision": 8,
-    "blockchain_currencies": [
+    "networks": [
       {
         "id": 0,
         "blockchain_key": "bitcoin",
@@ -89,7 +89,7 @@ Access-Control-Allow-Credentials: true
     "type": "coin",
     "price": "1000",
     "precision": 8,
-    "blockchain_currencies": [
+    "networks": [
       {
         "id": 0,
         "blockchain_key": "erc20",
@@ -138,7 +138,7 @@ Access-Control-Allow-Credentials: true
     "type": "coin",
     "price": "1000",
     "precision": 8,
-    "blockchain_currencies": [
+    "networks": [
       {
         "id": 0,
         "blockchain_key": "erc20",
@@ -186,7 +186,7 @@ Access-Control-Allow-Credentials: true
     "type": "coin",
     "price": "1000",
     "precision": 8,
-    "blockchain_currencies": [
+    "networks": [
       {
         "id": 0,
         "blockchain_key": "erc20",
@@ -249,7 +249,7 @@ Access-Control-Allow-Credentials: true
     "type": "coin",
     "price": "1000",
     "precision": 8,
-    "blockchain_currencies": [
+    "networks": [
       {
         "id": 0,
         "blockchain_key": "ripple",
@@ -297,7 +297,7 @@ Access-Control-Allow-Credentials: true
     "type": "coin",
     "price": "1000",
     "precision": 4,
-    "blockchain_currencies": [
+    "networks": [
       {
         "id": 0,
         "blockchain_key": "erc20",
@@ -345,7 +345,7 @@ Access-Control-Allow-Credentials: true
     "type": "coin",
     "price": "1000",
     "precision": 4,
-    "blockchain_currencies": [
+    "networks": [
       {
         "id": 0,
         "blockchain_key": "erc20",

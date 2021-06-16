@@ -27,7 +27,7 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
 
     const isMobileDevice = useSelector(selectMobileDeviceState);
 
-    const { handleToggleConfirmationModal, beneficiariesAddData } = props;
+    const { beneficiariesAddData } = props;
 
     const handleChangeFieldValue = React.useCallback((key: string, value: string) => {
         setConfirmationModalCode(value);
@@ -41,15 +41,6 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
         setConfirmationModalCode('');
         setConfirmationModalCodeFocused(false);
     }, []);
-
-    // const handleClickToggleConfirmationModal = React.useCallback((clear?: boolean) => () => {
-    //     handleToggleConfirmationModal();
-
-    //     if (clear) {
-    //         handleClearModalsInputs();
-    //     }
-    // }, [handleToggleConfirmationModal, handleClearModalsInputs]);
-
 
     const handleSubmitConfirmationModal = React.useCallback(() => {
         if (beneficiariesAddData) {

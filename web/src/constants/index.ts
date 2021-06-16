@@ -32,7 +32,7 @@ export const DEFAULT_WALLET: Wallet = {
     balance: '',
     type: 'coin',
     fixed: 0,
-    blockchain_currencies: [{blockchain_key: '', fee: 0, protocol: ''}],
+    networks: [{blockchain_key: '', fee: 0, protocol: ''}],
     account_type: '',
 };
 

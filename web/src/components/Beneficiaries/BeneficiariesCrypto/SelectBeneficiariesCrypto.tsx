@@ -9,22 +9,22 @@ import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../../const
 import { Decimal, Tooltip  } from '../../../components';
 import { TipIcon } from '../../../assets/images/TipIcon';
 
-interface SelectBeneficiariesCrypto {
+interface SelectBeneficiariesCryptoProps {
     blockchainKey: string;
     currency: string;
     handleClickSelectAddress: (item: Beneficiary) => () => void;
     handleDeleteAddress: (item: Beneficiary) => () => void;
 }
 
-export const SelectBeneficiariesCrypto = (props: SelectBeneficiariesCrypto) => {
+export const SelectBeneficiariesCrypto = (props: SelectBeneficiariesCryptoProps) => {
     const { currency, blockchainKey } = props;
- 
+
     const { formatMessage } = useIntl();
 
     const currencies = useSelector(selectCurrencies);
     const beneficiaries: Beneficiary[] = useSelector(selectBeneficiaries);
     const currencyItem = currencies.find(item => item.id === currency);
-    const blockchainItem = currencyItem?.blockchain_currencies.find(item => item.blockchain_key === blockchainKey);
+    const blockchainItem = currencyItem?.networks.find(item => item.blockchain_key === blockchainKey);
     const estimatedValueFee = +currencyItem?.price * +blockchainItem?.withdraw_fee;
 
 
