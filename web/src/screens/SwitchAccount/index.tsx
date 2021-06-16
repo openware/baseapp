@@ -49,7 +49,9 @@ export const SwitchAccountScreen: React.FC = () => {
     const handleSwitchAccount = useCallback((oid, uid) => {
         const payload = { oid, uid };
         dispatch(organizationAccountSwitch(payload));
-        history.goBack();
+        setTimeout(() => {
+            history.goBack();
+        }, 1500);
     }, []);
 
     const getSearchLabel = useCallback(label => {
