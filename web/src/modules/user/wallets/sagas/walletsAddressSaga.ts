@@ -10,7 +10,7 @@ const walletsAddressOptions: RequestOptions = {
 export function* walletsAddressSaga(action: WalletsAddressFetch) {
     try {
         const currency = action.payload.currency.toLocaleLowerCase();
-        const blockchainKey = action.payload.blockchain_key.toLocaleLowerCase();
+        const blockchainKey = action.payload.blockchain_key?.toLocaleLowerCase();
 
         const url = `/account/deposit_address/${currency}?blockchain_key=${blockchainKey}`;
         const { address, currencies, state, blockchain_key } = yield call(API.get(walletsAddressOptions), url);
