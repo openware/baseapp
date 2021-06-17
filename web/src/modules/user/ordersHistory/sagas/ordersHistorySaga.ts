@@ -21,7 +21,7 @@ export function* ordersHistorySaga(action: UserOrdersHistoryFetch) {
         let nextPageExists = false;
 
         if (data.length === limit) {
-            params = { ...params, page: (pageIndex + 1) * limit + 1, limit: 1 };
+            params = { ...params, page: (pageIndex + 1) * limit, limit: 1 };
             const checkData = yield call(API.get(ordersOptions), `/market/orders?${buildQueryString(params)}`);
 
             if (checkData.length === 1) {
