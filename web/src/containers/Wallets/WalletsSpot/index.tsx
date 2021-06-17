@@ -520,11 +520,11 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
 
         return (
-            <React.Fragment>
+            <div>
                 {!otp && <WarningMessage children={this.renderWithdrawOTP()} hint="Lorem ipsum"/>}
                 {level < memberLevels?.withdraw.minimum_level && <WarningMessage children={this.renderWithdrawWarningKYC()} hint="Lorem ipsum"/>}
                 {!currencyItem?.networks && <WarningMessage children={this.renderWithdrawWarningNoNetworks()} hint="Lorem ipsum"/>}
-            </React.Fragment>
+            </div>
         );
     };
 

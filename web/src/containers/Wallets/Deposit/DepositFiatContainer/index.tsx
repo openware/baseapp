@@ -8,11 +8,9 @@ import {
 } from '../../../../components';
 import {
     Wallet,
-    Currency,
     User,
     selectWallets,
     selectUserInfo,
-    selectCurrencies,
 } from '../../../../modules';
 import { WalletHistory } from '../../History';
 import { DEFAULT_WALLET } from '../../../../constants';

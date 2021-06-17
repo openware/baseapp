@@ -17,8 +17,9 @@ interface Props {
     handleToggleConfirmationModal: () => void;
 }
 
-
 const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
+    const { beneficiariesAddData } = props;
+
     const [confirmationModalCode, setConfirmationModalCode] = React.useState('');
     const [confirmationModalCodeFocused, setConfirmationModalCodeFocused] = React.useState(false);
 
@@ -26,8 +27,6 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
     const dispatch = useDispatch();
 
     const isMobileDevice = useSelector(selectMobileDeviceState);
-
-    const { beneficiariesAddData } = props;
 
     const handleChangeFieldValue = React.useCallback((key: string, value: string) => {
         setConfirmationModalCode(value);
