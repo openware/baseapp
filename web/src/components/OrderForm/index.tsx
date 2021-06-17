@@ -264,10 +264,10 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             case 'Take-limit':
                 return (
                     <div className="cr-price-inputs">
-                        {this.renderPrice()}
                         <div className="cr-price-inputs__trigger">
                             {this.renderTrigger()}
                         </div>
+                        {this.renderPrice()}
                     </div>
                 );
             case 'Market':
