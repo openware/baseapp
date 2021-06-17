@@ -142,7 +142,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         );
     }
 
-    if (depositAddress.state === 'disabled') {
+    if (props.disabled) {
         return (
             <div className="cr-deposit-crypto__disabled">
                 <div className="cr-deposit-crypto__disabled-wrapper">

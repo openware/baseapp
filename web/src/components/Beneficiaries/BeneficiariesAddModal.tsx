@@ -453,7 +453,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         isMobileDevice ?
             <Modal
                 title={formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.header' })}
-                onClose={props.handleToggleAddAddressModal}
+                onClose={handleToggleAddAddressModal}
                 isOpen>
                 {renderContent()}
             </Modal> : renderContent()

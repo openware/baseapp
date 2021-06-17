@@ -11,7 +11,6 @@ export function* feeGroupSaga(action: FeeGroupFetch) {
     try {
         const feeGroup = yield call(API.get(FeeGroupOption), '/account/members/me');
         yield put(feeGroupData(feeGroup));
-        yield put(alertPush({message: ['success.fee.group.action'], type: 'success'}));
     } catch (error) {
         yield put(sendError({
             error,
