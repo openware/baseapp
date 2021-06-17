@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects';
-import { alertPush, sendError } from '../../../';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { withdrawLimitData, withdrawLimitError, WithdrawLimitFetch } from '../actions';
 

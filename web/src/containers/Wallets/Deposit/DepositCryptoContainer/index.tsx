@@ -76,9 +76,9 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const handleOnCopy = () => dispatch(alertPush({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'}));
 
     const onTabChange = label => {
-        const blockchain = currencyItem.networks?.find(item => item.protocol?.toUpperCase() === label || item.blockchgain_key?.toUpperCase() === label);
+        const blockchainItem = currencyItem.networks?.find(item => item.protocol?.toUpperCase() === label || item.blockchgain_key?.toUpperCase() === label);
 
-        setTab(blockchain.blockchain_key);
+        setTab(blockchainItem.blockchain_key);
     };
 
     const onCurrentTabChange = index => setCurrentTabIndex(index);

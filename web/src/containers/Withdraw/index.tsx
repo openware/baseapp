@@ -1,6 +1,9 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button, OverlayTrigger } from 'react-bootstrap';
+import { injectIntl } from 'react-intl';
+import { compose } from 'redux';
+import { IntlProps } from 'src';
 import {
     Beneficiaries,
     CustomInput,
@@ -54,7 +57,9 @@ interface WithdrawState {
     total: string;
 }
 
-export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
+type Props = WithdrawProps & IntlProps;
+
+class WithdrawComponent extends React.Component<Props, WithdrawState> {
     public state = {
         amount: '',
         beneficiary: defaultBeneficiary,
@@ -75,6 +80,8 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             });
         }
     }
+
+    public translate = (id: string) => this.props.intl.formatMessage({ id });
 
     public render() {
         const {
@@ -115,7 +122,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
 
         return (
             <React.Fragment>
-                <h3 className="cr-withdraw-title">Withdrawal details</h3>
+                <h3 className="cr-withdraw-title">{this.translate('page.body.wallets.withdraw.details')}</h3>
                 <div className={cx}>
                     <div className="cr-withdraw__group">
                         <div className="cr-withdraw-column">
@@ -138,14 +145,14 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                                         </div>
                                     </OverlayTrigger>
                                     <span>
-                                        Min withdraw:&nbsp;
+                                        {this.translate('page.body.wallets.beneficiaries.min.withdraw')}&nbsp;
                                         <span className="cr-withdraw__group__warning-currency">
                                             <Decimal fixed={fixed} thousSep=",">{blockchainItem?.min_withdraw_amount?.toString()}</Decimal>&nbsp;{currency.toUpperCase()}
                                         </span>
                                     </span>
                                 </div>
                                 <div className="cr-withdraw__group__network">
-                                    <h5>Blockchain Network</h5>
+                                    <h5>{this.translate('page.body.wallets.withdraw.blockchain.network')}</h5>
                                     <OverlayTrigger
                                         placement="right"
                                         delay={{ show: 250, hide: 300 }}
@@ -164,7 +171,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                                                 <div className="cr-withdraw-blockchain-item__withdraw">{blockchainItem?.protocol?.toUpperCase()}</div>
                                             </div>
                                             <div className="cr-withdraw-blockchain-item-block">
-                                                <div className="cr-withdraw-blockchain-item__fee"><span>Fee:&nbsp;</span><Decimal fixed={fixed} thousSep=",">{blockchainItem?.withdraw_fee?.toString()}</Decimal> {currency.toUpperCase()}</div>
+                                                <div className="cr-withdraw-blockchain-item__fee"><span>{this.translate('page.body.wallets.beneficiaries.fee')}&nbsp;</span><Decimal fixed={fixed} thousSep=",">{blockchainItem?.withdraw_fee?.toString()}</Decimal> {currency.toUpperCase()}</div>
                                                 <div className="cr-withdraw-blockchain-item__estimated-value">≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedValueFee.toString()}</Decimal> {GLOBAL_PLATFORM_CURRENCY}</div>
                                             </div>
                                         </div>
@@ -300,3 +307,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         });
     };
 }
+
+export const Withdraw = compose(
+    injectIntl,
+)(WithdrawComponent) as any; // tslint:disable-this-line:no-any
