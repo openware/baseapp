@@ -286,6 +286,15 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankName': 'Intermediary Bank Name (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode': 'Intermediary Bank Swift Code (optional)',
 
+    'page.body.wallets.beneficiaries.network.fee': 'Network Fee',
+    'page.body.wallets.beneficiaries.min.withdraw': 'Min. withdraw:',
+    'page.body.wallets.beneficiaries.fee': 'Fee:',
+    'page.body.wallets.beneficiaries.tab.panel.add.whitelisted': 'Add Whitelisted',
+    'page.body.wallets.beneficiaries.tab.panel.whitelisted': 'Whitelisted',
+
+    'page.body.wallets.withdraw.blockchain.network': 'Blockchain Network',
+    'page.body.wallets.withdraw.details': 'Withdrawal details',
+
     'page.body.wallets.beneficiaries.addAddressModal.body.button': 'Submit for confirmation',
 
     'page.body.wallets.beneficiaries.confirmationModal.header': 'Confirm new address',

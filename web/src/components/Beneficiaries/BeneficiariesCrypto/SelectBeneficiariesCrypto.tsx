@@ -3,7 +3,13 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { OverlayTrigger } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { selectCurrencies, selectBeneficiaries, Beneficiary } from '../../../modules';
+import {
+    selectCurrencies,
+    selectBeneficiaries,
+    Beneficiary,
+    Currency,
+    BlockchainCurrencies,
+} from '../../../modules';
 import { TrashBin } from '../../../assets/images/TrashBin';
 import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../../constants';
 import { Decimal, Tooltip  } from '../../../components';
@@ -16,19 +22,19 @@ interface SelectBeneficiariesCryptoProps {
     handleDeleteAddress: (item: Beneficiary) => () => void;
 }
 
-export const SelectBeneficiariesCrypto = (props: SelectBeneficiariesCryptoProps) => {
+export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiariesCryptoProps> = (props: SelectBeneficiariesCryptoProps) => {
     const { currency, blockchainKey } = props;
 
     const { formatMessage } = useIntl();
 
     const currencies = useSelector(selectCurrencies);
     const beneficiaries: Beneficiary[] = useSelector(selectBeneficiaries);
-    const currencyItem = currencies.find(item => item.id === currency);
-    const blockchainItem = currencyItem?.networks.find(item => item.blockchain_key === blockchainKey);
+    const currencyItem: Currency = currencies.find(item => item.id === currency);
+    const blockchainItem: BlockchainCurrencies = currencyItem?.networks.find(item => item.blockchain_key === blockchainKey);
     const estimatedValueFee = +currencyItem?.price * +blockchainItem?.withdraw_fee;
 
 
-    const renderBeneficiaryItem = (item, index) => {
+    const renderBeneficiaryItem = React.useCallback((item, index) => {
         const isPending = item.state && item.state.toLowerCase() === 'pending';
         const itemClassName = classnames('pg-beneficiaries__dropdown__body__item', 'item', {
             'item--pending': isPending,
@@ -36,8 +42,8 @@ export const SelectBeneficiariesCrypto = (props: SelectBeneficiariesCryptoProps)
 
         if (item.blockchain_key === blockchainKey) {
             return (
-                <div key={index} onClick={props.handleClickSelectAddress(item)} className={itemClassName}>
-                    <div className="item__left">
+                <div key={index} className={itemClassName}>
+                    <div className="item__left" onClick={props.handleClickSelectAddress(item)}>
                         <span className="item__left__title">
                             {item.name}
                         </span>
@@ -67,10 +73,10 @@ export const SelectBeneficiariesCrypto = (props: SelectBeneficiariesCryptoProps)
                     </div>
                 </div>
             );
-        }
+        };
 
         return null;
-    }
+    }, [beneficiaries])
 
     return (
             <div className="cr-beneficiary-blockchain-item" key={blockchainKey}>
@@ -82,8 +88,14 @@ export const SelectBeneficiariesCrypto = (props: SelectBeneficiariesCryptoProps)
                                 <div className="cr-withdraw-blockchain-item__withdraw">{blockchainItem?.protocol?.toUpperCase()}</div>
                             </div>
                             <div className="cr-withdraw-blockchain-item-block">
-                                <div className="cr-withdraw-blockchain-item__fee"><span>Fee:&nbsp;</span><Decimal fixed={currencyItem?.precision} thousSep=",">{blockchainItem?.withdraw_fee?.toString()}</Decimal> {currency.toUpperCase()}</div>
-                                <div className="cr-withdraw-blockchain-item__estimated-value">≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedValueFee.toString()}</Decimal> {GLOBAL_PLATFORM_CURRENCY}</div>
+                                <div className="cr-withdraw-blockchain-item__fee">
+                                    <span>{formatMessage({ id: 'page.body.wallets.beneficiaries.fee' })}&nbsp;</span><Decimal fixed={currencyItem?.precision} thousSep=",">{blockchainItem?.withdraw_fee?.toString()}</Decimal>
+                                    &nbsp;{currency.toUpperCase()}
+                                </div>
+                                <div className="cr-withdraw-blockchain-item__estimated-value">
+                                    ≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedValueFee.toString()}</Decimal>
+                                    &nbsp;{GLOBAL_PLATFORM_CURRENCY}
+                                </div>
                             </div>
                         </div>
                     </div>

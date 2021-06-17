@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects';
-import { alertPush, sendError } from '../../..';
+import { sendError } from '../../..';
 import { API, RequestOptions } from '../../../../api';
 import { userWithdrawalsData, userWithdrawalsError, UserWithdrawalsFetch } from '../actions';
 
@@ -11,7 +11,6 @@ export function* walletsUserWithdrawalsSaga(action: UserWithdrawalsFetch) {
     try {
         const feeGroup = yield call(API.get(FeeGroupOption), 'account/withdraws/sums');
         yield put(userWithdrawalsData(feeGroup));
-        yield put(alertPush({message: ['success.user.withdraws.action'], type: 'success'}));
     } catch (error) {
         yield put(sendError({
             error,
