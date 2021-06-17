@@ -51,8 +51,10 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const [tab, setTab] = useState(currencyItem?.networks ? currencyItem?.networks[0]?.blockchain_key : '')
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
+    const blockchain = currencyItem.networks?.find(item => item.blockchain_key?.toLowerCase() === tab?.toLowerCase());
+
     useEffect(() => {
-        setTab(currencyItem?.networks ? currencyItem?.networks[0]?.blockchain_key.toUpperCase() : '');
+        setTab(currencyItem?.networks ? currencyItem?.networks[0]?.blockchain_key?.toUpperCase() : '');
     }, [wallet.currency]);
 
     const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab?.toLowerCase());
@@ -66,15 +68,15 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const buttonLabel = `${translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
 
     const handleGenerateAddress = useEffect(() => {
-            if (!depositAddress && wallets.length && wallet.type !== 'fiat' && currencyItem?.networks) {
+            if (!depositAddress && wallets.length && wallet.type !== 'fiat' && currencyItem?.networks && blockchain?.status !==' disabled' && tab?.toLowerCase() === blockchain?.blockchain_key?.toLowerCase() && tab) {
                 dispatch(walletsAddressFetch({ currency: wallets[selectedWalletIndex].currency, blockchain_key: tab }));
             }
-        }, [selectedWalletIndex, wallets, walletsAddressFetch, tab]);
+        }, [selectedWalletIndex, wallet, walletsAddressFetch, tab]);
 
     const handleOnCopy = () => dispatch(alertPush({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'}));
 
     const onTabChange = label => {
-        const blockchain = currencyItem.networks?.find(item => item.protocol.toUpperCase() === label);
+        const blockchain = currencyItem.networks?.find(item => item.protocol?.toUpperCase() === label || item.blockchgain_key?.toUpperCase() === label);
 
         setTab(blockchain.blockchain_key);
     };
@@ -82,9 +84,9 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const onCurrentTabChange = index => setCurrentTabIndex(index);
 
     const renderTabs = useMemo(() => {
-        return currencyItem.networks?.map(network => {
+        return currencyItem?.networks?.map(network => {
             return {
-                content: tab.toUpperCase() === network.blockchain_key?.toUpperCase() ?
+                content: tab?.toUpperCase() === network.blockchain_key?.toUpperCase() ?
                     <DepositCrypto
                         buttonLabel={buttonLabel}
                         copiableTextFieldText={translate('page.body.wallets.tabs.deposit.ccy.message.address')}
@@ -94,6 +96,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                         handleOnCopy={handleOnCopy}
                         text={text}
                         wallet={wallet}
+                        disabled={blockchain?.status === 'disabled'}
                         network={tab}
                     /> : null,
                 label: network.protocol?.toUpperCase() || network.blockchain_key?.toUpperCase(),
@@ -134,7 +137,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                 wallet={wallets[selectedWalletIndex]}
                 handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
             />
-            {currencyItem?.networks && user.level > memberLevels?.deposit.minimum_level &&
+            {currencyItem?.networks?.length && user.level > memberLevels?.deposit.minimum_level ?
                 <div className="cr-deposit-crypto-tabs">
                     <h3>{translate('page.body.wallets.tabs.deposit.ccy.details')}</h3>
                     <div className="cr-deposit-crypto-tabs__card">
@@ -156,7 +159,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                             onCurrentTabChange={onCurrentTabChange}
                         />
                     </div>
-                </div>}
+                </div> : null}
             {renderWarning}
             {wallet.currency && <WalletHistory label="deposit" type="deposits" currency={wallet.currency} />}
         </React.Fragment>

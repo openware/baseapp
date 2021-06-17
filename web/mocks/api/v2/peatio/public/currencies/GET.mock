@@ -40,7 +40,7 @@ Access-Control-Allow-Credentials: true
         "min_confirmations": 6,
         "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
         "explorer_address": "https://testnet.blockchain.info/address/#{address}",
-        "status": "enabled"
+        "status": "disabled"
       },
       {
         "id": 0,
