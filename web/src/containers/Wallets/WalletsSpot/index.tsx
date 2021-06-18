@@ -573,7 +573,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         const { currentTabIndex } = this.state;
 
         const nextWalletIndex = this.props.wallets.findIndex(
-            wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase()
+            wallet => wallet.currency?.toLowerCase() === value.currency.toLowerCase()
         );
 
         this.setState({
