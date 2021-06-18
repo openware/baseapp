@@ -67,11 +67,13 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const error = translate('page.body.wallets.tabs.deposit.ccy.message.pending');
     const buttonLabel = `${translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
 
-    const handleGenerateAddress = useEffect(() => {
-            if (!depositAddress && wallets.length && wallet.type !== 'fiat' && currencyItem?.networks && blockchain?.status !==' disabled' && tab?.toLowerCase() === blockchain?.blockchain_key?.toLowerCase() && tab) {
+    const handleGenerateAddress = () => {
+            if (!depositAddress && wallets.length && wallet.type !== 'fiat' &&
+                currencyItem?.networks && blockchain?.status !==' disabled' &&
+                tab?.toLowerCase() === blockchain?.blockchain_key?.toLowerCase()) {
                 dispatch(walletsAddressFetch({ currency: wallets[selectedWalletIndex].currency, blockchain_key: tab }));
             }
-        }, [selectedWalletIndex, wallet, walletsAddressFetch, tab]);
+        };
 
     const handleOnCopy = () => dispatch(alertPush({ message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'}));
 
@@ -92,7 +94,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                         copiableTextFieldText={translate('page.body.wallets.tabs.deposit.ccy.message.address')}
                         copyButtonText={translate('page.body.wallets.tabs.deposit.ccy.message.button')}
                         error={error}
-                        handleGenerateAddress={() => handleGenerateAddress}
+                        handleGenerateAddress={handleGenerateAddress}
                         handleOnCopy={handleOnCopy}
                         text={text}
                         wallet={wallet}

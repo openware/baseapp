@@ -112,7 +112,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         }
 
         if (beneficiaries.length) {
-            setTab('Whitelisted');
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
         }
     }, [beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess]);
 
@@ -351,10 +351,10 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         );
     }, []);
 
-    const handleCloseModals = React.useMemo(() => {
+    const handleCloseModals = () => {
         setAddressModalState(false);
         setConfirmationModalState(false);
-    }, [isOpenAddressModal, isOpenConfirmationModal])
+    }
 
     const onTabChange = label => setTab(label);
 
@@ -370,7 +370,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                             currency={currency}
                             handleDeleteAddress={handleDeleteAddress}
                             handleClickSelectAddress={handleClickSelectAddress} />) : null,
-                    label: 'Whitelisted',
+                    label: formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}),
                 },
                 {
                     content: tab === formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}) ? renderBeneficiariesAddModal : null,
@@ -420,7 +420,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                     <div className="cr-email-form__option">
                         <div className="cr-email-form__option-inner">
                             <LogoIcon />
-                            <HugeCloseIcon className="cr-email-form__option-inner-close" onClick={() => handleCloseModals}/>
+                            <HugeCloseIcon className="cr-email-form__option-inner-close" onClick={() => handleCloseModals()}/>
                         </div>
                     </div>
                 </div>
@@ -428,7 +428,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                 {renderTabPanel}
             </div>
         );
-    }, [renderTabPanel]);
+    }, [renderTabPanel, tab]);
 
     return (
         <div className="pg-beneficiaries">
