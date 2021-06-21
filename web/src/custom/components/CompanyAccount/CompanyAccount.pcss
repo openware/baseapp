@@ -1,0 +1,57 @@
+.cr-company-account {
+  &__title {
+    color: var(--primary-text-color);
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    margin: 24px 0;
+  }
+
+  &__content {
+    background: var(--body-background-color);
+    box-shadow: 0 2px 4px var(--shadow-color-level-1);
+    display: flex;
+    justify-content: space-between;
+    margin: 24px 0;
+    padding: 36px;
+
+    &__left {
+      .company-info {
+        align-items: center;
+        display: flex;
+
+        &__icon {
+          margin-right: 24px;
+        }
+
+        &__content {
+          &__name {
+            color: var(--primary-text-color);
+            font-size: 24px;
+            font-weight: bold;
+          }
+
+          &__id {
+            color: var(--secondary-text-color);
+            font-size: 12px;
+          }
+        }
+
+        &__status {
+          color: var(--system-green);
+          font-size: 18px;
+          margin-left: 24px;
+        }
+      }
+    }
+
+    &__right {
+      &__download {
+        background: var(--primary-cta-color);
+        color: var(--cta-layer-color);
+        height: 40px;
+        width: 192px;
+      }
+    }
+  }
+}

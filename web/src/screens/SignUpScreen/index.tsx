@@ -12,6 +12,7 @@ import {
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { SignUpCompanyForm, SignUpSelectionForm } from '../../custom/components';
 import { isUsernameEnabled } from '../../api';
 import { captchaType } from '../../api/config';
 import { Captcha, Modal, SignUpForm } from '../../components';
@@ -95,6 +96,7 @@ class SignUp extends React.Component<Props> {
         passwordErrorSecondSolved: false,
         passwordErrorThirdSolved: false,
         passwordPopUp: false,
+        signUpType: '',
     };
 
     private myRef = React.createRef<HTMLInputElement>();
@@ -170,56 +172,66 @@ class SignUp extends React.Component<Props> {
         return (
             <div className="pg-sign-up-screen">
                 <div className={className}>
-                    <SignUpForm
-                        labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
-                        labelSignUp={this.props.intl.formatMessage({ id: 'page.header.signUp'})}
-                        emailLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.email'})}
-                        passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.password'})}
-                        confirmPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.confirmPassword'})}
-                        referalCodeLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.referalCode'})}
-                        termsMessage={this.props.intl.formatMessage({ id: 'page.header.signUp.terms'})}
-                        refId={refId}
-                        handleChangeRefId={this.handleChangeRefId}
-                        isLoading={loading}
-                        onSignIn={this.handleSignIn}
-                        onSignUp={this.handleSignUp}
-                        username={username}
-                        handleChangeUsername={this.handleChangeUsername}
-                        email={email}
-                        handleChangeEmail={this.handleChangeEmail}
-                        password={password}
-                        handleChangePassword={this.handleChangePassword}
-                        confirmPassword={confirmPassword}
-                        handleChangeConfirmPassword={this.handleChangeConfirmPassword}
-                        hasConfirmed={hasConfirmed}
-                        clickCheckBox={this.handleCheckboxClick}
-                        validateForm={this.handleValidateForm}
-                        emailError={emailError}
-                        passwordError={passwordError}
-                        confirmationError={confirmationError}
-                        confirmPasswordFocused={confirmPasswordFocused}
-                        refIdFocused={refIdFocused}
-                        usernameFocused={usernameFocused}
-                        emailFocused={emailFocused}
-                        passwordFocused={passwordFocused}
-                        handleFocusUsername={this.handleFocusUsername}
-                        handleFocusEmail={this.handleFocusEmail}
-                        handleFocusPassword={this.handleFocusPassword}
-                        handleFocusConfirmPassword={this.handleFocusConfirmPassword}
-                        handleFocusRefId={this.handleFocusRefId}
-                        renderCaptcha={this.renderCaptcha()}
-                        reCaptchaSuccess={reCaptchaSuccess}
-                        geetestCaptchaSuccess={geetestCaptchaSuccess}
-                        captcha_response={captcha_response}
-                        currentPasswordEntropy={currentPasswordEntropy}
-                        passwordErrorFirstSolved={passwordErrorFirstSolved}
-                        passwordErrorSecondSolved={passwordErrorSecondSolved}
-                        passwordErrorThirdSolved={passwordErrorThirdSolved}
-                        passwordPopUp={passwordPopUp}
-                        myRef={this.myRef}
-                        passwordWrapper={this.passwordWrapper}
-                        translate={this.translate}
-                    />
+                    {this.state.signUpType === 'individual' ?
+                        <SignUpForm
+                            labelSignIn={this.props.intl.formatMessage({ id: 'page.header.signIn'})}
+                            labelSignUp={this.props.intl.formatMessage({ id: 'page.header.signUp'})}
+                            emailLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.email'})}
+                            passwordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.password'})}
+                            confirmPasswordLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.confirmPassword'})}
+                            referalCodeLabel={this.props.intl.formatMessage({ id: 'page.header.signUp.referalCode'})}
+                            termsMessage={this.props.intl.formatMessage({ id: 'page.header.signUp.terms'})}
+                            refId={refId}
+                            handleChangeRefId={this.handleChangeRefId}
+                            isLoading={loading}
+                            onSignIn={this.handleSignIn}
+                            onSignUp={this.handleSignUp}
+                            username={username}
+                            handleChangeUsername={this.handleChangeUsername}
+                            email={email}
+                            handleChangeEmail={this.handleChangeEmail}
+                            password={password}
+                            handleChangePassword={this.handleChangePassword}
+                            confirmPassword={confirmPassword}
+                            handleChangeConfirmPassword={this.handleChangeConfirmPassword}
+                            hasConfirmed={hasConfirmed}
+                            clickCheckBox={this.handleCheckboxClick}
+                            validateForm={this.handleValidateForm}
+                            emailError={emailError}
+                            passwordError={passwordError}
+                            confirmationError={confirmationError}
+                            confirmPasswordFocused={confirmPasswordFocused}
+                            refIdFocused={refIdFocused}
+                            usernameFocused={usernameFocused}
+                            emailFocused={emailFocused}
+                            passwordFocused={passwordFocused}
+                            handleFocusUsername={this.handleFocusUsername}
+                            handleFocusEmail={this.handleFocusEmail}
+                            handleFocusPassword={this.handleFocusPassword}
+                            handleFocusConfirmPassword={this.handleFocusConfirmPassword}
+                            handleFocusRefId={this.handleFocusRefId}
+                            renderCaptcha={this.renderCaptcha()}
+                            reCaptchaSuccess={reCaptchaSuccess}
+                            geetestCaptchaSuccess={geetestCaptchaSuccess}
+                            captcha_response={captcha_response}
+                            currentPasswordEntropy={currentPasswordEntropy}
+                            passwordErrorFirstSolved={passwordErrorFirstSolved}
+                            passwordErrorSecondSolved={passwordErrorSecondSolved}
+                            passwordErrorThirdSolved={passwordErrorThirdSolved}
+                            passwordPopUp={passwordPopUp}
+                            myRef={this.myRef}
+                            passwordWrapper={this.passwordWrapper}
+                            translate={this.translate}
+                        />
+                    : this.state.signUpType === 'company' ? 
+                        <SignUpCompanyForm
+                            handleGoBack={this.handleGoBackSignUpCompany}
+                        />
+                    : 
+                        <SignUpSelectionForm
+                            handleSelectSignUpType={this.handleSelectSignUpType}
+                        />
+                    }
                     <Modal
                         show={this.state.showModal}
                         header={this.renderModalHeader()}
@@ -479,6 +491,18 @@ class SignUp extends React.Component<Props> {
             passwordError: '',
         });
     };
+
+    private handleSelectSignUpType = type => {
+        this.setState({
+            signUpType: type,
+        });
+    };
+
+    private handleGoBackSignUpCompany = () => {
+        this.setState({
+            signUpType: '',
+        });
+    }
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({

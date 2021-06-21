@@ -4,6 +4,7 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { HeaderProfile } from 'src/custom/components';
 import { IntlProps } from '../../';
 import { showLanding } from '../../api';
 import { Logo } from '../../components';
@@ -51,6 +52,7 @@ interface LocationProps extends RouterProps {
 }
 
 const noHeaderRoutes = ['/confirm', '/restriction', '/maintenance', '/setup'];
+const landingHeaderRoutes = ['/signin', '/signup', '/forgot_password', '/email-verification', '/accounts/password_reset']
 
 type Props = ReduxProps & DispatchProps & IntlProps & LocationProps;
 
@@ -58,6 +60,7 @@ class Head extends React.Component<Props> {
     public render() {
         const { mobileWallet, location } = this.props;
         const tradingCls = location.pathname.includes('/trading') ? 'pg-container-trading' : '';
+        const landingCls = landingHeaderRoutes.find(p => p === location.pathname) ? 'pg-container-landing' : '';
         const shouldRenderHeader =
             !noHeaderRoutes.some((r) => location.pathname.includes(r)) && location.pathname !== '/';
 
@@ -67,7 +70,7 @@ class Head extends React.Component<Props> {
 
         return (
             <header className={`pg-header`}>
-                <div className={`pg-container pg-header__content ${tradingCls}`}>
+                <div className={`pg-container pg-header__content ${tradingCls} ${landingCls}`}>
                     <div
                         className={`pg-sidebar__toggler ${mobileWallet && 'pg-sidebar__toggler-mobile'}`}
                         onClick={this.openSidebar}>
@@ -86,6 +89,7 @@ class Head extends React.Component<Props> {
                     <div className="pg-header__navbar">
                         {this.renderMarketToolbar()}
                         <NavBar onLinkChange={this.closeMenu} />
+                        {this.renderHeaderProfile()}
                     </div>
                 </div>
             </header>
@@ -113,6 +117,14 @@ class Head extends React.Component<Props> {
         }
 
         return <HeaderToolbar />;
+    };
+
+    private renderHeaderProfile = () => {
+        if (landingHeaderRoutes.find(p => p === location.pathname)) {
+            return null;
+        }
+
+        return <HeaderProfile />;
     };
 
     private renderMarketToggler = () => {

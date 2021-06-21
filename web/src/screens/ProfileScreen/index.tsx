@@ -13,6 +13,7 @@ import {
     ProfileApiKeys,
     ProfileVerification,
 } from 'src/containers';
+import { CompanyAccount } from 'src/custom/components';
 import { useDocumentTitle } from 'src/hooks';
 import { selectAbilities } from 'src/modules';
 
@@ -32,6 +33,9 @@ export const ProfileScreen: FC = (): ReactElement => {
     const { routeTab } = useParams<ParamType>();
     const abilities = useSelector(selectAbilities);
 
+    //TODO: get info from user api
+    const isCompanyAccount = true;
+
     useDocumentTitle('Profile');
 
     useEffect(() => {
@@ -48,9 +52,9 @@ export const ProfileScreen: FC = (): ReactElement => {
                 setCurrentTabIndex(index);
             }
         } else {
-            history.push('/profile/security');
+            isCompanyAccount ? history.push('/profile/company') : history.push('/profile/security');
         }
-    }, [routeTab, tabMapping]);
+    }, [routeTab, tabMapping, isCompanyAccount]);
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
     const onCurrentTabChange = useCallback((index: number) => {
@@ -92,31 +96,36 @@ export const ProfileScreen: FC = (): ReactElement => {
 
     return (
         <div className="container pg-profile-page">
-            <div className="pg-profile-page__details">
-                <div className="pg-profile-top">
-                    <div className="row">
-                        <div className="col-12 col-md-6 mx-0">
-                            <div className="row col-12 mx-0">
-                                <ProfileAuthDetails/>
+            {isCompanyAccount ?
+                <React.Fragment>
+                    <CompanyAccount />
+                </React.Fragment>
+                : <div className="pg-profile-page__details">
+                    <div className="pg-profile-top">
+                        <div className="row">
+                            <div className="col-12 col-md-6 mx-0">
+                                <div className="row col-12 mx-0">
+                                    <ProfileAuthDetails/>
+                                </div>
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <ProfileVerification/>
                             </div>
                         </div>
-                        <div className="col-12 col-md-6">
-                            <ProfileVerification/>
+                    </div>
+                    <div className="row">
+                        <div className="col-12">
+                            <TabPanel
+                                panels={renderTabs()}
+                                onTabChange={onTabChange}
+                                currentTabIndex={currentTabIndex}
+                                onCurrentTabChange={onCurrentTabChange}
+                            />
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-12">
-                        <TabPanel
-                            panels={renderTabs()}
-                            onTabChange={onTabChange}
-                            currentTabIndex={currentTabIndex}
-                            onCurrentTabChange={onCurrentTabChange}
-                        />
-                    </div>
-                </div>
-            </div>
-            {tab === 'security' && (
+            }
+            {(isCompanyAccount || tab === 'security') && (
                 <div className="row">
                     <div className="col-12">
                         <ProfileAccountActivity/>

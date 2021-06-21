@@ -1,0 +1,93 @@
+.cr-sign-up-company {
+  &__container {
+    display: flex;
+    justify-content: center;
+
+    &__form {
+      background-color: var(--body-background-color);
+      border-radius: 3px;
+      box-shadow: 0 10px 15px var(--shadow-color-level-2);
+      margin-top: 134px;
+      width: 424px;
+
+      &__header {
+        align-items: center;
+        background-color: var(--subheader-background-color);
+        border-bottom: 1px solid var(--divider-color-level-1);
+        border-radius: 3px;
+        color: var(--primary-text-color);
+        display: flex;
+        font-size: 14px;
+        font-weight: 600;
+        height: 60px;
+        justify-content: center;
+        letter-spacing: 0.04em;
+        position: relative;
+
+        .close-icon {
+          cursor: pointer;
+          position: absolute;
+          right: 18px;
+        }
+      }
+
+      &__content {
+        padding: 40px 36px 36px 36px;
+
+        &__description {
+          border-bottom: 1px solid var(--divider-color-level-1);
+          color: var(--secondary-contrast-cta-color);
+          font-size: 16px;
+          font-weight: normal;
+          letter-spacing: 0.1px;
+          padding: 0 8px 24px 8px;
+          text-align: center;
+        }
+
+        &__email {
+          color: var(--primary-cta-color);
+          cursor: pointer;
+          display: flex;
+          font-size: 16px;
+          justify-content: center;
+          padding-top: 24px;
+          text-decoration: underline;
+        }
+
+        &__button {
+          align-items: center;
+          background: var(--primary-cta-color);
+          border-radius: 4px;
+          color: var(--cta-layer-color);
+          cursor: pointer;
+          display: flex;
+          font-size: 14px;
+          font-weight: 600;
+          height: 40px;
+          justify-content: center;
+          letter-spacing: 0.04em;
+          margin: 12px 0;
+          width: 353px;
+
+          &:last-child {
+            background: #08c;
+            margin-bottom: 0;
+            position: relative;
+
+            span {
+              left: 72px;
+              position: absolute;
+            }
+          }
+        }
+
+        &__or {
+          color: var(--secondary-contrast-cta-color);
+          display: flex;
+          font-size: 16px;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

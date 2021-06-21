@@ -667,6 +667,7 @@ export const ru: LangType = {
     'page.header.signIn.resetPassword.error': 'Поля пустые или не совпадают',
 
     'page.header.signUp': 'Регистрация',
+    'page.header.signUp.createAccount': 'Create account',
     'page.header.signUp.username.minLength.error': 'Пожалуйста, введите больше символов. Минимальное колисчество символов - 4',
     'page.header.signUp.username.maxLength.error': 'Пожалуйста, введите меньше символов. Максимальное колисчество символов - 12',
     'page.header.signUp.username.uniqueness.error': 'This username is already taken',
@@ -1353,6 +1354,38 @@ export const ru: LangType = {
     'success.payment_method.created': 'Payment Method: successfully created',
     'success.payment_method.updated': 'Payment Method: successfully updated',
     'success.p2p.dispute.submit': 'Dispute has been successfully submitted',
+
+    'page.body.signup.selection.title': 'Sign Up',
+    'page.body.signup.selection.subtitle': 'Select your account type',
+    'page.body.signup.selection.individual': 'Individual',
+    'page.body.signup.selection.company': 'Companies',
+    'page.body.signup.company.title': 'Sign up as a company',
+    'page.body.signup.company.description': 'In order to sign up as a company contact us by email or chat with us on telegram.',
+    'page.body.signup.company.link.email': 'signup@openfinex.io',
+    'page.body.signup.company.button.email': 'Mail to Openfinex',
+    'page.body.signup.company.button.telegram': 'Open telegram chat',
+    'page.body.signup.company.or': 'Or',
+
+    'page.header.navbar.item.dashboard': 'Dashboard',
+    'page.header.navbar.item.trade': 'Trade',
+    'page.header.navbar.item.tradeHistory': 'Trade History',
+    'page.header.navbar.item.settlements': 'Settlements',
+    'page.header.profile.switchAccount': 'Switch Account',
+
+    'page.body.profile.header.company.profile.detail': 'Company details',
+    'page.body.profile.header.company.profile.account': 'Account',
+    'page.body.profile.header.company.profile.downloadBalance.title': 'Download Balance',
+    'page.body.profile.header.company.profile.downloadBalance.button': 'Download Balance',
+    'page.body.profile.header.company.profile.downloadBalance.chooseDate': 'Choose date',
+    'page.body.profile.header.company.profile.downloadBalance.chooseDate.from': 'From',
+    'page.body.profile.header.company.profile.downloadBalance.chooseDate.to': 'To',
+    'page.body.profile.header.company.profile.changePassword': 'Change password',
+
+    'page.body.profile.individual.title': 'Profile',
+    'page.body.profile.individual.logout': 'Log out',
+
+    'page.body.profile.company.status.active': 'Active',
+    'page.body.profile.company.status.banned': 'Banned',
 
     ...nationalitiesNames,
     ...mobileTranslationsRu,
