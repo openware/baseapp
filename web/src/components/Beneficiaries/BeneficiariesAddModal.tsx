@@ -348,7 +348,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                     list={currencyItem.networks.map(renderDropdownItem(currencyItem.name, currencyItem.precision, currencyItem.price))}
                     selectedValue={coinBlockchainName}
                     onSelect={handleChangenBlockchain}
-                    placeholder={formatMessage({ id: 'page.body.quick.exchange.label.currency' })}
+                    placeholder={formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.blockchain.networks' })}
                     clear={false}
                 />
                 {renderAddAddressModalBodyItem('coinBeneficiaryName')}
