@@ -139,7 +139,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
                                     <OverlayTrigger
                                         placement="right"
                                         delay={{ show: 250, hide: 300 }}
-                                        overlay={<Tooltip title="page.body.wallets.tabs.deposit.ccy.tip" />}>
+                                        overlay={<Tooltip title="page.body.wallets.tabs.withdraw.min.amount.tip" />}>
                                         <div className="cr-withdraw__group__warning-tip">
                                             <TipIcon />
                                         </div>
@@ -156,7 +156,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
                                     <OverlayTrigger
                                         placement="right"
                                         delay={{ show: 250, hide: 300 }}
-                                        overlay={<Tooltip title="page.body.wallets.tabs.deposit.ccy.tip" />}>
+                                        overlay={<Tooltip title="page.body.wallets.tabs.withdraw.ccy.tip" />}>
                                         <div className="cr-deposit-crypto-tabs__card-title-tip">
                                             <TipIcon />
                                         </div>

@@ -79,15 +79,23 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
 
     React.useEffect(() => {
         setAddressModalState(false);
+
+        if (beneficiaries.length && beneficiaries[0].currency !== currency) {
+            setWithdrawalBeneficiary(defaultBeneficiary);
+            setCurrentTabIndex(0);
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}));
+        }
     }, [currency])
 
     React.useEffect(() => {
-        setCurrentTabIndex(0);
-        setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+        if (beneficiaries.length) {
+            setCurrentTabIndex(0);
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+        }
     }, [isOpenConfirmationModal]);
 
     React.useEffect(() => {
-        if (beneficiaries) {
+        if (beneficiaries.length) {
             handleSetCurrentAddressOnUpdate(beneficiaries);
         }
 
@@ -118,6 +126,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
 
         if (beneficiaries.length) {
             setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+            setCurrentTabIndex(0);
         }
     }, [beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess]);
 

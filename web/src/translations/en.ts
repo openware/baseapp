@@ -190,7 +190,7 @@ export const en = {
     'page.body.wallets.tabs.deposit.ccy.button.address': 'address',
     'page.body.wallets.tabs.deposit.ccy.details': 'Deposit details',
     'page.body.wallets.tabs.deposit.ccy.blockchain.networks': 'Blockchain network',
-    'page.body.wallets.tabs.deposit.ccy.tip': 'Lorem ipsum',
+    'page.body.wallets.tabs.deposit.ccy.tip': 'Select a blockchain network that you want to use to send your deposit.',
     'page.body.wallets.tabs.deposit.ccy.hint.title': 'Send only {currency} to this deposit address.',
     'page.body.wallets.tabs.deposit.ccy.hint': 'Sending coin or token other than {currency} to this address may result in the loss of your deposit.',
     'page.body.wallets.tabs.deposit.ccy.disabled': 'Deposits of {currency} on that network is temporary suspended',
@@ -198,7 +198,9 @@ export const en = {
     'page.body.wallets.tabs.deposit.ccy.memo.warning': 'Both a MEMO and an Address are required to successfully deposit your USDT BEP2 tokens to Binance.',
     'page.body.wallets.warning.deposit.disabled': 'Deposit disabled: ',
     'page.body.wallets.warning.no.networks': 'No network configured for deposits',
-    'page.body.wallets.warning.deposit.verification': 'Withdraw are allowed after passing KYC verification',
+    'page.body.wallets.warning.deposit.verification': 'Deposit are allowed after passing KYC verification',
+    'page.body.wallets.warning.deposit.networks.hint': 'Currently, that currency can’t be deposited as no blockchain network was configured or enabled. Please, use another currency to make a deposit.',
+    'page.body.wallets.warning.deposit.kyc.hint': `Your current verification level doesn't allow you to make a deposit. Please, submit the required KYC information to get deposit permission.`,
     'page.body.wallets.warning.deposit.verification.button': 'Verify Your Account',
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Deposit using bank transfer',
@@ -222,7 +224,12 @@ export const en = {
     'page.body.wallets.warning.withdraw.disabled': 'Withdrawal disabled: ',
     'page.body.wallets.warning.withdraw.no.networks': 'No network configured for withdrawals',
     'page.body.wallets.warning.withdraw.verification': 'Withdraw are allowed after passing KYC verification',
+    'page.body.wallets.warning.withdraw.no.networks.hint': 'Currently, that currency can’t be withdrawed as no blockchain network was configured or enabled. Please, use another currency to make a withdraw.',
+    'page.body.wallets.warning.withdraw.verification.hint': `Your current verification level doesn't allow you to make a withdraw. Please, submit the required KYC information to get withdraw permission.`,
+    'page.body.wallets.warning.withdraw.otp.hint': '. Please, enable 2FA to get withdraw permission.',
     'page.body.wallets.warning.withdraw.verification.button': 'Verify Your Account',
+    'page.body.wallets.tabs.withdraw.ccy.tip': 'You are going to withdraw using network. To withdraw on a different network, create or use an existing beneficiary with a needed network.',
+    'page.body.wallets.tabs.withdraw.min.amount.tip': 'To create a withdrawal request the amount should be ≥ the minimum withdrawal amount',
 
     'page.body.wallets.tabs.withdraw.modal.title': 'Withdraw',
     'page.body.wallets.tabs.withdraw.modal.withdrawTo': 'Withdraw to',
@@ -239,7 +246,7 @@ export const en = {
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2FA',
 
     'page.body.wallets.tabs.withdraw.content.withdrawal.limit': 'Withdrawal limits',
-    'page.body.wallets.tabs.withdraw.content.withdrawal.limit.tip': 'Lorem ipsum',
+    'page.body.wallets.tabs.withdraw.content.withdrawal.limit.tip': 'Withdrawal limits depend on your group. Limits reset every 24h and every month correspondingly. Still, you can create a withdrawal request that exceeds your limit but it will be processed manually.',
 
     'success.beneficiaries.created': 'Beneficiaries: successfully created',
     'success.beneficiaries.activated': 'Beneficiaries: successfully activated',

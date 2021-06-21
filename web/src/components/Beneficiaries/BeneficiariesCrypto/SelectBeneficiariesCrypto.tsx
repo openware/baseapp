@@ -33,6 +33,32 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
     const blockchainItem: BlockchainCurrencies = currencyItem?.networks.find(item => item.blockchain_key === blockchainKey);
     const estimatedValueFee = +currencyItem?.price * +blockchainItem?.withdraw_fee;
 
+    const renderDropdownTipCryptoNote = React.useCallback((note: string) => {
+        return (
+            <div className="tip__content__block">
+                <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipDescription' })}</span>
+                <span className="tip__content__block__value">{note}</span>
+            </div>
+        );
+    }, []);
+
+    const renderDropdownTipCrypto = React.useCallback((address, beneficiaryName, description) => {
+            return (
+                <div className="pg-beneficiaries__dropdown__tip tip">
+                    <div className="tip__content">
+                        <div className="tip__content__block">
+                            <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipAddress' })}</span>
+                            <span className="tip__content__block__value">{address}</span>
+                        </div>
+                        <div className="tip__content__block">
+                            <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipName' })}</span>
+                            <span className="tip__content__block__value">{beneficiaryName}</span>
+                        </div>
+                        {description && renderDropdownTipCryptoNote(description)}
+                    </div>
+                </div>
+            );
+    }, []);
 
     const renderBeneficiaryItem = React.useCallback((item, index) => {
         const isPending = item.state && item.state.toLowerCase() === 'pending';
@@ -59,9 +85,9 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
                         ) : null}
                         <span className="item__right__tip">
                             <OverlayTrigger
-                                placement="left"
+                                placement="bottom"
                                 delay={{ show: 250, hide: 300 }}
-                                overlay={<Tooltip title="page.body.wallets.tabs.deposit.ccy.tip" />}>
+                                overlay={renderDropdownTipCrypto(item.name, item.data?.address, item.description)}>
                                 <div className="cr-withdraw__group__warning-tip">
                                     <TipIcon />
                                 </div>
