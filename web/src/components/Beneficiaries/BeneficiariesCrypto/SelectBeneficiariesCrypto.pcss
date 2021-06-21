@@ -1,3 +1,46 @@
+.pg-beneficiaries__dropdown__tip {
+  max-width: 300px;
+
+  .tip {
+    &__content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+  
+      &__block {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: var(--email-form-padding);
+        width: 100%;
+  
+        &:last-child {
+          margin-bottom: 0;
+        }
+  
+        &__label {
+          color: var(--secondary-contrast-cta-color);
+          font-size: 10px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 12px;
+        }
+  
+        &__value {
+          color: var(--primary-text-color);
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 18px;
+          opacity: 0.8;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
 .cr-beneficiary-blockchain-item {
   width: 100%;
   min-width: 456px;
@@ -12,7 +55,7 @@
 
   .pg-beneficiaries__dropdown__body {
     &__group {
-      margin-bottom: 24px;
+      margin-bottom: 36px;
       box-shadow: 0px 6px 12px var(--header-shadow-color-level-1);
     }
 

@@ -112,7 +112,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
             <span className="cr-warning-message--bold">{translate('page.body.wallets.warning.no.networks')}</span>
         </span>), []);
 
-    const renderWithdrawWarningKYC = useMemo(() => {
+    const renderDepositWarningKYC = useMemo(() => {
         return (
             <React.Fragment>
                 <span>{translate('page.body.wallets.warning.deposit.verification')}</span>
@@ -127,8 +127,8 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
     const renderWarning = useMemo(() => {
         return (
             <div>
-                {!currencyItem?.networks?.length && <WarningMessage children={renderWarningNoNetworks} hint="Lorem ipsum"/>}
-                {user.level < memberLevels?.deposit.minimum_level && <WarningMessage children={renderWithdrawWarningKYC} hint="Lorem ipsum"/>}
+                {!currencyItem?.networks?.length && <WarningMessage children={renderWarningNoNetworks} hint="page.body.wallets.warning.deposit.networks.hint"/>}
+                {user.level < memberLevels?.deposit.minimum_level && <WarningMessage children={renderDepositWarningKYC} hint="page.body.wallets.warning.deposit.kyc.hint"/>}
             </div>
         );
     }, [currencyItem, memberLevels]);

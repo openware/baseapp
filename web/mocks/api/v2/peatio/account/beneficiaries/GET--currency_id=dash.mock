@@ -1,0 +1,15 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+[
+  {"id":9,"currency":"dash","blockchain_key":"bitgo","name":"test","description":null,"data":{"address":"2MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"active"},
+  {"id":10,"currency":"dash","blockchain_key":"bitgo","name":"test1","description":null,"data":{"address":"3MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"active"},
+  {"id":11,"currency":"dash","blockchain_key":"bitgo","name":"test2","description":null,"data":{"address":"4MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
+  {"id":12,"currency":"dash","blockchain_key":"bitgo","name":"test3","description":null,"data":{"address":"5MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"active"},
+  {"id":13,"currency":"dash","blockchain_key":"trc20","name":"test4","description":null,"data":{"address":"6MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
+  {"id":14,"currency":"dash","blockchain_key":"trc20","name":"test5","description":null,"data":{"address":"7MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"active"}
+]
