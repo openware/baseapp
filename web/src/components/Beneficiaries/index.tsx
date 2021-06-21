@@ -82,6 +82,11 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     }, [currency])
 
     React.useEffect(() => {
+        setCurrentTabIndex(0);
+        setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+    }, [isOpenConfirmationModal]);
+
+    React.useEffect(() => {
         if (beneficiaries) {
             handleSetCurrentAddressOnUpdate(beneficiaries);
         }
@@ -352,6 +357,8 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     }, []);
 
     const handleCloseModals = () => {
+        setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+        setCurrentTabIndex(0);
         setAddressModalState(false);
         setConfirmationModalState(false);
     }
