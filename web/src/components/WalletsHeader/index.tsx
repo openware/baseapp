@@ -5,7 +5,7 @@ import { FilterInput } from '..';
 import { Wallet } from '../../modules';
 
 interface ParentProps {
-    wallets: Wallet[];
+    wallets: object[];
     nonZeroSelected: boolean;
     setFilterValue: (value: string) => void;
     setFilteredWallets: (value: Wallet[]) => void;

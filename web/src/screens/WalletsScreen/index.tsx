@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ChangeIcon } from 'src/assets/images/ChangeIcon';
 import { TabPanel } from 'src/components';
-import { CanCan, EstimatedValue, WalletsOverview, WalletsP2P, WalletsSpot, WalletsTransfer } from 'src/containers';
-import { OrganizationOverview } from 'src/custom/containers';
+import { CanCan, EstimatedValue, OrganizationHeader, OrganizationOverview, WalletsOverview, WalletsP2P, WalletsSpot, WalletsTransfer } from 'src/containers';
 import { useDocumentTitle, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
 import { selectAbilities, selectCurrencies, selectP2PWallets, selectWallets, Wallet } from 'src/modules';
 
@@ -136,22 +135,8 @@ export const WalletsScreen: FC = (): ReactElement => {
 
     //TODO: Get calculated values from new Peatio Api.
     return (
-        <div className="container pg-dashboard">
-            <div className="pg-dashboard__title">{translate('page.body.dashboard.title')}</div>
-            <div className="pg-dashboard__header">
-                <div className="pg-dashboard__header__box">
-                    <div className="pg-dashboard__header__box__label">{translate('page.body.dashboard.totalLimitValue')}</div>
-                    <div>$48,8981.31</div>
-                </div>
-                <div className="pg-dashboard__header__box">
-                    <div className="pg-dashboard__header__box__label">{translate('page.body.dashboard.available')}</div>
-                    <div>$48,8981.31</div>
-                </div>
-                <div className="pg-dashboard__header__box">
-                    <div className="pg-dashboard__header__box__label">{translate('page.body.dashboard.used')}</div>
-                    <div>$48,8981.31</div>
-                </div>
-            </div>
+        <div className="container">
+            {history.location.pathname.includes('/wallets/organization') ? <OrganizationHeader /> : <EstimatedValue wallets={mergedWallets} />}
             <div className="pg-wallets-tab">
                 <div className="pg-wallets-tab__tabs-content">
                     <TabPanel
