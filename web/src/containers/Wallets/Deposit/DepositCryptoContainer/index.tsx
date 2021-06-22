@@ -55,6 +55,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
 
     useEffect(() => {
         setTab(currencyItem?.networks ? currencyItem?.networks[0]?.blockchain_key?.toUpperCase() : '');
+        setCurrentTabIndex(0);
     }, [wallet.currency]);
 
     const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === tab?.toLowerCase());
