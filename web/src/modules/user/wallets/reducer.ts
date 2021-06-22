@@ -68,11 +68,21 @@ export const initialWalletsState: WalletsState = {
 const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
     if (list.length && payload.currencies?.length) {
         return list.map(wallet => {
+            window.console.log(payload.blockchain_key, payload.blockchain_key && wallet.deposit_addresses?.findIndex(item => item.blockchain_key === payload.blockchain_key) === -1);
             if (payload.currencies.includes(wallet.currency)) {
                 let depositAddresses: WalletAddress[] = [];
                 let depositAddress: WalletAddress = null;
+                const walletDepositAddressExist = wallet.deposit_addresses?.findIndex(item => item.blockchain_key === payload.blockchain_key) !== -1;
 
-                if (wallet.deposit_addresses && wallet.deposit_addresses.length) {
+                if (payload.blockchain_key && !walletDepositAddressExist) {
+                    const newDepositAddress = [{
+                        address: payload.address,
+                        currencies: payload.currencies,
+                        blockchain_key: payload.blockchain_key,
+                    }];
+
+                    depositAddresses = [...wallet.deposit_addresses, ...newDepositAddress];
+                } else if (wallet.deposit_addresses && wallet.deposit_addresses.length && walletDepositAddressExist) {
                     depositAddresses = wallet.deposit_addresses.map(address => {
                         if (address.blockchain_key === payload.blockchain_key) {
                             depositAddress = {
