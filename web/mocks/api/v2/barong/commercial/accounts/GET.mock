@@ -1,0 +1,33 @@
+HTTP/2 200
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+
+[
+    {
+        "id": 1,
+        "oid": "OID001",
+        "name": "Company A",
+        "uids": [
+            "IDFE10A90000"
+        ]
+    },
+    {
+        "id": 3,
+        "oid": "OID001AID001",
+        "name": "Group A1",
+        "uids": [
+            "IDFE10A90001",
+            "IDFE10A90002",
+            "IDFE10A90003"
+        ]
+    },
+    {
+        "id": 4,
+        "oid": "OID001AID002",
+        "name": "Group A2",
+        "uids": [
+            "IDFE10A90003"
+        ]
+    }
+]

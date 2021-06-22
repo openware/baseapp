@@ -1,0 +1,28 @@
+.cr-searchbox {
+  align-items: center;
+  background: var(--body-background-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px var(--shadow-color-level-1);
+  display: flex;
+  padding: 0 22px;
+  width: 100%;
+
+  &__input {
+    background: var(--body-background-color);
+    border: 0;
+    border-radius: 4px;
+    color: var(--primary-text-color);
+    font-size: 24px;
+    height: 80px;
+    padding: 0 18px;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: var(--secondary-contrast-cta-color);
+    }
+  }
+}

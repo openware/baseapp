@@ -16,6 +16,7 @@ const HeaderProfileComponent: React.FC = () => {
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
     const user = useSelector(selectUserInfo);
     const location = useLocation();
+    const history = useHistory();
 
     useEffect(() => {
         if (profileOpen) {
@@ -47,7 +48,7 @@ const HeaderProfileComponent: React.FC = () => {
                     <div className="account-switch__user__name">{isUsernameEnabled() ? user.username : user.email}</div>
                     <div className="account-switch__user__uid">{user.uid}</div>
                 </div>
-                <div className="account-switch__button">
+                <div className="account-switch__button" onClick={() => history.push('/accounts/switch')}>
                     <div className="account-switch__button__icon"><ChevronIcon /></div>
                 </div>
             </div>

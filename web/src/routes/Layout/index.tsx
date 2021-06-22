@@ -80,6 +80,9 @@ import {
     CreateP2POfferScreen,
     P2POrderScreen,
 } from '../../screens';
+import {
+    SwitchAccountScreen
+} from '../../custom/screens';
 
 interface ReduxProps {
     colorTheme: string;
@@ -321,6 +324,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                         <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile/verification" component={ProfileVerificationMobileScreen} />
                         <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile/theme" component={ProfileThemeMobileScreen} />
                         <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileMobileScreen} />
+                        <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/switch" component={SwitchAccountScreen} />
                         <Route exact={true} path="/trading/:market?" component={TradingScreenMobile} />
                         {showLanding() && <Route exact={true} path="/" component={LandingScreenMobile} />}
                         <Route path="**"><Redirect to="/trading/" /></Route>
@@ -367,6 +371,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/order/:id" component={P2POrderScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/:currency" component={P2POffersScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p" component={P2POffersScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/switch" component={SwitchAccountScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}

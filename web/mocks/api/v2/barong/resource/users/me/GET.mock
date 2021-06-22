@@ -80,7 +80,7 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
     "organization": {
         "id": 1,
         "code": "8899776611",
-        "name": "Delchain",
+        "name": "Openfinex",
         "status": "active"
     }
 }

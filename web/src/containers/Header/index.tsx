@@ -51,7 +51,7 @@ interface LocationProps extends RouterProps {
     };
 }
 
-const noHeaderRoutes = ['/confirm', '/restriction', '/maintenance', '/setup'];
+const noHeaderRoutes = ['/confirm', '/restriction', '/maintenance', '/setup', '/accounts/switch'];
 const landingHeaderRoutes = ['/signin', '/signup', '/forgot_password', '/email-verification', '/accounts/password_reset']
 
 type Props = ReduxProps & DispatchProps & IntlProps & LocationProps;

@@ -1387,6 +1387,10 @@ export const ru: LangType = {
     'page.body.profile.company.status.active': 'Active',
     'page.body.profile.company.status.banned': 'Banned',
 
+    'page.body.profile.account.switch.search': 'Search by client name or UID',
+
+    'success.account.switch': 'Account has been switch successfully',
+
     ...nationalitiesNames,
     ...mobileTranslationsRu,
 };
