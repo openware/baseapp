@@ -35,7 +35,7 @@ export const ProfileScreen: FC = (): ReactElement => {
     const user = useSelector(selectUserInfo);
 
     const isCompanyAccount = useCallback(() => {
-        return !!user.organization && window.env?.organizationEnabled;
+        return !!user.organization && window.env?.organization_enabled;
     }, [user]);
 
     useDocumentTitle('Profile');

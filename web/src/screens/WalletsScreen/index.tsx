@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ChangeIcon } from 'src/assets/images/ChangeIcon';
 import { TabPanel } from 'src/components';
 import { CanCan, EstimatedValue, WalletsOverview, WalletsP2P, WalletsSpot, WalletsTransfer } from 'src/containers';
+import { OrganizationOverview } from 'src/custom/containers';
 import { useDocumentTitle, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
 import { selectAbilities, selectCurrencies, selectP2PWallets, selectWallets, Wallet } from 'src/modules';
 
@@ -15,8 +16,8 @@ interface ParamType {
 }
 
 export const WalletsScreen: FC = (): ReactElement => {
-    const [tab, setTab] = useState<string>('');
-    const [tabMapping, setTabMapping] = useState<string[]>(['overview', 'spot']);
+    const [tab, setTab] = useState<any>({id: '', label: ''});
+    const [tabMapping, setTabMapping] = useState<any[]>([{id: 'overview', label: 'overview'}, {id: 'spot', label: 'spot'}]);
     const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
     const [mergedWallets, setMergedWallets] = useState<Wallet[]>([]);
 
@@ -50,14 +51,30 @@ export const WalletsScreen: FC = (): ReactElement => {
     }, [wallets, p2pWallets, currencies]);
 
     useEffect(() => {
-        if (abilities && CanCan.checkAbilityByAction('read', 'P2P', abilities)) {
-            setTabMapping(['overview', 'spot', 'p2p', 'transfer']);
+        if (window.env?.wallet_navs) {
+            const tabs = [
+                ...(window.env.wallet_navs.organization?.enabled && window.env?.organization_enabled ? [{id: window.env.wallet_navs.organization?.id, label: window.env.wallet_navs.organization?.label}] : []),
+                ...(window.env.wallet_navs.overview?.enabled ? [{id: window.env.wallet_navs.overview?.id, label: window.env.wallet_navs.overview?.label}] : []),
+                ...(window.env.wallet_navs.spot.enabled ? [{id: window.env.wallet_navs.spot?.id, label: window.env.wallet_navs.spot?.label}] : []),
+                ...(window.env.wallet_navs.p2p?.enabled && abilities && CanCan.checkAbilityByAction('read', 'P2P', abilities) ? [{id: window.env.wallet_navs.p2p?.id, label:window.env.wallet_navs.p2p?.label}] : []),
+                ...(window.env.wallet_navs.transfer?.enabled && abilities && CanCan.checkAbilityByAction('read', 'P2P', abilities) ? [{id: window.env.wallet_navs.transfer?.id, label:window.env.wallet_navs.transfer?.label}] : []),
+            ]
+            setTabMapping(tabs);
+        } else {
+            if (abilities && CanCan.checkAbilityByAction('read', 'P2P', abilities)) {
+                setTabMapping([
+                    {id: 'overview', label: 'Overview'},
+                    {id: 'spot', label: 'Spot'},
+                    {id: 'p2p', label: 'P2P'},
+                    {id: 'transfer', label: 'Transfer'},
+                ]);
+            }
         }
     }, [abilities]);
 
     useEffect(() => {
         if (routeTab) {
-            const index = tabMapping.indexOf(routeTab);
+            const index = tabMapping.findIndex(t => t.id === routeTab);
             if (index !== -1) {
                 setTab(routeTab);
                 setCurrentTabIndex(index);
@@ -70,45 +87,72 @@ export const WalletsScreen: FC = (): ReactElement => {
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
     const onCurrentTabChange = useCallback((index: number) => {
         setCurrentTabIndex(index);
-        history.push(`/wallets/${tabMapping[index]}`);
+        history.push(`/wallets/${tabMapping[index].id}`);
     }, [tabMapping]);
 
     const onTabChange = useCallback((index: number) => {
-        if (tab !== tabMapping[index]) {
+        if (tab.id !== tabMapping[index].id) {
             setTab(tabMapping[index]);
         }
     }, [tabMapping]);
 
     const renderTabs = React.useCallback(() => {
         const isP2PEnabled = CanCan.checkAbilityByAction('read', 'P2P', abilities);
-        const p2pTabs = [
-            {
-                content: currentTabIndex === 2 ? <WalletsP2P /> : null,
-                label: translate('page.body.wallets.tab.p2p'),
-            },
-            {
-                content: currentTabIndex === 3 ? <WalletsTransfer currency={currency} /> : null,
-                label: <div><ChangeIcon className="icon" />{translate('page.body.wallets.tab.transfer')}</div>,
-            },
-        ];
 
-        return [
-            {
-                content: currentTabIndex === 0 ? <WalletsOverview isP2PEnabled={isP2PEnabled} /> : null,
-                label: translate('page.body.wallets.tab.overview'),
-            },
-            {
-                content: currentTabIndex === 1 ? <WalletsSpot currency={currency} action={action}/> : null,
-                label: translate('page.body.wallets.tab.spot'),
-            },
-            ...(isP2PEnabled ? p2pTabs : []),
-        ];
-    }, [currentTabIndex, currency, action, abilities, history, translate]);
+        const availableTabs = tabMapping.reduce((acc, val) => {
+            switch (val.id) {
+                case 'overview':
+                    return [ ...acc, {
+                            content: tabMapping[currentTabIndex].id === val.id ? <WalletsOverview isP2PEnabled={isP2PEnabled} /> : null,
+                            label: window.env?.wallet_navs?.overview?.label || translate('page.body.wallets.tab.overview')
+                        }];
+                case 'spot':
+                    return [ ...acc, {
+                            content: tabMapping[currentTabIndex].id === val.id ?  <WalletsSpot currency={currency} action={action}/> : null,
+                            label: window.env?.wallet_navs?.spot?.label || translate('page.body.wallets.tab.spot')
+                        }];
+                case 'p2p':
+                    return [ ...acc, {
+                            content: tabMapping[currentTabIndex].id === val.id ?  <WalletsP2P /> : null,
+                            label: window.env?.wallet_navs?.p2p?.label || translate('page.body.wallets.tab.p2p')
+                        }];
+                case 'transfer':
+                    return [ ...acc, {
+                            content: tabMapping[currentTabIndex].id === val.id ?  <WalletsTransfer currency={currency} /> : null,
+                            label: window.env?.wallet_navs?.transfer?.label || translate('page.body.wallets.tab.transfer')
+                        }];
+                case 'organization':
+                    return [ ...acc, {
+                            content: tabMapping[currentTabIndex].id === val.id ?  <OrganizationOverview isP2PEnabled={isP2PEnabled} /> : null,
+                            label: window.env?.wallet_navs?.organization?.label || translate('page.body.wallets.tab.organization')
+                        }];
+                default:
+                    return [...acc];
+            }
+        }, []);
 
+        return availableTabs;
+    }, [currentTabIndex, currency, action, abilities, history, tabMapping, translate]);
+
+    //TODO: Get calculated values from new Peatio Api.
     return (
-        <React.Fragment>
-            <EstimatedValue wallets={mergedWallets} />
-            <div className="pg-wallets-tab pg-container">
+        <div className="container pg-dashboard">
+            <div className="pg-dashboard__title">{translate('page.body.dashboard.title')}</div>
+            <div className="pg-dashboard__header">
+                <div className="pg-dashboard__header__box">
+                    <div className="pg-dashboard__header__box__label">{translate('page.body.dashboard.totalLimitValue')}</div>
+                    <div>$48,8981.31</div>
+                </div>
+                <div className="pg-dashboard__header__box">
+                    <div className="pg-dashboard__header__box__label">{translate('page.body.dashboard.available')}</div>
+                    <div>$48,8981.31</div>
+                </div>
+                <div className="pg-dashboard__header__box">
+                    <div className="pg-dashboard__header__box__label">{translate('page.body.dashboard.used')}</div>
+                    <div>$48,8981.31</div>
+                </div>
+            </div>
+            <div className="pg-wallets-tab">
                 <div className="pg-wallets-tab__tabs-content">
                     <TabPanel
                         panels={renderTabs()}
@@ -118,7 +162,6 @@ export const WalletsScreen: FC = (): ReactElement => {
                     />
                 </div>
             </div>
-        </React.Fragment>
-
+        </div>
     );
 };

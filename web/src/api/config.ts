@@ -45,6 +45,33 @@ export const defaultConfig: Config = {
     barong_upload_size_min_range: '1',
     barong_upload_size_max_range: '20',
     themeSwitcher: 'visible',
+    wallet_navs: {
+        overview: {
+            id: 'overview',
+            label: 'Overview',
+            enabled: true,
+        },
+        spot: {
+            id: 'spot',
+            label: 'Spot',
+            enabled: true
+        },
+        p2p: {
+            id: 'p2p',
+            label: 'P2P',
+            enabled: false
+        },
+        transfer: {
+            id: 'transfer',
+            label: 'P2P',
+            enabled: false
+        },
+        organization: {
+            id: 'organization',
+            label: 'Overview',
+            enabled: false
+        }
+    }
 };
 
 export const Cryptobase = {

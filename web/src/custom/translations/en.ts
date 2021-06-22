@@ -41,4 +41,18 @@ export const en = {
     'page.body.profile.account.switch.search': 'Search by client name or UID',
 
     'success.account.switch': 'Account has been switch successfully',
+
+    'page.body.dashboard.title': 'Account Dashboard',
+    'page.body.dashboard.asset': 'Asset',
+    'page.body.dashboard.totalLimitValue': 'Total limit value USD',
+    'page.body.dashboard.totalDailyLimit': 'Total daily limit',
+    'page.body.dashboard.available': 'Available',
+    'page.body.dashboard.used': 'Used',
+    'page.body.dashboard.trade': 'Trade',
+    'page.body.dashboard.tab.otc': 'OTC',
+    'page.body.wallets.overview.nonZero': 'Hide Small Balances',
+    'page.body.wallets.overview.header.action': 'Action',
+    'page.body.wallets.overview.search': 'Search asset',
+
+    'page.body.wallets.tab.organization': 'Organization Overview',
 };

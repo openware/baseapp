@@ -39,5 +39,32 @@ Access-Control-Allow-Credentials: true
     "wizard_step": "false",
     "msPricesUpdates": "1000",
     "themeSwitcher": "visible",
-    "organizationEnabled": true
+    "organization_enabled": true,
+    "wallet_navs": {
+        "overview": {
+            "id": "overview",
+            "label": "Overview",
+            "enabled": false
+        },
+        "spot": {
+            "id": "spot",
+            "label": "Deposit",
+            "enabled": true
+        },
+        "p2p": {
+            "id": "p2p",
+            "label": "P2P",
+            "enabled": false
+        },
+        "transfer": {
+            "id": "transfer",
+            "label": "Transfer",
+            "enabled": false
+        },
+        "organization": {
+            "id": "organization",
+            "label": "Overview",
+            "enabled": true
+        }
+    }
 }

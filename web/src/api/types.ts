@@ -38,11 +38,24 @@ declare global {
         barong_upload_size_min_range?: string;
         barong_upload_size_max_range?: string;
         themeSwitcher: 'visible' | 'hidden';
-        organizationEnabled?: string | boolean;
+        organization_enabled?: string | boolean;
+        wallet_navs?: {
+            overview: WalletTabConfig;
+            spot: WalletTabConfig;
+            p2p: WalletTabConfig;
+            transfer: WalletTabConfig;
+            organization: WalletTabConfig;
+        }
     }
 
     interface Window {
         env: Config;
+    }
+
+    interface WalletTabConfig {
+        id: string,
+        label: string,
+        enabled: boolean,
     }
 }
 

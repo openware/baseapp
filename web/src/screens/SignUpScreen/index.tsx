@@ -161,7 +161,7 @@ class SignUp extends React.Component<Props> {
     }
 
     private renderSignUp = () => {
-        if (window.env?.organizationEnabled) {
+        if (window.env?.organization_enabled) {
             return this.state.signUpType === 'individual' ? this.renderIndividualSignUp()
                 : this.state.signUpType === 'company' ? this.renderOrganizationSignUp()
                 : this.renderSelectSignUpType();

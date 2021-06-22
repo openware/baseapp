@@ -1336,7 +1336,7 @@ export const ru: LangType = {
     'page.body.wallets.overview.action.transfer': 'Transfer',
     'page.body.wallets.overview.action.p2p': 'P2P',
     'page.body.wallets.overview.seach': 'Search',
-    'page.body.wallets.overview.nonZero': 'Non Zero Balances',
+    'page.body.wallets.overview.nonZero': 'Hide Small Balances',
     'page.body.wallets.transfers.transferType': 'Transfer Type',
     'page.body.wallets.transfers.from': 'From',
     'page.body.wallets.transfers.to': 'To',
@@ -1390,6 +1390,19 @@ export const ru: LangType = {
     'page.body.profile.account.switch.search': 'Search by client name or UID',
 
     'success.account.switch': 'Account has been switch successfully',
+
+    'page.body.dashboard.title': 'Account Dashboard',
+    'page.body.dashboard.asset': 'Asset',
+    'page.body.dashboard.totalLimitValue': 'Total limit value USD',
+    'page.body.dashboard.totalDailyLimit': 'Total daily limit',
+    'page.body.dashboard.available': 'Available',
+    'page.body.dashboard.used': 'Used',
+    'page.body.dashboard.trade': 'Trade',
+    'page.body.dashboard.tab.otc': 'OTC',
+    'page.body.wallets.overview.header.action': 'Action',
+    'page.body.wallets.overview.search': 'Search asset',
+
+    'page.body.wallets.tab.organization': 'Organization Overview',
 
     ...nationalitiesNames,
     ...mobileTranslationsRu,
