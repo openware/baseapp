@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { validateBeneficiaryAddress } from '../../helpers/validateBeneficiaryAddress';
 import { Modal } from '../../mobile/components/Modal';
 import {
+    alertPush,
     beneficiariesCreate,
     BeneficiaryBank,
+    selectBeneficiariesCreateError,
     selectMobileDeviceState,
 } from '../../modules';
 import { CustomInput } from '../CustomInput';
@@ -48,6 +50,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
 
+    const beneficiariesAddError = useSelector(selectBeneficiariesCreateError);
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const isRipple = React.useMemo(() => currency === 'xrp', [currency]);
 
@@ -87,6 +90,14 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [handleToggleAddAddressModal]);
+
+    React.useEffect(() => {
+        if (beneficiariesAddError && beneficiariesAddError.message) {
+            if (beneficiariesAddError.message.indexOf('account.withdraw.not_permitted') > -1) {
+                dispatch(alertPush({ message: beneficiariesAddError.message, type: 'error'}));
+            }
+        }
+    }, [beneficiariesAddError, dispatch]);
 
     const renderAddAddressModalHeader = React.useMemo(() => {
         return (
