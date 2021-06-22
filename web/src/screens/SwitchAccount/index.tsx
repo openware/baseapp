@@ -49,13 +49,9 @@ export const SwitchAccountScreen: React.FC = () => {
     }, []);
 
     const renderAccounts = useMemo(() => {
-        const list = accounts.reduce((acc, org) => {
-            return [...acc, ...org.uids.map(uid => { return {name: org.name, uid, oid: org.oid}})];
-        }, []);
-
-        const searchList = list.length ? [
+        const searchList = accounts.length ? [
                     getSearchLabel('ALL'),
-                    ...list.map(account => {
+                    ...accounts.map(account => {
                         return (
                             <div className="pg-switch-account__container__body__accounts__item" onClick={() => handleSwitchAccount(account.oid, account.uid)}>
                                 <div className="pg-switch-account__container__body__accounts__item__name">{account.name}</div>

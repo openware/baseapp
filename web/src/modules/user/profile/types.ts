@@ -27,7 +27,11 @@ export interface Organization {
     status: string,
 }
 
-export interface User {
+export interface OrganizationUser {
+    oid?: string;
+}
+
+export interface User extends OrganizationUser {
     username?: string;
     email: string;
     level: number;
