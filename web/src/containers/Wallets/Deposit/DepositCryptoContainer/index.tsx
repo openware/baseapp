@@ -104,7 +104,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                 label: network.protocol?.toUpperCase() || network.blockchain_key?.toUpperCase(),
             };
         })
-    }, [currencyItem, tab])
+    }, [currencyItem, tab, wallet])
 
 
     const renderWarningNoNetworks = useMemo(() => (

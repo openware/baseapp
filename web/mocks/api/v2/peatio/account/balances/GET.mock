@@ -65,14 +65,7 @@ Access-Control-Allow-Credentials: true
         "balance":"0.0",
         "locked":"0.0",
         "account_type": "spot",
-        "deposit_addresses": [
-            {
-                "currencies": ["eth", "ltc"],
-                "address":"0x00eec1e95026faf0412d7a29b94d514d31446141",
-                "state":"active",
-                "blockchain_key": "erc20"
-            }
-        ]
+        "deposit_addresses": null
     },
     {
         "currency":"dash",
