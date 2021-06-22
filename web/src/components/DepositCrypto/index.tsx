@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
