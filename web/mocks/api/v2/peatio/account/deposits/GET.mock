@@ -339,5 +339,25 @@ Access-Control-Allow-Credentials: true
    "confirmations":5,
    "completed_at":"2018-08-29T21:29:19+02:00",
    "state":"accepted"
+  },
+  {"id":304,
+   "currency":"btc",
+   "amount":"100.0",
+   "fee":"0.0",
+   "txid":"11b2818546e1e4c54ca1d38b60e10a2c170d3e2c1d98425e38d902c092ecebbc",
+   "created_at":"2018-08-29T21:29:20+02:00",
+   "confirmations": "N/A",
+   "completed_at": null,
+   "state":"fee_processing"
+  },
+  {"id":305,
+   "currency":"btc",
+   "amount":"200.0",
+   "fee":"0.0",
+   "txid":"12b2818546e1e4c54ca1d38b60e10a2c170d3e2c1d98425e38d902c092ecebbc",
+   "created_at":"2018-08-29T21:29:20+02:00",
+   "confirmations": "N/A",
+   "completed_at": null,
+   "state":"errored"
   }
 ]
