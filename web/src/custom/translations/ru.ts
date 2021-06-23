@@ -234,7 +234,7 @@ export const ru: LangType = {
     'page.body.wallets.warning.withdraw.verification': 'Withdraw are allowed after passing KYC verification',
     'page.body.wallets.warning.withdraw.no.networks.hint': 'Currently, that currency can’t be withdrawed as no blockchain network was configured or enabled. Please, use another currency to make a withdraw.',
     'page.body.wallets.warning.withdraw.verification.hint': `Your current verification level doesn't allow you to make a withdraw. Please, submit the required KYC information to get withdraw permission.`,
-    'page.body.wallets.warning.withdraw.otp.hint': '. Please, enable 2FA to get withdraw permission.',
+    'page.body.wallets.warning.withdraw.otp.hint': 'Please, enable 2FA to get withdraw permission.',
     'page.body.wallets.warning.withdraw.verification.button': 'Verify Your Account',
     'page.body.wallets.tabs.withdraw.ccy.tip': 'You are going to withdraw using network. To withdraw on a different network, create or use an existing beneficiary with a needed network.',
     'page.body.wallets.tabs.withdraw.min.amount.tip': 'To create a withdrawal request the amount should be ≥ the minimum withdrawal amount',
