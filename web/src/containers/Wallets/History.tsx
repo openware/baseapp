@@ -179,6 +179,7 @@ export class WalletTable extends React.Component<Props> {
             canceled: <FailIcon />,
             rejected: <FailIcon />,
             processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
+            fee_processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
             prepared: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
             submitted: (minConfirmations && confirmations && confirmations !== 'N/A') ? (
                 `${confirmations}/${minConfirmations}`
@@ -186,6 +187,7 @@ export class WalletTable extends React.Component<Props> {
                 this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' })
             ),
             skipped: <SucceedIcon />,
+            errored: <span className="cr-mobile-history-table--failed">{this.props.intl.formatMessage({ id: 'page.body.history.deposit.content.status.errored' })}</span>,
         };
 
         return statusMapping[tx];

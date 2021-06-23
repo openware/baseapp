@@ -42,6 +42,7 @@ const HistoryTable = (props: any) => {
             canceled: <span className="cr-mobile-history-table--failed">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.canceled' })}</span>,
             rejected: <span className="cr-mobile-history-table--failed">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.rejected' })}</span>,
             processing: <span className="cr-mobile-history-table--pending">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.processing' })}</span>,
+            fee_processing: <span className="cr-mobile-history-table--pending">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.fee_processing' })}</span>,
             prepared: <span className="cr-mobile-history-table--pending">{intl.formatMessage({ id: 'page.body.wallets.table.pending' })}</span>,
             submitted: <span className="cr-mobile-history-table--pending">{(confirmations !== undefined && minConfirmations !== undefined) ? (
                 `${confirmations}/${minConfirmations}`
@@ -49,6 +50,7 @@ const HistoryTable = (props: any) => {
                 intl.formatMessage({ id: 'page.body.wallets.table.pending' })
                 )}</span>,
             skipped: <span className="cr-mobile-history-table--success">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.skipped' })}</span>,
+            errored: <span className="cr-mobile-history-table--failed">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.errored' })}</span>,
         };
 
         return statusMapping[tx];
