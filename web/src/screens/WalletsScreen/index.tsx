@@ -135,9 +135,9 @@ export const WalletsScreen: FC = (): ReactElement => {
 
     //TODO: Get calculated values from new Peatio Api.
     return (
-        <div className="container">
+        <React.Fragment>
             {history.location.pathname.includes('/wallets/organization') ? <OrganizationHeader /> : <EstimatedValue wallets={mergedWallets} />}
-            <div className="pg-wallets-tab">
+            <div className="pg-wallets-tab pg-container">
                 <div className="pg-wallets-tab__tabs-content">
                     <TabPanel
                         panels={renderTabs()}
@@ -147,6 +147,6 @@ export const WalletsScreen: FC = (): ReactElement => {
                     />
                 </div>
             </div>
-        </div>
+        </React.Fragment>
     );
 };

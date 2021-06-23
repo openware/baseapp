@@ -1336,7 +1336,7 @@ export const ru: LangType = {
     'page.body.wallets.overview.action.transfer': 'Transfer',
     'page.body.wallets.overview.action.p2p': 'P2P',
     'page.body.wallets.overview.seach': 'Search',
-    'page.body.wallets.overview.nonZero': 'Hide Small Balances',
+    'page.body.wallets.overview.nonZero': 'Non Zero Balances',
     'page.body.wallets.transfers.transferType': 'Transfer Type',
     'page.body.wallets.transfers.from': 'From',
     'page.body.wallets.transfers.to': 'To',
@@ -1400,7 +1400,7 @@ export const ru: LangType = {
     'page.body.dashboard.trade': 'Trade',
     'page.body.dashboard.tab.otc': 'OTC',
     'page.body.wallets.overview.header.action': 'Action',
-    'page.body.wallets.overview.search': 'Search asset',
+    'page.body.wallets.overview.search': 'Search',
 
     'page.body.wallets.tab.organization': 'Organization Overview',
 

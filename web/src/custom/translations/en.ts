@@ -38,7 +38,6 @@ export const en = {
     'page.body.profile.company.status.active': 'Active',
     'page.body.profile.company.status.banned': 'Banned',
 
-    'page.body.wallets.overview.nonZero': 'Hide Small Balances',
     'page.body.wallets.overview.header.action': 'Action',
-    'page.body.wallets.overview.search': 'Search asset',
+    'page.body.wallets.overview.search': 'Search',
 };
