@@ -107,7 +107,7 @@ export const UserWithdrawalLimits = React.memo((props: UserWithdrawalLimitsProps
                 <h3>{translate('page.body.wallets.tabs.withdraw.content.withdrawal.limit')}</h3>
                 <span className="cr-withdrawal-limits__fee-group">{feeGroup.group}</span>
                 <OverlayTrigger
-                    placement="right"
+                    placement="left"
                     delay={{ show: 250, hide: 300 }}
                     overlay={<Tooltip title="page.body.wallets.tabs.withdraw.content.withdrawal.limit.tip" />}>
                     <div className="cr-withdrawal-limits__title-tip">

@@ -6,6 +6,7 @@ import { IntlProps } from '../../';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate } from '../../helpers';
+import { LinkIcon } from '../../assets/images/LinkIcon';
 import {
     Currency,
     fetchHistory,
@@ -130,6 +131,7 @@ export class WalletTable extends React.Component<Props> {
         return list.sort((a, b) => {
             return localeDate(a.created_at, 'fullDate') > localeDate(b.created_at, 'fullDate') ? -1 : 1;
         }).map((item, index) => {
+            const blockchainLink = this.getBlockchainLink(currency, item.txid, item.rid);
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const confirmations = type === 'deposits' && item.confirmations;
             const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
@@ -139,10 +141,33 @@ export class WalletTable extends React.Component<Props> {
 
             return [
                 localeDate(item.created_at, 'fullDate'),
+                <div className="pg-history-elem__hide" key={item.txid || item.rid}>
+                    <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
+                        {item.txid || item.rid}
+                    </a>
+                    <LinkIcon className="pg-history-elem__link" />
+                </div>,
                 state,
                 <Decimal key={index} fixed={fixed} thousSep=",">{amount}</Decimal>,
             ];
         });
+    };
+
+    private getBlockchainLink = (currency: string, txid: string, blockchainKey: string, rid?: string) => {
+        const { wallets } = this.props;
+        const currencyInfo = wallets?.find(wallet => wallet.currency === currency);
+        const blockchainCurrency = currencyInfo?.networks.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
+
+        if (currencyInfo) {
+            if (txid && blockchainCurrency?.explorerTransaction) {
+                return blockchainCurrency.explorerTransaction.replace('#{txid}', txid);
+            }
+            if (rid && blockchainCurrency?.explorerAddress) {
+                return blockchainCurrency.explorerAddress.replace('#{address}', rid);
+            }
+        }
+
+        return '';
     };
 
     private formatTxState = (tx: string, confirmations?: number | string, minConfirmations?: number) => {
