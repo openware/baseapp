@@ -77,6 +77,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
                 amount: '',
                 otpCode: '',
                 total: '',
+                beneficiary: defaultBeneficiary,
             });
         }
     }
