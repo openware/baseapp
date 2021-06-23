@@ -288,6 +288,8 @@ export const ru: LangType = {
     'page.body.history.deposit.content.status.rejected': 'Отвергнут',
     'page.body.history.deposit.content.status.skipped': 'Пропущен',
     'page.body.history.deposit.content.status.processing': 'Обрабатывается',
+    'page.body.history.deposit.content.status.fee_processing': 'Обрабатывается',
+    'page.body.history.deposit.content.status.errored': 'Errored',
 
     'page.body.history.withdraw': 'История выводов',
     'page.body.history.withdraw.header.id': 'ID',
