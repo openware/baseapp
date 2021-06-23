@@ -366,7 +366,11 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     }, []);
 
     const handleCloseModals = () => {
-        setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+        if (beneficiaries.length) {
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
+        } else {
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}));
+        }
         setCurrentTabIndex(0);
         setAddressModalState(false);
         setConfirmationModalState(false);
