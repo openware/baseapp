@@ -1,6 +1,5 @@
 import cr from 'classnames';
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { Button } from 'react-bootstrap';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -9,15 +8,16 @@ import { CloseScreenIcon } from 'src/assets/images/CloseScreenIcon';
 import { LogoutIcon } from 'src/assets/images/sidebar/LogoutIcon';
 import { Logo } from 'src/components';
 import { SearchBox } from '../../components';
-import { organizationAccountsFetch, organizationAccountsReset, organizationAccountSwitch, selectOrganizationAccounts } from 'src/modules';
+import { organizationAccountsFetch, organizationAccountsReset, organizationAccountSwitch, selectOrganizationAccounts, userFetch } from 'src/modules';
 import { setDocumentTitle } from '../../helpers';
+import { Spinner } from 'react-bootstrap';
 
 export const SwitchAccountScreen: React.FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { formatMessage } = useIntl();
     const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
-
+    const [loading, setLoading] = useState<boolean>(false);
     const accounts = useSelector(selectOrganizationAccounts);
     
     useEffect(() => {
@@ -49,7 +49,9 @@ export const SwitchAccountScreen: React.FC = () => {
     const handleSwitchAccount = useCallback((oid, uid) => {
         const payload = { oid, uid };
         dispatch(organizationAccountSwitch(payload));
+        setLoading(true);
         setTimeout(() => {
+            dispatch(userFetch());
             history.goBack();
         }, 1500);
     }, []);
@@ -86,6 +88,12 @@ export const SwitchAccountScreen: React.FC = () => {
 
     return (
         <div className="pg-switch-account">
+            {loading ?
+                <div className="pg-loader-container">
+                    <Spinner animation="border" variant="primary" />
+                </div>
+                : null
+            }
             <div className="pg-switch-account__container">
                 <div className="pg-switch-account__container__header">
                     <Logo />

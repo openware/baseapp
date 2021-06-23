@@ -17,7 +17,6 @@ export function* organizationAccountSwitchSaga(action: OrganizationAccountSwitch
     try {
         yield call(API.post(config(getCsrfToken())), `/identity/sessions/switch`, action.payload);
         yield put(alertPush({ message: ['success.account.switch'], type: 'success' }));
-        yield put(userFetch());
     } catch (error) {
         yield put(sendError({
             error,
