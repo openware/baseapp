@@ -127,6 +127,8 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         if (beneficiaries.length) {
             setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.whitelisted'}));
             setCurrentTabIndex(0);
+        } else {
+            setTab(formatMessage({ id: 'page.body.wallets.beneficiaries.tab.panel.add.whitelisted'}));
         }
     }, [beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess]);
 
@@ -452,7 +454,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
 
     return (
         <div className="pg-beneficiaries">
-            {currentWithdrawalBeneficiary.id ? renderAddressItem(currentWithdrawalBeneficiary) : renderAddAddress}
+            {beneficiaries.length && currentWithdrawalBeneficiary.id && currentWithdrawalBeneficiary.currency === beneficiaries[0].currency ? renderAddressItem(currentWithdrawalBeneficiary) : renderAddAddress}
             {isOpenAddressModal && renderBeneficiariesModal}
         </div>
     );
