@@ -156,7 +156,7 @@ export class WalletTable extends React.Component<Props> {
     private getBlockchainLink = (currency: string, txid: string, blockchainKey: string, rid?: string) => {
         const { wallets } = this.props;
         const currencyInfo = wallets?.find(wallet => wallet.currency === currency);
-        const blockchainCurrency = currencyInfo?.networks.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
+        const blockchainCurrency = currencyInfo?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
 
         if (currencyInfo) {
             if (txid && blockchainCurrency?.explorerTransaction) {
