@@ -6,6 +6,7 @@ import {
     injectIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
+import { TRIGGER_BUY_PRICE_MULT, TRIGGER_BUY_PRICE_ADJUSTED_TYPES } from '../../constants'
 import {
     formatWithSeparators,
     Order,
@@ -243,6 +244,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
         const withPrice = typeof price !== 'undefined';
         const withTrigger = typeof trigger !== 'undefined';
         const actualOrderPrice = withPrice ? price : trigger;
+        const priceMult = TRIGGER_BUY_PRICE_ADJUSTED_TYPES.includes((orderType as string).toLowerCase()) ? TRIGGER_BUY_PRICE_MULT : 1;
 
         const resultData = {
             market: currentMarket.id,
@@ -331,7 +333,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
             orderAllowed = false;
         }
 
-        if ((+available < (+amount * +actualOrderPrice) && resultData.side === 'buy') ||
+        if ((+available < (+amount * +actualOrderPrice * priceMult) && resultData.side === 'buy') ||
             (+available < +amount && resultData.side === 'sell')) {
             this.props.pushAlert({
                 message: [this.translate(

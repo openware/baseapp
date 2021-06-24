@@ -6,7 +6,12 @@ import {
     PriceValidation,
     validatePriceStep,
 } from '../../filters';
-import { AMOUNT_PERCENTAGE_ARRAY, ORDER_TYPES_WITH_TRIGGER } from '../../constants';
+import {
+    AMOUNT_PERCENTAGE_ARRAY,
+    ORDER_TYPES_WITH_TRIGGER,
+    TRIGGER_BUY_PRICE_MULT,
+    TRIGGER_BUY_PRICE_ADJUSTED_TYPES,
+} from '../../constants';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 import { OrderInput as OrderInputMobile } from '../../mobile/components';
 import { Decimal } from '../Decimal';
@@ -306,7 +311,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         } else if ((orderType as string).toLowerCase().includes('limit')) {
             return safeAmount * (Number(price) || 0);
         } else {
-            return safeAmount * (Number(trigger) || 0);
+            return TRIGGER_BUY_PRICE_MULT * safeAmount * (Number(trigger) || 0);
         }
     }
 
@@ -523,8 +528,13 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
 
     private handleChangeAmountByButton = (value: number) => {
         const { orderType, price, trigger } = this.state;
+        const ordType = (orderType as string).toLowerCase()
 
-        const priceToUse = (orderType as string).toLowerCase().includes('limit') || orderType === 'Market' ? price : trigger;
+        let priceToUse = ordType.includes('limit') || orderType === 'Market' ? price : trigger;
+
+        if (TRIGGER_BUY_PRICE_ADJUSTED_TYPES.includes(ordType)) {
+            priceToUse = (Number(priceToUse) * TRIGGER_BUY_PRICE_MULT).toString()
+        }
 
         this.props.handleChangeAmountByButton(value, orderType, priceToUse, this.props.type);
     };
