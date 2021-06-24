@@ -110,6 +110,8 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
         'cr-withdraw-blockchain-item__blockchain_key__disabled': blockchainItem?.status === 'disabled',
     });
 
+    const currentBeneficiary = beneficiaries.find(item => item.blockchain_key === blockchainItem?.blockchain_key);
+
     return (
             <div className="cr-beneficiary-blockchain-item" key={blockchainKey}>
                 <div className="cr-withdraw__group__blockchain-item">
@@ -120,7 +122,7 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
                                     {blockchainItem?.protocol?.toUpperCase()}&nbsp;{formatMessage({ id: 'page.body.wallets.beneficiaries.addresses' })}
                                     {blockchainItem?.status === 'disabled' && <span className="cr-withdraw-blockchain-item__blockchain_key__disabled-block">{formatMessage({ id: "page.body.wallets.beneficiaries.disabled" })}</span>}    
                                 </h3>
-                                <div className="cr-withdraw-blockchain-item__withdraw">{blockchainItem?.blockchain_key} ({currencyItem?.id.toUpperCase()})</div>
+                                <div className="cr-withdraw-blockchain-item__withdraw">{currentBeneficiary?.blockchain_name} ({currencyItem?.id.toUpperCase()})</div>
                             </div>
                             <div className="cr-withdraw-blockchain-item-block">
                                 <div className="cr-withdraw-blockchain-item__fee">

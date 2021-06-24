@@ -90,6 +90,7 @@ const defaultBeneficiary: Beneficiary = {
     name: '',
     state: '',
     blockchain_key: '',
+    blockchain_name: '',
     data: {
         address: '',
     },
