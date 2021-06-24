@@ -4,10 +4,9 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { HeaderProfile } from 'src/custom/components';
 import { IntlProps } from '../../';
 import { showLanding } from '../../api';
-import { Logo } from '../../components';
+import { HeaderProfile, Logo } from '../../components';
 import {
     Market,
     RootState,

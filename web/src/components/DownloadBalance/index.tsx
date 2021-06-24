@@ -3,8 +3,8 @@ import * as React from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
+import { CloseIcon } from 'src/assets/images/CloseIcon';
 import { CalendarPicker } from '..';
-import { CloseIcon } from '../../../assets/images/CloseIcon';
 
 export interface DownloadBalanceProps {
     title: string;

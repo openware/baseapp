@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { organizationEnabled } from 'src/api';
-import { TabPanel } from 'src/components';
+import { CompanyAccount, TabPanel } from 'src/components';
 import {
     CanCan,
     ReferralProgram,
@@ -14,7 +14,6 @@ import {
     ProfileApiKeys,
     ProfileVerification,
 } from 'src/containers';
-import { CompanyAccount } from 'src/custom/components';
 import { useDocumentTitle } from 'src/hooks';
 import { selectAbilities, selectUserInfo } from 'src/modules';
 

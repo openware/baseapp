@@ -12,10 +12,9 @@ import {
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { SignUpCompanyForm, SignUpSelectionForm } from '../../custom/components';
 import { isUsernameEnabled } from '../../api';
 import { captchaType, organizationEnabled } from '../../api/config';
-import { Captcha, Modal, SignUpForm } from '../../components';
+import { Captcha, Modal, SignUpCompanyForm, SignUpForm, SignUpSelectionForm } from '../../components';
 import {
     EMAIL_REGEX,
     ERROR_INVALID_EMAIL,
