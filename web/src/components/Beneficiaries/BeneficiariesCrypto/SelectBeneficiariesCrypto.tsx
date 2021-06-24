@@ -64,7 +64,9 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
         const isPending = item.state && item.state.toLowerCase() === 'pending';
         const itemClassName = classnames('pg-beneficiaries__dropdown__body__item', 'item', {
             'item--pending': isPending,
+            'item--disabled': blockchainItem?.status === 'disabled',
         });
+
 
         if (item.blockchain_key === blockchainKey) {
             return (
@@ -104,14 +106,21 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
         return null;
     }, [beneficiaries])
 
+    const classTitle = classnames('cr-withdraw-blockchain-item__blockchain_key', {
+        'cr-withdraw-blockchain-item__blockchain_key__disabled': blockchainItem?.status === 'disabled',
+    });
+
     return (
             <div className="cr-beneficiary-blockchain-item" key={blockchainKey}>
                 <div className="cr-withdraw__group__blockchain-item">
                     <div className="cr-withdraw-blockchain-item">
                         <div className="cr-withdraw-blockchain-item__group">
                             <div className="cr-withdraw-blockchain-item-block">
-                                <h3 className="cr-withdraw-blockchain-item__blockchain_key">{currencyItem?.name} ({currencyItem?.id.toUpperCase()})</h3>
-                                <div className="cr-withdraw-blockchain-item__withdraw">{blockchainItem?.protocol?.toUpperCase()}</div>
+                                <h3 className={classTitle}>
+                                    {blockchainItem?.protocol?.toUpperCase()}&nbsp;{formatMessage({ id: 'page.body.wallets.beneficiaries.addresses' })}
+                                    {blockchainItem?.status === 'disabled' && <span className="cr-withdraw-blockchain-item__blockchain_key__disabled-block">{formatMessage({ id: "page.body.wallets.beneficiaries.disabled" })}</span>}    
+                                </h3>
+                                <div className="cr-withdraw-blockchain-item__withdraw">{blockchainItem?.blockchain_key} ({currencyItem?.id.toUpperCase()})</div>
                             </div>
                             <div className="cr-withdraw-blockchain-item-block">
                                 <div className="cr-withdraw-blockchain-item__fee">
