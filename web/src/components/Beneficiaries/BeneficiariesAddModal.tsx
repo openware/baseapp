@@ -333,6 +333,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 minWithdraw={item.min_withdraw_amount}
                 fixed={fixed}
                 price={price}
+                disabled={item.status === 'disabled'}
             />
         );
     };
