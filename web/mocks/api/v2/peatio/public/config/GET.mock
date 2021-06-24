@@ -42,7 +42,7 @@ Access-Control-Allow-Credentials: true
           "min_confirmations": 6,
           "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
           "explorer_address": "https://testnet.blockchain.info/address/#{address}",
-          "status": "disabled"
+          "status": "enabled"
         },
         {
           "id": 0,
@@ -61,7 +61,7 @@ Access-Control-Allow-Credentials: true
           "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
           "explorer_address": "https://testnet.blockchain.info/address/#{address}",
           "base_factor": 100000000,
-          "status": "enabled"
+          "status": "disabled"
         },
         {
           "id": 0,
