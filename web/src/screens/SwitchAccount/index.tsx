@@ -90,7 +90,7 @@ export const SwitchAccountScreen: React.FC = () => {
         <div className="pg-switch-account">
             {loading ?
                 <div className="pg-loader-container">
-                    <Spinner animation="border" variant="primary" />
+                    <Spinner animation="border" />
                 </div>
                 : null
             }
@@ -101,10 +101,10 @@ export const SwitchAccountScreen: React.FC = () => {
                 </div>
                 <div className="pg-switch-account__container__body">
                     <div className="pg-switch-account__container__body__description">
-                        <div className="pg-switch-account__container__body__description__left">Switch Account</div>
+                        <div className="pg-switch-account__container__body__description__left">{translate('page.body.profile.account.switch.title')}</div>
                         <div className="pg-switch-account__container__body__description__right">
-                        <div className="button" onClick={() => null}>
-                            Login to Default Account
+                        <div className="button" onClick={() => handleSwitchAccount(null, null)}>
+                            {translate('page.body.profile.account.switch.login.default')}
                             <LogoutIcon />
                         </div>
                         </div>

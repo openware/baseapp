@@ -1349,7 +1349,11 @@ export const en = {
     'success.payment_method.updated': 'Payment Method: successfully updated',
     'success.p2p.dispute.submit': 'Dispute has been successfully submitted',
 
+    'page.body.profile.account.switch.title': 'Switch Account',
+    'page.body.profile.account.switch.login.default': 'Login to Default Account',
     'page.body.profile.account.switch.search': 'Search by client name or UID',
+    'page.body.profile.account.switch.dropdown.profile': 'Profile',
+    'page.body.profile.account.switch.dropdown.logout': 'Logout',
 
     'success.account.switch': 'Account has been switch successfully',
 
