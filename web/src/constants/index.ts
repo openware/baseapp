@@ -48,6 +48,9 @@ export const HOST_URL = window.location.hostname === 'localhost' ? 'http://local
 export const P2P_TIME_LIMIT_LIST = ['15 min', '30 min', '60 min'];
 export const ORDER_TYPES_WITH_TRIGGER = ['Stop-loss', 'Take-profit', 'Stop-limit', 'Take-limit'];
 
+export const TRIGGER_BUY_PRICE_MULT = 1.1;
+export const TRIGGER_BUY_PRICE_ADJUSTED_TYPES = ['stop-loss', 'take-profit'];
+
 export const DEFAULT_MARKET = {
     id: '',
     name: '',
