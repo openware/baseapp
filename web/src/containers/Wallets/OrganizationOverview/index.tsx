@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CryptoIcon } from 'src/components/CryptoIcon';
 import { Decimal, Table } from 'src/components';
-import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
+import { useMarketsFetch, useMarketsTickersFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
 import { selectCurrencies, selectWalletsLoading, Wallet } from 'src/modules';
 import { WalletsHeader } from 'src/components/WalletsHeader';
 import { useHistory } from 'react-router';
@@ -34,7 +34,6 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
 
     useWalletsFetch();
     useP2PWalletsFetch();
-    useCurrenciesFetch();
     useMarketsTickersFetch();
     useMarketsFetch();
 
@@ -44,9 +43,9 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
             iconUrl: undefined,
             name: "Bitcoin Cash",
             type: "coin",
-            fee: 0,
             fixed: 6,
             account_type: 'organization',
+            networks: [],
             todayLimit: "0",
             available: "0",
             used: "0",
@@ -56,9 +55,9 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
             iconUrl: undefined,
             name: "Bitcoin Cash",
             type: "coin",
-            fee: 0,
             fixed: 6,
             account_type: 'organization',
+            networks: [],
             todayLimit: "0",
             available: "0",
             used: "0",
@@ -68,9 +67,9 @@ const OrganizationOverview: FC<Props> = (props: Props): ReactElement => {
             iconUrl: "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
             name: "Bitcoin Cash",
             type: "coin",
-            fee: 0,
             fixed: 6,
             account_type: 'organization',
+            networks: [],
             todayLimit: "0",
             available: "0",
             used: "0",
