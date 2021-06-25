@@ -7,11 +7,6 @@ describe('Beneficiary Address Validaity Test', () => {
         expect(coinAddressValidator.test('38T68JavN2m1VHodiNsBq9vj8v5zA6QEsa')).toBeTruthy();
     });
 
-    it('should pass BTC TestNet address', () => {
-        const coinAddressValidator = validateBeneficiaryAddress.cryptocurrency('btc', true);
-        expect(coinAddressValidator.test('2MzQwSSnBHWHqSAqtTVQ6v47XtaisrJa1Vc')).toBeTruthy();
-    });
-
     it('should pass BCH address', () => {
         const coinAddressValidator = validateBeneficiaryAddress.cryptocurrency('bch', true);
         expect(coinAddressValidator.test('bitcoincash:qqrxa0h9jqnc7v4wmj9ysetsp3y7w9l36u8gnnjulq')).toBeTruthy();
@@ -81,6 +76,7 @@ describe('Wrong Address Format Test', () => {
         expect(coinAddressValidator.test('18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX/')).toBeFalsy();
         expect(coinAddressValidator.test('18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX,')).toBeFalsy();
         expect(coinAddressValidator.test('+18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX')).toBeFalsy();
+        expect(coinAddressValidator.test('2MzQwSSnBHWHqSAqtTVQ6v47XtaisrJa1Vc')).toBeFalsy();
     });
 
     it('should not pass wrong BCH address', () => {

@@ -221,6 +221,7 @@ export const en = {
 
     'page.body.wallets.beneficiaries.addAddressModal.body.coinAddress': 'Blockchain Address',
     'page.body.wallets.beneficiaries.addAddressModal.body.invalidAddress': 'Invalid Address',
+    'page.body.wallets.beneficiaries.addAddressModal.body.testnetAddress': 'WARNING! This is testnet address',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag': 'Destination Tag (optional)',
