@@ -6,7 +6,8 @@ access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Au
 {
     "read":
         [
-            "QuickExchange"
+            "QuickExchange",
+            "P2P"
         ],
     "update": [],
     "manage": [],

@@ -43,32 +43,32 @@ Access-Control-Allow-Credentials: true
         "overview": {
             "id": "overview",
             "label": "Overview",
-            "enabled": false
+            "enabled": true
         },
         "spot": {
             "id": "spot",
-            "label": "Deposit",
+            "label": "Spot",
             "enabled": true
         },
         "p2p": {
             "id": "p2p",
             "label": "P2P",
-            "enabled": false
+            "enabled": true
         },
         "transfer": {
             "id": "transfer",
             "label": "Transfer",
-            "enabled": false
+            "enabled": true
         },
         "organization": {
             "id": "organization",
             "label": "Overview",
-            "enabled": true
+            "enabled": false
         }
     },
     "colorTheme": "light",
     "organization": {
-        "enable": true,
+        "enable": false,
         "signup_email": "signup@openfinex.io",
         "signup_telegram": "https://t.me/openfinex"
     }
