@@ -7,7 +7,7 @@ import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
-import { minutesUntilAutoLogout, sessionCheckInterval, showLanding, wizardStep } from '../../api';
+import { minutesUntilAutoLogout, organizationEnabled, sessionCheckInterval, showLanding, wizardStep } from '../../api';
 import { ExpiredSessionModal } from '../../components';
 import { WalletsFetch, CanCan } from '../../containers';
 import { P2PTradesHistory } from '../../containers/P2P/TradesHistory';
@@ -52,6 +52,7 @@ import {
     walletsReset,
     AbilitiesInterface,
     selectAbilities,
+    organizationAbilitiesFetch,
 } from '../../modules';
 import {
     ChangeForgottenPasswordScreen,
@@ -79,6 +80,7 @@ import {
     P2PUserOffersScreen,
     CreateP2POfferScreen,
     P2POrderScreen,
+    SwitchAccountScreen,
 } from '../../screens';
 
 interface ReduxProps {
@@ -96,6 +98,7 @@ interface DispatchProps {
     logout: typeof logoutFetch;
     userFetch: typeof userFetch;
     walletsReset: typeof walletsReset;
+    fetchOrganizationAbilities: typeof organizationAbilitiesFetch;
 }
 
 interface LocationProps extends RouterProps {
@@ -236,6 +239,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
 
         if (!this.props.user.email && nextProps.user.email && !this.props.location.pathname.includes('/setup')) {
             this.props.userFetch();
+            organizationEnabled() && this.props.fetchOrganizationAbilities();
         }
 
         if (!this.props.isLoggedIn && nextProps.isLoggedIn && !this.props.user.email) {
@@ -321,6 +325,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                         <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile/verification" component={ProfileVerificationMobileScreen} />
                         <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile/theme" component={ProfileThemeMobileScreen} />
                         <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/profile" component={ProfileMobileScreen} />
+                        <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/switch" component={SwitchAccountScreen} />
                         <Route exact={true} path="/trading/:market?" component={TradingScreenMobile} />
                         {showLanding() && <Route exact={true} path="/" component={LandingScreenMobile} />}
                         <Route path="**"><Redirect to="/trading/" /></Route>
@@ -367,6 +372,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/order/:id" component={P2POrderScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/:currency" component={P2POffersScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p" component={P2POffersScreen} />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/accounts/switch" component={SwitchAccountScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}
@@ -459,6 +465,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     toggleChartRebuild: () => dispatch(toggleChartRebuild()),
     userFetch: () => dispatch(userFetch()),
     walletsReset: () => dispatch(walletsReset()),
+    fetchOrganizationAbilities: () => dispatch(organizationAbilitiesFetch()),
 });
 
 export const Layout = compose(

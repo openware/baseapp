@@ -22,11 +22,17 @@ export interface ModalProps {
      * Additional classname
      */
     className?: string;
+    /**
+     * full view modal
+     */
+    fullView?: boolean;
 }
 
 export const Modal: React.FunctionComponent<ModalProps> = props => {
-    const { className } = props;
-    const cx = classnames('cr-modal', className);
+    const { className, fullView } = props;
+    const cx = classnames('cr-modal', className, {
+        'cr-modal--full-view': fullView,
+    });
 
     if (!props.show) {
         return null;
@@ -34,10 +40,11 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
 
     return (
         <div className={cx}>
+            {fullView ? props.header : null}
             <div className="cr-modal__container">
-                <div className="cr-modal__container-header">
+                {!fullView ? <div className="cr-modal__container-header">
                     {props.header}
-                </div>
+                </div> : null}
                 <div className="cr-modal__container-content">
                     {props.content}
                 </div>

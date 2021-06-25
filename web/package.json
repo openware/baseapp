@@ -43,6 +43,7 @@
         "react-bootstrap": "^1.0.0-beta.16",
         "react-color": "^2.18.0",
         "react-date-picker": "^7.0.0",
+        "react-datepicker": "^3.8.0",
         "react-dom": "^16.6.3",
         "react-fade-in": "^0.1.6",
         "react-ga": "^2.6.0",

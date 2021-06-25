@@ -21,9 +21,9 @@ import {
     selectEditIdentitySuccess,
     selectLabelData,
     selectSendIdentitySuccess,
-    selectUserInfo,
+    selectUserProfile,
     sendIdentity,
-    User,
+    UserProfile,
 } from '../../../modules';
 import { IdentityData } from '../../../modules/user/kyc/identity/types';
 
@@ -34,7 +34,7 @@ interface ReduxProps {
     sendSuccess?: string;
     lang: string;
     labels: Label[];
-    user: User;
+    userProfile: UserProfile;
 }
 
 interface DispatchProps {
@@ -417,7 +417,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
 
     private sendData = (event) => {
         event.preventDefault();
-        const { labels, user } = this.props;
+        const { labels, userProfile } = this.props;
         const dob = !isDateInFuture(this.state.dateOfBirth) ? this.state.dateOfBirth : '';
         const profileInfo: IdentityData = {
             first_name: this.state.firstName,
@@ -431,10 +431,8 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
         };
         const isIdentity =
             labels.length && labels.find((w) => w.key === 'profile' && w.value === 'verified' && w.scope === 'private');
-        const verifiedProfiles = user.profiles.length ? user.profiles.filter((i) => i.state === 'verified') : [];
-        const lastVerifiedProfile = verifiedProfiles.length && verifiedProfiles[verifiedProfiles.length - 1];
 
-        if (!isIdentity && lastVerifiedProfile && lastVerifiedProfile.address) {
+        if (!isIdentity && userProfile && userProfile.address) {
             this.props.editIdentity(profileInfo);
         } else {
             this.props.sendIdentity(profileInfo);
@@ -447,7 +445,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     sendSuccess: selectSendIdentitySuccess(state),
     lang: selectCurrentLanguage(state),
     labels: selectLabelData(state),
-    user: selectUserInfo(state),
+    userProfile: selectUserProfile(state)
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({

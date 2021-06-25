@@ -1,22 +1,31 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, OverlayTrigger } from 'react-bootstrap';
+import { injectIntl } from 'react-intl';
+import { compose } from 'redux';
+import { IntlProps } from 'src';
 import {
     Beneficiaries,
     CustomInput,
     SummaryField,
+    Tooltip,
 } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
-import { Beneficiary } from '../../modules';
+import { Beneficiary, BlockchainCurrencies } from '../../modules';
+import { TipIcon } from '../../assets/images/TipIcon';
+import { RadioButton } from '../../assets/images/RadioButton';
+import { UserWithdrawalLimits } from './UserWithdrawalLimits';
+import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../constants';
 
 export interface WithdrawProps {
     currency: string;
-    fee: number;
     onClick: (amount: string, total: string, beneficiary: Beneficiary, otpCode: string, fee: string) => void;
     fixed: number;
     className?: string;
     type: 'fiat' | 'coin';
+    price: string;
+    name: string;
     twoFactorAuthRequired?: boolean;
     withdrawAmountLabel?: string;
     withdraw2faLabel?: string;
@@ -24,6 +33,7 @@ export interface WithdrawProps {
     withdrawTotalLabel?: string;
     withdrawButtonLabel?: string;
     withdrawDone: boolean;
+    networks: BlockchainCurrencies[];
     isMobileDevice?: boolean;
 }
 
@@ -31,6 +41,8 @@ const defaultBeneficiary: Beneficiary = {
     id: 0,
     currency: '',
     name: '',
+    blockchain_key: '',
+    blockchain_name: '',
     state: '',
     data: {
         address: '',
@@ -46,7 +58,9 @@ interface WithdrawState {
     total: string;
 }
 
-export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
+type Props = WithdrawProps & IntlProps;
+
+class WithdrawComponent extends React.Component<Props, WithdrawState> {
     public state = {
         amount: '',
         beneficiary: defaultBeneficiary,
@@ -64,9 +78,12 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                 amount: '',
                 otpCode: '',
                 total: '',
+                beneficiary: defaultBeneficiary,
             });
         }
     }
+
+    public translate = (id: string) => this.props.intl.formatMessage({ id });
 
     public render() {
         const {
@@ -77,6 +94,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             otpCode,
         } = this.state;
         const {
+            networks,
             className,
             currency,
             type,
@@ -85,7 +103,12 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             withdrawFeeLabel,
             withdrawTotalLabel,
             withdrawButtonLabel,
+            fixed,
+            price,
+            name,
         } = this.props;
+
+        const blockchainItem = networks?.find(item => item.blockchain_key === beneficiary.blockchain_key);
 
         const cx = classnames('cr-withdraw', className);
         const lastDividerClassName = classnames('cr-withdraw__divider', {
@@ -97,55 +120,115 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
           'cr-withdraw__group__amount--focused': withdrawAmountFocused,
         });
 
+        const estimatedValueFee = +price * +blockchainItem?.withdraw_fee;
+
         return (
-            <div className={cx}>
-                <div className="cr-withdraw-column">
-                    <div className="cr-withdraw__group__address">
-                        <Beneficiaries
-                            currency={currency}
-                            type={type}
-                            onChangeValue={this.handleChangeBeneficiary}
+            <React.Fragment>
+                <h3 className="cr-withdraw-title">{this.translate('page.body.wallets.withdraw.details')}</h3>
+                <div className={cx}>
+                    <div className="cr-withdraw__group">
+                        <div className="cr-withdraw-column">
+                            <div className="cr-withdraw__group__address">
+                                <Beneficiaries
+                                    currency={currency}
+                                    type={type}
+                                    onChangeValue={this.handleChangeBeneficiary}
+                                />
+                            </div>
+                        {beneficiary.blockchain_key ?
+                            <div>
+                                <div className="cr-withdraw__group__warning">
+                                    <OverlayTrigger
+                                        placement="right"
+                                        delay={{ show: 250, hide: 300 }}
+                                        overlay={<Tooltip title="page.body.wallets.tabs.withdraw.min.amount.tip" />}>
+                                        <div className="cr-withdraw__group__warning-tip">
+                                            <TipIcon />
+                                        </div>
+                                    </OverlayTrigger>
+                                    <span>
+                                        {this.translate('page.body.wallets.beneficiaries.min.withdraw')}&nbsp;
+                                        <span className="cr-withdraw__group__warning-currency">
+                                            <Decimal fixed={fixed} thousSep=",">{blockchainItem?.min_withdraw_amount?.toString()}</Decimal>&nbsp;{currency.toUpperCase()}
+                                        </span>
+                                    </span>
+                                </div>
+                                <div className="cr-withdraw__group__network">
+                                    <h5>{this.translate('page.body.wallets.withdraw.blockchain.network')}</h5>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        delay={{ show: 250, hide: 300 }}
+                                        overlay={<Tooltip title="page.body.wallets.tabs.withdraw.ccy.tip" />}>
+                                        <div className="cr-deposit-crypto-tabs__card-title-tip">
+                                            <TipIcon />
+                                        </div>
+                                    </OverlayTrigger>
+                                </div>
+                                <div className="cr-withdraw__group__blockchain-item">
+                                    <div className="cr-withdraw-blockchain-item">
+                                        <RadioButton />
+                                        <div className="cr-withdraw-blockchain-item__group">
+                                            <div className="cr-withdraw-blockchain-item-block">
+                                                <h3 className="cr-withdraw-blockchain-item__blockchain_key">{name} ({currency.toUpperCase()})</h3>
+                                                <div className="cr-withdraw-blockchain-item__withdraw">{blockchainItem?.protocol?.toUpperCase()}</div>
+                                            </div>
+                                            <div className="cr-withdraw-blockchain-item-block">
+                                                <div className="cr-withdraw-blockchain-item__fee"><span>{this.translate('page.body.wallets.beneficiaries.fee')}&nbsp;</span><Decimal fixed={fixed} thousSep=",">{blockchainItem?.withdraw_fee?.toString()}</Decimal> {currency.toUpperCase()}</div>
+                                                <div className="cr-withdraw-blockchain-item__estimated-value">≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedValueFee.toString()}</Decimal> {GLOBAL_PLATFORM_CURRENCY}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        : null}
+                        <div className="cr-withdraw__divider cr-withdraw__divider-one" />
+                            <div className={withdrawAmountClass}>
+                                <CustomInput
+                                    type="number"
+                                    label={withdrawAmountLabel || 'Withdrawal Amount'}
+                                    defaultLabel="Withdrawal Amount"
+                                    inputValue={amount}
+                                    placeholder={withdrawAmountLabel || 'Amount'}
+                                    classNameInput="cr-withdraw__input"
+                                    handleChangeInput={this.handleChangeInputAmount}
+                                />
+                            </div>
+                            <div className={lastDividerClassName} />
+                        </div>
+                        <div className="cr-withdraw-column">
+                            <div>
+                                <SummaryField
+                                    className="cr-withdraw__summary-field"
+                                    message={withdrawFeeLabel ? withdrawFeeLabel : 'Fee'}
+                                    content={this.renderFee()}
+                                />
+                                <SummaryField
+                                    className="cr-withdraw__summary-field"
+                                    message={withdrawTotalLabel ? withdrawTotalLabel : 'Total Withdraw Amount'}
+                                    content={this.renderTotal()}
+                                />
+                            </div>
+                            <div className="cr-withdraw__deep">
+                                <Button
+                                    variant="primary"
+                                    size="lg"
+                                    onClick={this.handleClick}
+                                    disabled={this.handleCheckButtonDisabled(total, beneficiary, otpCode)}
+                                >
+                                    {withdrawButtonLabel ? withdrawButtonLabel : 'Withdraw'}
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="cr-withdraw__group__limits">
+                        <UserWithdrawalLimits
+                            currencyId={currency}
+                            fixed={fixed}
+                            price={price}
                         />
                     </div>
-                    <div className="cr-withdraw__divider cr-withdraw__divider-one" />
-                    <div className={withdrawAmountClass}>
-                        <CustomInput
-                            type="number"
-                            label={withdrawAmountLabel || 'Withdrawal Amount'}
-                            defaultLabel="Withdrawal Amount"
-                            inputValue={amount}
-                            placeholder={withdrawAmountLabel || 'Amount'}
-                            classNameInput="cr-withdraw__input"
-                            handleChangeInput={this.handleChangeInputAmount}
-                        />
-                    </div>
-                    <div className={lastDividerClassName} />
                 </div>
-                <div className="cr-withdraw-column">
-                    <div>
-                        <SummaryField
-                            className="cr-withdraw__summary-field"
-                            message={withdrawFeeLabel ? withdrawFeeLabel : 'Fee'}
-                            content={this.renderFee()}
-                        />
-                        <SummaryField
-                            className="cr-withdraw__summary-field"
-                            message={withdrawTotalLabel ? withdrawTotalLabel : 'Total Withdraw Amount'}
-                            content={this.renderTotal()}
-                        />
-                    </div>
-                    <div className="cr-withdraw__deep">
-                        <Button
-                            variant="primary"
-                            size="lg"
-                            onClick={this.handleClick}
-                            disabled={this.handleCheckButtonDisabled(total, beneficiary, otpCode)}
-                        >
-                            {withdrawButtonLabel ? withdrawButtonLabel : 'Withdraw'}
-                        </Button>
-                    </div>
-                </div>
-            </div>
+            </React.Fragment>
         );
     }
 
@@ -156,11 +239,14 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
     };
 
     private renderFee = () => {
-        const { fee, fixed, currency } = this.props;
+        const { networks, fixed, currency } = this.props;
+        const { beneficiary } = this.state;
+
+        const blockchainItem = networks?.find(item => item.blockchain_key === beneficiary.blockchain_key);
 
         return (
             <span>
-                <Decimal fixed={fixed} thousSep=",">{fee.toString()}</Decimal> {currency.toUpperCase()}
+                <Decimal fixed={fixed} thousSep=",">{blockchainItem?.withdraw_fee?.toString()}</Decimal> {currency.toUpperCase()}
             </span>
         );
     };
@@ -176,38 +262,30 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
         ) : <span>0 {currency.toUpperCase()}</span>;
     };
 
-    private handleClick = () => this.props.onClick(
-        this.state.amount,
-        this.state.total,
-        this.state.beneficiary,
-        this.state.otpCode,
-        this.props.fee.toString(),
-    );
+    private handleClick = () => {
+        const { networks } = this.props;
+        const { beneficiary } = this.state;
 
-    private handleFieldFocus = (field: string) => {
-        switch (field) {
-            case 'amount':
-                this.setState(prev => ({
-                    withdrawAmountFocused: !prev.withdrawAmountFocused,
-                }));
-                break;
-            case 'code':
-                this.setState(prev => ({
-                    withdrawCodeFocused: !prev.withdrawCodeFocused,
-                }));
-                break;
-            default:
-                break;
-        }
-    };
+        const blockchainItem = networks.find(item => item.blockchain_key === beneficiary.blockchain_key);
+
+        this.props.onClick(
+            this.state.amount,
+            this.state.total,
+            this.state.beneficiary,
+            this.state.otpCode,
+            blockchainItem.withdraw_fee?.toString(),
+        );
+    }
 
     private handleChangeInputAmount = (value: string) => {
-        const { fixed } = this.props;
+        const { beneficiary } = this.state;
+        const { fixed, networks } = this.props;
         const convertedValue = cleanPositiveFloatInput(String(value));
+        const blockchainItem = networks.find(item => item.blockchain_key === beneficiary.blockchain_key);
 
         if (convertedValue.match(precisionRegExp(fixed))) {
             const amount = (convertedValue !== '') ? Number(parseFloat(convertedValue).toFixed(fixed)) : '';
-            const total = (amount !== '') ? (amount - this.props.fee).toFixed(fixed) : '';
+            const total = (amount !== '') ? (amount - +blockchainItem.withdraw_fee).toFixed(fixed) : '';
 
             if (Number(total) <= 0) {
                 this.setTotal((0).toFixed(fixed));
@@ -230,8 +308,8 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             beneficiary: value,
         });
     };
-
-    private handleChangeInputOtpCode = (otpCode: string) => {
-        this.setState({ otpCode });
-    };
 }
+
+export const Withdraw = compose(
+    injectIntl,
+)(WithdrawComponent) as any; // tslint:disable-this-line:no-any

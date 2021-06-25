@@ -12,6 +12,7 @@ Access-Control-Allow-Credentials: true
     "deposit_address": {
         "currencies": ["bch"],
         "address": null,
-        "state": "pending"
+        "state": "pending",
+        "blockchain_key": "bitcoincash"
     }
 }

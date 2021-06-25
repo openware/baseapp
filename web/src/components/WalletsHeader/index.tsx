@@ -40,7 +40,7 @@ export const WalletsHeader: React.FunctionComponent<ParentProps> = (props: Paren
                     data={wallets}
                     onFilter={handleFilter}
                     filter={searchFilter}
-                    placeholder={intl.formatMessage({id: 'page.body.wallets.overview.seach'})}
+                    placeholder={intl.formatMessage({id: 'page.body.wallets.overview.search'})}
                 />
             </div>
             <Form className="cr-wallets-header__checkbox" onClick={handleToggleCheckbox}>

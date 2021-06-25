@@ -1,5 +1,5 @@
 const cryptoRegExps = {
-    btc: '[123][a-km-zA-HJ-NP-Z1-9]{26,35}',
+    btc: '[123mN][a-km-zA-HJ-NP-Z1-9]{26,35}',
     bch: '((bitcoincash|bchreg|bchtest):)?(q|p)[a-z0-9]{41}',
     eth: '0x[a-fA-F0-9]{40}',
     ltc: '[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}',

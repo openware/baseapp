@@ -2,7 +2,8 @@ import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { TabPanel } from 'src/components';
+import { organizationEnabled } from 'src/api';
+import { CompanyAccount, TabPanel } from 'src/components';
 import {
     CanCan,
     ReferralProgram,
@@ -14,7 +15,7 @@ import {
     ProfileVerification,
 } from 'src/containers';
 import { useDocumentTitle } from 'src/hooks';
-import { selectAbilities } from 'src/modules';
+import { selectAbilities, selectUserInfo } from 'src/modules';
 
 interface ParamType {
     routeTab?: string;
@@ -31,6 +32,11 @@ export const ProfileScreen: FC = (): ReactElement => {
     const { formatMessage } = useIntl();
     const { routeTab } = useParams<ParamType>();
     const abilities = useSelector(selectAbilities);
+    const user = useSelector(selectUserInfo);
+
+    const isCompanyAccount = useCallback(() => {
+        return !!user.organization && organizationEnabled();
+    }, [user]);
 
     useDocumentTitle('Profile');
 
@@ -48,7 +54,7 @@ export const ProfileScreen: FC = (): ReactElement => {
                 setCurrentTabIndex(index);
             }
         } else {
-            history.push('/profile/security');
+            isCompanyAccount() ? history.push('/profile/company') : history.push('/profile/security');
         }
     }, [routeTab, tabMapping]);
 
@@ -92,31 +98,36 @@ export const ProfileScreen: FC = (): ReactElement => {
 
     return (
         <div className="container pg-profile-page">
-            <div className="pg-profile-page__details">
-                <div className="pg-profile-top">
-                    <div className="row">
-                        <div className="col-12 col-md-6 mx-0">
-                            <div className="row col-12 mx-0">
-                                <ProfileAuthDetails/>
+            {isCompanyAccount() ?
+                <React.Fragment>
+                    <CompanyAccount />
+                </React.Fragment>
+                : <div className="pg-profile-page__details">
+                    <div className="pg-profile-top">
+                        <div className="row">
+                            <div className="col-12 col-md-6 mx-0">
+                                <div className="row col-12 mx-0">
+                                    <ProfileAuthDetails/>
+                                </div>
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <ProfileVerification/>
                             </div>
                         </div>
-                        <div className="col-12 col-md-6">
-                            <ProfileVerification/>
+                    </div>
+                    <div className="row">
+                        <div className="col-12">
+                            <TabPanel
+                                panels={renderTabs()}
+                                onTabChange={onTabChange}
+                                currentTabIndex={currentTabIndex}
+                                onCurrentTabChange={onCurrentTabChange}
+                            />
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-12">
-                        <TabPanel
-                            panels={renderTabs()}
-                            onTabChange={onTabChange}
-                            currentTabIndex={currentTabIndex}
-                            onCurrentTabChange={onCurrentTabChange}
-                        />
-                    </div>
-                </div>
-            </div>
-            {tab === 'security' && (
+            }
+            {(isCompanyAccount() || tab === 'security') && (
                 <div className="row">
                     <div className="col-12">
                         <ProfileAccountActivity/>

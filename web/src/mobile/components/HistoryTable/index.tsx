@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Pagination, Table } from '../../../components';
 import { DEFAULT_CCY_PRECISION } from '../../../constants';
 import { localeDate } from '../../../helpers';
-import { useCurrenciesFetch, useHistoryFetch, useWalletsFetch } from '../../../hooks';
+import { useHistoryFetch, useWalletsFetch } from '../../../hooks';
 import { RootState, selectCurrentPage, selectLastElemIndex, selectNextPageExists } from '../../../modules';
 import { selectCurrencies } from '../../../modules/public/currencies';
 import { selectFirstElemIndex, selectHistory } from '../../../modules/user/history';
@@ -25,7 +25,6 @@ const HistoryTable = (props: any) => {
     const nextPageExists = useSelector((state: RootState) => selectNextPageExists(state, DEFAULT_LIMIT));
 
     useWalletsFetch();
-    useCurrenciesFetch();
     useHistoryFetch({ type: props.type, currency: props.currency, limit: DEFAULT_LIMIT, page: currentPage });
 
     const onClickPrevPage = () => {
@@ -70,7 +69,8 @@ const HistoryTable = (props: any) => {
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const confirmations = type === 'deposits' && item.confirmations;
             const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
-            const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
+            const blockchainCurrency = itemCurrency?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === item.blockchain_key);
+            const minConfirmations = blockchainCurrency?.min_confirmations;
             const state = 'state' in item ? formatTxState(item.state, confirmations, minConfirmations) : '';
 
             return [

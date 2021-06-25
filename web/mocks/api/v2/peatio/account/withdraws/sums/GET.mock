@@ -6,7 +6,6 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 {
-    "currencies": ["btc"],
-    "address": "2NCimTNGnbm92drX7ARcwBKw6rvr456VWym",
-    "state": "active"
+    "last_24_hours": "12.0",
+    "last_1_month": "42.0"
 }

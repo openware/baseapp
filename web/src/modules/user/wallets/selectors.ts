@@ -30,3 +30,9 @@ export const selectShouldFetchP2PWallets = (state: RootState): boolean =>
 
 export const selectP2PWallets = (state: RootState): Wallet[] =>
     state.user.wallets.p2pWallets.list;
+
+export const selectUserWithdrawalLimitsMonth = (state: RootState): string =>
+    state.user.wallets.userWithdrawals.last_1_month;
+
+export const selectUserWithdrawalLimitsDay = (state: RootState): string =>
+    state.user.wallets.userWithdrawals.last_24_hours;

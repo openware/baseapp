@@ -75,6 +75,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                             disabled={disabled}
                             size="lg"
                             variant="primary"
+                            className="cr-copyable-text-field__button"
                         >
                             {copyButtonText ? copyButtonText : 'Copy'}
                         </Button>

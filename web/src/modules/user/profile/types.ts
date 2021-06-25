@@ -20,7 +20,26 @@ export interface Phone {
     validated_at: string | null;
 }
 
-export interface User {
+export interface OrganizationSubUnit {
+    id: number,
+    oid: string,
+    name: string,
+    status: string,
+}
+
+export interface Organization {
+    id: number,
+    oid: string,
+    name: string,
+    status: string,
+    subunit?: OrganizationSubUnit,
+}
+
+export interface OrganizationUser {
+    oid?: string;
+}
+
+export interface User extends OrganizationUser {
     username?: string;
     email: string;
     level: number;
@@ -34,6 +53,7 @@ export interface User {
     referal_uid: string | null;
     labels: Label[];
     phone: Phone[];
+    organization?: Organization; 
     created_at: string;
     updated_at: string;
 }

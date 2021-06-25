@@ -8,12 +8,12 @@ interface Props {
     className?: string;
 }
 
-const TooltipComponent = ({ id = 'tooltip', ...rest }: Props) => (
-    <BootstrapTooltip id={`${id}`} className="tooltip" {...rest}>
+const TooltipComponent = React.forwardRef(({ id = 'tooltip', ...rest }: Props, ref?: React.Ref<HTMLDivElement>) => (
+    <BootstrapTooltip id={`${id}`} className="tooltip" {...rest} ref={ref}>
         <div className="tooltip__content">
             <FormattedMessage id={rest.title} />
         </div>
     </BootstrapTooltip>
-);
+));
 
 export const Tooltip = React.memo(TooltipComponent);

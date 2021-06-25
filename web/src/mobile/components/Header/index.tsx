@@ -7,7 +7,7 @@ import { ProfileIcon } from '../../../assets/images/sidebar/ProfileIcon';
 import { Logo } from '../../../components';
 import { selectUserLoggedIn } from '../../../modules';
 
-const noHeaderRoutes = ['/setup'];
+const noHeaderRoutes = ['/setup', '/accounts/switch'];
 
 const HeaderComponent: React.FC = () => {
     const userLoggedIn = useSelector(selectUserLoggedIn);

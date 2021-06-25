@@ -16,7 +16,7 @@ export interface ColorThemeState {
     applyWindowEnvsTrigger: boolean;
 }
 
-const currentColorTheme: string = localStorage.getItem('colorTheme') || 'dark';
+const currentColorTheme: string = localStorage.getItem('colorTheme') || window.env.colorTheme || 'dark';
 
 export const initialChangeColorThemeState: ColorThemeState = {
     color: currentColorTheme,

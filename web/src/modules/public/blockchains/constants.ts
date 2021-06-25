@@ -1,0 +1,1 @@
+export const BLOCKCHAINS_DATA = 'BLOCKCHAINS_DATA';

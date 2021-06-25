@@ -2,21 +2,33 @@ export interface Wallet {
     currency: string;
     name: string;
     type: 'fiat' | 'coin';
-    fee: number;
     fixed: number;
     account_type: string;
     balance?: string;
     locked?: string;
     iconUrl?: string;
+    active?: boolean;
+    deposit_addresses?: WalletAddress[];
+    networks: WalletBlockchain[];
+    todayLimit?: string;
+    available?: string;
+    used?: string;
+}
+
+export interface WalletBlockchain {
+    blockchain_key: string;
+    protocol: string;
     explorerTransaction?: string;
     explorerAddress?: string;
-    deposit_address?: WalletAddress;
-    active?: boolean;
+    min_confirmations?: string;
+    fee: number;
 }
+
 export interface WalletAddress {
     address: string;
     currencies: string[];
     state?: string;
+    blockchain_key: string;
 }
 
 export interface WalletWithdrawCCY {
