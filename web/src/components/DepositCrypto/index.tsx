@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import React, { useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import React from 'react';
+import { Button, OverlayTrigger } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { formatCCYAddress } from '../../helpers';
@@ -9,6 +9,8 @@ import { CopyableTextField } from '../CopyableTextField';
 import { MetaMaskButton } from '../MetaMaskButton';
 import { QRCode } from '../QRCode';
 import { Warning } from '../../assets/images/Warning';
+import { Tooltip, Decimal } from '../../components';
+import { TipIcon } from '../../assets/images/TipIcon';
 
 export interface DepositCryptoProps {
     /**
@@ -55,6 +57,7 @@ export interface DepositCryptoProps {
      */
     buttonLabel?: string;
     disabled?: boolean;
+    minDepositAmount?: string;
 }
 
 
@@ -76,6 +79,7 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         text,
         wallet,
         network,
+        minDepositAmount,
     } = props;
     
     const depositAddress = wallet.deposit_addresses?.find(address => address.blockchain_key?.toLowerCase() === network?.toLowerCase());
@@ -152,8 +156,26 @@ const DepositCrypto: React.FunctionComponent<DepositCryptoProps> = (props: Depos
         );
     }
 
+    window.console.log(wallet, network);
+
     return (
         <React.Fragment>
+            <div className="cr-withdraw__group__warning">
+                <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 300 }}
+                    overlay={<Tooltip title="page.body.wallets.tabs.deposit.min.amount.tip" />}>
+                    <div className="cr-withdraw__group__warning-tip">
+                        <TipIcon />
+                    </div>
+                </OverlayTrigger>
+                <span>
+                    {formatMessage({ id: 'page.body.wallets.tabs.deposit.min.deposit'})}&nbsp;
+                    <span className="cr-withdraw__group__warning-currency">
+                        <Decimal fixed={wallet.fixed} thousSep=",">{minDepositAmount?.toString()}</Decimal>&nbsp;{wallet.currency?.toUpperCase()}
+                    </span>
+                </span>
+            </div>
             <h5 className="cr-deposit-crypto__currency">{`${wallet?.name} (${wallet?.currency.toUpperCase()})`}</h5>
             <div className={className}>
                 <div>
