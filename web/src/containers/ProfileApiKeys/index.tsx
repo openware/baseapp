@@ -91,6 +91,18 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         this.props.apiKeysFetch({ pageIndex: 0, limit: 4 });
     }
 
+    public componentDidUpdate(prevProps) {
+        const {
+            pageIndex,
+            apiKeys,
+            nextPageExists,
+        } = this.props;
+
+        if (prevProps.apiKeys.length && !apiKeys.length) {
+            pageIndex > 0 ? this.onClickPrevPage() : nextPageExists && this.onClickNextPage();
+        }
+    }
+
     public render() {
         const {
             apiKeys,
