@@ -209,6 +209,8 @@ export const ru: LangType = {
     'page.body.wallets.warning.deposit.verification.button': 'Verify Your Account',
     'page.body.wallets.warning.deposit.networks.hint': 'Deposit disabled: No network configured for deposits',
     'page.body.wallets.warning.deposit.kyc.hint': 'Deposit are allowed after passing KYC verification',
+    'page.body.wallets.tabs.deposit.min.deposit': 'Min. deposit:',
+    'page.body.wallets.tabs.deposit.min.amount.tip': 'To create a deposit request the amount should be ≥ the minimum deposit amount',
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Вы можете внести депозит в банке, используя следующие реквизиты',
     'page.body.wallets.tabs.deposit.fiat.message2': 'Пожалуйста, используйте предоставленную информацию для завершения банковского платежа. Ваш депозит станет доступным на протяжении 2-х рабочих дней.',
@@ -995,6 +997,7 @@ export const ru: LangType = {
     'resource.phone.empty_verification_code': 'Код проверки отсутствует',
 
     // peatio
+    'account.currency.withdrawal.disabled': 'Withdraw is currenctly disabled for currency',
     'account.currency.doesnt_exist': 'Валюта не существует',
     'account.currency.deposit_disabled': 'Deposit is currently disabled',
     'account.deposit.invalid_state': 'Депозит недействителен',

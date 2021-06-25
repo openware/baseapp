@@ -99,6 +99,7 @@ export const DepositCryptoContainer = React.memo((props: DepositCryptoProps) => 
                         handleOnCopy={handleOnCopy}
                         text={text}
                         wallet={wallet}
+                        minDepositAmount={network.min_deposit_amount}
                         disabled={blockchain?.status === 'disabled' || !blockchain?.deposit_enabled}
                         network={tab}
                     /> : null,

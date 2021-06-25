@@ -213,6 +213,8 @@ export const en = {
     'page.body.wallets.table.pending': 'Pending',
     'page.body.wallets.table.rejected': 'Rejected',
     'page.body.wallets.tabs.deposit.fiat.admin': ' To initiate a fiat withdrawal, please contact administrator!',
+    'page.body.wallets.tabs.deposit.min.deposit': 'Min. deposit:',
+    'page.body.wallets.tabs.deposit.min.amount.tip': 'To create a deposit request the amount should be ≥ the minimum deposit amount',
 
     'page.body.wallets.tabs.withdraw': 'Withdraw',
     'page.body.wallets.tabs.withdraw.content.amount': 'Withdrawal Amount',
@@ -990,6 +992,7 @@ export const en = {
     'resource.phone.empty_verification_code': 'Verification code is missing or empty',
 
     // peatio
+    'account.currency.withdrawal.disabled': 'Withdraw is currenctly disabled for currency',
     'account.currency.doesnt_exist': 'Currency doesn\'t exist',
     'account.currency.deposit_disabled': 'Deposit is currently disabled',
     'account.deposit.invalid_state': 'Deposit invalid state',
