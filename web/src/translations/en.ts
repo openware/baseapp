@@ -856,6 +856,7 @@ export const en = {
     'identity.session.missing_emai': 'Email is missing',
     'identity.session.missing_password': 'Password is missing',
     'identity.session.invalid_captcha_format': 'Invalid captcha format',
+    'identity.session.rack_attack_limit': 'The limit of sign in requests exceeded, please try again in 60 seconds',
 
     // resource module
     'resource.otp.missing_code': 'OTP code is missing',

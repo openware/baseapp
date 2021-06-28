@@ -855,6 +855,7 @@ export const ru: LangType = {
     'identity.user.empty_reset_password_token': 'Токен пароля отсутствует',
     'identity.user.missing_confirm_password': 'Подтверджение пароля отсутствует',
     'identity.user.empty_confirm_password': 'Подтверджение пароля отсутствует',
+    'identity.session.rack_attack_limit': 'Превышен лимит запросов на вход, пожалуйста, повторите попытку через 60 секунд',
 
     'identity.session.missing_emai': 'Почта отсутствует',
     'identity.session.missing_password': 'Почта отсутствует',
