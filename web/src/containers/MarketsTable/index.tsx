@@ -101,6 +101,7 @@ const MarketsTableComponent = props => {
             markets={filteredMarkets}
             redirectToTrading={handleRedirectToTrading}
             setCurrentBidUnit={setCurrentBidUnit}
+            isFixedPrecision={props.isFixedPrecision}
         />
     );
 };
