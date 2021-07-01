@@ -2,17 +2,19 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import {
-    Beneficiaries,
+    Beneficiaries, CopyableTextField,
     CustomInput,
-    SummaryField,
-} from '../../components';
+    SummaryField
+} from "../../components";
 import { Decimal } from '../../components/Decimal';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 import { Beneficiary } from '../../modules';
+import { InputWithButton } from "src/components/InputWithButton";
 
 export interface WithdrawProps {
     currency: string;
     fee: number;
+    balance: string;
     onClick: (amount: string, total: string, beneficiary: Beneficiary, otpCode: string, fee: string) => void;
     fixed: number;
     className?: string;
@@ -109,14 +111,14 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                     </div>
                     <div className="cr-withdraw__divider cr-withdraw__divider-one" />
                     <div className={withdrawAmountClass}>
-                        <CustomInput
+                        <InputWithButton
                             type="number"
+                            value={amount}
                             label={withdrawAmountLabel || 'Withdrawal Amount'}
-                            defaultLabel="Withdrawal Amount"
-                            inputValue={amount}
-                            placeholder={withdrawAmountLabel || 'Amount'}
-                            classNameInput="cr-withdraw__input"
                             handleChangeInput={this.handleChangeInputAmount}
+                            className="cr-withdraw__input"
+                            buttonText="All"
+                            handleClickButton={this.handleClickAllAmount}
                         />
                     </div>
                     <div className={lastDividerClassName} />
@@ -220,6 +222,11 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             });
         }
     };
+
+    private handleClickAllAmount = () => {
+        this.setState({ amount: this.props.balance })
+        this.handleChangeInputAmount(this.props.balance);
+    }
 
     private setTotal = (value: string) => {
         this.setState({ total: value });

@@ -40,7 +40,7 @@ const WalletWithdrawBodyComponent = props => {
     const user = useSelector(selectUserInfo);
     const currencies = useSelector(selectCurrencies);
     const withdrawSuccess = useSelector(selectWithdrawSuccess);
-    const { currency, fee, type } = props.wallet;
+    const { currency, fee, type, balance } = props.wallet;
     const fixed = (props.wallet || { fixed: 0 }).fixed;
     const withdrawAmountLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }), [intl]);
     const withdraw2faLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.code2fa' }), [intl]);
@@ -147,6 +147,7 @@ const WalletWithdrawBodyComponent = props => {
                     fee={fee}
                     type={type}
                     fixed={fixed}
+                    balance={balance}
                     currency={currency}
                     onClick={toggleConfirmModal}
                     withdrawAmountLabel={withdrawAmountLabel}

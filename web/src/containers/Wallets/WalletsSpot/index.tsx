@@ -562,13 +562,14 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         }
         const { user: { level, otp }, wallets } = this.props;
         const wallet = wallets[selectedWalletIndex];
-        const { currency, fee, type } = wallet;
+        const { currency, fee, type, balance } = wallet;
         const fixed = (wallet || { fixed: 0 }).fixed;
 
         const withdrawProps: WithdrawProps = {
             withdrawDone,
             currency,
             fee,
+            balance,
             onClick: this.toggleConfirmModal,
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,
