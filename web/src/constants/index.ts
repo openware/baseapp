@@ -115,3 +115,5 @@ export const colors = {
         },
     },
 };
+
+export const FIXED_VOL_PRECISION = 2;

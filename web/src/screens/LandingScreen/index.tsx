@@ -94,7 +94,7 @@ class Landing extends React.Component<Props> {
                                     {this.translate('page.body.landing.marketInfo.title.button')}
                                 </Link>
                             </div>
-                            <MarketsTable isFixedPrecision />
+                            <MarketsTable />
                         </div>
                     </div>
                     <div className="pg-landing-screen__platform-info">

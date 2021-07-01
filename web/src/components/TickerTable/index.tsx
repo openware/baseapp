@@ -2,6 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { Market } from '../../modules';
 import { Decimal } from '../Decimal';
+import { FIXED_VOL_PRECISION } from "src/constants";
 
 interface Props {
     currentBidUnit: string;
@@ -9,10 +10,7 @@ interface Props {
     markets: Market[];
     redirectToTrading: (key: string) => void;
     setCurrentBidUnit: (key: string) => void;
-    isFixedPrecision: boolean
 }
-
-const FIXED_PRECISION = 2;
 
 export const TickerTable: React.FC<Props> = ({
     currentBidUnit,
@@ -20,7 +18,6 @@ export const TickerTable: React.FC<Props> = ({
     setCurrentBidUnit,
     currentBidUnitsList,
     redirectToTrading,
-    isFixedPrecision
 }) => {
     const { formatMessage } = useIntl();
 
@@ -35,7 +32,7 @@ export const TickerTable: React.FC<Props> = ({
                     </td>
                     <td>
                         <span>
-                            <Decimal fixed={!isFixedPrecision ? market.amount_precision : market.price_precision} thousSep=",">
+                            <Decimal fixed={market.price_precision} thousSep=",">
                                 {market.last}
                             </Decimal>
                         </span>
@@ -45,21 +42,21 @@ export const TickerTable: React.FC<Props> = ({
                     </td>
                     <td>
                         <span>
-                            <Decimal fixed={!isFixedPrecision ? market.amount_precision : market.price_precision} thousSep=",">
+                            <Decimal fixed={market.price_precision} thousSep=",">
                                 {market.high}
                             </Decimal>
                         </span>
                     </td>
                     <td>
                         <span>
-                            <Decimal fixed={!isFixedPrecision ? market.amount_precision : market.price_precision} thousSep=",">
+                            <Decimal fixed={market.price_precision} thousSep=",">
                                 {market.low}
                             </Decimal>
                         </span>
                     </td>
                     <td>
                         <span>
-                            <Decimal fixed={!isFixedPrecision ? market.amount_precision : FIXED_PRECISION} thousSep=",">
+                            <Decimal fixed={FIXED_VOL_PRECISION} thousSep=",">
                                 {market.volume}
                             </Decimal>
                         </span>
