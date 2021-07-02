@@ -87,7 +87,7 @@ const RecentTradesMarket = ({ recentTrades }) => {
         }
     }, [currentMarket]);
 
-    const content = useMemo(() => {
+    const renderTable = useMemo(() => {
         return (
             <Table
                 data={getTrades()}
@@ -99,7 +99,7 @@ const RecentTradesMarket = ({ recentTrades }) => {
 
     return (
         <div className="pg-recent-trades__markets">
-            {content}
+            {renderTable}
         </div>
     );
 };
