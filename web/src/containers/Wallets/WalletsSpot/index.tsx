@@ -42,6 +42,7 @@ import {
     selectWallets,
     selectWalletsLoading,
     selectWithdrawSuccess,
+    selectBeneficiariesCreateError,
     setMobileWalletUi,
     Ticker,
     User,
@@ -68,6 +69,7 @@ interface ReduxProps {
     tickers: {
         [key: string]: Ticker,
     };
+    beneficiariesAddError: any,
 }
 
 interface DispatchProps {
@@ -245,6 +247,12 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             const selectedCurrency = (next.wallets[selectedWalletIndex] || { currency: '' }).currency;
 
             this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase() });
+        }
+
+        if (!this.props.beneficiariesAddError && next.beneficiariesAddError && next.beneficiariesAddError.message) {
+            if (next.beneficiariesAddError.message.indexOf('account.withdraw.not_permitted') > -1) {
+                this.props.fetchSuccess({ message: next.beneficiariesAddError.message, type: 'error'});
+            }
         }
     }
 
@@ -640,6 +648,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesDeleteSuccess: selectBeneficiariesDeleteSuccess(state),
     currencies: selectCurrencies(state),
     beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
+    beneficiariesAddError: selectBeneficiariesCreateError(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
