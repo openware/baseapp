@@ -24,6 +24,7 @@ import {
     userOrdersHistoryFetch,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
+import { getTriggerSign } from '../OpenOrders/helpers';
 
 interface OrdersProps {
     type: string;
@@ -64,7 +65,7 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         let updateList = list;
 
         if (type === 'open') {
-            updateList = list.filter(o => o.state === 'wait');
+            updateList = list.filter(o => o.state === 'wait' || o.state === 'trigger_wait');
         }
 
         const emptyMsg = this.props.intl.formatMessage({id: 'page.noDataToShow'});
@@ -108,14 +109,16 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
 
     private renderHeaders = () => {
         return [
-            this.props.intl.formatMessage({ id: 'page.body.history.deposit.header.date' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.date' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.market' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.side' }),
             this.props.intl.formatMessage({ id: 'page.body.openOrders.header.orderType' }),
-            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.pair' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.avgPrice' }),
             this.props.intl.formatMessage({ id: 'page.body.openOrders.header.price' }),
             this.props.intl.formatMessage({ id: 'page.body.openOrders.header.amount' }),
-            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.executed' }),
-            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.remaining' }),
-            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.costRemaining' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.value' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.trigger' }),
+            this.props.intl.formatMessage({ id: 'page.body.openOrders.header.filled' }),
             this.props.intl.formatMessage({ id: 'page.body.openOrders.header.status' }),
             '',
         ];
@@ -128,11 +131,11 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
     private renderOrdersHistoryRow = item => {
         const {
             id,
-            executed_volume,
             market,
             ord_type,
             price,
             avg_price,
+            trigger_price,
             remaining_volume,
             origin_volume,
             side,
@@ -143,33 +146,63 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
         const currentMarket = this.props.marketsData.find(m => m.id === market)
             || { name: '', price_precision: 0, amount_precision: 0 };
 
-        const orderType = this.getType(side, ord_type);
+        const orderType = this.getType(ord_type);
+        const orderSide = this.getSide(side);
         const marketName = currentMarket ? currentMarket.name : market;
-        const costRemaining = remaining_volume * price; // price or avg_price ???
-        const date = localeDate(updated_at ? updated_at : created_at, 'fullDate');
+        const date = updated_at || created_at;
         const status = this.setOrderStatus(state);
-        const actualPrice = ord_type === 'market' || status === 'done' ? avg_price : price;
+        const actualPrice = this.getPrice(ord_type, status, avg_price, trigger_price, price);
+        const total = +actualPrice * +origin_volume;
+        const executedVolume = Number(origin_volume) - Number(remaining_volume);
+        const filled = ((executedVolume / Number(origin_volume)) * 100).toFixed(2);
 
         return [
-            date,
-            <span style={{ color: setTradeColor(side).color }} key={id}>{orderType}</span>,
-            marketName,
-            <Decimal key={id} fixed={currentMarket.price_precision} thousSep=",">{actualPrice}</Decimal>,
+            <span key={id} className="split-lines f-small"><span className="secondary">{localeDate(date, 'date')}</span>&nbsp;<span>{localeDate(date, 'time')}</span></span>,
+            <span key={id} className="bold">{marketName}</span>,
+            <span style={{ color: setTradeColor(side).color }} key={id}>{orderSide}</span>,
+            <span key={id}>{orderType}</span>,
+            avg_price ? <Decimal key={id} fixed={currentMarket.price_precision} thousSep=",">{avg_price}</Decimal> : '-',
+            price ? <Decimal key={id} fixed={currentMarket.price_precision} thousSep=",">{price}</Decimal> : '-',
             <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{origin_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{executed_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{remaining_volume}</Decimal>,
-            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{costRemaining.toString()}</Decimal>,
-            status,
-            state === 'wait' && <CloseIcon key={id} onClick={this.handleCancel(id)} />,
+            <Decimal key={id} fixed={currentMarket.amount_precision} thousSep=",">{total}</Decimal>,
+            <span key={id} className="split-lines f-small justify-content-end">
+                {trigger_price ? (
+                    <React.Fragment>
+                        <span>{this.props.intl.formatMessage({ id: 'page.body.trade.header.openOrders.lastPrice' })}</span>&nbsp;{getTriggerSign(ord_type, side)}&nbsp;&nbsp;
+                        <span style={{ color: setTradeColor(side).color }}>{Decimal.format(trigger_price, currentMarket.price_precision, ',')}</span>
+                    </React.Fragment>
+                ) : '-'}
+            </span>,
+            <span style={{ color: setTradeColor(side).color }} className="f-small" key={id}><Decimal fixed={2} thousSep=",">{+filled}</Decimal>%</span>,
+            <span key={id} className="f-small">{status}</span>,
+            (state === 'wait' || state === 'trigger_wait') && <CloseIcon key={id} onClick={this.handleCancel(id)} />,
         ];
     };
 
-    private getType = (side: string, orderType: string) => {
-        if (!side || !orderType) {
+    private getSide = (side: string) => {
+        if (!side) {
             return '';
         }
 
-        return this.props.intl.formatMessage({ id: `page.body.openOrders.header.orderType.${side}.${orderType}` });
+        return this.props.intl.formatMessage({ id: `page.body.openOrders.header.side.${side}` });
+    };
+
+    private getType = (orderType: string) => {
+        if (!orderType) {
+            return '';
+        }
+
+        return this.props.intl.formatMessage({ id: `page.body.trade.header.openOrders.content.type.${orderType}` });
+    };
+
+    private getPrice = (ord_type, status, avg_price, trigger_price, price) => {
+        if (ord_type === 'market' || status === 'done') {
+            return avg_price;
+        } else if (status === 'trigger_wait') {
+            return trigger_price;
+        } else {
+            return price;
+        }
     };
 
     private setOrderStatus = (status: string) => {
@@ -181,15 +214,18 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
                     </span>
                 );
             case 'cancel':
+            case 'trigger_cancel':
+            case 'execution_reject':
                 return (
                     <span className="pg-history-elem-canceled">
-                        <FormattedMessage id={`page.body.openOrders.content.status.cancel`} />
+                        <FormattedMessage id={`page.body.openOrders.content.status.${status}`} />
                     </span>
                 );
             case 'wait':
+            case 'trigger_wait':
                 return (
                     <span className="pg-history-elem-opened">
-                        <FormattedMessage id={`page.body.openOrders.content.status.wait`} />
+                        <FormattedMessage id={`page.body.openOrders.content.status.${status}`} />
                     </span>
                 );
             default:

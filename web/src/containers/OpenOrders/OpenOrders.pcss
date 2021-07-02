@@ -18,12 +18,46 @@
   .cr-table-header {
     &__content {
       padding: 9px 9px 9px 12px;
+
+      .cr-title-component {
+        display: grid;
+        grid-template-columns: 82px 1fr 1fr;
+
+        &__checkbox {
+          .custom-control-label {
+            color: var(--secondary-contrast-cta-color);
+
+            &:after, &:before {
+              height: 18px;
+              width: 18px;
+              left: -26px;
+              top: 0;
+            }
+
+            &:before {
+              background-color: var(--subheader-background-color);
+            }
+          }
+
+          .custom-control-input:checked ~ .custom-control-label::before {
+            background-color: var(--input-checkbox-background-color-active);
+            border-color: var(--input-border-color-active);
+            transition: 0.2s;
+          }
+        }
+      }
     }
 
     &__cancel {
-      color: var(--secondary-contrast-cta-color);
+      color: var(--system-red);
       cursor: pointer;
-      float: right;
+      text-align: right;
+      letter-spacing: 0.06em;
+      font-weight: bold;
+      font-size: 10px;
+      text-transform: uppercase;
+      line-height: 17px;
+      margin-right: 2px;
       transition: 0.2s;
 
       &:hover {
@@ -43,10 +77,10 @@
     &__close {
       cursor: pointer;
       display: inline-block;
-      height: calc(var(--gap) * 2);
-      margin-left: calc(var(--gap) / 1.33);
+      height: 14px;
+      margin-left: 11px;
       position: relative;
-      width: calc(var(--gap) * 2);
+      width: 14px;
 
       &::before,
       &::after {
@@ -67,6 +101,10 @@
       &::after {
         transform: rotate(-45deg);
       }
+
+      path {
+        fill: var(--system-red);
+      }
     }
   }
 }
@@ -74,9 +112,13 @@
 .cr-open-orders .cr-table th,
 .cr-open-orders .cr-table td {
   width: auto !important;
+  text-align: right;
 
-  &:not(:first-child) {
-    text-align: right;
+  &:first-child,
+  &:nth-child(2),
+  &:nth-child(3),
+  &:nth-child(7) {
+    text-align: left;
   }
 
   &:last-child {
@@ -88,6 +130,20 @@
 
   svg {
     cursor: pointer;
+  }
+
+  .bold {
+    font-weight: 500;
+  }
+
+  .split-lines {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .secondary {
+    color: var(--secondary-contrast-cta-color);
   }
 }
 

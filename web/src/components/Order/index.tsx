@@ -12,6 +12,7 @@ export interface OrderProps {
     type: FormType;
     orderType: string | React.ReactNode;
     price: number | string;
+    trigger: number | string;
     amount: number | string;
     available: number;
 }
@@ -43,6 +44,10 @@ export interface OrderComponentProps {
      * If orderType is 'Limit' this value will be used as price
      */
     priceLimit?: number;
+    /**
+     * If orderType is 'Stop-loss', 'Take-profit', 'Stop-limit', 'Take-limit' this value will be used as trigger price
+     */
+    trigger?: number;
     /**
      * Name of currency for price field
      */
@@ -86,6 +91,10 @@ export interface OrderComponentProps {
      */
     listenInputPrice?: () => void;
     /**
+     * start handling change trigger price
+     */
+    listenInputTrigger?: () => void;
+    /**
      * default tab index
      */
     defaultTabIndex?: number;
@@ -103,6 +112,10 @@ interface State {
 const defaultOrderTypes: DropdownElem[] = [
     'Limit',
     'Market',
+    'Stop-loss',
+    'Take-profit',
+    'Stop-limit',
+    'Take-limit',
 ];
 
 const splitBorder = 449;
@@ -171,6 +184,7 @@ export class Order extends React.Component<OrderComponentProps, State> {
             priceMarketBuy,
             priceMarketSell,
             priceLimit,
+            trigger,
             from,
             to,
             currentMarketAskPrecision,
@@ -182,6 +196,7 @@ export class Order extends React.Component<OrderComponentProps, State> {
             currentMarketFilters,
             isMobileDevice,
             listenInputPrice,
+            listenInputTrigger,
             translate,
         } = this.props;
         const { amountSell, amountBuy } = this.state;
@@ -208,6 +223,7 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     available={available}
                     priceMarket={priceMarket}
                     priceLimit={priceLimit}
+                    trigger={trigger}
                     onSubmit={this.props.onSubmit}
                     orderTypes={orderTypes || defaultOrderTypes}
                     orderTypesIndex={orderTypesIndex || defaultOrderTypes}
@@ -215,7 +231,10 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     currentMarketBidPrecision={currentMarketBidPrecision}
                     totalPrice={getTotalPrice(amount, priceMarket, proposals)}
                     amount={amount}
+                    bestAsk={this.bestOBPrice(asks)}
+                    bestBid={this.bestOBPrice(bids)}
                     listenInputPrice={listenInputPrice}
+                    listenInputTrigger={listenInputTrigger}
                     handleAmountChange={this.handleAmountChange}
                     handleChangeAmountByButton={this.handleChangeAmountByButton}
                     currentMarketFilters={currentMarketFilters}
@@ -258,12 +277,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
         switch (type) {
             case 'buy':
                 switch (orderType) {
-                    case 'Limit':
-                        newAmount = available && +price ? (
-                            Decimal.format(available / +price * value, this.props.currentMarketAskPrecision)
-                        ) : '';
-
-                        break;
                     case 'Market':
                         newAmount = available ? (
                             Decimal.format(getAmount(Number(available), proposals, value), this.props.currentMarketAskPrecision)
@@ -271,6 +284,10 @@ export class Order extends React.Component<OrderComponentProps, State> {
 
                         break;
                     default:
+                        newAmount = available && +price ? (
+                            Decimal.format(available / +price * value, this.props.currentMarketAskPrecision)
+                        ) : '';
+
                         break;
                 }
                 break;
@@ -292,4 +309,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
     };
 
     private isTypeSell = (type: string) => type === 'sell';
+
+    private bestOBPrice = (list: string[][]) => list[0] && list[0][0];
 }

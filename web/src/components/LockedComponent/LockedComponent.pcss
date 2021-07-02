@@ -1,0 +1,28 @@
+.cr-locked {
+  height: 100%;
+  width: 100%;
+  background: var(--body-background-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px;
+
+  &__content {
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.1px;
+    max-width: 184px;
+    text-align: center;
+  }
+
+  & > * {
+    margin-bottom: 11px;
+  }
+
+  &__btn-icon {
+    path {
+      fill: var(--button-secondary-cta-text-color);
+    }
+  }
+}

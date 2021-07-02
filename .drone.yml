@@ -121,3 +121,35 @@ trigger:
 
 image_pull_secrets:
   - dockerconfigjson
+
+---
+kind: pipeline
+name: "Build branches"
+
+concurrency:
+  limit: 2
+
+steps:
+  - name: "Build Docker image"
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: quay_username
+      password:
+        from_secret: quay_password
+      repo:
+        from_secret: quay_repo
+      registry: quay.io
+      tags: ${DRONE_COMMIT:0:7}
+
+trigger:
+  branch:
+    - "enhancement/*"
+    - "fix/*"
+    - "feature/*"
+
+  event:
+    - push
+
+image_pull_secrets:
+  - dockerconfigjson

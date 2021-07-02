@@ -50,3 +50,4 @@ export * from './WalletList';
 export * from './QuickExchangeForm';
 export * from './Timer';
 export * from './Info';
+export * from './LockedComponent';

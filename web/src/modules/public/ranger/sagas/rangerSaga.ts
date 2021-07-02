@@ -182,6 +182,7 @@ const initRanger = (
                                         emitter(alertPush({ message: ['success.order.done'], type: 'success'}));
                                         break;
                                     case 'reject':
+                                    case 'execution_reject':
                                         emitter(alertPush({ message: ['error.order.rejected'], type: 'error'}));
                                         break;
                                     default:
