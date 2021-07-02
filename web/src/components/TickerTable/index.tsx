@@ -2,6 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { Market } from '../../modules';
 import { Decimal } from '../Decimal';
+import { FIXED_VOL_PRECISION } from "src/constants";
 
 interface Props {
     currentBidUnit: string;
@@ -31,7 +32,7 @@ export const TickerTable: React.FC<Props> = ({
                     </td>
                     <td>
                         <span>
-                            <Decimal fixed={market.amount_precision} thousSep=",">
+                            <Decimal fixed={market.price_precision} thousSep=",">
                                 {market.last}
                             </Decimal>
                         </span>
@@ -41,21 +42,21 @@ export const TickerTable: React.FC<Props> = ({
                     </td>
                     <td>
                         <span>
-                            <Decimal fixed={market.amount_precision} thousSep=",">
+                            <Decimal fixed={market.price_precision} thousSep=",">
                                 {market.high}
                             </Decimal>
                         </span>
                     </td>
                     <td>
                         <span>
-                            <Decimal fixed={market.amount_precision} thousSep=",">
+                            <Decimal fixed={market.price_precision} thousSep=",">
                                 {market.low}
                             </Decimal>
                         </span>
                     </td>
                     <td>
                         <span>
-                            <Decimal fixed={market.amount_precision} thousSep=",">
+                            <Decimal fixed={FIXED_VOL_PRECISION} thousSep=",">
                                 {market.volume}
                             </Decimal>
                         </span>
