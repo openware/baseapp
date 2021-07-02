@@ -20,7 +20,7 @@ const InputWithButton = ({
 }: {
   value: any;
   className: string;
-  fieldId?: any;
+  fieldId?: string | number;
   disabled?: boolean;
   buttonText?: string;
   label?: string;
@@ -30,42 +30,42 @@ const InputWithButton = ({
   handleClickButton?: MouseEventHandler;
   handleChangeInput?: (value: string) => void;
 }) => {
-  const cx = classnames('cr-copyable-text-field', className);
+  const cx = classnames('cr-input-with-button-field', className);
 
   return (
     <fieldset>
-    <div className={cx}>
-      <InputGroup>
-        <CustomInput
-          id={String(fieldId)}
-          readOnly={readOnly}
-          inputValue={value}
-          handleClick={handleClickInput}
-          type={type}
-          isDisabled={disabled}
-          label={label}
-          defaultLabel={label}
-          placeholder={label}
-          handleChangeInput={handleChangeInput}
-          classNameInput={"cr-input-with_button_input"}
-        />
-        <InputGroup.Append>
-          <div className="cr-input-with-button_wrapper">
-            <button
-              onClick={handleClickButton}
-              disabled={disabled}
-              className="cr-input-with-button"
-            >
-              {buttonText}
-            </button>
-          </div>
-        </InputGroup.Append>
-      </InputGroup>
-    </div>
+      <div className={cx}>
+        <InputGroup>
+          <CustomInput
+            id={String(fieldId)}
+            readOnly={readOnly}
+            inputValue={value}
+            handleClick={handleClickInput}
+            type={type}
+            isDisabled={disabled}
+            label={label}
+            defaultLabel={label}
+            placeholder={label}
+            handleChangeInput={handleChangeInput}
+            classNameInput={"cr-input-with_button_input"}
+          />
+          <InputGroup.Append>
+            <div className="cr-input-with-button_wrapper">
+              <Button
+                onClick={handleClickButton}
+                disabled={disabled}
+                className="cr-input-with-button"
+              >
+                {buttonText}
+              </Button>
+            </div>
+          </InputGroup.Append>
+        </InputGroup>
+      </div>
     </fieldset>
   )
 }
 
 export {
-  InputWithButton
+  InputWithButton,
 }

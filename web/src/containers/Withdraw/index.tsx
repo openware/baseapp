@@ -2,9 +2,8 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import {
-    Beneficiaries, CopyableTextField,
-    CustomInput,
-    SummaryField
+    Beneficiaries,
+    SummaryField,
 } from "../../components";
 import { Decimal } from '../../components/Decimal';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
@@ -27,6 +26,7 @@ export interface WithdrawProps {
     withdrawButtonLabel?: string;
     withdrawDone: boolean;
     isMobileDevice?: boolean;
+    withdrawAllButtonLabel?: string;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -87,6 +87,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
             withdrawFeeLabel,
             withdrawTotalLabel,
             withdrawButtonLabel,
+            withdrawAllButtonLabel
         } = this.props;
 
         const cx = classnames('cr-withdraw', className);
@@ -117,7 +118,7 @@ export class Withdraw extends React.Component<WithdrawProps, WithdrawState> {
                             label={withdrawAmountLabel || 'Withdrawal Amount'}
                             handleChangeInput={this.handleChangeInputAmount}
                             className="cr-withdraw__input"
-                            buttonText="All"
+                            buttonText={withdrawAllButtonLabel}
                             handleClickButton={this.handleClickAllAmount}
                         />
                     </div>

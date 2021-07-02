@@ -7,3 +7,59 @@
   flex: 1;
   background: inherit;
 }
+
+.cr-input-with-button-field {
+  align-items: center;
+  background: var(--input-background-color);
+  background: inherit;
+  border: none;
+  border-radius: calc(var(--gap) * 0.66);
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  padding: 0;
+
+  legend {
+    background: var(--input-legend-color);
+    margin-bottom: auto;
+    margin-top: calc(var(--gap) * -1.5);
+    position: absolute;
+    width: max-content;
+  }
+
+  &__input {
+    background: var(--input-background-color);
+    background: inherit;
+    color: var(--input-text-color);
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    padding: calc(var(--gap) * 1.67) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
+
+    input {
+      background: unset;
+      color: var(--input-text-color);
+    }
+  }
+
+  .cr-copyable-text-field {
+    padding: 0;
+  }
+
+  .cr-input-with-button {
+    background: #dee2ec;
+    border: 0;
+    border-radius: 4px;
+    color: #727a9a;
+    padding: 10px 15px;
+  }
+
+  input {
+    background: var(--input-background-color);
+    border-radius: 0;
+    border-style: none;
+    color: var(--input-text-color);
+    outline: none;
+    width: 100%;
+  }
+}
