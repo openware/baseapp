@@ -46,3 +46,5 @@ export * from './convertToString';
 export * from './hasDuplicates';
 export * from './ssToMMSS';
 export * from './mergeObjects';
+export * from './validateBeneficiaryTestnetAddress';
+export * from './validateBeneficiaryAddress';
