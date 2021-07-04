@@ -1,6 +1,7 @@
 import cr from 'classnames';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import ClientCaptcha from "react-client-captcha";
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -9,6 +10,7 @@ import { captchaLogin } from '../../api';
 import { EMAIL_REGEX } from '../../helpers';
 import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
+import { SIGN_IN_TRIES_COUNT } from "../../constants";
 
 export interface SignInProps {
     labelSignIn?: string;
@@ -43,6 +45,8 @@ export interface SignInProps {
     reCaptchaSuccess?: boolean;
     geetestCaptchaSuccess?: boolean;
     captcha_response?: string | GeetestCaptchaResponse;
+    captchaLabel?: string,
+    captchaSubmitLabel?: string;
 }
 
 const SignIn: React.FC<SignInProps> = ({
@@ -73,7 +77,12 @@ const SignIn: React.FC<SignInProps> = ({
     geetestCaptchaSuccess,
     reCaptchaSuccess,
     renderCaptcha,
+    captchaLabel,
+    captchaSubmitLabel,
 }) => {
+    const [tryCount, setTryCount] = useState(0);
+    const [captchaCode, setCaptchaCode] = useState('');
+    const [userCaptchaCode, setUserCaptchaCode] = useState('');
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const history = useHistory();
     const { formatMessage } = useIntl();
@@ -112,6 +121,7 @@ const SignIn: React.FC<SignInProps> = ({
     const handleSubmitForm = React.useCallback(() => {
         refreshError();
         onSignIn();
+        setTryCount(tryCount + 1);
     }, [onSignIn, refreshError]);
 
     const handleValidateForm = React.useCallback(() => {
@@ -167,6 +177,14 @@ const SignIn: React.FC<SignInProps> = ({
         ),
         [formatMessage, history]
     );
+
+    const handleSubmitCaptcha = () => {
+        if (userCaptchaCode === captchaCode) {
+            setTryCount(0);
+        }
+
+        setUserCaptchaCode('');
+    }
 
     return (
         <form>
@@ -229,11 +247,43 @@ const SignIn: React.FC<SignInProps> = ({
                     </div>
                     {captchaLogin() && renderCaptcha}
                     {isMobileDevice && renderForgotButton}
+                    {
+                        tryCount > SIGN_IN_TRIES_COUNT &&
+                        <div className="cr-sign-in-form__group">
+                            <ClientCaptcha captchaCode={setCaptchaCode} />
+                            <div className="cr-sign-in-form__captcha-input-wrapper">
+                                <div className="cr-sign-in-form__captcha_input">
+                                    <CustomInput
+                                      type="text"
+                                      label={captchaLabel || 'Captcha code'}
+                                      placeholder={captchaLabel || 'Captcha code'}
+                                      defaultLabel="Captcha code"
+                                      handleChangeInput={setUserCaptchaCode}
+                                      inputValue={userCaptchaCode}
+                                      classNameLabel="cr-sign-in-form__label"
+                                      autoFocus={false}
+                                    />
+                                </div>
+                                <Button
+                                    size="lg"
+                                    onClick={handleSubmitCaptcha}
+                                >
+                                    {captchaSubmitLabel || 'Submit'}
+                                </Button>
+                            </div>
+                        </div>
+                    }
                     <div className="cr-sign-in-form__button-wrapper">
                         <Button
                             block={true}
                             type="button"
-                            disabled={isLoading || !email.match(EMAIL_REGEX) || !password || isButtonDisabled}
+                            disabled={
+                                tryCount > SIGN_IN_TRIES_COUNT ||
+                                isLoading ||
+                                !email.match(EMAIL_REGEX) ||
+                                !password ||
+                                isButtonDisabled
+                            }
                             onClick={handleClick as any}
                             size="lg"
                             variant="primary">

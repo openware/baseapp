@@ -117,3 +117,4 @@ export const colors = {
 };
 
 export const FIXED_VOL_PRECISION = 2;
+export const SIGN_IN_TRIES_COUNT = 5;

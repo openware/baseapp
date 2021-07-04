@@ -191,6 +191,9 @@ export const SignInScreen: React.FC = () => {
                         labelSignUp={formatMessage({ id: 'page.header.signUp' })}
                         emailLabel={formatMessage({ id: 'page.header.signIn.email' })}
                         passwordLabel={formatMessage({ id: 'page.header.signIn.password' })}
+                        captchaType="geetest"
+                        captchaLabel={formatMessage({id: 'page.header.signIn.captcha'})}
+                        captchaSubmitLabel={formatMessage({ id: 'page.header.signIn.captcha.button'})}
                         receiveConfirmationLabel={formatMessage({
                             id: 'page.header.signIn.receiveConfirmation',
                         })}

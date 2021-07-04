@@ -614,6 +614,8 @@ export const ru: LangType = {
     'page.header.signIn.email': 'Почта',
     'page.header.signIn.password': 'Пароль',
     'page.header.signIn.password.message.error': 'Неправильный пароль',
+    'page.header.signIn.captcha': 'Captcha код',
+    'page.header.signIn.captcha.button': 'Потдвердить Captcha',
     'page.header.signIn.receiveConfirmation': 'Не получили подтверждение по электронной почте?',
     'page.header.signIn.forgotPassword': 'Забыли пароль?',
     'page.header.signIn.resetPassword.title': 'Сброс пароля',

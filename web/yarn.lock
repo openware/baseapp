@@ -11421,6 +11421,11 @@ react-calendar@^3.0.0:
     merge-class-names "^1.1.1"
     prop-types "^15.6.0"
 
+react-client-captcha@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-client-captcha/-/react-client-captcha-1.0.3.tgz#7c31e084fe2b1506f5b6c2c944c3346aaebc9bf6"
+  integrity sha512-uPnU6W/lYg3oEAwK+wo0MYUWWr24gv6QiILGprrDlk6Y/NjJiMOGItBtrDloysGLl0Mz+d1mbc99IWCsVQYWkg==
+
 react-color@^2.18.0:
   version "2.19.3"
   resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.19.3.tgz#ec6c6b4568312a3c6a18420ab0472e146aa5683d"

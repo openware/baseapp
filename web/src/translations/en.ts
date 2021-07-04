@@ -604,6 +604,8 @@ export const en = {
     'page.header.signIn': 'Sign In',
     'page.header.signIn.email': 'Email',
     'page.header.signIn.password': 'Password',
+    'page.header.signIn.captcha': 'Captcha Code',
+    'page.header.signIn.captcha.button': 'Submit Captcha',
     'page.header.signIn.password.message.error': 'Password is invalid',
     'page.header.signIn.receiveConfirmation': 'Didn\'t receive your confirmation email?',
     'page.header.signIn.forgotPassword': 'Forgot your password?',
