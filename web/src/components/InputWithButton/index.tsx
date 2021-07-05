@@ -17,6 +17,7 @@ const InputWithButton = ({
     handleClickInput = () => {},
     handleClickButton = () => {},
     handleChangeInput = () => {},
+    buttonClassName = '',
 }: {
     value: any;
     className: string;
@@ -26,6 +27,7 @@ const InputWithButton = ({
     label?: string;
     type?: string;
     readOnly?: boolean;
+    buttonClassName?: string;
     handleClickInput?: MouseEventHandler;
     handleClickButton?: MouseEventHandler;
     handleChangeInput?: (value: string) => void;
@@ -54,7 +56,7 @@ const InputWithButton = ({
                 <Button
                   onClick={handleClickButton}
                   disabled={disabled}
-                  className="cr-input-with-button"
+                  className={buttonClassName || "cr-input-with-button"}
                 >
                   {buttonText}
                 </Button>

@@ -57,47 +57,19 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
         const cx = classnames('cr-copyable-text-field', className);
 
         return (
-<<<<<<< HEAD
-          <InputWithButton
-            value={value}
-            className={cx}
-            fieldId={fieldId}
-            readOnly
-            handleClickInput={doCopy}
-            handleClickButton={doCopy}
-            type="text"
-            disabled={disabled}
-            label={label}
-            buttonText={copyButtonText || 'Copy'}
-          />
-=======
-            <div className={cx}>
-                <InputGroup>
-                    <CustomInput
-                        id={String(fieldId)}
-                        readOnly={true}
-                        inputValue={value}
-                        handleClick={doCopy}
-                        type="text"
-                        isDisabled={disabled}
-                        label={label || ''}
-                        defaultLabel={label || ''}
-                        placeholder={label || ''}
-                    />
-                    <InputGroup.Append>
-                        <Button
-                            onClick={doCopy}
-                            disabled={disabled}
-                            size="lg"
-                            variant="primary"
-                            className="cr-copyable-text-field__button"
-                        >
-                            {copyButtonText ? copyButtonText : 'Copy'}
-                        </Button>
-                    </InputGroup.Append>
-                </InputGroup>
-            </div>
->>>>>>> origin/master
+            <InputWithButton
+              value={value}
+              className={cx}
+              fieldId={fieldId}
+              readOnly
+              handleClickInput={doCopy}
+              handleClickButton={doCopy}
+              type="text"
+              disabled={disabled}
+              label={label}
+              buttonText={copyButtonText || 'Copy'}
+              buttonClassName="cr-copyable-text-field__button"
+            />
         );
     }
 }
