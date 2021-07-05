@@ -130,16 +130,6 @@ const PrivateRoute: React.FunctionComponent<any> = ({ component: CustomComponent
     const renderCustomerComponent = props => <CustomComponent {...props} />;
 
     if (isLogged) {
-        const { checkAbility, abilities, action, target } = rest;
-
-        if (checkAbility && !CanCan.checkAbilityByAction(action, target, abilities)) {
-            return (
-                <Route path="**">
-                    <Redirect to="/" />
-                </Route>
-            );
-        }
-
         return <Route {...rest} render={renderCustomerComponent} />;
     }
 
@@ -359,7 +349,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
                     <PrivateRoute exact={true} loading={userLoading} isLogged={isLoggedIn} path="/docs" component={DocumentationScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/internal-transfer" component={InternalTransfer} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/quick-exchange" component={QuickExchange} checkAbility={true} abilities={this.props.abilities} action="read" target="QuickExchange" />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/quick-exchange" component={QuickExchange} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/create-offer" component={CreateP2POfferScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/offers" component={P2PUserOffersScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p/offer/:id" component={P2PUserOffersScreen} />

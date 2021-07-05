@@ -214,9 +214,11 @@ class OrdersComponent extends React.PureComponent<Props, OrdersState>  {
                     </span>
                 );
             case 'cancel':
+            case 'trigger_cancel':
+            case 'execution_reject':
                 return (
                     <span className="pg-history-elem-canceled">
-                        <FormattedMessage id={`page.body.openOrders.content.status.cancel`} />
+                        <FormattedMessage id={`page.body.openOrders.content.status.${status}`} />
                     </span>
                 );
             case 'wait':

@@ -39,7 +39,7 @@ export interface OrderFormProps {
      */
     trigger?: number;
     /**
-     * Type of form, can be 'buy' or 'cell'
+     * Type of form, can be 'buy' or 'sell'
      */
     type: FormType;
     /**
@@ -118,6 +118,7 @@ interface OrderFormState {
     amountFocused: boolean;
     priceFocused: boolean;
     triggerFocused: boolean;
+    side: string;
 }
 
 const handleSetValue = (value: string | number | undefined, defaultValue: string) => (
@@ -128,6 +129,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     constructor(props: OrderFormProps) {
         super(props);
         this.state = {
+            side: this.props.type,
             orderType: 'Limit',
             price: '',
             priceMarket: this.props.priceMarket,
@@ -302,7 +304,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     }
 
     public getTotal = () => {
-        const { orderType, price, trigger } = this.state;
+        const { orderType, price, trigger, side } = this.state;
         const { totalPrice, amount } = this.props;
         const safeAmount = Number(amount) || 0;
 
@@ -310,8 +312,10 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             return totalPrice;
         } else if ((orderType as string).toLowerCase().includes('limit')) {
             return safeAmount * (Number(price) || 0);
-        } else {
+        } else if (side === 'buy') {
             return TRIGGER_BUY_PRICE_MULT * safeAmount * (Number(trigger) || 0);
+        } else {
+            return safeAmount * (Number(trigger) || 0);
         }
     }
 
@@ -527,12 +531,12 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     };
 
     private handleChangeAmountByButton = (value: number) => {
-        const { orderType, price, trigger } = this.state;
+        const { orderType, price, trigger, side } = this.state;
         const ordType = (orderType as string).toLowerCase()
 
         let priceToUse = ordType.includes('limit') || orderType === 'Market' ? price : trigger;
 
-        if (TRIGGER_BUY_PRICE_ADJUSTED_TYPES.includes(ordType)) {
+        if (side === 'buy' && TRIGGER_BUY_PRICE_ADJUSTED_TYPES.includes(ordType)) {
             priceToUse = (Number(priceToUse) * TRIGGER_BUY_PRICE_MULT).toString()
         }
 

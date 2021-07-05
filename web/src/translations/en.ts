@@ -188,6 +188,20 @@ export const en = {
     'page.body.wallets.tabs.deposit.ccy.message.pending': 'Generating deposit address',
     'page.body.wallets.tabs.deposit.ccy.button.generate': 'Generate',
     'page.body.wallets.tabs.deposit.ccy.button.address': 'address',
+    'page.body.wallets.tabs.deposit.ccy.details': 'Deposit details',
+    'page.body.wallets.tabs.deposit.ccy.blockchain.networks': 'Blockchain network',
+    'page.body.wallets.tabs.deposit.ccy.tip': 'Select a blockchain network that you want to use to send your deposit.',
+    'page.body.wallets.tabs.deposit.ccy.hint.title': 'Send only {currency} to this deposit address.',
+    'page.body.wallets.tabs.deposit.ccy.hint': 'Sending coin or token other than {currency} to this address may result in the loss of your deposit.',
+    'page.body.wallets.tabs.deposit.ccy.disabled': 'Deposits of {currency} on that network is temporary suspended',
+    'page.body.wallets.tabs.deposit.ccy.memo': 'Memo',
+    'page.body.wallets.tabs.deposit.ccy.memo.warning': 'Both a MEMO and an Address are required to successfully deposit your USDT BEP2 tokens to Binance.',
+    'page.body.wallets.warning.deposit.disabled': 'Deposit disabled: ',
+    'page.body.wallets.warning.no.networks': 'No network configured for deposits',
+    'page.body.wallets.warning.deposit.verification': 'Deposit are allowed after passing KYC verification',
+    'page.body.wallets.warning.deposit.networks.hint': 'Currently, that currency can’t be deposited as no blockchain network was configured or enabled. Please, use another currency to make a deposit.',
+    'page.body.wallets.warning.deposit.kyc.hint': `Your current verification level doesn't allow you to make a deposit. Please, submit the required KYC information to get deposit permission.`,
+    'page.body.wallets.warning.deposit.verification.button': 'Verify Your Account',
 
     'page.body.wallets.tabs.deposit.fiat.message1': 'Deposit using bank transfer',
     'page.body.wallets.tabs.deposit.fiat.message2': 'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account within 2 business days.',
@@ -199,6 +213,8 @@ export const en = {
     'page.body.wallets.table.pending': 'Pending',
     'page.body.wallets.table.rejected': 'Rejected',
     'page.body.wallets.tabs.deposit.fiat.admin': ' To initiate a fiat withdrawal, please contact administrator!',
+    'page.body.wallets.tabs.deposit.min.deposit': 'Min. deposit:',
+    'page.body.wallets.tabs.deposit.min.amount.tip': 'To create a deposit request the amount should be ≥ the minimum deposit amount',
 
     'page.body.wallets.tabs.withdraw': 'Withdraw',
     'page.body.wallets.tabs.withdraw.content.amount': 'Withdrawal Amount',
@@ -208,6 +224,15 @@ export const en = {
     'page.body.wallets.tabs.withdraw.content.total': 'Total Withdrawal Amount',
     'page.body.wallets.tabs.withdraw.content.button': 'WITHDRAW',
     'page.body.wallets.tabs.withdraw.disabled.message': 'Withdraw was disabled by administration',
+    'page.body.wallets.warning.withdraw.disabled': 'Withdrawal disabled: ',
+    'page.body.wallets.warning.withdraw.no.networks': 'No network configured for withdrawals',
+    'page.body.wallets.warning.withdraw.verification': 'Withdraw are allowed after passing KYC verification',
+    'page.body.wallets.warning.withdraw.no.networks.hint': 'Currently, that currency can’t be withdrawed as no blockchain network was configured or enabled. Please, use another currency to make a withdraw.',
+    'page.body.wallets.warning.withdraw.verification.hint': `Your current verification level doesn't allow you to make a withdraw. Please, submit the required KYC information to get withdraw permission.`,
+    'page.body.wallets.warning.withdraw.otp.hint': 'Please, enable 2FA to get withdraw permission.',
+    'page.body.wallets.warning.withdraw.verification.button': 'Verify Your Account',
+    'page.body.wallets.tabs.withdraw.ccy.tip': 'You are going to withdraw using selected network. To withdraw on a different network, create or use an existing beneficiary with a needed network.',
+    'page.body.wallets.tabs.withdraw.min.amount.tip': 'To create a withdrawal request the amount should be ≥ the minimum withdrawal amount',
 
     'page.body.wallets.tabs.withdraw.modal.title': 'Withdraw',
     'page.body.wallets.tabs.withdraw.modal.withdrawTo': 'Withdraw to',
@@ -217,9 +242,14 @@ export const en = {
     'page.body.wallets.tabs.withdraw.modal.message': 'Enter 2fa code from the Google Authenticator app',
     'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Cancel',
     'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Withdraw',
+    'page.body.wallets.tabs.withdraw.modal.name': 'Name',
+    'page.body.wallets.tabs.withdraw.modal.verification': 'Verification',
 
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'To withdraw you have to enable 2FA',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2FA',
+
+    'page.body.wallets.tabs.withdraw.content.withdrawal.limit': 'Withdrawal limits',
+    'page.body.wallets.tabs.withdraw.content.withdrawal.limit.tip': 'Withdrawal limits depend on your group. Limits reset every 24h and every month correspondingly. Still, you can create a withdrawal request that exceeds your limit but it will be processed manually.',
 
     'success.beneficiaries.created': 'Beneficiaries: successfully created',
     'success.beneficiaries.activated': 'Beneficiaries: successfully activated',
@@ -233,6 +263,11 @@ export const en = {
     'page.body.wallets.beneficiaries.dropdown.select': 'Select',
     'page.body.wallets.beneficiaries.dropdown.name': 'Name',
     'page.body.wallets.beneficiaries.dropdown.pending': 'Pending',
+    'page.body.wallets.beneficiaries.dropdown.blockchain.networks': 'Blockchain network',
+    'page.body.wallets.beneficiaries.disabled': 'Disabled',
+    'page.body.wallets.beneficiaries.addresses': 'Addresses',
+    'page.body.wallets.beneficiaries.title.confirm.new.account': 'Confirm New Account',
+    'page.body.wallets.beneficiaries.title.withdrawal.limit': 'Withdrawal Address',
 
     'page.body.wallets.beneficiaries.dropdown.fiat.account': 'Account',
     'page.body.wallets.beneficiaries.dropdown.fiat.bankOfBeneficiary': 'Bank of Beneficiary',
@@ -246,6 +281,7 @@ export const en = {
 
     'page.body.wallets.beneficiaries.addAddressModal.body.coinAddress': 'Blockchain Address',
     'page.body.wallets.beneficiaries.addAddressModal.body.invalidAddress': 'Invalid Address',
+    'page.body.wallets.beneficiaries.addAddressModal.body.testnetAddress': 'WARNING! This is testnet address',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag': 'Destination Tag (optional)',
@@ -258,6 +294,14 @@ export const en = {
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankName': 'Intermediary Bank Name (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode': 'Intermediary Bank Swift Code (optional)',
 
+    'page.body.wallets.beneficiaries.network.fee': 'Network Fee',
+    'page.body.wallets.beneficiaries.min.withdraw': 'Min. withdraw:',
+    'page.body.wallets.beneficiaries.fee': 'Fee:',
+    'page.body.wallets.beneficiaries.tab.panel.add.whitelisted': 'Add Whitelisted',
+    'page.body.wallets.beneficiaries.tab.panel.whitelisted': 'Whitelisted',
+
+    'page.body.wallets.withdraw.blockchain.network': 'Blockchain Network',
+    'page.body.wallets.withdraw.details': 'Withdrawal details',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.button': 'Submit for confirmation',
 
@@ -292,12 +336,15 @@ export const en = {
     'page.body.openOrders.header.status': 'Status',
     'page.body.openOrders.content.status.done': 'Executed',
     'page.body.openOrders.content.status.wait': 'Open',
-    'page.body.openOrders.content.status.trigger_wait': 'Open',
     'page.body.openOrders.content.status.cancel': 'Stopped',
+    'page.body.openOrders.content.status.trigger_wait': 'Open Trigger',
+    'page.body.openOrders.content.status.trigger_cancel': 'Canceled Trigger',
+    'page.body.openOrders.content.status.execution_reject': 'Rejected Trigger',
     'page.body.openOrders.header.button.cancelAll': 'Cancel all',
 
     'page.body.history.deposit': 'Deposit History',
     'page.body.history.deposit.header.txid': 'txID',
+    'page.body.history.deposit.header.blockchain': 'Network',
     'page.body.history.deposit.header.date': 'Date',
     'page.body.history.deposit.header.currency': 'Currency',
     'page.body.history.deposit.header.amount': 'Amount',
@@ -312,6 +359,7 @@ export const en = {
 
     'page.body.history.withdraw': 'Withdrawal History',
     'page.body.history.withdraw.header.id': 'ID',
+    'page.body.history.withdraw.header.blockchain': 'Network',
     'page.body.history.withdraw.header.date': 'Date',
     'page.body.history.withdraw.header.currency': 'Currency',
     'page.body.history.withdraw.header.address': 'Address',
@@ -950,6 +998,7 @@ export const en = {
     'resource.phone.empty_verification_code': 'Verification code is missing or empty',
 
     // peatio
+    'account.currency.withdrawal_disabled': 'Withdraw is currenctly disabled for currency',
     'account.currency.doesnt_exist': 'Currency doesn\'t exist',
     'account.currency.deposit_disabled': 'Deposit is currently disabled',
     'account.deposit.invalid_state': 'Deposit invalid state',

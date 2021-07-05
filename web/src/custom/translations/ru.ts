@@ -195,6 +195,23 @@ export const ru: LangType = {
 
     'page.body.wallets.tabs.deposit.ccy.message.pending': 'Генерация адреса',
 
+    'page.body.wallets.tabs.deposit.ccy.details': 'Deposit details',
+    'page.body.wallets.tabs.deposit.ccy.blockchain.networks': 'Blockchain network',
+    'page.body.wallets.tabs.deposit.ccy.tip': 'Select a blockchain network that you want to use to send your deposit.',
+    'page.body.wallets.tabs.deposit.ccy.hint.title': 'Send only {currency} to this deposit address.',
+    'page.body.wallets.tabs.deposit.ccy.hint': 'Sending coin or token other than {currency} to this address may result in the loss of your deposit.',
+    'page.body.wallets.tabs.deposit.ccy.disabled': 'Deposits of {currency} on that network is temporary suspended',
+    'page.body.wallets.tabs.deposit.ccy.memo': 'Memo',
+    'page.body.wallets.tabs.deposit.ccy.memo.warning': 'Both a MEMO and an Address are required to successfully deposit your USDT BEP2 tokens to Binance.',
+    'page.body.wallets.warning.deposit.disabled': 'Deposit disabled: ',
+    'page.body.wallets.warning.no.networks': 'No network configured for deposits',
+    'page.body.wallets.warning.deposit.verification': 'Withdraw are allowed after passing KYC verification',
+    'page.body.wallets.warning.deposit.verification.button': 'Verify Your Account',
+    'page.body.wallets.warning.deposit.networks.hint': 'Deposit disabled: No network configured for deposits',
+    'page.body.wallets.warning.deposit.kyc.hint': 'Deposit are allowed after passing KYC verification',
+    'page.body.wallets.tabs.deposit.min.deposit': 'Min. deposit:',
+    'page.body.wallets.tabs.deposit.min.amount.tip': 'To create a deposit request the amount should be ≥ the minimum deposit amount',
+
     'page.body.wallets.tabs.deposit.fiat.message1': 'Вы можете внести депозит в банке, используя следующие реквизиты',
     'page.body.wallets.tabs.deposit.fiat.message2': 'Пожалуйста, используйте предоставленную информацию для завершения банковского платежа. Ваш депозит станет доступным на протяжении 2-х рабочих дней.',
     'page.body.wallets.tabs.deposit.fiat.bankName': 'Название банка',
@@ -215,6 +232,15 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.content.button.all': 'Всё',
 
     'page.body.wallets.tabs.withdraw.disabled.message': 'Вывод средств был отключен администрацией',
+    'page.body.wallets.warning.withdraw.disabled': 'Withdrawal disabled: ',
+    'page.body.wallets.warning.withdraw.no.networks': 'No network configured for withdrawals',
+    'page.body.wallets.warning.withdraw.verification': 'Withdraw are allowed after passing KYC verification',
+    'page.body.wallets.warning.withdraw.no.networks.hint': 'Currently, that currency can’t be withdrawed as no blockchain network was configured or enabled. Please, use another currency to make a withdraw.',
+    'page.body.wallets.warning.withdraw.verification.hint': `Your current verification level doesn't allow you to make a withdraw. Please, submit the required KYC information to get withdraw permission.`,
+    'page.body.wallets.warning.withdraw.otp.hint': 'Please, enable 2FA to get withdraw permission.',
+    'page.body.wallets.warning.withdraw.verification.button': 'Verify Your Account',
+    'page.body.wallets.tabs.withdraw.ccy.tip': 'You are going to withdraw using network. To withdraw on a different network, create or use an existing beneficiary with a needed network.',
+    'page.body.wallets.tabs.withdraw.min.amount.tip': 'To create a withdrawal request the amount should be ≥ the minimum withdrawal amount',
 
     'page.body.wallets.tabs.withdraw.modal.title': 'Вывести',
     'page.body.wallets.tabs.withdraw.modal.withdrawTo': 'Вывести на',
@@ -224,9 +250,14 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.modal.message': 'Enter 2fa code from the Google Authenticator app',
     'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Отменить',
     'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Вывести',
+    'page.body.wallets.tabs.withdraw.modal.name': 'Name',
+    'page.body.wallets.tabs.withdraw.modal.verification': 'Verification',
 
     'page.body.wallets.tabs.withdraw.content.enable2fa': 'Вам нужно активировать 2FA, чтобы получить возможность выводить Ваши валюты!',
     'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Активировать 2FA',
+
+    'page.body.wallets.tabs.withdraw.content.withdrawal.limit': 'Withdrawal limits',
+    'page.body.wallets.tabs.withdraw.content.withdrawal.limit.tip': 'Withdrawal limits depend on your group. Limits reset every 24h and every month correspondingly. Still, you can create a withdrawal request that exceeds your limit but it will be processed manually.',
 
     'success.beneficiaries.created': 'Beneficiaries: successfully created',
     'success.beneficiaries.activated': 'Beneficiaries: successfully activated',
@@ -240,6 +271,11 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.dropdown.select': 'Select',
     'page.body.wallets.beneficiaries.dropdown.name': 'Название',
     'page.body.wallets.beneficiaries.dropdown.pending': 'Pending',
+    'page.body.wallets.beneficiaries.dropdown.blockchain.networks': 'Blockchain network',
+    'page.body.wallets.beneficiaries.disabled': 'Disabled',
+    'page.body.wallets.beneficiaries.addresses': 'Addresses',
+    'page.body.wallets.beneficiaries.title.confirm.new.account': 'Confirm New Account',
+    'page.body.wallets.beneficiaries.title.withdrawal.limit': 'Withdrawal Address',
 
     'page.body.wallets.beneficiaries.dropdown.fiat.account': 'Account',
     'page.body.wallets.beneficiaries.dropdown.fiat.bankOfBeneficiary': 'Bank of Beneficiary',
@@ -253,6 +289,7 @@ export const ru: LangType = {
 
     'page.body.wallets.beneficiaries.addAddressModal.body.coinAddress': 'Blockchain Address',
     'page.body.wallets.beneficiaries.addAddressModal.body.invalidAddress': 'Invalid Address',
+    'page.body.wallets.beneficiaries.addAddressModal.body.testnetAddress': 'WARNING! This is testnet address',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag': 'Destination Tag (optional)',
@@ -264,6 +301,15 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankSwiftCode': 'Bank Swift Code (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankName': 'Intermediary Bank Name (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode': 'Intermediary Bank Swift Code (optional)',
+
+    'page.body.wallets.beneficiaries.network.fee': 'Network Fee',
+    'page.body.wallets.beneficiaries.min.withdraw': 'Min. withdraw:',
+    'page.body.wallets.beneficiaries.fee': 'Fee:',
+    'page.body.wallets.beneficiaries.tab.panel.add.whitelisted': 'Add Whitelisted',
+    'page.body.wallets.beneficiaries.tab.panel.whitelisted': 'Whitelisted',
+
+    'page.body.wallets.withdraw.blockchain.network': 'Blockchain Network',
+    'page.body.wallets.withdraw.details': 'Withdrawal details',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.button': 'Submit for confirmation',
 
@@ -298,13 +344,16 @@ export const ru: LangType = {
     'page.body.openOrders.header.status': 'Статус',
     'page.body.openOrders.content.status.done': 'Выполнен',
     'page.body.openOrders.content.status.wait': 'Открыт',
-    'page.body.openOrders.content.status.trigger_wait': 'Открыт',
     'page.body.openOrders.content.status.cancel': 'Отменен',
+    'page.body.openOrders.content.status.trigger_wait': 'Триггер Открыт',
+    'page.body.openOrders.content.status.trigger_cancel': 'Триггер Отменен',
+    'page.body.openOrders.content.status.execution_reject': 'Триггер Отклонен',
     'page.body.openOrders.header.button.cancelAll': 'Отменить все',
 
     'page.body.history.deposit': 'История депозитов',
     'page.body.history.deposit.header.txid': 'txID',
     'page.body.history.deposit.header.date': 'Дата',
+    'page.body.history.deposit.header.blockchain': 'Network',
     'page.body.history.deposit.header.currency': 'Валюта',
     'page.body.history.deposit.header.amount': 'Количество',
     'page.body.history.deposit.header.status': 'Статус',
@@ -318,6 +367,7 @@ export const ru: LangType = {
 
     'page.body.history.withdraw': 'История выводов',
     'page.body.history.withdraw.header.id': 'ID',
+    'page.body.history.withdraw.header.blockchain': 'Network',
     'page.body.history.withdraw.header.date': 'Дата',
     'page.body.history.withdraw.header.currency': 'Валюта',
     'page.body.history.withdraw.header.address': 'Адрес',
@@ -953,6 +1003,7 @@ export const ru: LangType = {
     'resource.phone.empty_verification_code': 'Код проверки отсутствует',
 
     // peatio
+    'account.currency.withdrawal_disabled': 'Withdraw is currenctly disabled for currency',
     'account.currency.doesnt_exist': 'Валюта не существует',
     'account.currency.deposit_disabled': 'Deposit is currently disabled',
     'account.deposit.invalid_state': 'Депозит недействителен',

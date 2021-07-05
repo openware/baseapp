@@ -1,5 +1,5 @@
 const cryptoRegExps = {
-    btc: '[123][a-km-zA-HJ-NP-Z1-9]{26,35}',
+    btc: '([13][a-km-zA-HJ-NP-Z1-9]{25,34})|((?=bc1[a-km-zA-HJ-NP-Z1-9]*)(?:.{42}|.{62}))',
     bch: '((bitcoincash|bchreg|bchtest):)?(q|p)[a-z0-9]{41}',
     eth: '0x[a-fA-F0-9]{40}',
     ltc: '[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}',
@@ -56,3 +56,4 @@ cryptoAddress.cryptocurrency = (cryptoCurrency, exact) => {
 };
 
 export const validateBeneficiaryAddress = cryptoAddress;
+

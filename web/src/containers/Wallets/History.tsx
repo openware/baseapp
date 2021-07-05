@@ -6,8 +6,8 @@ import { IntlProps } from '../../';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate } from '../../helpers';
+import { LinkIcon } from '../../assets/images/LinkIcon';
 import {
-    currenciesFetch,
     Currency,
     fetchHistory,
     resetHistory,
@@ -46,7 +46,6 @@ export interface ReduxProps {
 }
 
 interface DispatchProps {
-    fetchCurrencies: typeof currenciesFetch;
     fetchHistory: typeof fetchHistory;
     resetHistory: typeof resetHistory;
 }
@@ -57,36 +56,17 @@ export type Props = HistoryProps & ReduxProps & DispatchProps & IntlProps;
 
 export class WalletTable extends React.Component<Props> {
     public componentDidMount() {
-        const {
-            currencies,
-            currency,
-            type,
-        } = this.props;
-        this.props.fetchHistory({ page: 0, currency, type, limit: rowsPerPage });
+        const { currency, type } = this.props;
 
-        if (!currencies.length) {
-            this.props.fetchCurrencies();
-        }
+        this.props.fetchHistory({ page: 0, currency, type, limit: 6 });
     }
 
     public componentWillReceiveProps(nextProps: Props) {
-        const {
-            currencies,
-            currency,
-            type,
-            withdrawSuccess,
-        } = this.props;
+        const { currency, type } = this.props;
+
         if (nextProps.currency !== currency || nextProps.type !== type) {
             this.props.resetHistory();
             this.props.fetchHistory({ page: 0, currency: nextProps.currency, type, limit: rowsPerPage });
-        }
-
-        if (!currencies.length && nextProps.currencies.length) {
-            this.props.fetchCurrencies();
-        }
-
-        if (!withdrawSuccess && nextProps.withdrawSuccess) {
-            this.props.fetchHistory({ page: 0, currency, type, limit: rowsPerPage });
         }
     }
 
@@ -151,18 +131,43 @@ export class WalletTable extends React.Component<Props> {
         return list.sort((a, b) => {
             return localeDate(a.created_at, 'fullDate') > localeDate(b.created_at, 'fullDate') ? -1 : 1;
         }).map((item, index) => {
+            const blockchainLink = this.getBlockchainLink(currency, item.txid, item.rid);
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const confirmations = type === 'deposits' && item.confirmations;
             const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
-            const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
+            const blockchainCurrency = itemCurrency?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === item.blockchain_key);
+            const minConfirmations = blockchainCurrency?.min_confirmations;
             const state = 'state' in item ? this.formatTxState(item.state, confirmations, minConfirmations) : '';
 
             return [
                 localeDate(item.created_at, 'fullDate'),
+                <div className="pg-history-elem__hide" key={item.txid || item.rid}>
+                    <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
+                        {item.txid || item.rid}
+                    </a>
+                    <LinkIcon className="pg-history-elem__link" />
+                </div>,
                 state,
                 <Decimal key={index} fixed={fixed} thousSep=",">{amount}</Decimal>,
             ];
         });
+    };
+
+    private getBlockchainLink = (currency: string, txid: string, blockchainKey: string, rid?: string) => {
+        const { wallets } = this.props;
+        const currencyInfo = wallets?.find(wallet => wallet.currency === currency);
+        const blockchainCurrency = currencyInfo?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
+
+        if (currencyInfo) {
+            if (txid && blockchainCurrency?.explorerTransaction) {
+                return blockchainCurrency.explorerTransaction.replace('#{txid}', txid);
+            }
+            if (rid && blockchainCurrency?.explorerAddress) {
+                return blockchainCurrency.explorerAddress.replace('#{address}', rid);
+            }
+        }
+
+        return '';
     };
 
     private formatTxState = (tx: string, confirmations?: number | string, minConfirmations?: number) => {
@@ -202,7 +207,6 @@ export const mapStateToProps = (state: RootState): ReduxProps => ({
 
 export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        fetchCurrencies: () => dispatch(currenciesFetch()),
         fetchHistory: params => dispatch(fetchHistory(params)),
         resetHistory: () => dispatch(resetHistory()),
     });

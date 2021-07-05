@@ -4,6 +4,12 @@
   display: flex;
   justify-content: flex-start;
 
+  .cr-modal--full-view {
+    .cr-modal__container {
+      width: 459px;
+    }
+  }
+
   .text-center {
     align-items: center;
     bottom: 0;
@@ -161,19 +167,36 @@
   .cr-withdraw {
     color: var(--table-text-color);
     display: flex;
-    flex-direction: column;
     justify-content: flex-start;
-    padding: calc(var(--gap) * 5) calc(var(--gap) * 3) calc(var(--gap) * 3);
+    background: var(--body-background-color);
+    border: 1px solid var(--divider-color-level-1);
+    padding: 38px 36px 42px;
+    box-shadow: 0px 6px 12px var(--header-shadow-color-level-1);
+    border-radius: 3px;
+    margin: 0 calc(var(--gap) * 3);
+
+    &__group__limits {
+      margin-left: 72px;
+    }
+
+    &-title {
+      font-weight: bold;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 28px;
+      letter-spacing: 0.15px;
+      color: var(--primary-text-color);
+      margin: 36px calc(var(--gap) * 1.8) 12px calc(var(--gap) * 1.8);
+    }
 
     &-column {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-width: 500px;
+      min-width: 450px;
       width: 50%;
 
       &:nth-child(1) {
-        flex-direction: row;
         flex-wrap: wrap;
 
         form:nth-child(1) {
@@ -196,6 +219,92 @@
           flex-grow: 2;
         }
       }
+    }
+
+    &__group__warning {
+      display: flex;
+      background: var(--system-yellow-level-1);
+      padding: 15px;
+      align-items: center;
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0.1px;
+      color: var(--primary-text-color);
+
+      &-tip {
+        margin-right: 10px;
+        display: flex;
+      }
+
+      svg {
+        width: 18px;
+        height: 18px;
+
+        path {
+          fill: var(--system-yellow);
+          stroke: var(--system-yellow);
+        }
+      }
+
+      &-currency {
+        font-weight: bold;
+      }
+    }
+
+    &__group__network {
+      display: flex;
+      width: 14px;
+      margin-top: 14px;
+      width: 100%;
+      color: var(--primary-text-color);
+
+      h5 {
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: bold;
+      }
+    }
+
+    &__group__blockchain-item {
+      margin-bottom: 40px;
+
+      .cr-withdraw-blockchain-item {
+        display: flex;
+        align-items: center;
+        flex-flow: row;
+        color: var(--primary-text-color);
+        
+
+        &__group {
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+          margin-left: 12px;
+        }
+
+        &__blockchain_key {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 22px;
+          font-weight: bold;
+          margin: 0;
+        }
+
+        &__fee {
+          font-size: 14px;
+          line-height: 22px;
+          letter-spacing: 0.1px;
+        }
+
+        &__estimated-value {
+          font-weight: bold;
+          font-size: 12px;
+          line-height: 15px;
+          float: right;
+        }
+      }
+
+
     }
 
     &__group__address,
@@ -487,6 +596,10 @@
     font-size: calc(var(--gap) * 3);
     text-align: center;
   }
+}
+
+.pg-history-elem__link {
+  margin-left: 8px;
 }
 
 .pg-history-elem__wallet {

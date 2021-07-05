@@ -41,6 +41,7 @@ export interface Withdraw {
     amount: string;
     fee: string;
     blockchain_txid: string;
+    blockchain_key: string;
     rid: string;
     state: string;
     created_at: string;
@@ -54,6 +55,7 @@ export interface Deposit {
     currency: string;
     id: number;
     amount: string;
+    blockchain_key: string;
     fee: string;
     txid: string;
     created_at: string;

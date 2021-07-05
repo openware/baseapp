@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { CanCan } from '../';
 import { msPricesUpdates } from '../../api';
-import { useCurrenciesFetch } from '../../hooks';
 import {
     marketsFetch,
     selectMarkets,
@@ -13,6 +14,8 @@ import {
     selectMarketPrice,
     selectMarketPriceFetchSuccess,
     createQuickExchangeFetch,
+    selectAbilities,
+    selectAbilitiesSuccess,
 } from '../../modules'
 import { SwipeIcon } from '../../assets/images/swipe';
 import { Decimal, CurrencyIcon, QuickExchangeForm, DropdownComponent, Timer } from '../../components';
@@ -60,15 +63,16 @@ export const QuickExchangeContainer = () => {
 
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const wallets = useSelector(selectWallets) || [];
     const markets = useSelector(selectMarkets) || [];
     const marketPrice = useSelector(selectMarketPrice);
     const updateTimer = useSelector(selectMarketPriceFetchSuccess);
+    const abilities = useSelector(selectAbilities);
+    const abilitiesSuccess = useSelector(selectAbilitiesSuccess);
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
-
-    useCurrenciesFetch();
 
     const updateMarketPrice = () => {
         if (currentSelectedMarket) {
@@ -80,9 +84,13 @@ export const QuickExchangeContainer = () => {
         const seconds = +msPricesUpdates() / 1000;
         setTime(ssToMMSS(seconds));
 
+        if (abilitiesSuccess && !CanCan.checkAbilityByAction('read', 'QuickExchange', abilities)) {
+            history.push('/');
+        }
+
         dispatch(walletsFetch());
         dispatch(marketsFetch({type: 'qe'}));
-    }, []);
+    }, [abilitiesSuccess]);
 
     const currentSelectedMarket = React.useMemo(() => getMarket(marketID, markets), [marketID]);
 
@@ -327,6 +335,12 @@ export const QuickExchangeContainer = () => {
         );
     }, [base, quote]);
 
+    const renderLoader = React.useMemo(() => {
+        <div className="pg-loader-container">
+            <Spinner animation="border" variant="primary" />
+        </div>
+    }, []);
+
     const renderPriceBlock = React.useMemo(() => {
         if (!base.currency || !marketPrice.price) {
             return null;
@@ -346,28 +360,32 @@ export const QuickExchangeContainer = () => {
     }, [marketPrice.price, base]);
 
     return (
-        <div className="cr-quick-exchange">
-            <div className="cr-quick-exchange__header">
-                {translate('page.body.quick.exchange.header')}
-            </div>
-            <div className="cr-quick-exchange__body">
-                {time.initialMinutes || time.initialSeconds ? <Timer updateTimer={updateTimer} {...time} handleRequest={updateMarketPrice} /> : null}
-                {renderBase}
-                {renderSwap}
-                {renderQuote}
-                {renderSummaryBlock}
-                {renderPriceBlock}
-                <div className="cr-quick-exchange__body-button">
-                    <Button
-                        onClick={handleSubmitExchange}
-                        size="lg"
-                        variant="primary"
-                        disabled={!base.amount || !quote.amount}
-                    >
-                        {translate('page.body.quick.exchange.button.exchange')}
-                    </Button>
+        <React.Fragment>
+            {!abilitiesSuccess ? {renderLoader} : (
+                <div className="cr-quick-exchange">
+                    <div className="cr-quick-exchange__header">
+                        {translate('page.body.quick.exchange.header')}
+                    </div>
+                    <div className="cr-quick-exchange__body">
+                        {time.initialMinutes || time.initialSeconds ? <Timer updateTimer={updateTimer} {...time} handleRequest={updateMarketPrice} /> : null}
+                        {renderBase}
+                        {renderSwap}
+                        {renderQuote}
+                        {renderSummaryBlock}
+                        {renderPriceBlock}
+                        <div className="cr-quick-exchange__body-button">
+                            <Button
+                                onClick={handleSubmitExchange}
+                                size="lg"
+                                variant="primary"
+                                disabled={!base.amount || !quote.amount}
+                            >
+                                {translate('page.body.quick.exchange.button.exchange')}
+                            </Button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </React.Fragment>
     );
 };

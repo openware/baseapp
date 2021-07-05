@@ -8,22 +8,24 @@ import {
 
 export interface AbilitiesState {
     loading: boolean;
+    success: boolean;
     abilities: AbilitiesInterface;
 }
 
 export const initialAbilitiesState: AbilitiesState = {
     loading: true,
+    success: false,
     abilities: {},
 };
 
 export const abilitiesReducer = (state = initialAbilitiesState, action: AbilitiesAction) => {
     switch (action.type) {
         case ABILITIES_FETCH:
-            return { ...state, loading: true };
+            return { ...state, loading: true, success: false };
         case ABILITIES_DATA:
-            return { ...state, loading: false, abilities: mergeObjects(action.payload) };
+            return { ...state, loading: false, success: true, abilities: mergeObjects(action.payload) };
         case ABILITIES_ERROR:
-            return { ...state, loading: false };
+            return { ...state, loading: false, success: false };
         default:
             return state;
     }

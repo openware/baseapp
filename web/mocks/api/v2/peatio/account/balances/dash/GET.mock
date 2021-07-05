@@ -12,6 +12,7 @@ Access-Control-Allow-Credentials: true
     "deposit_address": {
         "currencies": ["dash"],
         "address": "XpESxaUmonkq8RaLLp46Brx2K39ggQe226",
-        "state": "active"
+        "state": "active",
+        "blockchain_key": "erc20"
     }
 }

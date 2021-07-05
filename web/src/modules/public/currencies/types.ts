@@ -2,11 +2,20 @@ export interface Currency {
     id: string;
     name: string;
     symbol: string;
-    explorer_transaction: string;
-    explorer_address: string;
     type: string;
+    precision: number;
+    icon_url: string;
+    price: string;
+    networks: BlockchainCurrencies[];
+    status: string;
+}
+
+export interface BlockchainCurrencies {
+    id: number;
+    blockchain_key: string;
+    protocol: string;
+    currency_id: string;
     deposit_fee: string;
-    min_confirmations: number;
     min_deposit_amount: string;
     withdraw_fee: string;
     min_withdraw_amount: string;
@@ -14,7 +23,9 @@ export interface Currency {
     withdraw_limit_72h: string;
     deposit_enabled: boolean;
     withdrawal_enabled: boolean;
+    min_confirmations: number;
     base_factor: number;
-    precision: number;
-    icon_url: string;
+    explorer_transaction: string;
+    explorer_address: string;
+    status: string;
 }

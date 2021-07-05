@@ -1,4 +1,168 @@
+@import './BeneficiariesCrypto/BeneficiariesBlockchainItem.pcss';
+
 .pg-beneficiaries {
+  &__modal.cr-modal {
+    width: 100%;
+    height: 100%;
+    background: var(--body-background-color);
+    justify-content: flex-start;
+
+    .cr-email-from__group-button,
+    .cr-email-from__group-button:focus, {
+      position: relative;
+      z-index: 1000;
+      float: right;
+      bottom: 35px;
+      background: var(--dropdown-background-color);
+      border: 1px solid var(--secondary-contrast-cta-color-level-4);
+      color: var(--secondary-contrast-cta-color);
+      letter-spacing: 0.04em;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+      left: -4px;
+
+      &:hover {
+        background: var(--button-secondary-cta-background-color-hover);
+        color: var(--button-secondary-cta-text-color-hover);
+        transition: 0.2s;
+      }
+    }
+
+    h3 {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 28px;
+      color: var(--primary-text-color);
+      margin-top: 63px;
+      margin-bottom: 0;
+    }
+
+    .cr-dropdown {
+      height: 36.5px;
+
+      .dropdown-menu {
+        box-shadow: 0px 6px 12px var(--header-shadow-color-level-1);
+        border-radius: 4px;
+      }
+
+      .dropdown-item {
+        padding: 12px;
+        border-bottom: 1px solid var(--divider-color-level-1);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      
+      .dropdown-toggle {
+        height: 36.5px;
+        font-size: 1.25em;
+
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .cr-email-form {
+      &__options {
+        border: none;
+
+        &-group {
+          .cr-email-form__option {
+            border: none;
+
+            &-inner {
+              &-close {
+                position: relative;
+                float: right;
+                height: 100%;
+                right: 34px;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+
+      &__button {
+        &-wrapper {
+          width: 100%;
+          min-height: auto !important;
+        }
+      }
+    }
+
+    .cr-tab-panel {
+      .cr-tab-panel__navigation-container {
+        padding: 0;
+        margin-top: 24px;
+
+        &-navigation {
+          width: 100%;
+
+          .cr-tab {
+            width: 100%;
+            border: 1px solid var(--divider-color-level-1);
+            border-right: none;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            padding: 0 14px;
+            min-width: 120px;
+            min-height: 36px;
+            display: grid;
+            align-items: center;
+
+            &:hover {
+              background: var(--button-secondary-cta-background-color-hover);
+              color: var(--button-secondary-cta-text-color-hover);
+              transition: 0.2s;
+            }
+  
+            &:first-child {
+              border-top-left-radius: 4px;
+              border-bottom-left-radius: 4px
+            }
+  
+            &:last-child {
+              border-right: 1px solid var(--divider-color-level-1);
+              border-top-right-radius: 4px;
+              border-bottom-right-radius: 4px
+            }
+  
+            &__active {
+              background: var(--primary-cta-color-level-1);
+              color: var(--primary-cta-color);
+  
+              .cr-tab__pointer {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+      
+      .cr-tab-content {
+        padding: 0;
+      }
+    }
+
+    .beneficiaries-add-address-modal,
+    .beneficiaries-confirmation-modal {
+      .cr-email-form {
+        box-shadow: none;
+        background: none;
+        min-width: 456px !important;
+
+        &__form-content {
+          padding: 0;
+        }
+      }
+    }
+  }
+
   &__title {
     color: var(--primary-text-color);
     font-size: 20px;
@@ -38,9 +202,16 @@
   }
 
   .beneficiaries-add-address-modal--coin .cr-email-form {
-    .pg-beneficiaries__error-text {
-      color: var(--system-red);
-      margin-left: 16px;
+    .pg-beneficiaries {
+      &__error-text {
+        color: var(--system-red);
+        margin-left: 16px;
+      }
+
+      &__warning-text {
+        color: var(--system-yellow);
+        margin-left: 16px;
+      }
     }
   }
 
@@ -49,13 +220,8 @@
       align-items: center;
       display: flex;
       height: 60px;
-      margin: 10px 0 20px;
+      margin: 24px 0 22px;
       width: 100%;
-
-      &__icon {
-        margin: 0 19px 0 10px;
-        width: 44px;
-      }
 
       &__text {
         align-items: center;
@@ -191,7 +357,7 @@
       right: 0;
       top: 50px;
       width: 70%;
-      z-index: 120;
+      z-index: 99999;
 
       &__content {
         display: flex;
@@ -403,127 +569,6 @@
 
         &:first-child {
           margin-right: 30px;
-        }
-      }
-    }
-  }
-
-  .cr-email-form {
-    background: var(--body-background-color);
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    box-shadow: 0 8px 25px var(--shadow-color-level-3);
-
-    &__option {
-      background: var(--subheader-background-color);
-      border-top-left-radius: 3px;
-      border-top-right-radius: 3px;
-
-      &-inner {
-        color: var(--primary-text-color);
-        font-size: 16px;
-        font-style: normal;
-        font-weight: normal;
-        line-height: 60px;
-        text-transform: lowercase;
-
-        &::first-letter {
-          text-transform: uppercase;
-        }
-      }
-    }
-
-    &__label {
-      background: var(--input-background-color);
-    }
-
-    &__input {
-      background: transparent;
-      border-radius: 4px;
-
-      input {
-        border: 1px solid var(--input-border-color) !important;
-        color: var(--input-text-color);
-      }
-    }
-
-    &__group--focused {
-      .cr-email-form__label {
-        color: var(--input-legend-color-active);
-      }
-
-      input {
-        background: var(--input-background-color);
-        border: 1px solid var(--input-border-color-active) !important;
-      }
-    }
-
-    &__button {
-      align-items: center;
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-      outline: none;
-
-      &-wrapper {
-        align-items: center;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-
-        button {
-          width: 100%;
-        }
-
-        &--double {
-          button {
-            width: calc(50% - 5px);
-          }
-        }
-      }
-
-      &--disabled {
-        color: var(--beneficiaries-primary-0-8) !important;
-      }
-    }
-  }
-
-  .beneficiaries-add-address-modal {
-    .cr-email-form__form-content {
-      .cr-email-form__group--optional {
-        .cr-email-form__input {
-          background: var(--beneficiaries-primary-0-04);
-        }
-      }
-    }
-  }
-
-  .beneficiaries-fail-modal {
-    .cr-email-form {
-      min-height: unset;
-
-      &__form-content {
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        &__info {
-          align-items: center;
-          color: var(--primary-text-color);
-          font-size: 14px;
-          font-weight: normal;
-          padding: 12px 0;
-        }
-      }
-
-      &__button-wrapper {
-        a {
-          width: 100%;
-        }
-
-        &__btn {
-          width: 100%;
         }
       }
     }

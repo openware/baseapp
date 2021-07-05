@@ -53,6 +53,22 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
         this.props.resetHistory();
     }
 
+    public shouldComponentUpdate(nextProps: RecentTradesProps) {
+        const {
+            recentTrades,
+            isMobileDevice,
+            currentMarket,
+            userLoggedIn,
+        } = this.props;
+
+        return (
+            JSON.stringify(nextProps.recentTrades) !== JSON.stringify(recentTrades) ||
+            (nextProps.currentMarket && nextProps.currentMarket.id) !== (currentMarket && currentMarket.id) ||
+            (nextProps.isMobileDevice !== isMobileDevice) ||
+            (nextProps.userLoggedIn !== userLoggedIn)
+        );
+    }
+
     public render() {
         const className = classnames({
             'cr-table__noData' : !this.props.recentTrades.length,
@@ -72,7 +88,7 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
     }
 
     private renderContent = () => {
-        const { isMobileDevice } = this.props;
+        const { isMobileDevice, recentTrades } = this.props;
 
         return this.props.userLoggedIn ?
         (
@@ -89,7 +105,7 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
                 <div className="cr-table-header__content">
                     <div className="cr-title-component">{this.props.intl.formatMessage({id: 'page.body.trade.header.recentTrades'})}</div>
                 </div>
-                <RecentTradesMarket />
+                <RecentTradesMarket recentTrades={recentTrades}/>
             </div>
         );
 
@@ -97,10 +113,11 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
 
     private renderTabs = () => {
         const { tab, index } = this.state;
+        const { recentTrades } = this.props;
 
         return [
             {
-                content: tab === 'market' && index === 0 ? <RecentTradesMarket /> : null,
+                content: tab === 'market' && index === 0 ? <RecentTradesMarket recentTrades={recentTrades} /> : null,
                 label: this.props.intl.formatMessage({ id: 'page.body.trade.header.market' }),
             },
             {

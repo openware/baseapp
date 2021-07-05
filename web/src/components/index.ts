@@ -55,3 +55,4 @@ export * from './DoubleDropdownSelector';
 export * from './TransferForm';
 export * from './Info';
 export * from './LockedComponent';
+export * from './WarningMessage';
