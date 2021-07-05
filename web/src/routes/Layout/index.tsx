@@ -125,16 +125,6 @@ const PrivateRoute: React.FunctionComponent<any> = ({ component: CustomComponent
     const renderCustomerComponent = props => <CustomComponent {...props} />;
 
     if (isLogged) {
-        const { checkAbility, abilities, action, target } = rest;
-
-        if (checkAbility && !CanCan.checkAbilityByAction(action, target, abilities)) {
-            return (
-                <Route path="**">
-                    <Redirect to="/" />
-                </Route>
-            );
-        }
-
         return <Route {...rest} render={renderCustomerComponent} />;
     }
 
@@ -349,7 +339,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/wallets" component={WalletsScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/security/2fa" component={ProfileTwoFactorAuthScreen} />
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/internal-transfer" component={InternalTransfer} />
-                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/quick-exchange" component={QuickExchange} checkAbility={true} abilities={this.props.abilities} action="read" target="QuickExchange" />
+                    <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/quick-exchange" component={QuickExchange} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
                 {isLoggedIn && <WalletsFetch/>}
