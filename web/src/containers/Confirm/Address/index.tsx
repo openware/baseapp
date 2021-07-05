@@ -15,6 +15,7 @@ import {
     RootState,
     selectCurrentLanguage,
     selectMobileDeviceState,
+    selectSendAddressesLoading,
     selectSendAddressesSuccess,
     sendAddresses,
 } from '../../../modules';
@@ -23,6 +24,7 @@ interface ReduxProps {
     lang: string;
     success?: string;
     isMobileDevice: boolean;
+    loading: boolean;
 }
 
 interface DispatchProps {
@@ -64,7 +66,7 @@ class AddressComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const { lang, isMobileDevice } = this.props;
+        const { lang, isMobileDevice, loading } = this.props;
         const {
             address,
             addressFocused,
@@ -168,13 +170,21 @@ class AddressComponent extends React.Component<Props, State> {
                     <div className="pg-confirm__content-deep">
                         <Button
                             onClick={this.sendAddress}
-                            disabled={this.handleCheckButtonDisabled()}
+                            disabled={this.handleCheckButtonDisabled() || loading}
                             size="lg"
                             variant="primary"
                             type="button"
                             block={true}
                         >
-                            {this.translate('page.body.kyc.submit')}
+                            {loading ? (
+                                <Spinner
+                                    as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
+                            ) : this.translate('page.body.kyc.submit')}
                         </Button>
                     </div>
                 </div>
@@ -324,6 +334,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
     success: selectSendAddressesSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
+    loading: selectSendAddressesLoading(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =

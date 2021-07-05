@@ -1,7 +1,7 @@
 import cr from 'classnames';
 import * as countries from 'i18n-iso-countries';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
@@ -17,6 +17,7 @@ import {
     RootState,
     selectCurrentLanguage,
     selectMobileDeviceState,
+    selectSendDocumentsLoading,
     selectSendDocumentsSuccess,
     sendDocuments,
 } from '../../../modules';
@@ -29,6 +30,7 @@ interface ReduxProps {
     lang: string;
     success?: string;
     isMobileDevice: boolean;
+    loading: boolean;
 }
 
 interface DispatchProps {
@@ -93,7 +95,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     }
 
     public render() {
-        const { isMobileDevice } = this.props;
+        const { isMobileDevice, loading } = this.props;
         const {
             fileFront,
             fileBack,
@@ -245,12 +247,20 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                     <div className="pg-confirm__content-deep">
                         <Button
                             onClick={this.sendDocuments}
-                            disabled={this.handleCheckButtonDisabled()}
+                            disabled={this.handleCheckButtonDisabled() || loading}
                             size="lg"
                             variant="primary"
                             type="button"
                             block={true}>
-                            {this.translate('page.body.kyc.submit')}
+                            {loading ? (
+                                <Spinner
+                                    as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
+                            ) : this.translate('page.body.kyc.submit')}
                         </Button>
                     </div>
                 </div>
@@ -462,6 +472,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
     success: selectSendDocumentsSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
+    loading: selectSendDocumentsLoading(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
