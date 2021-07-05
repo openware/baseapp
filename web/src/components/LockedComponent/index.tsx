@@ -24,6 +24,7 @@ export const LockedComponent: FC<Props> = (props: Props): ReactElement => {
                 onClick={handleClick}
                 size="lg"
                 variant="secondary"
+                className="cr-locked__btn-content"
             >
                 {buttonText} <ArrowRight className="cr-locked__btn-icon" />
             </Button>
