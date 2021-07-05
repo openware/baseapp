@@ -67,17 +67,17 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
             confirmationCodeFocused,
         } = this.state;
 
-        const phoneNumberFocusedClass = cr('pg-confirm__content-phone-col-content', {
-            'pg-confirm__content-phone-col-content--focused': phoneNumberFocused,
+        const phoneNumberFocusedClass = cr('pg-confirm__content-phone__row__content', {
+            'pg-confirm__content-phone__row__content--focused': phoneNumberFocused,
         });
 
-        const confirmationCodeFocusedClass = cr('pg-confirm__content-phone-col-content', {
-            'pg-confirm__content-phone-col-content--focused': confirmationCodeFocused,
+        const confirmationCodeFocusedClass = cr('pg-confirm__content-phone__row__content', {
+            'pg-confirm__content-phone__row__content--focused': confirmationCodeFocused,
         });
 
         return (
             <div className="pg-confirm__content-phone">
-                <div className="pg-confirm__content-phone-col">
+                <div className="pg-confirm__content-phone__row">
                     <form>
                         <fieldset className={phoneNumberFocusedClass}>
                             <InputGroup>
@@ -111,7 +111,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                         </fieldset>
                     </form>
                 </div>
-                <div className="pg-confirm__content-phone-col">
+                <div className="pg-confirm__content-phone__row">
                     <fieldset className={confirmationCodeFocusedClass}>
                         <CustomInput
                             type="string"
