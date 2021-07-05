@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { CloseIcon } from '../../../assets/images/CloseIcon';
 import { Pagination, TabPanel } from '../../../components';
-import { useUserOrdersHistoryFetch } from '../../../hooks';
+import { useMarketsFetch, useUserOrdersHistoryFetch } from "../../../hooks";
 import {
     ordersCancelAllFetch,
     ordersHistoryCancelFetch,
@@ -19,7 +19,11 @@ import { OrdersItem } from './OrdersItem';
 
 const userOrdersHistoryTabs = ['open', 'all'];
 
-const OrdersComponent: React.FC = () => {
+interface IOrdersComponentProps {
+    withDropdownSelect?: boolean
+}
+
+const OrdersComponent: React.FC<IOrdersComponentProps> = ({ withDropdownSelect }) => {
     const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
     const [currentPageIndex, setPageIndex] = React.useState(0);
     const dispatch = useDispatch();
@@ -32,6 +36,7 @@ const OrdersComponent: React.FC = () => {
     const ordersNextPageExists = useSelector(selectOrdersNextPageExists);
     const filteredOrders = currentTabIndex === 0 ? orders.filter(o => ['wait', 'pending'].includes(o.state)) : orders;
     useUserOrdersHistoryFetch(currentPageIndex, userOrdersHistoryTabs[currentTabIndex], 25);
+    useMarketsFetch();
 
     const handleCancelAllOrders = () => {
         if (shouldFetchCancelAll) {
@@ -106,7 +111,7 @@ const OrdersComponent: React.FC = () => {
                 currentTabIndex={currentTabIndex}
                 onCurrentTabChange={setCurrentTabIndex}
                 optionalHead={filteredOrders.length ? renderOptionalHead() : null}
-                isMobileDevice={true}
+                isMobileDevice={withDropdownSelect}
             />
         </div>
     );
