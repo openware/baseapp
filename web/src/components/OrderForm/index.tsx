@@ -312,7 +312,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             return totalPrice;
         } else if ((orderType as string).toLowerCase().includes('limit')) {
             return safeAmount * (Number(price) || 0);
-        } else if (side === "buy") {
+        } else if (side === 'buy') {
             return TRIGGER_BUY_PRICE_MULT * safeAmount * (Number(trigger) || 0);
         } else {
             return safeAmount * (Number(trigger) || 0);
@@ -536,7 +536,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
 
         let priceToUse = ordType.includes('limit') || orderType === 'Market' ? price : trigger;
 
-        if (side === "buy" && TRIGGER_BUY_PRICE_ADJUSTED_TYPES.includes(ordType)) {
+        if (side === 'buy' && TRIGGER_BUY_PRICE_ADJUSTED_TYPES.includes(ordType)) {
             priceToUse = (Number(priceToUse) * TRIGGER_BUY_PRICE_MULT).toString()
         }
 
