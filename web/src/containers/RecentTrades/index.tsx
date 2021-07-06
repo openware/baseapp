@@ -97,7 +97,7 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
                 onTabChange={this.handleMakeRequest}
                 optionalHead={this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades' })}
                 currentTabIndex={this.state.index}
-                isMobileDevice={isMobileDevice}
+                isDropdown={isMobileDevice}
             />
         ) :
         (

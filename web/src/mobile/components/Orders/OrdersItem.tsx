@@ -41,29 +41,51 @@ const OrdersItemComponent = props => {
             </div>
             <div className="pg-mobile-orders-item__row">
                 <div className="pg-mobile-orders-item__row__block">
-                    <span>{intl.formatMessage({ id: 'page.mobile.orders.header.amount' })}</span>
-                    <span className="pg-mobile-orders-item__row__block__value">
-                        <Decimal fixed={currentMarket.amount_precision}>{order.origin_volume}</Decimal>
-                    </span>
-                </div>
-                <div className="pg-mobile-orders-item__row__block">
-                    <span>{intl.formatMessage({ id: 'page.mobile.orders.header.price' })}</span>
-                    <span className="pg-mobile-orders-item__row__block__value">
-                        <Decimal fixed={currentMarket.price_precision}>{actualPrice}</Decimal>
-                    </span>
-                </div>
-                <div className="pg-mobile-orders-item__row__block">
                     <span>{intl.formatMessage({ id: 'page.mobile.orders.header.filled' })}</span>
                     <div className="pg-mobile-orders-item__row__block__value">
-                        <span>{filled}%</span>
+                        <span style={{
+                            color: parseFloat(filled) < 100 ? 'var(--asks)' : 'var(--bids)'
+                        }}>
+                            {filled}%
+                        </span>
                     </div>
                 </div>
-                {order.state === 'wait' ? (
-                    <div className="pg-mobile-orders-item__row__button" onClick={props.handleCancel(order.id)}>
-                        <span>{intl.formatMessage({ id: 'page.mobile.orders.header.cancel' })}</span>
-                        <CloseIcon />
+                <div className="pg-mobile-orders-item__row__block">
+                    <div>
+                        <span>{intl.formatMessage({ id: 'page.mobile.orders.header.amount' })}</span>
+                        <span className="pg-mobile-orders-item__row__block__value">
+                            <Decimal fixed={currentMarket.amount_precision}>{order.origin_volume}</Decimal>
+                        </span>
                     </div>
-                ) : null}
+                    <div className="pg-mobile-orders-item__second__row">
+                        <span>{intl.formatMessage({ id: 'page.mobile.orders.header.volume' })}</span>
+                        <span className="pg-mobile-orders-item__row__block__value">
+                            <Decimal fixed={currentMarket.price_precision}>{actualPrice}</Decimal>
+                        </span>
+                    </div>
+                </div>
+                <div className="pg-mobile-orders-item__row__block">
+                    <div>
+                        <span>{intl.formatMessage({ id: 'page.mobile.orders.header.price' })}</span>
+                        <span className="pg-mobile-orders-item__row__block__value">
+                            <Decimal fixed={currentMarket.price_precision}>{actualPrice}</Decimal>
+                        </span>
+                    </div>
+                    <div className="pg-mobile-orders-item__second__row">
+                        <span>{intl.formatMessage({ id: 'page.mobile.orders.header.trigger' })}</span>
+                        <span className="pg-mobile-orders-item__row__block__value">
+                            <Decimal fixed={currentMarket.price_precision}>{actualPrice}</Decimal>
+                        </span>
+                    </div>
+                </div>
+                <div className="pg-mobile-orders-item__row__button__wrapper">
+                    {order.state === 'wait' ? (
+                        <div className="pg-mobile-orders-item__row__button" onClick={props.handleCancel(order.id)}>
+                            <span>{intl.formatMessage({ id: 'page.mobile.orders.header.cancel' })}</span>
+                            <CloseIcon />
+                        </div>
+                    ) : null}
+                </div>
             </div>
         </div>
     );

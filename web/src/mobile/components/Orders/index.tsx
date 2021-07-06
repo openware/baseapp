@@ -111,7 +111,7 @@ const OrdersComponent: React.FC<IOrdersComponentProps> = ({ withDropdownSelect }
                 currentTabIndex={currentTabIndex}
                 onCurrentTabChange={setCurrentTabIndex}
                 optionalHead={filteredOrders.length ? renderOptionalHead() : null}
-                isMobileDevice={withDropdownSelect}
+                isDropdown={withDropdownSelect}
             />
         </div>
     );
