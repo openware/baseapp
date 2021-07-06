@@ -178,6 +178,8 @@ export const en = {
     'page.body.wallets.balance': 'Balance',
     'page.body.wallets.tabs.deposit': 'Deposit',
     'page.body.wallets.tabs.deposit.disabled.message': 'Deposit was disabled by administration',
+    'page.body.wallets.warning.deposit.verification': 'Deposits are allowed after passing KYC verification',
+    'page.body.wallets.warning.deposit.verification.button': 'Verify Your Account',
     'page.body.wallets.tabs.deposit.ccy.message.submit': 'Submit a deposit using the following address or QR code. Your deposit will be reflected in your account after {confirmations} confirmations',
     'page.body.wallets.tabs.deposit.ccy.message.address': 'Deposit Address',
     'page.body.wallets.tabs.deposit.ccy.message.button': 'COPY',

@@ -183,6 +183,8 @@ export const ru: LangType = {
     'page.body.wallets.balance': 'Баланс',
     'page.body.wallets.tabs.deposit': 'Пополнить',
     'page.body.wallets.tabs.deposit.disabled.message': 'Депозит был отключен администрацией',
+    'page.body.wallets.warning.deposit.verification': 'Deposits are allowed after passing KYC verification',
+    'page.body.wallets.warning.deposit.verification.button': 'Verify Your Account',
     'page.body.wallets.tabs.deposit.ccy.message.submit': 'Пожалуйста, внесите депозитный платеж. Ваш депозит будет доступен после 6 подтверждений',
     'page.body.wallets.tabs.deposit.ccy.message.address': 'Пополнить кошелек',
     'page.body.wallets.tabs.deposit.ccy.message.button': 'Копировать',

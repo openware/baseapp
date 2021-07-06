@@ -28,12 +28,15 @@ import {
     Beneficiary,
     currenciesFetch,
     Currency,
+    MemberLevels,
+    memberLevelsFetch,
     RootState,
     selectBeneficiariesActivateSuccess,
     selectBeneficiariesCreateSuccess,
     selectBeneficiariesDeleteSuccess,
     selectCurrencies,
     selectHistory,
+    selectMemberLevels,
     selectMobileWalletUi,
     selectUserInfo,
     selectWallets,
@@ -61,6 +64,7 @@ interface ReduxProps {
     beneficiariesDeleteSuccess: boolean;
     beneficiariesAddSuccess: boolean;
     currencies: Currency[];
+    memberLevels?: MemberLevels;
 }
 
 interface DispatchProps {
@@ -72,6 +76,7 @@ interface DispatchProps {
     fetchSuccess: typeof alertPush;
     setMobileWalletUi: typeof setMobileWalletUi;
     currenciesFetch: typeof currenciesFetch;
+    memberLevelsFetch: typeof memberLevelsFetch;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -144,7 +149,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
     public componentDidMount() {
         setDocumentTitle('Wallets');
-        const { wallets } = this.props;
+        const { wallets, memberLevels } = this.props;
         const { selectedWalletIndex } = this.state;
 
         if (this.props.wallets.length === 0) {
@@ -158,6 +163,10 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
 
         if (!this.props.currencies.length) {
             this.props.currenciesFetch();
+        }
+
+        if (!memberLevels) {
+            this.props.memberLevelsFetch();
         }
     }
 
@@ -348,6 +357,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             currencies,
             user,
             wallets,
+            memberLevels,
         } = this.props;
         const { selectedWalletIndex } = this.state;
         const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
@@ -370,6 +380,14 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                         <Blur
                             className={blurCryptoClassName}
                             text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
+                        />
+                    ) : null}
+                    {user.level < memberLevels?.deposit.minimum_level ? (
+                        <Blur
+                            className={blurCryptoClassName}
+                            text={this.translate('page.body.wallets.warning.deposit.verification')}
+                            link="/confirm"
+                            linkText={this.translate('page.body.wallets.warning.deposit.verification.button')}
                         />
                     ) : null}
                     <DepositCrypto
@@ -506,6 +524,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     beneficiariesDeleteSuccess: selectBeneficiariesDeleteSuccess(state),
     currencies: selectCurrencies(state),
     beneficiariesAddSuccess: selectBeneficiariesCreateSuccess(state),
+    memberLevels: selectMemberLevels(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
@@ -517,6 +536,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
     fetchSuccess: payload => dispatch(alertPush(payload)),
     setMobileWalletUi: payload => dispatch(setMobileWalletUi(payload)),
     currenciesFetch: () => dispatch(currenciesFetch()),
+    memberLevelsFetch: () => dispatch(memberLevelsFetch()),
 });
 
 export const WalletsScreen = compose(
