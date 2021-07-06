@@ -188,13 +188,13 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
                         <div className="cr-withdraw__divider cr-withdraw__divider-one" />
                             <div className={withdrawAmountClass}>
                                 <InputWithButton
-                                  type="number"
-                                  value={amount}
-                                  label={withdrawAmountLabel || 'Withdrawal Amount'}
-                                  handleChangeInput={this.handleChangeInputAmount}
-                                  className="cr-withdraw__input"
-                                  buttonText={withdrawAllButtonLabel}
-                                  handleClickButton={this.handleClickAllAmount}
+                                    type="number"
+                                    value={amount}
+                                    label={withdrawAmountLabel || 'Withdrawal Amount'}
+                                    handleChangeInput={this.handleChangeInputAmount}
+                                    className="cr-withdraw__input"
+                                    buttonText={withdrawAllButtonLabel}
+                                    handleClickButton={this.handleClickAllAmount}
                                 />
                             </div>
                             <div className={lastDividerClassName} />

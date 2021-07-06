@@ -1,8 +1,6 @@
 import '@openware/cryptofont';
 import classnames from 'classnames';
 import * as React from 'react';
-import { Button, InputGroup } from 'react-bootstrap';
-import { CustomInput } from '../';
 import { copy } from '../../helpers';
 import { InputWithButton } from "src/components/InputWithButton";
 
@@ -58,17 +56,17 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
 
         return (
             <InputWithButton
-              value={value}
-              className={cx}
-              fieldId={fieldId}
-              readOnly
-              handleClickInput={doCopy}
-              handleClickButton={doCopy}
-              type="text"
-              disabled={disabled}
-              label={label}
-              buttonText={copyButtonText || 'Copy'}
-              buttonClassName="cr-copyable-text-field__button"
+                value={value}
+                className={cx}
+                fieldId={fieldId}
+                readOnly
+                handleClickInput={doCopy}
+                handleClickButton={doCopy}
+                type="text"
+                disabled={disabled}
+                label={label}
+                buttonText={copyButtonText || 'Copy'}
+                buttonClassName="cr-copyable-text-field__button"
             />
         );
     }
