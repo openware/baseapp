@@ -22,6 +22,10 @@ export interface DecimalProps {
      * If undefined, only integer part of the number is highlighted
      */
     prevValue?: string | number;
+    /**
+     * Color of text
+     */
+    color?: string;
 }
 
 const handleRemoveExponent = (value: DecimalProps['children']) => {
@@ -144,8 +148,8 @@ class Decimal extends React.Component<DecimalProps> {
         } else {
             return (
                 <React.Fragment>
-                    <span>{Decimal.getNumberBeforeDot(children, fixed, thousSep, floatSep)}</span>
-                    <span className="cr-decimal__opacity">{Decimal.getNumberAfterDot(children, fixed)}</span>
+                    <span style={{ color: this.props.color }}>{Decimal.getNumberBeforeDot(children, fixed, thousSep, floatSep)}</span>
+                    <span style={{ color: this.props.color }} className="cr-decimal__opacity">{Decimal.getNumberAfterDot(children, fixed)}</span>
                 </React.Fragment>
             );
         }
@@ -156,6 +160,7 @@ class Decimal extends React.Component<DecimalProps> {
         let prev = Decimal.format(prevValue, fixed, thousSep, floatSep);
         let highlighted = '';
 
+        const a = 1;
         while (val !== prev && val.length > 0) {
             highlighted = val[val.length - 1] + highlighted;
             val = val.slice(0, -1);
@@ -164,8 +169,8 @@ class Decimal extends React.Component<DecimalProps> {
 
         return (
             <React.Fragment>
-                <span className="cr-decimal__opacity">{val}</span>
-                <span>{highlighted}</span>
+                <span style={{ color: this.props.color }} className="cr-decimal__opacity">{val}</span>
+                <span style={{ color: this.props.color }}>{highlighted}</span>
             </React.Fragment>
         );
     };

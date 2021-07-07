@@ -39,7 +39,7 @@ export const ru = {
     'page.mobile.orders.header.filled': 'Filled',
     'page.mobile.orders.header.cancel': 'Cancel',
     'page.mobile.orders.header.trigger': 'Trigger',
-    'page.mobile.orders.header.volume': 'Volume',
+    'page.mobile.orders.header.volume': 'Total',
 
     'page.mobile.currentMarketInfo.search.placeholder': 'Search',
     'page.mobile.currentMarketInfo.volume': 'Vol',

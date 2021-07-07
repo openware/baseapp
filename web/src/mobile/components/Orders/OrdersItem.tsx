@@ -5,6 +5,7 @@ import { CloseIcon } from '../../../assets/images/CloseIcon';
 import { Decimal } from '../../../components';
 import { localeDate, setTradeColor } from '../../../helpers';
 import { selectMarkets } from '../../../modules';
+import { FIXED_VOL_PRECISION } from "src/constants";
 
 const OrdersItemComponent = props => {
     const { order } = props;
@@ -44,9 +45,15 @@ const OrdersItemComponent = props => {
                     <span>{intl.formatMessage({ id: 'page.mobile.orders.header.filled' })}</span>
                     <div className="pg-mobile-orders-item__row__block__value">
                         <span style={{
-                            color: parseFloat(filled) < 100 ? 'var(--asks)' : 'var(--bids)'
+                            color:  setTradeColor(order.side).color
                         }}>
-                            {filled}%
+                            <Decimal
+                              fixed={FIXED_VOL_PRECISION}
+                              color={setTradeColor(order.side).color}
+                            >
+                                {parseFloat(filled)}
+                            </Decimal>
+                            %
                         </span>
                     </div>
                 </div>
@@ -54,13 +61,13 @@ const OrdersItemComponent = props => {
                     <div>
                         <span>{intl.formatMessage({ id: 'page.mobile.orders.header.amount' })}</span>
                         <span className="pg-mobile-orders-item__row__block__value">
-                            <Decimal fixed={currentMarket.amount_precision}>{order.origin_volume}</Decimal>
+                            <Decimal fixed={currentMarket.amount_precision}>{order.remaining_volume}</Decimal>
                         </span>
                     </div>
                     <div className="pg-mobile-orders-item__second__row">
                         <span>{intl.formatMessage({ id: 'page.mobile.orders.header.volume' })}</span>
                         <span className="pg-mobile-orders-item__row__block__value">
-                            <Decimal fixed={currentMarket.price_precision}>{actualPrice}</Decimal>
+                            <Decimal fixed={currentMarket.price_precision}>{+order.remaining_volume  * +order.price}</Decimal>
                         </span>
                     </div>
                 </div>
@@ -74,12 +81,16 @@ const OrdersItemComponent = props => {
                     <div className="pg-mobile-orders-item__second__row">
                         <span>{intl.formatMessage({ id: 'page.mobile.orders.header.trigger' })}</span>
                         <span className="pg-mobile-orders-item__row__block__value">
-                            <Decimal fixed={currentMarket.price_precision}>{actualPrice}</Decimal>
+                            {
+                                order.trigger_price ?
+                                    <Decimal fixed={currentMarket.price_precision}>{order.trigger_price}</Decimal> :
+                                    '-'
+                            }
                         </span>
                     </div>
                 </div>
                 <div className="pg-mobile-orders-item__row__button__wrapper">
-                    {order.state === 'wait' ? (
+                    {order.state === 'wait' || order.state === 'trigger_wait' ? (
                         <div className="pg-mobile-orders-item__row__button" onClick={props.handleCancel(order.id)}>
                             <span>{intl.formatMessage({ id: 'page.mobile.orders.header.cancel' })}</span>
                             <CloseIcon />
