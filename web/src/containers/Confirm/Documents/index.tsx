@@ -28,9 +28,9 @@ import DocumentSelfieExample from 'src/assets/images/kyc/DocumentSelfieExample.s
 
 interface ReduxProps {
     lang: string;
-    success?: string;
     isMobileDevice: boolean;
     loading: boolean;
+    success: boolean;
 }
 
 interface DispatchProps {
@@ -247,7 +247,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                     <div className="pg-confirm__content-deep">
                         <Button
                             onClick={this.sendDocuments}
-                            disabled={this.handleCheckButtonDisabled() || loading}
+                            disabled={this.handleCheckButtonDisabled()}
                             size="lg"
                             variant="primary"
                             type="button"
@@ -400,8 +400,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             idNumber,
             frontFileSizeErrorMessage,
             backFileSizeErrorMessage,
-            selfieFileSizeErrorMessage
+            selfieFileSizeErrorMessage,
         } = this.state;
+        const { loading } = this.props;
 
         const typeOfDocuments = this.getDocumentsType(documentsType);
         const filesValid =
@@ -413,7 +414,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             !this.handleValidateInput('idNumber', idNumber) ||
             !this.handleValidateInput('issuedDate', issuedDate) ||
             (expireDate && !this.handleValidateInput('expireDate', expireDate)) ||
-            !filesValid
+            !filesValid || loading
         );
     };
 
@@ -425,13 +426,13 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             return;
         }
 
-        this.props.sendDocuments(this.createFormData('front_side', fileFront, identificator));
+        const payload = {
+            front_side: this.createFormData('front_side', fileFront, identificator),
+            ...(documentsType !== 'Passport' && { back_side: this.createFormData('back_side', fileBack, identificator) }),
+            selfie: this.createFormData('selfie', fileSelfie, identificator),
+        };
 
-        if (documentsType !== 'Passport') {
-            this.props.sendDocuments(this.createFormData('back_side', fileBack, identificator));
-        }
-
-        this.props.sendDocuments(this.createFormData('selfie', fileSelfie, identificator));
+        this.props.sendDocuments(payload);
     };
 
     private createFormData = (docCategory: string, upload: File[], identificator: string) => {
@@ -470,9 +471,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
-    success: selectSendDocumentsSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
     loading: selectSendDocumentsLoading(state),
+    success: selectSendDocumentsSuccess(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({

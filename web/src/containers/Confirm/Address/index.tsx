@@ -1,7 +1,7 @@
 import cr from 'classnames';
 import * as countries from 'i18n-iso-countries';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -170,7 +170,7 @@ class AddressComponent extends React.Component<Props, State> {
                     <div className="pg-confirm__content-deep">
                         <Button
                             onClick={this.sendAddress}
-                            disabled={this.handleCheckButtonDisabled() || loading}
+                            disabled={this.handleCheckButtonDisabled()}
                             size="lg"
                             variant="primary"
                             type="button"
@@ -293,6 +293,7 @@ class AddressComponent extends React.Component<Props, State> {
             postcode,
             fileSizeErrorMessage,
         } = this.state;
+        const { loading } = this.props;
 
         const addressValid = this.handleValidateInput('address', address);
         const cityValid = this.handleValidateInput('city', city);
@@ -305,6 +306,7 @@ class AddressComponent extends React.Component<Props, State> {
             !postcodeValid ||
             fileSizeErrorMessage !== '' ||
             !fileScan.length
+            || loading
         );
     };
 
