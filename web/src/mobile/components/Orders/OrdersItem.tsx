@@ -51,7 +51,7 @@ const OrdersItemComponent = props => {
                               fixed={FIXED_VOL_PRECISION}
                               color={setTradeColor(order.side).color}
                             >
-                                {parseFloat(filled)}
+                                {filled}
                             </Decimal>
                             %
                         </span>
