@@ -1,9 +1,11 @@
 import classnames from 'classnames';
 import * as React from 'react';
+import { useMemo } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { selectMemberLevels } from 'src/modules';
 import { Blur } from '../../../components/Blur';
 import { ModalWithdrawSubmit, Withdraw } from '../../../containers';
 import { useBeneficiariesFetch, useCurrenciesFetch } from '../../../hooks';
@@ -40,6 +42,7 @@ const WalletWithdrawBodyComponent = props => {
     const user = useSelector(selectUserInfo);
     const currencies = useSelector(selectCurrencies);
     const withdrawSuccess = useSelector(selectWithdrawSuccess);
+    const memberLevels = useSelector(selectMemberLevels);
     const { currency, fee, type } = props.wallet;
     const fixed = (props.wallet || { fixed: 0 }).fixed;
     const withdrawAmountLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.amount' }), [intl]);
@@ -134,30 +137,64 @@ const WalletWithdrawBodyComponent = props => {
         return renderOtpDisabled();
     }
 
+    const renderContent = useMemo(() => {
+        if (!currencyItem?.withdrawal_enabled) {
+            return (
+                <Blur
+                    className="pg-blur-withdraw"
+                    text={intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.disabled.message' })}
+                />
+            );
+        }
+
+        if (user.level < memberLevels?.withdraw.minimum_level) {
+            return (
+                <Blur
+                    className={`pg-blur-withdraw pg-blur-withdraw-${currencyItem?.type}`}
+                    text={intl.formatMessage({ id: 'page.body.wallets.warning.withdraw.verification' })}
+                    link="/confirm"
+                    linkText={intl.formatMessage({ id: 'page.body.wallets.warning.withdraw.verification.button' })}
+                />
+            );
+        }
+
+        return (
+            <Withdraw
+                isMobileDevice
+                fee={fee}
+                type={type}
+                fixed={fixed}
+                currency={currency}
+                onClick={toggleConfirmModal}
+                withdrawAmountLabel={withdrawAmountLabel}
+                withdraw2faLabel={withdraw2faLabel}
+                withdrawFeeLabel={withdrawFeeLabel}
+                withdrawTotalLabel={withdrawTotalLabel}
+                withdrawDone={withdrawData.withdrawDone}
+                withdrawButtonLabel={withdrawButtonLabel}
+                twoFactorAuthRequired={isTwoFactorAuthRequired(user.level, user.otp)}
+            />
+        );
+    }, [
+        currencyItem?.withdrawal_enabled,
+        user.level,
+        user.otp,
+        memberLevels?.withdraw.minimum_level,
+        fee,
+        type,
+        fixed,
+        currency,
+        withdrawAmountLabel,
+        withdraw2faLabel,
+        withdrawFeeLabel,
+        withdrawTotalLabel,
+        withdrawData.withdrawDone,
+        withdrawButtonLabel,
+    ]);
+
     return (
         <div className={className}>
-            {currencyItem && !currencyItem.withdrawal_enabled ? (
-                    <Blur
-                        className="pg-blur-withdraw"
-                        text={intl.formatMessage({id: 'page.body.wallets.tabs.withdraw.disabled.message'})}
-                    />
-                ) :
-                <Withdraw
-                    isMobileDevice
-                    fee={fee}
-                    type={type}
-                    fixed={fixed}
-                    currency={currency}
-                    onClick={toggleConfirmModal}
-                    withdrawAmountLabel={withdrawAmountLabel}
-                    withdraw2faLabel={withdraw2faLabel}
-                    withdrawFeeLabel={withdrawFeeLabel}
-                    withdrawTotalLabel={withdrawTotalLabel}
-                    withdrawDone={withdrawData.withdrawDone}
-                    withdrawButtonLabel={withdrawButtonLabel}
-                    twoFactorAuthRequired={isTwoFactorAuthRequired(user.level, user.otp)}
-                />
-            }
+            {renderContent}
             <div className="cr-mobile-wallet-withdraw-body__submit">
                 <ModalWithdrawSubmit
                     isMobileDevice

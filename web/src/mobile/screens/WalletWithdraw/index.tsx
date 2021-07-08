@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
+import { useMemberLevelFetch } from 'src/hooks/useMemberLevelsFetch';
 import { useWalletsFetch } from '../../../hooks';
 import { selectWallets } from '../../../modules/user/wallets';
 import { Subheader, WalletBanner, WalletHeader, WalletWithdrawBody } from '../../components';
@@ -17,6 +18,7 @@ const WalletWithdraw: React.FC = () => {
     const wallet = wallets.find(item => item.currency === currency) || defaultWallet;
 
     useWalletsFetch();
+    useMemberLevelFetch();
 
     return (
         <div className="cr-mobile-wallet-withdraw">

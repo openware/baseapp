@@ -6,6 +6,7 @@ export * from './useDocumentationFetch';
 export * from './useDocumentTitle';
 export * from './useHistoryFetch';
 export * from './useMarketsFetch';
+export * from './useMemberLevelsFetch';
 export * from './useRangerConnectFetch';
 export * from './useResetCaptchaState';
 export * from './usePrevious';

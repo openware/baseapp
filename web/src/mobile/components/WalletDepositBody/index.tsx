@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { formatCCYAddress } from 'src/helpers';
+import { selectMemberLevels } from 'src/modules';
 import { Blur } from '../../../components/Blur';
 import { CurrencyInfo } from '../../../components/CurrencyInfo';
 import { DepositCrypto } from '../../../components/DepositCrypto';
@@ -14,6 +15,7 @@ const WalletDepositBodyComponent = props => {
     const intl = useIntl();
     const currencies = useSelector(selectCurrencies);
     const user = useSelector(selectUserInfo);
+    const memberLevels = useSelector(selectMemberLevels);
     const label = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.message.address' }), [intl]);
     const handleOnCopy = () => ({});
     const renderDeposit = () => {
@@ -30,22 +32,35 @@ const WalletDepositBodyComponent = props => {
 
         const title = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message1' });
         const description = intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.fiat.message2' });
-        const blurCryptoClassName = classnames('pg-blur-deposit-crypto', {
-            'pg-blur-deposit-crypto--active': isAccountActivated,
+        const blurClassName = classnames(`pg-blur-deposit-${wallet.type}`, {
+            'pg-blur-deposit-coin--active': isAccountActivated && wallet.type === 'coin',
+            'pg-blur-deposit-fiat--active': isAccountActivated && wallet.type === 'fiat',
         });
 
         const buttonLabel = `${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.generate' })} ${wallet.currency.toUpperCase()} ${intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.ccy.button.address' })}`;
+
+        const blurIfNotEnoughLevel = (
+            <Blur
+                className={blurClassName}
+                text={intl.formatMessage({ id: 'page.body.wallets.warning.deposit.verification' })}
+                link="/confirm"
+                linkText={intl.formatMessage({ id: 'page.body.wallets.warning.deposit.verification.button' })}
+            />
+        );
+
+        const blurIfDepositDisabled = (
+            <Blur
+                className={blurClassName}
+                text={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.disabled.message' })}
+            />
+        );
 
         if (wallet.type === 'coin') {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallet}/>
-                    {currencyItem && !currencyItem.deposit_enabled ? (
-                        <Blur
-                            className={blurCryptoClassName}
-                            text={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.disabled.message' })}
-                        />
-                    ) : null}
+                    {currencyItem && !currencyItem.deposit_enabled ? blurIfDepositDisabled : null}
+                    {user.level < memberLevels?.deposit.minimum_level ? blurIfNotEnoughLevel : null}
                     <DepositCrypto
                         buttonLabel={buttonLabel}
                         copiableTextFieldText={`${wallet.currency.toUpperCase()} ${label}`}
@@ -63,12 +78,8 @@ const WalletDepositBodyComponent = props => {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallet}/>
-                    {currencyItem && !currencyItem.deposit_enabled ? (
-                        <Blur
-                            className="pg-blur-deposit-fiat"
-                            text={intl.formatMessage({ id: 'page.body.wallets.tabs.deposit.disabled.message' })}
-                        />
-                    ) : null}
+                    {currencyItem && !currencyItem.deposit_enabled ? blurIfDepositDisabled : null}
+                    {user.level < memberLevels?.deposit.minimum_level ? blurIfNotEnoughLevel : null}
                     <DepositFiat title={title} description={description} uid={user ? user.uid : ''}/>
                 </React.Fragment>
             );
