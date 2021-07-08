@@ -240,6 +240,7 @@ exports[`Markets should render empty data 1`] = `
         "identity.session.missing_otp": "The account has enabled 2FA but OTP code is missing",
         "identity.session.missing_password": "Password is missing",
         "identity.session.not_active": "Your account is not active",
+        "identity.session.rack_attack_limit": "The limit of sign in requests exceeded, please try again in 60 seconds",
         "identity.user.active_or_doesnt_exist": "User doesn't exist or has already been activated",
         "identity.user.empty_confirm_password": "Confirm password is missing or empty",
         "identity.user.empty_email": "Email is missing or empty",
