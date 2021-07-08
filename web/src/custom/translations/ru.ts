@@ -213,6 +213,10 @@ export const ru: LangType = {
     'page.body.wallets.tabs.withdraw.content.button': 'ВЫВЕСТИ',
 
     'page.body.wallets.tabs.withdraw.disabled.message': 'Вывод средств был отключен администрацией',
+    'page.body.wallets.warning.withdraw.verification': 'Withdraws are allowed after passing KYC verification',
+    'page.body.wallets.warning.withdraw.verification.button': 'Verify Your Account',
+    'page.body.wallets.warning.withdraw.2fa': 'Withdraws are allowed after enabling 2FA',
+    'page.body.wallets.warning.withdraw.2fa.button': 'Enable 2FA',
 
     'page.body.wallets.tabs.withdraw.modal.confirmation': 'Подтверждение',
     'page.body.wallets.tabs.withdraw.modal.message1': 'Вы получите ',
