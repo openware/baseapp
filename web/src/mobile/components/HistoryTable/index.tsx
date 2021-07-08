@@ -49,6 +49,7 @@ const HistoryTable = (props: any) => {
                 intl.formatMessage({ id: 'page.body.wallets.table.pending' })
                 )}</span>,
             skipped: <span className="cr-mobile-history-table--success">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.skipped' })}</span>,
+            errored: <span className="cr-mobile-history-table--failed">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.errored' })}</span>,
         };
 
         return statusMapping[tx];
