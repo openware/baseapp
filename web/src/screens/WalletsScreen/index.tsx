@@ -352,12 +352,45 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }
     };
 
+    private getBlurDeposit = (isAccountActivated: boolean) => {
+        const { user, wallets, memberLevels, currencies } = this.props;
+        const { selectedWalletIndex } = this.state;
+        const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
+        const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency)) || { min_confirmations: 6, deposit_enabled: false };
+
+        const blurClassName = classnames(`pg-blur-deposit-${wallets[selectedWalletIndex].type}`, {
+            'pg-blur-deposit-coin--active': isAccountActivated && wallets[selectedWalletIndex].type === 'coin',
+            'pg-blur-deposit-fiat--active': isAccountActivated && wallets[selectedWalletIndex].type === 'fiat',
+        });
+
+        if (!currencyItem?.deposit_enabled) {
+            return (
+                <Blur
+                    className={blurClassName}
+                    text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
+                />
+            );
+        }
+
+        if (user.level < memberLevels?.deposit.minimum_level) {
+            return (
+                <Blur
+                    className={blurClassName}
+                    text={this.translate('page.body.wallets.warning.deposit.verification')}
+                    onClick={() => this.props.history.push("/confirm")}
+                    linkText={this.translate('page.body.wallets.warning.deposit.verification.button')}
+                />
+            );
+        }
+
+        return null;
+    }
+
     private renderDeposit = (isAccountActivated: boolean) => {
         const {
             currencies,
             user,
             wallets,
-            memberLevels,
         } = this.props;
         const { selectedWalletIndex } = this.state;
         const wallet: Wallet = (wallets[selectedWalletIndex] || defaultWallet);
@@ -366,35 +399,13 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                                                    { confirmations: currencyItem.min_confirmations });
         const error = this.props.intl.formatMessage({id: 'page.body.wallets.tabs.deposit.ccy.message.pending'});
 
-        const blurClassName = classnames(`pg-blur-deposit-${wallets[selectedWalletIndex].type}`, {
-            'pg-blur-deposit-coin--active': isAccountActivated && wallets[selectedWalletIndex].type === 'coin',
-            'pg-blur-deposit-fiat--active': isAccountActivated && wallets[selectedWalletIndex].type === 'fiat',
-        });
-
         const buttonLabel = `${this.translate('page.body.wallets.tabs.deposit.ccy.button.generate')} ${wallet.currency.toUpperCase()} ${this.translate('page.body.wallets.tabs.deposit.ccy.button.address')}`;
-
-        const blurIfNotEnoughLevel = (
-            <Blur
-                className={blurClassName}
-                text={this.translate('page.body.wallets.warning.deposit.verification')}
-                onClick={() => this.props.history.push("/confirm")}
-                linkText={this.translate('page.body.wallets.warning.deposit.verification.button')}
-            />
-        );
-
-        const blurIfDepositDisabled = (
-            <Blur
-                className={blurClassName}
-                text={this.translate('page.body.wallets.tabs.deposit.disabled.message')}
-            />
-        );
 
         if (wallets[selectedWalletIndex].type === 'coin') {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
-                    {currencyItem && !currencyItem.deposit_enabled ? blurIfDepositDisabled : null}
-                    {user.level < memberLevels?.deposit.minimum_level ? blurIfNotEnoughLevel : null}
+                    {this.getBlurDeposit(isAccountActivated)}
                     <DepositCrypto
                         buttonLabel={buttonLabel}
                         copiableTextFieldText={this.translate('page.body.wallets.tabs.deposit.ccy.message.address')}
@@ -412,8 +423,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
-                    {currencyItem && !currencyItem.deposit_enabled ? blurIfDepositDisabled : null}
-                    {user.level < memberLevels?.deposit.minimum_level ? blurIfNotEnoughLevel : null}
+                    {this.getBlurDeposit(isAccountActivated)}
                     <DepositFiat title={this.title} description={this.description} uid={user ? user.uid : ''}/>
                     {wallet.currency && <WalletHistory label="deposit" type="deposits" currency={wallet.currency} />}
                 </React.Fragment>
@@ -421,38 +431,56 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
         }
     };
 
-    private renderWithdraw = () => {
-        const { currencies, user, wallets, walletsError, withdrawSuccess, memberLevels } = this.props;
+    private getBlurWithdraw = () => {
+        const { currencies, user, wallets, memberLevels } = this.props;
         const { selectedWalletIndex } = this.state;
         const wallet = (wallets[selectedWalletIndex] || defaultWallet);
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
+
+        if (!currencyItem?.withdrawal_enabled) {
+            return (
+                <Blur
+                    className="pg-blur-withdraw"
+                    text={this.translate('page.body.wallets.tabs.withdraw.disabled.message')}
+                />
+            );
+        }
+
+        if (user.level < memberLevels?.withdraw.minimum_level) {
+            return (
+                <Blur
+                    className={`pg-blur-withdraw pg-blur-withdraw-${currencyItem?.type}`}
+                    text={this.translate('page.body.wallets.warning.withdraw.verification')}
+                    onClick={() => this.props.history.push("/confirm")}
+                    linkText={this.translate('page.body.wallets.warning.withdraw.verification.button')}
+                />
+            );
+        }
+
+        if (!user.otp) {
+            return (
+                <Blur
+                    className={`pg-blur-withdraw pg-blur-withdraw-${currencyItem?.type}`}
+                    text={this.translate('page.body.wallets.warning.withdraw.2fa')}
+                    onClick={() => this.props.history.push('/security/2fa', { enable2fa: true })}
+                    linkText={this.translate('page.body.wallets.warning.withdraw.2fa.button')}
+                />
+            );
+        }
+
+        return null;
+    }
+
+    private renderWithdraw = () => {
+        const { user, wallets, walletsError, withdrawSuccess } = this.props;
+        const { selectedWalletIndex } = this.state;
+        const wallet = (wallets[selectedWalletIndex] || defaultWallet);
 
         return (
             <React.Fragment>
                 <CurrencyInfo wallet={wallets[selectedWalletIndex]}/>
                 {walletsError && <p className="pg-wallet__error">{walletsError.message}</p>}
-                {currencyItem && !currencyItem.withdrawal_enabled ? (
-                    <Blur
-                        className="pg-blur-withdraw"
-                        text={this.translate('page.body.wallets.tabs.withdraw.disabled.message')}
-                    />
-                ) : null}
-                {user.level < memberLevels?.withdraw.minimum_level ? (
-                    <Blur
-                        className={`pg-blur-withdraw pg-blur-withdraw-${currencyItem?.type}`}
-                        text={this.translate('page.body.wallets.warning.withdraw.verification')}
-                        onClick={() => this.props.history.push("/confirm")}
-                        linkText={this.translate('page.body.wallets.warning.withdraw.verification.button')}
-                    />
-                ) : null}
-                {!user.otp ? (
-                    <Blur
-                        className={`pg-blur-withdraw pg-blur-withdraw-${currencyItem?.type}`}
-                        text={this.translate('page.body.wallets.warning.withdraw.2fa')}
-                        onClick={() => this.props.history.push('/security/2fa', { enable2fa: true })}
-                        linkText={this.translate('page.body.wallets.warning.withdraw.2fa.button')}
-                    />
-                ) : null}
+                {this.getBlurWithdraw()}
                 {this.renderWithdrawContent()}
                 {user.otp && wallet.currency && <WalletHistory label="withdraw" type="withdraws" currency={wallet.currency} withdrawSuccess={withdrawSuccess} />}
             </React.Fragment>

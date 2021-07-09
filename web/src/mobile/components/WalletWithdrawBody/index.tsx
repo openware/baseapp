@@ -133,10 +133,6 @@ const WalletWithdrawBodyComponent = props => {
         'cr-mobile-wallet-withdraw-body--disabled': currencyItem && !currencyItem.withdrawal_enabled,
     });
 
-    if (!user.otp) {
-        return renderOtpDisabled();
-    }
-
     const renderContent = useMemo(() => {
         if (!currencyItem?.withdrawal_enabled) {
             return (
@@ -156,6 +152,10 @@ const WalletWithdrawBodyComponent = props => {
                     linkText={intl.formatMessage({ id: 'page.body.wallets.warning.withdraw.verification.button' })}
                 />
             );
+        }
+
+        if (!user.otp) {
+            return renderOtpDisabled();
         }
 
         return (
