@@ -1,7 +1,7 @@
 import cr from 'classnames';
 import moment from 'moment';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import MaskInput from 'react-maskinput';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
@@ -20,6 +20,7 @@ import {
     selectCurrentLanguage,
     selectEditIdentitySuccess,
     selectLabelData,
+    selectSendIdentityLoading,
     selectSendIdentitySuccess,
     selectUserInfo,
     sendIdentity,
@@ -35,6 +36,7 @@ interface ReduxProps {
     lang: string;
     labels: Label[];
     user: User;
+    loading: boolean;
 }
 
 interface DispatchProps {
@@ -98,7 +100,7 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
     }
 
     public render() {
-        const { editSuccess, sendSuccess, lang } = this.props;
+        const { editSuccess, sendSuccess, lang, loading } = this.props;
         const {
             city,
             dateOfBirth,
@@ -271,12 +273,20 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                 <div className="pg-confirm__content-deep">
                     <Button
                         onClick={this.sendData}
-                        disabled={this.handleCheckButtonDisabled()}
+                        disabled={this.handleCheckButtonDisabled() || loading}
                         size="lg"
                         variant="primary"
                         type="submit"
                         block={true}>
-                        {this.translate('page.body.kyc.next')}
+                        {loading ? (
+                            <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            />
+                        ) : this.translate('page.body.kyc.next')}
                     </Button>
                 </div>
             </form>
@@ -448,6 +458,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
     labels: selectLabelData(state),
     user: selectUserInfo(state),
+    loading: selectSendIdentityLoading(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({

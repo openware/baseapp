@@ -1,7 +1,7 @@
 import cr from 'classnames';
 import * as countries from 'i18n-iso-countries';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -15,6 +15,7 @@ import {
     RootState,
     selectCurrentLanguage,
     selectMobileDeviceState,
+    selectSendAddressesLoading,
     selectSendAddressesSuccess,
     sendAddresses,
 } from '../../../modules';
@@ -23,6 +24,7 @@ interface ReduxProps {
     lang: string;
     success?: string;
     isMobileDevice: boolean;
+    loading: boolean;
 }
 
 interface DispatchProps {
@@ -64,7 +66,7 @@ class AddressComponent extends React.Component<Props, State> {
     }
 
     public render() {
-        const { lang, isMobileDevice } = this.props;
+        const { lang, isMobileDevice, loading } = this.props;
         const {
             address,
             addressFocused,
@@ -174,7 +176,15 @@ class AddressComponent extends React.Component<Props, State> {
                             type="button"
                             block={true}
                         >
-                            {this.translate('page.body.kyc.submit')}
+                            {loading ? (
+                                <Spinner
+                                    as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
+                            ) : this.translate('page.body.kyc.submit')}
                         </Button>
                     </div>
                 </div>
@@ -283,6 +293,7 @@ class AddressComponent extends React.Component<Props, State> {
             postcode,
             fileSizeErrorMessage,
         } = this.state;
+        const { loading } = this.props;
 
         const addressValid = this.handleValidateInput('address', address);
         const cityValid = this.handleValidateInput('city', city);
@@ -295,6 +306,7 @@ class AddressComponent extends React.Component<Props, State> {
             !postcodeValid ||
             fileSizeErrorMessage !== '' ||
             !fileScan.length
+            || loading
         );
     };
 
@@ -324,6 +336,7 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     lang: selectCurrentLanguage(state),
     success: selectSendAddressesSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
+    loading: selectSendAddressesLoading(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =

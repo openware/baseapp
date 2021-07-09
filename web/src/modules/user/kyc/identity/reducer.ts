@@ -11,18 +11,24 @@ import {
 
 export interface IdentityState {
     send: {
+        loading: boolean;
         success?: string;
         error?: CommonError;
     };
     edit: {
+        loading: boolean;
         success?: string;
         error?: CommonError;
     };
 }
 
 export const initialIdentityState: IdentityState = {
-    send: {},
-    edit: {},
+    send: {
+        loading: false,
+    },
+    edit: {
+        loading: true,
+    },
 };
 
 export const identitySendReducer = (state: IdentityState['send'], action: IdentityAction) => {
@@ -32,17 +38,20 @@ export const identitySendReducer = (state: IdentityState['send'], action: Identi
                 ...state,
                 success: undefined,
                 error: undefined,
+                loading: true,
             };
         case SEND_IDENTITY_DATA:
             return {
                 ...state,
                 success: action.payload.message,
                 error: undefined,
+                loading: false,
             };
         case SEND_IDENTITY_ERROR:
             return {
                 success: undefined,
                 error: action.error,
+                loading: false,
             };
         default:
             return state;
@@ -56,17 +65,20 @@ export const identityEditReducer = (state: IdentityState['edit'], action: Identi
                 ...state,
                 success: undefined,
                 error: undefined,
+                loading: true,
             };
         case EDIT_IDENTITY_DATA:
             return {
                 ...state,
                 success: action.payload.message,
                 error: undefined,
+                loading: false,
             };
         case EDIT_IDENTITY_ERROR:
             return {
                 success: undefined,
                 error: action.error,
+                loading: false,
             };
         default:
             return state;
