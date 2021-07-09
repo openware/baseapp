@@ -110,7 +110,7 @@ const WalletWithdrawBodyComponent = props => {
                 </span>
                 <Button
                     block={true}
-                    onClick={() => history.push('/profile/2fa')}
+                    onClick={() => history.push('/profile/2fa', { enable2fa: true })}
                     size="lg"
                     variant="primary"
                 >
@@ -152,7 +152,7 @@ const WalletWithdrawBodyComponent = props => {
                 <Blur
                     className={`pg-blur-withdraw pg-blur-withdraw-${currencyItem?.type}`}
                     text={intl.formatMessage({ id: 'page.body.wallets.warning.withdraw.verification' })}
-                    link="/confirm"
+                    onClick={() => history.push("/confirm")}
                     linkText={intl.formatMessage({ id: 'page.body.wallets.warning.withdraw.verification.button' })}
                 />
             );

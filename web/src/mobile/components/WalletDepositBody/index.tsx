@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { formatCCYAddress } from 'src/helpers';
 import { selectMemberLevels } from 'src/modules';
 import { Blur } from '../../../components/Blur';
@@ -13,6 +14,7 @@ import { selectUserInfo } from '../../../modules/user/profile';
 
 const WalletDepositBodyComponent = props => {
     const intl = useIntl();
+    const history = useHistory();
     const currencies = useSelector(selectCurrencies);
     const user = useSelector(selectUserInfo);
     const memberLevels = useSelector(selectMemberLevels);
@@ -43,7 +45,7 @@ const WalletDepositBodyComponent = props => {
             <Blur
                 className={blurClassName}
                 text={intl.formatMessage({ id: 'page.body.wallets.warning.deposit.verification' })}
-                link="/confirm"
+                onClick={() => history.push("/confirm")}
                 linkText={intl.formatMessage({ id: 'page.body.wallets.warning.deposit.verification.button' })}
             />
         );

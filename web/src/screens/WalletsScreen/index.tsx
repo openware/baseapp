@@ -377,7 +377,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
             <Blur
                 className={blurClassName}
                 text={this.translate('page.body.wallets.warning.deposit.verification')}
-                link="/confirm"
+                onClick={() => this.props.history.push("/confirm")}
                 linkText={this.translate('page.body.wallets.warning.deposit.verification.button')}
             />
         );
@@ -441,7 +441,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                     <Blur
                         className={`pg-blur-withdraw pg-blur-withdraw-${currencyItem?.type}`}
                         text={this.translate('page.body.wallets.warning.withdraw.verification')}
-                        link="/confirm"
+                        onClick={() => this.props.history.push("/confirm")}
                         linkText={this.translate('page.body.wallets.warning.withdraw.verification.button')}
                     />
                 ) : null}
@@ -449,7 +449,7 @@ class WalletsComponent extends React.Component<Props, WalletsState> {
                     <Blur
                         className={`pg-blur-withdraw pg-blur-withdraw-${currencyItem?.type}`}
                         text={this.translate('page.body.wallets.warning.withdraw.2fa')}
-                        link="/security/2fa"
+                        onClick={() => this.props.history.push('/security/2fa', { enable2fa: true })}
                         linkText={this.translate('page.body.wallets.warning.withdraw.2fa.button')}
                     />
                 ) : null}
