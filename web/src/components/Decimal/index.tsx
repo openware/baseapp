@@ -160,7 +160,6 @@ class Decimal extends React.Component<DecimalProps> {
         let prev = Decimal.format(prevValue, fixed, thousSep, floatSep);
         let highlighted = '';
 
-        const a = 1;
         while (val !== prev && val.length > 0) {
             highlighted = val[val.length - 1] + highlighted;
             val = val.slice(0, -1);
