@@ -58,7 +58,7 @@ export interface TabPanelProps {
     /**
      * Determines whether tab header should looks like dropdown or tab switcher
      */
-    isMobileDevice?: boolean;
+    isDropdown?: boolean;
 }
 
 /**
@@ -70,7 +70,7 @@ export const TabPanel: React.FC<TabPanelProps> = ({
     panels,
     optionalHead,
     currentTabIndex,
-    isMobileDevice,
+    isDropdown,
     onCurrentTabChange,
     onTabChange,
 }) => {
@@ -137,7 +137,7 @@ export const TabPanel: React.FC<TabPanelProps> = ({
     );
 
     const tabPanelRender = React.useCallback(() => {
-        if (isMobileDevice) {
+        if (isDropdown) {
             return (
                 <div className="cr-tab-panel__dropdown">
                     <DropdownComponent
@@ -155,7 +155,7 @@ export const TabPanel: React.FC<TabPanelProps> = ({
                 </div>
             );
         }
-    }, [dropdownLabels, handleOrderTypeChange, isMobileDevice, panels, renderTabPanel]);
+    }, [dropdownLabels, handleOrderTypeChange, isDropdown, panels, renderTabPanel]);
 
     const renderTabContent = React.useCallback(
         (tab: Tab, index: number) => {
