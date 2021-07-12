@@ -28,7 +28,7 @@ const TradingTabsComponent: React.FC = () => {
             label: intl.formatMessage({id: 'page.mobile.tradingTabs.label.charts'}),
         },
         {
-            content: currentTabIndex === 2 ? <Orders /> : null,
+            content: currentTabIndex === 2 ? <Orders withDropdownSelect /> : null,
             label: intl.formatMessage({id: 'page.mobile.tradingTabs.label.orders'}),
             disabled: !userLoggedIn,
         },
