@@ -1,7 +1,7 @@
 import { ThemeColorInterface } from '../../types';
 
 export const RedTheme: ThemeColorInterface[] = [
-    { key: '--rgb-primary-cta-color', value: '249, 248, 244' },
+    { key: '--rgb-primary-cta-color', value: '229, 86, 66' },
     { key: '--rgb-cta-layer-color', value: '255, 255, 255' },
     { key: '--rgb-main-background-color', value: '26, 20, 20' },
     { key: '--rgb-header-background-color', value: '41, 26, 26' },
