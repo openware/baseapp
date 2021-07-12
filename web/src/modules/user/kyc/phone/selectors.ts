@@ -6,3 +6,6 @@ export const sendPhoneCode = (state: RootState): PhoneState['codeSend'] =>
 
 export const selectVerifyPhoneSuccess = (state: RootState): PhoneState['successMessage'] =>
     state.user.phone.successMessage;
+
+export const selectVerifyPhoneLoading = (state: RootState): PhoneState['loading'] =>
+    state.user.phone.loading;

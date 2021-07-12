@@ -1360,4 +1360,9 @@ export const en = {
     ...nationalitiesNames,
     ...customTranslations,
     ...mobileTranslations,
+
+    // finex
+    'order.action.not_permitted': 'Action is not permitted',
+    'order.action_role.not_permitted': 'Action is not permitted for your user role',
+    'order.action_level.not_permitted': 'Action is not permitted for your user verification level'
 };

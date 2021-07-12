@@ -1,4 +1,4 @@
-import { call, put } from 'redux-saga/effects';
+import { all, call, put } from 'redux-saga/effects';
 import { alertPush, sendError } from '../../../../';
 import { API, RequestOptions } from '../../../../../api';
 import { getCsrfToken } from '../../../../../helpers';
@@ -13,11 +13,14 @@ const sessionsConfig = (csrfToken?: string): RequestOptions => {
 
 export function* sendDocumentsSaga(action: SendDocumentsFetch) {
     try {
-        const response = yield call(API.post(sessionsConfig(getCsrfToken())), '/resource/documents', action.payload);
-        const defaultMessage = 'success.documents.accepted';
-        const { message = defaultMessage } = response;
-        yield put(sendDocumentsData({ message }));
-        yield put(alertPush({ message: [defaultMessage], type: 'success'}));
+        const { front_side, back_side, selfie } = action.payload;
+        yield all([
+            call(sendDocumentItem, front_side),
+            back_side && call(sendDocumentItem, back_side),
+            call(sendDocumentItem, selfie)
+        ]);
+
+        yield put(sendDocumentsData());
     } catch (error) {
         yield put(sendError({
             error,
@@ -27,4 +30,9 @@ export function* sendDocumentsSaga(action: SendDocumentsFetch) {
             },
         }));
     }
+}
+
+export function* sendDocumentItem(payload: FormData) {
+    yield call(API.post(sessionsConfig(getCsrfToken())), '/resource/documents', payload);
+    yield put(alertPush({ message: ['success.documents.accepted'], type: 'success'}));
 }
