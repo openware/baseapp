@@ -28,5 +28,44 @@
       opacity: 0.7;
       text-align: center;
     }
+
+    &__arrow {
+      border: solid var(--icons);
+      border-width: 0 2.5px 2.5px 0;
+      display: inline-block;
+      height: 8px;
+      margin-right: 4px;
+      transform: rotate(-45deg);
+      transition: margin 0.2s;
+      width: 8px;
+    }
+
+    &__button {
+      margin-top: 12px;
+      background: var(--secondary-contrast-cta-color-level-1);
+      color: var(--secondary-contrast-cta-color);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+
+      span {
+        margin-right: 12px;
+      }
+
+      &:hover {
+        transition: 0.2s;
+        text-decoration: none;
+
+        .pg-blur__content__arrow {
+          border-color: var(--button-primary-cta-text-color);
+        }
+      }
+    }
   }
 }

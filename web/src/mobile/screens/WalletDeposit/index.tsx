@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
+import { useMemberLevelFetch } from 'src/hooks/useMemberLevelsFetch';
 import {
     useCurrenciesFetch,
     useRangerConnectFetch,
@@ -25,6 +26,7 @@ const WalletDeposit: React.FC = () => {
     useCurrenciesFetch();
     useWalletsFetch();
     useRangerConnectFetch();
+    useMemberLevelFetch();
 
     const defaultWallet: Wallet = {
         name: '',
@@ -36,7 +38,6 @@ const WalletDeposit: React.FC = () => {
     };
 
     const wallet: Wallet = wallets.find(item => item.currency === currency) || defaultWallet;
-
 
     const handleGenerateAddress = () => {
         if (!wallet.deposit_address && wallets.length && wallet.type !== 'fiat') {
