@@ -224,6 +224,8 @@ github.com/openware/pkg/ika v0.0.0-20210224055737-ee0a497ae719 h1:H0gA13Je48xdKj
 github.com/openware/pkg/ika v0.0.0-20210224055737-ee0a497ae719/go.mod h1:8Gf39BJibV3+xVFSga1Nda5s1e8yw5fa10+mKqo67q4=
 github.com/openware/pkg/jwt v0.0.0-20210204083929-709d949cb0ff h1:P9vW0TgN9g7Wu2Vmc6v7cRPz8g5QsF9itSyH9AXTXqM=
 github.com/openware/pkg/jwt v0.0.0-20210204083929-709d949cb0ff/go.mod h1:LB6Vl3pne5B756MTNooMiUmzvrgXji5n+ZsWYTkqjJw=
+github.com/openware/pkg/jwt v0.0.0-20210427221722-08a80973e205 h1:b44hkYTx+A3VHWqgGwlw/6RrWeWYkCczFvRCC+Wt5NU=
+github.com/openware/pkg/jwt v0.0.0-20210427221722-08a80973e205/go.mod h1:LB6Vl3pne5B756MTNooMiUmzvrgXji5n+ZsWYTkqjJw=
 github.com/openware/pkg/kli v0.0.0-20210110002944-50c944a5e00d h1:4qKQDWBN67YlA228Q8nrtOWCdzk6eYiOzUsPFeBgxFE=
 github.com/openware/pkg/kli v0.0.0-20210110002944-50c944a5e00d/go.mod h1:GOlHexRI3ZB6oePaiqObLDwZ6/FmrmTb6hho62wehOE=
 github.com/openware/pkg/mngapi v0.0.0-20210323150825-66343ce05032/go.mod h1:41rKG0I4Nnd9xPTHflQmz2NEGqORuFMZEbRhkY1SaxE=
