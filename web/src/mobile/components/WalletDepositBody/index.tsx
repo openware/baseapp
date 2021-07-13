@@ -93,8 +93,7 @@ const WalletDepositBodyComponent = props => {
             return (
                 <React.Fragment>
                     <CurrencyInfo wallet={wallet}/>
-                    {currencyItem && !currencyItem.deposit_enabled ? blurIfDepositDisabled : null}
-                    {user.level < memberLevels?.deposit.minimum_level ? blurIfNotEnoughLevel : null}
+                    {renderDepositBlur}
                     <DepositFiat title={title} description={description} uid={user ? user.uid : ''}/>
                 </React.Fragment>
             );
