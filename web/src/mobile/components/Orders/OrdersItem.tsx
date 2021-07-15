@@ -17,7 +17,10 @@ const OrdersItemComponent = props => {
             return '';
         }
 
-        return intl.formatMessage({ id: `page.mobile.orders.header.orderType.${side}.${type}` });
+        const isCommonType = ['stop_loss', 'stop_limit', 'take_limit', 'take_profit'].includes(type);
+        const id = `page.mobile.orders.header.orderType.` + (isCommonType ? type : `${side}.${type}`);
+        
+        return intl.formatMessage({ id });
     };
 
     const currentMarket = (markets.length && markets.find(m => m.id === order.market)) ||
@@ -61,13 +64,13 @@ const OrdersItemComponent = props => {
                     <div>
                         <span>{intl.formatMessage({ id: 'page.mobile.orders.header.amount' })}</span>
                         <span className="pg-mobile-orders-item__row__block__value">
-                            <Decimal fixed={currentMarket.amount_precision}>{order.remaining_volume}</Decimal>
+                            <Decimal fixed={currentMarket.amount_precision} thousSep={","}>{order.remaining_volume}</Decimal>
                         </span>
                     </div>
                     <div className="pg-mobile-orders-item__second__row">
                         <span>{intl.formatMessage({ id: 'page.mobile.orders.header.volume' })}</span>
                         <span className="pg-mobile-orders-item__row__block__value">
-                            <Decimal fixed={currentMarket.price_precision}>{+order.remaining_volume  * +order.price}</Decimal>
+                            <Decimal fixed={currentMarket.price_precision} thousSep={","}>{+order.remaining_volume  * +order.price}</Decimal>
                         </span>
                     </div>
                 </div>
@@ -75,7 +78,7 @@ const OrdersItemComponent = props => {
                     <div>
                         <span>{intl.formatMessage({ id: 'page.mobile.orders.header.price' })}</span>
                         <span className="pg-mobile-orders-item__row__block__value">
-                            <Decimal fixed={currentMarket.price_precision}>{actualPrice}</Decimal>
+                            <Decimal fixed={currentMarket.price_precision} thousSep={","}>{actualPrice}</Decimal>
                         </span>
                     </div>
                     <div className="pg-mobile-orders-item__second__row">
