@@ -211,15 +211,36 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
     private updateChart = (currentMarket: Market) => {
         if (this.tvWidget) {
-            this.tvWidget.onChartReady(() => {
-                this.tvWidget!.activeChart().setSymbol(currentMarket.id, () => {
-                    print('Symbol set', currentMarket.id);
+            let symbolSet = false;
+            const UPDATE_TIMEOUT = 3000;
+
+            const callUpdateChart = () => {
+                return new Promise((resolve, reject) => {
+                    this.tvWidget.onChartReady(() => {
+                        this.tvWidget!.activeChart().setSymbol(currentMarket.id, () => {
+                            symbolSet = true;
+                            resolve('Symbol set');
+                        });
+                    });
+
+                    setTimeout(() => {
+                        resolve('Symbol failed to set');
+                    }, UPDATE_TIMEOUT);
                 });
+            };
+
+            callUpdateChart().then(res => {
+                print(res, currentMarket.id);
+
+                if  (!symbolSet) {
+                    print('Rebuild chart', currentMarket.id);
+                    this.handleRebuildChart(currentMarket);
+                }
             });
         }
     };
 
-    private handleRebuildChart = () => {
+    private handleRebuildChart = (nextMarket?: Market) => {
         const {
             colorTheme,
             currentMarket,
@@ -233,7 +254,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
                 window.console.log(`TradingChart unmount failed (Rebuild chart): ${error}`);
             }
 
-            this.setChart(markets, currentMarket, colorTheme);
+            this.setChart(markets, nextMarket || currentMarket, colorTheme);
         }
     };
 

@@ -4,6 +4,7 @@ export const depositColorMapping = {
     submitted: '',
     canceled: 'var(--system-red)',
     rejected: 'var(--system-red)',
+    errored: 'var(--system-red)',
 };
 
 export const withdrawColorMapping = {

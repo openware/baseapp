@@ -1,17 +1,17 @@
 .cr-locked {
-  height: 100%;
-  width: 100%;
+  align-items: center;
   background: var(--body-background-color);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 100%;
   justify-content: center;
+  width: 100%;
   padding: 36px;
 
   &__content {
     font-size: 14px;
-    line-height: 22px;
     letter-spacing: 0.1px;
+    line-height: 22px;
     max-width: 184px;
     text-align: center;
   }
@@ -24,5 +24,10 @@
     path {
       fill: var(--button-secondary-cta-text-color);
     }
+  }
+
+  &__btn-content {
+    padding: 10px;
+    font-size: 14px;
   }
 }

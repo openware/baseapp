@@ -529,9 +529,9 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 
         return (
             <div>
-                {!otp && <WarningMessage children={this.renderWithdrawOTP()} hint="page.body.wallets.warning.withdraw.otp.hint"/>}
-                {level < memberLevels?.withdraw.minimum_level && <WarningMessage children={this.renderWithdrawWarningKYC()} hint="page.body.wallets.warning.withdraw.verification.hint"/>}
                 {!currencyItem?.networks && <WarningMessage children={this.renderWithdrawWarningNoNetworks()} hint="page.body.wallets.warning.withdraw.no.networks.hint"/>}
+                {level < memberLevels?.withdraw.minimum_level && <WarningMessage children={this.renderWithdrawWarningKYC()} hint="page.body.wallets.warning.withdraw.verification.hint"/>}
+                {!otp && <WarningMessage children={this.renderWithdrawOTP()} hint="page.body.wallets.warning.withdraw.otp.hint"/>}
             </div>
         );
     };

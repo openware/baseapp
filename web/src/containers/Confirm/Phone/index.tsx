@@ -1,6 +1,6 @@
 import cr from 'classnames';
 import * as React from 'react';
-import { Button, InputGroup } from 'react-bootstrap';
+import { Button, InputGroup, Spinner } from 'react-bootstrap';
 import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { RouterProps } from 'react-router';
@@ -12,6 +12,7 @@ import {
     changeUserLevel,
     resendCode,
     RootState,
+    selectVerifyPhoneLoading,
     selectVerifyPhoneSuccess,
     sendCode,
     verifyPhone,
@@ -19,6 +20,7 @@ import {
 
 interface ReduxProps {
     verifyPhoneSuccess?: string;
+    loading: boolean;
 }
 
 interface PhoneState {
@@ -66,18 +68,19 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
             confirmationCode,
             confirmationCodeFocused,
         } = this.state;
+        const { loading } = this.props;
 
-        const phoneNumberFocusedClass = cr('pg-confirm__content-phone-col-content', {
-            'pg-confirm__content-phone-col-content--focused': phoneNumberFocused,
+        const phoneNumberFocusedClass = cr('pg-confirm__content-phone__row__content', {
+            'pg-confirm__content-phone__row__content--focused': phoneNumberFocused,
         });
 
-        const confirmationCodeFocusedClass = cr('pg-confirm__content-phone-col-content', {
-            'pg-confirm__content-phone-col-content--focused': confirmationCodeFocused,
+        const confirmationCodeFocusedClass = cr('pg-confirm__content-phone__row__content', {
+            'pg-confirm__content-phone__row__content--focused': confirmationCodeFocused,
         });
 
         return (
             <div className="pg-confirm__content-phone">
-                <div className="pg-confirm__content-phone-col">
+                <div className="pg-confirm__content-phone__row">
                     <form>
                         <fieldset className={phoneNumberFocusedClass}>
                             <InputGroup>
@@ -111,7 +114,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                         </fieldset>
                     </form>
                 </div>
-                <div className="pg-confirm__content-phone-col">
+                <div className="pg-confirm__content-phone__row">
                     <fieldset className={confirmationCodeFocusedClass}>
                         <CustomInput
                             type="string"
@@ -131,9 +134,17 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                         onClick={this.confirmPhone}
                         size="lg"
                         variant="primary"
-                        disabled={!confirmationCode}
+                        disabled={!confirmationCode || loading}
                     >
-                        {this.translate('page.body.kyc.next')}
+                        {loading ? (
+                            <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            />
+                        ) : this.translate('page.body.kyc.next')}
                     </Button>
                 </div>
             </div>
@@ -242,6 +253,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     verifyPhoneSuccess: selectVerifyPhoneSuccess(state),
+    loading: selectVerifyPhoneLoading(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =

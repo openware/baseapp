@@ -123,5 +123,5 @@ export const ru = {
     'page.mobile.twoFactorModal.send': 'Send',
 
     'page.mobile.createdApiKeyModal.title': 'Created',
-    'page.mobile.createdApiKeyModal.confirm': 'confirm',
+    'page.mobile.createdApiKeyModal.confirm': 'confirm'
 };

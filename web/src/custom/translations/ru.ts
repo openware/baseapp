@@ -363,7 +363,9 @@ export const ru: LangType = {
     'page.body.history.deposit.content.status.rejected': 'Отвергнут',
     'page.body.history.deposit.content.status.skipped': 'Пропущен',
     'page.body.history.deposit.content.status.processing': 'Обрабатывается',
-
+    'page.body.history.deposit.content.status.fee_processing': 'Обрабатывается',
+    'page.body.history.deposit.content.status.errored': 'Ошибка',
+  
     'page.body.history.withdraw': 'История выводов',
     'page.body.history.withdraw.header.id': 'ID',
     'page.body.history.withdraw.header.blockchain': 'Network',
@@ -945,6 +947,7 @@ export const ru: LangType = {
     'identity.user.empty_reset_password_token': 'Токен пароля отсутствует',
     'identity.user.missing_confirm_password': 'Подтверджение пароля отсутствует',
     'identity.user.empty_confirm_password': 'Подтверджение пароля отсутствует',
+    'identity.session.rack_attack_limit': 'Превышен лимит запросов на вход, пожалуйста, повторите попытку через 60 секунд',
 
     'identity.session.missing_emai': 'Почта отсутствует',
     'identity.session.missing_password': 'Почта отсутствует',
@@ -1361,4 +1364,9 @@ export const ru: LangType = {
 
     ...nationalitiesNames,
     ...mobileTranslationsRu,
+
+    // finex
+    'order.action.not_permitted': 'Action is not permitted',
+    'order.action_role.not_permitted': 'Action is not permitted for your user role',
+    'order.action_level.not_permitted': 'Action is not permitted for your user verification level'
 };

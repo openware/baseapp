@@ -355,6 +355,8 @@ export const en = {
     'page.body.history.deposit.content.status.rejected': 'Rejected',
     'page.body.history.deposit.content.status.skipped': 'Skipped',
     'page.body.history.deposit.content.status.processing': 'Processing',
+    'page.body.history.deposit.content.status.fee_processing': 'Processing',
+    'page.body.history.deposit.content.status.errored': 'Errored',
 
     'page.body.history.withdraw': 'Withdrawal History',
     'page.body.history.withdraw.header.id': 'ID',
@@ -944,6 +946,7 @@ export const en = {
     'identity.session.missing_emai': 'Email is missing',
     'identity.session.missing_password': 'Password is missing',
     'identity.session.invalid_captcha_format': 'Invalid captcha format',
+    'identity.session.rack_attack_limit': 'The limit of sign in requests exceeded, please try again in 60 seconds',
 
     // resource module
     'resource.otp.missing_code': 'OTP code is missing',
@@ -1357,4 +1360,9 @@ export const en = {
     ...nationalitiesNames,
     ...customTranslations,
     ...mobileTranslations,
+
+    // finex
+    'order.action.not_permitted': 'Action is not permitted',
+    'order.action_role.not_permitted': 'Action is not permitted for your user role',
+    'order.action_level.not_permitted': 'Action is not permitted for your user verification level'
 };

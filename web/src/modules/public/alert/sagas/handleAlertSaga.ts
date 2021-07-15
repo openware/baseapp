@@ -47,15 +47,6 @@ export function* handleAlertSaga(action: AlertPush) {
                         }
                 }
                 break;
-            case 403:
-                if (action.payload.message.indexOf('identity.session.invalid_otp') > -1) {
-                    yield call(callAlertData, action);
-                }
-                if (action.payload.message.indexOf('jwt.decode_and_verify') > -1) {
-                    yield call(callAlertData, action);
-                }
-
-                return;
             case 422:
                 if (action.payload.message.indexOf('value.taken') > -1) {
                     window.location.replace('/');

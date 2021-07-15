@@ -36,12 +36,12 @@ describe('KYC - Documents', () => {
     };
 
     const expectedActionsSuccess = [
-        sendDocuments(payloadFormData),
-        sendDocumentsData(confirmDocumentsResponse),
+        sendDocuments({ front_side: payloadFormData, selfie: payloadFormData }),
+        sendDocumentsData(),
     ];
 
     const expectedActionsError = [
-        sendDocuments(payloadFormData),
+        sendDocuments({ front_side: payloadFormData, selfie: payloadFormData }),
         sendError({
             error,
             processingType: 'alert',
@@ -66,7 +66,7 @@ describe('KYC - Documents', () => {
                 }
             });
         });
-        store.dispatch(sendDocuments(payloadFormData));
+        store.dispatch(sendDocuments({ front_side: payloadFormData, selfie: payloadFormData }));
 
         return promise;
     });
@@ -82,7 +82,7 @@ describe('KYC - Documents', () => {
                 }
             });
         });
-        store.dispatch(sendDocuments(payloadFormData));
+        store.dispatch(sendDocuments({ front_side: payloadFormData, selfie: payloadFormData }));
 
         return promise;
     });

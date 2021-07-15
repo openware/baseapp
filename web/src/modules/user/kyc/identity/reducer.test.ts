@@ -28,6 +28,7 @@ describe('Identity reducer', () => {
             ...initialIdentityState,
             send: {
                 ...initialIdentityState.send,
+                loading: true,
             },
         };
         expect(identityReducer(initialIdentityState, actions.sendIdentity(confirmIdentityPayload))).toEqual(expectedState);
@@ -39,6 +40,7 @@ describe('Identity reducer', () => {
             send: {
                 ...initialIdentityState.send,
                 success: confirmIdentityResponse.message,
+                loading: false,
             },
         };
         expect(identityReducer(initialIdentityState, actions.sendIdentityData(confirmIdentityResponse))).toEqual(expectedState);
@@ -50,6 +52,7 @@ describe('Identity reducer', () => {
             send: {
                 ...initialIdentityState.send,
                 error: error,
+                loading: false,
             },
          };
         expect(identityReducer(initialIdentityState, actions.sendIdentityError(error))).toEqual(expectedState);
@@ -60,6 +63,7 @@ describe('Identity reducer', () => {
             ...initialIdentityState,
             edit: {
                 ...initialIdentityState.edit,
+                loading: true,
             },
         };
         expect(identityReducer(initialIdentityState, actions.editIdentity(confirmIdentityPayload))).toEqual(expectedState);
@@ -71,6 +75,7 @@ describe('Identity reducer', () => {
             edit: {
                 ...initialIdentityState.edit,
                 success: confirmIdentityResponse.message,
+                loading: false,
             },
         };
         expect(identityReducer(initialIdentityState, actions.editIdentityData(confirmIdentityResponse))).toEqual(expectedState);
@@ -82,6 +87,7 @@ describe('Identity reducer', () => {
             edit: {
                 ...initialIdentityState.edit,
                 error: error,
+                loading: false,
             },
          };
         expect(identityReducer(initialIdentityState, actions.editIdentityError(error))).toEqual(expectedState);

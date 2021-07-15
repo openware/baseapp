@@ -3,14 +3,15 @@ import { SEND_DOCUMENTS_DATA, SEND_DOCUMENTS_ERROR, SEND_DOCUMENTS_FETCH } from 
 
 export interface SendDocumentsFetch {
     type: typeof SEND_DOCUMENTS_FETCH;
-    payload: FormData;
+    payload: {
+        front_side: FormData;
+        back_side?: FormData;
+        selfie: FormData;
+    };
 }
 
 export interface SendDocumentsData {
     type: typeof SEND_DOCUMENTS_DATA;
-    payload: {
-        message: string;
-    };
 }
 
 export interface SendDocumentsError {
@@ -27,9 +28,8 @@ export const sendDocuments = (payload: SendDocumentsFetch['payload']): SendDocum
     payload,
 });
 
-export const sendDocumentsData = (payload: SendDocumentsData['payload']): SendDocumentsData => ({
+export const sendDocumentsData = (): SendDocumentsData => ({
     type: SEND_DOCUMENTS_DATA,
-    payload,
 });
 
 export const sendDocumentsError = (error: CommonError): SendDocumentsError => ({

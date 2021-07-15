@@ -76,7 +76,7 @@ describe('Phone reducer', () => {
     });
 
     it('should handle VERIFY_PHONE_FETCH', () => {
-        const expectedState = initialPhoneState;
+        const expectedState = { ...initialPhoneState, loading: true };
         expect(phoneReducer(initialPhoneState, actions.verifyPhone(verifyCodeFetchPayload))).toEqual(expectedState);
     });
 
@@ -84,6 +84,7 @@ describe('Phone reducer', () => {
         const expectedState = {
             ...initialPhoneState,
             successMessage: verifyCodeDataPayload.message,
+            loading: false,
         };
         expect(phoneReducer(initialPhoneState, actions.verifyPhoneData(verifyCodeDataPayload))).toEqual(expectedState);
     });
@@ -93,6 +94,7 @@ describe('Phone reducer', () => {
             ...initialPhoneState,
             codeSend: false,
             error: error,
+            loading: false,
         };
         expect(phoneReducer(initialPhoneState, actions.verifyPhoneError(error))).toEqual(expectedState);
     });

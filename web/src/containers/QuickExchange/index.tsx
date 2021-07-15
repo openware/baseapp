@@ -335,11 +335,11 @@ export const QuickExchangeContainer = () => {
         );
     }, [base, quote]);
 
-    const renderLoader = React.useMemo(() => {
+    const renderLoader = React.useMemo(() => (
         <div className="pg-loader-container">
             <Spinner animation="border" variant="primary" />
         </div>
-    }, []);
+    ), []);
 
     const renderPriceBlock = React.useMemo(() => {
         if (!base.currency || !marketPrice.price) {
@@ -361,7 +361,7 @@ export const QuickExchangeContainer = () => {
 
     return (
         <React.Fragment>
-            {!abilitiesSuccess ? {renderLoader} : (
+            {!abilitiesSuccess ? renderLoader : (
                 <div className="cr-quick-exchange">
                     <div className="cr-quick-exchange__header">
                         {translate('page.body.quick.exchange.header')}
