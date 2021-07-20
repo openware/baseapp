@@ -200,13 +200,14 @@ const SignIn: React.FC<SignInProps> = ({
                         <CustomInput
                             type="email"
                             label={emailLabel || 'Email'}
-                            placeholder={emailPlaceholder}
+                            placeholder={emailFocused ? '' : emailPlaceholder}
                             defaultLabel="Email"
                             handleChangeInput={handleChangeEmail}
                             inputValue={email}
                             handleFocusInput={() => handleFieldFocus('email')}
                             classNameLabel="cr-sign-in-form__label"
                             autoFocus={!isMobileDevice}
+                            labelVisible={emailFocused}
                         />
                         {emailError && <div className={'cr-sign-in-form__error'}>{emailError}</div>}
                     </div>
@@ -217,13 +218,14 @@ const SignIn: React.FC<SignInProps> = ({
                         <CustomInput
                             type="password"
                             label={passwordLabel || 'Password'}
-                            placeholder={passwordPlaceholder}
+                            placeholder={passwordFocused ? '' : passwordPlaceholder}
                             defaultLabel="Password"
                             handleChangeInput={handleChangePassword}
                             inputValue={password}
                             handleFocusInput={() => handleFieldFocus('password')}
                             classNameLabel="cr-sign-in-form__label"
                             autoFocus={false}
+                            labelVisible={passwordFocused}
                         />
                         {passwordError && <div className={'cr-sign-in-form__error'}>{passwordError}</div>}
                     </div>
