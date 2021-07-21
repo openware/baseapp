@@ -18,6 +18,7 @@ export * from './ExpiredSessionModal';
 export * from './FilterInput';
 export * from './GridItem';
 export * from './History';
+export * from './InputWithButton';
 export * from './InternalTransfer';
 export * from './Logo';
 export * from './MarketDepths';

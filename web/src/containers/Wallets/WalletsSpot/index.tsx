@@ -544,7 +544,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         }
         const { user: { level, otp }, wallets, currencies, memberLevels } = this.props;
         const wallet = wallets[selectedWalletIndex];
-        const { currency, type } = wallet;
+        const { currency, fee, type, balance } = wallet;
         const fixed = (wallet || { fixed: 0 }).fixed;
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
 
@@ -554,6 +554,8 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             price: currencyItem.price,
             name: currencyItem.name,
             currency,
+            fee,
+            balance,
             onClick: this.toggleConfirmModal,
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
             fixed,
@@ -563,6 +565,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             withdrawFeeLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }),
             withdrawTotalLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }),
             withdrawButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }),
+            withdrawAllButtonLabel: this.props.intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button.all' })
         };
 
         if (!otp || !currencyItem?.networks || level < memberLevels?.withdraw.minimum_level) {

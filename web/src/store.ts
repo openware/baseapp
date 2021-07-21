@@ -1,10 +1,10 @@
-import * as Sentry from '@sentry/browser';
-import { applyMiddleware, compose, createStore } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import createSentryMiddleware from 'redux-sentry-middleware';
+import * as Sentry from "@sentry/browser";
+import { applyMiddleware, compose, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
+import createSentryMiddleware from "redux-sentry-middleware";
 
-import { sentryEnabled } from './api/config';
-import { rootReducer } from './modules';
+import { sentryEnabled } from "./api/config";
+import { rootReducer } from "./modules";
 
 const sagaMiddleware = createSagaMiddleware();
 const rangerMiddleware = createSagaMiddleware();

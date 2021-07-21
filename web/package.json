@@ -16,7 +16,7 @@
         "@sentry/browser": "^5.17.0",
         "@types/ws": "^6.0.4",
         "@typescript-eslint/eslint-plugin": "^3.10.1",
-        "@typescript-eslint/parser": "^3.9.1",
+        "@typescript-eslint/parser": "^4.28.2",
         "@web3-react/core": "^6.1.1",
         "@web3-react/injected-connector": "^6.0.7",
         "axios": "^0.21.1",
