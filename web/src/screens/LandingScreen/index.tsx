@@ -42,13 +42,13 @@ type Props = ReduxProps & RouteProps & IntlProps;
 class Landing extends React.Component<Props> {
     public componentDidMount() {
         if (this.props.colorTheme === 'light') {
-            toggleColorTheme('dark');
+            toggleColorTheme('light');
         }
     }
 
     public componentWillReceiveProps(next: Props) {
         if (next.colorTheme === 'light') {
-            toggleColorTheme('dark');
+            toggleColorTheme('light');
         }
     }
 
@@ -69,7 +69,7 @@ class Landing extends React.Component<Props> {
                         <div className="pg-landing-screen__header__wrap__right">
                             {this.props.isLoggedIn ? (
                                 <Link to="/profile" className="landing-button">
-                                    {this.translate('page.body.landing.header.button1')}
+                                    {this.translate('page.body.landing.header.button1')} 
                                 </Link>
                             ) : (
                                 <>

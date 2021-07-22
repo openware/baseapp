@@ -1,4 +1,6 @@
 .landing-block {
+  min-height:  580px !important;
+
   &__content {
     max-width: 1210px !important;
   }
@@ -6,6 +8,7 @@
 
 .pg-landing-screen {
   padding-top: 0 !important;
+  font-family: 'IBM Plex Sans', sans-serif;
 
   .positive {
     color: var(--system-green);
@@ -51,19 +54,19 @@
 
   .landing-button {
     align-items: center;
-    background: var(--button-primary-cta-background-color);
+    background: var(--button-primary-cta-background-color-active);
     border-radius: 4px;
-    color: var(--button-primary-cta-text-color);
+    color: var(--button-primary-cta-text-color-active);
     cursor: pointer;
     display: flex;
     flex-direction: row;
     font-size: 14px;
     font-style: normal;
-    font-weight: normal;
+    font-weight: 600;
     height: 44px;
     justify-content: center;
     letter-spacing: 1px;
-    line-height: 16px;
+    line-height: 18px;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
@@ -97,11 +100,12 @@
   }
 
   &__header {
-    background: var(--subheader-background-color);
+    background: var(--header-background-color);
     height: 64px;
     position: fixed;
     top: 0;
     z-index: 99;
+    box-shadow: 0px 6px 12px 0px rgba(30, 29, 29, 0.12);
 
     &__wrap {
       flex-direction: row;
@@ -127,7 +131,7 @@
 
           &--simple {
             background: transparent;
-            color: var(--button-contrast-cta-text-color);
+            color: var(--contrast-cta-color);
             height: 32px;
             margin-right: 21px;
             width: 76px;
@@ -158,6 +162,11 @@
     display: flex;
     flex: 1;
     justify-content: center;
+    background: url(assets/images/landing/MarketsBG.svg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 
     &__wrap {
       align-items: center;
@@ -174,7 +183,7 @@
         margin-top: 60px;
 
         .landing-button {
-          margin: 60px 0;
+          margin: 36px 0 74px 0;
         }
       }
 
@@ -185,9 +194,9 @@
   }
 
   &__platform-info {
-    background: var(--primary-cta-color);
+    background: var(--cta-layer-color);
     display: flex;
-    height: 150px;
+    height: 340px;
 
     &__wrap {
       align-items: center;
@@ -227,10 +236,11 @@
   }
 
   &__register {
-    background-image: url(assets/images/landing/TradingUIFullBG.png);
-    background-position: right center;
-    background-repeat: no-repeat;
-    background-size: 80%;
+    background: url(assets/images/landing/TradingRegister.svg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 
     &-content {
       justify-content: center;
@@ -263,7 +273,7 @@
     background: var(--landing-background-color);
 
     h1 {
-      color: var(--text-contrast-color);
+      color: var(--contrast-cta-color);
       margin-bottom: 25px;
     }
 
@@ -301,7 +311,7 @@
           }
 
           h2 {
-            color: var(--text-contrast-color);
+            color: var(--primary-text-color);
             font-size: 18px;
             font-style: normal;
             font-weight: 500;
@@ -311,7 +321,7 @@
           }
 
           span {
-            color: var(--text-contrast-color);
+            color: var(--primary-text-color);
             font-size: 16px;
             letter-spacing: 0.25px;
             line-height: 28px;
@@ -322,7 +332,7 @@
   }
 
   &__trade-on-the-go {
-    background-image: url(assets/images/landing/GridSecondBG.svg);
+    background-image: url(assets/images/landing/TradeOnTheGoBG.svg);
     background-position: left center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -339,7 +349,7 @@
       &__image {
         align-items: center;
         align-items: flex-start;
-        background-image: url(assets/images/landing/PhoneImage.png);
+        background-image: url(assets/images/landing/Phone.svg);
         background-position: bottom;
         background-repeat: no-repeat;
         background-size: contain;
@@ -366,6 +376,7 @@
         h1,
         h2 {
           text-align: left;
+          color: var(--text-contrast-color);
         }
 
         h1 {
@@ -386,7 +397,7 @@
       margin: 70px 0 103px 0;
 
       h1 {
-        color: var(--text-contrast-color);
+        color: var(--contrast-cta-color);
         margin-bottom: 70px;
       }
 
@@ -397,9 +408,19 @@
         height: max-content;
         justify-content: center;
         width: 100%;
+        color: var(--primary-cta-color);
+
 
         .landing-button {
           margin: 0 10px;
+          color: var(--primary-cta-color);
+          background: rgba(0, 189, 208, 0.12);
+        }
+
+        .landing-button--secondary {
+          color: var(--cta-layer-color);
+          background: var(--button-primary-cta-background-color-active);
+          opacity: 1
         }
       }
     }
@@ -407,6 +428,7 @@
 
   &__footer {
     height: 262px;
+    background: var(--dropdown-background-color);
 
     &__wrap {
       align-items: center;
@@ -450,7 +472,7 @@
           justify-content: flex-start;
 
           a {
-            color: var(--primary-text-color);
+            color: var(--contrast-cta-color);
             cursor: pointer;
             font-size: 12px;
             font-weight: normal;
@@ -495,7 +517,7 @@
 
     &__rights {
       align-items: flex-start;
-      color: var(--primary-text-color);
+      color: var(--contrast-cta-color);
       display: flex;
       font-size: 12px;
       font-weight: normal;
