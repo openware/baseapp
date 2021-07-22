@@ -56,7 +56,7 @@ steps:
       GIT_TOKEN:
         from_secret: kite_bot_key
     commands:
-      - /app/goci versions
+      - /app/goci -component=sonic versions
     when:
       branch:
         - master
