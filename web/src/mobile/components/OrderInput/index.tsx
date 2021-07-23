@@ -61,12 +61,13 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
                 <CustomInput
                     type="number"
                     inputValue={value}
-                    placeholder={placeholder || '0'}
+                    placeholder={isFocused ? '' : placeholder || '0'}
                     handleChangeInput={handleChangeValue}
                     label={value && placeholder ? placeholder : ''}
                     defaultLabel={value && placeholder ? placeholder : ''}
                     onKeyPress={onKeyPress}
                     handleFocusInput={() => handleFocusInput(label)}
+                    labelVisible={isFocused}
                 />
             </fieldset>
             <div className="cr-order-input-mobile__button" onClick={() => handleChangeValueByButton(true)}>

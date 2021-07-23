@@ -87,7 +87,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                                 <CustomInput
                                     label={phoneNumber ? this.translate('page.body.kyc.phone.phoneNumber') : ''}
                                     defaultLabel={phoneNumber ? this.translate('page.body.kyc.phone.phoneNumber') : ''}
-                                    placeholder={this.translate('page.body.kyc.phone.phoneNumber')}
+                                    placeholder={phoneNumberFocused ? '' : this.translate('page.body.kyc.phone.phoneNumber')}
                                     type="tel"
                                     name="phone"
                                     autoComplete="tel"
@@ -97,6 +97,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                                     onKeyPress={this.handleSendEnterPress}
                                     autoFocus={true}
                                     handleFocusInput={this.handleFieldFocus('phoneNumber')}
+                                    labelVisible={phoneNumberFocused}
                                 />
                                 <InputGroup.Append>
                                     <Button
@@ -123,8 +124,9 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                             handleChangeInput={this.handleChangeConfirmationCode}
                             onKeyPress={this.handleConfirmEnterPress}
                             inputValue={confirmationCode}
-                            placeholder={this.translate('page.body.kyc.phone.code')}
+                            placeholder={confirmationCodeFocused ? '' : this.translate('page.body.kyc.phone.code')}
                             handleFocusInput={this.handleFieldFocus('confirmationCode')}
+                            labelVisible={confirmationCodeFocused}
                         />
                     </fieldset>
                 </div>

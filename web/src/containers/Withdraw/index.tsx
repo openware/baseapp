@@ -188,9 +188,10 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
                                     label={withdrawAmountLabel || 'Withdrawal Amount'}
                                     defaultLabel="Withdrawal Amount"
                                     inputValue={amount}
-                                    placeholder={withdrawAmountLabel || 'Amount'}
+                                    placeholder={withdrawAmountFocused ? '' : withdrawAmountLabel || 'Amount'}
                                     classNameInput="cr-withdraw__input"
                                     handleChangeInput={this.handleChangeInputAmount}
+                                    labelVisible={withdrawAmountFocused}
                                 />
                             </div>
                             <div className={lastDividerClassName} />

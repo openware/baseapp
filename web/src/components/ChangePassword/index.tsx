@@ -128,12 +128,14 @@ export const ChangePasswordComponent = props => {
 
         return (
             <div className="pg-mobile-change-password__body" onKeyPress={handleEnterPress}>
-                {!props.hideOldPassword &&
+                {!props.hideOldPassword && (
                     <div className={oldPasswordClass}>
                         <CustomInput
                             type="password"
-                            label={intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
-                            placeholder={intl.formatMessage({id: 'page.body.profile.header.account.content.password.old'})}
+                            label={intl.formatMessage({ id: 'page.body.profile.header.account.content.password.old' })}
+                            placeholder={oldPasswordFocus ? '' : intl.formatMessage({
+                                id: 'page.body.profile.header.account.content.password.old',
+                            })}
                             defaultLabel="Old password"
                             handleChangeInput={setOldPassword}
                             inputValue={oldPassword}
@@ -141,14 +143,17 @@ export const ChangePasswordComponent = props => {
                             classNameLabel="cr-email-form__label"
                             classNameInput="cr-email-form__input"
                             autoFocus={true}
+                            labelVisible={oldPasswordFocus}
                         />
                     </div>
-                }
+                )}
                 <div className={newPasswordClass}>
                     <CustomInput
                         type="password"
-                        label={intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
-                        placeholder={intl.formatMessage({id: 'page.body.profile.header.account.content.password.new'})}
+                        label={intl.formatMessage({ id: 'page.body.profile.header.account.content.password.new' })}
+                        placeholder={newPasswordFocus ? '': intl.formatMessage({
+                            id: 'page.body.profile.header.account.content.password.new',
+                        })}
                         defaultLabel="New password"
                         handleChangeInput={handleChangeNewPassword}
                         inputValue={newPassword}
@@ -156,8 +161,9 @@ export const ChangePasswordComponent = props => {
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
                         autoFocus={false}
+                        labelVisible={newPasswordFocus}
                     />
-                    {newPassword ?
+                    {newPassword ? (
                         <PasswordStrengthMeter
                             minPasswordEntropy={passwordMinEntropy()}
                             currentPasswordEntropy={props.currentPasswordEntropy}
@@ -167,13 +173,16 @@ export const ChangePasswordComponent = props => {
                             passwordErrorThirdSolved={passwordErrorThirdSolved}
                             passwordPopUp={passwordPopUp}
                             translate={translate}
-                        /> : null}
+                        />
+                    ) : null}
                 </div>
                 <div className={confirmPasswordClass}>
                     <CustomInput
                         type="password"
-                        label={intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}
-                        placeholder={intl.formatMessage({id: 'page.body.profile.header.account.content.password.conf'})}
+                        label={intl.formatMessage({ id: 'page.body.profile.header.account.content.password.conf' })}
+                        placeholder={confirmPasswordFocus ? '' : intl.formatMessage({
+                            id: 'page.body.profile.header.account.content.password.conf',
+                        })}
                         defaultLabel="Password confirmation"
                         handleChangeInput={setConfirmationPassword}
                         inputValue={confirmationPassword}
@@ -181,6 +190,7 @@ export const ChangePasswordComponent = props => {
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
                         autoFocus={false}
+                        labelVisible={confirmPasswordFocus}
                     />
                 </div>
             </div>

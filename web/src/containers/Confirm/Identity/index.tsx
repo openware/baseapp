@@ -170,12 +170,13 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 name="fname"
                                 autoComplete="given-name"
                                 inputValue={firstName}
-                                placeholder={this.translate('page.body.kyc.identity.firstName')}
+                                placeholder={firstNameFocused ? '' :this.translate('page.body.kyc.identity.firstName')}
                                 handleChangeInput={(e) => this.handleChange(e, 'firstName')}
                                 autoFocus={true}
                                 label={this.translate('page.body.kyc.identity.firstName')}
                                 defaultLabel={''}
                                 handleFocusInput={this.handleFieldFocus('firstName')}
+                                labelVisible={firstNameFocused}
                             />
                         </fieldset>
                         <fieldset className={lastNameGroupClass}>
@@ -185,10 +186,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 autoComplete="family-name"
                                 inputValue={lastName}
                                 handleChangeInput={(e) => this.handleChange(e, 'lastName')}
-                                placeholder={this.translate('page.body.kyc.identity.lastName')}
+                                placeholder={lastNameFocused ? '' : this.translate('page.body.kyc.identity.lastName')}
                                 label={this.translate('page.body.kyc.identity.lastName')}
                                 defaultLabel={''}
                                 handleFocusInput={this.handleFieldFocus('lastName')}
+                                labelVisible={lastNameFocused}
                             />
                         </fieldset>
                     </div>
@@ -230,11 +232,12 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 name="ship-address"
                                 autoComplete="shipping street-address"
                                 inputValue={residentialAddress}
-                                placeholder={this.translate('page.body.kyc.identity.residentialAddress')}
+                                placeholder={residentialAddressFocused ? '' : this.translate('page.body.kyc.identity.residentialAddress')}
                                 label={this.translate('page.body.kyc.identity.residentialAddress')}
                                 defaultLabel={''}
                                 handleChangeInput={(e) => this.handleChange(e, 'residentialAddress')}
                                 handleFocusInput={this.handleFieldFocus('residentialAddress')}
+                                labelVisible={residentialAddressFocused}
                             />
                         </fieldset>
                     </div>
@@ -246,10 +249,11 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 autoComplete="shipping locality"
                                 inputValue={city}
                                 handleChangeInput={(e) => this.handleChange(e, 'city')}
-                                placeholder={this.translate('page.body.kyc.identity.city')}
+                                placeholder={cityFocused ? '' :this.translate('page.body.kyc.identity.city')}
                                 label={this.translate('page.body.kyc.identity.city')}
                                 defaultLabel={''}
                                 handleFocusInput={this.handleFieldFocus('city')}
+                                labelVisible={cityFocused}
                             />
                         </fieldset>
                         <fieldset className={postcodeGroupClass}>
@@ -262,8 +266,9 @@ class IdentityComponent extends React.Component<Props, IdentityState> {
                                 inputValue={postcode}
                                 handleChangeInput={(e) => this.handleChange(e, 'postcode')}
                                 onKeyPress={this.handleConfirmEnterPress}
-                                placeholder={this.translate('page.body.kyc.identity.postcode')}
+                                placeholder={postcodeFocused ? '' :this.translate('page.body.kyc.identity.postcode')}
                                 handleFocusInput={this.handleFieldFocus('postcode')}
+                                labelVisible={postcodeFocused}
                             />
                         </fieldset>
                     </div>

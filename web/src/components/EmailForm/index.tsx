@@ -119,7 +119,7 @@ export const EmailForm: React.FC<EmailFormProps> = (props) => {
                         <CustomInput
                             type="email"
                             label={emailLabel || 'Email'}
-                            placeholder={emailLabel || 'Email'}
+                            placeholder={emailFocused ? '' : emailLabel || 'Email'}
                             defaultLabel="Email"
                             handleChangeInput={props.handleInputEmail}
                             inputValue={email}
@@ -127,6 +127,7 @@ export const EmailForm: React.FC<EmailFormProps> = (props) => {
                             classNameLabel="cr-email-form__label"
                             classNameInput="cr-email-form__input"
                             autoFocus={!isMobileDevice}
+                            labelVisible={emailFocused}
                         />
                         {emailError && <div className="cr-email-form__error">{emailError}</div>}
                     </div>
@@ -136,7 +137,7 @@ export const EmailForm: React.FC<EmailFormProps> = (props) => {
                             block={true}
                             type="button"
                             disabled={isButtonDisabled()}
-                            onClick={e => handleClick(e as any)}
+                            onClick={(e) => handleClick(e as any)}
                             size="lg"
                             variant="primary">
                             {isLoading ? 'Loading...' : buttonLabel ? buttonLabel : 'Send'}
