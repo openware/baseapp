@@ -444,7 +444,7 @@
         fieldset {
           border: 1px solid var(--input-border-color);
           border-radius: var(--gap);
-          padding: 0 8px 0 9px;
+          padding: 0 2px 0 4px;
 
           legend {
             color: var(--input-legend-color);
@@ -461,7 +461,8 @@
 
           .cr-copyable-text-field {
             border: none;
-            padding: 9px 2px;
+            padding: 6px 2px;
+            height: 48px;
 
             .input-group {
               display: flex;
@@ -472,8 +473,12 @@
                 width: 80%;
 
                 label {
-                  margin-top: -18px;
+                  margin-top: -14px !important;
                 }
+              }
+
+              .input-group-append {
+                top: 2px;
               }
 
               .btn-primary {
